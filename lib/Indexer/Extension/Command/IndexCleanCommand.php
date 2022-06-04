@@ -7,11 +7,11 @@ use Phpactor\Indexer\Model\IndexInfo;
 use Phpactor\Indexer\Model\IndexInfos;
 use Phpactor\Indexer\Util\Filesystem as PhpactorFilesystem;
 use RuntimeException;
-use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -58,7 +58,7 @@ class IndexCleanCommand extends Command
                 bin/console index:clean
 
             DOCS, self::OPT_CLEAN_ALL));
-        $this->addArgument(self::ARG_INDEX_NAME, InputArgument::OPTIONAL, 'Index to delete (either the name or the number from the listing)');
+        $this->addArgument(self::ARG_INDEX_NAME, InputArgument::IS_ARRAY, 'Index names to delete');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -67,26 +67,33 @@ class IndexCleanCommand extends Command
             throw new RuntimeException('Symfony');
         }
 
-        $indexName = $input->getArgument(self::ARG_INDEX_NAME);
+        $indexNames = $input->getArgument(self::ARG_INDEX_NAME);
 
-        if ($indexName === null && !$input->isInteractive()) {
+        // Non interactive commands with no index to delete should do nothing
+        if (count($indexNames) === 0 && !$input->isInteractive()) {
             return 0;
         }
-
 
         $section = $output->section();
         $indicies = $this->getIndicies($section);
-        if ($indexName) {
-            $this->removeIndex($section, $indicies->get($indexName));
+        if (count($indexNames) !== 0) {
+            if ($indexNames[0] === self::OPT_CLEAN_ALL) {
+                foreach ($indicies as $index) {
+                    $this->removeIndex($output, $index);
+                }
+                return 0;
+            }
+            foreach ($indexNames as $indexName) {
+                $this->removeIndex($section, $indicies->get($indexName));
+            }
             return 0;
         }
-        $removed = null;
         $index = null;
         $section->clear();
 
         while (true) {
             $this->renderIndexTable($indicies, $section);
-            if ($removed && $index) {
+            if ($index) {
                 $section->writeln(sprintf('<info>Removed index "%s"</>', $index->name()));
             }
             try {
@@ -101,9 +108,16 @@ class IndexCleanCommand extends Command
             if (!$index) {
                 break;
             }
+
+            if ($index->absolutePath() === self::OPT_CLEAN_ALL) {
+                foreach ($indicies as $index) {
+                    $this->removeIndex($output, $index);
+                }
+                break;
+            }
+
             $this->removeIndex($output, $index);
             $indicies = $indicies->remove($index);
-            $removed = $index;
             $section->clear();
         }
 
@@ -126,6 +140,8 @@ class IndexCleanCommand extends Command
                 sprintf('%.1f days', $index->lastModifiedInDays()),
             ]);
         }
+        $table->addRow(new TableSeparator());
+        $table->addRow(['Σ', self::OPT_CLEAN_ALL, PhpactorFilesystem::formatSize($indexList->totalSize()), '', '']);
         $table->render();
 
         $output->writeln(sprintf('Total size: %s', PhpactorFilesystem::formatSize($totalSize)));
@@ -134,11 +150,15 @@ class IndexCleanCommand extends Command
     private function getInteractiveAnswer(IndexInfos $infos, InputInterface $input, OutputInterface $output): ?IndexInfo
     {
         $question = new Question('Index to remove: ', null);
-        $question->setAutocompleterValues(array_merge($infos->offsets(),  $infos->names()));
+        $question->setAutocompleterValues(array_merge($infos->offsets(), $infos->names(), [self::OPT_CLEAN_ALL]));
         $result = (new QuestionHelper())->ask($input, $output, $question);
 
         if (!$result) {
             return null;
+        }
+
+        if ($result === self::OPT_CLEAN_ALL) {
+            return new IndexInfo(self::OPT_CLEAN_ALL, '', 0, 0, 0);
         }
 
         if (is_numeric($result)) {
@@ -161,7 +181,7 @@ class IndexCleanCommand extends Command
 
         $indexes = [];
         foreach ($fileInfos as $fileInfo) {
-            $info = IndexInfo::fromFromSplFileInfo($fileInfo);
+            $info = IndexInfo::fromSplFileInfo($fileInfo);
 
             // warmup the size
             $info->size();

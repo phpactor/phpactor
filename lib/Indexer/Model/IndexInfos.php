@@ -40,8 +40,9 @@ class IndexInfos implements IteratorAggregate, Countable
         }
 
         throw new RuntimeException(sprintf(
-            'Index "%s" not found',
-            $name
+            'Index "%s" not found. Available indicies are: %s',
+            $name,
+            implode(', ', $this->names())
         ));
     }
 
@@ -78,13 +79,23 @@ class IndexInfos implements IteratorAggregate, Countable
         }
 
         throw new RuntimeException(sprintf(
-            'Index at offset "%s" not found',
-            $int
+            'Index at offset "%s" not found. Available offsets are: %s',
+            $int,
+            implode(', ', $this->offsets())
         ));
     }
 
     public function remove(IndexInfo $target): self
     {
         return new self(array_filter($this->infos, fn (IndexInfo $info) => $info->name() !== $target->name()));
+    }
+
+    public function totalSize():int
+    {
+        return array_reduce(
+            $this->infos,
+            fn (int $size, IndexInfo $current) => $size + $current->size(),
+            0
+        );
     }
 }
