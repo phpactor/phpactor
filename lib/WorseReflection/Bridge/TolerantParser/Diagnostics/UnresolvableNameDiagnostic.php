@@ -28,8 +28,7 @@ class UnresolvableNameDiagnostic implements Diagnostic
         ByteOffsetRange $range,
         string $type,
         Name $name
-    )
-    {
+    ) {
         $this->range = $range;
         $this->type = $type;
         $this->name = $name;

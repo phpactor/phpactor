@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
-use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
@@ -12,7 +11,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissi
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
@@ -40,11 +38,13 @@ class WorseReflectionExtension implements Extension
     const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
     const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
+    const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
 
     
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
+            self::PARAM_IMPORT_GLOBALS => false,
             self::PARAM_ENABLE_CACHE => true,
             self::PARAM_CACHE_LIFETIME => 5.0,
             self::PARAM_ENABLE_CONTEXT_LOCATION => true,
@@ -62,6 +62,7 @@ class WorseReflectionExtension implements Extension
         ,
             self::PARAM_STUB_DIR => 'Location of the core PHP stubs - these will be scanned and cached on the first request',
             self::PARAM_STUB_CACHE_DIR => 'Cache directory for stubs',
+            self::PARAM_IMPORT_GLOBALS => 'Show hints for non-imported global classes and functions',
         ]);
     }
 
@@ -166,7 +167,7 @@ class WorseReflectionExtension implements Extension
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UnresolvableNameProvider::class, function (Container $container) {
             return new UnresolvableNameProvider(
-                $container->getParameter(LanguageServerCodeTransformExtension::PARAM_IMPORT_GLOBALS)
+                $container->getParameter(self::PARAM_IMPORT_GLOBALS)
             );
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }

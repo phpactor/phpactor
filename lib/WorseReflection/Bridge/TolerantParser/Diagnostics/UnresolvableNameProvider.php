@@ -6,7 +6,6 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\ClassBaseClause;
-use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
@@ -16,7 +15,6 @@ use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\ResolvedName;
-use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Name\FullyQualifiedName as PhpactorFullyQualifiedName;
 use Phpactor\Name\Name;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -28,7 +26,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Reflector;
 
 class UnresolvableNameProvider implements DiagnosticProvider
 {

@@ -14,11 +14,6 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class UnresolvableNameProviderTest extends DiagnosticsTestCase
 {
-    protected function provider(): DiagnosticProvider
-    {
-        return new UnresolvableNameProvider(true);
-    }
-
     public function checkUnresolvableName(Diagnostics $diagnostics): void
     {
         self::assertCount(1, $diagnostics);
@@ -89,7 +84,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 // File: test.php
                 <?php class Foo { public function bar(Bar $bar) {} }
                 EOT
-            ,  function (Diagnostics $diagnostics) {
+            ,  function (Diagnostics $diagnostics): void {
                 self::assertCount(1, $diagnostics);
             }
         ];
@@ -504,7 +499,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 <?php foo();
                 EOT
             ,
-            function (Diagnostics $diagnostics) {
+            function (Diagnostics $diagnostics): void {
                 self::assertCount(1, $diagnostics);
                 self::assertEquals('Function "foo" not found', $diagnostics->at(0)->message());
             }
@@ -516,7 +511,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 <?php namespace Foobar; foo();
                 EOT
             ,
-            function (Diagnostics $diagnostics) {
+            function (Diagnostics $diagnostics): void {
                 self::assertCount(1, $diagnostics);
                 self::assertEquals('Foobar\foo', $diagnostics->at(0)->name());
                 self::assertEquals(24, $diagnostics->at(0)->range()->start()->toInt());
@@ -537,7 +532,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 // File: Bar.php
                 <?php namespace Bar; function foo() {}
                 EOT
-                , function (Diagnostics $diagnostics) {
+                , function (Diagnostics $diagnostics): void {
                     self::assertCount(0, $diagnostics);
                 }
         ];
@@ -575,5 +570,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
             TextDocumentBuilder::create('<?php barboo();')->build()
         );
         self::assertCount(1, $found);
+    }
+    protected function provider(): DiagnosticProvider
+    {
+        return new UnresolvableNameProvider(true);
     }
 }

@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport;
 
 use Generator;
-use Phpactor\CodeTransform\Domain\Helper\UnresolvableClassNameFinder;
 use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record\ConstantRecord;
@@ -11,9 +10,7 @@ use Phpactor\Indexer\Model\Record\HasFullyQualifiedName;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
-use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Reflector;
 

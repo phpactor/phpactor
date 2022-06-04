@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\CodeActionContext;
 use Phpactor\LanguageServerProtocol\CodeActionParams;
@@ -30,7 +31,7 @@ class ImportNameProviderTest extends IntegrationTestCase
         $this->workspace()->loadManifest($manifest);
 
         $tester = $this->container([
-            LanguageServerCodeTransformExtension::PARAM_IMPORT_GLOBALS => $imprtGlobals,
+            WorseReflectionExtension::PARAM_IMPORT_GLOBALS => $imprtGlobals,
             LanguageServerCodeTransformExtension::PARAM_REPORT_NON_EXISTING_NAMES => true
         ])->get(LanguageServerBuilder::class)->tester(
             ProtocolFactory::initializeParams($this->workspace()->path())

@@ -30,14 +30,14 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
         $this->addToAssertionCount(1);
     }
 
-    public function diagnosticsFromSource(string $source): Diagnostics 
+    public function diagnosticsFromSource(string $source): Diagnostics
     {
         $reflector = $this->createBuilder($source)->enableCache()->addDiagnosticProvider($this->provider())->build();
         $reflector->reflectOffset($source, mb_strlen($source));
         return $reflector->diagnostics($source);
     }
 
-    public function diagnosticsFromManifest(string $manifest): Diagnostics 
+    public function diagnosticsFromManifest(string $manifest): Diagnostics
     {
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
@@ -47,7 +47,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
             ->withLogger($this->logger());
 
         $reflector = $builder->addLocator(
-            new BruteForceSourceLocator(ReflectorBuilder::create()->build(),$this->workspace()->path())
+            new BruteForceSourceLocator(ReflectorBuilder::create()->build(), $this->workspace()->path())
         )->enableCache()->addDiagnosticProvider(
             $this->provider()
         )->build();

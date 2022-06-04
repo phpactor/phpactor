@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
-use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
