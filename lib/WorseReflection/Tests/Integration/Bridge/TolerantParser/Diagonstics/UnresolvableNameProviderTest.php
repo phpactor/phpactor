@@ -24,4 +24,10 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         self::assertCount(1, $diagnostics);
         self::assertEquals('Function "foobar" not found', $diagnostics->at(0)->message());
     }
+
+    public function checkUnresolvableNamespacedFunction(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Function "foobar" not found', $diagnostics->at(0)->message());
+    }
 }

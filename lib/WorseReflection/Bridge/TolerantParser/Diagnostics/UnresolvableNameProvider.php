@@ -4,14 +4,27 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Attribute;
+use Microsoft\PhpParser\Node\ClassBaseClause;
+use Microsoft\PhpParser\Node\Expression;
+use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Phpactor\Indexer\Model\Name\FullyQualifiedName;
+use Phpactor\Name\FullyQualifiedName as PhpactorFullyQualifiedName;
+use Phpactor\Name\Name;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Reflector;
@@ -40,9 +53,45 @@ class UnresolvableNameProvider implements DiagnosticProvider
             return;
         }
 
-        yield UnresolvableNameDiagnostic::forFunction(
-            ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition()),
+        // if the tolerant parser did not provide the resolved name (because of
+        // bug) then use the namespaced name.
+        if (!$resolvedName) {
+            $resolvedName = $name->getNamespacedName();
+        }
+
+        if (count($resolvedName->getNameParts()) == 0) {
+            return;
+        }
+
+        // Function names in global namespace have a "resolved name"
+        // (inconsistent parser behavior)
+        if ($name->parent instanceof CallExpression) {
+            yield from $this->forFunction(
+                $resolver->reflector(),
+                $name->getResolvedName() ?? $name->getText(),
+                $name,
+            );
+            return;
+        }
+
+        if (
+            !$name->parent instanceof ClassBaseClause &&
+            !$name->parent instanceof QualifiedNameList &&
+            !$name->parent instanceof ObjectCreationExpression &&
+            !$name->parent instanceof ScopedPropertyAccessExpression &&
+            !$name->parent instanceof FunctionDeclaration &&
+            !$name->parent instanceof MethodDeclaration &&
+            !$name->parent instanceof Expression &&
+            !$name->parent instanceof Parameter &&
+            !$name->parent instanceof Attribute
+        ) {
+            return;
+        }
+
+        yield from $this->forClass(
+            $resolver->reflector(),
             $name->__toString(),
+            $name
         );
     }
 
@@ -51,15 +100,17 @@ class UnresolvableNameProvider implements DiagnosticProvider
      */
     private function forFunction(FunctionReflector $reflector, string $fqn, QualifiedName $name): Generator
     {
+        $fqn = PhpactorFullyQualifiedName::fromString($fqn);
         try {
             // see comment for appendUnresolvedClassName
-            $source = $reflector->sourceCodeForFunction($fqn);
-            if (!$this->nameContainedInSource('function', $source, $fqn)) {
+            $source = $reflector->sourceCodeForFunction($fqn->__toString());
+            if (!$this->nameContainedInSource('function', $source, $fqn->head()->__toString())) {
                 throw new NotFound();
             }
         } catch (NotFound $notFound) {
-            yield new UnresolvableNameDiagnostic(
-                ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition())
+            yield UnresolvableNameDiagnostic::forFunction(
+                ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
+                $fqn->head()->__toString(),
             );
         }
     }
@@ -74,5 +125,29 @@ class UnresolvableNameProvider implements DiagnosticProvider
         }
 
         return (bool)preg_match(sprintf('{%s\s+%s}', $declarationPattern, $last), $source->__toString());
+    }
+
+    /**
+     * @return Generator<UnresolvableNameDiagnostic>
+     */
+    private function forClass(ClassReflector $reflector, string $fqn, QualifiedName $name): Generator
+    {
+        $fqn = PhpactorFullyQualifiedName::fromString($fqn);
+        try {
+            // we could reflect the class here but it's much more expensive
+            // than simply locating the source, however locating the source
+            // does not _guarantee_ that the name exists, so we additionally
+            // ensure that at least the short name of the FQN is located in
+            // the source code.
+            $source = $reflector->sourceCodeForClassLike($fqn->__toString());
+            if (!$this->nameContainedInSource('(class|trait|interface|enum)', $source, $fqn->head()->__toString())) {
+                throw new NotFound();
+            }
+        } catch (NotFound $notFound) {
+            yield UnresolvableNameDiagnostic::forClass(
+                ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
+                $fqn->head()->__toString(),
+            );
+        }
     }
 }
