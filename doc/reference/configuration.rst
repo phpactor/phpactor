@@ -1511,7 +1511,7 @@ LanguageServerCodeTransformExtension
 Show an error if a diagnostic name cannot be resolved - can produce false positives
 
 
-**Default**: ``false``
+**Default**: ``true``
 
 
 .. _LanguageServerPhpstanExtension:
