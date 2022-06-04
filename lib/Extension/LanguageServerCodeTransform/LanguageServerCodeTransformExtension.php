@@ -191,7 +191,6 @@ class LanguageServerCodeTransformExtension implements Extension
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => []
         ]);
 
         $container->register(TransformerCodeActionPovider::class.'complete_constructor_private', function (Container $container) {
@@ -231,7 +230,6 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Add missing properties'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -264,7 +262,6 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Add missing docblocks'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -275,7 +272,6 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Add missing return types'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -284,7 +280,6 @@ class LanguageServerCodeTransformExtension implements Extension
                 $container->get(MissingMethodFinder::class)
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
