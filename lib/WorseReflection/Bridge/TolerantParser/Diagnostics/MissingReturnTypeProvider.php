@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -73,7 +72,7 @@ class MissingReturnTypeProvider implements DiagnosticProvider
         $returnType = $frame->returnType();
 
         yield new MissingReturnTypeDiagnostic(
-            ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition()),
+            $method->nameRange(),
             $reflection->name()->__toString(),
             $methodName,
             $returnType->generalize()

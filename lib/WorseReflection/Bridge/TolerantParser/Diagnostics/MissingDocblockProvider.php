@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -68,10 +67,7 @@ class MissingDocblockProvider implements DiagnosticProvider
 
         if ($actualReturnType->isClosure()) {
             yield new MissingDocblockDiagnostic(
-                ByteOffsetRange::fromInts(
-                    $node->getStartPosition(),
-                    $node->getEndPosition()
-                ),
+                $method->nameRange(),
                 sprintf(
                     'Method "%s" is missing docblock return type: %s',
                     $methodName,
@@ -100,10 +96,7 @@ class MissingDocblockProvider implements DiagnosticProvider
         }
 
         yield new MissingDocblockDiagnostic(
-            ByteOffsetRange::fromInts(
-                $node->getStartPosition(),
-                $node->getEndPosition()
-            ),
+            $method->nameRange(),
             sprintf(
                 'Method "%s" is missing docblock return type: %s',
                 $methodName,
