@@ -22,24 +22,6 @@ use Phpactor\WorseReflection\Core\Type\NeverType;
 
 class IfStatementResolver implements Resolver
 {
-    /**
-     * If (or elseif) branch:
-     *
-     * - resolve context for expression (including type assertions)
-     * - apply type assertions to frame after start of branch
-     * - negate type assertions when branch ends
-     *
-     * After branch:
-     *
-     * - reset to pre-branch state
-     * - foreach branch
-     *   - it it terminates
-     *     - apply negated type assertions
-     *     - add (or union to existing) any assignments
-     *   - else
-     *     - apply type assertion
-     *     - add (or union to existing) any assignments
-     */
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         $context = NodeContextFactory::forNode($node);
@@ -74,26 +56,30 @@ class IfStatementResolver implements Resolver
             );
         }
 
+        // evaluate the nodes in the else clause
         if ($node->elseClause) {
             foreach ($node->elseClause->getChildNodes() as $child) {
                 $resolver->resolveNode($frame, $child);
             }
         }
 
-        // restore state to what it was before
+        // restore state frame to what it was before the if statement
         foreach ($frame->locals()->lessThan($node->getStartPosition())->mostRecent() as $assignment) {
             $frame->locals()->set($assignment->withOffset($node->getEndPosition()));
         }
 
-        $this->ifBranchPost(
+        // handle termination, negate the types if the branch terminates and
+        // add any new assignments as a union
+        $this->ifBranchTermination(
             $resolver,
             $frame,
             $node,
             $node->getEndPosition()
         );
 
+        // handle terminateion for elseif clauses
         foreach ($node->elseIfClauses as $clause) {
-            $this->ifBranchPost(
+            $this->ifBranchTermination(
                 $resolver,
                 $frame,
                 $clause,
@@ -101,6 +87,7 @@ class IfStatementResolver implements Resolver
             );
         }
 
+        // add any new assignments as unions to existing vars
         if ($node->elseClause) {
             $this->combineVariableAssignments($frame, $node->elseClause, $node->getEndPosition());
         }
@@ -135,11 +122,11 @@ class IfStatementResolver implements Resolver
     /**
      * @param IfStatementNode|ElseIfClauseNode $node
      */
-    private function ifBranchPost(
+    private function ifBranchTermination(
         NodeContextResolver $resolver,
         Frame $frame,
         $node,
-        int $end,
+        int $end
     ): void {
         $context = $resolver->resolveNode($frame, $node->expression);
         $terminates = $this->branchTerminates($resolver, $frame, $node);

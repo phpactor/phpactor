@@ -7,6 +7,8 @@ if (is_string($foo)) {
     wrAssertType('string', $foo, 'in');
 } elseif (is_int($foo)) {
     wrAssertType('int', $foo, 'out');
+} else {
+    wrAssertType('Foobar', $foo, 'out');
 }
 
 wrAssertType('Foobar|string|int', $foo);
