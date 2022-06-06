@@ -2,69 +2,56 @@
 
 namespace Phpactor\Indexer\Adapter\Worse;
 
+use Generator;
+use Microsoft\PhpParser\Node;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\TextDocument\Exception\TextDocumentNotFound;
+use Phpactor\TextDocument\TextDocumentLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
+use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
 use Safe\Exceptions\FilesystemException;
 use function Safe\file_get_contents;
 
 class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 {
-    private SourceCodeReflector $reflector;
-
     private LoggerInterface $logger;
 
-    public function __construct(SourceCodeReflector $reflector, LoggerInterface $logger)
+    private TextDocumentLocator $locator;
+
+    private Reflector $reflector;
+
+    public function __construct(Reflector $reflector, LoggerInterface $logger, TextDocumentLocator $locator)
     {
-        $this->reflector = $reflector;
         $this->logger = $logger;
+        $this->locator = $locator;
+        $this->reflector = $reflector;
     }
 
-    public function enhance(FileRecord $record, RecordReference $reference): RecordReference
+    public function enhance(string $path, ?string $containerType, string $memberName): Generator
     {
-        if ($reference->type() !== MemberRecord::RECORD_TYPE) {
-            return $reference;
-        }
-
-        if ($reference->contaninerType()) {
-            return $reference;
-        }
-
         try {
-            // TODO: We should get the latest in-memory source, e.g. from the
-            // LS workspace. Perhaps add an adapter.
-            $contents = file_get_contents($record->filePath());
-        } catch (FilesystemException $error) {
+            $document = $this->locator->get(TextDocumentUri::fromString($path));
+        } catch (TextDocumentNotFound $error) {
             $this->logger->warning(sprintf(
-                'Record Enhancer: Could not read file "%s": %s',
-                $record->filePath(),
+                'Indexer Reference Finder: Could not read file "%s": %s',
+                $path,
                 $error->getMessage()
             ));
-            return $reference;
+            return;
         }
 
-        try {
-            $offset = $this->reflector->reflectOffset($contents, $reference->offset());
-        } catch (NotFound $notFound) {
-            $this->logger->debug(sprintf(
-                'Record Enhancer: Could not reflect offset %s in file "%s": %s',
-                $reference->offset(),
-                $record->filePath(),
-                $notFound->getMessage()
-            ));
-            return $reference;
+        $visitor = new MemberReferenceWalker($document->uri(), $containerType, $memberName);
+        $this->reflector->walk($document->__toString(), $visitor);
+        foreach ($visitor->locations() as $location) {
+            yield $location;
         }
-
-        $containerType = $offset->symbolContext()->containerType();
-
-        if (!($containerType->isDefined())) {
-            return $reference;
-        }
-
-        return $reference->withContainerType($containerType);
     }
 }

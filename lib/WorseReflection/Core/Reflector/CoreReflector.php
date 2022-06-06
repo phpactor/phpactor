@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
@@ -236,5 +237,10 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     public function diagnostics($sourceCode): Diagnostics
     {
         return $this->sourceReflector->diagnostics($sourceCode);
+    }
+
+    public function walk($sourceCode, Walker $walker): void
+    {
+        $this->sourceReflector->walk($sourceCode, $walker);
     }
 }

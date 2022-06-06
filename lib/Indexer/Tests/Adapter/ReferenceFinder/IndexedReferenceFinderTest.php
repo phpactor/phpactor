@@ -50,7 +50,7 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
             return $location->isSurely();
         });
 
-        self::assertCount($expectedConfirmed, $sureLocations, 'Total confirmed');
+        self::assertCount($expectedConfirmed, $sureLocations, 'Total sure confirmed');
         self::assertCount($expectedTotal, $locations, 'Total expected');
     }
 

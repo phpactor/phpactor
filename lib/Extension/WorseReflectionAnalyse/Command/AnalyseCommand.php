@@ -40,6 +40,7 @@ class AnalyseCommand extends Command
         }
 
         $hasErrors = false;
+        $count = 0;
 
         foreach ($results as $file => $diagnostics) {
             if (!count($diagnostics)) {
@@ -51,6 +52,7 @@ class AnalyseCommand extends Command
             $table->setHeaders(['position', 'severity', 'message']);
             $table->setColumnMaxWidth(2, 60);
             foreach ($diagnostics as $diagnostic) {
+                $count++;
                 $table->addRow([
                     sprintf('%s:%s', $diagnostic->range()->start()->toInt(), $diagnostic->range()->end()->toInt()),
                     $diagnostic->severity()->toString(),
@@ -61,6 +63,7 @@ class AnalyseCommand extends Command
             $output->writeln('');
         }
 
+        $output->writeln(sprintf('Found %s issues', $count));
 
         return $hasErrors ? 1 : 0;
     }

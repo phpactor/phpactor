@@ -6,6 +6,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
@@ -53,4 +54,9 @@ interface SourceCodeReflector
      * @param TextDocument|string $sourceCode
      */
     public function diagnostics($sourceCode): Diagnostics;
+
+    /**
+     * @param TextDocument|string $sourceCode
+     */
+    public function walk($sourceCode, Walker $walker): void;
 }

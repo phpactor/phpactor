@@ -2,13 +2,14 @@
 
 namespace Phpactor\Indexer\Model;
 
+use Generator;
 use Phpactor\Indexer\Model\Record\FileRecord;
+use Phpactor\TextDocument\Location;
 
 interface RecordReferenceEnhancer
 {
     /**
-     * Add additional information to the record reference, e.g. determine its
-     * container type through static analysis.
+     * @return Generator<LocationConfidence>
      */
-    public function enhance(FileRecord $record, RecordReference $reference): RecordReference;
+    public function enhance(string $path, ?string $containerType, string $memberName): Generator;
 }

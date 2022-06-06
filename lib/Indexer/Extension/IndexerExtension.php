@@ -42,6 +42,7 @@ use Phpactor\Indexer\Extension\Rpc\IndexHandler;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\Indexer\Model\Indexer;
+use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -176,7 +177,9 @@ class IndexerExtension implements Extension
     {
         $container->register(IndexAgent::class, function (Container $container) {
             return $container->get(IndexAgentBuilder::class)
-                ->setReferenceEnhancer($container->get(WorseRecordReferenceEnhancer::class))
+                ->setReferenceEnhancer(
+                    $container->get(WorseRecordReferenceEnhancer::class)
+                )
                 ->buildAgent();
         });
 
@@ -232,7 +235,8 @@ class IndexerExtension implements Extension
         $container->register(WorseRecordReferenceEnhancer::class, function (Container $container) {
             return new WorseRecordReferenceEnhancer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $this->logger($container)
+                $this->logger($container),
+                $container->get(TextDocumentLocator::class)
             );
         });
     }

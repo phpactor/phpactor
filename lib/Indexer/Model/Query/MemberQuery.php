@@ -55,27 +55,12 @@ class MemberQuery implements IndexQuery
         foreach ($record->references() as $fileReference) {
             $fileRecord = $this->index->get(FileRecord::fromPath($fileReference));
             assert($fileRecord instanceof FileRecord);
-
-            foreach ($fileRecord->references()->to($record) as $memberReference) {
-                if ($containerType && null === $memberReference->contaninerType()) {
-                    $memberReference = $this->enhancer->enhance($fileRecord, $memberReference);
-                }
-
-                $location = Location::fromPathAndOffset($fileRecord->filePath(), $memberReference->offset());
-
-                if (null === $memberReference->contaninerType()) {
-                    yield LocationConfidence::maybe($location);
-                    continue;
-                }
-
-                if ($containerType && $containerType !== $memberReference->contaninerType()) {
-                    yield LocationConfidence::not($location);
-                    continue;
-                }
-
-
-                yield LocationConfidence::surely($location);
+            if (!$fileRecord->filePath()) {
+                continue;
             }
+            dump($fileRecord->filePath());
+
+            yield from $this->enhancer->enhance($fileRecord->filePath(), $containerType, $memberName);
         }
     }
 

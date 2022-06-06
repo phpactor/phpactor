@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigati
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
@@ -123,5 +124,12 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     {
         $rootNode = $this->parser->parseSourceFile((string) $sourceCode, $sourceCode->path());
         return $rootNode;
+    }
+
+    public function walk($sourceCode, Walker $walker): void
+    {
+        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $rootNode = $this->parseSourceCode($sourceCode);
+        $this->serviceLocator->frameBuilder()->withWalker($walker)->build($rootNode);
     }
 }

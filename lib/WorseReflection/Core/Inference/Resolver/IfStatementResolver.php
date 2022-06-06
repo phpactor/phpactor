@@ -23,6 +23,15 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class IfStatementResolver implements Resolver
 {
+    /**
+     * If: 
+     * - apply type assertions from expression
+     * - combine any assignments with previous variables
+     * - negate type assertion after end offset
+     *
+     * Elseif and Else: 
+     * - combine with any assignments in any other previous branch
+     */
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         $context = NodeContextFactory::forNode($node);
@@ -53,6 +62,11 @@ class IfStatementResolver implements Resolver
                 $clause->getStartPosition(),
                 $clause->getEndPosition(),
             );
+        }
+
+        if ($node->elseClause) {
+            $context = $resolver->resolveNode($frame, $node->expression)->negateTypeAssertions();
+            $frame->applyTypeAssertions($context->typeAssertions(), $node->getStartPosition(), $node->elseClause->getStartPosition());
         }
 
         return $context;
@@ -87,11 +101,6 @@ class IfStatementResolver implements Resolver
         if ($terminates) {
             $frame->restoreToStateBefore($node->getStartPosition(), $end, false);
             $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
-        }
-
-        if ($node instanceof IfStatementNode && $node->elseClause) {
-            $frame->applyTypeAssertions($context->typeAssertions(), $start, $node->elseClause->getStartPosition());
-            $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition(), true);
         }
     }
 

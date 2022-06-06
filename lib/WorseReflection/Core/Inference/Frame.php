@@ -179,7 +179,8 @@ class Frame
                 continue;
             }
 
-            // otherwise set the type to undefined
+            // otherwise set the type to undefined as it was potentially never
+            // defined
             $this->locals()->add($extra->withType(TypeFactory::undefined())->withOffset($after));
         }
 
