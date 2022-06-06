@@ -23,6 +23,24 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class IfStatementResolver implements Resolver
 {
+    /**
+     * If (or elseif) branch:
+     *
+     * - resolve context for expression (including type assertions)
+     * - apply type assertions to frame after start of branch
+     * - negate type assertions when branch ends
+     *
+     * After branch:
+     *
+     * - reset to pre-branch state
+     * - foreach branch
+     *   - it it terminates
+     *     - apply negated type assertions
+     *     - add (or union to existing) any assignments
+     *   - else 
+     *     - apply type assertion
+     *     - add (or union to existing) any assignments
+     */
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         $context = NodeContextFactory::forNode($node);
@@ -55,17 +73,19 @@ class IfStatementResolver implements Resolver
             );
         }
 
-        if ($node->elseClause) {
-            $context = $resolver->resolveNode($frame, $node->expression);
-            $frame->applyTypeAssertions($context->typeAssertions()->negate(), $node->getStartPosition(), $node->elseClause->getStartPosition());
-            $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition(), true);
-        }
+        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition(), false);
+
+        $this->ifBranchPost(
+            $resolver,
+            $frame,
+            $node,
+            $node->getEndPosition()
+        );
 
         return $context;
     }
 
     /**
-     *
      * @param IfStatementNode|ElseIfClauseNode $node
      */
     private function ifBranch(
@@ -76,24 +96,41 @@ class IfStatementResolver implements Resolver
         int $end
     ): void {
         $context = $resolver->resolveNode($frame, $node->expression);
-        $terminates = $this->branchTerminates($resolver, $frame, $node);
-
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
 
         foreach ($node->getChildNodes() as $child) {
             $resolver->resolveNode($frame, $child);
         }
 
-        if (!$terminates) {
-            $frame->restoreToStateBefore($node->getStartPosition(), $end, true);
-        }
+        $frame->applyTypeAssertions(
+            $context->typeAssertions()->negate(),
+            $start,
+            $end
+        );
+    }
 
-        $context->typeAssertions()->negate();
+    /**
+     * @param IfStatementNode|ElseIfClauseNode $node
+     */
+    private function ifBranchPost(
+        NodeContextResolver $resolver,
+        Frame $frame,
+        $node,
+        int $offset,
+    ): void {
+        $context = $resolver->resolveNode($frame, $node->expression);
+        $terminates = $this->branchTerminates($resolver, $frame, $node);
 
         if ($terminates) {
-            $frame->restoreToStateBefore($node->getStartPosition(), $end, false);
-            $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
+            $frame->applyTypeAssertions(
+                $context->typeAssertions()->negate(),
+                $node->getStartPosition(),
+                $offset
+            );
+            return;
         }
+
+        //$frame->applyTypeAssertions($context->typeAssertions(), $offset, $offset);
     }
 
     /**

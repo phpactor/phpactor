@@ -2,6 +2,7 @@
 
 if (rand(0,1)) {
     $foo = 'one';
+    die('');
 } else {
     $foo = 'two';
 }
