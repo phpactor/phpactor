@@ -11,4 +11,4 @@ if (is_string($foo)) {
 }
 
 // this is wrong, it should be Foobar|string
-wrAssertType('Foobar', $foo);
+wrAssertType('Foobar|string', $foo);

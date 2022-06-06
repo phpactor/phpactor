@@ -74,6 +74,7 @@ class IfStatementResolver implements Resolver
             $resolver,
             $frame,
             $node,
+            $node->getStartPosition(),
             $node->getEndPosition()
         );
 
@@ -83,6 +84,7 @@ class IfStatementResolver implements Resolver
                 $resolver,
                 $frame,
                 $clause,
+                $node->getStartPosition(),
                 $clause->getEndPosition(),
             );
         }
@@ -126,6 +128,7 @@ class IfStatementResolver implements Resolver
         NodeContextResolver $resolver,
         Frame $frame,
         $node,
+        int $start,
         int $end
     ): void {
         $context = $resolver->resolveNode($frame, $node->expression);
@@ -134,7 +137,7 @@ class IfStatementResolver implements Resolver
         if ($terminates) {
             $frame->applyTypeAssertions(
                 $context->typeAssertions()->negate(),
-                $node->getStartPosition(),
+                $start,
                 $end
             );
             return;
