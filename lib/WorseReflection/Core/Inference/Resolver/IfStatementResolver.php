@@ -73,7 +73,8 @@ class IfStatementResolver implements Resolver
             );
         }
 
-        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition(), false);
+        dump('post');
+        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition(), true);
 
         $this->ifBranchPost(
             $resolver,
@@ -129,8 +130,6 @@ class IfStatementResolver implements Resolver
             );
             return;
         }
-
-        //$frame->applyTypeAssertions($context->typeAssertions(), $offset, $offset);
     }
 
     /**

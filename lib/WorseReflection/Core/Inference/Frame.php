@@ -157,7 +157,7 @@ class Frame
         }
 
         // find any variables that were reassigned in the range
-        foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThanOrEqualTo($after) as $extra) {
+        foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThan($after) as $extra) {
 
             // if it was defined before then restore it
             if (isset($locals[$extra->name()])) {
