@@ -55,10 +55,17 @@ class IfStatementResolver implements Resolver
             );
         }
 
+        if ($node->elseClause) {
+            $context = $resolver->resolveNode($frame, $node->expression);
+            $frame->applyTypeAssertions($context->typeAssertions()->negate(), $node->getStartPosition(), $node->elseClause->getStartPosition());
+            $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition(), true);
+        }
+
         return $context;
     }
 
     /**
+     *
      * @param IfStatementNode|ElseIfClauseNode $node
      */
     private function ifBranch(
@@ -69,7 +76,6 @@ class IfStatementResolver implements Resolver
         int $end
     ): void {
         $context = $resolver->resolveNode($frame, $node->expression);
-        $expressionsAreTrue = TypeUtil::toBool($context->type())->isTrue();
         $terminates = $this->branchTerminates($resolver, $frame, $node);
 
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
@@ -87,11 +93,6 @@ class IfStatementResolver implements Resolver
         if ($terminates) {
             $frame->restoreToStateBefore($node->getStartPosition(), $end, false);
             $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
-        }
-
-        if ($node instanceof IfStatementNode && $node->elseClause) {
-            $frame->applyTypeAssertions($context->typeAssertions(), $start, $node->elseClause->getStartPosition());
-            $frame->restoreToStateBefore($node->getStartPosition(), $node->elseClause->getEndPosition(), true);
         }
     }
 
