@@ -1,0 +1,9 @@
+<?php
+
+if (rand(0,1)) {
+    $foo = 'one';
+} else {
+    $foo = 'two';
+}
+wrAssertType('"one"|"two"', $foo);
+

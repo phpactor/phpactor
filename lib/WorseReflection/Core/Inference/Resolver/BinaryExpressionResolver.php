@@ -226,7 +226,9 @@ class BinaryExpressionResolver implements Resolver
                 return $context->withTypeAssertion(TypeAssertion::forContext(
                     $recieverContext,
                     fn (Type $type) => $transmittingContext->type(),
-                    fn (Type $type) => TypeCombinator::subtract($transmittingContext->type(), $recieverContext->type()),
+
+                    // ???
+                    fn (Type $type) => TypeCombinator::subtract($transmittingContext->type(), $type),
                 ));
             case TokenKind::InstanceOfKeyword:
                 return $context->withTypeAssertion(TypeAssertion::forContext(
@@ -314,6 +316,6 @@ class BinaryExpressionResolver implements Resolver
             ]
         );
 
-        $frame->locals()->add(PhpactorVariable::fromSymbolContext($context));
+        $frame->locals()->set(PhpactorVariable::fromSymbolContext($context));
     }
 }

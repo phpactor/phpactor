@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Closure;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 
@@ -143,52 +142,8 @@ class Frame
 
                 $type = $variable->type();
 
-                $frameVariables->add($variable);
+                $frameVariables->set($variable);
             }
-        }
-    }
-
-    public function restoreToStateBefore(int $before, int $after, bool $combine): void
-    {
-        $locals = [];
-        // get most recent state of variables before offset
-        foreach ($this->locals()->lessThan($before) as $local) {
-            $locals[$local->name()] = $local;
-        }
-
-        // find any variables that were reassigned in the range
-        foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThanOrEqualTo($after) as $extra) {
-
-            // if it was defined before then restore it
-            if (isset($locals[$extra->name()])) {
-
-                // it was assigned in the if block so
-                // combine it with the previous variable
-                if ($combine && $extra->wasAssigned()) {
-                    $this->locals()->add(
-                        $locals[$extra->name()]->withOffset(
-                            $after
-                        )->withType(
-                            $locals[$extra->name()]->type()->addType($extra->type())
-                        )
-                    );
-                    continue;
-                }
-
-                $this->locals()->add($locals[$extra->name()]->withOffset($after));
-                continue;
-            }
-
-            // otherwise set the type to undefined
-            $this->locals()->add($extra->withType(TypeFactory::undefined())->withOffset($after));
-        }
-
-        $properties = [];
-        foreach ($this->properties() as $property) {
-            $properties[$property->name()] = $property;
-        }
-        foreach ($properties as $property) {
-            $this->properties()->add($property);
         }
     }
 

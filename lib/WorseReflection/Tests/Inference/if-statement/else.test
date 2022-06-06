@@ -8,5 +8,5 @@ if (is_string($foo)) {
 } else {
     wrAssertType('Foobar|int', $foo, 'out');
 }
-wrAssertType('Foobar|string|int', $foo, 'after');
 
+wrAssertType('Foobar|string|int', $foo, 'after');

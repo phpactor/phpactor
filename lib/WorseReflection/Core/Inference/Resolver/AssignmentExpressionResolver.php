@@ -88,7 +88,7 @@ class AssignmentExpressionResolver implements Resolver
             ]
         );
 
-        $frame->locals()->add(WorseVariable::fromSymbolContext($context)->asAssignment());
+        $frame->locals()->set(WorseVariable::fromSymbolContext($context)->asAssignment());
     }
 
     private function walkMemberAccessExpression(
@@ -132,7 +132,7 @@ class AssignmentExpressionResolver implements Resolver
             ]
         );
 
-        $frame->properties()->add(WorseVariable::fromSymbolContext($context));
+        $frame->properties()->set(WorseVariable::fromSymbolContext($context));
     }
 
     private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, NodeContext $symbolContext): void
@@ -171,7 +171,7 @@ class AssignmentExpressionResolver implements Resolver
                     $accessType = $resolver->resolveNode($frame, $leftOperand->accessExpression)->type();
 
                     if (!$accessType instanceof Literal) {
-                        $frame->locals()->add(
+                        $frame->locals()->set(
                             $variable->withType(
                                 new ArrayType(TypeFactory::undefined(), $rightContext->type())
                             )
@@ -179,7 +179,7 @@ class AssignmentExpressionResolver implements Resolver
                         return;
                     }
 
-                    $frame->locals()->add(
+                    $frame->locals()->set(
                         $variable->withType(
                             $type->set($accessType->value(), $rightContext->type())
                         )->withOffset($leftOperand->getStartPosition())
@@ -189,7 +189,7 @@ class AssignmentExpressionResolver implements Resolver
 
                 // array addition `$foo[] = `
                 // @phpstan-ignore-next-line TP lies
-                $frame->locals()->add(
+                $frame->locals()->set(
                     $variable->withType(
                         $type->add($rightContext->type())
                     )->withOffset($leftOperand->getStartPosition())
@@ -254,7 +254,7 @@ class AssignmentExpressionResolver implements Resolver
 
 
             $variableContext = $variableContext->withType($this->offsetType($type, $index));
-            $frame->locals()->add(WorseVariable::fromSymbolContext($variableContext));
+            $frame->locals()->set(WorseVariable::fromSymbolContext($variableContext));
         }
     }
 
