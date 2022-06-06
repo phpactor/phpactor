@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
-use Generator;
 use Phpactor\WorseReflection\Core\Inference\Assignments;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -10,8 +9,6 @@ use Phpactor\WorseReflection\Core\Inference\LocalAssignments;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Problems;
-use Phpactor\WorseReflection\Core\Inference\Variable;
-use Phpactor\WorseReflection\Core\TypeFactory;
 
 class FrameTest extends TestCase
 {

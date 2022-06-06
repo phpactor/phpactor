@@ -19,7 +19,6 @@ use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\BreakOrContinueStatement;
 use Phpactor\WorseReflection\Core\Type\NeverType;
-use Phpactor\WorseReflection\TypeUtil;
 
 class IfStatementResolver implements Resolver
 {
@@ -37,7 +36,7 @@ class IfStatementResolver implements Resolver
      *   - it it terminates
      *     - apply negated type assertions
      *     - add (or union to existing) any assignments
-     *   - else 
+     *   - else
      *     - apply type assertion
      *     - add (or union to existing) any assignments
      */
