@@ -143,7 +143,7 @@ class Frame
 
                 $type = $variable->type();
 
-                $frameVariables->add($variable);
+                $frameVariables->set($variable);
             }
         }
     }
@@ -180,7 +180,9 @@ class Frame
             }
 
             // otherwise set the type to undefined
-            $this->locals()->add($extra->withType(TypeFactory::undefined())->withOffset($after));
+            $this->locals()->add(
+                $extra->withType(TypeFactory::undefined())->withOffset($after)
+            );
         }
 
         $properties = [];
@@ -188,7 +190,7 @@ class Frame
             $properties[$property->name()] = $property;
         }
         foreach ($properties as $property) {
-            $this->properties()->add($property);
+            $this->properties()->set($property);
         }
     }
 

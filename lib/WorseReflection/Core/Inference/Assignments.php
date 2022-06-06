@@ -43,7 +43,7 @@ abstract class Assignments implements Countable, IteratorAggregate
         }, array_values($this->variables)));
     }
 
-    public function add(Variable $variable): void
+    public function set(Variable $variable): void
     {
         $this->version++;
         $this->variables[$variable->key()] = $variable;

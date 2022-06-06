@@ -73,7 +73,10 @@ class IfStatementResolver implements Resolver
             );
         }
 
-        dump('post');
+        foreach ($node->elseClause->getChildNodes() as $child) {
+            $resolver->resolveNode($frame, $child);
+        }
+
         $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition(), true);
 
         $this->ifBranchPost(

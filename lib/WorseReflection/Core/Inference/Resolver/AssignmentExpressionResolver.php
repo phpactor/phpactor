@@ -132,7 +132,7 @@ class AssignmentExpressionResolver implements Resolver
             ]
         );
 
-        $frame->properties()->add(WorseVariable::fromSymbolContext($context));
+        $frame->properties()->set(WorseVariable::fromSymbolContext($context));
     }
 
     private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, NodeContext $symbolContext): void
