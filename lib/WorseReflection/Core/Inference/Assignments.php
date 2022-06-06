@@ -50,10 +50,10 @@ abstract class Assignments implements Countable, IteratorAggregate
         $this->sort();
     }
 
-    public function add(Variable $variable): void
+    public function add(Variable $variable, int $offset): void
     {
         $this->version++;
-        $original = $this->byName($variable->name())->lessThanOrEqualTo($variable->offset())->lastOrNull();
+        $original = $this->byName($variable->name())->lessThanOrEqualTo($offset)->lastOrNull();
         if ($original === null) {
             $this->set($variable);
             return;
@@ -204,6 +204,16 @@ abstract class Assignments implements Countable, IteratorAggregate
     public function version(): int
     {
         return $this->version;
+    }
+
+    public function mostRecent(): self
+    {
+        $mostRecent = [];
+        foreach ($this->variables as $variable) {
+            $mostRecent[$variable->name()] = $variable;
+        }
+
+        return new static($mostRecent);
     }
 
     private function sort(): void

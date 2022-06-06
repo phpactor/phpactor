@@ -79,8 +79,6 @@ class IfStatementResolver implements Resolver
             }
         }
 
-        $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition(), true);
-
         $this->ifBranchPost(
             $resolver,
             $frame,
@@ -122,7 +120,7 @@ class IfStatementResolver implements Resolver
         NodeContextResolver $resolver,
         Frame $frame,
         $node,
-        int $offset,
+        int $end,
     ): void {
         $context = $resolver->resolveNode($frame, $node->expression);
         $terminates = $this->branchTerminates($resolver, $frame, $node);
@@ -131,9 +129,17 @@ class IfStatementResolver implements Resolver
             $frame->applyTypeAssertions(
                 $context->typeAssertions()->negate(),
                 $node->getStartPosition(),
-                $offset
+                $end
             );
             return;
+        }
+
+        foreach ($frame->locals()->lessThan($node->getStartPosition())->mostRecent() as $assignment) {
+            $frame->locals()->set($assignment->withOffset($end));
+        }
+
+        foreach ($frame->locals()->greaterThan($node->getStartPosition())->lessThan($node->getEndPosition())->mostRecent()->assignmentsOnly() as $assignment) {
+            $frame->locals()->add($assignment->withOffset($end), $node->getStartPosition());
         }
     }
 
