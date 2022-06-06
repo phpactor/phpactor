@@ -43,7 +43,7 @@ class CatchClauseResolver implements Resolver
             ]
         );
 
-        $frame->locals()->add(Variable::fromSymbolContext($context));
+        $frame->locals()->set(Variable::fromSymbolContext($context));
 
         return $context;
     }

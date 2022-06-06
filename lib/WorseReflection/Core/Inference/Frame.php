@@ -162,7 +162,7 @@ class Frame
             // it was assigned in the if block so
             // combine it with the previous variable
             if ($combine && $extra->wasAssigned()) {
-                $this->locals()->add($extra->withOffset($after));
+                $this->locals()->set($extra->withOffset($after));
                 continue;
             }
 

@@ -83,7 +83,7 @@ class VariableWalker implements Walker
             $locals->replace($existing, $existing->withType($context->type()));
             return $frame;
         }
-        $frame->locals()->add(WorseVariable::fromSymbolContext($context));
+        $frame->locals()->set(WorseVariable::fromSymbolContext($context));
 
         return $frame;
     }

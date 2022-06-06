@@ -316,6 +316,6 @@ class BinaryExpressionResolver implements Resolver
             ]
         );
 
-        $frame->locals()->add(PhpactorVariable::fromSymbolContext($context));
+        $frame->locals()->set(PhpactorVariable::fromSymbolContext($context));
     }
 }
