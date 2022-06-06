@@ -54,6 +54,7 @@ class IfStatementResolver implements Resolver
             return $context;
         }
 
+        // apply type assertions only within the if block
         $this->ifBranch(
             $resolver,
             $frame,
@@ -62,6 +63,7 @@ class IfStatementResolver implements Resolver
             $this->resolveInitialEndPosition($node)
         );
 
+        // apply type assertions only within the if block elseif clauses
         foreach ($node->elseIfClauses as $clause) {
             $this->ifBranch(
                 $resolver,
@@ -90,8 +92,17 @@ class IfStatementResolver implements Resolver
             $node->getEndPosition()
         );
 
+        foreach ($node->elseIfClauses as $clause) {
+            $this->ifBranchPost(
+                $resolver,
+                $frame,
+                $clause,
+                $clause->getEndPosition(),
+            );
+        }
+
         if ($node->elseClause) {
-            $this->restoreState($frame, $node->elseClause, $node->getEndPosition());
+            $this->combineVariableAssignments($frame, $node->elseClause, $node->getEndPosition());
         }
 
         return $context;
@@ -142,13 +153,14 @@ class IfStatementResolver implements Resolver
             return;
         }
 
-        $this->restoreState($frame, $node, $end);
+        $this->combineVariableAssignments($frame, $node, $end);
     }
 
-    private function restoreState(Frame $frame, Node $node, int $end): void
+    private function combineVariableAssignments(Frame $frame, Node $node, int $end): void
     {
-        // add any assignments in the branches
-        foreach ($frame->locals()->greaterThan($node->getStartPosition())->lessThan($node->getEndPosition())->mostRecent()->assignmentsOnly() as $assignment) {
+        foreach ($frame->locals()->greaterThan($node->getStartPosition())->lessThan(
+            $node->getEndPosition()
+        )->mostRecent()->assignmentsOnly() as $assignment) {
             $frame->locals()->add($assignment->withOffset($end), $node->getStartPosition());
         }
     }
