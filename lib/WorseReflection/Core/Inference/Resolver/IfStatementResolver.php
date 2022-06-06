@@ -73,8 +73,10 @@ class IfStatementResolver implements Resolver
             );
         }
 
-        foreach ($node->elseClause->getChildNodes() as $child) {
-            $resolver->resolveNode($frame, $child);
+        if ($node->elseClause) {
+            foreach ($node->elseClause->getChildNodes() as $child) {
+                $resolver->resolveNode($frame, $child);
+            }
         }
 
         $frame->restoreToStateBefore($node->getStartPosition(), $node->getEndPosition(), true);

@@ -159,30 +159,17 @@ class Frame
         // find any variables that were reassigned in the range
         foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThan($after) as $extra) {
 
-            // if it was defined before then restore it
-            if (isset($locals[$extra->name()])) {
-
-                // it was assigned in the if block so
-                // combine it with the previous variable
-                if ($combine && $extra->wasAssigned()) {
-                    $this->locals()->add(
-                        $locals[$extra->name()]->withOffset(
-                            $after
-                        )->withType(
-                            $locals[$extra->name()]->type()->addType($extra->type())
-                        )
-                    );
-                    continue;
-                }
-
-                $this->locals()->add($locals[$extra->name()]->withOffset($after));
+            // it was assigned in the if block so
+            // combine it with the previous variable
+            if ($combine && $extra->wasAssigned()) {
+                $this->locals()->add($extra->withOffset($after));
                 continue;
             }
 
-            // otherwise set the type to undefined
-            $this->locals()->add(
-                $extra->withType(TypeFactory::undefined())->withOffset($after)
-            );
+            if (isset($locals[$extra->name()])) {
+                $this->locals()->set($locals[$extra->name()]->withOffset($after));
+            }
+            continue;
         }
 
         $properties = [];

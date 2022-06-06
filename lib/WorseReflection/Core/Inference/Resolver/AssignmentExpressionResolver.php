@@ -88,7 +88,7 @@ class AssignmentExpressionResolver implements Resolver
             ]
         );
 
-        $frame->locals()->add(WorseVariable::fromSymbolContext($context)->asAssignment());
+        $frame->locals()->set(WorseVariable::fromSymbolContext($context)->asAssignment());
     }
 
     private function walkMemberAccessExpression(
