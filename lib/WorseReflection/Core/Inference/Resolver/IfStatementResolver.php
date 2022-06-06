@@ -79,12 +79,21 @@ class IfStatementResolver implements Resolver
             }
         }
 
+        // restore state to what it was before
+        foreach ($frame->locals()->lessThan($node->getStartPosition())->mostRecent() as $assignment) {
+            $frame->locals()->set($assignment->withOffset($node->getEndPosition()));
+        }
+
         $this->ifBranchPost(
             $resolver,
             $frame,
             $node,
             $node->getEndPosition()
         );
+
+        if ($node->elseClause) {
+            $this->restoreState($frame, $node->elseClause, $node->getEndPosition());
+        }
 
         return $context;
     }
@@ -134,10 +143,12 @@ class IfStatementResolver implements Resolver
             return;
         }
 
-        foreach ($frame->locals()->lessThan($node->getStartPosition())->mostRecent() as $assignment) {
-            $frame->locals()->set($assignment->withOffset($end));
-        }
+        $this->restoreState($frame, $node, $end);
+    }
 
+    private function restoreState(Frame $frame, Node $node, int $end): void
+    {
+        // add any assignments in the branches
         foreach ($frame->locals()->greaterThan($node->getStartPosition())->lessThan($node->getEndPosition())->mostRecent()->assignmentsOnly() as $assignment) {
             $frame->locals()->add($assignment->withOffset($end), $node->getStartPosition());
         }

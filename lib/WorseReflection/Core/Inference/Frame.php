@@ -148,39 +148,6 @@ class Frame
         }
     }
 
-    public function restoreToStateBefore(int $before, int $after, bool $combine): void
-    {
-        $locals = [];
-        // get most recent state of variables before offset
-        foreach ($this->locals()->lessThan($before) as $local) {
-            $locals[$local->name()] = $local;
-        }
-
-        // find any variables that were reassigned in the range
-        foreach ($this->locals()->greaterThanOrEqualTo($before)->lessThan($after) as $extra) {
-
-            // it was assigned in the if block so
-            // combine it with the previous variable
-            if ($combine && $extra->wasAssigned()) {
-                $this->locals()->set($extra->withOffset($after));
-                continue;
-            }
-
-            if (isset($locals[$extra->name()])) {
-                $this->locals()->set($locals[$extra->name()]->withOffset($after));
-            }
-            continue;
-        }
-
-        $properties = [];
-        foreach ($this->properties() as $property) {
-            $properties[$property->name()] = $property;
-        }
-        foreach ($properties as $property) {
-            $this->properties()->set($property);
-        }
-    }
-
     public function returnType(): Type
     {
         return $this->returnType ?: new VoidType();
