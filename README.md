@@ -64,6 +64,10 @@ Support
 Sponsors
 --------
 
+The following organisations are providing either financial support or free
+services. If you would like to support Phpactor development financially you
+can [sponsor me](https://github.com/sponsors/dantleech).
+
 ### Tinkerwell
 
 [![Tinkerwell](https://user-images.githubusercontent.com/530801/172365695-f60dcd49-315f-48df-b146-7316697a30bd.png)](https://tinkerwell.app/)
