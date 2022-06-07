@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Types;
 
 class ParenthesizedType extends Type
 {
@@ -32,5 +33,13 @@ class ParenthesizedType extends Type
     public function reduce(): Type
     {
         return $this->type;
+    }
+
+    /**
+     * @return Types<Type>
+     */
+    public function toTypes(): Types
+    {
+        return $this->type->toTypes();
     }
 }
