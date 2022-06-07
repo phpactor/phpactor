@@ -62,7 +62,7 @@ class AnalyseCommand extends Command
             }
             $output->writeln($file);
             $table = new Table($output);
-            $table->setHeaders(['position', 'severity', 'message']);
+            $table->setHeaders(['range', 'severity', 'message']);
             $table->setColumnMaxWidth(2, 60);
             foreach ($diagnostics as $diagnostic) {
                 $errorCount++;
