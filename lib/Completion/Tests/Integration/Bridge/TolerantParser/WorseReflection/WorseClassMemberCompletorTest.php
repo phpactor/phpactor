@@ -853,6 +853,40 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 ],
             ],
         ];
+
+        yield 'parenthesized type' => [
+            <<<'EOT'
+                <?php
+
+                interface Zero {}
+                interface OneIn extends Zero {}
+                interface TwoIn extends Zero {}
+                class One implements OneIn { public function foo(); }
+                class Two implements TwoIn { public function foo(); }
+
+                function (Zero $zero) {
+                    if (!$zero instanceof One && !$zero instanceof Two) {
+                        return;
+                    }
+
+                    $zero-><>
+                }
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'foo',
+                    'short_description' => 'pub foo()',
+                    'snippet' => 'foo()'
+                ],
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'foo',
+                    'short_description' => 'pub foo()',
+                    'snippet' => 'foo()'
+                ],
+            ],
+        ];
     }
 
     /**
