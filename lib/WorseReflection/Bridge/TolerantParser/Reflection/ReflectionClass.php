@@ -49,6 +49,11 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     private array $methods = [];
 
+    /**
+     * @var array<string,ReflectionPropertyCollection>
+     */
+    private array $properties = [];
+
     private ?ReflectionClassCollection $ancestors = null;
 
     private ?ReflectionTraitCollection $traits = null;
@@ -156,6 +161,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
     {
+        $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
+
+        if (isset($this->properties[$cacheKey])) {
+            return $this->properties[$cacheKey];
+        }
+
         $properties = ReflectionPropertyCollection::empty();
         $contextClass = $contextClass ?: $this;
 
@@ -174,6 +185,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
         $properties = $properties->merge(ReflectionPropertyCollection::fromClassDeclaration($this->serviceLocator, $this->node, $contextClass));
         $properties = $properties->merge(ReflectionPropertyCollection::fromClassDeclarationConstructorPropertyPromotion($this->serviceLocator, $this->node, $contextClass));
+
+        $this->properties[$cacheKey] = $properties;
 
         return $properties;
     }
