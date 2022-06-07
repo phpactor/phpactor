@@ -8,10 +8,10 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * @template-covariant T of Type
+ * @template T of Type
  * @implements IteratorAggregate<T>
  */
-class Types implements IteratorAggregate
+final class Types implements IteratorAggregate
 {
     /**
      * @var T[]
@@ -49,5 +49,19 @@ class Types implements IteratorAggregate
     public function filter(Closure $predicate): self
     {
         return new self(array_filter($this->types, $predicate));
+    }
+
+    /**
+     * @param Types<Type> $types
+     * @return Types<Type>
+     */
+    public function merge(Types $types): self
+    {
+        $merged = $this->types;
+        foreach ($types as $type) {
+            $merged[] = $type;
+        }
+
+        return new self($merged);
     }
 }

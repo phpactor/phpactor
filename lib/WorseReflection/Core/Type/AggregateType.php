@@ -105,7 +105,11 @@ abstract class AggregateType extends Type
 
     public function toTypes(): Types
     {
-        return new Types($this->types);
+        $types = new Types([]);
+        foreach ($this->types as $type) {
+            $types = $types->merge($type->toTypes());
+        }
+        return $types;
     }
 
     public function add(Type $type): AggregateType
