@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\WorseReflectionAnalyse\Model;
 
 use Generator;
+use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\WorseReflection\Core\Diagnostics;
@@ -26,7 +27,6 @@ class Analyser
      */
     public function analyse(string $path): Generator
     {
-        $filesystem = $this->filesystem->get('git');
         $cwd = (string)getcwd();
         $absPath = Path::makeAbsolute($path, $cwd);
         if (file_exists($absPath) && is_file($absPath)) {
@@ -34,11 +34,20 @@ class Analyser
             return;
         }
 
-        foreach ($filesystem->fileList()->phpFiles()->within(FilePath::fromString($absPath)) as $file) {
+        foreach ($this->fileList($absPath) as $file) {
             yield Path::makeRelative(
                 $file->path(),
                 $cwd
             ) => $this->reflector->diagnostics((string)file_get_contents($file->path()));
         }
+    }
+
+    public function fileList(string $path): FileList
+    {
+        $cwd = (string)getcwd();
+        $absPath = Path::makeAbsolute($path, $cwd);
+
+        $filesystem = $this->filesystem->get('git');
+        return $filesystem->fileList()->phpFiles()->within(FilePath::fromString($absPath));
     }
 }

@@ -23,6 +23,10 @@ class MissingDocblockProvider implements DiagnosticProvider
 
         $declaration = NodeUtil::nodeContainerClassLikeDeclaration($node);
 
+        if (null === $declaration) {
+            return;
+        }
+
         try {
             $class = $resolver->reflector()->reflectClassLike($declaration->getNamespacedName()->__toString());
             $methodName = $node->name->getText($node->getFileContents());
