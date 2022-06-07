@@ -8,7 +8,7 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * @template T of Type
+ * @template-covariant T of Type
  * @implements IteratorAggregate<T>
  */
 final class Types implements IteratorAggregate
