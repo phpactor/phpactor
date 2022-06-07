@@ -51,6 +51,7 @@ abstract class Type
      */
     public function toTypes(): Types
     {
+        /** @phpstan-ignore-next-line */
         return new Types([$this]);
     }
 
