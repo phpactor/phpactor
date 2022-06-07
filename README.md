@@ -61,3 +61,14 @@ Support
 - Create an issue on the main [Phpactor](https://github.com/phpactor/phpactor) repository.
 - Join the `#phpactor` channel on the Slack [Symfony Devs](https://symfony.com/slack-invite) channel.
 
+Sponsors
+--------
+
+### Tinkerwell
+
+[![Tinkerwell](https://user-images.githubusercontent.com/530801/172365695-f60dcd49-315f-48df-b146-7316697a30bd.png)(https://tinkerwell.app/)
+
+### Blackfire
+
+[![Blackfire](https://user-images.githubusercontent.com/530801/172365601-b8263c0a-387f-4ed4-b98f-3ac018eb56d0.png)](https://www.blackfire.io/)
+
