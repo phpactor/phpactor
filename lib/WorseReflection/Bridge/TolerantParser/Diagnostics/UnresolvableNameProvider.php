@@ -122,9 +122,12 @@ class UnresolvableNameProvider implements DiagnosticProvider
         } catch (NotFound $notFound) {
             // if we are not importing globals then check the global namespace
             if (false === $this->importGlobals) {
-                $source = $reflector->sourceCodeForFunction($fqn->head()->__toString());
-                if ($this->nameContainedInSource('function', $source, $fqn->head()->__toString())) {
-                    return;
+                try {
+                    $source = $reflector->sourceCodeForFunction($fqn->head()->__toString());
+                    if ($this->nameContainedInSource('function', $source, $fqn->head()->__toString())) {
+                        return;
+                    }
+                } catch (NotFound $notFound) {
                 }
             }
 
