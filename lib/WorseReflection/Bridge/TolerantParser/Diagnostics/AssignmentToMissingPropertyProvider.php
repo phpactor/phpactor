@@ -72,6 +72,10 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 
         $classNode = NodeUtil::nodeContainerClassLikeDeclaration($node);
 
+        if (null === $classNode) {
+            return;
+        }
+
         try {
             $class = $resolver->reflector()->reflectClassLike($classNode->getNamespacedName()->__toString());
         } catch (NotFound $notFound) {

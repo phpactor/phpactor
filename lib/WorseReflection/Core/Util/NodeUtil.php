@@ -54,7 +54,8 @@ class NodeUtil
         if ($ancestor instanceof ObjectCreationExpression) {
             if ($ancestor->classTypeDesignator instanceof Token) {
                 if ($ancestor->classTypeDesignator->kind == TokenKind::ClassKeyword) {
-                    throw new CouldNotResolveNode('Resolving anonymous classes is not currently supported');
+                    // Resolving anonymous classes is not currently supported
+                    return null;
                 }
             }
 
