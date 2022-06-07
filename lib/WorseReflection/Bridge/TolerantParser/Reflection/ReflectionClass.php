@@ -51,6 +51,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?ReflectionClassCollection $ancestors = null;
 
+    private ?ReflectionTraitCollection $traits = null;
+
     public function __construct(
         ServiceLocator $serviceLocator,
         SourceCode $sourceCode,
@@ -236,6 +238,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     public function traits(): ReflectionTraitCollection
     {
+        if ($this->traits) {
+            return $this->traits;
+        }
         $parentTraits = null;
 
         if ($this->parent()) {
@@ -245,8 +250,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $traits = ReflectionTraitCollection::fromClassDeclaration($this->serviceLocator, $this->node);
 
         if ($parentTraits) {
-            return $parentTraits->merge($traits);
+            $traits =  $parentTraits->merge($traits);
         }
+
+        $this->traits = $traits;
 
         return $traits;
     }
