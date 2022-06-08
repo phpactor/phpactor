@@ -105,7 +105,7 @@ class AnalyseCommand extends Command
         }
         $output->writeln(sprintf(
             '%s problems in %s seconds with %sb memory',
-            $errorCount,
+            number_format($errorCount),
             number_format(microtime(true) - $start, 4),
             number_format(memory_get_peak_usage()),
         ));
