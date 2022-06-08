@@ -119,7 +119,7 @@ jobs:
             -
                 name: "Run PHPStan"
                 run: "vendor/bin/phpstan analyse"
-    phpstan:
+    phpactor:
         name: "Phpactor Self Lint"
 
         runs-on: "ubuntu-latest"
