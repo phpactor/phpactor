@@ -18,7 +18,6 @@ class AnalyseCommand extends Command
     const OPT_IGNORE_FAILURE = 'ignore-failure';
     const OPT_FORMAT = 'format';
 
-
     private Analyser $analyser;
 
     public function __construct(Analyser $analyser)
@@ -104,7 +103,12 @@ class AnalyseCommand extends Command
             $table->render();
             $output->writeln('');
         }
-        $output->writeln(sprintf('%s problems in %s seconds', $errorCount, number_format(microtime(true) - $start, 4)));
+        $output->writeln(sprintf(
+            '%s problems in %s seconds with %sb memory',
+            $errorCount,
+            number_format(microtime(true) - $start, 4),
+            number_format(memory_get_peak_usage()),
+        ));
     }
 
     /**
