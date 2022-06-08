@@ -149,7 +149,7 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run Phpactor Analyse"
-                run: "bin/phpactor worse:analyse lib --ignore-failure"
+                run: "bin/phpactor worse:analyse lib --ignore-failure -vvv"
     php-cs-fixer:
         name: "PHP-CS-Fixer (${{ matrix.php-version }})"
 
