@@ -15,6 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class AnalyseCommand extends Command
 {
     const ARG_PATH = 'path';
+    const OPT_IGNORE_FAILURE = 'ignore-failure';
+    const OPT_FORMAT = 'format';
+
 
     private Analyser $analyser;
 
@@ -29,7 +32,8 @@ class AnalyseCommand extends Command
     {
         $this->setDescription('Experimental diagnostics for files in the given path');
         $this->addArgument(self::ARG_PATH, InputArgument::REQUIRED, 'Path to analyse');
-        $this->addOption('format', null, InputOption::VALUE_REQUIRED, 'json');
+        $this->addOption(self::OPT_FORMAT, null, InputOption::VALUE_REQUIRED, 'json');
+        $this->addOption(self::OPT_IGNORE_FAILURE, null, InputOption::VALUE_NONE, 'Exit with 0 even if there were problems');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -60,7 +64,7 @@ class AnalyseCommand extends Command
         $output->writeln('');
         $output->writeln('');
 
-        switch ($input->getOption('format')) {
+        switch ($input->getOption(self::OPT_FORMAT)) {
             case 'json':
                 $this->renderJson($output, $results);
                 break;
@@ -68,6 +72,9 @@ class AnalyseCommand extends Command
                 $this->renderTable($output, $results, $start);
         }
 
+        if ($input->getOption(self::OPT_IGNORE_FAILURE)) {
+            return 0;
+        }
 
         return $hasErrors ? 1 : 0;
     }
