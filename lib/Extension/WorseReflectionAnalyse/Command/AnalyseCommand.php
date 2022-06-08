@@ -9,6 +9,7 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class AnalyseCommand extends Command
@@ -28,11 +29,12 @@ class AnalyseCommand extends Command
     {
         $this->setDescription('Experimental diagnostics for files in the given path');
         $this->addArgument(self::ARG_PATH, InputArgument::REQUIRED, 'Path to analyse');
+        $this->addOption('format', null, InputOption::VALUE_REQUIRED, 'json');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $start = microtime(true);
+        $start = (float)microtime(true);
 
         /**
          * @var array<string,Diagnostics> $results
@@ -45,17 +47,37 @@ class AnalyseCommand extends Command
         $output->writeln('');
         $progress = new ProgressBar($output, $count);
         $progress->start();
+        $hasErrors = false;
 
         foreach ($this->analyser->analyse($path) as $file => $diagnostics) {
             $progress->advance();
             $results[$file] = $diagnostics;
+            if (0 !== $diagnostics->count()) {
+                $hasErrors = true;
+            }
         }
         $progress->finish();
         $output->writeln('');
         $output->writeln('');
 
-        $errorCount = 0;
+        switch ($input->getOption('format')) {
+            case 'json':
+                $this->renderJson($output, $results);
+                break;
+            default:
+                $this->renderTable($output, $results, $start);
+        }
 
+
+        return $hasErrors ? 1 : 0;
+    }
+
+    /**
+     * @param array<string,Diagnostics> $results
+     */
+    private function renderTable(OutputInterface $output, array $results, float $start): void
+    {
+        $errorCount = 0;
         foreach ($results as $file => $diagnostics) {
             if (!count($diagnostics)) {
                 continue;
@@ -76,7 +98,22 @@ class AnalyseCommand extends Command
             $output->writeln('');
         }
         $output->writeln(sprintf('%s problems in %s seconds', $errorCount, number_format(microtime(true) - $start, 4)));
+    }
 
-        return $errorCount ? 1 : 0;
+    /**
+     * @param array<string,Diagnostics> $results
+     */
+    private function renderJson(OutputInterface $output, array $results): void
+    {
+        foreach ($results as $file => $diagnostics) {
+            foreach ($diagnostics as $diagnostic) {
+                $output->writeln((string)json_encode([
+                    'file' => $file,
+                    'range' => ['start' => $diagnostic->range()->start()->toInt(), 'end' => $diagnostic->range()->end()->toInt()],
+                    'message' => $diagnostic->message(),
+                    'severity' => $diagnostic->severity(),
+                ]));
+            }
+        }
     }
 }

@@ -53,7 +53,7 @@ class ParsedDocblock implements DocBlock
 
     public function methodType(string $methodName): Type
     {
-        foreach ($this->node->descendantElements(MethodTag::class) as $methodTag) {
+        foreach ($this->node->tags(MethodTag::class) as $methodTag) {
             assert($methodTag instanceof MethodTag);
             if ($methodTag->methodName() !== $methodName) {
                 continue;
@@ -72,7 +72,7 @@ class ParsedDocblock implements DocBlock
     public function vars(): DocBlockVars
     {
         $vars = [];
-        foreach ($this->node->descendantElements(VarTag::class) as $varTag) {
+        foreach ($this->node->tags(VarTag::class) as $varTag) {
             assert($varTag instanceof VarTag);
             $vars[] = new DocBlockVar(
                 $varTag->variable ? ltrim($varTag->name() ?? '', '$') : '',
@@ -86,7 +86,7 @@ class ParsedDocblock implements DocBlock
     public function parameterType(string $paramName): Type
     {
         $types = [];
-        foreach ($this->node->descendantElements(ParamTag::class) as $paramTag) {
+        foreach ($this->node->tags(ParamTag::class) as $paramTag) {
             assert($paramTag instanceof ParamTag);
             if (ltrim($paramTag->paramName(), '$') !== $paramName) {
                 continue;
@@ -100,7 +100,7 @@ class ParsedDocblock implements DocBlock
     public function propertyType(string $propertyName): Type
     {
         $types = [];
-        foreach ($this->node->descendantElements(PropertyTag::class) as $propertyTag) {
+        foreach ($this->node->tags(PropertyTag::class) as $propertyTag) {
             assert($propertyTag instanceof PropertyTag);
             if (ltrim($propertyTag->propertyName(), '$') !== $propertyName) {
                 continue;
@@ -120,7 +120,7 @@ class ParsedDocblock implements DocBlock
 
     public function returnType(): Type
     {
-        foreach ($this->node->descendantElements(ReturnTag::class) as $tag) {
+        foreach ($this->node->tags(ReturnTag::class) as $tag) {
             assert($tag instanceof ReturnTag);
             return $this->convertType($tag->type());
         }
@@ -141,7 +141,7 @@ class ParsedDocblock implements DocBlock
     public function properties(ReflectionClassLike $declaringClass): CoreReflectionPropertyCollection
     {
         $properties = [];
-        foreach ($this->node->descendantElements(PropertyTag::class) as $propertyTag) {
+        foreach ($this->node->tags(PropertyTag::class) as $propertyTag) {
             assert($propertyTag instanceof PropertyTag);
             $type = $this->convertType($propertyTag->type);
             $property = new VirtualReflectionProperty(
@@ -166,7 +166,7 @@ class ParsedDocblock implements DocBlock
     public function methods(ReflectionClassLike $declaringClass): CoreReflectionMethodCollection
     {
         $methods = [];
-        foreach ($this->node->descendantElements(MethodTag::class) as $methodTag) {
+        foreach ($this->node->tags(MethodTag::class) as $methodTag) {
             assert($methodTag instanceof MethodTag);
             $params = ReflectionParameterCollection::empty();
             $method = new VirtualReflectionMethod(
@@ -195,7 +195,7 @@ class ParsedDocblock implements DocBlock
 
     public function deprecation(): Deprecation
     {
-        foreach ($this->node->descendantElements(DeprecatedTag::class) as $deprecatedTag) {
+        foreach ($this->node->tags(DeprecatedTag::class) as $deprecatedTag) {
             assert($deprecatedTag instanceof DeprecatedTag);
             return new Deprecation(true, $deprecatedTag->text());
         }
@@ -206,7 +206,7 @@ class ParsedDocblock implements DocBlock
     public function templateMap(): TemplateMap
     {
         $map = [];
-        foreach ($this->node->descendantElements(TemplateTag::class) as $templateTag) {
+        foreach ($this->node->tags(TemplateTag::class) as $templateTag) {
             assert($templateTag instanceof TemplateTag);
             $map[$templateTag->placeholder()] = $this->convertType($templateTag->type);
         }
@@ -216,7 +216,7 @@ class ParsedDocblock implements DocBlock
     public function extends(): array
     {
         $extends = [];
-        foreach ($this->node->descendantElements(ExtendsTag::class) as $extendsTag) {
+        foreach ($this->node->tags(ExtendsTag::class) as $extendsTag) {
             assert($extendsTag instanceof ExtendsTag);
             $extends[] = $this->convertType($extendsTag->type);
         }
@@ -226,7 +226,7 @@ class ParsedDocblock implements DocBlock
     public function implements(): array
     {
         $implements = [];
-        foreach ($this->node->descendantElements(ImplementsTag::class) as $implementsTag) {
+        foreach ($this->node->tags(ImplementsTag::class) as $implementsTag) {
             assert($implementsTag instanceof ImplementsTag);
             $implements = array_merge($implements, array_map(function (TypeNode $type) {
                 return $this->convertType($type);
@@ -238,7 +238,7 @@ class ParsedDocblock implements DocBlock
     public function mixins(): array
     {
         $mixins = [];
-        foreach ($this->node->descendantElements(MixinTag::class) as $mixinTag) {
+        foreach ($this->node->tags(MixinTag::class) as $mixinTag) {
             assert($mixinTag instanceof MixinTag);
             $mixins[] = $this->convertType($mixinTag->class);
         }
