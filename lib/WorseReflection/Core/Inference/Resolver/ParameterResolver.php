@@ -69,7 +69,14 @@ class ParameterResolver implements Resolver
     {
         $name = $function->getNamespacedName();
 
-        $function = $reflector->reflectFunction($name->getFullyQualifiedNameText());
+        try {
+            $function = $reflector->reflectFunction($name->getFullyQualifiedNameText());
+        } catch (NotFound $notFound) {
+            throw new CouldNotResolveNode(sprintf(
+                'Function "%s" not found',
+                $function->name()
+            ), 0, $notFound);
+        }
         $parameter = $function->parameters()->get($node->getName());
 
         return NodeContextFactory::create(
