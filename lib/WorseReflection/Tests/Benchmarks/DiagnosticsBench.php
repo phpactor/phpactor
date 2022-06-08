@@ -7,7 +7,6 @@ use GlobIterator;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\WorseReflection\Tests\Inference\TestAssertWalker;
 use SplFileInfo;
 
 /**

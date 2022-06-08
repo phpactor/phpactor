@@ -107,7 +107,7 @@ class AnalyseCommand extends Command
     {
         foreach ($results as $file => $diagnostics) {
             foreach ($diagnostics as $diagnostic) {
-                $output->writeln(json_encode([
+                $output->writeln((string)json_encode([
                     'file' => $file,
                     'range' => ['start' => $diagnostic->range()->start()->toInt(), 'end' => $diagnostic->range()->end()->toInt()],
                     'message' => $diagnostic->message(),
