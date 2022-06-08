@@ -61,7 +61,6 @@ abstract class Assignments implements Countable, IteratorAggregate
         $this->set($variable->withOffset(
             $variable->offset()
         )->withType($original->type()->addType($variable->type())->clean()));
-        $this->sort();
     }
 
     /**
