@@ -74,7 +74,7 @@ class ParameterResolver implements Resolver
         } catch (NotFound $notFound) {
             throw new CouldNotResolveNode(sprintf(
                 'Function "%s" not found',
-                $function->name()
+                $name->getFullyQualifiedNameText()
             ), 0, $notFound);
         }
         $parameter = $function->parameters()->get($node->getName());
