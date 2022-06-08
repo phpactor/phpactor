@@ -119,6 +119,37 @@ jobs:
             -
                 name: "Run PHPStan"
                 run: "vendor/bin/phpstan analyse"
+    phpactor:
+        name: "Phpactor Self Lint"
+
+        runs-on: "ubuntu-latest"
+
+        strategy:
+            matrix:
+                php-version:
+                    - '8.0'
+
+        steps:
+            -
+                name: "Checkout code"
+                uses: "actions/checkout@v2"
+            -
+                name: "Install PHP"
+                uses: "shivammathur/setup-php@v2"
+                with:
+                    coverage: "none"
+                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
+                    php-version: "${{ matrix.php-version }}"
+                    tools: composer:v2
+
+            -
+                name: "Composer install"
+                uses: "ramsey/composer-install@v1"
+                with:
+                    composer-options: "--no-scripts"
+            -
+                name: "Run Phpactor Analyse"
+                run: "bin/phpactor worse:analyse lib --ignore-failure"
     php-cs-fixer:
         name: "PHP-CS-Fixer (${{ matrix.php-version }})"
 

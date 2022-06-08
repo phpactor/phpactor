@@ -47,7 +47,13 @@ class MissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        $method = $reflection->methods()->belongingTo($reflection->name())->byName($methodName)->first();
+        $methods = $reflection->methods()->belongingTo($reflection->name())->byName($methodName);
+
+        if (0 === count($methods)) {
+            return;
+        }
+
+        $method = $methods->first();
 
         if ($method->isAbstract()) {
             return;
