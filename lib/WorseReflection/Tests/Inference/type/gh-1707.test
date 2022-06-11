@@ -1,0 +1,8 @@
+<?php
+
+/** @var array{name:string,age:int} */
+$shape = [];
+
+$tmp = $shape; // only suggest $shape
+
+wrAssertType('array{name:string,age:int}', $tmp);

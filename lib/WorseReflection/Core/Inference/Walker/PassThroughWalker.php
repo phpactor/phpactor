@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\CatchClause;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\YieldExpression;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
@@ -31,7 +32,8 @@ class PassThroughWalker implements Walker
             CatchClause::class,
             BinaryExpression::class,
             CallExpression::class,
-            AssignmentExpression::class
+            AssignmentExpression::class,
+            Variable::class,
         ];
     }
 
