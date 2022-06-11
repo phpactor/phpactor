@@ -31,6 +31,8 @@ class Frame
 
     private int $version = 1;
 
+    private VarDocBuffer $varDocBuffer;
+
     public function __construct(
         string $name,
         LocalAssignments $locals = null,
@@ -41,6 +43,7 @@ class Frame
         $this->properties = $properties ?: PropertyAssignments::create();
         $this->locals = $locals ?: LocalAssignments::create();
         $this->problems = $problems ?: Problems::create();
+        $this->varDocBuffer = new VarDocBuffer();
         $this->parent = $parent;
         $this->name = $name;
     }
@@ -159,10 +162,16 @@ class Frame
     public function version(): string
     {
         return sprintf(
-            '%s-%s-%s',
+            '%s-%s-%s-%s',
             $this->locals()->version(),
             $this->properties()->version(),
+            $this->varDocBuffer()->version(),
             $this->version
         );
+    }
+
+    public function varDocBuffer(): VarDocBuffer
+    {
+        return $this->varDocBuffer;
     }
 }

@@ -1,0 +1,6 @@
+<?php
+
+/** @var int[] $items */
+foreach ($items as $item) {
+    wrAssertType("int", $item);
+}

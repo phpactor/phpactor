@@ -26,7 +26,7 @@ final class Variable
         $this->wasAssigned = $wasAssigned;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf('%s#%s %s %s', $this->name, $this->offset, $this->type, $this->classType ? $this->classType->__toString() : '');
     }
