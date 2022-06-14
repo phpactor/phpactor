@@ -112,6 +112,15 @@ class HighlighterTest extends TestCase
             }
         ];
 
+        yield 'promoted property access' => [
+            '<?php class Foobar { public function __construct(private $foobar) {} function bar() { return $this->foo<>bar->barfoo; }',
+            function (Highlights $highlights): void {
+                self::assertCount(2, $highlights);
+                self::assertEquals(DocumentHighlightKind::TEXT, $highlights->at(0)->kind);
+                self::assertEquals(DocumentHighlightKind::READ, $highlights->at(1)->kind);
+            }
+        ];
+
         yield 'property write' => [
             '<?php class Foobar { private $f<>oobar; function bar() { return $this->foobar = "barfoo"; }',
             function (Highlights $highlights): void {
