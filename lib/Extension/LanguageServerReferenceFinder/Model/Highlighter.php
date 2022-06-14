@@ -43,7 +43,9 @@ class Highlighter
         }
 
         if ($node instanceof Parameter) {
-            return Highlights::fromIterator($this->variables($rootNode, (string)$node->getName()));
+            return (null === $node->visibilityToken)
+                ? Highlights::fromIterator($this->variables($rootNode, (string)$node->getName()))
+                : Highlights::fromIterator($this->properties($rootNode, (string)$node->getName()));
         }
 
         if ($node instanceof Variable) {
