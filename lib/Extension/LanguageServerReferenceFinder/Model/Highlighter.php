@@ -43,7 +43,9 @@ class Highlighter
         }
 
         if ($node instanceof Parameter) {
-            return Highlights::fromIterator($this->variables($rootNode, (string)$node->getName()));
+            return (null === $node->visibilityToken)
+                ? Highlights::fromIterator($this->variables($rootNode, (string)$node->getName()))
+                : Highlights::fromIterator($this->properties($rootNode, (string)$node->getName()));
         }
 
         if ($node instanceof Variable) {
@@ -132,6 +134,17 @@ class Highlighter
     private function properties(Node $rootNode, string $name): Generator
     {
         foreach ($rootNode->getDescendantNodes() as $node) {
+            if ($node instanceof Parameter && null !== $node->visibilityToken && (string)$node->getName() === $name) {
+                yield new DocumentHighlight(
+                    new Range(
+                        PositionConverter::intByteOffsetToPosition($node->variableName->getStartPosition(), $node->getFileContents()),
+                        PositionConverter::intByteOffsetToPosition($node->variableName->getEndPosition(), $node->getFileContents())
+                    ),
+                    DocumentHighlightKind::TEXT
+                );
+                continue;
+            }
+
             if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class) && (string)$node->getName() === $name) {
                 yield new DocumentHighlight(
                     new Range(
