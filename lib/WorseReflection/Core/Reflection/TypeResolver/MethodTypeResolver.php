@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type;
@@ -18,21 +19,23 @@ class MethodTypeResolver
         $this->method = $method;
     }
 
-    public function resolve(): Type
+    public function resolve(ReflectionClassLike $contextClass): Type
     {
-        $resolvedType = $this->getDocblockTypesFromClassOrMethod($this->method);
+        dump($contextClass->name()->__toString());
+        $resolvedType = $this->getDocblockTypesFromClassOrMethod($this->method, $contextClass);
 
         if (($resolvedType->isDefined())) {
             return $resolvedType;
         }
 
-        $resolvedType = $this->getTypesFromParentClass($this->method->class());
+        $resolvedType = $this->getTypesFromParentClass($contextClass);
+
 
         if (($resolvedType->isDefined())) {
             return $resolvedType;
         }
 
-        return $this->getTypesFromInterfaces($this->method->class());
+        return $this->getTypesFromInterfaces($contextClass);
     }
 
     private function getDocblockTypesFromClassOrMethod(ReflectionMethod $method): Type
@@ -43,6 +46,7 @@ class MethodTypeResolver
             return $classMethodOverride;
         }
 
+        // no static support here
         return $method->docblock()->returnType();
     }
 

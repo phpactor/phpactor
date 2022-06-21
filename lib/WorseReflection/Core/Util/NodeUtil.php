@@ -16,6 +16,7 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
@@ -153,15 +154,28 @@ class NodeUtil
         return implode("\n", $out);
     }
 
+    public static function typeFromQualfiedNameLikeForClass(Reflector $reflector, Node $node, $nodeOrToken, ClassName $classContext): Type
+    {
+        return self::typeFromQualfiedNameLike($reflector, $node, $nodeOrToken, $classContext);
+    }
+
     /**
      * @param null|Node|Token $nodeOrToken
      */
-    public static function typeFromQualfiedNameLike(Reflector $reflector, Node $node, $nodeOrToken): Type
+    public static function typeFromQualfiedNameLike(Reflector $reflector, Node $node, $nodeOrToken, ?ClassName $classContext = null): Type
     {
         if ($nodeOrToken instanceof Token) {
+            $text = (string)$nodeOrToken->getText($node->getFileContents());
+
+            if ($text === 'static' && $classContext) {
+                $class = self::nodeContainerClassLikeDeclaration($node);
+                return TypeFactory::reflectedClass($reflector, $classContext->__toString());
+            }
+
             return TypeFactory::fromStringWithReflector(
-                (string)$nodeOrToken->getText($node->getFileContents()),
+                $text,
                 $reflector,
+                $classContext
             );
         }
 
@@ -176,12 +190,17 @@ class NodeUtil
                 return TypeFactory::reflectedClass($reflector, $class->getNamespacedName()->__toString());
             }
 
+            if ($text === 'static') {
+                $class = self::nodeContainerClassLikeDeclaration($node);
+                return TypeFactory::reflectedClass($reflector, $classContext->__toString());
+            }
+
             return TypeFactory::fromStringWithReflector($nodeOrToken->getResolvedName(), $reflector);
         }
 
         if ($nodeOrToken instanceof QualifiedNameList) {
             $isIntersection = false;
-            $types = array_filter(array_map(function ($name) use ($node, $reflector, &$isIntersection) {
+            $types = array_filter(array_map(function ($name) use ($node, $reflector, &$isIntersection, $classContext) {
                 if ($name instanceof Token && $name->kind === TokenKind::AmpersandToken) {
                     $isIntersection = true;
                     return false;
@@ -189,7 +208,7 @@ class NodeUtil
                 if (null === $name) {
                     return new MissingType();
                 }
-                return self::typeFromQualfiedNameLike($reflector, $node, $name);
+                return self::typeFromQualfiedNameLike($reflector, $node, $name, $classContext);
             }, iterator_to_array($nodeOrToken->getElements(), true)), fn ($name) => $name !== false);
 
             return ($isIntersection ? IntersectionType::fromTypes(...$types) : UnionType::fromTypes(...$types))->reduce();

@@ -92,6 +92,7 @@ class MemberAccessExpressionResolver implements Resolver
             }
 
             foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
+                dump('1',$member->class()->name()->__toString());
                 $inferredType = $member->inferredType();
 
                 if ($member instanceof ReflectionProperty) {
