@@ -1,0 +1,6 @@
+<?php
+
+class Bar { public function baz(): static { return $this; } }
+
+$b = new Bar();
+wrAssertType('Bar', $b->baz());
