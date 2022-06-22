@@ -89,7 +89,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return ChainReflectionMemberCollection::fromCollections([
             $this->constants(),
             $this->properties(),
-            $this->methods()
+            $this->methods($this)
         ]);
     }
 

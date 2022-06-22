@@ -18,7 +18,7 @@ class MethodTypeResolver
         $this->method = $method;
     }
 
-    public function resolve(): Type
+    public function resolve(ReflectionClassLike $contextClass): Type
     {
         $resolvedType = $this->getDocblockTypesFromClassOrMethod($this->method);
 
@@ -26,13 +26,13 @@ class MethodTypeResolver
             return $resolvedType;
         }
 
-        $resolvedType = $this->getTypesFromParentClass($this->method->class());
+        $resolvedType = $this->getTypesFromParentClass($contextClass);
 
         if (($resolvedType->isDefined())) {
             return $resolvedType;
         }
 
-        return $this->getTypesFromInterfaces($this->method->class());
+        return $this->getTypesFromInterfaces($contextClass);
     }
 
     private function getDocblockTypesFromClassOrMethod(ReflectionMethod $method): Type
@@ -43,25 +43,29 @@ class MethodTypeResolver
             return $classMethodOverride;
         }
 
+        // no static support here
         return $method->docblock()->returnType();
     }
 
     private function getTypesFromParentClass(ReflectionClassLike $reflectionClassLike): Type
     {
-        if (false === $reflectionClassLike instanceof ReflectionClass) {
+        $methodClass = $this->method->declaringClass();
+
+        if (!$methodClass instanceof ReflectionClass) {
             return TypeFactory::undefined();
         }
 
-        if (null === $reflectionClassLike->parent()) {
+        if (null === $methodClass->parent()) {
             return TypeFactory::undefined();
         }
 
-        $reflectionClass = $reflectionClassLike->parent();
-        if (false === $reflectionClass->methods()->has($this->method->name())) {
+        $parentClass = $methodClass->parent();
+
+        if (false === $parentClass->methods($reflectionClassLike)->has($this->method->name())) {
             return TypeFactory::undefined();
         }
 
-        return $reflectionClass->methods()->get($this->method->name())->inferredType();
+        return $parentClass->methods($reflectionClassLike)->get($this->method->name())->inferredType();
     }
 
     private function getTypesFromInterfaces(ReflectionClassLike $reflectionClassLike): Type

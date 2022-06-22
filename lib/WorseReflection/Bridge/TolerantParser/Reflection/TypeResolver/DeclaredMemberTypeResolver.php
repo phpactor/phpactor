@@ -23,13 +23,13 @@ class DeclaredMemberTypeResolver
     /**
      * @param mixed $declaredTypes
      */
-    public function resolveTypes(Node $tolerantNode, $declaredTypes = null, ClassName $className = null, bool $nullable = false): Type
+    public function resolveTypes(Node $tolerantNode, $declaredTypes = null, ClassName $className, bool $nullable = false): Type
     {
         if (!$declaredTypes instanceof QualifiedNameList) {
             return TypeFactory::undefined();
         }
 
-        $type = NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $declaredTypes);
+        $type = NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $declaredTypes, $className);
 
         if (!$nullable) {
             return $type;
@@ -41,7 +41,7 @@ class DeclaredMemberTypeResolver
     /**
      * @param null|Node|Token $tolerantType
      */
-    public function resolve(Node $tolerantNode, $tolerantType = null, ClassName $className = null, bool $nullable = false): Type
+    public function resolve(Node $tolerantNode, $tolerantType = null, ?ClassName $className = null, bool $nullable = false): Type
     {
         $type = $this->doResolve($tolerantType, $tolerantNode, $className);
 
@@ -54,12 +54,12 @@ class DeclaredMemberTypeResolver
     /**
      * @param null|Node|Token $tolerantType
      */
-    private function doResolve($tolerantType, ?Node $tolerantNode, ?ClassName $className): Type
+    private function doResolve($tolerantType, ?Node $tolerantNode, ?ClassName $className = null): Type
     {
         if (null === $tolerantType) {
             return TypeFactory::undefined();
         }
 
-        return NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $tolerantType);
+        return NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $tolerantType, $className);
     }
 }
