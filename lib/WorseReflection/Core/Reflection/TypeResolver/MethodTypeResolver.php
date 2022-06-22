@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
-use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type;
@@ -21,15 +20,13 @@ class MethodTypeResolver
 
     public function resolve(ReflectionClassLike $contextClass): Type
     {
-        dump($contextClass->name()->__toString());
-        $resolvedType = $this->getDocblockTypesFromClassOrMethod($this->method, $contextClass);
+        $resolvedType = $this->getDocblockTypesFromClassOrMethod($this->method);
 
         if (($resolvedType->isDefined())) {
             return $resolvedType;
         }
 
         $resolvedType = $this->getTypesFromParentClass($contextClass);
-
 
         if (($resolvedType->isDefined())) {
             return $resolvedType;
@@ -52,20 +49,23 @@ class MethodTypeResolver
 
     private function getTypesFromParentClass(ReflectionClassLike $reflectionClassLike): Type
     {
-        if (false === $reflectionClassLike instanceof ReflectionClass) {
+        $methodClass = $this->method->declaringClass();
+
+        if (!$methodClass instanceof ReflectionClass) {
             return TypeFactory::undefined();
         }
 
-        if (null === $reflectionClassLike->parent()) {
+        if (null === $methodClass->parent()) {
             return TypeFactory::undefined();
         }
 
-        $reflectionClass = $reflectionClassLike->parent();
-        if (false === $reflectionClass->methods()->has($this->method->name())) {
+        $parentClass = $methodClass->parent();
+
+        if (false === $parentClass->methods($reflectionClassLike)->has($this->method->name())) {
             return TypeFactory::undefined();
         }
 
-        return $reflectionClass->methods()->get($this->method->name())->inferredType();
+        return $parentClass->methods($reflectionClassLike)->get($this->method->name())->inferredType();
     }
 
     private function getTypesFromInterfaces(ReflectionClassLike $reflectionClassLike): Type

@@ -154,11 +154,6 @@ class NodeUtil
         return implode("\n", $out);
     }
 
-    public static function typeFromQualfiedNameLikeForClass(Reflector $reflector, Node $node, $nodeOrToken, ClassName $classContext): Type
-    {
-        return self::typeFromQualfiedNameLike($reflector, $node, $nodeOrToken, $classContext);
-    }
-
     /**
      * @param null|Node|Token $nodeOrToken
      */
@@ -174,8 +169,7 @@ class NodeUtil
 
             return TypeFactory::fromStringWithReflector(
                 $text,
-                $reflector,
-                $classContext
+                $reflector
             );
         }
 
