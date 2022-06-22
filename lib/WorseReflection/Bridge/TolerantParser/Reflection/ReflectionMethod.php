@@ -73,7 +73,12 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
             ));
         }
 
-        return $this->serviceLocator->reflector()->reflectClassLike(ClassName::fromString($class));
+
+        $className = ClassName::fromString($class);
+        if ($className == $this->class()->name()) {
+            return $this->class();
+        }
+        return $this->serviceLocator->reflector()->reflectClassLike($className);
     }
 
     public function parameters(): CoreReflectionParameterCollection
