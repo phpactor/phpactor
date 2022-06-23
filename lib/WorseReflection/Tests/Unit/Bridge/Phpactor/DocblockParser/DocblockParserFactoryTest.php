@@ -213,7 +213,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         ];
         yield 'union false' => [
             '/** @return false|int */',
-            TypeFactory::union(TypeFactory::false(),TypeFactory::int())
+            TypeFactory::union(TypeFactory::false(), TypeFactory::int())
         ];
     }
 
