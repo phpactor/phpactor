@@ -23,7 +23,7 @@ class DeclaredMemberTypeResolver
     /**
      * @param mixed $declaredTypes
      */
-    public function resolveTypes(Node $tolerantNode, $declaredTypes = null, ClassName $className, bool $nullable = false): Type
+    public function resolveTypes(Node $tolerantNode, $declaredTypes = null, ?ClassName $className = null, bool $nullable = false): Type
     {
         if (!$declaredTypes instanceof QualifiedNameList) {
             return TypeFactory::undefined();

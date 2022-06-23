@@ -438,4 +438,9 @@ class TypeFactory
 
         return self::floatLiteral((float)$value);
     }
+
+    public static function false(): FalseType
+    {
+        return new FalseType();
+    }
 }
