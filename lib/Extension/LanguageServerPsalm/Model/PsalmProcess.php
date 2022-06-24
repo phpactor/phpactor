@@ -38,6 +38,7 @@ class PsalmProcess
         return \Amp\call(function () use ($filename) {
             $process = new Process([
                 $this->config->psalmBin(),
+                '--no-cache',
                 '--show-info=true',
                 '--output-format=json'
             ], $this->cwd);
