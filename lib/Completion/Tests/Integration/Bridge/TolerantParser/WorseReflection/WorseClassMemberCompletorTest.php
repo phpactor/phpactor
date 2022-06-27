@@ -222,6 +222,33 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
             ]
         ];
 
+        yield 'Virtual static method' => [
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @method static \Foobar foo()
+                 */
+                interface Barfoo {}
+
+                class Foobar implements Barfoo
+                {
+                }
+
+                $foobar = new Foobar();
+                $foobar::
+
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'foo',
+                    'short_description' => 'pub foo(): Foobar',
+                    'snippet' => 'foo()',
+                ]
+            ]
+        ];
+
         yield 'Static property' => [
             <<<'EOT'
                 <?php
