@@ -236,16 +236,21 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 }
 
                 $foobar = new Foobar();
-                $foobar::
+                $foobar::<>
 
                 EOT
             , [
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'class',
+                    'short_description' => 'Foobar',
+                ],
                 [
                     'type' => Suggestion::TYPE_METHOD,
                     'name' => 'foo',
                     'short_description' => 'pub foo(): Foobar',
                     'snippet' => 'foo()',
-                ]
+                ],
             ]
         ];
 

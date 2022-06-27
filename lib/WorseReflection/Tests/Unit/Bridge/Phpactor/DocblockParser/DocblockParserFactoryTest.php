@@ -270,6 +270,17 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         self::assertEquals('Barfoo', $methods->first()->type());
     }
 
+    public function testStaticMethods(): void
+    {
+        $reflector = $this->createReflector('<?php namespace Bar; class Foobar{}');
+        $docblock = $this->parseDocblockWithReflector($reflector, '/** @method static Barfoo foobar() */');
+        $methods = $docblock->methods($reflector->reflectClass('Bar\Foobar'));
+
+        self::assertEquals('foobar', $methods->first()->name());
+        self::assertEquals('Barfoo', $methods->first()->type());
+        self::assertTrue($methods->first()->isStatic());
+    }
+
     public function testMethodsWithParams(): void
     {
         $reflector = $this->createReflector('<?php namespace Bar; class Foobar{}');
