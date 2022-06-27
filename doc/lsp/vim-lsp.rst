@@ -24,9 +24,12 @@ This configuration snippet enables the following commands:
     local Float = require "plenary.window.float"
 
     vim.cmd([[
-    :command! -nargs=0 LspPhpactorReindex lua vim.lsp.buf_notify(0, "phpactor/indexer/reindex",{})
-    :command! -nargs=0 LspPhpactorConfig lua LspPhpactorDumpConfig()
-    :command! -nargs=0 LspPhpactorStatus lua LspPhpactorStatus()
+        augroup LspPhpactor
+          autocmd!
+          autocmd Filetype php command! -nargs=0 LspPhpactorReindex lua vim.lsp.buf_notify(0, "phpactor/indexer/reindex",{})
+          autocmd Filetype php command! -nargs=0 LspPhpactorConfig lua LspPhpactorDumpConfig()
+          autocmd Filetype php command! -nargs=0 LspPhpactorStatus lua LspPhpactorStatus()
+        augroup END
     ]])
 
     local function showWindow(title, syntax, contents)
