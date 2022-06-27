@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\BracedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
@@ -29,6 +30,10 @@ class VariableResolver implements Resolver
 
         if ($node->getFirstAncestor(PropertyDeclaration::class)) {
             return $this->resolvePropertyVariable($resolver, $node);
+        }
+
+        if ($node->name instanceof BracedExpression) {
+            return $resolver->resolveNode($frame, $node->name->expression);
         }
 
         $parent = $node->parent;

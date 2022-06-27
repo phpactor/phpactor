@@ -1,0 +1,7 @@
+<?php
+
+$bar = '123';
+$foo = ${$bar};
+
+wrAssertType('"123"', $foo);
+
