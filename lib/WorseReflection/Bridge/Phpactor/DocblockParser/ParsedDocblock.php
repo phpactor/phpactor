@@ -183,7 +183,7 @@ class ParsedDocblock implements DocBlock
                 $params,
                 NodeText::fromString(''),
                 false,
-                false,
+                $methodTag->static ? true : false,
                 new Deprecation(false),
             );
             $this->addParameters($method, $params, $methodTag->parameters);
