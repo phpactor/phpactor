@@ -84,6 +84,10 @@ class VariableResolver implements Resolver
 
     private function resolvePropertyVariable(NodeContextResolver $resolver, Variable $node): NodeContext
     {
+        if (null === $node->getName()) {
+            return NodeContext::none();
+        }
+
         $info = NodeContextFactory::create(
             $node->getName(),
             $node->getStartPosition(),
