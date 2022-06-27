@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * @method static Promise<A> sendMessage(string $text)
+ */
+class Mailer
+{
+}
+
+wrAssertType('Promise<A>', Mailer::sendMessage('foo'));
