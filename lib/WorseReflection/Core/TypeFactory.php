@@ -334,6 +334,11 @@ class TypeFactory
         return new NeverType();
     }
 
+    public static function false(): FalseType
+    {
+        return new FalseType();
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {

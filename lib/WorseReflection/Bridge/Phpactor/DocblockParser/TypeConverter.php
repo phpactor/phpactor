@@ -35,6 +35,7 @@ use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
+use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -159,6 +160,9 @@ class TypeConverter
         }
         if ($type === 'bool') {
             return new BooleanType();
+        }
+        if ($type === 'false') {
+            return new FalseType();
         }
         if ($type === 'callable') {
             return new CallableType([], new MissingType());

@@ -206,6 +206,15 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @return never */',
             TypeFactory::never(),
         ];
+
+        yield 'false' => [
+            '/** @return false */',
+            TypeFactory::false(),
+        ];
+        yield 'union false' => [
+            '/** @return false|int */',
+            TypeFactory::union(TypeFactory::false(), TypeFactory::int())
+        ];
     }
 
     public function testClassConstant(): void
