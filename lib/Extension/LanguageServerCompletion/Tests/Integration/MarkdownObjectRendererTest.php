@@ -55,6 +55,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      * @dataProvider provideMethod
      * @dataProvider provideProperty
      * @dataProvider provideConstant
+     * @dataProvider provideEnumCase
      * @dataProvider provideTrait
      * @dataProvider provideFunction
      * @dataProvider provideSymbolOffset
@@ -212,7 +213,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideInterface()
+    public function provideInterface(): Generator
     {
         yield 'complex interface' => [
             '',
@@ -246,7 +247,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideTrait()
+    public function provideTrait(): Generator
     {
         yield 'simple trait' => [
             '',
@@ -269,7 +270,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideMethod()
+    public function provideMethod(): Generator
     {
         yield 'simple' => [
             '',
@@ -445,7 +446,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideProperty()
+    public function provideProperty(): Generator
     {
         yield 'simple property' => [
             '',
@@ -544,7 +545,47 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideConstant()
+    public function provideEnumCase(): Generator
+    {
+        yield 'enum case' => [
+            '',
+            function (Reflector $reflector) {
+                return $reflector->reflectClassesIn(
+                    <<<'EOT'
+                        <?php
+
+                        enum Foobar
+                        {
+                            case FOOBAR;
+                        }
+                        EOT
+                )->first()->cases()->get('FOOBAR');
+            },
+            'enum_case1.md',
+        ];
+
+        yield 'backed enum case' => [
+            '',
+            function (Reflector $reflector) {
+                return $reflector->reflectClassesIn(
+                    <<<'EOT'
+                        <?php
+
+                        enum Foobar: string
+                        {
+                            case FOOBAR = 'foo';
+                        }
+                        EOT
+                )->first()->cases()->get('FOOBAR');
+            },
+            'enum_backed_case1.md',
+        ];
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideConstant(): Generator
     {
         yield 'simple constant' => [
             '',
@@ -584,7 +625,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideFunction()
+    public function provideFunction(): Generator
     {
         yield 'simple function' => [
             '',
@@ -616,7 +657,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideSymbolOffset()
+    public function provideSymbolOffset(): Generator
     {
         yield 'whitespace' => [
             '',
@@ -655,7 +696,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideType()
+    public function provideType(): Generator
     {
         yield 'mixed' => [
             '',
@@ -698,7 +739,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideMemberDocblock()
+    public function provideMemberDocblock(): Generator
     {
         yield 'single member with no doc' => [
             '',
@@ -736,7 +777,6 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'member_docblock2.md',
         ];
-
         yield 'member with concrete parent doc' => [
             '',
             function (Reflector $reflector) {
