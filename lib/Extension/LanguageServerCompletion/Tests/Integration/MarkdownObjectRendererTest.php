@@ -547,6 +547,10 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      */
     public function provideEnumCase(): Generator
     {
+        if (!defined('T_ENUM')) {
+            return;
+        }
+
         yield 'enum case' => [
             '',
             function (Reflector $reflector) {
