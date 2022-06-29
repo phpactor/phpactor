@@ -93,7 +93,7 @@ class TolerantExtractExpression implements ExtractExpression
     
     private function getCommonExpression(Node $node1, Node $node2): ?Expression
     {
-        if ($node1 == $node2 && $node1 instanceof Expression) {
+        if ($node1 === $node2 && $node1 instanceof Expression) {
             return $node1;
         }
         $ancestor = $node1;

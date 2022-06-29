@@ -5,6 +5,7 @@ namespace Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
@@ -104,7 +105,7 @@ class ClassNameFixerTransformer implements Transformer
             return null;
         }
         
-        assert($classLike instanceof ClassDeclaration || $classLike instanceof InterfaceDeclaration || $classLike instanceof TraitDeclaration);
+        assert($classLike instanceof EnumDeclaration || $classLike instanceof ClassDeclaration || $classLike instanceof InterfaceDeclaration || $classLike instanceof TraitDeclaration);
         
         $name = $classLike->name->getText($rootNode->getFileContents());
 
