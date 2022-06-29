@@ -1,5 +1,5 @@
 {% if object.deprecation.isDefined %}{{ render(object.deprecation) }}    {% endif %}
-{%- if object.declaringClass.isClass -%}
+{%- if object.declaringClass.isClass and object.class.isClass -%}
     {%- if object.deprecation.isDefined %}⚠ {% endif -%}
     {%- if object.declaringClass.parent -%}
         {%- set parent = object.class.parent -%}
