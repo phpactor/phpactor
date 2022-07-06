@@ -449,6 +449,34 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'adds docblock for invoked closure' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    public function baz()
+                    {
+                        return (function (string $foo): int {return 12;})();
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    /**
+                     * @return int
+                     */
+                    public function baz()
+                    {
+                        return (function (string $foo): int {return 12;})();
+                    }
+                }
+                EOT
+        ];
+
         yield 'imports classes' => [
             <<<'EOT'
                 <?php
