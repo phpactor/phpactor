@@ -68,12 +68,13 @@ class WorseExtractMethod implements ExtractMethod
             count($endNode->statements) > 0
         ) {
             $stmt = end($endNode->statements);
-            if (!$stmt instanceof Node) {
-                return false;
-            }
 
-            while ($stmt && $stmt->getEndPosition() > $offsetEnd) {
-                $stmt = prev($endNode->statements);
+            while ($stmt->getEndPosition() > $offsetEnd) {
+                $prev = prev($endNode->statements);
+                if ($prev === false) {
+                    break;
+                }
+                $stmt = $prev;
             }
             
             $endNode = $stmt ?? $endNode;
