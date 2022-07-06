@@ -1,0 +1,4 @@
+<?php
+
+$type = (fn (): string => 'string')();
+wrAssertType('string', $type);

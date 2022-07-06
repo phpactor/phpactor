@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -28,6 +29,11 @@ class CallExpressionResolver implements Resolver
         if ($resolvableNode instanceof ParenthesizedExpression && $type instanceof ReflectedClassType && $type->isInvokable()) {
             return NodeContextFactory::forNode($node)
                 ->withType($type->invokeType());
+        }
+
+        if ($type instanceof CallableType) {
+            return NodeContextFactory::forNode($node)
+                ->withType($type->returnType);
         }
 
         if (!$resolvableNode instanceof Variable) {
