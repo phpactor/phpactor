@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvi
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use BAR;
 
 class UnusedImportProviderTest extends DiagnosticsTestCase
 {

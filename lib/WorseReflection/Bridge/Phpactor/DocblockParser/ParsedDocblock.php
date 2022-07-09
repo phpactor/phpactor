@@ -52,10 +52,16 @@ class ParsedDocblock implements DocBlock
         $this->typeConverter = $typeConverter;
     }
 
+    /**
+     * @return Types<Type>
+     */
     public function types(): Types
     {
         $types = [];
         foreach ($this->node->descendantElements(TypeNode::class) as $type) {
+            if (!$type instanceof TypeNode) {
+                continue;
+            }
             $types[] = $this->typeConverter->convert($type);
         }
 
@@ -261,6 +267,11 @@ class ParsedDocblock implements DocBlock
         return new self($this->node, $this->typeConverter->withTypeResolver($typeResolver));
     }
 
+    public function node(): ParserDocblock
+    {
+        return $this->node;
+    }
+
     private function addParameters(VirtualReflectionMethod $method, ReflectionParameterCollection $collection, ?ParameterList $parameterList): void
     {
         if (null === $parameterList) {
@@ -285,10 +296,5 @@ class ParsedDocblock implements DocBlock
     private function convertType(?TypeNode $type): Type
     {
         return $this->typeConverter->convert($type);
-    }
-
-    public function node(): ParserDocblock
-    {
-        return $this->node;
     }
 }

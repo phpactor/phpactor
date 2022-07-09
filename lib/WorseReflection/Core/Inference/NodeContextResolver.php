@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
-use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
@@ -48,7 +47,7 @@ class NodeContextResolver
 
     public function withCache(Cache $cache):self
     {
-        return new self($this->reflector, $this->logger, $cache, $this->resolverMap);
+        return new self($this->reflector, $this->docblockFactory, $this->logger, $cache, $this->resolverMap);
     }
 
     /**
@@ -67,6 +66,11 @@ class NodeContextResolver
     public function reflector(): Reflector
     {
         return $this->reflector;
+    }
+
+    public function docblockFactory(): DocBlockFactory
+    {
+        return $this->docblockFactory;
     }
 
     /**
@@ -114,10 +118,5 @@ class NodeContextResolver
             get_class($node),
             $node->getText()
         ));
-    }
-
-    public function docblockFactory(): DocBlockFactory
-    {
-        return $this->docblockFactory;
     }
 }
