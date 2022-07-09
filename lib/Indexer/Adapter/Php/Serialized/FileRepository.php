@@ -61,6 +61,7 @@ class FileRepository
         $bufferKey = $this->bufferKey($record);
 
         if (isset($this->buffer[$bufferKey])) {
+            /** @phpstan-ignore-next-line */
             return $this->buffer[$bufferKey];
         }
         
