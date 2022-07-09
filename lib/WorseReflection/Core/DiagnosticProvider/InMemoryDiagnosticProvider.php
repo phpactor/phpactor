@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\DiagnosticProvider;
 
-use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -23,10 +23,18 @@ class InMemoryDiagnosticProvider implements DiagnosticProvider
     {
         $this->diagnostics = $diagnostics;
     }
-    public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
+        if (!$node instanceof SourceFileNode) {
+            return;
+        }
         foreach ($this->diagnostics as $diagnostic) {
             yield $diagnostic;
         }
+    }
+
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
     }
 }

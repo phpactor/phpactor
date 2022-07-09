@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\ClassBaseClause;
@@ -36,7 +35,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
         $this->importGlobals = $importGlobals;
     }
 
-    public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof QualifiedName) {
             return;
@@ -106,10 +105,15 @@ class UnresolvableNameProvider implements DiagnosticProvider
         );
     }
 
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
+
     /**
-     * @return Generator<UnresolvableNameDiagnostic>
+     * @return iterable<UnresolvableNameDiagnostic>
      */
-    private function forFunction(FunctionReflector $reflector, string $fqn, QualifiedName $name): Generator
+    private function forFunction(FunctionReflector $reflector, string $fqn, QualifiedName $name): iterable
     {
         $fqn = PhpactorFullyQualifiedName::fromString($fqn);
 
@@ -151,9 +155,9 @@ class UnresolvableNameProvider implements DiagnosticProvider
     }
 
     /**
-     * @return Generator<UnresolvableNameDiagnostic>
+     * @return iterable<UnresolvableNameDiagnostic>
      */
-    private function forClass(ClassReflector $reflector, string $fqn, QualifiedName $name): Generator
+    private function forClass(ClassReflector $reflector, string $fqn, QualifiedName $name): iterable
     {
         $fqn = PhpactorFullyQualifiedName::fromString($fqn);
 

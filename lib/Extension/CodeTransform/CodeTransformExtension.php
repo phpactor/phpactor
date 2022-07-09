@@ -33,6 +33,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingPropert
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateReturnTypeTransformer;
 use Phpactor\CodeTransform\CodeTransform;
@@ -430,5 +431,12 @@ class CodeTransformExtension implements Extension
                 $container->get(Updater::class)
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_properties' ]]);
+
+        $container->register('code_transform.transformer.remove_unused_imports', function (Container $container) {
+            return new RemoveUnusedImportsTransformer(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'remove_unused_imports' ]]);
     }
 }

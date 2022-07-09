@@ -114,6 +114,10 @@ final class FrameResolver
             }
         }
 
+        foreach ($this->globalWalkers as $walker) {
+            $frame = $walker->exit($this, $frame, $node);
+        }
+
         // if we found what we were looking for then return it
         if ($node === $targetNode) {
             return $frame;
@@ -122,10 +126,6 @@ final class FrameResolver
         // we start with the source node and we finish with the source node.
         if ($node instanceof SourceFileNode) {
             return $frame;
-        }
-
-        foreach ($this->globalWalkers as $walker) {
-            $frame = $walker->exit($this, $frame, $node);
         }
 
         return null;

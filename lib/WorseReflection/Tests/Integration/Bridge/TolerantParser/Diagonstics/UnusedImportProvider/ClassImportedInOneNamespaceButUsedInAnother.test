@@ -1,0 +1,9 @@
+<?php
+
+namespace One {
+    use Foo;
+}
+
+namespace Two {
+    new Foo();
+}

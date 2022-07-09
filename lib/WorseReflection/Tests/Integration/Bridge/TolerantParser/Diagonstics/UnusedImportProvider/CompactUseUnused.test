@@ -1,0 +1,6 @@
+<?php
+
+use Foobar\{Barfoo};
+
+new Foobar();
+

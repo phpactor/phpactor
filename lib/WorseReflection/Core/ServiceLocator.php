@@ -133,6 +133,7 @@ class ServiceLocator
     {
         return new NodeContextResolver(
             $this->reflector,
+            $this->docblockFactory,
             $this->logger,
             new StaticCache(),
             (new DefaultResolverFactory(

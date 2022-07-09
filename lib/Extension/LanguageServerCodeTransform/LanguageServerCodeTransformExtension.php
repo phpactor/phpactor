@@ -275,6 +275,16 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
+        $container->register(TransformerCodeActionPovider::class.'remove_unused_imports', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'remove_unused_imports',
+                'Remove unused imports'
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
         $container->register(GenerateMethodProvider::class, function (Container $container) {
             return new GenerateMethodProvider(
                 $container->get(MissingMethodFinder::class)

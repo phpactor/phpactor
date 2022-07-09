@@ -1,0 +1,8 @@
+<?php
+
+namespace Foo;
+
+use Bag\Boo;
+
+new Boo();
+

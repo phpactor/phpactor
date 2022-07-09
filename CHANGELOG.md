@@ -77,6 +77,7 @@ Improvements:
 
 Features:
 
+  - [ct] Remove unused imports diagnositcs and code transformation #1758
   - [wr] Added native WR single-pass diagnostics #1700
   - [cmd] Index clean command #1691 @mamazu
   - [cmp] (re?)support completion on parent:: #1643

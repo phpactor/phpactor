@@ -24,7 +24,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 {
-    public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {
         if (!$node instanceof AssignmentExpression) {
             return;
@@ -100,6 +100,11 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
             $this->resolvePropertyType($resolver, $frame, $rightOperand, $accessExpression),
             $accessExpression ? true : false,
         );
+    }
+
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
     }
 
     private function resolvePropertyType(
