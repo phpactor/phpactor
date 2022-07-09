@@ -62,6 +62,9 @@ class UnusedImportProvider implements DiagnosticProvider
             );
         }
 
+        $this->imported = [];
+        $this->names = [];
+
         return [];
     }
 
