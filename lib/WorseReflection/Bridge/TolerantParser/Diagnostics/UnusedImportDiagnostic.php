@@ -32,7 +32,7 @@ class UnusedImportDiagnostic implements Diagnostic
 
     public function severity(): DiagnosticSeverity
     {
-        return DiagnosticSeverity::ERROR();
+        return DiagnosticSeverity::WARNING();
     }
 
     public function message(): string

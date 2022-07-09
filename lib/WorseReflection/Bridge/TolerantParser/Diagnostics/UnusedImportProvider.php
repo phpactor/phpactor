@@ -10,9 +10,13 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\ParsedDocblock;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\TypeResolver\DefaultTypeResolver;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 
 class UnusedImportProvider implements DiagnosticProvider
 {
@@ -28,6 +32,12 @@ class UnusedImportProvider implements DiagnosticProvider
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
+        $docblock = $resolver->docblockFactory()->create($node->getLeadingCommentAndWhitespaceText());
+
+        if ($docblock instanceof ParsedDocblock) {
+            $this->extractDocblockNames($docblock, $resolver, $node);
+        }
+
         if ($node instanceof QualifiedName && !$node->parent instanceof NamespaceUseClause && !$node->parent instanceof NamespaceDefinition) {
             $resolvedName = $node->getResolvedName();
             if (null === $resolvedName) {
@@ -83,5 +93,21 @@ class UnusedImportProvider implements DiagnosticProvider
         $this->names = [];
 
         return [];
+    }
+
+    private function extractDocblockNames(ParsedDocblock $docblock, NodeContextResolver $resolver, Node $node): void
+    {
+        // horrbile hack to get the fully qualified class name for the docblock
+        $docblock = $docblock->withTypeResolver(
+            new DefaultTypeResolver(
+                new ReflectionScope($resolver->reflector(), $node)
+            )
+        );
+        assert($docblock instanceof ParsedDocblock);
+        foreach ($docblock->types() as $type) {
+            if ($type instanceof ClassType) {
+                $this->names[$type->name()->full()] = true;
+            }
+        }
     }
 }
