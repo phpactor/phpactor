@@ -6,6 +6,7 @@ use Amp\CancellationToken;
 use Amp\Promise;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
+use Microsoft\PhpParser\Node\NamespaceUseGroupClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
@@ -35,10 +36,21 @@ class UnusedImportProvider implements DiagnosticProvider
                 return [];
             }
             $this->names[(string)$resolvedName] = true;
+            return [];
         }
 
         if ($node instanceof NamespaceUseClause) {
+            if ($node->groupClauses) {
+                foreach ($node->groupClauses->children as $groupClause) {
+                    if (!$groupClause instanceof NamespaceUseGroupClause) {
+                        continue;
+                    }
+                    $this->imported[$groupClause->namespaceName->__toString()] = $groupClause;
+                }
+                return [];
+            }
             $this->imported[$node->__toString()] = $node;
+            return [];
         }
 
         return [];
