@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\NamespaceUseGroupClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
+use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -21,7 +22,7 @@ class UnusedImportProvider implements DiagnosticProvider
     private array $names = [];
 
     /**
-     * @var array<string,Node>
+     * @var array<string,Node|Token>
      */
     private array $imported = [];
 
@@ -52,7 +53,8 @@ class UnusedImportProvider implements DiagnosticProvider
                 }
                 return [];
             }
-            $this->imported[$node->__toString()] = $node;
+
+            $this->imported[$node->namespaceName->__toString()] = $node;
             return [];
         }
 
