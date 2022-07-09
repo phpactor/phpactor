@@ -1,0 +1,10 @@
+<?php
+
+namespace Foo;
+
+use Bar\Foobar;
+use Foobar\Baz\Foobar;
+use Bag\Boo;
+
+new Boo();
+

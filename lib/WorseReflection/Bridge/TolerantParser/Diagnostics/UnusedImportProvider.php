@@ -5,8 +5,12 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -16,25 +20,49 @@ class UnusedImportProvider implements DiagnosticProvider
     /**
      * @var array<string,bool>
      */
-    private array $used = [];
-    private ?Node $lastChild = null;
+    private array $names = [];
 
-
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
-    {
-        if ($node === $this->lastChild) {
-            dump('done');
-        }
-
-        if (!$node instanceof QualifiedName) {
-            return [];
-        }
-        return;
-        yield;
-    }
+    /**
+     * @var array<string,NamespaceUseClause>
+     */
+    private array $imported = [];
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
+        if ($node instanceof QualifiedName && !$node->parent instanceof NamespaceUseClause && !$node->parent instanceof NamespaceDefinition) {
+            $resolvedName = $node->getResolvedName();
+            if (null === $resolvedName) {
+                return [];
+            }
+            $this->names[(string)$resolvedName] = true;
+        }
+
+        if ($node instanceof NamespaceUseClause) {
+            $this->imported[$node->__toString()] = $node;
+        }
+
         return [];
     }
+
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        if (!$node instanceof SourceFileNode) {
+            return [];
+        }
+
+        foreach ($this->imported as $importedFqn => $imported) {
+            if (isset($this->names[$importedFqn])) {
+                continue;
+            }
+
+                
+            yield UnusedImportDiagnostic::for(
+                ByteOffsetRange::fromInts($imported->getStartPosition(), $imported->getEndPosition()),
+                $importedFqn
+            );
+        }
+
+        return [];
+    }
+
 }

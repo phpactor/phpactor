@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockPr
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
@@ -166,6 +167,9 @@ class WorseReflectionExtension implements Extension
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UnresolvableNameProvider::class, function (Container $container) {
             return new UnresolvableNameProvider($container->getParameter(self::PARAM_IMPORT_GLOBALS));
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+        $container->register(UnusedImportProvider::class, function (Container $container) {
+            return new UnusedImportProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 }
