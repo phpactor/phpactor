@@ -33,4 +33,9 @@ class UnusedImportProviderTest extends DiagnosticsTestCase
     {
         self::assertCount(0, $diagnostics);
     }
+
+    public function checkClassImportedInOneNamespaceButUsedInAnother(Diagnostics $diagnostics): void {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Name "Foo" is imported but not used', $diagnostics->at(0)->message());
+    }
 }
