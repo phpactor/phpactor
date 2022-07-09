@@ -102,6 +102,11 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
         );
     }
 
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
+
     private function resolvePropertyType(
         NodeContextResolver $resolver,
         Frame $frame,
@@ -118,10 +123,5 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
             $accessExpression instanceof SubscriptExpression ? new ArrayKeyType() : $resolver->resolveNode($frame, $accessExpression)->type(),
             $type
         );
-    }
-
-    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
-    {
-        return [];
     }
 }

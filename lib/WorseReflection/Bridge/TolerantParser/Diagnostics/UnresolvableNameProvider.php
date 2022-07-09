@@ -105,6 +105,11 @@ class UnresolvableNameProvider implements DiagnosticProvider
         );
     }
 
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
+
     /**
      * @return iterable<UnresolvableNameDiagnostic>
      */
@@ -172,10 +177,5 @@ class UnresolvableNameProvider implements DiagnosticProvider
                 $fqn,
             );
         }
-    }
-
-    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
-    {
-        return [];
     }
 }

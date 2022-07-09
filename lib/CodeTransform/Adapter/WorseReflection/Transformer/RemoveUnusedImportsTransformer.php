@@ -2,14 +2,11 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
-use Microsoft\PhpParser\Node\DelimitedList\NamespaceUseClauseList;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\NamespaceUseGroupClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
 use Microsoft\PhpParser\Parser;
-use Microsoft\PhpParser\Token;
-use Microsoft\PhpParser\TokenKind;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -25,6 +22,10 @@ class RemoveUnusedImportsTransformer implements Transformer
 
     private Parser $parser;
 
+    /**
+     * @var array<int, bool>
+     */
+    private array $fixed = [];
 
     public function __construct(Reflector $reflector, Parser $parser)
     {
@@ -70,8 +71,6 @@ class RemoveUnusedImportsTransformer implements Transformer
                 $length,
                 ''
             );
-
-
         }
 
         return TextEdits::fromTextEdits($edits);
@@ -98,16 +97,34 @@ class RemoveUnusedImportsTransformer implements Transformer
 
     private function forGroupClause(QualifiedName $importNode, NamespaceUseClause $list): ?TextEdit
     {
+        $fixed = spl_object_id($list);
+        if (isset($this->fixed[$fixed])) {
+            return null;
+        }
+        $this->fixed[$fixed] = true;
+
+        $names = [];
         foreach ($list->groupClauses->children as $groupClause) {
             if (!$groupClause instanceof NamespaceUseGroupClause) {
                 continue;
             }
 
             if ($groupClause->namespaceName->__toString() === $importNode->__toString()) {
-                die('asd');
+                continue;
             }
+            $names[] = $groupClause->__toString();
         }
 
-        return null;
+        $groupClauses = $list->groupClauses;
+
+        if (null === $groupClauses) {
+            return null;
+        }
+
+        return TextEdit::create(
+            $groupClauses->getStartPosition(),
+            $groupClauses->getEndPosition() - $groupClauses->getStartPosition(),
+            implode(', ', $names)
+        );
     }
 }

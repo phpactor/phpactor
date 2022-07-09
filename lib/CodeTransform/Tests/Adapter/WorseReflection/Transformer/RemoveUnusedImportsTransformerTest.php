@@ -6,7 +6,6 @@ use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 
 class RemoveUnusedImportsTransformerTest extends WorseTestCase
@@ -111,15 +110,14 @@ class RemoveUnusedImportsTransformerTest extends WorseTestCase
 
         ];
 
-        yield 'It compact use' => [
+        yield 'It removes names in compact use' => [
             <<<'EOT'
                 <?php
 
-                use Foobar\{Foobar, Barfoo};
+                use Foobar\{Bag, Barfoo};
                 use Symfony\Request;
 
-
-                new Foobar();
+                new Bag();
                 new Request();
 
                 EOT
@@ -127,15 +125,36 @@ class RemoveUnusedImportsTransformerTest extends WorseTestCase
             <<<'EOT'
                 <?php
 
-                use Foobar\{Foobar};
+                use Foobar\{Bag};
                 use Symfony\Request;
 
-
-                new Foobar();
+                new Bag();
                 new Request();
 
                 EOT
+        ];
 
+        // this is a workaround to avoid overlapping text edits
+        yield 'It only fixes one missing import per run' => [
+            <<<'EOT'
+                <?php
+
+                use Foobar\{Bag, Barfoo, Barrrr, Request};
+
+                new Bag();
+                new Request();
+
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Foobar\{Bag, Barrrr, Request};
+
+                new Bag();
+                new Request();
+
+                EOT
         ];
     }
 }

@@ -8,11 +8,6 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 
 class UnusedImportProviderTest extends DiagnosticsTestCase
 {
-    protected function provider(): DiagnosticProvider
-    {
-        return new UnusedImportProvider();
-    }
-
     public function checkUnusedImport(Diagnostics $diagnostics): void
     {
         self::assertCount(1, $diagnostics);
@@ -34,13 +29,19 @@ class UnusedImportProviderTest extends DiagnosticsTestCase
         self::assertCount(0, $diagnostics);
     }
 
-    public function checkClassImportedInOneNamespaceButUsedInAnother(Diagnostics $diagnostics): void {
+    public function checkClassImportedInOneNamespaceButUsedInAnother(Diagnostics $diagnostics): void
+    {
         self::assertCount(1, $diagnostics);
         self::assertEquals('Name "Foo" is imported but not used', $diagnostics->at(0)->message());
     }
 
-    public function checkCompactUseUnused(Diagnostics $diagnostics): void {
+    public function checkCompactUseUnused(Diagnostics $diagnostics): void
+    {
         self::assertCount(1, $diagnostics);
         self::assertEquals('Name "Foobar\Barfoo" is imported but not used', $diagnostics->at(0)->message());
+    }
+    protected function provider(): DiagnosticProvider
+    {
+        return new UnusedImportProvider();
     }
 }
