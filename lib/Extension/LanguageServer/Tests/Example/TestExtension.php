@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServer\Tests\Example;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\LanguageServerProtocol\Command;
@@ -82,7 +83,7 @@ class TestExtension implements Extension
 
         $container->register('test.code_action_provider', function (Container $container) {
             return new class implements CodeActionProvider {
-                public function provideActionsFor(TextDocumentItem $textDocument, Range $range): Promise
+                public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
                 {
                     return new Success([
                         CodeAction::fromArray([

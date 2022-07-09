@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use Amp\CancellationTokenSource;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
@@ -33,11 +34,13 @@ class GenerateAccessorProviderTest extends TestCase
         [$source, $start, $end] = ExtractOffset::fromSource($sourceCode);
         $provider = $this->createProvider($source);
 
+        $cancel = (new CancellationTokenSource())->getToken();
         self::assertEquals(
             $expectedActions,
             wait($provider->provideActionsFor(
                 new TextDocumentItem(self::EXAMPLE_FILE, 'php', 1, $source),
-                RangeConverter::toLspRange(ByteOffsetRange::fromInts((int)$start, (int)$end), $source)
+                RangeConverter::toLspRange(ByteOffsetRange::fromInts((int)$start, (int)$end), $source),
+                $cancel
             ))
         );
     }

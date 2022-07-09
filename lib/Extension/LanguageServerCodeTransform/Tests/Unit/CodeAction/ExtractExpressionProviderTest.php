@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use Amp\CancellationTokenSource;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
@@ -49,11 +50,13 @@ class ExtractExpressionProviderTest extends TestCase
             ->willReturn($shouldSucceed)
             ->shouldBeCalled();
 
+        $cancel = (new CancellationTokenSource())->getToken();
         $this->assertEquals(
             $expectedValue,
             wait($this->createProvider()->provideActionsFor(
                 $textDocumentItem,
-                $range
+                $range,
+                $cancel
             ))
         );
     }

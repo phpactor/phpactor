@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerWorseReflection\Tests\Unit\DiagnosticProvider;
 
+use Amp\CancellationTokenSource;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider\WorseDiagnosticProvider;
 use Phpactor\LanguageServerProtocol\Diagnostic;
@@ -22,9 +23,13 @@ class WorseDiagnosticProviderTest extends TestCase
             new BareDiagnostic(ByteOffsetRange::fromInts(1, 1), DiagnosticSeverity::WARNING(), 'Foo')
         ]))->build();
 
+        $cancel = (new CancellationTokenSource())->getToken();
         $lspDiagnostics = wait((
             new WorseDiagnosticProvider($reflector)
-        )->provideDiagnostics(ProtocolFactory::textDocumentItem('file:///foo', 'foo')));
+        )->provideDiagnostics(
+            ProtocolFactory::textDocumentItem('file:///foo', 'foo'),
+            $cancel
+        ));
 
         /** @var Diagnostic[] $lspDiagnostics */
         self::assertCount(1, $lspDiagnostics);
