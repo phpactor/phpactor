@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
@@ -34,7 +35,7 @@ class GenerateAccessorsProvider implements CodeActionProvider
          ];
     }
     
-    public function provideActionsFor(TextDocumentItem $textDocument, Range $range): Promise
+    public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($range, $textDocument) {
             // CoC will select the entire docyment if no range selected

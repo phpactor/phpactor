@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerDiagnostics\Provider;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerDiagnostics\Model\PhpLinter;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -23,7 +24,7 @@ class PhpLintDiagnosticProvider implements DiagnosticsProvider
     }
 
     
-    public function provideDiagnostics(TextDocumentItem $textDocument): Promise
+    public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
             return $this->linter->lint(
