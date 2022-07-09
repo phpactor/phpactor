@@ -24,7 +24,7 @@ class UnusedImportProvider implements DiagnosticProvider
     private array $names = [];
 
     /**
-     * @var array<string,NamespaceUseClause>
+     * @var array<string,Node>
      */
     private array $imported = [];
 
@@ -45,7 +45,13 @@ class UnusedImportProvider implements DiagnosticProvider
                     if (!$groupClause instanceof NamespaceUseGroupClause) {
                         continue;
                     }
-                    $this->imported[$groupClause->namespaceName->__toString()] = $groupClause;
+                    $parent = $groupClause->parent->parent;
+                    if (!$parent instanceof NamespaceUseClause) {
+                        continue;
+                    }
+
+                    $parent = $parent->namespaceName->__toString();
+                    $this->imported[$parent . $groupClause->namespaceName->getNamespacedName()->__toString()] = $groupClause;
                 }
                 return [];
             }

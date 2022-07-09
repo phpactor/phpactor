@@ -41,6 +41,6 @@ class UnusedImportProviderTest extends DiagnosticsTestCase
 
     public function checkCompactUseUnused(Diagnostics $diagnostics): void {
         self::assertCount(1, $diagnostics);
-        self::assertEquals('Name "Barfoo" is imported but not used', $diagnostics->at(0)->message());
+        self::assertEquals('Name "Foobar\Barfoo" is imported but not used', $diagnostics->at(0)->message());
     }
 }
