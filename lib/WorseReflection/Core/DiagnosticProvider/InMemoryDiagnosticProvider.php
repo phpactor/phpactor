@@ -28,4 +28,9 @@ class InMemoryDiagnosticProvider implements DiagnosticProvider
             yield $diagnostic;
         }
     }
+
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
 }

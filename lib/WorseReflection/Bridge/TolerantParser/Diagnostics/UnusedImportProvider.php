@@ -32,4 +32,9 @@ class UnusedImportProvider implements DiagnosticProvider
         return;
         yield;
     }
+
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
 }

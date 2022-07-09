@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -10,7 +9,12 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 interface DiagnosticProvider
 {
     /**
-     * @return Generator<Diagnostic>
+     * @return iterable<Diagnostic>
+     */
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable;
+
+    /**
+     * @return iterable<Diagnostic>
      */
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable;
 }

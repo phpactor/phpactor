@@ -111,4 +111,9 @@ class MissingDocblockProvider implements DiagnosticProvider
             $actualReturnType->__toString(),
         );
     }
+
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
 }

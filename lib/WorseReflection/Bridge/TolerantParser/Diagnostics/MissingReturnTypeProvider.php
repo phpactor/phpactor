@@ -83,4 +83,9 @@ class MissingReturnTypeProvider implements DiagnosticProvider
             $returnType->generalize()->reduce()
         );
     }
+
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
 }

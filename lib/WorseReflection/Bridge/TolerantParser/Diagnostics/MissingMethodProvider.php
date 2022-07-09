@@ -72,4 +72,9 @@ class MissingMethodProvider implements DiagnosticProvider
             );
         }
     }
+
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
 }

@@ -119,4 +119,9 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
             $type
         );
     }
+
+    public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
 }
