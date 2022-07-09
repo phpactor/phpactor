@@ -40,6 +40,12 @@ class UnusedImportProviderTest extends DiagnosticsTestCase
         self::assertCount(1, $diagnostics);
         self::assertEquals('Name "Foobar\Barfoo" is imported but not used', $diagnostics->at(0)->message());
     }
+
+    public function checkAliasedImportForUsedClass(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
     protected function provider(): DiagnosticProvider
     {
         return new UnusedImportProvider();

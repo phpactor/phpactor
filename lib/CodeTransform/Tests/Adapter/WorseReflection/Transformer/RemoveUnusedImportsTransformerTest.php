@@ -57,6 +57,25 @@ class RemoveUnusedImportsTransformerTest extends WorseTestCase
 
         ];
 
+        yield 'It does not remove aliased imports for existing' => [
+            <<<'EOT'
+                <?php
+
+                use Barfoo as Foobar;
+
+                new Foobar();
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Barfoo as Foobar;
+
+                new Foobar();
+                EOT
+
+        ];
+
         yield 'It removes unused imports with others' => [
             <<<'EOT'
                 <?php
