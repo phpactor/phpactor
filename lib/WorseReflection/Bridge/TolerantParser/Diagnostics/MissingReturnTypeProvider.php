@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MissingReturnTypeProvider implements DiagnosticProvider
 {
-    public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {
         if (!$node instanceof MethodDeclaration) {
             return;

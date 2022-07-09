@@ -18,7 +18,7 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class MissingMethodProvider implements DiagnosticProvider
 {
-    public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {
         if ((!$node instanceof CallExpression)) {
             return;

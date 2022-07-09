@@ -23,7 +23,7 @@ class InMemoryDiagnosticProvider implements DiagnosticProvider
     {
         $this->diagnostics = $diagnostics;
     }
-    public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {
         foreach ($this->diagnostics as $diagnostic) {
             yield $diagnostic;

@@ -36,7 +36,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
         $this->importGlobals = $importGlobals;
     }
 
-    public function provide(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
     {
         if (!$node instanceof QualifiedName) {
             return;
