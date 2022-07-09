@@ -12,5 +12,5 @@ interface DiagnosticProvider
     /**
      * @return Generator<Diagnostic>
      */
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator;
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable;
 }

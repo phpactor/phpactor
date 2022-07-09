@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
@@ -15,7 +14,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MissingDocblockProvider implements DiagnosticProvider
 {
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof MethodDeclaration) {
             return;

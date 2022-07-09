@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Amp\CancellationToken;
 use Amp\Promise;
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -21,7 +20,7 @@ class UnusedImportProvider implements DiagnosticProvider
     private ?Node $lastChild = null;
 
 
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if ($node === $this->lastChild) {
             dump('done');

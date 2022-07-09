@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
@@ -18,7 +17,7 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class MissingMethodProvider implements DiagnosticProvider
 {
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if ((!$node instanceof CallExpression)) {
             return;
