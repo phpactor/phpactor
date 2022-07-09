@@ -93,8 +93,10 @@ class ImportNameProviderBench extends IntegrationTestCase
 
         [ $source, $offset ] = ExtractOffset::fromSource($subject);
 
+        $cancel = (new CancellationTokenSource())->getToken();
         $this->provider->provideDiagnostics(
-            ProtocolFactory::textDocumentItem('file:///foobar', $subject)
+            ProtocolFactory::textDocumentItem('file:///foobar', $subject),
+            $cancel
         );
     }
 

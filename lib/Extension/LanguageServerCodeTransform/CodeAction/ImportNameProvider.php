@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -31,7 +32,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         $this->reportNonExistingClasses = $reportNonExistingClasses;
     }
 
-    public function provideActionsFor(TextDocumentItem $item, Range $range): Promise
+    public function provideActionsFor(TextDocumentItem $item, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($item) {
             $actions = [];
@@ -57,7 +58,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
     }
 
     
-    public function provideDiagnostics(TextDocumentItem $textDocument): Promise
+    public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
             $diagnostics = [];

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -33,7 +34,7 @@ class ExtractMethodProvider implements CodeActionProvider
         ];
     }
 
-    public function provideActionsFor(TextDocumentItem $textDocument, Range $range): Promise
+    public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument, $range) {
             if (!$this->extractMethod->canExtractMethod(

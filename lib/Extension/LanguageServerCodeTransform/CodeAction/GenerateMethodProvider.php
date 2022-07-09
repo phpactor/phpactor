@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
@@ -39,13 +40,13 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
     }
 
     
-    public function provideDiagnostics(TextDocumentItem $textDocument): Promise
+    public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return new Success($this->getDiagnostics($textDocument));
+        return new Success($this->getDiagnostics($textDocument, $cancel));
     }
 
     
-    public function provideActionsFor(TextDocumentItem $textDocument, Range $range): Promise
+    public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
             $diagnostics = $this->getDiagnostics($textDocument);

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use Amp\CancellationTokenSource;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
@@ -45,14 +46,19 @@ class GenerateMethodProviderTest extends TestCase
         $this->finder->find(Argument::type(TextDocument::class))->willReturn($missingMethods);
         $provider = $this->createProvider();
 
+        $cancel = (new CancellationTokenSource())->getToken();
         self::assertEquals(
             $expectedDiagnostics,
             wait($provider->provideDiagnostics(
-                new TextDocumentItem(self::EXAMPLE_FILE, 'php', 1, self::EXAMPLE_SOURCE)
+                new TextDocumentItem(self::EXAMPLE_FILE, 'php', 1, self::EXAMPLE_SOURCE),
+                $cancel
             ))
         );
     }
 
+    /**
+     * @return Generator<string,array{array,array}|array{array<int,Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod>,array<int,Phpactor\LanguageServerProtocol\Diagnostic>}>
+     */
     public function provideDiagnosticsTestData(): Generator
     {
         yield 'No missing methods' => [
@@ -82,15 +88,20 @@ class GenerateMethodProviderTest extends TestCase
     {
         $this->finder->find(Argument::type(TextDocument::class))->willReturn($missingMethods);
         $provider = $this->createProvider();
+        $cancel = (new CancellationTokenSource())->getToken();
         self::assertEquals(
             $expectedActions,
             wait($provider->provideActionsFor(
                 new TextDocumentItem(self::EXAMPLE_FILE, 'php', 1, self::EXAMPLE_SOURCE),
-                ProtocolFactory::range(0, 0, 0, 0)
+                ProtocolFactory::range(0, 0, 0, 0),
+                $cancel
             ))
         );
     }
 
+    /**
+     * @return Generator<string,array{array,array}|array{array<int,Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod>,array<int,Phpactor\LanguageServerProtocol\CodeAction>}>
+     */
     public function provideActionsTestData(): Generator
     {
         yield 'No missing methods' => [

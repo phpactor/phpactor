@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 use LanguageServerProtocol\DiagnosticSeverity as LanguageServerProtocolDiagnosticSeverity;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -22,9 +23,9 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
         $this->reflector = $reflector;
     }
 
-    public function provideDiagnostics(TextDocumentItem $textDocument): Promise
+    public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return call(function () use ($textDocument) {
+        return call(function () use ($textDocument, $cancel) {
             $lspDiagnostics = [];
             foreach ($this->reflector->diagnostics($textDocument->text) as $diagnostic) {
                 $range = new Range(
@@ -34,6 +35,10 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
                 $lspDiagnostic = ProtocolFactory::diagnostic($range, $diagnostic->message());
                 $lspDiagnostic->severity = self::toLspSeverity($diagnostic->severity());
                 $lspDiagnostics[] = $lspDiagnostic;
+
+                if ($cancel->isRequested()) {
+                    return $lspDiagnostics;
+                }
             }
 
             return $lspDiagnostics;

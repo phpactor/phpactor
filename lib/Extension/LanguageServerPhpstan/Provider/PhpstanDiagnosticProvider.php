@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Provider;
 
+use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -17,7 +18,7 @@ class PhpstanDiagnosticProvider implements DiagnosticsProvider
     }
 
     
-    public function provideDiagnostics(TextDocumentItem $textDocument): Promise
+    public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return $this->linter->lint($textDocument->uri, $textDocument->text);
     }
