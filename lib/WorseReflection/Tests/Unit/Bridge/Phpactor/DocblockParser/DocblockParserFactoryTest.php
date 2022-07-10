@@ -215,6 +215,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @return false|int */',
             TypeFactory::union(TypeFactory::false(), TypeFactory::int())
         ];
+
+        yield 'psalm prefix' => [
+            '/** @psalm-return int */',
+            TypeFactory::int(),
+        ];
     }
 
     public function testClassConstant(): void
