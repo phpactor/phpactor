@@ -10,8 +10,10 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class GenericTypeResolver
@@ -123,13 +125,27 @@ class GenericTypeResolver
         Type $genericClassType
     ): Type {
         return $memberType->map(function (Type $argument) use ($templateMap, $genericClassType) {
+            // unpleasant hack to preserve nullables
+            $nullable = false;
+            if ($argument instanceof NullableType) {
+                $argument = $argument->type;
+                $nullable = true;
+            }
+
             if (!$argument instanceof ClassType) {
                 return $argument;
             }
 
             if ($genericClassType instanceof GenericClassType) {
-                if ($templateMap->has($argument->short())) {
-                    return $templateMap->get($argument->short(), $genericClassType->arguments());
+                foreach ($argument->classNamedTypes() as $classLikeType) {
+                    if ($templateMap->has($classLikeType->short())) {
+                        $value = $templateMap->get($classLikeType->short(), $genericClassType->arguments());
+                        if ($nullable) {
+                            $value = TypeFactory::nullable($value);
+                        }
+
+                        return $value;
+                    }
                 }
             }
 
