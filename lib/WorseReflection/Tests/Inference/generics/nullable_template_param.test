@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @template T
+ */
+class AbstractFoo {
+    /**
+     * @return ?T
+     */
+    public function foo() {}
+}
+
+/**
+ * @extends AbstractFoo<B>
+ */
+class A extends AbstractFoo {}
+
+class B {}
+
+$a = new A();
+wrAssertType('?B', $a->foo());
