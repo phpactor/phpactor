@@ -85,8 +85,9 @@ final class Parser
     private function parseTag(): TagNode
     {
         $token = $this->tokens->current;
+        $value = str_replace(['@psalm-', '@phpstan-'], '@', $token->value);
 
-        switch ($token->value) {
+        switch ($value) {
             case '@param':
                 return $this->parseParam();
 
