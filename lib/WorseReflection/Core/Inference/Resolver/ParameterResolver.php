@@ -77,7 +77,15 @@ class ParameterResolver implements Resolver
                 $name->getFullyQualifiedNameText()
             ), 0, $notFound);
         }
-        $parameter = $function->parameters()->get($node->getName());
+
+        try {
+            $parameter = $function->parameters()->get($node->getName());
+        } catch (NotFound $notFound) {
+            throw new CouldNotResolveNode(sprintf(
+                'Parameter "%s" not found',
+                $node->getName(),
+            ), 0, $notFound);
+        }
 
         return NodeContextFactory::create(
             (string)$node->variableName->getText($node->getFileContents()),

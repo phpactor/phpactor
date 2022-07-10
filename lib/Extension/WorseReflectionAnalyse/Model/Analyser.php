@@ -8,6 +8,8 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
+use RuntimeException;
+use Throwable;
 use Webmozart\PathUtil\Path;
 
 class Analyser
@@ -35,10 +37,18 @@ class Analyser
         }
 
         foreach ($this->fileList($absPath) as $file) {
-            yield Path::makeRelative(
-                $file->path(),
-                $cwd
-            ) => $this->reflector->diagnostics((string)file_get_contents($file->path()));
+            try {
+                yield Path::makeRelative(
+                    $file->path(),
+                    $cwd
+                ) => $this->reflector->diagnostics((string)file_get_contents($file->path()));
+            } catch (Throwable $error) {
+                throw new RuntimeException(sprintf(
+                    'Error while analysing file "%s": %s',
+                    $file,
+                    $error->getMessage()
+                ), 0, $error);
+            }
         }
     }
 
