@@ -11,6 +11,7 @@ use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\ParsedDocblock;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -39,7 +40,7 @@ class UnusedImportProvider implements DiagnosticProvider
         }
 
         if ($node instanceof QualifiedName && !$node->parent instanceof NamespaceUseClause && !$node->parent instanceof NamespaceDefinition) {
-            $resolvedName = $node->getResolvedName();
+            $resolvedName = (new TolerantQualifiedNameResolver())->getResolvedName($node);
             if (null === $resolvedName) {
                 return [];
             }

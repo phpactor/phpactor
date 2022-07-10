@@ -1,0 +1,10 @@
+<?php
+
+namespace Foo;
+
+use Bag\Boo;
+
+class Foobar {
+    use Boo;
+}
+
