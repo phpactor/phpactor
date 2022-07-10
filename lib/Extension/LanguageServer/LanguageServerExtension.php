@@ -84,6 +84,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_SLEEP_TIME = 'language_server.diagnostic_sleep_time';
     public const PARAM_DIAGNOSTIC_ON_UPDATE = 'language_server.diagnostics_on_update';
     public const PARAM_DIAGNOSTIC_ON_SAVE = 'language_server.diagnostics_on_save';
+    public const PARAM_DIAGNOSTIC_ON_OPEN = 'language_server.diagnostics_on_open';
     public const PARAM_DIAGNOSTIC_PROVIDERS = 'language_server.diagnostic_providers';
     public const PARAM_FILE_EVENTS = 'language_server,file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
@@ -101,8 +102,9 @@ class LanguageServerExtension implements Extension
             self::PARAM_SESSION_PARAMETERS => [],
             self::PARAM_METHOD_ALIAS_MAP => [],
             self::PARAM_DIAGNOSTIC_SLEEP_TIME => 1000,
-            self::PARAM_DIAGNOSTIC_ON_UPDATE => false,
+            self::PARAM_DIAGNOSTIC_ON_UPDATE => true,
             self::PARAM_DIAGNOSTIC_ON_SAVE => true,
+            self::PARAM_DIAGNOSTIC_ON_OPEN => true,
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
@@ -123,6 +125,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_SLEEP_TIME => 'Amount of time to wait before analyzing the code again for diagnostics',
             self::PARAM_DIAGNOSTIC_ON_UPDATE => 'Perform diagnostics when the text document is updated',
             self::PARAM_DIAGNOSTIC_ON_SAVE => 'Perform diagnostics when the text document is saved',
+            self::PARAM_DIAGNOSTIC_ON_OPEN => 'Perform diagnostics when opening a text document',
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
             self::PARAM_FILE_EVENTS => 'Register to recieve file events',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time to wait before responding to a shutdown notification',
@@ -400,7 +403,10 @@ class LanguageServerExtension implements Extension
                 $container->get(DiagnosticsEngine::class),
                 $container->getParameter(self::PARAM_DIAGNOSTIC_ON_UPDATE),
                 $container->getParameter(self::PARAM_DIAGNOSTIC_ON_SAVE),
-                $container->get(self::SERVICE_SESSION_WORKSPACE)
+                $container->get(self::SERVICE_SESSION_WORKSPACE),
+                true,
+                $container->getParameter(self::PARAM_DIAGNOSTIC_ON_OPEN)
+
             );
         }, [
             self::TAG_SERVICE_PROVIDER => [],

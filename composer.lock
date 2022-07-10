@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e04b6125147a696f65345e8aed2d8fb8",
+    "content-hash": "e26944895a707239c1d5cb809ce2d2c2",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1680,16 +1680,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "3.0.0",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "051375f6d5a619eebdbc76148fc72b5066b50f6a"
+                "reference": "159cb20030695b05271843d27f76d4659ca43a1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/051375f6d5a619eebdbc76148fc72b5066b50f6a",
-                "reference": "051375f6d5a619eebdbc76148fc72b5066b50f6a",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/159cb20030695b05271843d27f76d4659ca43a1a",
+                "reference": "159cb20030695b05271843d27f76d4659ca43a1a",
                 "shasum": ""
             },
             "require": {
@@ -1740,9 +1740,9 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/3.0.0"
+                "source": "https://github.com/phpactor/language-server/tree/3.1.0"
             },
-            "time": "2022-07-09T13:32:56+00:00"
+            "time": "2022-07-10T06:09:38+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -3948,16 +3948,16 @@
         },
         {
             "name": "dantleech/what-changed",
-            "version": "0.4.3",
+            "version": "0.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dantleech/what-changed.git",
-                "reference": "02c32b1e03b8964a459847065c985f1b9423b558"
+                "reference": "d9d9fa1d1bf6f0f01a7f4ce8e0cdb61430d1251e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/what-changed/zipball/02c32b1e03b8964a459847065c985f1b9423b558",
-                "reference": "02c32b1e03b8964a459847065c985f1b9423b558",
+                "url": "https://api.github.com/repos/dantleech/what-changed/zipball/d9d9fa1d1bf6f0f01a7f4ce8e0cdb61430d1251e",
+                "reference": "d9d9fa1d1bf6f0f01a7f4ce8e0cdb61430d1251e",
                 "shasum": ""
             },
             "require": {
@@ -4001,9 +4001,9 @@
             "description": "Report changes in your dependencies",
             "support": {
                 "issues": "https://github.com/dantleech/what-changed/issues",
-                "source": "https://github.com/dantleech/what-changed/tree/0.4.3"
+                "source": "https://github.com/dantleech/what-changed/tree/0.4.4"
             },
-            "time": "2022-01-03T19:46:24+00:00"
+            "time": "2022-07-03T13:24:24+00:00"
         },
         {
             "name": "dms/phpunit-arraysubset-asserts",
@@ -7638,5 +7638,5 @@
     "platform-overrides": {
         "php": "7.4.0"
     },
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }
