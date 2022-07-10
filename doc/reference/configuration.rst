@@ -1265,7 +1265,7 @@ Amount of time to wait before analyzing the code again for diagnostics
 Perform diagnostics when the text document is updated
 
 
-**Default**: ``false``
+**Default**: ``true``
 
 
 .. _param_language_server.diagnostics_on_save:
@@ -1278,6 +1278,21 @@ Perform diagnostics when the text document is updated
 
 
 Perform diagnostics when the text document is saved
+
+
+**Default**: ``true``
+
+
+.. _param_language_server.diagnostics_on_open:
+
+
+``language_server.diagnostics_on_open``
+"""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Perform diagnostics when opening a text document
 
 
 **Default**: ``true``

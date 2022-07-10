@@ -114,7 +114,8 @@ class ImportNameProviderTest extends IntegrationTestCase
         yield 'no code action or diagnostics for missing global function name' => [
             <<<'EOT'
                 // File: subject.php
-                <?php namespace Foobar; sprintf('foo %s', 'bar')
+                <?php namespace Foobar;
+                sprintf('foo %s', 'bar');
                 EOT
             , 0, 0
         ];
@@ -148,8 +149,7 @@ class ImportNameProviderTest extends IntegrationTestCase
 
                 namespace Phpactor\Extension;
 
-                $bar = [];
-                explode(array_keys($bar));
+                sprintf('foo', 'bar');
                 EOT
             , 0, 0
         ];

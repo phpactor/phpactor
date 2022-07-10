@@ -181,7 +181,8 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(CandidateFinder::class, function (Container $container) {
             return new CandidateFinder(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(SearchClient::class)
+                $container->get(SearchClient::class),
+                $container->getParameter(CodeTransformExtension::PARAM_IMPORT_GLOBALS)
             );
         });
         $container->register(ImportNameProvider::class, function (Container $container) {
