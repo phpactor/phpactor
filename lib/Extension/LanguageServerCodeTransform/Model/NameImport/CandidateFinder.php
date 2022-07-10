@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport;
 use Generator;
 use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
 use Phpactor\Indexer\Model\Query\Criteria;
+use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\ConstantRecord;
 use Phpactor\Indexer\Model\Record\HasFullyQualifiedName;
 use Phpactor\Indexer\Model\SearchClient;
@@ -17,8 +18,6 @@ use Phpactor\WorseReflection\Reflector;
 class CandidateFinder
 {
     private SearchClient $client;
-
-    private bool $importGlobals;
 
     private Reflector $reflector;
 
@@ -63,12 +62,12 @@ class CandidateFinder
         }
     }
 
+    /**
+     * @return Generator<NameCandidate>
+     */
     public function candidatesForUnresolvedName(NameWithByteOffset $unresolvedName): Generator
     {
         if ($this->isUnresolvedGlobalFunction($unresolvedName)) {
-            if (false === $this->importGlobals) {
-                return;
-            }
             yield new NameCandidate($unresolvedName, $unresolvedName->name()->head()->__toString());
             return;
         }
@@ -106,6 +105,9 @@ class CandidateFinder
         return false;
     }
 
+    /**
+     * @return array<int,Record>
+     */
     private function findCandidates(NameWithByteOffset $unresolvedName): array
     {
         $candidates = [];

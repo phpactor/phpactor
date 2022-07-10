@@ -39,7 +39,6 @@ class PhpstanDiagnosticProviderTest extends TestCase
     {
         $updated = new TextDocumentUpdated(ProtocolFactory::versionedTextDocumentIdentifier('file://path', 12), 'asd');
         $this->tester->textDocument()->open('file:///path', 'asd');
-        $this->tester->textDocument()->update('file:///path', 'zar');
 
         wait(delay(10));
 

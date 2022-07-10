@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServerPsalm\Tests\DiagnosticProvider;
 
-use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerPsalm\DiagnosticProvider\PsalmDiagnosticProvider;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter\TestLinter;
@@ -32,14 +31,10 @@ class PsalmDiagnosticProviderTest extends TestCase
         $this->tester->initialize();
     }
 
-    /**
-     * @return Generator<mixed>
-     */
     public function testHandleSingle(): void
     {
         $updated = new TextDocumentUpdated(ProtocolFactory::versionedTextDocumentIdentifier('file://path', 12), 'asd');
         $this->tester->textDocument()->open('file:///path', 'asd');
-        $this->tester->textDocument()->update('file:///path', 'zar');
 
         wait(delay(10));
 

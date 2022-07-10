@@ -406,7 +406,6 @@ class LanguageServerExtension implements Extension
                 $container->get(self::SERVICE_SESSION_WORKSPACE),
                 true,
                 $container->getParameter(self::PARAM_DIAGNOSTIC_ON_OPEN)
-
             );
         }, [
             self::TAG_SERVICE_PROVIDER => [],
