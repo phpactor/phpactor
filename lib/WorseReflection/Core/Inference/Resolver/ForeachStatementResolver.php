@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\ForeachKey;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
@@ -32,9 +33,10 @@ class ForeachStatementResolver implements Resolver
         assert($node instanceof ForeachStatement);
         $context = NodeContextFactory::forNode($node);
         $nodeContext = $resolver->resolveNode($frame, $node->forEachCollectionName);
-
         $this->processKey($resolver, $node, $frame, $nodeContext->type());
         $this->processValue($resolver, $node, $frame, $nodeContext);
+
+        $this->addAssignedVarsInCompoundStatement($node, $resolver, $frame);
 
         return $context;
     }
@@ -194,5 +196,29 @@ class ForeachStatementResolver implements Resolver
         }
 
         return $type->iterableKeyType();
+    }
+
+    private function addAssignedVarsInCompoundStatement(ForeachStatement $node, NodeContextResolver $resolver, Frame $frame): void
+    {
+        $compoundStatement = $node->statements;
+        if ($compoundStatement instanceof CompoundStatementNode) {
+            foreach ($compoundStatement->statements as $statement) {
+                $resolver->resolveNode($frame, $statement);
+            }
+            foreach ($frame->locals()->greaterThan(
+                $compoundStatement->openBrace->getStartPosition()
+            )->lessThan(
+                $compoundStatement->closeBrace->getStartPosition()
+            ) as $local) {
+                if (!$local->wasAssigned()) {
+                    continue;
+                }
+                if ($previous = $frame->locals()->lessThan($local->offset())->byName($local->name())->lastOrNull()) {
+                    $frame->locals()->set(
+                        $previous->withType($previous->type()->addType($local->type()))->withOffset($compoundStatement->closeBrace->getEndPosition())
+                    );
+                }
+            }
+        }
     }
 }

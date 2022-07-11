@@ -1,0 +1,34 @@
+<?php
+
+namespace DTL\GherkinLint\Rule;
+
+use Cucumber\Messages\FeatureChild;
+use DTL\GherkinLint\Model\FeatureDiagnostic;
+use DTL\GherkinLint\Model\FeatureDiagnosticSeverity;
+use DTL\GherkinLint\Model\ParsedFeature;
+use DTL\GherkinLint\Model\Range;
+use DTL\GherkinLint\Model\Rule;
+use DTL\GherkinLint\Model\RuleConfig;
+use DTL\GherkinLint\Model\RuleDescription;
+use DTL\GherkinLint\Model\RuleExample;
+use DTL\GherkinLint\Rule\Util\DocumentQuery;
+use Generator;
+
+class NoBackgroundWithSingleScenarioRule
+{
+    /** @param array<string,string> $array */
+    public function analyse(array $array): Generator
+    {
+        $background = null;
+
+        foreach ($array as $child) {
+            if ($child) {
+                $background = $child;
+                break;
+            }
+        }
+
+        wrAssertType('string|null', $background);
+    }
+}
+
