@@ -1,0 +1,17 @@
+<?php
+
+class Foobar {
+    /**
+     * @param list<Tag> $tags
+     */
+    public function __construct(
+        public Location $location = new Location(),
+        public array $tags = [],
+    ) {}
+
+    public function bar()
+    {
+        wrAssertType('array<int,Tag>', $this->tags);
+    }
+}
+
