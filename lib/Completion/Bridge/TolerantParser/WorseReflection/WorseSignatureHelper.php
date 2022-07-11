@@ -192,8 +192,9 @@ class WorseSignatureHelper implements SignatureHelper
             throw new CouldNotHelpWithSignature(sprintf('Static calls only supported with qualified names'));
         }
 
-        $class = $scopeResolutionQualifier->getResolvedName();
-        $reflectionClass = $this->reflector->reflectClass((string) $class);
+        $offset = $this->reflector->reflectOffset($node->getFileContents(), $scopeResolutionQualifier->getStartPosition());
+
+        $reflectionClass = $this->reflector->reflectClass($offset->symbolContext()->type()->__toString());
 
         $memberName = $callable->memberName;
 

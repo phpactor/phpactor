@@ -117,6 +117,16 @@ class WorseSignatureHelperTest extends IntegrationTestCase
                 0
             )
         ];
+        yield 'self method signature with no parameters inside another function' => [
+            '<?php function hello() {}; class Hi { public static function hi() public function f() { self::hi(<> }',
+            new SignatureHelp(
+                [new SignatureInformation(
+                    'pub hi()',
+                    []
+                )],
+                0
+            )
+        ];
 
         yield 'function with parameter' => [
             '<?php function hello(string $foo) {}; hello(<>',
