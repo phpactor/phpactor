@@ -5,8 +5,8 @@ class Foobar {
      * @param list<Tag> $tags
      */
     public function __construct(
-        public readonly Location $location = new Location(),
-        public readonly array $tags = [],
+        public Location $location = new Location(),
+        public array $tags = [],
     ) {}
 
     public function bar()
