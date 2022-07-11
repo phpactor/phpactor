@@ -80,17 +80,8 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
     {
         $type = $this->typeResolver->resolve();
 
-        if (($type->isDefined())) {
+        if ($type->isDefined()) {
             return $type;
-        }
-
-        if ($this->parameter->typeDeclarationList) {
-            $type = $this->memberTypeResolver->resolveTypes(
-                $this->parameter,
-                $this->parameter->typeDeclarationList,
-                $this->class()->name(),
-                $this->parameter->questionToken ? true : false
-            );
         }
 
         return $type;

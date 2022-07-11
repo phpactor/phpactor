@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPromotedProperty;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 
@@ -24,6 +25,15 @@ class PropertyTypeResolver
 
         if (($docblockType->isDefined())) {
             return $docblockType;
+        }
+
+        if ($this->property instanceof ReflectionPromotedProperty) {
+            $paramType = $this->property->class()->methods()->get('__construct')->docblock()->parameterType(
+                $this->property->name()
+            );
+            if ($paramType->isDefined()) {
+                return $paramType;
+            }
         }
 
         return $this->property->type();
