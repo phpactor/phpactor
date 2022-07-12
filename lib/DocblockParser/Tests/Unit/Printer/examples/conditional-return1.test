@@ -1,0 +1,13 @@
+/**
+ * @return ($foo is true ? int : string)
+ */
+---
+''
+'Docblock: = \n
+ ElementList: = /**\n
+ * \n
+  ReturnTag: = @return\n
+   ParenthesizedType: = (\n
+    ConditionNode: = $foo\n
+   TextNode: = is true ? int : string)\n
+ */
