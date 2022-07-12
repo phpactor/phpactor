@@ -58,6 +58,7 @@ class ConditionalType extends Type
             }
             return $type;
         };
+
         if (!$argumentType->isDefined()) {
             return $evaluator($this->right);
         }

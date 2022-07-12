@@ -260,7 +260,9 @@ final class Parser
 
         if ($this->tokens->current->type === Token::T_PAREN_OPEN) {
             $open = $this->tokens->chomp();
+            $this->tokens->chompWhitespace();
             $type = $this->parseTypes();
+            $this->tokens->chompWhitespace();
             $close = $this->tokens->chompIf(Token::T_PAREN_CLOSE);
 
             return new ParenthesizedType($open, $type, $close);

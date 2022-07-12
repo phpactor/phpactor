@@ -232,7 +232,12 @@ class TypeConverter
             return new ListType(new MissingType());
         }
 
+
         $classType = $this->convert($type->type);
+
+        if ($classType instanceof ClassStringType) {
+            return $classType;
+        }
 
         if (!$classType instanceof ClassType) {
             return new MissingType();
