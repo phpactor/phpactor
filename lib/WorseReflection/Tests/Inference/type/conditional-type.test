@@ -8,8 +8,7 @@ interface TreeMapper
      *
      * @param string|class-string<T> $signature
      * @param mixed $source
-     * @return (
-     *     $signature is class-string<T>
+     * @return ($signature is class-string<T>
      *         ? T
      *         : mixed
      * )
