@@ -684,13 +684,13 @@ final class Parser
             return new ConditionalNode($variable, $is, $isType);
         }
         $this->tokens->chompWhitespace();
-        $left = $this->parseType();
+        $left = $this->parseTypes();
         $this->tokens->chompWhitespace();
         if (!$colon = $this->tokens->chompIf(Token::T_COLON)) {
             return new ConditionalNode($variable, $is, $isType);
         }
         $this->tokens->chompWhitespace();
-        $right = $this->parseType();
+        $right = $this->parseTypes();
 
         return new ConditionalNode($variable, $is, $isType, $question, $left, $colon, $right);
     }

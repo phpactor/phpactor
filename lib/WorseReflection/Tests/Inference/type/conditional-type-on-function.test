@@ -8,12 +8,12 @@
  *     ? int
  *     : ($array is array<float>
  *         ? float
- *         : (float|int)
+ *         : float|int
  *     )
  * )
  */
 function array_some(array $array) {}
 
-wrAssertType('(float|int)', array_some([]));
+wrAssertType('float|int', array_some([]));
 wrAssertType('int', array_some([1]));
 wrAssertType('float', array_some([1.2]));
