@@ -7,11 +7,13 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -24,6 +26,15 @@ class CallExpressionResolver implements Resolver
 
         $context = $resolver->resolveNode($frame, $resolvableNode);
         $type = $context->type();
+        $containerType = $context->containerType();
+
+        if ($type instanceof ConditionalType && $containerType instanceof ReflectedClassType) {
+            $method = $containerType->reflectionOrNull()->methods()->get($context->symbol()->name());
+            $context = $context->withType($type->evaluate(
+                $method,
+                FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
+            ));
+        }
 
         if ($resolvableNode instanceof ParenthesizedExpression && $type instanceof ReflectedClassType && $type->isInvokable()) {
             return NodeContextFactory::forNode($node)

@@ -26,12 +26,20 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
 
     private ReflectionFunctionLike $functionLike;
 
-    public function __construct(ServiceLocator $serviceLocator, ReflectionFunctionLike $functionLike, Parameter $parameter)
+    private int $index;
+
+    public function __construct(
+        ServiceLocator $serviceLocator,
+        ReflectionFunctionLike $functionLike,
+        Parameter $parameter,
+        int $index
+    )
     {
         $this->serviceLocator = $serviceLocator;
         $this->parameter = $parameter;
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($serviceLocator->reflector());
         $this->functionLike = $functionLike;
+        $this->index = $index;
     }
 
     public function name(): string
@@ -116,5 +124,10 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
+    }
+
+    public function index(): int
+    {
+        return $this->index;
     }
 }

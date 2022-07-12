@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
@@ -44,5 +46,20 @@ class ConditionalType extends Type
     public function accepts(Type $type): Trinary
     {
         return Trinary::maybe();
+    }
+
+    public function evaluate(ReflectionFunctionLike $functionLike, FunctionArguments $functionArguments): Type
+    {
+        $parameter = $functionLike->parameters()->get(ltrim($this->variable, '$'));
+        $argumentType = $functionArguments->at($parameter->index())->type();
+        if (!$argumentType->isDefined()) {
+            return $this->right;
+        }
+
+        if ($this->isType->accepts($argumentType)->isTrue()) {
+            return $this->left;
+        }
+
+        return $this->right;
     }
 }

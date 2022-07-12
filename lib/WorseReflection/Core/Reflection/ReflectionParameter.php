@@ -23,6 +23,8 @@ interface ReflectionParameter extends ReflectionNode
 
     public function inferredType(): Type;
 
+    public function index(): int;
+
     public function default(): DefaultValue;
 
     public function byReference(): bool;

@@ -57,7 +57,8 @@ class VirtualReflectionParameterTest extends TestCase
             $this->defaults,
             $this->byReference,
             $this->scope->reveal(),
-            $this->position
+            $this->position,
+            0
         );
     }
 
@@ -73,5 +74,6 @@ class VirtualReflectionParameterTest extends TestCase
         $this->assertEquals($this->byReference, $parameter->byReference());
         $this->assertEquals($this->scope->reveal(), $parameter->scope());
         $this->assertEquals($this->position, $parameter->position());
+        $this->assertEquals(0, $parameter->index());
     }
 }
