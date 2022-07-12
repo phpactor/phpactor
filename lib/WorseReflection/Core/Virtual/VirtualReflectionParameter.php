@@ -27,6 +27,8 @@ class VirtualReflectionParameter implements ReflectionParameter
     
     private Position $position;
 
+    private int $index;
+
     public function __construct(
         string $name,
         ReflectionFunctionLike $functionLike,
@@ -35,7 +37,8 @@ class VirtualReflectionParameter implements ReflectionParameter
         DefaultValue $default,
         bool $byReference,
         ReflectionScope $scope,
-        Position $position
+        Position $position,
+        int $index
     ) {
         $this->name = $name;
         $this->functionLike = $functionLike;
@@ -45,6 +48,7 @@ class VirtualReflectionParameter implements ReflectionParameter
         $this->byReference = $byReference;
         $this->scope = $scope;
         $this->position = $position;
+        $this->index = $index;
     }
 
     public function scope(): ReflectionScope
@@ -100,5 +104,10 @@ class VirtualReflectionParameter implements ReflectionParameter
     public function isVariadic(): bool
     {
         return false;
+    }
+
+    public function index(): int
+    {
+        return $this->index;
     }
 }

@@ -54,6 +54,11 @@ class ArrayType extends Type implements IterableType
 
     public function accepts(Type $type): Trinary
     {
+        if ($type instanceof ArrayLiteral) {
+            return Trinary::fromBoolean(
+                $this->keyType->accepts($type->keyType)->isTrue() && $this->valueType->accepts($type->valueType)->isTrue()
+            );
+        }
         return Trinary::fromBoolean($type instanceof ArrayType);
     }
 

@@ -4,6 +4,7 @@ namespace Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\ArrayKeyValueList;
 use Phpactor\DocblockParser\Ast\ArrayKeyValueNode;
+use Phpactor\DocblockParser\Ast\ConditionalNode;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
@@ -248,6 +249,10 @@ final class Parser
             return null;
         }
 
+        if ($this->tokens->current->type === Token::T_VARIABLE) {
+            return $this->parseConditionalType();
+        }
+
         if ($this->tokens->current->type === Token::T_NULLABLE) {
             $nullable = $this->tokens->chomp();
             return new NullableNode($nullable, $this->parseTypes());
@@ -255,7 +260,9 @@ final class Parser
 
         if ($this->tokens->current->type === Token::T_PAREN_OPEN) {
             $open = $this->tokens->chomp();
+            $this->tokens->chompWhitespace();
             $type = $this->parseTypes();
+            $this->tokens->chompWhitespace();
             $close = $this->tokens->chompIf(Token::T_PAREN_CLOSE);
 
             return new ParenthesizedType($open, $type, $close);
@@ -658,5 +665,33 @@ final class Parser
         }
 
         return new ArrayKeyValueNode($key, $colon, $type);
+    }
+
+    private function parseConditionalType(): TypeNode
+    {
+        $variable = $this->parseVariable();
+        if (!$this->tokens->if(Token::T_LABEL)) {
+            return new ConditionalNode($variable);
+        }
+        $is = $this->tokens->chomp();
+        if ($is->toString() !== 'is') {
+            return new ConditionalNode($variable, $is);
+        }
+        $this->tokens->chompWhitespace();
+        $isType = $this->parseType();
+        $this->tokens->chompWhitespace();
+        if (!$question = $this->tokens->chompIf(Token::T_NULLABLE)) {
+            return new ConditionalNode($variable, $is, $isType);
+        }
+        $this->tokens->chompWhitespace();
+        $left = $this->parseTypes();
+        $this->tokens->chompWhitespace();
+        if (!$colon = $this->tokens->chompIf(Token::T_COLON)) {
+            return new ConditionalNode($variable, $is, $isType);
+        }
+        $this->tokens->chompWhitespace();
+        $right = $this->parseTypes();
+
+        return new ConditionalNode($variable, $is, $isType, $question, $left, $colon, $right);
     }
 }

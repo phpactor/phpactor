@@ -35,8 +35,14 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
 
         /** @phpstan-ignore-next-line */
         if ($method->parameters) {
+            $index = 0;
             foreach ($method->parameters->getElements() as $parameter) {
-                $items[$parameter->getName()] = new ReflectionParameter($serviceLocator, $reflectionMethod, $parameter);
+                $items[$parameter->getName()] = new ReflectionParameter(
+                    $serviceLocator,
+                    $reflectionMethod,
+                    $parameter,
+                    $index
+                );
             }
         }
 
@@ -52,8 +58,14 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
          * @phpstan-ignore-next-line
          */
         if ($functionDeclaration->parameters) {
+            $index = 0;
             foreach ($functionDeclaration->parameters->getElements() as $parameter) {
-                $items[$parameter->getName()] = new ReflectionParameter($serviceLocator, $reflectionFunction, $parameter);
+                $items[$parameter->getName()] = new ReflectionParameter(
+                    $serviceLocator,
+                    $reflectionFunction,
+                    $parameter,
+                    $index++
+                );
             }
         }
 

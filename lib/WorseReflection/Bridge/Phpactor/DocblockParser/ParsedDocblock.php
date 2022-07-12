@@ -277,7 +277,7 @@ class ParsedDocblock implements DocBlock
         if (null === $parameterList) {
             return;
         }
-        foreach ($parameterList->parameters() as $parameterTag) {
+        foreach ($parameterList->parameters() as $index => $parameterTag) {
             assert($parameterTag instanceof ParameterTag);
             $type = $this->convertType($parameterTag->type);
             $collection->add(new VirtualReflectionParameter(
@@ -288,7 +288,8 @@ class ParsedDocblock implements DocBlock
                 DefaultValue::undefined(),
                 false,
                 $method->scope(),
-                $method->position()
+                $method->position(),
+                $index
             ));
         }
     }

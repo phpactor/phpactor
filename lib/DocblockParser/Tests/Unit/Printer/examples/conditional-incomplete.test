@@ -1,0 +1,12 @@
+/**
+ * @return ($foo)
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ReturnTag: = @return
+   ParenthesizedType: = (
+    ConditionalNode: = 
+     VariableNode: = $foo)
+ */

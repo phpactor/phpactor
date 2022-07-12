@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
@@ -125,5 +126,14 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable, ArrayAcc
     public function toShape(): ArrayShapeType
     {
         return new ArrayShapeType($this->typeMap);
+    }
+
+    public function accepts(Type $type): Trinary
+    {
+        if ($type instanceof ArrayType) {
+            return Trinary::maybe();
+        }
+
+        return parent::accepts($type);
     }
 }

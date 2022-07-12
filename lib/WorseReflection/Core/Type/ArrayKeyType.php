@@ -20,7 +20,7 @@ class ArrayKeyType extends ScalarType
     public function accepts(Type $type): Trinary
     {
         $parentAccepts = parent::accepts($type);
-        if (Trinary::false() !== $parentAccepts) {
+        if (!$parentAccepts->isFalse()) {
             return $parentAccepts;
         }
 

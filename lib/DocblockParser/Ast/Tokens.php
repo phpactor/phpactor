@@ -87,17 +87,25 @@ final class Tokens implements IteratorAggregate
         return $token;
     }
 
+    public function chompWhitespace(): void
+    {
+        while ($token = $this->chompIf(Token::T_WHITESPACE, Token::T_ASTERISK)) {
+        }
+    }
+
     /**
      * Chomp only if the current node is the given type
      */
-    public function chompIf(string $type): ?Token
+    public function chompIf(string ...$types): ?Token
     {
         if ($this->current === null) {
             return null;
         }
 
-        if ($this->current->type === $type) {
-            return $this->chomp($type);
+        foreach ($types as $type) {
+            if ($this->current->type === $type) {
+                return $this->chomp($type);
+            }
         }
 
         return null;

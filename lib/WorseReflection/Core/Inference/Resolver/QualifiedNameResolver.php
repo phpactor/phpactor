@@ -86,7 +86,7 @@ class QualifiedNameResolver implements Resolver
                 ]
             );
 
-            return $context->withType($function->inferredType());
+            return $context->withType($function->inferredType()->reduce());
         }
 
 

@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
@@ -220,17 +221,29 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @psalm-return int */',
             TypeFactory::int(),
         ];
+
+        yield 'conditional type' => [
+            '/** @return ($foo is true ? string : int) */',
+            TypeFactory::parenthesized(
+                new ConditionalType(
+                    '$foo',
+                    TypeFactory::boolLiteral(true),
+                    TypeFactory::string(),
+                    TypeFactory::int()
+                )
+            )
+        ];
     }
 
     public function testClassConstant(): void
     {
         $source = <<<'EOT'
-            <?php 
-            namespace Bar;
+                        <?php 
+                        namespace Bar;
 
-            class Foo { 
-                const BAR = "baz";
-            }
+                        class Foo { 
+                            const BAR = "baz";
+                        }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn(
@@ -243,13 +256,13 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     public function testClassConstantGlob(): void
     {
         $source = <<<'EOT'
-            <?php 
-            class Foo { 
-                const BAZ = "baz";
-                const BAR = "bar";
-                const ZED = "zed";
-                const SED = "sed";
-            }
+                        <?php 
+                        class Foo { 
+                            const BAZ = "baz";
+                            const BAR = "bar";
+                            const ZED = "zed";
+                            const SED = "sed";
+                        }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn($source)->first();
@@ -260,13 +273,13 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     public function testClassConstantGlobInArrayShape(): void
     {
         $source = <<<'EOT'
-            <?php 
-            class Foo { 
-                const BAZ = "baz";
-                const BAR = "bar";
-                const ZED = "zed";
-                const SED = "sed";
-            }
+                        <?php 
+                        class Foo { 
+                            const BAZ = "baz";
+                            const BAR = "bar";
+                            const ZED = "zed";
+                            const SED = "sed";
+                        }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn($source)->first();
