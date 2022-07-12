@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
+use Phpactor\DocblockParser\Ast\ConditionalNode;
 use Phpactor\DocblockParser\Ast\Type\ArrayShapeNode;
 use Phpactor\DocblockParser\Ast\Type\IntersectionNode;
 use Phpactor\DocblockParser\Ast\Type\ListNode;
@@ -35,6 +36,7 @@ use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
+use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
@@ -136,6 +138,9 @@ class TypeConverter
         }
         if ($type instanceof ConstantNode) {
             return $this->convertConstant($type);
+        }
+        if ($type instanceof ConditionalNode) {
+            return $this->convertConditional($type);
         }
 
         return new MissingType();
@@ -378,5 +383,10 @@ class TypeConverter
     private function convertNullable(NullableNode $type): Type
     {
         return new NullableType($this->convert($type->type));
+    }
+
+    private function convertConditional(ConditionalNode $type): Type
+    {
+        return new ConditionalType($type->variable->name()->toString(), $this->convert($type->isType), $this->convert($type->left), $this->convert($type->right));
     }
 }

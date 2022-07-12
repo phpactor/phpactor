@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
@@ -219,6 +220,18 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         yield 'psalm prefix' => [
             '/** @psalm-return int */',
             TypeFactory::int(),
+        ];
+
+        yield 'conditional type' => [
+            '/** @return ($foo is true ? string : int) */',
+            TypeFactory::parenthesized(
+            new ConditionalType(
+                '$foo',
+                TypeFactory::boolLiteral(true),
+                TypeFactory::string(),
+                TypeFactory::int()
+            )
+            )
         ];
     }
 
