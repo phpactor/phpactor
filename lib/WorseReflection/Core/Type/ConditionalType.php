@@ -77,6 +77,6 @@ class ConditionalType extends Type
             return $evaluator($this->left);
         }
 
-        return $this->right;
+        return $evaluator($this->right);
     }
 }

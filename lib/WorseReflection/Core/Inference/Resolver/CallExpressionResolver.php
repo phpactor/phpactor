@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -29,9 +30,21 @@ class CallExpressionResolver implements Resolver
         $containerType = $context->containerType();
 
         if ($type instanceof ConditionalType && $containerType instanceof ReflectedClassType) {
-            $method = $containerType->reflectionOrNull()->methods()->get($context->symbol()->name());
+            $reflection = $containerType->reflectionOrNull();
+            if (!$reflection) {
+                return $context;
+            }
+            $method = $reflection->methods()->get($context->symbol()->name());
             $context = $context->withType($type->evaluate(
                 $method,
+                FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
+            ));
+        }
+
+        if ($context->symbol()->symbolType() === Symbol::FUNCTION && $type instanceof ConditionalType) {
+            $function = $resolver->reflector()->reflectFunction($context->symbol()->name());
+            $context = $context->withType($type->evaluate(
+                $function,
                 FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
             ));
         }
