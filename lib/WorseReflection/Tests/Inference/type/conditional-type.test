@@ -8,7 +8,11 @@ interface TreeMapper
      *
      * @param string|class-string<T> $signature
      * @param mixed $source
-     * @return ($signature is class-string<T> ? T : mixed)
+     * @return (
+     *     $signature is class-string<T>
+     *         ? T
+     *         : mixed
+     * )
      *
      * @throws MappingError
      */
@@ -18,6 +22,6 @@ interface TreeMapper
 function foo(TreeMapper $mapper) {
     $map = $mapper->map('foo', 'bar');
 
-    // TODO: Support for class-string<T>
-    wrAssertType('T', $map);
+    // conditional types are currently not supported
+    wrAssertType('mixed', $map);
 }
