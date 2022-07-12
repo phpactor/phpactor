@@ -669,23 +669,23 @@ final class Parser
     {
         $variable = $this->parseVariable();
         if (!$this->tokens->if(Token::T_LABEL)) {
-            return null;
+            return new ConditionalNode($variable);
         }
-        $is  =$this->tokens->chomp();
+        $is = $this->tokens->chomp();
         if ($is->toString() !== 'is') {
-            return null;
+            return new ConditionalNode($variable, $is);
         }
         $this->tokens->chompWhitespace();
         $isType = $this->parseType();
         $this->tokens->chompWhitespace();
         if (!$question = $this->tokens->chompIf(Token::T_NULLABLE)) {
-            return null;
+            return new ConditionalNode($variable, $is, $isType);
         }
         $this->tokens->chompWhitespace();
         $left = $this->parseType();
         $this->tokens->chompWhitespace();
         if (!$colon = $this->tokens->chompIf(Token::T_COLON)) {
-            return null;
+            return new ConditionalNode($variable, $is, $isType);
         }
         $this->tokens->chompWhitespace();
         $right = $this->parseType();

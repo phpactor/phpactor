@@ -24,12 +24,12 @@ class ConditionalNode extends TypeNode
 
     public function __construct(
         VariableNode $variable,
-        ?Token $is,
-        ?TypeNode $isType,
-        ?Token $question,
-        ?TypeNode $left,
-        ?Token $colon,
-        ?TypeNode $right
+        ?Token $is = null,
+        ?TypeNode $isType = null,
+        ?Token $question = null,
+        ?TypeNode $left = null,
+        ?Token $colon = null,
+        ?TypeNode $right = null
     ) {
         $this->variable = $variable;
         $this->is = $is;
