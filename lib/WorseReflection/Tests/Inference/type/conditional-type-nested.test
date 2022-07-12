@@ -1,0 +1,17 @@
+<?php
+
+interface TreeMapper
+{
+    /**
+     * @return ($signature is "foo" ? ($source is string ? float : int) : int)
+     *
+     * @throws MappingError
+     */
+    public function map(string $signature, $source);
+}
+
+function foo(TreeMapper $mapper) {
+    $map = $mapper->map('foo', 'bar');
+
+    wrAssertType('float', $map);
+}
