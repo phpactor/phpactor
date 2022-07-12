@@ -667,7 +667,7 @@ final class Parser
         return new ArrayKeyValueNode($key, $colon, $type);
     }
 
-    private function parseConditionalType(): ?TypeNode
+    private function parseConditionalType(): TypeNode
     {
         $variable = $this->parseVariable();
         if (!$this->tokens->if(Token::T_LABEL)) {
@@ -693,6 +693,5 @@ final class Parser
         $right = $this->parseType();
 
         return new ConditionalNode($variable, $is, $isType, $question, $left, $colon, $right);
-
     }
 }

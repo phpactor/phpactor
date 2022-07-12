@@ -33,8 +33,7 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         ReflectionFunctionLike $functionLike,
         Parameter $parameter,
         int $index
-    )
-    {
+    ) {
         $this->serviceLocator = $serviceLocator;
         $this->parameter = $parameter;
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($serviceLocator->reflector());
@@ -116,6 +115,11 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         return $this->parameter->dotDotDotToken !== null;
     }
 
+    public function index(): int
+    {
+        return $this->index;
+    }
+
     protected function node(): Node
     {
         return $this->parameter;
@@ -124,10 +128,5 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
-    }
-
-    public function index(): int
-    {
-        return $this->index;
     }
 }

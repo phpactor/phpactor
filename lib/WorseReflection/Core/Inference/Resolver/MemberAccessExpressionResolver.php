@@ -7,7 +7,6 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\ConditionalTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\GenericTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -15,7 +14,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -28,13 +26,9 @@ class MemberAccessExpressionResolver implements Resolver
 {
     private GenericTypeResolver $genericResolver;
 
-    private ConditionalTypeResolver $conditionalTypeResolver;
-
-
     public function __construct()
     {
         $this->genericResolver = new GenericTypeResolver();
-        $this->conditionalTypeResolver = new ConditionalTypeResolver();
     }
 
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext

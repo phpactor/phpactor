@@ -2,15 +2,19 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ConditionalType extends Type
 {
     private Type $isType;
+
     private Type $left;
+
     private Type $right;
 
     private string $variable;
@@ -50,8 +54,14 @@ class ConditionalType extends Type
 
     public function evaluate(ReflectionFunctionLike $functionLike, FunctionArguments $functionArguments): Type
     {
-        $parameter = $functionLike->parameters()->get(ltrim($this->variable, '$'));
+        try {
+            $parameter = $functionLike->parameters()->get(ltrim($this->variable, '$'));
+        } catch (NotFound $notFound) {
+            return TypeFactory::undefined();
+        }
+
         $argumentType = $functionArguments->at($parameter->index())->type();
+
         $evaluator = function (Type $type) use ($functionLike, $functionArguments): Type {
             if ($type instanceof ParenthesizedType && $type->type instanceof ConditionalType) {
                 return $type->type->evaluate($functionLike, $functionArguments);

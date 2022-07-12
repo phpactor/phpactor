@@ -15,11 +15,17 @@ class ConditionalNode extends TypeNode
     ];
 
     public VariableNode $variable;
+
     public ?Token $is;
+
     public ?TypeNode $isType;
+
     public ?Token $question;
+
     public ?TypeNode $left;
+
     public ?Token $colon;
+
     public ?TypeNode $right;
 
     public function __construct(

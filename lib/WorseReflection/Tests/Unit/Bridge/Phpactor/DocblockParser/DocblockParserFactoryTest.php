@@ -238,13 +238,13 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     public function testClassConstant(): void
     {
         $source = <<<'EOT'
-            <?php 
-            namespace Bar;
+                        <?php 
+                        namespace Bar;
 
-            class Foo { 
-                const BAR = "baz";
-            }
-EOT;
+                        class Foo { 
+                            const BAR = "baz";
+                        }
+            EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn(
             $source
@@ -256,14 +256,14 @@ EOT;
     public function testClassConstantGlob(): void
     {
         $source = <<<'EOT'
-            <?php 
-            class Foo { 
-                const BAZ = "baz";
-                const BAR = "bar";
-                const ZED = "zed";
-                const SED = "sed";
-            }
-EOT;
+                        <?php 
+                        class Foo { 
+                            const BAZ = "baz";
+                            const BAR = "bar";
+                            const ZED = "zed";
+                            const SED = "sed";
+                        }
+            EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
@@ -273,14 +273,14 @@ EOT;
     public function testClassConstantGlobInArrayShape(): void
     {
         $source = <<<'EOT'
-            <?php 
-            class Foo { 
-                const BAZ = "baz";
-                const BAR = "bar";
-                const ZED = "zed";
-                const SED = "sed";
-            }
-EOT;
+                        <?php 
+                        class Foo { 
+                            const BAZ = "baz";
+                            const BAR = "bar";
+                            const ZED = "zed";
+                            const SED = "sed";
+                        }
+            EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return array{string,Foo::*} */');
