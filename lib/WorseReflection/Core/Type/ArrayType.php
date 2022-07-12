@@ -6,7 +6,6 @@ use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
-use Phpactor\WorseReflection\Tests\Assert\TrinaryAssert;
 
 class ArrayType extends Type implements IterableType
 {

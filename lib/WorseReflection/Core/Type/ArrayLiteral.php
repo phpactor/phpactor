@@ -132,7 +132,6 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable, ArrayAcc
     {
         if ($type instanceof ArrayType) {
             return Trinary::maybe();
-
         }
 
         return parent::accepts($type);
