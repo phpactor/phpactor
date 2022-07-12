@@ -52,12 +52,18 @@ class ConditionalType extends Type
     {
         $parameter = $functionLike->parameters()->get(ltrim($this->variable, '$'));
         $argumentType = $functionArguments->at($parameter->index())->type();
+        $evaluator = function (Type $type) use ($functionLike, $functionArguments): Type {
+            if ($type instanceof ParenthesizedType && $type->type instanceof ConditionalType) {
+                return $type->type->evaluate($functionLike, $functionArguments);
+            }
+            return $type;
+        };
         if (!$argumentType->isDefined()) {
-            return $this->right;
+            return $evaluator($this->right);
         }
 
         if ($this->isType->accepts($argumentType)->isTrue()) {
-            return $this->left;
+            return $evaluator($this->left);
         }
 
         return $this->right;
