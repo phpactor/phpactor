@@ -1,0 +1,20 @@
+/**
+ * @return ($foo is "foo" ? ($bar is 123 ? Foo : Bar) : string)
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ReturnTag: = @return
+   ParenthesizedType: = (
+    ConditionalNode: = 
+     VariableNode: = $foois
+     LiteralStringNode: = "foo"?
+     ParenthesizedType: = (
+      ConditionalNode: = 
+       VariableNode: = $baris
+       LiteralIntegerNode: = 123?
+       ClassNode: = Foo:
+       ClassNode: = Bar):
+     ScalarNode: = string)
+ */
