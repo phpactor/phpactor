@@ -90,3 +90,25 @@ Integer Types
     ``123_123``     ``7.4``        ✔          Decimal       
     ``0o123``       ``8.1``        ✘          Octal       
     ==============  =============  =========  ===========
+
+Conditional Types
+~~~~~~~~~~~~~~~~~
+
+Phpactor undestands conditional return types of the form:
+
+
+.. code-block::
+
+    /**
+     * @return (
+     *     $array is array<int>
+     *     ? int
+     *     : ($array is array<float>
+     *         ? float
+     *         : float|int
+     *     )
+     * )
+     */
+    function array_some(array $array) {
+        return array_sum($array);
+    }
