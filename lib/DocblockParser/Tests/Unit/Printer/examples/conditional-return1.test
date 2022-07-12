@@ -1,13 +1,15 @@
 /**
- * @return ($foo is true ? int : string)
+ * @return ($foo is "foo" ? int : string)
  */
 ---
-''
-'Docblock: = \n
- ElementList: = /**\n
- * \n
-  ReturnTag: = @return\n
-   ParenthesizedType: = (\n
-    ConditionNode: = $foo\n
-   TextNode: = is true ? int : string)\n
+Docblock: = 
+ ElementList: = /**
+ * 
+  ReturnTag: = @return
+   ParenthesizedType: = (
+    ConditionalNode: = 
+     VariableNode: = $foois
+     LiteralStringNode: = "foo"?
+     ScalarNode: = int:
+     ScalarNode: = string)
  */

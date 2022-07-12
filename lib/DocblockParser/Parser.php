@@ -4,6 +4,7 @@ namespace Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\ArrayKeyValueList;
 use Phpactor\DocblockParser\Ast\ArrayKeyValueNode;
+use Phpactor\DocblockParser\Ast\ConditionalNode;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
@@ -246,6 +247,10 @@ final class Parser
     {
         if (null === $this->tokens->current) {
             return null;
+        }
+
+        if ($this->tokens->current->type === Token::T_VARIABLE) {
+            return $this->parseConditionalType();
         }
 
         if ($this->tokens->current->type === Token::T_NULLABLE) {
@@ -658,5 +663,34 @@ final class Parser
         }
 
         return new ArrayKeyValueNode($key, $colon, $type);
+    }
+
+    private function parseConditionalType(): ?TypeNode
+    {
+        $variable = $this->parseVariable();
+        if (!$this->tokens->if(Token::T_LABEL)) {
+            return null;
+        }
+        $is  =$this->tokens->chomp();
+        if ($is->toString() !== 'is') {
+            return null;
+        }
+        $this->tokens->chompWhitespace();
+        $isType = $this->parseType();
+        $this->tokens->chompWhitespace();
+        if (!$question = $this->tokens->chompIf(Token::T_NULLABLE)) {
+            return null;
+        }
+        $this->tokens->chompWhitespace();
+        $left = $this->parseType();
+        $this->tokens->chompWhitespace();
+        if (!$colon = $this->tokens->chompIf(Token::T_COLON)) {
+            return null;
+        }
+        $this->tokens->chompWhitespace();
+        $right = $this->parseType();
+
+        return new ConditionalNode($variable, $is, $isType, $question, $left, $colon, $right);
+
     }
 }
