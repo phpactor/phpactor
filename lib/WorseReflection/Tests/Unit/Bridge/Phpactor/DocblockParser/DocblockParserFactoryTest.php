@@ -225,12 +225,12 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         yield 'conditional type' => [
             '/** @return ($foo is true ? string : int) */',
             TypeFactory::parenthesized(
-            new ConditionalType(
-                '$foo',
-                TypeFactory::boolLiteral(true),
-                TypeFactory::string(),
-                TypeFactory::int()
-            )
+                new ConditionalType(
+                    '$foo',
+                    TypeFactory::boolLiteral(true),
+                    TypeFactory::string(),
+                    TypeFactory::int()
+                )
             )
         ];
     }
@@ -244,7 +244,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             class Foo { 
                 const BAR = "baz";
             }
-            EOT;
+EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn(
             $source
@@ -263,7 +263,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                 const ZED = "zed";
                 const SED = "sed";
             }
-            EOT;
+EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
@@ -280,7 +280,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                 const ZED = "zed";
                 const SED = "sed";
             }
-            EOT;
+EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return array{string,Foo::*} */');
