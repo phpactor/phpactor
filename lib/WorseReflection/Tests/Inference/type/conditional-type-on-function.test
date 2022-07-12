@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @param array $array
+ *
+ * @return (
+ *     $array is array<int>
+ *     ? int
+ *     : ($array is array<float>
+ *         ? float
+ *         : float|int
+ *     )
+ * )
+ */
+function array_some(array $array) {}
+
+wrAssertType('float|int', array_some([]));
