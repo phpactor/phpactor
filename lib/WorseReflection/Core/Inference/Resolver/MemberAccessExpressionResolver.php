@@ -77,7 +77,7 @@ class MemberAccessExpressionResolver implements Resolver
                 if (!$classType instanceof ClassType) {
                     return $information;
                 }
-                return $information->withType(TypeFactory::stringLiteral($classType->name()->full()));
+                return $information->withType(TypeFactory::classString($classType->name()->full()));
             }
         }
 

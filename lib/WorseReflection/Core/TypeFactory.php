@@ -339,6 +339,11 @@ class TypeFactory
         return new FalseType();
     }
 
+    public static function classString(string $classFqn): ClassStringType
+    {
+        return new ClassStringType(ClassName::fromString($classFqn));
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
