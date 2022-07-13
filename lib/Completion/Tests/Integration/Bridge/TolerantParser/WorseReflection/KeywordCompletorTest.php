@@ -26,25 +26,29 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     {
         yield 'member keywords' => [
             '<?php class Foobar { <>',
-            $this->expect(['private', 'protected', 'public']),
+            $this->expect(['private ', 'protected ', 'public ']),
         ];
 
         yield 'member keyword postfix' => [
             '<?php class Foobar { private <>',
-            $this->expect(['const', 'function']),
+            $this->expect(['const ', 'function ']),
+        ];
+        yield '__construct' => [
+            '<?php class Foobar { public function __<>',
+            $this->expect(['__construct(']),
         ];
         yield 'member keyword postfix 2' => [
             '<?php class Foobar { private func<>',
-            $this->expect(['const', 'function']),
+            $this->expect(['const ', 'function ']),
         ];
 
         yield 'class implements 1' => [
             '<?php class Foobar <>',
-            $this->expect(['extends', 'implements']),
+            $this->expect(['extends ', 'implements ']),
         ];
         yield 'class implements 2' => [
             '<?php class Foobar impl<>',
-            $this->expect(['extends', 'implements']),
+            $this->expect(['extends ', 'implements ']),
         ];
     }
 

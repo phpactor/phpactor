@@ -241,4 +241,15 @@ class CompletionContext
             $node instanceof TraitUseClause ||
             $node instanceof ClassBaseClause;
     }
+
+    public static function functionName(Node $node): bool
+    {
+        $node = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->getStartPosition());
+
+        if (!$node instanceof MethodDeclaration) {
+            return false;
+        }
+
+        return true;
+    }
 }
