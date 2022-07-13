@@ -20,6 +20,17 @@ class KeywordCompletor implements TolerantCompletor
             yield from $this->keywords(['implements ', 'extends ']);
             return true;
         }
+        if (CompletionContext::declaration($node, $offset)) {
+            yield from $this->keywords(['class ', 'trait ', 'function ', 'interface ']);
+            return true;
+        }
+
+        if (CompletionContext::functionName($node)) {
+            yield from $this->keywords([
+                '__construct(',
+            ]);
+            return true;
+        }
 
         if (
             CompletionContext::classMembersBody($node->parent)
@@ -27,13 +38,6 @@ class KeywordCompletor implements TolerantCompletor
             yield from $this->keywords([
                 'function ',
                 'const ',
-            ]);
-            return true;
-        }
-
-        if (CompletionContext::functionName($node)) {
-            yield from $this->keywords([
-                '__construct(',
             ]);
             return true;
         }
@@ -55,7 +59,7 @@ class KeywordCompletor implements TolerantCompletor
         foreach ($keywords as $keyword) {
             yield Suggestion::createWithOptions($keyword, [
                 'type' => Suggestion::TYPE_KEYWORD,
-                'priority' => Suggestion::PRIORITY_HIGH,
+                'priority' => 1,
             ]);
         }
     }

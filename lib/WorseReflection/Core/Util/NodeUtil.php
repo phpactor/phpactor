@@ -251,4 +251,22 @@ class NodeUtil
 
         return $node;
     }
+
+    public static function previousSibling(Node $node): ?Node
+    {
+        $parent = $node->parent;
+        $previous = null;
+        foreach ($parent->getChildNodes() as $childNode) {
+            if (null === $previous) {
+                $previous = $childNode;
+                continue;
+            }
+            if ($childNode === $node) {
+                return $previous;
+            }
+            $previous = $childNode;
+        }
+
+        return null;
+    }
 }
