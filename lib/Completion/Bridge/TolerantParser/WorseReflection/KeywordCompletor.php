@@ -25,7 +25,7 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
-        if (CompletionContext::functionName($node)) {
+        if (CompletionContext::methodName($node)) {
             yield from $this->keywords([
                 '__construct(',
             ]);

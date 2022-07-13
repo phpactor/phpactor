@@ -23,7 +23,6 @@ use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
-use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitUseClause;
@@ -233,30 +232,12 @@ class CompletionContext
         return true;
     }
 
-    public static function functionName(Node $node): bool
+    public static function methodName(Node $node): bool
     {
-        $node = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->getStartPosition());
-
-        if (!$node instanceof MethodDeclaration) {
-            return false;
-        }
-
-        return true;
+        return $node->parent instanceof MethodDeclaration;
     }
 
-    private static function isClassClause(?Node $node): bool
-    {
-        if (null === $node) {
-            return false;
-        }
-        return
-            $node instanceof InterfaceBaseClause ||
-            $node instanceof ClassInterfaceClause ||
-            $node instanceof TraitUseClause ||
-            $node instanceof ClassBaseClause;
-    }
-
-    public static function declaration(Node $node, ByteOffset $offset)
+    public static function declaration(Node $node, ByteOffset $offset): bool
     {
         if (!$node->parent) {
             return false;
@@ -305,5 +286,17 @@ class CompletionContext
         }
 
         return true;
+    }
+
+    private static function isClassClause(?Node $node): bool
+    {
+        if (null === $node) {
+            return false;
+        }
+        return
+            $node instanceof InterfaceBaseClause ||
+            $node instanceof ClassInterfaceClause ||
+            $node instanceof TraitUseClause ||
+            $node instanceof ClassBaseClause;
     }
 }
