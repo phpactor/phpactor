@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -28,33 +29,33 @@ class CallExpressionResolver implements Resolver
         $resolvableNode = $node->callableExpression;
 
         $context = $resolver->resolveNode($frame, $resolvableNode);
-        $type = $context->type();
+        $returnType = $context->type();
         $containerType = $context->containerType();
 
-        if ($type instanceof ConditionalType) {
-            $context = $this->processConditionalType($type, $containerType, $context, $resolver, $frame, $node);
+        if ($returnType instanceof ConditionalType) {
+            $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $frame, $node);
         }
 
-        if ($resolvableNode instanceof ParenthesizedExpression && $type instanceof ReflectedClassType && $type->isInvokable()) {
+        if ($resolvableNode instanceof ParenthesizedExpression && $returnType instanceof ReflectedClassType && $returnType->isInvokable()) {
             return NodeContextFactory::forNode($node)
-                ->withType($type->invokeType());
+                ->withType($returnType->invokeType());
         }
 
-        if ($type instanceof CallableType) {
+        if ($returnType instanceof CallableType) {
             return NodeContextFactory::forNode($node)
-                ->withType($type->returnType);
+                ->withType($returnType->returnType);
         }
 
         if (!$resolvableNode instanceof Variable) {
             return $context;
         }
 
-        if ($type instanceof ReflectedClassType && $type->isInvokable()) {
+        if ($returnType instanceof ReflectedClassType && $returnType->isInvokable()) {
             return NodeContextFactory::forNode($node)
-                ->withType($type->invokeType());
+                ->withType($returnType->invokeType());
         }
 
-        if (!$type instanceof CallableType) {
+        if (!$returnType instanceof CallableType) {
             return NodeContext::none();
         }
 
@@ -63,7 +64,7 @@ class CallExpressionResolver implements Resolver
             $resolvableNode->getStartPosition(),
             $resolvableNode->getEndPosition(),
             [
-                'type' => $type->returnType,
+                'type' => $returnType->returnType,
             ]
         );
     }
