@@ -230,6 +230,17 @@ class CompletionContext
         return true;
     }
 
+    public static function functionName(Node $node): bool
+    {
+        $node = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->getStartPosition());
+
+        if (!$node instanceof MethodDeclaration) {
+            return false;
+        }
+
+        return true;
+    }
+
     private static function isClassClause(?Node $node): bool
     {
         if (null === $node) {
@@ -240,16 +251,5 @@ class CompletionContext
             $node instanceof ClassInterfaceClause ||
             $node instanceof TraitUseClause ||
             $node instanceof ClassBaseClause;
-    }
-
-    public static function functionName(Node $node): bool
-    {
-        $node = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->getStartPosition());
-
-        if (!$node instanceof MethodDeclaration) {
-            return false;
-        }
-
-        return true;
     }
 }

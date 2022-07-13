@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -16,7 +15,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\CallableType;
-use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -70,14 +68,13 @@ class CallExpressionResolver implements Resolver
     }
 
     private function processConditionalType(
-        Type $type,
+        ConditionalType $type,
         Type $containerType,
         NodeContext $context,
         NodeContextResolver $resolver,
         Frame $frame,
         CallExpression $node
-    ): NodeContext
-    {
+    ): NodeContext {
         if ($containerType instanceof ReflectedClassType) {
             $reflection = $containerType->reflectionOrNull();
             if (!$reflection) {

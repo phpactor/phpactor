@@ -50,6 +50,15 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php class Foobar impl<>',
             $this->expect(['extends ', 'implements ']),
         ];
+        yield 'class implements 2' => [
+            '<?php class Foobar impl<>',
+            $this->expect(['extends ', 'implements ']),
+        ];
+
+        yield 'class keyword' => [
+            '<?php cl<>',
+            $this->expect(['class ', 'trait ', 'function ', 'interface ']),
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor

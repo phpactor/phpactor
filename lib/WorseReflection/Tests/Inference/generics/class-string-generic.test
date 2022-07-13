@@ -13,6 +13,8 @@ class Foo {
 
 $f = new Foo();
 $f = $f->foobar(Foo::class);
-wrAssertType('Foo', $f);
+
+// not supported yet
+wrAssertType('T', $f);
 
 
