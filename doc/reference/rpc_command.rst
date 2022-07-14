@@ -1,5 +1,5 @@
 Commands
-=============
+========
 
 
 .. This document is generated via the `development:command-reference` command
@@ -18,7 +18,7 @@ GotoDefinitionHandler
 ---------------------
 
 
-.. _param_language:
+.. _RpcCommand_GlobalDefinitionHandler_language:
 
 
 ``language``
@@ -31,7 +31,7 @@ Type: string
 **Default**: ``"php"``
 
 
-.. _param_target:
+.. _RpcCommand_GlobalDefinitionHandler_target:
 
 
 ``target``
@@ -44,7 +44,7 @@ Type: string
 **Default**: ``"focused_window"``
 
 
-.. _param_offset:
+.. _RpcCommand_GlobalDefinitionHandler_offset:
 
 
 ``offset``
@@ -54,7 +54,7 @@ Type: string
 **Default**: ``null``
 
 
-.. _param_source:
+.. _RpcCommand_GlobalDefinitionHandler_source:
 
 
 ``source``
@@ -64,7 +64,7 @@ Type: string
 **Default**: ``null``
 
 
-.. _param_path:
+.. _RpcCommand_GlobalDefinitionHandler_path:
 
 
 ``path``
