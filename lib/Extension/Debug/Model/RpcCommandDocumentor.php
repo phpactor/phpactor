@@ -3,31 +3,36 @@
 namespace Phpactor\Extension\Debug\Model;
 
 use Phpactor\MapResolver\Resolver;
+use ReflectionClass;
 use RuntimeException;
+use Phpactor\Extension\Rpc\Handler;
 
-class ExtensionDocumentor implements Documentor
+class RpcCommandDocumentor implements Documentor
 {
     /**
-     * @var array<string>
+     * @var array<class-string>
      */
-    private array $extensionFqns;
+    private array $handlerFqns;
 
     private DefinitionDocumentor $definitionDocumentor;
 
     /**
-     * @param array<string> $extensionFqns
+     * @param array<class-string> $handlerFqns
      */
-    public function __construct(array $extensionFqns, DefinitionDocumentor $definitionDocumentor)
-    {
-        $this->extensionFqns = $extensionFqns;
+    public function __construct(
+        array $handlerFqns,
+        DefinitionDocumentor $definitionDocumentor
+    ) {
+        $this->handlerFqns = $handlerFqns;
         $this->definitionDocumentor = $definitionDocumentor;
     }
+
 
     public function document(string $commandName=''): string
     {
         $docs = [
-            'Configuration',
-            '=============',
+            'Commands',
+            '========',
             "\n",
             ".. This document is generated via the `$commandName` command",
             "\n",
@@ -37,8 +42,8 @@ class ExtensionDocumentor implements Documentor
             '   :local:',
             "\n",
         ];
-        foreach ($this->extensionFqns as $extensionFqn) {
-            $documentation = $this->documentExtension($extensionFqn);
+        foreach ($this->handlerFqns as $handlerFqn) {
+            $documentation = $this->documentHandler($handlerFqn);
             if (null === $documentation) {
                 continue;
             }
@@ -47,19 +52,21 @@ class ExtensionDocumentor implements Documentor
         return implode("\n", $docs);
     }
 
-    private function documentExtension(string $extensionClass): ?string
+    /**
+     * @param class-string $handlerClass
+     */
+    private function documentHandler(string $handlerClass): ?string
     {
-        $parts = explode('\\', $extensionClass);
+        $parts = explode('\\', $handlerClass);
         $documentedName = end($parts);
 
         /** @phpstan-ignore-next-line */
         if (false === $documentedName) {
             throw new RuntimeException(sprintf(
                 'Invalid extension class name "%s"',
-                $extensionClass
+                $handlerClass
             ));
         }
-
         $help = [
             '.. _' . $documentedName . ':',
             "\n",
@@ -68,18 +75,21 @@ class ExtensionDocumentor implements Documentor
             "\n",
         ];
 
-        $extension = new $extensionClass;
+
+        $class = new ReflectionClass($handlerClass);
+        $handler = $class->newInstanceWithoutConstructor();
+        assert($handler instanceof Handler);
 
         $resolver = new Resolver();
-        $extension->configure($resolver);
+        $handler->configure($resolver);
 
-        $hasDefinitions = false;
+        $hasDocumentation = false;
         foreach ($resolver->definitions() as $definition) {
-            $hasDefinitions = true;
-            $help[] = $this->definitionDocumentor->document('param', $definition);
+            $help[] = $this->definitionDocumentor->document('RpcCommand_GlobalDefinitionHandler', $definition);
+            $hasDocumentation = true;
         }
 
-        if (!$hasDefinitions) {
+        if (!$hasDocumentation) {
             return null;
         }
 

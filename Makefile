@@ -18,7 +18,7 @@ build/vimdoc:
 
 build/vimdoc/build: build/vimdoc
 	cd build/vimdoc; python3 setup.py config
-	cd build/vimdoc; python3 setup.py build 
+	cd build/vimdoc; python3 setup.py build
 
 build/bin/vimdoc: build/vimdoc/build
 	cd build/vimdoc; python3 setup.py install --user
@@ -28,6 +28,7 @@ vimdoc: build/bin/vimdoc
 
 configreference:
 	./bin/phpactor development:configuration-reference > doc/reference/configuration.rst
+	./bin/phpactor development:command-reference > doc/reference/rpc_command.rst
 
 # Put it first so that "make" without argument is like "make help".
 help:

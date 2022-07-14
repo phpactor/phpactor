@@ -42,6 +42,10 @@ class GotoDefinitionHandler implements Handler
             self::PARAM_SOURCE,
             self::PARAM_PATH,
         ]);
+        $resolver->setTypes([
+            self::PARAM_LANGUAGE => 'string',
+            self::PARAM_TARGET => 'string',
+        ]);
     }
 
     public function handle(array $arguments)

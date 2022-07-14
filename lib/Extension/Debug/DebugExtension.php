@@ -7,27 +7,51 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Console\ConsoleExtension;
-use Phpactor\Extension\Debug\Command\DocumentExtensionsCommand;
+use Phpactor\Extension\Debug\Command\GenerateDocumentationCommand;
 use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
+use Phpactor\Extension\Debug\Model\RpcCommandDocumentor;
+use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
 use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
+use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoDefinitionHandler;
 use Phpactor\MapResolver\Resolver;
 
 class DebugExtension implements Extension
 {
     public function load(ContainerBuilder $container): void
     {
+        $container->register(DefinitionDocumentor::class, function (Container $container) {
+            return new DefinitionDocumentor();
+        });
+
         $container->register(ExtensionDocumentor::class, function (Container $container) {
             return new ExtensionDocumentor(
-                $container->getParameter(PhpactorContainer::PARAM_EXTENSION_CLASSES)
+                $container->getParameter(PhpactorContainer::PARAM_EXTENSION_CLASSES),
+                $container->get(DefinitionDocumentor::class)
             );
         });
-        $container->register(DocumentExtensionsCommand::class, function (Container $container) {
-            return new DocumentExtensionsCommand(
-                $container->get(ExtensionDocumentor::class),
+
+        $container->register(RpcCommandDocumentor::class, function (Container $container) {
+            return new RpcCommandDocumentor(
+                [
+                    GotoDefinitionHandler::class
+                ],
+                $container->get(DefinitionDocumentor::class)
             );
+        });
+
+        $container->register('generate_documentation_command.extensions', function (Container $container) {
+            return new GenerateDocumentationCommand($container->get(ExtensionDocumentor::class));
         }, [
             ConsoleExtension::TAG_COMMAND => [
                 'name' => 'development:configuration-reference'
+            ]
+        ]);
+
+        $container->register('generate_documentation_command.command', function (Container $container) {
+            return new GenerateDocumentationCommand($container->get(RpcCommandDocumentor::class));
+        }, [
+            ConsoleExtension::TAG_COMMAND => [
+                'name' => 'development:command-reference'
             ]
         ]);
 
@@ -39,7 +63,7 @@ class DebugExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

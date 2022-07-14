@@ -2,16 +2,16 @@
 
 namespace Phpactor\Extension\Debug\Command;
 
-use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
+use Phpactor\Extension\Debug\Model\Documentor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class DocumentExtensionsCommand extends Command
+class GenerateDocumentationCommand extends Command
 {
-    private ExtensionDocumentor $documentor;
+    private Documentor $documentor;
 
-    public function __construct(ExtensionDocumentor $documentor)
+    public function __construct(Documentor $documentor)
     {
         parent::__construct();
         $this->documentor = $documentor;
@@ -24,7 +24,7 @@ class DocumentExtensionsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        fwrite(STDOUT, $this->documentor->document());
+        fwrite(STDOUT, $this->documentor->document($this->getName()));
         return 0;
     }
 }
