@@ -53,8 +53,10 @@ final class OffsetInfo
             $frame = [];
 
             foreach (['locals', 'properties'] as $assignmentType) {
-                /** @var $local Variable */
+                /** @var Variable $local */
                 foreach ($result->frame()->$assignmentType() as $local) {
+                    echo get_class($local);
+                    die();
                     $info = sprintf(
                         '%s = (%s) %s',
                         $local->name(),
