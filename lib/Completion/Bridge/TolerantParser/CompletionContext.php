@@ -17,6 +17,8 @@ use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\QualifiedName as MicrosoftQualifiedName;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
@@ -224,6 +226,62 @@ class CompletionContext
             return false;
         }
         if (!$anonymous->anonymousFunctionUseClause) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function methodName(Node $node): bool
+    {
+        return $node->parent instanceof MethodDeclaration;
+    }
+
+    public static function declaration(Node $node, ByteOffset $offset): bool
+    {
+        if (!$node->parent) {
+            return false;
+        }
+        if (!$node->parent->parent) {
+            return false;
+        }
+        if (!$node instanceof MicrosoftQualifiedName) {
+            return false;
+        }
+        if (!$node->parent->parent instanceof SourceFileNode) {
+            return false;
+        }
+
+        if ($node->parent->getText() !== $node->getText()) {
+            return false;
+        }
+
+        $previous = NodeUtil::previousSibling($node->parent);
+
+        // for some reason `class Foobar { func<>` will result in `func` being an sibling to `class Foobar` instead of
+        // within the members node.
+        // To fix this ensure that if the previous is a declaration then make sure that it doesn't have a missing closed token
+        if ($previous instanceof ClassDeclaration) {
+            if ($previous->classMembers->closeBrace instanceof MissingToken) {
+                return false;
+            }
+        }
+        if ($previous instanceof TraitDeclaration) {
+            if ($previous->traitMembers->closeBrace instanceof MissingToken) {
+                return false;
+            }
+        }
+        if ($previous instanceof InterfaceDeclaration) {
+            if ($previous->interfaceMembers->closeBrace instanceof MissingToken) {
+                return false;
+            }
+        }
+        if ($previous instanceof EnumDeclaration) {
+            if ($previous->enumMembers->closeBrace instanceof MissingToken) {
+                return false;
+            }
+        }
+        if ($node->getEndPosition() < $previous->getEndPosition()) {
             return false;
         }
 
