@@ -12,7 +12,6 @@ use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
 use Phpactor\Extension\Debug\Model\RpcCommandDocumentor;
 use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
 use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
-use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoDefinitionHandler;
 use Phpactor\MapResolver\Resolver;
 
 class DebugExtension implements Extension
@@ -32,9 +31,7 @@ class DebugExtension implements Extension
 
         $container->register(RpcCommandDocumentor::class, function (Container $container) {
             return new RpcCommandDocumentor(
-                [
-                    GotoDefinitionHandler::class
-                ],
+                $container->get('rpc.handler_registry'),
                 $container->get(DefinitionDocumentor::class)
             );
         });

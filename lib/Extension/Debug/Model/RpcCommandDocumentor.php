@@ -2,28 +2,22 @@
 
 namespace Phpactor\Extension\Debug\Model;
 
+use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\MapResolver\Resolver;
-use ReflectionClass;
 use RuntimeException;
 use Phpactor\Extension\Rpc\Handler;
 
 class RpcCommandDocumentor implements Documentor
 {
-    /**
-     * @var array<class-string>
-     */
-    private array $handlerFqns;
+    private HandlerRegistry $handlerRegistry;
 
     private DefinitionDocumentor $definitionDocumentor;
 
-    /**
-     * @param array<class-string> $handlerFqns
-     */
     public function __construct(
-        array $handlerFqns,
+        HandlerRegistry $handlerRegistry,
         DefinitionDocumentor $definitionDocumentor
     ) {
-        $this->handlerFqns = $handlerFqns;
+        $this->handlerRegistry = $handlerRegistry;
         $this->definitionDocumentor = $definitionDocumentor;
     }
 
@@ -42,8 +36,8 @@ class RpcCommandDocumentor implements Documentor
             '   :local:',
             "\n",
         ];
-        foreach ($this->handlerFqns as $handlerFqn) {
-            $documentation = $this->documentHandler($handlerFqn);
+        foreach ($this->handlerRegistry->all() as $handler) {
+            $documentation = $this->documentHandler($handler);
             if (null === $documentation) {
                 continue;
             }
@@ -52,11 +46,9 @@ class RpcCommandDocumentor implements Documentor
         return implode("\n", $docs);
     }
 
-    /**
-     * @param class-string $handlerClass
-     */
-    private function documentHandler(string $handlerClass): ?string
+    private function documentHandler(Handler $handler): ?string
     {
+        $handlerClass = get_class($handler);
         $parts = explode('\\', $handlerClass);
         $documentedName = end($parts);
 
@@ -67,6 +59,7 @@ class RpcCommandDocumentor implements Documentor
                 $handlerClass
             ));
         }
+
         $help = [
             '.. _' . $documentedName . ':',
             "\n",
@@ -74,11 +67,6 @@ class RpcCommandDocumentor implements Documentor
             str_repeat('-', mb_strlen($documentedName)),
             "\n",
         ];
-
-
-        $class = new ReflectionClass($handlerClass);
-        $handler = $class->newInstanceWithoutConstructor();
-        assert($handler instanceof Handler);
 
         $resolver = new Resolver();
         $handler->configure($resolver);

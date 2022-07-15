@@ -33,4 +33,14 @@ class LazyContainerHandlerRegistry implements HandlerRegistry
 
         return $this->container->get($this->serviceMap[$handlerName]);
     }
+
+    public function all(): array
+    {
+        return array_map(
+            function (string $serviceId) {
+                return $this->container->get($serviceId);
+            },
+            $this->serviceMap
+        );
+    }
 }
