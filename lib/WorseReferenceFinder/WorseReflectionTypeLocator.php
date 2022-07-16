@@ -49,7 +49,7 @@ class WorseReflectionTypeLocator implements TypeLocator
         $typeLocations = [];
         foreach ($type->toTypes() as $type) {
             if ($type instanceof ArrayType) {
-                $type = $type->valueType;
+                $type = $type->iterableValueType();
             }
 
             if (!$type instanceof ClassType) {

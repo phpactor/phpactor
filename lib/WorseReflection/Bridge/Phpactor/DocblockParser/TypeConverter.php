@@ -44,7 +44,6 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
-use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\ListType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
@@ -53,6 +52,7 @@ use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\ParenthesizedType as PhpactorParenthesizedType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
@@ -178,8 +178,7 @@ class TypeConverter
 
     private function convertArray(ArrayNode $type): Type
     {
-        // use missing type so this is rendered as "array" and not "mixed[]"
-        return new ArrayType(new ArrayKeyType(), new MissingType());
+        return new ArrayType(new MissingType());
     }
 
     private function convertList(ListNode $type): Type
@@ -209,7 +208,7 @@ class TypeConverter
             $parameters = array_values(iterator_to_array($type->parameters()->types()));
             if (count($parameters) === 1) {
                 return new ArrayType(
-                    new ArrayKeyType(),
+                    null,
                     $this->convert($parameters[0])
                 );
             }
@@ -232,6 +231,23 @@ class TypeConverter
             return new ListType(new MissingType());
         }
 
+        if ($type->type instanceof ClassNode && $type->type->name->value === 'iterable') {
+            $parameters = array_values(iterator_to_array($type->parameters()->types()));
+
+            if (count($parameters) === 1) {
+                return new PseudoIterableType(
+                    new ArrayKeyType(),
+                    $this->convert($parameters[0])
+                );
+            }
+            if (count($parameters) === 2) {
+                return new PseudoIterableType(
+                    $this->convert($parameters[0]),
+                    $this->convert($parameters[1]),
+                );
+            }
+            return new PseudoIterableType();
+        }
 
         $classType = $this->convert($type->type);
 
@@ -272,7 +288,7 @@ class TypeConverter
         }
 
         if ($name === 'iterable') {
-            return new IterablePrimitiveType();
+            return new PseudoIterableType();
         }
 
         if ($name === 'object') {

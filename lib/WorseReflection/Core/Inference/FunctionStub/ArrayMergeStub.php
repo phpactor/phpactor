@@ -40,8 +40,8 @@ class ArrayMergeStub implements FunctionStub
             if (!$type instanceof ArrayType) {
                 continue;
             }
-            $keys[] = $type->keyType;
-            $values[] = $type->valueType;
+            $keys[] = $type->iterableKeyType();
+            $values[] = $type->iterableValueType();
         }
 
         if ($values) {

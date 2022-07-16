@@ -472,6 +472,34 @@ class ImplementContractsTest extends WorseTestCase
                     }
                     EOT
             ],
+            'It uses "iterable"' => [
+                <<<'EOT'
+                    <?php
+
+                    interface Animal
+                    {
+                        abstract public function jump(): iterable;
+                    }
+                    class Foobar implements Animal
+                    {
+                    }
+                    EOT
+                ,
+                <<<'EOT'
+                    <?php
+
+                    interface Animal
+                    {
+                        abstract public function jump(): iterable;
+                    }
+                    class Foobar implements Animal
+                    {
+                        public function jump(): iterable
+                        {
+                        }
+                    }
+                    EOT
+            ],
         ];
     }
 

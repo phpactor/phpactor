@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -120,7 +119,7 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
         }
 
         return new ArrayType(
-            $accessExpression instanceof SubscriptExpression ? new ArrayKeyType() : $resolver->resolveNode($frame, $accessExpression)->type(),
+            $accessExpression instanceof SubscriptExpression ? null : $resolver->resolveNode($frame, $accessExpression)->type(),
             $type
         );
     }

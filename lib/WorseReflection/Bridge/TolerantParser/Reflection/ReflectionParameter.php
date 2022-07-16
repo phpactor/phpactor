@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as CoreReflectionParameter;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\ParameterTypeResolver;
-use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\TypeUtil;
 
@@ -66,7 +65,7 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         );
 
         if ($this->parameter->dotDotDotToken) {
-            return new ArrayType(new ArrayKeyType(), $type);
+            return new ArrayType(null, $type);
         }
 
         return $type;

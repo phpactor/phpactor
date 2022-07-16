@@ -1,0 +1,7 @@
+<?php
+
+/** @var iterable<int> $foo */
+foreach ($foo as $bar) {
+    wrAssertType('int', $bar);
+}
+

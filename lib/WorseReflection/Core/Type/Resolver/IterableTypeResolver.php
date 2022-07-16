@@ -31,6 +31,7 @@ class IterableTypeResolver
         }
 
         $iterableClasses = [
+            'iterable',
             'Traversable',
             'Iterator',
             'IteratorAggregate',

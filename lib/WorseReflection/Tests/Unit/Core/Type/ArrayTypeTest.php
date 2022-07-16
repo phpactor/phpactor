@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
 use Generator;
 use Phpactor\TestUtils\PHPUnit\TestCase;
-use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\StringType;
@@ -29,7 +28,7 @@ class ArrayTypeTest extends TestCase
                 'string[]',
             ];
         yield [
-                new ArrayType(new ArrayKeyType(), new StringType()),
+                new ArrayType(null, new StringType()),
                 'string[]',
             ];
         yield [

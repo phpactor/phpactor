@@ -134,7 +134,7 @@ class WorseBuilderFactory implements BuilderFactory
 
             if ($parameter->isVariadic()) {
                 if ($type instanceof ArrayType) {
-                    $type = $type->valueType;
+                    $type = $type->iterableValueType();
                 }
             }
             $type = $method->scope()->resolveLocalType($type);
