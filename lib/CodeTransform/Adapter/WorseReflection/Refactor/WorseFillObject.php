@@ -40,8 +40,7 @@ class WorseFillObject implements FillObject
         Updater $updater,
         bool $namedParameters = true,
         bool $hint = true,
-    )
-    {
+    ) {
         $this->reflector = $reflector;
         $this->parser = $parser;
         $this->valueRenderer = new EmptyValueRenderer();

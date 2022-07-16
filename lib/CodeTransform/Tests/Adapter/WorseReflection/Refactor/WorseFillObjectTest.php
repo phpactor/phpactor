@@ -5,7 +5,6 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
-use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TextDocument\ByteOffset;

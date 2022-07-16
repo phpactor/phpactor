@@ -242,6 +242,36 @@ Import functions even if they are in the global namespace
 **Default**: ``false``
 
 
+.. _param_code_transform.refactor.object_fill.hint:
+
+
+``code_transform.refactor.object_fill.hint``
+""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Object fill refactoring: show hint as a comment
+
+
+**Default**: ``true``
+
+
+.. _param_code_transform.refactor.object_fill.named_parameters:
+
+
+``code_transform.refactor.object_fill.named_parameters``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Object fill refactoring: use named parameters
+
+
+**Default**: ``true``
+
+
 .. _CompletionWorseExtension:
 
 

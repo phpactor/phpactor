@@ -82,6 +82,8 @@ class CodeTransformExtension implements Extension
     public const PARAM_GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     public const PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
     public const PARAM_IMPORT_GLOBALS = 'code_transform.import_globals';
+    public const PARAM_OBJECT_FILL_NAMED = 'code_transform.refactor.object_fill.named_parameters';
+    public const PARAM_OBJECT_FILL_HINT = 'code_transform.refactor.object_fill.hint';
     private const APP_TEMPLATE_PATH = '%application_root%/templates/code';
 
     
@@ -97,6 +99,8 @@ class CodeTransformExtension implements Extension
             self::PARAM_GENERATE_ACCESSOR_PREFIX => '',
             self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
             self::PARAM_IMPORT_GLOBALS => false,
+            self::PARAM_OBJECT_FILL_HINT => true,
+            self::PARAM_OBJECT_FILL_NAMED => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_NEW_CLASS_VARIANTS => 'Variants which should be suggested when class-create is invoked',
@@ -105,6 +109,8 @@ class CodeTransformExtension implements Extension
             self::PARAM_GENERATE_ACCESSOR_PREFIX => 'Prefix to use for generated accessors',
             self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST => 'If the first letter of a generated accessor should be made uppercase',
             self::PARAM_IMPORT_GLOBALS => 'Import functions even if they are in the global namespace',
+            self::PARAM_OBJECT_FILL_NAMED => 'Object fill refactoring: use named parameters',
+            self::PARAM_OBJECT_FILL_HINT => 'Object fill refactoring: show hint as a comment',
         ]);
     }
 
@@ -236,6 +242,8 @@ class CodeTransformExtension implements Extension
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),
                 $container->get(Updater::class),
+                $container->getParameter(self::PARAM_OBJECT_FILL_NAMED),
+                $container->getParameter(self::PARAM_OBJECT_FILL_HINT),
             );
         });
 

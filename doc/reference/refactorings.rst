@@ -692,6 +692,43 @@ subsequently need to import all the foreign classes into the current
 namespace. This refactoring will identify all unresolvable classes and
 import them.
 
+Fill Object
+-----------
+
+Fill a new objects constructor with default arguments.
+
+.. tabs::
+
+   .. tab:: LSP
+
+      Invoke code action on new class expression with no constructor arguments
+
+
+Motivation
+~~~~~~~~~~
+
+This refactoring is especially useful if you need to either create or map a
+DTO (data transfer object).
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   new My<>FancyDTO();
+
+After choosing the "Fill Object" code action:
+
+.. code:: php
+
+   <?php
+
+   new MyFancyDTO(title: '', cost: 0);
+
 Override Method
 ---------------
 
