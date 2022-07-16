@@ -25,6 +25,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\Interfac
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMethodFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseInterestingOffsetFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
@@ -44,6 +45,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
+use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
@@ -227,6 +229,12 @@ class CodeTransformExtension implements Extension
                 $container->get(Updater::class),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),
                 $container->getParameter(self::PARAM_IMPORT_GLOBALS),
+            );
+        });
+        $container->register(FillObject::class, function (Container $container) {
+            return new WorseFillObject(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(WorseReflectionExtension::SERVICE_PARSER),
             );
         });
 

@@ -21,16 +21,23 @@ class WorseFillObjectTest extends WorseTestCase
     ): void {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset($path);
 
-        $fill = new WorseFillObject(
-            $this->reflectorForWorkspace($source),
-            new Parser(),
-        );
+        $fill = $this->createFillObject($source);
         $transformed = $fill->fillObject(
             TextDocumentBuilder::create($source)->build(),
             ByteOffset::fromInt($offset)
         )->apply($source);
 
         $this->assertEquals(trim($expected), trim($transformed));
+    }
+
+    public function testOffsetNotObject(): void
+    {
+        $fill = $this->createFillObject('');
+        $edits = $fill->fillObject(
+            TextDocumentBuilder::create('<?php echo "hello";')->build(),
+            ByteOffset::fromInt(10)
+        );
+        self::assertCount(0, $edits);
     }
 
     /**
@@ -44,5 +51,14 @@ class WorseFillObjectTest extends WorseTestCase
                 $fileInfo->getPathname()
             ];
         }
+    }
+
+    private function createFillObject($source): WorseFillObject
+    {
+        $fill = new WorseFillObject(
+            $this->reflectorForWorkspace($source),
+            new Parser(),
+        );
+        return $fill;
     }
 }

@@ -1,0 +1,37 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+class Barfoo {}
+
+class DTO
+{
+    public function __construct(
+        Barfoo $barfoo
+    )
+    {
+    }
+}
+
+new DT<>O();
+// File: Barfoo.php
+<?php
+
+// File: expected
+<?php
+
+namespace Phpactor;
+
+class Barfoo {}
+
+class DTO
+{
+    public function __construct(
+        Barfoo $barfoo
+    )
+    {
+    }
+}
+
+new DTO(barfoo: new Barfoo());

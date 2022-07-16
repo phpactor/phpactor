@@ -1,6 +1,8 @@
 // File: source
 <?php
 
+class Foobar {}
+
 class DTO
 {
     public function __construct(
@@ -20,6 +22,8 @@ class DTO
 new DT<>O();
 // File: expected
 <?php
+
+class Foobar {}
 
 class DTO
 {

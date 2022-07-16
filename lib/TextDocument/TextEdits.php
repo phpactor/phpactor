@@ -3,6 +3,7 @@
 namespace Phpactor\TextDocument;
 
 use ArrayIterator;
+use Countable;
 use Iterator;
 use IteratorAggregate;
 use OutOfBoundsException;
@@ -10,7 +11,7 @@ use OutOfBoundsException;
 /**
  * @implements IteratorAggregate<int, TextEdit>
  */
-class TextEdits implements IteratorAggregate
+class TextEdits implements IteratorAggregate, Countable
 {
     /**
      * @var TextEdit[]
@@ -116,5 +117,10 @@ class TextEdits implements IteratorAggregate
                 str_replace("\n", '\n', $otherEdit->replacement())
             );
         }, $edits));
+    }
+
+    public function count(): int
+    {
+        return count($this->textEdits);
     }
 }
