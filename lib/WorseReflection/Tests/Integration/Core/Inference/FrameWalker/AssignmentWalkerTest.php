@@ -115,7 +115,7 @@ class AssignmentWalkerTest extends FrameWalkerTestCase
             $type = $var->type();
             assert($type instanceof IterableType);
             $this->assertEquals('Foobar[]', (string) $type);
-            $this->assertEquals('Foobar', (string) $var->type()->valueType);
+            $this->assertEquals('Foobar', (string) $type->iterableValueType());
         }];
 
 

@@ -26,6 +26,15 @@ use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
+/**
+ * This class is responsible for adjusting types according to their context
+ * (e.g. expanding to FQNs).
+ *
+ * This should not be done here but rather ealier when the docblock types are
+ * initially converted.
+ *
+ * https://github.com/phpactor/phpactor/issues/1781
+ */
 class NodeToTypeConverter
 {
     private LoggerInterface $logger;
@@ -57,8 +66,8 @@ class NodeToTypeConverter
         }
 
         if ($type instanceof ArrayType) {
-            $arrayType = $this->resolve($node, $type->valueType);
-            $type->valueType = $arrayType;
+            $arrayType = $this->resolve($node, $type->iterableValueType());
+            $type->setValueType($arrayType);
         }
 
         if ($type instanceof CallableType) {

@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
+use Phpactor\WorseReflection\Core\Type;
 
 class ArrayType extends PrimitiveIterableType implements IterableType
 {
@@ -20,5 +22,13 @@ class ArrayType extends PrimitiveIterableType implements IterableType
     public function toPhpString(): string
     {
         return 'array';
+    }
+
+    public function map(Closure $mapper): Type
+    {
+        return new self(
+            $this->keyType ? $this->iterableKeyType()->map($mapper) : null,
+            $this->valueType ? $this->iterableValueType()->map($mapper) : null,
+        );
     }
 }

@@ -44,7 +44,6 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
-use Phpactor\WorseReflection\Core\Type\IterablePrimitiveType;
 use Phpactor\WorseReflection\Core\Type\ListType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
@@ -179,8 +178,7 @@ class TypeConverter
 
     private function convertArray(ArrayNode $type): Type
     {
-        // use missing type so this is rendered as "array" and not "mixed[]"
-        return new ArrayType(new ArrayKeyType(), new MissingType());
+        return new ArrayType(new MissingType());
     }
 
     private function convertList(ListNode $type): Type
@@ -210,7 +208,7 @@ class TypeConverter
             $parameters = array_values(iterator_to_array($type->parameters()->types()));
             if (count($parameters) === 1) {
                 return new ArrayType(
-                    new ArrayKeyType(),
+                    null,
                     $this->convert($parameters[0])
                 );
             }

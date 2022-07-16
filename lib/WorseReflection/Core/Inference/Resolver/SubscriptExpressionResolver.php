@@ -40,7 +40,7 @@ class SubscriptExpressionResolver implements Resolver
         }
 
         $arrayLiteralType = $info->type();
-        $info = $info->withType($type->valueType);
+        $info = $info->withType($type->iterableValueType());
 
         if (!$arrayLiteralType instanceof ArrayAccessType) {
             $info = $info->withIssue(sprintf(

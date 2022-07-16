@@ -9,8 +9,9 @@ use Phpactor\WorseReflection\Core\Types;
 
 class PrimitiveIterableType extends Type implements IterableType
 {
-    public ?Type $valueType;
-    public ?Type $keyType;
+    protected ?Type $valueType;
+
+    protected ?Type $keyType;
 
     public function __construct(?Type $keyType = null, ?Type $valueType = null)
     {
@@ -26,7 +27,7 @@ class PrimitiveIterableType extends Type implements IterableType
 
     public function __toString(): string
     {
-        if ($this->valueType instanceof MissingType) {
+        if ($this->valueType === null) {
             return $this->toPhpString();
         }
         if ($this->keyType === null) {
@@ -55,7 +56,7 @@ class PrimitiveIterableType extends Type implements IterableType
     {
         if ($type instanceof ArrayLiteral) {
             return Trinary::fromBoolean(
-                $this->keyType->accepts($type->keyType)->isTrue() && $this->valueType->accepts($type->valueType)->isTrue()
+                $this->iterableKeyType()->accepts($type->keyType)->isTrue() && $this->iterableValueType()->accepts($type->valueType)->isTrue()
             );
         }
         return Trinary::fromBoolean($type instanceof ArrayType);
@@ -63,11 +64,22 @@ class PrimitiveIterableType extends Type implements IterableType
 
     public function toTypes(): Types
     {
-        return new Types([$this->valueType]);
+        return new Types([$this->iterableValueType()]);
     }
 
     public function map(Closure $mapper): Type
     {
-        return new self($this->keyType->map($mapper), $this->valueType->map($mapper));
+        return new self(
+            $this->keyType ? $this->iterableKeyType()->map($mapper) : null,
+            $this->valueType ? $this->iterableValueType()->map($mapper) : null,
+        );
+    }
+
+    /**
+     * DANGEROUS: @see Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter
+     */
+    public function setValueType(Type $type): void
+    {
+        $this->valueType = $type;
     }
 }
