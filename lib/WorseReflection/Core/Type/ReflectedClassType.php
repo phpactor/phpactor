@@ -174,6 +174,16 @@ class ReflectedClassType extends ClassType
         return new GenericClassType($this->reflector, $this->name(), $reflection->templateMap()->toArray());
     }
 
+    public function isInterface(): Trinary
+    {
+        $reflection = $this->reflectionOrNull();
+        if (null === $reflection) {
+            return Trinary::maybe();
+        }
+
+        return Trinary::fromBoolean($reflection instanceof ReflectionInterface);
+    }
+
     public function invokeType(): Type
     {
         $reflection = $this->reflectionOrNull();

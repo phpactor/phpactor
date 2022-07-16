@@ -3,8 +3,9 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Trinary;
+use Phpactor\WorseReflection\Core\Type;
 
-class BooleanType extends ScalarType
+class BooleanType extends ScalarType implements HasEmptyType
 {
     public function toPhpString(): string
     {
@@ -43,5 +44,10 @@ class BooleanType extends ScalarType
         }
 
         return false;
+    }
+
+    public function emptyType(): Type
+    {
+        return new BooleanLiteralType(false);
     }
 }

@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-final class NullType extends PrimitiveType
+final class NullType extends PrimitiveType implements HasEmptyType
 {
     public function __toString(): string
     {
@@ -25,5 +25,10 @@ final class NullType extends PrimitiveType
     public function isNull(): bool
     {
         return true;
+    }
+
+    public function emptyType(): Type
+    {
+        return $this;
     }
 }

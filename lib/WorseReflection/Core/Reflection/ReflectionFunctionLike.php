@@ -11,6 +11,9 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterColle
 
 interface ReflectionFunctionLike
 {
+    /**
+     * @return ReflectionParameterCollection<ReflectionParameter>
+     */
     public function parameters(): ReflectionParameterCollection;
 
     public function body(): NodeText;

@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
@@ -236,5 +237,10 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     public function diagnostics($sourceCode): Diagnostics
     {
         return $this->sourceReflector->diagnostics($sourceCode);
+    }
+
+    public function reflectNode($sourceCode, $offset): ReflectionNode
+    {
+        return $this->sourceReflector->reflectNode($sourceCode, $offset);
     }
 }

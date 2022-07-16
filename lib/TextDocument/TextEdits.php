@@ -3,6 +3,7 @@
 namespace Phpactor\TextDocument;
 
 use ArrayIterator;
+use Countable;
 use Iterator;
 use IteratorAggregate;
 use OutOfBoundsException;
@@ -10,7 +11,7 @@ use OutOfBoundsException;
 /**
  * @implements IteratorAggregate<int, TextEdit>
  */
-class TextEdits implements IteratorAggregate
+class TextEdits implements IteratorAggregate, Countable
 {
     /**
      * @var TextEdit[]
@@ -100,6 +101,11 @@ class TextEdits implements IteratorAggregate
     public function add(TextEdit $textEdit): self
     {
         return new self(...array_merge($this->textEdits, [$textEdit]));
+    }
+
+    public function count(): int
+    {
+        return count($this->textEdits);
     }
 
     /**

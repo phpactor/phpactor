@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollection;
 use Phpactor\WorseReflection\Core\Type;
 
-interface ReflectionMethodCall
+interface ReflectionMethodCall extends ReflectionNode
 {
     public function position(): Position;
 

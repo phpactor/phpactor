@@ -6,6 +6,7 @@ use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
+use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
@@ -19,6 +20,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateUnresolvable
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateAccessorsProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
@@ -330,6 +332,14 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(ExtractExpressionProvider::class, function (Container $container) {
             return new ExtractExpressionProvider(
                 $container->get(ExtractExpression::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(FillObjectProvider::class, function (Container $container) {
+            return new FillObjectProvider(
+                $container->get(FillObject::class)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []

@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
 
-class IntType extends NumericType implements BitwiseOperable
+class IntType extends NumericType implements BitwiseOperable, HasEmptyType
 {
     public function toPhpString(): string
     {
@@ -63,5 +63,10 @@ class IntType extends NumericType implements BitwiseOperable
         }
 
         return $this;
+    }
+
+    public function emptyType(): Type
+    {
+        return new IntLiteralType(0);
     }
 }
