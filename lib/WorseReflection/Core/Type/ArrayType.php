@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Closure;
 use Phpactor\WorseReflection\Core\Type;
 
-class ArrayType extends PrimitiveIterableType implements IterableType
+class ArrayType extends PseudoIterableType implements IterableType
 {
     public function __toString(): string
     {

@@ -52,7 +52,7 @@ use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\ParenthesizedType as PhpactorParenthesizedType;
-use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
@@ -235,18 +235,18 @@ class TypeConverter
             $parameters = array_values(iterator_to_array($type->parameters()->types()));
 
             if (count($parameters) === 1) {
-                return new PrimitiveIterableType(
+                return new PseudoIterableType(
                     new ArrayKeyType(),
                     $this->convert($parameters[0])
                 );
             }
             if (count($parameters) === 2) {
-                return new PrimitiveIterableType(
+                return new PseudoIterableType(
                     $this->convert($parameters[0]),
                     $this->convert($parameters[1]),
                 );
             }
-            return new PrimitiveIterableType();
+            return new PseudoIterableType();
         }
 
         $classType = $this->convert($type->type);
@@ -288,7 +288,7 @@ class TypeConverter
         }
 
         if ($name === 'iterable') {
-            return new PrimitiveIterableType();
+            return new PseudoIterableType();
         }
 
         if ($name === 'object') {

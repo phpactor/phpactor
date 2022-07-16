@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
 
-class PrimitiveIterableType extends Type implements IterableType
+class PseudoIterableType extends Type implements IterableType
 {
     protected ?Type $valueType;
 

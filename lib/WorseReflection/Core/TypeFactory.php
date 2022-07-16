@@ -33,7 +33,7 @@ use Phpactor\WorseReflection\Core\Type\NumericType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\OctalLiteralType;
 use Phpactor\WorseReflection\Core\Type\ParenthesizedType;
-use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
@@ -169,9 +169,9 @@ class TypeFactory
         return new ResourceType();
     }
 
-    public static function iterable(): PrimitiveIterableType
+    public static function iterable(): PseudoIterableType
     {
-        return new PrimitiveIterableType();
+        return new PseudoIterableType();
     }
 
     /**

@@ -20,7 +20,7 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
-use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
@@ -121,7 +121,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         ];
         yield [
             '/** @return iterable */',
-            new PrimitiveIterableType(),
+            new PseudoIterableType(),
         ];
         yield [
             '/** @return object */',
