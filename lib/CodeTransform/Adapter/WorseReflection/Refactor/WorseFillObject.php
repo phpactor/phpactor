@@ -5,7 +5,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\EmptyValueRenderer;
-use Phpactor\CodeTransform\Domain\Refactor\FillConstructor;
+use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\HasEmptyType;
 use Phpactor\WorseReflection\Reflector;
 
-class WorseFillConstructor implements FillConstructor
+class WorseFillObject implements FillObject
 {
     private Reflector $reflector;
     private Parser $parser;
@@ -30,7 +30,7 @@ class WorseFillConstructor implements FillConstructor
         $this->valueRenderer = new EmptyValueRenderer();
     }
 
-    public function fillConstructor(TextDocument $document, ByteOffset $offset): TextEdits
+    public function fillObject(TextDocument $document, ByteOffset $offset): TextEdits
     {
         $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
         $node = $node->getFirstAncestor(ObjectCreationExpression::class);

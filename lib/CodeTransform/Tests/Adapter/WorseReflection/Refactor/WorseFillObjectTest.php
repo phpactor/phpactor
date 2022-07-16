@@ -5,13 +5,13 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillConstructor;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use SplFileInfo;
 
-class WorseFillConstructorTest extends WorseTestCase
+class WorseFillObjectTest extends WorseTestCase
 {
     /**
      * @dataProvider provideFill
@@ -21,11 +21,11 @@ class WorseFillConstructorTest extends WorseTestCase
     ): void {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset($path);
 
-        $fill = new WorseFillConstructor(
+        $fill = new WorseFillObject(
             $this->reflectorForWorkspace($source),
             new Parser(),
         );
-        $transformed = $fill->fillConstructor(
+        $transformed = $fill->fillObject(
             TextDocumentBuilder::create($source)->build(),
             ByteOffset::fromInt($offset)
         )->apply($source);
@@ -38,7 +38,7 @@ class WorseFillConstructorTest extends WorseTestCase
      */
     public function provideFill(): Generator
     {
-        foreach ((new GlobIterator(__DIR__ . '/fixtures/fillConstructor*.test')) as $fileInfo) {
+        foreach ((new GlobIterator(__DIR__ . '/fixtures/fillObject*.test')) as $fileInfo) {
             assert($fileInfo instanceof SplFileInfo);
             yield $fileInfo->getBasename() => [
                 $fileInfo->getPathname()

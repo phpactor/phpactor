@@ -6,7 +6,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdits;
 
-interface FillConstructor
+interface FillObject
 {
-    public function fillConstructor(TextDocument $document, ByteOffset $offset): TextEdits;
+    public function fillObject(TextDocument $document, ByteOffset $offset): TextEdits;
 }
