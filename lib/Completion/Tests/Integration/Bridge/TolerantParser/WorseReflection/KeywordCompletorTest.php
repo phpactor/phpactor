@@ -25,26 +25,49 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     public function provideComplete(): Generator
     {
         yield 'member keywords' => [
-            '<?php class Foobar { <>',
-            $this->expect(['private', 'protected', 'public']),
+            '<?php class Foobar { p<>',
+            $this->expect(['private ', 'protected ', 'public ']),
         ];
 
         yield 'member keyword postfix' => [
             '<?php class Foobar { private <>',
-            $this->expect(['const', 'function']),
+            $this->expect(['const ', 'function ']),
         ];
         yield 'member keyword postfix 2' => [
             '<?php class Foobar { private func<>',
-            $this->expect(['const', 'function']),
+            $this->expect(['const ', 'function ']),
         ];
+
+        yield '__construct' => [
+            '<?php class Foobar { public function __<>',
+            $this->expect(['__construct(']),
+        ];
+        yield '__construct 2' => [
+            '<?php class Foo extends Bar implements One {    public function __<> }',
+            $this->expect(['__construct(']),
+        ];
+
 
         yield 'class implements 1' => [
             '<?php class Foobar <>',
-            $this->expect(['extends', 'implements']),
+            $this->expect(['extends ', 'implements ']),
         ];
         yield 'class implements 2' => [
             '<?php class Foobar impl<>',
-            $this->expect(['extends', 'implements']),
+            $this->expect(['extends ', 'implements ']),
+        ];
+
+        yield 'class keyword' => [
+            '<?php cl<>',
+            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
+        ];
+        yield 'class keyword 2' => [
+            '<?php class F {} cl<>',
+            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
+        ];
+        yield 'class keyword 3' => [
+            '<?php class F {function fo() {}} cl<>',
+            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
         ];
     }
 
