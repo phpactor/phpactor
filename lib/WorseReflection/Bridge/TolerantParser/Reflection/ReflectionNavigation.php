@@ -2,21 +2,22 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
-use Microsoft\PhpParser\Node\SourceFileNode;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NavigatorElementCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 
 class ReflectionNavigation
 {
-    private SourceFileNode $node;
+    private Node $node;
 
     private ServiceLocator $locator;
 
-    public function __construct(ServiceLocator $locator, SourceFileNode $node)
+    public function __construct(ServiceLocator $locator, Node $node)
     {
         $this->node = $node;
         $this->locator = $locator;
@@ -37,6 +38,11 @@ class ReflectionNavigation
             }
         }
         return new NavigatorElementCollection($calls);
+    }
+
+    public function at(ByteOffset $offset): self
+    {
+        return new self($this->locator, $this->node->getDescendantNodeAtPosition($offset->toInt()));
     }
 
     /**
