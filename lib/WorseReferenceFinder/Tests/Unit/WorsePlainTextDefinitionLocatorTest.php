@@ -35,6 +35,12 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->locate('', 'Hello this i<>s ');
     }
 
+    public function testLastOffset(): void
+    {
+        $this->expectException(CouldNotLocateDefinition::class);
+        $this->locate('', 'Hello this is <>');
+    }
+
     /**
      * @return Generator<mixed>
      */

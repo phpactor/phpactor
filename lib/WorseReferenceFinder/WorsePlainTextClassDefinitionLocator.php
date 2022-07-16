@@ -68,9 +68,14 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 
     private function extractWord(TextDocument $document, ByteOffset $byteOffset): string
     {
+        $offset = $byteOffset->toInt() + 1;
+        $docLength = strlen($document->__toString());
+        if ($offset > $docLength) {
+            $offset = $docLength;
+        }
         return (new WordAtOffset(
             WordAtOffset::SPLIT_QUALIFIED_PHP_NAME
-        ))->__invoke($document->__toString(), $byteOffset->toInt() + 1);
+        ))->__invoke($document->__toString(), $offset);
     }
 
     private function resolveClassName(TextDocument $document, ByteOffset $byteOffset, string $word): string
