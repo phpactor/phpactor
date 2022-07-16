@@ -49,7 +49,7 @@ final class ClassMemberQuery
         return new self();
     }
 
-    public function onlyConstants()
+    public function onlyConstants(): self
     {
         return new self(
             $this->class,
@@ -58,7 +58,7 @@ final class ClassMemberQuery
         );
     }
 
-    public function onlyMethods()
+    public function onlyMethods(): self
     {
         return new self(
             $this->class,
@@ -67,7 +67,7 @@ final class ClassMemberQuery
         );
     }
 
-    public function onlyProperties()
+    public function onlyProperties(): self
     {
         return new self(
             $this->class,
@@ -77,7 +77,9 @@ final class ClassMemberQuery
     }
 
     /**
-     * @var Class_|string
+     * If the argument is anything other than a Class_ or string then it will throw an error.
+     *
+     * @param Class_|string|mixed $className
      */
     public function withClass($className): ClassMemberQuery
     {
@@ -96,7 +98,9 @@ final class ClassMemberQuery
     }
 
     /**
-     * @var MemberName|string
+     * If the argument is anything but a MemberName or a string this class will throw an error.
+     *
+     * @param MemberName|string|mixed $memberName
      */
     public function withMember($memberName): ClassMemberQuery
     {
@@ -128,7 +132,7 @@ final class ClassMemberQuery
         return $this->memberName;
     }
 
-    public function matchesMemberName(string $memberName)
+    public function matchesMemberName(string $memberName): bool
     {
         if (null === $this->memberName) {
             return true;
@@ -137,7 +141,7 @@ final class ClassMemberQuery
         return $this->memberName->matches($memberName);
     }
 
-    public function matchesClass(string $className)
+    public function matchesClass(string $className): bool
     {
         if (null === $this->class) {
             return true;

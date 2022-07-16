@@ -136,51 +136,6 @@ parameters:
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery\\:\\:matchesClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery\\:\\:matchesMemberName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery\\:\\:onlyConstants\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery\\:\\:onlyMethods\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery\\:\\:onlyProperties\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery\\:\\:withClass\\(\\) has parameter \\$className with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery\\:\\:withMember\\(\\) has parameter \\$memberName with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
-			message: "#^PHPDoc tag @var above a method has no effect\\.$#"
-			count: 2
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
-			message: "#^PHPDoc tag @var does not specify variable name\\.$#"
-			count: 2
-			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
-
-		-
 			message: "#^Parameter \\#2 \\$memberName of class Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery constructor expects Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\MemberName\\|null, Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\Label given\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
@@ -654,11 +609,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassLikeUpdater\\:\\:resolvePropertyName\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassLikeUpdater.php
-
-		-
-			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\ClassLike\\:\\:\\$classMembers\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassMethodUpdater.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassMethodUpdater\\:\\:memberDeclarations\\(\\) has no return type specified\\.$#"
@@ -1546,61 +1496,6 @@ parameters:
 			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantRenameVariable.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:appendUnresolvedClassName\\(\\) has parameter \\$unresolvedNames with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:appendUnresolvedClassName\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:appendUnresolvedFunctionName\\(\\) has parameter \\$unresolvedNames with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:appendUnresolvedFunctionName\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:appendUnresolvedName\\(\\) has parameter \\$notFoundCache with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:appendUnresolvedName\\(\\) has parameter \\$unresolvedNames with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:appendUnresolvedName\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:descendants\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:filterResolvedNames\\(\\) has parameter \\$names with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:filterResolvedNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinder\\:\\:findNameNodes\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:addParametersAndGetArgs\\(\\) has parameter \\$freeVariables with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
@@ -1791,16 +1686,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseInterestingOffsetFinderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinderTest\\:\\:provideReturnsUnresolableClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseUnresolvableClassNameFinderTest\\:\\:testReturnsUnresolableClass\\(\\) has parameter \\$expectedNames with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseUnresolvableClassNameFinderTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractConstantTest\\:\\:provideExtractMethod\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseExtractConstantTest.php
@@ -1884,16 +1769,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$source of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
-			message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Benchmark/Adapter/WorseReflection/Util/WorseUnresolvableClassNameFinderBench.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Benchmark\\\\Adapter\\\\WorseReflection\\\\Util\\\\WorseUnresolvableClassNameFinderBench\\:\\:benchFind\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Benchmark/Adapter/WorseReflection/Util/WorseUnresolvableClassNameFinderBench.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Unit\\\\CodeTransformTest\\:\\:create\\(\\) has parameter \\$transformers with no value type specified in iterable type array\\.$#"
@@ -3991,11 +3866,6 @@ parameters:
 			path: lib/Extension/Rpc/Response/CollectionResponse.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\CollectionResponse\\:\\:fromActions\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/CollectionResponse.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\CollectionResponse\\:\\:fromActions\\(\\) has parameter \\$actions with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/CollectionResponse.php
@@ -4004,11 +3874,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\CollectionResponse\\:\\:parameters\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/CollectionResponse.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\EchoResponse\\:\\:fromMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/EchoResponse.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\EchoResponse\\:\\:parameters\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -5044,11 +4909,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\MappedFilesystemRegistryTest\\:\\:createRegistry\\(\\) has parameter \\$filesystems with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\Serialized\\\\FileRepository\\:\\:get\\(\\) should return TRecord of Phpactor\\\\Indexer\\\\Model\\\\Record\\|null but returns Phpactor\\\\Indexer\\\\Model\\\\Record\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Php/Serialized/FileRepository.php
 
 		-
 			message: "#^Property Phpactor\\\\Indexer\\\\Extension\\\\Command\\\\IndexBuildCommand\\:\\:\\$usage is never read, only written\\.$#"
