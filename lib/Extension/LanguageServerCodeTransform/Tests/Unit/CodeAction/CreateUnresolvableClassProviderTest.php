@@ -9,6 +9,8 @@ use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\FilePathCandidates;
+use Phpactor\CodeTransform\Domain\GenerateNew;
+use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\TestUtils\ExtractOffset;
@@ -32,20 +34,32 @@ class CreateUnresolvableClassProviderTest extends IntegrationTestCase
     {
         [$source, $start, $end] = ExtractOffset::fromSource($source);
 
+        $generateNew = $this->prophesize(GenerateNew::class);
         $classToFile = $this->prophesize(ClassToFile::class);
-        $classToFile->classToFileCandidates(ClassName::fromString('Foo'))->willReturn(FilePathCandidates::fromFilePaths([FilePath::fromString('/foo')]));
+
+        $classToFile->classToFileCandidates(
+            ClassName::fromString('Foo')
+        )->willReturn(FilePathCandidates::fromFilePaths([FilePath::fromString('/foo')]));
+
         $reflector = ReflectorBuilder::create()->addDiagnosticProvider(new UnresolvableNameProvider(false))->build();
-        $provider = new CreateUnresolvableClassProvider($reflector, $classToFile->reveal());
+
+        $provider = new CreateUnresolvableClassProvider(
+            $reflector,
+            new Generators([
+                'foobar' => $generateNew->reveal(),
+            ]),
+            $classToFile->reveal()
+        );
         $actions = wait($provider->provideActionsFor(
             ProtocolFactory::textDocumentItem('file://foo', $source),
-            RangeConverter::toLspRange(ByteOffsetRange::fromInts($start, $end), $source),
+            RangeConverter::toLspRange(ByteOffsetRange::fromInts((int)$start, (int)$end), $source),
             (new CancellationTokenSource)->getToken(),
         ));
         $assertion(...$actions);
     }
 
     /**
-     * @return Generator<array{string,Closure(CodeAction[]): void}>
+     * @return Generator<string,mixed>
      */
     public function provideCodeAction(): Generator
     {
@@ -55,10 +69,17 @@ class CreateUnresolvableClassProviderTest extends IntegrationTestCase
                 self::assertCount(0, $actions);
             }
         ];
-        yield [
+        yield 'In range' => [
             '<?php new Fo<>o<>();',
             function (CodeAction ...$actions): void {
                 self::assertCount(1, $actions);
+                self::assertEquals('Create foobar file for "Foo"', $actions[0]->title);
+            }
+        ];
+        yield 'Out of range' => [
+            '<?php <> <>new Foo();',
+            function (CodeAction ...$actions): void {
+                self::assertCount(0, $actions);
             }
         ];
     }

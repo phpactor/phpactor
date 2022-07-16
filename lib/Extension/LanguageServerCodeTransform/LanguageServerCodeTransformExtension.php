@@ -228,6 +228,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(CreateUnresolvableClassProvider::class, function (Container $container) {
             return new CreateUnresolvableClassProvider(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(CodeTransformExtension::SERVICE_CLASS_GENERATORS),
                 $container->get(ClassToFileExtension::SERVICE_CONVERTER)
             );
         }, [

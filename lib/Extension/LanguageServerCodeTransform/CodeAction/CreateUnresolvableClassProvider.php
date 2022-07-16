@@ -6,6 +6,7 @@ use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
+use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
@@ -27,40 +28,50 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
 
     private ClassToFile $classToFile;
 
-    public function __construct(SourceCodeReflector $reflector, ClassToFile $classToFile)
+    private Generators $generators;
+
+    public function __construct(SourceCodeReflector $reflector, Generators $generators, ClassToFile $classToFile)
     {
         $this->reflector = $reflector;
         $this->classToFile = $classToFile;
+        $this->generators = $generators;
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
-        return call(function () use ($textDocument) {
-            $diagnostics = $this->reflector->diagnostics($textDocument->text)->byClass(UnresolvableNameDiagnostic::class);
+        return call(function () use ($textDocument, $range) {
+            $diagnostics = $this->reflector->diagnostics($textDocument->text)->byClass(
+                UnresolvableNameDiagnostic::class
+            )->containingRange(
+                RangeConverter::toPhpactorRange($range, $textDocument->text)
+            );
             $actions = [];
+
             foreach ($diagnostics as $diagnostic) {
                 assert($diagnostic instanceof UnresolvableNameDiagnostic);
                 if ($diagnostic->type() !== UnresolvableNameDiagnostic::TYPE_CLASS) {
                     continue;
                 }
 
-                $title = sprintf('Create class "%s"', $diagnostic->name()->__toString());
                 foreach ($this->classToFile->classToFileCandidates(ClassName::fromString($diagnostic->name())) as $candidate) {
-                    $actions[] = CodeAction::fromArray([
-                        'title' =>  $title,
-                        'kind' => self::KIND,
-                        'diagnostics' => [
-                            ProtocolFactory::diagnostic(RangeConverter::toLspRange($diagnostic->range(), $textDocument->text), $diagnostic->message())
-                        ],
-                        'command' => new Command(
-                            $title,
-                            CreateClassCommand::NAME,
-                            [
-                                TextDocumentUri::fromString((string)$candidate)->__toString(),
-                                'default',
-                            ]
-                        )
-                    ]);
+                    foreach ($this->generators as $name => $_) {
+                        $title = sprintf('Create %s file for "%s"', $name, $diagnostic->name()->__toString());
+                        $actions[] = CodeAction::fromArray([
+                            'title' =>  $title,
+                            'kind' => self::KIND,
+                            'diagnostics' => [
+                                ProtocolFactory::diagnostic(RangeConverter::toLspRange($diagnostic->range(), $textDocument->text), $diagnostic->message())
+                            ],
+                            'command' => new Command(
+                                $title,
+                                CreateClassCommand::NAME,
+                                [
+                                    TextDocumentUri::fromString((string)$candidate)->__toString(),
+                                    $name
+                                ]
+                            )
+                        ]);
+                    }
                 }
             }
 
