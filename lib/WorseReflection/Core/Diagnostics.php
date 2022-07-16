@@ -61,8 +61,8 @@ final class Diagnostics implements IteratorAggregate, Countable
     {
         return new self(array_filter(
             $this->diagnostics,
-            fn (Diagnostic $d) => 
-            $d->range()->start()->toInt() >= $byteOffsetRange->start()->toInt() && 
+            fn (Diagnostic $d) =>
+            $d->range()->start()->toInt() >= $byteOffsetRange->start()->toInt() &&
             $d->range()->end()->toInt() <= $byteOffsetRange->end()->toInt()
         ));
     }
@@ -71,8 +71,8 @@ final class Diagnostics implements IteratorAggregate, Countable
     {
         return new self(array_filter(
             $this->diagnostics,
-            fn (Diagnostic $d) => 
-            $d->range()->start()->toInt() <= $byteOffsetRange->start()->toInt() && 
+            fn (Diagnostic $d) =>
+            $d->range()->start()->toInt() <= $byteOffsetRange->start()->toInt() &&
             $d->range()->end()->toInt() >= $byteOffsetRange->end()->toInt()
         ));
     }
