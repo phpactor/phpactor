@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigati
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -103,5 +104,10 @@ class CompositeReflector implements Reflector
     public function diagnostics($sourceCode): Diagnostics
     {
         return $this->sourceCodeReflector->diagnostics($sourceCode);
+    }
+
+    public function reflectNode($sourceCode, $offset): ReflectionNode
+    {
+        return $this->sourceCodeReflector->reflectNode($sourceCode, $offset);
     }
 }

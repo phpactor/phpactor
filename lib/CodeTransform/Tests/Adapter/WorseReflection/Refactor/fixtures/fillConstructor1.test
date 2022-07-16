@@ -1,0 +1,40 @@
+// File: source
+<?php
+
+class DTO
+{
+    public function __construct(
+        string $one,
+        int $two,
+        float $three,
+        Foobar $four,
+        array $five,
+        ?string $six,
+        string|int $seven,
+        Foo&Bar $eight
+    )
+    {
+    }
+}
+
+new DT<>O();
+// File: expected
+<?php
+
+class DTO
+{
+    public function __construct(
+        string $one,
+        int $two,
+        float $three,
+        Foobar $four,
+        array $five,
+        ?string $six,
+        string|int $seven,
+        Foo&Bar $eight
+    )
+    {
+    }
+}
+
+new DTO(one: '', two: 0, three: 0, four: new Foobar(), five: [], six: null, seven: /** string|int */, eight: /** Foo&Bar */);

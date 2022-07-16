@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -53,4 +54,10 @@ interface SourceCodeReflector
      * @param TextDocument|string $sourceCode
      */
     public function diagnostics($sourceCode): Diagnostics;
+
+    /**
+     * @param TextDocument|string $sourceCode
+     * @param Offset|ByteOffset|int $offset
+     */
+    public function reflectNode($sourceCode, $offset): ReflectionNode;
 }

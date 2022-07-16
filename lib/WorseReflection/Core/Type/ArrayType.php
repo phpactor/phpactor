@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Closure;
 use Phpactor\WorseReflection\Core\Type;
 
-class ArrayType extends PseudoIterableType implements IterableType
+class ArrayType extends PseudoIterableType implements IterableType, HasEmptyType
 {
     public function __toString(): string
     {
@@ -30,5 +30,10 @@ class ArrayType extends PseudoIterableType implements IterableType
             $this->keyType ? $this->iterableKeyType()->map($mapper) : null,
             $this->valueType ? $this->iterableValueType()->map($mapper) : null,
         );
+    }
+
+    public function emptyType(): Type
+    {
+        return new ArrayLiteral([]);
     }
 }

@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
 
-class NullableType extends Type
+class NullableType extends Type implements HasEmptyType
 {
     public Type $type;
 
@@ -52,5 +52,10 @@ class NullableType extends Type
     public function stripNullable(): Type
     {
         return $this->type;
+    }
+
+    public function emptyType(): Type
+    {
+        return $this;
     }
 }

@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class ClassType extends Type implements ClassNamedType
+class ClassType extends Type implements ClassNamedType, HasEmptyType
 {
     public ClassName $name;
 
@@ -72,5 +72,10 @@ class ClassType extends Type implements ClassNamedType
     public function isUnknown(): Trinary
     {
         return Trinary::true();
+    }
+
+    public function emptyType(): Type
+    {
+        return $this;
     }
 }
