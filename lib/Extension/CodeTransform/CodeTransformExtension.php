@@ -235,6 +235,7 @@ class CodeTransformExtension implements Extension
             return new WorseFillObject(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->get(Updater::class),
             );
         });
 

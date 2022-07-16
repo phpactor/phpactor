@@ -35,3 +35,20 @@ class DTO
 }
 
 new DTO(barfoo: /** Phpactor\Barfoo */);
+// File: nonamed
+<?php
+
+namespace Phpactor;
+
+interface Barfoo {}
+
+class DTO
+{
+    public function __construct(
+        Barfoo $barfoo
+    )
+    {
+    }
+}
+
+new DTO(/** Phpactor\Barfoo */ /** $barfoo Phpactor\Barfoo */);

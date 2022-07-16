@@ -4,6 +4,9 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Parser;
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\EmptyValueRenderer;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\TextDocument\ByteOffset;
@@ -14,6 +17,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\HasEmptyType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseFillObject implements FillObject
@@ -24,11 +28,26 @@ class WorseFillObject implements FillObject
 
     private EmptyValueRenderer $valueRenderer;
 
-    public function __construct(Reflector $reflector, Parser $parser)
+    private Updater $updater;
+
+    private bool $namedParameters;
+
+    private bool $hint;
+
+    public function __construct(
+        Reflector $reflector,
+        Parser $parser,
+        Updater $updater,
+        bool $namedParameters = true,
+        bool $hint = true,
+    )
     {
         $this->reflector = $reflector;
         $this->parser = $parser;
         $this->valueRenderer = new EmptyValueRenderer();
+        $this->updater = $updater;
+        $this->namedParameters = $namedParameters;
+        $this->hint = $hint;
     }
 
     public function fillObject(TextDocument $document, ByteOffset $offset): TextEdits
@@ -53,13 +72,36 @@ class WorseFillObject implements FillObject
 
         $args = [];
 
+        $imports = [];
         foreach ($constructor->parameters() as $parameter) {
             assert($parameter instanceof ReflectionParameter);
-            $args[] = sprintf('%s: %s', $parameter->name(), $this->renderEmptyValue($parameter->type()));
+            $parameterType = $parameter->type();
+            if ($parameterType instanceof ReflectedClassType && $parameterType->isInterface()->isFalse()) {
+                $imports[] = $parameterType;
+            }
+            $arg = [];
+            if ($this->namedParameters) {
+                $arg[] = sprintf(
+                    '%s: ',
+                    $parameter->name(),
+                );
+            }
+            $arg[] = $this->renderEmptyValue($parameterType);
+
+            if ($this->hint) {
+                $arg[] = sprintf(' /** $%s %s */', $parameter->name(), $parameter->type()->__toString());
+            }
+            $args[] = implode('', $arg);
         }
 
+        $sourceCode = SourceCodeBuilder::create();
+        foreach ($imports as $import) {
+            $sourceCode->use($import->__toString());
+        }
+        $textEdits = $this->updater->textEditsFor($sourceCode->build(), Code::fromString($document->__toString()));
+        $textEdits = $textEdits->add(TextEdit::create($node->openParen->getEndPosition(), 0, implode(', ', $args)));
 
-        return TextEdits::one(TextEdit::create($node->openParen->getEndPosition(), 0, implode(', ', $args)));
+        return $textEdits;
     }
 
     private function renderEmptyValue(Type $type): string
