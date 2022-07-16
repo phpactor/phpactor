@@ -10,6 +10,9 @@ use Phpactor\CodeTransform\Domain\GenerateNew;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\CreateFile;
+use Phpactor\LanguageServerProtocol\CreateFileOptions;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -47,7 +50,13 @@ class CreateClassCommand implements Command
      */
     public function __invoke(string $uri, string $transform): Promise
     {
-        $textDocument = $this->workspace->get($uri);
+        $documentChanges = [];
+        if (!$this->workspace->has($uri)) {
+            $textDocument = new TextDocumentItem($uri, 'php', 0, '');
+            $documentChanges[] = new CreateFile('create', $uri, new CreateFileOptions(false, true));
+        } else {
+            $textDocument = $this->workspace->get($uri);
+        }
         $generator = $this->generators->get($transform);
         assert($generator instanceof GenerateNew);
 
@@ -60,8 +69,13 @@ class CreateClassCommand implements Command
             TextEdit::create(0, PHP_INT_MAX, $sourceCode->__toString())
         );
 
+        $message = 'Class created';
+        if (count($documentChanges)) {
+            $message = sprintf('Class registered at "%s"', $uri);
+        }
+
         return $this->clientApi->workspace()->applyEdit(new WorkspaceEdit([
             $uri => TextEditConverter::toLspTextEdits($textEdits, $textDocument->text)
-        ]), 'Create class');
+        ]), $message);
     }
 }

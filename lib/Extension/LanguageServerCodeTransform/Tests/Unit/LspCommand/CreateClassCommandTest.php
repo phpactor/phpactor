@@ -14,7 +14,10 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
+use Phpactor\LanguageServer\Core\Server\ResponseWatcher;
+use Phpactor\LanguageServer\Core\Server\ResponseWatcher\TestResponseWatcher;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
 use function Amp\Promise\wait;
 
 class CreateClassCommandTest extends TestCase
@@ -22,6 +25,36 @@ class CreateClassCommandTest extends TestCase
     const EXAMPLE_VARIANT = 'test_transform';
 
     public function testAppliesTransform(): void
+    {
+        [$tester, $watcher] = $this->createTester();
+        $tester->textDocument()->open('file:///foobar', 'foobar');
+        $promise = $tester->workspace()->executeCommand('create_class', [
+            'file:///foobar',
+            self::EXAMPLE_VARIANT
+        ]);
+        $watcher->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $response = wait($promise);
+        self::assertInstanceOf(ResponseMessage::class, $response);
+        self::assertInstanceOf(ApplyWorkspaceEditResponse::class, $response->result);
+    }
+
+    public function testAppliesTransformForNonExistingClass(): void
+    {
+        [$tester, $watcher] = $this->createTester();
+        $promise = $tester->workspace()->executeCommand('create_class', [
+            'file:///foobar',
+            self::EXAMPLE_VARIANT
+        ]);
+        $watcher->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $response = wait($promise);
+        self::assertInstanceOf(ResponseMessage::class, $response);
+        self::assertInstanceOf(ApplyWorkspaceEditResponse::class, $response->result);
+    }
+
+    /**
+     * @return array{LanguageServerTester,TestResponseWatcher}
+     */
+    private function createTester(): array
     {
         $generator = new TestGenerator();
         $generators = new Generators([
@@ -37,15 +70,7 @@ class CreateClassCommandTest extends TestCase
         ));
         $watcher = $tester->responseWatcher();
         $tester = $tester->build();
-        $tester->textDocument()->open('file:///foobar', 'foobar');
-        $promise = $tester->workspace()->executeCommand('create_class', [
-            'file:///foobar',
-            self::EXAMPLE_VARIANT
-        ]);
-        $watcher->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
-        $response = wait($promise);
-        self::assertInstanceOf(ResponseMessage::class, $response);
-        self::assertInstanceOf(ApplyWorkspaceEditResponse::class, $response->result);
+        return [$tester, $watcher];
     }
 }
 
