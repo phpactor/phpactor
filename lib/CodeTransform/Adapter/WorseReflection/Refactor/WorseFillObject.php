@@ -19,6 +19,7 @@ use Phpactor\WorseReflection\Reflector;
 class WorseFillObject implements FillObject
 {
     private Reflector $reflector;
+
     private Parser $parser;
 
     private EmptyValueRenderer $valueRenderer;

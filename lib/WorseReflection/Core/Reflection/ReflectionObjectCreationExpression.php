@@ -1,8 +1,7 @@
 <?php
 
 namespace Phpactor\WorseReflection\Core\Reflection;
-use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Core\Type;
+
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollection;
 
 use Phpactor\WorseReflection\Core\Position;

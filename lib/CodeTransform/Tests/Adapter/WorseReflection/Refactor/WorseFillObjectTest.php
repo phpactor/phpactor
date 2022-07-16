@@ -53,7 +53,7 @@ class WorseFillObjectTest extends WorseTestCase
         }
     }
 
-    private function createFillObject($source): WorseFillObject
+    private function createFillObject(string $source): WorseFillObject
     {
         $fill = new WorseFillObject(
             $this->reflectorForWorkspace($source),

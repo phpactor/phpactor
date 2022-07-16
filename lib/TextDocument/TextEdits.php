@@ -103,6 +103,11 @@ class TextEdits implements IteratorAggregate, Countable
         return new self(...array_merge($this->textEdits, [$textEdit]));
     }
 
+    public function count(): int
+    {
+        return count($this->textEdits);
+    }
+
     /**
      * @param array<TextEdit> $edits
      */
@@ -117,10 +122,5 @@ class TextEdits implements IteratorAggregate, Countable
                 str_replace("\n", '\n', $otherEdit->replacement())
             );
         }, $edits));
-    }
-
-    public function count(): int
-    {
-        return count($this->textEdits);
     }
 }

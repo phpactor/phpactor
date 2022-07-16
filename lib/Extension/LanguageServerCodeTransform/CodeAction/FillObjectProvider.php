@@ -18,6 +18,7 @@ use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 class FillObjectProvider implements CodeActionProvider
 {
     const KIND = 'quickfix.fill.object';
+
     private FillObject $fillObject;
 
     public function __construct(FillObject $fillObject)

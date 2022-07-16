@@ -17,7 +17,9 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope as
 class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCreationExpression
 {
     private ServiceLocator $locator;
+
     private Frame $frame;
+
     private ObjectCreationExpression $node;
 
     public function __construct(ServiceLocator $locator, Frame $frame, ObjectCreationExpression $node)
