@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 
@@ -35,6 +36,10 @@ class WorseTypeRenderer74Test extends TypeRendererTestCase
         yield [
             new CallableType(),
             'callable',
+        ];
+        yield [
+            new PrimitiveIterableType(),
+            'iterable',
         ];
         yield [
             new UnionType(new StringType(), new FalseType()),

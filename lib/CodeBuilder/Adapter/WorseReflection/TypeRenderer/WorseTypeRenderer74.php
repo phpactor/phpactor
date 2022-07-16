@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
+use Phpactor\WorseReflection\Core\Type\PrimitiveIterableType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
@@ -50,6 +51,10 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
         }
 
         if ($type instanceof CallableType) {
+            return $type->toPhpString();
+        }
+
+        if ($type instanceof PrimitiveIterableType) {
             return $type->toPhpString();
         }
 

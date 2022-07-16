@@ -488,8 +488,6 @@ class ImplementContractsTest extends WorseTestCase
                 <<<'EOT'
                     <?php
 
-                    use Arg\Foo;
-
                     interface Animal
                     {
                         abstract public function jump(): iterable;
