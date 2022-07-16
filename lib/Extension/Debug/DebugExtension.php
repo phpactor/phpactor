@@ -9,15 +9,36 @@ use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Debug\Command\GenerateDocumentationCommand;
 use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
-use Phpactor\Extension\Debug\Model\RpcCommandDocumentor;
+use Phpactor\Extension\Debug\Model\DocumentorRegistry;
 use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
 use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\MapResolver\Resolver;
+use RuntimeException;
 
 class DebugExtension implements Extension
 {
+    public const TAG_DOCUMENTOR = 'debug.documentor';
+    public const EXTENSION_DOCUMENTOR_NAME = 'extension.documentor';
+
     public function load(ContainerBuilder $container): void
     {
+        $container->register(DocumentorRegistry::class, function (Container $container) {
+            $serviceMap = [];
+            foreach ($container->getServiceIdsForTag(self::TAG_DOCUMENTOR) as $serviceId => $attrs) {
+                if (!isset($attrs['name'])) {
+                    throw new RuntimeException(sprintf(
+                        'Documentor "%s" must be provided with a "name" ' .
+                        'attribute when it is registered',
+                        $serviceId
+                    ));
+                }
+
+                $serviceMap[$attrs['name']] = $serviceId;
+            }
+            return new DocumentorRegistry($container, $serviceMap);
+        });
+
         $container->register(DefinitionDocumentor::class, function (Container $container) {
             return new DefinitionDocumentor();
         });
@@ -27,17 +48,14 @@ class DebugExtension implements Extension
                 $container->getParameter(PhpactorContainer::PARAM_EXTENSION_CLASSES),
                 $container->get(DefinitionDocumentor::class)
             );
-        });
-
-        $container->register(RpcCommandDocumentor::class, function (Container $container) {
-            return new RpcCommandDocumentor(
-                $container->get('rpc.handler_registry'),
-                $container->get(DefinitionDocumentor::class)
-            );
-        });
+        }, [
+            self::TAG_DOCUMENTOR => ['name' => self::EXTENSION_DOCUMENTOR_NAME]
+        ]);
 
         $container->register('generate_documentation_command.extensions', function (Container $container) {
-            return new GenerateDocumentationCommand($container->get(ExtensionDocumentor::class));
+            return new GenerateDocumentationCommand(
+                $container->get(DocumentorRegistry::class)->get(self::EXTENSION_DOCUMENTOR_NAME)
+            );
         }, [
             ConsoleExtension::TAG_COMMAND => [
                 'name' => 'development:configuration-reference'
@@ -45,7 +63,9 @@ class DebugExtension implements Extension
         ]);
 
         $container->register('generate_documentation_command.command', function (Container $container) {
-            return new GenerateDocumentationCommand($container->get(RpcCommandDocumentor::class));
+            return new GenerateDocumentationCommand(
+                $container->get(DocumentorRegistry::class)->get(RpcExtension::RPC_DOCUMENTOR_NAME)
+            );
         }, [
             ConsoleExtension::TAG_COMMAND => [
                 'name' => 'development:command-reference'

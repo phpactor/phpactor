@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\Debug\Model;
+namespace Phpactor\Extension\Rpc;
 
-use Phpactor\Extension\Rpc\HandlerRegistry;
+use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
+use Phpactor\Extension\Debug\Model\Documentor;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
-use Phpactor\Extension\Rpc\Handler;
 
 class RpcCommandDocumentor implements Documentor
 {
@@ -20,7 +20,6 @@ class RpcCommandDocumentor implements Documentor
         $this->handlerRegistry = $handlerRegistry;
         $this->definitionDocumentor = $definitionDocumentor;
     }
-
 
     public function document(string $commandName=''): string
     {
