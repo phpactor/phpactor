@@ -39,7 +39,7 @@ class WorseFillObject implements FillObject
         Parser $parser,
         Updater $updater,
         bool $namedParameters = true,
-        bool $hint = true,
+        bool $hint = true
     ) {
         $this->reflector = $reflector;
         $this->parser = $parser;
