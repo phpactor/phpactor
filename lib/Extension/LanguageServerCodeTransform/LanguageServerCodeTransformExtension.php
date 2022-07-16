@@ -15,6 +15,7 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateClassProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateUnresolvableClassProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
@@ -221,6 +222,16 @@ class LanguageServerCodeTransformExtension implements Extension
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(CreateUnresolvableClassProvider::class, function (Container $container) {
+            return new CreateUnresolvableClassProvider(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(CodeTransformExtension::SERVICE_CLASS_GENERATORS),
+                $container->get(ClassToFileExtension::SERVICE_CONVERTER)
+            );
+        }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 

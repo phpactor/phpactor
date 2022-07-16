@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use Phpactor\TextDocument\ByteOffsetRange;
 use RuntimeException;
 use Traversable;
 
@@ -54,5 +55,25 @@ final class Diagnostics implements IteratorAggregate, Countable
         }
 
         return $this->diagnostics[$index];
+    }
+
+    public function withinRange(ByteOffsetRange $byteOffsetRange): self
+    {
+        return new self(array_filter(
+            $this->diagnostics,
+            fn (Diagnostic $d) =>
+            $d->range()->start()->toInt() >= $byteOffsetRange->start()->toInt() &&
+            $d->range()->end()->toInt() <= $byteOffsetRange->end()->toInt()
+        ));
+    }
+
+    public function containingRange(ByteOffsetRange $byteOffsetRange): self
+    {
+        return new self(array_filter(
+            $this->diagnostics,
+            fn (Diagnostic $d) =>
+            $d->range()->start()->toInt() <= $byteOffsetRange->start()->toInt() &&
+            $d->range()->end()->toInt() >= $byteOffsetRange->end()->toInt()
+        ));
     }
 }

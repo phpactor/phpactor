@@ -767,6 +767,10 @@ from a class name.
 
 .. tabs::
 
+   .. tab:: Language Server
+
+       Invoke the code action menu on a non-existing class name
+
    .. tab:: CLI
 
        .. code-block::

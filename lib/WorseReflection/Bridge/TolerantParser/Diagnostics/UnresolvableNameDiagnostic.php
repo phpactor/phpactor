@@ -9,8 +9,8 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
 class UnresolvableNameDiagnostic implements Diagnostic
 {
-    private const TYPE_CLASS = 'class';
-    private const TYPE_FUNCTION = 'function';
+    public const TYPE_CLASS = 'class';
+    public const TYPE_FUNCTION = 'function';
 
     private ByteOffsetRange $range;
 
@@ -59,6 +59,9 @@ class UnresolvableNameDiagnostic implements Diagnostic
         return sprintf('%s "%s" not found', ucfirst($this->type), $this->name->head()->__toString());
     }
 
+    /**
+     * @return self::TYPE_*
+     */
     public function type(): string
     {
         return $this->type;

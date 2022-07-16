@@ -14,4 +14,12 @@ class RangeConverter
             PositionConverter::byteOffsetToPosition($range->end(), $text),
         );
     }
+
+    public static function toPhpactorRange(Range $range, string $text): ByteOffsetRange
+    {
+        return new ByteOffsetRange(
+            PositionConverter::positionToByteOffset($range->start, $text),
+            PositionConverter::positionToByteOffset($range->end, $text),
+        );
+    }
 }
