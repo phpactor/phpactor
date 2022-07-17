@@ -24,8 +24,8 @@ class CodeTransformExtensionTest extends TestCase
 
         foreach ($container->getServiceIds() as $serviceId) {
             $service = $container->get($serviceId);
-            self::assertNotNull($service);
         }
+        $this->addToAssertionCount(1);
     }
 
     /**
