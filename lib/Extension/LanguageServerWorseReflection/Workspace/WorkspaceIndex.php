@@ -121,7 +121,7 @@ class WorkspaceIndex
         $namesToRemove = array_diff($currentNames, $newNames);
 
         foreach ($newNames as $name) {
-            $this->byName[$name] = $textDocument;
+            $this->byName[(string)$name] = $textDocument;
         }
         foreach ($namesToRemove as $name) {
             unset($this->byName[$name]);

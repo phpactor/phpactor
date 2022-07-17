@@ -75,6 +75,7 @@ class LanguageServerExtension implements Extension
     public const TAG_LISTENER_PROVIDER = 'language_server.listener_provider';
     public const TAG_CODE_ACTION_PROVIDER = 'language_server.code_action_provider';
     public const TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER = 'language_server.code_action_diagnostics_provider';
+    public const TAG_STATUS_PROVIDER = 'language_server.status_provvder';
     public const TAG_DIAGNOSTICS_PROVIDER = 'language_server.diagnostics_provider';
     public const PARAM_SESSION_PARAMETERS = 'language_server.session_parameters';
     public const PARAM_CLIENT_CAPABILITIES = 'language_server.client_capabilities';
@@ -224,6 +225,10 @@ class LanguageServerExtension implements Extension
         ]);
 
         $container->register('language_server.session.handler.session', function (Container $container) {
+            $providers = [];
+            foreach ($container->getServiceIdsForTag(self::TAG_STATUS_PROVIDER) as $serviceId => $_) {
+                $providers[] = $container->get($serviceId);
+            }
             return new DebugHandler(
                 $container,
                 $container->get(ClientApi::class),
@@ -231,6 +236,7 @@ class LanguageServerExtension implements Extension
                 $container->get(ServerStats::class),
                 $container->get(ServiceManager::class),
                 $container->get(AggregateDiagnosticsProvider::class),
+                $providers
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
 

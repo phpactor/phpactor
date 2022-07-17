@@ -34,11 +34,14 @@ class IndexerHandlerTest extends IntegrationTestCase
         );
 
         $this->tester->initialize();
+        $response = $this->tester->transmitter()->shiftRequest();
+        $this->tester->respond($response->id, null);
         wait(delay(50));
 
         self::assertGreaterThanOrEqual(2, $this->tester->transmitter()->count());
-        self::assertStringContainsString('Indexing', $this->tester->transmitter()->shift()->params['message']);
-        self::assertStringContainsString('Done indexing', $this->tester->transmitter()->shift()->params['message']);
+        $this->tester->transmitter()->shift();
+        $done = $this->tester->transmitter()->shift();
+        self::assertStringContainsString('Done indexing', $done->params['value']['message']);
     }
 
     public function testReindexNonStarted(): void
@@ -81,12 +84,12 @@ class IndexerHandlerTest extends IntegrationTestCase
         );
 
         $tester->initialize();
+        $response = $tester->transmitter()->shiftRequest();
+        $tester->respondAndWait($response->id, null);
         wait(delay(10));
 
-
         $tester->transmitter()->shift();
         $tester->transmitter()->shift();
-
         $message = $tester->transmitter()->shift();
         self::assertStringContainsString('File watcher died:', $message->params['message']);
     }

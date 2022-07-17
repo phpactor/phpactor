@@ -37,6 +37,11 @@ class ImportNameProviderTest extends IntegrationTestCase
             ProtocolFactory::initializeParams($this->workspace()->path())
         );
         $tester->initialize();
+
+        // respond to the index start request:
+        $response = $tester->transmitter()->shiftRequest();
+        $tester->respondAndWait($response->id, null);
+
         assert($tester instanceof LanguageServerTester);
 
         $subject = $this->workspace()->getContents('subject.php');

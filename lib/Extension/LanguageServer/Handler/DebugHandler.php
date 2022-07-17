@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServer\Handler;
 
 use Amp\Promise;
 use Amp\Success;
+use Phpactor\Extension\LanguageServer\Status\StatusProvider;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\Container\Container;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
@@ -32,13 +33,22 @@ class DebugHandler implements Handler
 
     private DiagnosticsProvider $diagnosticProvider;
 
+    /**
+     * @var StatusProvider[]
+     */
+    private array $statusProviders;
+
+    /**
+     * @param StatusProvider[] $statusProviders
+     */
     public function __construct(
         Container $container,
         ClientApi $client,
         Workspace $workspace,
         ServerStats $stats,
         ServiceManager $serviceManager,
-        DiagnosticsProvider $diagnosticProvider
+        DiagnosticsProvider $diagnosticProvider,
+        array $statusProviders
     ) {
         $this->container = $container;
         $this->client = $client;
@@ -46,6 +56,7 @@ class DebugHandler implements Handler
         $this->stats = $stats;
         $this->serviceManager = $serviceManager;
         $this->diagnosticProvider = $diagnosticProvider;
+        $this->statusProviders = $statusProviders;
     }
 
     
@@ -148,6 +159,16 @@ class DebugHandler implements Handler
             )->toArray() as $tokenName => $value
         ) {
             $info[] = sprintf('  %s: %s', $tokenName, $value);
+        }
+        $info[] = '';
+
+        foreach ($this->statusProviders as $provider) {
+            $info[] = $provider->title();
+            $info[] = str_repeat('-', mb_strlen($provider->title()));
+            $info[] = '';
+            foreach ($provider->provide() as $key => $value) {
+                $info[] = sprintf('  %s: %s', $key, $value);
+            }
         }
 
         return new Success(implode(PHP_EOL, $info));
