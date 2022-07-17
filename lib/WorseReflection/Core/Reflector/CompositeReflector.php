@@ -21,9 +21,9 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollec
 class CompositeReflector implements Reflector
 {
     private ClassReflector $classReflector;
-    
+
     private SourceCodeReflector $sourceCodeReflector;
-    
+
     private FunctionReflector $functionReflector;
 
     public function __construct(
@@ -35,35 +35,35 @@ class CompositeReflector implements Reflector
         $this->sourceCodeReflector = $sourceCodeReflector;
         $this->functionReflector = $functionReflector;
     }
-    
+
     public function reflectClass($className): ReflectionClass
     {
         return $this->classReflector->reflectClass($className);
     }
-    
-    public function reflectInterface($className): ReflectionInterface
+
+    public function reflectInterface($className, array $visited = []): ReflectionInterface
     {
-        return $this->classReflector->reflectInterface($className);
+        return $this->classReflector->reflectInterface($className, $visited);
     }
-    
+
     public function reflectTrait($className): ReflectionTrait
     {
         return $this->classReflector->reflectTrait($className);
     }
-    
+
     public function reflectEnum($className): ReflectionEnum
     {
         return $this->classReflector->reflectEnum($className);
     }
-    
-    public function reflectClassLike($className): ReflectionClassLike
+
+    public function reflectClassLike($className, $visited = []): ReflectionClassLike
     {
-        return $this->classReflector->reflectClassLike($className);
+        return $this->classReflector->reflectClassLike($className, $visited);
     }
     
-    public function reflectClassesIn($sourceCode): ReflectionClassLikeCollection
+    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
-        return $this->sourceCodeReflector->reflectClassesIn($sourceCode);
+        return $this->sourceCodeReflector->reflectClassesIn($sourceCode, $visited);
     }
     
     public function reflectOffset($sourceCode, $offset): ReflectionOffset

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 use Closure;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
@@ -47,10 +48,10 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
         });
     }
     
-    public function reflectInterface($className): ReflectionInterface
+    public function reflectInterface($className, array $visited = []): ReflectionInterface
     {
-        return $this->getOrSet(self::INTERFACE_PREFIX.$className, function () use ($className) {
-            return $this->classReflector->reflectInterface($className);
+        return $this->getOrSet(self::INTERFACE_PREFIX.$className, function () use ($className, $visited) {
+            return $this->classReflector->reflectInterface($className, $visited);
         });
     }
     
@@ -68,10 +69,16 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
         });
     }
     
-    public function reflectClassLike($className): ReflectionClassLike
+    public function reflectClassLike($className, $visited = [], string $prefix = self::CLASS_LIKE_PREFIX): ReflectionClassLike
     {
-        return $this->getOrSet(self::CLASS_LIKE_PREFIX.(string)$className, function () use ($className) {
-            return $this->classReflector->reflectClassLike($className);
+        if (isset($visited[(string)$className])) {
+            throw new ClassNotFound(sprintf(
+                'Cycle detected while resolving class "%s"',
+                (string)$className
+            ));
+        }
+        return $this->getOrSet(self::CLASS_LIKE_PREFIX.(string)$className, function () use ($className, $visited) {
+            return $this->classReflector->reflectClassLike($className, $visited);
         });
     }
 
