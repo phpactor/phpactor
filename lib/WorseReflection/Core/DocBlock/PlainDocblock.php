@@ -61,7 +61,7 @@ class PlainDocblock implements DocBlock
             if (false !== strpos($line, '*/')) {
                 continue;
             }
-            $line = trim(preg_replace('{\s+\*}', '', $line));
+            $line = trim(preg_replace('{\s+\*}', '', $line, 1));
             $lines[] = $line;
         }
         return trim(implode("\n", $lines));
