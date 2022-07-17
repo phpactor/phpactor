@@ -30,14 +30,24 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     
     private SourceCode $sourceCode;
 
+    /**
+     * @var array<string,bool>
+     */
+    private array $visited;
+
+    /**
+     * @param array<string,bool> $visited
+     */
     public function __construct(
         ServiceLocator $serviceLocator,
         SourceCode $sourceCode,
-        TraitDeclaration $node
+        TraitDeclaration $node,
+        array $visited = []
     ) {
         $this->serviceLocator = $serviceLocator;
         $this->node = $node;
         $this->sourceCode = $sourceCode;
+        $this->visited = $visited;
     }
 
     public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
@@ -96,7 +106,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
 
     public function traits(): ReflectionTraitCollection
     {
-        return PhpactorReflectionTraitCollection::fromTraitDeclaration($this->serviceLocator, $this->node);
+        return PhpactorReflectionTraitCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $this->visited);
     }
     /**
      * @return TraitDeclaration

@@ -95,11 +95,11 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      * @throws ClassNotFound If the class was not found, or the found class
      *         was not a trait.
      */
-    public function reflectTrait($className): ReflectionTrait
+    public function reflectTrait($className, array $visited = []): ReflectionTrait
     {
         $className = ClassName::fromUnknown($className);
 
-        $class = $this->reflectClassLike($className);
+        $class = $this->reflectClassLike($className, $visited);
 
         if (false === $class instanceof ReflectionTrait) {
             throw new ClassNotFound(sprintf(

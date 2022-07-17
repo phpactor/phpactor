@@ -40,7 +40,10 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
         return new self($items);
     }
 
-    public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $traitDeclaration): self
+    /**
+     * @param array<string,bool> $visited
+     */
+    public static function fromTraitDeclaration(ServiceLocator $serviceLocator, TraitDeclaration $traitDeclaration, array $visited = []): self
     {
         $items = [];
         foreach ($traitDeclaration->traitMembers->traitMemberDeclarations as $memberDeclaration) {
@@ -51,7 +54,7 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
             foreach ($memberDeclaration->traitNameList->getValues() as $traitName) {
                 $traitName = TolerantQualifiedNameResolver::getResolvedName($traitName);
                 try {
-                    $items[(string) $traitName] = $serviceLocator->reflector()->reflectTrait(ClassName::fromString($traitName));
+                    $items[(string) $traitName] = $serviceLocator->reflector()->reflectTrait(ClassName::fromString($traitName), $visited);
                 } catch (NotFound $notFound) {
                 }
             }

@@ -55,10 +55,10 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
         });
     }
     
-    public function reflectTrait($className): ReflectionTrait
+    public function reflectTrait($className, array $visited = []): ReflectionTrait
     {
-        return $this->getOrSet(self::TRAIT_PREFIX.$className, function () use ($className) {
-            return $this->classReflector->reflectTrait($className);
+        return $this->getOrSet(self::TRAIT_PREFIX.$className, function () use ($className, $visited) {
+            return $this->classReflector->reflectTrait($className, $visited);
         });
     }
     

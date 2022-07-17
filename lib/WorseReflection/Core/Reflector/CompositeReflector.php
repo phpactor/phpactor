@@ -46,9 +46,9 @@ class CompositeReflector implements Reflector
         return $this->classReflector->reflectInterface($className, $visited);
     }
 
-    public function reflectTrait($className): ReflectionTrait
+    public function reflectTrait($className, array $visited = []): ReflectionTrait
     {
-        return $this->classReflector->reflectTrait($className);
+        return $this->classReflector->reflectTrait($className, $visited);
     }
 
     public function reflectEnum($className): ReflectionEnum

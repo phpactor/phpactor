@@ -63,7 +63,7 @@ class MemonizedClassReflectorTest extends TestCase
 
     public function testReflectTrait(): void
     {
-        $this->innerClassReflector->reflectTrait($this->className)->shouldBeCalledTimes(1);
+        $this->innerClassReflector->reflectTrait($this->className, [])->shouldBeCalledTimes(1);
         $this->reflector->reflectTrait($this->className);
         $this->reflector->reflectTrait($this->className);
         $this->reflector->reflectTrait($this->className);
