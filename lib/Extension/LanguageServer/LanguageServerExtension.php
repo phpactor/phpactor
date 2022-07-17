@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServer;
 
 use Composer\InstalledVersions;
 use Phly\EventDispatcher\EventDispatcher;
+use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -231,6 +232,7 @@ class LanguageServerExtension implements Extension
                 $container->get(ServerStats::class),
                 $container->get(ServiceManager::class),
                 $container->get(AggregateDiagnosticsProvider::class),
+                $container->get(Watcher::class),
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
