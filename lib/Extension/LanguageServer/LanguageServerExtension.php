@@ -4,11 +4,9 @@ namespace Phpactor\Extension\LanguageServer;
 
 use Composer\InstalledVersions;
 use Phly\EventDispatcher\EventDispatcher;
-use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\LanguageServerIndexer\Status\IndexerStatusProvider;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
@@ -230,7 +228,6 @@ class LanguageServerExtension implements Extension
             $providers = [];
             foreach ($container->getServiceIdsForTag(self::TAG_STATUS_PROVIDER) as $serviceId => $_) {
                 $providers[] = $container->get($serviceId);
-
             }
             return new DebugHandler(
                 $container,

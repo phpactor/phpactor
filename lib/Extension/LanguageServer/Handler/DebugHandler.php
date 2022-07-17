@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServer\Handler;
 
 use Amp\Promise;
 use Amp\Success;
-use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\Extension\LanguageServer\Status\StatusProvider;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\Container\Container;
