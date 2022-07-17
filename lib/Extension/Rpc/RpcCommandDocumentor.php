@@ -24,8 +24,8 @@ class RpcCommandDocumentor implements Documentor
     public function document(string $commandName=''): string
     {
         $docs = [
-            'Commands',
-            '========',
+            'Legacy RPC Commands',
+            '===================',
             "\n",
             ".. This document is generated via the `$commandName` command",
             "\n",
@@ -72,7 +72,7 @@ class RpcCommandDocumentor implements Documentor
 
         $hasDocumentation = false;
         foreach ($resolver->definitions() as $definition) {
-            $help[] = $this->definitionDocumentor->document('RpcCommand_GlobalDefinitionHandler', $definition);
+            $help[] = $this->definitionDocumentor->document('RpcCommand_'.$handler->name(), $definition);
             $hasDocumentation = true;
         }
 

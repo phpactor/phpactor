@@ -23,7 +23,7 @@ class RpcExtension implements Extension
 {
     public const TAG_RPC_HANDLER = 'rpc.handler';
     public const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
-    public const RPC_DOCUMENTOR_NAME= 'rpc.documentor';
+    public const RPC_DOCUMENTOR_NAME= 'rpc';
     private const STORE_REPLAY = 'rpc.store_replay';
     private const REPLAY_PATH = 'rpc.replay_path';
 

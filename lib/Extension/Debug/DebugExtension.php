@@ -18,7 +18,7 @@ use RuntimeException;
 class DebugExtension implements Extension
 {
     public const TAG_DOCUMENTOR = 'debug.documentor';
-    public const EXTENSION_DOCUMENTOR_NAME = 'extension.documentor';
+    public const EXTENSION_DOCUMENTOR_NAME = 'extension';
 
     public function load(ContainerBuilder $container): void
     {
