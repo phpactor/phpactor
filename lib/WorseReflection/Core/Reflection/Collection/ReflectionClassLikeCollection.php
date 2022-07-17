@@ -43,7 +43,7 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
             }
 
             if ($child instanceof TraitDeclaration) {
-                $items[(string) $child->getNamespacedName()] =  new ReflectionTrait($serviceLocator, $source, $child);
+                $items[(string) $child->getNamespacedName()] =  new ReflectionTrait($serviceLocator, $source, $child, $visited);
                 continue;
             }
 

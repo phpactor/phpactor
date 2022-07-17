@@ -28,8 +28,9 @@ interface ClassReflector
     /**
      * Reflect a trait
      * @param Name|string $className
+     * @param array<string,bool> $visited
      */
-    public function reflectTrait($className): ReflectionTrait;
+    public function reflectTrait($className, array $visited = []): ReflectionTrait;
 
     /**
      * Reflect an enum

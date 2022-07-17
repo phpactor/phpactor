@@ -1,0 +1,19 @@
+<?php
+
+trait TraitTwo {
+    use TraitOne;
+    public function onTraitTwo(): string {}
+    public function onTraitThree(): int {}
+}
+
+trait TraitOne {
+    use TraitTwo;
+
+    public function onTraitOne(): string {}
+}
+
+class One {
+    use TraitOne;
+}
+
+$one = new One();
