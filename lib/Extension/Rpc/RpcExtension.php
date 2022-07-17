@@ -63,16 +63,14 @@ class RpcExtension implements Extension
             return new LazyContainerHandlerRegistry($container, $handlers);
         });
 
-        if (class_exists(DebugExtension::class)) {
-            $container->register(RpcCommandDocumentor::class, function ($container) {
-                return new RpcCommandDocumentor(
-                    $container->get('rpc.handler_registry'),
-                    $container->get(DefinitionDocumentor::class)
-                );
-            }, [ DebugExtension::TAG_DOCUMENTOR => [
-                'name' => self::RPC_DOCUMENTOR_NAME
-            ] ]);
-        }
+        $container->register(RpcCommandDocumentor::class, function ($container) {
+            return new RpcCommandDocumentor(
+                $container->get('rpc.handler_registry'),
+                $container->get(DefinitionDocumentor::class)
+            );
+        }, [ DebugExtension::TAG_DOCUMENTOR => [
+            'name' => self::RPC_DOCUMENTOR_NAME
+        ] ]);
 
         $this->registerHandlers($container);
     }
