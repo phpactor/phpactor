@@ -82,7 +82,7 @@ class IndexerHandler implements Handler, ServiceProvider
             $token = WorkDoneToken::generate();
 
             yield $this->clientApi->workDoneProgress()->create($token);
-            $this->clientApi->workDoneProgress()->begin($token, 'Indexing', sprintf('Indexing "%s" PHP files', $size), 0);
+            $this->clientApi->workDoneProgress()->begin($token, 'Indexing workspace', sprintf('%d PHP files', $size), 0);
 
             $start = microtime(true);
             $index = 0;
@@ -94,7 +94,7 @@ class IndexerHandler implements Handler, ServiceProvider
                     $this->clientApi->workDoneProgress()->report(
                         $token,
                         sprintf(
-                            'Indexed %s/%s (%s%%) %s',
+                            '%s/%s (%s%%) %s',
                             $index,
                             $size,
                             number_format($index / $size * 100, 2),
