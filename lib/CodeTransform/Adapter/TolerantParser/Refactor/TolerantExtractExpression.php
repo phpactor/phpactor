@@ -53,6 +53,10 @@ class TolerantExtractExpression implements ExtractExpression
 
     private function getExtractedExpression(SourceCode $source, int $offsetStart, ?int $offsetEnd): ?Expression
     {
+        // only apply to selections
+        if ($offsetStart === $offsetEnd) {
+            return null;
+        }
         $rootNode = $this->parser->parseSourceFile((string) $source);
         $startNode = $rootNode->getDescendantNodeAtPosition($offsetStart);
 

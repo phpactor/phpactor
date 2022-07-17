@@ -136,4 +136,20 @@ class TolerantExtractExpressionTest extends TolerantTestCase
             'foobar',
         ];
     }
+
+    public function testWillNotExtractExpressionIfNoRange(): void
+    {
+        $extractMethod = new TolerantExtractExpression();
+        
+        self::assertFalse($extractMethod->canExtractExpression(
+            SourceCode::fromString('<?php new Foobar();'),
+            8,
+            8,
+        ));
+        self::assertTrue($extractMethod->canExtractExpression(
+            SourceCode::fromString('<?php new Foobar();'),
+            8,
+            9,
+        ));
+    }
 }
