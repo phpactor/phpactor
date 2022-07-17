@@ -866,6 +866,21 @@ located in another (e.g. when running a Language Server)
 **Default**: ``true``
 
 
+.. _param_worse_reflection.mixins:
+
+
+``worse_reflection.mixins``
+"""""""""""""""""""""""""""
+
+
+
+
+Enable mixins (unstable see issue #1791)
+
+
+**Default**: ``false``
+
+
 .. _param_worse_reflection.cache_dir:
 
 
