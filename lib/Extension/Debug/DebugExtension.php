@@ -54,7 +54,8 @@ class DebugExtension implements Extension
 
         $container->register('generate_documentation_command.extensions', function (Container $container) {
             return new GenerateDocumentationCommand(
-                $container->get(DocumentorRegistry::class)->get(self::EXTENSION_DOCUMENTOR_NAME)
+                $container->get(DocumentorRegistry::class),
+                self::EXTENSION_DOCUMENTOR_NAME
             );
         }, [
             ConsoleExtension::TAG_COMMAND => [
@@ -64,7 +65,8 @@ class DebugExtension implements Extension
 
         $container->register('generate_documentation_command.command', function (Container $container) {
             return new GenerateDocumentationCommand(
-                $container->get(DocumentorRegistry::class)->get(RpcExtension::RPC_DOCUMENTOR_NAME)
+                $container->get(DocumentorRegistry::class),
+                RpcExtension::RPC_DOCUMENTOR_NAME
             );
         }, [
             ConsoleExtension::TAG_COMMAND => [
