@@ -13,6 +13,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type;
@@ -56,7 +57,11 @@ class WorseFillObject implements FillObject
         if (!$node instanceof ObjectCreationExpression) {
             return TextEdits::none();
         }
-        $offset = $this->reflector->reflectNode($document, $node->getStartPosition());
+        try {
+            $offset = $this->reflector->reflectNode($document, $node->getStartPosition());
+        } catch (NotFound $notFound) {
+            return TextEdits::none();
+        }
 
         if (!$offset instanceof ReflectionObjectCreationExpression) {
             return TextEdits::none();
@@ -67,7 +72,11 @@ class WorseFillObject implements FillObject
             return TextEdits::none();
         }
 
-        $constructor = $offset->class()->methods()->get('__construct');
+        try {
+            $constructor = $offset->class()->methods()->get('__construct');
+        } catch (NotFound $notFound) {
+            return TextEdits::none();
+        }
 
         $args = [];
 
