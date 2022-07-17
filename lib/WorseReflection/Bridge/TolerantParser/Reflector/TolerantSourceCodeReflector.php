@@ -35,6 +35,9 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $this->parser = $parser;
     }
     
+    /**
+     * @param array<string,bool> $visited
+     */
     public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);

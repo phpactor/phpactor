@@ -39,8 +39,14 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
 
     private ?ReflectionMethodCollection $methods = null;
 
+    /**
+     * @var array<string, bool>
+     */
     private array $visited;
 
+    /**
+     * @param array<string,bool> $visited
+     */
     public function __construct(
         ServiceLocator $serviceLocator,
         SourceCode $sourceCode,

@@ -58,8 +58,14 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?ReflectionTraitCollection $traits = null;
 
+    /**
+     * @var array<string, bool>
+     */
     private array $visited;
 
+    /**
+     * @param array<string,bool> $visited
+     */
     public function __construct(
         ServiceLocator $serviceLocator,
         SourceCode $sourceCode,

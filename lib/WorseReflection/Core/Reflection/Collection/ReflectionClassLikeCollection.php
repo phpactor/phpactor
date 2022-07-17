@@ -26,6 +26,9 @@ use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionInterfaceDecorator;
  */
 final class ReflectionClassLikeCollection extends AbstractReflectionCollection
 {
+    /**
+     * @param array<string,bool> $visited
+     */
     public static function fromNode(ServiceLocator $serviceLocator, SourceCode $source, Node $node, array $visited = []): self
     {
         $items = [];

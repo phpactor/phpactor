@@ -21,8 +21,9 @@ interface SourceCodeReflector
      * Reflect all classes (or class-likes) in the given source code.
      *
      * @param SourceCode|string $sourceCode
+     * @param array<string,bool> $visited
      */
-    public function reflectClassesIn($sourceCode): ReflectionClassLikeCollection;
+    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection;
 
     /**
      * Reflect all functions in the given source code.

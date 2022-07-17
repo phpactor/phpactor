@@ -21,6 +21,7 @@ interface ClassReflector
     /**
      * Reflect an interface.
      * @param Name|string $className
+     * @param array<string,bool> $visited
      */
     public function reflectInterface($className, array $visited = []): ReflectionInterface;
 
@@ -40,6 +41,7 @@ interface ClassReflector
     /**
      * Reflect a class, trait, enum or interface by its name.
      * @param Name|string $className
+     * @param array<string,bool> $visited
      */
     public function reflectClassLike($className, array $visited = []): ReflectionClassLike;
 

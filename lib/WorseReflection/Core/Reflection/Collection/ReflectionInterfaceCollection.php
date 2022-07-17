@@ -17,6 +17,9 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
  */
 class ReflectionInterfaceCollection extends AbstractReflectionCollection
 {
+    /**
+     * @param array<string,bool> $visited
+     */
     public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface, array $visited = []): self
     {
         return self::fromBaseClause($serviceLocator, $interface->interfaceBaseClause, $visited);
@@ -29,6 +32,7 @@ class ReflectionInterfaceCollection extends AbstractReflectionCollection
 
     /**
      * @param mixed $baseClause
+     * @param array<string,bool> $visited
      */
     private static function fromBaseClause(ServiceLocator $serviceLocator, $baseClause, array $visited): self
     {
