@@ -4,6 +4,13 @@ NVIM LSP Configuration Snippets
 This page contains some useful configuration snippets which are not guaranteed
 to work.
 
+Progress Notifications
+----------------------
+
+Neovim does not support LSP progress notifications out-of-the-box.
+
+Install a dedicated plugin such as `fidget <https://github.com/j-hui/fidget.nvim>`_
+
 Phpactor Commands
 -----------------
 
