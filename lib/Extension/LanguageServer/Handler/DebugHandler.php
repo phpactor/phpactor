@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServer\Handler;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\AmpFsWatch\Watcher;
+use Phpactor\Extension\LanguageServer\Status\StatusProvider;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\Container\Container;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
@@ -33,8 +34,14 @@ class DebugHandler implements Handler
 
     private DiagnosticsProvider $diagnosticProvider;
 
-    private Watcher $watcher;
+    /**
+     * @var StatusProvider[]
+     */
+    private array $statusProviders;
 
+    /**
+     * @param StatusProvider[] $statusProviders
+     */
     public function __construct(
         Container $container,
         ClientApi $client,
@@ -42,7 +49,7 @@ class DebugHandler implements Handler
         ServerStats $stats,
         ServiceManager $serviceManager,
         DiagnosticsProvider $diagnosticProvider,
-        Watcher $watcher
+        array $statusProviders
     ) {
         $this->container = $container;
         $this->client = $client;
@@ -50,7 +57,7 @@ class DebugHandler implements Handler
         $this->stats = $stats;
         $this->serviceManager = $serviceManager;
         $this->diagnosticProvider = $diagnosticProvider;
-        $this->watcher = $watcher;
+        $this->statusProviders = $statusProviders;
     }
 
     
@@ -142,7 +149,6 @@ class DebugHandler implements Handler
             '  documents: ' . $this->workspace->count(),
             '  services: ' . (string)json_encode($this->serviceManager->runningServices()),
             '  diagnostics: ' . (string)$this->diagnosticProvider->name(),
-            '  watcher: ' . $this->watcher->describe(),
             '',
             'Paths',
             '-----',
@@ -154,6 +160,16 @@ class DebugHandler implements Handler
             )->toArray() as $tokenName => $value
         ) {
             $info[] = sprintf('  %s: %s', $tokenName, $value);
+        }
+        $info[] = '';
+
+        foreach ($this->statusProviders as $provider) {
+            $info[] = $provider->title();
+            $info[] = str_repeat('-', mb_strlen($provider->title()));
+            $info[] = '';
+            foreach ($provider->provide() as $key => $value) {
+                $info[] = sprintf('  %s: %s', $key, $value);
+            }
         }
 
         return new Success(implode(PHP_EOL, $info));

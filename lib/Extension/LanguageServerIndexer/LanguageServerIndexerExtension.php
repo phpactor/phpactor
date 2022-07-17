@@ -10,6 +10,7 @@ use Phpactor\Extension\LanguageServerIndexer\Handler\IndexerHandler;
 use Phpactor\Extension\LanguageServerIndexer\Handler\WorkspaceSymbolHandler;
 use Phpactor\Extension\LanguageServerIndexer\Listener\IndexerListener;
 use Phpactor\Extension\LanguageServerIndexer\Model\WorkspaceSymbolProvider;
+use Phpactor\Extension\LanguageServerIndexer\Status\IndexerStatusProvider;
 use Phpactor\Extension\LanguageServerIndexer\Watcher\LanguageServerWatcher;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -51,6 +52,12 @@ class LanguageServerIndexerExtension implements Extension
                 'name' => 'lsp',
             ],
             LanguageServerExtension::TAG_LISTENER_PROVIDER => []
+        ]);
+
+        $container->register(IndexerStatusProvider::class, function (Container $container) {
+            return new IndexerStatusProvider($container->get(Watcher::class));
+        }, [
+            LanguageServerExtension::TAG_STATUS_PROVIDER => [],
         ]);
     }
 
