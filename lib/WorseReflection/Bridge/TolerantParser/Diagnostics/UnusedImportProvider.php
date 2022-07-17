@@ -85,7 +85,7 @@ class UnusedImportProvider implements DiagnosticProvider
                 continue;
             }
 
-            if ($this->usedByAnnotation($contents, $importedFqn)) {
+            if ($this->usedByAnnotation($contents, $importedFqn, $imported)) {
                 continue;
             }
                 
@@ -117,10 +117,21 @@ class UnusedImportProvider implements DiagnosticProvider
         }
     }
 
-    private function usedByAnnotation(string $contents, string $imported): bool
+    /**
+     * @param Node|Token $node
+     */
+    private function usedByAnnotation(string $contents, string $imported, $node): bool
     {
-        $imported = explode('\\', $imported);
-        $last = array_pop($imported);
-        return false !== strpos($contents, '@' . $last);
+        $name = (function () use ($imported, $node, $contents) {
+            /** @phpstan-ignore-next-line TP lies */
+            if ($node instanceof NamespaceUseClause && $node->namespaceAliasingClause) {
+                return $node->namespaceAliasingClause->name->getText($contents);
+            }
+
+            $imported = explode('\\', $imported);
+            return array_pop($imported);
+        })();
+
+        return false !== strpos($contents, '@' . $name);
     }
 }
