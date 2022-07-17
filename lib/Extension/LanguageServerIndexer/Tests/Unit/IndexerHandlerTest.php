@@ -9,6 +9,7 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\Extension\LanguageServerIndexer\Tests\IntegrationTestCase;
 use function Amp\Promise\wait;
 use function Amp\delay;
+use function Safe\json_decode;
 
 class IndexerHandlerTest extends IntegrationTestCase
 {
@@ -36,8 +37,33 @@ class IndexerHandlerTest extends IntegrationTestCase
         $this->tester->initialize();
         wait(delay(50));
 
-        self::assertGreaterThanOrEqual(2, $this->tester->transmitter()->count());
-        self::assertStringContainsString('Indexing', $this->tester->transmitter()->shift()->params['message']);
+        self::assertGreaterThanOrEqual(3, $this->tester->transmitter()->count());
+
+        $progressCreationTransmission = $this->tester->transmitter()->shift();
+
+        self::assertNotNull($token = $progressCreationTransmission->params['token']);
+        self::assertArraySubset([
+            'method' => 'window/workDoneProgress/create',
+            'params' => [
+                'token' => $token
+            ]
+        ], json_decode(json_encode($progressCreationTransmission), true));
+        self::assertArraySubset([
+            'method' => '$/progress',
+            'params' => [
+                'token' => $token,
+                'value' => [
+                    'title' => 'Indexing workspace',
+                    'message' => '1 PHP files'
+                ]
+            ]
+        ], json_decode(json_encode($this->tester->transmitter()->shift()), true));
+        self::assertArraySubset([
+            'method' => '$/progress',
+            'params' => [
+                'token' => $token
+            ]
+        ], json_decode(json_encode($this->tester->transmitter()->shift()), true));
         self::assertStringContainsString('Done indexing', $this->tester->transmitter()->shift()->params['message']);
     }
 
@@ -84,6 +110,8 @@ class IndexerHandlerTest extends IntegrationTestCase
         wait(delay(10));
 
 
+        $tester->transmitter()->shift();
+        $tester->transmitter()->shift();
         $tester->transmitter()->shift();
         $tester->transmitter()->shift();
 
