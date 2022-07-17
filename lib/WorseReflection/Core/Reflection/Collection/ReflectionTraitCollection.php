@@ -24,6 +24,10 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
                 continue;
             }
 
+            if ($memberDeclaration->traitNameList === null) {
+                continue;
+            }
+
             foreach ($memberDeclaration->traitNameList->getValues() as $traitName) {
                 $traitName = TolerantQualifiedNameResolver::getResolvedName($traitName);
                 try {
