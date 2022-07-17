@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 use Closure;
 use Phpactor\WorseReflection\Core\Cache;
-use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
+use Phpactor\WorseReflection\Core\Exception\CycleDetected;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
@@ -69,10 +69,10 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
         });
     }
     
-    public function reflectClassLike($className, $visited = [], string $prefix = self::CLASS_LIKE_PREFIX): ReflectionClassLike
+    public function reflectClassLike($className, $visited = []): ReflectionClassLike
     {
         if (isset($visited[(string)$className])) {
-            throw new ClassNotFound(sprintf(
+            throw new CycleDetected(sprintf(
                 'Cycle detected while resolving class "%s"',
                 (string)$className
             ));

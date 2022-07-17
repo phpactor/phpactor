@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigati
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
+use Phpactor\WorseReflection\Core\Exception\CycleDetected;
 use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Name;
@@ -140,7 +141,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         $className = ClassName::fromUnknown($className);
 
         if (isset($visited[$className->__toString()])) {
-            throw new ClassNotFound(sprintf(
+            throw new CycleDetected(sprintf(
                 'Cycle detected while resolving class "%s"',
                 $className->full()
             ));
