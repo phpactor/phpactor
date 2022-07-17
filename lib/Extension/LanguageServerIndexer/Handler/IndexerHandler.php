@@ -17,6 +17,7 @@ use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Core\Service\ServiceProvider;
+use Phpactor\LanguageServer\WorkDoneProgress\WorkDoneToken;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -41,6 +42,8 @@ class IndexerHandler implements Handler, ServiceProvider
 
     private EventDispatcherInterface $eventDispatcher;
 
+    private WorkDoneToken $token;
+
     public function __construct(
         Indexer $indexer,
         Watcher $watcher,
@@ -53,6 +56,7 @@ class IndexerHandler implements Handler, ServiceProvider
         $this->logger = $logger;
         $this->clientApi = $clientApi;
         $this->eventDispatcher = $eventDispatcher;
+        $this->token = WorkDoneToken::generate();
     }
 
     /**
@@ -83,7 +87,14 @@ class IndexerHandler implements Handler, ServiceProvider
         return \Amp\call(function () use ($cancel) {
             $job = $this->indexer->getJob();
             $size = $job->size();
-            $this->clientApi->window()->showMessage()->info(sprintf('Indexing "%s" PHP files', $size));
+
+            $this->clientApi->workDoneProgress()->create($this->token);
+            $this->clientApi->workDoneProgress()->begin(
+                $this->token,
+                'Indexing workspace',
+                sprintf('%s PHP files', $size),
+                0,
+            );
 
             $start = microtime(true);
             $index = 0;
@@ -92,13 +103,11 @@ class IndexerHandler implements Handler, ServiceProvider
 
                 if ($index % 500 === 0) {
                     $usage = MemoryUsage::create();
-                    $this->clientApi->window()->showMessage()->info(sprintf(
-                        'Indexed %s/%s (%s%%) %s',
-                        $index,
-                        $size,
+                    $this->clientApi->workDoneProgress()->report(
+                        $this->token,
+                        sprintf('%s/%s (%s)', $index, $size, $usage->memoryUsageFormatted()),
                         number_format($index / $size * 100, 2),
-                        $usage->memoryUsageFormatted()
-                    ));
+                    );
                 }
 
                 try {
@@ -111,7 +120,8 @@ class IndexerHandler implements Handler, ServiceProvider
             }
 
             $process = yield $this->watcher->watch();
-            $this->clientApi->window()->showMessage()->info(sprintf(
+            $this->clientApi->workDoneProgress()->end($this->token);
+            $this->clientApi->window()->logMessage()->log(sprintf(
                 'Done indexing (%ss, %s), watching with %s',
                 number_format(microtime(true) - $start, 2),
                 MemoryUsage::create()->memoryUsageFormatted(),
