@@ -78,11 +78,16 @@ class UnusedImportProvider implements DiagnosticProvider
             return [];
         }
 
+        $contents = $node->getFileContents();
+
         foreach ($this->imported as $importedFqn => $imported) {
             if (isset($this->names[$importedFqn])) {
                 continue;
             }
 
+            if ($this->usedByAnnotation($contents, $importedFqn, $imported)) {
+                continue;
+            }
                 
             yield UnusedImportDiagnostic::for(
                 ByteOffsetRange::fromInts($imported->getStartPosition(), $imported->getEndPosition()),
@@ -110,5 +115,23 @@ class UnusedImportProvider implements DiagnosticProvider
                 $this->names[$type->name()->full()] = true;
             }
         }
+    }
+
+    /**
+     * @param Node|Token $node
+     */
+    private function usedByAnnotation(string $contents, string $imported, $node): bool
+    {
+        $name = (function () use ($imported, $node, $contents) {
+            /** @phpstan-ignore-next-line TP lies */
+            if ($node instanceof NamespaceUseClause && $node->namespaceAliasingClause) {
+                return $node->namespaceAliasingClause->name->getText($contents);
+            }
+
+            $imported = explode('\\', $imported);
+            return array_pop($imported);
+        })();
+
+        return false !== strpos($contents, '@' . $name);
     }
 }

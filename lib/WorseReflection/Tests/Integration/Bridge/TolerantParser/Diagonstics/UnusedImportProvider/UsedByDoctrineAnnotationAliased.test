@@ -1,0 +1,11 @@
+<?php
+
+use Doctrine\ORM as Mapping;
+
+/**
+ * @Mapping\Foo $bar
+ */
+function fo($foo): void
+{
+}
+
