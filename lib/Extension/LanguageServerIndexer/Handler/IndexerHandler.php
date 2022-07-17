@@ -94,7 +94,7 @@ class IndexerHandler implements Handler, ServiceProvider
                     $this->clientApi->workDoneProgress()->report(
                         $token,
                         sprintf(
-                            '%s/%s (%s%%) %s',
+                            '%s/%s (%s%%, %s)',
                             $index,
                             $size,
                             number_format($index / $size * 100, 2),
