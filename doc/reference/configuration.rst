@@ -2,7 +2,7 @@ Configuration
 =============
 
 
-.. This document is generated via the `development:configuration-reference` command
+.. This document is generated via the `development:generate-documentation` command
 
 
 .. contents::

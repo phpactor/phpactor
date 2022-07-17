@@ -12,7 +12,6 @@ use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
 use Phpactor\Extension\Debug\Model\DocumentorRegistry;
 use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
 use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
-use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 
@@ -52,25 +51,11 @@ class DebugExtension implements Extension
             self::TAG_DOCUMENTOR => ['name' => self::EXTENSION_DOCUMENTOR_NAME]
         ]);
 
-        $container->register('generate_documentation_command.extensions', function (Container $container) {
-            return new GenerateDocumentationCommand(
-                $container->get(DocumentorRegistry::class),
-                self::EXTENSION_DOCUMENTOR_NAME
-            );
+        $container->register(GenerateDocumentationCommand::class, function (Container $container) {
+            return new GenerateDocumentationCommand($container->get(DocumentorRegistry::class));
         }, [
             ConsoleExtension::TAG_COMMAND => [
-                'name' => 'development:configuration-reference'
-            ]
-        ]);
-
-        $container->register('generate_documentation_command.command', function (Container $container) {
-            return new GenerateDocumentationCommand(
-                $container->get(DocumentorRegistry::class),
-                RpcExtension::RPC_DOCUMENTOR_NAME
-            );
-        }, [
-            ConsoleExtension::TAG_COMMAND => [
-                'name' => 'development:command-reference'
+                'name' => 'development:generate-documentation'
             ]
         ]);
 

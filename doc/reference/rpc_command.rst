@@ -2,7 +2,7 @@ Commands
 ========
 
 
-.. This document is generated via the `development:command-reference` command
+.. This document is generated via the `development:generate-documentation` command
 
 
 .. contents::
