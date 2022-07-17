@@ -1,9 +1,9 @@
 <?php
 
-use Foo;
+use ORM;
 
 /**
- * @param Foo $bar
+ * @ORM\Foo $bar
  */
 function fo($foo): void
 {
