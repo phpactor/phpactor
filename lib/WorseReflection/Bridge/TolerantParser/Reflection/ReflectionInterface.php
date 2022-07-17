@@ -39,14 +39,24 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
 
     private ?ReflectionMethodCollection $methods = null;
 
+    /**
+     * @var array<string, bool>
+     */
+    private array $visited;
+
+    /**
+     * @param array<string,bool> $visited
+     */
     public function __construct(
         ServiceLocator $serviceLocator,
         SourceCode $sourceCode,
-        InterfaceDeclaration $node
+        InterfaceDeclaration $node,
+        array $visited = []
     ) {
         $this->serviceLocator = $serviceLocator;
         $this->node = $node;
         $this->sourceCode = $sourceCode;
+        $this->visited = $visited;
     }
 
     /**
@@ -81,7 +91,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             return $this->parents;
         }
 
-        $this->parents = ReflectionInterfaceCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node);
+        $this->parents = ReflectionInterfaceCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $this->visited);
 
         return $this->parents;
     }

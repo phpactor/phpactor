@@ -1,0 +1,11 @@
+<?php
+interface Barfoo extends Foobar {}
+
+interface Foobar extends Barfoo {
+    public function bar(): string;
+}
+
+class One implements Foobar {
+}
+
+

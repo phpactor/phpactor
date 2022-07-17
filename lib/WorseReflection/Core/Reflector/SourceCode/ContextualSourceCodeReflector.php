@@ -25,12 +25,12 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
         $this->locator = $locator;
     }
     
-    public function reflectClassesIn($sourceCode): ReflectionClassLikeCollection
+    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
 
-        $collection = $this->innerReflector->reflectClassesIn($sourceCode);
+        $collection = $this->innerReflector->reflectClassesIn($sourceCode, $visited);
 
         return $collection;
     }

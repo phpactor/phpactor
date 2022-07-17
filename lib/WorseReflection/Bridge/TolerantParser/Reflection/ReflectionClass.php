@@ -58,14 +58,24 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?ReflectionTraitCollection $traits = null;
 
+    /**
+     * @var array<string, bool>
+     */
+    private array $visited;
+
+    /**
+     * @param array<string,bool> $visited
+     */
     public function __construct(
         ServiceLocator $serviceLocator,
         SourceCode $sourceCode,
-        ClassDeclaration $node
+        ClassDeclaration $node,
+        array $visited = []
     ) {
         $this->serviceLocator = $serviceLocator;
         $this->node = $node;
         $this->sourceCode = $sourceCode;
+        $this->visited = $visited;
     }
 
     public function isAbstract(): bool
@@ -96,8 +106,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     public function constants(): ReflectionConstantCollection
     {
         $parentConstants = null;
-        if ($this->parent()) {
-            $parentConstants = $this->parent()->constants();
+        $parent = $this->parent();
+        if ($parent) {
+            $parentConstants = $parent->constants();
         }
 
         $constants = ReflectionConstantCollection::fromClassDeclaration($this->serviceLocator, $this->node, $this);
@@ -116,7 +127,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     public function parent(): ?CoreReflectionClass
     {
         if ($this->parent) {
-            return $this->parent;
         }
 
         /** @phpstan-ignore-next-line */
@@ -140,6 +150,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
             $reflectedClass = $this->serviceLocator->reflector()->reflectClassLike(
                 $className,
+                $this->visited,
             );
 
             if (!$reflectedClass instanceof CoreReflectionClass) {

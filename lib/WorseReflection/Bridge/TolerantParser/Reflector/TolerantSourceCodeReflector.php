@@ -35,11 +35,14 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $this->parser = $parser;
     }
     
-    public function reflectClassesIn($sourceCode): ReflectionClassLikeCollection
+    /**
+     * @param array<string,bool> $visited
+     */
+    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
-        return TolerantReflectionClassCollection::fromNode($this->serviceLocator, $sourceCode, $node);
+        return TolerantReflectionClassCollection::fromNode($this->serviceLocator, $sourceCode, $node, $visited);
     }
     
     public function reflectOffset($sourceCode, $offset): ReflectionOffset

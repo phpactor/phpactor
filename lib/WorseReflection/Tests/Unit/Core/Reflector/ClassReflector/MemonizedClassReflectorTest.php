@@ -55,7 +55,7 @@ class MemonizedClassReflectorTest extends TestCase
 
     public function testReflectInterface(): void
     {
-        $this->innerClassReflector->reflectInterface($this->className)->shouldBeCalledTimes(1);
+        $this->innerClassReflector->reflectInterface($this->className, [])->shouldBeCalledTimes(1);
         $this->reflector->reflectInterface($this->className);
         $this->reflector->reflectInterface($this->className);
         $this->reflector->reflectInterface($this->className);
@@ -71,7 +71,7 @@ class MemonizedClassReflectorTest extends TestCase
 
     public function testReflectClassLike(): void
     {
-        $this->innerClassReflector->reflectClassLike($this->className)->shouldBeCalledTimes(1);
+        $this->innerClassReflector->reflectClassLike($this->className, [])->shouldBeCalledTimes(1);
         $this->reflector->reflectClassLike($this->className);
         $this->reflector->reflectClassLike($this->className);
         $this->reflector->reflectClassLike($this->className);

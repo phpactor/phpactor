@@ -17,20 +17,24 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
  */
 class ReflectionInterfaceCollection extends AbstractReflectionCollection
 {
-    public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface): self
+    /**
+     * @param array<string,bool> $visited
+     */
+    public static function fromInterfaceDeclaration(ServiceLocator $serviceLocator, InterfaceDeclaration $interface, array $visited = []): self
     {
-        return self::fromBaseClause($serviceLocator, $interface->interfaceBaseClause);
+        return self::fromBaseClause($serviceLocator, $interface->interfaceBaseClause, $visited);
     }
 
     public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class): self
     {
-        return self::fromBaseClause($serviceLocator, $class->classInterfaceClause);
+        return self::fromBaseClause($serviceLocator, $class->classInterfaceClause, []);
     }
 
     /**
      * @param mixed $baseClause
+     * @param array<string,bool> $visited
      */
-    private static function fromBaseClause(ServiceLocator $serviceLocator, $baseClause): self
+    private static function fromBaseClause(ServiceLocator $serviceLocator, $baseClause, array $visited): self
     {
         if (!$baseClause instanceof ClassInterfaceClause && !$baseClause instanceof InterfaceBaseClause) {
             return new self([]);
@@ -56,7 +60,8 @@ class ReflectionInterfaceCollection extends AbstractReflectionCollection
 
             try {
                 $interface = $serviceLocator->reflector()->reflectInterface(
-                    ClassName::fromString((string) $name->getResolvedName())
+                    ClassName::fromString((string) $name->getResolvedName()),
+                    $visited
                 );
                 $items[$interface->name()->full()] = $interface;
             } catch (NotFound $e) {

@@ -26,7 +26,10 @@ use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionInterfaceDecorator;
  */
 final class ReflectionClassLikeCollection extends AbstractReflectionCollection
 {
-    public static function fromNode(ServiceLocator $serviceLocator, SourceCode $source, Node $node): self
+    /**
+     * @param array<string,bool> $visited
+     */
+    public static function fromNode(ServiceLocator $serviceLocator, SourceCode $source, Node $node, array $visited = []): self
     {
         $items = [];
 
@@ -52,7 +55,7 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
             if ($child instanceof InterfaceDeclaration) {
                 $items[(string) $child->getNamespacedName()] =  new VirtualReflectionInterfaceDecorator(
                     $serviceLocator,
-                    new ReflectionInterface($serviceLocator, $source, $child),
+                    new ReflectionInterface($serviceLocator, $source, $child, $visited),
                     $serviceLocator->methodProviders()
                 );
                 continue;
@@ -61,7 +64,7 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
             if ($child instanceof ClassDeclaration) {
                 $items[(string) $child->getNamespacedName()] = new VirtualReflectionClassDecorator(
                     $serviceLocator,
-                    new ReflectionClass($serviceLocator, $source, $child),
+                    new ReflectionClass($serviceLocator, $source, $child, $visited),
                     $serviceLocator->methodProviders()
                 );
             }

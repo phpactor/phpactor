@@ -1,0 +1,11 @@
+<?php
+
+class Foobar extends One {
+    public function bar(): string;
+}
+
+class One extends Foobar {
+    use TraitOne;
+}
+
+$one = new One();

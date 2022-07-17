@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigati
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
+use Phpactor\WorseReflection\Core\Exception\CycleDetected;
 use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Name;
@@ -69,11 +70,11 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      * @throws ClassNotFound If the class was not found, or the found class
      *         was not a trait.
      */
-    public function reflectInterface($className): ReflectionInterface
+    public function reflectInterface($className, array $visited = []): ReflectionInterface
     {
         $className = ClassName::fromUnknown($className);
 
-        $class = $this->reflectClassLike($className);
+        $class = $this->reflectClassLike($className, $visited);
 
         if (false === $class instanceof ReflectionInterface) {
             throw new ClassNotFound(sprintf(
@@ -135,12 +136,20 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      *
      * @throws ClassNotFound
      */
-    public function reflectClassLike($className): ReflectionClassLike
+    public function reflectClassLike($className, array $visited = []): ReflectionClassLike
     {
         $className = ClassName::fromUnknown($className);
 
+        if (isset($visited[$className->__toString()])) {
+            throw new CycleDetected(sprintf(
+                'Cycle detected while resolving class "%s"',
+                $className->full()
+            ));
+        }
+        $visited[$className->__toString()] = true;
+
         $source = $this->sourceLocator->locate($className);
-        $classes = $this->reflectClassesIn($source);
+        $classes = $this->reflectClassesIn($source, $visited);
 
         if (false === $classes->has((string) $className)) {
             throw new ClassNotFound(sprintf(
@@ -157,9 +166,9 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     /**
      * Reflect all classes (or class-likes) in the given source code.
      */
-    public function reflectClassesIn($sourceCode): ReflectionClassLikeCollection
+    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
-        return $this->sourceReflector->reflectClassesIn($sourceCode);
+        return $this->sourceReflector->reflectClassesIn($sourceCode, $visited);
     }
 
     /**
