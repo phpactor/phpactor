@@ -11,6 +11,7 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentEdits;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\TextDocument\WorkspaceEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression;
@@ -37,11 +38,6 @@ class WorseGenerateConstructor implements GenerateConstructor
 
     public function generateMethod(TextDocument $document, ByteOffset $offset): WorkspaceEdits
     {
-        if (!$document->uri()) {
-            throw new RuntimeException(
-                'Text document has no URI'
-            );
-        }
         $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
         $node = $node->getFirstAncestor(ObjectCreationExpression::class);
 
@@ -64,7 +60,7 @@ class WorseGenerateConstructor implements GenerateConstructor
 
         $arguments = $newObject->arguments();
 
-        $builder = $this->factory->fromSource($document);
+        $builder = $this->factory->fromSource((string)$newObject->class()->sourceCode());
         $class = $builder->class($newObject->class()->name()->short());
         $method = $class->method('__construct');
 
@@ -80,7 +76,7 @@ class WorseGenerateConstructor implements GenerateConstructor
 
         return new WorkspaceEdits(
             new TextDocumentEdits(
-                $document->uri(),
+                TextDocumentUri::fromString($newObject->class()->sourceCode()->uri()),
                 $this->updater->textEditsFor($builder->build(), Code::fromString($document))
             )
         );
