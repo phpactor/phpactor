@@ -35,8 +35,9 @@ class MixinMemberProvider implements ReflectionMemberProvider
             $visited = $reflection->getClass()->getVisited();
 
             if (array_key_exists((string) $mixin->name, $visited)) {
-                self::$visitCount[$class->name() . '-' . $mixin->name]++;
-                if (self::$visitCount[$class->name() . '-' . $mixin->name] > 2) {
+                self::$visitCount[$class->name() . '-' . $mixin->name]['count']++;
+                if (self::$visitCount[$class->name() . '-' . $mixin->name]['count'] > 2) {
+                    $collections = array_merge($collections, self::$visitCount[$class->name() . '-' . $mixin->name]['collections'] ?? []);
                     continue;
                 }
             }
@@ -46,6 +47,8 @@ class MixinMemberProvider implements ReflectionMemberProvider
             if ($reflection instanceof ReflectionClass) {
                 $collections[] = $reflection->properties($class);
             }
+
+            self::$visitCount[$class->name() . '-' . $mixin->name]['collections'] = $collections;
         }
 
         return ChainReflectionMemberCollection::fromCollections($collections);
