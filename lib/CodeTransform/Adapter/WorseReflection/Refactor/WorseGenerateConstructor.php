@@ -1,6 +1,7 @@
 <?php
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
+
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
@@ -12,18 +13,18 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
-use Phpactor\TextDocument\TextEdits;
 use Phpactor\TextDocument\WorkspaceEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
 use Phpactor\WorseReflection\Reflector;
-use RuntimeException;
 
 class WorseGenerateConstructor implements GenerateConstructor
 {
     private Reflector $reflector;
+
     private BuilderFactory $factory;
+
     private Updater $updater;
 
     private Parser $parser;
@@ -85,5 +86,4 @@ class WorseGenerateConstructor implements GenerateConstructor
             )
         );
     }
-
 }

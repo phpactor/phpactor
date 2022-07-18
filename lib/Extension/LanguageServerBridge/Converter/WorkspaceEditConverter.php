@@ -10,7 +10,8 @@ class WorkspaceEditConverter
 {
     private TextDocumentLocator $locator;
 
-    public function __construct(TextDocumentLocator $locator) {
+    public function __construct(TextDocumentLocator $locator)
+    {
         $this->locator = $locator;
     }
 

@@ -18,7 +18,7 @@ class GenerateConstructorProvider implements CodeActionProvider
 {
     const KIND = 'quickfix.generate.constructor';
 
-    private  $generateConstructor;
+    private $generateConstructor;
 
     private WorkspaceEditConverter $converter;
 
