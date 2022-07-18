@@ -106,10 +106,10 @@ class WorseGenerateMethod implements GenerateMethod
         }
 
         /** @var ReflectionArgument $argument */
-        foreach ($methodCall->arguments() as $argument) {
+        foreach ($methodCall->arguments()->named() as $name => $argument) {
             $type = $argument->type();
 
-            $argumentBuilder = $methodBuilder->parameter($argument->guessName());
+            $argumentBuilder = $methodBuilder->parameter($name);
 
             if ($type->isDefined()) {
                 $argumentBuilder->type($type->short(), $type);

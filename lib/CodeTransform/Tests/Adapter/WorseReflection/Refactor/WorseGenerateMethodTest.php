@@ -77,6 +77,9 @@ class WorseGenerateMethodTest extends WorseTestCase
             'union false' => [
                 'generateMethod17.test',
             ],
+            'duplicated type guesses' => [
+                'generateMethod_duplicateNameGuesses.test',
+            ],
         ];
     }
 

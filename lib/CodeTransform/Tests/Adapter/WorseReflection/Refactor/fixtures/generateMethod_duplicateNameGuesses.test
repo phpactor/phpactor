@@ -1,0 +1,27 @@
+// File: source
+
+<?php
+
+class generateMethod
+{
+    public function name($one)
+    {
+        $this->f<>oobar('string', 'foo');
+    }
+}
+// File: expected
+<?php
+
+class generateMethod
+{
+    public function name($one)
+    {
+        $this->foobar('string', 'foo');
+    }
+
+    private function foobar(string $string, string $string2)
+    {
+    }
+}
+
+
