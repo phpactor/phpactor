@@ -42,6 +42,10 @@ class VirtualReflectionClassDecorator extends VirtualReflectionClassLikeDecorato
         return $this->class->isAbstract();
     }
 
+    public function getClass(): ReflectionClass {
+        return $this->class;
+    }
+
     public function constants(): ReflectionConstantCollection
     {
         return $this->class->constants();

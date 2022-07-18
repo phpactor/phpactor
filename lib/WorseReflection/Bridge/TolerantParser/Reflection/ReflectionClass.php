@@ -35,13 +35,13 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollecti
 class ReflectionClass extends AbstractReflectionClass implements CoreReflectionClass
 {
     private ServiceLocator $serviceLocator;
-    
+
     private ClassDeclaration $node;
-    
+
     private SourceCode $sourceCode;
 
     private ?ReflectionInterfaceCollection $interfaces = null;
-    
+
     private ?CoreReflectionClass $parent = null;
 
     /**
@@ -76,6 +76,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $this->node = $node;
         $this->sourceCode = $sourceCode;
         $this->visited = $visited;
+    }
+
+    public function getVisited(): array {
+        return $this->visited;
     }
 
     public function isAbstract(): bool

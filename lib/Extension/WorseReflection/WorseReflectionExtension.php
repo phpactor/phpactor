@@ -41,7 +41,7 @@ class WorseReflectionExtension implements Extension
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
     const PARAM_MIXIN_ENABLE = 'worse_reflection.mixins';
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -92,7 +92,7 @@ class WorseReflectionExtension implements Extension
                 $builder->enableCache();
                 $builder->withCache($container->get(Cache::class));
             }
-        
+
             foreach ($container->getServiceIdsForTag(self::TAG_SOURCE_LOCATOR) as $serviceId => $attrs) {
                 $builder->addLocator($container->get($serviceId), $attrs['priority'] ?? 0);
             }
@@ -111,11 +111,11 @@ class WorseReflectionExtension implements Extension
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_DIAGNOSTIC_PROVIDER)) as $serviceId) {
                 $builder->addDiagnosticProvider($container->get($serviceId));
             }
-        
+
             $builder->withLogger(
                 LoggingExtension::channelLogger($container, 'wr')
             );
-        
+
             return $builder->build();
         });
 

@@ -13,6 +13,8 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 
 class MixinMemberProvider implements ReflectionMemberProvider
 {
+    private static array $visitCount = [];
+
     /**
      * @return ReflectionMemberCollection<ReflectionMember>
      */
@@ -30,12 +32,22 @@ class MixinMemberProvider implements ReflectionMemberProvider
                 continue;
             }
 
+            $visited = $reflection->getClass()->getVisited();
+
+            if (array_key_exists((string) $mixin->name, $visited)) {
+                self::$visitCount[$class->name() . '-' . $mixin->name]++;
+                if (self::$visitCount[$class->name() . '-' . $mixin->name] > 2) {
+                    continue;
+                }
+            }
+
             $collections[] = $reflection->methods($class);
 
             if ($reflection instanceof ReflectionClass) {
                 $collections[] = $reflection->properties($class);
             }
         }
+
         return ChainReflectionMemberCollection::fromCollections($collections);
     }
 }
