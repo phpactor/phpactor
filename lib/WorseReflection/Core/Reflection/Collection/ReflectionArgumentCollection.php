@@ -32,4 +32,28 @@ class ReflectionArgumentCollection extends AbstractReflectionCollection
     {
         return new self([]);
     }
+
+    /**
+     * @return array<string,PhpactorReflectionArgument>
+     */
+    public function named(): array
+    {
+        $arguments = [];
+        $counters = [];
+        foreach ($this as $argument) {
+            $name = $argument->guessName();
+
+            if (isset($arguments[$name])) {
+                if (!isset($counters[$name])) {
+                    $counters[$name] = 1;
+                }
+                $counters[$name]++;
+                $name = $argument->guessName() . $counters[$name];
+            }
+
+            $arguments[$name] = $argument;
+        }
+
+        return $arguments;
+    }
 }

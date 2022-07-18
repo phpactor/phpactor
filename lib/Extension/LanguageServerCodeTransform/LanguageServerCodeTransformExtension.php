@@ -8,6 +8,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\Container\Container;
@@ -15,6 +16,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\LanguageServerBridge\Converter\WorkspaceEditConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateClassProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateUnresolvableClassProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantProvider;
@@ -22,6 +24,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionP
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateAccessorsProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
@@ -340,6 +343,15 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(FillObjectProvider::class, function (Container $container) {
             return new FillObjectProvider(
                 $container->get(FillObject::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(GenerateConstructorProvider::class, function (Container $container) {
+            return new GenerateConstructorProvider(
+                $container->get(GenerateConstructor::class),
+                $container->get(WorkspaceEditConverter::class),
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []

@@ -7,6 +7,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
+use Phpactor\Extension\LanguageServerBridge\Converter\WorkspaceEditConverter;
 use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
 use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
@@ -31,6 +32,10 @@ class LanguageServerBridgeExtension implements Extension
 
         $container->register(TextEditConverter::class, function (Container $container) {
             return new TextEditConverter();
+        });
+
+        $container->register(WorkspaceEditConverter::class, function (Container $container) {
+            return new WorkspaceEditConverter($container->get(TextDocumentLocator::class));
         });
 
         $container->register(FilesystemWorkspaceLocator::class, function (Container $container) {

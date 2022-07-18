@@ -3,13 +3,14 @@
 namespace Phpactor\TextDocument;
 
 use ArrayIterator;
+use Countable;
 use Iterator;
 use IteratorAggregate;
 
 /**
  * @implements IteratorAggregate<int, TextDocumentEdits>
  */
-class WorkspaceEdits implements IteratorAggregate
+final class WorkspaceEdits implements IteratorAggregate, Countable
 {
     /**
      * @var TextDocumentEdits[]
@@ -26,5 +27,15 @@ class WorkspaceEdits implements IteratorAggregate
     public function getIterator(): Iterator
     {
         return new ArrayIterator($this->documentEdits);
+    }
+
+    public static function none(): self
+    {
+        return new self();
+    }
+
+    public function count(): int
+    {
+        return count($this->documentEdits);
     }
 }
