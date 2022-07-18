@@ -54,13 +54,17 @@ class WorseGenerateConstructor implements GenerateConstructor
             return WorkspaceEdits::none();
         }
 
-        if ($newObject->class()->methods()->has('__construct')) {
+        try {
+            if ($newObject->class()->methods()->has('__construct')) {
+                return WorkspaceEdits::none();
+            }
+        } catch (NotFound $notFound) {
             return WorkspaceEdits::none();
         }
 
         $arguments = $newObject->arguments();
 
-        $builder = $this->factory->fromSource((string)$newObject->class()->sourceCode());
+        $builder = $this->factory->fromSource($newObject->class()->sourceCode());
         $class = $builder->class($newObject->class()->name()->short());
         $method = $class->method('__construct');
 
@@ -76,8 +80,8 @@ class WorseGenerateConstructor implements GenerateConstructor
 
         return new WorkspaceEdits(
             new TextDocumentEdits(
-                TextDocumentUri::fromString($newObject->class()->sourceCode()->uri()),
-                $this->updater->textEditsFor($builder->build(), Code::fromString($document))
+                TextDocumentUri::fromString($newObject->class()->sourceCode()->mustGetUri()),
+                $this->updater->textEditsFor($builder->build(), Code::fromString($newObject->class()->sourceCode()))
             )
         );
     }

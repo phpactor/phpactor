@@ -35,7 +35,7 @@ class WorseTestCase extends AdapterTestCase
         }
 
         if ($source) {
-            $builder->addSource($source);
+            $builder->addSource(SourceCode::fromPathAndString('/foo', $source));
         }
 
         return $builder->build();
