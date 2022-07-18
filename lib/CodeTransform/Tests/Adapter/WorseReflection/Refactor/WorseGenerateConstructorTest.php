@@ -24,7 +24,7 @@ class WorseGenerateConstructorTest extends WorseTestCase
 
         $create = $this->generator($source, true, false);
         $textDocumentEditsCollection = $create->generateMethod(
-            TextDocumentBuilder::create($source)->build(),
+            TextDocumentBuilder::create($source)->uri('file:///foo')->build(),
             ByteOffset::fromInt($offset)
         );
 
@@ -55,7 +55,7 @@ class WorseGenerateConstructorTest extends WorseTestCase
     {
         $create = $this->generator('');
         $edits = $create->generateMethod(
-            TextDocumentBuilder::create('<?php echo "hello";')->build(),
+            TextDocumentBuilder::create('<?php echo "hello";')->uri('file:///foo')->build(),
             ByteOffset::fromInt(10)
         );
         self::assertCount(0, $edits);
@@ -67,7 +67,8 @@ class WorseGenerateConstructorTest extends WorseTestCase
         return new WorseGenerateConstructor(
             $reflector,
             $this->builderFactory($reflector),
-            $this->updater()
+            $this->updater(),
+            new Parser()
         );
     }
 }
