@@ -184,7 +184,7 @@ final class Parser
             }
         }
 
-        if ($this->ifType()) {
+        if ($this->ifType() || $this->tokens->if(Token::T_VARIABLE)) {
             $type = $this->parseTypes();
         }
 
@@ -266,6 +266,10 @@ final class Parser
         }
 
         if ($this->tokens->current->type === Token::T_VARIABLE) {
+            if ($this->tokens->current->value === '$this') {
+                $variable = $this->tokens->chomp(Token::T_VARIABLE);
+                return new ThisNode($variable);
+            }
             return $this->parseConditionalType();
         }
 
