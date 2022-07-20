@@ -35,7 +35,11 @@ class ArrayCreationExpressionResolver implements Resolver
             $value = $resolver->resolveNode($frame, $element->elementValue)->type();
             if ($element->elementKey) {
                 $key = $resolver->resolveNode($frame, $element->elementKey)->type();
-                $array[TypeUtil::valueOrNull($key)] = $value;
+                $keyValue = TypeUtil::valueOrNull($key);
+                if (null === $keyValue) {
+                    continue;
+                }
+                $array[$keyValue] = $value;
                 continue;
             }
 
