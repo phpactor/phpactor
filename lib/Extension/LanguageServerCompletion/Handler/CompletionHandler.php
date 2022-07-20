@@ -30,6 +30,8 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class CompletionHandler implements Handler, CanRegisterCapabilities
 {
+    public static $snippetCache = [];
+
     private TypedCompletorRegistry $registry;
 
     private bool $provideTextEdit;
@@ -71,11 +73,62 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
             $languageId = $textDocument->languageId ?: 'php';
+            $body = $textDocument->text;
+            if ($languageId === 'blade') {
+                // If we are working with blade, set it to php.
+                $languageId = 'php';
+
+                if (self::$snippetCache === []) {
+                    $cmd = '/Users/rob/Sites/laravel-dev-generators/laravel-dev-tools snippets ' . $_SERVER['PWD'];
+
+                    $output = shell_exec($cmd);
+
+                    $decoded = json_decode($output, true);
+
+                    self::$snippetCache = $decoded;
+                }
+
+                $url = $textDocument->uri;
+                $body = $textDocument->text;
+                $fileToSearch = str_replace('file://', '', $url);
+
+                $docblock = '';
+                // This is only for livewire.
+                foreach (self::$snippetCache as $key => $entry) {
+                    if ($entry['livewire'] ?? false) {
+                        foreach ($entry['views'] as $key => $file) {
+                            if ($file === $fileToSearch) {
+                                foreach ($entry['arguments'] as $name => $data) {
+                                    if ($data['type'] ?? false) {
+                                        $type = $data['type'];
+                                        if (str_contains($type, '\\')) {
+                                            $type = '\\' . $type;
+                                        }
+                                        $var = '$' . $name;
+                                        $docblock .= "/** @var $type $var */ $var; ";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $lines = explode(PHP_EOL, $body);
+
+                $prefix = '<?php  ' . $docblock . '?> <?php ';
+                $prefixByteLen = mb_strlen($prefix);
+
+                $lines[0] = $prefix . $lines[0];
+
+                $body = implode(PHP_EOL, $lines);
+            }
+
             $byteOffset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
+            $byteOffset = $byteOffset->add($prefixByteLen ?? 0);
             $suggestions = $this->registry->completorForType(
                 $languageId
             )->complete(
-                TextDocumentBuilder::create($textDocument->text)->language($languageId)->uri($textDocument->uri)->build(),
+                TextDocumentBuilder::create($body)->language($languageId)->uri($textDocument->uri)->build(),
                 $byteOffset
             );
 

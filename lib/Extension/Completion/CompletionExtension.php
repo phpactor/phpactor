@@ -29,7 +29,7 @@ class CompletionExtension implements Extension
     public const PARAM_DEDUPE_MATCH_SHORT_DESCRIPTION = 'completion.dedupe_match_short_description';
     public const PARAM_LIMIT = 'completion.limit';
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -44,7 +44,7 @@ class CompletionExtension implements Extension
         ]);
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $this->registerCompletion($container);
