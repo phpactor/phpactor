@@ -17,6 +17,6 @@ class TypeFormatter implements Formatter
     {
         assert($type instanceof Type);
 
-        return $type->__toString();
+        return $type->short();
     }
 }
