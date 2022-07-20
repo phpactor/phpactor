@@ -117,5 +117,27 @@ class ReflectionEnumTest extends IntegrationTestCase
                 self::assertEquals('FOO', $case->value());
             },
         ];
+        yield 'Return backed methods' => [
+        <<<'EOT'
+                            <?php
+
+                            interface BackedEnum {
+                                public static function from(int|string $value): static;
+                                public static function tryFrom(int|string $value): ?static;
+                                public static function UnitEnum::cases(): array;
+                            }
+
+                            enum Enum1:string
+                            {
+                            }
+
+            EOT
+            ,
+            'Enum1',
+            function (ReflectionEnum $class): void {
+                $method = $class->methods()->get('from');
+                self::assertEquals('Enum1', $method->returnType()->__toString());
+            },
+        ];
     }
 }
