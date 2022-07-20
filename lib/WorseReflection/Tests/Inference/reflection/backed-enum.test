@@ -1,0 +1,16 @@
+<?php
+
+interface BackedEnum {
+    public static function from(int|string $value): static;
+    public static function tryFrom(int|string $value): ?static;
+    public static function UnitEnum::cases(): array;
+}
+
+enum Test:string
+{
+	case Stakeholder = StakeholderAssessment::class;
+	case BusinessSuccessFactor = BusinessSuccessFactorAssessment::class;
+}
+
+$foo = Test::from('foo');
+wrAssertType('Test', $foo);

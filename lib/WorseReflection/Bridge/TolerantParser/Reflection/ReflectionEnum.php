@@ -2,8 +2,10 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use BackedEnum;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection as PhpactorReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
@@ -42,7 +44,13 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
         $contextClass = $contextClass ?: $this;
-        return ReflectionMethodCollection::fromEnumDeclaration($this->serviceLocator, $this->node, $contextClass);
+        $methods = ReflectionMethodCollection::fromEnumDeclaration($this->serviceLocator, $this->node, $contextClass);
+        try {
+            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface(BackedEnum::class)->methods($this);
+            return $enumMethods->merge($methods);
+        } catch (NotFound $notFound) {
+            return $methods;
+        }
     }
 
     public function cases(): ReflectionEnumCaseCollection
