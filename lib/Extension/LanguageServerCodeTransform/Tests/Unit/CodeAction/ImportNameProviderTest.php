@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use Closure;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
@@ -25,7 +26,7 @@ class ImportNameProviderTest extends IntegrationTestCase
      * @dataProvider provideImportProvider
      * @group flakey
      */
-    public function testImportProvider(string $manifest, int $expectedCount, int $expectedDiagnosticCount, bool $imprtGlobals = false): void
+    public function testImportProvider(string $manifest, Closure $assertion, bool $imprtGlobals = false): void
     {
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
@@ -60,18 +61,12 @@ class ImportNameProviderTest extends IntegrationTestCase
             ),
             new CodeActionContext([])
         ));
-
         $tester->assertSuccess($result);
-
-        self::assertCount($expectedCount, array_filter($result->result, function (CodeAction $action) {
-            return $action->kind == 'quickfix.import_class';
-        }), 'Number of code actions');
-        $tester->textDocument()->save('file:///foobar');
 
         $diagnostics = $tester->transmitter()->filterByMethod('textDocument/publishDiagnostics')->shiftNotification();
         self::assertNotNull($diagnostics);
         $diagnostics = $diagnostics->params['diagnostics'];
-        self::assertEquals($expectedDiagnosticCount, count($diagnostics), 'Number of diagnostics');
+        $assertion($result->result, $diagnostics);
     }
 
     /**
@@ -95,7 +90,11 @@ class ImportNameProviderTest extends IntegrationTestCase
                 // File: subject.php
                 <?php new MissingNameFoo();'
                 EOT
-            , 0, 1
+            , function (array $codeActions, array $diagnostics) {
+                self::assertCount(0, $codeActions);
+                self::assertCount(1, $diagnostics);
+            }
+
         ];
 
         yield 'code actions + diagnostic for namespaced non-existant class' => [
@@ -103,7 +102,10 @@ class ImportNameProviderTest extends IntegrationTestCase
                 // File: subject.php
                 <?php namespace Bar; new MissingNameFoo();'
                 EOT
-            , 0, 1
+            , function (array $codeActions, array $diagnostics) {
+                self::assertCount(0, $codeActions);
+                self::assertCount(1, $diagnostics);
+            }
         ];
 
         yield 'code action and diagnostic for missing global class name' => [
@@ -113,7 +115,10 @@ class ImportNameProviderTest extends IntegrationTestCase
                 // File: Generator.php
                 <?php class Generator {}
                 EOT
-            , 1, 1, false
+            , function (array $codeActions, array $diagnostics) {
+                self::assertCount(1, $codeActions);
+                self::assertCount(1, $diagnostics);
+            }, false
         ];
 
         yield 'no code action or diagnostics for missing global function name' => [
@@ -122,7 +127,10 @@ class ImportNameProviderTest extends IntegrationTestCase
                 <?php namespace Foobar;
                 sprintf('foo %s', 'bar');
                 EOT
-            , 0, 0
+            , function (array $codeActions, array $diagnostics) {
+                self::assertCount(0, $codeActions);
+                self::assertCount(0, $diagnostics);
+            }, false
         ];
 
         yield 'no diagnostics for class declared in same namespace' => [
@@ -144,7 +152,10 @@ class ImportNameProviderTest extends IntegrationTestCase
                 {
                 }
                 EOT
-            , 0, 0
+            , function (array $codeActions, array $diagnostics) {
+                self::assertCount(0, $codeActions);
+                self::assertCount(0, $diagnostics);
+            }
         ];
 
         yield 'built in global funtion' => [
@@ -156,10 +167,13 @@ class ImportNameProviderTest extends IntegrationTestCase
 
                 sprintf('foo', 'bar');
                 EOT
-            , 0, 0
+            , function (array $codeActions, array $diagnostics) {
+                self::assertCount(0, $codeActions);
+                self::assertCount(0, $diagnostics);
+            }
         ];
 
-        yield 'built in global funtion with import globals' => [
+        yield 'built in global function with import globals' => [
             <<<'EOT'
                 // File: functions.php
                 // File: subject.php
@@ -170,7 +184,13 @@ class ImportNameProviderTest extends IntegrationTestCase
                 $bar = [];
                 explode(array_keys($bar));
                 EOT
-            , 2, 2, true
+            , function (array $codeActions, array $diagnostics) {
+                self::assertCount(3, $codeActions);
+                self::assertEquals('Import function "explode"', $codeActions[0]->title);
+                self::assertEquals('Import function "array_keys"', $codeActions[1]->title);
+                self::assertEquals('Import all unresolved names', $codeActions[2]->title);
+                self::assertCount(2, $diagnostics);
+            }, true
         ];
 
         yield 'constant' => [
@@ -183,7 +203,10 @@ class ImportNameProviderTest extends IntegrationTestCase
                 if (INF) {
                 }
                 EOT
-            , 0, 0, true
+            , function (array $codeActions, array $diagnostics) {
+                self::assertCount(0, $codeActions);
+                self::assertCount(0, $diagnostics);
+            }, true
         ];
     }
 }
