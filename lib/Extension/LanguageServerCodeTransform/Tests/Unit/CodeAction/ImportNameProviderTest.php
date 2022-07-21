@@ -8,7 +8,6 @@ use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\CodeActionContext;
 use Phpactor\LanguageServerProtocol\CodeActionParams;
 use Phpactor\LanguageServerProtocol\CodeActionRequest;
@@ -90,7 +89,7 @@ class ImportNameProviderTest extends IntegrationTestCase
                 // File: subject.php
                 <?php new MissingNameFoo();'
                 EOT
-            , function (array $codeActions, array $diagnostics) {
+            , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(0, $codeActions);
                 self::assertCount(1, $diagnostics);
             }
@@ -102,7 +101,7 @@ class ImportNameProviderTest extends IntegrationTestCase
                 // File: subject.php
                 <?php namespace Bar; new MissingNameFoo();'
                 EOT
-            , function (array $codeActions, array $diagnostics) {
+            , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(0, $codeActions);
                 self::assertCount(1, $diagnostics);
             }
@@ -115,7 +114,7 @@ class ImportNameProviderTest extends IntegrationTestCase
                 // File: Generator.php
                 <?php class Generator {}
                 EOT
-            , function (array $codeActions, array $diagnostics) {
+            , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(1, $codeActions);
                 self::assertCount(1, $diagnostics);
             }, false
@@ -127,7 +126,7 @@ class ImportNameProviderTest extends IntegrationTestCase
                 <?php namespace Foobar;
                 sprintf('foo %s', 'bar');
                 EOT
-            , function (array $codeActions, array $diagnostics) {
+            , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(0, $codeActions);
                 self::assertCount(0, $diagnostics);
             }, false
@@ -152,7 +151,7 @@ class ImportNameProviderTest extends IntegrationTestCase
                 {
                 }
                 EOT
-            , function (array $codeActions, array $diagnostics) {
+            , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(0, $codeActions);
                 self::assertCount(0, $diagnostics);
             }
@@ -167,7 +166,7 @@ class ImportNameProviderTest extends IntegrationTestCase
 
                 sprintf('foo', 'bar');
                 EOT
-            , function (array $codeActions, array $diagnostics) {
+            , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(0, $codeActions);
                 self::assertCount(0, $diagnostics);
             }
@@ -184,7 +183,7 @@ class ImportNameProviderTest extends IntegrationTestCase
                 $bar = [];
                 explode(array_keys($bar));
                 EOT
-            , function (array $codeActions, array $diagnostics) {
+            , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(3, $codeActions);
                 self::assertEquals('Import function "explode"', $codeActions[0]->title);
                 self::assertEquals('Import function "array_keys"', $codeActions[1]->title);
@@ -203,7 +202,7 @@ class ImportNameProviderTest extends IntegrationTestCase
                 if (INF) {
                 }
                 EOT
-            , function (array $codeActions, array $diagnostics) {
+            , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(0, $codeActions);
                 self::assertCount(0, $diagnostics);
             }, true

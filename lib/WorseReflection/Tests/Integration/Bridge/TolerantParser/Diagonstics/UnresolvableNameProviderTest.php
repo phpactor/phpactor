@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diago
 use Closure;
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
