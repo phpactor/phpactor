@@ -15,7 +15,6 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\Name\FullyQualifiedName as PhpactorFullyQualifiedName;
-use Phpactor\Name\Name;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
@@ -92,7 +91,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
             !$name->parent instanceof ScopedPropertyAccessExpression &&
             !$name->parent instanceof FunctionDeclaration &&
             !$name->parent instanceof MethodDeclaration &&
-            !$name->parent instanceof Parameter &&
+            //!$name->parent instanceof Parameter &&
             !$name->parent instanceof Attribute
         ) {
             return;

@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diago
 use Closure;
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
@@ -45,6 +46,17 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
     public function checkClassNameConstant(Diagnostics $diagnostics): void
     {
         self::assertCount(1, $diagnostics);
+    }
+
+    public function checkConstantsParam(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
+    public function checkParameter(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('class', $diagnostics->byClass(UnresolvableNameDiagnostic::class)->at(0)->type());
     }
 
     /**
