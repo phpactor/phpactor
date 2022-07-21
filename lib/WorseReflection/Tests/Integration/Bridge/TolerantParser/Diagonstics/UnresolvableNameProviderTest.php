@@ -47,6 +47,17 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         self::assertCount(1, $diagnostics);
     }
 
+    public function checkConstantsParam(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
+    public function checkParameter(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Class "Foo" not found', $diagnostics->at(0)->message());
+    }
+
     /**
      * @dataProvider provideReturnsUnresolableFunctions
      * @dataProvider provideReturnsUnresolableClass
