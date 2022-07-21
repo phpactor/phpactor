@@ -56,7 +56,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
     public function checkParameter(Diagnostics $diagnostics): void
     {
         self::assertCount(1, $diagnostics);
-        self::assertEquals('class', $diagnostics->byClass(UnresolvableNameDiagnostic::class)->at(0)->type());
+        self::assertEquals('Class "Foo" not found', $diagnostics->at(0)->message());
     }
 
     /**
