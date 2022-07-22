@@ -6,6 +6,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLanguage;
 use Phpactor\TextDocument\TextDocumentUri;
 use InvalidArgumentException;
+use RuntimeException;
 
 class SourceCode implements TextDocument
 {
@@ -93,6 +94,18 @@ class SourceCode implements TextDocument
         }
 
         return TextDocumentUri::fromString($this->path);
+    }
+
+    public function mustGetUri(): TextDocumentUri
+    {
+        $uri = $this->uri();
+        if (null === $uri) {
+            throw new RuntimeException(
+                'URI has not been set on source code'
+            );
+        }
+
+        return $uri;
     }
     
     public function language(): TextDocumentLanguage

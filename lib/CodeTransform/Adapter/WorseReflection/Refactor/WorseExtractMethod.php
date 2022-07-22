@@ -99,7 +99,9 @@ class WorseExtractMethod implements ExtractMethod
             }
             
             $startNode = $stmt ?? $startNode;
-            assert($startNode instanceof Node);
+            if (!$startNode instanceof Node) {
+                return false;
+            }
         }
 
         while ($startNode->parent && !($startNode->parent instanceof CompoundStatementNode)) {

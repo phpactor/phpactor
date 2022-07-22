@@ -14,6 +14,7 @@ use Phpactor\LanguageServerProtocol\CompletionList;
 use Phpactor\LanguageServerProtocol\CompletionOptions;
 use Phpactor\LanguageServerProtocol\CompletionParams;
 use Phpactor\LanguageServerProtocol\InsertTextFormat;
+use Phpactor\LanguageServerProtocol\MarkupContent;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\SignatureHelpOptions;
@@ -156,7 +157,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                          'label' => $name,
                          'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
                          'detail' => $this->formatShortDescription($suggestion),
-                         'documentation' => $suggestion->documentation(),
+                         'documentation' => new MarkupContent('markdown', $suggestion->documentation() ?? ''),
                          'insertText' => $insertText,
                          'sortText' => $this->sortText($suggestion),
                          'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),

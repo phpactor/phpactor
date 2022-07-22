@@ -1530,28 +1530,6 @@ LanguageServerIndexerExtension
 **Default**: ``250``
 
 
-.. _LanguageServerHoverExtension:
-
-
-LanguageServerHoverExtension
-----------------------------
-
-
-.. _param_language_server_hover.template_paths:
-
-
-``language_server_hover.template_paths``
-""""""""""""""""""""""""""""""""""""""""
-
-
-
-
-Paths in which to look for templates for hover information.
-
-
-**Default**: ``["%project_config%\/templates\/markdown","%config%\/templates\/markdown"]``
-
-
 .. _LanguageServerCodeTransformExtension:
 
 
@@ -1864,4 +1842,26 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
+
+
+.. _ObjectRendererExtension:
+
+
+ObjectRendererExtension
+-----------------------
+
+
+.. _param_object_renderer.template_paths.markdown:
+
+
+``object_renderer.template_paths.markdown``
+"""""""""""""""""""""""""""""""""""""""""""
+
+
+
+
+Paths in which to look for templates for hover information.
+
+
+**Default**: ``["%project_config%\/templates\/markdown","%config%\/templates\/markdown"]``
 

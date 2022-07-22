@@ -474,6 +474,55 @@ After generating the method:
        }
    }
 
+.. _generateo_constructor:
+
+Generate Constructor
+--------------------
+
+Generate a constructor from a new object instance expression
+
+.. tabs::
+
+   .. tab:: LSP
+
+      Invoke code action on new class expression for class with no constructor
+
+
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+Assuming `MyFancyObject` exists and has no constructor.
+
+Cursor position shown as ``<>``:
+
+.. code:: php
+
+   <?php
+
+   use App\MyFancyObject;
+
+   $barfoo = 'barfor?';
+
+   new My<>FancyObject($barfoo, 'foobar', 1234);
+
+After choosing the "Generate Constructor" code action the `MyFancyObject`
+class should have a constructor:
+
+.. code:: php
+
+   <?php
+
+   namespace App;
+
+   class MyFancyObject
+   {
+       public function __construct(string $barfoo, string $string, int $int)
+       {
+       }
+   }
+
+
 .. _implement_contracts:
 
 Implement Contracts

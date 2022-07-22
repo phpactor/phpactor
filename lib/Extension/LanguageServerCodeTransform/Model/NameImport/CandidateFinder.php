@@ -31,8 +31,8 @@ class CandidateFinder
     {
         $diagnostics = $this->reflector->diagnostics($item->text)->byClass(UnresolvableNameDiagnostic::class);
 
-        return new NameWithByteOffsets(...array_map(function (UnresolvableNameDiagnostic $diagnostic) {
-            return new NameWithByteOffset($diagnostic->name(), $diagnostic->range()->start());
+        return new NameWithByteOffsets(...array_map(function (UnresolvableNameDiagnostic $diagnostic): NameWithByteOffset {
+            return new NameWithByteOffset($diagnostic->name(), $diagnostic->range()->start(), $diagnostic->type());
         }, iterator_to_array($diagnostics)));
     }
 

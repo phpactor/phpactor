@@ -1,0 +1,24 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+class Barfoo 
+{
+}
+
+new Ba<>rfoo('foobar', 123);
+// File: expected
+<?php
+
+namespace Phpactor;
+
+class Barfoo 
+{
+    public function __construct(string $string, int $int)
+    {
+    }
+}
+
+new Barfoo('foobar', 123);
+
