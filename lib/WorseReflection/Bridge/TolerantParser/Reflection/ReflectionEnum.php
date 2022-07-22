@@ -24,9 +24,9 @@ use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEnum
 {
     private ServiceLocator $serviceLocator;
-    
+
     private EnumDeclaration $node;
-    
+
     private SourceCode $sourceCode;
 
     public function __construct(

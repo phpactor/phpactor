@@ -32,13 +32,16 @@ class MixinMemberProvider implements ReflectionMemberProvider
                 continue;
             }
 
-            $visited = $reflection->getClass()->getVisited();
+            // Hacky.
+            if (method_exists($reflection, 'getClass')) {
+                $visited = $reflection->getClass()->getVisited();
 
-            if (array_key_exists((string) $mixin->name, $visited)) {
-                self::$visitCount[$class->name() . '-' . $mixin->name]['count']++;
-                if (self::$visitCount[$class->name() . '-' . $mixin->name]['count'] > 2) {
-                    $collections = array_merge($collections, self::$visitCount[$class->name() . '-' . $mixin->name]['collections'] ?? []);
-                    continue;
+                if (array_key_exists((string) $mixin->name, $visited)) {
+                    self::$visitCount[$class->name() . '-' . $mixin->name]['count']++;
+                    if (self::$visitCount[$class->name() . '-' . $mixin->name]['count'] > 2) {
+                        $collections = array_merge($collections, self::$visitCount[$class->name() . '-' . $mixin->name]['collections'] ?? []);
+                        continue;
+                    }
                 }
             }
 

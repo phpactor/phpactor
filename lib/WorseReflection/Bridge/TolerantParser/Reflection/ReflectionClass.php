@@ -78,7 +78,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $this->visited = $visited;
     }
 
-    public function getVisited(): array {
+    public function getVisited(): array
+    {
         return $this->visited;
     }
 

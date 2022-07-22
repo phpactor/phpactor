@@ -98,6 +98,10 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                     if ($entry['livewire'] ?? false) {
                         foreach ($entry['views'] as $key => $file) {
                             if ($file === $fileToSearch) {
+                                // Easier approach to use a mixin to set the type?
+                                if ($class = $entry['class'] ?? false) {
+                                    $docblock .= "\$this = new \\{$class}();";
+                                }
                                 foreach ($entry['arguments'] as $name => $data) {
                                     if ($data['type'] ?? false) {
                                         $type = $data['type'];
@@ -115,7 +119,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
 
                 $lines = explode(PHP_EOL, $body);
 
-                $prefix = '<?php  ' . $docblock . '?> <?php ';
+                $prefix = '<?php  ' . $docblock . ' ';
                 $prefixByteLen = mb_strlen($prefix);
 
                 $lines[0] = $prefix . $lines[0];
