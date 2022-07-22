@@ -10,6 +10,8 @@ use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
 use Phpactor\LanguageServerProtocol\CompletionItem;
 use Phpactor\LanguageServerProtocol\CompletionList;
+use Phpactor\LanguageServerProtocol\MarkupContent;
+use Phpactor\LanguageServerProtocol\MarkupKind;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextEdit;
@@ -366,7 +368,7 @@ class CompletionHandlerTest extends TestCase
             'label' => $label,
             'kind' => $type,
             'detail' => '',
-            'documentation' => '',
+            'documentation' => new MarkupContent(MarkupKind::MARKDOWN, ''),
             'insertText' => $label,
             'insertTextFormat' => 1,
         ], $data));

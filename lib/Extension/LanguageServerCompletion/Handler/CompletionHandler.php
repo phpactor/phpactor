@@ -100,7 +100,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                          'label' => $name,
                          'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
                          'detail' => $this->formatShortDescription($suggestion),
-                         'documentation' => new MarkupContent('markdown', $suggestion->documentation()),
+                         'documentation' => new MarkupContent('markdown', $suggestion->documentation() ?? ''),
                          'insertText' => $insertText,
                          'sortText' => $this->sortText($suggestion),
                          'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),

@@ -22,12 +22,12 @@ use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRange
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
+use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Webmozart\PathUtil\Path;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\CodeTransformExtra\CodeTransformExtraExtension;
@@ -154,6 +154,7 @@ class Phpactor
             LanguageServerPsalmExtension::class,
             BehatExtension::class,
             IndexerExtension::class,
+            ObjectRendererExtension::class
         ];
 
         if (class_exists(DebugExtension::class)) {

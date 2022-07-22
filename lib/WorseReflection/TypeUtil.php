@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -77,6 +78,17 @@ class TypeUtil
         }
 
         return new BooleanType();
+    }
+
+    public static function shortenClassTypes(Type $type): Type
+    {
+        return $type->map(function (Type $type) {
+            if ($type instanceof ClassType) {
+                return TypeFactory::class($type->name()->short());
+            }
+
+            return $type;
+        });
     }
 
     /**
