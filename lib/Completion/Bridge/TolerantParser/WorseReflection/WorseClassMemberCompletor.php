@@ -11,7 +11,6 @@ use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassMemberQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
-use Phpactor\Extension\LanguageServerHover\Renderer\HoverInformation;
 use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;

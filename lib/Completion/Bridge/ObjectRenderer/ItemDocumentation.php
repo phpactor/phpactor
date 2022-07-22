@@ -32,4 +32,3 @@ class ItemDocumentation
         return $this->object;
     }
 }
-
