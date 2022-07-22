@@ -36,6 +36,7 @@ Bug fixes:
 
 Improvements:
 
+  - [wr] Markdown formatted member completion documentation
   - [ls] publish diagnostics on open and update
   - [ct] Add missing properties for array assignments #1640
   - [cmp] Provide variables from parent frame for anonymous use #1602
@@ -78,6 +79,8 @@ Improvements:
 
 Features:
 
+  - [ct] Generate constructor refactoring
+  - [ct] Fill object refactoring
   - [ct] Remove unused imports diagnositcs and code transformation #1758
   - [wr] Added native WR single-pass diagnostics #1700
   - [cmd] Index clean command #1691 @mamazu

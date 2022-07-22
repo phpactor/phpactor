@@ -17,6 +17,7 @@ use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
 use Phpactor\Extension\Php\PhpExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
@@ -59,9 +60,10 @@ class IntegrationTestCase extends TestCase
             ReferenceFinderExtension::class,
 
             LanguageServerBridgeExtension::class,
+            ObjectRendererExtension::class,
         ], [
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ .'/../../../../',
-            LanguageServerHoverExtension::PARAM_TEMPLATE_PATHS => [],
+            ObjectRendererExtension::PARAM_TEMPLATE_PATHS => [],
             IndexerExtension::PARAM_ENABLED_WATCHERS => [],
         ]);
 

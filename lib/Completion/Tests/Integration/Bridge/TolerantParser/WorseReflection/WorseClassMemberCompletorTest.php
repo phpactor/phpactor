@@ -5,6 +5,7 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseRefle
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
+use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -189,7 +190,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_METHOD,
                     'name' => 'foo',
                     'short_description' => 'pub foo(): Foobar|Barbar',
-                    'documentation' => 'Returns a foobar',
+                    'documentation' => '',
                     'snippet' => 'foo()',
                 ]
             ]
@@ -946,7 +947,8 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
         return new WorseClassMemberCompletor(
             $reflector,
             $this->formatter(),
-            $this->snippetFormatter($reflector)
+            $this->snippetFormatter($reflector),
+            ObjectRendererBuilder::create()->renderEmptyOnNotFound()->build()
         );
     }
 }

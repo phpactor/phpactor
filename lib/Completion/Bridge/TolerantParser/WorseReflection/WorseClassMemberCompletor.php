@@ -10,6 +10,8 @@ use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassMemberQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
+use Phpactor\Extension\LanguageServerHover\Renderer\HoverInformation;
+use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -34,14 +36,18 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
     private ObjectFormatter $snippetFormatter;
 
+    private ObjectRenderer $objectRenderer;
+
     public function __construct(
         Reflector $reflector,
         ObjectFormatter $formatter,
-        ObjectFormatter $snippetFormatter
+        ObjectFormatter $snippetFormatter,
+        ObjectRenderer $objectRenderer
     ) {
         $this->reflector = $reflector;
         $this->formatter = $formatter;
         $this->snippetFormatter = $snippetFormatter;
+        $this->objectRenderer = $objectRenderer;
     }
 
     public function qualifier(): TolerantQualifier
@@ -144,7 +150,11 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             yield Suggestion::createWithOptions($method->name(), [
                 'type' => Suggestion::TYPE_METHOD,
                 'short_description' => $this->formatter->format($method),
-                'documentation' => $method->docblock()->formatted(),
+                'documentation' => $this->objectRenderer->render(new HoverInformation(sprintf(
+                    '%s::%s',
+                    $method->class()->name(),
+                    $method->name()
+                ), $method->docblock()->formatted(), $method)),
                 'snippet' => $completeOnlyName ? $method->name() : $this->snippetFormatter->format($method),
             ]);
         }

@@ -49,6 +49,7 @@ use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
@@ -312,7 +313,8 @@ class CompletionWorseExtension implements Extension
                     return new WorseClassMemberCompletor(
                         $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                         $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER),
-                        $container->get(CompletionExtension::SERVICE_SNIPPET_FORMATTER)
+                        $container->get(CompletionExtension::SERVICE_SNIPPET_FORMATTER),
+                        $container->get(ObjectRendererExtension::SERVICE_MARKDOWN_RENDERER)
                     );
                 },
             ],
