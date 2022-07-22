@@ -6,6 +6,7 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Token;
+use Phpactor\Completion\Bridge\ObjectRenderer\ItemDocumentation;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassMemberQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
@@ -150,7 +151,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             yield Suggestion::createWithOptions($method->name(), [
                 'type' => Suggestion::TYPE_METHOD,
                 'short_description' => $this->formatter->format($method),
-                'documentation' => $this->objectRenderer->render(new HoverInformation(sprintf(
+                'documentation' => $this->objectRenderer->render(new ItemDocumentation(sprintf(
                     '%s::%s',
                     $method->class()->name(),
                     $method->name()
