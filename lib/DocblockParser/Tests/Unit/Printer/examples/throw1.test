@@ -1,0 +1,10 @@
+/**
+ * @throws RuntimeException
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ThrowsTag: = @throws
+   ClassNode: = RuntimeException
+ */

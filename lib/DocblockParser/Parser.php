@@ -45,6 +45,7 @@ use Phpactor\DocblockParser\Ast\UnknownTag;
 use Phpactor\DocblockParser\Ast\ValueNode;
 use Phpactor\DocblockParser\Ast\Value\NullValue;
 use Phpactor\DocblockParser\Ast\Tag\VarTag;
+use Phpactor\DocblockParser\Ast\Tag\ThrowsTag;
 use Phpactor\DocblockParser\Ast\VariableNode;
 use Phpactor\DocblockParser\Ast\Token;
 use Phpactor\DocblockParser\Ast\Tokens;
@@ -57,7 +58,7 @@ final class Parser
     private const SCALAR_TYPES = [
         'int', 'float', 'bool', 'class-string', 'string', 'mixed', 'callable', 'false'
     ];
-    
+
     private Tokens $tokens;
 
     public function parse(Tokens $tokens): Node
@@ -94,6 +95,9 @@ final class Parser
 
             case '@var':
                 return $this->parseVar();
+
+            case '@throws':
+                return $this->parseThrows();
 
             case '@deprecated':
                 return $this->parseDeprecated();
@@ -154,6 +158,18 @@ final class Parser
         }
 
         return new VarTag($tag, $type, $variable);
+    }
+
+    private function parseThrows(): ThrowsTag
+    {
+        $tag = $this->tokens->chomp(Token::T_TAG);
+        $type = null;
+
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $type = $this->parseTypes();
+        }
+
+        return new ThrowsTag($tag, $type);
     }
 
     private function parseMethod(): MethodTag
