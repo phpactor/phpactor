@@ -168,34 +168,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     // todo: switch to use members()
     public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
     {
-        $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
-
-        if (isset($this->properties[$cacheKey])) {
-            return $this->properties[$cacheKey];
-        }
-
-        $properties = ReflectionPropertyCollection::empty();
-        $contextClass = $contextClass ?: $this;
-
-        if ($this->traits()->count() > 0) {
-            foreach ($this->traits() as $trait) {
-                $properties = $properties->merge($trait->properties());
-            }
-        }
-
-        $parent = $this->parent();
-        if ($parent) {
-            $properties = $properties->merge(
-                $parent->properties($contextClass)->byVisibilities([ Visibility::public(), Visibility::protected() ])
-            );
-        }
-
-        $properties = $properties->merge(ReflectionPropertyCollection::fromClassDeclaration($this->serviceLocator, $this->node, $contextClass));
-        $properties = $properties->merge(ReflectionPropertyCollection::fromClassDeclarationConstructorPropertyPromotion($this->serviceLocator, $this->node, $contextClass));
-
-        $this->properties[$cacheKey] = $properties;
-
-        return $properties;
+        return $this->members()->properties();
     }
 
     // todo: switch to use members()
