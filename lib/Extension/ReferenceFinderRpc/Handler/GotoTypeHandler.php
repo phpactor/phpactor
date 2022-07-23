@@ -11,7 +11,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class GotoTypeHandler implements Handler
 {
-    const NAME = 'goto_definition';
+    const NAME = 'goto_type';
     const PARAM_OFFSET = 'offset';
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';

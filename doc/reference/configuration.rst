@@ -2,7 +2,7 @@ Configuration
 =============
 
 
-.. This document is generated via. the `documentation:configuration-reference` command
+.. This document is generated via the `development:generate-documentation` command
 
 
 .. contents::
@@ -25,8 +25,6 @@ CoreExtension
 """"""""""""""""""""""""""
 
 
-
-
 Name of the "dumper" (renderer) to use for some CLI commands
 
 
@@ -38,8 +36,6 @@ Name of the "dumper" (renderer) to use for some CLI commands
 
 ``xdebug_disable``
 """"""""""""""""""
-
-
 
 
 If XDebug should be automatically disabled
@@ -55,8 +51,6 @@ If XDebug should be automatically disabled
 """""""""""
 
 
-
-
 Internal use only - name of the command which was executed
 
 
@@ -68,8 +62,6 @@ Internal use only - name of the command which was executed
 
 ``core.warn_on_develop``
 """"""""""""""""""""""""
-
-
 
 
 Internal use only: if an warning will be issed when on develop, may be removed in the future
@@ -85,8 +77,6 @@ Internal use only: if an warning will be issed when on develop, may be removed i
 """""""""""""""""""""""""
 
 
-
-
 Ensure that PHP has a memory_limit of at least this amount in bytes
 
 
@@ -98,8 +88,6 @@ Ensure that PHP has a memory_limit of at least this amount in bytes
 
 ``$schema``
 """""""""""
-
-
 
 
 Path to JSON schema, which can be used for config autocompletion, use phpactor config:initialize to update
@@ -122,8 +110,6 @@ ClassToFileExtension
 """"""""""""""""""""""""""""""
 
 
-
-
 Root path of the project (e.g. where composer.json is)
 
 
@@ -135,8 +121,6 @@ Root path of the project (e.g. where composer.json is)
 
 ``class_to_file.brute_force_conversion``
 """"""""""""""""""""""""""""""""""""""""
-
-
 
 
 If composer not found, fallback to scanning all files (very time consuming depending on project size)
@@ -159,8 +143,6 @@ CodeTransformExtension
 """""""""""""""""""""""""""""""""""""
 
 
-
-
 Variants which should be suggested when class-create is invoked
 
 
@@ -172,8 +154,6 @@ Variants which should be suggested when class-create is invoked
 
 ``code_transform.template_paths``
 """""""""""""""""""""""""""""""""
-
-
 
 
 Paths in which to look for code templates
@@ -189,8 +169,6 @@ Paths in which to look for code templates
 """"""""""""""""""""""""""""""
 
 
-
-
 Indentation chars to use in code generation and transformation
 
 
@@ -202,8 +180,6 @@ Indentation chars to use in code generation and transformation
 
 ``code_transform.refactor.generate_accessor.prefix``
 """"""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Prefix to use for generated accessors
@@ -219,8 +195,6 @@ Prefix to use for generated accessors
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 If the first letter of a generated accessor should be made uppercase
 
 
@@ -232,8 +206,6 @@ If the first letter of a generated accessor should be made uppercase
 
 ``code_transform.import_globals``
 """""""""""""""""""""""""""""""""
-
-
 
 
 Import functions even if they are in the global namespace
@@ -249,8 +221,6 @@ Import functions even if they are in the global namespace
 """"""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Object fill refactoring: show hint as a comment
 
 
@@ -262,8 +232,6 @@ Object fill refactoring: show hint as a comment
 
 ``code_transform.refactor.object_fill.named_parameters``
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Object fill refactoring: use named parameters
@@ -286,8 +254,6 @@ CompletionWorseExtension
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``doctrine_annotation`` completor.
 
 Completion for annotations provided by the Doctrine annotation library.
@@ -301,8 +267,6 @@ Completion for annotations provided by the Doctrine annotation library.
 
 ``completion_worse.completor.imported_names.enabled``
 """""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Enable or disable the ``imported_names`` completor.
@@ -320,8 +284,6 @@ Completion for names imported into the current namespace.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``worse_parameter`` completor.
 
 Completion for method or function parameters.
@@ -335,8 +297,6 @@ Completion for method or function parameters.
 
 ``completion_worse.completor.named_parameter.enabled``
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Enable or disable the ``named_parameter`` completor.
@@ -354,8 +314,6 @@ Completion for named parameters.
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``constructor`` completor.
 
 Completion for constructors.
@@ -369,8 +327,6 @@ Completion for constructors.
 
 ``completion_worse.completor.class_member.enabled``
 """""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Enable or disable the ``class_member`` completor.
@@ -388,8 +344,6 @@ Completion for class members.
 """"""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``scf_class`` completor.
 
 Brute force completion for class names (not recommended).
@@ -403,8 +357,6 @@ Brute force completion for class names (not recommended).
 
 ``completion_worse.completor.local_variable.enabled``
 """""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Enable or disable the ``local_variable`` completor.
@@ -422,8 +374,6 @@ Completion for local variables.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``declared_function`` completor.
 
 Completion for functions defined in the Phpactor runtime.
@@ -437,8 +387,6 @@ Completion for functions defined in the Phpactor runtime.
 
 ``completion_worse.completor.declared_constant.enabled``
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Enable or disable the ``declared_constant`` completor.
@@ -456,8 +404,6 @@ Completion for constants defined in the Phpactor runtime.
 """""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``declared_class`` completor.
 
 Completion for classes defined in the Phpactor runtime.
@@ -471,8 +417,6 @@ Completion for classes defined in the Phpactor runtime.
 
 ``completion_worse.completor.expression_name_search.enabled``
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Enable or disable the ``expression_name_search`` completor.
@@ -490,8 +434,6 @@ Completion for class names, constants and functions at expression positions that
 """"""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``use`` completor.
 
 Completion for use imports.
@@ -505,8 +447,6 @@ Completion for use imports.
 
 ``completion_worse.completor.class_like.enabled``
 """""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Enable or disable the ``class_like`` completor.
@@ -524,8 +464,6 @@ Completion for class like contexts.
 """""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``type`` completor.
 
 Completion for types.
@@ -539,8 +477,6 @@ Completion for types.
 
 ``completion_worse.completor.keyword.enabled``
 """"""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Enable or disable the ``keyword`` completor.
@@ -558,8 +494,6 @@ Completion for keywords (not very accurate).
 """""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Enable or disable the ``docblock`` completor.
 
 Docblock completion.
@@ -575,8 +509,6 @@ Docblock completion.
 """""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 **Default**: ``false``
 
 
@@ -585,8 +517,6 @@ Docblock completion.
 
 ``completion_worse.completor.class.limit``
 """"""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Suggestion limit for the filesystem based SCF class_completor
@@ -600,8 +530,6 @@ Suggestion limit for the filesystem based SCF class_completor
 
 ``completion_worse.name_completion_priority``
 """""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Strategy to use when ordering completion results for classes and functions:
@@ -620,8 +548,6 @@ Strategy to use when ordering completion results for classes and functions:
 """""""""""""""""""""""""""""
 
 
-
-
 Enable or disable completion snippets
 
 
@@ -635,8 +561,6 @@ Enable or disable completion snippets
 """""""""""""""""""""""""""""""""
 
 
-
-
 Enable experimental functionality
 
 
@@ -648,8 +572,6 @@ Enable experimental functionality
 
 ``completion_worse.debug``
 """"""""""""""""""""""""""
-
-
 
 
 Include debug info in completion results
@@ -672,8 +594,6 @@ CompletionExtension
 """""""""""""""""""""
 
 
-
-
 If results should be de-duplicated
 
 
@@ -687,8 +607,6 @@ If results should be de-duplicated
 """""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 If ``completion.dedupe``, match on completion description intead of name
 
 
@@ -700,8 +618,6 @@ If ``completion.dedupe``, match on completion description intead of name
 
 ``completion.limit``
 """"""""""""""""""""
-
-
 
 
 Sets a limit on the number of completion suggestions for any request
@@ -724,8 +640,6 @@ NavigationExtension
 """"""""""""""""""""""""""
 
 
-
-
 **Default**: ``[]``
 
 
@@ -734,8 +648,6 @@ NavigationExtension
 
 ``navigator.autocreate``
 """"""""""""""""""""""""
-
-
 
 
 **Default**: ``[]``
@@ -755,8 +667,6 @@ RpcExtension
 """"""""""""""""""""
 
 
-
-
 Should replays be stored?
 
 
@@ -768,8 +678,6 @@ Should replays be stored?
 
 ``rpc.replay_path``
 """""""""""""""""""
-
-
 
 
 Path where the replays should be stored
@@ -792,8 +700,6 @@ SourceCodeFilesystemExtension
 """""""""""""""""""""""""""""""""""""""
 
 
-
-
 **Default**: ``"%project_root%"``
 
 
@@ -811,8 +717,6 @@ WorseReflectionExtension
 """""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Show hints for non-imported global classes and functions
 
 
@@ -824,8 +728,6 @@ Show hints for non-imported global classes and functions
 
 ``worse_reflection.enable_cache``
 """""""""""""""""""""""""""""""""
-
-
 
 
 If reflection caching should be enabled
@@ -841,8 +743,6 @@ If reflection caching should be enabled
 """""""""""""""""""""""""""""""""""
 
 
-
-
 If caching is enabled, limit the amount of time a cache entry can stay alive
 
 
@@ -854,8 +754,6 @@ If caching is enabled, limit the amount of time a cache entry can stay alive
 
 ``worse_reflection.enable_context_location``
 """"""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 If source code is passed to a ``Reflector`` then temporarily make it available as a
@@ -873,8 +771,6 @@ located in another (e.g. when running a Language Server)
 """""""""""""""""""""""""""
 
 
-
-
 Enable mixins (unstable see issue #1791)
 
 
@@ -888,8 +784,6 @@ Enable mixins (unstable see issue #1791)
 """"""""""""""""""""""""""""""
 
 
-
-
 Cache directory for stubs
 
 
@@ -901,8 +795,6 @@ Cache directory for stubs
 
 ``worse_reflection.stub_dir``
 """""""""""""""""""""""""""""
-
-
 
 
 Location of the core PHP stubs - these will be scanned and cached on the first request
@@ -925,9 +817,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-
-
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
+**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -935,8 +825,6 @@ FilePathResolverExtension
 
 ``file_path_resolver.app_name``
 """""""""""""""""""""""""""""""
-
-
 
 
 **Default**: ``"phpactor"``
@@ -949,8 +837,6 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""""""
 
 
-
-
 **Default**: ``null``
 
 
@@ -961,8 +847,6 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-
-
 **Default**: ``true``
 
 
@@ -971,8 +855,6 @@ FilePathResolverExtension
 
 ``file_path_resolver.enable_logging``
 """""""""""""""""""""""""""""""""""""
-
-
 
 
 **Default**: ``true``
@@ -1060,8 +942,6 @@ Type: string
 """""""""""""""""""""
 
 
-
-
 **Default**: ``null``
 
 
@@ -1079,8 +959,6 @@ ComposerAutoloaderExtension
 """""""""""""""""""
 
 
-
-
 Include of the projects autoloader to facilitate class location. Note that when including an autoloader code _may_ be executed. This option may be disabled when using the indexer
 
 
@@ -1092,8 +970,6 @@ Include of the projects autoloader to facilitate class location. Note that when 
 
 ``composer.autoloader_path``
 """"""""""""""""""""""""""""
-
-
 
 
 Path to project's autoloader, can be an array
@@ -1109,8 +985,6 @@ Path to project's autoloader, can be an array
 """"""""""""""""""""""""""""""""
 
 
-
-
 Immediately de-register the autoloader once it has been included (prevent conflicts with Phpactor's autoloader). Some platforms may require this to be disabled
 
 
@@ -1122,8 +996,6 @@ Immediately de-register the autoloader once it has been included (prevent confli
 
 ``composer.class_maps_only``
 """"""""""""""""""""""""""""
-
-
 
 
 Register the composer class maps only, do not register the autoloader - RECOMMENDED
@@ -1146,8 +1018,6 @@ ConsoleExtension
 """""""""""""""""""""
 
 
-
-
 Verbosity level
 
 
@@ -1162,8 +1032,6 @@ Verbosity level
 
 ``console.decorated``
 """""""""""""""""""""
-
-
 
 
 Whether to decorate messages (null for auto-guessing)
@@ -1209,8 +1077,6 @@ PhpExtension
 """""""""""""""
 
 
-
-
 Consider this value to be the project\'s version of PHP (e.g. `7.4`). If omitted
 it will check `composer.json` (by the configured platform then the PHP requirement) before
 falling back to the PHP version of the current process.
@@ -1233,8 +1099,6 @@ LanguageServerExtension
 """"""""""""""""""""""""""""""""
 
 
-
-
 **Default**: ``true``
 
 
@@ -1243,8 +1107,6 @@ LanguageServerExtension
 
 ``language_server.enable_workspace``
 """"""""""""""""""""""""""""""""""""
-
-
 
 
 If workspace management / text synchronization should be enabled (this isn't required for some language server implementations, e.g. static analyzers)
@@ -1260,8 +1122,6 @@ If workspace management / text synchronization should be enabled (this isn't req
 """"""""""""""""""""""""""""""""""""""
 
 
-
-
 Phpactor parameters (config) that apply only to the language server session
 
 
@@ -1273,8 +1133,6 @@ Phpactor parameters (config) that apply only to the language server session
 
 ``language_server.method_alias_map``
 """"""""""""""""""""""""""""""""""""
-
-
 
 
 Allow method names to be re-mapped. Useful for maintaining backwards compatibility
@@ -1290,8 +1148,6 @@ Allow method names to be re-mapped. Useful for maintaining backwards compatibili
 """""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Amount of time to wait before analyzing the code again for diagnostics
 
 
@@ -1303,8 +1159,6 @@ Amount of time to wait before analyzing the code again for diagnostics
 
 ``language_server.diagnostics_on_update``
 """""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Perform diagnostics when the text document is updated
@@ -1320,8 +1174,6 @@ Perform diagnostics when the text document is updated
 """""""""""""""""""""""""""""""""""""""
 
 
-
-
 Perform diagnostics when the text document is saved
 
 
@@ -1333,8 +1185,6 @@ Perform diagnostics when the text document is saved
 
 ``language_server.diagnostics_on_open``
 """""""""""""""""""""""""""""""""""""""
-
-
 
 
 Perform diagnostics when opening a text document
@@ -1350,8 +1200,6 @@ Perform diagnostics when opening a text document
 """"""""""""""""""""""""""""""""""""""""
 
 
-
-
 Specify which diagnostic providers should be active (default to all)
 
 
@@ -1363,8 +1211,6 @@ Specify which diagnostic providers should be active (default to all)
 
 ``language_server,file_events``
 """""""""""""""""""""""""""""""
-
-
 
 
 Register to recieve file events
@@ -1380,8 +1226,6 @@ Register to recieve file events
 """"""""""""""""""""""""""""""""""""
 
 
-
-
 **Default**: ``["**\/*.php"]``
 
 
@@ -1390,8 +1234,6 @@ Register to recieve file events
 
 ``language_server.profile``
 """""""""""""""""""""""""""
-
-
 
 
 Logs timing information for incoming LSP requests
@@ -1407,8 +1249,6 @@ Logs timing information for incoming LSP requests
 """""""""""""""""""""""""
 
 
-
-
 Log incoming and outgoing messages (needs log formatter to be set to ``json``)
 
 
@@ -1422,8 +1262,6 @@ Log incoming and outgoing messages (needs log formatter to be set to ``json``)
 """""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Amount of time to wait before responding to a shutdown notification
 
 
@@ -1435,8 +1273,6 @@ Amount of time to wait before responding to a shutdown notification
 
 ``language_server.self_destruct_timeout``
 """""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Wait this amount of time after a shutdown request before self-destructing
@@ -1459,8 +1295,6 @@ LanguageServerCompletionExtension
 """"""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 If the leading dollar should be trimmed for variable completion suggestions
 
 
@@ -1479,8 +1313,6 @@ LanguageServerReferenceFinderExtension
 
 ``language_server_reference_reference_finder.reference_timeout``
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Stop searching for references after this time (in seconds) has expired
@@ -1503,8 +1335,6 @@ LanguageServerWorseReflectionExtension
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 Minimum interval to update the workspace index as documents are updated (in milliseconds)
 
 
@@ -1525,8 +1355,6 @@ LanguageServerIndexerExtension
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-
-
 **Default**: ``250``
 
 
@@ -1542,8 +1370,6 @@ LanguageServerCodeTransformExtension
 
 ``language_server_code_transform.import_name.report_non_existing_names``
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Show an error if a diagnostic name cannot be resolved - can produce false positives
@@ -1566,8 +1392,6 @@ LanguageServerPhpstanExtension
 """""""""""""""""""""""""""""""""""
 
 
-
-
 Enable PHPStan diagnostics
 
 
@@ -1581,8 +1405,6 @@ Enable PHPStan diagnostics
 """""""""""""""""""""""""""""""
 
 
-
-
 Path to the PHPStan executable
 
 
@@ -1594,8 +1416,6 @@ Path to the PHPStan executable
 
 ``language_server_phpstan.level``
 """""""""""""""""""""""""""""""""
-
-
 
 
 Override the PHPStan level
@@ -1618,8 +1438,6 @@ LanguageServerPsalmExtension
 """""""""""""""""""""""""""""
 
 
-
-
 Path to pslam if different from vendor/bin/psalm
 
 
@@ -1631,8 +1449,6 @@ Path to pslam if different from vendor/bin/psalm
 
 ``language_server_psalm.enabled``
 """""""""""""""""""""""""""""""""
-
-
 
 
 **Default**: ``false``
@@ -1652,8 +1468,6 @@ BehatExtension
 """""""""""""""""
 
 
-
-
 **Default**: ``false``
 
 
@@ -1662,8 +1476,6 @@ BehatExtension
 
 ``behat.config_path``
 """""""""""""""""""""
-
-
 
 
 Path to the main behat.yml (including the filename behat.yml)
@@ -1677,8 +1489,6 @@ Path to the main behat.yml (including the filename behat.yml)
 
 ``behat.symfony.di_xml_path``
 """""""""""""""""""""""""""""
-
-
 
 
 If using Symfony, set this path to the XML container dump to find contexts which are defined as services
@@ -1701,8 +1511,6 @@ IndexerExtension
 """"""""""""""""""""""""""""
 
 
-
-
 List of allowed watchers. The first watcher that supports the current system will be used
 
 
@@ -1714,8 +1522,6 @@ List of allowed watchers. The first watcher that supports the current system wil
 
 ``indexer.index_path``
 """"""""""""""""""""""
-
-
 
 
 Path where the index should be saved
@@ -1731,8 +1537,6 @@ Path where the index should be saved
 """"""""""""""""""""""""""""
 
 
-
-
 Glob patterns to include while indexing
 
 
@@ -1744,8 +1548,6 @@ Glob patterns to include while indexing
 
 ``indexer.exclude_patterns``
 """"""""""""""""""""""""""""
-
-
 
 
 Glob patterns to exclude while indexing
@@ -1761,8 +1563,6 @@ Glob patterns to exclude while indexing
 """"""""""""""""""""""
 
 
-
-
 Paths to external folders to index. They will be indexed only once, if you want to take any changes into account you will have to reindex your project manually.
 
 
@@ -1774,8 +1574,6 @@ Paths to external folders to index. They will be indexed only once, if you want 
 
 ``indexer.poll_time``
 """""""""""""""""""""
-
-
 
 
 For polling indexers only: the time, in milliseconds, between polls (e.g. filesystem scans)
@@ -1791,8 +1589,6 @@ For polling indexers only: the time, in milliseconds, between polls (e.g. filesy
 """""""""""""""""""""""
 
 
-
-
 For real-time indexers only: the time, in milliseconds, to buffer the results
 
 
@@ -1804,8 +1600,6 @@ For real-time indexers only: the time, in milliseconds, to buffer the results
 
 ``indexer.project_root``
 """"""""""""""""""""""""
-
-
 
 
 The root path to use for scanning the index
@@ -1821,8 +1615,6 @@ The root path to use for scanning the index
 """""""""""""""""""""""""""""""""
 
 
-
-
 Recurse over class implementations to resolve all references
 
 
@@ -1834,8 +1626,6 @@ Recurse over class implementations to resolve all references
 
 ``indexer.implementation_finder.deep``
 """"""""""""""""""""""""""""""""""""""
-
-
 
 
 Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)
@@ -1856,8 +1646,6 @@ ObjectRendererExtension
 
 ``object_renderer.template_paths.markdown``
 """""""""""""""""""""""""""""""""""""""""""
-
-
 
 
 Paths in which to look for templates for hover information.

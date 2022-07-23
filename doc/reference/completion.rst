@@ -71,7 +71,7 @@ Provide completion for local variables in a scope. Triggered on ``$``.
 ~~~~~~~~~~~~~~~~~~~~~
 
 Provide function name completion based on functions defined at _runtime_ in the
-Phpactor process. 
+Phpactor process.
 
 Note that any functions which are not loaded when _Phpactor_
 loads will not be available. So this is mainly useful for built-in functions.
@@ -82,7 +82,7 @@ This completor is disabled by default when using the :ref:`language_server`.
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Provide constant name completion based on constants defined at _runtime_ in the
-Phpactor process. 
+Phpactor process.
 
 This is mainly useful for built-in constants (e.g. ``JSON_PRETTY_PRINT`` or
 ``PHP_INT_MAX``).

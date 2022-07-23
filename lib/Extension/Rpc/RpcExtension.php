@@ -5,6 +5,8 @@ namespace Phpactor\Extension\Rpc;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\Debug\DebugExtension;
+use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Rpc\Command\RpcCommand;
@@ -19,11 +21,11 @@ use RuntimeException;
 
 class RpcExtension implements Extension
 {
-    const TAG_RPC_HANDLER = 'rpc.handler';
+    public const TAG_RPC_HANDLER = 'rpc.handler';
     public const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
+    public const RPC_DOCUMENTOR_NAME= 'rpc';
     private const STORE_REPLAY = 'rpc.store_replay';
     private const REPLAY_PATH = 'rpc.replay_path';
-
 
     public function load(ContainerBuilder $container): void
     {
@@ -60,6 +62,15 @@ class RpcExtension implements Extension
 
             return new LazyContainerHandlerRegistry($container, $handlers);
         });
+
+        $container->register(RpcCommandDocumentor::class, function ($container) {
+            return new RpcCommandDocumentor(
+                $container->get('rpc.handler_registry'),
+                $container->get(DefinitionDocumentor::class)
+            );
+        }, [ DebugExtension::TAG_DOCUMENTOR => [
+            'name' => self::RPC_DOCUMENTOR_NAME
+        ] ]);
 
         $this->registerHandlers($container);
     }
