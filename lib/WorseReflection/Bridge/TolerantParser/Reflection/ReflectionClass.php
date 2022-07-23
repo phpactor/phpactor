@@ -99,6 +99,11 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $members = ClassLikeReflectionMemberCollection::empty();
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
             $members = $members->merge($reflectionClassLike->ownMembers());
+            if ($reflectionClassLike instanceof ReflectionTrait) {
+                $traitImports = TraitImports::forClassDeclaration($this->node);
+                $members = $members->merge($this->resolveTraitMethods($traitImports, $this, $this->traits()));
+                continue;
+            }
         }
 
         return $members;
