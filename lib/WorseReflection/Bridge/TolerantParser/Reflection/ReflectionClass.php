@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\TokenKind;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
+use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
@@ -96,7 +97,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     public function members(): ReflectionMemberCollection
     {
-        return $this->ownMembers();
+        $members = ClassLikeReflectionMemberCollection::empty();
+        foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
+            $members = $members->merge($reflectionClassLike->ownMembers());
+        }
+
+        return $members;
     }
 
     public function ownMembers(): ReflectionMemberCollection

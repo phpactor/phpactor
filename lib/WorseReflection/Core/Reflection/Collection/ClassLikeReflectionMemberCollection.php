@@ -35,7 +35,15 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         foreach ($class->classMembers->classMemberDeclarations as $member) {
 
             if ($member instanceof ClassConstDeclaration) {
-                $new->addConstant($member, $serviceLocator, $reflectionClass);
+                /** @phpstan-ignore-next-line TP: lie */
+                if (!$member->constElements) {
+                    continue;
+                }
+
+                foreach ($member->constElements->getElements() as $constElement) {
+                    $new->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $reflectionClass, $member, $constElement);
+                    $new->items[$constElement->getName()] = $new->constants[$constElement->getName()];
+                }
             }
         }
 
@@ -47,7 +55,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         foreach ([
             $this->constants
         ] as $collection) {
-            yield from $collection;
+        yield from $collection;
         }
     }
 
@@ -55,8 +63,9 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     {
         $new = clone $this;
         foreach ($collection as $member) {
+            $this->items[$member->name()] = $member;
             if ($member instanceof ReflectionConstant) {
-                $new->addConstant($member);
+                $this->constants[$member->name()] = $member;
             }
         }
 
@@ -67,6 +76,13 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     {
         return $this->filter(function (ReflectionMember $member) use ($fqn) {
             return $member instanceof $fqn;
+        });
+    }
+
+    public function byMemberType(string $type): ReflectionCollection
+    {
+        return $this->filter(function (ReflectionMember $member) use ($type) {
+            return $member->memberType();
         });
     }
 
@@ -133,30 +149,13 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         return new ReflectionConstantCollection($this->constants);
     }
 
-    public function byMemberType(string $type): ReflectionCollection
-    {
-    }
-
-    private function addConstant(Node $member, ServiceLocator $serviceLocator, ReflectionClassLike $reflectionClass): void
-    {
-        /** @phpstan-ignore-next-line TP: lie */
-        if (!$member->constElements) {
-            return;
-        }
-        
-        foreach ($member->constElements->getElements() as $constElement) {
-            $this->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $reflectionClass, $member, $constElement);
-            $this->items[$constElement->getName()] = $this->constants[$constElement->getName()];
-        }
-    }
-
     private function filter(Closure $closure): ReflectionCollection
     {
-        $new = new self();
+        $new = new self([]);
         foreach ([
             'constants',
         ] as $collection) {
-             $new->$collection = array_map($closure, $this->$collection);
+        $new->$collection = array_map($closure, $this->$collection);
         }
 
         return $new;
