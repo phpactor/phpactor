@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use AppendIterator;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -212,6 +213,11 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
     public function properties(): ReflectionPropertyCollection
     {
         return ReflectionPropertyCollection::fromReflections(iterator_to_array($this->byMemberClass(ReflectionProperty::class)));
+    }
+
+    public function constants(): ReflectionConstantCollection
+    {
+        return ReflectionPropertyCollection::fromReflections(iterator_to_array($this->byMemberClass(ReflectionConstant::class)));
     }
 
     public function byMemberClass(string $fqn): ReflectionCollection

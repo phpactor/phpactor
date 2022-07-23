@@ -103,6 +103,13 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
         }));
     }
 
+    public function constants(): ReflectionConstantCollection
+    {
+        return new ReflectionConstantCollection(array_filter($this->items, function (ReflectionMember $member) {
+            return $member instanceof ReflectionConstant;
+        }));
+    }
+
     public function properties(): ReflectionPropertyCollection
     {
         return new ReflectionPropertyCollection(array_filter($this->items, function (ReflectionMember $member) {

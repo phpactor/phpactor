@@ -47,6 +47,8 @@ interface ReflectionMemberCollection extends ReflectionCollection
 
     public function properties(): ReflectionPropertyCollection;
 
+    public function constants(): ReflectionConstantCollection;
+
     /**
      * @return static
      */

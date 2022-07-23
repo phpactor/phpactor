@@ -11,7 +11,7 @@ use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\HetrogeneousReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
@@ -96,17 +96,21 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     public function members(): ReflectionMemberCollection
     {
-        /** @phpstan-ignore-next-line Pretty sure this is a phpstan bug */
-        return ChainReflectionMemberCollection::fromCollections([
-            $this->constants(),
-            $this->properties(),
-            $this->methods($this)
-        ]);
+        return $this->ownMembers();
+    }
+
+    public function ownMembers(): ReflectionMemberCollection
+    {
+        return ClassLikeReflectionMemberCollection::fromClassMemberDeclarations(
+            $this->serviceLocator,
+            $this->node,
+            $this
+        )->constants();
     }
 
     public function constants(): ReflectionConstantCollection
     {
-        return HetrogeneousReflectionMemberCollection::fromClassMemberDeclarations($this->serviceLocator, $this->node, $this);
+        return $this->members()->constants();
     }
 
     public function parent(): ?CoreReflectionClass

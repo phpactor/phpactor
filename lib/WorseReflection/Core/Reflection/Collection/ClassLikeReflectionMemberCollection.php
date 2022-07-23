@@ -4,10 +4,12 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Closure;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Traversable;
@@ -16,16 +18,12 @@ use Traversable;
 /**
  * @extends AbstractReflectionCollection<ReflectionMember>
  */
-final class HetrogeneousReflectionMemberCollection extends AbstractReflectionCollection implements ReflectionMemberCollection
+final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollection implements ReflectionMemberCollection
 {
     /**
      * @var ReflectionConstant[]
      */
     private array $constants = [];
-
-    private function __construct()
-    {
-    }
 
     public static function fromClassMemberDeclarations(
         ServiceLocator $serviceLocator,
@@ -33,11 +31,11 @@ final class HetrogeneousReflectionMemberCollection extends AbstractReflectionCol
         ReflectionClass $reflectionClass
     ): ReflectionMemberCollection
     {
-        $new = new $this;
+        $new = new self([]);
         foreach ($class->classMembers->classMemberDeclarations as $member) {
 
             if ($member instanceof ClassConstDeclaration) {
-                $new->addConstant($member);
+                $new->addConstant($member, $serviceLocator, $reflectionClass);
             }
         }
 
@@ -53,7 +51,7 @@ final class HetrogeneousReflectionMemberCollection extends AbstractReflectionCol
         }
     }
 
-    public function merge(ReflectionCollection $collection): ReflectionCollection
+    public function merge(ReflectionCollection $collection): AbstractReflectionCollection
     {
         $new = clone $this;
         foreach ($collection as $member) {
@@ -130,11 +128,16 @@ final class HetrogeneousReflectionMemberCollection extends AbstractReflectionCol
         return new ReflectionPropertyCollection();
     }
 
+    public function constants(): ReflectionConstantCollection
+    {
+        return new ReflectionConstantCollection($this->constants);
+    }
+
     public function byMemberType(string $type): ReflectionCollection
     {
     }
 
-    private function addConstant(Node $member, ServiceLocator $serviceLocator, ReflectionClass $reflectionClass): void
+    private function addConstant(Node $member, ServiceLocator $serviceLocator, ReflectionClassLike $reflectionClass): void
     {
         /** @phpstan-ignore-next-line TP: lie */
         if (!$member->constElements) {
