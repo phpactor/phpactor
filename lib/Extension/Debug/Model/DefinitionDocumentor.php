@@ -12,6 +12,7 @@ class DefinitionDocumentor
         $help[] = "\n";
         $help[] = '``' . $definition->name() . '``';
         $help[] = str_repeat('"', mb_strlen($definition->name()) + 4);
+
         if ($definition->types()) {
             $help[] = "\n";
             $help[] = sprintf('Type: %s', implode('|', $definition->types()));
@@ -21,6 +22,7 @@ class DefinitionDocumentor
             $help[] = "\n";
             $help[] = $definition->description();
         }
+
         $help[] = "\n";
         $help[] = sprintf(
             '**Default**: ``%s``',

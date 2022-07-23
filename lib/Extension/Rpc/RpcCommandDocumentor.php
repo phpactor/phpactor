@@ -49,7 +49,7 @@ class RpcCommandDocumentor implements Documentor
     {
         $handlerClass = get_class($handler);
         $parts = explode('\\', $handlerClass);
-        $documentedName = end($parts);
+        $documentedName = '_RpcHandler_'.end($parts);
 
         /** @phpstan-ignore-next-line */
         if (false === $documentedName) {
@@ -60,7 +60,7 @@ class RpcCommandDocumentor implements Documentor
         }
 
         $help = [
-            '.. _' . $documentedName . ':',
+            '.. ' . $documentedName . ':',
             "\n",
             $documentedName,
             str_repeat('-', mb_strlen($documentedName)),
