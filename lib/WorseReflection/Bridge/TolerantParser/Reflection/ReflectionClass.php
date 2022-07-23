@@ -110,7 +110,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             $this->serviceLocator,
             $this->node,
             $this
-        )->constants();
+        );
     }
 
     public function constants(): ReflectionConstantCollection

@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 
+use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
@@ -68,6 +69,15 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             $this->constants(),
             $this->methods()
         ]);
+    }
+
+    public function ownMembers(): ReflectionMemberCollection
+    {
+        return ClassLikeReflectionMemberCollection::fromInterfaceMemberDeclarations(
+            $this->serviceLocator,
+            $this->node,
+            $this
+        );
     }
 
     public function constants(): CoreReflectionConstantCollection

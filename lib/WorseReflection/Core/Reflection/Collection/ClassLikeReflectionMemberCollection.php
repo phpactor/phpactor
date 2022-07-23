@@ -5,9 +5,12 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use Closure;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Traversable;
@@ -29,8 +32,17 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         ReflectionClass $reflectionClass
     ): ReflectionMemberCollection
     {
+        return self::fromDeclarations(
+            $serviceLocator,
+            $reflectionClass,
+            $class->classMembers->classMemberDeclarations,
+        );
+    }
+
+    private static function fromDeclarations(ServiceLocator $serviceLocator, ReflectionClassLike $classLike, array $nodes): self
+    {
         $new = new self([]);
-        foreach ($class->classMembers->classMemberDeclarations as $member) {
+        foreach ($nodes as $member) {
 
             if ($member instanceof ClassConstDeclaration) {
                 /** @phpstan-ignore-next-line TP: lie */
@@ -39,13 +51,23 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                 }
 
                 foreach ($member->constElements->getElements() as $constElement) {
-                    $new->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $reflectionClass, $member, $constElement);
+                    $new->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $classLike, $member, $constElement);
                     $new->items[$constElement->getName()] = $new->constants[$constElement->getName()];
                 }
             }
         }
 
         return $new;
+    }
+
+
+    public static function fromInterfaceMemberDeclarations(ServiceLocator $serviceLocator, InterfaceDeclaration $interfaceDeclaration, ReflectionInterface $reflectionInterface): self
+    {
+        return self::fromDeclarations(
+            $serviceLocator,
+            $class,
+            $interfaceDeclaration->interfaceMembers->interfaceMemberDeclarations,
+        );
     }
 
     public function getIterator(): Traversable

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as PhpactorReflectionTraitCollection;
@@ -69,6 +70,15 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
             $this->properties(),
             $this->methods()
         ]);
+    }
+
+    public function ownMembers(): ReflectionMemberCollection
+    {
+        return ClassLikeReflectionMemberCollection::fromInterfaceMemberDeclarations(
+            $this->serviceLocator,
+            $this->node,
+            $this
+        );
     }
 
     public function properties(): CoreReflectionPropertyCollection
