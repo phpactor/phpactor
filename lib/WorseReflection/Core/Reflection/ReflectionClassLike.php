@@ -25,6 +25,11 @@ interface ReflectionClassLike extends ReflectionNode
      */
     public function members(): ReflectionMemberCollection;
 
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
+    public function ownMembers(): ReflectionMemberCollection;
+
     public function sourceCode(): SourceCode;
 
     public function isInterface(): bool;

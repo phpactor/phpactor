@@ -3,13 +3,11 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Closure;
-use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Traversable;
@@ -63,9 +61,9 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     {
         $new = clone $this;
         foreach ($collection as $member) {
-            $this->items[$member->name()] = $member;
+            $new->items[$member->name()] = $member;
             if ($member instanceof ReflectionConstant) {
-                $this->constants[$member->name()] = $member;
+                $new->constants[$member->name()] = $member;
             }
         }
 
