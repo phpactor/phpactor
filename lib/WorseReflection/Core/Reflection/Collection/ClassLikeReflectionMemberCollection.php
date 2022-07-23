@@ -4,10 +4,12 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Closure;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
+use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -53,6 +55,21 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                 foreach ($member->constElements->getElements() as $constElement) {
                     $new->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $classLike, $member, $constElement);
                     $new->items[$constElement->getName()] = $new->constants[$constElement->getName()];
+                }
+            }
+
+            if ($member instanceof PropertyDeclaration) {
+                foreach ($property->propertyElements as $propertyElement) {
+                    foreach ($propertyElement as $variable) {
+                        if ($variable instanceof AssignmentExpression) {
+                            $variable = $variable->leftOperand;
+                        }
+
+                        if (false === $variable instanceof Variable) {
+                            continue;
+                        }
+                        $items[$variable->getName()] = new ReflectionProperty($serviceLocator, $reflectionClass, $member, $variable);
+                    }
                 }
             }
         }
