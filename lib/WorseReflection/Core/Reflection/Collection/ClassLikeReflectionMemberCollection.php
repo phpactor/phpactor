@@ -65,7 +65,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     {
         return self::fromDeclarations(
             $serviceLocator,
-            $class,
+            $reflectionInterface,
             $interfaceDeclaration->interfaceMembers->interfaceMemberDeclarations,
         );
     }
