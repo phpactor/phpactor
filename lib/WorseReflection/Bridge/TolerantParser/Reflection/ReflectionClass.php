@@ -45,16 +45,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?CoreReflectionClass $parent = null;
 
-    /**
-     * @var array<string,ReflectionMethodCollection>
-     */
-    private array $methods = [];
-
-    /**
-     * @var array<string,ReflectionPropertyCollection>
-     */
-    private array $properties = [];
-
     private ?ReflectionClassCollection $ancestors = null;
 
     private ?ReflectionTraitCollection $traits = null;
