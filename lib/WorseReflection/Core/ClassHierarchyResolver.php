@@ -37,6 +37,10 @@ final class ClassHierarchyResolver
             $resolved = $this->resolve($interface, $resolved);
         }
 
+        foreach ($classLike->traits() as $interface) {
+            $resolved = $this->resolve($interface, $resolved);
+        }
+
         return $resolved;
     }
 }

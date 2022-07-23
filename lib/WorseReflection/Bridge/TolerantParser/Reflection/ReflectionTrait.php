@@ -74,7 +74,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
 
     public function ownMembers(): ReflectionMemberCollection
     {
-        return ClassLikeReflectionMemberCollection::fromInterfaceMemberDeclarations(
+        return ClassLikeReflectionMemberCollection::fromTraitMemberDeclarations(
             $this->serviceLocator,
             $this->node,
             $this

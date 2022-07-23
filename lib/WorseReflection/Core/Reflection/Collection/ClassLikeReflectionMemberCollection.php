@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod;
@@ -21,6 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as PhpactorRefle
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as PhpactorReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as PhpactorReflectionProperty;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Traversable;
 
@@ -55,6 +57,24 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             $serviceLocator,
             $reflectionClass,
             $class->classMembers->classMemberDeclarations,
+        );
+    }
+
+    public static function fromTraitMemberDeclarations(ServiceLocator $serviceLocator, TraitDeclaration $traitDeclaration, ReflectionTrait $reflectionTrait): self
+    {
+        return self::fromDeclarations(
+            $serviceLocator,
+            $reflectionTrait,
+            $traitDeclaration->traitMembers->traitMemberDeclarations,
+        );
+    }
+
+    public static function fromInterfaceMemberDeclarations(ServiceLocator $serviceLocator, InterfaceDeclaration $interfaceDeclaration, ReflectionInterface $reflectionInterface): self
+    {
+        return self::fromDeclarations(
+            $serviceLocator,
+            $reflectionInterface,
+            $interfaceDeclaration->interfaceMembers->interfaceMemberDeclarations,
         );
     }
 
@@ -100,15 +120,6 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         return $new;
     }
 
-
-    public static function fromInterfaceMemberDeclarations(ServiceLocator $serviceLocator, InterfaceDeclaration $interfaceDeclaration, ReflectionInterface $reflectionInterface): self
-    {
-        return self::fromDeclarations(
-            $serviceLocator,
-            $reflectionInterface,
-            $interfaceDeclaration->interfaceMembers->interfaceMemberDeclarations,
-        );
-    }
 
     public function getIterator(): Traversable
     {
@@ -180,7 +191,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     public function atOffset(int $offset): ReflectionMemberCollection
     {
         return $this->filter(function (ReflectionMember $member) use ($offset) {
-            return $member->position()->start() == $offset;
+            return $member->position()->start() <= $offset && $member->position()->end() >= $offset;
         });
     }
 
