@@ -11,6 +11,7 @@ use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\HetrogeneousReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
@@ -105,28 +106,13 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function constants(): ReflectionConstantCollection
     {
-        $parentConstants = null;
-        $parent = $this->parent();
-        if ($parent) {
-            $parentConstants = $parent->constants();
-        }
-
-        $constants = ReflectionConstantCollection::fromClassDeclaration($this->serviceLocator, $this->node, $this);
-
-        if ($parentConstants) {
-            return $parentConstants->merge($constants);
-        }
-
-        foreach ($this->interfaces() as $interface) {
-            $constants = $constants->merge($interface->constants());
-        }
-
-        return $constants;
+        return HetrogeneousReflectionMemberCollection::fromClassMemberDeclarations($this->serviceLocator, $this->node, $this);
     }
 
     public function parent(): ?CoreReflectionClass
     {
         if ($this->parent) {
+            return $this->parent;
         }
 
         /** @phpstan-ignore-next-line */
