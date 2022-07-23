@@ -165,44 +165,14 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         }
     }
 
-    // todo: switch to use members()
     public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
     {
         return $this->members()->properties();
     }
 
-    // todo: switch to use members()
     public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection
     {
-        $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
-
-        if (isset($this->methods[$cacheKey])) {
-            return $this->methods[$cacheKey];
-        }
-
-        $contextClass = $contextClass ?: $this;
-        $methods = ReflectionMethodCollection::empty();
-        $traitImports = TraitImports::forClassDeclaration($this->node);
-        $traitMethods = $this->resolveTraitMethods($traitImports, $contextClass, $this->traits());
-        $methods = $methods->merge($traitMethods);
-
-        if ($this->parent()) {
-            $methods = $methods->merge(
-                $this->parent()->methods($contextClass)->byVisibilities([ Visibility::public(), Visibility::protected() ])
-            );
-        }
-
-        $methods = $methods->merge(
-            ReflectionMethodCollection::fromClassDeclaration(
-                $this->serviceLocator,
-                $this->node,
-                $contextClass
-            )
-        );
-
-        $this->methods[$cacheKey] = $methods;
-
-        return $methods;
+        return $this->members()->methods();
     }
 
     public function interfaces(): ReflectionInterfaceCollection
