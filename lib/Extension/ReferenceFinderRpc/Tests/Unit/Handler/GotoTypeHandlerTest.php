@@ -21,7 +21,7 @@ class GotoTypeHandlerTest extends TestCase
 
     public function testGotoType(): void
     {
-        $location = $this->create()->handle('goto_definition', [
+        $location = $this->create()->handle('goto_type', [
             'source' => self::EXAMPLE_SOURCE,
             'offset' => self::EXAMPLE_OFFSET,
             'path' => self::EXAMPLE_PATH,

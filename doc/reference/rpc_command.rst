@@ -1,5 +1,5 @@
-Commands
-========
+Legacy RPC Commands
+===================
 
 
 .. This document is generated via the `development:generate-documentation` command
@@ -18,7 +18,7 @@ StatusHandler
 -------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_type:
+.. _RpcCommand_status_type:
 
 
 ``type``
@@ -35,7 +35,7 @@ FileInfoHandler
 ---------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_file_info_path:
 
 
 ``path``
@@ -52,7 +52,7 @@ ReferencesHandler
 -----------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_mode:
+.. _RpcCommand_references_mode:
 
 
 ``mode``
@@ -62,7 +62,7 @@ ReferencesHandler
 **Default**: ``"find"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_filesystem:
+.. _RpcCommand_references_filesystem:
 
 
 ``filesystem``
@@ -72,7 +72,7 @@ ReferencesHandler
 **Default**: ``"git"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_replacement:
+.. _RpcCommand_references_replacement:
 
 
 ``replacement``
@@ -82,7 +82,7 @@ ReferencesHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_references_path:
 
 
 ``path``
@@ -92,7 +92,7 @@ ReferencesHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_references_offset:
 
 
 ``offset``
@@ -102,7 +102,7 @@ ReferencesHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_references_source:
 
 
 ``source``
@@ -119,7 +119,7 @@ ClassCopyHandler
 ----------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_dest_path:
+.. _RpcCommand_copy_class_dest_path:
 
 
 ``dest_path``
@@ -129,7 +129,7 @@ ClassCopyHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source_path:
+.. _RpcCommand_copy_class_source_path:
 
 
 ``source_path``
@@ -146,7 +146,7 @@ ClassMoveHandler
 ----------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_dest_path:
+.. _RpcCommand_move_class_dest_path:
 
 
 ``dest_path``
@@ -156,7 +156,7 @@ ClassMoveHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_confirmed:
+.. _RpcCommand_move_class_confirmed:
 
 
 ``confirmed``
@@ -166,7 +166,7 @@ ClassMoveHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_move_related:
+.. _RpcCommand_move_class_move_related:
 
 
 ``move_related``
@@ -176,7 +176,7 @@ ClassMoveHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source_path:
+.. _RpcCommand_move_class_source_path:
 
 
 ``source_path``
@@ -193,7 +193,7 @@ ClassInflectHandler
 -------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_new_path:
+.. _RpcCommand_class_inflect_new_path:
 
 
 ``new_path``
@@ -203,7 +203,7 @@ ClassInflectHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_variant:
+.. _RpcCommand_class_inflect_variant:
 
 
 ``variant``
@@ -213,7 +213,7 @@ ClassInflectHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_overwrite_existing:
+.. _RpcCommand_class_inflect_overwrite_existing:
 
 
 ``overwrite_existing``
@@ -223,7 +223,7 @@ ClassInflectHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_current_path:
+.. _RpcCommand_class_inflect_current_path:
 
 
 ``current_path``
@@ -240,7 +240,7 @@ ClassNewHandler
 ---------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_new_path:
+.. _RpcCommand_class_new_new_path:
 
 
 ``new_path``
@@ -250,7 +250,7 @@ ClassNewHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_variant:
+.. _RpcCommand_class_new_variant:
 
 
 ``variant``
@@ -260,7 +260,7 @@ ClassNewHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_overwrite_existing:
+.. _RpcCommand_class_new_overwrite_existing:
 
 
 ``overwrite_existing``
@@ -270,7 +270,7 @@ ClassNewHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_current_path:
+.. _RpcCommand_class_new_current_path:
 
 
 ``current_path``
@@ -287,7 +287,7 @@ TransformHandler
 ----------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_transform:
+.. _RpcCommand_transform_transform:
 
 
 ``transform``
@@ -297,7 +297,7 @@ TransformHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_transform_path:
 
 
 ``path``
@@ -307,7 +307,7 @@ TransformHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_transform_source:
 
 
 ``source``
@@ -324,7 +324,7 @@ ExtractConstantHandler
 ----------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_constant_name:
+.. _RpcCommand_extract_constant_constant_name:
 
 
 ``constant_name``
@@ -334,7 +334,7 @@ ExtractConstantHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_constant_name_suggestion:
+.. _RpcCommand_extract_constant_constant_name_suggestion:
 
 
 ``constant_name_suggestion``
@@ -344,7 +344,7 @@ ExtractConstantHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_extract_constant_path:
 
 
 ``path``
@@ -354,7 +354,7 @@ ExtractConstantHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_extract_constant_offset:
 
 
 ``offset``
@@ -364,7 +364,7 @@ ExtractConstantHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_extract_constant_source:
 
 
 ``source``
@@ -381,7 +381,7 @@ ExtractMethodHandler
 --------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_method_name:
+.. _RpcCommand_extract_method_method_name:
 
 
 ``method_name``
@@ -391,7 +391,7 @@ ExtractMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset_start:
+.. _RpcCommand_extract_method_offset_start:
 
 
 ``offset_start``
@@ -401,7 +401,7 @@ ExtractMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset_end:
+.. _RpcCommand_extract_method_offset_end:
 
 
 ``offset_end``
@@ -411,7 +411,7 @@ ExtractMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_extract_method_source:
 
 
 ``source``
@@ -421,7 +421,7 @@ ExtractMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_extract_method_path:
 
 
 ``path``
@@ -438,7 +438,7 @@ GenerateAccessorHandler
 -----------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_names:
+.. _RpcCommand_generate_accessor_names:
 
 
 ``names``
@@ -448,7 +448,7 @@ GenerateAccessorHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_generate_accessor_path:
 
 
 ``path``
@@ -458,7 +458,7 @@ GenerateAccessorHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_generate_accessor_source:
 
 
 ``source``
@@ -468,7 +468,7 @@ GenerateAccessorHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_generate_accessor_offset:
 
 
 ``offset``
@@ -485,7 +485,7 @@ GenerateMethodHandler
 ---------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_generate_method_path:
 
 
 ``path``
@@ -495,7 +495,7 @@ GenerateMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_generate_method_source:
 
 
 ``source``
@@ -505,7 +505,7 @@ GenerateMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_generate_method_offset:
 
 
 ``offset``
@@ -522,7 +522,7 @@ ImportClassHandler
 ------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_qualified_name:
+.. _RpcCommand_import_class_qualified_name:
 
 
 ``qualified_name``
@@ -532,7 +532,7 @@ ImportClassHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_alias:
+.. _RpcCommand_import_class_alias:
 
 
 ``alias``
@@ -542,7 +542,7 @@ ImportClassHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_import_class_offset:
 
 
 ``offset``
@@ -552,7 +552,7 @@ ImportClassHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_import_class_source:
 
 
 ``source``
@@ -562,7 +562,7 @@ ImportClassHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_import_class_path:
 
 
 ``path``
@@ -579,7 +579,7 @@ RenameVariableHandler
 ---------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_name:
+.. _RpcCommand_rename_variable_name:
 
 
 ``name``
@@ -589,7 +589,7 @@ RenameVariableHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_name_suggestion:
+.. _RpcCommand_rename_variable_name_suggestion:
 
 
 ``name_suggestion``
@@ -599,7 +599,7 @@ RenameVariableHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_scope:
+.. _RpcCommand_rename_variable_scope:
 
 
 ``scope``
@@ -609,7 +609,7 @@ RenameVariableHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_rename_variable_path:
 
 
 ``path``
@@ -619,7 +619,7 @@ RenameVariableHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_rename_variable_source:
 
 
 ``source``
@@ -629,7 +629,7 @@ RenameVariableHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_rename_variable_offset:
 
 
 ``offset``
@@ -646,7 +646,7 @@ ChangeVisiblityHandler
 ----------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_change_visibility_path:
 
 
 ``path``
@@ -656,7 +656,7 @@ ChangeVisiblityHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_change_visibility_source:
 
 
 ``source``
@@ -666,7 +666,7 @@ ChangeVisiblityHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_change_visibility_offset:
 
 
 ``offset``
@@ -686,7 +686,7 @@ OverrideMethodHandler
 ---------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_method_name:
+.. _RpcCommand_override_method_method_name:
 
 
 ``method_name``
@@ -696,7 +696,7 @@ OverrideMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_class_name:
+.. _RpcCommand_override_method_class_name:
 
 
 ``class_name``
@@ -706,7 +706,7 @@ OverrideMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_override_method_path:
 
 
 ``path``
@@ -716,7 +716,7 @@ OverrideMethodHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_override_method_source:
 
 
 ``source``
@@ -733,7 +733,7 @@ ExtractExpressionHandler
 ------------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_variable_name:
+.. _RpcCommand_extract_expression_variable_name:
 
 
 ``variable_name``
@@ -743,7 +743,7 @@ ExtractExpressionHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset_start:
+.. _RpcCommand_extract_expression_offset_start:
 
 
 ``offset_start``
@@ -753,7 +753,7 @@ ExtractExpressionHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_extract_expression_path:
 
 
 ``path``
@@ -763,7 +763,7 @@ ExtractExpressionHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_extract_expression_source:
 
 
 ``source``
@@ -773,7 +773,7 @@ ExtractExpressionHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset_end:
+.. _RpcCommand_extract_expression_offset_end:
 
 
 ``offset_end``
@@ -790,7 +790,7 @@ ImportMissingClassesHandler
 ---------------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_import_missing_classes_path:
 
 
 ``path``
@@ -800,7 +800,7 @@ ImportMissingClassesHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_import_missing_classes_source:
 
 
 ``source``
@@ -817,7 +817,7 @@ HoverHandler
 ------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_hover_source:
 
 
 ``source``
@@ -827,7 +827,7 @@ HoverHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_hover_offset:
 
 
 ``offset``
@@ -844,7 +844,7 @@ CompleteHandler
 ---------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_type:
+.. _RpcCommand_complete_type:
 
 
 ``type``
@@ -854,7 +854,7 @@ CompleteHandler
 **Default**: ``"php"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_complete_source:
 
 
 ``source``
@@ -864,7 +864,7 @@ CompleteHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_complete_offset:
 
 
 ``offset``
@@ -881,7 +881,7 @@ NavigateHandler
 ---------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source_path:
+.. _RpcCommand_navigate_source_path:
 
 
 ``source_path``
@@ -891,7 +891,7 @@ NavigateHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_destination:
+.. _RpcCommand_navigate_destination:
 
 
 ``destination``
@@ -901,7 +901,7 @@ NavigateHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_confirm_create:
+.. _RpcCommand_navigate_confirm_create:
 
 
 ``confirm_create``
@@ -918,7 +918,7 @@ ContextMenuHandler
 ------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_action:
+.. _RpcCommand_context_menu_action:
 
 
 ``action``
@@ -928,7 +928,7 @@ ContextMenuHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_current_path:
+.. _RpcCommand_context_menu_current_path:
 
 
 ``current_path``
@@ -938,7 +938,7 @@ ContextMenuHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_context_menu_source:
 
 
 ``source``
@@ -948,7 +948,7 @@ ContextMenuHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_context_menu_offset:
 
 
 ``offset``
@@ -965,7 +965,7 @@ EchoHandler
 -----------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_message:
+.. _RpcCommand_echo_message:
 
 
 ``message``
@@ -982,7 +982,7 @@ ClassSearchHandler
 ------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_short_name:
+.. _RpcCommand_class_search_short_name:
 
 
 ``short_name``
@@ -999,7 +999,7 @@ OffsetInfoHandler
 -----------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_offset_info_offset:
 
 
 ``offset``
@@ -1009,7 +1009,7 @@ OffsetInfoHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_offset_info_source:
 
 
 ``source``
@@ -1026,7 +1026,7 @@ GotoDefinitionHandler
 ---------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_language:
+.. _RpcCommand_goto_definition_language:
 
 
 ``language``
@@ -1039,7 +1039,7 @@ Type: string
 **Default**: ``"php"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_target:
+.. _RpcCommand_goto_definition_target:
 
 
 ``target``
@@ -1052,7 +1052,7 @@ Type: string
 **Default**: ``"focused_window"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_goto_definition_offset:
 
 
 ``offset``
@@ -1062,7 +1062,7 @@ Type: string
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_goto_definition_source:
 
 
 ``source``
@@ -1072,7 +1072,7 @@ Type: string
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_goto_definition_path:
 
 
 ``path``
@@ -1089,7 +1089,7 @@ GotoTypeHandler
 ---------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_language:
+.. _RpcCommand_goto_type_language:
 
 
 ``language``
@@ -1099,7 +1099,7 @@ GotoTypeHandler
 **Default**: ``"php"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_target:
+.. _RpcCommand_goto_type_target:
 
 
 ``target``
@@ -1109,7 +1109,7 @@ GotoTypeHandler
 **Default**: ``"focused_window"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_goto_type_offset:
 
 
 ``offset``
@@ -1119,7 +1119,7 @@ GotoTypeHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_goto_type_source:
 
 
 ``source``
@@ -1129,7 +1129,7 @@ GotoTypeHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_goto_type_path:
 
 
 ``path``
@@ -1146,7 +1146,7 @@ GotoImplementationHandler
 -------------------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_language:
+.. _RpcCommand_goto_implementation_language:
 
 
 ``language``
@@ -1156,7 +1156,7 @@ GotoImplementationHandler
 **Default**: ``"php"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_target:
+.. _RpcCommand_goto_implementation_target:
 
 
 ``target``
@@ -1166,7 +1166,7 @@ GotoImplementationHandler
 **Default**: ``"focused_window"``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_offset:
+.. _RpcCommand_goto_implementation_offset:
 
 
 ``offset``
@@ -1176,7 +1176,7 @@ GotoImplementationHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_source:
+.. _RpcCommand_goto_implementation_source:
 
 
 ``source``
@@ -1186,7 +1186,7 @@ GotoImplementationHandler
 **Default**: ``null``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_path:
+.. _RpcCommand_goto_implementation_path:
 
 
 ``path``
@@ -1203,7 +1203,7 @@ IndexHandler
 ------------
 
 
-.. _RpcCommand_GlobalDefinitionHandler_watch:
+.. _RpcCommand_index_watch:
 
 
 ``watch``
@@ -1213,7 +1213,7 @@ IndexHandler
 **Default**: ``false``
 
 
-.. _RpcCommand_GlobalDefinitionHandler_interval:
+.. _RpcCommand_index_interval:
 
 
 ``interval``
