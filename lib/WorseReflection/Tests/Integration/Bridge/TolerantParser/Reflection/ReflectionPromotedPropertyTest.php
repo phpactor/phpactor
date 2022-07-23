@@ -85,7 +85,7 @@ class ReflectionPromotedPropertyTest extends IntegrationTestCase
 
         yield 'With docblock' => [
             <<<'EOT'
-                <?php class Barfoo { 
+                <?php class Barfoo {
                     public function __construct(
                         /** @var Foobar */
                         private $foobar

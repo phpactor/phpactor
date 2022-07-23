@@ -24,7 +24,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
     {
         yield 'no parameters' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function barbar() {} }
 
                 $foobar = new Foobar();
@@ -36,7 +36,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'parameter' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function barbar(string $foo) {} }
 
                 $param = 'string';
@@ -54,7 +54,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'parameter, 2nd pos' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function barbar(string $foo, Foobar $bar) {} }
 
                 $param = 'string';
@@ -72,7 +72,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'parameter, 3rd pos' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function barbar(string $foo, Foobar $bar, $mixed) {} }
 
                 $param = 'string';
@@ -95,7 +95,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'no suggestions when exceeding parameter arity' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function barbar(string $foo) {} }
 
                 $param = 'string';
@@ -107,7 +107,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'function parameter completion' => [
             <<<'EOT'
-                <?php 
+                <?php
                 function foobar($bar, string $barbar) {}
 
                 $hello = 'string';
@@ -124,7 +124,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'function parameter completion, single parameters' => [
             <<<'EOT'
-                <?php 
+                <?php
                 function foobar($bar, string $barbar) {}
 
                 $hello = 'string';
@@ -142,7 +142,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'does not use variables declared after offset a' => [
             <<<'EOT'
-                <?php 
+                <?php
                 function foobar($bar, string $barbar) {}
 
                 class Hello
@@ -166,7 +166,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'does not use variables declared after offset with bracket' => [
             <<<'EOT'
-                <?php 
+                <?php
                 function foobar($bar, string $barbar) {}
 
                 class Hello
@@ -195,7 +195,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'can complete methods declared after the offset' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Hello
                 {
                     public function goodbye()
@@ -219,7 +219,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'complete on open braclet' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Hello
                 {
                     public function goodbye()
@@ -254,7 +254,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
     {
         yield 'complete after comma' => [
             <<<'EOT'
-                <?php 
+                <?php
                 function foobar($bar, string $barbar) {}
 
                 $hello = 'string';
@@ -271,7 +271,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
         yield 'complete on open braclet' => [
             <<<'EOT'
-                <?php 
+                <?php
                 function foobar($bar, string $barbar) {}
 
                 $hello = 'string';
@@ -299,7 +299,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
     {
         yield 'complete static method parameter' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public static function barbar(string $foo, Foobar $bar, $mixed) {} }
 
                 $param = 'string';

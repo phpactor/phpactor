@@ -104,9 +104,9 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->expectExceptionMessage('No definition(s) found');
         $location = $this->locate(<<<'EOT'
             // File: Foobar.php
-            <?php 
+            <?php
 
-            class Foobar 
+            class Foobar
             {
             }
             EOT

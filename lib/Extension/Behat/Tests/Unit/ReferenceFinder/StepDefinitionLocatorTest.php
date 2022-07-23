@@ -54,7 +54,7 @@ class StepDefinitionLocatorTest extends TestCase
 
         $text = <<<'EOT'
             Feature: Hello
-                
+
                 Scenario: Something
                     Given I have a scenario step
                     And my <>name is "Daniel"

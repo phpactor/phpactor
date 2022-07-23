@@ -54,7 +54,7 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
         yield 'list' => [ '/** @return <>Foobar[]', 'Foobar.php' ];
         yield 'solid block of text' => [ 'Foob<>ar', 'Foobar.php' ];
         yield 'imported class 1' => [ <<<'EOT'
-            <?php 
+            <?php
             namespace Bar {
 
             use Barfoo\Barfoo;
@@ -67,7 +67,7 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , 'Barfoo.php' ];
         yield 'imported class 2' => [ <<<'EOT'
-            <?php 
+            <?php
 
             use Barfoo\Barfoo;
 
@@ -75,7 +75,7 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , 'Barfoo.php' ];
         yield 'relative class' => [ <<<'EOT'
-            <?php 
+            <?php
 
             namespace Barfoo;
 
@@ -83,7 +83,7 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
         , 'Barfoo.php' ];
         yield 'imported class' => [ <<<'EOT'
-            <?php 
+            <?php
 
             namespace Barfoo;
 

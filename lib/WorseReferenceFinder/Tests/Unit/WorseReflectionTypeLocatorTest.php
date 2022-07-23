@@ -26,7 +26,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
 
                 class Foo
                 {
-                    /** 
+                    /**
                      * @var One
                      */
                     private $one;
@@ -58,7 +58,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
 
                 class Foo
                 {
-                    /** 
+                    /**
                      * @var One[]
                      */
                     private $one;
@@ -111,7 +111,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
 
                 class Foo
                 {
-                    /** 
+                    /**
                      * @var One
                      */
                     private $one;
@@ -142,7 +142,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
 
                 class Foo
                 {
-                    /** 
+                    /**
                      * @var Two|One
                      */
                     private $one;
@@ -173,7 +173,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
 
                 class Foo
                 {
-                    /** 
+                    /**
                      * @var string|null|Two|One
                      */
                     private $one;

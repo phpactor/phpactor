@@ -137,7 +137,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         yield 'multiple unresolvable classes' => [
             <<<'EOT'
                 // File: test.php
-                <?php 
+                <?php
 
                 new Bar\NotFound();
 
@@ -153,7 +153,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         yield 'interface not found' => [
             <<<'EOT'
                 // File: test.php
-                <?php 
+                <?php
 
                 class Bar implements Sugar {}
                 EOT
@@ -170,7 +170,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 interface Sugar {}
                 // File: test.php
-                <?php 
+                <?php
 
                 class Bar implements Sugar {}
                 EOT
@@ -184,7 +184,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 Sugar::class;
                 // File: test.php
-                <?php 
+                <?php
 
                 class Bar implements Sugar {}
                 EOT
@@ -197,7 +197,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         yield 'parent' => [
             <<<'EOT'
                 // File: test.php
-                <?php 
+                <?php
 
                 class Bar extends Sugar {}
                 EOT
@@ -209,7 +209,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         yield 'unresolvable trait' => [
             <<<'EOT'
                 // File: test.php
-                <?php 
+                <?php
 
                 class Bar {
                     use Sugar;
@@ -227,7 +227,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 trait Sugar {}
                 // File: test.php
-                <?php 
+                <?php
 
                 class Bar {
                     use Sugar;
@@ -243,7 +243,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 namespace Foobar;
 
-                class Barfoo { 
+                class Barfoo {
                     public function foo(): Baz {}
                 }
                 EOT
@@ -256,7 +256,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         yield 'resolvable fully qualified trait' => [
             <<<'EOT'
                 // File: test.php
-                <?php 
+                <?php
 
                 namespace Test;
 
@@ -264,7 +264,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     use \App\Sugar;
                 }
                 // File: Sugar.php
-                <?php 
+                <?php
 
                 namespace App;
 
@@ -277,7 +277,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         yield 'resolvable partially qualified trait' => [
             <<<'EOT'
                 // File: test.php
-                <?php 
+                <?php
 
                 namespace Test;
 
@@ -287,7 +287,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     use App\Sugar;
                 }
                 // File: Sugar.php
-                <?php 
+                <?php
 
                 namespace App;
 
@@ -300,7 +300,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         yield 'resolvable unqualified trait' => [
             <<<'EOT'
                 // File: test.php
-                <?php 
+                <?php
 
                 namespace Test;
 
@@ -310,7 +310,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     use Sugar;
                 }
                 // File: Sugar.php
-                <?php 
+                <?php
 
                 namespace App;
 
@@ -323,7 +323,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         yield 'resolvable alias trait' => [
             <<<'EOT'
                 // File: test.php
-                <?php 
+                <?php
 
                 namespace Test;
 
@@ -333,7 +333,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     use SweetSugar;
                 }
                 // File: Sugar.php
-                <?php 
+                <?php
 
                 namespace App;
 
@@ -352,7 +352,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 class Barfoo {}
                 // File: test.php
-                <?php 
+                <?php
 
                 use Foobar\Barfoo;
 
@@ -368,7 +368,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
 
                 namespace Foobar;
 
-                class Barfoo { 
+                class Barfoo {
                     public function foo(): self {}
                     public function bar(): {
                         static::foo();
@@ -388,7 +388,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                     namespace Foobar;
 
                     #[NotResolvable()]
-                    class Barfoo { 
+                    class Barfoo {
                     }
                     EOT
                     ,  function (Diagnostics $diagnostics): void {

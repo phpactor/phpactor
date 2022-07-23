@@ -177,11 +177,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
 
         yield 'multiline array shape' => [
             <<<'EOT'
-                /** 
+                /**
                  * @return array{
                  *   foo:int,
                  *   bar:string
-                 * } 
+                 * }
                  */
                 EOT
                 ,
@@ -238,10 +238,10 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     public function testClassConstant(): void
     {
         $source = <<<'EOT'
-                        <?php 
+                        <?php
                         namespace Bar;
 
-                        class Foo { 
+                        class Foo {
                             const BAR = "baz";
                         }
             EOT;
@@ -256,8 +256,8 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     public function testClassConstantGlob(): void
     {
         $source = <<<'EOT'
-                        <?php 
-                        class Foo { 
+                        <?php
+                        class Foo {
                             const BAZ = "baz";
                             const BAR = "bar";
                             const ZED = "zed";
@@ -273,8 +273,8 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     public function testClassConstantGlobInArrayShape(): void
     {
         $source = <<<'EOT'
-                        <?php 
-                        class Foo { 
+                        <?php
+                        class Foo {
                             const BAZ = "baz";
                             const BAR = "bar";
                             const ZED = "zed";

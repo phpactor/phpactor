@@ -96,7 +96,7 @@ class ImportedNameCompletorTest extends TolerantCompletorTestCase
 
         yield 'import multi-part non-aliased class' => [
             <<<'EOT'
-                <?php 
+                <?php
 
                     use Foo\Bar\Barfoo;
                     use Foo\Bar\Barbar;

@@ -77,7 +77,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
         yield 'interface referenced by alias from another namespace' => [
             <<<'EOT'
                 // File: project/test.php
-                <?php namespace Foobar; interface Barfoo {} 
+                <?php namespace Foobar; interface Barfoo {}
                 // File: project/test2.php
                 <?php namespace Barfoo;
                 use Foobar\Barfoo as BarBar;
@@ -381,7 +381,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
         yield 'namespaced function' => [
             <<<'EOT'
                 // File: project/test1.php
-                <?php 
+                <?php
                 namespace Barfoos;
                 foobar();
 
@@ -400,7 +400,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
         yield 'declaration is indexed' => [
             <<<'EOT'
                 // File: project/test1.php
-                <?php 
+                <?php
                 namespace Barfoos;
 
                 function foobar() {};

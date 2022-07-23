@@ -88,7 +88,7 @@ class WorseGenerateMethodTest extends WorseTestCase
         $this->expectException(TransformException::class);
         $this->expectExceptionMessage('Can only generate methods on classes');
         $source = <<<'EOT'
-            <?php 
+            <?php
             trait Hello
             {
             }
