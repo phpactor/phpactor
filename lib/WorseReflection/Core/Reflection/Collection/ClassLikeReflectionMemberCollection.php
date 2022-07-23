@@ -218,7 +218,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
 
     public function methods(): ReflectionMethodCollection
     {
-        return new ReflectionMethodCollection();
+        return new ReflectionMethodCollection($this->methods);
     }
 
     public function properties(): ReflectionPropertyCollection
