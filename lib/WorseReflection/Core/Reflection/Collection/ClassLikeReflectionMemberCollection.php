@@ -6,17 +6,20 @@ use Closure;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as PhpactorReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as PhpactorReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as PhpactorReflectionProperty;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Traversable;
@@ -36,6 +39,11 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
      * @var PhpactorReflectionProperty[]
      */
     private array $properties = [];
+
+    /**
+     * @var PhpactorReflectionMethod[]
+     */
+    private array $methods = [];
 
     public static function fromClassMemberDeclarations(
         ServiceLocator $serviceLocator,
@@ -82,7 +90,12 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                     }
                 }
             }
+            if ($member instanceof MethodDeclaration) {
+                $new->items[$member->getName()] = new ReflectionMethod($serviceLocator, $classLike, $member);
+                $new->methods[$member->getName()] = $new->items[$member->getName()];
+            }
         }
+
 
         return $new;
     }
@@ -102,6 +115,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         foreach ([
             $this->constants,
             $this->properties,
+            $this->methods,
         ] as $collection) {
             yield from $collection;
         }
@@ -114,9 +128,15 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             $new->items[$member->name()] = $member;
             if ($member instanceof ReflectionConstant) {
                 $new->constants[$member->name()] = $member;
+                continue;
             }
-            if ($member instanceof ReflectionProperty) {
+            if ($member instanceof PhpactorReflectionProperty) {
                 $new->properties[$member->name()] = $member;
+                continue;
+            }
+            if ($member instanceof PhpactorReflectionMethod) {
+                $new->methods[$member->name()] = $member;
+                continue;
             }
         }
 
@@ -206,8 +226,9 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         foreach ([
             'constants',
             'properties',
+            'methods',
         ] as $collection) {
-        $new->$collection = array_map($closure, $this->$collection);
+            $new->$collection = array_map($closure, $this->$collection);
         }
 
         return $new;

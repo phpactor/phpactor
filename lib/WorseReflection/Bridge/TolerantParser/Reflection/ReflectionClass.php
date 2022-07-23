@@ -165,6 +165,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         }
     }
 
+    // todo: switch to use members()
     public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
     {
         $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
@@ -197,6 +198,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $properties;
     }
 
+    // todo: switch to use members()
     public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection
     {
         $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
