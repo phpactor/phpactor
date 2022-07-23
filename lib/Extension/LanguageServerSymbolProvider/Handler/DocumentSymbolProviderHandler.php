@@ -24,7 +24,7 @@ class DocumentSymbolProviderHandler implements Handler, CanRegisterCapabilities
         $this->provider = $provider;
     }
 
-    
+
     public function methods(): array
     {
         return [

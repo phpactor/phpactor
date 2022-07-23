@@ -59,7 +59,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
     {
         $memberStartOffset = $offset;
         $isInstance = true;
-        
+
         if ($node instanceof MemberAccessExpression) {
             $memberStartOffset = $node->arrowToken->getFullStartPosition();
         }
@@ -80,9 +80,9 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         if (!$memberName instanceof Token) {
             return true;
         }
-        
+
         $shouldCompleteOnlyName = strlen($source) > $offset->toInt() && substr($source, $offset->toInt(), 1) == '(';
-        
+
         $partialMatch = (string) $memberName->getText($node->getFileContents());
 
         $reflectionOffset = $this->reflector->reflectOffset($source, $memberStartOffset);

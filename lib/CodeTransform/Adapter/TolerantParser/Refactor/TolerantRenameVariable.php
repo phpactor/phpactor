@@ -107,7 +107,7 @@ class TolerantRenameVariable implements RenameVariable
             $name = $variable->variableName->getText($variable->getFileContents());
             return (string)$name;
         }
-            
+
         return $variable->getText();
     }
 

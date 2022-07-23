@@ -62,11 +62,11 @@ class ExtractExpressionCommandTest extends TestCase
         $extractExpression->extractExpression(Argument::type(SourceCode::class), 0, self::EXAMPLE_OFFSET, ExtractExpressionCommand::DEFAULT_VARIABLE_NAME)
              ->shouldBeCalled()
              ->willThrow($exception);
- 
+
         [$tester, $builder] = $this->createTester($extractExpression);
         $tester->workspace()->executeCommand('extract_expression', [self::EXAMPLE_URI, 0, self::EXAMPLE_OFFSET]);
         $showMessage = $builder->transmitter()->filterByMethod('window/showMessage')->shiftNotification();
- 
+
         self::assertNotNull($showMessage);
         self::assertEquals([
              'type' => MessageType::WARNING,
@@ -94,10 +94,10 @@ class ExtractExpressionCommandTest extends TestCase
             $builder->workspace(),
             $extractExpression->reveal()
         ));
-         
+
         $tester = $builder->build();
         $tester->textDocument()->open(self::EXAMPLE_URI, self::EXAMPLE_SOURCE);
- 
+
         return [$tester, $builder];
     }
 }

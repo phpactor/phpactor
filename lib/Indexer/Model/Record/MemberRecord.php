@@ -49,7 +49,7 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
     {
         return new self($memberReference->type(), $memberReference->memberName(), $memberReference->containerType());
     }
-    
+
     public function recordType(): string
     {
         return self::RECORD_TYPE;

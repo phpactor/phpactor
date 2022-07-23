@@ -33,7 +33,7 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
      * @var ScopedPropertyAccessExpression|MemberAccessExpression
      */
     private $node;
-    
+
     private ServiceLocator $services;
 
     /**

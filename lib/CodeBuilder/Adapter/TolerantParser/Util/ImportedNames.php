@@ -16,7 +16,7 @@ class ImportedNames implements IteratorAggregate
         $this->buildTable($node);
     }
 
-    
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->classNamesFromNode());

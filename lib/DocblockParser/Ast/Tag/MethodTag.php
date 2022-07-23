@@ -20,21 +20,21 @@ class MethodTag extends TagNode
         'parenClose',
         'text'
     ];
-    
+
     public ?TypeNode $type;
-    
+
     public ?Token $name;
-    
+
     public ?Token $static;
-    
+
     public ?ParameterList $parameters;
-    
+
     public ?TextNode $text;
-    
+
     public ?Token $parenOpen;
-    
+
     public ?Token $parenClose;
-    
+
     public ?Token $tag;
 
     public function __construct(

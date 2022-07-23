@@ -20,7 +20,7 @@ use Webmozart\PathUtil\Path;
 class IncludeWalker implements Walker
 {
     private Parser $parser;
-    
+
     private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger, Parser $parser = null)
@@ -29,7 +29,7 @@ class IncludeWalker implements Walker
         $this->logger = $logger;
     }
 
-    
+
     public function nodeFqns(): array
     {
         return [ScriptInclusionExpression::class];
@@ -91,19 +91,19 @@ class IncludeWalker implements Walker
         $return = $sourceNode->getFirstDescendantNode(ReturnStatement::class);
         assert($return instanceof ReturnStatement);
         $returnValueContext = $resolver->resolveNode($frame->new('required'), $return->expression);
-        
+
         if (!$parentNode->leftOperand instanceof Variable) {
             return $frame;
         }
-        
+
         $name = $parentNode->leftOperand->name;
-        
+
         if (!$name instanceof Token) {
             return $frame;
         }
-        
+
         $name = $name->getText($node->getFileContents());
-        
+
         foreach ($frame->locals()->byName((string)$name) as $variable) {
             $frame->locals()->replace(
                 $variable,

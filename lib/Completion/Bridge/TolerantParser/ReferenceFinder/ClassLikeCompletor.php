@@ -31,7 +31,7 @@ class ClassLikeCompletor implements TolerantCompletor
         $this->prioritizer = $prioritizer;
     }
 
-    
+
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         if (!CompletionContext::classLike($node)) {

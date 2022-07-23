@@ -78,7 +78,7 @@ class TestGenerator implements GenerateNew
     public const EXAMPLE_TEXT = 'hello';
     public const EXAMPLE_PATH = '/path';
 
-    
+
     public function generateNew(ClassName $targetName): SourceCode
     {
         return SourceCode::fromStringAndPath(self::EXAMPLE_TEXT, self::EXAMPLE_PATH);

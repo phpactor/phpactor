@@ -41,7 +41,7 @@ final class TraitImports implements Countable, IteratorAggregate
             if ($memberDeclaration->traitNameList == null) {
                 continue;
             }
-                
+
             $traitNames = array_filter(array_map(function ($name) {
                 if (!$name instanceof QualifiedName) {
                     return null;
@@ -129,12 +129,12 @@ final class TraitImports implements Countable, IteratorAggregate
 
         return $this->imports[$name];
     }
-    
+
     public function count(): int
     {
         return count($this->imports);
     }
-    
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->imports);

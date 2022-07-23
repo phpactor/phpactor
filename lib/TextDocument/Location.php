@@ -5,7 +5,7 @@ namespace Phpactor\TextDocument;
 class Location
 {
     private TextDocumentUri $uri;
-    
+
     private ByteOffset $offset;
 
     public function __construct(TextDocumentUri $uri, ByteOffset $offset)

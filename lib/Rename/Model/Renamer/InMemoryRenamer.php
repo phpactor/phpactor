@@ -31,7 +31,7 @@ class InMemoryRenamer implements Renamer
     {
         return $this->range;
     }
-    
+
     public function rename(TextDocument $textDocument, ByteOffset $offset, string $newName): Generator
     {
         yield from $this->results;

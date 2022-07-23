@@ -17,7 +17,7 @@ class ObjectRendererExtension implements Extension
 {
     public const PARAM_TEMPLATE_PATHS = 'object_renderer.template_paths.markdown';
     public const SERVICE_MARKDOWN_RENDERER = 'object_renderer.renderer.markdown';
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

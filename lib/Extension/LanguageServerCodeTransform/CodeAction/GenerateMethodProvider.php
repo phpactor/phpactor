@@ -31,7 +31,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
         $this->missingMethodFinder = $missingMethodFinder;
     }
 
-    
+
     public function kinds(): array
     {
         return [
@@ -39,13 +39,13 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
          ];
     }
 
-    
+
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return new Success($this->getDiagnostics($textDocument, $cancel));
     }
 
-    
+
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
@@ -102,11 +102,11 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
             if ($a->range->start->line > $b->range->start->line) {
                 return 1;
             }
-            
+
             if ($a->range->start->line < $b->range->start->line) {
                 return -1;
             }
-            
+
             if ($a->range->start->character > $b->range->start->character) {
                 return 1;
             }
@@ -114,7 +114,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
             if ($a->range->start->character < $b->range->start->character) {
                 return -1;
             }
-            
+
             return 0;
         });
 

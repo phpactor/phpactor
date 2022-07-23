@@ -72,17 +72,17 @@ class CandidateFinder
             return;
         }
         assert($unresolvedName instanceof NameWithByteOffset);
-        
+
         $candidates = $this->findCandidates($unresolvedName);
-        
+
         foreach ($candidates as $candidate) {
             assert($candidate instanceof HasFullyQualifiedName);
-        
+
             // skip constants for now
             if ($candidate instanceof ConstantRecord) {
                 continue;
             }
-        
+
             $fqn = $candidate->fqn()->__toString();
             yield new NameCandidate($unresolvedName, $candidate->fqn());
         }

@@ -67,11 +67,11 @@ class ExtractMethodCommandTest extends TestCase
         $extractMethod->extractMethod(Argument::type(SourceCode::class), 0, self::EXAMPLE_OFFSET, ExtractMethodCommand::DEFAULT_METHOD_NAME)
              ->shouldBeCalled()
              ->willThrow($exception);
- 
+
         [$tester, $builder] = $this->createTester($extractMethod);
         $tester->workspace()->executeCommand('extract_method', [self::EXAMPLE_URI, 0, self::EXAMPLE_OFFSET]);
         $showMessage = $builder->transmitter()->filterByMethod('window/showMessage')->shiftNotification();
- 
+
         self::assertNotNull($showMessage);
         self::assertEquals([
              'type' => MessageType::WARNING,
@@ -86,7 +86,7 @@ class ExtractMethodCommandTest extends TestCase
         ];
     }
 
-    
+
     private function createTester(ObjectProphecy $extractMethod): array
     {
         $builder = LanguageServerTesterBuilder::createBare()
@@ -97,10 +97,10 @@ class ExtractMethodCommandTest extends TestCase
             $builder->workspace(),
             $extractMethod->reveal()
         ));
-         
+
         $tester = $builder->build();
         $tester->textDocument()->open(self::EXAMPLE_URI, self::EXAMPLE_SOURCE);
- 
+
         return [$tester, $builder];
     }
 }

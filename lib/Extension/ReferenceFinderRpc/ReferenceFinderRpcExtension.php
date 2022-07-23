@@ -29,7 +29,7 @@ class ReferenceFinderRpcExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => [ 'name' => 'goto_implementation' ]]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

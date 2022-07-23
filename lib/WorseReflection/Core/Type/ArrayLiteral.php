@@ -67,7 +67,7 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable, ArrayAcc
         return range(0, count($this->typeMap) - 1) === array_keys($this->typeMap);
     }
 
-    
+
     public function value()
     {
         return array_map(

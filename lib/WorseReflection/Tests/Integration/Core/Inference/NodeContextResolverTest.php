@@ -696,7 +696,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                         'container_type' => 'Foobar',
                     ],
                 ];
-        
+
         yield 'Static property access 2' => [
                     <<<'EOT'
                         <?php

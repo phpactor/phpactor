@@ -18,7 +18,7 @@ class NullValue extends ValueNode
     {
         return $this->null;
     }
-    
+
     public function value()
     {
         return null;

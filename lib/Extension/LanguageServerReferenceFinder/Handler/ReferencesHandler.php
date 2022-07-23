@@ -53,7 +53,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
         $this->clientApi = $clientApi;
     }
 
-    
+
     public function methods(): array
     {
         return [

@@ -20,7 +20,7 @@ class LanguageServerRenameExtension implements Extension
 {
     public const TAG_RENAMER = 'language_server_rename.renamer';
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register(Renamer::class, function (Container $container) {
@@ -57,7 +57,7 @@ class LanguageServerRenameExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

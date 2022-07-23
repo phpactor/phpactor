@@ -36,7 +36,7 @@ class DocBlockVars implements IteratorAggregate
 
         return TypeFactory::undefined();
     }
-    
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->vars);

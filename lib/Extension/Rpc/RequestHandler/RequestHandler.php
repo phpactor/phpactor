@@ -16,7 +16,7 @@ class RequestHandler implements CoreRequestHandler
     {
         $this->registry = $registry;
     }
-    
+
     public function handle(Request $request): Response
     {
         $counterActions = [];

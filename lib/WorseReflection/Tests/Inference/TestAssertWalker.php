@@ -169,7 +169,7 @@ class TestAssertWalker implements Walker
             if (!$expression instanceof ArgumentExpression) {
                 continue;
             }
-        
+
             $args[] = $resolver->resolveNode($frame, $expression);
         }
         return $args;

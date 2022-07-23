@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 class MethodTypeResolver
 {
     private ReflectionMethod $method;
-    
+
     public function __construct(ReflectionMethod $method)
     {
         $this->method = $method;

@@ -19,14 +19,14 @@ final class Symbol
     public const BOOLEAN = 'boolean';
     public const ARRAY = 'array';
     public const UNKNOWN = '<unknown>';
-    
+
     /**
      * @var Symbol::*
      */
     private string $symbolType;
-    
+
     private string $name;
-    
+
     private Position $position;
 
     /**

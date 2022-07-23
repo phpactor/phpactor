@@ -55,7 +55,7 @@ class ClassInflectHandlerTest extends AbstractClassGenerateHandlerTest
             ClassName::fromString(self::EXAMPLE_CLASS_1),
             ClassName::fromString(self::EXAMPLE_CLASS_2)
         )->willReturn(SourceCode::fromStringAndPath('<?php', $this->exampleNewPath()));
-            
+
         $response = $this->createTester()->handle(ClassInflectHandler::NAME, [
             ClassInflectHandler::PARAM_CURRENT_PATH => self::EXAMPLE_PATH,
             ClassInflectHandler::PARAM_NEW_PATH => $this->exampleNewPath(),

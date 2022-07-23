@@ -30,9 +30,9 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollecti
 class ReflectionInterface extends AbstractReflectionClass implements CoreReflectionInterface
 {
     private ServiceLocator $serviceLocator;
-    
+
     private InterfaceDeclaration $node;
-    
+
     private SourceCode $sourceCode;
 
     private ?ReflectionInterfaceCollection $parents = null;

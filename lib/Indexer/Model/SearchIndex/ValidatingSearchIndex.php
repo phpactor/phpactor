@@ -25,7 +25,7 @@ class ValidatingSearchIndex implements SearchIndex
         $this->logger = $logger;
     }
 
-    
+
     public function search(Criteria $criteria): Generator
     {
         foreach ($this->innerIndex->search($criteria) as $result) {

@@ -11,7 +11,7 @@ class ComposerPhpVersionResolver implements PhpVersionResolver
         $this->composerJsonPath = $composerJsonPath;
     }
 
-    
+
     public function resolve(): ?string
     {
         if (!file_exists($this->composerJsonPath)) {

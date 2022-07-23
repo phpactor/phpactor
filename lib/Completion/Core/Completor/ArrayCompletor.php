@@ -20,7 +20,7 @@ class ArrayCompletor implements Completor
         $this->suggestions = $suggestions;
     }
 
-    
+
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         yield from $this->suggestions;

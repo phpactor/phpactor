@@ -42,7 +42,7 @@ final class MemberReferences implements IteratorAggregate, Countable
         }));
     }
 
-    
+
     public function count(): int
     {
         return count($this->methodReferences);

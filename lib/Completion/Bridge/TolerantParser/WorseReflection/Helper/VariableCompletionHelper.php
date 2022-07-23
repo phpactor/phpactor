@@ -85,7 +85,7 @@ class VariableCompletionHelper
     private function offsetToReflect(Node $node, int $offset): int
     {
         $parentNode = $node->parent;
-        
+
         // If the parent is an assignment expression, then only parse
         // until the start of the expression, not the start of the variable
         // under completion:

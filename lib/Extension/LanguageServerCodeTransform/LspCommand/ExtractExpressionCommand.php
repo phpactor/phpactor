@@ -41,7 +41,7 @@ class ExtractExpressionCommand implements Command
     public function __invoke(string $uri, int $startOffset, int $endOffset): Promise
     {
         $textDocument = $this->workspace->get($uri);
-        
+
         try {
             $textEdits = $this->extractExpression->extractExpression(
                 SourceCode::fromStringAndPath($textDocument->text, $textDocument->uri),
@@ -53,7 +53,7 @@ class ExtractExpressionCommand implements Command
             $this->clientApi->window()->showMessage()->warning($error->getMessage());
             return new Success(null);
         }
- 
+
         return $this->clientApi->workspace()->applyEdit(new WorkspaceEdit([
             $uri => TextEditConverter::toLspTextEdits($textEdits, $textDocument->text)
         ]), 'Extract expression');

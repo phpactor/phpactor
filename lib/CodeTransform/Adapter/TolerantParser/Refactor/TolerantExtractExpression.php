@@ -63,7 +63,7 @@ class TolerantExtractExpression implements ExtractExpression
         if ($offsetEnd) {
             $endNode = $rootNode->getDescendantNodeAtPosition($offsetEnd);
             $expression = $this->getCommonExpression($startNode, $endNode);
-            
+
             if ($expression === null && $endNode instanceof ExpressionStatement) {
                 // <expression-statement> := <expression>;
                 // check if $endNode does not contain the semi-colon
@@ -77,11 +77,11 @@ class TolerantExtractExpression implements ExtractExpression
                             $item->getEndPosition() == $endNode->expression->getEndPosition();
                     }
                 );
-                
+
                 if (empty($expressions)) {
                     return null;
                 }
-                
+
                 $expression = $this->getCommonExpression($startNode, end($expressions));
             }
         } else {
@@ -94,7 +94,7 @@ class TolerantExtractExpression implements ExtractExpression
 
         return $expression;
     }
-    
+
     private function getCommonExpression(Node $node1, Node $node2): ?Expression
     {
         if ($node1 === $node2 && $node1 instanceof Expression) {
@@ -154,7 +154,7 @@ class TolerantExtractExpression implements ExtractExpression
         if (preg_match('/(\t| )*$/', $statement->getLeadingCommentAndWhitespaceText(), $matches) > 0) {
             $indentation = $matches[0];
         }
-        
+
         return [
             TextEdit::create($statement->getStartPosition(), 0, $assignment . $indentation),
             TextEdit::create($expression->getStartPosition(), strlen($extractedString), '$' . $variableName),

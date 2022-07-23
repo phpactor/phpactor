@@ -41,7 +41,7 @@ class ExtractConstantCommand implements Command
     public function __invoke(string $uri, int $offset): Promise
     {
         $textDocument = $this->workspace->get($uri);
-        
+
         try {
             $textEdits = $this->extractConstant->extractConstant(
                 SourceCode::fromStringAndPath($textDocument->text, $textDocument->uri),
@@ -52,7 +52,7 @@ class ExtractConstantCommand implements Command
             $this->clientApi->window()->showMessage()->warning($error->getMessage());
             return new Success(null);
         }
- 
+
         return $this->clientApi->workspace()->applyEdit(new WorkspaceEdit([
             $uri => TextEditConverter::toLspTextEdits($textEdits->textEdits(), $textDocument->text)
         ]), 'Extract constant');

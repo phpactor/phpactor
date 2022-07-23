@@ -101,7 +101,7 @@ class TestExtension implements Extension
                     ]);
                 }
 
-                
+
                 public function kinds(): array
                 {
                     return ['example'];
@@ -110,7 +110,7 @@ class TestExtension implements Extension
         }, [ LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

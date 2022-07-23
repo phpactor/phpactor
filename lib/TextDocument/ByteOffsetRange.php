@@ -5,7 +5,7 @@ namespace Phpactor\TextDocument;
 class ByteOffsetRange
 {
     private ByteOffset $start;
-    
+
     private ByteOffset $end;
 
     public function __construct(ByteOffset $start, ByteOffset $end)

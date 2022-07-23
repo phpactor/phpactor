@@ -16,7 +16,7 @@ class ComposerSourceLocator implements SourceCodeLocator
     {
         $this->classLoader = $classLoader;
     }
-    
+
     public function locate(Name $className): SourceCode
     {
         $path = $this->classLoader->findFile((string) $className);

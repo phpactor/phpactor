@@ -26,7 +26,7 @@ class ExtractMethodProvider implements CodeActionProvider
         $this->extractMethod = $extractMethod;
     }
 
-    
+
     public function kinds(): array
     {
         return [

@@ -73,11 +73,11 @@ class ExtractConstantCommandTest extends TestCase
         )
              ->shouldBeCalled()
              ->willThrow($exception);
- 
+
         [$tester, $builder] = $this->createTester($extractConstant);
         $tester->workspace()->executeCommand('extract_constant', [self::EXAMPLE_URI, self::EXAMPLE_OFFSET]);
         $showMessage = $builder->transmitter()->filterByMethod('window/showMessage')->shiftNotification();
- 
+
         self::assertNotNull($showMessage);
         self::assertEquals([
              'type' => MessageType::WARNING,
@@ -105,10 +105,10 @@ class ExtractConstantCommandTest extends TestCase
             $builder->workspace(),
             $extractConstant->reveal()
         ));
-         
+
         $tester = $builder->build();
         $tester->textDocument()->open(self::EXAMPLE_URI, self::EXAMPLE_SOURCE);
- 
+
         return [$tester, $builder];
     }
 }

@@ -20,7 +20,7 @@ final class Tokens implements IteratorAggregate
      * @var Token[]
      */
     private array $tokens;
-    
+
     private int $position = 0;
 
     /**

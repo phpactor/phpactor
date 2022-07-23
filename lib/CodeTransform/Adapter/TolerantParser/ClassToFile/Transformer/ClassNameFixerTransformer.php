@@ -55,7 +55,7 @@ class ClassNameFixerTransformer implements Transformer
         return TextEdits::fromTextEdits($edits);
     }
 
-    
+
     public function diagnostics(SourceCode $code): Diagnostics
     {
         $rootNode = $this->parser->parseSourceFile((string) $code);
@@ -96,17 +96,17 @@ class ClassNameFixerTransformer implements Transformer
         return new Diagnostics($diagnostics);
     }
 
-    
+
     private function fixClassName(SourceFileNode $rootNode, string $correctClassName): ?TextEdit
     {
         $classLike = $rootNode->getFirstDescendantNode(ClassLike::class);
-        
+
         if (null === $classLike) {
             return null;
         }
-        
+
         assert($classLike instanceof EnumDeclaration || $classLike instanceof ClassDeclaration || $classLike instanceof InterfaceDeclaration || $classLike instanceof TraitDeclaration);
-        
+
         $name = $classLike->name->getText($rootNode->getFileContents());
 
         if (!is_string($name) || $name === $correctClassName) {
@@ -158,11 +158,11 @@ class ClassNameFixerTransformer implements Transformer
         if (!$code->path()) {
             throw new RuntimeException('Source code has no path associated with it');
         }
-        
+
         $candidates = $this->fileToClass->fileToClassCandidates(
             FilePath::fromString((string) $code->path())
         );
-        
+
         $classFqn = $candidates->best();
 
         return $classFqn;

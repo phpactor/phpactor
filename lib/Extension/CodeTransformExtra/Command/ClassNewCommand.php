@@ -88,11 +88,11 @@ class ClassNewCommand extends Command
         } catch (FileAlreadyExists $exception) {
             $questionHelper = new QuestionHelper();
             $question = new ConfirmationQuestion('<question>File already exists, overwrite? [y/n]</>', false);
-        
+
             if (false === $questionHelper->ask($input, $output, $question)) {
                 throw $exception;
             }
-        
+
             return $this->classNew->generate($src, $variant, true);
         }
     }

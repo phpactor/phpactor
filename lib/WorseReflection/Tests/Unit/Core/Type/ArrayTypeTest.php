@@ -17,7 +17,7 @@ class ArrayTypeTest extends TestCase
     {
         self::assertEquals($expected, $type->__toString());
     }
-        
+
     /**
      * @return Generator<mixed>
      */

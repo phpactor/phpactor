@@ -12,7 +12,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class MappedFilesystemRegistryTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     /**
      * @var ObjectProphecy<Filesystem>
      */

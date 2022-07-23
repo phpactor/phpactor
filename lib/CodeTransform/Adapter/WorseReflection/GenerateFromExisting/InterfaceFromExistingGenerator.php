@@ -25,7 +25,7 @@ final class InterfaceFromExistingGenerator implements GenerateFromExisting
         $this->renderer = $renderer;
     }
 
-    
+
     public function generateFromExisting(ClassName $existingClass, ClassName $targetName): SourceCode
     {
         $existingClass = $this->reflector->reflectClass(ReflectionClassName::fromString((string) $existingClass));

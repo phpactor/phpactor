@@ -39,13 +39,13 @@ class VariableRenamerTest extends TestCase
         [ $selection ] = $extractor->offsets('selection');
         $expectedRanges = $extractor->ranges('expectedRange');
         $newSource = $extractor->source();
-        
+
         $expectedRange = count($expectedRanges) > 0 ? $expectedRanges[0] : null;
 
         $document = TextDocumentBuilder::create($newSource)
             ->uri('file:///test/testDoc')
             ->build();
-        
+
         $variableRenamer = $this->createRenamer([], null, []);
         $actualRange = $variableRenamer->getRenameRange($document, $selection);
         $this->assertEquals($expectedRange, $actualRange);

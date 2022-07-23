@@ -18,11 +18,11 @@ use Phpactor\WorseReflection\TypeUtil;
 class ReflectionConstant extends AbstractReflectionClassMember implements CoreReflectionConstant
 {
     private ServiceLocator $serviceLocator;
-    
+
     private ConstElement $node;
-    
+
     private AbstractReflectionClass $class;
-    
+
     private ClassConstDeclaration $declaration;
 
     public function __construct(
@@ -74,7 +74,7 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
     {
         return false;
     }
-    
+
     public function value()
     {
         return TypeUtil::valueOrNull($this->serviceLocator()

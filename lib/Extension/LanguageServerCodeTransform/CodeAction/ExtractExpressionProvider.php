@@ -26,7 +26,7 @@ class ExtractExpressionProvider implements CodeActionProvider
         $this->extractExpression = $extractExpression;
     }
 
-    
+
     public function kinds(): array
     {
         return [
@@ -34,7 +34,7 @@ class ExtractExpressionProvider implements CodeActionProvider
         ];
     }
 
-    
+
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument, $range) {

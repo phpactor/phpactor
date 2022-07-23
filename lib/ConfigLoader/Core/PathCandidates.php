@@ -19,7 +19,7 @@ class PathCandidates implements IteratorAggregate
         }
     }
 
-    
+
     public function getIterator(): Traversable
     {
         foreach ($this->candidates as $candidate) {

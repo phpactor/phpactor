@@ -20,19 +20,19 @@ class VirtualReflectionParameterTest extends TestCase
     use ProphecyTrait;
 
     private $position;
-    
+
     private ObjectProphecy $class;
-    
+
     private string $name;
-    
+
     private ObjectProphecy $frame;
-    
+
     private ObjectProphecy $scope;
 
     private Type $type;
-    
+
     private ObjectProphecy $method;
-    
+
     private DefaultValue $defaults;
 
     public function setUp(): void

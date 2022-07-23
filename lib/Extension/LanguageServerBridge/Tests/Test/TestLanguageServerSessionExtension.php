@@ -22,13 +22,13 @@ class TestLanguageServerSessionExtension implements Extension
         );
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $this->sessionExtension->load($container);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
         $this->sessionExtension->configure($schema);

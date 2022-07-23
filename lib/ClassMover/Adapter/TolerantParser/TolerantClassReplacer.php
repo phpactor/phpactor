@@ -93,11 +93,11 @@ class TolerantClassReplacer implements ClassReplacer
         if (ImportedNameReference::none() != $classRef->importedNameRef()) {
             return false;
         }
-        
+
         if ($classRef->isClassDeclaration()) {
             return false;
         }
-        
+
         return $classRef->fullName()->equals($originalName);
     }
 

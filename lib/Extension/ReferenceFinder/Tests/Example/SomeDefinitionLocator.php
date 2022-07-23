@@ -16,7 +16,7 @@ class SomeDefinitionLocator implements DefinitionLocator
     const EXAMPLE_PATH = '/path/to.php';
     const EXAMPLE_OFFSET = 666;
 
-    
+
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         return new TypeLocations([

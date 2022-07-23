@@ -26,7 +26,7 @@ class HighlightHandler implements Handler, CanRegisterCapabilities
         $this->highlighter = $highlighter;
     }
 
-    
+
     public function methods(): array
     {
         return [

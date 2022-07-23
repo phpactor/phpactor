@@ -33,7 +33,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
         $this->parser = $parser;
     }
 
-    
+
     public function kinds(): array
     {
         return [
@@ -41,7 +41,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
         ];
     }
 
-    
+
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return new Success($this->getDiagnostics($textDocument));

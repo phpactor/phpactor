@@ -102,7 +102,7 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
             2
         ];
     }
-    
+
     /**
      * @return Generator<mixed>
      */

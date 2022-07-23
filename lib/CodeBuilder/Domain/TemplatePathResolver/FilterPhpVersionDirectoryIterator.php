@@ -22,7 +22,7 @@ class FilterPhpVersionDirectoryIterator extends FilterIterator
         $this->phpVersion = $phpVersion;
     }
 
-    
+
     public function accept(): bool
     {
         $file = $this->current();

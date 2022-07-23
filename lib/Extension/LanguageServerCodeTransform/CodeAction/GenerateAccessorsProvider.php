@@ -27,14 +27,14 @@ class GenerateAccessorsProvider implements CodeActionProvider
         $this->reflector = $reflector;
     }
 
-    
+
     public function kinds(): array
     {
         return [
              self::KIND
          ];
     }
-    
+
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($range, $textDocument) {

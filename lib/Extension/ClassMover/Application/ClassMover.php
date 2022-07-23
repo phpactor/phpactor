@@ -166,16 +166,16 @@ class ClassMover
         $paths = [
             $src => $dest
         ];
-        
+
         if ($moveRelatedFiles) {
             $oldPaths = $this->getRelatedFiles($src);
             $newPaths = $this->pathFinder->destinationsFor($dest);
-        
+
             foreach ($oldPaths as $oldType => $oldPath) {
                 if (!isset($newPaths[$oldType])) {
                     continue;
                 }
-        
+
                 $newPath = $newPaths[$oldType];
                 $paths[$oldPath] = $newPath;
             }

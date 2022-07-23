@@ -67,7 +67,7 @@ class TypeSuggestionProvider
     private function nameImports(Node $node): Generator
     {
         $namespaceImports = $node->getImportTablesForCurrentScope()[0];
-        
+
         foreach ($namespaceImports as $alias => $resolvedName) {
             yield Suggestion::createWithOptions(
                 $alias,

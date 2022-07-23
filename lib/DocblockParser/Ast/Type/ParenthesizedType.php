@@ -12,7 +12,7 @@ class ParenthesizedType extends TypeNode
         'node',
         'closed',
     ];
-    
+
     public Token $open;
 
     public ?TypeNode $node;

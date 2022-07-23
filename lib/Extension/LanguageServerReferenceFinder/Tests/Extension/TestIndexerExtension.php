@@ -20,7 +20,7 @@ class TestIndexerExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

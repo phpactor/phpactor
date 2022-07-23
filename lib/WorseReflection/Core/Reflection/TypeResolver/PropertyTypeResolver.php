@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Type;
 class PropertyTypeResolver
 {
     private ReflectionProperty $property;
-    
+
     public function __construct(ReflectionProperty $property)
     {
         $this->property = $property;

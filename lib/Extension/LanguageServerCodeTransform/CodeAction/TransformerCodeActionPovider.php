@@ -34,7 +34,7 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
         $this->name = $name;
     }
 
-    
+
     public function kinds(): array
     {
         return [
@@ -42,7 +42,7 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
         ];
     }
 
-    
+
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return new Success($this->getDiagnostics($textDocument, $cancel));

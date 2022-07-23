@@ -49,7 +49,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         });
     }
 
-    
+
     public function kinds(): array
     {
         return [
@@ -57,7 +57,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         ];
     }
 
-    
+
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {

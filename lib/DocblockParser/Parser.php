@@ -57,7 +57,7 @@ final class Parser
     private const SCALAR_TYPES = [
         'int', 'float', 'bool', 'class-string', 'string', 'mixed', 'callable', 'false'
     ];
-    
+
     private Tokens $tokens;
 
     public function parse(Tokens $tokens): Node

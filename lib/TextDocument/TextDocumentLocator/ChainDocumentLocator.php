@@ -22,7 +22,7 @@ class ChainDocumentLocator implements TextDocumentLocator
         $this->locators = $locators;
     }
 
-    
+
     public function get(TextDocumentUri $uri): TextDocument
     {
         foreach ($this->locators as $workspace) {

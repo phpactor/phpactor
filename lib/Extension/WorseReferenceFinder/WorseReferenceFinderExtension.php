@@ -19,7 +19,7 @@ class WorseReferenceFinderExtension implements Extension
 {
     const PARAM_BREAK_CHARS = 'worse_reference_finder.plain_text_break_chars';
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register('worse_reference_finder.definition_locator.reflection', function (Container $container) {
@@ -57,7 +57,7 @@ class WorseReferenceFinderExtension implements Extension
         }, [ ReferenceFinderExtension::TAG_REFERENCE_FINDER => []]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

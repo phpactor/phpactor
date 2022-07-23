@@ -74,7 +74,7 @@ class StepScorerTest extends TestCase
         ];
     }
 
-    
+
     private function createStep(string $string): Step
     {
         $context = new Context('foo', 'bar');

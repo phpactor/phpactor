@@ -22,22 +22,22 @@ class ChainTolerantCompletorTest extends TestCase
      * @var ObjectProphecy<TolerantCompletor>
      */
     private ObjectProphecy $completor1;
-    
+
     /**
      * @var ObjectProphecy<TolerantCompletor&TolerantQualifiable>
      */
     private ObjectProphecy $qualifiableCompletor1;
-    
+
     /**
      * @var ObjectProphecy<TolerantQualifier>
      */
     private ObjectProphecy $qualifier1;
-    
+
     /**
      * @var ObjectProphecy<TolerantCompletor&TolerantQualifiable>
      */
     private ObjectProphecy $qualifiableCompletor2;
-    
+
     /**
      * @var ObjectProphecy<TolerantQualifier>
      */

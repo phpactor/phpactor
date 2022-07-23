@@ -48,7 +48,7 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
-    
+
     public function indent(string $string, int $level = 0): string
     {
         return $this->textFormat->indent($string, $level);

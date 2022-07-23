@@ -37,13 +37,13 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
         $this->clientCapabilities = $clientCapabilities;
     }
 
-    
+
     public function watch(): Promise
     {
         return new Success($this);
     }
 
-    
+
     public function isSupported(): Promise
     {
         if (!$this->clientCapabilities) {
@@ -55,13 +55,13 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
         );
     }
 
-    
+
     public function describe(): string
     {
         return 'LSP file events';
     }
 
-    
+
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof FilesChanged) {
@@ -87,7 +87,7 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
     {
     }
 
-    
+
     public function wait(): Promise
     {
         return call(function () {

@@ -12,9 +12,9 @@ class ImplementsTag extends TagNode
         'tag',
         'tokensAndTypes',
     ];
-    
+
     public Token $tag;
-    
+
     /**
      * @var array<array-key, Token|TypeNode>
      */

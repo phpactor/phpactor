@@ -74,7 +74,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
             $info = $this->infoFromReflecionOffset($offsetReflection);
             $string = new MarkupContent('markdown', $info);
             $symbolContext = $offsetReflection->symbolContext();
-            
+
             return new Hover($string, new Range(
                 PositionConverter::byteOffsetToPosition(
                     ByteOffset::fromInt($symbolContext->symbol()->position()->start()),

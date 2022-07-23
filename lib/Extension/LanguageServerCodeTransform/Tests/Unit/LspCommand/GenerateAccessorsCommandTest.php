@@ -81,7 +81,7 @@ class GenerateAccessorsCommandTest extends TestCase
                 TextDocumentBuilder::create('foobar')->uri(self::EXAMPLE_URI)->build()
             ])
         ));
-        
+
         $tester = $builder->build();
         $tester->textDocument()->open(self::EXAMPLE_URI, self::EXAMPLE_SOURCE);
 

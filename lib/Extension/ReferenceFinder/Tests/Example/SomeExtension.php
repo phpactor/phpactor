@@ -24,7 +24,7 @@ class SomeExtension implements Extension
         }, [ ReferenceFinderExtension::TAG_IMPLEMENTATION_FINDER=> []]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

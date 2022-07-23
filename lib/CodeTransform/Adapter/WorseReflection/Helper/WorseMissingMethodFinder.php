@@ -17,7 +17,7 @@ class WorseMissingMethodFinder implements MissingMethodFinder
         $this->reflector = $reflector;
     }
 
-    
+
     public function find(TextDocument $sourceCode): array
     {
         $diagnostics = $this->reflector->diagnostics($sourceCode)->byClass(MissingMethodDiagnostic::class);

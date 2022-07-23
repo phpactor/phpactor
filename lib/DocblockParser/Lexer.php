@@ -59,7 +59,7 @@ final class Lexer
     private const IGNORE_PATTERNS = [
         '\s+',
     ];
-    
+
     private string $pattern;
 
     public function __construct()

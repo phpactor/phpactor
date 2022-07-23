@@ -18,14 +18,14 @@ use Phpactor\WorseReflection\Core\TypeResolver\DefaultTypeResolver;
 class VariableWalker implements Walker
 {
     private DocBlockFactory $docblockFactory;
-    
+
     public function __construct(
         DocBlockFactory $docblockFactory
     ) {
         $this->docblockFactory = $docblockFactory;
     }
 
-    
+
     public function nodeFqns(): array
     {
         return [];

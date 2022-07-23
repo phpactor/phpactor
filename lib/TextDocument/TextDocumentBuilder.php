@@ -9,9 +9,9 @@ use Webmozart\PathUtil\Path;
 final class TextDocumentBuilder
 {
     private ?TextDocumentUri $uri = null;
-    
+
     private ?TextDocumentLanguage $language = null;
-    
+
     private string $text;
 
     private function __construct(string $text)

@@ -25,7 +25,7 @@ class LanguageServerReferenceFinderExtension implements Extension
 {
     const PARAM_REFERENCE_TIMEOUT = 'language_server_reference_reference_finder.reference_timeout';
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register(GotoDefinitionHandler::class, function (Container $container) {
@@ -81,7 +81,7 @@ class LanguageServerReferenceFinderExtension implements Extension
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

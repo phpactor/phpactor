@@ -15,16 +15,16 @@ class GenericNode extends TypeNode
         'parameters',
         'close'
     ];
-    
+
     public Token $open;
-    
+
     public Token $close;
 
     /**
      * @var TypeList<Element>
      */
     public TypeList $parameters;
-    
+
     public TypeNode $type;
 
     /**

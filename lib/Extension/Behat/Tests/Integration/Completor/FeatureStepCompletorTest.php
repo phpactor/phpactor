@@ -101,8 +101,8 @@ class FeatureStepCompletorTest extends TestCase
             BehatExtension::PARAM_CONFIG_PATH => __DIR__ .'/behat.yml',
             BehatExtension::PARAM_ENABLED => true,
         ]);
-        
-        
+
+
         return $container->get(CompletionExtension::SERVICE_REGISTRY)->completorForType('cucumber');
     }
 }

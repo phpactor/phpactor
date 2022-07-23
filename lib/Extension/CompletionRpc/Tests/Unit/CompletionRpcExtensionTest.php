@@ -32,7 +32,7 @@ class CompletionRpcExtensionTest extends TestCase
             CompletionExtension::class,
             LoggingExtension::class,
         ]);
-        
+
         return $container->get(RpcExtension::SERVICE_REQUEST_HANDLER);
     }
 }

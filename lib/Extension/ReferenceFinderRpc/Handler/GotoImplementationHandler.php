@@ -83,7 +83,7 @@ class GotoImplementationHandler extends AbstractHandler
             $contents = $this->fileContents($location);
             $lineCol = (new LineColFromOffset())($contents, $location->offset()->toInt());
             $line = (new LineAtOffset())->__invoke($contents, $location->offset()->toInt());
-        
+
             $fileReferences = FileReferences::fromPathAndReferences(
                 $location->uri()->path(),
                 [

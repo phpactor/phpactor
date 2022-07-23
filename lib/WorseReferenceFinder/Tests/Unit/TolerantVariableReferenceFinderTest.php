@@ -27,7 +27,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
             ->uri($uri)
             ->language('php')
             ->build();
-        
+
         $finder = new TolerantVariableReferenceFinder(new Parser(), $includeDefinition);
         $actualReferences = iterator_to_array($finder->findReferences($document, ByteOffset::fromInt($selectionOffset)), false);
 
@@ -183,7 +183,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
     {
         $textDocumentUri = $uri !== null ? TextDocumentUri::fromString($uri) : null;
         $results = preg_split('/(<>|<sr>)/u', $source, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-        
+
         $referenceLocations = [];
         $selectionOffset = null;
 
@@ -198,18 +198,18 @@ class TolerantVariableReferenceFinderTest extends TestCase
                 $selectionOffset = $offset;
                 continue;
             }
-            
+
             if ($result == '<sr>') {
                 $referenceLocations[] = PotentialLocation::surely(
                     new Location($textDocumentUri, ByteOffset::fromInt($offset))
                 );
                 continue;
             }
-            
+
             $newSource .= $result;
             $offset += mb_strlen($result);
         }
-        
+
         return [$newSource, $selectionOffset, $referenceLocations];
     }
 }

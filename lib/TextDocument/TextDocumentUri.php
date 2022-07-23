@@ -8,7 +8,7 @@ use Webmozart\PathUtil\Path;
 class TextDocumentUri
 {
     private string $scheme;
-    
+
     private string $path;
 
     final private function __construct(string $scheme, string $path)

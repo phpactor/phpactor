@@ -38,7 +38,7 @@ class FileSearchIndex implements SearchIndex
         $this->path = $path;
     }
 
-    
+
     public function search(Criteria $criteria): Generator
     {
         $this->open();

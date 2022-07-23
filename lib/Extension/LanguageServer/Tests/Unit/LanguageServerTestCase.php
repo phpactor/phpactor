@@ -43,9 +43,9 @@ class LanguageServerTestCase extends TestCase
         $builder = $this->createContainer($config)->get(
             LanguageServerBuilder::class
         );
-        
+
         $this->assertInstanceOf(LanguageServerBuilder::class, $builder);
-        
+
         return $builder->tester($params ?? ProtocolFactory::initializeParams($this->workspace()->path('/')));
     }
 

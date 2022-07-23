@@ -5,7 +5,7 @@ namespace Phpactor\TextDocument;
 final class LineColRange
 {
     private LineCol $start;
-    
+
     private LineCol $end;
 
     public function __construct(LineCol $start, LineCol $end)

@@ -26,9 +26,9 @@ class ParamTag extends TagNode
      * @var ?VariableNode
      */
     public $variable;
-    
+
     public ?TextNode $text;
-    
+
     public Token $tag;
 
     public function __construct(Token $tag, ?TypeNode $type, ?VariableNode $variable, ?TextNode $text = null)

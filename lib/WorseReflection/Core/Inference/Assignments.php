@@ -140,7 +140,7 @@ abstract class Assignments implements Countable, IteratorAggregate
 
         return $last;
     }
-    
+
     public function count(): int
     {
         return count($this->variables);

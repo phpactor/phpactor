@@ -188,7 +188,7 @@ abstract class AbstractMethodUpdater
         if (null === $firstReturnType) {
             return;
         }
-        
+
         $existingReturnType = $returnType ? NodeHelper::resolvedShortName($methodDeclaration, $firstReturnType) : null;
 
         if (null === $existingReturnType) {

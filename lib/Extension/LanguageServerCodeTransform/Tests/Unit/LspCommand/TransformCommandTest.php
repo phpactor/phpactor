@@ -57,7 +57,7 @@ class TestTransformer implements Transformer
         return TextEdits::none();
     }
 
-    
+
     public function diagnostics(SourceCode $code): Diagnostics
     {
         return Diagnostics::none();

@@ -20,7 +20,7 @@ class SimilarityResultPrioritizerTest extends TestCase
 
         self::assertEquals($priority, (new SimilarityResultPrioritizer())->priority($one, $two));
     }
-        
+
     /**
      * @return Generator<mixed>
      */

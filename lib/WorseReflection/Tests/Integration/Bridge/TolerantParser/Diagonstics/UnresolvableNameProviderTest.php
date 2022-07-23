@@ -102,7 +102,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
                 self::assertCount(1, $diagnostics);
             }
         ];
-        
+
         yield 'class imported in list' => [
             <<<'EOT'
                 // File: test.php

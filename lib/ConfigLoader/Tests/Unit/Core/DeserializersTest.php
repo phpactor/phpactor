@@ -12,7 +12,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class DeserializersTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     /**
      * @var ObjectProphecy<Deserializer>
      */

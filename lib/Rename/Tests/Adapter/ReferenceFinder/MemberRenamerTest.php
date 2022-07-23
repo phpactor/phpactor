@@ -34,17 +34,17 @@ class MemberRenamerTest extends TestCase
             ->registerOffset('selection', '<>')
             ->registerRange('expectedRange', '{{', '}}')
             ->parse($source);
-        
+
         $selection = $extractor->offset('selection');
         $expectedRanges = $extractor->ranges('expectedRange');
         $newSource = $extractor->source();
-        
+
         $expectedRange = count($expectedRanges) > 0 ? $expectedRanges[0] : null;
 
         $document = TextDocumentBuilder::create($newSource)
             ->uri('file:///test/testDoc')
             ->build();
-        
+
         $variableRenamer = new MemberRenamer(
             new PredefinedReferenceFinder(...[]),
             InMemoryDocumentLocator::fromTextDocuments([]),
@@ -105,13 +105,13 @@ class MemberRenamerTest extends TestCase
         $implementations = $extractor->offsets('implementations');
         $resultEditRanges = $extractor->ranges('resultEditRanges');
         $newSource = $extractor->source();
-        
+
         $newName = 'newName';
 
         $textDocument = TextDocumentBuilder::create($newSource)
             ->uri(self::EXAMPLE_DOCUMENT_URI)
             ->build();
-        
+
         $renamer = new MemberRenamer(
             new PredefinedReferenceFinder(...array_map(function (ByteOffset $reference) use ($textDocument) {
                 return PotentialLocation::surely(new Location($textDocument->uri(), $reference));

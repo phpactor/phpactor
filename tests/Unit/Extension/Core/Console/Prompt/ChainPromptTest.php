@@ -17,7 +17,7 @@ class ChainPromptTest extends TestCase
      * @var ObjectProphecy<Prompt>
      */
     private ObjectProphecy $prompt1;
-    
+
     /**
      * @var ObjectProphecy<Prompt>
      */

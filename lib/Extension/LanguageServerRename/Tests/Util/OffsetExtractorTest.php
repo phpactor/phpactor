@@ -17,7 +17,7 @@ class OffsetExtractorTest extends TestCase
 
         $selection = $extractor->offset('selection');
         $newSource = $extractor->source();
-        
+
         $this->assertEquals(ByteOffset::fromInt(16), $selection);
         $this->assertEquals('Test string with selector', $newSource);
     }
@@ -30,7 +30,7 @@ class OffsetExtractorTest extends TestCase
 
         $selection = $extractor->offset();
         $newSource = $extractor->source();
-        
+
         $this->assertEquals(ByteOffset::fromInt(16), $selection);
         $this->assertEquals('Test string with selector', $newSource);
     }
@@ -43,7 +43,7 @@ class OffsetExtractorTest extends TestCase
 
         $selection = $extractor->offset('selection');
         $newSource = $extractor->source();
-        
+
         $this->assertEquals(ByteOffset::fromInt(19), $selection);
         $this->assertEquals('Test string 🐱    selector', $newSource);
     }
@@ -98,7 +98,7 @@ class OffsetExtractorTest extends TestCase
         ], $selection);
         $this->assertEquals('Test string with two selectors', $newSource);
     }
-    
+
     public function testRange(): void
     {
         $extractor = OffsetExtractor::create()

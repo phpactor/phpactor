@@ -43,7 +43,7 @@ class WorseGenerateMethod implements GenerateMethod
         $contextType = $this->contextType($sourceCode, $offset);
         $worseSourceCode = WorseSourceCode::fromPathAndString((string) $sourceCode->path(), (string) $sourceCode);
         $methodCall = $this->reflector->reflectMethodCall($worseSourceCode, $offset);
-        
+
         $this->validate($methodCall);
         $visibility = $this->determineVisibility($contextType, $methodCall->class());
 
@@ -51,7 +51,7 @@ class WorseGenerateMethod implements GenerateMethod
         $sourceCode = $this->resolveSourceCode($sourceCode, $methodCall, $visibility);
 
         $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
-        
+
         return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->path()), $textEdits);
     }
 

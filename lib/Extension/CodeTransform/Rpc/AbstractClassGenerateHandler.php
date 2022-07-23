@@ -109,7 +109,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
     {
         $newPath = $arguments[self::PARAM_NEW_PATH];
         $dirName = dirname($newPath);
-        
+
         if (!file_exists($dirName)) {
             if (!@mkdir($dirName, 0777, true)) {
                 throw new RuntimeException(sprintf(
@@ -118,7 +118,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
                 ));
             }
         }
-        
+
         if (!file_put_contents($newPath, (string) $code)) {
             throw new RuntimeException(sprintf(
                 'Could not save file contents to "%s"',

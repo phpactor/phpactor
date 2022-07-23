@@ -20,7 +20,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 class StepDefinitionLocator implements DefinitionLocator
 {
     private StepGenerator $generator;
-    
+
     private StepParser $parser;
 
     public function __construct(StepGenerator $generator, StepParser $parser)
@@ -29,7 +29,7 @@ class StepDefinitionLocator implements DefinitionLocator
         $this->parser = $parser;
     }
 
-    
+
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (!$document->language()->in(['cucumber', 'behat', 'gherkin'])) {

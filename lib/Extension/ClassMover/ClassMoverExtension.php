@@ -34,7 +34,7 @@ class ClassMoverExtension implements Extension
     {
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $this->registerClassMover($container);
@@ -132,21 +132,21 @@ class ClassMoverExtension implements Extension
                 $container->get('console.prompter')
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:move' ]]);
-        
+
         $container->register('command.class_copy', function (Container $container) {
             return new ClassCopyCommand(
                 $container->get('application.class_copy'),
                 $container->get('console.prompter')
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'class:copy' ]]);
-        
+
         $container->register('command.class_references', function (Container $container) {
             return new ReferencesClassCommand(
                 $container->get('application.class_references'),
                 $container->get('console.dumper_registry')
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'references:class' ]]);
-        
+
         $container->register('command.member_references', function (Container $container) {
             return new ReferencesMemberCommand(
                 $container->get('application.method_references'),

@@ -26,7 +26,7 @@ class ExtractConstantProvider implements CodeActionProvider
         $this->extractConstant = $extractConstant;
     }
 
-    
+
     public function kinds(): array
     {
         return [

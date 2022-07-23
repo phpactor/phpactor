@@ -17,7 +17,7 @@ class WorkspaceSourceLocator implements SourceCodeLocator
         $this->index = $index;
     }
 
-    
+
     public function locate(Name $name): SourceCode
     {
         if (null === $document = $this->index->documentForName($name)) {

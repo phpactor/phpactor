@@ -88,7 +88,7 @@ class CodeTransformExtension implements Extension
     public const PARAM_OBJECT_FILL_HINT = 'code_transform.refactor.object_fill.hint';
     private const APP_TEMPLATE_PATH = '%application_root%/templates/code';
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

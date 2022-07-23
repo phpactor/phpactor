@@ -14,7 +14,7 @@ use SplFileInfo;
 final class BruteForceSourceLocator implements SourceCodeLocator
 {
     private Reflector $reflector;
-    
+
     private string $path;
 
     /**
@@ -91,7 +91,7 @@ final class BruteForceSourceLocator implements SourceCodeLocator
         $functions = $this->reflector->reflectClassesIn(
             SourceCode::fromPath($file)
         );
-        
+
         foreach ($functions as $function) {
             $map[(string) $function->name()] = (string) $file;
         }
@@ -108,7 +108,7 @@ final class BruteForceSourceLocator implements SourceCodeLocator
         $functions = $this->reflector->reflectFunctionsIn(
             SourceCode::fromPath($file)
         );
-        
+
         foreach ($functions as $function) {
             $map[(string) $function->name()] = (string) $file;
         }

@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\Type;
 class DocBlockVar
 {
     private string $name;
-    
+
     private Type $type;
 
     public function __construct(string $name, Type $type)

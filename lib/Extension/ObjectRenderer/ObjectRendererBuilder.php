@@ -27,20 +27,20 @@ final class ObjectRendererBuilder
      * @var array<string>
      */
     private array $templatePaths = [];
-    
+
     private string $suffix = '.twig';
-    
+
     private bool $renderEmptyOnNotFound = false;
-    
+
     private LoggerInterface $logger;
 
     /**
      * @var bool|string|callable
      */
     private $escaping = false;
-    
+
     private bool $enableAncestoralCandidates = false;
-    
+
     private bool $enableInterfaceCandidates = false;
 
     /**

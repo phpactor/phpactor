@@ -20,7 +20,7 @@ class Names implements Countable, IteratorAggregate
         return new self(...$array);
     }
 
-    
+
     public function count(): int
     {
         return count($this->names);

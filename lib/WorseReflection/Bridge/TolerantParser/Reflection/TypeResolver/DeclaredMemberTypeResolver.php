@@ -19,7 +19,7 @@ class DeclaredMemberTypeResolver
     {
         $this->reflector = $reflector;
     }
-    
+
     /**
      * @param mixed $declaredTypes
      */

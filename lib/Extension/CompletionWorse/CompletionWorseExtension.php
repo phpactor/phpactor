@@ -76,7 +76,7 @@ class CompletionWorseExtension implements Extension
         $this->registerSignatureHelper($container);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
         $completors = array_merge($this->getOtherCompletors(), $this->getTolerantCompletors());

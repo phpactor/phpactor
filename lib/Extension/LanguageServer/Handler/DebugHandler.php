@@ -59,7 +59,7 @@ class DebugHandler implements Handler
         $this->statusProviders = $statusProviders;
     }
 
-    
+
     public function methods(): array
     {
         return [

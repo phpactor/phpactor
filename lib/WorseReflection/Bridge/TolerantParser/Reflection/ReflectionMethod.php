@@ -25,13 +25,13 @@ use InvalidArgumentException;
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {
     private ServiceLocator $serviceLocator;
-    
+
     private MethodDeclaration $node;
-    
+
     private ReflectionClassLike $class;
-    
+
     private MethodTypeResolver $returnTypeResolver;
-    
+
     private DeclaredMemberTypeResolver $memberTypeResolver;
 
     public function __construct(

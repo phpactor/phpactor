@@ -18,7 +18,7 @@ class TestReferenceFinder implements ReferenceFinder
         $this->locations = $locations;
     }
 
-    
+
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         foreach ($this->locations as $location) {

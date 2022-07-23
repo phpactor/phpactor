@@ -60,22 +60,22 @@ class CompositeReflector implements Reflector
     {
         return $this->classReflector->reflectClassLike($className, $visited);
     }
-    
+
     public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         return $this->sourceCodeReflector->reflectClassesIn($sourceCode, $visited);
     }
-    
+
     public function reflectOffset($sourceCode, $offset): ReflectionOffset
     {
         return $this->sourceCodeReflector->reflectOffset($sourceCode, $offset);
     }
-    
+
     public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall
     {
         return $this->sourceCodeReflector->reflectMethodCall($sourceCode, $offset);
     }
-    
+
     public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
     {
         return $this->sourceCodeReflector->reflectFunctionsIn($sourceCode);
@@ -90,12 +90,12 @@ class CompositeReflector implements Reflector
     {
         return $this->functionReflector->reflectFunction($name);
     }
-    
+
     public function sourceCodeForClassLike($className): SourceCode
     {
         return $this->classReflector->sourceCodeForClassLike($className);
     }
-    
+
     public function sourceCodeForFunction($name): SourceCode
     {
         return $this->functionReflector->sourceCodeForFunction($name);

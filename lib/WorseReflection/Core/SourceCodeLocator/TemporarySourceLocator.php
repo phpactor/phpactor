@@ -32,9 +32,9 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 class TemporarySourceLocator implements SourceCodeLocator
 {
     private ?SourceCode $source = null;
-    
+
     private SourceCodeReflector $reflector;
-    
+
     private bool $locateFunctions;
 
     public function __construct(SourceCodeReflector $reflector, bool $locateFunctions = false)
@@ -47,7 +47,7 @@ class TemporarySourceLocator implements SourceCodeLocator
     {
         $this->source = $source;
     }
-    
+
     public function locate(Name $name): SourceCode
     {
         if (null === $this->source) {

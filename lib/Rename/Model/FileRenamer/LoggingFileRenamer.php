@@ -20,7 +20,7 @@ class LoggingFileRenamer implements FileRenamer
         $this->innerRenamer = $innerRenamer;
     }
 
-    
+
     public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
     {
         return call(function () use ($from, $to) {
