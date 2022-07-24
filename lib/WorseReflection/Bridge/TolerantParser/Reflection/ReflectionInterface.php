@@ -71,7 +71,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             $members = $members->merge($reflectionClassLike->ownMembers());
         }
 
-        return $members;
+        return $members->map(fn (ReflectionMember $member) => $member->withClass($this));
     }
 
     public function ownMembers(): ReflectionMemberCollection
@@ -125,7 +125,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
 
     public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
-        return $this->members()->constants();
+        return $this->members()->methods();
     }
 
     public function name(): ClassName

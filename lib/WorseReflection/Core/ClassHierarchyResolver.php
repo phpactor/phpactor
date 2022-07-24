@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 
 final class ClassHierarchyResolver
 {
@@ -24,10 +25,26 @@ final class ClassHierarchyResolver
             return $resolved;
         }
         $resolved[$classLike->name()->__toString()] = $classLike;
+
         if ($classLike instanceof ReflectionClass) {
             return $this->resolveReflectionClass($classLike, $resolved);
         }
 
+        if ($classLike instanceof ReflectionInterface) {
+            return $this->resolveReflectionInterface($classLike, $resolved);
+        }
+
+        return $resolved;
+    }
+
+    /**
+     * @return ReflectionClassLike[]
+     */
+    private function resolveReflectionInterface(ReflectionInterface $classLike, array $resolved): array
+    {
+        foreach ($classLike->parents() as $interface) {
+            $resolved = $this->doResolve($interface, $resolved);
+        }
         return $resolved;
     }
 
