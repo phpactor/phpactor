@@ -198,7 +198,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     public function byMemberType(string $type): ReflectionCollection
     {
         return $this->filter(function (ReflectionMember $member) use ($type) {
-            return $member->memberType();
+            return $member->memberType() === $type;
         });
     }
 
