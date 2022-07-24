@@ -9,8 +9,9 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\TokenKind;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
+use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
@@ -21,6 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollectio
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -44,16 +46,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?CoreReflectionClass $parent = null;
 
-    /**
-     * @var array<string,ReflectionMethodCollection>
-     */
-    private array $methods = [];
-
-    /**
-     * @var array<string,ReflectionPropertyCollection>
-     */
-    private array $properties = [];
-
     private ?ReflectionClassCollection $ancestors = null;
 
     private ?ReflectionTraitCollection $traits = null;
@@ -62,6 +54,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      * @var array<string, bool>
      */
     private array $visited;
+
+    private ?ClassLikeReflectionMemberCollection $ownMembers = null;
+
+    private ?ClassName $name = null;
+
+    private ?ClassLikeReflectionMemberCollection $members = null;
 
     /**
      * @param array<string,bool> $visited
@@ -95,38 +93,63 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     public function members(): ReflectionMemberCollection
     {
-        /** @phpstan-ignore-next-line Pretty sure this is a phpstan bug */
-        return ChainReflectionMemberCollection::fromCollections([
-            $this->constants(),
-            $this->properties(),
-            $this->methods($this)
-        ]);
+        if ($this->members) {
+            return $this->members;
+        }
+        $members = ClassLikeReflectionMemberCollection::empty();
+        foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
+            $classLikeMembers = $reflectionClassLike->ownMembers();
+
+            // only inerit public and protected properties from parent classes
+            if ($reflectionClassLike !== $this && !$reflectionClassLike instanceof ReflectionTrait) {
+                $classLikeMembers = $classLikeMembers->byVisibilities([Visibility::public(), Visibility::protected()]);
+            }
+
+            // we only take constants from interfaces, methods must be implemented.
+            if ($reflectionClassLike instanceof ReflectionInterface) {
+                /** @phpstan-ignore-next-line Constants is compatible with this */
+                $members = $members->merge($classLikeMembers->constants());
+                continue;
+            }
+
+            /** @phpstan-ignore-next-line Constants is compatible with this */
+            $members = $members->merge($classLikeMembers);
+
+            // we need to account for traits renaming aliases
+            if ($reflectionClassLike instanceof ReflectionTrait) {
+                $traitImports = TraitImports::forClassDeclaration($this->node);
+                /** @phpstan-ignore-next-line Constants is compatible with this */
+                $members = $members->merge($this->resolveTraitMethods($traitImports, $this, $this->traits()));
+                continue;
+            }
+        }
+        $this->members = $members->map(fn (ReflectionMember $member) => $member->withClass($this));
+
+        return $this->members;
+    }
+
+    public function ownMembers(): ReflectionMemberCollection
+    {
+        if ($this->ownMembers) {
+            return $this->ownMembers;
+        }
+        $this->ownMembers = ClassLikeReflectionMemberCollection::fromClassMemberDeclarations(
+            $this->serviceLocator,
+            $this->node,
+            $this
+        );
+        return $this->ownMembers;
     }
 
     public function constants(): ReflectionConstantCollection
     {
-        $parentConstants = null;
-        $parent = $this->parent();
-        if ($parent) {
-            $parentConstants = $parent->constants();
-        }
-
-        $constants = ReflectionConstantCollection::fromClassDeclaration($this->serviceLocator, $this->node, $this);
-
-        if ($parentConstants) {
-            return $parentConstants->merge($constants);
-        }
-
-        foreach ($this->interfaces() as $interface) {
-            $constants = $constants->merge($interface->constants());
-        }
-
-        return $constants;
+        return $this->members()->constants();
     }
 
     public function parent(): ?CoreReflectionClass
     {
         if ($this->parent) {
+            return $this->parent;
         }
 
         /** @phpstan-ignore-next-line */
@@ -172,67 +195,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
     {
-        $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
-
-        if (isset($this->properties[$cacheKey])) {
-            return $this->properties[$cacheKey];
-        }
-
-        $properties = ReflectionPropertyCollection::empty();
-        $contextClass = $contextClass ?: $this;
-
-        if ($this->traits()->count() > 0) {
-            foreach ($this->traits() as $trait) {
-                $properties = $properties->merge($trait->properties());
-            }
-        }
-
-        $parent = $this->parent();
-        if ($parent) {
-            $properties = $properties->merge(
-                $parent->properties($contextClass)->byVisibilities([ Visibility::public(), Visibility::protected() ])
-            );
-        }
-
-        $properties = $properties->merge(ReflectionPropertyCollection::fromClassDeclaration($this->serviceLocator, $this->node, $contextClass));
-        $properties = $properties->merge(ReflectionPropertyCollection::fromClassDeclarationConstructorPropertyPromotion($this->serviceLocator, $this->node, $contextClass));
-
-        $this->properties[$cacheKey] = $properties;
-
-        return $properties;
+        return $this->members()->properties();
     }
 
     public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection
     {
-        $cacheKey = $contextClass ? (string) $contextClass->name() : '*_null_*';
-
-        if (isset($this->methods[$cacheKey])) {
-            return $this->methods[$cacheKey];
-        }
-
-        $contextClass = $contextClass ?: $this;
-        $methods = ReflectionMethodCollection::empty();
-        $traitImports = TraitImports::forClassDeclaration($this->node);
-        $traitMethods = $this->resolveTraitMethods($traitImports, $contextClass, $this->traits());
-        $methods = $methods->merge($traitMethods);
-
-        if ($this->parent()) {
-            $methods = $methods->merge(
-                $this->parent()->methods($contextClass)->byVisibilities([ Visibility::public(), Visibility::protected() ])
-            );
-        }
-
-        $methods = $methods->merge(
-            ReflectionMethodCollection::fromClassDeclaration(
-                $this->serviceLocator,
-                $this->node,
-                $contextClass
-            )
-        );
-
-        $this->methods[$cacheKey] = $methods;
-
-        return $methods;
+        return $this->members()->methods();
     }
 
     public function interfaces(): ReflectionInterfaceCollection
@@ -293,7 +261,11 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function name(): ClassName
     {
-        return ClassName::fromString((string) $this->node->getNamespacedName());
+        if ($this->name) {
+            return $this->name;
+        }
+        $this->name = ClassName::fromString((string) $this->node->getNamespacedName());
+        return $this->name;
     }
 
     public function isInstanceOf(ClassName $className): bool

@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node;
@@ -34,9 +33,11 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
 
     private Parameter $parameter;
 
+    private ?string $name = null;
+
     public function __construct(
         ServiceLocator $serviceLocator,
-        ReflectionClass $class,
+        ReflectionClassLike $class,
         Parameter $parameter
     ) {
         $this->serviceLocator = $serviceLocator;
@@ -65,7 +66,12 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
 
     public function name(): string
     {
-        return (string) $this->parameter->getName();
+        if ($this->name) {
+            return $this->name;
+        }
+
+        $this->name = (string) $this->parameter->getName();
+        return $this->name;
     }
 
     public function nameRange(): ByteOffsetRange
@@ -143,6 +149,11 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
         }
 
         return Visibility::public();
+    }
+
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        return new self($this->serviceLocator, $class, $this->parameter);
     }
 
     protected function node(): Node

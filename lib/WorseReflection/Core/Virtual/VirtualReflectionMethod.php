@@ -106,4 +106,11 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
     {
         return ReflectionMember::TYPE_METHOD;
     }
+
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        $new = clone $this;
+        $new->class = $class;
+        return $new;
+    }
 }

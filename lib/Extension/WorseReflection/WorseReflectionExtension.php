@@ -6,7 +6,6 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
-use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\MixinMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
@@ -40,7 +39,6 @@ class WorseReflectionExtension implements Extension
     const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
-    const PARAM_MIXIN_ENABLE = 'worse_reflection.mixins';
 
     public function configure(Resolver $schema): void
     {
@@ -49,7 +47,6 @@ class WorseReflectionExtension implements Extension
             self::PARAM_ENABLE_CACHE => true,
             self::PARAM_CACHE_LIFETIME => 5.0,
             self::PARAM_ENABLE_CONTEXT_LOCATION => true,
-            self::PARAM_MIXIN_ENABLE => false,
             self::PARAM_STUB_CACHE_DIR => '%cache%/worse-reflection',
             self::PARAM_STUB_DIR => '%application_root%/vendor/jetbrains/phpstorm-stubs',
         ]);
@@ -65,7 +62,6 @@ class WorseReflectionExtension implements Extension
             self::PARAM_STUB_DIR => 'Location of the core PHP stubs - these will be scanned and cached on the first request',
             self::PARAM_STUB_CACHE_DIR => 'Cache directory for stubs',
             self::PARAM_IMPORT_GLOBALS => 'Show hints for non-imported global classes and functions',
-            self::PARAM_MIXIN_ENABLE => 'Enable mixins (unstable see issue #1791)',
         ]);
     }
 
@@ -152,12 +148,6 @@ class WorseReflectionExtension implements Extension
     {
         $container->register('worse_reflection.member_provider.docblock', function (Container $container) {
             return new DocblockMemberProvider();
-        }, [ self::TAG_MEMBER_PROVIDER => []]);
-        $container->register('worse_reflection.member_provider.mixins', function (Container $container) {
-            if (false === $container->getParameter(self::PARAM_MIXIN_ENABLE)) {
-                return null;
-            }
-            return new MixinMemberProvider();
         }, [ self::TAG_MEMBER_PROVIDER => []]);
     }
 

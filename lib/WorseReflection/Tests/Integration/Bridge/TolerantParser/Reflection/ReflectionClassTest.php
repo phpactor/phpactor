@@ -401,7 +401,7 @@ class ReflectionClassTest extends IntegrationTestCase
             },
         ];
 
-        yield 'Get properties includes trait properties' => [
+        yield 'Get trait properties' => [
             <<<'EOT'
                 <?php
 
@@ -443,7 +443,7 @@ class ReflectionClassTest extends IntegrationTestCase
             },
         ];
 
-        yield 'Get properties includes trait methods' => [
+        yield 'Get properties includes trait properties' => [
             <<<'EOT'
                 <?php
 
@@ -462,7 +462,7 @@ class ReflectionClassTest extends IntegrationTestCase
                 EOT
         ,
             'Class2',
-            function ($class): void {
+            function (ReflectionClass $class): void {
                 $this->assertEquals(2, $class->properties()->count());
                 $this->assertEquals('foobar', $class->properties()->first()->name());
             },

@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -103,10 +104,24 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
         }));
     }
 
+    public function constants(): ReflectionConstantCollection
+    {
+        return new ReflectionConstantCollection(array_filter($this->items, function (ReflectionMember $member) {
+            return $member instanceof ReflectionConstant;
+        }));
+    }
+
     public function properties(): ReflectionPropertyCollection
     {
         return new ReflectionPropertyCollection(array_filter($this->items, function (ReflectionMember $member) {
             return $member instanceof ReflectionProperty;
+        }));
+    }
+
+    public function enumCases(): ReflectionEnumCaseCollection
+    {
+        return new ReflectionEnumCaseCollection(array_filter($this->items, function (ReflectionMember $member) {
+            return $member instanceof ReflectionEnumCase;
         }));
     }
 

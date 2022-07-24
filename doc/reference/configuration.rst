@@ -764,19 +764,6 @@ located in another (e.g. when running a Language Server)
 **Default**: ``true``
 
 
-.. _param_worse_reflection.mixins:
-
-
-``worse_reflection.mixins``
-"""""""""""""""""""""""""""
-
-
-Enable mixins (unstable see issue #1791)
-
-
-**Default**: ``false``
-
-
 .. _param_worse_reflection.cache_dir:
 
 
@@ -817,7 +804,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor2"``
 
 
 .. _param_file_path_resolver.app_name:

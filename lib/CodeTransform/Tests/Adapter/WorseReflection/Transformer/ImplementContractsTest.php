@@ -21,7 +21,10 @@ class ImplementContractsTest extends WorseTestCase
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
 
-    public function provideCompleteConstructor()
+    /**
+     * @return array<string,array<int,string>>
+     */
+    public function provideCompleteConstructor(): array
     {
         return [
             'It does nothing on source with no classes' => [

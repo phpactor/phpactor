@@ -34,6 +34,8 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     private DeclaredMemberTypeResolver $memberTypeResolver;
 
+    private ?string $name = null;
+
     public function __construct(
         ServiceLocator $serviceLocator,
         ReflectionClassLike $class,
@@ -48,7 +50,11 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     public function name(): string
     {
-        return $this->node->getName();
+        if ($this->name) {
+            return $this->name;
+        }
+        $this->name = $this->node->getName();
+        return $this->name;
     }
 
     public function nameRange(): ByteOffsetRange
@@ -166,6 +172,11 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     public function memberType(): string
     {
         return ReflectionMember::TYPE_METHOD;
+    }
+
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        return new self($this->serviceLocator, $class, $this->node);
     }
 
     protected function node(): Node

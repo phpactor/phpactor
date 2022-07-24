@@ -102,4 +102,9 @@ class VirtualReflectionClassLikeDecorator implements ReflectionClassLike
     {
         return $this->classLike->type();
     }
+
+    public function ownMembers(): ReflectionMemberCollection
+    {
+        return $this->classLike->ownMembers();
+    }
 }

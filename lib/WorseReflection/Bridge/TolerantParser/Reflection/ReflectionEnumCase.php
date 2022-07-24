@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase as CoreReflectionEnumCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\TypeUtil;
+use RuntimeException;
 
 class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreReflectionEnumCase
 {
@@ -93,6 +94,17 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
     public function memberType(): string
     {
         return ReflectionMember::TYPE_ENUM;
+    }
+
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        if (!$class instanceof ReflectionEnum) {
+            throw new RuntimeException(
+                'Cannot make case member part of a non-enum reflection'
+            );
+        }
+
+        return new self($this->serviceLocator, $class, $this->node);
     }
 
     protected function node(): Node

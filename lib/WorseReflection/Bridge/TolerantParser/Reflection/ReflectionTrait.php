@@ -4,12 +4,10 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as PhpactorReflectionTraitCollection;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
@@ -35,6 +33,10 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
      */
     private array $visited;
 
+    private ?ClassLikeReflectionMemberCollection $ownMembers = null;
+
+    private ?ClassLikeReflectionMemberCollection $members = null;
+
     /**
      * @param array<string,bool> $visited
      */
@@ -52,12 +54,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
 
     public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
-        $contextClass = $contextClass ?: $this;
-        $methods = ReflectionMethodCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $contextClass);
-        $traitImports = TraitImports::forTraitDeclaration($this->node);
-        $traitMethods = $this->resolveTraitMethods($traitImports, $contextClass, $this->traits());
-
-        return $methods->merge($traitMethods);
+        return $this->members()->methods();
     }
 
     /**
@@ -65,17 +62,35 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
      */
     public function members(): ReflectionMemberCollection
     {
-        return ChainReflectionMemberCollection::fromCollections([
-            $this->properties(),
-            $this->methods()
-        ]);
+        if ($this->members) {
+            return $this->members;
+        }
+        $members = ClassLikeReflectionMemberCollection::empty();
+        foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
+            /** @phpstan-ignore-next-line Constants is compatible with this */
+            $members = $members->merge($reflectionClassLike->ownMembers());
+        }
+
+        $this->members = $members->map(fn (ReflectionMember $member) => $member->withClass($this));
+        return $this->members;
+    }
+
+    public function ownMembers(): ReflectionMemberCollection
+    {
+        if ($this->ownMembers) {
+            return $this->ownMembers;
+        }
+        $this->ownMembers = ClassLikeReflectionMemberCollection::fromTraitMemberDeclarations(
+            $this->serviceLocator,
+            $this->node,
+            $this
+        );
+        return $this->ownMembers;
     }
 
     public function properties(): CoreReflectionPropertyCollection
     {
-        $properties = ReflectionPropertyCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $this);
-
-        return $properties;
+        return $this->members()->properties();
     }
 
     public function name(): ClassName

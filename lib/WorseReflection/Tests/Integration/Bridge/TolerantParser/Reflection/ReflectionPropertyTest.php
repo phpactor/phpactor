@@ -24,12 +24,15 @@ class ReflectionPropertyTest extends IntegrationTestCase
         $assertion($class->properties());
     }
 
+    /**
+     * @return Generator<string,array{string,string,Closure(ReflectionProperty): void}>
+     */
     public function provideReflectionPropertyTypes(): Generator
     {
         yield 'It reflects a property with union type' => [
             '<?php class Foobar { private int|string $property;}',
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals('property', $properties->get('property')->name());
                     $this->assertEquals(TypeFactory::union(...[
                         TypeFactory::int(),
@@ -39,6 +42,9 @@ class ReflectionPropertyTest extends IntegrationTestCase
         ];
     }
 
+    /**
+     * @return Generator<string,array{string,string,Closure(ReflectionProperty): void}>
+     */
     public function provideReflectionProperty()
     {
         yield 'It reflects a property' => [
@@ -52,7 +58,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals('property', $properties->get('property')->name());
                     $this->assertInstanceOf(ReflectionProperty::class, $properties->get('property'));
                 },
@@ -69,7 +75,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals(Visibility::private(), $properties->get('property')->visibility());
                 },
             ];
@@ -85,7 +91,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals(Visibility::protected(), $properties->get('property')->visibility());
                 },
             ];
@@ -101,7 +107,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals(Visibility::public(), $properties->get('property')->visibility());
                 },
             ];
@@ -159,7 +165,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals(
                         'Acme\Post',
                         $properties->get('property1')->inferredType()->__toString(),
@@ -184,7 +190,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals(
                         TypeFactory::unknown(),
                         $properties->get('property1')->type()
@@ -205,7 +211,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertTrue($properties->has('property1'));
                 },
             ];
@@ -223,7 +229,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertTrue($properties->get('property1')->isStatic());
                 },
             ];
@@ -239,7 +245,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function ($properties): void {
+                function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals('Foobar', $properties->get('property1')->declaringClass()->name()->__toString());
                 },
             ];

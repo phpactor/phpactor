@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Virtual;
 
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 
@@ -25,5 +26,12 @@ class VirtualReflectionProperty extends VirtualReflectionMember implements Refle
     public function isPromoted(): bool
     {
         return false;
+    }
+
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        $new = clone $this;
+        $new->class = $class;
+        return $new;
     }
 }
