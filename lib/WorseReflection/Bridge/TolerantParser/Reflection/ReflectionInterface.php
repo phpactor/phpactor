@@ -42,6 +42,8 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
 
     private ?ClassLikeReflectionMemberCollection $ownMembers = null;
 
+    private ?ClassLikeReflectionMemberCollection $members = null;
+
     /**
      * @param array<string,bool> $visited
      */
@@ -62,13 +64,17 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
      */
     public function members(): ReflectionMemberCollection
     {
+        if ($this->members) {
+            return $this->members;
+        }
         $members = ClassLikeReflectionMemberCollection::empty();
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
             /** @phpstan-ignore-next-line Constants is compatible with this */
             $members = $members->merge($reflectionClassLike->ownMembers());
         }
 
-        return $members->map(fn (ReflectionMember $member) => $member->withClass($this));
+        $this->members = $members->map(fn (ReflectionMember $member) => $member->withClass($this));
+        return $this->members;
     }
 
     public function ownMembers(): ReflectionMemberCollection
