@@ -62,7 +62,11 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
             }
 
             if ($child instanceof ClassDeclaration) {
-                $items[(string) $child->getNamespacedName()] = new ReflectionClass($serviceLocator, $source, $child, $visited);
+                $items[(string) $child->getNamespacedName()] = new VirtualReflectionClassDecorator(
+                    $serviceLocator,
+                    new ReflectionClass($serviceLocator, $source, $child, $visited),
+                    $serviceLocator->methodProviders()
+                );
             }
         }
 
