@@ -40,6 +40,7 @@ class DocblockParserFactory implements DocBlockFactory
         '@psalm-template-extends',
         '@phpstan-template-extends',
         '@mixin',
+        '@throws',
     ];
 
     private Lexer $lexer;

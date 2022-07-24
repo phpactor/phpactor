@@ -1,0 +1,11 @@
+<?php
+
+use RuntimeException;
+
+/**
+ * @throws RuntimeException
+ */
+function fo($foo): void
+{
+}
+
