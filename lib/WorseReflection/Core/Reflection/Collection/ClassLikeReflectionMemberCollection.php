@@ -4,15 +4,19 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Closure;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
+use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnumCase as PhpactorReflectionEnumCase;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPromotedProperty;
@@ -21,6 +25,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as PhpactorReflectionConstant;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as PhpactorReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as PhpactorReflectionProperty;
@@ -37,6 +42,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         'constants',
         'properties',
         'methods',
+        'enumCases',
     ];
 
     /**
@@ -53,6 +59,11 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
      * @var PhpactorReflectionMethod[]
      */
     private array $methods = [];
+
+    /**
+     * @var PhpactorReflectionEnumCase[]
+     */
+    private array $enumCases = [];
 
     public static function fromClassMemberDeclarations(
         ServiceLocator $serviceLocator,
@@ -84,15 +95,19 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         );
     }
 
+    public static function fromEnumMemberDeclarations(ServiceLocator $serviceLocator, EnumDeclaration $enumDeclaration, ReflectionEnum $reflectionEnum): self
+    {
+        return self::fromDeclarations(
+            $serviceLocator,
+            $reflectionEnum,
+            $enumDeclaration->enumMembers->enumMemberDeclarations
+        );
+    }
 
     public function getIterator(): Traversable
     {
-        foreach ([
-            $this->constants,
-            $this->properties,
-            $this->methods,
-        ] as $collection) {
-            yield from $collection;
+        foreach (self::MEMBER_TYPES as $collection) {
+            yield from $this->$collection;
         }
     }
 
@@ -195,6 +210,11 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         return new ReflectionConstantCollection($this->constants);
     }
 
+    public function enumCases(): ReflectionEnumCaseCollection
+    {
+        return new ReflectionEnumCaseCollection($this->enumCases);
+    }
+
     /**
      * @return static
      */
@@ -267,6 +287,13 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                         $new->properties[$promotedParameter->getName()] = $new->items[$promotedParameter->getName()];
                     }
                 }
+                continue;
+            }
+
+            if ($member instanceof EnumCaseDeclaration) {
+                $enumCase = new PhpactorReflectionEnumCase($serviceLocator, $classLike, $member);
+                $new->items[$enumCase->name()] = $enumCase;
+                $new->enumCases[$enumCase->name()] = $enumCase;
                 continue;
             }
         }

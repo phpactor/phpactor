@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection as PhpactorReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
@@ -42,23 +43,12 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
 
     public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
-        $contextClass = $contextClass ?: $this;
-        $methods = ReflectionMethodCollection::fromEnumDeclaration($this->serviceLocator, $this->node, $contextClass);
-        try {
-            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface('BackedEnum')->methods($this);
-            return $enumMethods->merge($methods);
-        } catch (NotFound $notFound) {
-            return $methods;
-        }
+        return $this->members()->methods();
     }
 
     public function cases(): ReflectionEnumCaseCollection
     {
-        return PhpactorReflectionEnumCaseCollection::fromEnumDeclaration(
-            $this->serviceLocator,
-            $this->node,
-            $this
-        );
+        return $this->ownMembers()->enumCases();
     }
 
     /**
@@ -66,18 +56,33 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
      */
     public function members(): ReflectionMemberCollection
     {
-        return ChainReflectionMemberCollection::fromCollections([
-            $this->properties(),
-            $this->methods(),
-            $this->cases(),
-        ]);
+        $members = ClassLikeReflectionMemberCollection::empty();
+        $members = $members->merge($this->ownMembers());
+        try {
+            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface('BackedEnum')->methods($this);
+            return $members->merge(
+                $enumMethods
+            )->map(
+                fn (ReflectionMember $member) => $member->withClass($this)
+            );
+        } catch (NotFound $notFound) {
+        }
+
+        return $members;
+    }
+
+    public function ownMembers(): ReflectionMemberCollection
+    {
+        return ClassLikeReflectionMemberCollection::fromEnumMemberDeclarations(
+            $this->serviceLocator,
+            $this->node,
+            $this
+        );
     }
 
     public function properties(): CoreReflectionPropertyCollection
     {
-        $properties = ReflectionPropertyCollection::fromEnumDeclaration($this->serviceLocator, $this->node, $this);
-
-        return $properties;
+        return $this->ownMembers()->properties();
     }
 
     public function name(): ClassName

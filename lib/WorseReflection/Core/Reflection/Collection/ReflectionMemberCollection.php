@@ -49,6 +49,8 @@ interface ReflectionMemberCollection extends ReflectionCollection
 
     public function constants(): ReflectionConstantCollection;
 
+    public function enumCases(): ReflectionEnumCaseCollection;
+
     /**
      * @return static
      */
