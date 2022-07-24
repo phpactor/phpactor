@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
@@ -53,12 +54,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
 
     public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
-        $contextClass = $contextClass ?: $this;
-        $methods = ReflectionMethodCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $contextClass);
-        $traitImports = TraitImports::forTraitDeclaration($this->node);
-        $traitMethods = $this->resolveTraitMethods($traitImports, $contextClass, $this->traits());
-
-        return $methods->merge($traitMethods);
+        return $this->members()->methods();
     }
 
     /**
@@ -66,10 +62,12 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
      */
     public function members(): ReflectionMemberCollection
     {
-        return ChainReflectionMemberCollection::fromCollections([
-            $this->properties(),
-            $this->methods()
-        ]);
+        $members = ClassLikeReflectionMemberCollection::empty();
+        foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
+            $members = $members->merge($reflectionClassLike->ownMembers());
+        }
+
+        return $members->map(fn (ReflectionMember $member) => $member->withClass($this));
     }
 
     public function ownMembers(): ReflectionMemberCollection
@@ -83,9 +81,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
 
     public function properties(): CoreReflectionPropertyCollection
     {
-        $properties = ReflectionPropertyCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $this);
-
-        return $properties;
+        return $this->members()->properties();
     }
 
     public function name(): ClassName
