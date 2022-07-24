@@ -59,6 +59,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?ClassName $name = null;
 
+    private ?ClassLikeReflectionMemberCollection $members = null;
+
     /**
      * @param array<string,bool> $visited
      */
@@ -91,6 +93,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     public function members(): ReflectionMemberCollection
     {
+        if ($this->members) {
+            return $this->members;
+        }
         $members = ClassLikeReflectionMemberCollection::empty();
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
@@ -117,9 +122,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
                 continue;
             }
         }
-        return $members;
+        $this->members = $members->map(fn (ReflectionMember $member) => $member->withClass($this));
 
-        return $members->map(fn (ReflectionMember $member) => $member->withClass($this));
+        return $this->members;
     }
 
     public function ownMembers(): ReflectionMemberCollection
