@@ -172,7 +172,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     {
         return $this->filter(function (ReflectionMember $member) use ($visibilities) {
             foreach ($visibilities as $visiblity) {
-                if ($visiblity->__toString() === $member->visibility()->__toString()) {
+                if ($visiblity == $member->visibility()) {
                     return true;
                 }
             }
@@ -239,7 +239,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             'properties',
             'methods',
         ] as $collection) {
-            $new->$collection = array_map($closure, $this->$collection);
+            $new->$collection = array_filter($this->$collection, $closure);
         }
 
         return $new;

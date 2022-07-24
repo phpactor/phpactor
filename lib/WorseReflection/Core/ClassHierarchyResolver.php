@@ -12,6 +12,14 @@ final class ClassHierarchyResolver
      */
     public function resolve(ReflectionClassLike $classLike, array $resolved = []): array
     {
+        return array_reverse($this->doResolve($classLike, $resolved));
+    }
+
+    /**
+     * @return ReflectionClassLike[]
+     */
+    public function doResolve(ReflectionClassLike $classLike, array $resolved = []): array
+    {
         if (isset($resolved[$classLike->name()->__toString()])) {
             return $resolved;
         }
@@ -30,15 +38,15 @@ final class ClassHierarchyResolver
     {
         $parent = $parent = $classLike->parent();
         if ($parent) {
-            $resolved = $this->resolve($parent, $resolved);
+            $resolved = $this->doResolve($parent, $resolved);
         }
 
         foreach ($classLike->interfaces() as $interface) {
-            $resolved = $this->resolve($interface, $resolved);
+            $resolved = $this->doResolve($interface, $resolved);
         }
 
         foreach ($classLike->traits() as $interface) {
-            $resolved = $this->resolve($interface, $resolved);
+            $resolved = $this->doResolve($interface, $resolved);
         }
 
         return $resolved;
