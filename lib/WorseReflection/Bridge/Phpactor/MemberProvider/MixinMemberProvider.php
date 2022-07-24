@@ -30,7 +30,8 @@ class MixinMemberProvider implements ReflectionMemberProvider
                 continue;
             }
 
-            $collections[] = $reflection->methods($class);
+
+            $collections[] = $reflection->methods();
 
             if ($reflection instanceof ReflectionClass) {
                 $collections[] = $reflection->properties($class);

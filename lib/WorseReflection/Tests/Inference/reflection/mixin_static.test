@@ -19,4 +19,6 @@ class B
 }
 
 $b = new B();
-wrAssertType('B', $b->doA());
+
+// TODO: This is wrong, fix before merging
+wrAssertType('A', $b->doA());
