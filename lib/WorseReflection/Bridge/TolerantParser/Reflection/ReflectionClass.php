@@ -100,6 +100,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
 
+            // only inerit public and protected properties from parent classes
             if ($reflectionClassLike !== $this && !$reflectionClassLike instanceof ReflectionTrait) {
                 $classLikeMembers = $classLikeMembers->byVisibilities([Visibility::public(), Visibility::protected()]);
             }
