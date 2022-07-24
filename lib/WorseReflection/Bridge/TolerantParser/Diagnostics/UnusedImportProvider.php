@@ -88,7 +88,7 @@ class UnusedImportProvider implements DiagnosticProvider
             if ($this->usedByAnnotation($contents, $importedFqn, $imported)) {
                 continue;
             }
-                
+
             yield UnusedImportDiagnostic::for(
                 ByteOffsetRange::fromInts($imported->getStartPosition(), $imported->getEndPosition()),
                 $importedFqn

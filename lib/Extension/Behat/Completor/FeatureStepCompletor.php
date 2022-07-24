@@ -16,9 +16,9 @@ use Phpactor\TextDocument\TextDocument;
 class FeatureStepCompletor implements Completor
 {
     private StepGenerator $generator;
-    
+
     private StepParser $parser;
-    
+
     private StepScorer $stepSorter;
 
     public function __construct(StepGenerator $generator, StepParser $parser, StepScorer $stepSorter = null)
@@ -28,7 +28,7 @@ class FeatureStepCompletor implements Completor
         $this->stepSorter = $stepSorter ?: new StepScorer();
     }
 
-    
+
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         $currentLine = $this->lineForOffset($source->__toString(), $byteOffset->toInt());

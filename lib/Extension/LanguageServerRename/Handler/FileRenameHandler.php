@@ -30,7 +30,7 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
         $this->converter = $converter;
     }
 
-    
+
     public function methods(): array
     {
         return [

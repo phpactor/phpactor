@@ -25,9 +25,9 @@ use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionTrait
 {
     private ServiceLocator $serviceLocator;
-    
+
     private TraitDeclaration $node;
-    
+
     private SourceCode $sourceCode;
 
     /**

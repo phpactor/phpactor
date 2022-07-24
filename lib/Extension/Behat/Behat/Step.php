@@ -9,13 +9,13 @@ use Phpactor\Extension\Behat\Behat\Pattern\TurnipPatternPolicy;
 class Step
 {
     private Context $context;
-    
+
     private string $method;
-    
+
     private string $pattern;
-    
+
     private string $path;
-    
+
     private int $startByteOffset;
 
     public function __construct(

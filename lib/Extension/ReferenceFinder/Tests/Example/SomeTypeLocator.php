@@ -16,7 +16,7 @@ class SomeTypeLocator implements TypeLocator
     const EXAMPLE_OFFSET = 1;
     const EXAMPLE_PATH = '/foobar';
 
-    
+
     public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         return new TypeLocations([new TypeLocation(new MixedType(), new Location(

@@ -27,7 +27,7 @@ class LimitingCompletor implements Completor
         }
     }
 
-    
+
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         $count = 0;

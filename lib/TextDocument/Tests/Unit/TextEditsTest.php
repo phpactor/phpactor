@@ -25,7 +25,7 @@ class TextEditsTest extends TestCase
         );
     }
 
-    
+
     public function provideMerge(): Generator
     {
         yield 'empty' => [

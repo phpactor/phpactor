@@ -40,6 +40,8 @@ return (new Config())
         'single_quote' => true,
         'heredoc_indentation' => true,
         'global_namespace_import' => true,
+        'no_trailing_whitespace' => true,
+        'no_whitespace_in_blank_line' => true,
     ])
     ->setFinder($finder)
 ;

@@ -35,7 +35,7 @@ class ClassToFileExtraExtension implements Extension
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => FileInfoHandler::NAME] ]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

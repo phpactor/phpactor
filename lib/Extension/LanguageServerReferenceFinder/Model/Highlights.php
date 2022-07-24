@@ -23,7 +23,7 @@ class Highlights implements IteratorAggregate, Countable
     {
         $this->highlights = $highlights;
     }
-    
+
     public function first(): DocumentHighlight
     {
         if (empty($this->highlights)) {
@@ -60,7 +60,7 @@ class Highlights implements IteratorAggregate, Countable
         return new self(...iterator_to_array($iterator));
     }
 
-    
+
     public function count(): int
     {
         return count($this->highlights);

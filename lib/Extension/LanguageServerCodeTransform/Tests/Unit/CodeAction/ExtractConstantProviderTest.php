@@ -59,7 +59,7 @@ class ExtractConstantProviderTest extends TestCase
             ))
         );
     }
-     
+
     public function provideActionsData(): Generator
     {
         yield 'Fail' => [
@@ -86,7 +86,7 @@ class ExtractConstantProviderTest extends TestCase
             ]
         ];
     }
-    
+
     private function createProvider(): ExtractConstantProvider
     {
         return new ExtractConstantProvider($this->extractConstant->reveal());

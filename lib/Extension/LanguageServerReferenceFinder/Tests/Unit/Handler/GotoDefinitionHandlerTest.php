@@ -90,7 +90,7 @@ class GotoDefinitionHandlerTest extends TestCase
     private function createTester(array $locations): array
     {
         $builder = LanguageServerTesterBuilder::create();
-        
+
         $tester = $builder->addHandler(new GotoDefinitionHandler(
             $builder->workspace(),
             new TestDefinitionLocator(new TypeLocations($locations)),

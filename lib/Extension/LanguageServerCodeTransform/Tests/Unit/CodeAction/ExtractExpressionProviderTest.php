@@ -60,7 +60,7 @@ class ExtractExpressionProviderTest extends TestCase
             ))
         );
     }
-     
+
     public function provideActionsData(): Generator
     {
         yield 'Fail' => [
@@ -87,7 +87,7 @@ class ExtractExpressionProviderTest extends TestCase
             ]
         ];
     }
-    
+
     private function createProvider(): ExtractExpressionProvider
     {
         return new ExtractExpressionProvider($this->extractExpression->reveal());

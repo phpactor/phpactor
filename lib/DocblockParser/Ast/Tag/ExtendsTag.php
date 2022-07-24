@@ -12,9 +12,9 @@ class ExtendsTag extends TagNode
         'tag',
         'type',
     ];
-    
+
     public Token $tag;
-    
+
     public ?TypeNode $type;
 
     public function __construct(Token $tag, ?TypeNode $type = null)

@@ -26,7 +26,7 @@ class UseNameCompletor implements TolerantCompletor
         $this->prioritizer = $prioritizer;
     }
 
-    
+
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $parent = $node->parent;

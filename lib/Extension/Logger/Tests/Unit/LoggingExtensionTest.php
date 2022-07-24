@@ -107,7 +107,7 @@ class ExampleExtension implements Extension
         }, [ LoggingExtension::TAG_FORMATTER => ['alias'=> 'json2']]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

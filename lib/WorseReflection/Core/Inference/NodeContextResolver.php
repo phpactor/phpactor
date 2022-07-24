@@ -16,9 +16,9 @@ use Psr\Log\LoggerInterface;
 class NodeContextResolver
 {
     private Reflector $reflector;
-    
+
     private LoggerInterface $logger;
-    
+
     /**
      * @var array<class-name,Resolver>
      */
@@ -27,7 +27,7 @@ class NodeContextResolver
     private Cache $cache;
 
     private DocBlockFactory $docblockFactory;
-    
+
     /**
      * @param array<class-name,Resolver> $resolverMap
      */

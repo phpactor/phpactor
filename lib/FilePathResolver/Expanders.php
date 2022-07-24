@@ -40,7 +40,7 @@ class Expanders implements IteratorAggregate
         return $this->expanders[$tokenName];
     }
 
-    
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->expanders);

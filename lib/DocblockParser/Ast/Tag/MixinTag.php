@@ -12,9 +12,9 @@ class MixinTag extends TagNode
         'tag',
         'class'
     ];
-    
+
     public ?ClassNode $class;
-    
+
     public Token $tag;
 
     public function __construct(Token $tag, ?ClassNode $class)

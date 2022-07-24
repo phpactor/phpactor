@@ -30,7 +30,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollec
 class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector
 {
     private SourceCodeReflector $sourceReflector;
-    
+
     private SourceCodeLocator $sourceLocator;
 
     public function __construct(SourceCodeReflector $sourceReflector, SourceCodeLocator $sourceLocator)
@@ -111,7 +111,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
 
         return $class;
     }
-    
+
     public function reflectEnum($className): ReflectionEnum
     {
         $className = ClassName::fromUnknown($className);
@@ -187,7 +187,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     {
         return $this->sourceReflector->reflectMethodCall($sourceCode, $offset);
     }
-    
+
     public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
     {
         return $this->sourceReflector->reflectFunctionsIn($sourceCode);
@@ -232,12 +232,12 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
 
         return $function;
     }
-    
+
     public function sourceCodeForFunction($name): SourceCode
     {
         return $this->sourceLocator->locate(Name::fromUnknown($name));
     }
-    
+
     public function sourceCodeForClassLike($name): SourceCode
     {
         return $this->sourceLocator->locate(Name::fromUnknown($name));

@@ -94,7 +94,7 @@ class LanguageServerExtension implements Extension
     public const LOG_CHANNEL = 'LSP';
     public const PARAM_SHUTDOWN_GRACE_PERIOD = 'language_server.shutdown_grace_period';
     public const PARAM_SELF_DESTRUCT_TIMEOUT = 'language_server.self_destruct_timeout';
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -134,7 +134,7 @@ class LanguageServerExtension implements Extension
         ]);
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $this->registerServer($container);
@@ -373,13 +373,13 @@ class LanguageServerExtension implements Extension
 
         $container->register(Handlers::class, function (Container $container) {
             $handlers = [];
-        
+
             foreach (array_keys(
                 $container->getServiceIdsForTag(LanguageServerExtension::TAG_METHOD_HANDLER)
             ) as $serviceId) {
                 $handlers[] = $container->get($serviceId);
             }
-        
+
             return new Handlers(...$handlers);
         });
 

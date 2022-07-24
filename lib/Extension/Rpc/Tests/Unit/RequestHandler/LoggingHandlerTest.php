@@ -16,24 +16,24 @@ use Prophecy\PhpUnit\ProphecyTrait;
 class LoggingHandlerTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     /**
      * @var ObjectProphecy<RequestHandler>
      */
     private ObjectProphecy $innerHandler;
 
     private LoggingHandler $loggingHandler;
-    
+
     /**
      * @var ObjectProphecy<Response>
      */
     private ObjectProphecy $response;
-    
+
     /**
      * @var ObjectProphecy<Request>
      */
     private ObjectProphecy $request;
-    
+
     /**
      * @var ObjectProphecy<LoggerInterface>
      */

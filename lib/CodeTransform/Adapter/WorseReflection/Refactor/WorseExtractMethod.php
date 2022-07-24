@@ -76,7 +76,7 @@ class WorseExtractMethod implements ExtractMethod
                 }
                 $stmt = $prev;
             }
-            
+
             $endNode = $stmt ?? $endNode;
         }
 
@@ -97,7 +97,7 @@ class WorseExtractMethod implements ExtractMethod
             while ($stmt && $stmt->getStartPosition() < $offsetStart) {
                 $stmt = next($startNode->statements);
             }
-            
+
             $startNode = $stmt ?? $startNode;
             if (!$startNode instanceof Node) {
                 return false;
@@ -140,13 +140,13 @@ class WorseExtractMethod implements ExtractMethod
         $args = $this->addParametersAndGetArgs($parameterVariables, $methodBuilder, $builder);
 
         $returnVariables = $this->returnVariables($locals, $reflectionMethod, $source, $offsetStart, $offsetEnd);
-        
+
         $returnAssignment = $this->addReturnAndGetAssignment(
             $returnVariables,
             $methodBuilder,
             $args
         );
-        
+
         $prototype = $builder->build();
 
         $replacement = $this->replacement($name, $args, $selection, $returnAssignment);
@@ -408,19 +408,19 @@ class WorseExtractMethod implements ExtractMethod
     {
         $node = $this->parser->parseSourceFile($source->__toString());
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
-        
+
         // end node is in the statement body, get last child node
         if ($endNode instanceof CompoundStatementNode) {
             $childNodes = iterator_to_array($endNode->getChildNodes());
             $endNode = end($childNodes);
             assert($endNode instanceof Node);
         }
-        
+
         // get the positional parent of the node
         while ($endNode->parent && $endNode->getEndPosition() === $endNode->parent->getEndPosition()) {
             $endNode = $endNode->parent;
         }
-        
+
         return !$endNode->parent instanceof CompoundStatementNode;
     }
 

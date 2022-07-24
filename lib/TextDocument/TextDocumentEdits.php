@@ -11,7 +11,7 @@ use IteratorAggregate;
 class TextDocumentEdits implements IteratorAggregate
 {
     private TextEdits $textEdits;
-    
+
     private TextDocumentUri $uri;
 
 
@@ -20,7 +20,7 @@ class TextDocumentEdits implements IteratorAggregate
         $this->textEdits = $textEdits;
         $this->uri = $uri;
     }
-    
+
     public function uri(): TextDocumentUri
     {
         return $this->uri;

@@ -24,7 +24,7 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
     {
         yield 'no parameters' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { function __construct() {} }
 
                 $foobar = new Foobar($<>);
@@ -34,7 +34,7 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
 
         yield 'parameter 1' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function __construct(string $foo) {} }
 
                 $param = 'string';
@@ -51,7 +51,7 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
 
         yield 'parameter, 2nd pos' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function __construct(string $foo, Foobar $bar) {} }
 
                 $param = 'string';
@@ -69,7 +69,7 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
 
         yield 'parameter, 3rd pos' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function __construct(string $foo, Foobar $bar, $mixed) {} }
 
                 $param = 'string';
@@ -86,7 +86,7 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
 
         yield 'no suggestions when exceeding parameter arity' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public function __construct(string $foo) {} }
 
                 $param = 'string';
@@ -97,7 +97,7 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
 
         yield 'namespaced class' => [
             <<<'EOT'
-                <?php 
+                <?php
 
                 namespace Hello;
 
@@ -117,10 +117,10 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
 
         yield 'complete on open braclet' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Hello
                 {
-                    public function __construct(string $foobar) 
+                    public function __construct(string $foobar)
                     {
                     }
                 }
@@ -142,7 +142,7 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
     {
         yield 'complete static method parameter' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foobar { public static function barbar(string $foo, Foobar $bar, $mixed) {} }
 
                 $param = 'string';

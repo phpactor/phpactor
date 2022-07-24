@@ -23,7 +23,7 @@ class PhpLintDiagnosticProvider implements DiagnosticsProvider
         $this->linter = $linter;
     }
 
-    
+
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {

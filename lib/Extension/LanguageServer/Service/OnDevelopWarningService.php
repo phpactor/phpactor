@@ -23,7 +23,7 @@ class OnDevelopWarningService implements ServiceProvider
         $this->status = $status;
     }
 
-    
+
     public function services(): array
     {
         if (false === $this->warnOnDevelop) {

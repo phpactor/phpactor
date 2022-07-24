@@ -17,7 +17,7 @@ class PhpstanDiagnosticProvider implements DiagnosticsProvider
         $this->linter = $linter;
     }
 
-    
+
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return $this->linter->lint($textDocument->uri, $textDocument->text);

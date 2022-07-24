@@ -30,7 +30,7 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
         $this->snippetFormatter = $snippetFormatter;
     }
 
-    
+
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $parent = $node->parent;

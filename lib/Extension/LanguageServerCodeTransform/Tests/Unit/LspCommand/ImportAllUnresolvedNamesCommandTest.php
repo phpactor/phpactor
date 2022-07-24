@@ -117,7 +117,7 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
         $builder = LanguageServerTesterBuilder::createBare()
             ->enableCommands()
             ->enableTextDocuments();
-        
+
         $builder->addCommand(
             ImportAllUnresolvedNamesCommand::NAME,
             new ImportAllUnresolvedNamesCommand(

@@ -152,7 +152,7 @@ class MemberIndexer implements TolerantIndexer
         assert($record instanceof MemberRecord);
         $record->addReference($document->uri()->path());
         $index->write($record);
-        
+
         $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
         assert($fileRecord instanceof FileRecord);
         $fileRecord->addReference(RecordReference::fromRecordAndOffsetAndContainerType($record, $offsetStart, $containerFqn));

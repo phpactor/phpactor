@@ -25,7 +25,7 @@ class TestExtension implements Extension
         }, [ WorseReflectionExtension::TAG_FRAME_WALKER => []]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

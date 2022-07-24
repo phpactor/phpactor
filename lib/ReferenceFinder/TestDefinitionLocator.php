@@ -24,7 +24,7 @@ class TestDefinitionLocator implements DefinitionLocator
         }
         return new self(new TypeLocations([ new TypeLocation($type, $location)]));
     }
-    
+
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (null === $this->location) {

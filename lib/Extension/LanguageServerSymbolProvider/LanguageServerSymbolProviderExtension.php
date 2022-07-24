@@ -29,7 +29,7 @@ class LanguageServerSymbolProviderExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

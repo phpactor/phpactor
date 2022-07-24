@@ -19,7 +19,7 @@ class DefinitionAndReferenceFinder implements ReferenceFinder
         $this->referenceFinder = $referenceFinder;
     }
 
-    
+
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         try {

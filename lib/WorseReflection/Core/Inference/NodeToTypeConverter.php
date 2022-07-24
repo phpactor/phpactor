@@ -90,7 +90,7 @@ class NodeToTypeConverter
         if ($this->isFunctionCall($node)) {
             return TypeFactory::unknown();
         }
-        
+
         if ($this->isUseDefinition($node)) {
             return TypeFactory::fromStringWithReflector((string) $type, $this->reflector);
         }

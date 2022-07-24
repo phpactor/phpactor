@@ -35,7 +35,7 @@ class WorseNamedParameterCompletor implements TolerantCompletor
         $this->formatter = $formatter;
     }
 
-    
+
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         if (null === $creation = NodeQuery::firstAncestorOrSelfInVia(

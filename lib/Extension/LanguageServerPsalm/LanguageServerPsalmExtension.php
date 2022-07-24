@@ -20,7 +20,7 @@ class LanguageServerPsalmExtension implements Extension
     public const PARAM_PSALM_BIN = 'language_server_psalm.bin';
     public const PARAM_ENABLED = 'language_server_psalm.enabled';
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register(PsalmDiagnosticProvider::class, function (Container $container) {
@@ -51,7 +51,7 @@ class LanguageServerPsalmExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([

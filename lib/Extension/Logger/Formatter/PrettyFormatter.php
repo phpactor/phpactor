@@ -20,7 +20,7 @@ class PrettyFormatter implements FormatterInterface
         return $message."\n";
     }
 
-    
+
     public function formatBatch(array $records): void
     {
     }

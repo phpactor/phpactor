@@ -13,8 +13,8 @@ class YamlDeserializerTest extends TestCase
         $this->expectException(CouldNotDeserialize::class);
         (new YamlDeserializer())->deserialize(
             <<<'EOT'
-                asd 
-                 \t 
+                asd
+                 \t
                 a
                  1235
                      123

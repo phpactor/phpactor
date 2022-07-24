@@ -162,7 +162,7 @@ abstract class AbstractParameterCompletor
             assert($callExpression instanceof CallExpression);
             return $callExpression->argumentExpressionList;
         }
-        
+
         assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
         assert(null !== $node->parent);
 

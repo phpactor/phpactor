@@ -106,7 +106,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
- 
+
         yield 'add union of array literals' => [
             <<<'EOT'
                 <?php

@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 final class NodeContext
 {
     private Type $type;
-    
+
     private Symbol $symbol;
 
     private TypeAssertions $typeAssertions;

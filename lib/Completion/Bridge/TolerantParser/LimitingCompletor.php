@@ -23,7 +23,7 @@ class LimitingCompletor implements TolerantCompletor, TolerantQualifiable
         $this->limit = $limit;
     }
 
-    
+
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         /** @var TolerantCompletor $completor */

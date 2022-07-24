@@ -11,9 +11,9 @@ class NullableNode extends TypeNode
         'nullable',
         'type',
     ];
-    
+
     public Token $nullable;
-    
+
     public TypeNode $type;
 
     public function __construct(Token $nullable, TypeNode $type)

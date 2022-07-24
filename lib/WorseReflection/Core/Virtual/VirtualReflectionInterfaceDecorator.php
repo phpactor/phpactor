@@ -21,7 +21,7 @@ class VirtualReflectionInterfaceDecorator extends VirtualReflectionClassLikeDeco
      * @var ReflectionMemberProvider[]
      */
     private array $memberProviders;
-    
+
     private ServiceLocator $serviceLocator;
 
     public function __construct(ServiceLocator $serviceLocator, ReflectionInterface $interface, array $memberProviders = [])

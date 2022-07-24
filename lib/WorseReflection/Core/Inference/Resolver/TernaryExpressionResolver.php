@@ -27,7 +27,7 @@ class TernaryExpressionResolver implements Resolver
             $frame->applyTypeAssertions($condition->typeAssertions(), $node->ifExpression->getStartPosition());
             $left = $resolver->resolveNode($frame, $node->ifExpression);
         }
-        
+
         /** @phpstan-ignore-next-line */
         if (!$node->ifExpression) {
             $left = $condition;

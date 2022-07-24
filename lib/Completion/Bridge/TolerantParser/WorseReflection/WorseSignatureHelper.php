@@ -60,7 +60,7 @@ class WorseSignatureHelper implements SignatureHelper
         $nodeAtPosition = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
         [$argsNode, $callNode] = $this->resolveArgsAndCallNode($nodeAtPosition, $offset);
-        
+
         // if current position not inside a call expression
         if (!$callNode && self::isACallExpression($nodeAtPosition)) {
             $callNode = $nodeAtPosition;
@@ -107,37 +107,37 @@ class WorseSignatureHelper implements SignatureHelper
         if ($callable instanceof QualifiedName) {
             return $this->signatureHelpForFunction($callable, $position);
         }
-        
+
         if ($callable instanceof ScopedPropertyAccessExpression) {
             return $this->signatureHelpForScopedPropertyAccess($callable, $callNode, $position);
         }
-        
+
         if ($callable instanceof MemberAccessExpression) {
             $reflectionOffset = $this->reflector->reflectOffset($textDocument, $callable->getEndPosition());
             $symbolContext = $reflectionOffset->symbolContext();
-        
+
             if ($symbolContext->symbol()->symbolType() !== Symbol::METHOD) {
                 throw new CouldNotHelpWithSignature(sprintf(
                     'Could not provide signature member type "%s"',
                     $symbolContext->symbol()->symbolType()
                 ));
             }
-        
+
             $containerType = $symbolContext->containerType()->classNamedTypes()->firstOrNull();
-        
+
             if (!$containerType instanceof ClassType) {
                 throw new CouldNotHelpWithSignature(sprintf(
                     'Container type is not a class: "%s"',
                     $symbolContext->symbol()->name()
                 ));
             }
-        
+
             $reflectionClass = $this->reflector->reflectClassLike($containerType->name());
             $reflectionMethod = $reflectionClass->methods()->get($symbolContext->symbol()->name());
-        
+
             return $this->createSignatureHelp($reflectionMethod, $position);
         }
-        
+
         throw new CouldNotHelpWithSignature(sprintf('Could not provide signature for AST node of type "%s"', get_class($callable)));
     }
 
@@ -245,13 +245,13 @@ class WorseSignatureHelper implements SignatureHelper
         ) {
             return [null, $nodeAtPosition];
         }
-        
+
         if ($nodeAtPosition instanceof ArgumentExpressionList) {
             $argsNode = $nodeAtPosition;
             $callNode = $argsNode->parent ?? null;
             return [$argsNode, $callNode];
         }
-        
+
         if ($argsNode = $nodeAtPosition->getFirstChildNode(ArgumentExpressionList::class)) {
             return [$argsNode, $nodeAtPosition];
         }

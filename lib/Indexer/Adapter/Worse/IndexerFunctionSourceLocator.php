@@ -18,7 +18,7 @@ class IndexerFunctionSourceLocator implements SourceCodeLocator
         $this->index = $index;
     }
 
-    
+
     public function locate(Name $name): SourceCode
     {
         if (empty($name->__toString())) {

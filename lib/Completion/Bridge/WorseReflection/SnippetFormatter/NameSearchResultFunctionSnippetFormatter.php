@@ -22,7 +22,7 @@ class NameSearchResultFunctionSnippetFormatter implements Formatter
             && $object->type()->isFunction();
     }
 
-    
+
     public function format(ObjectFormatter $formatter, object $nameSearchResult): string
     {
         assert($nameSearchResult instanceof NameSearchResult);

@@ -21,7 +21,7 @@ class LanguageServerBridgeExtension implements Extension
     {
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register(LocationConverter::class, function (Container $container) {

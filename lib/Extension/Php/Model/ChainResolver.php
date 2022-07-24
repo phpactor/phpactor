@@ -16,7 +16,7 @@ class ChainResolver implements PhpVersionResolver
         $this->versionResolvers = $versionResolvers;
     }
 
-    
+
     public function resolve(): ?string
     {
         foreach ($this->versionResolvers as $versionResolver) {

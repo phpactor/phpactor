@@ -28,7 +28,7 @@ class GotoImplementationHandler implements Handler, CanRegisterCapabilities
         $this->locationConverter = $locationConverter;
     }
 
-    
+
     public function methods(): array
     {
         return [

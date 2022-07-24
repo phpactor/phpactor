@@ -13,7 +13,7 @@ class LoggerFactory
     {
         $this->mainLogger = $mainLogger;
     }
-         
+
     public function get(string $name): LoggerInterface
     {
         return new ChannelLogger($name, $this->mainLogger);

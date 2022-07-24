@@ -13,9 +13,9 @@ use RecursiveIteratorIterator;
 final class StubSourceLocator implements SourceCodeLocator
 {
     private string $cacheDir;
-    
+
     private Reflector $reflector;
-    
+
     private string $stubPath;
 
     public function __construct(Reflector $reflector, string $stubPath, string $cacheDir)
@@ -87,7 +87,7 @@ final class StubSourceLocator implements SourceCodeLocator
         $functions = $this->reflector->reflectClassesIn(
             SourceCode::fromPath($file)
         );
-        
+
         foreach ($functions as $function) {
             $map[(string) $function->name()] = (string) $file;
         }
@@ -100,7 +100,7 @@ final class StubSourceLocator implements SourceCodeLocator
         $functions = $this->reflector->reflectFunctionsIn(
             SourceCode::fromPath($file)
         );
-        
+
         foreach ($functions as $function) {
             $map[(string) $function->name()] = (string) $file;
         }

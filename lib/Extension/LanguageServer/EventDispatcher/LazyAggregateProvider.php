@@ -20,7 +20,7 @@ class LazyAggregateProvider implements ListenerProviderInterface
         $this->container = $container;
         $this->serviceIds = $serviceIds;
     }
-    
+
     public function getListenersForEvent(object $event): iterable
     {
         if (null === $this->aggregateProvider) {

@@ -12,7 +12,7 @@ final class WordAtOffset
     // see https://www.php.net/manual/en/language.oop5.basic.php
     const SPLIT_PHP_NAME = '[^a-zA-Z0-9_\x80-\xff]';
     const SPLIT_QUALIFIED_PHP_NAME = '[^a-zA-Z0-9_\x80-\xff\\\]';
-    
+
     private string $splitPattern;
 
     public function __construct(string $splitPattern = self::SPLIT_WORD)

@@ -10,7 +10,7 @@ class IntersectionNode extends TypeNode
     protected const CHILD_NAMES = [
         'types',
     ];
-    
+
     public TypeList $types;
 
     public function __construct(TypeList $types)

@@ -35,7 +35,7 @@ class FilePathResolverExtension implements Extension
     const PARAM_APPLICATION_ROOT = 'file_path_resolver.application_root';
     const LOG_CHANNEL = 'FPR';
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -47,7 +47,7 @@ class FilePathResolverExtension implements Extension
         ]);
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $this->registerPathResolver($container);
@@ -76,7 +76,7 @@ class FilePathResolverExtension implements Extension
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_FILTER)) as $serviceId) {
                 $filters[] = $container->get($serviceId);
             }
-        
+
             $resolver = new FilteringPathResolver($filters);
 
             if ($container->getParameter(self::PARAM_ENABLE_CACHE)) {

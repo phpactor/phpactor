@@ -53,13 +53,13 @@ class HoverHandlerTest extends IntegrationTestCase
 
         yield 'method with documentation' => [
             <<<'EOT'
-                <?php 
+                <?php
 
-                class A { 
-                    /** 
-                     * This is a method 
+                class A {
+                    /**
+                     * This is a method
                      */
-                    private function f<>oo():string {} 
+                    private function f<>oo():string {}
                 }
                 EOT
             ,
@@ -67,19 +67,19 @@ class HoverHandlerTest extends IntegrationTestCase
 
         yield 'method with parent documentation' => [
             <<<'EOT'
-                <?php 
+                <?php
 
                 class Foobar {
-                    /** 
+                    /**
                      * The original documentation
                      */
-                    private function foo():string {} 
+                    private function foo():string {}
                 }
-                class A extends Foobar { 
-                    /** 
-                     * This is a method 
+                class A extends Foobar {
+                    /**
+                     * This is a method
                      */
-                    private function f<>oo():string {} 
+                    private function f<>oo():string {}
                 }
                 EOT
             ,
@@ -87,19 +87,19 @@ class HoverHandlerTest extends IntegrationTestCase
 
         yield 'method on a union' => [
             <<<'EOT'
-                <?php 
+                <?php
 
                 class Barfoo {
-                    /** 
+                    /**
                      * The original documentation
                      */
-                    private function foo():string {} 
+                    private function foo():string {}
                 }
                 class Foobar {
-                    /** 
+                    /**
                      * The original documentation
                      */
-                    private function foo():string {} 
+                    private function foo():string {}
                 }
 
                 function foo(Barfoo|Foobar $foo) {

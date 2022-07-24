@@ -16,7 +16,7 @@ class TestExtension implements Extension
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'test' ] ]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

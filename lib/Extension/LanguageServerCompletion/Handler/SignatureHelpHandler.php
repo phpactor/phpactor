@@ -28,7 +28,7 @@ class SignatureHelpHandler implements Handler, CanRegisterCapabilities
         $this->helper = $helper;
     }
 
-    
+
     public function methods(): array
     {
         return [

@@ -18,7 +18,7 @@ class WorseNameToUriConverter implements NameToUriConverter
         $this->reflector = $reflector;
     }
 
-    
+
     public function convert(string $className): TextDocumentUri
     {
         try {

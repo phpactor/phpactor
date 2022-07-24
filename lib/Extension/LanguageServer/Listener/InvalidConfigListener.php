@@ -22,7 +22,7 @@ class InvalidConfigListener implements ListenerProviderInterface
         $this->errors = $errors;
     }
 
-    
+
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof Initialized) {

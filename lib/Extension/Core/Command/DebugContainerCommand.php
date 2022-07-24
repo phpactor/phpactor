@@ -53,14 +53,14 @@ class DebugContainerCommand extends Command
         ]);
         foreach ($this->container->getServiceIds() as $serviceId) {
             $type = '<not found>';
-        
+
             try {
                 $value = $this->container->get($serviceId);
                 $type = is_object($value) ? get_class($value) : gettype($value);
             } catch (RuntimeException $exception) {
                 $table->addRow(['<error>Error: '.$serviceId.'</>', $exception->getMessage()]);
             }
-        
+
             $table->addRow([$serviceId, $type ]);
         }
         $table->render();

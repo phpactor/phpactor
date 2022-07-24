@@ -34,7 +34,7 @@ class ProximityPrioritizer implements DocumentPrioritizer
     {
         $e1 = explode('/', $one->path());
         $e2 = explode('/', $two->path());
-        
+
         foreach ($e1 as $index => $segment) {
             if (isset($e2[$index]) && $e2[$index] === $segment) {
                 unset($e1[$index], $e2[$index]);
@@ -49,7 +49,7 @@ class ProximityPrioritizer implements DocumentPrioritizer
         if ($distance === 0) {
             return 1;
         }
-        
+
         $max = max($count1, $count2);
         $weight = $max / $distance;
         return 1 - $weight;

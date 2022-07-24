@@ -50,7 +50,7 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
     public function index(Index $index, TextDocument $document, Node $node): void
     {
         assert($node instanceof QualifiedName);
-        
+
         $name =
             $node->parent->parent instanceof TraitUseClause ?
                 TolerantQualifiedNameResolver::getResolvedName($node) :

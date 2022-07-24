@@ -35,12 +35,12 @@ class ArrayKeyValueList extends Node implements IteratorAggregate, Countable
     {
         return new ArrayIterator($this->list);
     }
-    
+
     public function count(): int
     {
         return count($this->list);
     }
-    
+
     /**
      * @return ArrayKeyValueNode[]
      */

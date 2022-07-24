@@ -39,7 +39,7 @@ final class OffsetExtractor
             array_keys($this->rangeCloseMarkers),
         );
         $results = preg_split('/('. implode('|', $markers) .')/u', $source, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
-        
+
         if (!is_array($results)) {
             return $this;
         }
@@ -62,7 +62,7 @@ final class OffsetExtractor
                 $pointResults[$this->points[$result]][] = ByteOffset::fromInt($offset);
                 continue;
             }
-            
+
             if (isset($this->rangeOpenMarkers[$result])) {
                 $currentRangeStartOffset = $offset;
                 continue;
@@ -72,11 +72,11 @@ final class OffsetExtractor
                 $rangeResults[$this->rangeCloseMarkers[$result]][] = ByteOffsetRange::fromInts($currentRangeStartOffset, $offset);
                 continue;
             }
-            
+
             $offset += strlen($result);
             $newSource .= $result;
         }
-        
+
         return new OffsetExtractorResult($newSource, $pointResults, $rangeResults);
         ;
     }

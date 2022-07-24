@@ -67,10 +67,10 @@ class ChainTolerantCompletor implements Completor
         // ` will evaluate the Variable node as an expression node with a
         // double variable `$\n    $bar = `
         $truncatedSource = substr($source, 0, $byteOffset);
-        
+
         // determine the last non-whitespace _character_ offset
         $characterOffset = OffsetHelper::lastNonWhitespaceCharacterOffset($truncatedSource);
-        
+
         // truncate the source at the character offset
         $truncatedSource = mb_substr($source, 0, $characterOffset);
 

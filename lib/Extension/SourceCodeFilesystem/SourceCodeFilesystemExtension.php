@@ -29,7 +29,7 @@ class SourceCodeFilesystemExtension implements Extension
     const SERVICE_FILESYSTEM_COMPOSER = 'source_code_filesystem.composer';
     const PARAM_PROJECT_ROOT = 'source_code_filesystem.project_root';
 
-    
+
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -57,7 +57,7 @@ class SourceCodeFilesystemExtension implements Extension
                     ));
                 }
             }
-        
+
             return new FallbackFilesystemRegistry(
                 new MappedFilesystemRegistry($filesystems),
                 'simple'
@@ -66,24 +66,24 @@ class SourceCodeFilesystemExtension implements Extension
         $container->register(self::SERVICE_FILESYSTEM_GIT, function (Container $container) {
             return new GitFilesystem(FilePath::fromString($this->projectRoot($container)));
         }, [ 'source_code_filesystem.filesystem' => [ 'name' => self::FILESYSTEM_GIT ]]);
-        
+
         $container->register(self::SERVICE_FILESYSTEM_SIMPLE, function (Container $container) {
             return new SimpleFilesystem(FilePath::fromString($this->projectRoot($container)));
         }, [ 'source_code_filesystem.filesystem' => ['name' => self::FILESYSTEM_SIMPLE]]);
-        
+
         $container->register(self::SERVICE_FILESYSTEM_COMPOSER, function (Container $container) {
             $providers = [];
             $cwd = FilePath::fromString($this->projectRoot($container));
             $classLoaders = $container->get(ComposerAutoloaderExtension::SERVICE_AUTOLOADERS);
-        
+
             if (!$classLoaders) {
                 throw new NotSupported('No composer class loaders found/configured');
             }
-        
+
             foreach ($classLoaders as $classLoader) {
                 $providers[] = new ComposerFileListProvider($cwd, $classLoader);
             }
-        
+
             return new SimpleFilesystem($cwd, new ChainFileListProvider($providers));
         }, [ 'source_code_filesystem.filesystem' => [ 'name' => self::FILESYSTEM_COMPOSER ]]);
     }

@@ -39,14 +39,14 @@ class OriginalMethodResolver
     private function resolveClass(ReflectionClass $classLike, ReflectionMember $member): ReflectionMember
     {
         $parent = $classLike->parent();
-        
+
         if ($parent !== null) {
             $member = $this->doResolveOriginalMember(
                 $classLike->parent(),
                 $member
             );
         }
-        
+
         foreach ($classLike->interfaces() as $interface) {
             $member = $this->doResolveOriginalMember(
                 $interface,

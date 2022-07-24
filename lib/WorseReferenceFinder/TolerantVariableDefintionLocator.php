@@ -22,7 +22,7 @@ class TolerantVariableDefintionLocator implements DefinitionLocator
         $this->finder = $finder;
     }
 
-    
+
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         foreach ($this->finder->findReferences($document, $byteOffset) as $reference) {

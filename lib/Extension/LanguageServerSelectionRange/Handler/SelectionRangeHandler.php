@@ -27,7 +27,7 @@ class SelectionRangeHandler implements Handler, CanRegisterCapabilities
         $this->provider = $provider;
     }
 
-    
+
     public function methods(): array
     {
         return [

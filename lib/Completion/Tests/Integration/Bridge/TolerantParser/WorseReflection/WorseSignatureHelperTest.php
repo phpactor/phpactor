@@ -440,7 +440,7 @@ class WorseSignatureHelperTest extends IntegrationTestCase
 
         yield 'non-existing static member' => [
             <<<'EOT'
-                <?php 
+                <?php
                 class Foo {}
 
                 Foo::bar(<>);

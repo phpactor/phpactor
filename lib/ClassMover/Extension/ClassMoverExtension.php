@@ -17,7 +17,7 @@ class ClassMoverExtension implements Extension
     {
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $this->registerClassMover($container);

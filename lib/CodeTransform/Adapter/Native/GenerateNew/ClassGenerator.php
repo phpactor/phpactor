@@ -20,7 +20,7 @@ class ClassGenerator implements GenerateNew
         $this->renderer = $renderer;
     }
 
-    
+
     public function generateNew(ClassName $targetName): SourceCode
     {
         $builder = SourceCodeBuilder::create();

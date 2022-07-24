@@ -11,7 +11,7 @@ class ConstantPhpVersionResolver implements PhpVersionResolver
         $this->version = $version;
     }
 
-    
+
     public function resolve(): ?string
     {
         return $this->version;

@@ -72,14 +72,14 @@ class FileFinder
 
         $filePaths = [ $path ];
         $filePaths = $this->traitFilePaths($reflection, $filePaths);
-        
+
         if ($private) {
             return FileList::fromFilePaths($filePaths);
         }
-        
+
         $filePaths = $this->parentFilePaths($reflection, $filePaths);
         $filePaths = $this->interfaceFilePaths($reflection, $filePaths);
-        
+
         return FileList::fromFilePaths($filePaths);
     }
 

@@ -130,8 +130,8 @@ class NodeTest extends NodeTestCase
             <<<'EOT'
                 /**
                  * This is a docblock
-                 * With some text - 
-                 * and maybe some 
+                 * With some text -
+                 * and maybe some
                  * ```
                  * Markdown
                  * ```
@@ -141,8 +141,8 @@ class NodeTest extends NodeTestCase
             , function (Docblock $docblock): void {
                 self::assertEquals(<<<'EOT'
                     This is a docblock
-                    With some text - 
-                    and maybe some 
+                    With some text -
+                    and maybe some
                     ```
                     Markdown
                     ```

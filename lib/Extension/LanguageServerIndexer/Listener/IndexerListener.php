@@ -18,7 +18,7 @@ class IndexerListener implements ListenerProviderInterface
         $this->manager = $manager;
     }
 
-    
+
     /**
      * @return Generator<callable>
      */

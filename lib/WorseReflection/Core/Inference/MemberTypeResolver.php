@@ -16,7 +16,7 @@ class MemberTypeResolver
     const TYPE_METHODS = 'methods';
     const TYPE_CONSTANTS = 'constants';
     const TYPE_PROPERTIES = 'properties';
-    
+
     private ClassReflector $reflector;
 
     public function __construct(ClassReflector $reflector)

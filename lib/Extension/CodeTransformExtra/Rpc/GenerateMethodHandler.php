@@ -48,7 +48,7 @@ class GenerateMethodHandler extends AbstractHandler
         );
 
         $originalSource = $this->determineOriginalSource($textDocumentEdits->uri(), $arguments);
-        
+
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
             $textDocumentEdits->uri()->path(),
             $originalSource,

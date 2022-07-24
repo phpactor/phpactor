@@ -14,7 +14,7 @@ class CallbackExpanderTest extends ExpanderTestCase
             return 'bar';
         });
     }
-    
+
     public function testExpandsCallbackValue(): void
     {
         $this->assertEquals('bar', $this->expand('%foo%'));

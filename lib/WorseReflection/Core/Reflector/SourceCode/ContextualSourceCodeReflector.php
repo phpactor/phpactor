@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeColle
 class ContextualSourceCodeReflector implements SourceCodeReflector
 {
     private SourceCodeReflector $innerReflector;
-    
+
     private TemporarySourceLocator $locator;
 
     public function __construct(SourceCodeReflector $innerReflector, TemporarySourceLocator $locator)
@@ -24,7 +24,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
         $this->innerReflector = $innerReflector;
         $this->locator = $locator;
     }
-    
+
     public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
@@ -34,7 +34,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
 
         return $collection;
     }
-    
+
     public function reflectOffset($sourceCode, $offset): ReflectionOffset
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
@@ -54,7 +54,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
 
         return $offset;
     }
-    
+
     public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);

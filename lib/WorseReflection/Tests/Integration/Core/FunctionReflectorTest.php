@@ -48,7 +48,7 @@ class FunctionReflectorTest extends IntegrationTestCase
         yield 'fallback to global function' => [
             <<<'EOT'
                 // File: project/global.php
-                <?php 
+                <?php
                 function hello() {}
                 EOT
             ,
@@ -61,7 +61,7 @@ class FunctionReflectorTest extends IntegrationTestCase
         yield 'namespaced function' => [
             <<<'EOT'
                 // File: project/global.php
-                <?php 
+                <?php
                 namespace Foo;
                 function hello() {}
                 EOT

@@ -19,7 +19,7 @@ class HydratingSearchClient implements SearchClient
         $this->index = $index;
     }
 
-    
+
     public function search(Criteria $criteria): Generator
     {
         foreach ($this->innerClient->search($criteria) as $record) {

@@ -44,11 +44,11 @@ class ForeachStatementResolver implements Resolver
     private function processValue(NodeContextResolver $resolver, ForeachStatement $node, Frame $frame, NodeContext $nodeContext): void
     {
         $itemName = $node->foreachValue;
-        
+
         if (!$itemName instanceof ForeachValue) {
             return;
         }
-        
+
         $expression = $itemName->expression;
         if ($expression instanceof Variable) {
             $this->valueFromVariable($expression, $node, $nodeContext, $frame);
@@ -63,16 +63,16 @@ class ForeachStatementResolver implements Resolver
     private function processKey(NodeContextResolver $resolver, ForeachStatement $node, Frame $frame, Type $type): void
     {
         $itemName = $node->foreachKey;
-        
+
         if (!$itemName instanceof ForeachKey) {
             return;
         }
-        
+
         $expression = $itemName->expression;
         if (!$expression instanceof Variable) {
             return;
         }
-        
+
         /** @phpstan-ignore-next-line */
         $itemName = $expression->name->getText($node->getFileContents());
 
@@ -91,14 +91,14 @@ class ForeachStatementResolver implements Resolver
         if ($type instanceof IterableType) {
             $context = $context->withType($this->resolveKeyType($type));
         }
-        
+
         $frame->locals()->set(WorseVariable::fromSymbolContext($context));
     }
 
     private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $nodeContext, Frame $frame): void
     {
         $itemName = $expression->getText();
-        
+
         if (!is_string($itemName)) {
             return;
         }
@@ -113,14 +113,14 @@ class ForeachStatementResolver implements Resolver
                 'symbol_type' => Symbol::VARIABLE,
             ]
         );
-        
+
         if ($type instanceof ReflectedClassType) {
             $context = $context->withType($type->iterableValueType());
         }
         if ($type instanceof IterableType) {
             $context = $context->withType($this->resolveValueType($type));
         }
-        
+
         $frame->locals()->set(WorseVariable::fromSymbolContext($context));
     }
 

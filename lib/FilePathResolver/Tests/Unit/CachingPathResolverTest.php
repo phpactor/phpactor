@@ -11,7 +11,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class CachingPathResolverTest extends TestCase
 {
     use ProphecyTrait;
-    
+
     /**
      * @var ObjectProphecy<PathResolver>
      */

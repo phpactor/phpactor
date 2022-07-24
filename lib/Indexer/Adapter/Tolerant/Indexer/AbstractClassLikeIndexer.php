@@ -24,11 +24,11 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
     {
         foreach ($record->implements() as $implementedClass) {
             $implementedRecord = $index->get(ClassRecord::fromName($implementedClass));
-        
+
             if (false === $implementedRecord->removeImplementation($record->fqn())) {
                 continue;
             }
-        
+
             $index->write($implementedRecord);
         }
     }
@@ -45,10 +45,10 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
             $record->addImplements(
                 FullyQualifiedName::fromString($interfaceName)
             );
-        
+
             assert($interfaceRecord instanceof ClassRecord);
             $interfaceRecord->addImplementation($record->fqn());
-        
+
             $index->write($interfaceRecord);
         }
     }

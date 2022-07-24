@@ -194,7 +194,7 @@ class FunctionLikeWalker implements Walker
                 'symbol_type' => Symbol::VARIABLE,
             ]
         );
-        
+
         // add this and self
         $frame->locals()->set(Variable::fromSymbolContext($context));
 

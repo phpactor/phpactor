@@ -23,7 +23,7 @@ class TolerantExtractExpressionTest extends TolerantTestCase
         }
 
         $extractMethod = new TolerantExtractExpression();
-        
+
         $textEdits = $extractMethod->extractExpression(SourceCode::fromString($source), $offsetStart, $offsetEnd, $name);
         $transformed = $textEdits->apply($source);
         $this->assertEquals(trim($expected), trim($transformed));
@@ -80,7 +80,7 @@ class TolerantExtractExpressionTest extends TolerantTestCase
             'extractExpression8A.test',
             'foobar',
         ];
- 
+
         yield 'preserve statement indentation: tabs and comments' => [
             'extractExpression8B.test',
             'foobar',
@@ -140,7 +140,7 @@ class TolerantExtractExpressionTest extends TolerantTestCase
     public function testWillNotExtractExpressionIfNoRange(): void
     {
         $extractMethod = new TolerantExtractExpression();
-        
+
         self::assertFalse($extractMethod->canExtractExpression(
             SourceCode::fromString('<?php new Foobar();'),
             8,

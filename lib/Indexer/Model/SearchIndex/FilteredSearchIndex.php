@@ -25,7 +25,7 @@ class FilteredSearchIndex implements SearchIndex
         $this->recordTypes = $recordTypes;
     }
 
-    
+
     public function search(Criteria $criteria): Generator
     {
         return $this->innerIndex->search($criteria);

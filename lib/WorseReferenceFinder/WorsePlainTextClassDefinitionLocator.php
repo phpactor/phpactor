@@ -38,7 +38,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
         $this->parser = new Parser();
     }
 
-    
+
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         $word = $this->extractWord($document, $byteOffset);
@@ -169,7 +169,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
         if (null === $name) {
             return '';
         }
-        
+
         return $name->__toString();
     }
 }

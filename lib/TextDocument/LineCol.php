@@ -15,9 +15,9 @@ use RuntimeException;
 final class LineCol
 {
     private const NEWLINE_PATTERN = '\\r\\n|\\n|\\r';
-    
+
     private int $line;
-    
+
     private int $col;
 
     public function __construct(int $line, int $col)

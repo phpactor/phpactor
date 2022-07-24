@@ -11,7 +11,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class SuffixExpanderDecoratorTest extends ExpanderTestCase
 {
     use ProphecyTrait;
-    
+
     /**
      * @var ObjectProphecy<Expander>
      */

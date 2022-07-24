@@ -30,11 +30,11 @@ use Psr\Log\LoggerInterface;
 class ServiceLocator
 {
     private SourceCodeLocator $sourceLocator;
-    
+
     private LoggerInterface $logger;
-    
+
     private Reflector $reflector;
-    
+
     private DocBlockFactory $docblockFactory;
 
     /**

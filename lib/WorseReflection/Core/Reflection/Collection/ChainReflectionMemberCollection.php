@@ -226,7 +226,7 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
         /** @phpstan-ignore-next-line It's _fine_ */
         return HomogeneousReflectionMemberCollection::fromReflections($items);
     }
-    
+
     /**
      * @param ReflectionMember::TYPE_* $type
      */

@@ -16,7 +16,7 @@ class InvalidExtension implements Extension
         }, [ ConsoleExtension::TAG_COMMAND => [] ]);
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

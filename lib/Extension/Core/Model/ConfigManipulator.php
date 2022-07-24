@@ -75,7 +75,7 @@ final class ConfigManipulator
                 ));
             }
         }
-        
+
         $config = file_get_contents($this->configPath);
         if (false === $config) {
             throw new RuntimeException(sprintf(
@@ -83,7 +83,7 @@ final class ConfigManipulator
                 $this->configPath
             ));
         }
-        
+
         $json = json_decode($config);
         if (null === $json) {
             throw new RuntimeException(sprintf(

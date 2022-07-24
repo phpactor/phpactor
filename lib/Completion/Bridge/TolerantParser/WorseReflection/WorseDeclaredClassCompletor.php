@@ -28,7 +28,7 @@ class WorseDeclaredClassCompletor implements TolerantCompletor, TolerantQualifia
         $this->formatter = $formatter;
     }
 
-    
+
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $classes = get_declared_classes();

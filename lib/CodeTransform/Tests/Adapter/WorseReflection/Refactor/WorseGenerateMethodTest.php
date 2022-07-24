@@ -88,7 +88,7 @@ class WorseGenerateMethodTest extends WorseTestCase
         $this->expectException(TransformException::class);
         $this->expectExceptionMessage('Can only generate methods on classes');
         $source = <<<'EOT'
-            <?php 
+            <?php
             trait Hello
             {
             }
@@ -115,11 +115,11 @@ class WorseGenerateMethodTest extends WorseTestCase
     {
         $worseSourceCode = WorseSourceCode::fromPathAndString('file:///source', $source);
         $reflector = $this->reflectorForWorkspace($worseSourceCode);
-        
+
         $generateMethod = new WorseGenerateMethod($reflector, new WorseBuilderFactory($reflector), $this->updater());
         $sourceCode = SourceCode::fromStringAndPath($source, 'file:///source');
         $textDocumentEdits = $generateMethod->generateMethod($sourceCode, $start, $name);
-        
+
         $transformed = SourceCode::fromStringAndPath(
             (string) $textDocumentEdits->textEdits()->apply($sourceCode),
             $textDocumentEdits->uri()->path()

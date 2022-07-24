@@ -38,7 +38,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
         $this->includeDefinition = $includeDefinition;
     }
 
-    
+
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         $sourceNode = $this->sourceNode($document->__toString());
@@ -46,7 +46,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
         if ($variable === null) {
             return;
         }
-        
+
         $scopeNode = $this->scopeNode($variable);
         $referencesGenerator = $this->find($scopeNode, $this->variableName($variable), $document->uri());
 
@@ -151,7 +151,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
             if ($node instanceof AnonymousFunctionCreationExpression && !$this->nameExistsInUseClause($name, $node)) {
                 continue;
             }
-            
+
             if ($node instanceof Variable && $name == $node->getName()) {
                 yield PotentialLocation::surely(
                     Location::fromPathAndOffset($uri, $node->getStartPosition())
@@ -204,7 +204,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
         if ($variable instanceof CatchClause && $variable->variableName) {
             return substr((string)$variable->variableName->getText($variable->getFileContents()), 1);
         }
-        
+
         return null;
     }
 }

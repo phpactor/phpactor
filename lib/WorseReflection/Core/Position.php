@@ -5,9 +5,9 @@ namespace Phpactor\WorseReflection\Core;
 final class Position
 {
     private int $fullStart;
-    
+
     private int $start;
-    
+
     private int $end;
 
     private function __construct(

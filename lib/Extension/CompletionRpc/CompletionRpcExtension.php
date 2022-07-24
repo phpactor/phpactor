@@ -16,7 +16,7 @@ class CompletionRpcExtension implements Extension
     {
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register('completion_rpc.handler', function (Container $container) {

@@ -22,7 +22,7 @@ class ComposerAutoloaderExtension implements Extension
     const PARAM_CLASS_MAPS_ONLY = 'composer.class_maps_only';
     const LOG_CHANNEL = 'COMPOSER';
 
-    
+
     public function configure(Resolver $resolver): void
     {
         $resolver->setDefaults([
@@ -39,7 +39,7 @@ class ComposerAutoloaderExtension implements Extension
         ]);
     }
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_AUTOLOADERS, function (Container $container) {
@@ -107,7 +107,7 @@ class ComposerAutoloaderExtension implements Extension
         foreach ($autoloaders as $autoloadFunction) {
             spl_autoload_unregister($autoloadFunction);
         }
-        
+
         foreach ($currentAutoloaders as $autoloader) {
             spl_autoload_register($autoloader);
         }

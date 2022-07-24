@@ -8,9 +8,9 @@ use OutOfRangeException;
 class TextEdit
 {
     private ByteOffset $start;
-    
+
     private int $length;
-    
+
     private string $replacement;
 
     private function __construct(ByteOffset $start, int $length, string $content)

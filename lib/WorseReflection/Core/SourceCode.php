@@ -86,7 +86,7 @@ class SourceCode implements TextDocument
     {
         return new self($source, $filePath);
     }
-    
+
     public function uri(): ?TextDocumentUri
     {
         if (!$this->path) {
@@ -107,7 +107,7 @@ class SourceCode implements TextDocument
 
         return $uri;
     }
-    
+
     public function language(): TextDocumentLanguage
     {
         return TextDocumentLanguage::fromString('php');

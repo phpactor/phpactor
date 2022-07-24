@@ -8,7 +8,7 @@ use Phpactor\DocblockParser\Parser;
 class PhpactorParserBench extends AbstractParserBenchCase
 {
     private Parser $parser;
-    
+
     private Lexer $lexer;
 
     public function setUp(): void

@@ -28,7 +28,7 @@ class LanguageServerSelectionRangeExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

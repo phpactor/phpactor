@@ -64,14 +64,14 @@ class FileRepository
             /** @phpstan-ignore-next-line */
             return $this->buffer[$bufferKey];
         }
-        
+
         $path = $this->pathFor($record);
 
         if (!file_exists($path)) {
             $this->remove($record);
             return null;
         }
-        
+
         try {
             $deserialized = $this->serializer->deserialize(file_get_contents($path));
         } catch (Throwable $corrupted) {

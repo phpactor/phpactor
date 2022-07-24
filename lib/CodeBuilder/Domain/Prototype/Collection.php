@@ -35,7 +35,7 @@ abstract class Collection implements IteratorAggregate, Countable
         /** @phpstan-ignore-next-line */
         return new static([]);
     }
-    
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
@@ -63,7 +63,7 @@ abstract class Collection implements IteratorAggregate, Countable
         return $first;
     }
 
-    
+
     public function count(): int
     {
         return count($this->items);

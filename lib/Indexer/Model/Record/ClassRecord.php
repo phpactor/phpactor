@@ -98,7 +98,7 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
         return $this;
     }
 
-    
+
     public function recordType(): string
     {
         return self::RECORD_TYPE;

@@ -17,7 +17,7 @@ class XdgExpanderTest extends TestCase
     use ProphecyTrait;
 
     private TokenExpandingFilter $expander;
-    
+
     /**
      * @var ObjectProphecy<Xdg>
      */

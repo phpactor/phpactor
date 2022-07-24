@@ -26,7 +26,7 @@ class ReferenceFinderExtension implements Extension
     const TAG_REFERENCE_FINDER = 'reference_finder.reference_finder';
     const TAG_NAME_SEARCHER = 'reference_finder.name_searcher';
 
-    
+
     public function load(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_DEFINITION_LOCATOR, function (Container $container) {
@@ -78,7 +78,7 @@ class ReferenceFinderExtension implements Extension
         });
     }
 
-    
+
     public function configure(Resolver $schema): void
     {
     }

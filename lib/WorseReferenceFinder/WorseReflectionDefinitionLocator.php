@@ -36,7 +36,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         $this->cache = $cache;
     }
 
-    
+
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (false === $document->language()->isPhp()) {

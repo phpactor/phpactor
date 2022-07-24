@@ -84,7 +84,7 @@ class LanguageServerReferenceFinderExtensionTest extends TestCase
             LanguageServerBridgeExtension::class,
             TestIndexerExtension::class,
         ]);
-        
+
         $builder = $container->get(LanguageServerBuilder::class);
         $this->assertInstanceOf(LanguageServerBuilder::class, $builder);
 

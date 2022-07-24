@@ -28,7 +28,7 @@ class WorseReflectionTypeLocator implements TypeLocator
         $this->reflector = $reflector;
     }
 
-    
+
     public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         if (false === $document->language()->isPhp()) {

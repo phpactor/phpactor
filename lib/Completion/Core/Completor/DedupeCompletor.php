@@ -19,7 +19,7 @@ class DedupeCompletor implements Completor
         $this->matchShortDescription = $matchShortDescription;
     }
 
-    
+
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         $seen = [];

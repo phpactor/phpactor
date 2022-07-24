@@ -86,9 +86,9 @@ abstract class AbstractReferenceRenamer implements Renamer
     protected function renameEdit(Location $location, ?ByteOffsetRange $range, string $originalName, string $newName): LocatedTextEdit
     {
         $referenceDocument = $this->locator->get($location->uri());
-        
+
         $range = $this->getRenameRange($referenceDocument, $location->offset());
-        
+
         if (null === $range) {
             throw new CouldNotRename(sprintf(
                 'Could not find corresponding reference to member name "%s" in document "%s" at offset %s',
@@ -97,7 +97,7 @@ abstract class AbstractReferenceRenamer implements Renamer
                 $location->offset()->toInt()
             ));
         }
-        
+
         $foundName = $this->rangeText($referenceDocument, $range);
         if ($foundName !== $originalName) {
             throw new CouldNotRename(sprintf(
@@ -107,7 +107,7 @@ abstract class AbstractReferenceRenamer implements Renamer
                 $originalName
             ));
         }
-        
+
         return new LocatedTextEdit(
             $location->uri(),
             PhpactorTextEdit::create(

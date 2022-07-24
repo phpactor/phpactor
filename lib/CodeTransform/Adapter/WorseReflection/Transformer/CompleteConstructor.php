@@ -77,7 +77,7 @@ class CompleteConstructor implements Transformer
         return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
     }
 
-    
+
     public function diagnostics(SourceCode $source): Diagnostics
     {
         $diagnostics = [];
@@ -122,7 +122,7 @@ class CompleteConstructor implements Transformer
             if ($class instanceof ReflectionInterface) {
                 continue;
             }
-        
+
             if (!$class->methods()->belongingTo($class->name())->has('__construct')) {
                 continue;
             }
