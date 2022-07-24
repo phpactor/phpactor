@@ -102,6 +102,6 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
 
     public function withClass(ReflectionClassLike $class): ReflectionMember
     {
-        return new self($this->serviceLocator, $class, $this->node);
+        return new self($this->serviceLocator, $class, $this->declaration, $this->node);
     }
 }
