@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 
+use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
@@ -65,10 +66,12 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
      */
     public function members(): ReflectionMemberCollection
     {
-        return ChainReflectionMemberCollection::fromCollections([
-            $this->constants(),
-            $this->methods()
-        ]);
+        $members = ClassLikeReflectionMemberCollection::empty();
+        foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
+            $members = $members->merge($reflectionClassLike->ownMembers());
+        }
+
+        return $members;
     }
 
     public function ownMembers(): ReflectionMemberCollection
@@ -82,17 +85,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
 
     public function constants(): CoreReflectionConstantCollection
     {
-        $parentConstants = [];
-        foreach ($this->parents() as $parent) {
-            foreach ($parent->constants() as $constant) {
-                $parentConstants[$constant->name()] = $constant;
-            }
-        }
-
-        $parentConstants = ReflectionConstantCollection::fromReflectionConstants($parentConstants);
-        $constants = ReflectionConstantCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $this);
-
-        return $parentConstants->merge($constants);
+        return $this->members()->constants();
     }
 
     public function parents(): CoreReflectionInterfaceCollection
@@ -132,25 +125,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
 
     public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
-        if ($this->methods) {
-            return $this->methods;
-        }
-
-        $parentMethods = [];
-        foreach ($this->parents() as $parent) {
-            foreach ($parent->methods($this)->byVisibilities([ Visibility::public(), Visibility::protected() ]) as $name => $method) {
-                $parentMethods[$method->name()] = $method;
-            }
-        }
-
-        $contextClass = $contextClass ?: $this;
-        $parentMethods = ReflectionMethodCollection::fromReflectionMethods($parentMethods);
-        $methods = ReflectionMethodCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $contextClass);
-        $merged = $parentMethods->merge($methods);
-        assert($merged instanceof ReflectionMethodCollection);
-        $this->methods = $merged;
-
-        return $this->methods;
+        return $this->members()->constants();
     }
 
     public function name(): ClassName
