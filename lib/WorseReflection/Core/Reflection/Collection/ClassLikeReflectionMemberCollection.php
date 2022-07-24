@@ -272,7 +272,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             $new->$collection = array_filter($this->$collection, $closure);
         }
 
-        $new->items = array_merge(...array_map(fn(string $type) => $this->$type, self::MEMBER_TYPES));
+        $new->items = array_merge(...array_map(fn(string $type) => $new->$type, self::MEMBER_TYPES));
 
         return $new;
     }
