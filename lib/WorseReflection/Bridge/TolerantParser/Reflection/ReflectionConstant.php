@@ -78,11 +78,11 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
     public function value()
     {
         return TypeUtil::valueOrNull($this->serviceLocator()
-                    ->symbolContextResolver()
-                    ->resolveNode(
-                        new Frame('_'),
-                        $this->node->assignment
-                    )->type());
+            ->symbolContextResolver()
+            ->resolveNode(
+                new Frame('_'),
+                $this->node->assignment
+            )->type());
     }
 
     public function memberType(): string

@@ -90,7 +90,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
 
-            if ($reflectionClassLike !== $this) {
+            if ($reflectionClassLike !== $this && !$reflectionClassLike instanceof ReflectionTrait) {
                 $classLikeMembers = $classLikeMembers->byVisibilities([Visibility::public(), Visibility::protected()]);
             }
 
