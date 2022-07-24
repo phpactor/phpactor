@@ -57,7 +57,7 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
 
     /**
      * @return static
-     * @param AbstractReflectionCollection<T> $collection
+     * @param ReflectionCollection<T> $collection
      */
     public function merge(ReflectionCollection $collection): self
     {

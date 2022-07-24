@@ -21,13 +21,13 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
 
     private ConstElement $node;
 
-    private AbstractReflectionClass $class;
+    private ReflectionClassLike $class;
 
     private ClassConstDeclaration $declaration;
 
     public function __construct(
         ServiceLocator $serviceLocator,
-        AbstractReflectionClass $class,
+        ReflectionClassLike $class,
         ClassConstDeclaration $declaration,
         ConstElement $node
     ) {
@@ -90,6 +90,11 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
         return ReflectionMember::TYPE_CONSTANT;
     }
 
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        return new self($this->serviceLocator, $class, $this->declaration, $this->node);
+    }
+
     protected function node(): Node
     {
         return $this->declaration;
@@ -98,10 +103,5 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
-    }
-
-    public function withClass(ReflectionClassLike $class): ReflectionMember
-    {
-        return new self($this->serviceLocator, $class, $this->declaration, $this->node);
     }
 }

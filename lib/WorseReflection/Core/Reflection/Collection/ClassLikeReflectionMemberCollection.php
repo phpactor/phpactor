@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Closure;
-use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -29,12 +28,17 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Traversable;
 
-
 /**
  * @extends AbstractReflectionCollection<ReflectionMember>
  */
 final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollection implements ReflectionMemberCollection
 {
+    private const MEMBER_TYPES = [
+        'constants',
+        'properties',
+        'methods',
+    ];
+
     /**
      * @var PhpactorReflectionConstant[]
      */
@@ -50,18 +54,11 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
      */
     private array $methods = [];
 
-    private const MEMBER_TYPES = [
-        'constants',
-        'properties',
-        'methods',
-    ];
-
     public static function fromClassMemberDeclarations(
         ServiceLocator $serviceLocator,
         ClassDeclaration $class,
         ReflectionClass $reflectionClass
-    ): ReflectionMemberCollection
-    {
+    ): ReflectionMemberCollection {
         return self::fromDeclarations(
             $serviceLocator,
             $reflectionClass,
@@ -87,73 +84,6 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         );
     }
 
-    private static function fromDeclarations(ServiceLocator $serviceLocator, ReflectionClassLike $classLike, array $nodes): self
-    {
-        $new = new self([]);
-        foreach ($nodes as $member) {
-
-            if ($member instanceof ClassConstDeclaration) {
-                /** @phpstan-ignore-next-line TP: lie */
-                if (!$member->constElements) {
-                    continue;
-                }
-
-                foreach ($member->constElements->getElements() as $constElement) {
-                    $new->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $classLike, $member, $constElement);
-                    $new->items[$constElement->getName()] = $new->constants[$constElement->getName()];
-                }
-                continue;
-            }
-
-            if ($member instanceof PropertyDeclaration) {
-                foreach ($member->propertyElements as $propertyElement) {
-                    foreach ($propertyElement as $variable) {
-                        if ($variable instanceof AssignmentExpression) {
-                            $variable = $variable->leftOperand;
-                        }
-
-                        if (false === $variable instanceof Variable) {
-                            continue;
-                        }
-                        $new->properties[$variable->getName()] = new ReflectionProperty($serviceLocator, $classLike, $member, $variable);
-                        $new->items[$variable->getName()] = $new->properties[$variable->getName()];
-                    }
-                }
-                continue;
-            }
-            if ($member instanceof MethodDeclaration) {
-                $new->items[$member->getName()] = new ReflectionMethod($serviceLocator, $classLike, $member);
-                $new->methods[$member->getName()] = $new->items[$member->getName()];
-
-                // promoted properties
-                if ($member->getName() === '__construct') {
-                    $parameters = $member->parameters;
-                    /** @phpstan-ignore-next-line */
-                    if (!$parameters) {
-                        continue;
-                    }
-                    $children = $parameters->children;
-                    if (!$children) {
-                        continue;
-                    }
-                    foreach (array_filter($children, function ($member) {
-                        if (!$member instanceof Parameter) {
-                            return false;
-                        }
-                        return $member->visibilityToken !== null;
-                    }) as $promotedParameter) {
-                        $new->items[$promotedParameter->getName()] = new ReflectionPromotedProperty($serviceLocator, $classLike, $promotedParameter);
-                        $new->properties[$promotedParameter->getName()] = $new->items[$promotedParameter->getName()];
-                    }
-                }
-                continue;
-            }
-        }
-
-
-        return $new;
-    }
-
 
     public function getIterator(): Traversable
     {
@@ -162,7 +92,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             $this->properties,
             $this->methods,
         ] as $collection) {
-        yield from $collection;
+            yield from $collection;
         }
     }
 
@@ -265,6 +195,86 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         return new ReflectionConstantCollection($this->constants);
     }
 
+    /**
+     * @return static
+     */
+    public function map(Closure $closure): ReflectionCollection
+    {
+        $new = new self([]);
+        foreach (self::MEMBER_TYPES as $collection) {
+            $new->$collection = array_map($closure, $this->$collection);
+        }
+        $new->items = array_merge(...array_map(fn (string $type) => $this->$type, self::MEMBER_TYPES));
+
+        return $new;
+    }
+
+    private static function fromDeclarations(ServiceLocator $serviceLocator, ReflectionClassLike $classLike, array $nodes): self
+    {
+        $new = new self([]);
+        foreach ($nodes as $member) {
+            if ($member instanceof ClassConstDeclaration) {
+                /** @phpstan-ignore-next-line TP: lie */
+                if (!$member->constElements) {
+                    continue;
+                }
+
+                foreach ($member->constElements->getElements() as $constElement) {
+                    $new->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $classLike, $member, $constElement);
+                    $new->items[$constElement->getName()] = $new->constants[$constElement->getName()];
+                }
+                continue;
+            }
+
+            if ($member instanceof PropertyDeclaration) {
+                foreach ($member->propertyElements as $propertyElement) {
+                    foreach ($propertyElement as $variable) {
+                        if ($variable instanceof AssignmentExpression) {
+                            $variable = $variable->leftOperand;
+                        }
+
+                        if (false === $variable instanceof Variable) {
+                            continue;
+                        }
+                        $new->properties[$variable->getName()] = new ReflectionProperty($serviceLocator, $classLike, $member, $variable);
+                        $new->items[$variable->getName()] = $new->properties[$variable->getName()];
+                    }
+                }
+                continue;
+            }
+            if ($member instanceof MethodDeclaration) {
+                $new->items[$member->getName()] = new ReflectionMethod($serviceLocator, $classLike, $member);
+                $new->methods[$member->getName()] = $new->items[$member->getName()];
+
+                // promoted properties
+                if ($member->getName() === '__construct') {
+                    $parameters = $member->parameters;
+                    /** @phpstan-ignore-next-line */
+                    if (!$parameters) {
+                        continue;
+                    }
+                    $children = $parameters->children;
+                    if (!$children) {
+                        continue;
+                    }
+                    foreach (array_filter($children, function ($member) {
+                        if (!$member instanceof Parameter) {
+                            return false;
+                        }
+                        return $member->visibilityToken !== null;
+                    }) as $promotedParameter) {
+                        $new->items[$promotedParameter->getName()] = new ReflectionPromotedProperty($serviceLocator, $classLike, $promotedParameter);
+                        $new->properties[$promotedParameter->getName()] = $new->items[$promotedParameter->getName()];
+                    }
+                }
+                continue;
+            }
+        }
+
+
+        return $new;
+    }
+
     private function filter(Closure $closure): ReflectionCollection
     {
         $new = new self([]);
@@ -272,18 +282,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             $new->$collection = array_filter($this->$collection, $closure);
         }
 
-        $new->items = array_merge(...array_map(fn(string $type) => $new->$type, self::MEMBER_TYPES));
-
-        return $new;
-    }
-
-    public function map(Closure $closure): ReflectionCollection
-    {
-        $new = new self([]);
-        foreach (self::MEMBER_TYPES as $collection) {
-            $new->$collection = array_map($closure, $this->$collection);
-        }
-        $new->items = array_merge(...array_map(fn(string $type) => $this->$type, self::MEMBER_TYPES));
+        $new->items = array_merge(...array_map(fn (string $type) => $new->$type, self::MEMBER_TYPES));
 
         return $new;
     }

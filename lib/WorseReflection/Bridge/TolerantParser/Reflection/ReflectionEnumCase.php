@@ -96,16 +96,6 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
         return ReflectionMember::TYPE_ENUM;
     }
 
-    protected function node(): Node
-    {
-        return $this->node;
-    }
-
-    protected function serviceLocator(): ServiceLocator
-    {
-        return $this->serviceLocator;
-    }
-
     public function withClass(ReflectionClassLike $class): ReflectionMember
     {
         if (!$class instanceof ReflectionEnum) {
@@ -115,5 +105,15 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
         }
 
         return new self($this->serviceLocator, $class, $this->node);
+    }
+
+    protected function node(): Node
+    {
+        return $this->node;
+    }
+
+    protected function serviceLocator(): ServiceLocator
+    {
+        return $this->serviceLocator;
     }
 }

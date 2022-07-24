@@ -168,6 +168,11 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         return ReflectionMember::TYPE_METHOD;
     }
 
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        return new self($this->serviceLocator, $class, $this->node);
+    }
+
     protected function node(): Node
     {
         return $this->node;
@@ -176,10 +181,5 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
-    }
-
-    public function withClass(ReflectionClassLike $class): ReflectionMember
-    {
-        return new self($this->serviceLocator, $class, $this->node);
     }
 }
