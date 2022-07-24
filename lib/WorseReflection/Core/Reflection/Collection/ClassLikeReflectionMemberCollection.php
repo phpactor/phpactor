@@ -136,7 +136,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                     if (!$children) {
                         continue;
                     }
-                    foreach (array_filter($children, function (Node $member) {
+                    foreach (array_filter($children, function ($member) {
                         if (!$member instanceof Parameter) {
                             return false;
                         }
