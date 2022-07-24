@@ -3,10 +3,12 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Closure;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
@@ -14,6 +16,7 @@ use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionConstant;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPromotedProperty;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -99,6 +102,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                     $new->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $classLike, $member, $constElement);
                     $new->items[$constElement->getName()] = $new->constants[$constElement->getName()];
                 }
+                continue;
             }
 
             if ($member instanceof PropertyDeclaration) {
@@ -115,10 +119,34 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                         $new->items[$variable->getName()] = $new->properties[$variable->getName()];
                     }
                 }
+                continue;
             }
             if ($member instanceof MethodDeclaration) {
                 $new->items[$member->getName()] = new ReflectionMethod($serviceLocator, $classLike, $member);
                 $new->methods[$member->getName()] = $new->items[$member->getName()];
+
+                // promoted properties
+                if ($member->getName() === '__construct') {
+                    $parameters = $member->parameters;
+                    /** @phpstan-ignore-next-line */
+                    if (!$parameters) {
+                        continue;
+                    }
+                    $children = $parameters->children;
+                    if (!$children) {
+                        continue;
+                    }
+                    foreach (array_filter($children, function (Node $member) {
+                        if (!$member instanceof Parameter) {
+                            return false;
+                        }
+                        return $member->visibilityToken !== null;
+                    }) as $promotedParameter) {
+                        $new->items[$promotedParameter->getName()] = new ReflectionPromotedProperty($serviceLocator, $classLike, $promotedParameter);
+                        $new->properties[$promotedParameter->getName()] = $new->items[$promotedParameter->getName()];
+                    }
+                }
+                continue;
             }
         }
 
