@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @mixin B
+ */
+class A
+{
+    /**
+     * @return static
+     */
+    public function doA()
+    {
+        return new static();
+    }
+}
+
+/**
+ * @mixin A
+ */
+class B
+{
+}
+
+$b = new B();
+
+wrAssertType('B', $b->doA());
