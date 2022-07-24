@@ -33,6 +33,8 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
 
     private Parameter $parameter;
 
+    private ?string $name = null;
+
     public function __construct(
         ServiceLocator $serviceLocator,
         ReflectionClassLike $class,
@@ -64,7 +66,12 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
 
     public function name(): string
     {
-        return (string) $this->parameter->getName();
+        if ($this->name) {
+            return $this->name;
+        }
+
+        $this->name = (string) $this->parameter->getName();
+        return $this->name;
     }
 
     public function nameRange(): ByteOffsetRange
