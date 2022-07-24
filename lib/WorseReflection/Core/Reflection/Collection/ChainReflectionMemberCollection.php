@@ -218,7 +218,7 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
 
     public function constants(): ReflectionConstantCollection
     {
-        return ReflectionPropertyCollection::fromReflections(iterator_to_array($this->byMemberClass(ReflectionConstant::class)));
+        return ReflectionConstantCollection::fromReflections(iterator_to_array($this->byMemberClass(ReflectionConstant::class)));
     }
 
     public function enumCases(): ReflectionEnumCaseCollection
