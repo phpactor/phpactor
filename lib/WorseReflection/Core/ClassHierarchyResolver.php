@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 final class ClassHierarchyResolver
 {
@@ -73,6 +74,16 @@ final class ClassHierarchyResolver
 
         foreach ($classLike->traits() as $interface) {
             $resolved = $this->doResolve($interface, $resolved);
+        }
+
+        // consider making this an extension point and "mixins" an extension
+        foreach ($classLike->docblock()->mixins() as $mixin) {
+            if ($mixin instanceof ReflectedClassType) {
+                $reflection = $mixin->reflectionOrNull();
+                if ($reflection) {
+                    $resolved = $this->doResolve($reflection, $resolved);
+                }
+            }
         }
 
         return $resolved;

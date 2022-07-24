@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionClassDecorator;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionInterfaceDecorator;
 
 /**
@@ -53,20 +52,12 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
             }
 
             if ($child instanceof InterfaceDeclaration) {
-                $items[(string) $child->getNamespacedName()] =  new VirtualReflectionInterfaceDecorator(
-                    $serviceLocator,
-                    new ReflectionInterface($serviceLocator, $source, $child, $visited),
-                    $serviceLocator->methodProviders()
-                );
+                $items[(string) $child->getNamespacedName()] =  new ReflectionInterface($serviceLocator, $source, $child, $visited);
                 continue;
             }
 
             if ($child instanceof ClassDeclaration) {
-                $items[(string) $child->getNamespacedName()] = new VirtualReflectionClassDecorator(
-                    $serviceLocator,
-                    new ReflectionClass($serviceLocator, $source, $child, $visited),
-                    $serviceLocator->methodProviders()
-                );
+                $items[(string) $child->getNamespacedName()] = new ReflectionClass($serviceLocator, $source, $child, $visited);
             }
         }
 
