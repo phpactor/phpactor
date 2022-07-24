@@ -267,24 +267,23 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
 
     private function filter(Closure $closure): ReflectionCollection
     {
-        // TODO: this isn't very efficient
         $new = new self([]);
         foreach (self::MEMBER_TYPES as $collection) {
             $new->$collection = array_filter($this->$collection, $closure);
-            $new->items = array_filter($this->items, $closure);
         }
+
+        $new->items = array_merge(...array_map(fn(string $type) => $this->$type, self::MEMBER_TYPES));
 
         return $new;
     }
 
     public function map(Closure $closure): ReflectionCollection
     {
-        // TODO: this isn't very efficient
         $new = new self([]);
         foreach (self::MEMBER_TYPES as $collection) {
             $new->$collection = array_map($closure, $this->$collection);
-            $new->items = array_map($closure, $this->items);
         }
+        $new->items = array_merge(...array_map(fn(string $type) => $this->$type, self::MEMBER_TYPES));
 
         return $new;
     }

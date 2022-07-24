@@ -37,6 +37,7 @@ class ImplementContracts implements Transformer
         $diagnostics = [];
         $classes = $this->reflector->reflectClassesIn(WorseSourceCode::fromString((string) $source));
         foreach ($classes->concrete() as $class) {
+
             assert($class instanceof ReflectionClass);
             $missingMethods = $this->missingClassMethods($class);
             if (0 === count($missingMethods)) {

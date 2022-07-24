@@ -22,6 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollectio
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -94,8 +95,15 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
                 $classLikeMembers = $classLikeMembers->byVisibilities([Visibility::public(), Visibility::protected()]);
             }
 
+            // we only take constants from interfaces, methods must be implemented.
+            if ($reflectionClassLike instanceof ReflectionInterface) {
+                $members = $members->merge($classLikeMembers->constants());
+                continue;
+            }
+
             $members = $members->merge($classLikeMembers);
 
+            // we need to account for traits renaming aliases
             if ($reflectionClassLike instanceof ReflectionTrait) {
                 $traitImports = TraitImports::forClassDeclaration($this->node);
                 $members = $members->merge($this->resolveTraitMethods($traitImports, $this, $this->traits()));
