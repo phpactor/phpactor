@@ -135,8 +135,7 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
 
     public function withClass(ReflectionClassLike $class): ReflectionMember
     {
-        $this->class = $class;
-        return $this;
+        return new self($this->serviceLocator, $this, $this->propertyDeclaration, $this->variable);
     }
 
     protected function node(): Node
