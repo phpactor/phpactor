@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection as CoreReflectionInterfaceCollection;
@@ -35,8 +34,6 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
     private SourceCode $sourceCode;
 
     private ?ReflectionInterfaceCollection $parents = null;
-
-    private ?ReflectionMethodCollection $methods = null;
 
     /**
      * @var array<string, bool>

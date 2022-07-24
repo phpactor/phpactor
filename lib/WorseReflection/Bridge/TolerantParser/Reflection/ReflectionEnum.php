@@ -6,11 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection as PhpactorReflectionEnumCaseCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
@@ -60,9 +56,8 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         $members = $members->merge($this->ownMembers());
         try {
             $enumMethods = $this->serviceLocator()->reflector()->reflectInterface('BackedEnum')->methods($this);
-            return $members->merge(
-                $enumMethods
-            )->map(
+            /** @phpstan-ignore-next-line It is fine */
+            return $members->merge($enumMethods)->map(
                 fn (ReflectionMember $member) => $member->withClass($this)
             );
         } catch (NotFound $notFound) {

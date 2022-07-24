@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 final class ClassHierarchyResolver
 {
     /**
+     * @param array<string,ReflectionClassLike> $resolved
      * @return ReflectionClassLike[]
      */
     public function resolve(ReflectionClassLike $classLike, array $resolved = []): array
@@ -18,6 +19,7 @@ final class ClassHierarchyResolver
     }
 
     /**
+     * @param array<string,ReflectionClassLike> $resolved
      * @return ReflectionClassLike[]
      */
     public function doResolve(ReflectionClassLike $classLike, array $resolved = []): array
@@ -43,6 +45,7 @@ final class ClassHierarchyResolver
     }
 
     /**
+     * @param array<string,ReflectionClassLike> $resolved
      * @return ReflectionClassLike[]
      */
     private function resolveReflectionInterface(ReflectionInterface $classLike, array $resolved): array
@@ -54,6 +57,7 @@ final class ClassHierarchyResolver
     }
 
     /**
+     * @param array<string,ReflectionClassLike> $resolved
      * @return ReflectionClassLike[]
      */
     private function resolveReflectionClass(ReflectionClass $classLike, array $resolved): array
@@ -75,6 +79,7 @@ final class ClassHierarchyResolver
     }
 
     /**
+     * @param array<string,ReflectionClassLike> $resolved
      * @return ReflectionClassLike[]
      */
     private function resolveReflectionTrait(ReflectionTrait $classLike, array $resolved): array

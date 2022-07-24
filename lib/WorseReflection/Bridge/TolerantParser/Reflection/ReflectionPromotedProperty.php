@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node;
@@ -36,7 +35,7 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
 
     public function __construct(
         ServiceLocator $serviceLocator,
-        ReflectionClass $class,
+        ReflectionClassLike $class,
         Parameter $parameter
     ) {
         $this->serviceLocator = $serviceLocator;
