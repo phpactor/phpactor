@@ -33,6 +33,8 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
 
     private DeclaredMemberTypeResolver $memberTypeResolver;
 
+    private ?string $name = null;
+
     public function __construct(
         ServiceLocator $serviceLocator,
         ReflectionClassLike $class,
@@ -65,7 +67,11 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
 
     public function name(): string
     {
-        return (string) $this->variable->getName();
+        if ($this->name) {
+            return $this->name;
+        }
+        $this->name = (string) $this->variable->getName();
+        return $this->name;
     }
 
     public function nameRange(): ByteOffsetRange
@@ -129,7 +135,8 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
 
     public function withClass(ReflectionClassLike $class): ReflectionMember
     {
-        return new self($this->serviceLocator, $class, $this->propertyDeclaration, $this->variable);
+        $this->class = $class;
+        return $this;
     }
 
     protected function node(): Node

@@ -57,6 +57,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?ClassLikeReflectionMemberCollection $ownMembers = null;
 
+    private ?ClassName $name = null;
+
     /**
      * @param array<string,bool> $visited
      */
@@ -115,6 +117,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
                 continue;
             }
         }
+        return $members;
 
         return $members->map(fn (ReflectionMember $member) => $member->withClass($this));
     }
@@ -252,7 +255,11 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function name(): ClassName
     {
-        return ClassName::fromString((string) $this->node->getNamespacedName());
+        if ($this->name) {
+            return $this->name;
+        }
+        $this->name = ClassName::fromString((string) $this->node->getNamespacedName());
+        return $this->name;
     }
 
     public function isInstanceOf(ClassName $className): bool
