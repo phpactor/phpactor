@@ -129,6 +129,10 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                 $new->methods[$member->name()] = $member;
                 continue;
             }
+            if ($member instanceof PhpactorReflectionEnumCase) {
+                $new->enumCases[$member->name()] = $member;
+                continue;
+            }
         }
 
         return $new;
