@@ -35,6 +35,8 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
 
     private ?ClassLikeReflectionMemberCollection $ownMembers = null;
 
+    private ?ClassLikeReflectionMemberCollection $members = null;
+
     /**
      * @param array<string,bool> $visited
      */
