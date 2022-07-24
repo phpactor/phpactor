@@ -102,6 +102,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
                 continue;
             }
 
+            /** @phpstan-ignore-next-line Constants is compatible with this */
             $members = $members->merge($classLikeMembers);
 
             // we need to account for traits renaming aliases

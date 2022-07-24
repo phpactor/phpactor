@@ -15,11 +15,11 @@ use Phpactor\WorseReflection\Core\Visibility;
 
 abstract class VirtualReflectionMember implements ReflectionMember
 {
+    protected ReflectionClassLike $class;
+
     private Position $position;
 
     private ReflectionClassLike $declaringClass;
-
-    private ReflectionClassLike $class;
 
     private string $name;
 

@@ -60,6 +60,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     {
         $members = ClassLikeReflectionMemberCollection::empty();
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
+            /** @phpstan-ignore-next-line Constants is compatible with this */
             $members = $members->merge($reflectionClassLike->ownMembers());
         }
 

@@ -57,7 +57,7 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
 
     /**
      * @return static
-     * @param ReflectionCollection<T> $collection
+     * @param AbstractReflectionCollection<T> $collection
      */
     public function merge(ReflectionCollection $collection): self
     {
@@ -124,6 +124,9 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
         return new ArrayIterator($this->items);
     }
 
+    /**
+     * @return static
+     */
     public function byMemberClass(string $fqn): ReflectionCollection
     {
         return new static(array_filter($this->items, function (object $member) use ($fqn) {

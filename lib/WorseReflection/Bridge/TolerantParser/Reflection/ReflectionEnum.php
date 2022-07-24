@@ -53,6 +53,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     public function members(): ReflectionMemberCollection
     {
         $members = ClassLikeReflectionMemberCollection::empty();
+        /** @phpstan-ignore-next-line Constants is compatible with this */
         $members = $members->merge($this->ownMembers());
         try {
             $enumMethods = $this->serviceLocator()->reflector()->reflectInterface('BackedEnum')->methods($this);

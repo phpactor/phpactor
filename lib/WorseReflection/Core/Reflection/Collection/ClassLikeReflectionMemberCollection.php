@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Closure;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
@@ -34,6 +35,7 @@ use Traversable;
 
 /**
  * @extends AbstractReflectionCollection<ReflectionMember>
+ * @implements ReflectionMemberCollection<ReflectionMember>
  */
 final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollection implements ReflectionMemberCollection
 {
@@ -68,7 +70,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         ServiceLocator $serviceLocator,
         ClassDeclaration $class,
         ReflectionClass $reflectionClass
-    ): ReflectionMemberCollection {
+    ): self {
         return self::fromDeclarations(
             $serviceLocator,
             $reflectionClass,
@@ -132,6 +134,9 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         return $new;
     }
 
+    /**
+     * @return static<ReflectionMember>
+     */
     public function byMemberClass(string $fqn): ReflectionCollection
     {
         return $this->filter(function (ReflectionMember $member) use ($fqn) {
@@ -139,6 +144,9 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         });
     }
 
+    /**
+     * @return self
+     */
     public function byMemberType(string $type): ReflectionCollection
     {
         return $this->filter(function (ReflectionMember $member) use ($type) {
@@ -228,6 +236,9 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         return $new;
     }
 
+    /**
+     * @param array<Node> $nodes
+     */
     private static function fromDeclarations(ServiceLocator $serviceLocator, ReflectionClassLike $classLike, array $nodes): self
     {
         $new = new self([]);
@@ -246,6 +257,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             }
 
             if ($member instanceof PropertyDeclaration) {
+                /** @phpstan-ignore-next-line TP lies */
                 foreach ($member->propertyElements as $propertyElement) {
                     foreach ($propertyElement as $variable) {
                         if ($variable instanceof AssignmentExpression) {
@@ -262,8 +274,9 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                 continue;
             }
             if ($member instanceof MethodDeclaration) {
-                $new->items[$member->getName()] = new ReflectionMethod($serviceLocator, $classLike, $member);
-                $new->methods[$member->getName()] = $new->items[$member->getName()];
+                $method = new ReflectionMethod($serviceLocator, $classLike, $member);
+                $new->items[$member->getName()] = $method;
+                $new->methods[$member->getName()] = $method;
 
                 // promoted properties
                 if ($member->getName() === '__construct') {
@@ -282,14 +295,18 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                         }
                         return $member->visibilityToken !== null;
                     }) as $promotedParameter) {
-                        $new->items[$promotedParameter->getName()] = new ReflectionPromotedProperty($serviceLocator, $classLike, $promotedParameter);
-                        $new->properties[$promotedParameter->getName()] = $new->items[$promotedParameter->getName()];
+                        if (!$promotedParameter instanceof Parameter) {
+                            continue;
+                        }
+                        $property = new ReflectionPromotedProperty($serviceLocator, $classLike, $promotedParameter);
+                        $new->items[$promotedParameter->getName()] = $property;
+                        $new->properties[$promotedParameter->getName()] = $property;
                     }
                 }
                 continue;
             }
 
-            if ($member instanceof EnumCaseDeclaration) {
+            if ($member instanceof EnumCaseDeclaration && $classLike instanceof ReflectionEnum) {
                 $enumCase = new PhpactorReflectionEnumCase($serviceLocator, $classLike, $member);
                 $new->items[$enumCase->name()] = $enumCase;
                 $new->enumCases[$enumCase->name()] = $enumCase;
@@ -301,7 +318,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         return $new;
     }
 
-    private function filter(Closure $closure): ReflectionCollection
+    private function filter(Closure $closure): self
     {
         $new = new self([]);
         foreach (self::MEMBER_TYPES as $collection) {
