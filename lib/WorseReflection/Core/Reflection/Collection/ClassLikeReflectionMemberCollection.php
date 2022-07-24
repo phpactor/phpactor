@@ -254,8 +254,9 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                 }
 
                 foreach ($member->constElements->getElements() as $constElement) {
-                    $new->constants[$constElement->getName()] = new ReflectionConstant($serviceLocator, $classLike, $member, $constElement);
-                    $new->items[$constElement->getName()] = $new->constants[$constElement->getName()];
+                    $constant = new ReflectionConstant($serviceLocator, $classLike, $member, $constElement);
+                    $new->constants[$constant->name()] = $constant;
+                    $new->items[$constant->name()] = $constant;
                 }
                 continue;
             }
@@ -271,19 +272,20 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                         if (false === $variable instanceof Variable) {
                             continue;
                         }
-                        $new->properties[$variable->getName()] = new ReflectionProperty($serviceLocator, $classLike, $member, $variable);
-                        $new->items[$variable->getName()] = $new->properties[$variable->getName()];
+                        $property = new ReflectionProperty($serviceLocator, $classLike, $member, $variable);
+                        $new->properties[$property->name()] = $property;
+                        $new->items[$property->name()] = $property;
                     }
                 }
                 continue;
             }
             if ($member instanceof MethodDeclaration) {
                 $method = new ReflectionMethod($serviceLocator, $classLike, $member);
-                $new->items[$member->getName()] = $method;
-                $new->methods[$member->getName()] = $method;
+                $new->items[$method->name()] = $method;
+                $new->methods[$method->name()] = $method;
 
                 // promoted properties
-                if ($member->getName() === '__construct') {
+                if ($method->name() === '__construct') {
                     $parameters = $member->parameters;
                     /** @phpstan-ignore-next-line */
                     if (!$parameters) {
@@ -303,8 +305,8 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                             continue;
                         }
                         $property = new ReflectionPromotedProperty($serviceLocator, $classLike, $promotedParameter);
-                        $new->items[$promotedParameter->getName()] = $property;
-                        $new->properties[$promotedParameter->getName()] = $property;
+                        $new->items[$property->name()] = $property;
+                        $new->properties[$property->name()] = $property;
                     }
                 }
                 continue;
