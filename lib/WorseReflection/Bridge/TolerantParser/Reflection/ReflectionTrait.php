@@ -33,6 +33,8 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
      */
     private array $visited;
 
+    private ?ClassLikeReflectionMemberCollection $ownMembers = null;
+
     /**
      * @param array<string,bool> $visited
      */
@@ -69,11 +71,15 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
 
     public function ownMembers(): ReflectionMemberCollection
     {
-        return ClassLikeReflectionMemberCollection::fromTraitMemberDeclarations(
+        if ($this->ownMembers) {
+            return $this->ownMembers;
+        }
+        $this->ownMembers = ClassLikeReflectionMemberCollection::fromTraitMemberDeclarations(
             $this->serviceLocator,
             $this->node,
             $this
         );
+        return $this->ownMembers;
     }
 
     public function properties(): CoreReflectionPropertyCollection

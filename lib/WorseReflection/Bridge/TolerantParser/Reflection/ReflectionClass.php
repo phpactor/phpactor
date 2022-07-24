@@ -55,6 +55,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     private array $visited;
 
+    private ?ClassLikeReflectionMemberCollection $ownMembers = null;
+
     /**
      * @param array<string,bool> $visited
      */
@@ -119,11 +121,15 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function ownMembers(): ReflectionMemberCollection
     {
-        return ClassLikeReflectionMemberCollection::fromClassMemberDeclarations(
+        if ($this->ownMembers) {
+            return $this->ownMembers;
+        }
+        $this->ownMembers = ClassLikeReflectionMemberCollection::fromClassMemberDeclarations(
             $this->serviceLocator,
             $this->node,
             $this
         );
+        return $this->ownMembers;
     }
 
     public function constants(): ReflectionConstantCollection

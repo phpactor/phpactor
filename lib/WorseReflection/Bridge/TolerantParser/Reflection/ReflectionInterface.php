@@ -40,6 +40,8 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
      */
     private array $visited;
 
+    private ?ClassLikeReflectionMemberCollection $ownMembers = null;
+
     /**
      * @param array<string,bool> $visited
      */
@@ -71,11 +73,15 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
 
     public function ownMembers(): ReflectionMemberCollection
     {
-        return ClassLikeReflectionMemberCollection::fromInterfaceMemberDeclarations(
+        if ($this->ownMembers) {
+            return $this->ownMembers;
+        }
+        $this->ownMembers = ClassLikeReflectionMemberCollection::fromInterfaceMemberDeclarations(
             $this->serviceLocator,
             $this->node,
             $this
         );
+        return $this->ownMembers;
     }
 
     public function constants(): CoreReflectionConstantCollection
