@@ -56,4 +56,6 @@ interface ReflectionMember
     public function memberType(): string;
 
     public function deprecation(): Deprecation;
+
+    public function withClass(ReflectionClassLike $class): self;
 }

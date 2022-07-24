@@ -47,6 +47,12 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
      */
     private array $methods = [];
 
+    private const MEMBER_TYPES = [
+        'constants',
+        'properties',
+        'methods',
+    ];
+
     public static function fromClassMemberDeclarations(
         ServiceLocator $serviceLocator,
         ClassDeclaration $class,
@@ -128,7 +134,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             $this->properties,
             $this->methods,
         ] as $collection) {
-            yield from $collection;
+        yield from $collection;
         }
     }
 
@@ -234,12 +240,18 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     private function filter(Closure $closure): ReflectionCollection
     {
         $new = new self([]);
-        foreach ([
-            'constants',
-            'properties',
-            'methods',
-        ] as $collection) {
+        foreach (self::MEMBER_TYPES as $collection) {
             $new->$collection = array_filter($this->$collection, $closure);
+        }
+
+        return $new;
+    }
+
+    public function map(Closure $closure): ReflectionCollection
+    {
+        $new = new self([]);
+        foreach (self::MEMBER_TYPES as $collection) {
+            $new->$collection = array_map($closure, $this->$collection);
         }
 
         return $new;

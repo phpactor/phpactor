@@ -103,7 +103,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             }
         }
 
-        return $members;
+        return $members->map(fn (ReflectionMember $member) => $member->withClass($this));
     }
 
     public function ownMembers(): ReflectionMemberCollection

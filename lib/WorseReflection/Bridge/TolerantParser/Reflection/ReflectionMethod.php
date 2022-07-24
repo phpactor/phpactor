@@ -177,4 +177,9 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     {
         return $this->serviceLocator;
     }
+
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        return new self($this->serviceLocator, $class, $this->node);
+    }
 }

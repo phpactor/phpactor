@@ -127,6 +127,11 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
         return false;
     }
 
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        return new self($this->serviceLocator, $class, $this->propertyDeclaration, $this->variable);
+    }
+
     protected function node(): Node
     {
         return $this->propertyDeclaration;

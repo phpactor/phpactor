@@ -145,6 +145,11 @@ class ReflectionPromotedProperty extends AbstractReflectionClassMember implement
         return Visibility::public();
     }
 
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        return new self($this->serviceLocator, $class, $this->parameter);
+    }
+
     protected function node(): Node
     {
         return $this->parameter;

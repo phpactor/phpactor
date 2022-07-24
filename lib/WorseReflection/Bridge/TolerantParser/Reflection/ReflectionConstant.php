@@ -99,4 +99,9 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
     {
         return $this->serviceLocator;
     }
+
+    public function withClass(ReflectionClassLike $class): ReflectionMember
+    {
+        return new self($this->serviceLocator, $class, $this->node);
+    }
 }
