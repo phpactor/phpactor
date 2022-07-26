@@ -1,0 +1,4 @@
+<?php
+
+$i = 0;
+wrAssertType('1', $i++);

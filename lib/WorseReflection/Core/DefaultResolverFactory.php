@@ -18,6 +18,7 @@ use Microsoft\PhpParser\Node\Expression\CloneExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
+use Microsoft\PhpParser\Node\Expression\PostfixUpdateExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
 use Microsoft\PhpParser\Node\Expression\TernaryExpression;
@@ -77,6 +78,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\NumericLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParenthesizedExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\PostfixUpdateExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ReservedWordResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ReturnStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
@@ -157,6 +159,7 @@ final class DefaultResolverFactory
             SourceFileNode::class => new SourceFileNodeResolver(),
             ReturnStatement::class => new ReturnStatementResolver(),
             YieldExpression::class => new YieldExpressionResolver(),
+            PostfixUpdateExpression::class => new PostfixUpdateExpressionResolver(),
         ];
     }
 
