@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\TypeUtil;
@@ -47,6 +48,10 @@ class TestAssertWalker implements Walker
         }
         if ($name === 'wrAssertType') {
             $this->assertType($resolver, $frame, $node);
+            return $frame;
+        }
+        if ($name === 'wrAssertOffset') {
+            $this->assertOffset($resolver, $frame, $node);
             return $frame;
         }
         if ($name === 'wrReturnType') {
@@ -192,5 +197,19 @@ class TestAssertWalker implements Walker
             $position->line + 1,
             $position->character + 1,
         ));
+    }
+
+    private function assertOffset(FrameResolver $resolver, Frame $frame, CallExpression $node)
+    {
+        $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);
+        $expectedType = $args[0]->type();
+        $type = $args[1]->type();
+        if (!$type instanceof IntLiteralType) {
+            throw new RuntimeException(
+                'Expected int literal'
+            );
+        }
+        $offset = $resolver->reflector()->reflectOffset($node->getFileContents(), $type->value());
+        $this->assertTypeIs($node, $expectedType, $offset->symbolContext()->type());
     }
 }

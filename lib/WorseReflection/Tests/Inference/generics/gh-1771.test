@@ -1,0 +1,31 @@
+<?php
+
+
+interface A
+{
+    /**
+     * Some document
+     */
+    public function hello();
+}
+
+
+/**
+ * @template T
+ */
+class B implements A
+{
+    /**
+     * @return T
+     */
+    public function hello()
+    {
+    }
+}
+
+function foo($arg) {}
+
+/** @var B<int> $x */
+foo($x);
+
+wrAssertOffset('B<int>', 264);
