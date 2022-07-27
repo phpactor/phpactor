@@ -8,9 +8,11 @@ use Blackfire\Probe;
 class BlackfireProfiler
 {
     private Client $blackfire;
+
     private ?Probe $probe = null;
 
     private bool $profiling = false;
+
     private bool $probing = false;
 
     public function __construct(Client $blackfire)
@@ -48,6 +50,20 @@ class BlackfireProfiler
         return $profile->getUrl();
     }
 
+    public function start(): void
+    {
+        $this->getProbe();
+        $this->profiling = true;
+    }
+
+    /**
+     * Return true if profiling has been started
+     */
+    public function started(): bool
+    {
+        return $this->profiling;
+    }
+
     private function getProbe(): Probe
     {
         if ($this->probe) {
@@ -57,19 +73,4 @@ class BlackfireProfiler
         $this->probe = $this->blackfire->createProbe(null, false);
         return $this->probe;
     }
-
-    public function start(): void
-    {
-        $this->getProbe();
-        $this->profiling = true;
-    }
-
-    /** 
-     * Return true if profiling has been started
-     */
-    public function started(): bool
-    {
-        return $this->profiling;
-    }
 }
-

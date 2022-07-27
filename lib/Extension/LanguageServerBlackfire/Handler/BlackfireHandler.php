@@ -4,16 +4,14 @@ namespace Phpactor\Extension\LanguageServerBlackfire\Handler;
 
 use Amp\Promise;
 use Amp\Success;
-use Blackfire\Client;
-use Blackfire\Probe;
 use Phpactor\Extension\LanguageServerBlackfire\BlackfireProfiler;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
-use RuntimeException;
 
 class BlackfireHandler implements Handler
 {
     private ClientApi $client;
+
     private BlackfireProfiler $profiler;
 
     /**
@@ -63,5 +61,4 @@ class BlackfireHandler implements Handler
         ));
         return new Success(null);
     }
-
 }

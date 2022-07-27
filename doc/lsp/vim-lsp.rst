@@ -11,6 +11,8 @@ Neovim does not support LSP progress notifications out-of-the-box.
 
 Install a dedicated plugin such as `fidget <https://github.com/j-hui/fidget.nvim>`_
 
+.. _nvim_configuration_snippet_commands:
+
 Phpactor Commands
 -----------------
 
@@ -24,6 +26,11 @@ This configuration snippet enables the following commands:
 - ``:LspPhpactorReindex``: Reindex the current project
 - ``:LspPhpactorStatus``: Show some useful information and statistics
 - ``:LspPhpactorConfig``: Show the config in a floating window
+
+If you want to profile Phpactor for debugging purposes:
+
+- ``:LspPhpactorBlackfireStart``: Start :ref:`developing_blackfire_profiling` (if enabled with :ref:`param_blackfire.enable`)
+- ``:LspPhpactorBlackfireFinish``: Finish profiling and get the profiling URL
 
 .. code-block:: lua
 
