@@ -36,6 +36,8 @@ This configuration snippet enables the following commands:
           autocmd Filetype php command! -nargs=0 LspPhpactorReindex lua vim.lsp.buf_notify(0, "phpactor/indexer/reindex",{})
           autocmd Filetype php command! -nargs=0 LspPhpactorConfig lua LspPhpactorDumpConfig()
           autocmd Filetype php command! -nargs=0 LspPhpactorStatus lua LspPhpactorStatus()
+          autocmd Filetype php command! -nargs=0 LspPhpactorBlackfireStart lua LspPhpactorBlackfireStart()
+          autocmd Filetype php command! -nargs=0 LspPhpactorBlackfireFinish lua LspPhpactorBlackfireFinish()
         augroup END
     ]])
 
@@ -72,4 +74,11 @@ This configuration snippet enables the following commands:
         for _, res in pairs(results or {}) do
             showWindow("Phpactor Status", "markdown", res["result"])
         end
+    end
+
+    function LspPhpactorBlackfireStart()
+        local _, _ = vim.lsp.buf_request_sync(0, "blackfire/start", {})
+    end
+    function LspPhpactorBlackfireFinish()
+        local _, _ = vim.lsp.buf_request_sync(0, "blackfire/finish", {})
     end
