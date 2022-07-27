@@ -6,22 +6,27 @@ use Amp\Promise;
 use Amp\Success;
 use Blackfire\Client;
 use Blackfire\Probe;
+use Phpactor\Extension\LanguageServerBlackfire\BlackfireProfiler;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use RuntimeException;
 
 class BlackfireHandler implements Handler
 {
-    private Client $blackfire;
     private ClientApi $client;
+    private BlackfireProfiler $profiler;
 
-    private ?Probe $probe = null;
+    /**
+     * @var null
+     */
+    private $probe;
 
-    public function __construct(Client $blackfire, ClientApi $client)
+    public function __construct(BlackfireProfiler $profiler, ClientApi $client)
     {
-        $this->blackfire = $blackfire;
         $this->client = $client;
+        $this->profiler = $profiler;
     }
+
     public function methods(): array
     {
         return [
@@ -35,14 +40,11 @@ class BlackfireHandler implements Handler
      */
     public function start(): Promise
     {
-        if ($this->probe) {
-            throw new RuntimeException(sprintf('Probe already started'));
-        }
         $this->client->window()->showMessage()->info(
-            'Blackfire probe enabled',
+            'Blackfire profiling started',
         );
+        $this->profiler->start();
 
-        $this->probe = $this->blackfire->createProbe();
         return new Success(null);
     }
 
@@ -54,12 +56,11 @@ class BlackfireHandler implements Handler
         $this->client->window()->showMessage()->info(
             'Blackfire profile creating....',
         );
-        $profile = $this->blackfire->endProbe($this->probe);
+        $url = $this->profiler->done();
         $this->client->window()->showMessage()->info(sprintf(
             'Blackfire profile created: %s',
-            $profile->getUrl()
+            $url
         ));
-        $this->probe = null;
         return new Success(null);
     }
 

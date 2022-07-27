@@ -7,6 +7,8 @@ use Phly\EventDispatcher\EventDispatcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServerBlackfire\BlackfireProfiler;
+use Phpactor\Extension\LanguageServerBlackfire\Middleware\BlackfireMiddleware;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
@@ -77,6 +79,7 @@ class LanguageServerExtension implements Extension
     public const TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER = 'language_server.code_action_diagnostics_provider';
     public const TAG_STATUS_PROVIDER = 'language_server.status_provvder';
     public const TAG_DIAGNOSTICS_PROVIDER = 'language_server.diagnostics_provider';
+    public const TAG_MIDDLEWARE = 'language_server.middleware';
     public const PARAM_SESSION_PARAMETERS = 'language_server.session_parameters';
     public const PARAM_CLIENT_CAPABILITIES = 'language_server.client_capabilities';
     public const PARAM_ENABLE_WORKPACE = 'language_server.enable_workspace';
@@ -326,6 +329,15 @@ class LanguageServerExtension implements Extension
             if ($container->getParameter(self::PARAM_PROFILE)) {
                 $stack[] = new ProfilerMiddleware($this->logger($container));
             }
+
+            foreach ($container->getServiceIdsForTag(self::TAG_MIDDLEWARE) as $serviceId => $_) {
+                $service = $container->get($serviceId);
+                if (null === $service) {
+                    continue;
+                }
+                $stack[] = $service;
+            }
+
             if ($container->getParameter(self::PARAM_TRACE)) {
                 $stack[] = new TraceMiddleware($this->logger($container));
             }
@@ -377,7 +389,11 @@ class LanguageServerExtension implements Extension
             foreach (array_keys(
                 $container->getServiceIdsForTag(LanguageServerExtension::TAG_METHOD_HANDLER)
             ) as $serviceId) {
-                $handlers[] = $container->get($serviceId);
+                $handler = $container->get($serviceId);
+                if (null === $handler) {
+                    continue;
+                }
+                $handlers[] = $handler;
             }
 
             return new Handlers(...$handlers);
