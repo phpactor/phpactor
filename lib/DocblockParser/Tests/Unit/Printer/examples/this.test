@@ -1,0 +1,10 @@
+/**
+ * @var $this 
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   VariableNode: = $this 
+ */

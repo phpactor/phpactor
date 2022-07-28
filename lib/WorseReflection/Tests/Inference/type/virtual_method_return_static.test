@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @method static sendMessage(string $text)
+ */
+class Mailer
+{
+}
+
+class CoolMailer
+{
+}
+
+$mailer = new Mailer();
+$coolMailer = new CoolMailer();
+
+// wrAssertType('Mailer', $mailer->sendMessage('foo'));
+// wrAssertType('CoolMailer', $coolMailer->sendMessage('foo'));
