@@ -1458,7 +1458,7 @@ LanguageServerBlackfireExtension
 Type: boolean
 
 
-Enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls
+Requires dev dependencies - enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls.
 
 
 **Default**: ``false``

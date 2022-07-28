@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServerBlackfire\Middleware\BlackfireMiddleware;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
+use RuntimeException;
 
 class LanguageServerBlackfireExtension implements Extension
 {
@@ -29,6 +30,11 @@ class LanguageServerBlackfireExtension implements Extension
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
 
         $container->register(BlackfireProfiler::class, function (Container $container) {
+            if (!class_exists(Client::class)) {
+                throw new RuntimeException(
+                    'Blackfire blackfire/php-sdk package is not installed, maybe you need to ensure Phpactor is installed with dev dependencies?'
+                );
+            }
             return new BlackfireProfiler(new Client());
         });
 
@@ -48,7 +54,7 @@ class LanguageServerBlackfireExtension implements Extension
             self::PARAM_BLACKFIRE_ENABLE => false,
         ]);
         $schema->setDescriptions([
-            self::PARAM_BLACKFIRE_ENABLE => 'Enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls'
+            self::PARAM_BLACKFIRE_ENABLE => 'Requires dev dependencies - enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls.'
         ]);
         $schema->setTypes([
             self::PARAM_BLACKFIRE_ENABLE => 'boolean',
