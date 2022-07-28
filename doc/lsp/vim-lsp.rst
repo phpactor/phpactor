@@ -11,6 +11,8 @@ Neovim does not support LSP progress notifications out-of-the-box.
 
 Install a dedicated plugin such as `fidget <https://github.com/j-hui/fidget.nvim>`_
 
+.. _nvim_configuration_snippet_commands:
+
 Phpactor Commands
 -----------------
 
@@ -25,6 +27,11 @@ This configuration snippet enables the following commands:
 - ``:LspPhpactorStatus``: Show some useful information and statistics
 - ``:LspPhpactorConfig``: Show the config in a floating window
 
+If you want to profile Phpactor for debugging purposes:
+
+- ``:LspPhpactorBlackfireStart``: Start :ref:`developing_blackfire_profiling` (if enabled with :ref:`param_blackfire.enable`)
+- ``:LspPhpactorBlackfireFinish``: Finish profiling and get the profiling URL
+
 .. code-block:: lua
 
     -- requires plenary (which is required by telescope)
@@ -36,6 +43,8 @@ This configuration snippet enables the following commands:
           autocmd Filetype php command! -nargs=0 LspPhpactorReindex lua vim.lsp.buf_notify(0, "phpactor/indexer/reindex",{})
           autocmd Filetype php command! -nargs=0 LspPhpactorConfig lua LspPhpactorDumpConfig()
           autocmd Filetype php command! -nargs=0 LspPhpactorStatus lua LspPhpactorStatus()
+          autocmd Filetype php command! -nargs=0 LspPhpactorBlackfireStart lua LspPhpactorBlackfireStart()
+          autocmd Filetype php command! -nargs=0 LspPhpactorBlackfireFinish lua LspPhpactorBlackfireFinish()
         augroup END
     ]])
 
@@ -72,4 +81,11 @@ This configuration snippet enables the following commands:
         for _, res in pairs(results or {}) do
             showWindow("Phpactor Status", "markdown", res["result"])
         end
+    end
+
+    function LspPhpactorBlackfireStart()
+        local _, _ = vim.lsp.buf_request_sync(0, "blackfire/start", {})
+    end
+    function LspPhpactorBlackfireFinish()
+        local _, _ = vim.lsp.buf_request_sync(0, "blackfire/finish", {})
     end

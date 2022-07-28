@@ -804,7 +804,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor2"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1436,6 +1436,29 @@ Path to pslam if different from vendor/bin/psalm
 
 ``language_server_psalm.enabled``
 """""""""""""""""""""""""""""""""
+
+
+**Default**: ``false``
+
+
+.. _LanguageServerBlackfireExtension:
+
+
+LanguageServerBlackfireExtension
+--------------------------------
+
+
+.. _param_blackfire.enable:
+
+
+``blackfire.enable``
+""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls
 
 
 **Default**: ``false``

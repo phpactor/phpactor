@@ -44,7 +44,8 @@
         "phpstan/phpstan-phpunit": "^1.0",
         "jangregor/phpstan-prophecy": "^1.0",
         "phpstan/extension-installer": "^1.1",
-        "vimeo/psalm": "^4.22"
+        "vimeo/psalm": "^4.22",
+        "blackfire/php-sdk": "^1.31"
     },
     "replace": {
         "phpactor/class-mover": "0.2.0",

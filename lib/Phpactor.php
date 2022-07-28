@@ -6,6 +6,7 @@ use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension
 use Phpactor\Container\Container;
 use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\Debug\DebugExtension;
+use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
@@ -152,6 +153,7 @@ class Phpactor
             LanguageServerRenameWorseExtension::class,
             LanguageServerPhpstanExtension::class,
             LanguageServerPsalmExtension::class,
+            LanguageServerBlackfireExtension::class,
             BehatExtension::class,
             IndexerExtension::class,
             ObjectRendererExtension::class
