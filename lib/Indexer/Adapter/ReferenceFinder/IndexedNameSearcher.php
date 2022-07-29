@@ -27,7 +27,7 @@ class IndexedNameSearcher implements NameSearcher
      */
     public function search(string $name, ?string $type = null): Generator
     {
-        if (false === PhpNameMatcher::isClassName($name)) {
+        if (false === PhpNameMatcher::isPhpName($name)) {
             return;
         }
         $criteria = Criteria::shortNameBeginsWith($name);
