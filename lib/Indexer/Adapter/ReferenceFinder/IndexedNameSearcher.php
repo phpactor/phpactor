@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\Indexer\Model\SearchClient;
+use Phpactor\Indexer\Util\PhpNameMatcher;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\NameSearcherType;
@@ -26,6 +27,9 @@ class IndexedNameSearcher implements NameSearcher
      */
     public function search(string $name, ?string $type = null): Generator
     {
+        if (false === PhpNameMatcher::isPhpName($name)) {
+            return;
+        }
         $criteria = Criteria::shortNameBeginsWith($name);
 
         $typeCriteria = $this->resolveTypeCriteria($type);
