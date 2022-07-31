@@ -1,0 +1,29 @@
+// File: source
+<?php
+
+class Foobar {}
+
+class DTO
+{
+    public function __construct(string $one) {}
+}
+
+new DT<>O;
+// File: expected
+<?php
+
+class DTO
+{
+    public function __construct(string $one) {}
+}
+
+new DTO(one: '');
+// File: nonamed
+<?php
+
+class DTO
+{
+    public function __construct(string $one) {}
+}
+
+new DTO(one: '');
