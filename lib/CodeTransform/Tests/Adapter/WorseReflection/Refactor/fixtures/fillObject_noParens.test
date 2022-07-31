@@ -1,8 +1,6 @@
 // File: source
 <?php
 
-class Foobar {}
-
 class DTO
 {
     public function __construct(string $one) {}
@@ -26,4 +24,4 @@ class DTO
     public function __construct(string $one) {}
 }
 
-new DTO(one: '');
+new DTO('' /** $one string */);

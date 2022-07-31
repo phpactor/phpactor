@@ -107,7 +107,19 @@ class WorseFillObject implements FillObject
             $sourceCode->use($import->__toString());
         }
         $textEdits = $this->updater->textEditsFor($sourceCode->build(), Code::fromString($document->__toString()));
-        $textEdits = $textEdits->add(TextEdit::create($node->openParen->getEndPosition(), 0, implode(', ', $args)));
+
+        $openParen = $closedParen = '';
+        if ($node->openParen) {
+            $endPosition = $node->openParen->getEndPosition();
+        } else {
+            $endPosition = $node->getEndPosition();
+            $openParen = '(';
+        }
+        if (!$node->closeParen) {
+            $closedParen = ')';
+        }
+
+        $textEdits = $textEdits->add(TextEdit::create($endPosition, 0, sprintf('%s%s%s', $openParen, implode(', ', $args), $closedParen)));
 
         return $textEdits;
     }
