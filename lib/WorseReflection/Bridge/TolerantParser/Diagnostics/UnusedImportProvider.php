@@ -81,8 +81,11 @@ class UnusedImportProvider implements DiagnosticProvider
         $contents = $node->getFileContents();
 
         foreach ($this->imported as $importedFqn => $imported) {
-            if (isset($this->names[$importedFqn])) {
-                continue;
+            foreach ($this->names as $name => $_) {
+                if (strpos($name.'\\', $importedFqn.'\\') === 0) {
+                    unset($this->names[$name]);
+                    continue 2;
+                }
             }
 
             if ($this->usedByAnnotation($contents, $importedFqn, $imported)) {
