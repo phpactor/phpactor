@@ -79,6 +79,15 @@ class UnusedImportProviderTest extends DiagnosticsTestCase
         self::assertCount(0, $diagnostics);
     }
 
+    public function checkUsedByDoctrineAttributeAliased(Diagnostics $diagnostics): void
+    {
+        if (version_compare(PHP_VERSION, '8.0', '<')) {
+            $this->markTestSkipped('Requires PHP >= 8.0');
+        }
+
+        self::assertCount(0, $diagnostics);
+    }
+
     public function checkTrait(Diagnostics $diagnostics): void
     {
         self::assertCount(0, $diagnostics);
