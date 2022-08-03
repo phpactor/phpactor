@@ -111,20 +111,20 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                 $textEdits = $nameImporterResult->getTextEdits();
 
                 $item = CompletionItem::fromArray([
-                         'label' => $suggestion->label(),
-                         'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
-                         'detail' => $this->formatShortDescription($suggestion),
-                         'insertText' => $insertText,
-                         'sortText' => $this->sortText($suggestion),
-                         'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),
-                         'additionalTextEdits' => $textEdits,
-                         'insertTextFormat' => $insertTextFormat,
-                         'data' => $index,
-                     ]);
-
+                    'label' => $suggestion->label(),
+                    'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
+                    'insertText' => $insertText,
+                    'sortText' => $this->sortText($suggestion),
+                    'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),
+                    'additionalTextEdits' => $textEdits,
+                    'insertTextFormat' => $insertTextFormat,
+                    'data' => $index,
+                ]);
 
                 $this->resolve[$index] = function (CompletionItem $item) use ($suggestion): CompletionItem {
-                    $item->documentation = $suggestion->documentation() ?? '';
+                    $documentation = $suggestion->documentation();
+                    $item->documentation = $documentation ? new MarkupContent(MarkupKind::MARKDOWN, $documentation) : null;
+                    $item->detail = $this->formatShortDescription($suggestion);
                     return $item;
                 };
 
@@ -154,10 +154,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     {
         return call(function () use ($request) {
             $item = CompletionItem::fromArray($request->params);
-            $documentation = $this->resolve[$item->data]();
-            if ($documentation) {
-                $item->documentation = new MarkupContent(MarkupKind::MARKDOWN, $documentation);
-            }
+            $item = $this->resolve[$item->data]($item);
             return $item;
         });
     }

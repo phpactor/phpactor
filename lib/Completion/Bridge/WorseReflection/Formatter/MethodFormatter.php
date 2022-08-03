@@ -32,7 +32,19 @@ class MethodFormatter implements Formatter
             array_unshift($info, 'abstract ');
         }
 
-        $info[] = '(...)';
+        $paramInfos = [];
+
+        /** @var ReflectionParameter $parameter */
+        foreach ($method->parameters() as $parameter) {
+            $paramInfos[] = $formatter->format($parameter);
+        }
+        $info[] = '(' . implode(', ', $paramInfos) . ')';
+
+        $returnType = $method->inferredType();
+
+        if (($returnType->isDefined())) {
+            $info[] = ': ' . $formatter->format($returnType);
+        }
 
         return implode('', $info);
     }
