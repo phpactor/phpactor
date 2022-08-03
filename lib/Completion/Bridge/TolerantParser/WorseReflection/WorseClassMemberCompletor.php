@@ -149,7 +149,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
             yield Suggestion::createWithOptions($method->name(), [
                 'type' => Suggestion::TYPE_METHOD,
-                'short_description' => $this->formatter->format($method),
+                //'short_description' => $this->formatter->format($method),
                 'documentation' => function () use ($method) {
                     return $this->objectRenderer->render(new ItemDocumentation(sprintf(
                         '%s::%s',
@@ -179,8 +179,14 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
                 yield Suggestion::createWithOptions($name, [
                     'type' => Suggestion::TYPE_PROPERTY,
-                    'short_description' => $this->formatter->format($property),
-                    'documentation' => fn () => $property->docblock()->formatted()
+                    //'short_description' => $this->formatter->format($property),
+                    'documentation' => function () use ($property) {
+                        return $this->objectRenderer->render(new ItemDocumentation(sprintf(
+                            '%s::%s',
+                            $property->class()->name(),
+                            $property->name()
+                        ), $property->docblock()->formatted(), $property));
+                    },
                 ]);
             }
         }
@@ -191,7 +197,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             foreach ($classReflection->constants() as $constant) {
                 yield Suggestion::createWithOptions($constant->name(), [
                     'type' => Suggestion::TYPE_CONSTANT,
-                    'short_description' => $this->formatter->format($constant),
+                    //'short_description' => $this->formatter->format($constant),
                     'documentation' => fn () => $constant->docblock()->formatted(),
                 ]);
             }
@@ -201,7 +207,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             foreach ($classReflection->cases() as $case) {
                 yield Suggestion::createWithOptions($case->name(), [
                     'type' => Suggestion::TYPE_ENUM,
-                    'short_description' => $this->formatter->format($case),
+                    //'short_description' => $this->formatter->format($case),
                     'documentation' => fn () => $case->docblock()->formatted(),
                 ]);
             }

@@ -6,6 +6,7 @@ use Amp\CancellationToken;
 use Amp\CancelledException;
 use Amp\Delayed;
 use Amp\Promise;
+use Closure;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
@@ -15,6 +16,7 @@ use Phpactor\LanguageServerProtocol\CompletionOptions;
 use Phpactor\LanguageServerProtocol\CompletionParams;
 use Phpactor\LanguageServerProtocol\InsertTextFormat;
 use Phpactor\LanguageServerProtocol\MarkupContent;
+use Phpactor\LanguageServerProtocol\MarkupKind;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\SignatureHelpOptions;
@@ -26,8 +28,10 @@ use Phpactor\Extension\LanguageServerCompletion\Util\PhpactorToLspCompletionType
 use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use function Amp\call;
 
 class CompletionHandler implements Handler, CanRegisterCapabilities
 {
@@ -42,6 +46,11 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     private bool $supportSnippets;
 
     private NameImporter $nameImporter;
+
+    /**
+     * @var array<int,Closure(): string>
+     */
+    private array $lazy = [];
 
     public function __construct(
         Workspace $workspace,
@@ -67,9 +76,13 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         ];
     }
 
+    /**
+     * @return Promise<array<CompletionItem>>
+     */
     public function completion(CompletionParams $params, CancellationToken $token): Promise
     {
-        return \Amp\call(function () use ($params, $token) {
+        return call(function () use ($params, $token) {
+            $this->lazy = [];
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
             $languageId = $textDocument->languageId ?: 'php';
@@ -83,7 +96,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
 
             $items = [];
             $isIncomplete = false;
-            foreach ($suggestions as $suggestion) {
+            foreach ($suggestions as $index => $suggestion) {
                 assert($suggestion instanceof Suggestion);
 
                 $name = $this->suggestionNameFormatter->format($suggestion);
@@ -97,21 +110,25 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
 
                 $textEdits = $nameImporterResult->getTextEdits();
 
-                $items[] = CompletionItem::fromArray([
+                $item = CompletionItem::fromArray([
                          'label' => $suggestion->label(),
                          'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
                          'detail' => $this->formatShortDescription($suggestion),
-                         'documentation' => new MarkupContent('markdown', $suggestion->documentation() ?? ''),
                          'insertText' => $insertText,
                          'sortText' => $this->sortText($suggestion),
                          'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),
                          'additionalTextEdits' => $textEdits,
-                         'insertTextFormat' => $insertTextFormat
+                         'insertTextFormat' => $insertTextFormat,
+                         'data' => $index,
                      ]);
+
+                $this->lazy[$index] = fn (): string => $suggestion->documentation() ?? '';
+                $items[] = $item;
 
                 try {
                     $token->throwIfRequested();
                 } catch (CancelledException $cancellation) {
+                    $this->lazy = [];
                     $isIncomplete = true;
                     break;
                 }
@@ -131,6 +148,11 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     public function resolveItem(RequestMessage $request): Promise
     {
         return call(function () use ($request) {
+            $item = CompletionItem::fromArray($request->params);
+            $documentation = $this->lazy[$item->data]();
+            if ($documentation) {
+                $item->documentation = new MarkupContent(MarkupKind::MARKDOWN, $documentation);
+            }
             return $item;
         });
     }
