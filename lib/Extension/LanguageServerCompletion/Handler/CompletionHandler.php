@@ -48,9 +48,9 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     private NameImporter $nameImporter;
 
     /**
-     * @var array<int,Closure(): string>
+     * @var array<int,Closure(CompletionItem): CompletionItem>
      */
-    private array $lazy = [];
+    private array $resolve = [];
 
     public function __construct(
         Workspace $workspace,
@@ -82,7 +82,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     public function completion(CompletionParams $params, CancellationToken $token): Promise
     {
         return call(function () use ($params, $token) {
-            $this->lazy = [];
+            $this->resolve = [];
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
             $languageId = $textDocument->languageId ?: 'php';
@@ -122,13 +122,18 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                          'data' => $index,
                      ]);
 
-                $this->lazy[$index] = fn (): string => $suggestion->documentation() ?? '';
+
+                $this->resolve[$index] = function (CompletionItem $item) use ($suggestion): CompletionItem {
+                    $item->documentation = $suggestion->documentation() ?? '';
+                    return $item;
+                };
+
                 $items[] = $item;
 
                 try {
                     $token->throwIfRequested();
                 } catch (CancelledException $cancellation) {
-                    $this->lazy = [];
+                    $this->resolve = [];
                     $isIncomplete = true;
                     break;
                 }
@@ -149,7 +154,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     {
         return call(function () use ($request) {
             $item = CompletionItem::fromArray($request->params);
-            $documentation = $this->lazy[$item->data]();
+            $documentation = $this->resolve[$item->data]();
             if ($documentation) {
                 $item->documentation = new MarkupContent(MarkupKind::MARKDOWN, $documentation);
             }

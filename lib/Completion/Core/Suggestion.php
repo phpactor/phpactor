@@ -37,7 +37,10 @@ class Suggestion
 
     private string $name;
 
-    private ?string $shortDescription;
+    /**
+     * @var null|string|Closure
+     */
+    private $shortDescription;
 
     private string $label;
 
@@ -56,11 +59,12 @@ class Suggestion
 
     /**
      * @param null|string|Closure $documentation
+     * @param null|string|Closure $shortDescription
      */
     private function __construct(
         string $name,
         ?string $type = null,
-        ?string $shortDescription = null,
+        $shortDescription = null,
         ?string $nameImport = null,
         ?string $label = null,
         $documentation = null,
@@ -86,8 +90,8 @@ class Suggestion
 
     /**
      * @param array{
-     *   short_description?:string|null,
-     *   documentation?:string|null|\Closure,
+     *   short_description?:string|null|Closure,
+     *   documentation?:string|null|Closure,
      *   type?:string|null,
      *   class_import?:string|null,
      *   name_import?:string|null,
@@ -134,6 +138,9 @@ class Suggestion
         );
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -147,16 +154,12 @@ class Suggestion
             'name_import' => $this->nameImport,
             'range' => $this->range ? $this->range->toArray() : null,
 
-            // deprecated: in favour of short_description, to be removed
-            // after 0.10.0
-            'info' => $this->shortDescription(),
+            // removed
+            'info' => '',
         ];
     }
 
-    /**
-     * @return string|null
-     */
-    public function type()
+    public function type(): ?string
     {
         return $this->type;
     }
@@ -173,6 +176,10 @@ class Suggestion
 
     public function shortDescription(): ?string
     {
+        if ($this->shortDescription instanceof Closure) {
+            $shortDescription = $this->shortDescription;
+            return $shortDescription();
+        }
         return $this->shortDescription;
     }
 
