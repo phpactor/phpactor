@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Core;
 
+use Closure;
 use RuntimeException;
 
 class Suggestion
@@ -42,7 +43,10 @@ class Suggestion
 
     private ?Range $range;
 
-    private ?string $documentation;
+    /**
+     * @var null|string|Closure
+     */
+    private $documentation;
 
     private ?string $snippet;
 
@@ -50,13 +54,16 @@ class Suggestion
 
     private ?int $priority;
 
+    /**
+     * @param null|string|Closure $documentation
+     */
     private function __construct(
         string $name,
         ?string $type = null,
         ?string $shortDescription = null,
         ?string $nameImport = null,
         ?string $label = null,
-        ?string $documentation = null,
+        $documentation = null,
         ?Range $range = null,
         ?string $snippet = null,
         ?int $priority = null
@@ -80,7 +87,7 @@ class Suggestion
     /**
      * @param array{
      *   short_description?:string|null,
-     *   documentation?:string|null,
+     *   documentation?:string|null|\Closure,
      *   type?:string|null,
      *   class_import?:string|null,
      *   name_import?:string|null,
@@ -213,6 +220,10 @@ class Suggestion
 
     public function documentation(): ?string
     {
+        if ($this->documentation instanceof Closure) {
+            $documentation = $this->documentation;
+            return $documentation();
+        }
         return $this->documentation;
     }
 

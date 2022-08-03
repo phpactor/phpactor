@@ -63,6 +63,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     {
         return [
             'textDocument/completion' => 'completion',
+            'completionItem/resolve' => 'resolveItem',
         ];
     }
 
@@ -124,10 +125,21 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         });
     }
 
+    /**
+     * @return Promise<CompletionItem>
+     */
+    public function resolveItem(RequestMessage $request): Promise
+    {
+        return call(function () use ($request) {
+            return $item;
+        });
+    }
+
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
         $capabilities->completionProvider = new CompletionOptions([':', '>', '$', '@']);
         $capabilities->signatureHelpProvider = new SignatureHelpOptions(['(', ',']);
+        $capabilities->completionProvider->resolveProvider = true;
     }
 
     /**
