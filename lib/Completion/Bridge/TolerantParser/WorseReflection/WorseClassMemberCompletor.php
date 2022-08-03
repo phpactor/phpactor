@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
@@ -178,7 +177,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
                 yield Suggestion::createWithOptions($name, [
                     'type' => Suggestion::TYPE_PROPERTY,
-                    'short_description' => fn() => $this->formatter->format($property),
+                    'short_description' => fn () => $this->formatter->format($property),
                     'documentation' => function () use ($property) {
                         return $this->objectRenderer->render(new ItemDocumentation(sprintf(
                             '%s::%s',

@@ -128,7 +128,7 @@ class CompletionExtensionTest extends TestCase
         return $builder->build([
             'logging.enabled' => false,
             CompletionExtension::PARAM_DEDUPE => false,
-            CompletionExtension::PARAM_DEDUPE_MATCH_SHORT_DESCRIPTION => false,
+            CompletionExtension::PARAM_DEDUPE_MATCH_NAME_IMPORT => false,
             CompletionExtension::PARAM_LIMIT => 10,
         ]);
     }
