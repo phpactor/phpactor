@@ -19,6 +19,7 @@ abstract class NameSearcherCompletor
     protected NameSearcher $nameSearcher;
 
     private DocumentPrioritizer $prioritizer;
+
     private LabelFormatter $labelFormatter;
 
     public function __construct(NameSearcher $nameSearcher, DocumentPrioritizer $prioritizer = null, LabelFormatter $labelFormatter = null)
