@@ -69,6 +69,28 @@ class CompletionHandlerTest extends TestCase
         $this->assertFalse($response->result->isIncomplete);
     }
 
+    public function testResolveCompletionItem(): void
+    {
+        $tester = $this->create([
+            Suggestion::create('hello')->withShortDescription(fn () => 'this is a short description')->withDocumentation(fn () => 'documentation now'),
+        ]);
+        $response = $tester->requestAndWait(
+            'textDocument/completion',
+            [
+                'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
+                'position' => ProtocolFactory::position(0, 0)
+            ]
+        );
+        $this->assertInstanceOf(CompletionList::class, $response->result);
+        $response = $tester->requestAndWait(
+            'completionItem/resolve',
+            $response->result->items[0]
+        );
+        self::assertEquals('this is a short description', $response->result->detail);
+        self::assertEquals('documentation now', $response->result->documentation->value);
+
+    }
+
     public function testHandleAnIncompleteListOfSuggestions(): void
     {
         $tester = $this->create([

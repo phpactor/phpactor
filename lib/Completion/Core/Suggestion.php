@@ -183,7 +183,10 @@ class Suggestion
         return $this->shortDescription;
     }
 
-    public function withShortDescription(string $description): self
+    /**
+     * @param string|Closure $description
+     */
+    public function withShortDescription($description): self
     {
         $clone = clone $this;
         $clone->shortDescription = $description;
@@ -243,6 +246,16 @@ class Suggestion
     {
         $new = clone $this;
         $new->label = $label;
+        return $new;
+    }
+
+    /**
+     * @param null|string|Closure $documentation
+     */
+    public function withDocumentation($documentation): self
+    {
+        $new = clone $this;
+        $new->documentation = $documentation;
         return $new;
     }
 }
