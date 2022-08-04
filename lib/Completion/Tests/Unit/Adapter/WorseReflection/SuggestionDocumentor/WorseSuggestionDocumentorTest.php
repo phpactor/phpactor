@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseSuggestionDocumentorTest extends TestCase
 {
-    public function testClassSuggestion(): void 
+    public function testClassSuggestion(): void
     {
         $documentation = $this->createDocumentor('<?php /** Hello */class Foobar {}')->document(Suggestion::createWithOptions('Foobar', [
             'type' => Suggestion::TYPE_CLASS,
@@ -20,7 +20,7 @@ class WorseSuggestionDocumentorTest extends TestCase
         self::assertNotEmpty($documentation);
     }
 
-    public function testFunctionSuggestion(): void 
+    public function testFunctionSuggestion(): void
     {
         $documentation = $this->createDocumentor('<?php /** Documentation */function boo() {}')->document(Suggestion::createWithOptions('Foobar', [
             'type' => Suggestion::TYPE_FUNCTION,
