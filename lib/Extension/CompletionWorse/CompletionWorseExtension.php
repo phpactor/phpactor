@@ -42,10 +42,12 @@ use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\FunctionLikeSnip
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultClassSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\NameSearchResultFunctionSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\ParametersSnippetFormatter;
+use Phpactor\Completion\Bridge\WorseReflection\SuggestionDocumentor\WorseSuggestionDocumentor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\SimilarityResultPrioritizer;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\Completion\Core\SuggestionDocumentor;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Extension\Completion\CompletionExtension;
@@ -139,6 +141,13 @@ class CompletionWorseExtension implements Extension
                 CompletionExtension::TAG_COMPLETOR => [ 'name' => $name ]
             ]);
         }
+
+        $container->register(SuggestionDocumentor::class, function (Container $container) {
+            return new WorseSuggestionDocumentor(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(ObjectRendererExtension::SERVICE_MARKDOWN_RENDERER)
+            );
+        });
 
         $container->register(TypeSuggestionProvider::class, function (Container $container) {
             return new TypeSuggestionProvider(

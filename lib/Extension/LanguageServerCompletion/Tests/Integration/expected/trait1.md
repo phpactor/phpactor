@@ -1,2 +1,4 @@
-trait Blah
+trait Blah {
     public function foo()
+}
+

@@ -1,1 +1,2 @@
-final class Foobar
+final class Foobar {
+}

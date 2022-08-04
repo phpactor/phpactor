@@ -5,11 +5,13 @@ namespace Phpactor\Extension\Completion;
 use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\ChainSignatureHelper;
 use Phpactor\Completion\Core\Completor\DedupeCompletor;
+use Phpactor\Completion\Core\Completor\DocumentingCompletor;
 use Phpactor\Completion\Core\Completor\LabelFormattingCompletor;
 use Phpactor\Completion\Core\Completor\LimitingCompletor;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Core\LabelFormatter;
 use Phpactor\Completion\Core\LabelFormatter\HelpfulLabelFormatter;
+use Phpactor\Completion\Core\SuggestionDocumentor;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
@@ -86,6 +88,9 @@ class CompletionExtension implements Extension
                 }
 
                 $completors = new LabelFormattingCompletor($completors, $container->get(LabelFormatter::class));
+                if ($container->has(SuggestionDocumentor::class)) {
+                    $completors = new DocumentingCompletor($completors, $container->get(SuggestionDocumentor::class));
+                }
 
                 $mapped[(string)$type] = $completors;
             }
