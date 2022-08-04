@@ -36,6 +36,7 @@ Bug fixes:
 
 Improvements:
 
+  - [cmp] Show partial namespace to disambiguate class name suggestions
   - [wr] Markdown formatted member completion documentation
   - [ls] publish diagnostics on open and update
   - [ct] Add missing properties for array assignments #1640
@@ -76,9 +77,11 @@ Improvements:
   - [cb] Preserve `?` operator as distinct from a union type
   - [wr] Support for class-string type (not for type inference however)
   - [completion + location] Better support for union types
+  - [cs] Updated CS and converted property docblock types to actual types
 
 Features:
 
+  - [ls] Lazily resolve documentation for completion items
   - [ct] Generate constructor refactoring
   - [ct] Fill object refactoring
   - [ct] Remove unused imports diagnositcs and code transformation #1758
@@ -121,10 +124,6 @@ Features:
   - [reference-finder] Enum support (requires 8.1 PHP runtime)
   - [php8.1] Disable deprecation warnings unless `PHPACTOR_DEPRECATIONS`
     provided.
-
-Improvements:
-
-  - [cs] Updated CS and converted property docblock types to actual types
 
 ## 2022-01-03 (0.18.0)
 
