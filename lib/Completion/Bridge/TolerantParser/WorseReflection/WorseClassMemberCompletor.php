@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
@@ -134,7 +133,6 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        /** @var ReflectionMethod $method */
         foreach ($classReflection->methods() as $method) {
             if ($method->name() === '__construct') {
                 continue;
@@ -149,12 +147,14 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
             yield Suggestion::createWithOptions($method->name(), [
                 'type' => Suggestion::TYPE_METHOD,
-                'short_description' => $this->formatter->format($method),
-                'documentation' => $this->objectRenderer->render(new ItemDocumentation(sprintf(
-                    '%s::%s',
-                    $method->class()->name(),
-                    $method->name()
-                ), $method->docblock()->formatted(), $method)),
+                'short_description' => fn () => $this->formatter->format($method),
+                'documentation' => function () use ($method) {
+                    return $this->objectRenderer->render(new ItemDocumentation(sprintf(
+                        '%s::%s',
+                        $method->class()->name(),
+                        $method->name()
+                    ), $method->docblock()->formatted(), $method));
+                },
                 'snippet' => $completeOnlyName ? $method->name() : $this->snippetFormatter->format($method),
             ]);
         }
@@ -177,8 +177,14 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
                 yield Suggestion::createWithOptions($name, [
                     'type' => Suggestion::TYPE_PROPERTY,
-                    'short_description' => $this->formatter->format($property),
-                    'documentation' => $property->docblock()->formatted()
+                    'short_description' => fn () => $this->formatter->format($property),
+                    'documentation' => function () use ($property) {
+                        return $this->objectRenderer->render(new ItemDocumentation(sprintf(
+                            '%s::%s',
+                            $property->class()->name(),
+                            $property->name()
+                        ), $property->docblock()->formatted(), $property));
+                    },
                 ]);
             }
         }
@@ -189,8 +195,8 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             foreach ($classReflection->constants() as $constant) {
                 yield Suggestion::createWithOptions($constant->name(), [
                     'type' => Suggestion::TYPE_CONSTANT,
-                    'short_description' => $this->formatter->format($constant),
-                    'documentation' => $constant->docblock()->formatted(),
+                    'short_description' => fn () => $this->formatter->format($constant),
+                    'documentation' => fn () => $constant->docblock()->formatted(),
                 ]);
             }
         }
@@ -199,8 +205,8 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             foreach ($classReflection->cases() as $case) {
                 yield Suggestion::createWithOptions($case->name(), [
                     'type' => Suggestion::TYPE_ENUM,
-                    'short_description' => $this->formatter->format($case),
-                    'documentation' => $case->docblock()->formatted(),
+                    'short_description' => fn () => $this->formatter->format($case),
+                    'documentation' => fn () => $case->docblock()->formatted(),
                 ]);
             }
         }

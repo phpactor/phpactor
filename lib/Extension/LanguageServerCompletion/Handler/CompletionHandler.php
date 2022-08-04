@@ -6,6 +6,7 @@ use Amp\CancellationToken;
 use Amp\CancelledException;
 use Amp\Delayed;
 use Amp\Promise;
+use Closure;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
@@ -15,6 +16,7 @@ use Phpactor\LanguageServerProtocol\CompletionOptions;
 use Phpactor\LanguageServerProtocol\CompletionParams;
 use Phpactor\LanguageServerProtocol\InsertTextFormat;
 use Phpactor\LanguageServerProtocol\MarkupContent;
+use Phpactor\LanguageServerProtocol\MarkupKind;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\SignatureHelpOptions;
@@ -26,8 +28,10 @@ use Phpactor\Extension\LanguageServerCompletion\Util\PhpactorToLspCompletionType
 use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use function Amp\call;
 
 class CompletionHandler implements Handler, CanRegisterCapabilities
 {
@@ -42,6 +46,11 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     private bool $supportSnippets;
 
     private NameImporter $nameImporter;
+
+    /**
+     * @var array<int,Closure(CompletionItem): CompletionItem>
+     */
+    private array $resolve = [];
 
     public function __construct(
         Workspace $workspace,
@@ -63,12 +72,17 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     {
         return [
             'textDocument/completion' => 'completion',
+            'completionItem/resolve' => 'resolveItem',
         ];
     }
 
+    /**
+     * @return Promise<array<CompletionItem>>
+     */
     public function completion(CompletionParams $params, CancellationToken $token): Promise
     {
-        return \Amp\call(function () use ($params, $token) {
+        return call(function () use ($params, $token) {
+            $this->resolve = [];
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
             $languageId = $textDocument->languageId ?: 'php';
@@ -82,7 +96,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
 
             $items = [];
             $isIncomplete = false;
-            foreach ($suggestions as $suggestion) {
+            foreach ($suggestions as $index => $suggestion) {
                 assert($suggestion instanceof Suggestion);
 
                 $name = $this->suggestionNameFormatter->format($suggestion);
@@ -96,21 +110,30 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
 
                 $textEdits = $nameImporterResult->getTextEdits();
 
-                $items[] = CompletionItem::fromArray([
-                         'label' => $suggestion->label(),
-                         'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
-                         'detail' => $this->formatShortDescription($suggestion),
-                         'documentation' => new MarkupContent('markdown', $suggestion->documentation() ?? ''),
-                         'insertText' => $insertText,
-                         'sortText' => $this->sortText($suggestion),
-                         'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),
-                         'additionalTextEdits' => $textEdits,
-                         'insertTextFormat' => $insertTextFormat
-                     ]);
+                $item = CompletionItem::fromArray([
+                    'label' => $suggestion->label(),
+                    'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
+                    'insertText' => $insertText,
+                    'sortText' => $this->sortText($suggestion),
+                    'textEdit' => $this->textEdit($suggestion, $insertText, $textDocument),
+                    'additionalTextEdits' => $textEdits,
+                    'insertTextFormat' => $insertTextFormat,
+                    'data' => $index,
+                ]);
+
+                $this->resolve[$index] = function (CompletionItem $item) use ($suggestion): CompletionItem {
+                    $documentation = $suggestion->documentation();
+                    $item->documentation = $documentation ? new MarkupContent(MarkupKind::MARKDOWN, $documentation) : null;
+                    $item->detail = $this->formatShortDescription($suggestion);
+                    return $item;
+                };
+
+                $items[] = $item;
 
                 try {
                     $token->throwIfRequested();
                 } catch (CancelledException $cancellation) {
+                    $this->resolve = [];
                     $isIncomplete = true;
                     break;
                 }
@@ -124,10 +147,23 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         });
     }
 
+    /**
+     * @return Promise<CompletionItem>
+     */
+    public function resolveItem(RequestMessage $request): Promise
+    {
+        return call(function () use ($request) {
+            $item = CompletionItem::fromArray($request->params);
+            $item = $this->resolve[$item->data]($item);
+            return $item;
+        });
+    }
+
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
         $capabilities->completionProvider = new CompletionOptions([':', '>', '$', '@']);
         $capabilities->signatureHelpProvider = new SignatureHelpOptions(['(', ',']);
+        $capabilities->completionProvider->resolveProvider = true;
     }
 
     /**

@@ -600,14 +600,14 @@ If results should be de-duplicated
 **Default**: ``true``
 
 
-.. _param_completion.dedupe_match_short_description:
+.. _param_completion.dedupe_match_fqn:
 
 
-``completion.dedupe_match_short_description``
-"""""""""""""""""""""""""""""""""""""""""""""
+``completion.dedupe_match_fqn``
+"""""""""""""""""""""""""""""""
 
 
-If ``completion.dedupe``, match on completion description intead of name
+If ``completion.dedupe``, consider the class FQN in addition to the completion suggestion
 
 
 **Default**: ``true``

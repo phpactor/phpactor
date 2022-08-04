@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Core;
 
+use Closure;
 use RuntimeException;
 
 class Suggestion
@@ -36,13 +37,19 @@ class Suggestion
 
     private string $name;
 
-    private ?string $shortDescription;
+    /**
+     * @var null|string|Closure
+     */
+    private $shortDescription;
 
     private string $label;
 
     private ?Range $range;
 
-    private ?string $documentation;
+    /**
+     * @var null|string|Closure
+     */
+    private $documentation;
 
     private ?string $snippet;
 
@@ -50,13 +57,17 @@ class Suggestion
 
     private ?int $priority;
 
+    /**
+     * @param null|string|Closure $documentation
+     * @param null|string|Closure $shortDescription
+     */
     private function __construct(
         string $name,
         ?string $type = null,
-        ?string $shortDescription = null,
+        $shortDescription = null,
         ?string $nameImport = null,
         ?string $label = null,
-        ?string $documentation = null,
+        $documentation = null,
         ?Range $range = null,
         ?string $snippet = null,
         ?int $priority = null
@@ -79,8 +90,8 @@ class Suggestion
 
     /**
      * @param array{
-     *   short_description?:string|null,
-     *   documentation?:string|null,
+     *   short_description?:string|null|Closure,
+     *   documentation?:string|null|Closure,
      *   type?:string|null,
      *   class_import?:string|null,
      *   name_import?:string|null,
@@ -127,6 +138,9 @@ class Suggestion
         );
     }
 
+    /**
+     * @return array<string,mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -140,16 +154,12 @@ class Suggestion
             'name_import' => $this->nameImport,
             'range' => $this->range ? $this->range->toArray() : null,
 
-            // deprecated: in favour of short_description, to be removed
-            // after 0.10.0
-            'info' => $this->shortDescription(),
+            // removed
+            'info' => '',
         ];
     }
 
-    /**
-     * @return string|null
-     */
-    public function type()
+    public function type(): ?string
     {
         return $this->type;
     }
@@ -166,10 +176,17 @@ class Suggestion
 
     public function shortDescription(): ?string
     {
+        if ($this->shortDescription instanceof Closure) {
+            $shortDescription = $this->shortDescription;
+            return $shortDescription();
+        }
         return $this->shortDescription;
     }
 
-    public function withShortDescription(string $description): self
+    /**
+     * @param string|Closure $description
+     */
+    public function withShortDescription($description): self
     {
         $clone = clone $this;
         $clone->shortDescription = $description;
@@ -213,6 +230,10 @@ class Suggestion
 
     public function documentation(): ?string
     {
+        if ($this->documentation instanceof Closure) {
+            $documentation = $this->documentation;
+            return $documentation();
+        }
         return $this->documentation;
     }
 
@@ -225,6 +246,16 @@ class Suggestion
     {
         $new = clone $this;
         $new->label = $label;
+        return $new;
+    }
+
+    /**
+     * @param null|string|Closure $documentation
+     */
+    public function withDocumentation($documentation): self
+    {
+        $new = clone $this;
+        $new->documentation = $documentation;
         return $new;
     }
 }
