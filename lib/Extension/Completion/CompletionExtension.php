@@ -5,8 +5,11 @@ namespace Phpactor\Extension\Completion;
 use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\ChainSignatureHelper;
 use Phpactor\Completion\Core\Completor\DedupeCompletor;
+use Phpactor\Completion\Core\Completor\LabelFormattingCompletor;
 use Phpactor\Completion\Core\Completor\LimitingCompletor;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\Completion\Core\LabelFormatter;
+use Phpactor\Completion\Core\LabelFormatter\HelpfulLabelFormatter;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
@@ -82,10 +85,16 @@ class CompletionExtension implements Extension
                     $completors = new LimitingCompletor($completors, $limit);
                 }
 
+                $completors = new LabelFormattingCompletor($completors, $container->get(LabelFormatter::class));
+
                 $mapped[(string)$type] = $completors;
             }
 
             return new TypedCompletorRegistry($mapped);
+        });
+
+        $container->register(LabelFormatter::class, function (Container $container) {
+            return new HelpfulLabelFormatter();
         });
 
         $container->register(self::SERVICE_SHORT_DESC_FORMATTER, function (Container $container) {

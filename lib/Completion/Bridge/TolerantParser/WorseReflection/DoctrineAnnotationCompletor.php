@@ -29,7 +29,7 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
         Reflector $reflector,
         Parser $parser = null
     ) {
-        parent::__construct($nameSearcher);
+        parent::__construct($nameSearcher, null);
 
         $this->reflector = $reflector;
         $this->parser = $parser ?: new Parser();

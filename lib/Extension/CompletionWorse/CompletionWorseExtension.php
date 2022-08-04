@@ -187,7 +187,6 @@ class CompletionWorseExtension implements Extension
             return $completors;
         });
 
-
         $container->register(DocumentPrioritizer::class, function (Container $container) {
             switch ($container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY)) {
                 case self::NAME_SEARCH_STRATEGY_PROXIMITY:
@@ -260,7 +259,8 @@ class CompletionWorseExtension implements Extension
                 function (Container $container) {
                     return new DoctrineAnnotationCompletor(
                         $container->get(NameSearcher::class),
-                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(WorseReflectionExtension::SERVICE_PARSER)
                     );
                 },
             ],

@@ -30,10 +30,11 @@ abstract class NameSearcherCompletor
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
         foreach ($this->nameSearcher->search($name) as $result) {
+            $options = $this->createSuggestionOptions($result, $sourceUri, $node);
             yield $this->createSuggestion(
                 $result,
                 $node,
-                $this->createSuggestionOptions($result, $sourceUri, $node),
+                $options,
             );
         }
 

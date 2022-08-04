@@ -97,7 +97,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                 $textEdits = $nameImporterResult->getTextEdits();
 
                 $items[] = CompletionItem::fromArray([
-                         'label' => $name,
+                         'label' => $suggestion->label(),
                          'kind' => PhpactorToLspCompletionType::fromPhpactorType($suggestion->type()),
                          'detail' => $this->formatShortDescription($suggestion),
                          'documentation' => new MarkupContent('markdown', $suggestion->documentation() ?? ''),
@@ -116,6 +116,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
                 }
                 yield new Delayed(0);
             }
+
 
             $isIncomplete = $isIncomplete || !$suggestions->getReturn();
 

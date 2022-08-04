@@ -286,7 +286,9 @@ class CompletionHandlerTest extends TestCase
         $this->assertEquals([
             self::completionItem('hello', 2),
             self::completionItem('goodbye', 2, ['insertText' => 'goodbye()', 'insertTextFormat' => 2]),
-            self::completionItem('var', 6),
+            self::completionItem('var', 6, [
+                'label' => '$var',
+            ]),
         ], $response->result->items);
         $this->assertFalse($response->result->isIncomplete);
     }
@@ -316,7 +318,9 @@ class CompletionHandlerTest extends TestCase
         $this->assertEquals([
             self::completionItem('hello', 2),
             self::completionItem('goodbye', 2),
-            self::completionItem('var', 6),
+            self::completionItem('var', 6, [
+                'label' => '$var',
+            ]),
         ], $response->result->items);
         $this->assertFalse($response->result->isIncomplete);
     }
@@ -354,7 +358,9 @@ class CompletionHandlerTest extends TestCase
             self::completionItem('goodbye', 2, [
                 'sortText' => '0255-goodbye',
             ]),
-            self::completionItem('var', 6),
+            self::completionItem('var', 6, [
+                'label' => '$var',
+            ]),
         ], $response->result->items);
         $this->assertFalse($response->result->isIncomplete);
     }
