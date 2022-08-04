@@ -52,7 +52,7 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
         NameSearchResult $result,
         ?TextDocumentUri $sourceUri = null,
         ?Node $node = null,
-        array &$seen = [],
+        array &$seen = []
     ): array {
         $suggestionOptions = parent::createSuggestionOptions($result, $sourceUri, $node, $seen);
 
