@@ -7,8 +7,6 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
-use Phpactor\Completion\Core\LabelFormatter;
-use Phpactor\Completion\Core\LabelFormatter\PassthruLabelFormatter;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;

@@ -8,7 +8,6 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor;
-use Phpactor\Completion\Core\LabelFormatter;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Util\OffsetHelper;
 use Phpactor\ReferenceFinder\NameSearcher;
@@ -73,8 +72,7 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
     protected function createSuggestionOptions(
         NameSearchResult $result,
         ?TextDocumentUri $sourceUri = null,
-        ?Node $node = null,
-        array &$seen = []
+        ?Node $node = null
     ): array {
         return array_merge(parent::createSuggestionOptions($result, null, $node), [
             'snippet' => (string) $result->name()->head() .'($1)$0',

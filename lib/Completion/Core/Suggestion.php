@@ -185,6 +185,17 @@ class Suggestion
         return $this->type() === self::TYPE_CLASS ? $this->nameImport : null;
     }
 
+    /**
+     * Fully qualified name of suggestion, if applicable
+     */
+    public function fqn(): ?string
+    {
+        return $this->nameImport();
+    }
+
+    /**
+     * @deprecated Use fqn()
+     */
     public function nameImport(): ?string
     {
         return $this->nameImport;
@@ -208,5 +219,12 @@ class Suggestion
     public function priority(): ?int
     {
         return $this->priority;
+    }
+
+    public function withLabel(string $label): self
+    {
+        $new = clone $this;
+        $new->label = $label;
+        return $new;
     }
 }
