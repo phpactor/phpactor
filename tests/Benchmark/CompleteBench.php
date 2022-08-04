@@ -21,6 +21,6 @@ class CompleteBench extends BaseBenchCase
     public function benchComplete(): void
     {
         $output = $this->runCommand('complete tests/FoobarTest.php 145'); //145?
-        Assert::assertStringContainsString('info:pub', $output);
+        Assert::assertStringContainsString('short_description:pub', $output);
     }
 }

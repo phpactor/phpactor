@@ -61,7 +61,7 @@ class SuggestionTest extends TestCase
             'name' => 'hello',
             'label' => 'hallo',
             'range' => [1, 2],
-            'info' => 'Foobar',
+            'info' => '',
             'snippet' => null,
             'name_import' => 'Namespace\\Foobar',
         ], $suggestion->toArray());

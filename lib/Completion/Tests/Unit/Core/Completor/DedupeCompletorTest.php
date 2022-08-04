@@ -30,7 +30,7 @@ class DedupeCompletorTest extends TestCase
         $this->assertTrue($suggestions->getReturn());
     }
 
-    public function testDeduplicatesWithShortDescription(): void
+    public function testDeduplicatesWithFqn(): void
     {
         $source = TextDocumentBuilder::create('foobar')->build();
         $offset = ByteOffset::fromInt(10);
@@ -38,11 +38,11 @@ class DedupeCompletorTest extends TestCase
         $inner = new ArrayCompletor([
             Suggestion::create('foobar'),
             Suggestion::createWithOptions('barfoo', [
-                'short_description' => 'baf',
+                'name_import' => 'baf',
             ]),
             Suggestion::create('foobar'),
             Suggestion::createWithOptions('barfoo', [
-                'short_description' => 'bosh',
+                'name_import' => 'bosh',
             ]),
         ]);
         $dedupe = new DedupeCompletor($inner, true);
@@ -50,10 +50,10 @@ class DedupeCompletorTest extends TestCase
         self::assertEquals([
             Suggestion::create('foobar'),
             Suggestion::createWithOptions('barfoo', [
-                'short_description' => 'baf',
+                'name_import' => 'baf',
             ]),
             Suggestion::createWithOptions('barfoo', [
-                'short_description' => 'bosh',
+                'name_import' => 'bosh',
             ]),
         ], iterator_to_array($suggestions));
         $this->assertTrue($suggestions->getReturn());

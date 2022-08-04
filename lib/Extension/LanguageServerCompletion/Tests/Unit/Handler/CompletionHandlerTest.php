@@ -73,6 +73,10 @@ class CompletionHandlerTest extends TestCase
     {
         $tester = $this->create([
             Suggestion::create('hello')->withShortDescription(fn () => 'this is a short description')->withDocumentation(fn () => 'documentation now'),
+            Suggestion::createWithOptions('hello', [
+                'type' => Suggestion::TYPE_CLASS,
+                'name_import' => 'Foobar',
+            ])->withShortDescription(fn () => 'import class')->withDocumentation(fn () => 'documentation now'),
         ]);
         $response = $tester->requestAndWait(
             'textDocument/completion',
@@ -82,13 +86,24 @@ class CompletionHandlerTest extends TestCase
             ]
         );
         $this->assertInstanceOf(CompletionList::class, $response->result);
+        $completionList = $response->result;
+        assert($completionList instanceof CompletionList);
+
+        // resolve item 0
         $response = $tester->requestAndWait(
             'completionItem/resolve',
-            $response->result->items[0]
+            $completionList->items[0]
         );
         self::assertEquals('this is a short description', $response->result->detail);
         self::assertEquals('documentation now', $response->result->documentation->value);
 
+        // resolve item 1
+        $response = $tester->requestAndWait(
+            'completionItem/resolve',
+            $completionList->items[1]
+        );
+        self::assertEquals('↓ import class', $response->result->detail);
+        self::assertEquals('documentation now', $response->result->documentation->value);
     }
 
     public function testHandleAnIncompleteListOfSuggestions(): void
