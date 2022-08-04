@@ -20,13 +20,10 @@ abstract class NameSearcherCompletor
 
     private DocumentPrioritizer $prioritizer;
 
-    private LabelFormatter $labelFormatter;
-
-    public function __construct(NameSearcher $nameSearcher, DocumentPrioritizer $prioritizer = null, LabelFormatter $labelFormatter = null)
+    public function __construct(NameSearcher $nameSearcher, DocumentPrioritizer $prioritizer = null)
     {
         $this->nameSearcher = $nameSearcher;
         $this->prioritizer = $prioritizer ?: new DefaultResultPrioritizer();
-        $this->labelFormatter = $labelFormatter ?? new PassthruLabelFormatter();
     }
 
     /**
@@ -34,9 +31,8 @@ abstract class NameSearcherCompletor
      */
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
-        $seen = [];
         foreach ($this->nameSearcher->search($name) as $result) {
-            $options = $this->createSuggestionOptions($result, $sourceUri, $node, $seen);
+            $options = $this->createSuggestionOptions($result, $sourceUri, $node);
             yield $this->createSuggestion(
                 $result,
                 $node,
@@ -60,14 +56,10 @@ abstract class NameSearcherCompletor
 
     /**
      * @return array<string,mixed>
-     * @param array<string,bool> $seen
      */
-    protected function createSuggestionOptions(NameSearchResult $result, ?TextDocumentUri $sourceUri = null, ?Node $node = null, array &$seen = []): array
+    protected function createSuggestionOptions(NameSearchResult $result, ?TextDocumentUri $sourceUri = null, ?Node $node = null): array
     {
-        $label = $this->labelFormatter->format($result->name()->__toString(), $seen);
-
         $options = [
-            'label' => $label,
             'short_description' => $result->name()->__toString(),
             'type' => $this->suggestionType($result),
             'class_import' => null,
@@ -80,8 +72,6 @@ abstract class NameSearcherCompletor
             $options['class_import'] = $this->classImport($result);
             $options['name_import'] = $result->name()->__toString();
         }
-
-        $seen[$label] = true;
 
         return $options;
     }

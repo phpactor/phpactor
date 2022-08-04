@@ -24,10 +24,9 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
     public function __construct(
         NameSearcher $nameSearcher,
         ObjectFormatter $snippetFormatter,
-        DocumentPrioritizer $prioritizer = null,
-        LabelFormatter $labelFormatter = null
+        DocumentPrioritizer $prioritizer = null
     ) {
-        parent::__construct($nameSearcher, $prioritizer, $labelFormatter);
+        parent::__construct($nameSearcher, $prioritizer);
 
         $this->snippetFormatter = $snippetFormatter;
     }
