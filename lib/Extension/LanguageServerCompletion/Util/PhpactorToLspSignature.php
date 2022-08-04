@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Util;
 
+use Phpactor\LanguageServerProtocol\MarkupContent;
+use Phpactor\LanguageServerProtocol\MarkupKind;
 use Phpactor\LanguageServerProtocol\ParameterInformation;
 use Phpactor\LanguageServerProtocol\SignatureHelp;
 use Phpactor\LanguageServerProtocol\SignatureInformation;
@@ -23,7 +25,7 @@ class PhpactorToLspSignature
 
             $signatures[] = new SignatureInformation(
                 $phpactorSignature->label(),
-                $phpactorSignature->documentation(),
+                new MarkupContent(MarkupKind::MARKDOWN, $phpactorSignature->documentation()),
                 $parameters
             );
         }

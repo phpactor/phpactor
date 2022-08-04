@@ -46,6 +46,8 @@ use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\SimilarityResultPrioritizer;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\Completion\Core\LabelFormatter;
+use Phpactor\Completion\Core\LabelFormatter\HelpfulLabelFormatter;
 use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Extension\Completion\CompletionExtension;
@@ -187,6 +189,9 @@ class CompletionWorseExtension implements Extension
             return $completors;
         });
 
+        $container->register(LabelFormatter::class, function (Container $container) {
+            return new HelpfulLabelFormatter();
+        });
 
         $container->register(DocumentPrioritizer::class, function (Container $container) {
             switch ($container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY)) {
@@ -260,7 +265,9 @@ class CompletionWorseExtension implements Extension
                 function (Container $container) {
                     return new DoctrineAnnotationCompletor(
                         $container->get(NameSearcher::class),
-                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                        $container->get(LabelFormatter::class)
                     );
                 },
             ],
@@ -369,7 +376,8 @@ class CompletionWorseExtension implements Extension
                         new ObjectFormatter(
                             $container->get(self::SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS)
                         ),
-                        $container->get(DocumentPrioritizer::class)
+                        $container->get(DocumentPrioritizer::class),
+                        $container->get(LabelFormatter::class)
                     ));
                 },
             ],

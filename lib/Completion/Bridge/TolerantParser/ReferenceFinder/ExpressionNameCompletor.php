@@ -10,6 +10,7 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor as CoreNameSearcherCompletor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\Completion\Core\LabelFormatter;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\ByteOffset;
@@ -23,9 +24,10 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
     public function __construct(
         NameSearcher $nameSearcher,
         ObjectFormatter $snippetFormatter,
-        DocumentPrioritizer $prioritizer = null
+        DocumentPrioritizer $prioritizer = null,
+        LabelFormatter $labelFormatter = null
     ) {
-        parent::__construct($nameSearcher, $prioritizer);
+        parent::__construct($nameSearcher, $prioritizer, $labelFormatter);
 
         $this->snippetFormatter = $snippetFormatter;
     }
@@ -49,9 +51,10 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
     protected function createSuggestionOptions(
         NameSearchResult $result,
         ?TextDocumentUri $sourceUri = null,
-        ?Node $node = null
+        ?Node $node = null,
+        array &$seen = [],
     ): array {
-        $suggestionOptions = parent::createSuggestionOptions($result, $sourceUri, $node);
+        $suggestionOptions = parent::createSuggestionOptions($result, $sourceUri, $node, $seen);
 
         if ($this->isNonObjectCreationClassResult($result, $node) ||
             !$this->snippetFormatter->canFormat($result)) {

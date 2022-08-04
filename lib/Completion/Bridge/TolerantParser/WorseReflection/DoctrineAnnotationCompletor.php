@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor;
+use Phpactor\Completion\Core\LabelFormatter;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Util\OffsetHelper;
 use Phpactor\ReferenceFinder\NameSearcher;
@@ -27,9 +28,10 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
     public function __construct(
         NameSearcher $nameSearcher,
         Reflector $reflector,
-        Parser $parser = null
+        Parser $parser = null,
+        LabelFormatter $labelFormatter = null
     ) {
-        parent::__construct($nameSearcher);
+        parent::__construct($nameSearcher, null, $labelFormatter);
 
         $this->reflector = $reflector;
         $this->parser = $parser ?: new Parser();
@@ -72,7 +74,8 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
     protected function createSuggestionOptions(
         NameSearchResult $result,
         ?TextDocumentUri $sourceUri = null,
-        ?Node $node = null
+        ?Node $node = null,
+        array &$seen = []
     ): array {
         return array_merge(parent::createSuggestionOptions($result, null, $node), [
             'snippet' => (string) $result->name()->head() .'($1)$0',
