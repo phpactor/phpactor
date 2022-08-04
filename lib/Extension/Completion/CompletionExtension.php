@@ -88,7 +88,10 @@ class CompletionExtension implements Extension
                 }
 
                 $completors = new LabelFormattingCompletor($completors, $container->get(LabelFormatter::class));
-                $completors = new DocumentingCompletor($completors, $container->get(SuggestionDocumentor::class));
+                if ($container->has(SuggestionDocumentor::class)) {
+                    $completors = new DocumentingCompletor($completors, $container->get(SuggestionDocumentor::class));
+                }
+
                 $mapped[(string)$type] = $completors;
             }
 

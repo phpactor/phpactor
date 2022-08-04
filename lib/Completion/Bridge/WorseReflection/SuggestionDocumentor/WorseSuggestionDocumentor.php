@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Reflector;
 class WorseSuggestionDocumentor implements SuggestionDocumentor
 {
     private Reflector $reflector;
+
     private ObjectRenderer $renderer;
 
     public function __construct(Reflector $reflector, ObjectRenderer $renderer)
