@@ -1,2 +1,3 @@
 // @deprecated This is deprecated 
-class Foobar
+class Foobar {
+}

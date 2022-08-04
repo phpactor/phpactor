@@ -1,6 +1,7 @@
 ### 
 
 ```php
-<?php class Foobar
+<?php class Foobar {
+}
 
 ```
