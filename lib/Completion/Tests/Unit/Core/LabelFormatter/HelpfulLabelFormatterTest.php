@@ -19,7 +19,7 @@ class HelpfulLabelFormatterTest extends TestCase
     }
 
     /**
-     * @return Generator<array{string,array,string}>
+     * @return Generator<array{string,array<string,bool>,string}>
      */
     public function provideFormat(): Generator
     {

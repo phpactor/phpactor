@@ -19,13 +19,13 @@ class PhpactorToLspSignature
             foreach ($phpactorSignature->parameters() as $phpactorParameter) {
                 $parameters[] = new ParameterInformation(
                     $phpactorParameter->label(),
-                    $phpactorParameter->documentation()
+                    new MarkupContent(MarkupKind::MARKDOWN, $phpactorParameter->documentation())
                 );
             }
 
             $signatures[] = new SignatureInformation(
                 $phpactorSignature->label(),
-                new MarkupContent(MarkupKind::MARKDOWN, $phpactorSignature->documentation()),
+                new MarkupContent(MarkupKind::MARKDOWN, $phpactorSignature->documentation() ?? ''),
                 $parameters
             );
         }

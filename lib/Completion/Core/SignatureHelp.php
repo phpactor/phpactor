@@ -33,6 +33,9 @@ class SignatureHelp
         return $this->activeSignature;
     }
 
+    /**
+     * @return SignatureInformation[]
+     */
     public function signatures(): array
     {
         return $this->signatures;
