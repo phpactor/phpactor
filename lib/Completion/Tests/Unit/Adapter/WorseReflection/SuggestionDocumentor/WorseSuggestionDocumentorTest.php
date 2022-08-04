@@ -15,6 +15,7 @@ class WorseSuggestionDocumentorTest extends TestCase
         $documentation = $this->createDocumentor('<?php /** Hello */class Foobar {}')->document(Suggestion::createWithOptions('Foobar', [
             'type' => Suggestion::TYPE_CLASS,
             'name_import' => 'Foobar',
+            'documentation' => 'Boo',
         ]));
         self::assertNotEmpty($documentation);
     }
@@ -26,6 +27,16 @@ class WorseSuggestionDocumentorTest extends TestCase
             'name_import' => 'boo',
         ]));
         self::assertNotEmpty($documentation);
+    }
+
+    public function testOtherSuggestion(): void
+    {
+        $documentation = $this->createDocumentor('<?php /** Documentation */function boo() {}')->document(Suggestion::createWithOptions('Foobar', [
+            'type' => Suggestion::TYPE_UNIT,
+            'name_import' => 'boo',
+            'documentation' => 'Boo',
+        ]));
+        self::assertEquals('Boo', $documentation());
     }
 
     private function createDocumentor(string $string): WorseSuggestionDocumentor
