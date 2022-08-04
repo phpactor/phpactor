@@ -62,7 +62,7 @@ class CompletionHandlerTest extends TestCase
             ]
         );
         $this->assertInstanceOf(CompletionList::class, $response->result);
-        $this->assertEquals([
+        $this->assertCompletion([
             self::completionItem('hello', null),
             self::completionItem('goodbye', null),
         ], $response->result->items);
@@ -83,7 +83,7 @@ class CompletionHandlerTest extends TestCase
             ]
         );
         $this->assertInstanceOf(CompletionList::class, $response->result);
-        $this->assertEquals([
+        $this->assertCompletion([
             self::completionItem('hello', null),
             self::completionItem('goodbye', null),
         ], $response->result->items);
@@ -102,7 +102,7 @@ class CompletionHandlerTest extends TestCase
                 'position' => ProtocolFactory::position(0, 0)
             ]
         );
-        $this->assertEquals([
+        $this->assertCompletion([
             self::completionItem('hello', null, ['textEdit' => new TextEdit(
                 new Range(new Position(0, 1), new Position(0, 2)),
                 'hello'
@@ -137,14 +137,14 @@ class CompletionHandlerTest extends TestCase
                 'position'     => ProtocolFactory::position(0, 0)
             ]
         );
-        $this->assertEquals(
+        $this->assertCompletion(
             [
                 self::completionItem(
                     'hello',
                     null,
                     [
                         'kind' => 7,
-                        'detail' => '↓ ',
+                        'detail' => null,
                         'insertText' => 'hello',
                         'textEdit'   => TextEdit::fromArray(
                             [
@@ -205,14 +205,14 @@ class CompletionHandlerTest extends TestCase
                 'position'     => ProtocolFactory::position(0, 0)
             ]
         );
-        $this->assertEquals(
+        $this->assertCompletion(
             [
                 self::completionItem(
                     'hello',
                     null,
                     [
                         'kind'       => 7,
-                        'detail'     => '↓ ',
+                        'detail'     => null,
                         'insertText' => 'FooBar',
                         'textEdit'   => TextEdit::fromArray(
                             [
@@ -283,7 +283,7 @@ class CompletionHandlerTest extends TestCase
                 'position' => ProtocolFactory::position(0, 0)
             ]
         );
-        $this->assertEquals([
+        $this->assertCompletion([
             self::completionItem('hello', 2),
             self::completionItem('goodbye', 2, ['insertText' => 'goodbye()', 'insertTextFormat' => 2]),
             self::completionItem('var', 6, [
@@ -315,7 +315,7 @@ class CompletionHandlerTest extends TestCase
                 'position' => ProtocolFactory::position(0, 0)
             ]
         );
-        $this->assertEquals([
+        $this->assertCompletion([
             self::completionItem('hello', 2),
             self::completionItem('goodbye', 2),
             self::completionItem('var', 6, [
@@ -351,7 +351,7 @@ class CompletionHandlerTest extends TestCase
             ]
         );
 
-        $this->assertEquals([
+        $this->assertCompletion([
             self::completionItem('hello', 2, [
                 'sortText' => '0064-hello',
             ]),
@@ -465,5 +465,17 @@ class CompletionHandlerTest extends TestCase
                 return !$this->isIncomplete;
             }
         };
+    }
+
+    /**
+     * @param CompletionItem[] $expectedItems
+     * @param CompletionItem[] $items
+     */
+    private function assertCompletion(array $expectedItems, array $items): void
+    {
+        foreach ($expectedItems as $index => $expected) {
+            $actual = $items[$index];
+            self::assertEquals($actual->detail, $expected->detail);
+        }
     }
 }
