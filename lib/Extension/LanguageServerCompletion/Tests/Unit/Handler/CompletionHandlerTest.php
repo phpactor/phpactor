@@ -513,6 +513,10 @@ class CompletionHandlerTest extends TestCase
         foreach ($expectedItems as $index => $expected) {
             $actual = $items[$index];
             self::assertEquals($actual->detail, $expected->detail);
+            self::assertEquals($actual->kind, $expected->kind);
+            self::assertEquals($actual->insertText, $expected->insertText);
+            self::assertEquals($actual->additionalTextEdits, $expected->additionalTextEdits);
+            self::assertEquals($actual->label, $expected->label);
         }
     }
 }

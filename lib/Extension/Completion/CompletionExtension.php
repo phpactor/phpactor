@@ -29,7 +29,7 @@ class CompletionExtension implements Extension
     public const SERVICE_SNIPPET_FORMATTER = 'completion.snippet.formatter';
     public const KEY_COMPLETOR_TYPES = 'types';
     public const PARAM_DEDUPE = 'completion.dedupe';
-    public const PARAM_DEDUPE_MATCH_NAME_IMPORT = 'completion.dedupe_match_name_import';
+    public const PARAM_DEDUPE_MATCH_FQN = 'completion.dedupe_match_fqn';
     public const PARAM_LIMIT = 'completion.limit';
 
 
@@ -37,12 +37,12 @@ class CompletionExtension implements Extension
     {
         $schema->setDefaults([
             self::PARAM_DEDUPE => true,
-            self::PARAM_DEDUPE_MATCH_NAME_IMPORT => true,
+            self::PARAM_DEDUPE_MATCH_FQN => true,
             self::PARAM_LIMIT => null,
         ]);
         $schema->setDescriptions([
             self::PARAM_DEDUPE => 'If results should be de-duplicated',
-            self::PARAM_DEDUPE_MATCH_NAME_IMPORT => 'If ``' . self::PARAM_DEDUPE . '``, consider the class FQN in addition to the completion suggestion',
+            self::PARAM_DEDUPE_MATCH_FQN => 'If ``' . self::PARAM_DEDUPE . '``, consider the class FQN in addition to the completion suggestion',
             self::PARAM_LIMIT => 'Sets a limit on the number of completion suggestions for any request',
         ]);
     }
@@ -77,7 +77,7 @@ class CompletionExtension implements Extension
                 if ($container->getParameter(self::PARAM_DEDUPE)) {
                     $completors = new DedupeCompletor(
                         $completors,
-                        $container->getParameter(self::PARAM_DEDUPE_MATCH_NAME_IMPORT)
+                        $container->getParameter(self::PARAM_DEDUPE_MATCH_FQN)
                     );
                 }
 
