@@ -3,8 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Type;
 use Microsoft\PhpParser\ClassLike;
@@ -87,10 +85,6 @@ class NodeToTypeConverter
         }
 
 
-        if ($this->isFunctionCall($node)) {
-            return TypeFactory::unknown();
-        }
-
         if ($this->isUseDefinition($node)) {
             return TypeFactory::fromStringWithReflector((string) $type, $this->reflector);
         }
@@ -125,12 +119,6 @@ class NodeToTypeConverter
         }
 
         return $type;
-    }
-
-    private function isFunctionCall(Node $node): bool
-    {
-        return false === $node instanceof ScopedPropertyAccessExpression &&
-            $node->parent instanceof CallExpression;
     }
 
     private function parentClass(Node $node): Type
