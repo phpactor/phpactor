@@ -3,8 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Type;
 use Microsoft\PhpParser\ClassLike;

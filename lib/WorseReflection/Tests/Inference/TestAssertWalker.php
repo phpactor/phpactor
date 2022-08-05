@@ -163,6 +163,20 @@ class TestAssertWalker implements Walker
         $this->assertTypeIs($node, $frame->returnType(), $expected);
     }
 
+    private function assertOffset(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    {
+        $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);
+        $expectedType = $args[0]->type();
+        $type = $args[1]->type();
+        if (!$type instanceof IntLiteralType) {
+            throw new RuntimeException(
+                'Expected int literal'
+            );
+        }
+        $offset = $resolver->reflector()->reflectOffset($node->getFileContents(), $type->value());
+        $this->assertTypeIs($node, $offset->symbolContext()->type(), $expectedType);
+    }
+
     /**
      * @return array<int,NodeContext>
      */
@@ -197,19 +211,5 @@ class TestAssertWalker implements Walker
             $position->line + 1,
             $position->character + 1,
         ));
-    }
-
-    private function assertOffset(FrameResolver $resolver, Frame $frame, CallExpression $node)
-    {
-        $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);
-        $expectedType = $args[0]->type();
-        $type = $args[1]->type();
-        if (!$type instanceof IntLiteralType) {
-            throw new RuntimeException(
-                'Expected int literal'
-            );
-        }
-        $offset = $resolver->reflector()->reflectOffset($node->getFileContents(), $type->value());
-        $this->assertTypeIs($node, $expectedType, $offset->symbolContext()->type());
     }
 }
