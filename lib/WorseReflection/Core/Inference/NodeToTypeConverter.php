@@ -87,10 +87,6 @@ class NodeToTypeConverter
         }
 
 
-        if ($this->isFunctionCall($node)) {
-            return TypeFactory::unknown();
-        }
-
         if ($this->isUseDefinition($node)) {
             return TypeFactory::fromStringWithReflector((string) $type, $this->reflector);
         }
@@ -125,12 +121,6 @@ class NodeToTypeConverter
         }
 
         return $type;
-    }
-
-    private function isFunctionCall(Node $node): bool
-    {
-        return false === $node instanceof ScopedPropertyAccessExpression &&
-            $node->parent instanceof CallExpression;
     }
 
     private function parentClass(Node $node): Type
