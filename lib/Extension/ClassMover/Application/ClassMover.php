@@ -15,7 +15,6 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
 use RuntimeException;
-use Webmozart\PathUtil\Path;
 
 class ClassMover
 {
