@@ -63,6 +63,12 @@ class ClassCopyCommandTest extends SystemTestCase
                     'lib/Hello/World/Foobar.php' => true,
                 ],
             ],
+            'Copy file to folder' => [
+                'class:copy lib/Aardvark/Edentate.php lib/Hello/World/',
+                [
+                    'lib/Hello/World/Edentate.php' => true,
+                ],
+            ],
             'Copy file force' => [
                 'class:copy lib/Aardvark/Edentate.php lib/Foobar.php --type=file',
             ],

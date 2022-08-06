@@ -95,6 +95,9 @@ class ClassMover
     {
         $filesystem = $this->filesystemRegistry->get($filesystemName);
         $destPath = Phpactor::normalizePath($destPath);
+        if (substr($destPath, -1, 1) === '/') {
+            $destPath = $destPath . basename($srcPath);
+        }
 
         $srcPath = $filesystem->createPath($srcPath);
         $destPath = $filesystem->createPath($destPath);
