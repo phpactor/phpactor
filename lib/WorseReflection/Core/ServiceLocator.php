@@ -15,6 +15,7 @@ use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Virtual\ChainReflectionMemberProvider;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
@@ -156,12 +157,9 @@ class ServiceLocator
         );
     }
 
-    /**
-     * @return list<ReflectionMemberProvider>
-     */
-    public function methodProviders(): array
+    public function methodProviders(): ReflectionMemberProvider
     {
-        return $this->methodProviders;
+        return new ChainReflectionMemberProvider(...$this->methodProviders);
     }
 
     public function cache(): Cache

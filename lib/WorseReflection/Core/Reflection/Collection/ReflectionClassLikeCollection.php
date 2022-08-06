@@ -56,7 +56,7 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
                 $items[(string) $child->getNamespacedName()] =  new VirtualReflectionInterfaceDecorator(
                     $serviceLocator,
                     new ReflectionInterface($serviceLocator, $source, $child, $visited),
-                    $serviceLocator->methodProviders()
+                    $serviceLocator->methodProviders()->providers
                 );
                 continue;
             }

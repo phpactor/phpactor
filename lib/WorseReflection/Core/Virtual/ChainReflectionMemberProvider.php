@@ -10,9 +10,11 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 class ChainReflectionMemberProvider implements ReflectionMemberProvider
 {
     /**
+     * TODO: make private when finished refactoring
+     *
      * @var ReflectionMemberProvider[]
      */
-    private array $providers;
+    public array $providers;
 
     public function __construct(ReflectionMemberProvider ...$providers) {
         $this->providers = $providers;
@@ -22,7 +24,7 @@ class ChainReflectionMemberProvider implements ReflectionMemberProvider
     {
         $virtualMethods = ReflectionMethodCollection::fromReflectionMethods([]);
         foreach ($this->providers as $provider) {
-            $virtualMethods = $virtualMethods->merge($provider->provideMembers($locator, $class););
+            $virtualMethods = $virtualMethods->merge($provider->provideMembers($locator, $class));
         }
 
         return $virtualMethods;

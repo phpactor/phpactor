@@ -28,6 +28,7 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -70,10 +71,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         ClassDeclaration $node,
         array $visited = []
     ) {
-        $this->serviceLocator = $serviceLocator;
         $this->node = $node;
         $this->sourceCode = $sourceCode;
         $this->visited = $visited;
+        $this->serviceLocator = $serviceLocator;
     }
 
     public function isAbstract(): bool
@@ -99,6 +100,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $members = ClassLikeReflectionMemberCollection::empty();
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
+            $classLikeMembers = $this->serviceLocator->methodProviders()->provideMembers($this->serviceLocator, $reflectionClassLike);
 
             // only inerit public and protected properties from parent classes
             if ($reflectionClassLike !== $this && !$reflectionClassLike instanceof ReflectionTrait) {
