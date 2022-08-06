@@ -185,9 +185,9 @@ class ImportNameProviderTest extends IntegrationTestCase
                 EOT
             , function (array $codeActions, array $diagnostics): void {
                 self::assertCount(3, $codeActions);
-                self::assertEquals('Import function "explode"', $codeActions[0]->title);
-                self::assertEquals('Import function "array_keys"', $codeActions[1]->title);
-                self::assertEquals('Import all unresolved names', $codeActions[2]->title);
+                self::assertEquals('Import function "explode"', $codeActions[1]->title);
+                self::assertEquals('Import function "array_keys"', $codeActions[2]->title);
+                self::assertEquals('Import all unresolved names', $codeActions[0]->title);
                 self::assertCount(2, $diagnostics);
             }, true
         ];
