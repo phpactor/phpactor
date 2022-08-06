@@ -42,7 +42,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
             }
 
             if (count($actions) > 1) {
-                $actions[] = $this->addImportAllAction($item);
+                array_unshift($actions, $this->addImportAllAction($item));
             }
 
             return $actions;
