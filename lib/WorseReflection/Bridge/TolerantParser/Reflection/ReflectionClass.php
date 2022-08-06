@@ -112,7 +112,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             // we only take constants from interfaces, methods must be implemented.
             if ($reflectionClassLike instanceof ReflectionInterface) {
                 /** @phpstan-ignore-next-line collection IS compatible */
-                $members = $members->merge($classLikeMembers);
+                $members = $members->merge($classLikeMembers->constants());
+                /** @phpstan-ignore-next-line collection IS compatible */
+                $members = $members->merge($classLikeMembers->virtual());
                 continue;
             }
 
