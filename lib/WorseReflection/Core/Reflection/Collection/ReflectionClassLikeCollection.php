@@ -18,8 +18,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionClassDecorator;
-use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionInterfaceDecorator;
 
 /**
  * @extends AbstractReflectionCollection<PhpactorReflectionClass|PhpactorReflectionEnum|PhpactorReflectionTrait|PhpactorReflectionInterface>

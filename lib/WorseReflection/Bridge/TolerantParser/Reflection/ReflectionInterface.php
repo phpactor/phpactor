@@ -87,6 +87,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             $this->node,
             $this
         );
+        /** @phpstan-ignore-next-line collection IS compatible */
         $members = $members->merge($this->serviceLocator->methodProviders()->provideMembers(
             $this->serviceLocator,
             $this
