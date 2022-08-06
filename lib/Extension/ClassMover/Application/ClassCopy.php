@@ -56,6 +56,9 @@ class ClassCopy
     public function copyFile(ClassCopyLogger $logger, string $srcPath, string $destPath): void
     {
         $srcPath = Phpactor::normalizePath($srcPath);
+        if (substr($destPath, -1, 1) === '/') {
+            $destPath = $destPath . basename($srcPath);
+        }
 
         if (false === Glob::isDynamic($srcPath) && !file_exists($srcPath)) {
             throw new RuntimeException(sprintf(

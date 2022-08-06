@@ -53,6 +53,12 @@ class ClassMoveCommandTest extends SystemTestCase
                     'lib/Hello/World/Foobar.php' => true,
                 ],
             ],
+            'Move file to folder' => [
+                'class:move lib/Aardvark/Edentate.php lib/Hello/World/',
+                [
+                    'lib/Hello/World/Edentate.php' => true,
+                ],
+            ],
             'Move file force' => [
                 'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=file',
             ],
