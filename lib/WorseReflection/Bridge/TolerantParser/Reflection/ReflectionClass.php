@@ -70,10 +70,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         ClassDeclaration $node,
         array $visited = []
     ) {
-        $this->serviceLocator = $serviceLocator;
         $this->node = $node;
         $this->sourceCode = $sourceCode;
         $this->visited = $visited;
+        $this->serviceLocator = $serviceLocator;
     }
 
     public function isAbstract(): bool
@@ -99,6 +99,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $members = ClassLikeReflectionMemberCollection::empty();
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
+            $classLikeMembers = $classLikeMembers->merge($this->serviceLocator->methodProviders()->provideMembers(
+                $this->serviceLocator,
+                $reflectionClassLike
+            ));
 
             // only inerit public and protected properties from parent classes
             if ($reflectionClassLike !== $this && !$reflectionClassLike instanceof ReflectionTrait) {
@@ -107,8 +111,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
             // we only take constants from interfaces, methods must be implemented.
             if ($reflectionClassLike instanceof ReflectionInterface) {
-                /** @phpstan-ignore-next-line Constants is compatible with this */
+                /** @phpstan-ignore-next-line collection IS compatible */
                 $members = $members->merge($classLikeMembers->constants());
+                /** @phpstan-ignore-next-line collection IS compatible */
+                $members = $members->merge($classLikeMembers->virtual());
                 continue;
             }
 
@@ -118,7 +124,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             // we need to account for traits renaming aliases
             if ($reflectionClassLike instanceof ReflectionTrait) {
                 $traitImports = TraitImports::forClassDeclaration($this->node);
-                /** @phpstan-ignore-next-line Constants is compatible with this */
+                /** @phpstan-ignore-next-line collection IS compatible */
                 $members = $members->merge($this->resolveTraitMethods($traitImports, $this, $this->traits()));
                 continue;
             }
