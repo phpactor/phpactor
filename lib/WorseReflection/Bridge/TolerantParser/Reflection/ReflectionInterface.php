@@ -71,12 +71,6 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
             /** @phpstan-ignore-next-line */
             $members = $members->merge($reflectionClassLike->ownMembers());
-
-            // tests pass without this....
-            //$members = $members->merge($this->serviceLocator->methodProviders()->provideMembers(
-            //    $this->serviceLocator,
-            //    $reflectionClassLike
-            //));
         }
 
         $this->members = $members->map(fn (ReflectionMember $member) => $member->withClass($this));
@@ -88,11 +82,16 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         if ($this->ownMembers) {
             return $this->ownMembers;
         }
-        $this->ownMembers = ClassLikeReflectionMemberCollection::fromInterfaceMemberDeclarations(
+        $members = ClassLikeReflectionMemberCollection::fromInterfaceMemberDeclarations(
             $this->serviceLocator,
             $this->node,
             $this
         );
+        $members = $members->merge($this->serviceLocator->methodProviders()->provideMembers(
+            $this->serviceLocator,
+            $this
+        ));
+        $this->ownMembers = $members;
         return $this->ownMembers;
     }
 

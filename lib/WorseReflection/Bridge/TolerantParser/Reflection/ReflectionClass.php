@@ -112,8 +112,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
             // we only take constants from interfaces, methods must be implemented.
             if ($reflectionClassLike instanceof ReflectionInterface) {
-                /** @phpstan-ignore-next-line Constants is compatible with this */
-                $members = $members->merge($classLikeMembers->constants());
+                /** @phpstan-ignore-next-line collection IS compatible */
+                $members = $members->merge($classLikeMembers);
                 continue;
             }
 
@@ -123,7 +123,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             // we need to account for traits renaming aliases
             if ($reflectionClassLike instanceof ReflectionTrait) {
                 $traitImports = TraitImports::forClassDeclaration($this->node);
-                /** @phpstan-ignore-next-line Constants is compatible with this */
+                /** @phpstan-ignore-next-line collection IS compatible */
                 $members = $members->merge($this->resolveTraitMethods($traitImports, $this, $this->traits()));
                 continue;
             }
