@@ -4,8 +4,8 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
-use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;

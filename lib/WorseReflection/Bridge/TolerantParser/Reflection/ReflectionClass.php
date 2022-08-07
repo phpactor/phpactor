@@ -220,6 +220,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             $interfaces = $parentInterfaces->merge($interfaces);
         }
 
+        foreach ($interfaces as $interface) {
+            $interfaces = $interfaces->merge($interface->parents());
+        }
+
         $this->interfaces = $interfaces;
 
         return $interfaces;
