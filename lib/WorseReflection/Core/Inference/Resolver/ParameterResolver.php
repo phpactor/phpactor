@@ -79,11 +79,11 @@ class ParameterResolver implements Resolver
         }
 
         try {
-            $parameter = $function->parameters()->get($node->getName());
+            $parameter = $function->parameters()->get((string)$node->getName());
         } catch (NotFound $notFound) {
             throw new CouldNotResolveNode(sprintf(
                 'Parameter "%s" not found',
-                $node->getName(),
+                (string)$node->getName(),
             ), 0, $notFound);
         }
 

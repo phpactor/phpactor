@@ -18,7 +18,7 @@ class ConstElementResolver implements Resolver
     {
         assert($node instanceof ConstElement);
         return NodeContextFactory::create(
-            $node->getName(),
+            (string)$node->getName(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             [

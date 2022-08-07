@@ -53,7 +53,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         if ($this->name) {
             return $this->name;
         }
-        $this->name = $this->node->getName();
+        $this->name = (string)$this->node->getName();
         return $this->name;
     }
 

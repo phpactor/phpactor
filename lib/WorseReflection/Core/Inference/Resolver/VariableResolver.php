@@ -107,7 +107,7 @@ class VariableResolver implements Resolver
     private function resolveStaticPropertyAccess(NodeContextResolver $resolver, Type $containerType, Variable $node): NodeContext
     {
         $info = NodeContextFactory::create(
-            $node->getName(),
+            (string)$node->getName(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
