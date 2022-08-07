@@ -39,7 +39,7 @@ class Highlighter
         $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class)) {
-            return Highlights::fromIterator($this->properties($rootNode, $node->getName()), );
+            return Highlights::fromIterator($this->properties($rootNode, (string)$node->getName()), );
         }
 
         if ($node instanceof Parameter) {

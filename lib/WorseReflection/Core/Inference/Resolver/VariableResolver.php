@@ -7,7 +7,6 @@ use Microsoft\PhpParser\Node\Expression\BracedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
-use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -107,14 +106,8 @@ class VariableResolver implements Resolver
 
     private function resolveStaticPropertyAccess(NodeContextResolver $resolver, Type $containerType, Variable $node): NodeContext
     {
-        $name = $node->getName();
-        if (null === $name) {
-            throw new CouldNotResolveNode(
-                'Parameter name was null'
-            );
-        }
         $info = NodeContextFactory::create(
-            $name,
+            (string)$node->getName(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             [

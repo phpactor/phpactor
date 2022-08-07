@@ -15,7 +15,7 @@ class UseVariableNameResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof UseVariableName);
-        $name = $node->getName();
+        $name = (string)$node->getName();
 
         return NodeContextFactory::forVariableAt(
             $frame,

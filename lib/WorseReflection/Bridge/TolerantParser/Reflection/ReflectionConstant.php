@@ -39,7 +39,7 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
 
     public function name(): string
     {
-        return $this->node->getName();
+        return (string)$this->node->getName();
     }
 
     public function nameRange(): ByteOffsetRange

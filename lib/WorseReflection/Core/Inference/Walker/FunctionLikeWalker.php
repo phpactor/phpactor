@@ -165,7 +165,7 @@ class FunctionLikeWalker implements Walker
     private function functionName(FunctionLike $node): string
     {
         if ($node instanceof MethodDeclaration) {
-            return $node->getName();
+            return (string)$node->getName();
         }
 
         if ($node instanceof FunctionDeclaration) {
