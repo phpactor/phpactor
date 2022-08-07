@@ -77,9 +77,14 @@ class ParameterResolver implements Resolver
                 $name->getFullyQualifiedNameText()
             ), 0, $notFound);
         }
+        $name = $node->getName();
+
+        if (null === $name) {
+            throw new CouldNotResolveNode('parameter name was null');
+        }
 
         try {
-            $parameter = $function->parameters()->get($node->getName());
+            $parameter = $function->parameters()->get($name);
         } catch (NotFound $notFound) {
             throw new CouldNotResolveNode(sprintf(
                 'Parameter "%s" not found',
