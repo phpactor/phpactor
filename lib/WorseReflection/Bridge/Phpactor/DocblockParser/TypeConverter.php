@@ -280,11 +280,11 @@ class TypeConverter
         }
 
         if ($name === 'static') {
-            return $this->resolver->resolve(new StaticType());
+            return new StaticType();
         }
 
         if ($name === 'self') {
-            return $this->resolver->resolve(new SelfType());
+            return new SelfType();
         }
 
         if ($name === 'iterable') {
