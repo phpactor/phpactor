@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * @extends AbstractReflectionCollection<ReflectionArgument>
+ */
+class ReflectionArgumentCollection extends AbstractReflectionCollection
+{
+}
+
+/**
+ * @template T
+ * @implements ReflectionCollection<T>
+ */
+abstract class AbstractReflectionCollection implements ReflectionCollection
+{
+}
+
+/**
+ * @template T
+ * @extends IteratorAggregate<T>
+ */
+interface ReflectionCollection extends IteratorAggregate
+{
+}
+
+interface ReflectionArgument
+{
+}
+
+interface IteratorAggregate {}
+
+class ReflectionNode {}
+class ReflectionNodeArgumentExpression extends ReflectioNode {
+    public function arguments(): ReflectionArgumentCollection {}
+}
+
+function a(): ReflectionNode {}
+
+$foo = a();
+if (!$foo instanceof ReflectionNodeArgumentExpression) {
+    throw new \Exception();
+}
+
+$foo = $foo->arguments();
+wrAssertType('ReflectionArgumentCollection', $foo);
+
+foreach ($foo as $a => $bar) {
+    $bar;
+}
+
+wrAssertOffset('ReflectionArgument', 883);
