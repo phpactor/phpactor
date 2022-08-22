@@ -115,8 +115,9 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     public function docblock(): DocBlock
     {
         return $this->serviceLocator->docblockFactory()->create(
-            $this->node()->getLeadingCommentAndWhitespaceText()
-        )->withTypeResolver(new ClassLikeTypeResolver($this));
+            $this->node()->getLeadingCommentAndWhitespaceText(),
+            $this->scope()
+        );
     }
 
     public function traits(): ReflectionTraitCollection
