@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Types;
 
 class GlobbedConstantUnionType extends Type
 {
@@ -54,5 +55,11 @@ class GlobbedConstantUnionType extends Type
         }
 
         return (new UnionType(...$types))->reduce();
+    }
+
+    public function toTypes(): Types
+    {
+        /** @phpstan-ignore-next-line */
+        return new Types([$this->classType]);
     }
 }

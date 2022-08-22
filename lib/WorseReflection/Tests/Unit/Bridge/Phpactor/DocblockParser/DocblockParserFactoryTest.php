@@ -253,7 +253,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             $source
         )->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return self::BAR */');
-        self::assertEquals('"baz"', $docblock->returnType()->__toString());
+        self::assertEquals('self::BAR', $docblock->returnType()->__toString());
     }
 
     public function testClassConstantGlob(): void

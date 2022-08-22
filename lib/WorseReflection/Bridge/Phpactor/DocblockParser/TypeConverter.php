@@ -373,10 +373,6 @@ class TypeConverter
     {
         $classType = $this->convert($type->name);
 
-        if (!$classType instanceof ReflectedClassType) {
-            return new MissingType();
-        }
-
         return new GlobbedConstantUnionType($classType, $type->constant->value);
     }
 
