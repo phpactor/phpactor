@@ -154,7 +154,8 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
     public function docblock(): DocBlock
     {
         return $this->serviceLocator->docblockFactory()->create(
-            $this->node()->getLeadingCommentAndWhitespaceText()
+            $this->node()->getLeadingCommentAndWhitespaceText(),
+            $this->scope()
         );
     }
 
