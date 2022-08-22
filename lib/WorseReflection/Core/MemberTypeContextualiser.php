@@ -18,6 +18,6 @@ final class MemberTypeContextualiser
             return new StaticType($declaringClass->type());
         }
 
-        return $class->scope()->resolveFullyQualifiedName($type);
+        return $type;
     }
 }
