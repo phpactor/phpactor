@@ -16,7 +16,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\TypeResolver\DefaultTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 
 class UnusedImportProvider implements DiagnosticProvider

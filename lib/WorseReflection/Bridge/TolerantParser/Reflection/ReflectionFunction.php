@@ -16,7 +16,6 @@ use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\FunctionReturnTypeResolver;
-use Phpactor\WorseReflection\Core\TypeResolver\DefaultTypeResolver;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionFunction extends AbstractReflectedNode implements CoreReflectionFunction

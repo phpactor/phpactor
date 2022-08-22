@@ -17,7 +17,6 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 
 class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEnum
 {
@@ -103,8 +102,9 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     public function docblock(): DocBlock
     {
         return $this->serviceLocator->docblockFactory()->create(
-            $this->node()->getLeadingCommentAndWhitespaceText()
-        )->withTypeResolver(new ClassLikeTypeResolver($this));
+            $this->node()->getLeadingCommentAndWhitespaceText(),
+            $this->scope()
+        );
     }
 
     /**

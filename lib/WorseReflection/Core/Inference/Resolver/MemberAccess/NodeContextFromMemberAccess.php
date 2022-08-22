@@ -1,6 +1,7 @@
 <?php
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess;
+
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;

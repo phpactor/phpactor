@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 
 class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionTrait
 {

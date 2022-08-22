@@ -6,7 +6,6 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\MemberTypeContextualiser;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -38,8 +37,6 @@ abstract class VirtualReflectionMember implements ReflectionMember
 
     private Deprecation $deprecation;
 
-    private MemberTypeContextualiser $typeContextualiser;
-
     public function __construct(
         Position $position,
         ReflectionClassLike $declaringClass,
@@ -64,7 +61,6 @@ abstract class VirtualReflectionMember implements ReflectionMember
         $this->inferredType = $inferredType;
         $this->type = $type;
         $this->deprecation = $deprecation;
-        $this->typeContextualiser = new MemberTypeContextualiser();
     }
 
     public function position(): Position

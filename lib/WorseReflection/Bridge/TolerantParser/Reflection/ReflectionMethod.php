@@ -22,8 +22,6 @@ use Phpactor\WorseReflection\Core\Reflection\TypeResolver\MethodTypeResolver;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use InvalidArgumentException;
-use Phpactor\WorseReflection\Core\Type\SelfType;
-use Phpactor\WorseReflection\Core\Type\StaticType;
 
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {
@@ -101,7 +99,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     public function inferredType(): Type
     {
         $type = $this->typeContextualiser->contextualise(
-            $this->declaringClass(), 
+            $this->declaringClass(),
             $this->class(),
             $this->returnTypeResolver->resolve($this->class())
         );
