@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\GenericTypeResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
@@ -100,8 +101,21 @@ class NodeContextFromMemberAccess
 
                 $inferredType = $this->genericResolver->resolveMemberType($subType, $member, $inferredType);
 
-                if ($inferredType instanceof StaticType || $inferredType instanceof SelfType) {
-                    $inferredType = $inferredType->type();
+                // unwrap static and self types (including $this which extends Static)
+                $inferredType = $inferredType->map(function (Type $type) {
+                    if ($type instanceof StaticType || $type instanceof SelfType) {
+                        return $type->type();
+                    }
+                    if ($type instanceof GlobbedConstantUnionType) {
+                        $u = $type->toUnion();
+                        return $u;
+                    }
+                    return $type;
+                });
+
+                // expand globbed constants
+                if ($inferredType instanceof GlobbedConstantUnionType) {
+                    $inferredType = $inferredType->toUnion();
                 }
 
 

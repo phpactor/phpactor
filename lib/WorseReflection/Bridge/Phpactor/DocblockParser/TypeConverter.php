@@ -13,7 +13,6 @@ use Phpactor\DocblockParser\Ast\Type\NullableNode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;

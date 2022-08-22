@@ -270,7 +270,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
-        self::assertEquals('"baz"|"bar"', $docblock->returnType()->__toString());
+        self::assertEquals('Foo::BA*', $docblock->returnType()->__toString());
     }
 
     public function testClassConstantGlobInArrayShape(): void
@@ -287,7 +287,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return array{string,Foo::*} */');
-        self::assertEquals('array{string,"baz"|"bar"|"zed"|"sed"}', $docblock->returnType()->__toString());
+        self::assertEquals('array{string,Foo::*}', $docblock->returnType()->__toString());
     }
 
     public function testMethods(): void

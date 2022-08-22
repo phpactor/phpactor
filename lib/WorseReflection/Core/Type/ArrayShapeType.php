@@ -71,7 +71,10 @@ class ArrayShapeType extends ArrayType implements Generalizable, ArrayAccessType
     public function map(Closure $mapper): Type
     {
         return new self(
-            array_map(fn (Type $type) => $type->map($mapper), $this->typeMap)
+            array_map(function (Type $type) use ($mapper) {
+                $type = $type->map($mapper);
+                return $mapper($type);
+            }, $this->typeMap)
         );
     }
 }

@@ -2,14 +2,15 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Types;
 
 class GlobbedConstantUnionType extends Type
 {
     private Type $classType;
+
     private string $glob;
 
     public function __construct(Type $classType, string $glob)
@@ -57,9 +58,8 @@ class GlobbedConstantUnionType extends Type
         return (new UnionType(...$types))->reduce();
     }
 
-    public function toTypes(): Types
+    public function map(Closure $mapper): Type
     {
-        /** @phpstan-ignore-next-line */
-        return new Types([$this->classType]);
+        return new self($mapper($this->classType), $this->glob);
     }
 }

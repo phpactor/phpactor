@@ -13,6 +13,6 @@ class Example
 }
 
 $n = new Example();
-wrAssertType('"bar"|"boo"|"barboo"', $n->s());
+wrAssertType('"bar"|"boo"', $n->s());
 
 
