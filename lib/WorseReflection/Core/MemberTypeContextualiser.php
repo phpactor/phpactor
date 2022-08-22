@@ -17,9 +17,8 @@ final class MemberTypeContextualiser
         if ($type instanceof StaticType) {
             return new StaticType($class->type());
         }
-
         if ($type instanceof SelfType) {
-            return new StaticType($declaringClass->type());
+            return new SelfType($declaringClass->type());
         }
 
         return $type;

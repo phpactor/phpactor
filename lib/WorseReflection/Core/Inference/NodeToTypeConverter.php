@@ -97,6 +97,7 @@ class NodeToTypeConverter
             return $type;
         }
 
+        // TODO: Still needed?
         if ($type instanceof SelfType || $type instanceof StaticType) {
             return $this->currentClass($node, $currentClass);
         }

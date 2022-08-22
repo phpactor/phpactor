@@ -40,6 +40,7 @@ use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
@@ -376,22 +377,7 @@ class TypeConverter
             return new MissingType();
         }
 
-        $reflection = $classType->reflectionOrNull();
-
-        if (null === $reflection) {
-            return new MissingType();
-        }
-
-        $types = [];
-        foreach ($reflection->members()->byMemberType(ReflectionMember::TYPE_CONSTANT) as $constant) {
-            $pattern = preg_quote(str_replace('*', '__ASTERISK__', $type->constant->value));
-            $pattern = str_replace('__ASTERISK__', '.*', $pattern);
-            if (preg_match('{' . $pattern . '}', $constant->name())) {
-                $types[] = $constant->type();
-            }
-        }
-
-        return (new UnionType(...$types))->reduce();
+        return new GlobbedConstantUnionType($classType, $type->constant->value);
     }
 
     private function convertNullable(NullableNode $type): Type
