@@ -262,11 +262,6 @@ class ParsedDocblock implements DocBlock
         return $mixins;
     }
 
-    public function withTypeResolver(TypeResolver $typeResolver): DocBlock
-    {
-        return new self($this->node, $this->typeConverter->withTypeResolver($typeResolver));
-    }
-
     public function node(): ParserDocblock
     {
         return $this->node;

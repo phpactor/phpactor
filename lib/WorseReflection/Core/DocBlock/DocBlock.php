@@ -52,6 +52,4 @@ interface DocBlock
      * @return Type[]
      */
     public function mixins(): array;
-
-    public function withTypeResolver(TypeResolver $classLikeTypeResolver): self;
 }
