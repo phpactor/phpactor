@@ -155,7 +155,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
     {
         return $this->serviceLocator->docblockFactory()->create(
             $this->node()->getLeadingCommentAndWhitespaceText()
-        )->withTypeResolver(new ClassLikeTypeResolver($this));
+        );
     }
 
     /**

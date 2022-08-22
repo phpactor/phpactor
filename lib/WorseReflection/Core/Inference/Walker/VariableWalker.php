@@ -63,7 +63,7 @@ class VariableWalker implements Walker
     private function injectVariablesFromComment(PhpactorReflectionScope $scope, Frame $frame, Node $node): ?Type
     {
         $comment = $node->getLeadingCommentAndWhitespaceText();
-        $docblock = $this->docblockFactory->create($comment);
+        $docblock = $this->docblockFactory->create($comment, $scope);
 
         if (false === $docblock->isDefined()) {
             return null;

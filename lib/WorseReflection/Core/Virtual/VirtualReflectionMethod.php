@@ -84,6 +84,7 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
 
     public function returnType(): Type
     {
+        dd('asd');
         return $this->type();
     }
 

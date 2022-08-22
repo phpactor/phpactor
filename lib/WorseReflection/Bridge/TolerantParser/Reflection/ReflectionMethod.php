@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\MemberTypeContextualiser;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
@@ -38,6 +39,8 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     private ?string $name = null;
 
+    private MemberTypeContextualiser $typeContextualiser;
+
     public function __construct(
         ServiceLocator $serviceLocator,
         ReflectionClassLike $class,
@@ -48,6 +51,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         $this->class = $class;
         $this->returnTypeResolver = new MethodTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());
+        $this->typeContextualiser = new MemberTypeContextualiser();
     }
 
     public function name(): string
@@ -96,10 +100,14 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     public function inferredType(): Type
     {
-        $type = $this->returnTypeResolver->resolve($this->class());
+        $type = $this->typeContextualiser->contextualise(
+            $this->declaringClass(), 
+            $this->class(),
+            $this->returnTypeResolver->resolve($this->class())
+        );
 
         if (($type->isDefined())) {
-            return $this->contextualiseType($type);
+            return $type;
         }
 
         return $this->type();
@@ -180,18 +188,5 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
-    }
-
-    private function contextualiseType(Type $type): Type
-    {
-        if ($type instanceof StaticType) {
-            return new StaticType($this->class()->type());
-        }
-
-        if ($type instanceof SelfType) {
-            return new StaticType($this->declaringClass()->type());
-        }
-
-        return $type;
     }
 }

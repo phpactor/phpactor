@@ -15,6 +15,7 @@ use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -67,9 +68,18 @@ class TypeConverter
 {
     private Reflector $reflector;
 
-    public function __construct(Reflector $reflector)
+    private ?ReflectionScope $scope;
+
+
+    public function __construct(Reflector $reflector, ?ReflectionScope $scope)
     {
         $this->reflector = $reflector;
+        $this->scope = $scope;
+    }
+
+    public function withTypeResolver(TypeResolver $typeResolver):self
+    {
+        return new self($this->reflector, $typeResolver);
     }
 
     public function convert(?TypeNode $type): Type
@@ -295,12 +305,14 @@ class TypeConverter
             return new VoidType();
         }
 
-        return new ReflectedClassType(
+        $type = new ReflectedClassType(
             $this->reflector,
             ClassName::fromString(
                 $typeNode->name()->toString()
             )
         );
+
+        return $this->scope->resolveFullyQualifiedName($type);
     }
 
     private function convertListBrackets(ListBracketsNode $type): Type
