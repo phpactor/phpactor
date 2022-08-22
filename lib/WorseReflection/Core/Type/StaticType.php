@@ -4,10 +4,11 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
-final class StaticType extends Type
+class StaticType extends Type
 {
-    private ?Type $class;
+    protected ?Type $class;
 
     public function __construct(?Type $class = null)
     {
@@ -17,9 +18,18 @@ final class StaticType extends Type
     public function __toString(): string
     {
         if ($this->class) {
-            return sprintf('static<%s>', $this->class->__toString());
+            return sprintf('static(%s)', $this->class->__toString());
         }
         return 'static';
+    }
+
+    public function type(): Type
+    {
+        if ($this->class) {
+            return $this->class;
+        }
+
+        return TypeFactory::undefined();
     }
 
     public function toPhpString(): string

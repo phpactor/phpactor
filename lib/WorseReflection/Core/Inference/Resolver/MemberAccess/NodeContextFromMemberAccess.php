@@ -13,6 +13,8 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\GenericTypeResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\SelfType;
+use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -96,6 +98,11 @@ class NodeContextFromMemberAccess
                 $types[] = $subType;
 
                 $inferredType = $this->genericResolver->resolveMemberType($subType, $member, $inferredType);
+
+                if ($inferredType instanceof StaticType || $inferredType instanceof SelfType) {
+                    $inferredType = $inferredType->type();
+                }
+
 
                 // if multiple classes declare a member, always take the "top" one
                 $memberTypes[$memberName] = $inferredType;
