@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\DefaultResolverFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\Type;
@@ -1162,7 +1163,11 @@ class NodeContextResolverTest extends IntegrationTestCase
             new DocblockParserFactory($reflector),
             $this->logger(),
             new StaticCache(),
-            (new DefaultResolverFactory($reflector, $nameResolver))->createResolvers(),
+            (new DefaultResolverFactory(
+                $reflector,
+                $nameResolver,
+                new NodeContextFromMemberAccess()
+            ))->createResolvers(),
         );
 
         return $resolver->resolveNode($frame, $node);
