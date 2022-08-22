@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
@@ -28,9 +29,12 @@ use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
+use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class DocblockParserFactoryTest extends IntegrationTestCase
 {
+    use ProphecyTrait;
     /**
      * @dataProvider provideResolveType
      * @param Type|string $expected
@@ -374,11 +378,14 @@ class DocblockParserFactoryTest extends IntegrationTestCase
 
     private function parseDocblockWithReflector(Reflector $reflector, string $docblock): DocBlock
     {
-        return (new DocblockParserFactory($reflector))->create($docblock);
+        $scope = $this->prophesize(ReflectionScope::class);
+        $scope->resolveFullyQualifiedName(Argument::any())->will(fn ($args) => $args[0]);
+
+        return (new DocblockParserFactory($reflector))->create($docblock, $scope->reveal());
     }
 
     private function parseDocblockWithClass(Reflector $reflector, ReflectionClassLike $classLike, string $docblock): DocBlock
     {
-        return (new DocblockParserFactory($reflector))->create($docblock)->withTypeResolver(new ClassLikeTypeResolver($classLike));
+        return (new DocblockParserFactory($reflector))->create($docblock, $classLike->scope());
     }
 }
