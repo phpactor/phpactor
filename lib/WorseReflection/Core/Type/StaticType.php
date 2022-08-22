@@ -7,8 +7,18 @@ use Phpactor\WorseReflection\Core\Type;
 
 final class StaticType extends Type
 {
+    private ?Type $class;
+
+    public function __construct(?Type $class = null)
+    {
+        $this->class = $class;
+    }
+
     public function __toString(): string
     {
+        if ($this->class) {
+            return sprintf('static<%s>', $this->class->__toString());
+        }
         return 'static';
     }
 

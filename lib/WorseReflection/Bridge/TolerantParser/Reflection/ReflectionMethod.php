@@ -21,6 +21,8 @@ use Phpactor\WorseReflection\Core\Reflection\TypeResolver\MethodTypeResolver;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\Core\Type\SelfType;
+use Phpactor\WorseReflection\Core\Type\StaticType;
 
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {
@@ -96,20 +98,11 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     {
         $type = $this->returnTypeResolver->resolve($this->class());
 
-        if (!$this->node->returnTypeList) {
-            return $type;
-        }
-
         if (($type->isDefined())) {
-            return $type;
+            return $this->contextualiseType($type);
         }
 
-        return $this->memberTypeResolver->resolveTypes(
-            $this->node,
-            $this->node->returnTypeList,
-            $this->class()->name(), // note: this call is quite expensive
-            $this->node->questionToken ? true : false
-        );
+        return $this->type();
     }
 
     /**
@@ -187,5 +180,18 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
+    }
+
+    private function contextualiseType(Type $type): Type
+    {
+        if ($type instanceof StaticType) {
+            return new StaticType($this->class()->type());
+        }
+
+        if ($type instanceof SelfType) {
+            return new StaticType($this->declaringClass()->type());
+        }
+
+        return $type;
     }
 }
