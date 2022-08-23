@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
@@ -13,6 +14,7 @@ use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\ResolvedName;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\Name\FullyQualifiedName as PhpactorFullyQualifiedName;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
@@ -83,14 +85,16 @@ class UnresolvableNameProvider implements DiagnosticProvider
             return;
         }
 
+        $parent = $name->parent;
         if (
-            !$name->parent instanceof ClassBaseClause &&
-            !$name->parent instanceof QualifiedNameList &&
-            !$name->parent instanceof ObjectCreationExpression &&
-            !$name->parent instanceof ScopedPropertyAccessExpression &&
-            !$name->parent instanceof FunctionDeclaration &&
-            !$name->parent instanceof MethodDeclaration &&
-            !$name->parent instanceof Attribute
+            !$parent instanceof ClassBaseClause &&
+            !$parent instanceof QualifiedNameList &&
+            !$parent instanceof ObjectCreationExpression &&
+            !$parent instanceof ScopedPropertyAccessExpression &&
+            !$parent instanceof FunctionDeclaration &&
+            !$parent instanceof MethodDeclaration &&
+            !$parent instanceof Attribute &&
+            !($parent instanceof BinaryExpression && $parent->operator->kind === TokenKind::InstanceOfKeyword)
         ) {
             return;
         }
