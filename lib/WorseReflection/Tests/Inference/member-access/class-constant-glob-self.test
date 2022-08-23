@@ -1,0 +1,18 @@
+<?php
+
+class Example
+{
+    const FOOBAR = 'bar';
+    const FOOBOO = 'boo';
+    const BARBOO = 'barboo';
+
+    /**
+     * @return self::FOO*
+     */
+    public function s(): string {}
+}
+
+$n = new Example();
+wrAssertType('"bar"|"boo"', $n->s());
+
+

@@ -26,7 +26,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
@@ -325,8 +324,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     public function docblock(): DocBlock
     {
         return $this->serviceLocator->docblockFactory()->create(
-            $this->node()->getLeadingCommentAndWhitespaceText()
-        )->withTypeResolver(new ClassLikeTypeResolver($this));
+            $this->node()->getLeadingCommentAndWhitespaceText(),
+            $this->scope()
+        );
     }
 
     public function ancestors(): ReflectionClassCollection

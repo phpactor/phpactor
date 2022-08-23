@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\TypeResolver\ClassLikeTypeResolver;
 
 class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionTrait
 {
@@ -115,8 +114,9 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     public function docblock(): DocBlock
     {
         return $this->serviceLocator->docblockFactory()->create(
-            $this->node()->getLeadingCommentAndWhitespaceText()
-        )->withTypeResolver(new ClassLikeTypeResolver($this));
+            $this->node()->getLeadingCommentAndWhitespaceText(),
+            $this->scope()
+        );
     }
 
     public function traits(): ReflectionTraitCollection

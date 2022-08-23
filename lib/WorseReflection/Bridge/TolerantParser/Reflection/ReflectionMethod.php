@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\MemberTypeContextualiser;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
@@ -36,6 +37,8 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     private ?string $name = null;
 
+    private MemberTypeContextualiser $typeContextualiser;
+
     public function __construct(
         ServiceLocator $serviceLocator,
         ReflectionClassLike $class,
@@ -46,6 +49,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         $this->class = $class;
         $this->returnTypeResolver = new MethodTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());
+        $this->typeContextualiser = new MemberTypeContextualiser();
     }
 
     public function name(): string
@@ -94,22 +98,17 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     public function inferredType(): Type
     {
-        $type = $this->returnTypeResolver->resolve($this->class());
-
-        if (!$this->node->returnTypeList) {
-            return $type;
-        }
+        $type = $this->typeContextualiser->contextualise(
+            $this->declaringClass(),
+            $this->class(),
+            $this->returnTypeResolver->resolve($this->class())
+        );
 
         if (($type->isDefined())) {
             return $type;
         }
 
-        return $this->memberTypeResolver->resolveTypes(
-            $this->node,
-            $this->node->returnTypeList,
-            $this->class()->name(), // note: this call is quite expensive
-            $this->node->questionToken ? true : false
-        );
+        return $this->type();
     }
 
     /**

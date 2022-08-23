@@ -11,7 +11,6 @@ use Microsoft\PhpParser\ClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\TokenKind;
-use Phpactor\WorseReflection\Core\TypeResolver\MemberTypeResolver as PhpactorMemberTypeResolver;
 use Phpactor\WorseReflection\Core\Util\OriginalMethodResolver;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -54,8 +53,9 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
     public function docblock(): DocBlock
     {
         return $this->serviceLocator()->docblockFactory()->create(
-            $this->node()->getLeadingCommentAndWhitespaceText()
-        )->withTypeResolver(new PhpactorMemberTypeResolver($this));
+            $this->node()->getLeadingCommentAndWhitespaceText(),
+            $this->scope()
+        );
     }
 
     public function visibility(): Visibility

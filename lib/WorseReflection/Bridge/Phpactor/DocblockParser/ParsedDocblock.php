@@ -32,7 +32,6 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
-use Phpactor\WorseReflection\Core\TypeResolver;
 use Phpactor\WorseReflection\Core\Types;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionParameter;
@@ -260,11 +259,6 @@ class ParsedDocblock implements DocBlock
             $mixins[] = $this->convertType($mixinTag->class);
         }
         return $mixins;
-    }
-
-    public function withTypeResolver(TypeResolver $typeResolver): DocBlock
-    {
-        return new self($this->node, $this->typeConverter->withTypeResolver($typeResolver));
     }
 
     public function node(): ParserDocblock

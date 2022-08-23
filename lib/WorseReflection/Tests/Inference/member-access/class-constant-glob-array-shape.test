@@ -1,0 +1,16 @@
+<?php
+
+class Foo
+{
+    const FOOBAR = 'bar';
+    const FOOBOO = 'boo';
+    const BARBOO = 'barboo';
+
+    /** @return array{string,Foo::*} */
+    public function s(): string {}
+}
+
+$n = new Foo();
+wrAssertType('array{string,"bar"|"boo"|"barboo"}', $n->s());
+
+

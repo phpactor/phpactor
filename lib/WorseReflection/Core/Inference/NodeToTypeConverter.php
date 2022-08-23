@@ -12,14 +12,10 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
-use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -57,34 +53,6 @@ class NodeToTypeConverter
         /** @var Type $type */
         $type = $type instanceof Type ? $type : TypeFactory::fromStringWithReflector($type, $this->reflector);
 
-        if ($type instanceof GenericClassType) {
-            foreach ($type->arguments() as $offset => $gType) {
-                $type->replaceArgument($offset, $this->resolve($node, $gType));
-            }
-        }
-
-        if ($type instanceof ArrayType) {
-            $arrayType = $this->resolve($node, $type->iterableValueType());
-            $type->setValueType($arrayType);
-        }
-
-        if ($type instanceof CallableType) {
-            $type->args = array_map(function (Type $type) use ($node) {
-                return $this->resolve($node, $type);
-            }, $type->args);
-            $type->returnType = $this->resolve($node, $type->returnType);
-            return $type;
-        }
-
-        if ($type instanceof UnionType) {
-            $type->types = array_map(function (Type $type) use ($node) {
-                return $this->resolve($node, $type);
-            }, $type->types);
-
-            return $type;
-        }
-
-
         if ($this->isUseDefinition($node)) {
             return TypeFactory::fromStringWithReflector((string) $type, $this->reflector);
         }
@@ -104,7 +72,6 @@ class NodeToTypeConverter
         if ($type instanceof ClassType && (string) $type == 'parent') {
             return $this->parentClass($node);
         }
-
 
         if ($importedType = $this->fromClassImports($node, $type)) {
             return $importedType;

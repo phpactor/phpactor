@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as PhpactorReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeResolver\DefaultTypeResolver;
 
 class VariableWalker implements Walker
 {
@@ -63,7 +62,7 @@ class VariableWalker implements Walker
     private function injectVariablesFromComment(PhpactorReflectionScope $scope, Frame $frame, Node $node): ?Type
     {
         $comment = $node->getLeadingCommentAndWhitespaceText();
-        $docblock = $this->docblockFactory->create($comment)->withTypeResolver(new DefaultTypeResolver($scope));
+        $docblock = $this->docblockFactory->create($comment, $scope);
 
         if (false === $docblock->isDefined()) {
             return null;

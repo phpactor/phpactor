@@ -267,8 +267,8 @@ class ReflectionMethodTest extends IntegrationTestCase
         ,
             'Foobar',
             function ($methods): void {
-                $this->assertEquals('Foobar', $methods->get('method1')->inferredType()->__toString(), 'this');
-                $this->assertEquals('Foobar', $methods->get('method2')->inferredType()->__toString(), 'static');
+                $this->assertEquals('$this(Foobar)', $methods->get('method1')->inferredType()->__toString(), '$this(Foobar)');
+                $this->assertEquals('static(Foobar)', $methods->get('method2')->inferredType()->__toString(), 'static(Foobar)');
             },
         ];
         yield 'Return type from docblock this and static from a trait' => [
@@ -296,8 +296,8 @@ class ReflectionMethodTest extends IntegrationTestCase
         ,
             'Foobar',
             function ($methods): void {
-                $this->assertEquals('Foobar', $methods->get('method1')->inferredType()->__toString());
-                $this->assertEquals('Foobar', $methods->get('method2')->inferredType()->__toString());
+                $this->assertEquals('$this(Foobar)', $methods->get('method1')->inferredType()->__toString());
+                $this->assertEquals('static(Foobar)', $methods->get('method2')->inferredType()->__toString());
             },
         ];
         yield 'Return type from class @method annotation' => [

@@ -73,6 +73,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ExpressionStatementResolver
 use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\IfStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MethodDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\NumericLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionResolver;
@@ -104,13 +105,17 @@ final class DefaultResolverFactory
 
     private FunctionStubRegistry $functionStubRegistry;
 
+    private NodeContextFromMemberAccess $nodeContextFromMemberAccess;
+
     public function __construct(
         Reflector $reflector,
-        NodeToTypeConverter $nodeTypeConverter
+        NodeToTypeConverter $nodeTypeConverter,
+        NodeContextFromMemberAccess $nodeContextFromMemberAccess
     ) {
         $this->reflector = $reflector;
         $this->nodeTypeConverter = $nodeTypeConverter;
         $this->functionStubRegistry = $this->createStubRegistry();
+        $this->nodeContextFromMemberAccess = $nodeContextFromMemberAccess;
     }
 
     /**
@@ -126,8 +131,8 @@ final class DefaultResolverFactory
             Parameter::class => new ParameterResolver(),
             UseVariableName::class => new UseVariableNameResolver(),
             Variable::class => new VariableResolver(),
-            MemberAccessExpression::class => new MemberAccessExpressionResolver(),
-            ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeTypeConverter),
+            MemberAccessExpression::class => new MemberAccessExpressionResolver($this->nodeContextFromMemberAccess),
+            ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeTypeConverter, $this->nodeContextFromMemberAccess),
             CallExpression::class => new CallExpressionResolver(),
             ParenthesizedExpression::class => new ParenthesizedExpressionResolver(),
             BinaryExpression::class => new BinaryExpressionResolver(),

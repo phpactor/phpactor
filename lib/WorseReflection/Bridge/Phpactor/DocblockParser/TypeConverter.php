@@ -10,11 +10,9 @@ use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\NullableNode;
-use Phpactor\WorseReflection\Core\TypeResolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
-use Phpactor\WorseReflection\Core\TypeResolver\PassthroughTypeResolver;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -41,6 +39,7 @@ use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
@@ -59,6 +58,7 @@ use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Type\StringType;
+use Phpactor\WorseReflection\Core\Type\ThisType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Reflector;
@@ -67,17 +67,12 @@ class TypeConverter
 {
     private Reflector $reflector;
 
-    private TypeResolver $resolver;
+    private ?ReflectionScope $scope;
 
-    public function __construct(Reflector $reflector, ?TypeResolver $resolver = null)
+    public function __construct(Reflector $reflector, ?ReflectionScope $scope)
     {
         $this->reflector = $reflector;
-        $this->resolver = $resolver ?: new PassthroughTypeResolver();
-    }
-
-    public function withTypeResolver(TypeResolver $typeResolver):self
-    {
-        return new self($this->reflector, $typeResolver);
+        $this->scope = $scope;
     }
 
     public function convert(?TypeNode $type): Type
@@ -280,11 +275,11 @@ class TypeConverter
         }
 
         if ($name === 'static') {
-            return $this->resolver->resolve(new StaticType());
+            return new StaticType();
         }
 
         if ($name === 'self') {
-            return $this->resolver->resolve(new SelfType());
+            return new SelfType();
         }
 
         if ($name === 'iterable') {
@@ -310,9 +305,7 @@ class TypeConverter
             )
         );
 
-        $resolved = $this->resolver->resolve($type);
-
-        return $resolved;
+        return $this->scope->resolveFullyQualifiedName($type);
     }
 
     private function convertListBrackets(ListBracketsNode $type): Type
@@ -322,7 +315,7 @@ class TypeConverter
 
     private function convertThis(ThisNode $type): Type
     {
-        return $this->resolver->resolve(new StaticType());
+        return new ThisType();
     }
 
     private function convertCallable(CallableNode $callableNode): CallableType
@@ -379,26 +372,7 @@ class TypeConverter
     {
         $classType = $this->convert($type->name);
 
-        if (!$classType instanceof ReflectedClassType) {
-            return new MissingType();
-        }
-
-        $reflection = $classType->reflectionOrNull();
-
-        if (null === $reflection) {
-            return new MissingType();
-        }
-
-        $types = [];
-        foreach ($reflection->members()->byMemberType(ReflectionMember::TYPE_CONSTANT) as $constant) {
-            $pattern = preg_quote(str_replace('*', '__ASTERISK__', $type->constant->value));
-            $pattern = str_replace('__ASTERISK__', '.*', $pattern);
-            if (preg_match('{' . $pattern . '}', $constant->name())) {
-                $types[] = $constant->type();
-            }
-        }
-
-        return (new UnionType(...$types))->reduce();
+        return new GlobbedConstantUnionType($classType, $type->constant->value);
     }
 
     private function convertNullable(NullableNode $type): Type
