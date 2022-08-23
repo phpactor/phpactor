@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\GenericTypeResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
-use Phpactor\WorseReflection\Core\Type\ClassNamedType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
@@ -149,19 +148,19 @@ class NodeContextFromMemberAccess
         Type $classType,
         int $position
     ): ?Type {
-    if (!$classType instanceof ClassType) {
-        return null;
-    }
+        if (!$classType instanceof ClassType) {
+            return null;
+        }
 
-    $variable = $frame->properties()
+        $variable = $frame->properties()
         ->lessThanOrEqualTo($position)
         ->byName($propertyName)
         ->lastOrNull();
 
-    if (null === $variable) {
-        return null;
-    }
+        if (null === $variable) {
+            return null;
+        }
 
-    return $variable->type();
+        return $variable->type();
     }
 }
