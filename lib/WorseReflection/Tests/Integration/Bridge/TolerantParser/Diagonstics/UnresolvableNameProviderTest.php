@@ -58,6 +58,12 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         self::assertEquals('Class "Foo" not found', $diagnostics->at(0)->message());
     }
 
+    public function checkUnresolvableInstanceOfClass(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Class "Foobar" not found', $diagnostics->at(0)->message());
+    }
+
     /**
      * @dataProvider provideReturnsUnresolableFunctions
      * @dataProvider provideReturnsUnresolableClass
