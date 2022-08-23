@@ -7,12 +7,12 @@ class Mailer
 {
 }
 
-class CoolMailer
+class CoolMailer extends Mailer
 {
 }
 
 $mailer = new Mailer();
-//$coolMailer = new CoolMailer();
-
 wrAssertType('Mailer', $mailer->sendMessage('foo'));
-//wrAssertType('CoolMailer', $coolMailer->sendMessage('foo'));
+t ,fjk
+$coolMailer = new CoolMailer();
+wrAssertType('CoolMailer', $coolMailer->sendMessage('foo'));

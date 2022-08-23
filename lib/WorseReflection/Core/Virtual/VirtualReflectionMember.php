@@ -38,8 +38,6 @@ abstract class VirtualReflectionMember implements ReflectionMember
 
     private Deprecation $deprecation;
 
-    private Visibility $visiblity;
-
     private MemberTypeContextualiser $contextualizer;
 
     public function __construct(
@@ -67,7 +65,6 @@ abstract class VirtualReflectionMember implements ReflectionMember
         $this->type = $type;
         $this->deprecation = $deprecation;
         $this->contextualizer = new MemberTypeContextualiser();
-        $this->visiblity = $visiblity;
     }
 
     public function position(): Position
