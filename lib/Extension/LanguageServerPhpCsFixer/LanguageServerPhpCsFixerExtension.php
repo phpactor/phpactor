@@ -23,7 +23,7 @@ class LanguageServerPhpCsFixerExtension implements Extension
             );
         });
         $container->register(FormattingHandler::class, function (Container $container) {
-               return new FormattingHandler(
+            return new FormattingHandler(
                 $container->get(PhpCsFixerFormatter::class),
                 $container->get(TextDocumentLocator::class)
             );

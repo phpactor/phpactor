@@ -39,6 +39,7 @@ class TextEditBuilderTest extends TestCase
             [ ]
         ];
 
+
         yield 'addition at start of file' => [
             <<<'EOT'
                 original
