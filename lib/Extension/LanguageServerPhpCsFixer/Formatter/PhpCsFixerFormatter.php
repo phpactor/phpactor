@@ -10,7 +10,7 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TextDocument\TextDocument;
 use RuntimeException;
 use function Amp\call;
- 
+
 class PhpCsFixerFormatter implements Formatter
 {
     public function format(TextDocument $document): Promise
@@ -67,8 +67,9 @@ class PhpCsFixerFormatter implements Formatter
         if ($document === $formatted) {
             return null;
         }
-    
+
         $builder = new TextEditBuilder();
+
         $edits = $builder->calculateTextEdits($document, $formatted);
 
         $lspEdits = [];

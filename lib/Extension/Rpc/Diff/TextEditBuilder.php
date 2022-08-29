@@ -15,6 +15,10 @@ use SebastianBergmann\Diff\Differ as BergmannDiffer;
  */
 class TextEditBuilder
 {
+    const NOOP = 0;
+    const ADD = 1;
+    const REMOVE = 2;
+
     private BergmannDiffer $differ;
 
     public function __construct(BergmannDiffer $differ = null)
@@ -31,44 +35,68 @@ class TextEditBuilder
         $diff = $this->differ->diffToArray($original, $new);
         $lineNumber = -1;
 
-        foreach ($diff as $line) {
+        $skipNext = false;
+        foreach ($diff as $index => $line) {
+            if ($skipNext) {
+                $skipNext = false;
+                continue;
+            }
+
             $lineNumber++;
+            $nextLine = $diff[$index + 1] ?? null;
             $token = $line[0];
-            switch ($line[1]) {
-                // Nothing
-                case 0:
-                    break;
 
-                // Added
-                case 1:
-                    $edits[] = [
-                        'start' => [
-                            'line' => $lineNumber,
-                            'character' => 0,
-                        ],
-                        'end' => [
-                            'line' => $lineNumber,
-                            'character' => 0,
-                        ],
-                        'text' => $token,
-                    ];
-                    break;
+            // nothing
+            if ($line[1] === self::NOOP) {
+                continue;
+            }
 
-                // Removed
-                case 2:
-                    $edits[] = [
-                        'start' => [
-                            'line' => $lineNumber,
-                            'character' => 0,
-                        ],
-                        'end' => [
-                            'line' => $lineNumber + 1,
-                            'character' => 0,
-                        ],
-                        'text' => '',
-                    ];
-                    $lineNumber--;
-                    break;
+            // replace
+            if ($line[1] === self::REMOVE && $nextLine && $nextLine[1] === self::ADD) {
+                $edits[] = [
+                    'start' => [
+                        'line' => $lineNumber,
+                        'character' => 0,
+                    ],
+                    'end' => [
+                        'line' => $lineNumber +  1,
+                        'character' => 0,
+                    ],
+                    'text' => $nextLine[0],
+                ];
+                $skipNext = true;
+                continue;
+            }
+
+            if ($line[1] === self::ADD) {
+                $edits[] = [
+                    'start' => [
+                        'line' => $lineNumber,
+                        'character' => 0,
+                    ],
+                    'end' => [
+                        'line' => $lineNumber,
+                        'character' => 0,
+                    ],
+                    'text' => $line[0],
+                ];
+                continue;
+            }
+
+            // remove
+            if ($line[1] === 2) {
+                $edits[] = [
+                    'start' => [
+                        'line' => $lineNumber,
+                        'character' => 0,
+                    ],
+                    'end' => [
+                        'line' => $lineNumber +  1,
+                        'character' => 0,
+                    ],
+                    'text' => '',
+                ];
+                continue;
             }
         }
 
