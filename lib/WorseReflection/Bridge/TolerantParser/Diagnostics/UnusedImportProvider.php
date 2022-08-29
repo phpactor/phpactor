@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 
 class UnusedImportProvider implements DiagnosticProvider
 {
@@ -112,6 +113,9 @@ class UnusedImportProvider implements DiagnosticProvider
         foreach ($docblock->types() as $type) {
             if ($type instanceof ClassType) {
                 $this->names[$type->name()->full()] = true;
+            }
+            if ($type instanceof ClosureType) {
+                $this->names['Closure'] = true;
             }
         }
     }
