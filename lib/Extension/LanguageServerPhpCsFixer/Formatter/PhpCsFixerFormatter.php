@@ -54,9 +54,9 @@ class PhpCsFixerFormatter implements Formatter
 
             $formatted = file_get_contents($tempName);
             unlink($tempName);
+
             return $formatted;
         });
-
     }
 
     /**
@@ -67,17 +67,23 @@ class PhpCsFixerFormatter implements Formatter
         if ($document === $formatted) {
             return null;
         }
-        
+    
         $builder = new TextEditBuilder();
         $edits = $builder->calculateTextEdits($document, $formatted);
+
         $lspEdits = [];
         foreach ($edits as $edit) {
             $lspEdits[] = new TextEdit(
-                ProtocolFactory::range($edit['start']['line'], $edit['start']['character'], $edit['end']['line'], $edit['end']['character']),
+                ProtocolFactory::range(
+                    $edit['start']['line'],
+                    $edit['start']['character'],
+                    $edit['end']['line'],
+                    $edit['end']['character']
+                ),
                 $edit['text']
             );
         }
-        
+
         return $lspEdits;
     }
 }
