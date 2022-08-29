@@ -5,6 +5,8 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
+use Phpactor\Extension\LanguageServerPhpCsFixer\Handler\FormattingHandler;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\MapResolver\Resolver;
 

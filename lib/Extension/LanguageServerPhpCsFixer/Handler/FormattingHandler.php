@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCsFixer;
+namespace Phpactor\Extension\LanguageServerPhpCsFixer\Handler;
 
 use Amp\Promise;
+use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
 use Phpactor\LanguageServerProtocol\FormattingOptions;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
@@ -18,9 +19,7 @@ use function Amp\call;
 class FormattingHandler implements Handler, CanRegisterCapabilities
 {
     private PhpCsFixerFormatter $formatter;
-
     private TextDocumentLocator $locator;
-
 
     public function __construct(PhpCsFixerFormatter $formatter, TextDocumentLocator $locator)
     {
