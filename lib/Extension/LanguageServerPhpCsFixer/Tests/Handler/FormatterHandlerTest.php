@@ -8,6 +8,7 @@ use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Handler\FormattingHandler;
 use Phpactor\LanguageServerProtocol\DocumentFormattingParams;
 use Phpactor\LanguageServerProtocol\FormattingOptions;
+use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 
@@ -25,16 +26,15 @@ class FormatterHandlerTest extends TestCase
             ));
         $server = $builder->build();
 
-        $server->textDocument()->open('file:///foobar', '<?php exit();');
-        $server->requestAndWait(
+        $server->textDocument()->open('file:///foobar', "<?php       \n\n\n\n exit();");
+        $response = $server->requestAndWait(
             'textDocument/formatting',
             new DocumentFormattingParams(
                 ProtocolFactory::textDocumentIdentifier('file:///foobar'),
                 new FormattingOptions(4, false)
             )
         );
+        self::assertInstanceOf(ResponseMessage::class, $response);
+        self::assertIsArray($response->result);
     }
-
-
-
 }
