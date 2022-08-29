@@ -20,9 +20,14 @@ class LanguageServerPhpCsFixerExtension implements Extension
     {
         $container->register(PhpCsFixerFormatter::class, function (Container $container) {
             return new PhpCsFixerFormatter(
+                $container->getParameter(self::PARAM_PHP_CS_FIXER_BIN)
             );
         });
         $container->register(FormattingHandler::class, function (Container $container) {
+            if (false === $container->getParameter(self::PARAM_PHP_CS_FIXER_ENABLED)) {
+                return null;
+            }
+
             return new FormattingHandler(
                 $container->get(PhpCsFixerFormatter::class),
                 $container->get(TextDocumentLocator::class)
@@ -33,7 +38,6 @@ class LanguageServerPhpCsFixerExtension implements Extension
         ]);
     }
 
-
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
@@ -41,8 +45,8 @@ class LanguageServerPhpCsFixerExtension implements Extension
             self::PARAM_PHP_CS_FIXER_BIN => '%project_root%/vendor/bin/phpcsfixer',
         ]);
         $schema->setDescriptions([
-            self::PARAM_PHP_CS_FIXER_ENABLED => 'Enable PHPStan diagnostics',
-            self::PARAM_PHP_CS_FIXER_BIN => 'Path to the PHPStan executable',
+            self::PARAM_PHP_CS_FIXER_ENABLED => 'Enable document formattig via. php-cs-fixer',
+            self::PARAM_PHP_CS_FIXER_BIN => 'Path to the php-cs-fixer executable',
         ]);
     }
 }

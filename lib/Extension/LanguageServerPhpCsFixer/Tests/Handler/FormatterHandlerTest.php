@@ -21,7 +21,7 @@ class FormatterHandlerTest extends TestCase
 
         $builder
             ->addHandler(new FormattingHandler(
-                new PhpCsFixerFormatter(),
+                new PhpCsFixerFormatter(__DIR__ . '/../../../../../vendor/bin/php-cs-fixer'),
                 new WorkspaceTextDocumentLocator($builder->workspace())
             ));
         $server = $builder->build();

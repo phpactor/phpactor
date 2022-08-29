@@ -1464,6 +1464,39 @@ Requires dev dependencies - enable Blackfire profiles to be captured via. blackf
 **Default**: ``false``
 
 
+.. _LanguageServerPhpCsFixerExtension:
+
+
+LanguageServerPhpCsFixerExtension
+---------------------------------
+
+
+.. _param_language_server_phpcsfixer.enabled:
+
+
+``language_server_phpcsfixer.enabled``
+""""""""""""""""""""""""""""""""""""""
+
+
+Enable document formattig via. php-cs-fixer
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_phpcsfixer.bin:
+
+
+``language_server_phpcsfixer.bin``
+""""""""""""""""""""""""""""""""""
+
+
+Path to the php-cs-fixer executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpcsfixer"``
+
+
 .. _BehatExtension:
 
 

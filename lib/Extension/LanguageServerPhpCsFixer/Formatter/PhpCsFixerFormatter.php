@@ -13,6 +13,13 @@ use function Amp\call;
 
 class PhpCsFixerFormatter implements Formatter
 {
+    private string $binPath;
+
+    public function __construct(string $binPath)
+    {
+        $this->binPath = $binPath;
+    }
+
     public function format(TextDocument $document): Promise
     {
         return call(function () use ($document) {
@@ -39,7 +46,7 @@ class PhpCsFixerFormatter implements Formatter
             }
 
             $process = new Process([
-                'vendor/bin/php-cs-fixer',
+                $this->binPath,
                 'fix',
                 $tempName
             ]);
