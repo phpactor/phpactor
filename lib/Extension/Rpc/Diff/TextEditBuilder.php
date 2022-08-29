@@ -22,7 +22,10 @@ class TextEditBuilder
         $this->differ = $differ ?: new BergmannDiffer();
     }
 
-    public function calculateTextEdits(string $original, string $new)
+    /**
+     * @return array<int,array{start:array{line:int,character:int},end:array{line:int,character:int},text:string}>
+     */
+    public function calculateTextEdits(string $original, string $new): array
     {
         $edits = [];
         $diff = $this->differ->diffToArray($original, $new);
