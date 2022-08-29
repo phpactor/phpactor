@@ -88,6 +88,11 @@ class UnusedImportProviderTest extends DiagnosticsTestCase
         self::assertCount(0, $diagnostics);
     }
 
+    public function checkUsedByDocblockComplex(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
     public function checkTrait(Diagnostics $diagnostics): void
     {
         self::assertCount(0, $diagnostics);
