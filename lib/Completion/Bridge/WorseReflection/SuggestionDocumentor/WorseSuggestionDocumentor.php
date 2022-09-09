@@ -25,9 +25,15 @@ class WorseSuggestionDocumentor implements SuggestionDocumentor
     public function document(Suggestion $suggestion): Closure
     {
         return function () use ($suggestion) {
+            $fqn = $suggestion->fqn();
+
+            if (null === $fqn) {
+                return '';
+            }
+
             if ($suggestion->type() === Suggestion::TYPE_CLASS) {
                 try {
-                    $reflectionClass = $this->reflector->reflectClassLike($suggestion->fqn());
+                    $reflectionClass = $this->reflector->reflectClassLike($fqn);
                 } catch (NotFound $notFound) {
                     return $suggestion->documentation();
                 }
@@ -41,7 +47,7 @@ class WorseSuggestionDocumentor implements SuggestionDocumentor
 
             if ($suggestion->type() === Suggestion::TYPE_FUNCTION) {
                 try {
-                    $reflectionFunction = $this->reflector->reflectFunction($suggestion->fqn());
+                    $reflectionFunction = $this->reflector->reflectFunction($fqn);
                 } catch (NotFound $notFound) {
                     return $suggestion->documentation();
                 }
