@@ -232,6 +232,15 @@ class AssignmentExpressionResolver implements Resolver
 
             $index++;
             $elementValue = $element->elementValue;
+            if ($elementValue instanceof ArrayCreationExpression) {
+                $list = $elementValue->arrayElements;
+                if (!$list instanceof ArrayElementList) {
+                    return;
+                }
+                $accessType = $this->offsetType($type, $index);
+                $this->walkArrayElements($list->children, $leftOperand, $accessType, $frame);
+                continue;
+            }
             if (!$elementValue instanceof Variable) {
                 continue;
             }

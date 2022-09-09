@@ -1,0 +1,10 @@
+<?php
+
+function yesOrNo(): bool
+{
+}
+
+[[$one, $two]] = yesOrNo() ? [['one', 'two']] : [['three', 'four']];
+
+wrAssertType('"one"|"three"', $one);
+wrAssertType('"two"|"four"', $two);
