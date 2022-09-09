@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\DelimitedList\TraitSelectOrAliasClauseList;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
@@ -41,6 +42,11 @@ class NodeContextFromMemberAccess
 
         $memberName = NodeUtil::nameFromTokenOrNode($node, $node->memberName);
         $memberType = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
+
+        // support trait method-alias clauses, e.g. use  use A, B {A::foobar insteadof B; B::bigTalk insteadof A;}
+        if ($memberType === Symbol::PROPERTY && $node->parent->parent && $node->parent->parent instanceof TraitSelectOrAliasClauseList) {
+            $memberType = Symbol::METHOD;
+        }
 
         if ($node->memberName instanceof Node) {
             $memberNameType = $resolver->resolveNode($frame, $node->memberName)->type();

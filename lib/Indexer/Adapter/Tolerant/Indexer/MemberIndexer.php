@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\Node\TraitSelectOrAliasClause;
 use Microsoft\PhpParser\Token;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
 use Phpactor\Indexer\Model\Index;
@@ -21,7 +22,7 @@ class MemberIndexer implements TolerantIndexer
 {
     public function canIndex(Node $node): bool
     {
-        return $node instanceof ScopedPropertyAccessExpression || $node instanceof MemberAccessExpression;
+        return $node instanceof TraitSelectOrAliasClause || $node instanceof ScopedPropertyAccessExpression || $node instanceof MemberAccessExpression;
     }
 
     public function beforeParse(Index $index, TextDocument $document): void
@@ -45,6 +46,10 @@ class MemberIndexer implements TolerantIndexer
 
     public function index(Index $index, TextDocument $document, Node $node): void
     {
+        if ($node instanceof TraitSelectOrAliasClause) {
+            $this->indexTraitSelectOrAliasClause($index, $document, $node);
+            return;
+        }
         if ($node instanceof ScopedPropertyAccessExpression) {
             $this->indexScopedPropertyAccess($index, $document, $node);
             return;
@@ -56,7 +61,10 @@ class MemberIndexer implements TolerantIndexer
         }
     }
 
-    private function indexScopedPropertyAccess(Index $index, TextDocument $document, ScopedPropertyAccessExpression $node): void
+    /**
+     * @param MemberRecord::TYPE_* $memberType
+     */
+    private function indexScopedPropertyAccess(Index $index, TextDocument $document, ScopedPropertyAccessExpression $node, ?string $memberType = null): void
     {
         $containerType = $node->scopeResolutionQualifier;
 
@@ -71,13 +79,13 @@ class MemberIndexer implements TolerantIndexer
             return;
         }
 
-        $memberType = $this->resolveScopedPropertyAccessMemberType($node);
+        $memberType = $memberType ?? $this->resolveScopedPropertyAccessMemberType($node);
 
         $this->writeIndex($index, $memberType, $containerType, $memberName, $document, $this->resolveStart($node->memberName));
     }
 
     /**
-     * @return MemberRecord::TYPE_METHOD|MemberRecord::TYPE_PROPERTY|MemberRecord::TYPE_CONSTANT
+     * @return MemberRecord::TYPE_*
      */
     private function resolveScopedPropertyAccessMemberType(ScopedPropertyAccessExpression $node): string
     {
@@ -182,5 +190,12 @@ class MemberIndexer implements TolerantIndexer
         }
 
         return $containerType;
+    }
+
+    private function indexTraitSelectOrAliasClause(Index $index, TextDocument $document, TraitSelectOrAliasClause $node): void
+    {
+        if ($node->name instanceof ScopedPropertyAccessExpression) {
+            $this->indexScopedPropertyAccess($index, $document, $node->name, MemberRecord::TYPE_METHOD);
+        }
     }
 }

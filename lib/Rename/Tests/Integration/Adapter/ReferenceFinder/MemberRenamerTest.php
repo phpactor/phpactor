@@ -11,6 +11,7 @@ use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
 use Phpactor\Rename\Adapter\ReferenceFinder\MemberRenamer;
 use Phpactor\Rename\Model\Renamer;
 use Phpactor\Rename\Tests\RenamerTestCase;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Reflector;
@@ -26,6 +27,7 @@ class MemberRenamerTest extends RenamerTestCase
         yield from $this->methodRenames();
         yield from $this->propertyRenames();
         yield from $this->constantRenames();
+        yield from $this->traitRenames();
         if (defined('T_ENUM')) {
             yield from $this->enumRenames();
         }
@@ -292,6 +294,46 @@ class MemberRenamerTest extends RenamerTestCase
             function (Reflector $reflector): void {
                 $reflection = $reflector->reflectEnum('ClassOne');
                 self::assertTrue($reflection->cases()->has('newName'));
+            }
+        ];
+    }
+
+    /**
+     * @return Generator<string,array{string,Closure(Reflector,Renamer): Generator,Closure(Reflector): void}>
+     */
+    private function traitRenames(): Generator
+    {
+        yield 'trait use with insteadof' => [
+            'member_renamer/trait_insteadof',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectTrait('A');
+                $method = $reflection->methods()->get('smallTalk');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $method->nameRange()->start(),
+                    'foobar'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectTrait('A');
+                self::assertTrue($reflection->methods()->has('foobar'));
+            }
+        ];
+        yield 'trait use with insteadof rename alias' => [
+            'member_renamer/trait_insteadof',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectTrait('A');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    ByteOffset::fromInt(311),
+                    'foobar'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectTrait('A');
+                self::assertTrue($reflection->methods()->has('foobar'));
             }
         ];
     }
