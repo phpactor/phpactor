@@ -28,8 +28,8 @@ Enable it as follows:
 
    {
        "logging.enabled": true,
-       "logging.level: "debug",
-       "logging.path: "phpactor.log",
+       "logging.level": "debug",
+       "logging.path": "phpactor.log",
    }
 
 Var Dump Server
