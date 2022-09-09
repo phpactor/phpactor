@@ -1,0 +1,14 @@
+<?php
+
+namespace Bar;
+
+use Closure;
+
+/**
+ * @param string|Closure(string): string $bar
+ */
+function fo($bar): void
+{
+}
+
+
