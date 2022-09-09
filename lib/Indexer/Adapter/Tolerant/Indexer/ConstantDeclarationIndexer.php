@@ -15,6 +15,7 @@ use Phpactor\Indexer\Model\Record\ConstantRecord;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Indexer\Model\Index;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ConstantDeclarationIndexer implements TolerantIndexer
 {
@@ -34,7 +35,7 @@ class ConstantDeclarationIndexer implements TolerantIndexer
         }
 
         /** @phpstan-ignore-next-line */
-        if ('define' === $node->callableExpression->getNamespacedName()->__toString()) {
+        if ('define' === NodeUtil::shortName($node->callableExpression)) {
             return true;
         }
 
