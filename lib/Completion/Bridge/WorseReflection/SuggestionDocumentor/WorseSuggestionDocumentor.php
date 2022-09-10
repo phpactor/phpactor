@@ -59,6 +59,20 @@ class WorseSuggestionDocumentor implements SuggestionDocumentor
                 ));
             }
 
+            if ($suggestion->type() === Suggestion::TYPE_CONSTANT) {
+                try {
+                    $reflectionConstant = $this->reflector->reflectConstant($fqn);
+                } catch (NotFound $notFound) {
+                    return $suggestion->documentation();
+                }
+
+                return $this->renderer->render(new ItemDocumentation(
+                    $reflectionConstant->name(),
+                    $reflectionConstant->docblock()->formatted(),
+                    $reflectionConstant
+                ));
+            }
+
             return $suggestion->documentation();
         };
     }
