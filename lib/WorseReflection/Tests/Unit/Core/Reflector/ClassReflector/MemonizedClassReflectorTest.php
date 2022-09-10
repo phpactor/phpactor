@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector\MemonizedReflector;
+use Phpactor\WorseReflection\Core\Reflector\ConstantReflector;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
 use Prophecy\PhpUnit\ProphecyTrait;
 
@@ -36,10 +37,12 @@ class MemonizedClassReflectorTest extends TestCase
     {
         $this->innerClassReflector = $this->prophesize(ClassReflector::class);
         $this->innerFunctionReflector = $this->prophesize(FunctionReflector::class);
+        $this->innerConstantReflector = $this->prophesize(ConstantReflector::class);
 
         $this->reflector = new MemonizedReflector(
             $this->innerClassReflector->reveal(),
             $this->innerFunctionReflector->reveal(),
+            $this->innerConstantReflector->reveal(),
             new TtlCache(10)
         );
         $this->className = ClassName::fromString('Hello');

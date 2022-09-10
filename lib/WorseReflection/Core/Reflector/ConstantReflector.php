@@ -2,19 +2,19 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector;
 
+use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\SourceCode;
 
-interface FunctionReflector
+interface ConstantReflector
 {
     /**
      * @param string|Name $name
      */
-    public function reflectFunction($name): ReflectionFunction;
+    public function reflectConstant($name): ReflectionDeclaredConstant;
 
     /**
      * @param string|Name $name
      */
-    public function sourceCodeForFunction($name): SourceCode;
+    public function sourceCodeForConstant($name): SourceCode;
 }

@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigati
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
@@ -102,6 +103,13 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $sourceCode = SourceCode::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
         return TolerantReflectionFunctionCollection::fromNode($this->serviceLocator, $sourceCode, $node);
+    }
+
+    public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection
+    {
+        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $node = $this->parseSourceCode($sourceCode);
+        return ReflectionDeclaredConstantCollection::fromNode($this->serviceLocator, $sourceCode, $node);
     }
 
     public function navigate($sourceCode): ReflectionNavigation

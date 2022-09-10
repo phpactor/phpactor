@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
 final class StubSourceLocator implements SourceCodeLocator
 {
@@ -40,6 +41,9 @@ final class StubSourceLocator implements SourceCodeLocator
         ));
     }
 
+    /**
+     * @return array<string,string>
+     */
     private function map(): array
     {
         if (file_exists($this->serializedMapPath())) {
@@ -60,6 +64,7 @@ final class StubSourceLocator implements SourceCodeLocator
 
             $map = $this->buildClassMap($file, $map);
             $map = $this->buildFunctionMap($file, $map);
+            $map = $this->buildConstantMap($file, $map);
         }
 
         if (!file_exists($this->cacheDir)) {
@@ -69,12 +74,15 @@ final class StubSourceLocator implements SourceCodeLocator
         file_put_contents($this->serializedMapPath(), serialize($map));
     }
 
-    private function serializedMapPath()
+    private function serializedMapPath(): string
     {
         return $this->cacheDir . '/' . md5($this->stubPath) . '.map';
     }
 
-    private function fileIterator()
+    /**
+     * @return RecursiveIteratorIterator<RecursiveDirectoryIterator>
+     */
+    private function fileIterator(): RecursiveIteratorIterator
     {
         return new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($this->stubPath, RecursiveDirectoryIterator::SKIP_DOTS),
@@ -82,7 +90,11 @@ final class StubSourceLocator implements SourceCodeLocator
         );
     }
 
-    private function buildClassMap($file, array $map): array
+    /**
+     * @return array<string,string>
+     * @param array<string,string> $map
+     */
+    private function buildClassMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectClassesIn(
             SourceCode::fromPath($file)
@@ -95,7 +107,11 @@ final class StubSourceLocator implements SourceCodeLocator
         return $map;
     }
 
-    private function buildFunctionMap($file, array $map): array
+    /**
+     * @param array<string,string> $map
+     * @return array<string,string>
+     */
+    private function buildFunctionMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectFunctionsIn(
             SourceCode::fromPath($file)
@@ -103,6 +119,23 @@ final class StubSourceLocator implements SourceCodeLocator
 
         foreach ($functions as $function) {
             $map[(string) $function->name()] = (string) $file;
+        }
+
+        return $map;
+    }
+
+    /**
+     * @param array<string,string> $map
+     * @return array<string,string>
+     */
+    private function buildConstantMap(SplFileInfo $file, array $map): array
+    {
+        $constants = $this->reflector->reflectConstantsIn(
+            SourceCode::fromPath($file)
+        );
+
+        foreach ($constants as $constant) {
+            $map[(string) $constant->name()] = (string) $file;
         }
 
         return $map;

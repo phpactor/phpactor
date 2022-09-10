@@ -4,16 +4,16 @@ namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
 use Closure;
 use Generator;
-use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionDeclaredConstant;
+use Phpactor\WorseReflection\Core\Exception\ConstantNotFound;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
-class FunctionReflectorTest extends IntegrationTestCase
+class ConstantReflectorTest extends IntegrationTestCase
 {
     /**
-     * @dataProvider provideReflectFunction
+     * @dataProvider provideReflectDeclaredConstant
      */
     public function testReflectFunction(string $manifest, string $name, Closure $assertion): void
     {
@@ -25,37 +25,37 @@ class FunctionReflectorTest extends IntegrationTestCase
             $this->workspace()->path('project'),
             $this->workspace()->path('cache'),
         );
-        $reflection = ReflectorBuilder::create()->addLocator($locator)->build()->reflectFunction($name);
+        $reflection = ReflectorBuilder::create()->addLocator($locator)->build()->reflectConstant($name);
         $assertion($reflection);
     }
 
     /**
      * @return Generator<mixed>
      */
-    public function provideReflectFunction(): Generator
+    public function provideReflectDeclaredConstant(): Generator
     {
-        yield 'reflect function' => [
+        yield 'reflect in root namespace' => [
             <<<'EOT'
                 // File: project/hello.php
-                <?php function hello() {}
+                <?php define('HELLO', 'hello') {}
                 EOT
             ,
-            'hello',
-            function (ReflectionFunction $function): void {
-                $this->assertEquals('hello', $function->name());
+            'HELLO',
+            function (ReflectionDeclaredConstant $constant): void {
+                $this->assertEquals('"hello"', $constant->type()->__toString());
             }
         ];
 
-        yield 'fallback to global function' => [
+        yield 'fallback to global constant' => [
             <<<'EOT'
                 // File: project/global.php
                 <?php
-                function hello() {}
+                <?php define('HELLO', 'hello') {}
                 EOT
             ,
-            'Foo\hello',
-            function (ReflectionFunction $function): void {
-                $this->assertEquals('hello', $function->name());
+            'Foo\HELLO',
+            function (ReflectionDeclaredConstant $constant): void {
+                $this->assertEquals('HELLO', $constant->name());
             }
         ];
 
@@ -63,20 +63,19 @@ class FunctionReflectorTest extends IntegrationTestCase
             <<<'EOT'
                 // File: project/global.php
                 <?php
-                namespace Foo;
-                function hello() {}
+                <?php define('Foo\HELLO', 'hello') {}
                 EOT
             ,
-            'Foo\hello',
-            function (ReflectionFunction $function): void {
-                $this->assertEquals('Foo\hello', $function->name());
+            'Foo\HELLO',
+            function (ReflectionDeclaredConstant $function): void {
+                $this->assertEquals('Foo\HELLO', $function->name());
             }
         ];
     }
 
     public function testThrowsExceptionIfFunctionNotFound(): void
     {
-        $this->expectException(FunctionNotFound::class);
-        $this->createReflector('<?php ')->reflectFunction('hallo');
+        $this->expectException(ConstantNotFound::class);
+        $this->createReflector('<?php ')->reflectConstant('hallo');
     }
 }
