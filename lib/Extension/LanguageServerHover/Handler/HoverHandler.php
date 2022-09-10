@@ -119,6 +119,8 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::METHOD:
             case Symbol::PROPERTY:
+            case Symbol::DECLARED_CONSTANT:
+                return $this->renderDeclaredConstant($symbolContext->type());
             case Symbol::CONSTANT:
                 return $this->renderMember($symbolContext);
             case Symbol::CLASS_:
@@ -200,6 +202,15 @@ class HoverHandler implements Handler, CanRegisterCapabilities
                 $class->docblock()->formatted(),
                 $class
             ));
+        } catch (NotFound $e) {
+            return $e->getMessage();
+        }
+    }
+
+    private function renderDeclaredConstant(Type $type): ?string
+    {
+        try {
+            return $this->renderer->render($type);
         } catch (NotFound $e) {
             return $e->getMessage();
         }
