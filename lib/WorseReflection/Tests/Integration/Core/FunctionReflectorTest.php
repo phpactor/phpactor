@@ -17,6 +17,7 @@ class FunctionReflectorTest extends IntegrationTestCase
      */
     public function testReflectFunction(string $manifest, string $name, Closure $assertion): void
     {
+        $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
 
         $locator = new StubSourceLocator(
@@ -68,7 +69,7 @@ class FunctionReflectorTest extends IntegrationTestCase
             ,
             'Foo\hello',
             function (ReflectionFunction $function): void {
-                $this->assertEquals('hello', $function->name());
+                $this->assertEquals('Foo\hello', $function->name());
             }
         ];
     }
