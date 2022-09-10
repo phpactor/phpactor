@@ -14,6 +14,7 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\ResolvedName;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -30,6 +31,29 @@ class NodeUtil
         'iterable',
         'resource',
     ];
+
+    /**
+     * @param array<string, ResolvedName> $importTable
+     */
+    public static function resolveNameFromImportTable(Node $node, array $importTable): ?ResolvedName
+    {
+        if (!$node instanceof QualifiedName) {
+            return null;
+        }
+        $content = $node->getFileContents();
+        $nameParts = $node->getNameParts();
+        if (count($nameParts) === 0) {
+            return null;
+        }
+        $base = $nameParts[0]->getText($content);
+
+        if (isset($importTable[$base])) {
+            $resolvedName = $importTable[$base];
+            $resolvedName->addNameParts(\array_slice($node->getNameParts(), 1), $content);
+            return $resolvedName;
+        }
+        return null;
+    }
 
     public static function nodeContainerClassLikeType(Reflector $reflector, Node $node): Type
     {

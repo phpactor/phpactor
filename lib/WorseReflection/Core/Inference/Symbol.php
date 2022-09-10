@@ -13,6 +13,7 @@ final class Symbol
     public const FUNCTION = 'function';
     public const PROPERTY = 'property';
     public const CONSTANT = 'constant';
+    public const DECLARED_CONSTANT = 'declared_constant';
     public const CASE = 'case';
     public const STRING = 'string';
     public const NUMBER = 'number';
@@ -93,6 +94,19 @@ final class Symbol
     public function position(): Position
     {
         return $this->position;
+    }
+
+    /**
+     * @param self::* $symbolType
+     */
+    public function withSymbolType(string $symbolType): self
+    {
+        return new self($symbolType, $this->name, $this->position);
+    }
+
+    public function withSymbolName(string $symbolName): self
+    {
+        return new self($this->symbolType, $symbolName, $this->position);
     }
 
     /**

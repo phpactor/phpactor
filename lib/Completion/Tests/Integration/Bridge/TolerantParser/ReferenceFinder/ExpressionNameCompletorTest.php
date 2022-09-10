@@ -76,11 +76,24 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+
+        yield 'constant' => [
+            '<?php define("FOO", "BAR"); FO<>', [
+                [
+                    'type'              => Suggestion::TYPE_CONSTANT,
+                    'name'              => 'FOO',
+                    'short_description' => 'FOO',
+                ]
+            ]
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
+        $searcher->search('FO')->willYield([
+            NameSearchResult::create('constant', 'FOO')
+        ]);
         $searcher->search('Foo')->willYield([
             NameSearchResult::create('class', 'Foobar')
         ]);

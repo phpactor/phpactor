@@ -29,6 +29,20 @@ class WorseSuggestionDocumentorTest extends TestCase
         self::assertNotEmpty($documentation);
     }
 
+    public function testConstantSuggestion(): void
+    {
+        $documentation = $this->createDocumentor('<?php /** Documentation */define("foobar", "barfoo");')->document(
+            Suggestion::createWithOptions(
+                'foobar',
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name_import' => 'foobar'
+                ]
+            )
+        );
+        self::assertNotEmpty($documentation);
+    }
+
     public function testOtherSuggestion(): void
     {
         $documentation = $this->createDocumentor('<?php /** Documentation */function boo() {}')->document(Suggestion::createWithOptions('Foobar', [

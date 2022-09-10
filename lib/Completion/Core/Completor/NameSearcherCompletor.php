@@ -84,6 +84,10 @@ abstract class NameSearcherCompletor
             return Suggestion::TYPE_FUNCTION;
         }
 
+        if ($result->type()->isConstant()) {
+            return Suggestion::TYPE_CONSTANT;
+        }
+
         return null;
     }
 

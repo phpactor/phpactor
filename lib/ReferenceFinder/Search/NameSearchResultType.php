@@ -39,4 +39,9 @@ final class NameSearchResultType
     {
         return $this->type === self::TYPE_FUNCTION;
     }
+
+    public function isConstant(): bool
+    {
+        return $this->type === self::TYPE_CONSTANT;
+    }
 }
