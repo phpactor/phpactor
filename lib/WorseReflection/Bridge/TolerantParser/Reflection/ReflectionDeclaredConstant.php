@@ -24,7 +24,9 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
      * @var Node\Expression\CallExpression
      */
     private CallExpression $node;
+
     private string $name;
+
     private ArgumentExpression $value;
 
     public function __construct(
@@ -36,6 +38,36 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
         $this->sourceCode = $sourceCode;
         $this->node = $node;
         $this->bindArguments();
+    }
+
+    public function name(): Name
+    {
+        return Name::fromString($this->name);
+    }
+
+    public function type(): Type
+    {
+        return $this->serviceLocator->symbolContextResolver()->resolveNode(new Frame(''), $this->value)->type();
+    }
+
+    public function sourceCode(): SourceCode
+    {
+        return $this->sourceCode;
+    }
+
+    public function docblock(): DocBlock
+    {
+        return $this->serviceLocator->docblockFactory()->create($this->node->getLeadingCommentAndWhitespaceText(), $this->scope());
+    }
+
+    protected function node(): Node
+    {
+        return $this->node;
+    }
+
+    protected function serviceLocator(): ServiceLocator
+    {
+        return $this->serviceLocator;
     }
 
     private function bindArguments(): void
@@ -59,35 +91,5 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
         if (isset($arguments[1]) && $arguments[1] instanceof ArgumentExpression) {
             $this->value = $arguments[1];
         }
-    }
-
-    public function name(): Name
-    {
-        return Name::fromString($this->name);
-    }
-
-    public function type(): Type
-    {
-        return $this->serviceLocator->symbolContextResolver()->resolveNode(new Frame(''), $this->value)->type();
-    }
-
-    protected function node(): Node
-    {
-        return $this->node;
-    }
-
-    protected function serviceLocator(): ServiceLocator
-    {
-        return $this->serviceLocator;
-    }
-
-    public function sourceCode(): SourceCode
-    {
-        return $this->sourceCode;
-    }
-
-    public function docblock(): DocBlock
-    {
-        return $this->serviceLocator->docblockFactory()->create($this->node->getLeadingCommentAndWhitespaceText(), $this->scope());
     }
 }
