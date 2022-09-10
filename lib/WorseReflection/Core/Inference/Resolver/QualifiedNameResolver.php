@@ -19,6 +19,7 @@ use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
 class QualifiedNameResolver implements Resolver
@@ -118,7 +119,11 @@ class QualifiedNameResolver implements Resolver
         $type = $this->nodeTypeConverter->resolve($node);
 
         if ($type instanceof ReflectedClassType) {
+            [$_, $_, $constImportTable] = $node->getImportTablesForCurrentScope();
             $name = $type->name()->full();
+            if ($resolved = NodeUtil::resolveNameFromImportTable($node, $constImportTable)) {
+                $name = $resolved->__toString();
+            }
             try {
                 $sourceCode = $this->reflector->sourceCodeForConstant($name);
                 $constant = $this->reflector->reflectConstant($name);

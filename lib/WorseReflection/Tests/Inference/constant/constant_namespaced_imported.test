@@ -1,0 +1,11 @@
+<?php
+
+namespace Foo;
+
+define('Barfoo\FOOBAR', 'foobar');
+
+use const Barfoo\FOOBAR;
+
+$f = FOOBAR;
+
+wrAssertType('"foobar"', $f);
