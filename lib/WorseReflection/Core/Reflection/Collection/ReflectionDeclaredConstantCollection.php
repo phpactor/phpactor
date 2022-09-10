@@ -2,10 +2,13 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\DocblockParser\Ast\Type\CallableNode;
-use Phpactor\Name\QualifiedName;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionDeclaredConstant as PhpactorReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -13,7 +16,7 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
- * @extends HomogeneousReflectionMemberCollection<CoreReflectionConstant>
+ * @extends HomogeneousReflectionMemberCollection<ReflectionDeclaredConstant>
  */
 class ReflectionDeclaredConstantCollection extends HomogeneousReflectionMemberCollection
 {
@@ -51,13 +54,27 @@ class ReflectionDeclaredConstantCollection extends HomogeneousReflectionMemberCo
             if (!$arguments) {
                 continue;
             }
-            $arguments = $arguments->children;
+            $arguments = iterator_to_array($arguments->getElements());
             if (!is_array($arguments)) {
                 continue;
             }
-            dump($arguments);
+            if (count($arguments) < 2) {
+                continue;
+            }
 
-            $items[(string) $callable->getNamespacedName()] = new ReflectionDeclaredConstant($sourceCode, $serviceLocator, $descendentNode);
+            $name = $arguments[0];
+            $value = $arguments[1];
+
+            if (!$name instanceof ArgumentExpression && !$value instanceof ArgumentExpression) {
+                continue;
+            }
+
+            $name = $name->expression;
+            if (!$name instanceof StringLiteral) {
+                continue;
+            }
+
+            $items[(string) $name->getStringContentsText()] = new PhpactorReflectionDeclaredConstant($serviceLocator, $name, $value);
         }
 
         return new self($items);

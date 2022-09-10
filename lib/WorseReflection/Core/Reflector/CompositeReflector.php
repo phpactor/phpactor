@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
@@ -27,14 +28,18 @@ class CompositeReflector implements Reflector
 
     private FunctionReflector $functionReflector;
 
+    private ConstantReflector $constantReflector;
+
     public function __construct(
         ClassReflector $classReflector,
         SourceCodeReflector $sourceCodeReflector,
-        FunctionReflector $functionReflector
+        FunctionReflector $functionReflector,
+        ConstantReflector $constantReflector
     ) {
         $this->classReflector = $classReflector;
         $this->sourceCodeReflector = $sourceCodeReflector;
         $this->functionReflector = $functionReflector;
+        $this->constantReflector = $constantReflector;
     }
 
     public function reflectClass($className): ReflectionClass
@@ -115,5 +120,15 @@ class CompositeReflector implements Reflector
     public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection
     {
         return $this->sourceCodeReflector->reflectConstantsIn($sourceCode);
+    }
+
+    public function reflectConstant($name): ReflectionDeclaredConstant
+    {
+        return $this->constantReflector->reflectConstant($name);
+    }
+
+    public function sourceCodeForConstant($name): SourceCode
+    {
+        return $this->constantReflector->sourceCodeForConstant($name);
     }
 }

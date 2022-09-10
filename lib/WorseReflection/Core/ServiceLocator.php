@@ -93,6 +93,7 @@ class ServiceLocator
         $this->reflector = new CompositeReflector(
             $coreReflector,
             $sourceReflector,
+            $coreReflector,
             $coreReflector
         );
 

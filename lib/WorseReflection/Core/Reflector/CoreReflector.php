@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigati
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
+use Phpactor\WorseReflection\Core\Exception\ConstantNotFound;
 use Phpactor\WorseReflection\Core\Exception\CycleDetected;
 use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -195,7 +196,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
 
     public function reflectConstantsIn($source): ReflectionDeclaredConstantCollection
     {
-        return $this->sourceReflector->reflectConstantsIn($sourceCode);
+        return $this->sourceReflector->reflectConstantsIn($source);
     }
 
     public function navigate($sourceCode): ReflectionNavigation
@@ -276,18 +277,16 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         if (false === $constants->has((string) $name)) {
             $name = Name::fromString($name->short());
             $source = $this->sourceLocator->locate($name);
-            $constants = $this->reflectFunctionsIn($source);
+            $constants = $this->reflectConstantsIn($source);
             if (false === $constants->has($name)) {
-                throw new FunctionNotFound(sprintf(
-                    'Unable to locate function "%s"',
+                throw new ConstantNotFound(sprintf(
+                    'Unable to locate constant "%s"',
                     $name
                 ));
             }
         }
 
-        $function = $constants->get((string) $name);
-
-        return $function;
+        return $constants->get((string) $name);
     }
 
     public function sourceCodeForConstant($name): SourceCode

@@ -2,54 +2,47 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
-use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
-use Phpactor\TextDocument\ByteOffsetRange;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\StringLiteral;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant as PhpactorReflectionDeclaredConstant;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectionConstant;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Microsoft\PhpParser\Node\ClassConstDeclaration;
-use Phpactor\WorseReflection\TypeUtil;
+use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 
 class ReflectionDeclaredConstant extends AbstractReflectedNode implements PhpactorReflectionDeclaredConstant
 {
     private ServiceLocator $serviceLocator;
 
-    private ReflectionClassLike $class;
+    private StringLiteral $name;
 
-    /**
-     * @var Node\Expression\CallExpression
-     */
-    private CallExpression $node;
+    private ArgumentExpression $value;
 
     public function __construct(
         ServiceLocator $serviceLocator,
-        ReflectionClassLike $class,
-        CallExpression $node
+        StringLiteral $name,
+        ArgumentExpression $value
     ) {
         $this->serviceLocator = $serviceLocator;
-        $this->node = $node;
-        $this->class = $class;
+        $this->name = $name;
+        $this->value = $value;
     }
 
-    public function name(): string
+    public function name(): Name
     {
-        return (string)$this->node->getName();
+        return Name::fromString($this->name->getStringContentsText());
     }
 
     public function type(): Type
     {
+        return $this->serviceLocator->symbolContextResolver()->resolveNode(new Frame(''), $this->value)->type();
     }
 
     protected function node(): Node
     {
-        return $this->node;
+        return $this->name;
     }
 
     protected function serviceLocator(): ServiceLocator
