@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigati
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
@@ -61,4 +62,9 @@ interface SourceCodeReflector
      * @param Offset|ByteOffset|int $offset
      */
     public function reflectNode($sourceCode, $offset): ReflectionNode;
+
+    /**
+     * @param TextDocument|string $sourceCode
+     */
+    public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection;
 }

@@ -11,6 +11,8 @@ use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
@@ -22,12 +24,10 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 
-class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector
+class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector, ConstantReflector
 {
     private SourceCodeReflector $sourceReflector;
 
@@ -193,6 +193,11 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         return $this->sourceReflector->reflectFunctionsIn($sourceCode);
     }
 
+    public function reflectConstantsIn(SourceCode $source): ReflectionDeclaredConstantCollection
+    {
+        return $this->sourceReflector->reflectConstantsIn($sourceCode);
+    }
+
     public function navigate($sourceCode): ReflectionNavigation
     {
         return $this->sourceReflector->navigate($sourceCode);
@@ -251,5 +256,53 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     public function reflectNode($sourceCode, $offset): ReflectionNode
     {
         return $this->sourceReflector->reflectNode($sourceCode, $offset);
+    }
+
+    public function reflectConstant($name): ReflectionDeclaredConstant
+    {
+        $name = Name::fromUnknown($name);
+
+        // if the source is not found, fallback to the global
+        // function
+        try {
+            $source = $this->sourceLocator->locate($name);
+        } catch (NotFound $notFound) {
+            $name = Name::fromString($name->short());
+            $source = $this->sourceLocator->locate($name);
+        }
+
+        $constants = $this->reflectConstantsIn($source);
+
+        if (false === $constants->has((string) $name)) {
+            $name = Name::fromString($name->short());
+            $source = $this->sourceLocator->locate($name);
+            $constants = $this->reflectFunctionsIn($source);
+            if (false === $constants->has($name)) {
+                throw new FunctionNotFound(sprintf(
+                    'Unable to locate function "%s"',
+                    $name
+                ));
+            }
+        }
+
+        $function = $constants->get((string) $name);
+
+        return $function;
+    }
+
+    public function sourceCodeForConstant($name): SourceCode
+    {
+        $name = Name::fromUnknown($name);
+
+        // if the source is not found, fallback to the global
+        // function
+        try {
+            $source = $this->sourceLocator->locate($name);
+        } catch (NotFound $notFound) {
+            $name = Name::fromString($name->short());
+            $source = $this->sourceLocator->locate($name);
+        }
+
+        return $source;
     }
 }
