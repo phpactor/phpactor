@@ -126,7 +126,7 @@ class QualifiedNameResolver implements Resolver
                 $this->reflector->reflectClassLike($type->name());
                 return $context->withType($type);
             } catch (NotFound $notFound) {
-                // resolve the name of the potnatial constant
+                // resolve the name of the potential constant
                 [$_, $_, $constImportTable] = $node->getImportTablesForCurrentScope();
                 if ($resolved = NodeUtil::resolveNameFromImportTable($node, $constImportTable)) {
                     $name = $resolved->__toString();
@@ -134,7 +134,7 @@ class QualifiedNameResolver implements Resolver
                     $name = $type->name()->full();
                 }
                 try {
-                    // fast but inaccurate check to see if class exists
+                    // fast but inaccurate check to see if constant exists
                     $sourceCode = $this->reflector->sourceCodeForConstant($name);
                     // accurate check to see if constant exists
                     $constant = $this->reflector->reflectConstant($name);
