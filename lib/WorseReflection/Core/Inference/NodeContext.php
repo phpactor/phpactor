@@ -113,6 +113,14 @@ final class NodeContext
         return $new;
     }
 
+    public function withSymbolName(string $symbolName): self
+    {
+        $new = clone $this;
+        $new->symbol = $this->symbol->withSymbolName($symbolName);
+
+        return $new;
+    }
+
     /**
      * @deprecated
      */

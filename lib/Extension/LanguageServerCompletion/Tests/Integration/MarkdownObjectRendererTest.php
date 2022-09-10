@@ -59,6 +59,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      * @dataProvider provideTrait
      * @dataProvider provideFunction
      * @dataProvider provideSymbolOffset
+     * @dataProvider provideDeclaredConstant
      * @dataProvider provideType
      * @dataProvider provideMemberDocblock
      */
@@ -655,6 +656,25 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
                 )->first();
             },
             'function2.md',
+        ];
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideDeclaredConstant(): Generator
+    {
+        yield 'define constant' => [
+            '',
+            function (Reflector $reflector) {
+                return $reflector->reflectConstantsIn(
+                    <<<'EOT'
+                        <?php
+                        define('FOO', 'bar');
+                        EOT
+                )->first();
+            },
+            'declared_constant1.md',
         ];
     }
 

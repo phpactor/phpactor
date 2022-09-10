@@ -104,6 +104,11 @@ final class Symbol
         return new self($symbolType, $this->name, $this->position);
     }
 
+    public function withSymbolName(string $symbolName): self
+    {
+        return new self($this->symbolType, $symbolName, $this->position);
+    }
+
     /**
      * @return array<array-key,self::*>
      */
