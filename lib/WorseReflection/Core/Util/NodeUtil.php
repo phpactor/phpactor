@@ -122,6 +122,22 @@ class NodeUtil
         return (string)$qualifiedName->getResolvedName() === $name;
     }
 
+    public static function shortName(Node $node): string
+    {
+        if (!$node instanceof QualifiedName) {
+            return '';
+        }
+
+        $parts = $node->getNameParts();
+        $last = array_pop($parts);
+
+        if (!$last instanceof Token) {
+            return '';
+        }
+
+        return (string)$last->getText($node->getFileContents());
+    }
+
     public static function operatorKindForUnaryExpression(UnaryExpression $node): int
     {
         foreach ($node->getChildTokens() as $token) {
