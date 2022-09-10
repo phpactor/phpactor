@@ -16,7 +16,6 @@ use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -92,32 +91,32 @@ class QualifiedNameResolver implements Resolver
         }
 
 
-        return NodeContextFactory::create(
+        return $this->resolveContext($node);
+    }
+
+    private function resolveContext(QualifiedName $node): NodeContext
+    {
+        $context = NodeContextFactory::create(
             $node->getText(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
-                'type' => $this->resolveType($node),
-                'symbol_type' => Symbol::CLASS_,
+                'symbol_type' => Symbol::CLASS_
             ]
         );
-    }
 
-    private function resolveType(QualifiedName $node): Type
-    {
         $text = $node->getText();
 
         // magic constants
         if ($text === '__DIR__') {
             // TODO: [TP] tolerant parser `getUri` returns NULL or string but only declares NULL
             if (!$node->getRoot()->uri) {
-                return TypeFactory::string();
+                return $context->withType(TypeFactory::string());
             }
-            return TypeFactory::stringLiteral(dirname($node->getUri()));
+            return $context->withType(TypeFactory::stringLiteral(dirname($node->getUri())));
         }
 
         $type = $this->nodeTypeConverter->resolve($node);
-
 
         if ($type instanceof ReflectedClassType) {
             try {
@@ -125,7 +124,7 @@ class QualifiedNameResolver implements Resolver
                 $this->reflector->sourceCodeForClassLike($type->name());
                 // accurate check to see if class exists
                 $this->reflector->reflectClassLike($type->name());
-                return $type;
+                return $context->withType($type);
             } catch (NotFound $notFound) {
                 // resolve the name of the potnatial constant
                 [$_, $_, $constImportTable] = $node->getImportTablesForCurrentScope();
@@ -139,12 +138,12 @@ class QualifiedNameResolver implements Resolver
                     $sourceCode = $this->reflector->sourceCodeForConstant($name);
                     // accurate check to see if constant exists
                     $constant = $this->reflector->reflectConstant($name);
-                    return $constant->type();
+                    return $context->withType($constant->type())->withSymbolType(Symbol::DECLARED_CONSTANT);
                 } catch (NotFound $e) {
                 }
             }
         }
 
-        return $type;
+        return $context->withType($type);
     }
 }

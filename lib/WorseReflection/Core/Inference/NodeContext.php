@@ -103,6 +103,17 @@ final class NodeContext
     }
 
     /**
+     * @param Symbol::* $symbolType
+     */
+    public function withSymbolType($symbolType): self
+    {
+        $new = clone $this;
+        $new->symbol = $this->symbol->withSymbolType($symbolType);
+
+        return $new;
+    }
+
+    /**
      * @deprecated
      */
     public function type(): Type
