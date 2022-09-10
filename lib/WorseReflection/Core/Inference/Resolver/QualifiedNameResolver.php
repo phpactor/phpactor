@@ -16,20 +16,21 @@ use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Reflector;
 
 class QualifiedNameResolver implements Resolver
 {
-    private FunctionReflector $reflector;
+    private Reflector $reflector;
 
     private NodeToTypeConverter $nodeTypeConverter;
 
     private FunctionStubRegistry $registry;
 
     public function __construct(
-        FunctionReflector $reflector,
+        Reflector $reflector,
         FunctionStubRegistry $registry,
         NodeToTypeConverter $nodeTypeConverter
     ) {
@@ -114,6 +115,18 @@ class QualifiedNameResolver implements Resolver
             return TypeFactory::stringLiteral(dirname($node->getUri()));
         }
 
-        return $this->nodeTypeConverter->resolve($node);
+        $type = $this->nodeTypeConverter->resolve($node);
+
+        if ($type instanceof ReflectedClassType) {
+            $name = $type->name()->full();
+            try {
+                $sourceCode = $this->reflector->sourceCodeForConstant($name);
+                $constant = $this->reflector->reflectConstant($name);
+                return $constant->type();
+            } catch (NotFound $e) {
+            }
+        }
+
+        return $type;
     }
 }

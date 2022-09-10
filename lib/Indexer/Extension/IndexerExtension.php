@@ -26,6 +26,7 @@ use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedNameSearcher;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
+use Phpactor\Indexer\Adapter\Worse\IndexerConstantSourceLocator;
 use Phpactor\Indexer\Adapter\Worse\IndexerFunctionSourceLocator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
@@ -141,6 +142,13 @@ class IndexerExtension implements Extension
         }, [
             WorseReflectionExtension::TAG_SOURCE_LOCATOR => [
                 'priority' => 128,
+            ],
+        ]);
+        $container->register(IndexerConstantSourceLocator::class, function (Container $container) {
+            return new IndexerConstantSourceLocator($container->get(IndexAccess::class));
+        }, [
+            WorseReflectionExtension::TAG_SOURCE_LOCATOR => [
+                'priority' => 100,
             ],
         ]);
     }
