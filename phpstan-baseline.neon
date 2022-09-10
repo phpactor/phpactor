@@ -1841,11 +1841,6 @@ parameters:
 			path: lib/Completion/Core/SignatureHelp.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\SignatureHelp\\:\\:signatures\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Core/SignatureHelp.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\SignatureInformation\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/SignatureInformation.php
@@ -5546,24 +5541,9 @@ parameters:
 			path: lib/WorseReflection/Core/Reflection/ReflectionSourceCode.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:reflectFunction\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:\\$innerReflector is never read, only written\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectFunction\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\FunctionReflector\\:\\:reflectFunction\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/FunctionReflector.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:empty\\(\\) has no return type specified\\.$#"
@@ -5621,64 +5601,9 @@ parameters:
 			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildClassMap\\(\\) has parameter \\$file with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildClassMap\\(\\) has parameter \\$map with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildClassMap\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildFunctionMap\\(\\) has parameter \\$file with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildFunctionMap\\(\\) has parameter \\$map with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildFunctionMap\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:fileIterator\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:map\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:serializedMapPath\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\OriginalMethodResolver\\:\\:resolveInterface\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Util/OriginalMethodResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionClassDecorator\\:\\:__construct\\(\\) has parameter \\$memberProviders with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionClassDecorator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionInterfaceDecorator\\:\\:__construct\\(\\) has parameter \\$memberProviders with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Virtual/VirtualReflectionInterfaceDecorator.php
 
 		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionMethod\\:\\:\\$type is unused\\.$#"
