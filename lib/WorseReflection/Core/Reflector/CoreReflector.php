@@ -193,7 +193,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         return $this->sourceReflector->reflectFunctionsIn($sourceCode);
     }
 
-    public function reflectConstantsIn(SourceCode $source): ReflectionDeclaredConstantCollection
+    public function reflectConstantsIn($source): ReflectionDeclaredConstantCollection
     {
         return $this->sourceReflector->reflectConstantsIn($sourceCode);
     }

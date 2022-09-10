@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
@@ -109,5 +110,10 @@ class CompositeReflector implements Reflector
     public function reflectNode($sourceCode, $offset): ReflectionNode
     {
         return $this->sourceCodeReflector->reflectNode($sourceCode, $offset);
+    }
+
+    public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection
+    {
+        return $this->sourceCodeReflector->reflectConstantsIn($sourceCode);
     }
 }

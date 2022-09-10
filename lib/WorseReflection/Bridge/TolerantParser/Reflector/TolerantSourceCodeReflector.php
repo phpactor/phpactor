@@ -136,5 +136,4 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $rootNode = $this->parser->parseSourceFile((string) $sourceCode, $sourceCode->path());
         return $rootNode;
     }
-    }
 }

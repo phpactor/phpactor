@@ -7,8 +7,10 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\DocblockParser\Ast\Type\CallableNode;
 use Phpactor\Name\QualifiedName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectionConstant;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
  * @extends HomogeneousReflectionMemberCollection<CoreReflectionConstant>
@@ -33,11 +35,29 @@ class ReflectionDeclaredConstantCollection extends HomogeneousReflectionMemberCo
 
             $callable = $descendentNode->callableExpression;
 
+            /**
+             * @phpstan-ignore-next-line TP lies
+             */
             if (!$callable instanceof QualifiedName) {
                 continue;
             }
 
-            $items[(string) $descendentNode->getNamespacedName()] = new ReflectionFunction($sourceCode, $serviceLocator, $descendentNode);
+            /** @phpstan-ignore-next-line */
+            if ('define' !== NodeUtil::shortName($callable)) {
+                continue;
+            }
+
+            $arguments = $descendentNode->argumentExpressionList;
+            if (!$arguments) {
+                continue;
+            }
+            $arguments = $arguments->children;
+            if (!is_array($arguments)) {
+                continue;
+            }
+            dump($arguments);
+
+            $items[(string) $callable->getNamespacedName()] = new ReflectionDeclaredConstant($sourceCode, $serviceLocator, $descendentNode);
         }
 
         return new self($items);
