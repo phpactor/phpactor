@@ -87,7 +87,7 @@ class ServiceLocator
         $coreReflector = new CoreReflector($sourceReflector, $sourceLocator);
 
         if (!$cache instanceof NullCache) {
-            $coreReflector = new MemonizedReflector($coreReflector, $coreReflector, $cache);
+            $coreReflector = new MemonizedReflector($coreReflector, $coreReflector, $coreReflector, $cache);
         }
 
         $this->reflector = new CompositeReflector(

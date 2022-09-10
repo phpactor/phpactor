@@ -6,6 +6,7 @@ use Closure;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Exception\CycleDetected;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
@@ -13,10 +14,11 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflector\ConstantReflector;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 
-class MemonizedReflector implements ClassReflector, FunctionReflector
+class MemonizedReflector implements ClassReflector, FunctionReflector, ConstantReflector
 {
     private const FUNC_PREFIX = '__func__';
     private const CLASS_PREFIX = '__class__';
@@ -33,12 +35,15 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
 
     private Cache $cache;
 
-    public function __construct(ClassReflector $innerReflector, FunctionReflector $functionReflector, Cache $cache)
+    private ConstantReflector $constantReflector;
+
+    public function __construct(ClassReflector $innerReflector, FunctionReflector $functionReflector, ConstantReflector $constantReflector, Cache $cache)
     {
         $this->classReflector = $innerReflector;
         $this->functionReflector = $functionReflector;
         $this->innerReflector = $innerReflector;
         $this->cache = $cache;
+        $this->constantReflector = $constantReflector;
     }
 
     public function reflectClass($className): ReflectionClass
@@ -101,6 +106,16 @@ class MemonizedReflector implements ClassReflector, FunctionReflector
         return $this->getOrSet(self::CLASS_LIKE_PREFIX.'source_code'.$name, function () use ($name) {
             return $this->classReflector->sourceCodeForClassLike($name);
         });
+    }
+
+    public function reflectConstant($name): ReflectionDeclaredConstant
+    {
+        return $this->constantReflector->reflectConstant($name);
+    }
+
+    public function sourceCodeForConstant($name): SourceCode
+    {
+        return $this->constantReflector->sourceCodeForConstant($name);
     }
 
     /**

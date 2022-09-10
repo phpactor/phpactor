@@ -6,8 +6,6 @@ use Closure;
 use Generator;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Exception\ConstantNotFound;
-use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;

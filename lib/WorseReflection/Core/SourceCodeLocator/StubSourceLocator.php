@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
 final class StubSourceLocator implements SourceCodeLocator
 {
@@ -40,6 +41,9 @@ final class StubSourceLocator implements SourceCodeLocator
         ));
     }
 
+    /**
+     * @return array<string,string>
+     */
     private function map(): array
     {
         if (file_exists($this->serializedMapPath())) {
@@ -75,6 +79,9 @@ final class StubSourceLocator implements SourceCodeLocator
         return $this->cacheDir . '/' . md5($this->stubPath) . '.map';
     }
 
+    /**
+     * @return RecursiveIteratorIterator<RecursiveDirectoryIterator>
+     */
     private function fileIterator(): RecursiveIteratorIterator
     {
         return new RecursiveIteratorIterator(
@@ -83,7 +90,11 @@ final class StubSourceLocator implements SourceCodeLocator
         );
     }
 
-    private function buildClassMap($file, array $map): array
+    /**
+     * @return array<string,string>
+     * @param array<string,string> $map
+     */
+    private function buildClassMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectClassesIn(
             SourceCode::fromPath($file)
@@ -100,7 +111,7 @@ final class StubSourceLocator implements SourceCodeLocator
      * @param array<string,string> $map
      * @return array<string,string>
      */
-    private function buildFunctionMap($file, array $map): array
+    private function buildFunctionMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectFunctionsIn(
             SourceCode::fromPath($file)
@@ -117,14 +128,14 @@ final class StubSourceLocator implements SourceCodeLocator
      * @param array<string,string> $map
      * @return array<string,string>
      */
-    private function buildConstantMap($file, array $map): array
+    private function buildConstantMap(SplFileInfo $file, array $map): array
     {
         $constants = $this->reflector->reflectConstantsIn(
             SourceCode::fromPath($file)
         );
 
-        foreach ($constants as $function) {
-            $map[(string) $function->name()] = (string) $file;
+        foreach ($constants as $constant) {
+            $map[(string) $constant->name()] = (string) $file;
         }
 
         return $map;

@@ -10,7 +10,6 @@ use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant as PhpactorReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 
 class ReflectionDeclaredConstant extends AbstractReflectedNode implements PhpactorReflectionDeclaredConstant
 {
