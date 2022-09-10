@@ -72,7 +72,7 @@ class ReflectionDeclaredConstantCollection extends AbstractReflectionCollection
                 continue;
             }
 
-            $items[(string) $name->getStringContentsText()] = new PhpactorReflectionDeclaredConstant($serviceLocator, $name, $value);
+            $items[(string) $name->getStringContentsText()] = new PhpactorReflectionDeclaredConstant($serviceLocator, $sourceCode, $name, $value);
         }
 
         return new self($items);

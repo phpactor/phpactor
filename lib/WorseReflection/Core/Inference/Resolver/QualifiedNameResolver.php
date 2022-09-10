@@ -139,7 +139,7 @@ class QualifiedNameResolver implements Resolver
                     // accurate check to see if constant exists
                     $constant = $this->reflector->reflectConstant($name);
                     return $context
-                        ->withSymbolName($name)
+                        ->withSymbolName($constant->name()->full())
                         ->withType($constant->type())
                         ->withSymbolType(Symbol::DECLARED_CONSTANT);
                 } catch (NotFound $e) {

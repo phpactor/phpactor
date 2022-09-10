@@ -125,6 +125,17 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 
+    public function testLocatesToConstant(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php define('FOOBAR', 123); }
+            EOT
+        , '<?php FOO<>BAR;');
+
+        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
+    }
+
     public function testLocatesToMethodOnUnionTypeWithOneTypeMissingTheMethod(): void
     {
         $location = $this->locate(<<<'EOT'

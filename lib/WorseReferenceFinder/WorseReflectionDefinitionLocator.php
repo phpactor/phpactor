@@ -83,6 +83,8 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                 return $this->gotoClass($symbolContext);
             case Symbol::FUNCTION:
                 return $this->gotoFunction($symbolContext);
+            case Symbol::DECLARED_CONSTANT:
+                return $this->gotoDeclaredConstant($symbolContext);
         }
 
         throw new CouldNotLocateDefinition(sprintf(
@@ -148,6 +150,33 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             new TypeLocation(TypeFactory::unknown(), new Location(
                 TextDocumentUri::fromString($path),
                 ByteOffset::fromInt($function->position()->start())
+            ))
+        ]);
+    }
+
+    private function gotoDeclaredConstant(NodeContext $symbolContext): TypeLocations
+    {
+        $constantName = $symbolContext->symbol()->name();
+
+        try {
+            $constant = $this->reflector->reflectConstant($constantName);
+        } catch (NotFound $e) {
+            throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
+        }
+
+        $path = $constant->sourceCode()->path();
+
+        if (null === $path) {
+            throw new CouldNotLocateDefinition(sprintf(
+                'The source code for constant "%s" has no path associated with it.',
+                $constant->name()
+            ));
+        }
+
+        return new TypeLocations([
+            new TypeLocation(TypeFactory::unknown(), new Location(
+                TextDocumentUri::fromString($path),
+                ByteOffset::fromInt($constant->position()->start())
             ))
         ]);
     }
