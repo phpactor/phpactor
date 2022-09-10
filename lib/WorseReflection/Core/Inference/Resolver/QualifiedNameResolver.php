@@ -118,17 +118,23 @@ class QualifiedNameResolver implements Resolver
 
         $type = $this->nodeTypeConverter->resolve($node);
 
+
         if ($type instanceof ReflectedClassType) {
-            [$_, $_, $constImportTable] = $node->getImportTablesForCurrentScope();
-            $name = $type->name()->full();
-            if ($resolved = NodeUtil::resolveNameFromImportTable($node, $constImportTable)) {
-                $name = $resolved->__toString();
-            }
             try {
-                $sourceCode = $this->reflector->sourceCodeForConstant($name);
-                $constant = $this->reflector->reflectConstant($name);
-                return $constant->type();
-            } catch (NotFound $e) {
+                $this->reflector->sourceCodeForClassLike($type->name());
+                return $type;
+            } catch (NotFound $notFound) {
+                [$_, $_, $constImportTable] = $node->getImportTablesForCurrentScope();
+                $name = $type->name()->full();
+                if ($resolved = NodeUtil::resolveNameFromImportTable($node, $constImportTable)) {
+                    $name = $resolved->__toString();
+                }
+                try {
+                    $sourceCode = $this->reflector->sourceCodeForConstant($name);
+                    $constant = $this->reflector->reflectConstant($name);
+                    return $constant->type();
+                } catch (NotFound $e) {
+                }
             }
         }
 
