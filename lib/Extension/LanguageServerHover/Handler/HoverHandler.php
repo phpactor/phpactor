@@ -213,7 +213,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
             $constant = $this->reflector->reflectConstant($context->symbol()->name());
             return $this->renderer->render(new HoverInformation(
                 $context->symbol()->name(),
-                '',
+                $constant->docblock()->formatted(),
                 $constant
             ));
         } catch (NotFound $e) {

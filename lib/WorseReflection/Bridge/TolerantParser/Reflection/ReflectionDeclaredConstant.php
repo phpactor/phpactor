@@ -4,7 +4,9 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\StringLiteral;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant as PhpactorReflectionDeclaredConstant;
@@ -16,27 +18,52 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
 {
     private ServiceLocator $serviceLocator;
 
-    private StringLiteral $name;
-
-    private ArgumentExpression $value;
-
     private SourceCode $sourceCode;
+
+    /**
+     * @var Node\Expression\CallExpression
+     */
+    private CallExpression $node;
+    private string $name;
+    private ArgumentExpression $value;
 
     public function __construct(
         ServiceLocator $serviceLocator,
         SourceCode $sourceCode,
-        StringLiteral $name,
-        ArgumentExpression $value
+        CallExpression $node
     ) {
         $this->serviceLocator = $serviceLocator;
-        $this->name = $name;
-        $this->value = $value;
         $this->sourceCode = $sourceCode;
+        $this->node = $node;
+        $this->bindArguments();
+    }
+
+    private function bindArguments(): void
+    {
+        $arguments = $this->node->argumentExpressionList;
+        if (!$arguments) {
+            return;
+        }
+        $arguments = iterator_to_array($arguments->getElements());
+        if (!is_array($arguments)) {
+            return;
+        }
+        if (isset($arguments[0]) && $arguments[0] instanceof ArgumentExpression) {
+            if (!$arguments[0]->expression instanceof StringLiteral) {
+                $this->name = '?';
+            } else {
+                $this->name = $arguments[0]->expression->getStringContentsText();
+            }
+        }
+
+        if (isset($arguments[1]) && $arguments[1] instanceof ArgumentExpression) {
+            $this->value = $arguments[1];
+        }
     }
 
     public function name(): Name
     {
-        return Name::fromString($this->name->getStringContentsText());
+        return Name::fromString($this->name);
     }
 
     public function type(): Type
@@ -46,7 +73,7 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
 
     protected function node(): Node
     {
-        return $this->name;
+        return $this->node;
     }
 
     protected function serviceLocator(): ServiceLocator
@@ -57,5 +84,10 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
     public function sourceCode(): SourceCode
     {
         return $this->sourceCode;
+    }
+
+    public function docblock(): DocBlock
+    {
+        return $this->serviceLocator->docblockFactory()->create($this->node->getLeadingCommentAndWhitespaceText(), $this->scope());
     }
 }
