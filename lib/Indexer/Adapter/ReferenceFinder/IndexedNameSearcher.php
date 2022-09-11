@@ -27,10 +27,17 @@ class IndexedNameSearcher implements NameSearcher
      */
     public function search(string $name, ?string $type = null): Generator
     {
-        if (false === PhpNameMatcher::isPhpName($name)) {
+        if (false === PhpNameMatcher::isPhpFqn($name)) {
             return;
         }
-        $criteria = Criteria::shortNameBeginsWith($name);
+
+        $fullyQualified = substr($name, 0, 1) === '\\';
+
+        if ($fullyQualified) {
+            $criteria = Criteria::fqnBeginsWith(substr($name, 1));
+        } else {
+            $criteria = Criteria::shortNameBeginsWith($name);
+        }
 
         $typeCriteria = $this->resolveTypeCriteria($type);
 

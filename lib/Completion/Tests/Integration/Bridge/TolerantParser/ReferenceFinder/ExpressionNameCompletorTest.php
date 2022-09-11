@@ -55,6 +55,15 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+        yield 'absolute class typehint' => [
+            '<?php class Foobar { public function __construct() {} } :int {}; \Fo<>', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FOO',
+                    'short_description' => 'FOO',
+                ]
+            ]
+        ];
 
         yield 'function' => [
             '<?php function bar(int $foo) {}; ba<>', [
@@ -93,6 +102,9 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         $searcher = $this->prophesize(NameSearcher::class);
         $searcher->search('FO')->willYield([
             NameSearchResult::create('constant', 'FOO')
+        ]);
+        $searcher->search('\Fo')->willYield([
+            NameSearchResult::create('class', 'FOO')
         ]);
         $searcher->search('Foo')->willYield([
             NameSearchResult::create('class', 'Foobar')

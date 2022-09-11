@@ -9,6 +9,20 @@ use Phpactor\ReferenceFinder\Search\NameSearchResult;
 
 class IndexedNameSearcherTest extends IndexTestCase
 {
+    public function testSearcherWithAbsolute(): void
+    {
+        $this->workspace()->put('project/Foobar.php', '<?php class Foobar {}');
+        $this->workspace()->put('project/Barfoo.php', '<?php namespace Bar; class Foobar {}');
+        $this->workspace()->put('project/Barfoo.php', '<?php namespace Foo; class Foobar {}');
+        $agent = $this->indexAgent();
+        $agent->indexer()->getJob()->run();
+        $searcher = new IndexedNameSearcher($agent->search());
+
+        $results = iterator_to_array($searcher->search('\Foo'));
+
+        self::assertCount(2, $results, 'Returns both root class name and namespace match');
+    }
+
     public function testSearcher(): void
     {
         $this->workspace()->put('project/Foobar.php', '<?php class Foobar {}');
