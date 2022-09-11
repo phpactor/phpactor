@@ -81,6 +81,8 @@ Improvements:
 
 Features:
 
+  - [-] Better constant suppoer - indexing, goto def, find references, hover, etc.
+  - [cmp] Support absolute name completions
   - [ls] Lazily resolve documentation for completion items
   - [ct] Generate constructor refactoring
   - [ct] Fill object refactoring
