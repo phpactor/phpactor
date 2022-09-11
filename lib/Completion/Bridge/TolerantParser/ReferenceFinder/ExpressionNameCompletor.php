@@ -49,9 +49,10 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
     protected function createSuggestionOptions(
         NameSearchResult $result,
         ?TextDocumentUri $sourceUri = null,
-        ?Node $node = null
+        ?Node $node = null,
+        bool $wasAbsolute = false
     ): array {
-        $suggestionOptions = parent::createSuggestionOptions($result, $sourceUri, $node);
+        $suggestionOptions = parent::createSuggestionOptions($result, $sourceUri, $node, $wasAbsolute);
 
         if ($this->isNonObjectCreationClassResult($result, $node) ||
             !$this->snippetFormatter->canFormat($result)) {

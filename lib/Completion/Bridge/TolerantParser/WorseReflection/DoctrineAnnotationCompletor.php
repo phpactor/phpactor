@@ -72,9 +72,10 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
     protected function createSuggestionOptions(
         NameSearchResult $result,
         ?TextDocumentUri $sourceUri = null,
-        ?Node $node = null
+        ?Node $node = null,
+        bool $wasAbsolute = false
     ): array {
-        return array_merge(parent::createSuggestionOptions($result, null, $node), [
+        return array_merge(parent::createSuggestionOptions($result, null, $node, $wasAbsolute), [
             'snippet' => (string) $result->name()->head() .'($1)$0',
         ]);
     }
@@ -131,7 +132,7 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
     private function extractAnnotation(string $truncatedSource): ?string
     {
         $count = 0;
-        $annotation = preg_replace('/.*@([^@\s\t*]+)$/s', '$1', $truncatedSource, 1, $count);
+        $annotation = preg_replace('/.*@([^\\@\s\t*]+)$/s', '$1', $truncatedSource, 1, $count);
 
         if (0 === $count) {
             return null;

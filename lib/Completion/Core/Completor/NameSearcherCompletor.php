@@ -24,13 +24,11 @@ abstract class NameSearcherCompletor
         $this->prioritizer = $prioritizer ?: new DefaultResultPrioritizer();
     }
 
-    /**
-     * @return Generator<Suggestion>
-     */
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
         foreach ($this->nameSearcher->search($name) as $result) {
-            $options = $this->createSuggestionOptions($result, $sourceUri, $node);
+            $wasAbsolute = strpos($name, '\\') === 0;
+            $options = $this->createSuggestionOptions($result, $sourceUri, $node, $wasAbsolute);
             yield $this->createSuggestion(
                 $result,
                 $node,
@@ -41,6 +39,9 @@ abstract class NameSearcherCompletor
         return true;
     }
 
+    /**
+     * @param array<string,string> $options
+     */
     protected function createSuggestion(NameSearchResult $result, ?Node $node = null, array $options = []): Suggestion
     {
         $options = array_merge($this->createSuggestionOptions($result, null, $node), $options);
@@ -55,7 +56,7 @@ abstract class NameSearcherCompletor
     /**
      * @return array<string,mixed>
      */
-    protected function createSuggestionOptions(NameSearchResult $result, ?TextDocumentUri $sourceUri = null, ?Node $node = null): array
+    protected function createSuggestionOptions(NameSearchResult $result, ?TextDocumentUri $sourceUri = null, ?Node $node = null, bool $wasAbsolute = false): array
     {
         $options = [
             'short_description' => $result->name()->__toString(),
@@ -65,8 +66,7 @@ abstract class NameSearcherCompletor
             'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
         ];
 
-
-        if ($node === null || !($node->getParent() instanceof NamespaceUseClause)) {
+        if (!$wasAbsolute && ($node === null || !($node->getParent() instanceof NamespaceUseClause))) {
             $options['class_import'] = $this->classImport($result);
             $options['name_import'] = $result->name()->__toString();
         }
