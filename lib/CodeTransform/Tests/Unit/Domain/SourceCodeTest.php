@@ -64,7 +64,7 @@ class SourceCodeTest extends TestCase
     public function testNonAbsolutePath(): void
     {
         $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Path "path" must be absolute');
+        $this->expectExceptionMessage('must be absolute');
         SourceCode::fromStringAndPath('asdf', 'path');
     }
 

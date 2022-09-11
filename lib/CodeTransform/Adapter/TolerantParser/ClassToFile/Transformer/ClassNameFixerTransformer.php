@@ -16,6 +16,7 @@ use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
+use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -37,6 +38,9 @@ class ClassNameFixerTransformer implements Transformer
 
     public function transform(SourceCode $code): TextEdits
     {
+        if ($code->uri()->scheme() !== 'file') {
+            throw new TransformException(sprintf('Source is not a file:// it is "%s"', $code->uri()->scheme()));
+        }
         $classFqn = $this->determineClassFqn($code);
         $correctClassName = $classFqn->name();
         $correctNamespace = $classFqn->namespace();
@@ -58,6 +62,9 @@ class ClassNameFixerTransformer implements Transformer
 
     public function diagnostics(SourceCode $code): Diagnostics
     {
+        if ($code->uri()->scheme() !== 'file') {
+            return Diagnostics::none();
+        }
         $rootNode = $this->parser->parseSourceFile((string) $code);
         try {
             $classFqn = $this->determineClassFqn($code);

@@ -11,10 +11,8 @@ use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\TextDocument\TextDocumentLocator;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 
 class GenerateMethodCommand implements Command
@@ -49,7 +47,7 @@ class GenerateMethodCommand implements Command
         $document = $this->workspace->get($uri);
         $sourceCode = SourceCode::fromStringAndPath(
             $document->text,
-            TextDocumentUri::fromString($document->uri)->path()
+            $document->uri
         );
 
         $textEdits = null;

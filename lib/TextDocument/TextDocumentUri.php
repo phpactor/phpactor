@@ -7,6 +7,9 @@ use Webmozart\PathUtil\Path;
 
 class TextDocumentUri
 {
+    public const SCHEME_FILE = 'file';
+    public const SCHEME_UNTITLED = 'untitled';
+
     private string $scheme;
 
     private string $path;
@@ -19,7 +22,10 @@ class TextDocumentUri
 
     public function __toString(): string
     {
-        return sprintf('%s://%s', $this->scheme, $this->path);
+        if ($this->scheme === self::SCHEME_FILE) {
+            return sprintf('%s://%s', $this->scheme, $this->path);
+        }
+        return sprintf('%s:%s', $this->scheme, $this->path);
     }
 
     public static function fromString(string $uri): self
@@ -40,22 +46,26 @@ class TextDocumentUri
             ));
         }
 
-        if (isset($components['scheme']) && $components['scheme'] !== 'file') {
+        $components['scheme'] = $components['scheme'] ?? self::SCHEME_FILE;
+
+        if (!in_array($components['scheme'], [self::SCHEME_FILE, self::SCHEME_UNTITLED])) {
             throw new InvalidUriException(sprintf(
                 'Only "file://" scheme is supported, got "%s"',
                 $components['scheme']
             ));
         }
 
-        if (false === Path::isAbsolute($uri)) {
+        if ($components['scheme'] === self::SCHEME_FILE && false === Path::isAbsolute($uri)) {
             throw new InvalidUriException(sprintf(
-                'URI must be absolute, got "%s"',
+                'URI for file:// must be absolute, got "%s"',
                 $uri
             ));
         }
 
+        $components['path'] = Path::canonicalize($components['path']);
+
         return new self(
-            'file',
+            $components['scheme'],
             $components['path']
         );
     }

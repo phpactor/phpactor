@@ -4,10 +4,10 @@ namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\ClassToFile\Transf
 
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
+use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 use Phpactor\TestUtils\Workspace;
-use RuntimeException;
 
 class ClassNameFixerTransformerTest extends AdapterTestCase
 {
@@ -73,8 +73,8 @@ class ClassNameFixerTransformerTest extends AdapterTestCase
 
     public function testThrowsExceptionIfSourceCodeHasNoPath(): void
     {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Source code has no path');
+        $this->expectException(TransformException::class);
+        $this->expectExceptionMessage('Source is not a file');
         $transformer = $this->createTransformer($this->workspace());
         $transformed = $transformer->transform(SourceCode::fromString('hello'));
     }

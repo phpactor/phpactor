@@ -11,7 +11,10 @@ final class Transformers extends AbstractCollection
     {
         foreach ($this as $transformer) {
             assert($transformer instanceof Transformer);
-            $code = SourceCode::fromStringAndPath($transformer->transform($code)->apply($code), $code->path());
+            $code = SourceCode::fromStringAndPath(
+                $transformer->transform($code)->apply($code),
+                $code->uri()->__toString()
+            );
         }
 
         return $code;
