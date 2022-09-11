@@ -91,6 +91,11 @@ final class SourceCode implements TextDocument
         return TextDocumentLanguage::fromString('php');
     }
 
+    /**
+     * Create a SourceCode class from the standard TextDocument. In the long
+     * term this package should be updated to work with this TextDocument
+     * interface and not depend on it's own representation.
+     */
     public static function fromTextDocument(TextDocument $textDocument): self
     {
         return new self($textDocument->__toString(), $textDocument->uri());
