@@ -35,6 +35,10 @@ command! -buffer -nargs=0 PhpactorContextMenu call phpactor#ContextMenu()
 command! -buffer -nargs=0 PhpactorCopyFile call phpactor#CopyFile()
 
 ""
+" Copy the current class FQN (based on current filename) to the clipboard
+command! -buffer -nargs=0 PhpactorCopyClassName call phpactor#CopyFullClassName()
+
+""
 " Move the current file - updating the namespace and class name according to
 " the new file location and name
 command! -buffer -nargs=0 PhpactorMoveFile call phpactor#MoveFile()
@@ -65,3 +69,4 @@ command! -buffer -nargs=0 PhpactorGenerateAccessors call phpactor#GenerateAccess
 ""
 " Automatically add any missing properties to a class
 command! -buffer -nargs=0 PhpactorTransform call phpactor#Transform()
+

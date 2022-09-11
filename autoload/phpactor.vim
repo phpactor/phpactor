@@ -377,6 +377,16 @@ function! phpactor#GetClassFullName()
     return fileInfo['class']
 endfunction
 
+function! phpactor#CopyFullClassName()
+    let className = phpactor#GetClassFullName()
+    if empty(className)
+        echo "No class name found for the current file"
+    else
+        let @+ = className
+        echo printf("Class Name copied to clipboard: %s", className)
+    endif
+endfunction
+
 function! phpactor#ChangeVisibility()
     call phpactor#rpc("change_visibility", { "offset": phpactor#_offset(), "source": phpactor#_source(), "path": expand('%:p') })
 endfunction

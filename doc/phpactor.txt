@@ -122,6 +122,9 @@ COMMANDS                                                   *phpactor-commands*
   Copy the current file - updating the namespace and class name according to
   the new file location and name
 
+:[N]PhpactorCopyClassName                             *:PhpactorCopyClassName*
+  Copy the current class FQN (based on current filename) to the clipboard
+
 :[N]PhpactorMoveFile                                       *:PhpactorMoveFile*
   Move the current file - updating the namespace and class name according to
   the new file location and name
