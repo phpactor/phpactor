@@ -48,7 +48,7 @@ class WorseOverrideMethod implements OverrideMethod
     {
         $builder = TextDocumentBuilder::create($source)->language('php');
         if ($source->path()) {
-            $builder->uri($source->path());
+            $builder->uri($source->uri());
         }
 
         $classes = $this->reflector->reflectClassesIn($builder->build())->classes();

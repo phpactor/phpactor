@@ -92,7 +92,7 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
         }, DiagnosticsConverter::toLspDiagnostics(
             $phpactorTextDocument,
             $this->transformers->get($this->name)->diagnostics(
-                SourceCode::fromStringAndPath($textDocument->text, $phpactorTextDocument->uri()->path())
+                SourceCode::fromTextDocument(TextDocumentConverter::fromLspTextItem($textDocument))
             )
         ));
     }

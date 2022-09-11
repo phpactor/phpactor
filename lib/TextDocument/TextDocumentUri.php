@@ -19,7 +19,10 @@ class TextDocumentUri
 
     public function __toString(): string
     {
-        return sprintf('%s://%s', $this->scheme, $this->path);
+        if ($this->scheme === 'file') {
+            return sprintf('%s://%s', $this->scheme, $this->path);
+        }
+        return sprintf('%s:%s', $this->scheme, $this->path);
     }
 
     public static function fromString(string $uri): self
@@ -40,22 +43,26 @@ class TextDocumentUri
             ));
         }
 
-        if (isset($components['scheme']) && $components['scheme'] !== 'file') {
+        $components['scheme'] = $components['scheme'] ?? 'file';
+
+        if (!in_array($components['scheme'], ['file', 'untitled'])) {
             throw new InvalidUriException(sprintf(
                 'Only "file://" scheme is supported, got "%s"',
                 $components['scheme']
             ));
         }
 
-        if (false === Path::isAbsolute($uri)) {
+        if ($components['scheme'] === 'file' && false === Path::isAbsolute($uri)) {
             throw new InvalidUriException(sprintf(
-                'URI must be absolute, got "%s"',
+                'URI for file:// must be absolute, got "%s"',
                 $uri
             ));
         }
 
+        $components['path'] = Path::canonicalize($components['path']);
+
         return new self(
-            'file',
+            $components['scheme'],
             $components['path']
         );
     }
