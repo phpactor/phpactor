@@ -11,7 +11,6 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
-use Phpactor\TextDocument\TextDocumentUri;
 
 class TransformCommand implements Command
 {

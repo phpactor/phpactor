@@ -2,7 +2,6 @@
 
 namespace Phpactor\CodeTransform\Domain;
 
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLanguage;
 use Phpactor\TextDocument\TextDocumentUri;
