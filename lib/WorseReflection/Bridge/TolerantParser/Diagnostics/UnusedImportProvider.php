@@ -9,22 +9,22 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Token;
+use Phpactor\DocblockParser\Ast\Docblock;
+use Phpactor\DocblockParser\Ast\Type\CallableNode;
+use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\ParsedDocblock;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\ClosureType;
 
 class UnusedImportProvider implements DiagnosticProvider
 {
     /**
      * @var array<string,bool>
      */
-    private array $names = [];
+    private array $usedPrefixes = [];
 
     /**
      * @var array<string,Node|Token>
@@ -39,36 +39,55 @@ class UnusedImportProvider implements DiagnosticProvider
         );
 
         if ($docblock instanceof ParsedDocblock) {
-            $this->extractDocblockNames($docblock, $resolver, $node);
+            $this->extractDocblockNames($docblock->rawNode(), $resolver, $node);
         }
 
-        if ($node instanceof QualifiedName && !$node->parent instanceof NamespaceUseClause && !$node->parent instanceof NamespaceDefinition) {
-            $resolvedName = (new TolerantQualifiedNameResolver())->getResolvedName($node);
-            if (null === $resolvedName) {
+        if ($node instanceof QualifiedName && !$node->parent instanceof NamespaceUseClause && !$node->parent instanceof NamespaceDefinition && !$node->parent instanceof NamespaceUseGroupClause) {
+            $prefix = $node->getNameParts()[0];
+            if (!$prefix instanceof Token) {
                 return [];
             }
-            $this->names[(string)$resolvedName] = true;
+            $usedPrefix = sprintf(
+                '%s:%s',
+                $this->getNamespaceName($node),
+                (string)$prefix->getText($node->getFileContents())
+            );
+            $this->usedPrefixes[$usedPrefix] = true;
             return [];
         }
 
         if ($node instanceof NamespaceUseClause) {
+            $prefix = (function (Node $clause): string {
+                $namespaceName = $this->getNamespaceName($clause);
+                /** @phpstan-ignore-next-line TP lies */
+                if ($clause->namespaceAliasingClause) {
+                    return sprintf(
+                        '%s:%s',
+                        $namespaceName,
+                        (string)$clause->namespaceAliasingClause->name->getText($clause->getFileContents())
+                    );
+                }
+                /** @phpstan-ignore-next-line TP lies */
+                $lastPart = $this->lastPart((string)$clause->namespaceName);
+                return sprintf('%s:%s', $namespaceName, $lastPart);
+            })($node);
+
             if ($node->groupClauses) {
                 foreach ($node->groupClauses->children as $groupClause) {
                     if (!$groupClause instanceof NamespaceUseGroupClause) {
                         continue;
                     }
-                    $parent = $groupClause->parent->parent;
-                    if (!$parent instanceof NamespaceUseClause) {
+                    $useClause = $groupClause->parent->parent;
+                    if (!$useClause instanceof NamespaceUseClause) {
                         continue;
                     }
 
-                    $parent = $parent->namespaceName->__toString();
-                    $this->imported[$parent . $groupClause->namespaceName->getNamespacedName()->__toString()] = $groupClause;
+                    $lastPart = $this->lastPart($groupClause->namespaceName->getNamespacedName()->__toString());
+                    $this->imported[sprintf('%s:%s', $this->getNamespaceName($groupClause), $lastPart)] = $groupClause;
                 }
                 return [];
             }
-
-            $this->imported[$node->namespaceName->__toString()] = $node;
+            $this->imported[$prefix] = $node;
             return [];
         }
 
@@ -83,39 +102,37 @@ class UnusedImportProvider implements DiagnosticProvider
 
         $contents = $node->getFileContents();
 
-        foreach ($this->imported as $importedFqn => $imported) {
-            foreach ($this->names as $name => $_) {
-                if (strpos($name.'\\', $importedFqn.'\\') === 0) {
-                    unset($this->names[$name]);
-                    continue 2;
-                }
+        foreach ($this->imported as $importedName => $imported) {
+            if (isset($this->usedPrefixes[$importedName])) {
+                continue;
             }
 
-            if ($this->usedByAnnotation($contents, $importedFqn, $imported)) {
+            if ($this->usedByAnnotation($contents, $importedName, $imported)) {
                 continue;
             }
 
             yield UnusedImportDiagnostic::for(
                 ByteOffsetRange::fromInts($imported->getStartPosition(), $imported->getEndPosition()),
-                $importedFqn
+                explode(':', $importedName)[1]
             );
         }
 
         $this->imported = [];
-        $this->names = [];
+        $this->usedPrefixes = [];
 
         return [];
     }
 
-    private function extractDocblockNames(ParsedDocblock $docblock, NodeContextResolver $resolver, Node $node): void
+    private function extractDocblockNames(Docblock $docblock, NodeContextResolver $resolver, Node $node): void
     {
-        assert($docblock instanceof ParsedDocblock);
-        foreach ($docblock->types() as $type) {
-            if ($type instanceof ClassType) {
-                $this->names[$type->name()->full()] = true;
-            }
-            if ($type instanceof ClosureType) {
-                $this->names['Closure'] = true;
+        $prefix = sprintf('%s:', $this->getNamespaceName($node));
+        foreach ($docblock->descendantElements(ClassNode::class) as $type) {
+            $this->usedPrefixes[$prefix . $type->toString()] = true;
+        }
+        foreach ($docblock->descendantElements(CallableNode::class) as $type) {
+            assert($type instanceof CallableNode);
+            if ($type->name->toString() === 'Closure') {
+                $this->usedPrefixes[$prefix . 'Closure'] = true;
             }
         }
     }
@@ -125,16 +142,26 @@ class UnusedImportProvider implements DiagnosticProvider
      */
     private function usedByAnnotation(string $contents, string $imported, $node): bool
     {
-        $name = (function () use ($imported, $node, $contents) {
-            /** @phpstan-ignore-next-line TP lies */
-            if ($node instanceof NamespaceUseClause && $node->namespaceAliasingClause) {
-                return $node->namespaceAliasingClause->name->getText($contents);
-            }
+        $imported = explode(':', $imported)[1];
+        return false !== strpos($contents, '@' . $imported);
+    }
 
-            $imported = explode('\\', $imported);
-            return array_pop($imported);
-        })();
+    private function getNamespaceName(Node $node): string
+    {
+        $definition = $node->getNamespaceDefinition();
+        if (null === $definition) {
+            return '';
+        }
+        return (string)$definition->name;
+    }
 
-        return false !== strpos($contents, '@' . $name);
+    private function lastPart(string $name): string
+    {
+        $parts = array_filter(explode('\\', $name));
+        /** @phpstan-ignore-next-line TP lies */
+        if (!$parts) {
+            return '';
+        }
+        return $parts[array_key_last($parts)];
     }
 }
