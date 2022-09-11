@@ -2,11 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diagonstics;
 
-use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
-use Phpactor\WorseReflection\ReflectorBuilder;
 
 class UnusedImportProviderTest extends DiagnosticsTestCase
 {

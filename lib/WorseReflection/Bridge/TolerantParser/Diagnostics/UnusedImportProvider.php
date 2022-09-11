@@ -47,31 +47,12 @@ class UnusedImportProvider implements DiagnosticProvider
             if (!$prefix instanceof Token) {
                 return [];
             }
-            $usedPrefix = sprintf(
-                '%s:%s',
-                $this->getNamespaceName($node),
-                (string)$prefix->getText($node->getFileContents())
-            );
+            $usedPrefix = $this->prefixedName($node, (string)$prefix->getText($node->getFileContents()));
             $this->usedPrefixes[$usedPrefix] = true;
             return [];
         }
 
         if ($node instanceof NamespaceUseClause) {
-            $prefix = (function (Node $clause): string {
-                $namespaceName = $this->getNamespaceName($clause);
-                /** @phpstan-ignore-next-line TP lies */
-                if ($clause->namespaceAliasingClause) {
-                    return sprintf(
-                        '%s:%s',
-                        $namespaceName,
-                        (string)$clause->namespaceAliasingClause->name->getText($clause->getFileContents())
-                    );
-                }
-                /** @phpstan-ignore-next-line TP lies */
-                $lastPart = $this->lastPart((string)$clause->namespaceName);
-                return sprintf('%s:%s', $namespaceName, $lastPart);
-            })($node);
-
             if ($node->groupClauses) {
                 foreach ($node->groupClauses->children as $groupClause) {
                     if (!$groupClause instanceof NamespaceUseGroupClause) {
@@ -83,10 +64,21 @@ class UnusedImportProvider implements DiagnosticProvider
                     }
 
                     $lastPart = $this->lastPart($groupClause->namespaceName->getNamespacedName()->__toString());
-                    $this->imported[sprintf('%s:%s', $this->getNamespaceName($groupClause), $lastPart)] = $groupClause;
+                    $this->imported[$this->prefixedName($groupClause, $lastPart)] = $groupClause;
                 }
                 return [];
             }
+
+            $prefix = (function (Node $clause): string {
+                /** @phpstan-ignore-next-line TP lies */
+                if ($clause->namespaceAliasingClause) {
+                    return $this->prefixedName($clause, (string)$clause->namespaceAliasingClause->name->getText($clause->getFileContents()));
+                }
+                /** @phpstan-ignore-next-line TP lies */
+                $lastPart = $this->lastPart((string)$clause->namespaceName);
+                return $this->prefixedName($clause, $lastPart);
+            })($node);
+
             $this->imported[$prefix] = $node;
             return [];
         }
@@ -146,15 +138,6 @@ class UnusedImportProvider implements DiagnosticProvider
         return false !== strpos($contents, '@' . $imported);
     }
 
-    private function getNamespaceName(Node $node): string
-    {
-        $definition = $node->getNamespaceDefinition();
-        if (null === $definition) {
-            return '';
-        }
-        return (string)$definition->name;
-    }
-
     private function lastPart(string $name): string
     {
         $parts = array_filter(explode('\\', $name));
@@ -163,5 +146,19 @@ class UnusedImportProvider implements DiagnosticProvider
             return '';
         }
         return $parts[array_key_last($parts)];
+    }
+
+    private function prefixedName(Node $node, string $name): string
+    {
+        return sprintf('%s:%s', $this->getNamespaceName($node), $name);
+    }
+
+    private function getNamespaceName(Node $node): string
+    {
+        $definition = $node->getNamespaceDefinition();
+        if (null === $definition) {
+            return '';
+        }
+        return (string)$definition->name;
     }
 }
