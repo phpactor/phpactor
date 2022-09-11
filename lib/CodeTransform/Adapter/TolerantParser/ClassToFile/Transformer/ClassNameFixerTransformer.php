@@ -62,6 +62,9 @@ class ClassNameFixerTransformer implements Transformer
 
     public function diagnostics(SourceCode $code): Diagnostics
     {
+        if ($code->uri()->scheme() !== 'file') {
+            return Diagnostics::none();
+        }
         $rootNode = $this->parser->parseSourceFile((string) $code);
         try {
             $classFqn = $this->determineClassFqn($code);

@@ -41,7 +41,7 @@ class TransformCommand implements Command
         $textEdits = $transformer->transform(
             SourceCode::fromStringAndPath(
                 $textDocument->text,
-                TextDocumentUri::fromString($textDocument->uri)->path()
+                $textDocument->uri
             ),
         );
 

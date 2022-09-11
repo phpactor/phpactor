@@ -36,7 +36,7 @@ class NameImporter implements Command
     ): NameImporterResult {
         $sourceCode = SourceCode::fromStringAndPath(
             $document->text,
-            TextDocumentUri::fromString($document->uri)->path()
+            TextDocumentUri::fromString($document->uri)->__toString()
         );
 
         $nameImport = $type === 'function' ?
