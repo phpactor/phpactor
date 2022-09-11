@@ -51,6 +51,12 @@ class ParsedDocblock implements DocBlock
         $this->typeConverter = $typeConverter;
     }
 
+
+    public function rawNode(): ParserDocblock
+    {
+        return $this->node;
+    }
+
     /**
      * @return Types<Type>
      */

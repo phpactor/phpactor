@@ -55,16 +55,32 @@ class Name
         ));
     }
 
+    /**
+     * Return with only last segment of the name of name
+     */
     public function head(): self
     {
         return new self([ reset($this->parts) ], false);
     }
 
+    /**
+     * Return without the last segment of the name
+     */
     public function tail(): self
     {
         $parts = $this->parts;
         array_shift($parts);
         return new self($parts, $this->wasFullyQualified);
+    }
+
+    /**
+     * Return with only the first segment of the name
+     */
+    public function base(): self
+    {
+        $parts = $this->parts;
+        $first = array_shift($parts);
+        return new self([$first], $this->wasFullyQualified);
     }
 
     public function namespace(): string
