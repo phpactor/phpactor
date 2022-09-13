@@ -70,29 +70,26 @@ class TolerantMatchFinder implements MatchFinder
     private function nodeMatches(Node $node, Node $toMatch): bool
     {
         foreach ($toMatch->getChildNodesAndTokens() as $name => $matchNodeOrToken) {
-            if ($matchNodeOrToken !== null) {
+            // candidate does not have required token or node
+            if (!isset($node->$name) || null === $node->$name) {
+                return false;
+            }
 
-                // candidate does not have required token or node
-                if (!isset($node->$name) || null === $node->$name) {
-                    return false;
-                }
-
-                foreach ($this->normalize($node->$name) as $nnode) {
-                    // we can do a text match on the token
-                    if ($nnode instanceof Token && $matchNodeOrToken instanceof Token) {
-                        $t1 = new MatchToken(
-                            ByteOffsetRange::fromInts($nnode->getStartPosition(), $nnode->getEndPosition()),
-                            (string)$nnode->getText($node->getFileContents()),
-                            $nnode->kind
-                        );
-                        $t2 = new MatchToken(
-                            ByteOffsetRange::fromInts($matchNodeOrToken->getStartPosition(), $matchNodeOrToken->getEndPosition()),
-                            (string)$matchNodeOrToken->getText($toMatch->getFileContents()),
-                            $matchNodeOrToken->kind
-                        );
-                        if ($this->matcher->matches($t1, $t2)->isNotMatch()) {
-                            return false;
-                        }
+            foreach ($this->normalize($node->$name) as $nnode) {
+                // we can do a text match on the token
+                if ($nnode instanceof Token && $matchNodeOrToken instanceof Token) {
+                    $t1 = new MatchToken(
+                        ByteOffsetRange::fromInts($nnode->getStartPosition(), $nnode->getEndPosition()),
+                        (string)$nnode->getText($node->getFileContents()),
+                        $nnode->kind
+                    );
+                    $t2 = new MatchToken(
+                        ByteOffsetRange::fromInts($matchNodeOrToken->getStartPosition(), $matchNodeOrToken->getEndPosition()),
+                        (string)$matchNodeOrToken->getText($toMatch->getFileContents()),
+                        $matchNodeOrToken->kind
+                    );
+                    if ($this->matcher->matches($t1, $t2)->isNotMatch()) {
+                        return false;
                     }
                 }
             }
