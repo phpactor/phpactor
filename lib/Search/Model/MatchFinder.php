@@ -4,7 +4,7 @@ namespace Phpactor\Search\Model;
 
 use Phpactor\TextDocument\TextDocument;
 
-interface Matcher
+interface MatchFinder
 {
     /**
      * Find all nodes matching first node of pattern

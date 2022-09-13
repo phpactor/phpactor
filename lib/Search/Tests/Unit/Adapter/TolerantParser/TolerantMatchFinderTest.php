@@ -7,19 +7,20 @@ use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Search\Adapter\TolerantParser\TolerantMatcher;
+use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
+use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
 use Phpactor\Search\Model\Matches;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use SplFileInfo;
 
-class TolerantMatcherTest extends TestCase
+class TolerantMatchFinderTest extends TestCase
 {
     /**
      * @dataProvider provideMatch
      */
     public function testMatch(string $document, string $pattern, Closure $assertion): void
     {
-        $matches = (new TolerantMatcher(new Parser()))->match(TextDocumentBuilder::create($document)->build(), $pattern);
+        $matches = (new TolerantMatchFinder(new Parser(), new TokenEqualityMatcher()))->match(TextDocumentBuilder::create($document)->build(), $pattern);
         $assertion($matches);
     }
 

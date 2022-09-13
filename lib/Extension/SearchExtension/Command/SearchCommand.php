@@ -4,7 +4,7 @@ namespace Phpactor\Extension\SearchExtension\Command;
 
 use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Search\Model\Matcher;
+use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LineCol;
@@ -21,11 +21,11 @@ class SearchCommand extends Command
 {
     const ARG_PATTERN = 'pattern';
 
-    private Matcher $matcher;
+    private MatchFinder $matcher;
     private FilesystemRegistry $filesystemRegistry;
 
 
-    public function __construct(Matcher $matcher, FilesystemRegistry $filesystemRegistry)
+    public function __construct(MatchFinder $matcher, FilesystemRegistry $filesystemRegistry)
     {
         parent::__construct();
         $this->matcher = $matcher;

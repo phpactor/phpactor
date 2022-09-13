@@ -7,19 +7,22 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
-use Phpactor\Search\Model\Matcher;
+use Phpactor\Search\Model\MatchFinder;
+use Phpactor\Search\Model\MatchToken;
 use Phpactor\Search\Model\Matches;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 
-class TolerantMatcher implements Matcher
+class TolerantMatchFinder implements MatchFinder
 {
     private Parser $parser;
+    private Matcher $matcher;
 
-    public function __construct(Parser $parser)
+    public function __construct(Parser $parser, Matcher $matcher)
     {
         $this->parser = $parser;
+        $this->matcher = $matcher;
     }
 
     /**
@@ -33,6 +36,7 @@ class TolerantMatcher implements Matcher
         $matches = [];
         $patternNode = $this->reducePattern($patternNode);
         $baseNodes = $this->traverseDocument($documentNode, $patternNode);
+
         foreach ($baseNodes as $baseNode) {
             if ($this->nodeMatches($baseNode, $patternNode)) {
                 $matches[] = new PatternMatch(ByteOffsetRange::fromInts($baseNode->getStartPosition(), $baseNode->getEndPosition()));
@@ -75,10 +79,17 @@ class TolerantMatcher implements Matcher
                 foreach ($this->normalize($node->$name) as $nnode) {
                     // we can do a text match on the token
                     if ($nnode instanceof Token && $matchNodeOrToken instanceof Token) {
-                        $val1 = $nnode->getText($node->getFileContents());
-                        $val2 = $matchNodeOrToken->getText($toMatch->getFileContents());
-                        
-                        if ($val1 !== $val2) {
+                        $t1 = new MatchToken(
+                            ByteOffsetRange::fromInts($nnode->getStartPosition(), $nnode->getEndPosition()),
+                            (string)$nnode->getText($node->getFileContents()),
+                            $nnode->kind
+                        );
+                        $t2 = new MatchToken(
+                            ByteOffsetRange::fromInts($matchNodeOrToken->getStartPosition(), $matchNodeOrToken->getEndPosition()),
+                            (string)$matchNodeOrToken->getText($toMatch->getFileContents()),
+                            $matchNodeOrToken->kind
+                        );
+                        if (false === $this->matcher->matches($t1, $t2)) {
                             return false;
                         }
                     }
@@ -122,6 +133,10 @@ class TolerantMatcher implements Matcher
         return [$nodeOrTokenOrArray];
     }
 
+    /**
+     * Remove any unnecessary preceding nodes from the pattern AST (e.g. HTML,
+     * Statement)
+     */
     private function reducePattern(Node $patternNode): Node
     {
         foreach ($patternNode->getChildNodes() as $childNode) {
