@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\SearchExtension\Command;
 
+use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Search\Model\Matcher;
 use Phpactor\Search\Model\PatternMatch;
@@ -59,7 +60,10 @@ class SearchCommand extends Command
                     $startLineCol->col(),
                     $endLineCol->line(),
                     $endLineCol->col(),
-                    LineAtOffset::lineAtByteOffset($document, ByteOffset::fromInt($match->range()->start()->toInt() + 1))
+                    Highlight::highlightAtCol(
+                        LineAtOffset::lineAtByteOffset($document, ByteOffset::fromInt($match->range()->start()->toInt() + 1)),
+                        substr($document->__toString(),$match->range()->start()->toInt(), $match->range()->length()), $startLineCol->col() - 1, true
+                    )
                 ));
             }
             $output->writeln('');
