@@ -4,7 +4,6 @@ namespace Phpactor\Search\Tests\Unit\Model\Matcher;
 
 use Closure;
 use Generator;
-use Microsoft\PhpParser\TokenKind;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Model\MatchResult;

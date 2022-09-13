@@ -7,6 +7,9 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * @implements IteratorAggregate<PatternMatch>
+ */
 class Matches implements Countable, IteratorAggregate
 {
     /**

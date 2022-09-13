@@ -27,7 +27,7 @@ class FileList implements Iterator
     }
 
     /**
-     * @return FileList<SplFileInfo>
+     * @return FileList
      */
     public static function fromIterator(Iterator $iterator): self
     {
@@ -35,7 +35,7 @@ class FileList implements Iterator
     }
 
     /**
-     * @return FileList<SplFileInfo>
+     * @return FileList
      */
     public static function fromFilePaths(array $filePaths): self
     {

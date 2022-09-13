@@ -6,12 +6,9 @@ use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Search\Model\MatchFinder;
-use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextEdit;
-use Phpactor\TextDocument\TextEdits;
 use Phpactor\TextDocument\Util\LineAtOffset;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -24,8 +21,8 @@ class SearchCommand extends Command
     const ARG_PATTERN = 'pattern';
     const ARG_PATH = 'path';
 
-
     private MatchFinder $matcher;
+
     private FilesystemRegistry $filesystemRegistry;
 
 
@@ -72,7 +69,9 @@ class SearchCommand extends Command
                     $endLineCol->col(),
                     Highlight::highlightAtCol(
                         LineAtOffset::lineAtByteOffset($document, ByteOffset::fromInt($match->range()->start()->toInt() + 1)),
-                        substr($document->__toString(),$match->range()->start()->toInt(), $match->range()->length()), $startLineCol->col() - 1, true
+                        substr($document->__toString(), $match->range()->start()->toInt(), $match->range()->length()),
+                        $startLineCol->col() - 1,
+                        true
                     )
                 ));
             }

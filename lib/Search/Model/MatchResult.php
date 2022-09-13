@@ -5,7 +5,7 @@ namespace Phpactor\Search\Model;
 class MatchResult
 {
     private ?bool $result;
-   
+
     public function __construct(?bool $result)
     {
         $this->result = $result;
@@ -45,5 +45,4 @@ class MatchResult
     {
         return $this->result === null;
     }
-
 }

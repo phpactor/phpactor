@@ -172,14 +172,14 @@ class TolerantMatchFinderTest extends TestCase
         ];
         yield [
             'assign_string_literal.test',
-            "\$foo",
+            '$foo',
             function (Matches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_with_sprintf.test',
-            "sprintf()",
+            'sprintf()',
             function (Matches $matches): void {
                 self::assertCount(1, $matches);
             }
@@ -207,42 +207,42 @@ class TolerantMatchFinderTest extends TestCase
     {
         yield [
             'assign_string_literal.test',
-            "\$__a__",
+            '$__a__',
             function (Matches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_placeholder_with_method.test',
-            "class __A__ {}",
+            'class __A__ {}',
             function (Matches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_placeholder_with_method.test',
-            "class __A__ { public function baz() {}}",
+            'class __A__ { public function baz() {}}',
             function (Matches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield [
             'class_placeholder_with_method.test',
-            "class __A__ { function bar() {}}",
+            'class __A__ { function bar() {}}',
             function (Matches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_placeholder_with_no_methods.test',
-            "class __A__ { function bar() {}}",
+            'class __A__ { function bar() {}}',
             function (Matches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield 'returns match from multiple' => [
             'class_placeholder_with_multiple_method.test',
-            "class __A__ { function bar() {}}",
+            'class __A__ { function bar() {}}',
             function (Matches $matches): void {
                 self::assertCount(1, $matches);
             }

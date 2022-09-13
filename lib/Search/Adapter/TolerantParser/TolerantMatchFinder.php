@@ -14,11 +14,11 @@ use Phpactor\Search\Model\Matches;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class TolerantMatchFinder implements MatchFinder
 {
     private Parser $parser;
+
     private Matcher $matcher;
 
     public function __construct(Parser $parser, Matcher $matcher)
@@ -67,9 +67,7 @@ class TolerantMatchFinder implements MatchFinder
         return $matches;
     }
 
-    /**
-     * @return bool
-     */
+
     private function nodeMatches(Node $node, Node $toMatch): bool
     {
         foreach ($toMatch->getChildNodesAndTokens() as $name => $matchNodeOrToken) {
