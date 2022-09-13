@@ -135,6 +135,13 @@ class TolerantMatchFinderTest extends TestCase
                 self::assertCount(0, $matches);
             }
         ];
+        yield 'static method' => [
+            'class_with_static_method.test',
+            'class Foo { public static function bar() {} }',
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
         yield [
             'class_with_private_method.test',
             'class Foo { private function bar() {} }',

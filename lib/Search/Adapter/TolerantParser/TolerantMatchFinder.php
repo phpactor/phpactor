@@ -76,25 +76,28 @@ class TolerantMatchFinder implements MatchFinder
                 return false;
             }
 
-            $normalized = $this->normalize($node->$name);
+            // the `$node->$name` can either be an array of nodes or a node,
+            // normalize to an array for simplicity
+            $nodeChildren = $this->normalize($node->$name);
 
             // the subject matched up until here, but now the pattern specifies
             // something further that is not present in the subject.
-            if (empty($normalized)) {
+            if (empty($nodeChildren)) {
                 return false;
             }
 
-            foreach ($normalized as $nnode) {
+            $matched = null;
+            foreach ($nodeChildren as $nodeChild) {
 
                 // we only match tokens
-                if (!$nnode instanceof Token || !$matchNodeOrToken instanceof Token) {
+                if (!$nodeChild instanceof Token || !$matchNodeOrToken instanceof Token) {
                     continue;
                 }
 
                 $t1 = new MatchToken(
-                    ByteOffsetRange::fromInts($nnode->getStartPosition(), $nnode->getEndPosition()),
-                    (string)$nnode->getText($node->getFileContents()),
-                    $nnode->kind
+                    ByteOffsetRange::fromInts($nodeChild->getStartPosition(), $nodeChild->getEndPosition()),
+                    (string)$nodeChild->getText($node->getFileContents()),
+                    $nodeChild->kind
                 );
 
                 $t2 = new MatchToken(
@@ -103,9 +106,20 @@ class TolerantMatchFinder implements MatchFinder
                     $matchNodeOrToken->kind
                 );
 
-                if ($this->matcher->matches($t1, $t2)->isNotMatch()) {
-                    return false;
+                $match = $this->matcher->matches($t1, $t2);
+
+                if ($match->isMatch()) {
+                    $matched = true;
+                    break;
                 }
+
+                if ($match->isNotMatch()) {
+                    $matched = false;
+                }
+            }
+
+            if (false === $matched) {
+                return false;
             }
 
             if (!$matchNodeOrToken instanceof Node) {
@@ -113,7 +127,7 @@ class TolerantMatchFinder implements MatchFinder
             }
 
             $matches = false;
-            foreach ($normalized as $normal) {
+            foreach ($nodeChildren as $normal) {
                 if (!$normal instanceof Node) {
                     continue;
                 }
