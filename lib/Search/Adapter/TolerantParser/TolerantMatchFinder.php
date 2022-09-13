@@ -36,7 +36,7 @@ class TolerantMatchFinder implements MatchFinder
         $documentNode = $this->parser->parseSourceFile($document);
         $matches = [];
         $patternNode = $this->reducePattern($patternNode);
-        $baseNodes = $this->traverseDocument($documentNode, $patternNode);
+        $baseNodes = $this->findBaseNodes($documentNode, $patternNode);
 
         foreach ($baseNodes as $baseNode) {
             if ($this->nodeMatches($baseNode, $patternNode)) {
@@ -51,14 +51,14 @@ class TolerantMatchFinder implements MatchFinder
      * @return array<Node>
      * @param array<Node> $matches
      */
-    private function traverseDocument(Node $documentNode, Node $targetNode, array &$matches = []): array
+    private function findBaseNodes(Node $documentNode, Node $targetNode, array &$matches = []): array
     {
         foreach ($documentNode->getChildNodes() as $childNode) {
             if (get_class($childNode) === get_class($targetNode)) {
                 $matches[] = $childNode;
             }
 
-            $this->traverseDocument($childNode, $targetNode, $matches);
+            $this->findBaseNodes($childNode, $targetNode, $matches);
         }
 
         return $matches;
@@ -76,7 +76,15 @@ class TolerantMatchFinder implements MatchFinder
                 return false;
             }
 
-            foreach ($this->normalize($node->$name) as $nnode) {
+            $normalized = $this->normalize($node->$name);
+
+            // the subject matched up until here, but now the pattern specifies
+            // something further that is not present in the subject.
+            if (empty($normalized)) {
+                return false;
+            }
+
+            foreach ($normalized as $nnode) {
 
                 // we only match tokens
                 if (!$nnode instanceof Token || !$matchNodeOrToken instanceof Token) {
@@ -104,22 +112,17 @@ class TolerantMatchFinder implements MatchFinder
                 continue;
             }
 
-            $normalized = $this->normalize($node->$name);
-
-            // the subject matched up until here, but now the pattern specifies
-            // something further that is not present in the subject.
-            if (empty($normalized)) {
-                return false;
-            }
-
+            $matches = false;
             foreach ($normalized as $normal) {
                 if (!$normal instanceof Node) {
                     continue;
                 }
-                if (false === $this->nodeMatches($normal, $matchNodeOrToken)) {
-                    return false;
+                if ($this->nodeMatches($normal, $matchNodeOrToken)) {
+                    $matches = true;
                 }
             }
+
+            return $matches;
         }
 
         return true;

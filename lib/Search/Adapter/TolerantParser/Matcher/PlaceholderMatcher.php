@@ -20,6 +20,7 @@ class PlaceholderMatcher implements Matcher
         if (preg_match('{' . $this->pattern . '}', $token2->text, $matches)) {
             return MatchResult::yes();
         }
+
         return MatchResult::maybe();
     }
 }

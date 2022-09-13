@@ -177,6 +177,13 @@ class TolerantMatchFinderTest extends TestCase
                 self::assertCount(1, $matches);
             }
         ];
+        yield 'string does not match heredoc' => [
+            'example_with_heredocs.test',
+            "'hello'",
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
+            }
+        ];
     }
 
     /**
@@ -217,6 +224,13 @@ class TolerantMatchFinderTest extends TestCase
             "class __A__ { function bar() {}}",
             function (Matches $matches): void {
                 self::assertCount(0, $matches);
+            }
+        ];
+        yield 'returns match from multiple' => [
+            'class_placeholder_with_multiple_method.test',
+            "class __A__ { function bar() {}}",
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
             }
         ];
     }

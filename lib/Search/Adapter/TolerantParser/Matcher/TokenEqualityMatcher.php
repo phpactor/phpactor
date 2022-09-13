@@ -10,6 +10,8 @@ class TokenEqualityMatcher implements Matcher
 {
     public function matches(MatchToken $token1, MatchToken $token2): MatchResult
     {
-        return MatchResult::fromBool($token1->kind === $token2->kind && $token1->text === $token2->text);
+        $match = MatchResult::fromBool($token1->kind === $token2->kind && $token1->text === $token2->text);
+
+        return $match;
     }
 }
