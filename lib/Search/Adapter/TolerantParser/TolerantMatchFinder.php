@@ -70,6 +70,7 @@ class TolerantMatchFinder implements MatchFinder
     private function nodeMatches(Node $node, Node $toMatch): bool
     {
         foreach ($toMatch->getChildNodesAndTokens() as $name => $matchNodeOrToken) {
+
             // candidate does not have required token or node
             if (!isset($node->$name) || null === $node->$name) {
                 return false;
@@ -103,7 +104,15 @@ class TolerantMatchFinder implements MatchFinder
                 continue;
             }
 
-            foreach ($this->normalize($node->$name) as $normal) {
+            $normalized = $this->normalize($node->$name);
+
+            // the subject matched up until here, but now the pattern specifies
+            // something further that is not present in the subject.
+            if (empty($normalized)) {
+                return false;
+            }
+
+            foreach ($normalized as $normal) {
                 if (!$normal instanceof Node) {
                     continue;
                 }
