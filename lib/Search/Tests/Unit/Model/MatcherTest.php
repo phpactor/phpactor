@@ -5,6 +5,7 @@ namespace Phpactor\Search\Tests\Unit\Model;
 use Closure;
 use Generator;
 use GlobIterator;
+use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Search\Model\Matcher;
 use Phpactor\Search\Model\Matches;
@@ -18,40 +19,141 @@ class MatcherTest extends TestCase
      */
     public function testMatch(string $document, string $pattern, Closure $assertion): void
     {
-        $matches = (new Matcher())->match(TextDocumentBuilder::create($document)->build(), $pattern);
+        $matches = (new Matcher(new Parser()))->match(TextDocumentBuilder::create($document)->build(), $pattern);
         $assertion($matches);
     }
 
     /**
-     * @return Generator<array{string|bool,<missing>,<missing>}>
+     * @return Generator<array{string,string,Closure(Matches): void}>
      */
     public function provideMatch(): Generator
     {
         $cases = iterator_to_array($this->cases());
         /** @var SplFileInfo $splFileInfo */
         foreach ((new GlobIterator(__DIR__ . '/source/*.test')) as $splFileInfo) {
-            $case = $splFileInfo->getBasename();
-            if (!isset($cases[$case])) {
-                $this->fail(sprintf('Could not find case for "%s"', $case));
+            $caseName = $splFileInfo->getBasename();
+
+            foreach ($cases as $case) {
+                if ($case[0] !== $caseName) {
+                    continue;
+                }
+                yield [
+                    (string)file_get_contents($splFileInfo->getPathname()),
+                    $case[1],
+                    $case[2]
+                ];
             }
-            $case = $cases[$case];
-            yield [
-                file_get_contents($splFileInfo->getPathName()),
-                $case[0],
-                $case[1]
-            ];
         }
     }
 
     /**
-     * @return Generator<string,array{string,Closure(Matches): void}>
+     * @return Generator<array-key,array{string,string,Closure(Matches): void}>
      */
     public function cases(): Generator
     {
-        yield 'test1.test' => [
-            'class $foo',
+        yield [
+            'class_only.test',
+            'class Foo {}',
             function (Matches $matches): void {
-                dump($matches);
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'class_only.test',
+            'class Bar {}',
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
+            }
+        ];
+        yield [
+            'class_only.test',
+            'class Foo extends {}',
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'class_only.test',
+            'class Foo extends Bazfoo {}',
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'class_only.test',
+            'class Foo implements Gar {}',
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
+            }
+        ];
+        yield [
+            'class_with_method.test',
+            'class Foo { function bar() {} }',
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'class_with_method.test',
+            'class Foo { function baz() {} }',
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
+            }
+        ];
+        yield [
+            'class_with_method.test',
+            'class Foo { abstract function bar() {} }',
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
+            }
+        ];
+        yield [
+            'class_with_method.test',
+            'class Foo { public function bar() {} }',
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'class_with_method.test',
+            'class Foo { private function bar() {} }',
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
+            }
+        ];
+        yield [
+            'class_with_private_method.test',
+            'class Foo { private function bar() {} }',
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'assign_string_literal.test',
+            "'hello'",
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'assign_string_literal.test',
+            "\$foo = 'hello'",
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'assign_string_literal.test',
+            "\$bar = 'hello'",
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
+            }
+        ];
+        yield [
+            'assign_string_literal.test',
+            "\$foo",
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
             }
         ];
     }
