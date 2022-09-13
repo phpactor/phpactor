@@ -1,25 +1,25 @@
 <?php
 
-namespace Phpactor\Search\Tests\Unit\Model;
+namespace Phpactor\Search\Tests\Unit\Adapter\TolerantParser;
 
 use Closure;
 use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Search\Model\Matcher;
+use Phpactor\Search\Adapter\TolerantParser\TolerantMatcher;
 use Phpactor\Search\Model\Matches;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use SplFileInfo;
 
-class MatcherTest extends TestCase
+class TolerantMatcherTest extends TestCase
 {
     /**
      * @dataProvider provideMatch
      */
     public function testMatch(string $document, string $pattern, Closure $assertion): void
     {
-        $matches = (new Matcher(new Parser()))->match(TextDocumentBuilder::create($document)->build(), $pattern);
+        $matches = (new TolerantMatcher(new Parser()))->match(TextDocumentBuilder::create($document)->build(), $pattern);
         $assertion($matches);
     }
 
