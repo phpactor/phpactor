@@ -12,6 +12,9 @@ use Webmozart\Glob\Glob;
 use ArrayIterator;
 use Closure;
 
+/**
+ * @implements Iterator<FilePath>
+ */
 class FileList implements Iterator
 {
     private $iterator;
@@ -63,6 +66,9 @@ class FileList implements Iterator
         return false;
     }
 
+    /**
+     * @return self<FilePath>
+     */
     public function phpFiles(): self
     {
         return new self((function () {

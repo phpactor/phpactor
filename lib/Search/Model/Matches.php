@@ -2,9 +2,12 @@
 
 namespace Phpactor\Search\Model;
 
+use ArrayIterator;
 use Countable;
+use IteratorAggregate;
+use Traversable;
 
-class Matches implements Countable
+class Matches implements Countable, IteratorAggregate
 {
     /**
      * @var PatternMatch[]
@@ -35,5 +38,10 @@ class Matches implements Countable
     public function count(): int
     {
         return count($this->matches);
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator($this->matches);
     }
 }

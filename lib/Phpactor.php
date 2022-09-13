@@ -24,6 +24,7 @@ use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflecti
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\SearchExtension\SearchExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
@@ -156,7 +157,8 @@ class Phpactor
             LanguageServerBlackfireExtension::class,
             BehatExtension::class,
             IndexerExtension::class,
-            ObjectRendererExtension::class
+            ObjectRendererExtension::class,
+            SearchExtension::class,
         ];
 
         if (class_exists(DebugExtension::class)) {
