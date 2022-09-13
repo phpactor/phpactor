@@ -156,5 +156,12 @@ class TolerantMatcherTest extends TestCase
                 self::assertCount(1, $matches);
             }
         ];
+        yield [
+            'class_with_sprintf.test',
+            "sprintf()",
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
     }
 }
