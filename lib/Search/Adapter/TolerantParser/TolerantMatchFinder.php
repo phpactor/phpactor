@@ -76,21 +76,26 @@ class TolerantMatchFinder implements MatchFinder
             }
 
             foreach ($this->normalize($node->$name) as $nnode) {
-                // we can do a text match on the token
-                if ($nnode instanceof Token && $matchNodeOrToken instanceof Token) {
-                    $t1 = new MatchToken(
-                        ByteOffsetRange::fromInts($nnode->getStartPosition(), $nnode->getEndPosition()),
-                        (string)$nnode->getText($node->getFileContents()),
-                        $nnode->kind
-                    );
-                    $t2 = new MatchToken(
-                        ByteOffsetRange::fromInts($matchNodeOrToken->getStartPosition(), $matchNodeOrToken->getEndPosition()),
-                        (string)$matchNodeOrToken->getText($toMatch->getFileContents()),
-                        $matchNodeOrToken->kind
-                    );
-                    if ($this->matcher->matches($t1, $t2)->isNotMatch()) {
-                        return false;
-                    }
+
+                // we only match tokens
+                if (!$nnode instanceof Token || !$matchNodeOrToken instanceof Token) {
+                    continue;
+                }
+
+                $t1 = new MatchToken(
+                    ByteOffsetRange::fromInts($nnode->getStartPosition(), $nnode->getEndPosition()),
+                    (string)$nnode->getText($node->getFileContents()),
+                    $nnode->kind
+                );
+
+                $t2 = new MatchToken(
+                    ByteOffsetRange::fromInts($matchNodeOrToken->getStartPosition(), $matchNodeOrToken->getEndPosition()),
+                    (string)$matchNodeOrToken->getText($toMatch->getFileContents()),
+                    $matchNodeOrToken->kind
+                );
+
+                if ($this->matcher->matches($t1, $t2)->isNotMatch()) {
+                    return false;
                 }
             }
 
