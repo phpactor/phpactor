@@ -191,6 +191,13 @@ class TolerantMatchFinderTest extends TestCase
                 self::assertCount(0, $matches);
             }
         ];
+        yield 'member access' => [
+            'this_member_access.test',
+            '$this->assertEquals()',
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
     }
 
     /**

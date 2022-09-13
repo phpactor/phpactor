@@ -14,6 +14,7 @@ use Phpactor\Search\Model\Matches;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class TolerantMatchFinder implements MatchFinder
 {
@@ -88,7 +89,7 @@ class TolerantMatchFinder implements MatchFinder
                 return false;
             }
 
-            $matched = null;
+            $matchedNode = null;
             foreach ($nodeChildren as $nodeChild) {
 
                 // we only match tokens
@@ -112,17 +113,17 @@ class TolerantMatchFinder implements MatchFinder
 
                 // if it's a definite match, short cut
                 if ($match->isYes()) {
-                    $matched = true;
+                    $matchedNode = true;
                     break;
                 }
 
                 // if it's not a match, allow further elements to match
                 if ($match->isNo()) {
-                    $matched = false;
+                    $matchedNode = false;
                 }
             }
 
-            if (false === $matched) {
+            if (false === $matchedNode) {
                 return false;
             }
 
@@ -130,17 +131,19 @@ class TolerantMatchFinder implements MatchFinder
                 continue;
             }
 
-            $matches = false;
-            foreach ($nodeChildren as $normal) {
-                if (!$normal instanceof Node) {
+            $matchedNode = false;
+            foreach ($nodeChildren as $name => $nodeChild) {
+                if (!$nodeChild instanceof Node) {
                     continue;
                 }
-                if ($this->nodeMatches($normal, $matchNodeOrToken)) {
-                    $matches = true;
+                if ($this->nodeMatches($nodeChild, $matchNodeOrToken)) {
+                    $matchedNode = true;
                 }
             }
 
-            return $matches;
+            if ($matchedNode === false) {
+                return false;
+            }
         }
 
         return true;
