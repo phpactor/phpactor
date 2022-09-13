@@ -98,19 +98,11 @@ class TolerantMatchFinder implements MatchFinder
                 continue;
             }
 
-            $childNodeOrArray = $node->$name;
-            if (is_array($childNodeOrArray)) {
-                foreach ($childNodeOrArray as $childNode) {
-                    if (false === $this->nodeMatches($childNode, $matchNodeOrToken)) {
-                        return false;
-                    }
+            foreach ($this->normalize($node->$name) as $normal) {
+                if (!$normal instanceof Node) {
+                    continue;
                 }
-
-                continue;
-            }
-
-            if ($childNodeOrArray instanceof Node) {
-                if (false === $this->nodeMatches($node->$name, $matchNodeOrToken)) {
+                if (false === $this->nodeMatches($normal, $matchNodeOrToken)) {
                     return false;
                 }
             }
