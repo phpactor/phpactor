@@ -47,15 +47,18 @@ class SearchCommand extends Command
                 continue;
             }
 
-            $output->writeln(sprintf('%s', $file->path()));
+            $output->writeln(sprintf('<fg=cyan>%s</>:', $file->path()));
             $edits = [];
 
             foreach ($matches as $match) {
-                $lineCol = LineCol::fromByteOffset($document, $match->range()->start());
+                $startLineCol = LineCol::fromByteOffset($document, $match->range()->start());
+                $endLineCol = LineCol::fromByteOffset($document, $match->range()->end());
                 $output->writeln(sprintf(
-                    '%d:%d %s',
-                    $lineCol->line(),
-                    $lineCol->col(),
+                    '(%d:%d,%d:%d) %s',
+                    $startLineCol->line(),
+                    $startLineCol->col(),
+                    $endLineCol->line(),
+                    $endLineCol->col(),
                     LineAtOffset::lineAtByteOffset($document, ByteOffset::fromInt($match->range()->start()->toInt() + 1))
                 ));
             }

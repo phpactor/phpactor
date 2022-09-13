@@ -68,7 +68,7 @@ class TolerantMatcher implements Matcher
             if ($matchNodeOrToken !== null) {
 
                 // candidate does not have required token or node
-                if (!$node->$name) {
+                if (!isset($node->$name) || null === $node->$name) {
                     return false;
                 }
 
