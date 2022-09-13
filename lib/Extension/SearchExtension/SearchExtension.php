@@ -10,15 +10,24 @@ use Phpactor\Extension\SearchExtension\Command\SearchCommand;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\Search\Adapter\TolerantParser\Matcher\PlaceholderMatcher;
+use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
 use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
 use Phpactor\Search\Model\MatchFinder;
+use Phpactor\Search\Model\Matcher\ChainMatcher;
 
 class SearchExtension implements Extension
 {
     public function load(ContainerBuilder $container): void
     {
         $container->register(MatchFinder::class, function (Container $container) {
-            return new TolerantMatchFinder($container->get(WorseReflectionExtension::SERVICE_PARSER));
+            return new TolerantMatchFinder(
+                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                new ChainMatcher(
+                    new PlaceholderMatcher(),
+                    new TokenEqualityMatcher(),
+                )
+            );
         });
 
         $container->register(SearchCommand::class, function (Container $container) {

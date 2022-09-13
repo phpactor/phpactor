@@ -8,7 +8,9 @@ use GlobIterator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
+use Phpactor\Search\Adapter\TolerantParser\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
+use Phpactor\Search\Model\Matcher\ChainMatcher;
 use Phpactor\Search\Model\Matches;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use SplFileInfo;
@@ -20,7 +22,15 @@ class TolerantMatchFinderTest extends TestCase
      */
     public function testMatch(string $document, string $pattern, Closure $assertion): void
     {
-        $matches = (new TolerantMatchFinder(new Parser(), new TokenEqualityMatcher()))->match(TextDocumentBuilder::create($document)->build(), $pattern);
+        $matches = (
+            new TolerantMatchFinder(
+                new Parser(),
+                new ChainMatcher(
+                    new PlaceholderMatcher(),
+                    new TokenEqualityMatcher(),
+                )
+            )
+        )->match(TextDocumentBuilder::create($document)->build(), $pattern);
         $assertion($matches);
     }
 
@@ -29,16 +39,19 @@ class TolerantMatchFinderTest extends TestCase
      */
     public function provideMatch(): Generator
     {
-        $cases = iterator_to_array($this->cases());
+        $cases = array_merge(
+            iterator_to_array($this->cases()),
+            iterator_to_array($this->placeholderCases())
+        );
         /** @var SplFileInfo $splFileInfo */
         foreach ((new GlobIterator(__DIR__ . '/source/*.test')) as $splFileInfo) {
             $caseName = $splFileInfo->getBasename();
 
-            foreach ($cases as $case) {
+            foreach ($cases as $name => $case) {
                 if ($case[0] !== $caseName) {
                     continue;
                 }
-                yield [
+                yield $name => [
                     (string)file_get_contents($splFileInfo->getPathname()),
                     $case[1],
                     $case[2]
@@ -162,6 +175,48 @@ class TolerantMatchFinderTest extends TestCase
             "sprintf()",
             function (Matches $matches): void {
                 self::assertCount(1, $matches);
+            }
+        ];
+    }
+
+    /**
+     * @return Generator<array-key,array{string,string,Closure(Matches): void}>
+     */
+    public function placeholderCases(): Generator
+    {
+        yield [
+            'assign_string_literal.test',
+            "\$__a__",
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'class_placeholder_with_method.test',
+            "class __A__ {}",
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'class_placeholder_with_method.test',
+            "class __A__ { public function baz() {}}",
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
+            }
+        ];
+        yield [
+            'class_placeholder_with_method.test',
+            "class __A__ { function bar() {}}",
+            function (Matches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
+        yield [
+            'class_placeholder_with_no_methods.test',
+            "class __A__ { function bar() {}}",
+            function (Matches $matches): void {
+                self::assertCount(0, $matches);
             }
         ];
     }

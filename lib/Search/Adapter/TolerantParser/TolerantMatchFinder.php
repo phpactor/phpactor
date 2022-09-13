@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\MatchToken;
+use Phpactor\Search\Model\Matcher;
 use Phpactor\Search\Model\Matches;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -89,7 +90,7 @@ class TolerantMatchFinder implements MatchFinder
                             (string)$matchNodeOrToken->getText($toMatch->getFileContents()),
                             $matchNodeOrToken->kind
                         );
-                        if (false === $this->matcher->matches($t1, $t2)) {
+                        if ($this->matcher->matches($t1, $t2)->isNotMatch()) {
                             return false;
                         }
                     }

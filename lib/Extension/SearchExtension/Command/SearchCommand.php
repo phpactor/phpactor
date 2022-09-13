@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\SearchExtension\Command;
 
 use Phpactor\Extension\Core\Console\Formatter\Highlight;
+use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\PatternMatch;
@@ -16,10 +17,13 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Filesystem\Path;
 
 class SearchCommand extends Command
 {
     const ARG_PATTERN = 'pattern';
+    const ARG_PATH = 'path';
+
 
     private MatchFinder $matcher;
     private FilesystemRegistry $filesystemRegistry;
@@ -34,14 +38,20 @@ class SearchCommand extends Command
 
     public function configure(): void
     {
+        $this->addArgument(self::ARG_PATH, InputArgument::REQUIRED);
         $this->addArgument(self::ARG_PATTERN, InputArgument::REQUIRED);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        $path = $input->getArgument(self::ARG_PATH);
         $pattern = $input->getArgument(self::ARG_PATTERN);
         $filesystem = $this->filesystemRegistry->get('git');
-        foreach ($filesystem->fileList()->phpFiles() as $file) {
+        foreach ($filesystem->fileList()->phpFiles()->within(
+            FilePath::fromString(
+                Path::makeAbsolute((string)$path, (string)getcwd())
+            )
+        ) as $file) {
             $document = TextDocumentBuilder::fromUri($file->__toString())->build();
             $matches = $this->matcher->match($document, $pattern);
             if (count($matches) === 0) {
