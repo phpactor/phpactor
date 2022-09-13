@@ -123,6 +123,7 @@ class ReferencesMemberCommand extends Command
             Phpactor::relativizePath($filePath),
             $reference['line_no'],
             Highlight::highlightAtCol($reference['line'], $reference['reference'], $reference['col_no'], $ansi),
+
             $reference['start'],
             $reference['end'],
         ]);

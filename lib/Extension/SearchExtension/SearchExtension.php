@@ -10,7 +10,7 @@ use Phpactor\Extension\SearchExtension\Command\SearchCommand;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Search\Adapter\TolerantParser\Matcher\PlaceholderMatcher;
+use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
 use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
 use Phpactor\Search\Model\MatchFinder;

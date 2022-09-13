@@ -40,7 +40,9 @@ class TolerantMatchFinder implements MatchFinder
 
         foreach ($baseNodes as $baseNode) {
             if ($this->nodeMatches($baseNode, $patternNode)) {
-                $matches[] = new PatternMatch(ByteOffsetRange::fromInts($baseNode->getStartPosition(), $baseNode->getEndPosition()));
+                $matches[] = new PatternMatch(
+                    ByteOffsetRange::fromInts($baseNode->getStartPosition(), $baseNode->getEndPosition())
+                );
             }
         }
 
@@ -108,12 +110,14 @@ class TolerantMatchFinder implements MatchFinder
 
                 $match = $this->matcher->matches($t1, $t2);
 
-                if ($match->isMatch()) {
+                // if it's a definite match, short cut
+                if ($match->isYes()) {
                     $matched = true;
                     break;
                 }
 
-                if ($match->isNotMatch()) {
+                // if it's not a match, allow further elements to match
+                if ($match->isNo()) {
                     $matched = false;
                 }
             }

@@ -26,12 +26,12 @@ class MatchResult
         return new self(null);
     }
 
-    public function isNotMatch(): bool
+    public function isNo(): bool
     {
         return $this->result === false;
     }
 
-    public function isMatch(): bool
+    public function isYes(): bool
     {
         return $this->result === true;
     }
@@ -39,6 +39,11 @@ class MatchResult
     public static function fromBool(bool $bool): self
     {
         return new self($bool);
+    }
+
+    public function isMaybe(): bool
+    {
+        return $this->result === null;
     }
 
 }

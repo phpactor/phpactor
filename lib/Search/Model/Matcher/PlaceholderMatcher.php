@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Search\Adapter\TolerantParser\Matcher;
+namespace Phpactor\Search\Model\Matcher;
 
 use Phpactor\Search\Model\MatchResult;
 use Phpactor\Search\Model\MatchToken;
@@ -10,7 +10,7 @@ class PlaceholderMatcher implements Matcher
 {
     private string $pattern;
 
-    public function __construct(string $pattern = '^\$?__(?P<label>[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)__')
+    public function __construct(string $pattern = '^\$?__(?P<placeholder>[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)__')
     {
         $this->pattern = $pattern;
     }
