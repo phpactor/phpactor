@@ -6,6 +6,7 @@ use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Search\Model\MatchFinder;
+use Phpactor\Search\Search;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -21,15 +22,15 @@ class SearchCommand extends Command
     const ARG_PATTERN = 'pattern';
     const ARG_PATH = 'path';
 
-    private MatchFinder $matcher;
+    private Search $search;
 
     private FilesystemRegistry $filesystemRegistry;
 
 
-    public function __construct(MatchFinder $matcher, FilesystemRegistry $filesystemRegistry)
+    public function __construct(Search $search, FilesystemRegistry $filesystemRegistry)
     {
         parent::__construct();
-        $this->matcher = $matcher;
+        $this->search = $search;
         $this->filesystemRegistry = $filesystemRegistry;
     }
 
@@ -50,7 +51,7 @@ class SearchCommand extends Command
             )
         ) as $file) {
             $document = TextDocumentBuilder::fromUri($file->__toString())->build();
-            $matches = $this->matcher->match($document, $pattern);
+            $matches = $this->search->search($document, $pattern);
             if (count($matches) === 0) {
                 continue;
             }
