@@ -7,7 +7,7 @@ use Phpactor\Search\Model\MatchFilter;
 
 class PassthroughMatchFilter implements MatchFilter
 {
-    public function filter(DocumentMatches $matches): DocumentMatches
+    public function filter(DocumentMatches $matches, string $filter): DocumentMatches
     {
         return $matches;
     }

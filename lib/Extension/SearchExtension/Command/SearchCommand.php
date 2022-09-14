@@ -14,6 +14,7 @@ use Phpactor\TextDocument\Util\LineAtOffset;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Path;
 
@@ -21,6 +22,7 @@ class SearchCommand extends Command
 {
     const ARG_PATTERN = 'pattern';
     const ARG_PATH = 'path';
+    const OPT_FILTER = 'filter';
 
     private Search $search;
 
@@ -38,20 +40,22 @@ class SearchCommand extends Command
     {
         $this->addArgument(self::ARG_PATH, InputArgument::REQUIRED);
         $this->addArgument(self::ARG_PATTERN, InputArgument::REQUIRED);
+        $this->addOption(self::OPT_FILTER, null, InputOption::VALUE_REQUIRED);
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $path = $input->getArgument(self::ARG_PATH);
         $pattern = $input->getArgument(self::ARG_PATTERN);
+        $filter = $input->getOption(self::OPT_FILTER);
+
         $filesystem = $this->filesystemRegistry->get('git');
+
         foreach ($filesystem->fileList()->phpFiles()->within(
-            FilePath::fromString(
-                Path::makeAbsolute((string)$path, (string)getcwd())
-            )
+            FilePath::fromString(Path::makeAbsolute((string)$path, (string)getcwd()))
         ) as $file) {
             $document = TextDocumentBuilder::fromUri($file->__toString())->build();
-            $matches = $this->search->search($document, $pattern);
+            $matches = $this->search->search($document, $pattern, $filter);
             if (count($matches) === 0) {
                 continue;
             }

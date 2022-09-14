@@ -5,6 +5,7 @@ namespace Phpactor\Search\Model;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use Phpactor\TextDocument\TextDocument;
 use RuntimeException;
 use Traversable;
 
@@ -18,12 +19,15 @@ class DocumentMatches implements Countable, IteratorAggregate
      */
     private array $matches;
 
+    private TextDocument $document;
+
     /**
      * @param PatternMatch[] $matches
      */
-    public function __construct(array $matches)
+    public function __construct(TextDocument $document, array $matches)
     {
         $this->matches = $matches;
+        $this->document = $document;
     }
 
     public static function none(): self
@@ -58,5 +62,10 @@ class DocumentMatches implements Countable, IteratorAggregate
         }
 
         return $this->matches[0];
+    }
+
+    public function document(): TextDocument
+    {
+        return $this->document;
     }
 }

@@ -50,7 +50,7 @@ class TolerantMatchFinder implements MatchFinder
             }
         }
 
-        return new DocumentMatches($matches);
+        return new DocumentMatches($document, $matches);
     }
 
     /**
