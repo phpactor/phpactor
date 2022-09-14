@@ -23,10 +23,10 @@ class ChainMatcher implements Matcher
         foreach ($this->matchers as $matcher) {
             $result = $matcher->matches($token1, $token2);
             if ($result->isYes()) {
-                return MatchResult::yes();
+                return $result;
             }
             if ($result->isNo()) {
-                return MatchResult::no();
+                return $result;
             }
         }
 

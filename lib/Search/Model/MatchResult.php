@@ -4,14 +4,18 @@ namespace Phpactor\Search\Model;
 
 class MatchResult
 {
+    public ?MatchToken $token;
+    public ?string $name;
     private ?bool $result;
 
-    public function __construct(?bool $result)
+    private function __construct(?bool $result, ?MatchToken $token = null, ?string $name = null)
     {
         $this->result = $result;
+        $this->token = $token;
+        $this->name = $name;
     }
 
-    public static function yes(): self
+    public static function yes(MatchToken $token, string $name = null): self
     {
         return new self(true);
     }
