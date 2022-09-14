@@ -5,6 +5,7 @@ namespace Phpactor\Search\Model;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use RuntimeException;
 use Traversable;
 
 /**
@@ -33,5 +34,17 @@ class MatchTokens implements Countable, IteratorAggregate
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->tokens);
+    }
+
+    public function get(string $indexOrPlaceholder): MatchToken
+    {
+        if (!isset($this->tokens[$indexOrPlaceholder])) {
+            throw new RuntimeException(sprintf(
+                'No token exists with index/placeholder "%s"',
+                $indexOrPlaceholder
+            ));
+        }
+
+        return $this->tokens[$indexOrPlaceholder];
     }
 }

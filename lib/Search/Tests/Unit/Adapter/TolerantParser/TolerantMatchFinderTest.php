@@ -35,7 +35,7 @@ class TolerantMatchFinderTest extends TestCase
     }
 
     /**
-     * @return Generator<array{string,string,Closure(Matches): void}>
+     * @return Generator<array{string,string,Closure(DocumentMatches): void}>
      */
     public function provideMatch(): Generator
     {
@@ -61,7 +61,7 @@ class TolerantMatchFinderTest extends TestCase
     }
 
     /**
-     * @return Generator<array-key,array{string,string,Closure(Matches): void}>
+     * @return Generator<array-key,array{string,string,Closure(DocumentMatches): void}>
      */
     public function cases(): Generator
     {
@@ -201,7 +201,7 @@ class TolerantMatchFinderTest extends TestCase
     }
 
     /**
-     * @return Generator<array-key,array{string,string,Closure(Matches): void}>
+     * @return Generator<array-key,array{string,string,Closure(DocumentMatches): void}>
      */
     public function placeholderCases(): Generator
     {
@@ -210,6 +210,7 @@ class TolerantMatchFinderTest extends TestCase
             '$__a__',
             function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
+                self::assertEquals('$foo', $matches->first()->tokens()->get('a')->text);
             }
         ];
         yield 'placeholder' => [
@@ -217,7 +218,7 @@ class TolerantMatchFinderTest extends TestCase
             'class __A__ {}',
             function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
-                dd($matches);
+                self::assertEquals('ThisShouldBeCaptured', $matches->first()->tokens()->get('A')->text);
             }
         ];
         yield [

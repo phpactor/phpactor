@@ -5,6 +5,7 @@ namespace Phpactor\Search\Model;
 use ArrayIterator;
 use Countable;
 use IteratorAggregate;
+use RuntimeException;
 use Traversable;
 
 /**
@@ -46,5 +47,16 @@ class DocumentMatches implements Countable, IteratorAggregate
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->matches);
+    }
+
+    public function first(): PatternMatch
+    {
+        if (!isset($this->matches[0])) {
+            throw new RuntimeException(
+                'Document has no match at index 0'
+            );
+        }
+
+        return $this->matches[0];
     }
 }

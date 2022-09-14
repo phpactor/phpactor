@@ -7,13 +7,12 @@ use Phpactor\TextDocument\ByteOffsetRange;
 class PatternMatch
 {
     private ByteOffsetRange $range;
+    private MatchTokens $tokens;
 
-    private MatchTokens $matchTokens;
-
-    public function __construct(ByteOffsetRange $range, MatchTokens $matchTokens)
+    public function __construct(ByteOffsetRange $range, MatchTokens $tokens)
     {
         $this->range = $range;
-        $this->matchTokens = $matchTokens;
+        $this->tokens = $tokens;
     }
 
     public function range(): ByteOffsetRange
@@ -21,8 +20,8 @@ class PatternMatch
         return $this->range;
     }
 
-    public function matchTokens(): MatchTokens
+    public function tokens(): MatchTokens
     {
-        return $this->matchTokens;
+        return $this->tokens;
     }
 }
