@@ -1,5 +1,5 @@
 <?php
 
-class __A__ {
+class ThisShouldBeCaptured {
     public function bar(): void {}
 }

@@ -18,7 +18,7 @@ class PlaceholderMatcher implements Matcher
     public function matches(MatchToken $token1, MatchToken $token2): MatchResult
     {
         if (preg_match('{' . $this->pattern . '}', $token2->text, $matches)) {
-            return MatchResult::yes($token2, $matches['placeholder'] ?? null);
+            return MatchResult::yes($token1, $matches['placeholder'] ?? null);
         }
 
         return MatchResult::maybe();

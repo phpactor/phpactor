@@ -11,7 +11,7 @@ use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
 use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
 use Phpactor\Search\Model\Matcher\ChainMatcher;
-use Phpactor\Search\Model\Matches;
+use Phpactor\Search\Model\DocumentMatches;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use SplFileInfo;
 
@@ -68,133 +68,133 @@ class TolerantMatchFinderTest extends TestCase
         yield [
             'class_only.test',
             'class Foo {}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_only.test',
             'class Bar {}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield [
             'class_only.test',
             'class Foo extends {}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_only.test',
             'class Foo extends Bazfoo {}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_only.test',
             'class Foo implements Gar {}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield [
             'class_with_method.test',
             'class Foo { function bar() {} }',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_with_method.test',
             'class Foo { function baz() {} }',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield [
             'class_with_method.test',
             'class Foo { abstract function bar() {} }',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield [
             'class_with_method.test',
             'class Foo { public function bar() {} }',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_with_method.test',
             'class Foo { private function bar() {} }',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield 'static method' => [
             'class_with_static_method.test',
             'class Foo { public static function bar() {} }',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_with_private_method.test',
             'class Foo { private function bar() {} }',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'assign_string_literal.test',
             "'hello'",
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'assign_string_literal.test',
             "\$foo = 'hello'",
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'assign_string_literal.test',
             "\$bar = 'hello'",
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield [
             'assign_string_literal.test',
             '$foo',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_with_sprintf.test',
             'sprintf()',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield 'string does not match heredoc' => [
             'example_with_heredocs.test',
             "'hello'",
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield 'member access' => [
             'this_member_access.test',
             '$this->assertEquals()',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
@@ -208,42 +208,43 @@ class TolerantMatchFinderTest extends TestCase
         yield [
             'assign_string_literal.test',
             '$__a__',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
-        yield [
+        yield 'placeholder' => [
             'class_placeholder_with_method.test',
             'class __A__ {}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
+                dd($matches);
             }
         ];
         yield [
             'class_placeholder_with_method.test',
             'class __A__ { public function baz() {}}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield [
             'class_placeholder_with_method.test',
             'class __A__ { function bar() {}}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];
         yield [
             'class_placeholder_with_no_methods.test',
             'class __A__ { function bar() {}}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(0, $matches);
             }
         ];
         yield 'returns match from multiple' => [
             'class_placeholder_with_multiple_method.test',
             'class __A__ { function bar() {}}',
-            function (Matches $matches): void {
+            function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
             }
         ];

@@ -17,7 +17,7 @@ class MatchResult
 
     public static function yes(MatchToken $token, string $name = null): self
     {
-        return new self(true);
+        return new self(true, $token, $name);
     }
 
     public static function no(): self
@@ -38,11 +38,6 @@ class MatchResult
     public function isYes(): bool
     {
         return $this->result === true;
-    }
-
-    public static function fromBool(bool $bool): self
-    {
-        return new self($bool);
     }
 
     public function isMaybe(): bool

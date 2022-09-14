@@ -8,13 +8,21 @@ class PatternMatch
 {
     private ByteOffsetRange $range;
 
-    public function __construct(ByteOffsetRange $range)
+    private MatchTokens $matchTokens;
+
+    public function __construct(ByteOffsetRange $range, MatchTokens $matchTokens)
     {
         $this->range = $range;
+        $this->matchTokens = $matchTokens;
     }
 
     public function range(): ByteOffsetRange
     {
         return $this->range;
+    }
+
+    public function matchTokens(): MatchTokens
+    {
+        return $this->matchTokens;
     }
 }

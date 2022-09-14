@@ -9,8 +9,9 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\MatchToken;
+use Phpactor\Search\Model\MatchTokens;
 use Phpactor\Search\Model\Matcher;
-use Phpactor\Search\Model\Matches;
+use Phpactor\Search\Model\DocumentMatches;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
@@ -31,7 +32,7 @@ class TolerantMatchFinder implements MatchFinder
      * Find all nodes matching first node of pattern
      * Within those nodes find immediate children matching secod node of pattern
      */
-    public function match(TextDocument $document, string $pattern): Matches
+    public function match(TextDocument $document, string $pattern): DocumentMatches
     {
         $patternNode = $this->parser->parseSourceFile('<?php ' . $pattern);
         $documentNode = $this->parser->parseSourceFile($document);
@@ -40,14 +41,16 @@ class TolerantMatchFinder implements MatchFinder
         $baseNodes = $this->findBaseNodes($documentNode, $patternNode);
 
         foreach ($baseNodes as $baseNode) {
-            if ($this->nodeMatches($baseNode, $patternNode)) {
+            $matchTokens = [];
+            if ($this->nodeMatches($baseNode, $patternNode, $matchTokens)) {
                 $matches[] = new PatternMatch(
-                    ByteOffsetRange::fromInts($baseNode->getStartPosition(), $baseNode->getEndPosition())
+                    ByteOffsetRange::fromInts($baseNode->getStartPosition(), $baseNode->getEndPosition()),
+                    new MatchTokens($matchTokens)
                 );
             }
         }
 
-        return new Matches($matches);
+        return new DocumentMatches($matches);
     }
 
     /**
@@ -68,7 +71,10 @@ class TolerantMatchFinder implements MatchFinder
     }
 
 
-    private function nodeMatches(Node $node, Node $toMatch): bool
+    /**
+     * @param array<string,MatchToken> $matchTokens
+     */
+    private function nodeMatches(Node $node, Node $toMatch, array &$matchTokens): bool
     {
         foreach ($toMatch->getChildNodesAndTokens() as $name => $matchNodeOrToken) {
 
@@ -112,6 +118,11 @@ class TolerantMatchFinder implements MatchFinder
                 // if it's a definite match, short cut
                 if ($match->isYes()) {
                     $matchedNode = true;
+                    if ($match->name) {
+                        $matchTokens[$match->name] = $match->token;
+                    } else {
+                        $matchTokens[] = $match->token;
+                    }
                     break;
                 }
 
@@ -134,7 +145,7 @@ class TolerantMatchFinder implements MatchFinder
                 if (!$nodeChild instanceof Node) {
                     continue;
                 }
-                if ($this->nodeMatches($nodeChild, $matchNodeOrToken)) {
+                if ($this->nodeMatches($nodeChild, $matchNodeOrToken, $matchTokens)) {
                     $matchedNode = true;
                 }
             }

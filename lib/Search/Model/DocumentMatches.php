@@ -10,7 +10,7 @@ use Traversable;
 /**
  * @implements IteratorAggregate<PatternMatch>
  */
-class Matches implements Countable, IteratorAggregate
+class DocumentMatches implements Countable, IteratorAggregate
 {
     /**
      * @var PatternMatch[]
