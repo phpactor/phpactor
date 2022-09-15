@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @template TKey
+ * @implements Iterator<TKey, string>
+ */
+abstract class Test1 implements Iterator
+{
+}
+
+/**
+ * @extends Test1<int>
+ */
+class Test2 extends Test1
+{
+    public function current(): mixed
+    {
+    }
+
+    public function next(): void
+    {
+    }
+
+    public function key(): mixed
+    {
+    }
+
+    public function valid(): bool
+    {
+    }
+
+    public function rewind(): void
+    {
+    }
+
+}
+
+/** @var Test2 $a */
+foreach ($a as $value) {
+    wrAssertType('string', $value);
+}
