@@ -18,10 +18,12 @@ class Search
         $this->filter = $filter;
     }
 
-    public function search(TextDocument $document, string $pattern, string $filter): DocumentMatches
+    public function search(TextDocument $document, string $pattern, ?string $filter = null): DocumentMatches
     {
         $matches = $this->matchFinder->match($document, $pattern);
-        $matches = $this->filter->filter($matches, $filter);
+        if ($filter) {
+            $matches = $this->filter->filter($matches, $filter);
+        }
 
         return $matches;
     }

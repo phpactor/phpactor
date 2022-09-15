@@ -60,13 +60,13 @@ class SearchCommand extends Command
                 continue;
             }
 
-            $output->writeln(sprintf('<fg=cyan>%s</>:', $file->path()));
+            $output->write(sprintf('<fg=cyan>%s</>:', $file->path()));
             $edits = [];
 
             foreach ($matches as $match) {
                 $startLineCol = LineCol::fromByteOffset($document, $match->range()->start());
                 $endLineCol = LineCol::fromByteOffset($document, $match->range()->end());
-                $output->writeln(sprintf(
+                $output->writeln(str_replace("\n", " ", sprintf(
                     '(%d:%d,%d:%d) %s',
                     $startLineCol->line(),
                     $startLineCol->col(),
@@ -78,9 +78,8 @@ class SearchCommand extends Command
                         $startLineCol->col() - 1,
                         true
                     )
-                ));
+                )));
             }
-            $output->writeln('');
         }
         return 0;
     }

@@ -174,13 +174,6 @@ class BinaryExpressionResolver implements Resolver
             }
         }
 
-        if ($left instanceof ClassType) {
-            switch ($operator) {
-            case TokenKind::InstanceOfKeyword:
-                return TypeFactory::boolLiteral(true);
-            }
-        }
-
         return new MissingType();
     }
 
