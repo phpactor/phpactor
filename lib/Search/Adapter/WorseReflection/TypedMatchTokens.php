@@ -2,11 +2,17 @@
 
 namespace Phpactor\Search\Adapter\WorseReflection;
 
+use ArrayIterator;
+use IteratorAggregate;
 use Phpactor\Search\Model\MatchToken;
 use Phpactor\WorseReflection\Core\Type;
 use RuntimeException;
+use Traversable;
 
-class TypedMatchTokens
+/**
+ * @implements IteratorAggregate<TypedMatchToken>
+ */
+class TypedMatchTokens implements IteratorAggregate
 {
     /**
      * @var array<string,TypedMatchToken>
@@ -21,14 +27,40 @@ class TypedMatchTokens
         $this->tokens = $tokens;
     }
 
-    public function get(string $name): TypedMatchToken
+    public function byName(string $placeholder): self
     {
-        if (!isset($this->tokens[$name])) {
-            throw new RuntimeException(sprintf(
-                'Unknown token/placeholder "%s"', $name
-            ));
+        $tokens = [];
+        foreach ($this->tokens as $token) {
+            if ($token->name !== $placeholder) {
+                continue;
+            }
+            $tokens[] = $token;
         }
 
-        return $this->tokens[$name];
+        return new self($tokens);
+    }
+
+    public function at(int $targetOffset): MatchToken
+    {
+        foreach ($this->getIterator() as $offset => $token) {
+            if ($targetOffset === $offset) {
+                return $token;
+            }
+        }
+
+        throw new RuntimeException(sprintf(
+            'No tokens at offset %d', $targetOffset
+        ));
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayIterator(array_reduce($this->tokens, function (array $carry, array $tokens) {
+            foreach ($tokens as $token) {
+                $carry[] = $token;
+            }
+
+            return $carry;
+        }, []));
     }
 }

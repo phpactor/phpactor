@@ -29,16 +29,10 @@ class WorseMatchFilter implements MatchFilter
         foreach ($matches as $match) {
             $vars = [];
             foreach ($match->tokens() as $name => $token) {
-                // only do static analysis for tokens that are placeholders.
-                //
-                // TODO: don't rely name being a string to decide if this is a
-                //       placeholder or not.
-                if (is_string($name)) {
-                    $vars[$name] = new TypedMatchToken($name, $token, $this->reflector->reflectOffset(
-                        $matches->document(),
-                        $token->range->start()->toInt()
-                    )->symbolContext()->type());
-                }
+                $vars[] = new TypedMatchToken($name, $token, $this->reflector->reflectOffset(
+                    $matches->document(),
+                    $token->range->start()->toInt()
+                )->symbolContext()->type());
             }
 
             $result = $this->evaluator->evaluate($expression, new TypedMatchTokens($vars));
