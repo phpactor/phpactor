@@ -25,7 +25,6 @@ class WorseFilterEvaluatorTest extends TestCase
     {
         $node = (new Parser())->parseSourceFile('<?php ' . $expression);
         $evaluated = (new WorseFilterEvaluator())->evaluate($node, new TypedMatchTokens($vars));
-        dump($evaluated);
         self::assertEquals($expected, $evaluated);
     }
 
@@ -62,6 +61,13 @@ class WorseFilterEvaluatorTest extends TestCase
             '$A instanceof "Foobar"',
             [
                 'A' => $this->matchToken('Foobar', TypeFactory::string()),
+            ],
+            TypeFactory::boolLiteral(false),
+        ];
+        yield [
+            '$A instanceof Foobar',
+            [
+                'A' => $this->matchToken('Foobar', TypeFactory::class('Foobar')),
             ],
             TypeFactory::boolLiteral(true),
         ];

@@ -5,6 +5,7 @@ namespace Phpactor\Search\Adapter\WorseReflection;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\ReservedWord;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
@@ -16,6 +17,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use RuntimeException;
 
 class WorseFilterEvaluator
@@ -40,6 +42,9 @@ class WorseFilterEvaluator
         if ($expression instanceof StringLiteral) {
             return TypeFactory::stringLiteral((string)$expression->getStringContentsText());
         }
+        if ($expression instanceof QualifiedName) {
+            return TypeFactory::class((string)$expression->getResolvedName());
+        }
 
         $this->cannotEvaluate($expression);
     }
@@ -58,9 +63,13 @@ class WorseFilterEvaluator
 
     private function evaluateBinaryStatement(BinaryExpression $expression, TypedMatchTokens $vars): BooleanType
     {
+        $operator = $expression->operator;
+        if ($operator->kind === TokenKind::InstanceOfKeyword) {
+            return $this->evaluateInstanceOf($expression, $vars);
+        }
+
         $leftType = $this->evaluate($expression->leftOperand, $vars);
         $rightType = $this->evaluate($expression->rightOperand, $vars);
-        $operator = $expression->operator;
 
         if ($leftType instanceof Comparable) {
             switch ($operator->kind) {
@@ -121,5 +130,20 @@ class WorseFilterEvaluator
                 '$'
             ))->token->text
         );
+    }
+
+    private function evaluateInstanceOf(BinaryExpression $expression, TypedMatchTokens $vars): Type
+    {
+        $leftOperand = $expression->leftOperand;
+        $rightType = $this->evaluate($expression->rightOperand, $vars);
+        if (!$leftOperand instanceof Variable) {
+            throw new RuntimeException(
+                'instanceof can only be used on variables'
+            );
+        }
+        $name = ltrim(NodeUtil::nameFromTokenOrNode($expression, $leftOperand), '$');
+        $match = $vars->get($name);
+
+        return TypeFactory::boolLiteral($match->type->instanceof($rightType)->isTrue());
     }
 }
