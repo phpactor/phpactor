@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\Search\Model\MatchFinder;
+use Phpactor\Search\Model\MatchResult;
 use Phpactor\Search\Model\MatchToken;
 use Phpactor\Search\Model\MatchTokens;
 use Phpactor\Search\Model\Matcher;
@@ -74,9 +75,9 @@ class TolerantMatchFinder implements MatchFinder
     /**
      * @param array<string,MatchToken> $matchTokens
      */
-    private function nodeMatches(Node $node, Node $toMatch, array &$matchTokens): bool
+    private function nodeMatches(Node $node, Node $template, array &$matchTokens): bool
     {
-        foreach ($toMatch->getChildNodesAndTokens() as $name => $matchNodeOrToken) {
+        foreach ($template->getChildNodesAndTokens() as $name => $templateNodeOrToken) {
 
             // candidate does not have required token or node
             if (!isset($node->$name) || null === $node->$name) {
@@ -97,36 +98,23 @@ class TolerantMatchFinder implements MatchFinder
             foreach ($nodeChildren as $nodeChild) {
 
                 // we only match tokens
-                if (!$nodeChild instanceof Token || !$matchNodeOrToken instanceof Token) {
+                if (!$nodeChild instanceof Token || !$templateNodeOrToken instanceof Token) {
                     continue;
                 }
 
-                $t1 = new MatchToken(
-                    ByteOffsetRange::fromInts($nodeChild->getStartPosition(), $nodeChild->getEndPosition()),
-                    (string)$nodeChild->getText($node->getFileContents()),
-                    $nodeChild->kind
-                );
+                $match = $this->isMatch($template, $templateNodeOrToken, $node, $nodeChild);
 
-                $t2 = new MatchToken(
-                    ByteOffsetRange::fromInts($matchNodeOrToken->getStartPosition(), $matchNodeOrToken->getEndPosition()),
-                    (string)$matchNodeOrToken->getText($toMatch->getFileContents()),
-                    $matchNodeOrToken->kind
-                );
-
-                $match = $this->matcher->matches($t1, $t2);
-
-                // if it's a definite match, short cut
                 if ($match->isYes()) {
                     $matchedNode = true;
                     if ($match->name) {
                         $matchTokens[$match->name] = $match->token;
                     } else {
+                        // TODO: remove this? do we really want to capture all tokens?
                         $matchTokens[] = $match->token;
                     }
                     break;
-                }
+                };
 
-                // if it's not a match, allow further elements to match
                 if ($match->isNo()) {
                     $matchedNode = false;
                 }
@@ -136,7 +124,7 @@ class TolerantMatchFinder implements MatchFinder
                 return false;
             }
 
-            if (!$matchNodeOrToken instanceof Node) {
+            if (!$templateNodeOrToken instanceof Node) {
                 continue;
             }
 
@@ -145,7 +133,7 @@ class TolerantMatchFinder implements MatchFinder
                 if (!$nodeChild instanceof Node) {
                     continue;
                 }
-                if ($this->nodeMatches($nodeChild, $matchNodeOrToken, $matchTokens)) {
+                if ($this->nodeMatches($nodeChild, $templateNodeOrToken, $matchTokens)) {
                     $matchedNode = true;
                 }
             }
@@ -189,5 +177,22 @@ class TolerantMatchFinder implements MatchFinder
         }
 
         return $patternNode;
+    }
+
+    private function isMatch(Node $template, Token $matchNodeOrToken, Node $node, Token $nodeChild): MatchResult
+    {
+        $t1 = new MatchToken(
+            ByteOffsetRange::fromInts($nodeChild->getStartPosition(), $nodeChild->getEndPosition()),
+            (string)$nodeChild->getText($node->getFileContents()),
+            $nodeChild->kind
+        );
+
+        $t2 = new MatchToken(
+            ByteOffsetRange::fromInts($matchNodeOrToken->getStartPosition(), $matchNodeOrToken->getEndPosition()),
+            (string)$matchNodeOrToken->getText($template->getFileContents()),
+            $matchNodeOrToken->kind
+        );
+
+        return $this->matcher->matches($t1, $t2);
     }
 }

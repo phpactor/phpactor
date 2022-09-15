@@ -221,6 +221,13 @@ class TolerantMatchFinderTest extends TestCase
                 self::assertEquals('ThisShouldBeCaptured', $matches->first()->tokens()->get('A')->text);
             }
         ];
+        yield 'placeholder with multiple matches' => [
+            'class_placeholder_with_multiple_methods.test',
+            'class __A__ {public function __method__() {}}',
+            function (DocumentMatches $matches): void {
+                self::assertCount(3, $matches);
+            }
+        ];
         yield [
             'class_placeholder_with_method.test',
             'class __A__ { public function baz() {}}',
