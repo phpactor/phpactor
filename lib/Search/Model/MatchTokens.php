@@ -4,6 +4,7 @@ namespace Phpactor\Search\Model;
 
 use ArrayIterator;
 use Countable;
+use Generator;
 use IteratorAggregate;
 use RuntimeException;
 use Traversable;
@@ -14,12 +15,12 @@ use Traversable;
 class MatchTokens implements Countable, IteratorAggregate
 {
     /**
-     * @var array<string,MatchToken>
+     * @var array<string,array<int, MatchToken>>
      */
     private array $tokens;
 
     /**
-     * @param array<string,MatchToken> $tokens
+     * @param array<string,array<int, MatchToken>> $tokens
      */
     public function __construct(array $tokens)
     {
@@ -33,18 +34,37 @@ class MatchTokens implements Countable, IteratorAggregate
 
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->tokens);
+        return new ArrayIterator(array_reduce($this->tokens, function (array $carry, array $tokens) {
+            foreach ($tokens as $token) {
+                $carry[] = $token;
+            }
+
+            return $carry;
+        }, []));
     }
 
-    public function get(string $indexOrPlaceholder): MatchToken
+    public function byName(string $placeholder): self
     {
-        if (!isset($this->tokens[$indexOrPlaceholder])) {
+        if (!isset($this->tokens[$placeholder])) {
             throw new RuntimeException(sprintf(
                 'No token exists with index/placeholder "%s"',
-                $indexOrPlaceholder
+                $placeholder
             ));
         }
 
-        return $this->tokens[$indexOrPlaceholder];
+        return new self([$placeholder => $this->tokens[$placeholder]]);
+    }
+
+    public function at(int $targetOffset): MatchToken
+    {
+        foreach ($this->getIterator() as $offset => $token) {
+            if ($targetOffset === $offset) {
+                return $token;
+            }
+        }
+
+        throw new RuntimeException(sprintf(
+            'No tokens at offset %d', $offset
+        ));
     }
 }

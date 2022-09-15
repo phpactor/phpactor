@@ -210,7 +210,7 @@ class TolerantMatchFinderTest extends TestCase
             '$__a__',
             function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
-                self::assertEquals('$foo', $matches->first()->tokens()->get('a')->text);
+                self::assertEquals('$foo', $matches->first()->tokens()->byName('a')->at(0)->text);
             }
         ];
         yield 'placeholder' => [
@@ -218,14 +218,19 @@ class TolerantMatchFinderTest extends TestCase
             'class __A__ {}',
             function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
-                self::assertEquals('ThisShouldBeCaptured', $matches->first()->tokens()->get('A')->text);
+                self::assertEquals('ThisShouldBeCaptured', $matches->first()->tokens()->byName('A')->at(0)->text);
             }
         ];
         yield 'placeholder with multiple matches' => [
             'class_placeholder_with_multiple_methods.test',
-            'class __A__ {public function __method__() {}}',
+            'class TestClass {public function __method__() {}}',
             function (DocumentMatches $matches): void {
-                self::assertCount(3, $matches);
+                self::assertCount(1, $matches);
+                $match = $matches->first();
+                $methods = $match->tokens()->byName('method');
+                self::assertEquals('baz', $methods->at(0)->text);
+                self::assertEquals('bar', $methods->at(1)->text);
+                self::assertEquals('boo', $methods->at(2)->text);
             }
         ];
         yield [

@@ -1,6 +1,6 @@
 <?php
 
-class __A__ {
+class TestClass {
     public function baz(): void {}
     public function bar(): void {}
     public function boo(): void {}

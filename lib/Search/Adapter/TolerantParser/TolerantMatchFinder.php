@@ -104,20 +104,24 @@ class TolerantMatchFinder implements MatchFinder
 
                 $match = $this->isMatch($template, $templateNodeOrToken, $node, $nodeChild);
 
-                if ($match->isYes()) {
-                    $matchedNode = true;
-                    if ($match->name) {
-                        $matchTokens[$match->name] = $match->token;
-                    } else {
-                        // TODO: remove this? do we really want to capture all tokens?
-                        $matchTokens[] = $match->token;
-                    }
-                    break;
-                };
-
                 if ($match->isNo()) {
                     $matchedNode = false;
+                    continue;
                 }
+
+                if ($match->isYes()) {
+                    $matchedNode = true;
+                    if (!$match->name) {
+                        break;
+                    }
+
+                    if (!isset($matchTokens[$match->name])) {
+                        $matchTokens[$match->name] = [];
+                    }
+
+                    $matchTokens[$match->name][] = $match->token;
+                    break;
+                };
             }
 
             if (false === $matchedNode) {
