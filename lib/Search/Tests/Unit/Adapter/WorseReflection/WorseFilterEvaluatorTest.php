@@ -29,7 +29,7 @@ class WorseFilterEvaluatorTest extends TestCase
     }
 
     /**
-     * @return Generator<array{string,array<string,TypedMatchToken>,Type}>
+     * @return Generator<array{string,array<TypedMatchToken>,Type}>
      */
     public function provideEvaluate(): Generator
     {
@@ -46,35 +46,36 @@ class WorseFilterEvaluatorTest extends TestCase
         yield [
             '$A',
             [
-                'A' => $this->matchToken('Foobar', TypeFactory::string()),
+                $this->matchToken('A', 'Foobar', TypeFactory::string()),
             ],
-            TypeFactory::stringLiteral('Foobar'),
+            TypeFactory::union(TypeFactory::stringLiteral('Foobar')),
         ];
         yield [
-            '$A === "Foobar"',
+            'withText($A, "Foobar")',
             [
-                'A' => $this->matchToken('Foobar', TypeFactory::string()),
+                $this->matchToken('A', 'methodOne', TypeFactory::string()),
+                $this->matchToken('A', 'methodTwo', TypeFactory::string()),
             ],
             TypeFactory::boolLiteral(true),
         ];
         yield [
             '$A instanceof "Foobar"',
             [
-                'A' => $this->matchToken('Foobar', TypeFactory::string()),
+                $this->matchToken('A', 'Foobar', TypeFactory::string()),
             ],
             TypeFactory::boolLiteral(false),
         ];
         yield [
             '$A instanceof Foobar',
             [
-                'A' => $this->matchToken('Foobar', TypeFactory::class('Foobar')),
+                $this->matchToken('A', 'Foobar', TypeFactory::class('Foobar')),
             ],
             TypeFactory::boolLiteral(true),
         ];
     }
 
-    private function matchToken(string $text, Type $type): TypedMatchToken
+    private function matchToken(string $name, string $text, Type $type): TypedMatchToken
     {
-        return new TypedMatchToken('', new MatchToken(ByteOffsetRange::fromInts(0, 0), $text, 0), $type);
+        return new TypedMatchToken($name, new MatchToken(ByteOffsetRange::fromInts(0, 0), $text, 0), $type);
     }
 }

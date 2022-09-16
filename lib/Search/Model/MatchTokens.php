@@ -34,13 +34,11 @@ class MatchTokens implements Countable, IteratorAggregate
 
     public function getIterator(): Traversable
     {
-        return new ArrayIterator(array_reduce($this->tokens, function (array $carry, array $tokens) {
+        foreach ($this->tokens as $placeholder => $tokens) {
             foreach ($tokens as $token) {
-                $carry[] = $token;
+                yield $placeholder => $token;
             }
-
-            return $carry;
-        }, []));
+        }
     }
 
     public function byName(string $placeholder): self

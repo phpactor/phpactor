@@ -30,7 +30,7 @@ class TypedMatchTokens implements IteratorAggregate
     public function byName(string $placeholder): self
     {
         $tokens = [];
-        foreach ($this->tokens as $token) {
+        foreach ($this as $token) {
             if ($token->name !== $placeholder) {
                 continue;
             }
@@ -55,12 +55,6 @@ class TypedMatchTokens implements IteratorAggregate
 
     public function getIterator(): Traversable
     {
-        return new ArrayIterator(array_reduce($this->tokens, function (array $carry, array $tokens) {
-            foreach ($tokens as $token) {
-                $carry[] = $token;
-            }
-
-            return $carry;
-        }, []));
+        return new ArrayIterator($this->tokens);
     }
 }

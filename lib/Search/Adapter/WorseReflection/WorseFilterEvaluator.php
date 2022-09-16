@@ -22,7 +22,7 @@ use RuntimeException;
 
 class WorseFilterEvaluator
 {
-    public function evaluate(Node $expression, TypedMatchTokens $vars): Type
+    public function evaluate(Node $expression, TypedMatchTokens $vars): TypedMatchTokens
     {
         if ($expression instanceof SourceFileNode) {
             return $this->evaluateSourceFileNode($expression, $vars);
@@ -30,26 +30,11 @@ class WorseFilterEvaluator
         if ($expression instanceof ExpressionStatement) {
             return $this->evaluate($expression->expression, $vars);
         }
-        if ($expression instanceof BinaryExpression) {
-            return TypeFactory::boolLiteral($this->evaluateBinaryStatement($expression, $vars)->isTrue());
-        }
-        if ($expression instanceof ReservedWord) {
-            return $this->evaluateReservedWord($expression, $vars);
-        }
-        if ($expression instanceof Variable) {
-            return $this->evaluateVariable($expression, $vars);
-        }
-        if ($expression instanceof StringLiteral) {
-            return TypeFactory::stringLiteral((string)$expression->getStringContentsText());
-        }
-        if ($expression instanceof QualifiedName) {
-            return TypeFactory::class((string)$expression->getResolvedName());
-        }
 
         $this->cannotEvaluate($expression);
     }
 
-    private function evaluateSourceFileNode(SourceFileNode $expression, TypedMatchTokens $vars): Type
+    private function evaluateSourceFileNode(SourceFileNode $expression, TypedMatchTokens $vars): TypedMatchTokens
     {
         foreach ($expression->statementList as $statement) {
             if ($statement instanceof InlineHtml) {
@@ -61,7 +46,7 @@ class WorseFilterEvaluator
         return TypeFactory::false();
     }
 
-    private function evaluateBinaryStatement(BinaryExpression $expression, TypedMatchTokens $vars): BooleanType
+    private function evaluateBinaryStatement(BinaryExpression $expression, TypedMatchTokens $vars): TypedMatchTokens
     {
         $operator = $expression->operator;
         if ($operator->kind === TokenKind::InstanceOfKeyword) {
@@ -92,10 +77,12 @@ class WorseFilterEvaluator
             }
         }
 
-        $this->cannotEvaluate($expression);
+        throw new RuntimeException(sprintf(
+            'Do not know how to evaluate `%s` (%s) with operator "%s" and left type: %s (%s)', $expression->getText(), get_class($expression), Token::getTokenKindNameFromValue($operator->kind), $leftType->__toString(), get_class($leftType)
+        ));
     }
 
-    private function evaluateReservedWord(ReservedWord $expression, TypedMatchTokens $vars): BooleanType
+    private function evaluateReservedWord(ReservedWord $expression, TypedMatchTokens $vars): TypedMatchTokens
     {
         if ($expression->getText() === 'true') {
             return TypeFactory::boolLiteral(true);
@@ -117,22 +104,29 @@ class WorseFilterEvaluator
         ));
     }
 
-    private function evaluateVariable(Variable $expression, TypedMatchTokens $vars): Type
+    private function evaluateVariable(Variable $expression, TypedMatchTokens $vars): TypedMatchTokens
     {
         $name = $expression->name;
         if (!$name instanceof Token) {
             return $this->cannotEvaluate($expression);
         }
 
-        return TypeFactory::stringLiteral(
-            $vars->get(ltrim(
-                (string)$name->getText($expression->getFileContents()),
-                '$'
-            ))->token->text
-        );
+        $union = [];
+        $placeholderName = ltrim((string)$name->getText($expression->getFileContents()), '$');
+        foreach ($vars->byName($placeholderName) as $token) {
+            $union[] = TypeFactory::stringLiteral($token->token->text);
+        }
+
+        if (empty($union)) {
+            throw new RuntimeException(sprintf(
+                'Placeholder "%s" has not been defined', $placeholderName
+            ));
+        }
+
+        return TypeFactory::union(...$union);
     }
 
-    private function evaluateInstanceOf(BinaryExpression $expression, TypedMatchTokens $vars): Type
+    private function evaluateInstanceOf(BinaryExpression $expression, TypedMatchTokens $vars): TypedMatchTokens
     {
         $leftOperand = $expression->leftOperand;
         $rightType = $this->evaluate($expression->rightOperand, $vars);
