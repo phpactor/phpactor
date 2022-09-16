@@ -51,7 +51,7 @@ class TolerantMatchFinderTest extends TestCase
                 if ($case[0] !== $caseName) {
                     continue;
                 }
-                yield $name => [
+                yield $case[0] . $name => [
                     (string)file_get_contents($splFileInfo->getPathname()),
                     $case[1],
                     $case[2]
@@ -223,14 +223,9 @@ class TolerantMatchFinderTest extends TestCase
         ];
         yield 'placeholder with multiple matches' => [
             'class_placeholder_with_multiple_methods.test',
-            'class TestClass {public function __method__() {}}',
+            'class __A__ {public function __method__() {}}',
             function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
-                $match = $matches->first();
-                $methods = $match->tokens()->byName('method');
-                self::assertEquals('baz', $methods->at(0)->text);
-                self::assertEquals('bar', $methods->at(1)->text);
-                self::assertEquals('boo', $methods->at(2)->text);
             }
         ];
         yield [
