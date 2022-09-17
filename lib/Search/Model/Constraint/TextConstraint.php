@@ -8,4 +8,9 @@ final class TextConstraint extends AbstractConstraint
     {
         return $this->value;
     }
+
+    public function describe(): string
+    {
+        return sprintf('matching text: %s', $this->value);
+    }
 }

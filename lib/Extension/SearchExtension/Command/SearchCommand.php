@@ -6,7 +6,7 @@ use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Search\Model\Constraint\TextConstraint;
-use Phpactor\Search\Model\MatchFinder;
+use Phpactor\Search\Model\Constraint\TypeConstraint;
 use Phpactor\Search\Model\TokenConstraints;
 use Phpactor\Search\Search;
 use Phpactor\TextDocument\ByteOffset;
@@ -17,6 +17,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Path;
 
@@ -25,6 +26,7 @@ class SearchCommand extends Command
     const ARG_PATTERN = 'pattern';
     const ARG_PATH = 'path';
     const OPT_TEXT = 'text';
+    const OPT_TYPE = 'type';
 
     private Search $search;
 
@@ -44,15 +46,26 @@ class SearchCommand extends Command
         $this->addArgument(self::ARG_PATH, InputArgument::REQUIRED);
         $this->addArgument(self::ARG_PATTERN, InputArgument::REQUIRED);
         $this->addOption(self::OPT_TEXT, null, InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Filter placeholders by text');
+        $this->addOption(self::OPT_TYPE, null, InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Filter placeholders by type');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        assert($output instanceof ConsoleOutput);
         $path = $input->getArgument(self::ARG_PATH);
         $pattern = $input->getArgument(self::ARG_PATTERN);
-        $constraints = new TokenConstraints(...array_map(function (string $constraint) {
-            return TextConstraint::fromString($constraint);
-        }, (array)$input->getOption(self::OPT_TEXT)));
+        $constraints = new TokenConstraints(...array_merge(
+            array_map(function (string $constraint) {
+                return TextConstraint::fromString($constraint);
+            }, (array)$input->getOption(self::OPT_TEXT)),
+            array_map(function (string $constraint) {
+                return TypeConstraint::fromString($constraint);
+            }, (array)$input->getOption(self::OPT_TYPE))
+        ));
+        $output->getErrorOutput()->writeln(sprintf('template: %s', $pattern));
+        foreach ($constraints as $constraint) {
+            $output->getErrorOutput()->writeln(sprintf('  filter: <fg=cyan>%s %s</>', $constraint->placeholder(), $constraint->describe()));
+        }
 
         $filesystem = $this->filesystemRegistry->get('git');
 

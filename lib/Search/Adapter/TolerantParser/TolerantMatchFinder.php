@@ -7,12 +7,15 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
+use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
 use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\MatchResult;
 use Phpactor\Search\Model\MatchToken;
 use Phpactor\Search\Model\MatchTokens;
 use Phpactor\Search\Model\Matcher;
 use Phpactor\Search\Model\DocumentMatches;
+use Phpactor\Search\Model\Matcher\ChainMatcher;
+use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
@@ -198,5 +201,16 @@ class TolerantMatchFinder implements MatchFinder
         );
 
         return $this->matcher->matches($t1, $t2);
+    }
+
+    public static function createDefault(): self
+    {
+        return new self(
+            new Parser(),
+            new ChainMatcher(
+                new PlaceholderMatcher(),
+                new TokenEqualityMatcher()
+            )
+        );
     }
 }
