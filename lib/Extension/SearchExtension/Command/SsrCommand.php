@@ -21,7 +21,7 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Path;
 
-class SearchCommand extends Command
+class SsrCommand extends Command
 {
     const ARG_PATTERN = 'pattern';
     const ARG_PATH = 'path';
@@ -29,9 +29,7 @@ class SearchCommand extends Command
     const OPT_TYPE = 'type';
 
     private Search $search;
-
     private FilesystemRegistry $filesystemRegistry;
-
 
     public function __construct(Search $search, FilesystemRegistry $filesystemRegistry)
     {
