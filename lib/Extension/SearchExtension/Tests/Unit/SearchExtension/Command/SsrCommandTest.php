@@ -74,5 +74,16 @@ class SsrCommandTest extends TestCase
                 self::assertEquals(0, $process->getExitCode());
             }
         ];
+        yield 'replace' => [
+            [
+                '.',
+                'class Foobar {}',
+                '--replace=A:Foobar',
+            ],
+            function (Process $process): void {
+                $process->mustRun();
+                self::assertEquals(0, $process->getExitCode());
+            }
+        ];
     }
 }
