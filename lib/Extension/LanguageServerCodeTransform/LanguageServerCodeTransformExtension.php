@@ -25,6 +25,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvi
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateAccessorsProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
@@ -352,6 +353,14 @@ class LanguageServerCodeTransformExtension implements Extension
             return new GenerateConstructorProvider(
                 $container->get(GenerateConstructor::class),
                 $container->get(WorkspaceEditConverter::class),
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(GenerateDecoratorProvider::class, function (Container $container) {
+            return new GenerateDecoratorProvider(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
