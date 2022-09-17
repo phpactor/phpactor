@@ -8,11 +8,14 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Search\Model\Constraint\TextConstraint;
 use Phpactor\Search\Model\Constraint\TypeConstraint;
 use Phpactor\Search\Model\TokenConstraints;
+use Phpactor\Search\Model\TokenReplacement;
+use Phpactor\Search\Model\TokenReplacements;
 use Phpactor\Search\Search;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\Util\LineAtOffset;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,6 +30,7 @@ class SsrCommand extends Command
     const ARG_PATH = 'path';
     const OPT_TEXT = 'text';
     const OPT_TYPE = 'type';
+    const OPT_REPLACE = 'replace';
 
     private Search $search;
     private FilesystemRegistry $filesystemRegistry;
@@ -45,6 +49,7 @@ class SsrCommand extends Command
         $this->addArgument(self::ARG_PATTERN, InputArgument::REQUIRED);
         $this->addOption(self::OPT_TEXT, null, InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Filter placeholders by text');
         $this->addOption(self::OPT_TYPE, null, InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Filter placeholders by type');
+        $this->addOption(self::OPT_REPLACE, null, InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Replace placeholder with text');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -60,6 +65,10 @@ class SsrCommand extends Command
                 return TypeConstraint::fromString($constraint);
             }, (array)$input->getOption(self::OPT_TYPE))
         ));
+        $replacements = new TokenReplacements(...array_map(function (string $replacement) {
+            return TokenReplacement::fromString($replacement);
+        }, (array)$input->getOption(self::OPT_TEXT)));
+
         $output->getErrorOutput()->writeln(sprintf('template: %s', $pattern));
         foreach ($constraints as $constraint) {
             $output->getErrorOutput()->writeln(sprintf('  filter: <fg=cyan>%s %s</>', $constraint->placeholder(), $constraint->describe()));
@@ -73,6 +82,7 @@ class SsrCommand extends Command
             $document = TextDocumentBuilder::fromUri($file->__toString())->build();
 
             $matches = $this->search->search($document, $pattern, $constraints);
+
             if (count($matches) === 0) {
                 continue;
             }
@@ -83,6 +93,7 @@ class SsrCommand extends Command
             foreach ($matches as $match) {
                 $startLineCol = LineCol::fromByteOffset($document, $match->range()->start());
                 $endLineCol = LineCol::fromByteOffset($document, $match->range()->end());
+
                 $output->writeln(str_replace("\n", ' ', sprintf(
                     '(%d:%d,%d:%d) %s',
                     $startLineCol->line(),
@@ -96,8 +107,16 @@ class SsrCommand extends Command
                         true
                     )
                 )));
+
+            }
+
+            $document = $replacements->applyTo($matches);
+            continue;
+            if (false === file_put_contents($document->uri()->path(), $document->__toString())) {
+                throw new RuntimeException(sprintf('Could not update file "%s"', $document->uri()));
             }
         }
+
         return 0;
     }
 }
