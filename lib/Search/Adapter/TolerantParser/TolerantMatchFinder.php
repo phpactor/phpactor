@@ -36,9 +36,9 @@ class TolerantMatchFinder implements MatchFinder
      * Find all nodes matching first node of pattern
      * Within those nodes find immediate children matching secod node of pattern
      */
-    public function match(TextDocument $document, string $pattern): DocumentMatches
+    public function match(TextDocument $document, string $template): DocumentMatches
     {
-        $patternNode = $this->parser->parseSourceFile('<?php ' . $pattern);
+        $patternNode = $this->parser->parseSourceFile('<?php ' . $template);
         $documentNode = $this->parser->parseSourceFile($document);
         $matches = [];
         $patternNode = $this->reducePattern($patternNode);

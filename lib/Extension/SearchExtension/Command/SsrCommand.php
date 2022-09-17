@@ -17,11 +17,13 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\Util\LineAtOffset;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Filesystem\Path;
 
 class SsrCommand extends Command
@@ -67,14 +69,18 @@ class SsrCommand extends Command
         ));
         $replacements = new TokenReplacements(...array_map(function (string $replacement) {
             return TokenReplacement::fromString($replacement);
-        }, (array)$input->getOption(self::OPT_TEXT)));
+        }, (array)$input->getOption(self::OPT_REPLACE)));
 
         $output->getErrorOutput()->writeln(sprintf('template: %s', $pattern));
         foreach ($constraints as $constraint) {
             $output->getErrorOutput()->writeln(sprintf('  filter: <fg=cyan>%s %s</>', $constraint->placeholder(), $constraint->describe()));
         }
+        foreach ($replacements as $replacement) {
+            $output->getErrorOutput()->writeln(sprintf(' replace: <fg=cyan>%s</> with <fg=cyan>%s</>', $replacement->placeholder(), $replacement->replacement()));
+        }
 
         $filesystem = $this->filesystemRegistry->get('git');
+        $questionHelper = new QuestionHelper();
 
         foreach ($filesystem->fileList()->phpFiles()->within(
             FilePath::fromString(Path::makeAbsolute((string)$path, (string)getcwd()))
@@ -111,9 +117,11 @@ class SsrCommand extends Command
             }
 
             $document = $replacements->applyTo($matches);
-            continue;
-            if (false === file_put_contents($document->uri()->path(), $document->__toString())) {
-                throw new RuntimeException(sprintf('Could not update file "%s"', $document->uri()));
+            if ($document->__toString() !== $matches->document()->__toString()) {
+                $questionHelper->ask(new ConfirmationQuestion(sprintf('Update "%s"?', $document->uri()->__toString())));
+                if (false === file_put_contents($document->uri()->path(), $document->__toString())) {
+                    throw new RuntimeException(sprintf('Could not update file "%s"', $document->uri()));
+                }
             }
         }
 

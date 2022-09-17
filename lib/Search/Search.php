@@ -23,11 +23,11 @@ class Search
 
     public function search(
         TextDocument $document,
-        string $pattern,
+        string $template,
         TokenConstraints $constraints
     ): DocumentMatches
     {
-        $matches = $this->matchFinder->match($document, $pattern);
+        $matches = $this->matchFinder->match($document, $template);
         $matches = $this->filter->filter($matches, $constraints);
 
         return $matches;
