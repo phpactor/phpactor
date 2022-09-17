@@ -118,9 +118,13 @@ class SsrCommand extends Command
 
             $document = $replacements->applyTo($matches);
             if ($document->__toString() !== $matches->document()->__toString()) {
-                $questionHelper->ask(new ConfirmationQuestion(sprintf('Update "%s"?', $document->uri()->__toString())));
-                if (false === file_put_contents($document->uri()->path(), $document->__toString())) {
-                    throw new RuntimeException(sprintf('Could not update file "%s"', $document->uri()));
+                if ($questionHelper->ask($input, $output, new ConfirmationQuestion(sprintf(
+                    '<bg=cyan;fg=black>Update: %s? [no]</>',
+                    $document->uri()->__toString()
+                ), false))) {
+                    if (false === file_put_contents($document->uri()->path(), $document->__toString())) {
+                        throw new RuntimeException(sprintf('Could not update file "%s"', $document->uri()));
+                    }
                 }
             }
         }

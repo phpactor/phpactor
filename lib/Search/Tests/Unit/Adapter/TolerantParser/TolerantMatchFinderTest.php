@@ -30,7 +30,7 @@ class TolerantMatchFinderTest extends TestCase
                     new TokenEqualityMatcher(),
                 )
             )
-        )->match(TextDocumentBuilder::create($document)->build(), pattern);
+        )->match(TextDocumentBuilder::create($document)->build(), $pattern);
         $assertion($matches);
     }
 
