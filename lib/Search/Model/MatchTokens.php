@@ -3,6 +3,7 @@
 namespace Phpactor\Search\Model;
 
 use ArrayIterator;
+use Closure;
 use Countable;
 use Generator;
 use IteratorAggregate;
@@ -62,7 +63,21 @@ class MatchTokens implements Countable, IteratorAggregate
         }
 
         throw new RuntimeException(sprintf(
-            'No tokens at offset %d', $offset
+            'No tokens at offset %d', $targetOffset
         ));
+    }
+
+    public function filterPlaceholder(string $placeholder, Closure $predicate): self
+    {
+        if (!isset($this->tokens[$placeholder])) {
+            throw new RuntimeException(sprintf(
+                'No token exists with index/placeholder "%s"',
+                $placeholder
+            ));
+        }
+        $tokens = $this->tokens;
+        $tokens[$placeholder] = array_filter($this->tokens[$placeholder], $predicate);
+
+        return new self($tokens);
     }
 }

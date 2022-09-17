@@ -4,7 +4,7 @@ namespace Phpactor\Search\Model;
 
 use Phpactor\TextDocument\ByteOffsetRange;
 
-class PatternMatch
+final class PatternMatch
 {
     private ByteOffsetRange $range;
     private MatchTokens $tokens;
@@ -23,5 +23,10 @@ class PatternMatch
     public function tokens(): MatchTokens
     {
         return $this->tokens;
+    }
+
+    public function withTokens(MatchTokens $tokens): self
+    {
+        return new self($this->range, $tokens);
     }
 }

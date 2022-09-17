@@ -3,13 +3,13 @@
 namespace Phpactor\Search\Adapter\WorseReflection;
 
 use Microsoft\PhpParser\Parser;
+use Phpactor\Search\Model\Constraint\TextConstraint;
 use Phpactor\Search\Model\DocumentMatches;
 use Phpactor\Search\Model\MatchFilter;
+use Phpactor\Search\Model\MatchToken;
+use Phpactor\Search\Model\TokenConstraint;
 use Phpactor\Search\Model\TokenConstraints;
-use Phpactor\Search\Model\TokenExprs;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
-use Phpactor\WorseReflection\Core\Type\BooleanType;
-use RuntimeException;
 
 class WorseMatchFilter implements MatchFilter
 {
@@ -22,6 +22,28 @@ class WorseMatchFilter implements MatchFilter
 
     public function filter(DocumentMatches $matches, TokenConstraints $constraints): DocumentMatches
     {
-        return $matches;
+        $filtered = [];
+        foreach ($matches as $match) {
+            foreach ($constraints as $constraint) {
+                $tokens = $match->tokens()->filterPlaceholder(
+                    $constraint->placeholder(),
+                    fn (MatchToken $token) => $this->evalConstraint($token, $constraint)
+                );
+                $match = $match->withTokens($tokens);
+            }
+
+            $filtered[] = $match;
+        }
+
+        return new DocumentMatches($matches->document(), $filtered);
+    }
+
+    private function evalConstraint(MatchToken $token, TokenConstraint $constraint): bool
+    {
+        if ($constraint instanceof TextConstraint) {
+            return $token->text === $constraint->text();
+        }
+
+        return false;
     }
 }

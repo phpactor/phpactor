@@ -5,7 +5,9 @@ namespace Phpactor\Extension\SearchExtension\Command;
 use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Search\Model\Constraint\TextConstraint;
 use Phpactor\Search\Model\MatchFinder;
+use Phpactor\Search\Model\TokenConstraints;
 use Phpactor\Search\Search;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LineCol;
@@ -22,7 +24,7 @@ class SearchCommand extends Command
 {
     const ARG_PATTERN = 'pattern';
     const ARG_PATH = 'path';
-    const OPT_FILTER = 'filter';
+    const OPT_TEXT = 'text';
 
     private Search $search;
 
@@ -38,16 +40,19 @@ class SearchCommand extends Command
 
     public function configure(): void
     {
+        $this->setDescription('Structural search and replace');
         $this->addArgument(self::ARG_PATH, InputArgument::REQUIRED);
         $this->addArgument(self::ARG_PATTERN, InputArgument::REQUIRED);
-        $this->addOption(self::OPT_FILTER, null, InputOption::VALUE_REQUIRED);
+        $this->addOption(self::OPT_TEXT, null, InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Filter placeholders by text');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $path = $input->getArgument(self::ARG_PATH);
         $pattern = $input->getArgument(self::ARG_PATTERN);
-        $filter = $input->getOption(self::OPT_FILTER);
+        $constraints = new TokenConstraints(...array_map(function (string $constraint) {
+            return TextConstraint::fromString($constraint);
+        }, (array)$input->getOption(self::OPT_TEXT)));
 
         $filesystem = $this->filesystemRegistry->get('git');
 
@@ -55,7 +60,8 @@ class SearchCommand extends Command
             FilePath::fromString(Path::makeAbsolute((string)$path, (string)getcwd()))
         ) as $file) {
             $document = TextDocumentBuilder::fromUri($file->__toString())->build();
-            $matches = $this->search->search($document, $pattern, $filter);
+
+            $matches = $this->search->search($document, $pattern, $constraints);
             if (count($matches) === 0) {
                 continue;
             }
