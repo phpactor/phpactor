@@ -4,5 +4,5 @@ namespace Phpactor\Search\Model;
 
 interface MatchFilter
 {
-    public function filter(DocumentMatches $matches, string $filter): DocumentMatches;
+    public function filter(DocumentMatches $matches, TokenConstraints $filter): DocumentMatches;
 }

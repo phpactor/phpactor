@@ -38,8 +38,7 @@ class SearchExtension implements Extension
                 $container->get(MatchFinder::class),
                 new WorseMatchFilter(
                     $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                    $container->get(WorseReflectionExtension::SERVICE_PARSER),
-                    new WorseFilterEvaluator()
+                    $container->get(WorseReflectionExtension::SERVICE_PARSER)
                 )
             );
         });
