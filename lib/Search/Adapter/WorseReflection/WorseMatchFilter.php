@@ -2,7 +2,6 @@
 
 namespace Phpactor\Search\Adapter\WorseReflection;
 
-use Microsoft\PhpParser\Parser;
 use Phpactor\Search\Model\Constraint\TextConstraint;
 use Phpactor\Search\Model\DocumentMatches;
 use Phpactor\Search\Model\MatchFilter;
