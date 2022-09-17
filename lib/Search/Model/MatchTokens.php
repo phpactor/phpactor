@@ -80,4 +80,15 @@ class MatchTokens implements Countable, IteratorAggregate
 
         return new self($tokens);
     }
+
+    public function hasDepletedPlaceholders(): bool
+    {
+        foreach ($this->tokens as $placeholder => $tokens) {
+            if (count($tokens) === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

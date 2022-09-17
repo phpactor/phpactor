@@ -29,4 +29,9 @@ final class PatternMatch
     {
         return new self($this->range, $tokens);
     }
+
+    public function hasDepletedPlaceholders(): bool
+    {
+        return $this->tokens->hasDepletedPlaceholders();
+    }
 }

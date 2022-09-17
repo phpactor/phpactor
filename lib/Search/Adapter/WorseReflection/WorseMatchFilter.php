@@ -32,6 +32,10 @@ class WorseMatchFilter implements MatchFilter
                 $match = $match->withTokens($tokens);
             }
 
+            if ($match->hasDepletedPlaceholders()) {
+                continue;
+            }
+
             $filtered[] = $match;
         }
 
