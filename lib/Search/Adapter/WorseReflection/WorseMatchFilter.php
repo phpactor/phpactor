@@ -46,7 +46,7 @@ class WorseMatchFilter implements MatchFilter
     private function evalConstraint(TextDocument $document, MatchToken $token, TokenConstraint $constraint): bool
     {
         if ($constraint instanceof TextConstraint) {
-            return ltrim($token->text, '$') === $constraint->text();
+            return $token->text === $constraint->text();
         }
 
         if ($constraint instanceof TypeConstraint) {
