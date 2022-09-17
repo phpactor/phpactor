@@ -5,7 +5,9 @@ namespace Phpactor\Search\Model;
 class MatchResult
 {
     public ?MatchToken $token;
+
     public ?string $name;
+
     private ?bool $result;
 
     private function __construct(?bool $result, ?MatchToken $token = null, ?string $name = null)

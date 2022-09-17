@@ -10,7 +10,6 @@ use Phpactor\Extension\SearchExtension\Command\SearchCommand;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Search\Adapter\WorseReflection\WorseFilterEvaluator;
 use Phpactor\Search\Adapter\WorseReflection\WorseMatchFilter;
 use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
@@ -37,8 +36,7 @@ class SearchExtension implements Extension
             return new Search(
                 $container->get(MatchFinder::class),
                 new WorseMatchFilter(
-                    $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                    $container->get(WorseReflectionExtension::SERVICE_PARSER)
+                    $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
                 )
             );
         });
@@ -50,7 +48,7 @@ class SearchExtension implements Extension
             );
         }, [
             ConsoleExtension::TAG_COMMAND => [
-                'name' => 'search'
+                'name' => 'ssr'
             ]
         ]);
     }

@@ -8,6 +8,7 @@ use RuntimeException;
 abstract class AbstractConstraint implements TokenConstraint
 {
     protected string $placeholder;
+
     protected string $value;
 
     final public function __construct(string $placeholder, string $value)
@@ -21,7 +22,8 @@ abstract class AbstractConstraint implements TokenConstraint
         $parts = explode(':', $constraint);
         if (count($parts) !== 2) {
             throw new RuntimeException(sprintf(
-                'Invalid specification, must be of form <placeholder>:<value>, got: %s', $constraint
+                'Invalid specification, must be of form <placeholder>:<value>, got: %s',
+                $constraint
             ));
         }
 

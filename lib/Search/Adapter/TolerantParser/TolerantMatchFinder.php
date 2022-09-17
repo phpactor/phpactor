@@ -57,6 +57,17 @@ class TolerantMatchFinder implements MatchFinder
         return new DocumentMatches($document, $matches);
     }
 
+    public static function createDefault(): self
+    {
+        return new self(
+            new Parser(),
+            new ChainMatcher(
+                new PlaceholderMatcher(),
+                new TokenEqualityMatcher()
+            )
+        );
+    }
+
     /**
      * @return array<Node>
      * @param array<Node> $matches
@@ -201,16 +212,5 @@ class TolerantMatchFinder implements MatchFinder
         );
 
         return $this->matcher->matches($t1, $t2);
-    }
-
-    public static function createDefault(): self
-    {
-        return new self(
-            new Parser(),
-            new ChainMatcher(
-                new PlaceholderMatcher(),
-                new TokenEqualityMatcher()
-            )
-        );
     }
 }

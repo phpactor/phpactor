@@ -4,26 +4,19 @@ namespace Phpactor\Search\Tests\Unit\Adapter\WorseReflection;
 
 use Closure;
 use Generator;
-use Microsoft\PhpParser\Parser;
-use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
 use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
 use Phpactor\Search\Adapter\WorseReflection\WorseMatchFilter;
 use Phpactor\Search\Model\Constraint\TextConstraint;
 use Phpactor\Search\Model\Constraint\TypeConstraint;
 use Phpactor\Search\Model\DocumentMatches;
-use Phpactor\Search\Model\Matcher\ChainMatcher;
-use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
-use Phpactor\Search\Model\PatternMatch;
 use Phpactor\Search\Model\TokenConstraint;
 use Phpactor\Search\Model\TokenConstraints;
 use Phpactor\TestUtils\PHPUnit\TestCase;
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseMatchFilterTest extends TestCase
 {
-
     /**
      * @dataProvider provideFilter
      * @param TokenConstraint[] $constraints

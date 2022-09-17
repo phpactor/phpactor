@@ -2,10 +2,8 @@
 
 namespace Phpactor\Search\Model;
 
-use ArrayIterator;
 use Closure;
 use Countable;
-use Generator;
 use IteratorAggregate;
 use RuntimeException;
 use Traversable;
@@ -63,7 +61,8 @@ class MatchTokens implements Countable, IteratorAggregate
         }
 
         throw new RuntimeException(sprintf(
-            'No tokens at offset %d', $targetOffset
+            'No tokens at offset %d',
+            $targetOffset
         ));
     }
 

@@ -6,12 +6,12 @@ use Phpactor\Search\Model\DocumentMatches;
 use Phpactor\Search\Model\MatchFilter;
 use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\TokenConstraints;
-use Phpactor\Search\Model\TokenExprs;
 use Phpactor\TextDocument\TextDocument;
 
 class Search
 {
     private MatchFinder $matchFinder;
+
     private MatchFilter $filter;
 
     public function __construct(MatchFinder $matchFinder, MatchFilter $filter)

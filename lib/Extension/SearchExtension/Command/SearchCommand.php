@@ -85,7 +85,7 @@ class SearchCommand extends Command
             foreach ($matches as $match) {
                 $startLineCol = LineCol::fromByteOffset($document, $match->range()->start());
                 $endLineCol = LineCol::fromByteOffset($document, $match->range()->end());
-                $output->writeln(str_replace("\n", " ", sprintf(
+                $output->writeln(str_replace("\n", ' ', sprintf(
                     '(%d:%d,%d:%d) %s',
                     $startLineCol->line(),
                     $startLineCol->col(),

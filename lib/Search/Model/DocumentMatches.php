@@ -30,11 +30,6 @@ class DocumentMatches implements Countable, IteratorAggregate
         $this->document = $document;
     }
 
-    public static function none(): self
-    {
-        return new self([]);
-    }
-
     /**
      * @return PatternMatch[]
      */
