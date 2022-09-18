@@ -7,6 +7,7 @@ use RuntimeException;
 final class TokenReplacement
 {
     private string $placeholder;
+
     private string $replacement;
 
     public function __construct(string $placeholder, string $replacement)

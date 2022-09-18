@@ -2,11 +2,8 @@
 
 namespace Phpactor\Extension\SearchExtension\Command;
 
-use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Search\Adapter\Console\ConsoleMatchRenderer;
-use Phpactor\Search\Adapter\Symfony\ConsoleMatchRenderer as PhpactorConsoleMatchRenderer;
 use Phpactor\Search\Model\Constraint\TextConstraint;
 use Phpactor\Search\Model\Constraint\TypeConstraint;
 use Phpactor\Search\Model\MatchRenderer;
@@ -14,10 +11,7 @@ use Phpactor\Search\Model\TokenConstraints;
 use Phpactor\Search\Model\TokenReplacement;
 use Phpactor\Search\Model\TokenReplacements;
 use Phpactor\Search\Search;
-use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\Util\LineAtOffset;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -38,15 +32,16 @@ class SsrCommand extends Command
     const OPT_REPLACE = 'replace';
 
     private Search $search;
+
     private FilesystemRegistry $filesystemRegistry;
+
     private MatchRenderer $renderer;
 
     public function __construct(
         Search $search,
         MatchRenderer $renderer,
         FilesystemRegistry $filesystemRegistry
-    )
-    {
+    ) {
         parent::__construct();
         $this->search = $search;
         $this->filesystemRegistry = $filesystemRegistry;

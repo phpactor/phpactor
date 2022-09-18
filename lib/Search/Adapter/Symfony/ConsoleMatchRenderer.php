@@ -2,13 +2,10 @@
 
 namespace Phpactor\Search\Adapter\Symfony;
 
-use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Search\Model\DocumentMatches;
 use Phpactor\Search\Model\MatchRenderer;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\LineCol;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\Util\LineAtOffset;
 use Symfony\Component\Console\Output\OutputInterface;
 

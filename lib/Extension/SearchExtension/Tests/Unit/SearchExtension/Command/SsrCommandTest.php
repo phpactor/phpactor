@@ -12,6 +12,7 @@ class SsrCommandTest extends TestCase
 {
     /**
      * @dataProvider provideSsr
+     * @param array<string> $args
      */
     public function testCommand(array $args, Closure $assertion): void
     {
@@ -60,7 +61,6 @@ class SsrCommandTest extends TestCase
                 $exit = $process->run();
                 self::assertEquals(255, $exit);
                 self::assertStringContainsString('Invalid specification', $process->getErrorOutput());
-
             }
         ];
         yield 'type filter' => [

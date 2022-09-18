@@ -6,7 +6,6 @@ use Phpactor\Search\Model\DocumentMatches;
 use Phpactor\Search\Model\MatchFilter;
 use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\TokenConstraints;
-use Phpactor\Search\Model\TokenReplacements;
 use Phpactor\TextDocument\TextDocument;
 
 class Search
@@ -25,8 +24,7 @@ class Search
         TextDocument $document,
         string $template,
         TokenConstraints $constraints
-    ): DocumentMatches
-    {
+    ): DocumentMatches {
         $matches = $this->matchFinder->match($document, $template);
         $matches = $this->filter->filter($matches, $constraints);
 
