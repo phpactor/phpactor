@@ -1,6 +1,1 @@
-`${{ object.name -}}`
-{{- ' ' }}{{ '__' ~ render(object.symbolContext.types) ~ '__'  -}}
-{%- if object.symbolContext.value is not null -%}
-    {{- ' = ' }}{{ object.symbolContext.value|json_encode(constant('JSON_UNESCAPED_SLASHES')) -}}
-{% endif %}
-{{ ' ' }}_[{{ render(object.symbolContext.symbol.position) }}{{ ']' -}}{{ '_' -}}
+{{ render(object.type) }}
