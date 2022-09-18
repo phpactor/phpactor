@@ -45,8 +45,8 @@ class SearchExtension implements Extension
         $container->register(SsrCommand::class, function (Container $container) {
             return new SsrCommand(
                 $container->get(Search::class),
-                $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY),
-                new ConsoleMatchRenderer()
+                new ConsoleMatchRenderer($container->get(ConsoleExtension::SERVICE_OUTPUT)),
+                $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)
             );
         }, [
             ConsoleExtension::TAG_COMMAND => [

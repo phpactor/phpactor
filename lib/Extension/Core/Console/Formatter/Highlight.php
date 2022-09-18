@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Core\Console\Formatter;
 
 class Highlight
 {
-    public static function highlightAtCol(string $line, string $subject, int $col, bool $ansi)
+    public static function highlightAtCol(string $line, string $subject, int $col, bool $ansi): string
     {
         $leftBracket = '⟶';
         $rightBracket = '⟵';

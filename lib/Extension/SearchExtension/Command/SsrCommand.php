@@ -102,12 +102,8 @@ class SsrCommand extends Command
                 continue;
             }
 
-            $output->write(sprintf('<fg=cyan>%s</>:', $file->path()));
             $edits = [];
-
-            foreach ($matches as $match) {
-                $output->writeln($this->renderer->render($document, $match));
-            }
+            $this->renderer->render($matches);
 
             $document = $replacements->applyTo($matches);
             if ($document->__toString() !== $matches->document()->__toString()) {
