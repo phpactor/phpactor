@@ -198,6 +198,13 @@ class TolerantMatchFinderTest extends TestCase
                 self::assertCount(1, $matches);
             }
         ];
+        yield 'fully qualified name' => [
+            'namespaced.test',
+            'One\\Two\\Three\\Four',
+            function (DocumentMatches $matches): void {
+                self::assertCount(1, $matches);
+            }
+        ];
     }
 
     /**
@@ -254,6 +261,17 @@ class TolerantMatchFinderTest extends TestCase
             'class __A__ { function bar() {}}',
             function (DocumentMatches $matches): void {
                 self::assertCount(1, $matches);
+            }
+        ];
+        yield 'fully qualified name' => [
+            'namespaced.test',
+            '__ONE__\\__TWO__\\Three\\Four',
+            function (DocumentMatches $matches): void {
+                self::assertCount(1, $matches);
+                $match = $matches->first();
+                self::assertEquals(['ONE', 'TWO'], $match->tokens()->placeholders());
+                self::assertEquals('One', $match->tokens()->byName('ONE')->at(0)->text);
+                self::assertEquals('Two', $match->tokens()->byName('TWO')->at(0)->text);
             }
         ];
     }
