@@ -23,7 +23,7 @@ class WorseLocalVariableCompletor implements TolerantCompletor
 
     public function __construct(
         VariableCompletionHelper $variableCompletionHelper,
-        ObjectFormatter $typeFormatter = null,
+        ObjectFormatter $typeFormatter = null
     ) {
         $this->informationFormatter = $typeFormatter ?: new ObjectFormatter();
         $this->variableCompletionHelper = $variableCompletionHelper;
