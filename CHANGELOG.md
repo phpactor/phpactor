@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## master
+
+Improvements:
+
+  - [cmp/lsp] inline type information for completion items
+
+
 ## 2022.09.11
 
 Bug fixes:
