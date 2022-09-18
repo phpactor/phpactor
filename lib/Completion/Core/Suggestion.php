@@ -237,6 +237,11 @@ class Suggestion
         return $this->documentation;
     }
 
+    public function hasDocumentation(): bool
+    {
+        return !empty($this->documentation);
+    }
+
     public function priority(): ?int
     {
         return $this->priority;

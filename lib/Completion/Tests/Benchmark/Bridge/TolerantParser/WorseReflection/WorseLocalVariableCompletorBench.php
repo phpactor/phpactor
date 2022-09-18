@@ -3,6 +3,7 @@
 namespace Phpactor\Completion\Tests\Benchmark\Bridge\TolerantParser\WorseReflection;
 
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Helper\VariableCompletionHelper;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Tests\Benchmark\Bridge\TolerantParser\TolerantCompletorBenchCase;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -13,6 +14,11 @@ class WorseLocalVariableCompletorBench extends TolerantCompletorBenchCase
     protected function createTolerant(string $source): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
-        return new WorseLocalVariableCompletor($reflector, new ObjectFormatter());
+        return new WorseLocalVariableCompletor(
+            new VariableCompletionHelper(
+                $reflector
+            ),
+            new ObjectFormatter()
+        );
     }
 }

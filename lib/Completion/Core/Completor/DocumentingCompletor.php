@@ -24,7 +24,10 @@ class DocumentingCompletor implements Completor
     {
         $suggestions = $this->innerCompletor->complete($source, $byteOffset);
         foreach ($suggestions as $suggestion) {
-            yield $suggestion->withDocumentation($this->documentor->document($suggestion));
+            if (false === $suggestion->hasDocumentation()) {
+                $suggestion = $suggestion->withDocumentation($this->documentor->document($suggestion));
+            }
+            yield $suggestion;
         }
         return $suggestions->getReturn();
     }

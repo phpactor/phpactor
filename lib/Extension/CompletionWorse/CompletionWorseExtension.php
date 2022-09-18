@@ -13,6 +13,7 @@ use Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem\ScfClassCompl
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Helper\VariableCompletionHelper;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\KeywordCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\ImportedNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompletor;
@@ -340,7 +341,9 @@ class CompletionWorseExtension implements Extension
                 'Completion for local variables',
                 function (Container $container) {
                     return new WorseLocalVariableCompletor(
-                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        new VariableCompletionHelper(
+                            $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        ),
                         $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
                     );
                 },

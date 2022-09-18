@@ -9,7 +9,6 @@ use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Helper\VariableCom
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Microsoft\PhpParser\Node\Expression\Variable as TolerantVariable;
@@ -20,15 +19,14 @@ class WorseLocalVariableCompletor implements TolerantCompletor
 {
     private ObjectFormatter $informationFormatter;
 
-    private Reflector $reflector;
-
     private VariableCompletionHelper $variableCompletionHelper;
 
-    public function __construct(Reflector $reflector, ObjectFormatter $typeFormatter = null, VariableCompletionHelper $variableCompletionHelper = null)
-    {
-        $this->reflector = $reflector;
+    public function __construct(
+        VariableCompletionHelper $variableCompletionHelper,
+        ObjectFormatter $typeFormatter = null
+    ) {
         $this->informationFormatter = $typeFormatter ?: new ObjectFormatter();
-        $this->variableCompletionHelper = $variableCompletionHelper ?: new VariableCompletionHelper($reflector);
+        $this->variableCompletionHelper = $variableCompletionHelper;
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
@@ -47,7 +45,10 @@ class WorseLocalVariableCompletor implements TolerantCompletor
                 '$' . $local->name(),
                 [
                     'type' => Suggestion::TYPE_VARIABLE,
-                    'short_description' => $this->informationFormatter->format($local)
+                    'short_description' => $this->informationFormatter->format($local),
+                    'documentation' => function () use ($local) {
+                        return $local->type()->__toString();
+                    },
                 ]
             );
         }
@@ -88,6 +89,9 @@ class WorseLocalVariableCompletor implements TolerantCompletor
             yield 'why'.$key => Suggestion::createWithOptions(sprintf('$%s[%s]', $varName, (string)$key), [
                 'type' => Suggestion::TYPE_FIELD,
                 'short_description' => $this->informationFormatter->format($type),
+                'documentation' => function () use ($type) {
+                    return $type->__toString();
+                },
             ]);
         }
     }

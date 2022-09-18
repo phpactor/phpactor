@@ -3,6 +3,7 @@
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Helper\VariableCompletionHelper;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
 use Generator;
@@ -56,6 +57,7 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_VARIABLE,
                     'name' => '$foobar',
                     'short_description' => '"hello"',
+                    'documentation' => '"hello"',
                 ]
             ]
         ];
@@ -200,6 +202,9 @@ class WorseLocalVariableCompletorTest extends TolerantCompletorTestCase
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
-        return new WorseLocalVariableCompletor($reflector, $this->formatter());
+        return new WorseLocalVariableCompletor(
+            new VariableCompletionHelper($reflector),
+            $this->formatter()
+        );
     }
 }

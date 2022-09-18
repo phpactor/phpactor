@@ -53,6 +53,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      * @dataProvider provideClass
      * @dataProvider provideInterface
      * @dataProvider provideMethod
+     * @dataProvider provideVariable
      * @dataProvider provideProperty
      * @dataProvider provideConstant
      * @dataProvider provideEnumCase
@@ -956,6 +957,22 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
                 )->get('OneClass')->methods()->get('foo'));
             },
             'member_docblock7.md',
+        ];
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideVariable(): Generator
+    {
+        yield 'variable:' => [
+            '',
+            function (Reflector $reflector) {
+                $offset = $reflector->reflectOffset('<?php $foo = "bar";', 18);
+                $variable = $offset->frame()->locals()->byName('foo')->first();
+                return $variable;
+            },
+            'variable1.md',
         ];
     }
 }
