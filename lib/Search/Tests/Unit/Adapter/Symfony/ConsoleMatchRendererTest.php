@@ -7,7 +7,6 @@ use Phpactor\Search\Adapter\Symfony\ConsoleMatchRenderer;
 use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Symfony\Component\Console\Formatter\NullOutputFormatter;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 class ConsoleMatchRendererTest extends TestCase

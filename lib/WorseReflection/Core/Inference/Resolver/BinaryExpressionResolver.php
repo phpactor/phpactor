@@ -21,6 +21,7 @@ use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -170,6 +171,13 @@ class BinaryExpressionResolver implements Resolver
                 return $left->shiftLeft($right);
             case TokenKind::GreaterThanGreaterThanToken:
                 return $left->shiftRight($right);
+            }
+        }
+
+        if ($left instanceof ClassType) {
+            switch ($operator) {
+            case TokenKind::InstanceOfKeyword:
+                return TypeFactory::boolLiteral(true);
             }
         }
 

@@ -13,7 +13,6 @@ use SplFileInfo;
 
 class FileFinder
 {
-
     public function filesFor(Filesystem $filesystem, ReflectionClassLike $reflection = null, string $memberName = null): FileList
     {
         // if no member name, then we are searching for all members of the

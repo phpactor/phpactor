@@ -54,8 +54,9 @@ class MatchTokens implements Countable, IteratorAggregate
 
     public function at(int $targetOffset): MatchToken
     {
-        foreach ($this->getIterator() as $offset => $token) {
-            if ($targetOffset === $offset) {
+        $offset = 0;
+        foreach ($this->getIterator() as $token) {
+            if ($targetOffset === $offset++) {
                 return $token;
             }
         }

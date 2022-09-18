@@ -4,7 +4,6 @@ namespace Phpactor\Filesystem\Domain;
 
 interface Filesystem
 {
-
     public function fileList(): FileList;
 
     /**
