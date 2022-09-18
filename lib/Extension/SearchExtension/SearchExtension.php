@@ -10,6 +10,7 @@ use Phpactor\Extension\SearchExtension\Command\SsrCommand;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\Search\Adapter\Symfony\ConsoleMatchRenderer;
 use Phpactor\Search\Adapter\WorseReflection\WorseMatchFilter;
 use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
@@ -44,7 +45,8 @@ class SearchExtension implements Extension
         $container->register(SsrCommand::class, function (Container $container) {
             return new SsrCommand(
                 $container->get(Search::class),
-                $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)
+                $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY),
+                new ConsoleMatchRenderer()
             );
         }, [
             ConsoleExtension::TAG_COMMAND => [

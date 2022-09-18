@@ -5,8 +5,11 @@ namespace Phpactor\Extension\SearchExtension\Command;
 use Phpactor\Extension\Core\Console\Formatter\Highlight;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\Search\Adapter\Console\ConsoleMatchRenderer;
+use Phpactor\Search\Adapter\Symfony\ConsoleMatchRenderer as PhpactorConsoleMatchRenderer;
 use Phpactor\Search\Model\Constraint\TextConstraint;
 use Phpactor\Search\Model\Constraint\TypeConstraint;
+use Phpactor\Search\Model\MatchRenderer;
 use Phpactor\Search\Model\TokenConstraints;
 use Phpactor\Search\Model\TokenReplacement;
 use Phpactor\Search\Model\TokenReplacements;
@@ -36,12 +39,18 @@ class SsrCommand extends Command
 
     private Search $search;
     private FilesystemRegistry $filesystemRegistry;
+    private MatchRenderer $renderer;
 
-    public function __construct(Search $search, FilesystemRegistry $filesystemRegistry)
+    public function __construct(
+        Search $search,
+        MatchRenderer $renderer,
+        FilesystemRegistry $filesystemRegistry
+    )
     {
         parent::__construct();
         $this->search = $search;
         $this->filesystemRegistry = $filesystemRegistry;
+        $this->renderer = $renderer;
     }
 
     public function configure(): void
@@ -97,23 +106,7 @@ class SsrCommand extends Command
             $edits = [];
 
             foreach ($matches as $match) {
-                $startLineCol = LineCol::fromByteOffset($document, $match->range()->start());
-                $endLineCol = LineCol::fromByteOffset($document, $match->range()->end());
-
-                $output->writeln(str_replace("\n", ' ', sprintf(
-                    '(%d:%d,%d:%d) %s',
-                    $startLineCol->line(),
-                    $startLineCol->col(),
-                    $endLineCol->line(),
-                    $endLineCol->col(),
-                    Highlight::highlightAtCol(
-                        LineAtOffset::lineAtByteOffset($document, ByteOffset::fromInt($match->range()->start()->toInt() + 1)),
-                        substr($document->__toString(), $match->range()->start()->toInt(), $match->range()->length()),
-                        $startLineCol->col() - 1,
-                        true
-                    )
-                )));
-
+                $output->writeln($this->renderer->render($document, $match));
             }
 
             $document = $replacements->applyTo($matches);
