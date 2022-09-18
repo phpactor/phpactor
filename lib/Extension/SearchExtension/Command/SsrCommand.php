@@ -37,15 +37,19 @@ class SsrCommand extends Command
 
     private MatchRenderer $renderer;
 
+    private string $cwd;
+
     public function __construct(
         Search $search,
         MatchRenderer $renderer,
-        FilesystemRegistry $filesystemRegistry
+        FilesystemRegistry $filesystemRegistry,
+        string $cwd
     ) {
         parent::__construct();
         $this->search = $search;
         $this->filesystemRegistry = $filesystemRegistry;
         $this->renderer = $renderer;
+        $this->cwd = $cwd;
     }
 
     public function configure(): void
@@ -86,33 +90,64 @@ class SsrCommand extends Command
         $filesystem = $this->filesystemRegistry->get('git');
         $questionHelper = new QuestionHelper();
 
+        $absolutePath = Path::makeAbsolute((string)$path, $this->cwd);
+        if (file_exists($absolutePath) && is_file($absolutePath)) {
+            $this->scanAndReplace(
+                FilePath::fromString($absolutePath),
+                $pattern,
+                $constraints,
+                $replacements,
+                $questionHelper,
+                $input,
+                $output
+            );
+            return 0;
+        }
+
         foreach ($filesystem->fileList()->phpFiles()->within(
-            FilePath::fromString(Path::makeAbsolute((string)$path, (string)getcwd()))
+            FilePath::fromString($absolutePath)
         ) as $file) {
-            $document = TextDocumentBuilder::fromUri($file->__toString())->build();
-
-            $matches = $this->search->search($document, $pattern, $constraints);
-
-            if (count($matches) === 0) {
-                continue;
-            }
-
-            $edits = [];
-            $this->renderer->render($matches);
-
-            $document = $replacements->applyTo($matches);
-            if ($document->__toString() !== $matches->document()->__toString()) {
-                if ($questionHelper->ask($input, $output, new ConfirmationQuestion(sprintf(
-                    '<bg=cyan;fg=black>Update: %s? [no]</>',
-                    $document->uri()->__toString()
-                ), false))) {
-                    if (false === file_put_contents($document->uri()->path(), $document->__toString())) {
-                        throw new RuntimeException(sprintf('Could not update file "%s"', $document->uri()));
-                    }
-                }
-            }
+            $this->scanAndReplace($file, $pattern, $constraints, $replacements, $questionHelper, $input, $output);
         }
 
         return 0;
+    }
+
+    private function scanAndReplace(
+        FilePath $file,
+        string $pattern,
+        TokenConstraints $constraints,
+        TokenReplacements $replacements,
+        QuestionHelper $questionHelper,
+        InputInterface $input,
+        OutputInterface $output
+    ): void
+    {
+        $document = TextDocumentBuilder::fromUri($file->__toString())->build();
+        
+        $matches = $this->search->search($document, $pattern, $constraints);
+        
+        if (count($matches) === 0) {
+            return;
+        }
+        
+        $edits = [];
+        $this->renderer->render($matches);
+        
+        $document = $replacements->applyTo($matches);
+        if ($document->__toString() === $matches->document()->__toString()) {
+            return;
+        }
+
+        if (false === $questionHelper->ask($input, $output, new ConfirmationQuestion(sprintf(
+            '<bg=cyan;fg=black>Update: %s? [no]</>',
+            $document->uri()->__toString()
+        ), false))) {
+            return;
+        }
+
+        if (false === file_put_contents($document->uri()->path(), $document->__toString())) {
+            throw new RuntimeException(sprintf('Could not update file "%s"', $document->uri()));
+        }
     }
 }

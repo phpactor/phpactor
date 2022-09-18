@@ -30,7 +30,7 @@ final class ConsoleMatchRenderer implements MatchRenderer
         $document = $matches->document();
         foreach ($matches as $match) {
             $this->output->write(sprintf(
-                '<fg=cyan>%s</>:',
+                '%s:',
                 Path::makeRelative($matches->document()->uri()->path(), $this->cwd)
             ));
 

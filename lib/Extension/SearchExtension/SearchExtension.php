@@ -50,7 +50,8 @@ class SearchExtension implements Extension
                     $container->get(ConsoleExtension::SERVICE_OUTPUT),
                     $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)
                 ),
-                $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)
+                $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY),
+                $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)
             );
         }, [
             ConsoleExtension::TAG_COMMAND => [
