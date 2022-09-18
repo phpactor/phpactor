@@ -47,6 +47,13 @@ class JsonSchemaBuilderTest extends TestCase
                             "string"
                         ],
                         "default": "bar"
+                    },
+                    "bloob": {
+                        "description": "Testing boolean defaults",
+                        "type": [
+                            "boolean"
+                        ],
+                        "default": false
                     }
                 }
             }
@@ -62,6 +69,7 @@ class JsonSchemaBuilderTest extends TestCase
                 $resolver->setDefaults([
                     'bar.foo' => 1234,
                     'foo.bar' => 'bar',
+                    'bloob' => false
                 ]);
                 $resolver->setRequired([
                     'bar.foo',
@@ -69,9 +77,11 @@ class JsonSchemaBuilderTest extends TestCase
                 $resolver->setTypes([
                     'bar.foo' => 'string',
                     'foo.bar' => 'string',
+                    'bloob' => 'bool'
                 ]);
                 $resolver->setDescriptions([
                     'bar.foo' => 'This does something',
+                    'bloob' => 'Testing boolean defaults'
                 ]);
                 $resolver->setEnums([
                     'bar.foo' => ['one', 'two'],

@@ -56,7 +56,7 @@ class JsonSchemaBuilder
                 if ($definition->types()) {
                     $meta['type'] = $this->mapTypes($definition->types());
                 }
-                if ($definition->defaultValue()) {
+                if (null !== $definition->defaultValue()) {
                     $meta['default'] = $definition->defaultValue();
                 }
                 if ([] !== $definition->enum()) {
