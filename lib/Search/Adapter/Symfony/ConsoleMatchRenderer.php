@@ -31,12 +31,16 @@ final class ConsoleMatchRenderer implements MatchRenderer
         foreach ($matches as $match) {
             $this->output->write(sprintf(
                 '%s:',
-                Path::makeRelative($matches->document()->uri()->path(), $this->cwd)
+                Path::makeRelative(
+                    $document->uri()->path(),
+                    $this->cwd
+                )
             ));
 
             $startLineCol = LineCol::fromByteOffset($document, $match->range()->start());
             $endLineCol = LineCol::fromByteOffset($document, $match->range()->end());
 
+            $highlighted = $this->highlight($document->__toString(), $match);
             $output = (sprintf(
                 '%d:%d,%d:%d %s',
                 $startLineCol->line(),
@@ -44,8 +48,8 @@ final class ConsoleMatchRenderer implements MatchRenderer
                 $endLineCol->line(),
                 $endLineCol->col(),
                 substr(
-                    $this->highlight($document->__toString(), $match),
-                    (new LineCol($startLineCol->line(), 1))->toByteOffset($document->__toString())->toInt()
+                    $highlighted,
+                    (new LineCol($startLineCol->line(), 1))->toByteOffset($highlighted)->toInt()
                 )
             ));
 
