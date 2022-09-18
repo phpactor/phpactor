@@ -6,6 +6,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\SearchExtension\Command\SsrCommand;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
@@ -45,7 +46,10 @@ class SearchExtension implements Extension
         $container->register(SsrCommand::class, function (Container $container) {
             return new SsrCommand(
                 $container->get(Search::class),
-                new ConsoleMatchRenderer($container->get(ConsoleExtension::SERVICE_OUTPUT)),
+                new ConsoleMatchRenderer(
+                    $container->get(ConsoleExtension::SERVICE_OUTPUT),
+                    $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)
+                ),
                 $container->get(SourceCodeFilesystemExtension::SERVICE_REGISTRY)
             );
         }, [

@@ -35,7 +35,7 @@ class MatchTokens implements Countable, IteratorAggregate
     {
         foreach ($this->tokens as $placeholder => $tokens) {
             foreach ($tokens as $token) {
-                yield $token;
+                yield $placeholder => $token;
             }
         }
     }
@@ -89,5 +89,13 @@ class MatchTokens implements Countable, IteratorAggregate
         }
 
         return false;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function placeholders(): array
+    {
+        return array_keys($this->tokens);
     }
 }
