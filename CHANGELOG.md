@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - [rpc] Fix regression with :PhpactorClassNew opening in `Untitled` buffer #1881
+
 Improvements:
 
   - [cmp/lsp] inline type information for completion items
