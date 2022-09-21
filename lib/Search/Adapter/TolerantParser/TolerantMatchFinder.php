@@ -3,6 +3,7 @@
 namespace Phpactor\Search\Adapter\TolerantParser;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
@@ -20,6 +21,7 @@ use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
  * This finder will match all parts of the documents AST which match the
@@ -110,6 +112,8 @@ class TolerantMatchFinder implements MatchFinder
             $nodeProps = $this->normalize($node->$childName);
             $templateProps = $this->normalize($template->$childName);
 
+            $atLeastOne = $node instanceof ClassMembersNode && $childName === 'classMemberDeclarations';
+
             foreach ($templateProps as $index => $templateProp) {
                 $nodeProp = $nodeProps[$index] ?? null;
 
@@ -117,6 +121,7 @@ class TolerantMatchFinder implements MatchFinder
                 if ($templateProp === null) {
                     continue;
                 }
+
 
                 if ($nodeProp instanceof Node && $templateProp instanceof Node) {
                     if (false === $this->nodeMatches($nodeProp, $templateProp, $matchTokens)) {
