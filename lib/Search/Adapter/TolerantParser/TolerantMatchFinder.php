@@ -20,6 +20,20 @@ use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 
+/**
+ * This finder will match all parts of the documents AST which match the
+ * template AST.
+ *
+ * The finder works:
+ *
+ * - Parse the template string, obtaining a template AST
+ * - Parse the document
+ * - Find all nodes in the document having the same type as the template AST
+ * - For each of those nodes
+ *   - Check it is the same class as the template node
+ *   - Check to see if tokens in the node match the tokens on the template node
+ *   - Descend into any children of the node, passing the corresponding child of the template node and recurse.
+ */
 class TolerantMatchFinder implements MatchFinder
 {
     private Parser $parser;
@@ -30,31 +44,6 @@ class TolerantMatchFinder implements MatchFinder
     {
         $this->parser = $parser;
         $this->matcher = $matcher;
-    }
-
-    /**
-     * Find all nodes matching first node of pattern
-     * Within those nodes find immediate children matching secod node of pattern
-     */
-    public function match(TextDocument $document, string $pattern): DocumentMatches
-    {
-        $patternNode = $this->parser->parseSourceFile('<?php ' . $pattern);
-        $documentNode = $this->parser->parseSourceFile($document);
-        $matches = [];
-        $patternNode = $this->reducePattern($patternNode);
-        $baseNodes = $this->findBaseNodes($documentNode, $patternNode);
-
-        foreach ($baseNodes as $baseNode) {
-            $matchTokens = [];
-            if ($this->nodeMatches($baseNode, $patternNode, $matchTokens)) {
-                $matches[] = new PatternMatch(
-                    ByteOffsetRange::fromInts($baseNode->getStartPosition(), $baseNode->getEndPosition()),
-                    new MatchTokens($matchTokens)
-                );
-            }
-        }
-
-        return new DocumentMatches($document, $matches);
     }
 
     public static function createDefault(): self
@@ -68,18 +57,39 @@ class TolerantMatchFinder implements MatchFinder
         );
     }
 
+    public function match(TextDocument $document, string $template): DocumentMatches
+    {
+        $templateNode = $this->parser->parseSourceFile('<?php ' . $template);
+        $documentNode = $this->parser->parseSourceFile($document);
+        $matches = [];
+        $templateNode = $this->reducePattern($templateNode);
+        $baseNodes = $this->findBaseNodes($documentNode, $templateNode);
+
+        foreach ($baseNodes as $baseNode) {
+            $matchTokens = [];
+            if ($this->nodeMatches($baseNode, $templateNode, $matchTokens)) {
+                $matches[] = new PatternMatch(
+                    ByteOffsetRange::fromInts($baseNode->getStartPosition(), $baseNode->getEndPosition()),
+                    new MatchTokens($matchTokens)
+                );
+            }
+        }
+
+        return new DocumentMatches($document, $matches);
+    }
+
     /**
      * @return array<Node>
      * @param array<Node> $matches
      */
-    private function findBaseNodes(Node $documentNode, Node $targetNode, array &$matches = []): array
+    private function findBaseNodes(Node $documentNode, Node $templateNode, array &$matches = []): array
     {
         foreach ($documentNode->getChildNodes() as $childNode) {
-            if (get_class($childNode) === get_class($targetNode)) {
+            if (get_class($childNode) === get_class($templateNode)) {
                 $matches[] = $childNode;
             }
 
-            $this->findBaseNodes($childNode, $targetNode, $matches);
+            $this->findBaseNodes($childNode, $templateNode, $matches);
         }
 
         return $matches;
@@ -95,8 +105,42 @@ class TolerantMatchFinder implements MatchFinder
             return false;
         }
         foreach ($template::CHILD_NAMES as $childName) {
-            $nodeChild = $node->$childName;
-            $templateChild = $template->$childName;
+            $nodeProps = $this->normalize($node->$childName);
+            $templateProps = $this->normalize($template->$childName);
+
+            foreach ($templateProps as $index => $templateProp) {
+                $nodeProp = $nodeProps[$index] ?? null;
+
+                // template does not have property set, it's ok for node to have it
+                if ($templateProp === null) {
+                    continue;
+                }
+
+                if ($nodeProp instanceof Node && $templateProp instanceof Node) {
+                    if (false === $this->nodeMatches($nodeProp, $templateProp, $matchTokens)) {
+                        return false;
+                    }
+                }
+
+                // out of range
+                if (null === $nodeProp) {
+                    return false;
+                }
+
+                if ($nodeProp instanceof Token && $templateProp instanceof Token) {
+                    $match = $this->isMatch($template, $templateProp, $node, $nodeProp);
+                    if ($match->isNo()) {
+                        return false;
+                    }
+                    if ($match->isYes() && $match->name) {
+                        if (!isset($matchTokens[$match->name])) {
+                            $matchTokens[$match->name] = [];
+                        }
+                        $matchTokens[$match->name][] = $match->token;
+                    }
+
+                }
+            }
         }
 
         return true;
@@ -115,12 +159,12 @@ class TolerantMatchFinder implements MatchFinder
     }
 
     /**
-     * Remove any unnecessary preceding nodes from the pattern AST (e.g. HTML,
+     * Remove any unnecessary preceding nodes from the template AST (e.g. HTML,
      * Statement)
      */
-    private function reducePattern(Node $patternNode): Node
+    private function reducePattern(Node $templateNode): Node
     {
-        foreach ($patternNode->getChildNodes() as $childNode) {
+        foreach ($templateNode->getChildNodes() as $childNode) {
             if ($childNode instanceof InlineHtml) {
                 continue;
             }
@@ -132,7 +176,7 @@ class TolerantMatchFinder implements MatchFinder
             return $childNode;
         }
 
-        return $patternNode;
+        return $templateNode;
     }
 
     private function isMatch(Node $template, Token $matchNodeOrToken, Node $node, Token $nodeChild): MatchResult
@@ -150,9 +194,6 @@ class TolerantMatchFinder implements MatchFinder
         );
 
         $m  = $this->matcher->matches($t1, $t2);
-        if ($m->isYes()) {
-            dump($t1, $t2);
-        }
         return $m;
     }
 }
