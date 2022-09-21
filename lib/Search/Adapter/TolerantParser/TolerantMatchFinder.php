@@ -3,6 +3,7 @@
 namespace Phpactor\Search\Adapter\TolerantParser;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Parser;
@@ -104,6 +105,7 @@ class TolerantMatchFinder implements MatchFinder
         if (get_class($node) !== get_class($template)) {
             return false;
         }
+
         foreach ($template::CHILD_NAMES as $childName) {
             $nodeProps = $this->normalize($node->$childName);
             $templateProps = $this->normalize($template->$childName);
@@ -129,9 +131,11 @@ class TolerantMatchFinder implements MatchFinder
 
                 if ($nodeProp instanceof Token && $templateProp instanceof Token) {
                     $match = $this->isMatch($template, $templateProp, $node, $nodeProp);
+
                     if ($match->isNo()) {
                         return false;
                     }
+
                     if ($match->isYes() && $match->name) {
                         if (!isset($matchTokens[$match->name])) {
                             $matchTokens[$match->name] = [];
