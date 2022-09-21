@@ -8,7 +8,7 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
-use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
+use Phpactor\Search\Model\Matcher\TokenEqualityMatcher;
 use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\MatchResult;
 use Phpactor\Search\Model\MatchToken;

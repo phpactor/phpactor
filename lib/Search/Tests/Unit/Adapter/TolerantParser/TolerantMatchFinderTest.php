@@ -7,7 +7,7 @@ use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
+use Phpactor\Search\Model\Matcher\TokenEqualityMatcher;
 use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
 use Phpactor\Search\Model\Matcher\ChainMatcher;

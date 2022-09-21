@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Search\Adapter\TolerantParser\Matcher;
+namespace Phpactor\Search\Model\Matcher;
 
 use Phpactor\Search\Model\MatchResult;
 use Phpactor\Search\Model\Matcher;

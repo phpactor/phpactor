@@ -14,7 +14,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Search\Adapter\Symfony\ConsoleMatchRenderer;
 use Phpactor\Search\Adapter\WorseReflection\WorseMatchFilter;
 use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
-use Phpactor\Search\Adapter\TolerantParser\Matcher\TokenEqualityMatcher;
+use Phpactor\Search\Model\Matcher\TokenEqualityMatcher;
 use Phpactor\Search\Adapter\TolerantParser\TolerantMatchFinder;
 use Phpactor\Search\Model\MatchFinder;
 use Phpactor\Search\Model\Matcher\ChainMatcher;

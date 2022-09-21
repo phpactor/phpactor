@@ -10,7 +10,7 @@ use Phpactor\Search\Model\MatchResult;
 use Phpactor\Search\Model\MatchToken;
 use Phpactor\TextDocument\ByteOffsetRange;
 
-class PlaceholderMatcherTest extends TestCase
+class NamedEqualityMatcherTest extends TestCase
 {
     /**
      * @dataProvider provideMatches
@@ -38,22 +38,6 @@ class PlaceholderMatcherTest extends TestCase
             new MatchToken(ByteOffsetRange::fromInts(1, 2), '__A__', 1),
             function (MatchResult $result): void {
                 self::assertTrue($result->isYes());
-            }
-        ];
-
-        yield 'name and value' => [
-            new MatchToken(ByteOffsetRange::fromInts(1, 2), 'Foobar', 1),
-            new MatchToken(ByteOffsetRange::fromInts(1, 2), '__A__Foobar', 1),
-            function (MatchResult $result): void {
-                self::assertTrue($result->isYes());
-            }
-        ];
-
-        yield 'name and wrong value' => [
-            new MatchToken(ByteOffsetRange::fromInts(1, 2), 'Foobar', 1),
-            new MatchToken(ByteOffsetRange::fromInts(1, 2), '__A__Barfoo', 1),
-            function (MatchResult $result): void {
-                self::assertFalse($result->isYes());
             }
         ];
     }
