@@ -22,6 +22,7 @@ use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use RuntimeException;
 
 /**
  * This finder will match all parts of the documents AST which match the
@@ -109,45 +110,16 @@ class TolerantMatchFinder implements MatchFinder
         }
 
         foreach ($template::CHILD_NAMES as $childName) {
-            $nodeProps = $this->normalize($node->$childName);
-            $templateProps = $this->normalize($template->$childName);
+            $nodePropNodes = $this->normalize($node->$childName);
+            $templatePropNodes = $this->normalize($template->$childName);
 
             $atLeastOne = $node instanceof ClassMembersNode && $childName === 'classMemberDeclarations';
 
-            foreach ($templateProps as $index => $templateProp) {
-                $nodeProp = $nodeProps[$index] ?? null;
+            foreach ($templatePropNodes as $index => $templatePropNode) {
+                $nodeProp = $nodePropNodes[$index] ?? null;
 
-                // template does not have property set, it's ok for node to have it
-                if ($templateProp === null) {
-                    continue;
-                }
-
-
-                if ($nodeProp instanceof Node && $templateProp instanceof Node) {
-                    if (false === $this->nodeMatches($nodeProp, $templateProp, $matchTokens)) {
-                        return false;
-                    }
-                }
-
-                // out of range
-                if (null === $nodeProp) {
+                if (false === $this->nodesMatch($template, $templatePropNode, $node, $nodeProp, $matchTokens)) {
                     return false;
-                }
-
-                if ($nodeProp instanceof Token && $templateProp instanceof Token) {
-                    $match = $this->isMatch($template, $templateProp, $node, $nodeProp);
-
-                    if ($match->isNo()) {
-                        return false;
-                    }
-
-                    if ($match->isYes() && $match->name) {
-                        if (!isset($matchTokens[$match->name])) {
-                            $matchTokens[$match->name] = [];
-                        }
-                        $matchTokens[$match->name][] = $match->token;
-                    }
-
                 }
             }
         }
@@ -188,21 +160,61 @@ class TolerantMatchFinder implements MatchFinder
         return $templateNode;
     }
 
-    private function isMatch(Node $template, Token $matchNodeOrToken, Node $node, Token $nodeChild): MatchResult
+    private function isMatch(Node $template, Token $templateToken, Node $node, Token $nodeToken): MatchResult
     {
         $t1 = new MatchToken(
-            ByteOffsetRange::fromInts($nodeChild->getStartPosition(), $nodeChild->getEndPosition()),
-            (string)$nodeChild->getText($node->getFileContents()),
-            $nodeChild->kind
+            ByteOffsetRange::fromInts($nodeToken->getStartPosition(), $nodeToken->getEndPosition()),
+            (string)$nodeToken->getText($node->getFileContents()),
+            $nodeToken->kind
         );
 
         $t2 = new MatchToken(
-            ByteOffsetRange::fromInts($matchNodeOrToken->getStartPosition(), $matchNodeOrToken->getEndPosition()),
-            (string)$matchNodeOrToken->getText($template->getFileContents()),
-            $matchNodeOrToken->kind
+            ByteOffsetRange::fromInts($templateToken->getStartPosition(), $templateToken->getEndPosition()),
+            (string)$templateToken->getText($template->getFileContents()),
+            $templateToken->kind
         );
 
-        $m  = $this->matcher->matches($t1, $t2);
-        return $m;
+        return $this->matcher->matches($t1, $t2);
+    }
+
+    /**
+     * @param Node|Token|null $templateNodeOrToken
+     * @param Node|Token|null $nodeOrToken
+     * @param array<string,MatchToken> $matchTokens
+     */
+    private function nodesMatch(Node $template, $templateNodeOrToken, Node $node, $nodeOrToken, array &$matchTokens): bool
+    {
+        // template does not have property set, it's ok for node to have it
+        if ($templateNodeOrToken === null) {
+            return true;
+        }
+
+        // out of range
+        if (null === $node) {
+            return false;
+        }
+
+        if ($nodeOrToken instanceof Node && $templateNodeOrToken instanceof Node) {
+            return $this->nodeMatches($nodeOrToken, $templateNodeOrToken, $matchTokens);
+        }
+
+        if ($nodeOrToken instanceof Token && $templateNodeOrToken instanceof Token) {
+            $match = $this->isMatch($template, $templateNodeOrToken, $node, $nodeOrToken);
+
+            if ($match->isNo()) {
+                return false;
+            }
+
+            if ($match->name) {
+                if (!isset($matchTokens[$match->name])) {
+                    $matchTokens[$match->name] = [];
+                }
+                $matchTokens[$match->name][] = $match->token;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }
