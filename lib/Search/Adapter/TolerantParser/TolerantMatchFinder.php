@@ -91,74 +91,12 @@ class TolerantMatchFinder implements MatchFinder
      */
     private function nodeMatches(Node $node, Node $template, array &$matchTokens): bool
     {
-        foreach ($template->getChildNodesAndTokens() as $name => $templateNodeOrToken) {
-
-            // candidate does not have required token or node
-            if (!isset($node->$name) || null === $node->$name) {
-                return false;
-            }
-
-            // the `$node->$name` can either be an array of nodes or a node,
-            // normalize to an array for simplicity
-            $nodeChildren = $this->normalize($node->$name);
-
-            // the subject matched up until here, but now the pattern specifies
-            // something further that is not present in the subject.
-            if (empty($nodeChildren)) {
-                return false;
-            }
-
-            $matchedNode = null;
-            foreach ($nodeChildren as $nodeChild) {
-
-                // we only match tokens
-                if (!$nodeChild instanceof Token || !$templateNodeOrToken instanceof Token) {
-                    continue;
-                }
-
-                $match = $this->isMatch($template, $templateNodeOrToken, $node, $nodeChild);
-
-                if ($match->isNo()) {
-                    $matchedNode = false;
-                    continue;
-                }
-
-                if ($match->isYes()) {
-                    $matchedNode = true;
-                    if (!$match->name) {
-                        break;
-                    }
-
-                    if (!isset($matchTokens[$match->name])) {
-                        $matchTokens[$match->name] = [];
-                    }
-
-                    $matchTokens[$match->name][] = $match->token;
-                    break;
-                };
-            }
-
-            if (false === $matchedNode) {
-                return false;
-            }
-
-            if (!$templateNodeOrToken instanceof Node) {
-                continue;
-            }
-
-            $matchedNode = false;
-            foreach ($nodeChildren as $name => $nodeChild) {
-                if (!$nodeChild instanceof Node) {
-                    continue;
-                }
-                if ($this->nodeMatches($nodeChild, $templateNodeOrToken, $matchTokens)) {
-                    $matchedNode = true;
-                }
-            }
-
-            if ($matchedNode === false) {
-                return false;
-            }
+        if (get_class($node) !== get_class($template)) {
+            return false;
+        }
+        foreach ($template::CHILD_NAMES as $childName) {
+            $nodeChild = $node->$childName;
+            $templateChild = $template->$childName;
         }
 
         return true;
@@ -211,6 +149,10 @@ class TolerantMatchFinder implements MatchFinder
             $matchNodeOrToken->kind
         );
 
-        return $this->matcher->matches($t1, $t2);
+        $m  = $this->matcher->matches($t1, $t2);
+        if ($m->isYes()) {
+            dump($t1, $t2);
+        }
+        return $m;
     }
 }
