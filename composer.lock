@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61851cace56f1ac58eb593d75481a521",
+    "content-hash": "9acb543a02c680a4db0ed7744d6803e8",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1380,16 +1380,16 @@
         },
         {
             "name": "microsoft/tolerant-php-parser",
-            "version": "v0.1.1",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/microsoft/tolerant-php-parser.git",
-                "reference": "6a965617cf484355048ac6d2d3de7b6ec93abb16"
+                "reference": "a60544ed0a65fdc56e98cebeaef996c9cdd4c6a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/microsoft/tolerant-php-parser/zipball/6a965617cf484355048ac6d2d3de7b6ec93abb16",
-                "reference": "6a965617cf484355048ac6d2d3de7b6ec93abb16",
+                "url": "https://api.github.com/repos/microsoft/tolerant-php-parser/zipball/a60544ed0a65fdc56e98cebeaef996c9cdd4c6a7",
+                "reference": "a60544ed0a65fdc56e98cebeaef996c9cdd4c6a7",
                 "shasum": ""
             },
             "require": {
@@ -1398,6 +1398,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^8.5.15"
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1419,9 +1420,9 @@
             "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
             "support": {
                 "issues": "https://github.com/microsoft/tolerant-php-parser/issues",
-                "source": "https://github.com/microsoft/tolerant-php-parser/tree/v0.1.1"
+                "source": "https://github.com/microsoft/tolerant-php-parser/tree/main"
             },
-            "time": "2021-07-16T21:28:12+00:00"
+            "time": "2022-08-25T21:22:39+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -7780,6 +7781,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "jetbrains/phpstorm-stubs": 20,
+        "microsoft/tolerant-php-parser": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
     "prefer-stable": true,
