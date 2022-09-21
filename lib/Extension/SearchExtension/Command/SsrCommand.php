@@ -121,19 +121,18 @@ class SsrCommand extends Command
         QuestionHelper $questionHelper,
         InputInterface $input,
         OutputInterface $output
-    ): void
-    {
+    ): void {
         $document = TextDocumentBuilder::fromUri($file->__toString())->build();
-        
+
         $matches = $this->search->search($document, $pattern, $constraints);
-        
+
         if (count($matches) === 0) {
             return;
         }
-        
+
         $edits = [];
         $this->renderer->render($matches);
-        
+
         $document = $replacements->applyTo($matches);
         if ($document->__toString() === $matches->document()->__toString()) {
             return;

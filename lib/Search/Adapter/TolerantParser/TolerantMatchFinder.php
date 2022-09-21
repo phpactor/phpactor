@@ -111,10 +111,10 @@ class TolerantMatchFinder implements MatchFinder
             $nodePropNodes = $this->normalize($node->$childName);
             $templatePropNodes = $this->normalize($template->$childName);
 
-            $allowOneOf = $node instanceof ClassMembersNode && $childName === 'classMemberDeclarations';
+            $matchOneOf = $this->shouldMatchOneOf($node, $childName);
 
             foreach ($templatePropNodes as $index => $templatePropNode) {
-                if (false === $allowOneOf) {
+                if (false === $matchOneOf) {
                     $nodeProp = $nodePropNodes[$index] ?? null;
                     $isMatch = $this->nodesMatch($template, $templatePropNode, $node, $nodeProp, $matchTokens);
 
@@ -198,7 +198,7 @@ class TolerantMatchFinder implements MatchFinder
     /**
      * @param Node|Token|null $templateNodeOrToken
      * @param Node|Token|null $nodeOrToken
-     * @param array<string,MatchToken> $matchTokens
+     * @param array<string,MatchToken[]> $matchTokens
      */
     private function nodesMatch(Node $template, $templateNodeOrToken, Node $node, $nodeOrToken, array &$matchTokens): bool
     {
@@ -207,7 +207,7 @@ class TolerantMatchFinder implements MatchFinder
             return true;
         }
 
-        // out of range
+        // @phpstan-ignore-next-line TP lies - out of range
         if (null === $node) {
             return false;
         }
@@ -234,5 +234,10 @@ class TolerantMatchFinder implements MatchFinder
         }
 
         return false;
+    }
+
+    private function shouldMatchOneOf(Node $node, string $childName): bool
+    {
+        return $node instanceof ClassMembersNode && $childName === 'classMemberDeclarations';
     }
 }

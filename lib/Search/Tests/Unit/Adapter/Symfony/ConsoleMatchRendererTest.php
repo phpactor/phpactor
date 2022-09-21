@@ -56,5 +56,4 @@ class ConsoleMatchRendererTest extends TestCase
             'public function foo',
         ];
     }
-
 }
