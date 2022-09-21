@@ -91,11 +91,24 @@ final class ConsoleMatchRenderer implements MatchRenderer
         $edits[] = TextEdit::create($match->range()->end()->toInt(), 0, '__' . $secret . 'END__');
 
         $document = TextEdits::fromTextEdits($edits)->apply($document);
+
+        // it seems that `\` is not escaped by the output formatter and
+        // namespace `\` escapes the colorisation tags.
+        $slashToken = '__SLASH_'. $secret;
+        $document = str_replace('\\', $slashToken, $document);
+
         $document = OutputFormatter::escape($document);
+
         $document = preg_replace_callback('{__' . $secret . '_([a-z]+)__}', function (array $matches) {
             return sprintf('<fg=%s>', $matches[1]);
         }, $document);
+
         $document = str_replace('__' . $secret . 'END__', '</>', $document);
+
+        // replace the backslash with a unicode backslash to avoid above
+        // mentioned escaping bug.
+        $document = str_replace($slashToken, '', $document);
+
         $document .= '</>';
 
         return $document;
