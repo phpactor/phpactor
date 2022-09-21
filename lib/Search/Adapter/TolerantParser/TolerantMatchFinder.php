@@ -4,7 +4,6 @@ namespace Phpactor\Search\Adapter\TolerantParser;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassMembersNode;
-use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Parser;
@@ -21,8 +20,6 @@ use Phpactor\Search\Model\Matcher\PlaceholderMatcher;
 use Phpactor\Search\Model\PatternMatch;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use RuntimeException;
 
 /**
  * This finder will match all parts of the documents AST which match the
@@ -109,22 +106,43 @@ class TolerantMatchFinder implements MatchFinder
             return false;
         }
 
+        $matched = true;
         foreach ($template::CHILD_NAMES as $childName) {
             $nodePropNodes = $this->normalize($node->$childName);
             $templatePropNodes = $this->normalize($template->$childName);
 
-            $atLeastOne = $node instanceof ClassMembersNode && $childName === 'classMemberDeclarations';
+            $allowOneOf = $node instanceof ClassMembersNode && $childName === 'classMemberDeclarations';
 
             foreach ($templatePropNodes as $index => $templatePropNode) {
-                $nodeProp = $nodePropNodes[$index] ?? null;
+                if (false === $allowOneOf) {
+                    $nodeProp = $nodePropNodes[$index] ?? null;
+                    $isMatch = $this->nodesMatch($template, $templatePropNode, $node, $nodeProp, $matchTokens);
 
-                if (false === $this->nodesMatch($template, $templatePropNode, $node, $nodeProp, $matchTokens)) {
+                    if (false === $isMatch) {
+                        return false;
+                    }
+                    continue;
+                }
+
+                if (empty($nodePropNodes)) {
                     return false;
+                }
+
+                // if applicable, iterate over list (e.g. list of method declarations) and match at least one
+                foreach ($nodePropNodes as $nodeProp) {
+                    $isMatch = $this->nodesMatch($template, $templatePropNode, $node, $nodeProp, $matchTokens);
+
+                    if ($isMatch) {
+                        $matched = true;
+                        break;
+                    }
+
+                    $matched = false;
                 }
             }
         }
 
-        return true;
+        return $matched;
     }
 
     /**
