@@ -8,16 +8,11 @@ use Phpactor\Search\Model\Matcher;
 
 class PlaceholderMatcher implements Matcher
 {
-    private string $template;
-
-    public function __construct(string $template = '^\$?__(?P<placeholder>[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*)__')
-    {
-        $this->template = $template;
-    }
+    private const PATTERN = '^\$?__(?P<placeholder>' . Matcher::LABEL_PREFIX . Matcher::LABEL_SUFFIX . '*)__';
 
     public function matches(MatchToken $token1, MatchToken $token2): MatchResult
     {
-        if (preg_match('{' . $this->template . '}', $token2->text, $matches)) {
+        if (preg_match('{' . self::PATTERN . '}', $token2->text, $matches)) {
             return MatchResult::yes($token1, $matches['placeholder'] ?? null);
         }
 
