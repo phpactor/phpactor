@@ -53,7 +53,7 @@ class ConsoleMatchRendererTest extends TestCase
         yield 'overlapping' => [
             '<?php namespace One\\Two\\Three\\Four',
             '__A__\\__B__\\__C__\\__D__',
-            'public function foo',
+            'namespace',
         ];
     }
 }
