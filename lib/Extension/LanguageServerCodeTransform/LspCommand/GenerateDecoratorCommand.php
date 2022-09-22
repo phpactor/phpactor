@@ -4,6 +4,8 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 
 use Amp\Promise;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
@@ -26,14 +28,18 @@ class GenerateDecoratorCommand extends Command
 
     private Reflector $reflector;
 
+    private Updater $updater;
+
     public function __construct(
         ClientApi $clientApi,
         Workspace $workspace,
-        Reflector $reflector
+        Reflector $reflector,
+        Updater $updater
     ) {
         $this->clientApi = $clientApi;
         $this->workspace = $workspace;
         $this->reflector = $reflector;
+        $this->updater = $updater;
     }
 
     /**
@@ -77,7 +83,7 @@ class GenerateDecoratorCommand extends Command
             $method->body()->line($this->generateMethodBody($interfaceMethod));
         }
 
-        return [];
+        return $this->updater->textEditsFor($builder->build(), Code::fromString((string) $source));
     }
 
     /**
