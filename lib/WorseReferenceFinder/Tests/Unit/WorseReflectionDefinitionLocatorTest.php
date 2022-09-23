@@ -136,6 +136,67 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
     }
 
+    public function testLocatesMethodDeclaration(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            EOT
+        , '<?php class Foobar { public function b<>ar() {} }');
+
+        $this->assertEquals(
+            $this->workspace->path('somefile.php'),
+            (string) $location->first()->location()->uri()->path()
+        );
+    }
+
+    public function testLocatesMethodDeclarationInParentClass(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php abstract class Foobar { abstract public function bar() {} }
+            // File: Barfoo.php
+            <?php class Barfoo extends Foobar { public function b<>ar() {} }
+            EOT
+        , '<?php class Barfoo extends Foobar { public function b<>ar() {} }');
+
+        $this->assertEquals(
+            $this->workspace->path('Foobar.php'),
+            (string) $location->first()->location()->uri()->path()
+        );
+    }
+
+    public function testLocatesPropertyInParentClass(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar { public $bar; }
+            // File: Barfoo.php
+            <?php class Barfoo extends Foobar { public string $bar; }
+            EOT
+        , '<?php class Barfoo extends Foobar { public string $b<>ar; }');
+
+        $this->assertEquals(
+            $this->workspace->path('Foobar.php'),
+            (string) $location->first()->location()->uri()->path()
+        );
+    }
+
+    public function testLocatesMethodInInterface(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php interface Foobar { public function foo(); }
+            // File: Barfoo.php
+            <?php class Barfoo implements Foobar { public function foo() {} }
+            EOT
+        , '<?php class Barfoo implements Foobar { public function f<>oo() }');
+
+        $this->assertEquals(
+            $this->workspace->path('Foobar.php'),
+            (string) $location->first()->location()->uri()->path()
+        );
+    }
+
     public function testLocatesToMethodOnUnionTypeWithOneTypeMissingTheMethod(): void
     {
         $location = $this->locate(<<<'EOT'

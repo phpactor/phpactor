@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Expression\BracedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -88,7 +89,7 @@ class VariableResolver implements Resolver
             return NodeContext::none();
         }
 
-        $info = NodeContextFactory::create(
+        $context = NodeContextFactory::create(
             $node->getName(),
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -97,11 +98,13 @@ class VariableResolver implements Resolver
             ]
         );
 
-        return (new MemberTypeResolver($resolver->reflector()))->propertyType(
+        $context = (new MemberTypeResolver($resolver->reflector()))->propertyType(
             NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node),
-            $info,
-            $info->symbol()->name()
+            $context,
+            $context->symbol()->name()
         );
+
+        return new MemberDeclarationContext($context->symbol(), $context->type(), $context->containerType());
     }
 
     private function resolveStaticPropertyAccess(NodeContextResolver $resolver, Type $containerType, Variable $node): NodeContext
