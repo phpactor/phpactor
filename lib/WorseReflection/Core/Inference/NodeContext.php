@@ -9,16 +9,16 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 
 class NodeContext
 {
-    private Type $type;
-
     protected Symbol $symbol;
-
-    private TypeAssertions $typeAssertions;
 
     /**
      * @var Type
      */
     protected ?Type $containerType = null;
+
+    private Type $type;
+
+    private TypeAssertions $typeAssertions;
 
     /**
      * @var string[]
