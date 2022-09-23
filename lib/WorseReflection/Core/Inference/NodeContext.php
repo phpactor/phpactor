@@ -16,7 +16,7 @@ class NodeContext
      */
     protected ?Type $containerType = null;
 
-    private Type $type;
+    protected Type $type;
 
     private TypeAssertions $typeAssertions;
 

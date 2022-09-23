@@ -181,6 +181,22 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         );
     }
 
+    public function testLocatesMethodInInterface(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php interface Foobar { public function foo(); }
+            // File: Barfoo.php
+            <?php class Barfoo implements Foobar { public function foo() {} }
+            EOT
+        , '<?php class Barfoo implements Foobar { public function f<>oo() }');
+
+        $this->assertEquals(
+            $this->workspace->path('Foobar.php'),
+            (string) $location->first()->location()->uri()->path()
+        );
+    }
+
     public function testLocatesToMethodOnUnionTypeWithOneTypeMissingTheMethod(): void
     {
         $location = $this->locate(<<<'EOT'

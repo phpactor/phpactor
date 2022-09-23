@@ -12,6 +12,9 @@ Improvements:
 
   - [cmp/lsp] inline type information for completion items
 
+Features:
+
+  - [gtd] For member declarations, goto parent member definition if it exists #1886
 
 ## 2022.09.11
 

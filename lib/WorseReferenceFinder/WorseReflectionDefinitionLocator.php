@@ -11,6 +11,7 @@ use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -262,20 +263,11 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
         // find first parent definition or return declaring class
         $member = (function (string $name) use ($class) {
-            $currentClass = $class->parent();
-            while ($currentClass) {
+            foreach ((new ClassHierarchyResolver())->resolve($class) as $currentClass) {
                 if ($currentClass->ownMembers()->has($name)) {
                     return $currentClass->ownMembers()->byName($name)->first();
                 }
-                $currentClass = $currentClass->parent();
             }
-
-            try {
-                return $class->ownMembers()->byName($name)->first();
-            } catch (NotFound $notFound) {
-                return null;
-            }
-
             return null;
         })($symbolContext->name());
 
@@ -289,7 +281,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(
                 'The source code for class "%s" has no path associated with it.',
-                (string) $containingClass->name()
+                (string) $member->declaringClass()->name()
             ));
         }
 
