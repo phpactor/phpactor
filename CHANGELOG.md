@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - [lsp] Import all unresolved names command no longer dupliates names #1835
   - [tp] Update tolerant parser library fixing issue with parsing `match` keyword #1873
   - [rpc] Fix regression with :PhpactorClassNew opening in `Untitled` buffer #1881
 
