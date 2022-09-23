@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 
-class MethodDeclarationContext extends NodeContext
+class MemberDeclarationContext extends NodeContext
 {
     public function __construct(Symbol $symbol, Type $type, ClassType $containerType)
     {

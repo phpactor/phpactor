@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
-use Phpactor\WorseReflection\Core\Inference\Context\MethodDeclarationContext;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -24,7 +24,7 @@ class MethodDeclarationResolver implements Resolver
         $classNode = NodeUtil::nodeContainerClassLikeDeclaration($node);
         $classSymbolContext = $resolver->resolveNode($frame, $classNode);
 
-        return new MethodDeclarationContext(
+        return new MemberDeclarationContext(
             Symbol::fromTypeNameAndPosition(
                 Symbol::METHOD,
                 (string)$node->name->getText($node->getFileContents()),

@@ -12,7 +12,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\Context\MethodDeclarationContext;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -75,7 +75,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
     {
         $symbolContext = $offset->symbolContext();
 
-        if ($symbolContext instanceof MethodDeclarationContext) {
+        if ($symbolContext instanceof MemberDeclarationContext) {
             return $this->gotoMethodDeclaration($symbolContext);
         }
 
@@ -252,7 +252,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         return new TypeLocations($locations);
     }
 
-    private function gotoMethodDeclaration(MethodDeclarationContext $symbolContext): TypeLocations
+    private function gotoMethodDeclaration(MemberDeclarationContext $symbolContext): TypeLocations
     {
         try {
             $class = $this->reflector->reflectClass($symbolContext->classType()->name());
