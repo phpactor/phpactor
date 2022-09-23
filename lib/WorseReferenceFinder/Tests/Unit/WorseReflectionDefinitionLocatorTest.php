@@ -165,6 +165,22 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
         );
     }
 
+    public function testLocatesPropertyInParentClass(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: Foobar.php
+            <?php class Foobar { public $bar; }
+            // File: Barfoo.php
+            <?php class Barfoo extends Foobar { public string $bar; }
+            EOT
+        , '<?php class Barfoo extends Foobar { public string $b<>ar; }');
+
+        $this->assertEquals(
+            $this->workspace->path('Foobar.php'),
+            (string) $location->first()->location()->uri()->path()
+        );
+    }
+
     public function testLocatesToMethodOnUnionTypeWithOneTypeMissingTheMethod(): void
     {
         $location = $this->locate(<<<'EOT'

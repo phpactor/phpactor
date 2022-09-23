@@ -260,7 +260,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             return new TypeLocations([]);
         }
 
-        // find next parent definition
+        // find first parent definition or return declaring class
         $member = (function (string $name) use ($class) {
             $currentClass = $class->parent();
             while ($currentClass) {
