@@ -69,6 +69,28 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
         self::assertEquals('Class "Foobar" has no candidates', $notification->params['message']);
     }
 
+    public function testIdenticallyNamedCandidates(): void
+    {
+        $builder = $this->createBuilder();
+        $server = $builder->build();
+        $server->textDocument()->open(self::EXAMPLE_URI, 'foobar');
+
+        $unresolvedName = $this->createUnresolvedName();
+        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new NameWithByteOffsets(
+            $unresolvedName,
+            $this->createUnresolvedName()
+        ));
+        $this->candidateFinder->candidatesForUnresolvedName($unresolvedName)->willYield([]);
+
+        wait($server->workspace()->executeCommand(ImportAllUnresolvedNamesCommand::NAME, [
+            self::EXAMPLE_URI
+        ]));
+
+        $notification = $server->transmitter()->shiftNotification();
+        $notification = $server->transmitter()->shiftNotification();
+        self::assertNull($notification);
+    }
+
     public function testOneCandidate(): void
     {
         $builder = $this->createBuilder();
