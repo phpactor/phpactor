@@ -11,14 +11,14 @@ class NodeContext
 {
     private Type $type;
 
-    private Symbol $symbol;
+    protected Symbol $symbol;
 
     private TypeAssertions $typeAssertions;
 
     /**
      * @var Type
      */
-    private ?Type $containerType = null;
+    protected ?Type $containerType = null;
 
     /**
      * @var string[]
