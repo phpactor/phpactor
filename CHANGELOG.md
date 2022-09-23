@@ -12,6 +12,7 @@ Bug fixes:
 Improvements:
 
   - [cmp/lsp] inline type information for completion items
+  - [cmp] complete `__construct` on `parent::` #1272
 
 Features:
 

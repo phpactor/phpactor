@@ -134,7 +134,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         }
 
         foreach ($classReflection->methods() as $method) {
-            if ($method->name() === '__construct') {
+            if (false === $isParent && $method->name() === '__construct') {
                 continue;
             }
             if ($publicOnly && false === $method->visibility()->isPublic()) {
