@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 
-final class NodeContext
+class NodeContext
 {
     private Type $type;
 
@@ -30,7 +30,7 @@ final class NodeContext
      */
     private ?ReflectionScope $scope = null;
 
-    private function __construct(Symbol $symbol, Type $type, Type $containerType = null, ReflectionScope $scope = null)
+    protected function __construct(Symbol $symbol, Type $type, Type $containerType = null, ReflectionScope $scope = null)
     {
         $this->symbol = $symbol;
         $this->containerType = $containerType;
