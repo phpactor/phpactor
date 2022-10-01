@@ -57,7 +57,6 @@ class Highlighter
                 ),
                 $highlight->kind
             );
-
         }
         return new Highlights(...$lspHighlights);
     }
@@ -135,7 +134,7 @@ class Highlighter
             if ($childNode instanceof Variable && $childNode->getName() === $name) {
                 yield new Highlight(
                     $childNode->getStartPosition(),
-$childNode->getEndPosition(),
+                    $childNode->getEndPosition(),
                     $this->variableKind($childNode)
                 );
             }
@@ -175,7 +174,7 @@ $childNode->getEndPosition(),
             if ($node instanceof Parameter && null !== $node->visibilityToken && (string)$node->getName() === $name) {
                 yield new Highlight(
                     $node->variableName->getStartPosition(),
-$node->variableName->getEndPosition(),
+                    $node->variableName->getEndPosition(),
                     DocumentHighlightKind::TEXT,
                 );
                 continue;
@@ -184,7 +183,7 @@ $node->variableName->getEndPosition(),
             if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class) && (string)$node->getName() === $name) {
                 yield new Highlight(
                     $node->getStartPosition(),
-$node->getEndPosition(),
+                    $node->getEndPosition(),
                     DocumentHighlightKind::TEXT,
                 );
             }
@@ -193,7 +192,7 @@ $node->getEndPosition(),
                 if ($name === $node->memberName->getText($rootNode->getFileContents())) {
                     yield new Highlight(
                         $node->memberName->getStartPosition(),
-$node->memberName->getEndPosition(),
+                        $node->memberName->getEndPosition(),
                         $this->variableKind($node),
                     );
                 }
@@ -226,7 +225,7 @@ $node->memberName->getEndPosition(),
             if ($node instanceof MethodDeclaration && $node->getName() === $name) {
                 yield new Highlight(
                     $node->name->getStartPosition(),
-$node->name->getEndPosition(),
+                    $node->name->getEndPosition(),
                     DocumentHighlightKind::TEXT,
                 );
             }

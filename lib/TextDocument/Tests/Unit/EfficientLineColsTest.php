@@ -11,6 +11,7 @@ class EfficientLineColsTest extends TestCase
 {
     /**
      * @dataProvider provideConvertOffsetsToLineCol
+     * @param list<int> $offsets
      */
     public function testFromByteOffsets(array $offsets, string $text, Closure $assertion): void
     {
@@ -52,6 +53,7 @@ class EfficientLineColsTest extends TestCase
 
     /**
      * @dataProvider provideConvertOffsetsToLineColAsOffset
+     * @param list<int> $offsets
      */
     public function testFromByteOffsetsAsOffset(array $offsets, string $text, Closure $assertion): void
     {
