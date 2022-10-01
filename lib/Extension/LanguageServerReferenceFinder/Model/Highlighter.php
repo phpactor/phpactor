@@ -23,7 +23,7 @@ use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\LineCols;
+use Phpactor\TextDocument\EfficientLineCols;
 
 class Highlighter
 {
@@ -44,7 +44,7 @@ class Highlighter
             $highlights[] = $highlight;
         }
 
-        $lineCols = LineCols::fromByteOffsetInts($source, $offsets);
+        $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true, true);
         $lspHighlights = [];
 
         foreach ($highlights as $highlight) {
@@ -52,8 +52,8 @@ class Highlighter
             $endPos = $lineCols->get($highlight->end);
             $lspHighlights[] = new DocumentHighlight(
                 new Range(
-                    new Position($startPos->line() - 1, $startPos->col() - 1),
-                    new Position($endPos->line() - 1, $endPos->col() - 1),
+                    new Position($startPos->line(), $startPos->col()),
+                    new Position($endPos->line(), $endPos->col()),
                 ),
                 $highlight->kind
             );

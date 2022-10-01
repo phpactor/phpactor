@@ -5,7 +5,14 @@ namespace Phpactor\TextDocument;
 use OutOfBoundsException;
 use RuntimeException;
 
-class LineCols
+/**
+ * Efficiently compute line/col positions for batches of byte offsets.
+ *
+ * This class accepts a list of byte offsets and a text document. It will
+ * iterate over the text document _once_ indexing the line/col position of the
+ * byte offset.
+ */
+final class EfficientLineCols
 {
     /**
      * @var array<int,LineCol>
@@ -15,12 +22,17 @@ class LineCols
     /**
      * @param array<int,LineCol> $positions
      */
-    public function __construct(array $positions)
+    private function __construct(array $positions)
     {
         $this->positions = $positions;
     }
 
-    public static function fromByteOffsetInts(string $text, array $ints): self
+    public static function fromByteOffsetInts(
+        string $text,
+        array $ints,
+        bool $charOffset = false,
+        bool $zeroBased = false
+    ): self
     {
         sort($ints);
 
@@ -36,9 +48,10 @@ class LineCols
         $lineNb = 0;
         $byteOffset = array_shift($ints);
         if (null === $byteOffset) {
-            return new LineCols([]);
+            return new EfficientLineCols([]);
         }
         $positions = [];
+        $base = $zeroBased ? 0 : 1;
 
         foreach ($lines as $lineOrDelim) {
 
@@ -60,7 +73,10 @@ class LineCols
                     $byteOffset - $start
                 );
 
-                $positions[$byteOffset] = new LineCol($lineNb, mb_strlen($section) + 1);
+                $positions[$byteOffset] = new LineCol(
+                    $lineNb,
+                    $charOffset ? strlen($section) + $base : mb_strlen($section) + $base
+                );
                 $byteOffset = array_shift($ints);
                 if (null === $byteOffset) {
                     break;
@@ -70,7 +86,7 @@ class LineCols
             $offset = $end;
         }
 
-        return new LineCols($positions);
+        return new EfficientLineCols($positions);
     }
 
     public function get(int $offset): LineCol

@@ -6,12 +6,11 @@ use Closure;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\EfficientLineCols;
-use Phpactor\TextDocument\LineCol;
 
 class EfficientLineColsTest extends TestCase
 {
     /**
-     * @dataProvider provideConvertLineColToOffset
+     * @dataProvider provideConvertOffsetsToLineCol
      */
     public function testFromByteOffsets(array $offsets, string $text, Closure $assertion): void
     {
@@ -22,7 +21,7 @@ class EfficientLineColsTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideConvertLineColToOffset(): Generator
+    public function provideConvertOffsetsToLineCol(): Generator
     {
         yield [
             [],
@@ -47,6 +46,29 @@ class EfficientLineColsTest extends TestCase
                 self::assertEquals(1, $lineCols->get(2)->line());
                 self::assertEquals(2, $lineCols->get(10)->line());
                 self::assertEquals(5, $lineCols->get(10)->col());
+            }
+        ];
+    }
+
+    /**
+     * @dataProvider provideConvertOffsetsToLineColAsOffset
+     */
+    public function testFromByteOffsetsAsOffset(array $offsets, string $text, Closure $assertion): void
+    {
+        $converter = EfficientLineCols::fromByteOffsetInts($text, $offsets, true);
+        $assertion($converter);
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideConvertOffsetsToLineColAsOffset(): Generator
+    {
+        yield 'cat is 4 bytes' => [
+            [5],
+            "a😸bc",
+            function (EfficientLineCols $lineCols) {
+                self::assertEquals(6, $lineCols->get(5)->col());
             }
         ];
     }
