@@ -11,6 +11,7 @@ use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 
 class WorseGenerateDecorator
 {
@@ -38,13 +39,15 @@ class WorseGenerateDecorator
 
         $constructor = $classBuilder->method('__construct');
         $constructor->parameter('inner')->type($interfaceFQN);
-        $constructor->body()->line('$this->inner = $inner');
+        $constructor->body()->line('$this->inner = $inner;');
 
         $interface = $this->reflector->reflectInterface($interfaceFQN);
         foreach ($interface->methods() as $interfaceMethod) {
             $method = $classBuilder->method($interfaceMethod->name());
 
-            $method->returnType($interfaceMethod->returnType());
+            if (!($interfaceMethod->returnType() instanceof MissingType)) {
+                $method->returnType($interfaceMethod->returnType());
+            }
             $method->visibility($interfaceMethod->visibility());
 
             $this->attachParameters($method, $interfaceMethod);
@@ -61,10 +64,13 @@ class WorseGenerateDecorator
     private function attachParameters(MethodBuilder $method, ReflectionMethod $interfaceMethod): void
     {
         foreach ($interfaceMethod->parameters() as $interfaceMethodParameter) {
-            $method->parameter($interfaceMethodParameter->name())
-                   ->type($interfaceMethodParameter->type())
-                   ->defaultValue($interfaceMethodParameter->default())
-                ;
+            $parameter = $method->parameter($interfaceMethodParameter->name())
+                                ->type($interfaceMethodParameter->type());
+
+            $defaultValue = $interfaceMethodParameter->default();
+            if ($defaultValue->isDefined()) {
+                $parameter ->defaultValue($interfaceMethodParameter->default()->value());
+            }
         }
     }
 
@@ -82,9 +88,10 @@ class WorseGenerateDecorator
     {
         $code = '$this->inner->'.$interfaceMethod->name().'(';
         foreach ($interfaceMethod->parameters() as $interfaceMethodParameter) {
-            $code .= $interfaceMethodParameter->name().','.PHP_EOL;
+            $code .= '$'.$interfaceMethodParameter->name().', ';
         }
-        $code .= ')';
+        $code = trim($code, ', ');
+        $code .= ');';
 
         if (!$interfaceMethod->returnType()->isVoid()) {
             $code = 'return '. $code;
