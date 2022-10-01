@@ -2,11 +2,16 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Model;
 
+use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
+
 class Highlight {
     public int $start;
     public int $end;
 
-    public string $kind;
+    /**
+     * @var DocumentHighlightKind::*
+     */
+    public int $kind;
 
     /**
      * @param DocumentHighlightKind::* $kind
