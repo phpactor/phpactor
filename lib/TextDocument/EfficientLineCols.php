@@ -27,13 +27,17 @@ final class EfficientLineCols
         $this->positions = $positions;
     }
 
+    /**
+     * Initialize the converter with the list of byte offsets to be converted.
+     *
+     * For converting to LSP positions there is a flag to return the character
+     * offset.Note that, like the line/col number, this is 1 based.
+     */
     public static function fromByteOffsetInts(
         string $text,
         array $ints,
-        bool $charOffset = false,
-        bool $zeroBased = false
-    ): self
-    {
+        bool $charOffset = false
+    ): self {
         sort($ints);
 
         $lines = preg_split('{(' . LineCol::NEWLINE_PATTERN . ')}', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
@@ -51,10 +55,8 @@ final class EfficientLineCols
             return new EfficientLineCols([]);
         }
         $positions = [];
-        $base = $zeroBased ? 0 : 1;
 
         foreach ($lines as $lineOrDelim) {
-
             $lineOrDelim = (string)$lineOrDelim;
 
             if ((bool)preg_match('{(' . LineCol::NEWLINE_PATTERN . ')}', (string)$lineOrDelim)) {
@@ -75,7 +77,7 @@ final class EfficientLineCols
 
                 $positions[$byteOffset] = new LineCol(
                     $lineNb,
-                    $charOffset ? strlen($section) + $base : mb_strlen($section) + $base
+                    $charOffset ? strlen($section) + 1 : mb_strlen($section) + 1
                 );
                 $byteOffset = array_shift($ints);
                 if (null === $byteOffset) {

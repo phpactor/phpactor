@@ -26,14 +26,14 @@ class EfficientLineColsTest extends TestCase
         yield [
             [],
             '',
-            function (EfficientLineCols $lineCols) {
+            function (EfficientLineCols $lineCols): void {
                 self::assertInstanceOf(EfficientLineCols::class, $lineCols);
             }
         ];
         yield [
             [2],
             '01234',
-            function (EfficientLineCols $lineCols) {
+            function (EfficientLineCols $lineCols): void {
                 self::assertEquals(3, $lineCols->get(2)->col());
                 self::assertEquals(1, $lineCols->get(2)->line());
             }
@@ -41,7 +41,7 @@ class EfficientLineColsTest extends TestCase
         yield [
             [2, 3, 0, 10],
             "01234\n5678",
-            function (EfficientLineCols $lineCols) {
+            function (EfficientLineCols $lineCols): void {
                 self::assertEquals(3, $lineCols->get(2)->col());
                 self::assertEquals(1, $lineCols->get(2)->line());
                 self::assertEquals(2, $lineCols->get(10)->line());
@@ -66,8 +66,8 @@ class EfficientLineColsTest extends TestCase
     {
         yield 'cat is 4 bytes' => [
             [5],
-            "a😸bc",
-            function (EfficientLineCols $lineCols) {
+            'a😸bc',
+            function (EfficientLineCols $lineCols): void {
                 self::assertEquals(6, $lineCols->get(5)->col());
             }
         ];

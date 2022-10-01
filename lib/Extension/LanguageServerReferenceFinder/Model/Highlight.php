@@ -4,8 +4,10 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Model;
 
 use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
 
-class Highlight {
+class Highlight
+{
     public int $start;
+
     public int $end;
 
     /**

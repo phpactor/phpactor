@@ -44,7 +44,7 @@ class Highlighter
             $highlights[] = $highlight;
         }
 
-        $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true, true);
+        $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
         $lspHighlights = [];
 
         foreach ($highlights as $highlight) {
@@ -52,8 +52,8 @@ class Highlighter
             $endPos = $lineCols->get($highlight->end);
             $lspHighlights[] = new DocumentHighlight(
                 new Range(
-                    new Position($startPos->line(), $startPos->col()),
-                    new Position($endPos->line(), $endPos->col()),
+                    new Position($startPos->line() - 1, $startPos->col() - 1),
+                    new Position($endPos->line() - 1, $endPos->col() - 1),
                 ),
                 $highlight->kind
             );
