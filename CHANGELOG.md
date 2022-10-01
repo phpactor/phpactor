@@ -11,6 +11,7 @@ Bug fixes:
 
 Improvements:
 
+  - [lsp] Highlighting more 10x faster #1891
   - [cmp/lsp] inline type information for completion items
   - [cmp] complete `__construct` on `parent::` #1272
 
