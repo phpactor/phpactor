@@ -37,15 +37,16 @@ class Highlighter
     public function highlightsFor(string $source, ByteOffset $offset): Highlights
     {
         $offsets = [];
-        $highlghts = [];
+        $highlights = [];
         foreach ($this->generate($source, $offset) as $highlight) {
             $offsets[] = $highlight->start;
             $offsets[] = $highlight->end;
-            $highlghts[] = $highlight;
+            $highlights[] = $highlight;
         }
         $lineCols = LineCols::fromByteOffsetInts($source, $offsets);
         $lspHighlights = [];
-        foreach ($highlghts as $highlight) {
+
+        foreach ($highlights as $highlight) {
             $startPos = $lineCols->get($highlight->start);
             $endPos = $lineCols->get($highlight->end);
             $lspHighlights[] = new DocumentHighlight(
@@ -70,6 +71,7 @@ class Highlighter
 
         if ($node instanceof Variable && $node->getFirstAncestor(PropertyDeclaration::class)) {
             yield from $this->properties($rootNode, (string)$node->getName());
+            return;
         }
 
         if ($node instanceof Parameter) {
@@ -77,26 +79,32 @@ class Highlighter
                 ? $this->variables($rootNode, (string)$node->getName())
                 : $this->properties($rootNode, (string)$node->getName())
             ;
+            return;
         }
 
         if ($node instanceof Variable) {
             yield from $this->variables($rootNode, (string)$node->getName());
+            return;
         }
 
         if ($node instanceof MethodDeclaration) {
             yield from $this->methods($rootNode, $node->getName());
+            return;
         }
 
         if ($node instanceof ClassDeclaration) {
             yield from $this->namespacedNames($rootNode, (string)$node->getNamespacedName());
+            return;
         }
 
         if ($node instanceof ConstElement) {
             yield from $this->constants($rootNode, (string)$node->getNamespacedName());
+            return;
         }
 
         if ($node instanceof QualifiedName) {
             yield from $this->namespacedNames($rootNode, (string)$node->getResolvedName() ?: (string)$node->getNamespacedName());
+            return;
         }
 
         if ($node instanceof ScopedPropertyAccessExpression) {
@@ -105,10 +113,12 @@ class Highlighter
                 return;
             }
             yield from $this->memberAccess($rootNode, $node, (string)$memberName->getText($rootNode->getFileContents()));
+            return;
         }
 
         if ($node instanceof MemberAccessExpression) {
             yield from $this->memberAccess($rootNode, $node, (string)$node->memberName->getText($rootNode->getFileContents()));
+            return;
         }
 
         return;
