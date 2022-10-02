@@ -1471,11 +1471,11 @@ LanguageServerPhpCsFixerExtension
 ---------------------------------
 
 
-.. _param_language_server_phpcsfixer.enabled:
+.. _param_language_server_php_cs_fixer.enabled:
 
 
-``language_server_phpcsfixer.enabled``
-""""""""""""""""""""""""""""""""""""""
+``language_server_php_cs_fixer.enabled``
+""""""""""""""""""""""""""""""""""""""""
 
 
 Enable document formattig via. php-cs-fixer
@@ -1484,17 +1484,17 @@ Enable document formattig via. php-cs-fixer
 **Default**: ``false``
 
 
-.. _param_language_server_phpcsfixer.bin:
+.. _param_language_server_php_cs_fixer.bin:
 
 
-``language_server_phpcsfixer.bin``
-""""""""""""""""""""""""""""""""""
+``language_server_php_cs_fixer.bin``
+""""""""""""""""""""""""""""""""""""
 
 
 Path to the php-cs-fixer executable
 
 
-**Default**: ``"%project_root%\/vendor\/bin\/phpcsfixer"``
+**Default**: ``"%project_root%\/vendor\/bin\/php-cs-fixer"``
 
 
 .. _BehatExtension:
