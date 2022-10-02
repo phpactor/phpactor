@@ -430,7 +430,7 @@ class IndexerExtension implements Extension
 
             /** @phpstan-ignore-next-line Phpactor LSP does not deserialize WorkspaceFolder as an object */
             $workspacePaths = array_map(function (array $folder): string {
-                return $folder['uri'];
+                return TextDocumentUri::fromString($folder['uri'])->path();
             }, $params->workspaceFolders ?? []);
 
             if ($workspacePaths) {
