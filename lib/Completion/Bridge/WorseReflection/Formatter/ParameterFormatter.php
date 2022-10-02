@@ -19,7 +19,7 @@ class ParameterFormatter implements Formatter
 
         $paramInfo = [];
         $type = $object->inferredType();
-        if (($type->isDefined())) {
+        if ($type->isDefined()) {
             $paramInfo[] = $formatter->format($object->inferredType());
         }
         $paramInfo[] = '$' . $object->name();

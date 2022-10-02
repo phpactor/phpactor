@@ -26,6 +26,12 @@ class CallableType extends PrimitiveType
 
     public function __toString(): string
     {
+        if ($this->returnType instanceof MissingType) {
+            return sprintf(
+                'callable(%s)',
+                implode(',', array_map(fn (Type $type) => $type->__toString(), $this->args))
+            );
+        }
         return sprintf(
             'callable(%s): %s',
             implode(',', array_map(fn (Type $type) => $type->__toString(), $this->args)),
