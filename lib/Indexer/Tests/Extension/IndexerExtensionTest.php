@@ -26,6 +26,7 @@ class IndexerExtensionTest extends IntegrationTestCase
 {
     protected function setUp(): void
     {
+        parent::setUp();
         $this->initProject();
     }
 
@@ -53,6 +54,7 @@ class IndexerExtensionTest extends IntegrationTestCase
 
     public function testIndexDirtyFile(): void
     {
+        $this->workspace()->mkdir('cache');
         $container = $this->container();
         $indexer = $container->get(Indexer::class);
         $this->assertInstanceOf(Indexer::class, $indexer);

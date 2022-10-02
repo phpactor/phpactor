@@ -24,9 +24,9 @@ class FilesystemFileListProviderTest extends IntegrationTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->filesystem = new SimpleFilesystem($this->workspace()->path());
         $this->provider = new FilesystemFileListProvider($this->filesystem);
-        $this->workspace()->reset();
         $this->index = $this->prophesize(Index::class);
     }
 

@@ -31,7 +31,6 @@ class LanguageServerSessionExtension implements Extension
         $this->initializeParams = $initializeParams;
     }
 
-
     public function load(ContainerBuilder $container): void
     {
         $container->register(ClientCapabilities::class, function (Container $container) {

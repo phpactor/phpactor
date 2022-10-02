@@ -12,11 +12,6 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class IndexedReferenceFinderTest extends IntegrationTestCase
 {
-    protected function setUp(): void
-    {
-        $this->workspace()->reset();
-    }
-
     /**
      * @dataProvider provideClasses
      * @dataProvider provideTraits

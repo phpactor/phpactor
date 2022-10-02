@@ -22,6 +22,7 @@ class ValidatingSearchIndexTest extends IntegrationTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->innerSearchIndex = new InMemorySearchIndex();
         $this->index = new InMemoryIndex();
         $this->searchIndex = new ValidatingSearchIndex(

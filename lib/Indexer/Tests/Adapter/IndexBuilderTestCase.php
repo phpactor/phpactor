@@ -14,7 +14,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
 {
     protected function setUp(): void
     {
-        $this->workspace()->reset();
+        parent::setUp();
         $this->workspace()->loadManifest(file_get_contents(__DIR__ . '/Manifest/buildIndex.php.test'));
     }
 

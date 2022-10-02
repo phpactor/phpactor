@@ -24,6 +24,7 @@ class FilteredSearchIndexTest extends IntegrationTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
         $this->innerIndex = $this->prophesize(SearchIndex::class);
         $this->index = new FilteredSearchIndex($this->innerIndex->reveal(), [ClassRecord::RECORD_TYPE]);
     }

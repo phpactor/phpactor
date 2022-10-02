@@ -10,11 +10,6 @@ class IndexCleanCommandTest extends IntegrationTestCase
 {
     private const CONSOLE_PATH = __DIR__ . '/../../bin/console';
 
-    public function setUp():void
-    {
-        $this->workspace()->reset();
-    }
-
     /**
      * @dataProvider provideAllIndexClean
      * @param array<string> $command

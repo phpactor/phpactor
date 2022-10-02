@@ -34,6 +34,7 @@ use Phpactor\Indexer\Extension\Command\IndexSearchCommand;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Indexer\Model\IndexAccess;
+use Phpactor\LanguageServerProtocol\InitializeParams;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Extension\Command\IndexQueryCommand;
@@ -65,9 +66,6 @@ class IndexerExtension implements Extension
     public const TAG_WATCHER = 'indexer.watcher';
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
-    private const INDEXER_TOLERANT = 'tolerant';
-    private const INDEXER_WORSE = 'worse';
-    private const SERVICE_FILESYSTEM = 'indexer.filesystem';
     private const PARAM_PROJECT_ROOT = 'indexer.project_root';
 
 
@@ -104,6 +102,7 @@ class IndexerExtension implements Extension
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
         ]);
     }
+
 
 
     public function load(ContainerBuilder $container): void
@@ -425,10 +424,29 @@ class IndexerExtension implements Extension
      */
     private function workspacePaths(Container $container): array
     {
+        // if language server, return the workspace paths
+        if ($container->has(InitializeParams::class)) {
+            $params = $container->get(InitializeParams::class);
+
+            /** @phpstan-ignore-next-line Phpactor LSP does not deserialize WorkspaceFolder as an object */
+            $workspacePaths = array_map(function (array $folder): string {
+                return $folder['uri'];
+            }, $params->workspaceFolders ?? []);
+
+            if ($workspacePaths) {
+                return $workspacePaths;
+            }
+        }
+
+        // otherwise return the project root
+        $projectRoot = $container->get(
+            FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
+        )->resolve(
+            $container->getParameter(self::PARAM_PROJECT_ROOT)
+        );
+
         return [
-            $container->get(
-                FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
-            )->resolve($container->getParameter(self::PARAM_PROJECT_ROOT))
+            $projectRoot
         ];
     }
 

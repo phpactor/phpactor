@@ -13,7 +13,7 @@ class FileSearchIndexTest extends IntegrationTestCase
 
     protected function setUp(): void
     {
-        $this->workspace()->reset();
+        parent::setUp();
         $this->index = new FileSearchIndex($this->workspace()->path('search'));
     }
 

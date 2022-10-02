@@ -162,6 +162,30 @@ final class IndexAgentBuilder
         return $this;
     }
 
+    /**
+     * @return string[]
+     */
+    public function paths(): array
+    {
+        return $this->paths;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function includePatterns(): array
+    {
+        return $this->includePatterns;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function excludePatterns(): array
+    {
+        return $this->excludePatterns;
+    }
+
     private function buildIndex(): Index
     {
         $repository = new FileRepository(
@@ -251,29 +275,5 @@ final class IndexAgentBuilder
     private function buildDirtyTracker(): DirtyFileListProvider
     {
         return new DirtyFileListProvider($this->indexRoot . '/dirty');
-    }
-
-    /**
-     * @return string[]
-     */
-    public function paths(): array
-    {
-        return $this->paths;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function includePatterns(): array
-    {
-        return $this->includePatterns;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function excludePatterns(): array
-    {
-        return $this->excludePatterns;
     }
 }

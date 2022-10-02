@@ -11,11 +11,6 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class IndexedImplementationFinderTest extends IntegrationTestCase
 {
-    protected function setUp(): void
-    {
-        $this->workspace()->reset();
-    }
-
     /**
      * @dataProvider provideClassLikes
      * @dataProvider provideClassMembers

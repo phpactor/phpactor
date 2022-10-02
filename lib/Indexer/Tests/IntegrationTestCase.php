@@ -32,6 +32,7 @@ class IntegrationTestCase extends TestCase
 {
     protected function setUp():void
     {
+        parent::setUp();
         $this->workspace()->reset();
     }
 
