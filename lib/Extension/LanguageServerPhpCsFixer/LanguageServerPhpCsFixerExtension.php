@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Handler\FormattingHandler;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
@@ -19,9 +20,8 @@ class LanguageServerPhpCsFixerExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register(PhpCsFixerFormatter::class, function (Container $container) {
-            return new PhpCsFixerFormatter(
-                $container->getParameter(self::PARAM_PHP_CS_FIXER_BIN)
-            );
+            $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PHP_CS_FIXER_BIN));
+            return new PhpCsFixerFormatter($path);
         });
         $container->register(FormattingHandler::class, function (Container $container) {
             if (false === $container->getParameter(self::PARAM_PHP_CS_FIXER_ENABLED)) {
@@ -42,11 +42,17 @@ class LanguageServerPhpCsFixerExtension implements Extension
     {
         $schema->setDefaults([
             self::PARAM_PHP_CS_FIXER_ENABLED => false,
-            self::PARAM_PHP_CS_FIXER_BIN => '%project_root%/vendor/bin/phpcsfixer',
+
+            self::PARAM_PHP_CS_FIXER_BIN => '%project_root%/vendor/bin/php-cs-fixer',
+
         ]);
+
+
+
         $schema->setDescriptions([
             self::PARAM_PHP_CS_FIXER_ENABLED => 'Enable document formattig via. php-cs-fixer',
             self::PARAM_PHP_CS_FIXER_BIN => 'Path to the php-cs-fixer executable',
         ]);
+
     }
 }

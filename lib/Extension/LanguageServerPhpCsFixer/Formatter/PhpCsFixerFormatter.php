@@ -9,6 +9,7 @@ use Phpactor\LanguageServerProtocol\TextEdit;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TextDocument\TextDocument;
 use RuntimeException;
+use function Amp\ByteStream\buffer;
 use function Amp\call;
 
 class PhpCsFixerFormatter implements Formatter
@@ -54,8 +55,9 @@ class PhpCsFixerFormatter implements Formatter
             $exitCode = yield $process->join();
             if ($exitCode !== 0) {
                 throw new RuntimeException(sprintf(
-                    'php-cs-fixer exited with code "%s"',
-                    $exitCode
+                    'php-cs-fixer exited with code "%s": %s',
+                    $exitCode,
+                    yield buffer($process->getStderr())
                 ));
             }
 

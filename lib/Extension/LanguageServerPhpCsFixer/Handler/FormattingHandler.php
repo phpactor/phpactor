@@ -38,7 +38,6 @@ class FormattingHandler implements Handler, CanRegisterCapabilities
     public function formatting(TextDocumentIdentifier $textDocument, FormattingOptions $options): Promise
     {
         return call(function () use ($textDocument) {
-            $builder = new TextEditBuilder();
             $document = $this->locator->get(TextDocumentUri::fromString($textDocument->uri));
             $formatted = yield $this->formatter->format($document);
 
