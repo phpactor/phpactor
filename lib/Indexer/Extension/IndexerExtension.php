@@ -210,12 +210,13 @@ class IndexerExtension implements Extension
             $indexPath = $resolver->resolve(
                 $container->getParameter(self::PARAM_INDEX_PATH)
             );
-            return IndexAgentBuilder::create($indexPath, $this->projectRoot($container))
+            return IndexAgentBuilder::create($indexPath, ...array_merge([
+                $this->projectRoot($container)
+            ], $container->getParameter(self::PARAM_STUB_PATHS)))
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
                 ->setIncludePatterns(
                     $container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS),
-                )
-                ->setStubPaths($container->getParameter(self::PARAM_STUB_PATHS));
+                );
         });
 
         $container->register(Indexer::class, function (Container $container) {

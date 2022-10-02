@@ -52,7 +52,7 @@ final class IndexAgentBuilder
     /**
      * @var array<string>
      */
-    private array $stubPaths = [];
+    private array $paths = [];
 
     /**
      * @var array<string>
@@ -67,16 +67,20 @@ final class IndexAgentBuilder
 
     private LoggerInterface $logger;
 
-    private function __construct(string $indexRoot)
+    /**
+     * @param string[] $paths
+     */
+    private function __construct(string $indexRoot, array $paths)
     {
         $this->indexRoot = $indexRoot;
         $this->enhancer = new NullRecordReferenceEnhancer();
         $this->logger = new NullLogger();
+        $this->paths = $paths;
     }
 
-    public static function create(string $indexRootPath): self
+    public static function create(string $indexRootPath, string ...$paths): self
     {
-        return new self($indexRootPath);
+        return new self($indexRootPath, $paths);
     }
 
     public function setLogger(LoggerInterface $logger): self
@@ -88,7 +92,7 @@ final class IndexAgentBuilder
 
     public function addPath(string $path): self
     {
-        $this->stubPaths[] = $path;
+        $this->paths[] = $path;
 
         return $this;
     }
@@ -149,11 +153,11 @@ final class IndexAgentBuilder
     }
 
     /**
-     * @param array<string> $stubPaths
+     * @param array<string> $paths
      */
-    public function setStubPaths(array $stubPaths): self
+    public function setPaths(array $paths): self
     {
-        $this->stubPaths = $stubPaths;
+        $this->paths = $paths;
 
         return $this;
     }
@@ -231,17 +235,11 @@ final class IndexAgentBuilder
      */
     private function buildFileListProviders(): array
     {
-        $providers = [
-            new FilesystemFileListProvider(
-                $this->buildFilesystem($this->projectRoot),
+        foreach ($this->paths as $path) {
+            $providers[] = new FilesystemFileListProvider(
+                $this->buildFilesystem($path),
                 $this->includePatterns,
                 $this->excludePatterns
-            )
-        ];
-
-        foreach ($this->stubPaths as $stubPath) {
-            $providers[] = new FilesystemFileListProvider(
-                $this->buildFilesystem($stubPath)
             );
         }
 

@@ -7,10 +7,6 @@ use Symfony\Component\Process\Process;
 
 class IndexBuildCommandTest extends IntegrationTestCase
 {
-    public function tearDown():void
-    {
-        $this->workspace()->reset();
-    }
     public function testRefreshIndex(): void
     {
         $this->initProject();
