@@ -62,7 +62,7 @@ class IndexerExtension implements Extension
     public const PARAM_REFERENCES_DEEP_REFERENCES = 'indexer.reference_finder.deep';
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
-    const TAG_WATCHER = 'indexer.watcher';
+    public const TAG_WATCHER = 'indexer.watcher';
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
     private const INDEXER_TOLERANT = 'tolerant';
@@ -210,9 +210,10 @@ class IndexerExtension implements Extension
             $indexPath = $resolver->resolve(
                 $container->getParameter(self::PARAM_INDEX_PATH)
             );
-            return IndexAgentBuilder::create($indexPath, ...array_merge([
-                $this->projectRoot($container)
-            ], $container->getParameter(self::PARAM_STUB_PATHS)))
+            return IndexAgentBuilder::create($indexPath, ...array_merge(
+                $this->workspacePaths($container),
+                $container->getParameter(self::PARAM_STUB_PATHS)
+            ))
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
                 ->setIncludePatterns(
                     $container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS),
@@ -224,18 +225,21 @@ class IndexerExtension implements Extension
         });
 
         $container->register(self::SERVICE_INDEXER_EXCLUDE_PATTERNS, function (Container $container) {
-            $projectRoot = $this->projectRoot($container);
-            return array_map(function (string $pattern) use ($projectRoot) {
-                return Path::join([$projectRoot, $pattern]);
-            }, $container->getParameter(self::PARAM_EXCLUDE_PATTERNS));
+            $workspaceRoots = $this->workspacePaths($container);
+            return array_reduce($workspaceRoots, function (array $paths, string $workspacePath) use ($container) {
+                return array_merge($paths, array_map(function (string $pattern) use ($workspacePath) {
+                    return Path::join([$workspacePath, $pattern]);
+                }, $container->getParameter(self::PARAM_EXCLUDE_PATTERNS)));
+            }, []);
         });
 
         $container->register(self::SERVICE_INDEXER_INCLUDE_PATTERNS, function (Container $container) {
-            $projectRoot = $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT);
-
-            return array_map(function (string $pattern) use ($projectRoot) {
-                return Path::join([$projectRoot, $pattern]);
-            }, $container->getParameter(self::PARAM_INCLUDE_PATTERNS));
+            $workspaceRoots = $this->workspacePaths($container);
+            return array_reduce($workspaceRoots, function (array $paths, string $workspacePath) use ($container) {
+                return array_merge($paths, array_map(function (string $pattern) use ($workspacePath) {
+                    return Path::join([$workspacePath, $pattern]);
+                }, $container->getParameter(self::PARAM_INCLUDE_PATTERNS)));
+            }, []);
         });
 
         $container->register(WorseRecordReferenceEnhancer::class, function (Container $container) {
@@ -416,11 +420,16 @@ class IndexerExtension implements Extension
         ]);
     }
 
-    private function projectRoot(Container $container): string
+    /**
+     * @return string[]
+     */
+    private function workspacePaths(Container $container): array
     {
-        return $container->get(
-            FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
-        )->resolve($container->getParameter(self::PARAM_PROJECT_ROOT));
+        return [
+            $container->get(
+                FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
+            )->resolve($container->getParameter(self::PARAM_PROJECT_ROOT))
+        ];
     }
 
     private function logger(Container $container): LoggerInterface
