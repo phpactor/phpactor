@@ -18,6 +18,7 @@ Improvements:
 
 Features:
 
+  - [lsp] Document formatting via. php-cs-fixer #1897
   - [gtd] For member declarations, goto parent member definition if it exists #1886
 
 ## 2022.09.11
