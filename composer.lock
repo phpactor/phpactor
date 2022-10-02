@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9acb543a02c680a4db0ed7744d6803e8",
+    "content-hash": "5230b317ec67c0d532ab7d96bf97dc03",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1681,16 +1681,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "221ebc68d865b7ccc3f496755c18fb31f822052e"
+                "reference": "d20395c182c492ab606f9135ad1fe707620e9306"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/221ebc68d865b7ccc3f496755c18fb31f822052e",
-                "reference": "221ebc68d865b7ccc3f496755c18fb31f822052e",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/d20395c182c492ab606f9135ad1fe707620e9306",
+                "reference": "d20395c182c492ab606f9135ad1fe707620e9306",
                 "shasum": ""
             },
             "require": {
@@ -1741,9 +1741,9 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/3.2.0"
+                "source": "https://github.com/phpactor/language-server/tree/3.3.0"
             },
-            "time": "2022-08-04T14:40:19+00:00"
+            "time": "2022-10-02T16:25:31+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",

@@ -22,7 +22,7 @@ class PhpCsFormatterTest extends TestCase
     public function testHandlerWithNoChange(): void
     {
         $edits = $this->format('<?php ');
-        self::assertNull($edits,'No-op should return NULL');
+        self::assertNull($edits, 'No-op should return NULL');
     }
 
     /**
