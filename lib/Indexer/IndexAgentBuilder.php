@@ -60,8 +60,6 @@ final class IndexAgentBuilder
     private array $excludePatterns = [
     ];
 
-    private string $projectRoot;
-
     /**
      * @var array<TolerantIndexer>|null
      */
@@ -69,17 +67,16 @@ final class IndexAgentBuilder
 
     private LoggerInterface $logger;
 
-    private function __construct(string $indexRoot, string $projectRoot)
+    private function __construct(string $indexRoot)
     {
         $this->indexRoot = $indexRoot;
         $this->enhancer = new NullRecordReferenceEnhancer();
         $this->logger = new NullLogger();
-        $this->projectRoot = $projectRoot;
     }
 
-    public static function create(string $indexRootPath, string $projectRoot): self
+    public static function create(string $indexRootPath): self
     {
-        return new self($indexRootPath, $projectRoot);
+        return new self($indexRootPath);
     }
 
     public function setLogger(LoggerInterface $logger): self
@@ -89,7 +86,7 @@ final class IndexAgentBuilder
         return $this;
     }
 
-    public function addStubPath(string $path): self
+    public function addPath(string $path): self
     {
         $this->stubPaths[] = $path;
 
