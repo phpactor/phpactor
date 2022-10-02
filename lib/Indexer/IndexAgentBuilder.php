@@ -252,4 +252,28 @@ final class IndexAgentBuilder
     {
         return new DirtyFileListProvider($this->indexRoot . '/dirty');
     }
+
+    /**
+     * @return string[]
+     */
+    public function paths(): array
+    {
+        return $this->paths;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function includePatterns(): array
+    {
+        return $this->includePatterns;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function excludePatterns(): array
+    {
+        return $this->excludePatterns;
+    }
 }

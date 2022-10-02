@@ -15,6 +15,7 @@ use Phpactor\Extension\LanguageServerIndexer\Watcher\LanguageServerWatcher;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
+use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
@@ -55,7 +56,10 @@ class LanguageServerIndexerExtension implements Extension
         ]);
 
         $container->register(IndexerStatusProvider::class, function (Container $container) {
-            return new IndexerStatusProvider($container->get(Watcher::class));
+            return new IndexerStatusProvider(
+                $container->get(Watcher::class),
+                $container->get(IndexAgentBuilder::class),
+            );
         }, [
             LanguageServerExtension::TAG_STATUS_PROVIDER => [],
         ]);
