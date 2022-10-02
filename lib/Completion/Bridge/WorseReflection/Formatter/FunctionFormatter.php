@@ -30,7 +30,7 @@ class FunctionFormatter implements Formatter
 
         $returnType = $function->inferredType();
 
-        if (($returnType->isDefined())) {
+        if ($returnType->isDefined()) {
             $info[] = ': ' . $formatter->format($returnType);
         }
 

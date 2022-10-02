@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit\Util;
 
+use Phpactor\LanguageServerProtocol\ParameterInformation as PhpactorParameterInformation;
 use Phpactor\LanguageServerProtocol\SignatureHelp as LspSignatureHelp;
 use Phpactor\LanguageServerProtocol\SignatureInformation as LspSignatureInformation;
 use PHPUnit\Framework\TestCase;
@@ -29,5 +30,8 @@ class PhpactorToLspSignatureTest extends TestCase
         $signature = $help->signatures[0];
         $this->assertInstanceOf(LspSignatureInformation::class, $signature);
         $this->assertEquals('foo', $signature->label);
+
+        $this->assertInstanceOf(PhpactorParameterInformation::class, $help->signatures[0]->parameters[0]);
+        $this->assertEquals('$one', $help->signatures[0]->parameters[0]->label);
     }
 }
