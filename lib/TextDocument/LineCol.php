@@ -14,7 +14,7 @@ use RuntimeException;
  */
 final class LineCol
 {
-    private const NEWLINE_PATTERN = '\\r\\n|\\n|\\r';
+    public const NEWLINE_PATTERN = '\\r\\n|\\n|\\r';
 
     private int $line;
 

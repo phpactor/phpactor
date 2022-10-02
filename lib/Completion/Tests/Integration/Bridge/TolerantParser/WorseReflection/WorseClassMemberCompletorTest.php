@@ -22,6 +22,9 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
         $this->assertComplete($source, $expected);
     }
 
+    /**
+     * @return Generator<string,array{string,array<int,array<string,string>>}>
+     */
     public function provideComplete(): Generator
     {
         yield 'Public property' => [
@@ -887,6 +890,31 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
             ],
         ];
 
+        yield 'parent::__construct' => [
+            <<<'EOT'
+                <?php
+
+                class Bar {
+                    public function __construct(string $foo) {}
+                }
+
+                class Foobar extends Bar
+                {
+                    public function bar(): string {
+                        parent::<>
+                    }
+                }
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => '__construct',
+                    'short_description' => 'pub __construct(string $foo)',
+                    'snippet' => '__construct(${1:\\$foo})${0}'
+                ],
+            ],
+        ];
+
         yield 'parenthesized type' => [
             <<<'EOT'
                 <?php
@@ -930,6 +958,9 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
         $this->assertCouldNotComplete($source);
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideCouldNotComplete(): Generator
     {
         yield 'non member access' => [ '<?php $hello<>' ];

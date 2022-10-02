@@ -3,10 +3,21 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - [lsp] Import all unresolved names command no longer dupliates names #1835
+  - [tp] Update tolerant parser library fixing issue with parsing `match` keyword #1873
+  - [rpc] Fix regression with :PhpactorClassNew opening in `Untitled` buffer #1881
+
 Improvements:
 
+  - [lsp] Highlighting more 10x faster #1891
   - [cmp/lsp] inline type information for completion items
+  - [cmp] complete `__construct` on `parent::` #1272
 
+Features:
+
+  - [gtd] For member declarations, goto parent member definition if it exists #1886
 
 ## 2022.09.11
 

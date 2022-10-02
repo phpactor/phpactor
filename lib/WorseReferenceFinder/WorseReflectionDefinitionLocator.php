@@ -11,7 +11,9 @@ use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -73,6 +75,11 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
     private function gotoDefinition(TextDocument $document, ReflectionOffset $offset): TypeLocations
     {
         $symbolContext = $offset->symbolContext();
+
+        if ($symbolContext instanceof MemberDeclarationContext) {
+            return $this->gotoMethodDeclaration($symbolContext);
+        }
+
         switch ($symbolContext->symbol()->symbolType()) {
             case Symbol::METHOD:
             case Symbol::PROPERTY:
@@ -244,5 +251,43 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
         return new TypeLocations($locations);
+    }
+
+    private function gotoMethodDeclaration(MemberDeclarationContext $symbolContext): TypeLocations
+    {
+        try {
+            $class = $this->reflector->reflectClass($symbolContext->classType()->name());
+        } catch (NotFound $notFound) {
+            return new TypeLocations([]);
+        }
+
+        // find first parent definition or return declaring class
+        $member = (function (string $name) use ($class) {
+            foreach ((new ClassHierarchyResolver())->resolve($class) as $currentClass) {
+                if ($currentClass->ownMembers()->has($name)) {
+                    return $currentClass->ownMembers()->byName($name)->first();
+                }
+            }
+            return null;
+        })($symbolContext->name());
+
+        if (null === $member) {
+            return new TypeLocations([]);
+        }
+
+
+        $path = $member->declaringClass()->sourceCode()->path();
+
+        if (null === $path) {
+            throw new CouldNotLocateDefinition(sprintf(
+                'The source code for class "%s" has no path associated with it.',
+                (string) $member->declaringClass()->name()
+            ));
+        }
+
+        return new TypeLocations([new TypeLocation($symbolContext->classType(), new Location(
+            TextDocumentUri::fromString($path),
+            ByteOffset::fromInt($member->position()->start())
+        ))]);
     }
 }
