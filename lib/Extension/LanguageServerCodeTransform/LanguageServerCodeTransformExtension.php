@@ -187,6 +187,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(GenerateDecoratorCommand::class, function (Container $container) {
             return new GenerateDecoratorCommand(
                 $container->get(ClientApi::class),
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(GenerateDecorator::class)
             );
         }, [

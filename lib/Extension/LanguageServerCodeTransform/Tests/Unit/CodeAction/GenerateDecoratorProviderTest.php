@@ -20,10 +20,10 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
      * @dataProvider provideClassCreateProvider
      * @group flakey
      */
-    public function testClassCreateProvider(string $manifest, int $expectedCount): void
+    public function testClassCreateProvider(string $source, int $expectedCount): void
     {
         $this->workspace()->reset();
-        $this->workspace()->loadManifest($manifest);
+        [$source, $offset] = ExtractOffset::fromSource($source);
 
         $tester = $this->container([])->get(LanguageServerBuilder::class)->tester(
             ProtocolFactory::initializeParams($this->workspace()->path())
@@ -31,15 +31,12 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
         $tester->initialize();
         assert($tester instanceof LanguageServerTester);
 
-        $FooBar = $this->workspace()->getContents('FooBar.php');
-        [ $source, $offset ] = ExtractOffset::fromSource($FooBar);
-
         $tester->textDocument()->open('file:///foobar', $source);
 
         $result = $tester->requestAndWait(CodeActionRequest::METHOD, new CodeActionParams(
             ProtocolFactory::textDocumentIdentifier('file:///foobar'),
             new Range(
-                ProtocolFactory::position(0, 8),
+                PositionConverter::intByteOffsetToPosition((int)$offset, $source),
                 PositionConverter::intByteOffsetToPosition((int)$offset, $source)
             ),
             new CodeActionContext([])
@@ -47,7 +44,7 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
 
         $tester->assertSuccess($result);
 
-        $tester->textDocument()->save('file:///foobar', $source);
+        $tester->textDocument()->save('file:///foobar');
 
         $result = $tester->requestAndWait(CodeActionRequest::METHOD, new CodeActionParams(
             ProtocolFactory::textDocumentIdentifier('file:///foobar'),
@@ -70,9 +67,8 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
     {
         yield 'class with no interfaces' => [
             <<<'EOT'
-                // File: FooBar.php
                 <?php
-                class FooBar {}
+                class Foo<>bar {}
 
                 EOT
         , 0
@@ -80,9 +76,9 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
 
         yield 'class with one interface' => [
             <<<'EOT'
-                // File: FooBar.php
                 <?php
-                class FooBar implements SomeInterface {}
+                interface SomeInterface {public function foo(): void {}}
+                class FooBar implements So<>meInterface {}
 
                 EOT
         , 1
@@ -90,12 +86,13 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
 
         yield 'class with multiple interfaces' => [
             <<<'EOT'
-                // File: FooBar.php
                 <?php
-                class FooBar implements SomeInterface, OtherInterface {}
+                interface SomeInterface {public function foo(): void {}}
+                interface OtherInterface {public function foo(): void {}}
+                class FooBar implements SomeInterface, Ot<>herInterface {}
 
                 EOT
-        , 2
+        , 1
         ];
     }
 }

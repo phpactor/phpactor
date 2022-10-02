@@ -9,6 +9,7 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class GenerateDecoratorCommand implements Command
 {
@@ -18,12 +19,16 @@ class GenerateDecoratorCommand implements Command
 
     private GenerateDecorator $generateDecorator;
 
+    private Workspace $workspace;
+
     public function __construct(
         ClientApi $clientApi,
+        Workspace $workspace,
         GenerateDecorator $generateDecorator
     ) {
         $this->clientApi = $clientApi;
         $this->generateDecorator = $generateDecorator;
+        $this->workspace = $workspace;
     }
 
     /**
