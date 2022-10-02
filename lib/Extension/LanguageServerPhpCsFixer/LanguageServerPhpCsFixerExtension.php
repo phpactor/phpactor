@@ -12,8 +12,8 @@ use Phpactor\MapResolver\Resolver;
 
 class LanguageServerPhpCsFixerExtension implements Extension
 {
-    public const PARAM_PHP_CS_FIXER_ENABLED = 'language_server_phpcsfixer.enabled';
-    public const PARAM_PHP_CS_FIXER_BIN = 'language_server_phpcsfixer.bin';
+    public const PARAM_PHP_CS_FIXER_ENABLED = 'language_server_php_cs_fixer.enabled';
+    public const PARAM_PHP_CS_FIXER_BIN = 'language_server_php_cs_fixer.bin';
 
     public function load(ContainerBuilder $container): void
     {

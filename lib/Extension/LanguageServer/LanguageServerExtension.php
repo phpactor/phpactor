@@ -61,7 +61,6 @@ use Phpactor\LanguageServer\Middleware\ShutdownMiddleware;
 use Phpactor\LanguageServer\Service\DiagnosticsService;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\MapResolver\ResolverErrors;
-use Phpactor\TextDocument\TextDocumentLocator;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;

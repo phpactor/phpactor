@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer\Handler;
 
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
-use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
 use Phpactor\LanguageServerProtocol\FormattingOptions;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
