@@ -27,6 +27,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
+use function array_reduce;
 
 class WorseSignatureHelper implements SignatureHelper
 {
