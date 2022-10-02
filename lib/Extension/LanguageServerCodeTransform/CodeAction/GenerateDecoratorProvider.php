@@ -61,11 +61,11 @@ class GenerateDecoratorProvider implements CodeActionProvider
 
             return [
                 CodeAction::fromArray([
-                    'title' => sprintf('Generate "%s"', $interfaceFQN),
+                    'title' => sprintf('Decorate "%s"', $interfaceFQN),
                     'kind' => self::KIND,
                     'command' => new Command(
                         'Generate decorator',
-                        GenerateDecoratorCommand::class,
+                        GenerateDecoratorCommand::NAME,
                         [
                             $textDocument->uri,
                             $interfaceFQN,

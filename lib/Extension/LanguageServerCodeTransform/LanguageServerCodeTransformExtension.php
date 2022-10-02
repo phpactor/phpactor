@@ -9,6 +9,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\Container\Container;
@@ -34,6 +35,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCom
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateDecoratorCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportAllUnresolvedNamesCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
@@ -179,6 +181,17 @@ class LanguageServerCodeTransformExtension implements Extension
         }, [
             LanguageServerExtension::TAG_COMMAND => [
                 'name' => ExtractExpressionCommand::NAME
+            ],
+        ]);
+
+        $container->register(GenerateDecoratorCommand::class, function (Container $container) {
+            return new GenerateDecoratorCommand(
+                $container->get(ClientApi::class),
+                $container->get(GenerateDecorator::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_COMMAND => [
+                'name' => GenerateDecoratorCommand::NAME
             ],
         ]);
     }
