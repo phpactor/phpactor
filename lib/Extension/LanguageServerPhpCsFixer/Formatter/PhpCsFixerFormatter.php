@@ -4,10 +4,12 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer\Formatter;
 
 use Amp\Process\Process;
 use Amp\Promise;
-use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
+use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\TextEdit;
+use Phpactor\LanguageServer\Core\Formatting\Formatter;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\ByteOffset;
 use RuntimeException;
 use function Amp\ByteStream\buffer;
 use function Amp\call;
@@ -21,17 +23,17 @@ class PhpCsFixerFormatter implements Formatter
         $this->binPath = $binPath;
     }
 
-    public function format(TextDocument $document): Promise
+    public function format(TextDocumentItem $document): Promise
     {
         return call(function () use ($document) {
-            return $this->toTextEdits($document->__toString(), yield $this->fixDocument($document));
+            return $this->toTextEdits($document->text, yield $this->fixDocument($document));
         });
     }
 
     /**
      * @return Promise<string>
      */
-    private function fixDocument(TextDocument $document): Promise
+    private function fixDocument(TextDocumentItem $document): Promise
     {
         return call(function () use ($document) {
             $tempName = tempnam(sys_get_temp_dir(), 'phpactor_php_cs_fixer');
@@ -40,7 +42,7 @@ class PhpCsFixerFormatter implements Formatter
                     'Could get create temp name'
                 );
             }
-            if (false === file_put_contents($tempName, $document->__toString())) {
+            if (false === file_put_contents($tempName, $document->text)) {
                 throw new RuntimeException(
                     'Could not write temporary document'
                 );
@@ -77,22 +79,22 @@ class PhpCsFixerFormatter implements Formatter
             return null;
         }
 
-        $builder = new TextEditBuilder();
+        $lineCol = PositionConverter::byteOffsetToPosition(
+            ByteOffset::fromInt(strlen($document)),
+            $document
+        );
 
-        $edits = $builder->calculateTextEdits($document, $formatted);
-
-        $lspEdits = [];
-        foreach ($edits as $edit) {
-            $lspEdits[] = new TextEdit(
+        $lspEdits = [
+            new TextEdit(
                 ProtocolFactory::range(
-                    $edit['start']['line'],
-                    $edit['start']['character'],
-                    $edit['end']['line'],
-                    $edit['end']['character']
+                    0,
+                    0,
+                    $lineCol->line,
+                    $lineCol->character
                 ),
-                $edit['text']
-            );
-        }
+                $formatted
+            )
+        ];
 
         return $lspEdits;
     }
