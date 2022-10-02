@@ -422,6 +422,9 @@ class LanguageServerExtension implements Extension
             $formatter = null;
             foreach ($container->getServiceIdsForTag(self::TAG_FORMATTER) as $seviceId => $_) {
                 $formatter = $container->get($seviceId);
+                if (null === $formatter) {
+                    continue;
+                }
                 break;
             }
 

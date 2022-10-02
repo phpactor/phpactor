@@ -18,6 +18,9 @@ class LanguageServerPhpCsFixerExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register(PhpCsFixerFormatter::class, function (Container $container) {
+            if (!$container->getParameter(self::PARAM_PHP_CS_FIXER_ENABLED)) {
+                return null;
+            }
             $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PHP_CS_FIXER_BIN));
             return new PhpCsFixerFormatter($path);
         }, [
