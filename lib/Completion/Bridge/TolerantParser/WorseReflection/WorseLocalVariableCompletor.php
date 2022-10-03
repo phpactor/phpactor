@@ -4,16 +4,16 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Microsoft\PhpParser\Node\Expression\Variable as TolerantVariable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\Helper\VariableCompletionHelper;
+use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
-use Phpactor\Completion\Core\Suggestion;
-use Phpactor\Completion\Core\Formatter\ObjectFormatter;
-use Microsoft\PhpParser\Node\Expression\Variable as TolerantVariable;
-use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
-use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 
 class WorseLocalVariableCompletor implements TolerantCompletor
 {

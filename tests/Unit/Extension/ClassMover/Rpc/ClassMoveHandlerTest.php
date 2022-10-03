@@ -2,27 +2,27 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassMover;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Prophecy\Argument;
-use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Response\CollectionResponse;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response\CloseFileResponse;
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {
-    const SOURCE_PATH = 'souce_path';
-    const DEST_PATH = 'dest_path';
+    public const SOURCE_PATH = 'souce_path';
+    public const DEST_PATH = 'dest_path';
 
     private ObjectProphecy $classMover;
 

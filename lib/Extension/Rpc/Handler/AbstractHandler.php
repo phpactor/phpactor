@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
+use InvalidArgumentException;
 use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response\Input\Input;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Request;
-use InvalidArgumentException;
 
 abstract class AbstractHandler implements Handler
 {

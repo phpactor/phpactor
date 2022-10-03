@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application;
 
-use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\ClassFileConverter\Domain\FilePath;
+use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Reflector;
 use SplFileInfo;
 
 class ClassSearch

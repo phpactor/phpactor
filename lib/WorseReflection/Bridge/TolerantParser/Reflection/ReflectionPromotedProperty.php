@@ -2,24 +2,24 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use InvalidArgumentException;
+use Microsoft\PhpParser\NamespacedNameInterface;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
-use Phpactor\WorseReflection\Core\ServiceLocator;
-use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
-use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as CoreReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as CoreReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\PropertyTypeResolver;
-use Microsoft\PhpParser\NamespacedNameInterface;
+use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Visibility;
-use InvalidArgumentException;
 
 class ReflectionPromotedProperty extends AbstractReflectionClassMember implements CoreReflectionProperty
 {

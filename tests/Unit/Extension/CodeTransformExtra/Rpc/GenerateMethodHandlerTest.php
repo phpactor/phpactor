@@ -17,10 +17,10 @@ use function Safe\file_get_contents;
 
 class GenerateMethodHandlerTest extends HandlerTestCase
 {
-    const EXAMPLE_SOURCE = '<php example source';
-    const EXAMPLE_TRANSFORMED_SOURCE = '<php example source 1';
-    const EXAMPLE_OFFSET = 1234;
-    const EXAMPLE_PATH = '/path/to/1';
+    public const EXAMPLE_SOURCE = '<php example source';
+    public const EXAMPLE_TRANSFORMED_SOURCE = '<php example source 1';
+    public const EXAMPLE_OFFSET = 1234;
+    public const EXAMPLE_PATH = '/path/to/1';
 
     private ObjectProphecy $generateMethod;
 

@@ -13,9 +13,9 @@ use Microsoft\PhpParser\Token;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
 use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\MemberReference;
-use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\TextDocument\TextDocument;
 
 class MemberIndexer implements TolerantIndexer

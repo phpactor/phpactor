@@ -2,26 +2,26 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use InvalidArgumentException;
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\MemberTypeContextualiser;
 use Phpactor\WorseReflection\Core\NodeText;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
-use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as CoreReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\MethodTypeResolver;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
-use Microsoft\PhpParser\NamespacedNameInterface;
-use InvalidArgumentException;
+use Phpactor\WorseReflection\Core\ServiceLocator;
+use Phpactor\WorseReflection\Core\Type;
 
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {

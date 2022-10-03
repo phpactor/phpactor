@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\Editor;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Rpc\Response\ReturnOption;
 use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
+use Phpactor\Extension\Rpc\Response\ReturnOption;
+use PHPUnit\Framework\TestCase;
 
 class ReturnChoiceActionTest extends TestCase
 {

@@ -2,6 +2,8 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection;
 
+use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
+use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
@@ -12,8 +14,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvi
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseTestCase extends AdapterTestCase

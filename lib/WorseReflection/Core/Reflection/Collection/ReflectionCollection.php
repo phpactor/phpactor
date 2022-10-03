@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use IteratorAggregate;
 use Countable;
+use IteratorAggregate;
 
 /**
  * @template T

@@ -2,32 +2,32 @@
 
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
+use Phpactor\CodeTransform\Domain\Exception\TransformException;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyImportedException;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyUsedException;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
-use Phpactor\Extension\Rpc\Response\CollectionResponse;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
-use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyUsedException;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyImportedException;
-use Phpactor\CodeTransform\Domain\Exception\TransformException;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Util\WordAtOffset;
 
 class ImportClassHandler extends AbstractHandler
 {
-    const PARAM_NAME = 'name';
-    const PARAM_OFFSET = 'offset';
-    const PARAM_SOURCE = 'source';
-    const PARAM_PATH = 'path';
-    const PARAM_ALIAS = 'alias';
-    const PARAM_QUALIFIED_NAME = 'qualified_name';
-    const NAME = 'import_class';
+    public const PARAM_NAME = 'name';
+    public const PARAM_OFFSET = 'offset';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_PATH = 'path';
+    public const PARAM_ALIAS = 'alias';
+    public const PARAM_QUALIFIED_NAME = 'qualified_name';
+    public const NAME = 'import_class';
 
     private ImportName $nameImport;
 

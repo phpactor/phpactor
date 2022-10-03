@@ -6,8 +6,8 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 
 class MemberAccessExpressionResolver implements Resolver

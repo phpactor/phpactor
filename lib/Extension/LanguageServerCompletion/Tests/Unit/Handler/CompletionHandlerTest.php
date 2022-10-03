@@ -6,8 +6,17 @@ use Amp\Delayed;
 use DTL\Invoke\Invoke;
 use Generator;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
+use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Core\Range as PhpactorRange;
+use Phpactor\Completion\Core\Suggestion;
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
+use Phpactor\Extension\LanguageServerCompletion\Handler\CompletionHandler;
+use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
+use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\LanguageServerProtocol\CompletionItem;
 use Phpactor\LanguageServerProtocol\CompletionList;
 use Phpactor\LanguageServerProtocol\MarkupContent;
@@ -15,23 +24,14 @@ use Phpactor\LanguageServerProtocol\MarkupKind;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextEdit;
-use PHPUnit\Framework\TestCase;
-use Phpactor\Completion\Core\Completor;
-use Phpactor\Completion\Core\Range as PhpactorRange;
-use Phpactor\Completion\Core\Suggestion;
-use Phpactor\Completion\Core\TypedCompletorRegistry;
-use Phpactor\Extension\LanguageServerCompletion\Handler\CompletionHandler;
-use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
-use Phpactor\LanguageServer\LanguageServerTesterBuilder;
-use Phpactor\LanguageServer\Test\LanguageServerTester;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use PHPUnit\Framework\TestCase;
 
 class CompletionHandlerTest extends TestCase
 {
-    const EXAMPLE_URI = 'file:///test';
-    const EXAMPLE_TEXT = 'hello';
+    public const EXAMPLE_URI = 'file:///test';
+    public const EXAMPLE_TEXT = 'hello';
 
     public function testHandleNoSuggestions(): void
     {
@@ -479,7 +479,7 @@ class CompletionHandlerTest extends TestCase
 
     private function createCompletor(array $suggestions, bool $isIncomplete = false): Completor
     {
-        return new class($suggestions, $isIncomplete) implements Completor {
+        return new class ($suggestions, $isIncomplete) implements Completor {
             private $suggestions;
 
             private $isIncomplete;

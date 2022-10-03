@@ -4,12 +4,12 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 
 use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
-use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
-use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
+use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 
 class GenerateDecoratorCommand implements Command
 {

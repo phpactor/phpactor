@@ -2,7 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerPsalm\Tests\DiagnosticProvider;
 
-use PHPUnit\Framework\TestCase;
+use function Amp\delay;
+use function Amp\Promise\wait;
 use Phpactor\Extension\LanguageServerPsalm\DiagnosticProvider\PsalmDiagnosticProvider;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter\TestLinter;
 use Phpactor\Extension\LanguageServerPsalm\Tests\Util\DiagnosticBuilder;
@@ -10,8 +11,7 @@ use Phpactor\LanguageServer\Event\TextDocumentUpdated;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use function Amp\Promise\wait;
-use function Amp\delay;
+use PHPUnit\Framework\TestCase;
 
 class PsalmDiagnosticProviderTest extends TestCase
 {

@@ -2,15 +2,15 @@
 
 namespace Phpactor\Extension\Rpc\Command;
 
+use InvalidArgumentException;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\RpcVersion;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Extension\Rpc\RequestHandler;
-use Phpactor\Extension\Rpc\Request;
 use Symfony\Component\Console\Input\InputOption;
-use RuntimeException;
-use InvalidArgumentException;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class RpcCommand extends Command
 {

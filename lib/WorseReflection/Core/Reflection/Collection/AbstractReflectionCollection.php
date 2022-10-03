@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use ArrayIterator;
+use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Traversable;
 
 /**

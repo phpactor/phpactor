@@ -2,48 +2,48 @@
 
 namespace Phpactor\Extension\Core;
 
+use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Core\Application\CacheClear;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Status;
+use Phpactor\Extension\Core\Command\CacheClearCommand;
+use Phpactor\Extension\Core\Command\ConfigDumpCommand;
 use Phpactor\Extension\Core\Command\ConfigInitCommand;
 use Phpactor\Extension\Core\Command\ConfigJsonSchemaCommand;
 use Phpactor\Extension\Core\Command\ConfigSetCommand;
 use Phpactor\Extension\Core\Command\DebugContainerCommand;
-use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
-use Phpactor\Extension\Core\Rpc\CacheClearHandler;
-use Phpactor\Extension\Core\Rpc\ConfigHandler;
-use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\Core\Model\ConfigManipulator;
-use Phpactor\Extension\Php\Model\PhpVersionResolver;
-use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Core\Command\StatusCommand;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
 use Phpactor\Extension\Core\Console\Dumper\JsonDumper;
 use Phpactor\Extension\Core\Console\Dumper\TableDumper;
 use Phpactor\Extension\Core\Console\Prompt\BashPrompt;
 use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
-use Phpactor\Extension\Core\Command\ConfigDumpCommand;
-use Phpactor\Extension\Core\Application\CacheClear;
-use Phpactor\Extension\Core\Command\CacheClearCommand;
-use Phpactor\Extension\Core\Application\Status;
-use Phpactor\Extension\Core\Command\StatusCommand;
-use Phpactor\Container\Container;
-use Phpactor\Container\Extension;
+use Phpactor\Extension\Core\Model\ConfigManipulator;
+use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
+use Phpactor\Extension\Core\Rpc\CacheClearHandler;
+use Phpactor\Extension\Core\Rpc\ConfigHandler;
+use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Php\Model\PhpVersionResolver;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
-use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Container\ContainerBuilder;
 
 class CoreExtension implements Extension
 {
-    const APP_NAME = 'phpactor';
-    const APP_VERSION = '0.2.0';
-    const PARAM_DUMPER = 'console_dumper_default';
-    const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
-    const PARAM_COMMAND = 'command';
-    const PARAM_WARN_ON_DEVELOP = 'core.warn_on_develop';
-    const PARAM_MIN_MEMORY_LIMIT = 'core.min_memory_limit';
-    const PARAM_SCHEMA = '$schema';
+    public const APP_NAME = 'phpactor';
+    public const APP_VERSION = '0.2.0';
+    public const PARAM_DUMPER = 'console_dumper_default';
+    public const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
+    public const PARAM_COMMAND = 'command';
+    public const PARAM_WARN_ON_DEVELOP = 'core.warn_on_develop';
+    public const PARAM_MIN_MEMORY_LIMIT = 'core.min_memory_limit';
+    public const PARAM_SCHEMA = '$schema';
 
     public function configure(Resolver $schema): void
     {

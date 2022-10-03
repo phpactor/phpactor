@@ -14,9 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class AnalyseCommand extends Command
 {
-    const ARG_PATH = 'path';
-    const OPT_IGNORE_FAILURE = 'ignore-failure';
-    const OPT_FORMAT = 'format';
+    public const ARG_PATH = 'path';
+    public const OPT_IGNORE_FAILURE = 'ignore-failure';
+    public const OPT_FORMAT = 'format';
 
     private Analyser $analyser;
 

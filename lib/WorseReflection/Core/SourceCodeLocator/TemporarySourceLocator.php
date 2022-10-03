@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
+use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
+use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
-use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
-use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 
 /**
  * Source locator for keeping track of source code provided at call time.

@@ -6,13 +6,13 @@ use Amp\Promise;
 use Amp\Success;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
+use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
+use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServerProtocol\DocumentHighlight;
 use Phpactor\LanguageServerProtocol\DocumentHighlightParams;
 use Phpactor\LanguageServerProtocol\DocumentHighlightRequest;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
-use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
-use Phpactor\LanguageServer\Core\Handler\Handler;
-use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class HighlightHandler implements Handler, CanRegisterCapabilities
 {

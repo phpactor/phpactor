@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Handler;
 
+use function Amp\asyncCall;
 use Amp\CancellationToken;
 use Amp\CancelledException;
 use Amp\Delayed;
@@ -11,21 +12,20 @@ use Phpactor\AmpFsWatch\Exception\WatcherDied;
 use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\AmpFsWatch\WatcherProcess;
 use Phpactor\Extension\LanguageServerIndexer\Event\IndexReset;
+use Phpactor\Indexer\Model\Indexer;
 use Phpactor\Indexer\Model\MemoryUsage;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
-use Phpactor\Indexer\Model\Indexer;
 use Phpactor\LanguageServer\Core\Service\ServiceProvider;
 use Phpactor\LanguageServer\WorkDoneProgress\WorkDoneToken;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
-use function Amp\asyncCall;
 
 class IndexerHandler implements Handler, ServiceProvider
 {
-    const SERVICE_INDEXER = 'indexer';
+    public const SERVICE_INDEXER = 'indexer';
 
     private Indexer $indexer;
 

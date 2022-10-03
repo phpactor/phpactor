@@ -2,9 +2,9 @@
 
 namespace Acme;
 
-use Acme\Foobar\Warble;
-use Acme\Foobar\Barfoo;
 use Acme\Barfoo as ZedZed;
+use Acme\Foobar\Barfoo;
+use Acme\Foobar\Warble;
 
 class Hello
 {

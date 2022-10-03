@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
+use function assert;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\PotentialLocation;
@@ -11,7 +12,6 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use function assert;
 
 class TolerantVariableDefintionLocator implements DefinitionLocator
 {

@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\Response;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class OpenFileResponseTest extends TestCase

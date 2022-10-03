@@ -3,12 +3,12 @@
 namespace Phpactor\Extension\Core\Command;
 
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\FilePathResolver\Expanders;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Terminal;
 
 class ConfigDumpCommand extends Command

@@ -2,11 +2,11 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Domain\ChainFileListProvider;
-use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Domain\FilePath;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class ChainFileListProviderTest extends TestCase

@@ -4,8 +4,8 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
 use Generator;
 use Phpactor\TestUtils\PHPUnit\TestCase;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ArrayLiteralTypeTest extends TestCase
 {

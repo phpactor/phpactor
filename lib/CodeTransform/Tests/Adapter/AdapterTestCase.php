@@ -2,11 +2,11 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter;
 
-use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
-use PHPUnit\Framework\TestCase;
-use Phpactor\TestUtils\Workspace;
+use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
 
 class AdapterTestCase extends TestCase
 {

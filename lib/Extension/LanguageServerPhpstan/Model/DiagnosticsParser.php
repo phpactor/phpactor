@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Model;
 
+use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServerProtocol\Diagnostic;
 use RuntimeException;
 
 class DiagnosticsParser

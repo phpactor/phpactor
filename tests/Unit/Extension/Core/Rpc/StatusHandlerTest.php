@@ -4,13 +4,13 @@ namespace Phpactor\Tests\Unit\Extension\Core\Rpc;
 
 use Phpactor\ConfigLoader\Adapter\PathCandidate\AbsolutePathCandidate;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Core\Application\Status;
+use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Core\Application\Status;
 use Prophecy\Prophecy\ObjectProphecy;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Core\Rpc\StatusHandler;
 
 class StatusHandlerTest extends HandlerTestCase
 {

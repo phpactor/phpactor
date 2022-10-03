@@ -4,12 +4,12 @@ namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser;
 
 use Microsoft\PhpParser\Parser;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder;
-use PHPUnit\Framework\TestCase;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassReplacer;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 
 class TolerantClassReplacerTest extends TestCase
 {

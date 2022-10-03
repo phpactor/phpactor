@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\Response\Input;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use PHPUnit\Framework\TestCase;
 
 class ChoiceInputTest extends TestCase
 {

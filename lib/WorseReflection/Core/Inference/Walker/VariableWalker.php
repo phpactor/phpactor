@@ -2,14 +2,14 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
-use Microsoft\PhpParser\Token;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Phpactor\WorseReflection\Core\Inference\Frame;
+use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as PhpactorReflectionScope;
 use Phpactor\WorseReflection\Core\Type;

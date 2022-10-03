@@ -2,20 +2,20 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Reflector\SourceCode;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflector\SourceCode\ContextualSourceCodeReflector;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class ContextualSourceCodeReflectorTest extends TestCase
 {
     use ProphecyTrait;
-    const TEST_SOURCE_CODE = '<?php echo "hello";';
-    const TEST_OFFSET = 1;
+    public const TEST_SOURCE_CODE = '<?php echo "hello";';
+    public const TEST_OFFSET = 1;
 
     private ContextualSourceCodeReflector $reflector;
 

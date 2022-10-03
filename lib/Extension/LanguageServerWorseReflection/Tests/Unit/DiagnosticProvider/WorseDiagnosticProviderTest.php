@@ -3,17 +3,17 @@
 namespace Phpactor\Extension\LanguageServerWorseReflection\Tests\Unit\DiagnosticProvider;
 
 use Amp\CancellationTokenSource;
-use PHPUnit\Framework\TestCase;
+use function Amp\Promise\wait;
 use Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider\WorseDiagnosticProvider;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity as PhpactorDiagnosticSeverity;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DiagnosticProvider\BareDiagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticProvider\InMemoryDiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use function Amp\Promise\wait;
+use PHPUnit\Framework\TestCase;
 
 class WorseDiagnosticProviderTest extends TestCase
 {

@@ -4,13 +4,13 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
+use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
-use Microsoft\PhpParser\Node\QualifiedName;
-use Phpactor\WorseReflection\Core\ClassName;
-use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 
 /**
  * @extends AbstractReflectionCollection<ReflectionInterface>

@@ -7,11 +7,11 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Console\ConsoleExtension;
-use Phpactor\Extension\Debug\Command\GenerateDocumentationCommand;
-use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
-use Phpactor\Extension\Debug\Model\DocumentorRegistry;
-use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
 use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
+use Phpactor\Extension\Debug\Command\GenerateDocumentationCommand;
+use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
+use Phpactor\Extension\Debug\Model\DocumentorRegistry;
+use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 

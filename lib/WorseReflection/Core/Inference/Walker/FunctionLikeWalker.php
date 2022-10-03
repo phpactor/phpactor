@@ -2,24 +2,24 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
+use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
-use Microsoft\PhpParser\TokenKind;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Microsoft\PhpParser\FunctionLike;
+use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
-use Phpactor\WorseReflection\Core\Inference\Variable;
-use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
-use Microsoft\PhpParser\Node\MethodDeclaration;
-use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
-use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Token;
+use Microsoft\PhpParser\TokenKind;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;

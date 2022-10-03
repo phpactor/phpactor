@@ -2,13 +2,13 @@
 
 namespace Phpactor\Extension\ComposerAutoloader\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Composer\Autoload\ClassLoader;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
-use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
-use Composer\Autoload\ClassLoader;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use PHPUnit\Framework\TestCase;
 
 class ComposerAutoloaderExtensionTest extends TestCase
 {

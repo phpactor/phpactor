@@ -4,14 +4,14 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
 use Phpactor\Indexer\Model\Exception\CannotIndexNode;
+use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\Indexer\Model\Index;
 use Phpactor\TextDocument\TextDocument;
 
 abstract class AbstractClassLikeIndexer implements TolerantIndexer

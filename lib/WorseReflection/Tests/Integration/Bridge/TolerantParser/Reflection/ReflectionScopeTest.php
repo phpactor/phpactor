@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
-use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
+use Closure;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\NameImports;
-use Closure;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class ReflectionScopeTest extends IntegrationTestCase
 {

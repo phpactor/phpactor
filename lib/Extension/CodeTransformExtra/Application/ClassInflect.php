@@ -4,11 +4,11 @@ namespace Phpactor\Extension\CodeTransformExtra\Application;
 
 use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Phpactor;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
+use Phpactor\Phpactor;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Webmozart\Glob\Glob;
 use RuntimeException;
+use Webmozart\Glob\Glob;
 
 class ClassInflect extends AbstractClassGenerator
 {

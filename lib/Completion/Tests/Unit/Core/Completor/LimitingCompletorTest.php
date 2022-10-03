@@ -2,12 +2,12 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core\Completor;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Completor\ArrayCompletor;
-use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Completor\LimitingCompletor;
+use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 
 class LimitingCompletorTest extends TestCase
 {

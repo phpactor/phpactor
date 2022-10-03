@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\SourceCodeLocator;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
+use PHPUnit\Framework\TestCase;
 
 class NativeReflectionFunctionSourceLocatorTest extends TestCase
 {

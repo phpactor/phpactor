@@ -5,13 +5,13 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\ReferenceFinder\Search\PredefinedNameSearcher;
 use Phpactor\TestUtils\ExtractOffset;
+use PHPUnit\Framework\TestCase;
 
 class TypeSuggestionProviderTest extends TestCase
 {

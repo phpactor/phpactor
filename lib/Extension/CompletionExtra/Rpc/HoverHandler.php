@@ -9,17 +9,17 @@ use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
 class HoverHandler implements Handler
 {
-    const PARAM_SOURCE = 'source';
-    const PARAM_OFFSET = 'offset';
-    const NAME = 'hover';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_OFFSET = 'offset';
+    public const NAME = 'hover';
 
     private Reflector $reflector;
 

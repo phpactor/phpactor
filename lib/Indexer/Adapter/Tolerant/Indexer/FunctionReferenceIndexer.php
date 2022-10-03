@@ -6,9 +6,9 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\Indexer\Model\Index;
-use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
+use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\TextDocument\TextDocument;
 
 class FunctionReferenceIndexer extends AbstractClassLikeIndexer

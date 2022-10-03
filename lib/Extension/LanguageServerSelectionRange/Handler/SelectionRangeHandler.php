@@ -6,14 +6,14 @@ use Amp\Promise;
 use Amp\Success;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerSelectionRange\Model\RangeProvider;
+use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
+use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\SelectionRange;
 use Phpactor\LanguageServerProtocol\SelectionRangeParams;
 use Phpactor\LanguageServerProtocol\SelectionRangeRequest;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
-use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
-use Phpactor\LanguageServer\Core\Handler\Handler;
-use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class SelectionRangeHandler implements Handler, CanRegisterCapabilities
 {

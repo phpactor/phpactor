@@ -6,8 +6,8 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerPhpCsFixerExtension implements Extension

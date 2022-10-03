@@ -3,18 +3,18 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use InvalidArgumentException;
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PrototypeSourceCode;
+use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextEdits;
-use RuntimeException;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\CodeBuilder\Domain\Code;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use RuntimeException;
 
 class WorseGenerateAccessor implements GenerateAccessor
 {

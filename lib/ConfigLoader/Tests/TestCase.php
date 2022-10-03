@@ -2,8 +2,8 @@
 
 namespace Phpactor\ConfigLoader\Tests;
 
-use PHPUnit\Framework\TestCase as PhpunitTestCase;
 use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase as PhpunitTestCase;
 
 class TestCase extends PhpunitTestCase
 {

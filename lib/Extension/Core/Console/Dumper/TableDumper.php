@@ -2,12 +2,12 @@
 
 namespace Phpactor\Extension\Core\Console\Dumper;
 
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Output\OutputInterface;
 
 final class TableDumper implements Dumper
 {
-    const PADDING = '  ';
+    public const PADDING = '  ';
 
     public function dump(OutputInterface $output, array $data): void
     {

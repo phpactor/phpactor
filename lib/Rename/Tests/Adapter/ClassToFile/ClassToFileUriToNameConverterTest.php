@@ -3,9 +3,9 @@
 namespace Phpactor\Rename\Tests\Adapter\ClassToFile;
 
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
+use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Rename\Model\Exception\CouldNotConvertUriToClass;
-use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\TextDocument\TextDocumentUri;
 
 class ClassToFileUriToNameConverterTest extends IntegrationTestCase

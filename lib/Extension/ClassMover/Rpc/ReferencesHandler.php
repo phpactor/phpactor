@@ -2,27 +2,27 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\MapResolver\Resolver;
+use InvalidArgumentException;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
-use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
-use Phpactor\Extension\Rpc\Response\CollectionResponse;
-use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
-use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\Rpc\Handler\AbstractHandler;
-use InvalidArgumentException;
 use RuntimeException;
 
 /**
@@ -31,16 +31,16 @@ use RuntimeException;
  */
 class ReferencesHandler extends AbstractHandler
 {
-    const NAME = 'references';
-    const PARAMETER_OFFSET = 'offset';
-    const PARAMETER_SOURCE = 'source';
-    const PARAMETER_MODE = 'mode';
-    const PARAMETER_PATH = 'path';
-    const PARAMETER_FILESYSTEM = 'filesystem';
-    const MODE_FIND = 'find';
-    const MODE_REPLACE = 'replace';
-    const PARAMETER_REPLACEMENT = 'replacement';
-    const MESSAGE_NO_REFERENCES_FOUND = 'No references found';
+    public const NAME = 'references';
+    public const PARAMETER_OFFSET = 'offset';
+    public const PARAMETER_SOURCE = 'source';
+    public const PARAMETER_MODE = 'mode';
+    public const PARAMETER_PATH = 'path';
+    public const PARAMETER_FILESYSTEM = 'filesystem';
+    public const MODE_FIND = 'find';
+    public const MODE_REPLACE = 'replace';
+    public const PARAMETER_REPLACEMENT = 'replacement';
+    public const MESSAGE_NO_REFERENCES_FOUND = 'No references found';
 
     private ClassReferences $classReferences;
 

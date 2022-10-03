@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
@@ -9,16 +10,15 @@ use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
+use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
-use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use function Amp\call;
 
 class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 {

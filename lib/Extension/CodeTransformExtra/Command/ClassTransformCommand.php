@@ -3,16 +3,16 @@
 namespace Phpactor\Extension\CodeTransformExtra\Command;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Extension\CodeTransformExtra\Application\Transformer;
 use Phpactor\Phpactor;
+use RuntimeException;
 use SebastianBergmann\Diff\Differ;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Extension\CodeTransformExtra\Application\Transformer;
+use Symfony\Component\Console\Output\OutputInterface;
 use Webmozart\Glob\Glob;
-use RuntimeException;
 
 class ClassTransformCommand extends Command
 {

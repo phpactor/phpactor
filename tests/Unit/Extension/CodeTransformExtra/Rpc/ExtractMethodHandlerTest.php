@@ -2,12 +2,12 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractMethodHandler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -17,11 +17,11 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ExtractMethodHandlerTest extends HandlerTestCase
 {
-    const SOURCE = '<?php echo "foo";';
-    const PATH = '/path/to';
-    const OFFSET_START = 1234;
-    const OFFSET_END = 1234;
-    const METHOD_NAME = 'FOOBAR';
+    public const SOURCE = '<?php echo "foo";';
+    public const PATH = '/path/to';
+    public const OFFSET_START = 1234;
+    public const OFFSET_END = 1234;
+    public const METHOD_NAME = 'FOOBAR';
 
     /**
      * @var ObjectProphecy<ExtractMethod>

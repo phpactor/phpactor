@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\ClassFileConverter\Domain\ClassName;
@@ -9,16 +10,15 @@ use Phpactor\ClassFileConverter\Domain\ClassToFile;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
-use function Amp\call;
 
 class CreateUnresolvableClassProvider implements CodeActionProvider
 {

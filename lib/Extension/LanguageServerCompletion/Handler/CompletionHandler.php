@@ -2,14 +2,23 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Handler;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\CancelledException;
 use Amp\Delayed;
 use Amp\Promise;
 use Closure;
+use Phpactor\Completion\Core\Suggestion;
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
+use Phpactor\Extension\LanguageServerCompletion\Util\PhpactorToLspCompletionType;
+use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
+use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
+use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServerProtocol\CompletionItem;
 use Phpactor\LanguageServerProtocol\CompletionList;
 use Phpactor\LanguageServerProtocol\CompletionOptions;
@@ -22,16 +31,7 @@ use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\SignatureHelpOptions;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\TextEdit;
-use Phpactor\Completion\Core\Suggestion;
-use Phpactor\Completion\Core\TypedCompletorRegistry;
-use Phpactor\Extension\LanguageServerCompletion\Util\PhpactorToLspCompletionType;
-use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
-use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
-use Phpactor\LanguageServer\Core\Handler\Handler;
-use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
-use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use function Amp\call;
 
 class CompletionHandler implements Handler, CanRegisterCapabilities
 {

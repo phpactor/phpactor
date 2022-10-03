@@ -3,11 +3,11 @@
 namespace Phpactor\Completion\Tests\Benchmark\Bridge\TolerantParser\WorseReflection;
 
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Tests\Benchmark\Bridge\TolerantParser\TolerantCompletorBenchCase;
 use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
 
 class ClassMemberCompletorBench extends TolerantCompletorBenchCase
 {

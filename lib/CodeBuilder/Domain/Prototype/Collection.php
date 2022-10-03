@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
-use IteratorAggregate;
-use Countable;
 use ArrayIterator;
+use Countable;
 use InvalidArgumentException;
+use IteratorAggregate;
 use Traversable;
 
 /**

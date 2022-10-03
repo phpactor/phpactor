@@ -2,16 +2,16 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\SourceCode;
-use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class SourceCodeTest extends TestCase
 {
-    const SOURCE_CODE = 'source code';
-    const EXAMPLE_PATH = '/path/to';
+    public const SOURCE_CODE = 'source code';
+    public const EXAMPLE_PATH = '/path/to';
 
     /**
      * @testdox It can load source code from a file.
@@ -50,7 +50,7 @@ class SourceCodeTest extends TestCase
     public function testFromUnknownInvalid(): void
     {
         $this->expectExceptionMessage('Do not know how to create source code');
-        SourceCode::fromUnknown(new stdClass);
+        SourceCode::fromUnknown(new stdClass());
     }
 
     public function testFromTextDocument(): void

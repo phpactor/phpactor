@@ -2,12 +2,12 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractConstantHandler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -17,10 +17,10 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ExtractConstantHandlerTest extends HandlerTestCase
 {
-    const SOURCE = '<?php echo "foo";';
-    const PATH = '/path/to';
-    const OFFSET = 1234;
-    const CONSTANT_NAME = 'FOOBAR';
+    public const SOURCE = '<?php echo "foo";';
+    public const PATH = '/path/to';
+    public const OFFSET = 1234;
+    public const CONSTANT_NAME = 'FOOBAR';
 
     private ObjectProphecy $extractConstant;
 

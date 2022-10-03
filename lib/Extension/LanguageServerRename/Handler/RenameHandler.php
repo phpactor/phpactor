@@ -2,15 +2,14 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Handler;
 
+use function Amp\delay;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
-use Phpactor\Rename\Model\Exception\CouldNotRename;
-use Phpactor\Rename\Model\LocatedTextEdit;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Rename\Model\RenameResult;
-use Phpactor\Rename\Model\Renamer;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
+use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
+use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServerProtocol\PrepareRenameParams;
 use Phpactor\LanguageServerProtocol\PrepareRenameRequest;
 use Phpactor\LanguageServerProtocol\Range;
@@ -19,13 +18,14 @@ use Phpactor\LanguageServerProtocol\RenameParams;
 use Phpactor\LanguageServerProtocol\RenameRequest;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
-use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
-use Phpactor\LanguageServer\Core\Handler\Handler;
-use Phpactor\LanguageServer\Core\Server\ClientApi;
+use Phpactor\Rename\Model\Exception\CouldNotRename;
+use Phpactor\Rename\Model\LocatedTextEdit;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\Renamer;
+use Phpactor\Rename\Model\RenameResult;
 use Phpactor\TextDocument\TextDocumentLocator;
-use Phpactor\TextDocument\TextDocumentUri;
 
-use function Amp\delay;
+use Phpactor\TextDocument\TextDocumentUri;
 
 class RenameHandler implements Handler, CanRegisterCapabilities
 {

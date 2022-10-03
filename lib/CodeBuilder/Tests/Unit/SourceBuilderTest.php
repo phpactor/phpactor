@@ -2,13 +2,13 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\CodeBuilder\SourceBuilder;
+use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Prototype;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Prototype;
-use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\SourceBuilder;
 use Phpactor\TextDocument\TextEdits;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class SourceBuilderTest extends TestCase

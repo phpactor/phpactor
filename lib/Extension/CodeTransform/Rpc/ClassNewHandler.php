@@ -7,7 +7,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 class ClassNewHandler extends AbstractClassGenerateHandler
 {
-    const NAME = 'class_new';
+    public const NAME = 'class_new';
 
     public function name(): string
     {

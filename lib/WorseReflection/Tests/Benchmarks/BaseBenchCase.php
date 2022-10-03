@@ -5,8 +5,8 @@ namespace Phpactor\WorseReflection\Tests\Benchmarks;
 use Phpactor\TestUtils\Workspace;
 use Phpactor\WorseReflection\Bridge\Composer\ComposerSourceLocator;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 /**

@@ -2,17 +2,16 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder;
 
-use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Generator;
-use Phpactor\Rename\Adapter\ReferenceFinder\VariableRenamer;
-use Phpactor\Rename\Model\LocatedTextEdits;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
 use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\TestDefinitionLocator;
+use Phpactor\Rename\Adapter\ReferenceFinder\VariableRenamer;
+use Phpactor\Rename\Model\LocatedTextEdits;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Rename\Model\ReferenceFinder\PredefinedReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -23,10 +22,11 @@ use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use PHPUnit\Framework\TestCase;
 
 class VariableRenamerTest extends TestCase
 {
-    const URI = 'file:///test/Class1.php';
+    public const URI = 'file:///test/Class1.php';
 
     /** @dataProvider provideGetRenameRange */
     public function testGetRenameRange(string $source): void

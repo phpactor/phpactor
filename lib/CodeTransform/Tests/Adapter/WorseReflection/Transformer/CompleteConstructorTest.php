@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
-use Phpactor\CodeTransform\Domain\SourceCode;
-
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
+
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 
 class CompleteConstructorTest extends WorseTestCase

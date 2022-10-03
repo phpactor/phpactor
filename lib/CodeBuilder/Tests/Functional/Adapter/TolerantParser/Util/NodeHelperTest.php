@@ -3,9 +3,9 @@
 namespace Phpactor\CodeBuilder\Tests\Functional\Adapter\TolerantParser\Util;
 
 use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
 use Phpactor\TestUtils\ExtractOffset;
+use PHPUnit\Framework\TestCase;
 
 class NodeHelperTest extends TestCase
 {

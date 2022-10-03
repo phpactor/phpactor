@@ -2,18 +2,22 @@
 
 namespace Phpactor\Extension\ClassMover;
 
-use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\Extension\ClassMover\Application\ClassCopy;
-use Phpactor\Extension\ClassMover\Application\ClassMover as ClassMoverApp;
-use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassReplacer;
 use Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberFinder;
 use Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberReplacer;
 use Phpactor\ClassMover\ClassMover;
-use Phpactor\Extension\ClassMover\Command\ClassCopyCommand;
-use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
+use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\ClassMover\Application\ClassCopy;
+use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
+use Phpactor\Extension\ClassMover\Application\ClassMover as ClassMoverApp;
+use Phpactor\Extension\ClassMover\Application\ClassReferences;
+use Phpactor\Extension\ClassMover\Command\ClassCopyCommand;
+use Phpactor\Extension\ClassMover\Command\ClassMoveCommand;
+use Phpactor\Extension\ClassMover\Command\ReferencesClassCommand;
+use Phpactor\Extension\ClassMover\Command\ReferencesMemberCommand;
 use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
 use Phpactor\Extension\ClassMover\Rpc\ClassMoveHandler;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
@@ -23,10 +27,6 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Container\Container;
-use Phpactor\Extension\ClassMover\Command\ReferencesMemberCommand;
-use Phpactor\Extension\ClassMover\Command\ReferencesClassCommand;
-use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 
 class ClassMoverExtension implements Extension
 {

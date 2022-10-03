@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\Rpc\Response;
 
-use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\Input\Input;
 
 class InputCallbackResponse implements Response

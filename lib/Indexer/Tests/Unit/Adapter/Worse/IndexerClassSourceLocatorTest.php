@@ -2,13 +2,13 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Adapter\Worse;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Indexer\Model\Record\ClassRecord;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
+use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
+use PHPUnit\Framework\TestCase;
 
 class IndexerClassSourceLocatorTest extends TestCase
 {

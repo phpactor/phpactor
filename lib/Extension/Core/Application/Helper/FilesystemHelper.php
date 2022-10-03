@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\Core\Application\Helper;
 
+use Generator;
+use InvalidArgumentException;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
-use InvalidArgumentException;
-use Generator;
 
 final class FilesystemHelper
 {

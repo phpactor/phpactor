@@ -3,11 +3,11 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 
 class TypeCombinatorTest extends TestCase
 {

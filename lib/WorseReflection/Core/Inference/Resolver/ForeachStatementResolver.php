@@ -2,21 +2,21 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
-use Microsoft\PhpParser\Node\ForeachKey;
-use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
-use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Microsoft\PhpParser\Node\Statement\ForeachStatement;
-use Microsoft\PhpParser\Node\ForeachValue;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\ForeachKey;
+use Microsoft\PhpParser\Node\ForeachValue;
+use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
+use Microsoft\PhpParser\Node\Statement\ForeachStatement;
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;

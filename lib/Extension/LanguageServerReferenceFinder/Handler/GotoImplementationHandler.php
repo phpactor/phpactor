@@ -3,13 +3,13 @@
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
 use Amp\Promise;
-use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
-use Phpactor\LanguageServerProtocol\ImplementationParams;
-use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
+use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
+use Phpactor\LanguageServerProtocol\ImplementationParams;
+use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\TextDocumentBuilder;
 

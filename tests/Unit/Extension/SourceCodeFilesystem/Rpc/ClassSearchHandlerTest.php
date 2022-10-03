@@ -2,12 +2,12 @@
 
 namespace Phpactor\Tests\Unit\Extension\SourceCodeFilesystem\Rpc;
 
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
-use Phpactor\Extension\SourceCodeFilesystemExtra\Rpc\ClassSearchHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
+use Phpactor\Extension\Rpc\Response\ReturnResponse;
+use Phpactor\Extension\SourceCodeFilesystemExtra\Rpc\ClassSearchHandler;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 

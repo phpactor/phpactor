@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection;
 
+use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\DefaultValue;
 
 interface ReflectionParameter extends ReflectionNode
 {

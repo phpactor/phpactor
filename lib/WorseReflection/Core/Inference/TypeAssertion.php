@@ -9,8 +9,8 @@ use RuntimeException;
 
 final class TypeAssertion
 {
-    const VARIABLE_TYPE_PROPERTY = 'property';
-    const VARIABLE_TYPE_VARIABLE = 'variable';
+    public const VARIABLE_TYPE_PROPERTY = 'property';
+    public const VARIABLE_TYPE_VARIABLE = 'variable';
 
     private string $name;
 

@@ -24,16 +24,16 @@ use RuntimeException;
 
 class FilePathResolverExtension implements Extension
 {
-    const SERVICE_FILE_PATH_RESOLVER = 'file_path_resolver.resolver';
-    const SERVICE_EXPANDERS = 'file_path_resolver.expanders';
-    const TAG_FILTER = 'file_path_resolver.filter';
-    const TAG_EXPANDER = 'file_path_resolver.expander';
-    const PARAM_PROJECT_ROOT = 'file_path_resolver.project_root';
-    const PARAM_APP_NAME = 'file_path_resolver.app_name';
-    const PARAM_ENABLE_CACHE = 'file_path_resolver.enable_cache';
-    const PARAM_ENABLE_LOGGING = 'file_path_resolver.enable_logging';
-    const PARAM_APPLICATION_ROOT = 'file_path_resolver.application_root';
-    const LOG_CHANNEL = 'FPR';
+    public const SERVICE_FILE_PATH_RESOLVER = 'file_path_resolver.resolver';
+    public const SERVICE_EXPANDERS = 'file_path_resolver.expanders';
+    public const TAG_FILTER = 'file_path_resolver.filter';
+    public const TAG_EXPANDER = 'file_path_resolver.expander';
+    public const PARAM_PROJECT_ROOT = 'file_path_resolver.project_root';
+    public const PARAM_APP_NAME = 'file_path_resolver.app_name';
+    public const PARAM_ENABLE_CACHE = 'file_path_resolver.enable_cache';
+    public const PARAM_ENABLE_LOGGING = 'file_path_resolver.enable_logging';
+    public const PARAM_APPLICATION_ROOT = 'file_path_resolver.application_root';
+    public const LOG_CHANNEL = 'FPR';
 
 
     public function configure(Resolver $schema): void

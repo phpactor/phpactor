@@ -2,13 +2,13 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Tests\Unit;
 
+use function Amp\delay;
+use function Amp\Promise\wait;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServerIndexer\Tests\IntegrationTestCase;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use Phpactor\Extension\LanguageServerIndexer\Tests\IntegrationTestCase;
-use function Amp\Promise\wait;
-use function Amp\delay;
 
 class IndexerHandlerTest extends IntegrationTestCase
 {

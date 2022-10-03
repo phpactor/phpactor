@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\ReferenceFinder\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
@@ -16,6 +15,7 @@ use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 
 class ReferenceFinderExtensionTest extends TestCase
 {

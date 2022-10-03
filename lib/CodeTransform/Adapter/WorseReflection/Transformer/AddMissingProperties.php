@@ -3,20 +3,20 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
 use Microsoft\PhpParser\Parser;
+use Phpactor\CodeBuilder\Domain\Builder\ClassBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\TraitBuilder;
+use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
-use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyDiagnostic;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
-use Phpactor\CodeBuilder\Domain\Builder\ClassBuilder;
-use Phpactor\CodeBuilder\Domain\Builder\TraitBuilder;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Reflector;
 
 class AddMissingProperties implements Transformer
 {

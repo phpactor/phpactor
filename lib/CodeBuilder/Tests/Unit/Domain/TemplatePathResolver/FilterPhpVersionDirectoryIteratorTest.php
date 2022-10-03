@@ -4,8 +4,8 @@ namespace Phpactor\CodeBuilder\Tests\Unit\Domain\TemplatePathResolver;
 
 use ArrayIterator;
 use Iterator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\FilterPhpVersionDirectoryIterator;
+use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 
 class FilterPhpVersionDirectoryIteratorTest extends TestCase

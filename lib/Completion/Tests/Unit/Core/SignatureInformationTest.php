@@ -2,8 +2,8 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\SignatureInformation;
+use PHPUnit\Framework\TestCase;
 
 class SignatureInformationTest extends TestCase
 {

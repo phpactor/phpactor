@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\Inference\Problems;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\Problems;
+use PHPUnit\Framework\TestCase;
 
 class ProblemsTest extends TestCase
 {

@@ -2,10 +2,10 @@
 
 namespace Phpactor\Indexer\Adapter\Worse;
 
-use Phpactor\Indexer\Model\RecordReference;
-use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\Indexer\Model\RecordReference;
+use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Psr\Log\LoggerInterface;

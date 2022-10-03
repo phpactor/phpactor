@@ -4,13 +4,13 @@ namespace Phpactor\Extension\ClassMover\Application;
 
 use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Domain\MemberReplacer;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\ClassMover\Domain\Reference\MemberReference;
 use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\Extension\ClassMover\Application\Finder\FileFinder;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Filesystem\Domain\Filesystem;
-use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\WorseReflection\Reflector;
 

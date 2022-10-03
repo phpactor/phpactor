@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\DefaultValue;
+use PHPUnit\Framework\TestCase;
 
 class DefaultValueTest extends TestCase
 {

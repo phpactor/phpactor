@@ -2,12 +2,12 @@
 
 namespace Phpactor\Tests\Unit\Extension\Core\Application;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Extension\Core\Application\Status;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 

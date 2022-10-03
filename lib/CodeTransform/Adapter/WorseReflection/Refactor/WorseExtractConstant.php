@@ -2,23 +2,23 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\NumericLiteral;
+use Microsoft\PhpParser\Node\StringLiteral;
+use Microsoft\PhpParser\Parser;
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Code;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Microsoft\PhpParser\Parser;
-use Microsoft\PhpParser\ClassLike;
-use Microsoft\PhpParser\Node\StringLiteral;
-use Microsoft\PhpParser\Node\NumericLiteral;
-use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\CodeTransform\Domain\Exception\TransformException;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\TypeUtil;
 
 class WorseExtractConstant implements ExtractConstant

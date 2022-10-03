@@ -3,14 +3,14 @@
 namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
-use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class OffsetInfoHandlerTest extends HandlerTestCase
 {
-    const SOURCE = <<<'EOT'
+    public const SOURCE = <<<'EOT'
         <?php $foo = 1234;
 
         EOT

@@ -4,18 +4,18 @@ namespace Phpactor\Extension\Core\Rpc;
 
 use Phpactor\ConfigLoader\Core\PathCandidate;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Core\Application\Status;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Core\Application\Status;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
 
 class StatusHandler implements Handler
 {
-    const NAME = 'status';
-    const PARAM_TYPE = 'type';
-    const TYPE_FORMATTED = 'formatted';
-    const TYPE_DETAILED = 'detailed';
+    public const NAME = 'status';
+    public const PARAM_TYPE = 'type';
+    public const TYPE_FORMATTED = 'formatted';
+    public const TYPE_DETAILED = 'detailed';
 
     private Status $status;
 

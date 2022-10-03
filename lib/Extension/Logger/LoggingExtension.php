@@ -4,18 +4,18 @@ namespace Phpactor\Extension\Logger;
 
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\FingersCrossedHandler;
 use Monolog\Handler\NullHandler;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\Logger\Formatter\FormatterRegistry;
 use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
-use Psr\Log\LogLevel;
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\FingersCrossedHandler;
-use Phpactor\Container\Container;
-use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Container\ContainerBuilder;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use RuntimeException;
 
 class LoggingExtension implements Extension

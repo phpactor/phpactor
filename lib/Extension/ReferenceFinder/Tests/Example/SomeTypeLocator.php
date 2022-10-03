@@ -13,8 +13,8 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
 
 class SomeTypeLocator implements TypeLocator
 {
-    const EXAMPLE_OFFSET = 1;
-    const EXAMPLE_PATH = '/foobar';
+    public const EXAMPLE_OFFSET = 1;
+    public const EXAMPLE_PATH = '/foobar';
 
 
     public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations

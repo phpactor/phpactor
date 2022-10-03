@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
-use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
-use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
-use Phpactor\WorseReflection\Core\Position;
-use Phpactor\TestUtils\ExtractOffset;
 use Closure;
+use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Position;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class ReflectionMethodCallTest extends IntegrationTestCase
 {

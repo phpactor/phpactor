@@ -2,30 +2,30 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
-use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
-use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
-use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\WorseReflection\ReflectorBuilder;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
 use RuntimeException;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
-    const TEST_PATH = 'test_file.php';
+    public const TEST_PATH = 'test_file.php';
 
     private ObjectProphecy $classReferences;
 

@@ -2,21 +2,21 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\CodeTransform;
+use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Request;
-use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
 
 class TransformHandler implements Handler
 {
-    const NAME = 'transform';
-    const PARAM_NAME = 'transform';
-    const PARAM_PATH = 'path';
-    const PARAM_SOURCE = 'source';
+    public const NAME = 'transform';
+    public const PARAM_NAME = 'transform';
+    public const PARAM_PATH = 'path';
+    public const PARAM_SOURCE = 'source';
 
     private CodeTransform $codeTransform;
 

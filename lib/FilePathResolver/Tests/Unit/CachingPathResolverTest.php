@@ -2,9 +2,9 @@
 
 namespace Phpactor\FilePathResolver\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\CachingPathResolver;
 use Phpactor\FilePathResolver\PathResolver;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 

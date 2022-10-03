@@ -4,7 +4,6 @@ namespace Phpactor\Extension\Behat\Tests\Integration\Completor;
 
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Behat\BehatExtension;
@@ -17,6 +16,7 @@ use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 
 class FeatureStepCompletorTest extends TestCase
 {

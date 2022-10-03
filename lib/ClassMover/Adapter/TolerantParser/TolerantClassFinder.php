@@ -12,17 +12,17 @@ use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Parser;
-use Phpactor\ClassMover\Domain\Reference\ClassReference;
+use Phpactor\ClassMover\Domain\ClassFinder;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\Name\ImportedName;
-use Phpactor\ClassMover\Domain\Reference\ImportedNameReference;
-use Phpactor\ClassMover\Domain\Reference\NamespaceReference;
-use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
-use Phpactor\ClassMover\Domain\Reference\Position;
-use Phpactor\ClassMover\Domain\Name\QualifiedName;
-use Phpactor\ClassMover\Domain\ClassFinder;
 use Phpactor\ClassMover\Domain\Name\NameImportTable;
 use Phpactor\ClassMover\Domain\Name\Namespace_;
+use Phpactor\ClassMover\Domain\Name\QualifiedName;
+use Phpactor\ClassMover\Domain\Reference\ClassReference;
+use Phpactor\ClassMover\Domain\Reference\ImportedNameReference;
+use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
+use Phpactor\ClassMover\Domain\Reference\NamespaceReference;
+use Phpactor\ClassMover\Domain\Reference\Position;
 use Phpactor\TextDocument\TextDocument;
 
 class TolerantClassFinder implements ClassFinder

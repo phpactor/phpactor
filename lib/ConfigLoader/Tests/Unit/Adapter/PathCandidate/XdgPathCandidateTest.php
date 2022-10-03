@@ -2,8 +2,8 @@
 
 namespace Phpactor\ConfigLoader\Tests\Unit\Adapter\PathCandidate;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ConfigLoader\Adapter\PathCandidate\XdgPathCandidate;
+use PHPUnit\Framework\TestCase;
 
 class XdgPathCandidateTest extends TestCase
 {

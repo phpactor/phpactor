@@ -3,8 +3,8 @@
 namespace Phpactor\TextDocument\Tests\Unit;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\LineCol;
+use PHPUnit\Framework\TestCase;
 
 class LineColTest extends TestCase
 {

@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Parser;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
+use PHPUnit\Framework\TestCase;
 
 class CachedParserTest extends TestCase
 {

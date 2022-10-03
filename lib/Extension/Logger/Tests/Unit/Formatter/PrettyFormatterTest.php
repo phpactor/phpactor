@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\Logger\Tests\Unit\Formatter;
 
 use DateTime;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
+use PHPUnit\Framework\TestCase;
 
 class PrettyFormatterTest extends TestCase
 {

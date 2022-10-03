@@ -3,9 +3,9 @@
 namespace Phpactor\Tests\Integration;
 
 use Phpactor\Application;
+use Phpactor\Tests\IntegrationTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
-use Phpactor\Tests\IntegrationTestCase;
 
 class ApplicationTest extends IntegrationTestCase
 {

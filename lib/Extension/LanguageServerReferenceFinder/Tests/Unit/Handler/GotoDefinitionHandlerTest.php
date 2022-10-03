@@ -2,15 +2,16 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Unit\Handler;
 
-use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
-use Phpactor\LanguageServerProtocol\DefinitionRequest;
-use Phpactor\LanguageServerProtocol\Location;
+use function Amp\Promise\wait;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
+use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoDefinitionHandler;
-use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\DefinitionRequest;
+use Phpactor\LanguageServerProtocol\Location;
+use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
@@ -21,12 +22,11 @@ use Phpactor\TextDocument\Location as PhpactorLocation;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use function Amp\Promise\wait;
 
 class GotoDefinitionHandlerTest extends TestCase
 {
-    const EXAMPLE_URI = 'file:///test';
-    const EXAMPLE_TEXT = 'hello';
+    public const EXAMPLE_URI = 'file:///test';
+    public const EXAMPLE_TEXT = 'hello';
 
     public function testGoesToDefinition(): void
     {

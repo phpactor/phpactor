@@ -2,9 +2,9 @@
 
 namespace Phpactor\ClassMover\Tests\Unit\Domain\Name;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\ClassMover\Domain\Name\ImportedName;
 use InvalidArgumentException;
+use Phpactor\ClassMover\Domain\Name\ImportedName;
+use PHPUnit\Framework\TestCase;
 
 class ImportedNamespaceNameTest extends TestCase
 {

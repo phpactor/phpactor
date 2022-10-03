@@ -5,13 +5,13 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
+use Phpactor\LanguageServer\LanguageServerBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\LanguageServerProtocol\CodeActionContext;
 use Phpactor\LanguageServerProtocol\CodeActionParams;
 use Phpactor\LanguageServerProtocol\CodeActionRequest;
 use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServer\LanguageServerBuilder;
-use Phpactor\LanguageServer\Test\LanguageServerTester;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TestUtils\ExtractOffset;
 
 class CreateClassProviderTest extends IntegrationTestCase

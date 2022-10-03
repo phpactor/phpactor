@@ -2,7 +2,6 @@
 
 namespace Phpactor\ReferenceFinder\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
@@ -15,6 +14,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 

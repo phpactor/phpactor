@@ -9,14 +9,14 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\WorkspaceEditConverter;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 
 class GenerateConstructorProvider implements CodeActionProvider
 {
-    const KIND = 'quickfix.generate.constructor';
+    public const KIND = 'quickfix.generate.constructor';
 
     private $generateConstructor;
 

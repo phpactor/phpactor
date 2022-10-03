@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\LanguageServer\Service;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Extension\Core\Application\Status;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Service\ServiceProvider;
-use function Amp\call;
 
 class OnDevelopWarningService implements ServiceProvider
 {

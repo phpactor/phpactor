@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\MapResolver\Resolver;
 
 class EchoHandler implements Handler
 {

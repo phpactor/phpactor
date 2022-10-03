@@ -2,17 +2,17 @@
 
 namespace Phpactor\Extension\SourceCodeFilesystemExtra;
 
+use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\Extension\SourceCodeFilesystemExtra\Rpc\ClassSearchHandler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\Container\Extension;
-use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Container;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\SourceCodeFilesystemExtra\Command\ClassSearchCommand;
+use Phpactor\Extension\SourceCodeFilesystemExtra\Rpc\ClassSearchHandler;
 use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\MapResolver\Resolver;
 
 class SourceCodeFilesystemExtraExtension implements Extension
 {

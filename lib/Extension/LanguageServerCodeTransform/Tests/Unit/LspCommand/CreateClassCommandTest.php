@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
-use PHPUnit\Framework\TestCase;
+use function Amp\Promise\wait;
 use Phpactor\ClassFileConverter\Domain\ClassName as PhpactorClassName;
 use Phpactor\ClassFileConverter\Domain\ClassNameCandidates;
 use Phpactor\ClassFileConverter\Domain\FilePath;
@@ -12,16 +12,16 @@ use Phpactor\CodeTransform\Domain\GenerateNew;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\Core\Server\ResponseWatcher\TestResponseWatcher;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
-use function Amp\Promise\wait;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use PHPUnit\Framework\TestCase;
 
 class CreateClassCommandTest extends TestCase
 {
-    const EXAMPLE_VARIANT = 'test_transform';
+    public const EXAMPLE_VARIANT = 'test_transform';
 
     public function testAppliesTransform(): void
     {

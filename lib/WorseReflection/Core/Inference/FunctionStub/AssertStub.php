@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\FunctionStub;
 
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 
 class AssertStub implements FunctionStub
 {

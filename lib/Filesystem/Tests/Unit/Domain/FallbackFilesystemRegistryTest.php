@@ -2,10 +2,10 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class FallbackFilesystemRegistryTest extends TestCase

@@ -2,23 +2,23 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use InvalidArgumentException;
+use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\NamespacedNameInterface;
+use Microsoft\PhpParser\Node\ClassConstDeclaration;
+use Microsoft\PhpParser\Node\MethodDeclaration;
+
+use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Deprecation;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Microsoft\PhpParser\ClassLike;
-
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Microsoft\PhpParser\NamespacedNameInterface;
-use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Util\OriginalMethodResolver;
 use Phpactor\WorseReflection\Core\Visibility;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
-use Microsoft\PhpParser\Node\MethodDeclaration;
-use Microsoft\PhpParser\Node\PropertyDeclaration;
-use Microsoft\PhpParser\Node\ClassConstDeclaration;
-use InvalidArgumentException;
 
 abstract class AbstractReflectionClassMember extends AbstractReflectedNode implements ReflectionMember
 {

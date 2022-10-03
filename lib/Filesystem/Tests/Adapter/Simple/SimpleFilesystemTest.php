@@ -4,8 +4,8 @@ namespace Phpactor\Filesystem\Tests\Adapter\Simple;
 
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
 use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
 
 class SimpleFilesystemTest extends AdapterTestCase
 {

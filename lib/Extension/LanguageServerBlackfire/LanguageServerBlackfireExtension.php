@@ -6,16 +6,16 @@ use Blackfire\Client;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerBlackfire\Handler\BlackfireHandler;
 use Phpactor\Extension\LanguageServerBlackfire\Middleware\BlackfireMiddleware;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 
 class LanguageServerBlackfireExtension implements Extension
 {
-    const PARAM_BLACKFIRE_ENABLE = 'blackfire.enable';
+    public const PARAM_BLACKFIRE_ENABLE = 'blackfire.enable';
 
     public function load(ContainerBuilder $container): void
     {

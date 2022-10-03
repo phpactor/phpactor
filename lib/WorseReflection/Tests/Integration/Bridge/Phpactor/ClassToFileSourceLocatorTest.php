@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\Phpactor;
 
-use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\ClassFileConverter\ClassToFileConverter;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
+use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class ClassToFileSourceLocatorTest extends IntegrationTestCase
 {

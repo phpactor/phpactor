@@ -9,9 +9,9 @@ use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\Helper\NodeQuery;
 use Phpactor\TestUtils\ExtractOffset;
+use PHPUnit\Framework\TestCase;
 
 class NodeQueryTest extends TestCase
 {

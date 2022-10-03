@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerBridge\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
 
 class IntegrationTestCase extends TestCase
 {

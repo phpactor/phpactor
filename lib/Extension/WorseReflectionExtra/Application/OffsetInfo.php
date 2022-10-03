@@ -2,12 +2,12 @@
 
 namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
+use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\TypeUtil;
 
 final class OffsetInfo

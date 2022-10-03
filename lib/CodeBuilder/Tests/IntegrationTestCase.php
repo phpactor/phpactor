@@ -3,8 +3,8 @@
 namespace Phpactor\CodeBuilder\Tests;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 abstract class IntegrationTestCase extends TestCase

@@ -3,11 +3,11 @@
 namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record\ClassRecord;
-use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\Indexer\Model\Index;
 
 class ClassDeclarationIndexer extends AbstractClassLikeIndexer
 {

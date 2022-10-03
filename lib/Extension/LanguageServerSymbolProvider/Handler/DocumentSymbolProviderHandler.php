@@ -5,12 +5,12 @@ namespace Phpactor\Extension\LanguageServerSymbolProvider\Handler;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\Extension\LanguageServerSymbolProvider\Model\DocumentSymbolProvider;
-use Phpactor\LanguageServerProtocol\DocumentSymbolParams;
-use Phpactor\LanguageServerProtocol\DocumentSymbolRequest;
-use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
+use Phpactor\LanguageServerProtocol\DocumentSymbolParams;
+use Phpactor\LanguageServerProtocol\DocumentSymbolRequest;
+use Phpactor\LanguageServerProtocol\ServerCapabilities;
 
 class DocumentSymbolProviderHandler implements Handler, CanRegisterCapabilities
 {

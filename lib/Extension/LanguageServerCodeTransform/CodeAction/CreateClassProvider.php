@@ -2,12 +2,15 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
+use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
@@ -15,9 +18,6 @@ use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
-use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
-use function Amp\call;
 
 class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
 {

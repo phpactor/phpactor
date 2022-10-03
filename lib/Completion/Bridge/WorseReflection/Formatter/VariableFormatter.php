@@ -2,9 +2,9 @@
 
 namespace Phpactor\Completion\Bridge\WorseReflection\Formatter;
 
-use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 
 class VariableFormatter implements Formatter
 {

@@ -6,10 +6,10 @@ use InvalidArgumentException;
 
 final class Visibility
 {
-    const PUBLIC = 'public';
-    const PROTECTED = 'protected';
-    const PRIVATE = 'private';
-    const VISIBILITIES = [
+    public const PUBLIC = 'public';
+    public const PROTECTED = 'protected';
+    public const PRIVATE = 'private';
+    public const VISIBILITIES = [
         self::PUBLIC,
         self::PROTECTED,
         self::PRIVATE

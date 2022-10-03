@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\Rpc\RequestHandler;
 
-use Phpactor\Extension\Rpc\RequestHandler;
-use Phpactor\Extension\Rpc\Response\ErrorResponse;
-use Phpactor\Extension\Rpc\Request;
-use Phpactor\Extension\Rpc\Response;
 use Exception;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\RequestHandler;
+use Phpactor\Extension\Rpc\Response;
+use Phpactor\Extension\Rpc\Response\ErrorResponse;
 
 class ExceptionCatchingHandler implements RequestHandler
 {

@@ -2,23 +2,23 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\DefaultResolverFactory;
-use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
-use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
-use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\LocalAssignments;
-use Phpactor\WorseReflection\Core\Inference\Variable;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
+use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
+use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Position;
-use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use RuntimeException;
 
 class NodeContextResolverTest extends IntegrationTestCase

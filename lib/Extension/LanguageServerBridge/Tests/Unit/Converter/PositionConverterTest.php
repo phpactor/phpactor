@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerBridge\Tests\Unit\Converter;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\TextDocument\ByteOffset;
+use PHPUnit\Framework\TestCase;
 
 class PositionConverterTest extends TestCase
 {

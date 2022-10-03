@@ -2,11 +2,11 @@
 
 namespace Phpactor\Rename\Model\ReferenceFinder;
 
+use Generator;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Generator;
 
 class PredefinedReferenceFinderFoo implements ReferenceFinder
 {

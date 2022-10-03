@@ -2,28 +2,28 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
+use function Amp\Promise\wait;
 use Amp\Success;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportAllUnresolvedNamesCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\CandidateFinder;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameCandidate;
-use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\TextDocument\ByteOffset;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
-use function Amp\Promise\wait;
 
 class ImportAllUnresolvedNamesCommandTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_URI = 'file:///foobar';
-    const EXAMPLE_CANDIDATE = 'Foobar';
+    public const EXAMPLE_URI = 'file:///foobar';
+    public const EXAMPLE_CANDIDATE = 'Foobar';
 
     private ObjectProphecy $candidateFinder;
 

@@ -3,10 +3,10 @@
 namespace Phpactor\Extension\Behat\Tests\Unit\Behat;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Behat\Context;
 use Phpactor\Extension\Behat\Behat\Step;
 use Phpactor\Extension\Behat\Behat\StepScorer;
+use PHPUnit\Framework\TestCase;
 
 class StepScorerTest extends TestCase
 {

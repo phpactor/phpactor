@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Adapter\Twig;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\CodeBuilder\Domain\Prototype\Prototype;
 use Phpactor\CodeBuilder\Adapter\Twig\ClassShortNameResolver;
+use Phpactor\CodeBuilder\Domain\Prototype\Prototype;
+use PHPUnit\Framework\TestCase;
 
 class ClassShortNameResolverTest extends TestCase
 {

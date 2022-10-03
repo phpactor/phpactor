@@ -4,10 +4,10 @@ namespace Phpactor\Extension\ReferenceFinderRpc\Handler;
 
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Response\Reference\FileReferences;
 use Phpactor\Extension\Rpc\Response\Reference\Reference;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
@@ -19,13 +19,13 @@ use RuntimeException;
 
 class GotoImplementationHandler extends AbstractHandler
 {
-    const NAME = 'goto_implementation';
-    const PARAM_OFFSET = 'offset';
-    const PARAM_SOURCE = 'source';
-    const PARAM_PATH = 'path';
-    const PARAM_LANGUAGE = 'language';
-    const PARAM_TARGET = 'target';
-    const PARAM_SELECTED_PATH = 'selected_path';
+    public const NAME = 'goto_implementation';
+    public const PARAM_OFFSET = 'offset';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_PATH = 'path';
+    public const PARAM_LANGUAGE = 'language';
+    public const PARAM_TARGET = 'target';
+    public const PARAM_SELECTED_PATH = 'selected_path';
 
     private ClassImplementationFinder $finder;
 

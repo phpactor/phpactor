@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Reflection\Collection;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class ReflectionClassCollectionTest extends TestCase

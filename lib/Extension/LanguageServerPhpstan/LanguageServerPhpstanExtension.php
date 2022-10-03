@@ -5,14 +5,14 @@ namespace Phpactor\Extension\LanguageServerPhpstan;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\PhpstanLinter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanConfig;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
 use Phpactor\Extension\LanguageServerPhpstan\Provider\PhpstanDiagnosticProvider;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerPhpstanExtension implements Extension

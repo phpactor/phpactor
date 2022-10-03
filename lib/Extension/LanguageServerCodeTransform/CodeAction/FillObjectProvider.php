@@ -9,15 +9,15 @@ use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
-use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 
 class FillObjectProvider implements CodeActionProvider
 {
-    const KIND = 'quickfix.fill.object';
+    public const KIND = 'quickfix.fill.object';
 
     private FillObject $fillObject;
 

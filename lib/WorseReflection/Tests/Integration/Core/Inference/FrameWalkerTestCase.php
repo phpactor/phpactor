@@ -2,14 +2,14 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use Closure;
+use Generator;
+use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
-use Phpactor\TestUtils\ExtractOffset;
-use Closure;
-use Generator;
 
 abstract class FrameWalkerTestCase extends IntegrationTestCase
 {

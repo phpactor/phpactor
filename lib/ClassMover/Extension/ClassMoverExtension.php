@@ -2,14 +2,14 @@
 
 namespace Phpactor\ClassMover\Extension;
 
-use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassReplacer;
 use Phpactor\ClassMover\ClassMover;
+use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Container\Container;
 
 class ClassMoverExtension implements Extension
 {

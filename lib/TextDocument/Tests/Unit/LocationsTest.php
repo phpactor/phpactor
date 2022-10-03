@@ -3,9 +3,9 @@
 namespace Phpactor\TextDocument\Tests\Unit;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class LocationsTest extends TestCase

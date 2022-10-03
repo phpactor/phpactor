@@ -16,8 +16,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class LimitingCompletorTest extends TestCase
 {
-    const EXAMPLE_SOURCE = '<?php';
-    const EXAMPLE_OFFSET = 15;
+    public const EXAMPLE_SOURCE = '<?php';
+    public const EXAMPLE_OFFSET = 15;
 
     private ObjectProphecy $innerCompletor;
 

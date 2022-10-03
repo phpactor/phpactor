@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Assignments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Position;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 abstract class AssignmentstTestCase extends TestCase

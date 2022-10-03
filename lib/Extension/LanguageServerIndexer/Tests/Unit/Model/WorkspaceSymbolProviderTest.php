@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Tests\Unit\Model;
 
+use function Amp\Promise\wait;
 use Closure;
 use Generator;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
@@ -12,7 +13,6 @@ use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\LanguageServerProtocol\SymbolInformation;
 use Phpactor\LanguageServerProtocol\SymbolKind;
 use Phpactor\TextDocument\TextDocumentLocator;
-use function Amp\Promise\wait;
 
 class WorkspaceSymbolProviderTest extends IntegrationTestCase
 {

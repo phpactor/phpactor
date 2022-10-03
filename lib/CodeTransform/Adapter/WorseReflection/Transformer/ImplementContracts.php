@@ -2,20 +2,20 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
-use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
-use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
+use Phpactor\WorseReflection\Reflector;
 
 class ImplementContracts implements Transformer
 {

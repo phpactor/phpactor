@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\SourceCodeLocator;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\SourceCodeLocator;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class ChainSourceLocatorTest extends TestCase

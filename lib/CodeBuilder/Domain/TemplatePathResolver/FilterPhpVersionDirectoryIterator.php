@@ -2,8 +2,8 @@
 
 namespace Phpactor\CodeBuilder\Domain\TemplatePathResolver;
 
-use Iterator;
 use FilterIterator;
+use Iterator;
 use RuntimeException;
 use SplFileInfo;
 

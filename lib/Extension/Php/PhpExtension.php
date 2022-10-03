@@ -5,17 +5,17 @@ namespace Phpactor\Extension\Php;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Php\Model\ChainResolver;
 use Phpactor\Extension\Php\Model\ComposerPhpVersionResolver;
 use Phpactor\Extension\Php\Model\ConstantPhpVersionResolver;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Php\Model\RuntimePhpVersionResolver;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 
 class PhpExtension implements Extension
 {
-    const PARAM_VERSION = 'php.version';
+    public const PARAM_VERSION = 'php.version';
 
 
     public function load(ContainerBuilder $container): void

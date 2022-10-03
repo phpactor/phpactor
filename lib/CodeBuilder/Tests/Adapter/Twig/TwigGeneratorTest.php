@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter\Twig;
 
-use Phpactor\CodeBuilder\Tests\Adapter\GeneratorTestCase;
-use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Renderer;
+use Phpactor\CodeBuilder\Tests\Adapter\GeneratorTestCase;
 
 class TwigGeneratorTest extends GeneratorTestCase
 {

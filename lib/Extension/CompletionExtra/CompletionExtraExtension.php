@@ -2,21 +2,21 @@
 
 namespace Phpactor\Extension\CompletionExtra;
 
-use Phpactor\Container\Extension;
-use Phpactor\Container\ContainerBuilder;
-use Phpactor\Extension\CompletionExtra\Rpc\HoverHandler;
-use Phpactor\Extension\Completion\CompletionExtension;
-use Phpactor\Extension\Console\ConsoleExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
-use Phpactor\Extension\CompletionExtra\Command\CompleteCommand;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
+use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\CompletionExtra\Application\Complete;
+use Phpactor\Extension\CompletionExtra\Command\CompleteCommand;
+use Phpactor\Extension\CompletionExtra\Rpc\HoverHandler;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\MapResolver\Resolver;
 
 class CompletionExtraExtension implements Extension
 {
-    const CLASS_COMPLETOR_LIMIT = 'completion.completor.class.limit';
+    public const CLASS_COMPLETOR_LIMIT = 'completion.completor.class.limit';
 
 
     public function load(ContainerBuilder $container): void

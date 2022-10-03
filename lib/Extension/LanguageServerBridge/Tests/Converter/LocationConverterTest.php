@@ -3,14 +3,14 @@
 namespace Phpactor\Extension\LanguageServer\Tests\ridge\Converter;
 
 use Generator;
-use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
-use Phpactor\LanguageServerProtocol\Position;
-use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\Extension\LanguageServerBridge\Tests\IntegrationTestCase;
+use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
+use Phpactor\LanguageServerProtocol\Location as LspLocation;
+use Phpactor\LanguageServerProtocol\Position;
+use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
-use Phpactor\LanguageServerProtocol\Location as LspLocation;
 
 class LocationConverterTest extends IntegrationTestCase
 {

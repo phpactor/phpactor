@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Rpc\Request;
 use InvalidArgumentException;
+use Phpactor\Extension\Rpc\Request;
+use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase
 {

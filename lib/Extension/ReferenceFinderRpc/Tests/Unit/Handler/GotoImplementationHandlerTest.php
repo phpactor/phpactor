@@ -1,7 +1,7 @@
 <?php
+
 namespace Phpactor\Extension\ReferenceFinderRpc\Tests\Unit\Handler;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoImplementationHandler;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
@@ -11,12 +11,13 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
+use PHPUnit\Framework\TestCase;
 
 class GotoImplementationHandlerTest extends TestCase
 {
-    const EXAMPLE_SOURCE = 'some source file';
-    const EXAMPLE_OFFSET = 1234;
-    const EXAMPLE_PATH = '/some/path.php';
+    public const EXAMPLE_SOURCE = 'some source file';
+    public const EXAMPLE_OFFSET = 1234;
+    public const EXAMPLE_PATH = '/some/path.php';
 
     public function testGotoSingleImplementation(): void
     {
@@ -54,7 +55,7 @@ class GotoImplementationHandlerTest extends TestCase
      */
     public function create(array $locations): HandlerTester
     {
-        $locator = new class($locations) implements ClassImplementationFinder {
+        $locator = new class ($locations) implements ClassImplementationFinder {
             /**
              * @var Location[]
              */

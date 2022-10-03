@@ -4,14 +4,14 @@ namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Reflector;
 
 class ClassReflector
 {
-    const FOOBAR = 'foo';
+    public const FOOBAR = 'foo';
 
     private ClassFileNormalizer $classFileNormalizer;
 

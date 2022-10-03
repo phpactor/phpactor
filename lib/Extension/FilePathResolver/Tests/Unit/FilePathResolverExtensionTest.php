@@ -3,11 +3,11 @@
 namespace Phpactor\Extension\FilePathResolver\Tests\Unit;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
-use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\FilePathResolver\PathResolver;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class FilePathResolverExtensionTest extends TestCase

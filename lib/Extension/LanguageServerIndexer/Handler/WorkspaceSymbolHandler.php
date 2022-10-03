@@ -4,11 +4,11 @@ namespace Phpactor\Extension\LanguageServerIndexer\Handler;
 
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerIndexer\Model\WorkspaceSymbolProvider;
+use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
+use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\SymbolInformation;
 use Phpactor\LanguageServerProtocol\WorkspaceSymbolParams;
-use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
-use Phpactor\LanguageServer\Core\Handler\Handler;
 
 class WorkspaceSymbolHandler implements Handler, CanRegisterCapabilities
 {

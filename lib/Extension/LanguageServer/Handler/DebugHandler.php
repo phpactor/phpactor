@@ -4,22 +4,22 @@ namespace Phpactor\Extension\LanguageServer\Handler;
 
 use Amp\Promise;
 use Amp\Success;
-use Phpactor\Extension\LanguageServer\Status\StatusProvider;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\Container\Container;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\Status\StatusProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
+use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Server\ServerStats;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
-use Phpactor\LanguageServer\Core\Server\ClientApi;
-use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
 
 class DebugHandler implements Handler
 {
-    const METHOD_DEBUG_CONFIG = 'phpactor/debug/config';
-    const METHOD_DEBUG_WORKSPACE = 'phpactor/debug/workspace';
-    const METHOD_DEBUG_STATUS = 'phpactor/status';
+    public const METHOD_DEBUG_CONFIG = 'phpactor/debug/config';
+    public const METHOD_DEBUG_WORKSPACE = 'phpactor/debug/workspace';
+    public const METHOD_DEBUG_STATUS = 'phpactor/status';
 
     private Container $container;
 

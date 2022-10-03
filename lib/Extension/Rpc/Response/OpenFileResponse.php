@@ -7,11 +7,11 @@ use RuntimeException;
 
 class OpenFileResponse implements Response
 {
-    const TARGET_FOCUSED_WINDOW = 'focused_window';
-    const TARGET_VERTICAL_SPLIT = 'vsplit';
-    const TARGET_HORIZONTAL_SPLIT = 'hsplit';
-    const TARGET_NEW_TAB = 'new_tab';
-    const VALID_TARGETS = [
+    public const TARGET_FOCUSED_WINDOW = 'focused_window';
+    public const TARGET_VERTICAL_SPLIT = 'vsplit';
+    public const TARGET_HORIZONTAL_SPLIT = 'hsplit';
+    public const TARGET_NEW_TAB = 'new_tab';
+    public const VALID_TARGETS = [
         self::TARGET_FOCUSED_WINDOW,
         self::TARGET_VERTICAL_SPLIT,
         self::TARGET_HORIZONTAL_SPLIT,

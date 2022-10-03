@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\Completion\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Formatter\Formatter;
 use Phpactor\Completion\Core\SignatureHelp;
@@ -14,6 +13,7 @@ use Phpactor\Extension\Completion\CompletionExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use stdClass;
@@ -21,9 +21,9 @@ use stdClass;
 class CompletionExtensionTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_SUGGESTION = 'example_suggestion';
-    const EXAMPLE_SOURCE = 'asd';
-    const EXAMPLE_OFFSET = 1234;
+    public const EXAMPLE_SUGGESTION = 'example_suggestion';
+    public const EXAMPLE_SOURCE = 'asd';
+    public const EXAMPLE_OFFSET = 1234;
 
     private ObjectProphecy $completor1;
 

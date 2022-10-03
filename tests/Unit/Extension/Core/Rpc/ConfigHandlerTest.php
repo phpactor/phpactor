@@ -2,10 +2,10 @@
 
 namespace Phpactor\Tests\Unit\Extension\Core\Rpc;
 
-use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
-use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 
 class ConfigHandlerTest extends HandlerTestCase
 {

@@ -2,12 +2,12 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
-use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
+use Exception;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
-use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
-use Exception;
 
 class WorseExtractMethodTest extends WorseTestCase
 {

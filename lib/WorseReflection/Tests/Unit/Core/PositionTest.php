@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Position;
+use PHPUnit\Framework\TestCase;
 
 class PositionTest extends TestCase
 {

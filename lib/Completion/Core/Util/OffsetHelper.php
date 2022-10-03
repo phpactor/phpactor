@@ -2,8 +2,8 @@
 
 namespace Phpactor\Completion\Core\Util;
 
-use RuntimeException;
 use function preg_last_error_msg;
+use RuntimeException;
 
 class OffsetHelper
 {

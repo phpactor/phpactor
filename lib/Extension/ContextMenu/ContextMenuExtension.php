@@ -3,10 +3,10 @@
 namespace Phpactor\Extension\ContextMenu;
 
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
-use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
-use Phpactor\Container\Extension;
-use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
+use Phpactor\Extension\ContextMenu\Handler\ContextMenuHandler;
 use Phpactor\Extension\ContextMenu\Model\ContextMenu;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
@@ -14,7 +14,7 @@ use Phpactor\MapResolver\Resolver;
 
 class ContextMenuExtension implements Extension
 {
-    const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
+    public const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
 
 
     public function load(ContainerBuilder $container): void

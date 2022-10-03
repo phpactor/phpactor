@@ -3,8 +3,8 @@
 namespace Phpactor\DocblockParser\Ast\Tag;
 
 use Phpactor\DocblockParser\Ast\TagNode;
-use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\DocblockParser\Ast\Token;
+use Phpactor\DocblockParser\Ast\Type\ClassNode;
 
 class MixinTag extends TagNode
 {

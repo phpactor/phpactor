@@ -2,12 +2,12 @@
 
 namespace Phpactor\FilePathResolver\Tests\Unit\Expander\Xdg;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\Expander\Xdg\XdgCacheExpander;
 use Phpactor\FilePathResolver\Expander\Xdg\XdgConfigExpander;
 use Phpactor\FilePathResolver\Expander\Xdg\XdgDataExpander;
 use Phpactor\FilePathResolver\Expanders;
 use Phpactor\FilePathResolver\Filter\TokenExpandingFilter;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use XdgBaseDir\Xdg;

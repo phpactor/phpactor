@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 
 class IndexBuildCommandTest extends IntegrationTestCase
 {
-    public function tearDown():void
+    public function tearDown(): void
     {
         $this->workspace()->reset();
     }

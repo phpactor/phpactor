@@ -2,10 +2,10 @@
 
 namespace Phpactor\Name\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Name\Exception\InvalidName;
 use Phpactor\Name\Name;
 use Phpactor\Name\QualifiedName;
+use PHPUnit\Framework\TestCase;
 
 abstract class AbstractQualifiedNameTestCase extends TestCase
 {

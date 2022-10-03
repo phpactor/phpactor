@@ -2,8 +2,8 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
+use PHPUnit\Framework\TestCase;
 
 class TypeTest extends TestCase
 {

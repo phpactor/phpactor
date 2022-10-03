@@ -3,11 +3,11 @@
 namespace Phpactor\DocblockParser\Tests\Unit\Ast;
 
 use Closure;
-use PHPUnit\Framework\TestCase;
 use Phpactor\DocblockParser\Ast\Element;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Lexer;
 use Phpactor\DocblockParser\Parser;
+use PHPUnit\Framework\TestCase;
 
 class NodeTestCase extends TestCase
 {

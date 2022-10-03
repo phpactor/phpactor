@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Phpactor\WorseReflection\Core\Position;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\Core\Position;
 
 final class Symbol
 {

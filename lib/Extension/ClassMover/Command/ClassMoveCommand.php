@@ -2,23 +2,23 @@
 
 namespace Phpactor\Extension\ClassMover\Command;
 
+use InvalidArgumentException;
+use Phpactor\Extension\ClassMover\Application\ClassMover;
+use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleMoveLogger;
+use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
+use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Extension\ClassMover\Application\ClassMover;
 use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleMoveLogger;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Extension\Core\Console\Prompt\Prompt;
-use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
-use InvalidArgumentException;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class ClassMoveCommand extends Command
 {
-    const TYPE_AUTO = 'auto';
-    const TYPE_CLASS = 'class';
-    const TYPE_FILE = 'file';
+    public const TYPE_AUTO = 'auto';
+    public const TYPE_CLASS = 'class';
+    public const TYPE_FILE = 'file';
 
     private ClassMover $mover;
 

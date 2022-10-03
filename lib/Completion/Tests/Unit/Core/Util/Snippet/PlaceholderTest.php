@@ -2,8 +2,8 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core\Util\Snippet;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Util\Snippet\Placeholder;
+use PHPUnit\Framework\TestCase;
 
 final class PlaceholderTest extends TestCase
 {

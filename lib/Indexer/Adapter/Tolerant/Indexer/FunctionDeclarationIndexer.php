@@ -6,8 +6,8 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
 use Phpactor\Indexer\Model\Index;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 
 class FunctionDeclarationIndexer implements TolerantIndexer

@@ -2,14 +2,14 @@
 
 namespace Phpactor\PathFinder\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Phpactor\PathFinder\Exception\NoMatchingSourceException;
 use Phpactor\PathFinder\Exception\NoPlaceHoldersException;
 use Phpactor\PathFinder\PathFinder;
-use Phpactor\PathFinder\Exception\NoMatchingSourceException;
+use PHPUnit\Framework\TestCase;
 
 class PathFinderTest extends TestCase
 {
-    const PROJECT_ROOT = '/home/user/src/github.com/organisation/project';
+    public const PROJECT_ROOT = '/home/user/src/github.com/organisation/project';
 
     /**
      * @dataProvider provideTeleport

@@ -2,14 +2,14 @@
 
 namespace Phpactor\ClassMover\Domain\Model;
 
-use Phpactor\ClassMover\Domain\Name\MemberName;
 use InvalidArgumentException;
+use Phpactor\ClassMover\Domain\Name\MemberName;
 
 final class ClassMemberQuery
 {
-    const TYPE_CONSTANT = 'constant';
-    const TYPE_METHOD = 'method';
-    const TYPE_PROPERTY = 'property';
+    public const TYPE_CONSTANT = 'constant';
+    public const TYPE_METHOD = 'method';
+    public const TYPE_PROPERTY = 'property';
 
     private $validTypes = [
         self::TYPE_CONSTANT,

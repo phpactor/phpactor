@@ -9,14 +9,14 @@ use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Indexer\Model\Indexer;
+use Phpactor\MapResolver\Resolver;
 
 class IndexHandler implements Handler
 {
-    const NAME = 'index';
-    const PARAM_WATCH = 'watch';
-    const PARAM_INTERVAL = 'interval';
+    public const NAME = 'index';
+    public const PARAM_WATCH = 'watch';
+    public const PARAM_INTERVAL = 'interval';
 
     private Indexer $indexer;
 

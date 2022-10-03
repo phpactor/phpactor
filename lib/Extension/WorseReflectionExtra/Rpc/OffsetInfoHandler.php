@@ -2,18 +2,18 @@
 
 namespace Phpactor\Extension\WorseReflectionExtra\Rpc;
 
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
+use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\TypeUtil;
 
 class OffsetInfoHandler implements Handler
 {
-    const NAME = 'offset_info';
+    public const NAME = 'offset_info';
 
     private Reflector $reflector;
 

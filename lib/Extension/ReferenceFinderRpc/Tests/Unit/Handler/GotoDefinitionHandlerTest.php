@@ -1,7 +1,7 @@
 <?php
+
 namespace Phpactor\Extension\ReferenceFinderRpc\Tests\Unit\Handler;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoDefinitionHandler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
@@ -10,12 +10,13 @@ use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use PHPUnit\Framework\TestCase;
 
 class GotoDefinitionHandlerTest extends TestCase
 {
-    const EXAMPLE_SOURCE = 'some source file';
-    const EXAMPLE_OFFSET = 1234;
-    const EXAMPLE_PATH = '/some/path.php';
+    public const EXAMPLE_SOURCE = 'some source file';
+    public const EXAMPLE_OFFSET = 1234;
+    public const EXAMPLE_PATH = '/some/path.php';
 
     public function testGotoDefinition(): void
     {

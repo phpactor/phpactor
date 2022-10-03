@@ -2,9 +2,9 @@
 
 namespace Phpactor\FilePathResolver\Tests\Unit\Filter;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\Filter;
 use Phpactor\FilePathResolver\FilteringPathResolver;
+use PHPUnit\Framework\TestCase;
 
 abstract class FilterTestCase extends TestCase
 {

@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Tests\Formatter;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
-use Phpactor\LanguageServerProtocol\TextEdit;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use function Amp\Promise\wait;
+use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\TextEdit;
+use PHPUnit\Framework\TestCase;
 
 class PhpCsFormatterTest extends TestCase
 {

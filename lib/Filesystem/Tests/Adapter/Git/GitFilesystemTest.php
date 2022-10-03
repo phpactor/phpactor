@@ -3,10 +3,10 @@
 namespace Phpactor\Filesystem\Tests\Adapter\Git;
 
 use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
-use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
-use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\Cwd;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
 use RuntimeException;
 
 class GitFilesystemTest extends AdapterTestCase

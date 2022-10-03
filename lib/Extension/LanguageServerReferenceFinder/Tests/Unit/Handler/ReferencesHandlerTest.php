@@ -2,19 +2,19 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Unit\Handler;
 
-use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
-use Phpactor\LanguageServerProtocol\Location as LspLocation;
-use Phpactor\LanguageServerProtocol\Position;
-use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServerProtocol\ReferenceContext;
-use Phpactor\LanguageServerProtocol\ReferencesRequest;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
+use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\ReferencesHandler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Server\RpcClient\TestRpcClient;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\Location as LspLocation;
+use Phpactor\LanguageServerProtocol\Position;
+use Phpactor\LanguageServerProtocol\Range;
+use Phpactor\LanguageServerProtocol\ReferenceContext;
+use Phpactor\LanguageServerProtocol\ReferencesRequest;
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
@@ -31,8 +31,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ReferencesHandlerTest extends TestCase
 {
-    const EXAMPLE_URI = 'file:///test';
-    const EXAMPLE_TEXT = 'hello';
+    public const EXAMPLE_URI = 'file:///test';
+    public const EXAMPLE_TEXT = 'hello';
 
     /**
      * @var ObjectProphecy<ReferenceFinder>

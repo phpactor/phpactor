@@ -2,15 +2,15 @@
 
 namespace Phpactor\Extension\CompletionExtra\Command;
 
+use Phpactor\Extension\CompletionExtra\Application\Complete;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
+use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
-use Phpactor\Extension\CompletionExtra\Application\Complete;
-use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
-use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class CompleteCommand extends Command
 {

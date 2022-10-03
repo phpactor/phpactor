@@ -5,9 +5,9 @@ namespace Phpactor\ClassMover\Adapter\WorseTolerant;
 use Microsoft\PhpParser\TextEdit;
 
 use Phpactor\ClassMover\Domain\MemberReplacer;
+use Phpactor\ClassMover\Domain\Reference\MemberReference;
 use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\SourceCode;
-use Phpactor\ClassMover\Domain\Reference\MemberReference;
 
 class WorseTolerantMemberReplacer implements MemberReplacer
 {

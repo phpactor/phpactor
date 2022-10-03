@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use RuntimeException;
-use ArrayIterator;
 
 /**
  * @implements IteratorAggregate<array-key,Variable>

@@ -2,9 +2,9 @@
 
 namespace Phpactor\Tests\Benchmark;
 
-use PHPUnit\Framework\Assert;
 use PhpBench\Benchmark\Metadata\Annotations\BeforeMethods;
 use PhpBench\Benchmark\Metadata\Annotations\Iterations;
+use PHPUnit\Framework\Assert;
 
 /**
  * @BeforeMethods({"setUp"})

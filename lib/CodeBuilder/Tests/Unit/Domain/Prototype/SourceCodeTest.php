@@ -2,13 +2,13 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
-use Phpactor\CodeBuilder\Domain\Prototype\NamespaceName;
-use Phpactor\CodeBuilder\Domain\Prototype\UseStatements;
 use Phpactor\CodeBuilder\Domain\Prototype\Classes;
 use Phpactor\CodeBuilder\Domain\Prototype\Interfaces;
+use Phpactor\CodeBuilder\Domain\Prototype\NamespaceName;
+use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\Traits;
+use Phpactor\CodeBuilder\Domain\Prototype\UseStatements;
+use PHPUnit\Framework\TestCase;
 
 class SourceCodeTest extends TestCase
 {

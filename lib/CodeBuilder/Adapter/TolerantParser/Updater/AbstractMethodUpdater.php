@@ -2,20 +2,20 @@
 
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
-use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;
-use Microsoft\PhpParser\Node\PropertyDeclaration;
-use Microsoft\PhpParser\Node\MethodDeclaration;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
-use Phpactor\CodeBuilder\Domain\Prototype\Parameter as PhpactorParameter;
-use Phpactor\CodeBuilder\Domain\Renderer;
-use Phpactor\CodeBuilder\Domain\Prototype\Method;
-use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
-use Phpactor\CodeBuilder\Domain\Prototype\Parameters;
-use Phpactor\CodeBuilder\Domain\Prototype\ClassLikePrototype;
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
+use Phpactor\CodeBuilder\Domain\Prototype\ClassLikePrototype;
+use Phpactor\CodeBuilder\Domain\Prototype\Method;
+use Phpactor\CodeBuilder\Domain\Prototype\Parameter as PhpactorParameter;
+use Phpactor\CodeBuilder\Domain\Prototype\Parameters;
 use Phpactor\CodeBuilder\Domain\Prototype\ReturnType;
+use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 
@@ -145,7 +145,7 @@ abstract class AbstractMethodUpdater
 
         $renderedParameters = [];
         if ($methodDeclaration->parameters) {
-            $renderedParameters = array_combine(
+            $renderedParameters = (array)array_combine(
                 array_map(function (Parameter $parameter) {
                     return substr($parameter->variableName ? $parameter->variableName->getText($parameter->getFileContents()) : false, 1);
                 }, iterator_to_array($methodDeclaration->parameters->getElements())),

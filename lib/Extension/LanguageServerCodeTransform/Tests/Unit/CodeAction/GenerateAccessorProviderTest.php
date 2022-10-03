@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
 use Amp\CancellationTokenSource;
+use function Amp\Promise\wait;
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateAccessorsProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
@@ -14,13 +14,13 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use function Amp\Promise\wait;
 
 class GenerateAccessorProviderTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_FILE = 'file:///somefile.php';
+    public const EXAMPLE_FILE = 'file:///somefile.php';
 
     protected function setUp(): void
     {

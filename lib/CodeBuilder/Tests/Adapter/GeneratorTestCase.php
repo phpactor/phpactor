@@ -2,11 +2,10 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
-use Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Classes;
+use Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Constant;
 use Phpactor\CodeBuilder\Domain\Prototype\Constants;
 use Phpactor\CodeBuilder\Domain\Prototype\DefaultValue;
@@ -30,11 +29,12 @@ use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\TraitPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Traits;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
-use Phpactor\CodeBuilder\Domain\Prototype\UseStatements;
 use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
+use Phpactor\CodeBuilder\Domain\Prototype\UseStatements;
 use Phpactor\CodeBuilder\Domain\Prototype\Value;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Renderer;
+use PHPUnit\Framework\TestCase;
 
 abstract class GeneratorTestCase extends TestCase
 {

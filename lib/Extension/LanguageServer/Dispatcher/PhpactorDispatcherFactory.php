@@ -2,20 +2,20 @@
 
 namespace Phpactor\Extension\LanguageServer\Dispatcher;
 
-use Phpactor\Extension\LanguageServer\LanguageServerSessionExtension;
+use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\LanguageServer\Core\Dispatcher\Dispatcher\MiddlewareDispatcher;
-use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
-use Phpactor\Container\Container;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerSessionExtension;
+use Phpactor\LanguageServer\Core\Dispatcher\Dispatcher;
+use Phpactor\LanguageServer\Core\Dispatcher\Dispatcher\MiddlewareDispatcher;
+use Phpactor\LanguageServer\Core\Dispatcher\DispatcherFactory;
+use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
+use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
 use Phpactor\LanguageServerProtocol\InitializeParams;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\MapResolver\ResolverErrors;
 use Phpactor\TextDocument\TextDocumentUri;
-use Phpactor\LanguageServer\Core\Dispatcher\Dispatcher;
-use Phpactor\LanguageServer\Core\Dispatcher\DispatcherFactory;
-use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
 
 class PhpactorDispatcherFactory implements DispatcherFactory
 {
@@ -69,7 +69,7 @@ class PhpactorDispatcherFactory implements DispatcherFactory
         $container = new PhpactorContainer();
 
         $extensions = array_map(function (string $class) {
-            return new $class;
+            return new $class();
         }, $extensionClasses);
         $extensions[] = new LanguageServerSessionExtension($transmitter, $params);
 

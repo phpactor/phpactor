@@ -2,16 +2,16 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting;
 
-use Phpactor\CodeTransform\Domain\GenerateFromExisting;
-use Phpactor\CodeTransform\Domain\ClassName;
-use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\ClassName as ReflectionClassName;
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Renderer;
+use Phpactor\CodeTransform\Domain\ClassName;
+use Phpactor\CodeTransform\Domain\GenerateFromExisting;
+use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\WorseReflection\Core\ClassName as ReflectionClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\WorseReflection\Core\Visibility;
+use Phpactor\WorseReflection\Reflector;
 
 final class InterfaceFromExistingGenerator implements GenerateFromExisting
 {

@@ -2,8 +2,8 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Util;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Util\PhpNameMatcher;
+use PHPUnit\Framework\TestCase;
 
 class PhpNameMatcherTest extends TestCase
 {

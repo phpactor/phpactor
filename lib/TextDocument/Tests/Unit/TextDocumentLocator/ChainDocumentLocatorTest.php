@@ -2,13 +2,13 @@
 
 namespace Phpactor\TextDocument\Tests\Unit\TextDocumentLocator;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextDocumentLocator\ChainDocumentLocator;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
+use Phpactor\TextDocument\TextDocumentUri;
+use PHPUnit\Framework\TestCase;
 
 class ChainDocumentLocatorTest extends TestCase
 {

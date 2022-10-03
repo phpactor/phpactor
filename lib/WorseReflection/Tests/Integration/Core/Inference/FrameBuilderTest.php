@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use Closure;
 use Generator;
-use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Closure;
+use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class FrameBuilderTest extends IntegrationTestCase
 {

@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\Core\Command;
 
+use Phpactor\Extension\Core\Application\CacheClear;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Extension\Core\Application\CacheClear;
 
 class CacheClearCommand extends Command
 {

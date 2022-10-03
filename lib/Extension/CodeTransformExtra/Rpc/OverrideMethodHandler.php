@@ -2,25 +2,25 @@
 
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\MapResolver\Resolver;
-use Phpactor\WorseReflection\Reflector;
 use InvalidArgumentException;
-use Phpactor\Extension\Rpc\Response\Input\ListInput;
-use Phpactor\WorseReflection\Core\Visibility;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Visibility;
+use Phpactor\WorseReflection\Reflector;
 
 class OverrideMethodHandler extends AbstractHandler
 {
-    const NAME = 'override_method';
-    const PARAM_SOURCE = 'source';
-    const PARAM_CLASS_NAME = 'class_name';
-    const PARAM_METHOD_NAME = 'method_name';
-    const PARAM_PATH = 'path';
+    public const NAME = 'override_method';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_CLASS_NAME = 'class_name';
+    public const PARAM_METHOD_NAME = 'method_name';
+    public const PARAM_PATH = 'path';
 
     private Reflector $reflector;
 

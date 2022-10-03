@@ -2,11 +2,11 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
-use InvalidArgumentException;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class MappedFilesystemRegistryTest extends TestCase

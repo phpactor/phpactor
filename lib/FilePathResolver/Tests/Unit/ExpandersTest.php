@@ -2,10 +2,10 @@
 
 namespace Phpactor\FilePathResolver\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\Exception\UnknownToken;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\FilePathResolver\Expanders;
+use PHPUnit\Framework\TestCase;
 
 class ExpandersTest extends TestCase
 {

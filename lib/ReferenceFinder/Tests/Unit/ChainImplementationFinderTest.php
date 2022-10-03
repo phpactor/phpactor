@@ -1,9 +1,7 @@
 <?php
 
-
 namespace Phpactor\ReferenceFinder\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\ChainImplementationFinder;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
@@ -12,6 +10,7 @@ use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 

@@ -2,21 +2,21 @@
 
 namespace Phpactor\Extension\ClassMover\Command;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Extension\ClassMover\Application\ClassCopy;
-use Symfony\Component\Console\Input\InputArgument;
-use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleCopyLogger;
-use Symfony\Component\Console\Input\InputOption;
-use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use InvalidArgumentException;
+use Phpactor\Extension\ClassMover\Application\ClassCopy;
+use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleCopyLogger;
+use Phpactor\Extension\Core\Console\Prompt\Prompt;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class ClassCopyCommand extends Command
 {
-    const TYPE_AUTO = 'auto';
-    const TYPE_CLASS = 'class';
-    const TYPE_FILE = 'file';
+    public const TYPE_AUTO = 'auto';
+    public const TYPE_CLASS = 'class';
+    public const TYPE_FILE = 'file';
 
     private ClassCopy $copier;
 

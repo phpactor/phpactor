@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\TypeResolver;
 
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\TypeUtil;
 
 class ParameterTypeResolver

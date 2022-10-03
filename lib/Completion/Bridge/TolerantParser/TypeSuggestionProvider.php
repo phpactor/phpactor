@@ -9,7 +9,7 @@ use Phpactor\ReferenceFinder\NameSearcher;
 
 class TypeSuggestionProvider
 {
-    const BUILT_IN_TYPES = [
+    public const BUILT_IN_TYPES = [
         'string',
         'float',
         'int',

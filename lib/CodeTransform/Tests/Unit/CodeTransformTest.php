@@ -2,15 +2,15 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\CodeTransform\Domain\Transformer;
+use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Phpactor\CodeTransform\Domain\Transformers;
 
 class CodeTransformTest extends TestCase
 {

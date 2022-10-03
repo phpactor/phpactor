@@ -2,22 +2,22 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use function Amp\delay;
+use function Amp\Promise\wait;
 use Closure;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\LanguageServer\LanguageServerBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\LanguageServerProtocol\CodeActionContext;
 use Phpactor\LanguageServerProtocol\CodeActionParams;
 use Phpactor\LanguageServerProtocol\CodeActionRequest;
 use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServer\LanguageServerBuilder;
-use Phpactor\LanguageServer\Test\LanguageServerTester;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TestUtils\ExtractOffset;
-use function Amp\Promise\wait;
-use function Amp\delay;
 
 class ImportNameProviderTest extends IntegrationTestCase
 {

@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReferenceFinder;
 
+use function assert;
+use Exception;
 use Generator;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\FunctionLike;
@@ -23,8 +25,6 @@ use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
-use function assert;
-use Exception;
 
 class TolerantVariableReferenceFinder implements ReferenceFinder
 {

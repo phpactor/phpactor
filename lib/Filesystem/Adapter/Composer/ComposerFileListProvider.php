@@ -2,17 +2,17 @@
 
 namespace Phpactor\Filesystem\Adapter\Composer;
 
-use Phpactor\Filesystem\Domain\FileList;
-use Phpactor\Filesystem\Domain\FilePath;
-use Composer\Autoload\ClassLoader;
-use Phpactor\Filesystem\Domain\FileListProvider;
 use AppendIterator;
-use Webmozart\PathUtil\Path;
-use SplFileInfo;
 use ArrayIterator;
+use Composer\Autoload\ClassLoader;
 use Iterator;
+use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Domain\FilePath;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
+use Webmozart\PathUtil\Path;
 
 class ComposerFileListProvider implements FileListProvider
 {

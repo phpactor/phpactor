@@ -4,9 +4,9 @@ namespace Phpactor\Indexer\Tests\Adapter\Worse;
 
 use Generator;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
-use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\ReflectorBuilder;

@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReflection\Bridge\Phpactor;
 
+use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\ClassFileConverter\Domain\ClassName;
+use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class ClassToFileSourceLocator implements SourceCodeLocator
 {

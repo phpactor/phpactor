@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Tests\Util;
 
+use function array_reduce;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use RuntimeException;
-use function array_reduce;
 
 final class OffsetExtractorResult
 {

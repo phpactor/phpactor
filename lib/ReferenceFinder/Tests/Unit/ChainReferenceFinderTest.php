@@ -1,9 +1,7 @@
 <?php
 
-
 namespace Phpactor\ReferenceFinder\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\ChainReferenceFinder;
 use Phpactor\ReferenceFinder\ClassReferenceFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
@@ -12,6 +10,7 @@ use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 

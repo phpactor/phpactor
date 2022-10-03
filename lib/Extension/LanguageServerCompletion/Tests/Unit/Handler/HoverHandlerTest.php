@@ -4,15 +4,15 @@ namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit\Handler;
 
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
 use Phpactor\LanguageServerProtocol\Hover;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
-use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 
 class HoverHandlerTest extends IntegrationTestCase
 {
-    const PATH = 'file:///hello';
+    public const PATH = 'file:///hello';
 
     /**
      * @dataProvider provideHover

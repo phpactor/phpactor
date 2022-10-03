@@ -2,16 +2,16 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Reflector;
 

@@ -2,15 +2,15 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\RequestHandler;
 
-use PHPUnit\Framework\TestCase;
+use Exception;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\RequestHandler\ExceptionCatchingHandler;
-use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response;
-use Prophecy\Prophecy\ObjectProphecy;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Extension\Rpc\Response\ErrorResponse;
-use Exception;
+use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ExceptionCatchingHandlerTest extends TestCase
 {

@@ -2,20 +2,20 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Type;
 use Microsoft\PhpParser\ClassLike;
-use Microsoft\PhpParser\Node\NamespaceUseClause;
-use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
-use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\NamespacedNameInterface;
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\NamespaceUseClause;
+use Microsoft\PhpParser\Node\QualifiedName;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;

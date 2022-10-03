@@ -2,15 +2,15 @@
 
 namespace Phpactor\ClassMover\Tests\Unit\Extension;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Extension\ClassMoverExtension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Php\PhpExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use PHPUnit\Framework\TestCase;
 
 class ClassMoverExtensionTest extends TestCase
 {

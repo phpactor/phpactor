@@ -3,8 +3,8 @@
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\Collection;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class CollectionTest extends TestCase

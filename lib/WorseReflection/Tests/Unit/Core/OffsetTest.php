@@ -2,14 +2,14 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Offset;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class OffsetTest extends TestCase
 {
-    const OFFSET = 123;
+    public const OFFSET = 123;
 
     public function testFromPhpactorByteOffset(): void
     {
@@ -37,6 +37,6 @@ class OffsetTest extends TestCase
     public function testFromUnknownInvalid(): void
     {
         $this->expectExceptionMessage('Do not know how to create offset');
-        Offset::fromUnknown(new stdClass);
+        Offset::fromUnknown(new stdClass());
     }
 }

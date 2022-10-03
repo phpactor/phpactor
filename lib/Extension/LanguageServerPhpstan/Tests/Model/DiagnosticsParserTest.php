@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Model;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerPhpstan\Model\DiagnosticsParser;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class DiagnosticsParserTest extends TestCase

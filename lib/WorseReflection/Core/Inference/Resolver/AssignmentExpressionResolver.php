@@ -2,28 +2,27 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
+use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\DelimitedList\ListExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
+use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
+use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable as WorseVariable;
-use Microsoft\PhpParser\Token;
-use Microsoft\PhpParser\Node\ArrayElement;
-use Microsoft\PhpParser\MissingToken;
-use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayAccessType;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
@@ -31,6 +30,7 @@ use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\StringType;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 

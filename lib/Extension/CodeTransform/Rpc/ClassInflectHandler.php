@@ -7,7 +7,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 class ClassInflectHandler extends AbstractClassGenerateHandler
 {
-    const NAME = 'class_inflect';
+    public const NAME = 'class_inflect';
 
     public function name(): string
     {

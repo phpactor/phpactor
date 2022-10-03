@@ -2,9 +2,9 @@
 
 namespace Phpactor\ClassMover\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\SourceCode;
+use PHPUnit\Framework\TestCase;
 
 class SourceCodeTest extends TestCase
 {

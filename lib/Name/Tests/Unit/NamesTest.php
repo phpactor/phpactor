@@ -2,9 +2,9 @@
 
 namespace Phpactor\Name\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Name\Names;
 use Phpactor\Name\QualifiedName;
+use PHPUnit\Framework\TestCase;
 
 class NamesTest extends TestCase
 {

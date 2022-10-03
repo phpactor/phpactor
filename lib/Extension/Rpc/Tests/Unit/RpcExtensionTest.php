@@ -2,17 +2,17 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
-use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Rpc\Command\RpcCommand;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use PHPUnit\Framework\TestCase;
 
 class RpcExtensionTest extends TestCase
 {

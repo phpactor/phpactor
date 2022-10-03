@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\Refactor;
 
-use Phpactor\CodeTransform\Tests\Adapter\TolerantParser\TolerantTestCase;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\CodeTransform\Tests\Adapter\TolerantParser\TolerantTestCase;
 
 class TolerantRenameVariableTest extends TolerantTestCase
 {

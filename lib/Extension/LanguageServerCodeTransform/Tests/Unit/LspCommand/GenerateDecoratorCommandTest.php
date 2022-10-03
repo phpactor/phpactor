@@ -3,12 +3,12 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateDecoratorCommand;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
-use Phpactor\LanguageServer\LanguageServerTesterBuilder;
-use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateDecoratorCommand;
+use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
@@ -20,9 +20,9 @@ use Prophecy\Prophecy\ObjectProphecy;
 class GenerateDecoratorCommandTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_SOURCE = '<?php interface SomeInterface{} class ClassesAreCool implements SomeInterface {}';
-    const EXAMPLE_URI = 'file:///file.php';
-    const EXAMPLE_OFFSET = 48;
+    public const EXAMPLE_SOURCE = '<?php interface SomeInterface{} class ClassesAreCool implements SomeInterface {}';
+    public const EXAMPLE_URI = 'file:///file.php';
+    public const EXAMPLE_OFFSET = 48;
 
     public function testSuccessfulCall(): void
     {

@@ -2,8 +2,8 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser;
 
-use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 use Microsoft\PhpParser\Parser;
+use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 
 class TolerantTestCase extends AdapterTestCase
 {

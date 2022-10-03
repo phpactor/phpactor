@@ -4,9 +4,9 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\Indexer\Model\Index;
 
 class EnumDeclarationIndexer extends AbstractClassLikeIndexer
 {

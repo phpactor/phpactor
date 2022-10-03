@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Formatter;
 
 use Amp\Promise;
-use Phpactor\TextDocument\TextEdits;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextEdits;
 
 interface Formatter
 {

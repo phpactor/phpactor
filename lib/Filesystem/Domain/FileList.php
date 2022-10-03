@@ -2,15 +2,15 @@
 
 namespace Phpactor\Filesystem\Domain;
 
+use ArrayIterator;
 use CallbackFilterIterator;
+use Closure;
 use Iterator;
 use RegexIterator;
 use ReturnTypeWillChange;
 use SplFileInfo;
 use Traversable;
 use Webmozart\Glob\Glob;
-use ArrayIterator;
-use Closure;
 
 class FileList implements Iterator
 {

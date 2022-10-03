@@ -2,8 +2,8 @@
 
 namespace Phpactor\ConfigLoader\Tests\Unit\Adapter\PathCandidate;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ConfigLoader\Adapter\PathCandidate\AbsolutePathCandidate;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class AbsolutePathCandidateTest extends TestCase

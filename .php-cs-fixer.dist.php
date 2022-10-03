@@ -18,6 +18,8 @@ return (new Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR2' => true,
+        '@PSR12' => true,
+        'ordered_imports' => true,
         'no_unused_imports' => true,
         'phpdoc_to_property_type' => true,
         'no_superfluous_phpdoc_tags' => [
@@ -36,7 +38,6 @@ return (new Config())
         'phpdoc_trim' => true,
         'array_syntax' => ['syntax' => 'short'],
         'void_return' => true,
-        'ordered_class_elements' => true,
         'single_quote' => true,
         'heredoc_indentation' => true,
         'global_namespace_import' => true,

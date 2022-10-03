@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\CodeTransformExtra\Application;
 
-use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\CodeTransform\Domain\Generators;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Filesystem\Domain\FilePath;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;

@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
 
 abstract class IntegrationTestCase extends TestCase
 {

@@ -2,17 +2,17 @@
 
 namespace Phpactor\Extension\ClassMover\Application;
 
+use Exception;
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\Extension\ClassMover\Application\Logger\ClassCopyLogger;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
+use RuntimeException;
 use Webmozart\Glob\Glob;
 use Webmozart\PathUtil\Path;
-use Phpactor\Filesystem\Domain\CopyReport;
-use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\Extension\ClassMover\Application\Logger\ClassCopyLogger;
-use Exception;
-use RuntimeException;
 
 class ClassCopy
 {

@@ -2,11 +2,11 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Adapter\Php\Serialized;
 
-use PHPUnit\Framework\Assert;
 use Phpactor\Indexer\Adapter\Php\Serialized\FileRepository;
 use Phpactor\Indexer\Adapter\Php\Serialized\SerializedIndex;
 use Phpactor\Indexer\Model\RecordSerializer\PhpSerializer;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
+use PHPUnit\Framework\Assert;
 use SplFileInfo;
 
 class SerializedIndexTest extends IntegrationTestCase

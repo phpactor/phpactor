@@ -4,8 +4,8 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
-use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Index;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\TextDocument\TextDocument;
 
 class InterfaceDeclarationIndexer extends AbstractClassLikeIndexer

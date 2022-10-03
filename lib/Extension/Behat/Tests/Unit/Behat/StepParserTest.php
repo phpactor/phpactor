@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\Behat\Tests\Unit\Behat;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Behat\StepParser;
+use PHPUnit\Framework\TestCase;
 
 class StepParserTest extends TestCase
 {

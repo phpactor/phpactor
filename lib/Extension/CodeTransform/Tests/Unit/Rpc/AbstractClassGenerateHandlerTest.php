@@ -2,27 +2,27 @@
 
 namespace Phpactor\Extension\CodeTransform\Tests\Unit\Rpc;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
 use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 use Webmozart\PathUtil\Path;
 
 abstract class AbstractClassGenerateHandlerTest extends TestCase
 {
-    const EXAMPLE_PATH = '/path/to.php';
-    const EXAMPLE_NEW_PATH = '/new/path.php';
-    const EXAMPLE_VARIANT = 'one';
-    const EXAMPLE_CLASS_1 = 'exampleClassName1';
-    const EXAMPLE_CLASS_2 = 'exampleClassName2';
+    public const EXAMPLE_PATH = '/path/to.php';
+    public const EXAMPLE_NEW_PATH = '/new/path.php';
+    public const EXAMPLE_VARIANT = 'one';
+    public const EXAMPLE_CLASS_1 = 'exampleClassName1';
+    public const EXAMPLE_CLASS_2 = 'exampleClassName2';
 
     protected ObjectProphecy $fileToClass;
 

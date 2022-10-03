@@ -6,10 +6,10 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameExtension;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\FileRenamer\TestFileRenamer;
 use Phpactor\Rename\Model\Renamer\InMemoryRenamer;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\ByteOffsetRange;
 
 class TestExtension implements Extension

@@ -6,8 +6,8 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Indexer\Model\FileList;
 use Phpactor\Indexer\Model\FileListProvider;
-use SplFileInfo;
 use Phpactor\Indexer\Model\Index;
+use SplFileInfo;
 
 class FilesystemFileListProvider implements FileListProvider
 {

@@ -5,9 +5,9 @@ namespace Phpactor\Extension\LanguageServerDiagnostics;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerDiagnostics\Model\PhpLinter;
 use Phpactor\Extension\LanguageServerDiagnostics\Provider\PhpLintDiagnosticProvider;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentLocator;
 

@@ -7,21 +7,21 @@ use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
-    const PARAM_CURRENT_PATH = 'current_path';
-    const PARAM_NEW_PATH = 'new_path';
-    const PARAM_VARIANT = 'variant';
-    const PARAM_OVERWRITE_EXISTING = 'overwrite_existing';
+    public const PARAM_CURRENT_PATH = 'current_path';
+    public const PARAM_NEW_PATH = 'new_path';
+    public const PARAM_VARIANT = 'variant';
+    public const PARAM_OVERWRITE_EXISTING = 'overwrite_existing';
 
     protected Generators $generators;
 

@@ -2,16 +2,16 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\RequestHandler;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\Request;
-use Phpactor\Extension\Rpc\Response;
-use Prophecy\Prophecy\ObjectProphecy;
-use Phpactor\Extension\Rpc\Response\ErrorResponse;
-use Psr\Log\LoggerInterface;
+use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\RequestHandler\LoggingHandler;
-use Psr\Log\LogLevel;
+use Phpactor\Extension\Rpc\Response;
+use Phpactor\Extension\Rpc\Response\ErrorResponse;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 class LoggingHandlerTest extends TestCase
 {

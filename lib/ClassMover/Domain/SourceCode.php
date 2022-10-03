@@ -2,8 +2,8 @@
 
 namespace Phpactor\ClassMover\Domain;
 
-use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use InvalidArgumentException;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 
 class SourceCode
 {

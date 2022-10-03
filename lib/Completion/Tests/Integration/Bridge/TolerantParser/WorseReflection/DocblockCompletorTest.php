@@ -5,7 +5,6 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseRefle
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\TypeSuggestionProvider;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DocblockCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -15,6 +14,7 @@ use Phpactor\ReferenceFinder\Search\PredefinedNameSearcher;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 
 class DocblockCompletorTest extends TestCase
 {

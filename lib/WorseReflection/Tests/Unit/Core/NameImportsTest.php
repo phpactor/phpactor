@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\NameImports;
 use Phpactor\WorseReflection\Core\Name;
+use Phpactor\WorseReflection\Core\NameImports;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class NameImportsTest extends TestCase

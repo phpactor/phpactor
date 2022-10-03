@@ -2,9 +2,9 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Exception\InvalidByteOffset;
+use PHPUnit\Framework\TestCase;
 
 class ByteOffsetTest extends TestCase
 {

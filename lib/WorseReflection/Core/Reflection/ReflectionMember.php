@@ -4,11 +4,11 @@ namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Deprecation;
-use Phpactor\WorseReflection\Core\Position;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
-use Phpactor\WorseReflection\Core\Visibility;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Visibility;
 
 interface ReflectionMember
 {

@@ -10,8 +10,8 @@ use RuntimeException;
 
 class DirtyFileListProviderTest extends IntegrationTestCase
 {
-    const EXAMPLE_FILE_1 = 'foobar';
-    const EXAMPLE_FILE_2 = 'barfoo';
+    public const EXAMPLE_FILE_1 = 'foobar';
+    public const EXAMPLE_FILE_2 = 'barfoo';
 
     public function testTrackAndProvideDirtyDocuments(): void
     {

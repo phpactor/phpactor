@@ -2,12 +2,12 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
+use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use PHPUnit\Framework\TestCase;
 
 abstract class UpdaterTestCase extends TestCase
 {

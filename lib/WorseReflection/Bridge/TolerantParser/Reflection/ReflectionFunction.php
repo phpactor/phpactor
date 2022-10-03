@@ -2,20 +2,20 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Name;
+use Phpactor\WorseReflection\Core\NodeText;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as TolerantReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction as CoreReflectionFunction;
-use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
-use Phpactor\WorseReflection\Core\NodeText;
-use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
-use Phpactor\WorseReflection\Core\ServiceLocator;
-use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\FunctionReturnTypeResolver;
+use Phpactor\WorseReflection\Core\ServiceLocator;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionFunction extends AbstractReflectedNode implements CoreReflectionFunction

@@ -2,8 +2,8 @@
 
 namespace Phpactor\ClassMover\Tests\Unit\Domain\Name;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ClassMover\Domain\Name\MemberName;
+use PHPUnit\Framework\TestCase;
 
 class MemberNameTest extends TestCase
 {

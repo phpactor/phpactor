@@ -4,8 +4,8 @@ namespace Phpactor\TextDocument\TextDocumentLocator;
 
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextDocumentLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 
 class ChainDocumentLocator implements TextDocumentLocator
 {

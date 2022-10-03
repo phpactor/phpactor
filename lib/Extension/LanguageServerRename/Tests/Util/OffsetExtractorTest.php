@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Tests\Util;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class OffsetExtractorTest extends TestCase

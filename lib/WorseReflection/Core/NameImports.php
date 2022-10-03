@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core;
 
-use RuntimeException;
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
+use RuntimeException;
 
 final class NameImports implements IteratorAggregate
 {

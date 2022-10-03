@@ -4,10 +4,10 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 
 class DocblockMemberProvider implements ReflectionMemberProvider
 {

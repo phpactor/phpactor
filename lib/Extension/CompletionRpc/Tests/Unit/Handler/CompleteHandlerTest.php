@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\CompletionRpc\Tests\Unit\Handler;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
@@ -11,6 +10,7 @@ use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 

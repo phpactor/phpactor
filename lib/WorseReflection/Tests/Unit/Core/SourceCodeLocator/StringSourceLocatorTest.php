@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\SourceCodeLocator;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
+use PHPUnit\Framework\TestCase;
 
 class StringSourceLocatorTest extends TestCase
 {

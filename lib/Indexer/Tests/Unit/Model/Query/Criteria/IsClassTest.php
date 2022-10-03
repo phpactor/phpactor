@@ -2,10 +2,10 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Model\Query\Criteria;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
+use PHPUnit\Framework\TestCase;
 
 class IsClassTest extends TestCase
 {

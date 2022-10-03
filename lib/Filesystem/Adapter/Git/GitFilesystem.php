@@ -2,16 +2,16 @@
 
 namespace Phpactor\Filesystem\Adapter\Git;
 
-use Phpactor\Filesystem\Domain\FileList;
-use Phpactor\Filesystem\Domain\FileListProvider;
-use Phpactor\Filesystem\Domain\FilePath;
+use ArrayIterator;
+use InvalidArgumentException;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
+use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Domain\FilePath;
 use SplFileInfo;
 use Symfony\Component\Process\Process;
-use ArrayIterator;
-use InvalidArgumentException;
 
 class GitFilesystem extends SimpleFilesystem
 {

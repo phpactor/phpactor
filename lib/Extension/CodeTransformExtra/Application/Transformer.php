@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\CodeTransformExtra\Application;
 
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Webmozart\PathUtil\Path;
 
 class Transformer

@@ -2,8 +2,8 @@
 
 namespace Phpactor\FilePathResolver;
 
-use Psr\Log\LogLevel;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 class LoggingPathResolver implements PathResolver
 {

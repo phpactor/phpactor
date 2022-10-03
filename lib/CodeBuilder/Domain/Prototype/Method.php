@@ -4,8 +4,8 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class Method extends Prototype
 {
-    const IS_STATIC = 1;
-    const IS_ABSTRACT = 2;
+    public const IS_STATIC = 1;
+    public const IS_ABSTRACT = 2;
 
     private string $name;
 

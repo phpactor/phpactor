@@ -6,8 +6,8 @@ use Generator;
 use Phpactor\Completion\Tests\TestCase;
 use Phpactor\WorseReflection\Core\Inference\GenericTypeResolver;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class GenericTypeResolverTest extends TestCase

@@ -2,13 +2,13 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Integration\Command;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Rpc\Command\RpcCommand;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Rpc\RpcVersion;
 use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class RpcCommandTest extends TestCase

@@ -2,21 +2,21 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
-use PHPUnit\Framework\TestCase;
+use function Amp\Promise\wait;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\TransformCommand;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\TextDocument\TextEdits;
-use function Amp\Promise\wait;
+use PHPUnit\Framework\TestCase;
 
 class TransformCommandTest extends TestCase
 {
-    const EXAMPLE_TRANSFORM_NAME = 'test_transform';
+    public const EXAMPLE_TRANSFORM_NAME = 'test_transform';
 
     public function testAppliesTransform(): void
     {

@@ -5,12 +5,12 @@ namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder\ClassMover;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ClassMover\ClassMover;
+use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
 use Phpactor\Rename\Adapter\ReferenceFinder\ClassMover\ClassRenamer;
 use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Rename\Model\NameToUriConverter;
 use Phpactor\Rename\Tests\Adapter\ReferenceFinder\ReferenceRenamerIntegrationTestCase;
-use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -167,7 +167,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         array $references,
         TextDocument $textDocument
     ): ClassRenamer {
-        $nameToUriConverter = new class($namespaceRootDir) implements NameToUriConverter {
+        $nameToUriConverter = new class ($namespaceRootDir) implements NameToUriConverter {
             private string $namespaceRootDir;
             public function __construct(
                 string $namespaceRootDir

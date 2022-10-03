@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\ClassMover\Application\Logger;
 
-use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\ClassMover\FoundReferences;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\ClassMover\FoundReferences;
+use Phpactor\Filesystem\Domain\FilePath;
 
 interface ClassMoverLogger
 {

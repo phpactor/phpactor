@@ -17,14 +17,14 @@ use Phpactor\ReferenceFinder\Search\NullNameSearcher;
 
 class ReferenceFinderExtension implements Extension
 {
-    const SERVICE_DEFINITION_LOCATOR = 'reference_finder.definition_locator';
-    const SERVICE_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
-    const SERVICE_TYPE_LOCATOR = self::TAG_TYPE_LOCATOR;
-    const TAG_DEFINITION_LOCATOR = 'reference_finder.definition_locator';
-    const TAG_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
-    const TAG_TYPE_LOCATOR = 'reference_finder.type_locator';
-    const TAG_REFERENCE_FINDER = 'reference_finder.reference_finder';
-    const TAG_NAME_SEARCHER = 'reference_finder.name_searcher';
+    public const SERVICE_DEFINITION_LOCATOR = 'reference_finder.definition_locator';
+    public const SERVICE_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
+    public const SERVICE_TYPE_LOCATOR = self::TAG_TYPE_LOCATOR;
+    public const TAG_DEFINITION_LOCATOR = 'reference_finder.definition_locator';
+    public const TAG_IMPLEMENTATION_FINDER = 'reference_finder.implementation_finder';
+    public const TAG_TYPE_LOCATOR = 'reference_finder.type_locator';
+    public const TAG_REFERENCE_FINDER = 'reference_finder.reference_finder';
+    public const TAG_NAME_SEARCHER = 'reference_finder.name_searcher';
 
 
     public function load(ContainerBuilder $container): void

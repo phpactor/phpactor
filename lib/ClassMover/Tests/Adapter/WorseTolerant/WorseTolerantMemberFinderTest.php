@@ -2,9 +2,9 @@
 
 namespace Phpactor\ClassMover\Tests\Adapter\WorseTolerant;
 
-use Phpactor\ClassMover\Domain\SourceCode;
-use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Closure;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\ClassMover\Domain\SourceCode;
 
 class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
 {

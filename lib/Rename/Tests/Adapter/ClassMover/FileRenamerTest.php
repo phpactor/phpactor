@@ -2,22 +2,22 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ClassMover;
 
+use function Amp\Promise\wait;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassMover\ClassMover;
-use Phpactor\Indexer\Model\Record;
-use Phpactor\Rename\Adapter\ClassMover\FileRenamer;
-use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Model\QueryClient;
-use Phpactor\Indexer\Model\RecordReference;
+use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FileRecord;
+use Phpactor\Indexer\Model\RecordReference;
+use Phpactor\Rename\Adapter\ClassMover\FileRenamer;
+use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
-use function Amp\Promise\wait;
 
 class FileRenamerTest extends IntegrationTestCase
 {

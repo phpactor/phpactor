@@ -5,15 +5,15 @@ namespace Phpactor\Extension\LanguageServerRename;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\LanguageServerRename\Handler\FileRenameHandler;
-use Phpactor\Rename\Model\FileRenamer;
-use Phpactor\Rename\Model\Renamer\ChainRenamer;
-use Phpactor\Extension\LanguageServerRename\Handler\RenameHandler;
-use Phpactor\Rename\Model\Renamer;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServerRename\Handler\FileRenameHandler;
+use Phpactor\Extension\LanguageServerRename\Handler\RenameHandler;
+use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\Rename\Model\FileRenamer;
+use Phpactor\Rename\Model\Renamer;
+use Phpactor\Rename\Model\Renamer\ChainRenamer;
 use Phpactor\TextDocument\TextDocumentLocator;
 
 class LanguageServerRenameExtension implements Extension

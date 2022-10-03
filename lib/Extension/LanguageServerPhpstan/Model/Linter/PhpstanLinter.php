@@ -8,8 +8,8 @@ use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\TextDocument\TextDocumentUri;
-use function Safe\tempnam;
 use function Safe\file_put_contents;
+use function Safe\tempnam;
 
 class PhpstanLinter implements Linter
 {

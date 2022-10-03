@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\Behat\Tests\Integration\Adapter\Worse;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Adapter\Worse\WorseContextClassResolver;
 use Phpactor\Extension\Behat\Adapter\Worse\WorseStepFactory;
 use Phpactor\Extension\Behat\Behat\Context;
@@ -10,6 +9,7 @@ use Phpactor\Extension\Behat\Behat\Step;
 use Phpactor\Extension\Behat\Behat\StepParser;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 
 class WorseStepFactoryTest extends TestCase
 {

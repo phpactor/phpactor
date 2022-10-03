@@ -2,9 +2,9 @@
 
 namespace Phpactor\Indexer\Adapter\Php\Serialized;
 
+use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\RecordSerializer;
 use Phpactor\Indexer\Util\Filesystem;
-use Phpactor\Indexer\Model\Record;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use function Safe\file_get_contents;

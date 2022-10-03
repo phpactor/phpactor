@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Generator;
 use Phpactor\CodeTransform\Domain\Generators;
+use PHPUnit\Framework\TestCase;
 
 class GeneratorsTest extends TestCase
 {

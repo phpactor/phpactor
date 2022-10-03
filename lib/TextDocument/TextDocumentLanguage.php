@@ -4,8 +4,8 @@ namespace Phpactor\TextDocument;
 
 class TextDocumentLanguage
 {
-    const LANGUAGE_UNDEFINED = 'undefined';
-    const LANGUAGE_PHP = 'php';
+    public const LANGUAGE_UNDEFINED = 'undefined';
+    public const LANGUAGE_PHP = 'php';
 
     private string $language;
 

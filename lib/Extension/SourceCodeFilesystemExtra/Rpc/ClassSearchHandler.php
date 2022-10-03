@@ -2,19 +2,19 @@
 
 namespace Phpactor\Extension\SourceCodeFilesystemExtra\Rpc;
 
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
-use Phpactor\Extension\Rpc\Response\ReturnResponse;
-use Phpactor\Extension\Rpc\Response\ReturnOption;
-use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
+use Phpactor\Extension\Rpc\Response\ReturnOption;
+use Phpactor\Extension\Rpc\Response\ReturnResponse;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\MapResolver\Resolver;
 
 class ClassSearchHandler implements Handler
 {
-    const NAME = 'class_search';
-    const SHORT_NAME = 'short_name';
+    public const NAME = 'class_search';
+    public const SHORT_NAME = 'short_name';
 
     private ClassSearch $classSearch;
 

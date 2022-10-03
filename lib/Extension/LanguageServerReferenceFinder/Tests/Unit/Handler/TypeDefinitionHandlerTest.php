@@ -2,16 +2,17 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Unit\Handler;
 
+use function Amp\Promise\wait;
+use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\TypeDefinitionHandler;
-use Phpactor\LanguageServerProtocol\Location;
-use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
-use Phpactor\LanguageServerProtocol\MessageActionItem;
-use Phpactor\LanguageServerProtocol\TypeDefinitionRequest;
 use Phpactor\LanguageServer\Core\Server\ResponseWatcher\TestResponseWatcher;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\Location;
+use Phpactor\LanguageServerProtocol\MessageActionItem;
+use Phpactor\LanguageServerProtocol\TypeDefinitionRequest;
 use Phpactor\ReferenceFinder\TestTypeLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
@@ -21,12 +22,11 @@ use Phpactor\TextDocument\Location as PhpactorLocation;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use function Amp\Promise\wait;
 
 class TypeDefinitionHandlerTest extends TestCase
 {
-    const EXAMPLE_URI = 'file:///test';
-    const EXAMPLE_TEXT = 'hello';
+    public const EXAMPLE_URI = 'file:///test';
+    public const EXAMPLE_TEXT = 'hello';
 
     public function testGoesToSingleType(): void
     {

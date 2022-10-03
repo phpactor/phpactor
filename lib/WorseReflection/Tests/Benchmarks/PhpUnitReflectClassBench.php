@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Benchmarks;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassName;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @Iterations(5)

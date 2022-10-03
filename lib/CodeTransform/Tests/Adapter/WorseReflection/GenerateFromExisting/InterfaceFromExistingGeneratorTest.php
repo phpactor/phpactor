@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\GenerateFromExisting;
 
-use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
-use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
+use Phpactor\CodeTransform\Domain\ClassName;
+use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 
 class InterfaceFromExistingGeneratorTest extends WorseTestCase
 {

@@ -2,25 +2,25 @@
 
 namespace Phpactor\Extension\ComposerAutoloader;
 
+use Composer\Autoload\ClassLoader;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\MapResolver\Resolver;
-use Composer\Autoload\ClassLoader;
 use Phpactor\Extension\ComposerAutoloader\ClassLoaderFactory as PhpactorClassLoader;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\MapResolver\Resolver;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class ComposerAutoloaderExtension implements Extension
 {
-    const SERVICE_AUTOLOADERS = 'composer.class_loaders';
-    const PARAM_AUTOLOADER_PATH = 'composer.autoloader_path';
-    const PARAM_AUTOLOAD_DEREGISTER = 'composer.autoload_deregister';
-    const PARAM_COMPOSER_ENABLE = 'composer.enable';
-    const PARAM_CLASS_MAPS_ONLY = 'composer.class_maps_only';
-    const LOG_CHANNEL = 'COMPOSER';
+    public const SERVICE_AUTOLOADERS = 'composer.class_loaders';
+    public const PARAM_AUTOLOADER_PATH = 'composer.autoloader_path';
+    public const PARAM_AUTOLOAD_DEREGISTER = 'composer.autoload_deregister';
+    public const PARAM_COMPOSER_ENABLE = 'composer.enable';
+    public const PARAM_CLASS_MAPS_ONLY = 'composer.class_maps_only';
+    public const LOG_CHANNEL = 'COMPOSER';
 
 
     public function configure(Resolver $resolver): void

@@ -2,26 +2,26 @@
 
 namespace Phpactor\Extension\ClassToFile;
 
-use Phpactor\Container\Extension;
+use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
+use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
+use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
+use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
+use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
+use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
+use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
+use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
-use Phpactor\ClassFileConverter\Adapter\Composer\ComposerClassToFile;
-use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
-use Phpactor\ClassFileConverter\Domain\ChainClassToFile;
-use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
-use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
-use Phpactor\Container\Container;
-use Phpactor\ClassFileConverter\Domain\ChainFileToClass;
 
 class ClassToFileExtension implements Extension
 {
-    const SERVICE_CONVERTER = 'class_to_file.converter';
-    const PARAM_CLASS_LOADERS = 'composer.class_loaders';
-    const PARAM_PROJECT_ROOT = 'class_to_file.project_root';
-    const PARAM_BRUTE_FORCE_CONVERSION = 'class_to_file.brute_force_conversion';
+    public const SERVICE_CONVERTER = 'class_to_file.converter';
+    public const PARAM_CLASS_LOADERS = 'composer.class_loaders';
+    public const PARAM_PROJECT_ROOT = 'class_to_file.project_root';
+    public const PARAM_BRUTE_FORCE_CONVERSION = 'class_to_file.brute_force_conversion';
 
 
     public function configure(Resolver $schema): void

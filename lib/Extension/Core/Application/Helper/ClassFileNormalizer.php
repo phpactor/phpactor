@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\Core\Application\Helper;
 
 use Phpactor\ClassFileConverter\Domain\ClassName;
-use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
+use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\Phpactor;
 
 class ClassFileNormalizer

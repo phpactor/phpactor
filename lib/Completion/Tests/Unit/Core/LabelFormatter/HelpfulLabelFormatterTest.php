@@ -3,8 +3,8 @@
 namespace Phpactor\Completion\Tests\Unit\Core\LabelFormatter;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\LabelFormatter\HelpfulLabelFormatter;
+use PHPUnit\Framework\TestCase;
 
 class HelpfulLabelFormatterTest extends TestCase
 {

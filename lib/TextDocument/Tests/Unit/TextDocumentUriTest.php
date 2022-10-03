@@ -2,9 +2,9 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Exception\InvalidUriException;
 use Phpactor\TextDocument\TextDocumentUri;
+use PHPUnit\Framework\TestCase;
 
 class TextDocumentUriTest extends TestCase
 {

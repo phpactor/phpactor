@@ -2,9 +2,9 @@
 
 namespace Phpactor\ClassMover\Domain\Reference;
 
-use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
-use IteratorAggregate;
 use ArrayIterator;
+use IteratorAggregate;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Traversable;
 
 /**

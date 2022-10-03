@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\CallableType;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use PHPUnit\Framework\TestCase;
 
 class CallableTypeTest extends TestCase
 {

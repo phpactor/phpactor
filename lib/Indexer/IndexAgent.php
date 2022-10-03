@@ -3,8 +3,8 @@
 namespace Phpactor\Indexer;
 
 use Phpactor\Indexer\Model\IndexAccess;
-use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\Indexer;
+use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\SearchClient;
 
 interface IndexAgent

@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
+use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
-use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
-use Phpactor\TestUtils\ExtractOffset;
 
 class SourceReflectorTest extends IntegrationTestCase
 {

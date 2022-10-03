@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use RuntimeException;

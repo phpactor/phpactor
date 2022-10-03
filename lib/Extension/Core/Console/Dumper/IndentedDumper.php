@@ -6,7 +6,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class IndentedDumper implements Dumper
 {
-    const PADDING = '  ';
+    public const PADDING = '  ';
 
     public function dump(OutputInterface $output, array $data): void
     {

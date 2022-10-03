@@ -2,11 +2,11 @@
 
 namespace Phpactor\Indexer\Extension\Command;
 
-use Phpactor\Indexer\Model\RecordReference;
+use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
-use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Util\Cast;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexQueryCommand extends Command
 {
-    const ARG_IDENITIFIER = 'identifier';
+    public const ARG_IDENITIFIER = 'identifier';
 
     private QueryClient $query;
 

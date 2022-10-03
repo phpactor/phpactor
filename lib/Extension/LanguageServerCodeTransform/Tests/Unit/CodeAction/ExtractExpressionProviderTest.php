@@ -3,25 +3,25 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
 use Amp\CancellationTokenSource;
+use function Amp\Promise\wait;
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
-use function Amp\Promise\wait;
 
 class ExtractExpressionProviderTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_SOURCE = 'foobar';
-    const EXAMPLE_FILE = 'file:///somefile.php';
+    public const EXAMPLE_SOURCE = 'foobar';
+    public const EXAMPLE_FILE = 'file:///somefile.php';
 
     /**
      * @var ObjectProphecy<ExtractExpression>

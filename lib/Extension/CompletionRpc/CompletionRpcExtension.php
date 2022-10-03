@@ -5,8 +5,8 @@ namespace Phpactor\Extension\CompletionRpc;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\CompletionRpc\Handler\CompleteHandler;
 use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\CompletionRpc\Handler\CompleteHandler;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\MapResolver\Resolver;
 

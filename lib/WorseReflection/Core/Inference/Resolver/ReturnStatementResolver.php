@@ -2,13 +2,13 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
-use Microsoft\PhpParser\Node;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 
 class ReturnStatementResolver implements Resolver
 {

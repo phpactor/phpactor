@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Model;
 
+use function Amp\ByteStream\buffer;
 use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Diagnostic;
-use function Amp\ByteStream\buffer;
 use Psr\Log\LoggerInterface;
 
 class PhpstanProcess

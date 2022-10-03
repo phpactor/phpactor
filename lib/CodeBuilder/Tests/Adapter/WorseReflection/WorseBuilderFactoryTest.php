@@ -2,11 +2,11 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter\WorseReflection;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
+use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 
 class WorseBuilderFactoryTest extends TestCase
 {

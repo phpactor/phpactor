@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as CoreReflectionMethod;
 
 /**
  * @extends HomogeneousReflectionMemberCollection<CoreReflectionMethod>

@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Cache;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
+use PHPUnit\Framework\TestCase;
 
 class TtlCacheTest extends TestCase
 {

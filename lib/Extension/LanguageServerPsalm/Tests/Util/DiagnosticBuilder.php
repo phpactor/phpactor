@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerPsalm\Tests\Util;
 
+use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServerProtocol\Diagnostic;
 
 final class DiagnosticBuilder
 {

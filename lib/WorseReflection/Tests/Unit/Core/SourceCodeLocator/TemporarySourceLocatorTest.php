@@ -2,13 +2,13 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\SourceCodeLocator;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class TemporarySourceLocatorTest extends TestCase

@@ -2,15 +2,15 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Response\Input\ListInput;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateAccessorHandler;
-use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
@@ -20,7 +20,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class GenerateAccessorHandlerTest extends HandlerTestCase
 {
-    const SOURCE = <<<'PHP'
+    public const SOURCE = <<<'PHP'
         <?php
 
         class Dummy
@@ -29,12 +29,12 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
             public $bar;
         }
         PHP;
-    const PATH = '/path/to';
-    const FOO_NAME = 'foo';
-    const BAR_NAME = 'bar';
-    const PROPERTIES_CHOICES = [self::FOO_NAME => self::FOO_NAME, self::BAR_NAME => self::BAR_NAME];
-    const GENERATE_ACCESSOR_ACTION = 'generate_accessor';
-    const CURSOR_OFFSET = 57;
+    public const PATH = '/path/to';
+    public const FOO_NAME = 'foo';
+    public const BAR_NAME = 'bar';
+    public const PROPERTIES_CHOICES = [self::FOO_NAME => self::FOO_NAME, self::BAR_NAME => self::BAR_NAME];
+    public const GENERATE_ACCESSOR_ACTION = 'generate_accessor';
+    public const CURSOR_OFFSET = 57;
 
     private ObjectProphecy $generateAccessor;
 

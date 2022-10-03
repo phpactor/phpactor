@@ -3,8 +3,8 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateDecorator;
-use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 
 class WorseGenerateDecoratorTest extends WorseTestCase
 {

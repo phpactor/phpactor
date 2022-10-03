@@ -3,23 +3,23 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
 
 class RenameVariableHandler extends AbstractHandler
 {
-    const NAME = 'rename_variable';
-    const PARAM_OFFSET = 'offset';
-    const PARAM_SOURCE = 'source';
-    const PARAM_NAME = 'name';
-    const PARAM_NAME_SUGGESTION = 'name_suggestion';
-    const PARAM_PATH = 'path';
-    const INPUT_LABEL = 'New name: ';
-    const PARAM_SCOPE = 'scope';
+    public const NAME = 'rename_variable';
+    public const PARAM_OFFSET = 'offset';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_NAME = 'name';
+    public const PARAM_NAME_SUGGESTION = 'name_suggestion';
+    public const PARAM_PATH = 'path';
+    public const INPUT_LABEL = 'New name: ';
+    public const PARAM_SCOPE = 'scope';
 
     private RenameVariable $renameVariable;
 

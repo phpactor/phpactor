@@ -2,8 +2,8 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant;
 
-use Phpactor\Indexer\Model\Indexer;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
+use Phpactor\Indexer\Model\Indexer;
 use Phpactor\Indexer\Model\TestIndexAgent;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 

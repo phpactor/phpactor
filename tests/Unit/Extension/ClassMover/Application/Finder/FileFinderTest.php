@@ -3,13 +3,13 @@
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Application\Finder;
 
 use Closure;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ClassMover\Application\Finder\FileFinder;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;

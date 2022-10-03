@@ -2,9 +2,9 @@
 
 namespace Phpactor\Indexer\Model;
 
-use RuntimeException;
 use function ini_get;
 use function memory_get_usage;
+use RuntimeException;
 
 final class MemoryUsage
 {

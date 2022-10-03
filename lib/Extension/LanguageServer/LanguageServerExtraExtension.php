@@ -6,9 +6,9 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\Core\CoreExtension;
+use Phpactor\Extension\LanguageServer\Service\OnDevelopWarningService;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\LanguageServer\Service\OnDevelopWarningService;
 
 class LanguageServerExtraExtension implements Extension
 {

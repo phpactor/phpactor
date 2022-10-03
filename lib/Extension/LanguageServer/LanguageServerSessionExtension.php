@@ -5,8 +5,6 @@ namespace Phpactor\Extension\LanguageServer;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\LanguageServerProtocol\ClientCapabilities;
-use Phpactor\LanguageServerProtocol\InitializeParams;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Server\ResponseWatcher;
 use Phpactor\LanguageServer\Core\Server\ResponseWatcher\DeferredResponseWatcher;
@@ -15,6 +13,8 @@ use Phpactor\LanguageServer\Core\Server\RpcClient\JsonRpcClient;
 use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
 use Phpactor\LanguageServer\WorkDoneProgress\ClientCapabilityDependentProgressNotifier;
 use Phpactor\LanguageServer\WorkDoneProgress\ProgressNotifier;
+use Phpactor\LanguageServerProtocol\ClientCapabilities;
+use Phpactor\LanguageServerProtocol\InitializeParams;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerSessionExtension implements Extension

@@ -90,7 +90,7 @@ class IndexInfos implements IteratorAggregate, Countable
         return new self(array_filter($this->infos, fn (IndexInfo $info) => $info->name() !== $target->name()));
     }
 
-    public function totalSize():int
+    public function totalSize(): int
     {
         return array_reduce(
             $this->infos,

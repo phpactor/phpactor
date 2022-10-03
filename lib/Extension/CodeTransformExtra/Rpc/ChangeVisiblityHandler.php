@@ -10,10 +10,10 @@ use Phpactor\MapResolver\Resolver;
 
 class ChangeVisiblityHandler implements Handler
 {
-    const NAME = 'change_visibility';
-    const PARAM_PATH = 'path';
-    const PARAM_SOURCE = 'source';
-    const PARAM_OFFSET = 'offset';
+    public const NAME = 'change_visibility';
+    public const PARAM_PATH = 'path';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_OFFSET = 'offset';
 
     private ChangeVisiblity $changeVisiblity;
 

@@ -2,7 +2,7 @@
 
 namespace Phpactor\Rename\Tests\Model\Renamer;
 
-use PHPUnit\Framework\TestCase;
+use function iterator_to_array;
 use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\Renamer;
 use Phpactor\Rename\Model\Renamer\ChainRenamer;
@@ -12,7 +12,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
-use function iterator_to_array;
+use PHPUnit\Framework\TestCase;
 
 class ChainRenamerTest extends TestCase
 {

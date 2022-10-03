@@ -2,14 +2,14 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Builder;
 
+use Closure;
 use Generator;
-use PHPUnit\Framework\TestCase;
+use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
-use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
 use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
-use Closure;
+use PHPUnit\Framework\TestCase;
 
 class SourceCodeBuilderTest extends TestCase
 {

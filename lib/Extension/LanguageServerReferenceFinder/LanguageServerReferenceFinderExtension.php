@@ -6,15 +6,15 @@ use Microsoft\PhpParser\Parser;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
+use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer\WorkspaceUpdateReferenceFinder;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoDefinitionHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoImplementationHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\HighlightHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\ReferencesHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\TypeDefinitionHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
-use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer\WorkspaceUpdateReferenceFinder;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -23,7 +23,7 @@ use Phpactor\ReferenceFinder\ReferenceFinder;
 
 class LanguageServerReferenceFinderExtension implements Extension
 {
-    const PARAM_REFERENCE_TIMEOUT = 'language_server_reference_reference_finder.reference_timeout';
+    public const PARAM_REFERENCE_TIMEOUT = 'language_server_reference_reference_finder.reference_timeout';
 
 
     public function load(ContainerBuilder $container): void

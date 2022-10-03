@@ -2,8 +2,8 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit\Domain\Utils;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Utils\TextUtils;
+use PHPUnit\Framework\TestCase;
 
 class TextUtilsTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\Diff;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
+use PHPUnit\Framework\TestCase;
 
 class TextEditBuilderTest extends TestCase
 {

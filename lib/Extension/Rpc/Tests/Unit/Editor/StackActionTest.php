@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\Editor;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class StackActionTest extends TestCase

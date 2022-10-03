@@ -3,17 +3,17 @@
 namespace Phpactor\Extension\CodeTransformExtra\Command;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
-use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\CodeTransformExtra\Application\Exception\FileAlreadyExists;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class ClassNewCommand extends Command
 {

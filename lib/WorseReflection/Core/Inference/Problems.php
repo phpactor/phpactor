@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use IteratorAggregate;
-use Countable;
 use ArrayIterator;
+use Countable;
+use IteratorAggregate;
 
 /**
  * @implements IteratorAggregate<array-key,NodeContext>

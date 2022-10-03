@@ -12,9 +12,9 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ChangeVisiblityHandlerTest extends HandlerTestCase
 {
-    const EXAMPLE_SOURCE = '<?php hello';
-    const EXAMPLE_PATH = '/path/to';
-    const EXAMPLE_OFFSET = 12;
+    public const EXAMPLE_SOURCE = '<?php hello';
+    public const EXAMPLE_PATH = '/path/to';
+    public const EXAMPLE_OFFSET = 12;
 
     private ObjectProphecy $changeVisibility;
 

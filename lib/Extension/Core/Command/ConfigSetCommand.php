@@ -11,9 +11,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigSetCommand extends Command
 {
-    const ARG_KEY = 'key';
-    const ARG_VALUE = 'value';
-    const OPT_DELETE = 'delete';
+    public const ARG_KEY = 'key';
+    public const ARG_VALUE = 'value';
+    public const OPT_DELETE = 'delete';
 
     private ConfigManipulator $manipulator;
 

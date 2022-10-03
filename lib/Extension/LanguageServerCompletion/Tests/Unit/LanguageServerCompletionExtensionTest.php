@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit;
 
+use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
+use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServerProtocol\CompletionList;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
-use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
-use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 
 class LanguageServerCompletionExtensionTest extends IntegrationTestCase
 {

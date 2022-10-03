@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Navigation\Application;
 
+use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 use Phpactor\Extension\Navigation\Navigator\Navigator as NavigatorInterface;
 use RuntimeException;
-use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 
 class Navigator
 {

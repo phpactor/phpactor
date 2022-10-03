@@ -2,10 +2,10 @@
 
 namespace Phpactor\ConfigLoader\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ConfigLoader\Core\Deserializer;
 use Phpactor\ConfigLoader\Core\Deserializers;
 use Phpactor\ConfigLoader\Core\Exception\DeserializerNotFound;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 

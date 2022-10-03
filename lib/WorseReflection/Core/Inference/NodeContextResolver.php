@@ -5,12 +5,12 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Psr\Log\LoggerInterface;
 
 class NodeContextResolver
@@ -45,7 +45,7 @@ class NodeContextResolver
         $this->docblockFactory = $docblockFactory;
     }
 
-    public function withCache(Cache $cache):self
+    public function withCache(Cache $cache): self
     {
         return new self($this->reflector, $this->docblockFactory, $this->logger, $cache, $this->resolverMap);
     }

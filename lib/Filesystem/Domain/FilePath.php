@@ -2,10 +2,10 @@
 
 namespace Phpactor\Filesystem\Domain;
 
+use InvalidArgumentException;
 use RuntimeException;
 use SplFileInfo;
 use Webmozart\PathUtil\Path;
-use InvalidArgumentException;
 
 final class FilePath
 {

@@ -138,7 +138,7 @@ class Frame
 
                 $variable = new Variable(
                     $typeAssertion->name(),
-                    $createAtOffset  ?: $typeAssertion->offset(),
+                    $createAtOffset ?: $typeAssertion->offset(),
                     $typeAssertion->apply($originalType),
                     $typeAssertion->classType(),
                 );

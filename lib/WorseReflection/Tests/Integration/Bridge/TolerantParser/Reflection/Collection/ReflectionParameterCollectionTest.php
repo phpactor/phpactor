@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\Collection;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
-use Closure;
 
 class ReflectionParameterCollectionTest extends IntegrationTestCase
 {

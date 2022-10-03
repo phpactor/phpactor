@@ -2,16 +2,16 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\HandlerRegistry;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Rpc\Response;
-use Phpactor\Extension\Rpc\Request;
+use Phpactor\MapResolver\Resolver;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
-use Prophecy\Prophecy\ObjectProphecy;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class RequestHandlerTest extends TestCase
 {

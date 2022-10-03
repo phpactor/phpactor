@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 
 abstract class IntegrationTestCase extends TestCase
 {

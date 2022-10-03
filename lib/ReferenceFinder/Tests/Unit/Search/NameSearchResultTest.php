@@ -2,9 +2,9 @@
 
 namespace Phpactor\ReferenceFinder\Tests\Unit\Search;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\ReferenceFinder\Search\NameSearchResultType;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class NameSearchResultTest extends TestCase

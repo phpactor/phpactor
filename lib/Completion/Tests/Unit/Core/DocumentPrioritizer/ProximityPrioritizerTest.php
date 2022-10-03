@@ -3,10 +3,10 @@
 namespace Phpactor\Completion\Tests\Unit\Core\DocumentPrioritizer;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\DocumentPrioritizer\ProximityPrioritizer;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\TextDocumentUri;
+use PHPUnit\Framework\TestCase;
 
 class ProximityPrioritizerTest extends TestCase
 {

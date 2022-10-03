@@ -5,11 +5,11 @@ namespace Phpactor\Extension\ObjectRenderer;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Extension\LanguageServerHover\Twig\TwigFunctions;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServerHover\Twig\TwigFunctions;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 use Twig\Environment;
 

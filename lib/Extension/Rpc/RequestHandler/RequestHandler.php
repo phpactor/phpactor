@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\Rpc\RequestHandler;
 
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\HandlerRegistry;
-use Phpactor\Extension\Rpc\RequestHandler as CoreRequestHandler;
 use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\RequestHandler as CoreRequestHandler;
 use Phpactor\Extension\Rpc\Response;
+use Phpactor\MapResolver\Resolver;
 
 class RequestHandler implements CoreRequestHandler
 {

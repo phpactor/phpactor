@@ -68,7 +68,7 @@ class ExtensionDocumentor implements Documentor
             "\n",
         ];
 
-        $extension = new $extensionClass;
+        $extension = new $extensionClass();
 
         $resolver = new Resolver();
         $extension->configure($resolver);

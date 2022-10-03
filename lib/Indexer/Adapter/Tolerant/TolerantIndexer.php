@@ -3,8 +3,8 @@
 namespace Phpactor\Indexer\Adapter\Tolerant;
 
 use Microsoft\PhpParser\Node;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\Indexer\Model\Index;
+use Phpactor\TextDocument\TextDocument;
 
 interface TolerantIndexer
 {

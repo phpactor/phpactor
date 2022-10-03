@@ -2,15 +2,15 @@
 
 namespace Phpactor\ReferenceFinder\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentUri;
+use PHPUnit\Framework\TestCase;
 
 class DefinitionLocationTest extends TestCase
 {
-    const EXAMPLE_URI = '/path/to.php';
-    const EXAMPLE_OFFSET = 1234;
+    public const EXAMPLE_URI = '/path/to.php';
+    public const EXAMPLE_OFFSET = 1234;
 
     public function testValues(): void
     {

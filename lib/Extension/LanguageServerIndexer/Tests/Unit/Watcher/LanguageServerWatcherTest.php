@@ -2,16 +2,16 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Tests\Unit\Watcher;
 
-use PHPUnit\Framework\TestCase;
+use function Amp\Promise\wait;
 use Phpactor\AmpFsWatch\ModifiedFile;
 use Phpactor\Extension\LanguageServerIndexer\Watcher\LanguageServerWatcher;
+use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServerProtocol\DidChangeConfigurationClientCapabilities;
 use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesParams;
 use Phpactor\LanguageServerProtocol\FileChangeType;
 use Phpactor\LanguageServerProtocol\FileEvent;
-use Phpactor\LanguageServer\LanguageServerTesterBuilder;
-use function Amp\Promise\wait;
+use PHPUnit\Framework\TestCase;
 
 class LanguageServerWatcherTest extends TestCase
 {

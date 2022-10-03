@@ -6,8 +6,8 @@ use InvalidArgumentException;
 
 class Request
 {
-    const KEY_ACTION = 'action';
-    const KEY_PARAMETERS = 'parameters';
+    public const KEY_ACTION = 'action';
+    public const KEY_PARAMETERS = 'parameters';
 
     private string $name;
 

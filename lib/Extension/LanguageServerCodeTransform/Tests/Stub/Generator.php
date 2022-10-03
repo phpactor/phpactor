@@ -1,6 +1,6 @@
 <?php
 
-function sprintf():string
+function sprintf(): string
 {
     return '';
 }

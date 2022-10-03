@@ -4,11 +4,11 @@ namespace Phpactor\Extension\LanguageServerHover;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerHover\Handler\HoverHandler;
-use Phpactor\Container\Extension;
+use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerHoverExtension implements Extension

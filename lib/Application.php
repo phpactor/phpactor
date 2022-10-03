@@ -2,19 +2,19 @@
 
 namespace Phpactor;
 
-use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
-use Symfony\Component\Console\Application as SymfonyApplication;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Output\ConsoleOutputInterface;
-use Phpactor\Container\Container;
-use Monolog\Handler\StreamHandler;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
-use Symfony\Component\Console\Input\InputOption;
-use PackageVersions\Versions;
-use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\Console\ConsoleExtension;
 use Exception;
+use Monolog\Handler\StreamHandler;
+use PackageVersions\Versions;
+use Phpactor\Container\Container;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Symfony\Component\Console\Application as SymfonyApplication;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Application extends SymfonyApplication
 {

@@ -2,8 +2,8 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Location;
+use PHPUnit\Framework\TestCase;
 
 class LocationTest extends TestCase
 {

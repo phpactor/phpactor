@@ -3,10 +3,10 @@
 namespace Phpactor\DocblockParser\Tests\Unit\Printer;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\DocblockParser\Lexer;
 use Phpactor\DocblockParser\Parser;
 use Phpactor\DocblockParser\Printer\TestPrinter;
+use PHPUnit\Framework\TestCase;
 
 class PrinterTest extends TestCase
 {

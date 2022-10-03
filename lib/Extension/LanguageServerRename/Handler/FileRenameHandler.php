@@ -2,10 +2,11 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Handler;
 
+use function Amp\call;
 use Amp\Promise;
-use Phpactor\Rename\Model\FileRenamer;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
+use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
+use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServerProtocol\FileOperationFilter;
 use Phpactor\LanguageServerProtocol\FileOperationPattern;
 use Phpactor\LanguageServerProtocol\FileOperationRegistrationOptions;
@@ -13,10 +14,9 @@ use Phpactor\LanguageServerProtocol\FileRename;
 use Phpactor\LanguageServerProtocol\RenameFilesParams;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
-use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
-use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\Rename\Model\FileRenamer;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\TextDocument\TextDocumentUri;
-use function Amp\call;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
 {

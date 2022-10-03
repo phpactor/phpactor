@@ -3,17 +3,17 @@
 namespace Phpactor\Indexer\Model\Query;
 
 use Phpactor\Indexer\Model\Query\Criteria\AndCriteria;
-use Phpactor\Indexer\Model\Query\Criteria\FileAbsolutePathBeginsWith;
-use Phpactor\Indexer\Model\Query\Criteria\IsClassType;
-use Phpactor\Indexer\Model\Query\Criteria\ShortNameContains;
 use Phpactor\Indexer\Model\Query\Criteria\ExactShortName;
+use Phpactor\Indexer\Model\Query\Criteria\FileAbsolutePathBeginsWith;
 use Phpactor\Indexer\Model\Query\Criteria\FqnBeginsWith;
 use Phpactor\Indexer\Model\Query\Criteria\IsClass;
+use Phpactor\Indexer\Model\Query\Criteria\IsClassType;
 use Phpactor\Indexer\Model\Query\Criteria\IsConstant;
 use Phpactor\Indexer\Model\Query\Criteria\IsFunction;
 use Phpactor\Indexer\Model\Query\Criteria\IsMember;
 use Phpactor\Indexer\Model\Query\Criteria\OrCriteria;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
+use Phpactor\Indexer\Model\Query\Criteria\ShortNameContains;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 

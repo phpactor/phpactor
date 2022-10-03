@@ -2,16 +2,16 @@
 
 namespace Phpactor\Extension\ReferenceFinderRpc\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
+use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\Response\ErrorResponse;
 use Phpactor\Extension\Rpc\RpcExtension;
+use PHPUnit\Framework\TestCase;
 
 class ReferenceFinderRpcExtensionTest extends TestCase
 {

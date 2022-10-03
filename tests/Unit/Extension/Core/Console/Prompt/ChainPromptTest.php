@@ -2,9 +2,9 @@
 
 namespace Phpactor\Tests\Unit\Extension\Core\Console\Prompt;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
+use Phpactor\Extension\Core\Console\Prompt\Prompt;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use RuntimeException;

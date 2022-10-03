@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeBuilder;
 
+use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Code;
 
 class SourceBuilder
 {

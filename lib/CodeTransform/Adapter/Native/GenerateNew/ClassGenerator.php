@@ -2,11 +2,11 @@
 
 namespace Phpactor\CodeTransform\Adapter\Native\GenerateNew;
 
-use Phpactor\CodeTransform\Domain\GenerateNew;
-use Phpactor\CodeTransform\Domain\ClassName;
-use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Renderer;
+use Phpactor\CodeTransform\Domain\ClassName;
+use Phpactor\CodeTransform\Domain\GenerateNew;
+use Phpactor\CodeTransform\Domain\SourceCode;
 
 class ClassGenerator implements GenerateNew
 {

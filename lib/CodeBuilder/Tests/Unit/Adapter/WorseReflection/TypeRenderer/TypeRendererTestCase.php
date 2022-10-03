@@ -3,9 +3,9 @@
 namespace Phpactor\CodeBuilder\Tests\Unit\Adapter\WorseReflection\TypeRenderer;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
 use Phpactor\WorseReflection\Core\Type;
+use PHPUnit\Framework\TestCase;
 
 abstract class TypeRendererTestCase extends TestCase
 {

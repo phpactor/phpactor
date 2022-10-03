@@ -2,10 +2,10 @@
 
 namespace Phpactor\FilePathResolver\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\Filter;
 use Phpactor\FilePathResolver\FilteringPathResolver;
 use Phpactor\FilePathResolver\PathResolver;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class FilteringPathResolverTest extends TestCase

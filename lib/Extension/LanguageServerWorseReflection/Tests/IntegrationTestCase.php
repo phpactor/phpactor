@@ -2,17 +2,17 @@
 
 namespace Phpactor\Extension\LanguageServerWorseReflection\Tests;
 
-use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
-use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
-use Phpactor\Extension\ClassToFile\ClassToFileExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\Console\ConsoleExtension;
-use Phpactor\Container\PhpactorContainer;
 use Phpactor\Container\Container;
+use Phpactor\Container\PhpactorContainer;
+use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TestUtils\Workspace;
 

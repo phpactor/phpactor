@@ -2,18 +2,18 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
-use Microsoft\PhpParser\Node\MethodDeclaration;
-use Microsoft\PhpParser\Node\UseVariableName;
-use Phpactor\CodeTransform\Domain\SourceCode;
-use Microsoft\PhpParser\Parser;
-use Microsoft\PhpParser\Node\Expression\Variable;
-use Microsoft\PhpParser\Node\SourceFileNode;
-use Microsoft\PhpParser\Node;
-use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
-use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\FunctionLike;
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Node\UseVariableName;
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
+use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 

@@ -2,13 +2,13 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassName;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class ClassNameTest extends TestCase
 {
-    const CLASS_NAME = 'Foobar';
+    public const CLASS_NAME = 'Foobar';
 
     public function testFromUnknownReturnsClassNameIfGivenClassName(): void
     {
@@ -28,7 +28,7 @@ class ClassNameTest extends TestCase
     public function testFromUnknownInvalid(): void
     {
         $this->expectExceptionMessage('Do not know how to create class');
-        ClassName::fromUnknown(new stdClass);
+        ClassName::fromUnknown(new stdClass());
     }
 
     public function testFromUnknownClassName(): void

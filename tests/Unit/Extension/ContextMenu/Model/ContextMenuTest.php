@@ -2,8 +2,8 @@
 
 namespace Phpactor\Tests\Unit\Extension\ContextMenu\Model;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ContextMenu\Model\ContextMenu;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class ContextMenuTest extends TestCase

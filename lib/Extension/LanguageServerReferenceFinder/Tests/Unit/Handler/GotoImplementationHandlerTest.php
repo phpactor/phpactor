@@ -2,12 +2,12 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Unit\Handler;
 
-use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
-use Phpactor\LanguageServerProtocol\Location as LspLocation;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
+use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoImplementationHandler;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\Location as LspLocation;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
@@ -18,8 +18,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class GotoImplementationHandlerTest extends TestCase
 {
-    const EXAMPLE_URI = 'file:///test.php';
-    const EXAMPLE_TEXT = 'hello';
+    public const EXAMPLE_URI = 'file:///test.php';
+    public const EXAMPLE_TEXT = 'hello';
 
     /**
      * @var ObjectProphecy|ClassImplementationFinder

@@ -2,23 +2,23 @@
 
 namespace Phpactor\Extension\Navigation;
 
+use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Container\Container;
 use Phpactor\Extension\Navigation\Application\Navigator;
-use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Handler\NavigateHandler;
+use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Navigator\PathFinderNavigator;
 use Phpactor\Extension\Navigation\Navigator\WorseReflectionNavigator;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\PathFinder\PathFinder;
 
 class NavigationExtension implements Extension
 {
-    const PATH_FINDER_DESTINATIONS = 'navigator.destinations';
-    const NAVIGATOR_AUTOCREATE = 'navigator.autocreate';
-    const SERVICE_PATH_FINDER = 'navigation.path_finder';
+    public const PATH_FINDER_DESTINATIONS = 'navigator.destinations';
+    public const NAVIGATOR_AUTOCREATE = 'navigator.autocreate';
+    public const SERVICE_PATH_FINDER = 'navigation.path_finder';
 
 
     public function load(ContainerBuilder $container): void

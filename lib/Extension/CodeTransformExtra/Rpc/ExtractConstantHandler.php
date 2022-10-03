@@ -3,21 +3,21 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
 
 class ExtractConstantHandler extends AbstractHandler
 {
-    const NAME = 'extract_constant';
-    const PARAM_CONSTANT_NAME = 'constant_name';
-    const PARAM_OFFSET = 'offset';
-    const PARAM_SOURCE = 'source';
-    const PARAM_PATH = 'path';
-    const PARAM_CONSTANT_NAME_SUGGESTION = 'constant_name_suggestion';
-    const INPUT_LABEL_NAME = 'Constant name: ';
+    public const NAME = 'extract_constant';
+    public const PARAM_CONSTANT_NAME = 'constant_name';
+    public const PARAM_OFFSET = 'offset';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_PATH = 'path';
+    public const PARAM_CONSTANT_NAME_SUGGESTION = 'constant_name_suggestion';
+    public const INPUT_LABEL_NAME = 'Constant name: ';
 
     private ExtractConstant $extractConstant;
 

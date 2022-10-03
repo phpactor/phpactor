@@ -2,14 +2,14 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Reflector\ClassReflector;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
-use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector\MemonizedReflector;
 use Phpactor\WorseReflection\Core\Reflector\ConstantReflector;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class MemonizedClassReflectorTest extends TestCase

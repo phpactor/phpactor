@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\ComposerAutoloader\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ComposerAutoloader\ClassLoaderFactory;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 
 class ClassLoaderFactoryTest extends TestCase

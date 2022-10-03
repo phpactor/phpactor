@@ -2,24 +2,24 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
-use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
-use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Inference\Variable;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\CodeTransform\Domain\Exception\TransformException;
-use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Reflector;
 
 class WorseGenerateMethod implements GenerateMethod
 {
@@ -89,7 +89,7 @@ class WorseGenerateMethod implements GenerateMethod
         Visibility $visibility,
         bool $static,
         ?string $methodName
-    ):  PhpactorSourceCode {
+    ): PhpactorSourceCode {
         $methodName = $methodName ?: $methodCall->name();
 
         $reflectionClass = $methodCall->class();

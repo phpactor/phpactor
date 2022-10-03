@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Name;
+use PHPUnit\Framework\TestCase;
 
 class NameTest extends TestCase
 {

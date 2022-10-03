@@ -8,7 +8,7 @@ use Webmozart\PathUtil\Path;
 
 class Pattern
 {
-    const TOKEN_REGEX = '{<([a-z-]+?)>}';
+    public const TOKEN_REGEX = '{<([a-z-]+?)>}';
 
     private string $regex;
 

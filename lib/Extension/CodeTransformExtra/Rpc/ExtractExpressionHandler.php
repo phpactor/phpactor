@@ -3,21 +3,21 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
 
 class ExtractExpressionHandler extends AbstractHandler
 {
-    const NAME = 'extract_expression';
-    const PARAM_SOURCE = 'source';
-    const PARAM_PATH = 'path';
-    const PARAM_VARIABLE_NAME = 'variable_name';
-    const PARAM_OFFSET_START = 'offset_start';
-    const PARAM_OFFSET_END = 'offset_end';
-    const INPUT_LABEL_NAME = 'Variable name: ';
+    public const NAME = 'extract_expression';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_PATH = 'path';
+    public const PARAM_VARIABLE_NAME = 'variable_name';
+    public const PARAM_OFFSET_START = 'offset_start';
+    public const PARAM_OFFSET_END = 'offset_end';
+    public const INPUT_LABEL_NAME = 'Variable name: ';
 
     private ExtractExpression $extractExpression;
 

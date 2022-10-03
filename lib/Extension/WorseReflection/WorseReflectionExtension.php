@@ -2,9 +2,14 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
-use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
@@ -12,33 +17,28 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProv
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Container\Extension;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Container;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 
 class WorseReflectionExtension implements Extension
 {
-    const SERVICE_REFLECTOR = 'worse_reflection.reflector';
-    const TAG_SOURCE_LOCATOR = 'worse_reflection.source_locator';
-    const TAG_FRAME_WALKER = 'worse_reflection.frame_walker';
-    const TAG_MEMBER_PROVIDER = 'worse_reflection.member_provider';
-    const PARAM_ENABLE_CACHE = 'worse_reflection.enable_cache';
-    const PARAM_STUB_DIR = 'worse_reflection.stub_dir';
-    const PARAM_STUB_CACHE_DIR = 'worse_reflection.cache_dir';
-    const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
-    const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
-    const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
-    const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
-    const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
+    public const SERVICE_REFLECTOR = 'worse_reflection.reflector';
+    public const TAG_SOURCE_LOCATOR = 'worse_reflection.source_locator';
+    public const TAG_FRAME_WALKER = 'worse_reflection.frame_walker';
+    public const TAG_MEMBER_PROVIDER = 'worse_reflection.member_provider';
+    public const PARAM_ENABLE_CACHE = 'worse_reflection.enable_cache';
+    public const PARAM_STUB_DIR = 'worse_reflection.stub_dir';
+    public const PARAM_STUB_CACHE_DIR = 'worse_reflection.cache_dir';
+    public const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
+    public const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
+    public const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
+    public const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
+    public const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
 
     public function configure(Resolver $schema): void
     {

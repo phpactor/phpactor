@@ -5,12 +5,12 @@ namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Model;
 use Generator;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanConfig;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
+use Phpactor\Extension\LanguageServerPhpstan\Tests\IntegrationTestCase;
+use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServerProtocol\Diagnostic;
 use Psr\Log\NullLogger;
-use Phpactor\Extension\LanguageServerPhpstan\Tests\IntegrationTestCase;
 
 class PhpstanProcessTest extends IntegrationTestCase
 {

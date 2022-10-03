@@ -23,10 +23,10 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ContextMenuHandlerTest extends HandlerTestCase
 {
-    const VARIABLE_ACTION = 'do_something';
-    const SOURCE = '<?php $hello = "world"; echo $hello;';
-    const FOUND_OFFSET = 10;
-    const ORIGINAL_OFFSET = 8;
+    public const VARIABLE_ACTION = 'do_something';
+    public const SOURCE = '<?php $hello = "world"; echo $hello;';
+    public const FOUND_OFFSET = 10;
+    public const ORIGINAL_OFFSET = 8;
 
     private Reflector $reflector;
 

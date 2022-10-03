@@ -4,8 +4,8 @@ namespace Phpactor\Filesystem\Tests\Adapter\Composer;
 
 use Phpactor\Filesystem\Adapter\Composer\ComposerFilesystem;
 use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
 use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Tests\Adapter\AdapterTestCase;
 
 class ComposerFilesystemTest extends AdapterTestCase
 {

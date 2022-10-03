@@ -4,10 +4,10 @@ namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser;
 
 use Generator;
 use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
+use PHPUnit\Framework\TestCase;
 
 class CompletionContextTest extends TestCase
 {

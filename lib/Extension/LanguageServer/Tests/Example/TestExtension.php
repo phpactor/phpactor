@@ -5,21 +5,21 @@ namespace Phpactor\Extension\LanguageServer\Tests\Example;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
-use Phpactor\LanguageServerProtocol\Command;
-use Phpactor\LanguageServerProtocol\CodeAction;
-use Phpactor\LanguageServerProtocol\MessageType;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
-use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\Command as CoreCommand;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Service\ServiceProvider;
+use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\Command;
+use Phpactor\LanguageServerProtocol\MessageType;
+use Phpactor\LanguageServerProtocol\Range;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\MapResolver\Resolver;
 
 class TestExtension implements Extension
@@ -27,7 +27,7 @@ class TestExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.handler', function (Container $container) {
-            return new class implements Handler {
+            return new class () implements Handler {
                 public function methods(): array
                 {
                     return ['test' => 'test'];
@@ -44,7 +44,7 @@ class TestExtension implements Extension
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
 
         $container->register('test.service', function (Container $container) {
-            return new class($container->get(ClientApi::class)) implements ServiceProvider {
+            return new class ($container->get(ClientApi::class)) implements ServiceProvider {
                 private ClientApi $api;
 
                 public function __construct(ClientApi $api)
@@ -69,7 +69,7 @@ class TestExtension implements Extension
         }, [ LanguageServerExtension::TAG_SERVICE_PROVIDER => []]);
 
         $container->register('test.command', function (Container $container) {
-            return new class implements CoreCommand {
+            return new class () implements CoreCommand {
                 public function __invoke(string $text): Promise
                 {
                     return new Success($text);
@@ -82,7 +82,7 @@ class TestExtension implements Extension
         ]);
 
         $container->register('test.code_action_provider', function (Container $container) {
-            return new class implements CodeActionProvider {
+            return new class () implements CodeActionProvider {
                 public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
                 {
                     return new Success([

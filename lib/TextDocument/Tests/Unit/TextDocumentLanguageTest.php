@@ -2,8 +2,8 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentLanguage;
+use PHPUnit\Framework\TestCase;
 
 class TextDocumentLanguageTest extends TestCase
 {

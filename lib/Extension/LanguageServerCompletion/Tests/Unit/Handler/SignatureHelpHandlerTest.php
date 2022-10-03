@@ -2,21 +2,21 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit\Handler;
 
-use Phpactor\LanguageServerProtocol\SignatureHelp as LspSignatureHelp;
-use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\SignatureHelp;
 use Phpactor\Completion\Core\SignatureHelper;
 use Phpactor\Extension\LanguageServerCompletion\Handler\SignatureHelpHandler;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\SignatureHelp as LspSignatureHelp;
+use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use PHPUnit\Framework\TestCase;
 
 class SignatureHelpHandlerTest extends TestCase
 {
-    const IDENTIFIER = '/test';
+    public const IDENTIFIER = '/test';
 
     public function testHandleHelpers(): void
     {
@@ -44,7 +44,7 @@ class SignatureHelpHandlerTest extends TestCase
 
     private function createHelper(): SignatureHelper
     {
-        return new class() implements SignatureHelper {
+        return new class () implements SignatureHelper {
             public function signatureHelp(TextDocument $textDocument, ByteOffset $offset): SignatureHelp
             {
                 $help = new SignatureHelp([], 0);

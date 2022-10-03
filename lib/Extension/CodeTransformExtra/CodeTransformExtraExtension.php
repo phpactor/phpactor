@@ -3,25 +3,18 @@
 namespace Phpactor\Extension\CodeTransformExtra;
 
 use Phpactor\CodeTransform\CodeTransform;
-use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
-use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
-use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
+use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
+use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
+use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
-use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\Extension\Console\ConsoleExtension;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\CodeTransformExtra\Application\ClassInflect;
 use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 use Phpactor\Extension\CodeTransformExtra\Application\Transformer;
@@ -35,8 +28,15 @@ use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractMethodHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateAccessorHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateMethodHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ImportClassHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ImportMissingClassesHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\OverrideMethodHandler;
 use Phpactor\Extension\CodeTransformExtra\Rpc\RenameVariableHandler;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\MapResolver\Resolver;
 
 class CodeTransformExtraExtension implements Extension
 {

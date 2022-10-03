@@ -18,8 +18,8 @@ use Prophecy\PhpUnit\ProphecyTrait;
 class ImportMissingClassesHandlerTest extends IntegrationTestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_PATH = '/example/path';
-    const EXAMPLE_SOURCE = 'example-source';
+    public const EXAMPLE_PATH = '/example/path';
+    public const EXAMPLE_SOURCE = 'example-source';
 
     private $requestHandler;
 

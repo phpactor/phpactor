@@ -2,11 +2,11 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
 use Phpactor\Name\QualifiedName;
 use Phpactor\TextDocument\ByteOffset;
+use PHPUnit\Framework\TestCase;
 
 class NameWithByteOffsetsTest extends TestCase
 {

@@ -5,8 +5,8 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
+use Phpactor\CodeBuilder\Domain\Renderer;
 use RuntimeException;
 
 class ClassMethodUpdater extends AbstractMethodUpdater

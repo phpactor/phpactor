@@ -13,11 +13,11 @@ use Phpactor\Completion\Core\LabelFormatter;
 use Phpactor\Completion\Core\LabelFormatter\HelpfulLabelFormatter;
 use Phpactor\Completion\Core\SuggestionDocumentor;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
-use Phpactor\Container\Extension;
+use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Container\Container;
 
 class CompletionExtension implements Extension
 {

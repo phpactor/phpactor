@@ -4,10 +4,10 @@ namespace Phpactor\CodeBuilder\Adapter\Twig;
 
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
-use Phpactor\WorseReflection\Core\Type as PhpactorType;
-use Twig\TwigFilter;
-use Twig\Extension\AbstractExtension;
 use Phpactor\CodeBuilder\Util\TextFormat;
+use Phpactor\WorseReflection\Core\Type as PhpactorType;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 class TwigExtension extends AbstractExtension

@@ -3,9 +3,9 @@
 namespace Phpactor\TextDocument\Tests\Unit\Util;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\Util\LineColFromOffset;
+use PHPUnit\Framework\TestCase;
 
 class LineColFromOffsetTest extends TestCase
 {

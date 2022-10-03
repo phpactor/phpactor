@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServer\Middleware;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\LanguageServer\Core\Middleware\Middleware;
 use Phpactor\LanguageServer\Core\Middleware\RequestHandler;
@@ -9,7 +10,6 @@ use Phpactor\LanguageServer\Core\Rpc\Message;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
 use Psr\Log\LoggerInterface;
-use function Amp\call;
 
 class ProfilerMiddleware implements Middleware
 {

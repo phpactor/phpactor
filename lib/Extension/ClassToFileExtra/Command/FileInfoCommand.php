@@ -2,13 +2,13 @@
 
 namespace Phpactor\Extension\ClassToFileExtra\Command;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
+use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Handler\FormatHandler;
-use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class FileInfoCommand extends Command
 {

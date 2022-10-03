@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\Response;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Rpc\Response\ErrorResponse;
 use Exception;
+use Phpactor\Extension\Rpc\Response\ErrorResponse;
+use PHPUnit\Framework\TestCase;
 
 class ErrorResponseTest extends TestCase
 {

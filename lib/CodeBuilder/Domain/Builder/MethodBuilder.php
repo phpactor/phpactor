@@ -2,14 +2,14 @@
 
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
+use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
+use Phpactor\CodeBuilder\Domain\Prototype\Docblock;
+use Phpactor\CodeBuilder\Domain\Prototype\Method;
+use Phpactor\CodeBuilder\Domain\Prototype\Parameters;
+use Phpactor\CodeBuilder\Domain\Prototype\ReturnType;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
-use Phpactor\CodeBuilder\Domain\Prototype\Parameters;
-use Phpactor\CodeBuilder\Domain\Prototype\Method;
-use Phpactor\CodeBuilder\Domain\Prototype\ReturnType;
-use Phpactor\CodeBuilder\Domain\Prototype\Docblock;
-use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
 
 class MethodBuilder extends AbstractBuilder implements NamedBuilder
 {

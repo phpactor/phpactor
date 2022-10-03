@@ -2,14 +2,14 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Core\Application\CacheClear;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\MapResolver\Resolver;
 
 class CacheClearHandler implements Handler
 {
-    const NAME = 'cache_clear';
+    public const NAME = 'cache_clear';
 
     private CacheClear $cacheClear;
 

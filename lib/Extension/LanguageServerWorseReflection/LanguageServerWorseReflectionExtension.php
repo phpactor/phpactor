@@ -5,18 +5,18 @@ namespace Phpactor\Extension\LanguageServerWorseReflection;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider\WorseDiagnosticProvider;
 use Phpactor\Extension\LanguageServerWorseReflection\SourceLocator\WorkspaceSourceLocator;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndexListener;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class LanguageServerWorseReflectionExtension implements Extension
 {
-    const PARAM_UPDATE_INTERVAL = 'language_server_worse_reflection.workspace_index.update_interval';
+    public const PARAM_UPDATE_INTERVAL = 'language_server_worse_reflection.workspace_index.update_interval';
 
 
     public function load(ContainerBuilder $container): void

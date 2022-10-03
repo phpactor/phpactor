@@ -2,20 +2,20 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
 use Phpactor\Extension\ClassMover\Application\ClassMover;
+use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\CloseFileResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Response\CloseFileResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
-use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\MapResolver\Resolver;
 
 class ClassMoveHandler extends AbstractHandler
 {
-    const NAME = 'move_class';
+    public const NAME = 'move_class';
     private const PARAM_SOURCE_PATH = 'source_path';
     private const PARAM_DEST_PATH = 'dest_path';
     private const PARAM_CONFIRMED = 'confirmed';

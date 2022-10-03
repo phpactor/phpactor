@@ -2,8 +2,8 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Model\Record;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class MemberRecordTest extends TestCase

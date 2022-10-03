@@ -2,12 +2,12 @@
 
 namespace Phpactor\Extension\LanguageServerWorseReflection\Tests\Benchmark;
 
-use PhpBench\Benchmark\Metadata\Annotations\OutputTimeUnit;
-use PhpBench\Benchmark\Metadata\Annotations\Revs;
+use Generator;
 use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
+use PhpBench\Benchmark\Metadata\Annotations\OutputTimeUnit;
 use PhpBench\Benchmark\Metadata\Annotations\ParamProviders;
-use Generator;
+use PhpBench\Benchmark\Metadata\Annotations\Revs;
 
 /**
  * @BeforeMethods({"setUp"})

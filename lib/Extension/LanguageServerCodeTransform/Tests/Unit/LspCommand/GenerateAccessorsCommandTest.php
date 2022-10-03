@@ -3,15 +3,15 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
-use Phpactor\LanguageServer\LanguageServerTesterBuilder;
-use Phpactor\LanguageServer\Test\LanguageServerTester;
-use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
+use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
+use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use PHPUnit\Framework\TestCase;
@@ -22,9 +22,9 @@ use Prophecy\Prophecy\ObjectProphecy;
 class GenerateAccessorsCommandTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_SOURCE = '<?php ';
-    const EXAMPLE_URI = 'file:///file.php';
-    const EXAMPLE_OFFSET = 5;
+    public const EXAMPLE_SOURCE = '<?php ';
+    public const EXAMPLE_URI = 'file:///file.php';
+    public const EXAMPLE_OFFSET = 5;
 
     public function testSuccessfulCall(): void
     {

@@ -2,14 +2,14 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 
 class TextDocumentBuilderTest extends TestCase
 {
-    const EXAMPLE_TEXT = 'hello world';
-    const EXAMPLE_URI = 'file:///path/to';
+    public const EXAMPLE_TEXT = 'hello world';
+    public const EXAMPLE_URI = 'file:///path/to';
 
     public function testCreate(): void
     {

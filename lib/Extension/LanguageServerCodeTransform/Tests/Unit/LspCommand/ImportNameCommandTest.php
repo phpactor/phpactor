@@ -5,8 +5,8 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
-use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
+use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Server\RpcClient\TestRpcClient;
@@ -19,10 +19,10 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ImportNameCommandTest extends TestCase
 {
-    const EXAMPLE_CONTENT = 'hello this is some text';
-    const EXAMPLE_PATH = '/foobar.php';
-    const EXAMPLE_OFFSET = 12;
-    const EXAMPLE_PATH_URI = 'file:///foobar.php';
+    public const EXAMPLE_CONTENT = 'hello this is some text';
+    public const EXAMPLE_PATH = '/foobar.php';
+    public const EXAMPLE_OFFSET = 12;
+    public const EXAMPLE_PATH_URI = 'file:///foobar.php';
 
     private Workspace $workspace;
 

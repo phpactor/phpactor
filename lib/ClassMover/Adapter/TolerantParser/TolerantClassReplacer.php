@@ -2,12 +2,12 @@
 
 namespace Phpactor\ClassMover\Adapter\TolerantParser;
 
-use Phpactor\ClassMover\Domain\Name\QualifiedName;
-use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
-use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
 use Phpactor\ClassMover\Domain\ClassReplacer;
-use Phpactor\ClassMover\Domain\Reference\ImportedNameReference;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\Name\QualifiedName;
 use Phpactor\ClassMover\Domain\Reference\ClassReference;
+use Phpactor\ClassMover\Domain\Reference\ImportedNameReference;
+use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;

@@ -2,8 +2,9 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Provider;
 
+use function Amp\delay;
+use function Amp\Promise\wait;
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\TestLinter;
 use Phpactor\Extension\LanguageServerPhpstan\Provider\PhpstanDiagnosticProvider;
 use Phpactor\Extension\LanguageServerPhpstan\Tests\Util\DiagnosticBuilder;
@@ -11,8 +12,7 @@ use Phpactor\LanguageServer\Event\TextDocumentUpdated;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use function Amp\Promise\wait;
-use function Amp\delay;
+use PHPUnit\Framework\TestCase;
 
 class PhpstanDiagnosticProviderTest extends TestCase
 {

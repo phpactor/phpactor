@@ -5,8 +5,8 @@ namespace Phpactor\Extension\LanguageServerPsalm\DiagnosticProvider;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
 
 class PsalmDiagnosticProvider implements DiagnosticsProvider
 {

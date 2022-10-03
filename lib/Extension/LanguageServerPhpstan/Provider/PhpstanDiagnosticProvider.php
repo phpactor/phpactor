@@ -5,8 +5,8 @@ namespace Phpactor\Extension\LanguageServerPhpstan\Provider;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
 
 class PhpstanDiagnosticProvider implements DiagnosticsProvider
 {

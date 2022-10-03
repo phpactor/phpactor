@@ -2,18 +2,18 @@
 
 namespace Phpactor\Extension\ClassMover\Rpc;
 
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
-use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\MapResolver\Resolver;
 
 class ClassCopyHandler extends AbstractHandler
 {
-    const NAME = 'copy_class';
-    const PARAM_SOURCE_PATH = 'source_path';
-    const PARAM_DEST_PATH = 'dest_path';
+    public const NAME = 'copy_class';
+    public const PARAM_SOURCE_PATH = 'source_path';
+    public const PARAM_DEST_PATH = 'dest_path';
 
     private ClassCopy $classCopy;
 

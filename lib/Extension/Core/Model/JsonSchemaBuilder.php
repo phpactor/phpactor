@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\Core\Model;
 
+use function json_encode;
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Definition;
 use Phpactor\MapResolver\Resolver;
-use function json_encode;
 
 class JsonSchemaBuilder
 {

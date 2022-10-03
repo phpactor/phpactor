@@ -18,7 +18,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class DocblockCompletor implements TolerantCompletor
 {
-    const SUPPORTED_TAGS = [
+    public const SUPPORTED_TAGS = [
         '@property',
         '@var',
         '@param',
@@ -30,10 +30,10 @@ class DocblockCompletor implements TolerantCompletor
         '@template',
         '@template-extends',
     ];
-    const TAGS_WITH_VAR = [
+    public const TAGS_WITH_VAR = [
         '@param',
     ];
-    const TAGS_WITH_TYPE_ARG = [
+    public const TAGS_WITH_TYPE_ARG = [
         '@param',
         '@var',
         '@return',

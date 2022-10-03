@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\ClassToFileExtra\Application;
 
-use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
+use Phpactor\Filesystem\Domain\Filesystem;
 
 class FileInfo
 {

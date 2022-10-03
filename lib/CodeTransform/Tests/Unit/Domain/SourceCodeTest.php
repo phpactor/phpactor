@@ -2,16 +2,16 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\SourceCode;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class SourceCodeTest extends TestCase
 {
-    const PATH = '/bar';
-    const SOURCE = 'asd';
-    const OTHER_SOURCE = 'other source';
-    const OTHER_PATH = '/other/path.php';
+    public const PATH = '/bar';
+    public const SOURCE = 'asd';
+    public const OTHER_SOURCE = 'other source';
+    public const OTHER_PATH = '/other/path.php';
 
     public function testPath(): void
     {

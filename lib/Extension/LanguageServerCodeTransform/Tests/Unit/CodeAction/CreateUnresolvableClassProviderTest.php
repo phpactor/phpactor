@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
 use Amp\CancellationTokenSource;
+use function Amp\Promise\wait;
 use Closure;
 use Generator;
 use Phpactor\ClassFileConverter\Domain\ClassName;
@@ -12,16 +13,15 @@ use Phpactor\ClassFileConverter\Domain\FilePathCandidates;
 use Phpactor\CodeTransform\Domain\GenerateNew;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateUnresolvableClassProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
-use Prophecy\PhpUnit\ProphecyTrait;
-use function Amp\Promise\wait;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateUnresolvableClassProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class CreateUnresolvableClassProviderTest extends IntegrationTestCase
 {
@@ -53,7 +53,7 @@ class CreateUnresolvableClassProviderTest extends IntegrationTestCase
         $actions = wait($provider->provideActionsFor(
             ProtocolFactory::textDocumentItem('file://foo', $source),
             RangeConverter::toLspRange(ByteOffsetRange::fromInts((int)$start, (int)$end), $source),
-            (new CancellationTokenSource)->getToken(),
+            (new CancellationTokenSource())->getToken(),
         ));
         $assertion(...$actions);
     }

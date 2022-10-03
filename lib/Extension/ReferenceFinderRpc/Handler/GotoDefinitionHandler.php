@@ -2,21 +2,21 @@
 
 namespace Phpactor\Extension\ReferenceFinderRpc\Handler;
 
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class GotoDefinitionHandler implements Handler
 {
-    const NAME = 'goto_definition';
-    const PARAM_OFFSET = 'offset';
-    const PARAM_SOURCE = 'source';
-    const PARAM_PATH = 'path';
-    const PARAM_LANGUAGE = 'language';
-    const PARAM_TARGET = 'target';
+    public const NAME = 'goto_definition';
+    public const PARAM_OFFSET = 'offset';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_PATH = 'path';
+    public const PARAM_LANGUAGE = 'language';
+    public const PARAM_TARGET = 'target';
 
     private DefinitionLocator $locator;
 

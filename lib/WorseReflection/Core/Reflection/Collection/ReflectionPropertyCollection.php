@@ -2,15 +2,14 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as PhpactorReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as PhpactorReflectionProperty;
 
 /**
  * @extends HomogeneousReflectionMemberCollection<PhpactorReflectionProperty>
  */
 final class ReflectionPropertyCollection extends HomogeneousReflectionMemberCollection
 {
-
     /**
      * @param PhpactorReflectionProperty[] $properties
      */

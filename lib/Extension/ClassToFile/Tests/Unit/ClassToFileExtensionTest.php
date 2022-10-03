@@ -2,15 +2,15 @@
 
 namespace Phpactor\Extension\ClassToFile\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFileFileToClass;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
-use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @isolateProcess

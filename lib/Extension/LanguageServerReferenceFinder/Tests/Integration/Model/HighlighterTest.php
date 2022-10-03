@@ -5,12 +5,12 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Integration\Mod
 use Closure;
 use Generator;
 use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlights;
 use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
+use PHPUnit\Framework\TestCase;
 
 class HighlighterTest extends TestCase
 {

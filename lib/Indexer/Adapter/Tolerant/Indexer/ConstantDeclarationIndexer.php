@@ -11,9 +11,9 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ConstDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
+use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\Record\ConstantRecord;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\Indexer\Model\Index;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 

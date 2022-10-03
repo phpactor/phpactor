@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\Native\GenerateNew;
 
-use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
-use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
+use Phpactor\CodeTransform\Domain\ClassName;
+use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 
 class ClassGeneratorTest extends AdapterTestCase
 {

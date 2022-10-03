@@ -3,13 +3,13 @@
 namespace Phpactor\Extension\WorseReflectionAnalyse;
 
 use Phpactor\Container\Container;
-use Phpactor\Extension\Console\ConsoleExtension;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\Command\AnalyseCommand;
 use Phpactor\Extension\WorseReflectionAnalyse\Model\Analyser;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
 class WorseReflectionAnalyseExtension implements Extension

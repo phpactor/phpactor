@@ -3,10 +3,10 @@
 namespace Phpactor\TextDocument\Tests\Unit\Util;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\LineColRange;
 use Phpactor\TextDocument\Util\LineColRangeForLine;
+use PHPUnit\Framework\TestCase;
 
 class LineColRangeForLineTest extends TestCase
 {

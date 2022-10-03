@@ -2,16 +2,16 @@
 
 namespace Phpactor\Extension\WorseReflectionAnalyse\Tests\Command;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\Command\AnalyseCommand;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 

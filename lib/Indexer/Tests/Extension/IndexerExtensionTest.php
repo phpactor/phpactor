@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Extension;
 
+use function iterator_to_array;
 use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\AmpFsWatch\Watcher\Null\NullWatcher;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
@@ -20,7 +21,6 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
-use function iterator_to_array;
 
 class IndexerExtensionTest extends IntegrationTestCase
 {

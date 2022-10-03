@@ -2,14 +2,14 @@
 
 namespace Phpactor\Tests;
 
-use Symfony\Component\Console\Output\BufferedOutput;
-use Symfony\Component\Process\Process;
-use Symfony\Component\Filesystem\Filesystem;
-use PHPUnit\Framework\TestCase;
-use Phpactor\TestUtils\Workspace;
-use Symfony\Component\Console\Input\ArrayInput;
 use Phpactor\Container\Container;
 use Phpactor\Phpactor;
+use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Process\Process;
 
 abstract class IntegrationTestCase extends TestCase
 {

@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\LanguageServer\Listener;
 
+use function Amp\asyncCall;
+use function Amp\delay;
 use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
 use Phpactor\LanguageServer\Event\WillShutdown;
 use Psr\EventDispatcher\ListenerProviderInterface;
-use function Amp\asyncCall;
-use function Amp\delay;
 
 class SelfDestructListener implements ListenerProviderInterface
 {

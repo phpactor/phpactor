@@ -2,9 +2,9 @@
 
 namespace Phpactor\Indexer;
 
-use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFileListProvider;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
+use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Indexer\Adapter\Filesystem\FilesystemFileListProvider;
 use Phpactor\Indexer\Adapter\Php\FileSearchIndex;
 use Phpactor\Indexer\Adapter\Php\Serialized\FileRepository;
@@ -15,19 +15,19 @@ use Phpactor\Indexer\Model\FileListProvider;
 use Phpactor\Indexer\Model\FileListProvider\ChainFileListProvider;
 use Phpactor\Indexer\Model\FileListProvider\DirtyFileListProvider;
 use Phpactor\Indexer\Model\Index;
-use Phpactor\Indexer\Model\IndexAccess;
 use Phpactor\Indexer\Model\Index\SearchAwareIndex;
-use Phpactor\Indexer\Model\RealIndexAgent;
+use Phpactor\Indexer\Model\IndexAccess;
 use Phpactor\Indexer\Model\IndexBuilder;
-use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\Indexer;
+use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\Indexer\Model\RealIndexAgent;
+use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\Indexer\Model\Record\ConstantRecord;
+use Phpactor\Indexer\Model\Record\FunctionRecord;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer\NullRecordReferenceEnhancer;
 use Phpactor\Indexer\Model\RecordSerializer;
 use Phpactor\Indexer\Model\RecordSerializer\PhpSerializer;
-use Phpactor\Indexer\Model\Record\ClassRecord;
-use Phpactor\Indexer\Model\Record\ConstantRecord;
-use Phpactor\Indexer\Model\Record\FunctionRecord;
 use Phpactor\Indexer\Model\SearchClient\HydratingSearchClient;
 use Phpactor\Indexer\Model\SearchIndex;
 use Phpactor\Indexer\Model\SearchIndex\FilteredSearchIndex;

@@ -3,20 +3,20 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
+use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\CodeBuilder\Domain\Code;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
-use Phpactor\CodeTransform\Domain\Exception\TransformException;
-use Phpactor\CodeBuilder\Domain\BuilderFactory;
 
 class WorseOverrideMethod implements OverrideMethod
 {

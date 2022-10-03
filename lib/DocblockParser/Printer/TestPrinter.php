@@ -4,8 +4,8 @@ namespace Phpactor\DocblockParser\Printer;
 
 use Phpactor\DocblockParser\Ast\Element;
 use Phpactor\DocblockParser\Ast\Node;
-use Phpactor\DocblockParser\Printer;
 use Phpactor\DocblockParser\Ast\Token;
+use Phpactor\DocblockParser\Printer;
 
 final class TestPrinter implements Printer
 {

@@ -3,8 +3,8 @@
 namespace Phpactor\Rename\Tests\Adapter\ClassToFile;
 
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleClassToFile;
-use Phpactor\Rename\Adapter\ClassToFile\ClassToFileNameToUriConverter;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
+use Phpactor\Rename\Adapter\ClassToFile\ClassToFileNameToUriConverter;
 use Phpactor\TextDocument\TextDocumentUri;
 
 class ClassToFileNameToUriConverterTest extends IntegrationTestCase

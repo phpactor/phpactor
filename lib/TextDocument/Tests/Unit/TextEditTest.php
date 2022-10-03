@@ -3,9 +3,9 @@
 namespace Phpactor\TextDocument\Tests\Unit;
 
 use OutOfRangeException;
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdit;
+use PHPUnit\Framework\TestCase;
 
 class TextEditTest extends TestCase
 {

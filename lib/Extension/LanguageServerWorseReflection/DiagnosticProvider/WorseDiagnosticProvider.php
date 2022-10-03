@@ -2,17 +2,17 @@
 
 namespace Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\Promise;
 use LanguageServerProtocol\DiagnosticSeverity as LanguageServerProtocolDiagnosticSeverity;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
-use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\Range;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Reflector;
-use function Amp\call;
 
 class WorseDiagnosticProvider implements DiagnosticsProvider
 {

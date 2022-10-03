@@ -4,8 +4,8 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer;
 
 use Generator;
 use Phpactor\Indexer\Model\Indexer;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;

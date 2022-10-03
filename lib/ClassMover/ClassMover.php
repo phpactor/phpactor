@@ -2,11 +2,11 @@
 
 namespace Phpactor\ClassMover;
 
-use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
-use Phpactor\ClassMover\Domain\ClassFinder;
-use Phpactor\ClassMover\Domain\ClassReplacer;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassReplacer;
+use Phpactor\ClassMover\Domain\ClassFinder;
+use Phpactor\ClassMover\Domain\ClassReplacer;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\TextDocument\TextDocumentBuilder;

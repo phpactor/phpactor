@@ -4,17 +4,17 @@ namespace Phpactor\Completion\Tests\Unit;
 
 use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
-use Phpactor\Completion\Core\Suggestion;
 
 class CompletorTest extends TestCase
 {
-    const EXAMPLE_SOURCE = 'test source';
-    const EXAMPLE_OFFSET = 1234;
+    public const EXAMPLE_SOURCE = 'test source';
+    public const EXAMPLE_OFFSET = 1234;
 
     /**
      * @var ObjectProphecy|CouldComplete

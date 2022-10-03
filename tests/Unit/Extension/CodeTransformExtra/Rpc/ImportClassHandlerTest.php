@@ -2,20 +2,20 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
-use Phpactor\Extension\Rpc\Response\CollectionResponse;
-use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\CodeTransform\Domain\Refactor\ImportName;
-use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
-use Phpactor\Extension\CodeTransformExtra\Rpc\ImportClassHandler;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Response\Input\ListInput;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\AliasAlreadyUsedException;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameAlreadyImportedException;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
+use Phpactor\CodeTransform\Domain\Refactor\ImportName;
+use Phpactor\CodeTransform\Domain\SourceCode;
+use Phpactor\Extension\CodeTransformExtra\Rpc\ImportClassHandler;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response\CollectionResponse;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\SourceCodeFilesystemExtra\SourceCodeFilestem\Application\ClassSearch;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
@@ -23,11 +23,11 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ImportClassHandlerTest extends HandlerTestCase
 {
-    const TEST_NAME = 'Foo';
-    const TEST_OFFSET = 7;
-    const TEST_PATH = '/path/to';
-    const TEST_SOURCE = '<?php Foo';
-    const TEST_ALIAS = 'Alias';
+    public const TEST_NAME = 'Foo';
+    public const TEST_OFFSET = 7;
+    public const TEST_PATH = '/path/to';
+    public const TEST_SOURCE = '<?php Foo';
+    public const TEST_ALIAS = 'Alias';
 
     private ObjectProphecy $importName;
 

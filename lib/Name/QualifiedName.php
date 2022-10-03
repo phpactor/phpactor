@@ -6,7 +6,7 @@ use Phpactor\Name\Exception\InvalidName;
 
 final class QualifiedName implements Name
 {
-    const NAMESPACE_SEPARATOR = '\\';
+    public const NAMESPACE_SEPARATOR = '\\';
 
     private array $parts;
 

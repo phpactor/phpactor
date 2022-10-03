@@ -2,20 +2,20 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Command\Logger;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\TextDocument\TextDocumentBuilder;
-use Symfony\Component\Console\Output\BufferedOutput;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\ClassMover\Domain\Name\Namespace_;
+use Phpactor\ClassMover\Domain\Name\QualifiedName;
+use Phpactor\ClassMover\Domain\Reference\ClassReference;
+use Phpactor\ClassMover\Domain\Reference\ImportedNameReference;
+use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
+use Phpactor\ClassMover\Domain\Reference\NamespaceReference;
+use Phpactor\ClassMover\Domain\Reference\Position;
+use Phpactor\ClassMover\FoundReferences;
 use Phpactor\Extension\ClassMover\Command\Logger\SymfonyConsoleMoveLogger;
 use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\ClassMover\FoundReferences;
-use Phpactor\ClassMover\Domain\Reference\NamespaceReference;
-use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
-use Phpactor\ClassMover\Domain\Reference\ClassReference;
-use Phpactor\ClassMover\Domain\Name\QualifiedName;
-use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
-use Phpactor\ClassMover\Domain\Reference\ImportedNameReference;
-use Phpactor\ClassMover\Domain\Name\Namespace_;
-use Phpactor\ClassMover\Domain\Reference\Position;
+use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class SymfonyConsoleMoveLoggerTest extends TestCase
 {

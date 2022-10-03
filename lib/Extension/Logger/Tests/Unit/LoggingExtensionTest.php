@@ -7,13 +7,13 @@ use Monolog\Handler\FingersCrossedHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\MapResolver\Resolver;
+use PHPUnit\Framework\TestCase;
 
 class LoggingExtensionTest extends TestCase
 {

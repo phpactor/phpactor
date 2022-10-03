@@ -2,21 +2,21 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Unit;
 
-use Phpactor\Extension\LanguageServerReferenceFinder\Tests\Extension\TestIndexerExtension;
-use Phpactor\LanguageServerProtocol\ReferenceContext;
-use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\LanguageServerReferenceFinder\Tests\Extension\TestIndexerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\ReferenceContext;
+use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
 use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
 use function Safe\file_get_contents;
 
 class LanguageServerReferenceFinderExtensionTest extends TestCase

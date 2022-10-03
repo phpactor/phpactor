@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
-use Phpactor\CodeBuilder\Domain\Prototype\Type;
-use Phpactor\CodeBuilder\Domain\Prototype\Methods;
 use Phpactor\CodeBuilder\Domain\Prototype\ExtendsInterfaces;
 use Phpactor\CodeBuilder\Domain\Prototype\InterfacePrototype;
+use Phpactor\CodeBuilder\Domain\Prototype\Methods;
+use Phpactor\CodeBuilder\Domain\Prototype\Type;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 
 class InterfaceBuilder extends ClassLikeBuilder

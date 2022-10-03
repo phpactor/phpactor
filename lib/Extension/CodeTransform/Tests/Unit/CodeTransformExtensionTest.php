@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\CodeTransform\Tests\Unit;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\Container\Container;
@@ -11,10 +10,11 @@ use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Php\PhpExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use PHPUnit\Framework\TestCase;
 
 class CodeTransformExtensionTest extends TestCase
 {

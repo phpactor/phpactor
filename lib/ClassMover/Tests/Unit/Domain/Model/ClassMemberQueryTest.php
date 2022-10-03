@@ -2,8 +2,8 @@
 
 namespace Phpactor\ClassMover\Tests\Unit\Domain\Model;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use PHPUnit\Framework\TestCase;
 
 class ClassMemberQueryTest extends TestCase
 {

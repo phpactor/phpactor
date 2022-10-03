@@ -2,15 +2,14 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder;
 
-use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Generator;
+use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerRename\Tests\Unit\PredefiniedImplementationFinder;
 use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
+use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\Rename\Adapter\ReferenceFinder\MemberRenamer;
 use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\Rename\Model\ReferenceFinder\PredefinedReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -20,10 +19,11 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use PHPUnit\Framework\TestCase;
 
 class MemberRenamerTest extends TestCase
 {
-    const EXAMPLE_DOCUMENT_URI = 'file:///test/Class1.php';
+    public const EXAMPLE_DOCUMENT_URI = 'file:///test/Class1.php';
 
     /**
      * @dataProvider provideGetRenameRange

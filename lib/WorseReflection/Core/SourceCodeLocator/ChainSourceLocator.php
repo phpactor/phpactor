@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
-use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCodeLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
+use Phpactor\WorseReflection\Core\Name;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 

@@ -1,12 +1,17 @@
 <?php
+
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser;
 
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
-use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Parser;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\ClassUpdater;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\InterfaceUpdater;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\TraitUpdater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\UseStatementUpdater;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\NamespaceName;
@@ -15,10 +20,6 @@ use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Util\TextFormat;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\ClassUpdater;
-use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\InterfaceUpdater;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\TraitUpdater;
 use Phpactor\TextDocument\TextEdits;
 
 class TolerantUpdater implements Updater

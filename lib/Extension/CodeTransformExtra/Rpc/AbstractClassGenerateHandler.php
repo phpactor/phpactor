@@ -3,24 +3,24 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
-use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Request;
-use Phpactor\Extension\CodeTransformExtra\Application\Exception\FileAlreadyExists;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\CodeTransformExtra\Application\AbstractClassGenerator;
+use Phpactor\Extension\CodeTransformExtra\Application\Exception\FileAlreadyExists;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
-    const PARAM_CURRENT_PATH = 'current_path';
-    const PARAM_NEW_PATH = 'new_path';
-    const PARAM_VARIANT = 'variant';
-    const PARAM_OVERWRITE = 'overwrite';
+    public const PARAM_CURRENT_PATH = 'current_path';
+    public const PARAM_NEW_PATH = 'new_path';
+    public const PARAM_VARIANT = 'variant';
+    public const PARAM_OVERWRITE = 'overwrite';
 
     protected AbstractClassGenerator $classGenerator;
 

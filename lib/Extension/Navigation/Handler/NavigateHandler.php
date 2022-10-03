@@ -2,21 +2,21 @@
 
 namespace Phpactor\Extension\Navigation\Handler;
 
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Navigation\Application\Navigator;
-use RuntimeException;
+use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\MapResolver\Resolver;
+use RuntimeException;
 
 class NavigateHandler extends AbstractHandler
 {
-    const NAME = 'navigate';
-    const PARAM_SOURCE_PATH = 'source_path';
-    const PARAM_DESTINATION = 'destination';
-    const PARAM_CONFIRM_CREATE = 'confirm_create';
+    public const NAME = 'navigate';
+    public const PARAM_SOURCE_PATH = 'source_path';
+    public const PARAM_DESTINATION = 'destination';
+    public const PARAM_CONFIRM_CREATE = 'confirm_create';
 
     private Navigator $navigator;
 

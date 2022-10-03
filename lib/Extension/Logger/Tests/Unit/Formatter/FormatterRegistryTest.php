@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\Logger\Tests\Unit\Formatter;
 
 use Monolog\Formatter\FormatterInterface;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Logger\Formatter\FormatterRegistry;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use RuntimeException;

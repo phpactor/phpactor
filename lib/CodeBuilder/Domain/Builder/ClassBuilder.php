@@ -3,12 +3,12 @@
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
 use Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype;
+use Phpactor\CodeBuilder\Domain\Prototype\Constants;
 use Phpactor\CodeBuilder\Domain\Prototype\ExtendsClass;
+use Phpactor\CodeBuilder\Domain\Prototype\ImplementsInterfaces;
+use Phpactor\CodeBuilder\Domain\Prototype\Methods;
 use Phpactor\CodeBuilder\Domain\Prototype\Properties;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
-use Phpactor\CodeBuilder\Domain\Prototype\Methods;
-use Phpactor\CodeBuilder\Domain\Prototype\ImplementsInterfaces;
-use Phpactor\CodeBuilder\Domain\Prototype\Constants;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 
 class ClassBuilder extends ClassLikeBuilder

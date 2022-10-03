@@ -9,15 +9,15 @@ use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReferenceFinder\TolerantVariableDefintionLocator;
+use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
 use Phpactor\WorseReferenceFinder\WorsePlainTextClassDefinitionLocator;
 use Phpactor\WorseReferenceFinder\WorseReflectionDefinitionLocator;
 use Phpactor\WorseReferenceFinder\WorseReflectionTypeLocator;
-use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
 use Phpactor\WorseReflection\Core\Cache;
 
 class WorseReferenceFinderExtension implements Extension
 {
-    const PARAM_BREAK_CHARS = 'worse_reference_finder.plain_text_break_chars';
+    public const PARAM_BREAK_CHARS = 'worse_reference_finder.plain_text_break_chars';
 
 
     public function load(ContainerBuilder $container): void

@@ -2,14 +2,14 @@
 
 namespace Phpactor\ClassMover\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use Phpactor\ClassMover\ClassMover;
 use Phpactor\ClassMover\Domain\ClassFinder;
 use Phpactor\ClassMover\Domain\ClassReplacer;
-use Phpactor\ClassMover\ClassMover;
+use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\ClassMover\Domain\Reference\NamespacedClassReferences;
 use Phpactor\ClassMover\FoundReferences;
-use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 class ClassMoverTest extends TestCase

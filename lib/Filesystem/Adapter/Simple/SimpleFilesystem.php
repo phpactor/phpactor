@@ -2,16 +2,16 @@
 
 namespace Phpactor\Filesystem\Adapter\Simple;
 
-use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\Filesystem;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
 use Webmozart\PathUtil\Path;
-use Phpactor\Filesystem\Domain\FileListProvider;
-use Phpactor\Filesystem\Domain\CopyReport;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
 
 class SimpleFilesystem implements Filesystem
 {

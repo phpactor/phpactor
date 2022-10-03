@@ -8,8 +8,8 @@ use Phpactor\CodeBuilder\Domain\Prototype\Prototype;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
 use Twig\Error\LoaderError;
+use Twig\Loader\FilesystemLoader;
 
 final class TwigRenderer implements Renderer
 {

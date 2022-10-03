@@ -2,9 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Tests\Unit\Handler;
 
-use Phpactor\Rename\Model\LocatedTextEdit;
-use Phpactor\Rename\Model\Renamer\InMemoryRenamer;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
+use Phpactor\LanguageServer\LanguageServerBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\LanguageServerProtocol\PrepareRenameParams;
 use Phpactor\LanguageServerProtocol\PrepareRenameRequest;
 use Phpactor\LanguageServerProtocol\RenameParams;
@@ -12,9 +13,8 @@ use Phpactor\LanguageServerProtocol\RenameRequest;
 use Phpactor\LanguageServerProtocol\TextDocumentEdit;
 use Phpactor\LanguageServerProtocol\TextEdit as PhpactorTextEdit;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
-use Phpactor\LanguageServer\LanguageServerBuilder;
-use Phpactor\LanguageServer\Test\LanguageServerTester;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\Rename\Model\LocatedTextEdit;
+use Phpactor\Rename\Model\Renamer\InMemoryRenamer;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -22,8 +22,8 @@ use Phpactor\TextDocument\TextEdit;
 
 class RenameHandlerTest extends IntegrationTestCase
 {
-    const EXAMPLE_FILE = 'file:///Foobar.php';
-    const EXAMPLE_NEW_NAME = 'foobar';
+    public const EXAMPLE_FILE = 'file:///Foobar.php';
+    public const EXAMPLE_NEW_NAME = 'foobar';
 
     private LanguageServerTester $tester;
 

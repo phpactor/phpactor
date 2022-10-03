@@ -3,15 +3,15 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\CatchClause;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
-use Phpactor\WorseReflection\Core\Inference\Variable;
-use Microsoft\PhpParser\Node\CatchClause;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 
 class CatchClauseResolver implements Resolver
 {

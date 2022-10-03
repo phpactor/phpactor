@@ -2,14 +2,14 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection as PhpactorReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as PhpactorReflectionParameter;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Microsoft\PhpParser\Node\MethodDeclaration;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 /**
  * @extends AbstractReflectionCollection<PhpactorReflectionParameter>

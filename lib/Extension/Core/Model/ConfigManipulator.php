@@ -2,12 +2,12 @@
 
 namespace Phpactor\Extension\Core\Model;
 
-use RuntimeException;
-use stdClass;
 use function file_get_contents;
 use function file_put_contents;
 use function json_decode;
 use function json_encode;
+use RuntimeException;
+use stdClass;
 
 final class ConfigManipulator
 {

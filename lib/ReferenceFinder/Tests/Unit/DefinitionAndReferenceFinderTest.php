@@ -2,7 +2,7 @@
 
 namespace Phpactor\ReferenceFinder\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use function iterator_to_array;
 use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
 use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\PotentialLocation;
@@ -13,7 +13,7 @@ use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use function iterator_to_array;
+use PHPUnit\Framework\TestCase;
 
 class DefinitionAndReferenceFinderTest extends TestCase
 {

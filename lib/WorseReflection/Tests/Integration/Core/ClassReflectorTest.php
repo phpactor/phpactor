@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
+use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
-use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 
 class ClassReflectorTest extends IntegrationTestCase
 {

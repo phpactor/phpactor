@@ -2,22 +2,22 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Tests\Unit\Handler;
 
+use function Amp\Promise\wait;
 use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServerRename\Handler\FileRenameHandler;
-use Phpactor\Rename\Model\FileRenamer\TestFileRenamer;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
+use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
+use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServerProtocol\FileOperationRegistrationOptions;
 use Phpactor\LanguageServerProtocol\FileRename;
 use Phpactor\LanguageServerProtocol\RenameFilesParams;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
-use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
-use Phpactor\LanguageServer\LanguageServerTesterBuilder;
-use Phpactor\LanguageServer\Test\LanguageServerTester;
+use Phpactor\Rename\Model\FileRenamer\TestFileRenamer;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use function Amp\Promise\wait;
 
 class FileRenameHandlerTest extends IntegrationTestCase
 {

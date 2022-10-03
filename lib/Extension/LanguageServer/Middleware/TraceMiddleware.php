@@ -2,13 +2,13 @@
 
 namespace Phpactor\Extension\LanguageServer\Middleware;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\LanguageServer\Core\Middleware\Middleware;
 use Phpactor\LanguageServer\Core\Middleware\RequestHandler;
 use Phpactor\LanguageServer\Core\Rpc\Message;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Psr\Log\LoggerInterface;
-use function Amp\call;
 
 class TraceMiddleware implements Middleware
 {

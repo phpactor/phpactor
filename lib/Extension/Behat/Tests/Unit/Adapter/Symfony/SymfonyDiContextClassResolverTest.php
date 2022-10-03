@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Behat\Tests\Unit\Adapter\Symfony;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Adapter\Symfony\SymfonyDiContextClassResolver;
 use Phpactor\Extension\Behat\Behat\Exception\CouldNotResolverContextClass;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class SymfonyDiContextClassResolverTest extends TestCase

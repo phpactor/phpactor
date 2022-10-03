@@ -2,22 +2,22 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
-use Phpactor\Extension\Rpc\Request;
-use Prophecy\Argument;
-use Phpactor\Extension\Rpc\Response\OpenFileResponse;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\ClassMover\Application\Logger\NullLogger;
+use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Request;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassCopyHandlerTest extends HandlerTestCase
 {
-    const SOURCE_PATH = 'souce_path';
-    const DEST_PATH = 'souce_path';
+    public const SOURCE_PATH = 'souce_path';
+    public const DEST_PATH = 'souce_path';
 
     private ObjectProphecy $classCopy;
 

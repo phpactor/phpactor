@@ -2,15 +2,15 @@
 
 namespace Phpactor\Extension\CompletionRpc\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
-use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\CompletionRpc\CompletionRpcExtension;
 use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\CompletionRpc\CompletionRpcExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\RequestHandler;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Extension\Rpc\RpcExtension;
+use PHPUnit\Framework\TestCase;
 
 class CompletionRpcExtensionTest extends TestCase
 {

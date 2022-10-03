@@ -3,9 +3,9 @@
 namespace Phpactor\TextDocument\Tests\Unit\Util;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\Util\WordAtOffset;
+use PHPUnit\Framework\TestCase;
 
 class WordAtOffsetTest extends TestCase
 {

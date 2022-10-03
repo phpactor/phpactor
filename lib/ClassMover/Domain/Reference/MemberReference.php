@@ -2,8 +2,8 @@
 
 namespace Phpactor\ClassMover\Domain\Reference;
 
-use Phpactor\ClassMover\Domain\Name\MemberName;
 use Phpactor\ClassMover\Domain\Model\Class_;
+use Phpactor\ClassMover\Domain\Name\MemberName;
 
 class MemberReference
 {

@@ -2,20 +2,20 @@
 
 namespace Phpactor\Tests\Unit\Extension\Navigation\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Navigation\Handler\NavigateHandler;
 use Phpactor\Extension\Navigation\Application\Navigator;
-use Prophecy\Prophecy\ObjectProphecy;
+use Phpactor\Extension\Navigation\Handler\NavigateHandler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class NavigateHandlerTest extends HandlerTestCase
 {
-    const TEST_PATH = 'path/to/file.php';
-    const TEST_DEST1 = 'dest1';
+    public const TEST_PATH = 'path/to/file.php';
+    public const TEST_DEST1 = 'dest1';
 
     private ObjectProphecy $navigator;
 

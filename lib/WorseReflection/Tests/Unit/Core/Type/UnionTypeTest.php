@@ -3,11 +3,11 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\UnionType;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use PHPUnit\Framework\TestCase;
 
 class UnionTypeTest extends TestCase
 {

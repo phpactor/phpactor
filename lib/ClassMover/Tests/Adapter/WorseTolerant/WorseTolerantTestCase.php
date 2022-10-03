@@ -2,10 +2,10 @@
 
 namespace Phpactor\ClassMover\Tests\Adapter\WorseTolerant;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberFinder;
+use Phpactor\ClassMover\Domain\MemberFinder;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 
 abstract class WorseTolerantTestCase extends TestCase
 {

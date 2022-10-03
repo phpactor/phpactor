@@ -4,19 +4,19 @@ namespace Phpactor\Extension\CompletionRpc\Handler;
 
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
-use Phpactor\Extension\Rpc\Response;
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class CompleteHandler implements Handler
 {
-    const NAME = 'complete';
-    const PARAM_SOURCE = 'source';
-    const PARAM_OFFSET = 'offset';
-    const PARAM_TYPE = 'type';
+    public const NAME = 'complete';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_OFFSET = 'offset';
+    public const PARAM_TYPE = 'type';
 
     private TypedCompletorRegistry $registry;
 

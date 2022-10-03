@@ -4,9 +4,9 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Benchmark\CodeAct
 
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
-use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\TestUtils\ExtractOffset;
 
 /**
  * @Iterations(10)

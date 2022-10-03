@@ -2,24 +2,24 @@
 
 namespace Phpactor\Extension\CodeTransform\Tests\Unit\Rpc;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class TransformHandlerTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_NEW_PATH = '/path/to/new.php';
-    const EXAMPLE_SOURCE_CODE = '<?php';
+    public const EXAMPLE_NEW_PATH = '/path/to/new.php';
+    public const EXAMPLE_SOURCE_CODE = '<?php';
 
     private ObjectProphecy $codeTransform;
 

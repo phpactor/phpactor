@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\Rpc\Response;
 
-use Phpactor\Extension\Rpc\Response;
 use Exception;
+use Phpactor\Extension\Rpc\Response;
 
 class ErrorResponse implements Response
 {

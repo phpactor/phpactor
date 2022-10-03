@@ -2,15 +2,15 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
 use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
-use Generator;
 
 class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
 {

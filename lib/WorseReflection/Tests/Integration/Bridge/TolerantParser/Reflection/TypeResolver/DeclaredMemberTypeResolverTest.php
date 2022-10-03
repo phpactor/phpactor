@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\TypeResolver;
 
-use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
-use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Closure;
 use Generator;
+use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class DeclaredMemberTypeResolverTest extends IntegrationTestCase
 {

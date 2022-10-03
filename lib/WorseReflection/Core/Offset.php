@@ -2,8 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core;
 
-use Phpactor\TextDocument\ByteOffset;
 use InvalidArgumentException;
+use Phpactor\TextDocument\ByteOffset;
 
 final class Offset
 {

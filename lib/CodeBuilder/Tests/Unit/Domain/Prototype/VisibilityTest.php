@@ -3,8 +3,8 @@
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
+use PHPUnit\Framework\TestCase;
 
 class VisibilityTest extends TestCase
 {

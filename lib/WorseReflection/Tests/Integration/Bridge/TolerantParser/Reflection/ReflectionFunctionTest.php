@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Closure;
 use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class ReflectionFunctionTest extends IntegrationTestCase
 {

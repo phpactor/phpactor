@@ -2,9 +2,9 @@
 
 namespace Phpactor\ClassMover\Domain\Reference;
 
-use IteratorAggregate;
-use Countable;
 use ArrayIterator;
+use Countable;
+use IteratorAggregate;
 use Traversable;
 
 final class MemberReferences implements IteratorAggregate, Countable

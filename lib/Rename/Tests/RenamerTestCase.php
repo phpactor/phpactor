@@ -4,7 +4,6 @@ namespace Phpactor\Rename\Tests;
 
 use Closure;
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
@@ -15,6 +14,7 @@ use Phpactor\TestUtils\Workspace;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\BruteForceSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Component\Process\Process;
 

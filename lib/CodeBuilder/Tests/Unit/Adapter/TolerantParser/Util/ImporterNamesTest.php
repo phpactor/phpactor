@@ -4,8 +4,8 @@ namespace Phpactor\CodeBuilder\Tests\Unit\Adapter\TolerantParser\Util;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\ImportedNames;
+use PHPUnit\Framework\TestCase;
 
 class ImporterNamesTest extends TestCase
 {

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Phpactor\TextDocument;
 
 use OutOfRangeException;

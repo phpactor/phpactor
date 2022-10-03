@@ -4,25 +4,25 @@ namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use InvalidArgumentException;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
-use Phpactor\Extension\Rpc\Response;
-use Phpactor\Extension\Rpc\Response\Input\ListInput;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\Extension\Rpc\Response;
+use Phpactor\Extension\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
 
 class GenerateAccessorHandler extends AbstractHandler
 {
-    const NAME = 'generate_accessor';
-    const PARAM_NAMES = 'names';
-    const PARAM_SOURCE = 'source';
-    const PARAM_PATH = 'path';
-    const PARAM_OFFSET = 'offset';
+    public const NAME = 'generate_accessor';
+    public const PARAM_NAMES = 'names';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_PATH = 'path';
+    public const PARAM_OFFSET = 'offset';
 
     private Reflector $reflector;
 

@@ -3,18 +3,18 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentUri;
 
 class GenerateMethodHandler extends AbstractHandler
 {
-    const NAME = 'generate_method';
-    const PARAM_OFFSET = 'offset';
-    const PARAM_SOURCE = 'source';
-    const PARAM_PATH = 'path';
+    public const NAME = 'generate_method';
+    public const PARAM_OFFSET = 'offset';
+    public const PARAM_SOURCE = 'source';
+    public const PARAM_PATH = 'path';
 
     private GenerateMethod $generateMethod;
 

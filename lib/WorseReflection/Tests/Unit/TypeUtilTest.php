@@ -3,13 +3,13 @@
 namespace Phpactor\WorseReflection\Tests\Unit;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\TypeUtil;
+use PHPUnit\Framework\TestCase;
 
 class TypeUtilTest extends TestCase
 {

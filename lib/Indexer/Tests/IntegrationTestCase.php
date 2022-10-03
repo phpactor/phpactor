@@ -2,30 +2,30 @@
 
 namespace Phpactor\Indexer\Tests;
 
-use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
-use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
-use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\Extension\ClassToFile\ClassToFileExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
-use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
+use Phpactor\Extension\ClassToFile\ClassToFileExtension;
+use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
+use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
+use Phpactor\Extension\Rpc\RpcExtension;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
 use Phpactor\Indexer\Extension\IndexerExtension;
-use Phpactor\Container\Container;
 use Phpactor\Indexer\IndexAgentBuilder;
+use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\TestIndexAgent;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\TestUtils\Workspace;
-use Phpactor\Indexer\Model\Index;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
-use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
-use Phpactor\WorseReflection\ReflectorBuilder;
 use Symfony\Component\Process\Process;
 
 class IntegrationTestCase extends TestCase
@@ -127,7 +127,7 @@ class IntegrationTestCase extends TestCase
 
     private function createLogger(): LoggerInterface
     {
-        return new class extends AbstractLogger {
+        return new class () extends AbstractLogger {
             public function log($level, $message, array $context = []): void
             {
                 fwrite(STDOUT, sprintf("[%s] %s\n", $level, $message));

@@ -2,12 +2,12 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
+use InvalidArgumentException;
 use Phpactor\Filesystem\Domain\FilePath;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use SplFileInfo;
 use stdClass;
-use InvalidArgumentException;
 
 class FilePathTest extends TestCase
 {

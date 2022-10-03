@@ -2,23 +2,23 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\Extension\CodeTransformExtra\Rpc\RenameVariableHandler;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\Extension\CodeTransformExtra\Rpc\RenameVariableHandler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class RenameVariableHandlerTest extends HandlerTestCase
 {
-    const SOURCE = '<?php echo "foo";';
-    const PATH = '/path/to';
-    const OFFSET = 1234;
-    const VARIABLE_NAME = 'FOOBAR';
+    public const SOURCE = '<?php echo "foo";';
+    public const PATH = '/path/to';
+    public const OFFSET = 1234;
+    public const VARIABLE_NAME = 'FOOBAR';
 
     private ObjectProphecy $renameVariable;
 

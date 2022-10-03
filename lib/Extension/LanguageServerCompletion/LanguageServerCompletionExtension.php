@@ -6,11 +6,11 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
+use Phpactor\Extension\LanguageServerCompletion\Handler\CompletionHandler;
 use Phpactor\Extension\LanguageServerCompletion\Handler\SignatureHelpHandler;
 use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
-use Phpactor\Extension\LanguageServerCompletion\Handler\CompletionHandler;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\MapResolver\Resolver;
 

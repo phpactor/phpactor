@@ -2,20 +2,20 @@
 
 namespace Phpactor\Extension\LanguageServer\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\Tests\Example\TestExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\LanguageServerProtocol\InitializeParams;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\InitializeParams;
 use Phpactor\TestUtils\Workspace;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class LanguageServerTestCase extends TestCase

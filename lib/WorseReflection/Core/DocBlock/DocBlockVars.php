@@ -2,10 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core\DocBlock;
 
+use ArrayIterator;
 use IteratorAggregate;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use ArrayIterator;
 use Traversable;
 
 /**

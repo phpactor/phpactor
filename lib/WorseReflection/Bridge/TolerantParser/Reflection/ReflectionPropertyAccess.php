@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Position;
-use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionPropertyAccess

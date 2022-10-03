@@ -3,31 +3,31 @@
 namespace Phpactor\Extension\ContextMenu\Handler;
 
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
+use Phpactor\Container\Container;
+use Phpactor\Extension\ContextMenu\ContextMenuExtension;
 use Phpactor\Extension\ContextMenu\Model\Action;
 use Phpactor\Extension\ContextMenu\Model\ContextMenu;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\Rpc\Handler;
-use Phpactor\TextDocument\ByteOffset;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\Extension\Rpc\Response\EchoResponse;
-use Phpactor\Extension\Rpc\Request;
-use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
-use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
-use Phpactor\Extension\ContextMenu\ContextMenuExtension;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response;
-use Phpactor\Container\Container;
+use Phpactor\Extension\Rpc\Response\EchoResponse;
+use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
+use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
+use Phpactor\MapResolver\Resolver;
+use Phpactor\TextDocument\ByteOffset;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
+use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Reflector;
 
 class ContextMenuHandler implements Handler
 {
-    const NAME = 'context_menu';
-    const PARAMETER_SOURCE = 'source';
-    const PARAMETER_OFFSET = 'offset';
-    const PARAMETER_ACTION = 'action';
-    const PARAMETER_CURRENT_PATH = 'current_path';
+    public const NAME = 'context_menu';
+    public const PARAMETER_SOURCE = 'source';
+    public const PARAMETER_OFFSET = 'offset';
+    public const PARAMETER_ACTION = 'action';
+    public const PARAMETER_CURRENT_PATH = 'current_path';
 
     private Reflector $reflector;
 

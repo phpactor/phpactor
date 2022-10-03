@@ -3,10 +3,10 @@
 namespace Phpactor\Filesystem\Adapter\Simple;
 
 use FilesystemIterator;
-use Phpactor\Filesystem\Domain\FileListProvider;
-use Phpactor\Filesystem\Domain\FileList;
-use Phpactor\Filesystem\Domain\FilePath;
 use Iterator;
+use Phpactor\Filesystem\Domain\FileList;
+use Phpactor\Filesystem\Domain\FileListProvider;
+use Phpactor\Filesystem\Domain\FilePath;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 

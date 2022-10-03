@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\Behat\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
@@ -14,6 +13,7 @@ use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 
 class BehatExtensionTest extends TestCase
 {

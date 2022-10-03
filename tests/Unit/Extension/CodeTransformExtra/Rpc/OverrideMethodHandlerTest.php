@@ -2,13 +2,13 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
-use Phpactor\Extension\CodeTransformExtra\Rpc\OverrideMethodHandler;
-use Phpactor\Extension\Rpc\Handler;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
-use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\Extension\CodeTransformExtra\Rpc\OverrideMethodHandler;
+use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
+use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
+use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Prophecy\ObjectProphecy;

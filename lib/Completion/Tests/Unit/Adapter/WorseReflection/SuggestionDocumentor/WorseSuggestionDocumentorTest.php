@@ -2,11 +2,11 @@
 
 namespace Phpactor\Completion\Tests\Unit\Adapter\WorseReflection\SuggestionDocumentor;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\WorseReflection\SuggestionDocumentor\WorseSuggestionDocumentor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 
 class WorseSuggestionDocumentorTest extends TestCase
 {

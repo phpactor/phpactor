@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\Core\Tests\Unit\Model;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
 use Phpactor\MapResolver\Resolver;
+use PHPUnit\Framework\TestCase;
 
 class JsonSchemaBuilderTest extends TestCase
 {
@@ -63,7 +63,7 @@ class JsonSchemaBuilderTest extends TestCase
 
     private function createExtension1(): Extension
     {
-        return new class implements Extension {
+        return new class () implements Extension {
             public function configure(Resolver $resolver): void
             {
                 $resolver->setDefaults([

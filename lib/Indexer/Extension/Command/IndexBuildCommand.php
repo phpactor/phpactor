@@ -6,20 +6,20 @@ use Amp\Loop;
 use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\Indexer\Model\MemoryUsage;
+use Phpactor\Indexer\Util\Cast;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Phpactor\Indexer\Util\Cast;
 use Webmozart\PathUtil\Path;
 
 class IndexBuildCommand extends Command
 {
-    const ARG_SUB_PATH = 'sub-path';
-    const OPT_RESET = 'reset';
-    const OPT_WATCH = 'watch';
+    public const ARG_SUB_PATH = 'sub-path';
+    public const OPT_RESET = 'reset';
+    public const OPT_WATCH = 'watch';
 
     private Indexer $indexer;
 

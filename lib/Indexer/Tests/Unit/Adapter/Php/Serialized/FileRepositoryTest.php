@@ -4,9 +4,9 @@ namespace Phpactor\Indexer\Tests\Unit\Adapter\Php\Serialized;
 
 use Phpactor\Indexer\Adapter\Php\Serialized\FileRepository;
 use Phpactor\Indexer\Model\Exception\CorruptedRecord;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\RecordSerializer;
 use Phpactor\Indexer\Model\RecordSerializer\PhpSerializer;
-use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;

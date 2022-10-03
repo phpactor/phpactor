@@ -3,13 +3,13 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Patch;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\ResolvedName;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
-use Microsoft\PhpParser\Node\TraitSelectOrAliasClause;
-use Microsoft\PhpParser\TokenKind;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\TraitSelectOrAliasClause;
+use Microsoft\PhpParser\ResolvedName;
+use Microsoft\PhpParser\TokenKind;
 
 /**
  * This is a hack to allow resolving trait use clauses, which are for some reason
@@ -118,7 +118,7 @@ class TolerantQualifiedNameResolver
         return null;
     }
 
-    private static function isConstantName($node) : bool
+    private static function isConstantName($node): bool
     {
         return
             ($node->parent instanceof Node\Statement\ExpressionStatement || $node->parent instanceof Expression) &&

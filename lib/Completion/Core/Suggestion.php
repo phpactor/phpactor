@@ -11,27 +11,27 @@ class Suggestion
      * Completion types based on the language server protocol:
      * https://github.com/Microsoft/language-server-protocol/blob/gh-pages/specification.md#completion-request-leftwards_arrow_with_hook
      */
-    const TYPE_METHOD = 'method';
-    const TYPE_FUNCTION = 'function';
-    const TYPE_CONSTRUCTOR = 'constructor';
-    const TYPE_FIELD = 'field';
-    const TYPE_VARIABLE = 'variable';
-    const TYPE_CLASS = 'class';
-    const TYPE_INTERFACE = 'interface';
-    const TYPE_MODULE = 'module';
-    const TYPE_PROPERTY = 'property';
-    const TYPE_UNIT = 'unit';
-    const TYPE_VALUE = 'value';
-    const TYPE_ENUM = 'enum';
-    const TYPE_KEYWORD = 'keyword';
-    const TYPE_SNIPPET = 'snippet';
-    const TYPE_COLOR = 'color';
-    const TYPE_FILE = 'file';
-    const TYPE_REFERENCE = 'reference';
-    const TYPE_CONSTANT = 'constant';
-    const PRIORITY_HIGH = 64;
-    const PRIORITY_MEDIUM = 127;
-    const PRIORITY_LOW = 255;
+    public const TYPE_METHOD = 'method';
+    public const TYPE_FUNCTION = 'function';
+    public const TYPE_CONSTRUCTOR = 'constructor';
+    public const TYPE_FIELD = 'field';
+    public const TYPE_VARIABLE = 'variable';
+    public const TYPE_CLASS = 'class';
+    public const TYPE_INTERFACE = 'interface';
+    public const TYPE_MODULE = 'module';
+    public const TYPE_PROPERTY = 'property';
+    public const TYPE_UNIT = 'unit';
+    public const TYPE_VALUE = 'value';
+    public const TYPE_ENUM = 'enum';
+    public const TYPE_KEYWORD = 'keyword';
+    public const TYPE_SNIPPET = 'snippet';
+    public const TYPE_COLOR = 'color';
+    public const TYPE_FILE = 'file';
+    public const TYPE_REFERENCE = 'reference';
+    public const TYPE_CONSTANT = 'constant';
+    public const PRIORITY_HIGH = 64;
+    public const PRIORITY_MEDIUM = 127;
+    public const PRIORITY_LOW = 255;
 
     private ?string $type;
 

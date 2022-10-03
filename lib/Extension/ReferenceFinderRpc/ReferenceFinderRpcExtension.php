@@ -5,10 +5,10 @@ namespace Phpactor\Extension\ReferenceFinderRpc;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoDefinitionHandler;
 use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoImplementationHandler;
 use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoTypeHandler;
-use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\MapResolver\Resolver;
 

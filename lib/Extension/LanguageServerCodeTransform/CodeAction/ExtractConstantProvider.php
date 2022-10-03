@@ -2,18 +2,18 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
-use function Amp\call;
 
 class ExtractConstantProvider implements CodeActionProvider
 {

@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\ReflectorBuilder;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\ReflectorBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Log\LoggerInterface;

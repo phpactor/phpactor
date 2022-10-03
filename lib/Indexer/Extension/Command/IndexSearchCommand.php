@@ -12,15 +12,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class IndexSearchCommand extends Command
 {
-    const ARG_SEARCH = 'search';
-    const OPT_FQN_BEGINS = 'fqn-begins';
-    const OPT_SHORT_NAME_BEGINS = 'short-name-begins';
-    const OPT_SHORT_NAME = 'short-name';
-    const OPT_IS_FUNCTION = 'is-function';
-    const OPT_IS_CLASS = 'is-class';
-    const OPT_IS_MEMBER = 'is-member';
-    const OPT_IS_CONSTANT = 'is-constant';
-    const OPT_LIMIT = 'limit';
+    public const ARG_SEARCH = 'search';
+    public const OPT_FQN_BEGINS = 'fqn-begins';
+    public const OPT_SHORT_NAME_BEGINS = 'short-name-begins';
+    public const OPT_SHORT_NAME = 'short-name';
+    public const OPT_IS_FUNCTION = 'is-function';
+    public const OPT_IS_CLASS = 'is-class';
+    public const OPT_IS_MEMBER = 'is-member';
+    public const OPT_IS_CONSTANT = 'is-constant';
+    public const OPT_LIMIT = 'limit';
 
     private SearchClient $searchClient;
 

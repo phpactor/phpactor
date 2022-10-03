@@ -2,18 +2,18 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
+use function end;
+use function iterator_to_array;
 use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression;
-use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
+use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use function end;
-use function iterator_to_array;
 use function preg_match;
 
 class TolerantExtractExpression implements ExtractExpression

@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\Composer;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Bridge\Composer\ComposerSourceLocator;
 use Phpactor\WorseReflection\Core\Name;
+use PHPUnit\Framework\TestCase;
 
 class ComposerSourceCodeLocatorTest extends TestCase
 {

@@ -3,12 +3,12 @@
 namespace Phpactor\Extension\Console\Tests\Unit;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Console\Tests\Unit\Example\InvalidExtension;
 use Phpactor\Extension\Console\Tests\Unit\Example\TestExtension;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;

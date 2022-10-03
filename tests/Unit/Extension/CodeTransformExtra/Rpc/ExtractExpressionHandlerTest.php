@@ -5,9 +5,9 @@ namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\Extension\CodeTransformExtra\Rpc\ExtractExpressionHandler;
 use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
-use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
@@ -15,11 +15,11 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ExtractExpressionHandlerTest extends HandlerTestCase
 {
-    const SOURCE = '<?php "foo";';
-    const PATH = '/path/to';
-    const OFFSET_START = 1234;
-    const OFFSET_END = 1234;
-    const VARIABLE_NAME = 'FOOBAR';
+    public const SOURCE = '<?php "foo";';
+    public const PATH = '/path/to';
+    public const OFFSET_START = 1234;
+    public const OFFSET_END = 1234;
+    public const VARIABLE_NAME = 'FOOBAR';
 
     /**
      * @var ObjectProphecy<ExtractExpression>

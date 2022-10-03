@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeTransform\Domain;
 
-use Countable;
-use IteratorAggregate;
 use ArrayIterator;
+use Countable;
 use InvalidArgumentException;
+use IteratorAggregate;
 use Traversable;
 
 /**

@@ -2,17 +2,17 @@
 
 namespace Phpactor\Extension\WorseReflectionExtra;
 
+use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
-use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\Container\Extension;
-use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Container;
-use Phpactor\Extension\WorseReflectionExtra\Command\OffsetInfoCommand;
-use Phpactor\Extension\WorseReflectionExtra\Application\OffsetInfo;
 use Phpactor\Extension\WorseReflectionExtra\Application\ClassReflector;
+use Phpactor\Extension\WorseReflectionExtra\Application\OffsetInfo;
 use Phpactor\Extension\WorseReflectionExtra\Command\ClassReflectorCommand;
+use Phpactor\Extension\WorseReflectionExtra\Command\OffsetInfoCommand;
+use Phpactor\Extension\WorseReflectionExtra\Rpc\OffsetInfoHandler;
 use Phpactor\MapResolver\Resolver;
 
 class WorseReflectionExtraExtension implements Extension

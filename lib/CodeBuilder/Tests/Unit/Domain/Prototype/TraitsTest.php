@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\TraitPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Traits;
+use PHPUnit\Framework\TestCase;
 
 class TraitsTest extends TestCase
 {

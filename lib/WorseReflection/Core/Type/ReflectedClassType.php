@@ -10,8 +10,8 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ReflectedClassType extends ClassType
 {

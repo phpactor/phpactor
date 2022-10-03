@@ -2,22 +2,22 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as PhpactorReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum as PhpactorReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface as PhpactorReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait as PhpactorReflectionTrait;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
-use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Microsoft\PhpParser\ClassLike;
-use Microsoft\PhpParser\Node;
 
 /**
  * @extends AbstractReflectionCollection<PhpactorReflectionClass|PhpactorReflectionEnum|PhpactorReflectionTrait|PhpactorReflectionInterface>

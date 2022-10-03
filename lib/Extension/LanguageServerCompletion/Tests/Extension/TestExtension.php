@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Extension;
@@ -6,8 +7,8 @@ namespace Phpactor\Extension\LanguageServerCompletion\Tests\Extension;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\MapResolver\Resolver;
 
 class TestExtension implements Extension

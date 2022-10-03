@@ -3,20 +3,20 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
 use Exception;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
+use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServerProtocol\MessageType;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
-use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -24,9 +24,9 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ExtractConstantCommandTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_SOURCE = '<?php ';
-    const EXAMPLE_URI = 'file:///file.php';
-    const EXAMPLE_OFFSET = 5;
+    public const EXAMPLE_SOURCE = '<?php ';
+    public const EXAMPLE_URI = 'file:///file.php';
+    public const EXAMPLE_OFFSET = 5;
 
     public function testSuccessfulCall(): void
     {

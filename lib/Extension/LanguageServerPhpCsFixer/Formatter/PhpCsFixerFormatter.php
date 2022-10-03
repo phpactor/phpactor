@@ -2,17 +2,17 @@
 
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Formatter;
 
+use function Amp\ByteStream\buffer;
+use function Amp\call;
 use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServerProtocol\TextEdit;
 use Phpactor\LanguageServer\Core\Formatting\Formatter;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
+use Phpactor\LanguageServerProtocol\TextEdit;
 use Phpactor\TextDocument\ByteOffset;
 use RuntimeException;
-use function Amp\ByteStream\buffer;
-use function Amp\call;
 
 class PhpCsFixerFormatter implements Formatter
 {

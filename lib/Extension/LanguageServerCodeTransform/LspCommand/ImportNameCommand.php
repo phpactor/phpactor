@@ -5,10 +5,10 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
-use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
+use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 
 class ImportNameCommand implements Command
 {

@@ -2,13 +2,13 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
-use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
+use Phpactor\MapResolver\Resolver;
 
 class ConfigHandler implements Handler
 {
-    const CONFIG = 'config';
+    public const CONFIG = 'config';
 
     private array $config;
 

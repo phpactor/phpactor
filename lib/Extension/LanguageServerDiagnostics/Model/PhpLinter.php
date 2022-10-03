@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerDiagnostics\Model;
 
+use function Amp\ByteStream\buffer;
+use function Amp\call;
 use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Diagnostic;
@@ -10,8 +12,6 @@ use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\Util\LineColRangeForLine;
-use function Amp\ByteStream\buffer;
-use function Amp\call;
 
 final class PhpLinter
 {

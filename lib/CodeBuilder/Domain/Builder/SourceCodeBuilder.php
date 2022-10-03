@@ -3,15 +3,15 @@
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
 use InvalidArgumentException;
+use Phpactor\CodeBuilder\Domain\Prototype\Classes;
+use Phpactor\CodeBuilder\Domain\Prototype\Interfaces;
+use Phpactor\CodeBuilder\Domain\Prototype\NamespaceName;
 use Phpactor\CodeBuilder\Domain\Prototype\QualifiedName;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
-use Phpactor\CodeBuilder\Domain\Prototype\NamespaceName;
-use Phpactor\CodeBuilder\Domain\Prototype\Classes;
-use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
-use Phpactor\CodeBuilder\Domain\Prototype\UseStatements;
-use Phpactor\CodeBuilder\Domain\Prototype\Interfaces;
 use Phpactor\CodeBuilder\Domain\Prototype\Traits;
+use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
+use Phpactor\CodeBuilder\Domain\Prototype\UseStatements;
 
 class SourceCodeBuilder extends AbstractBuilder
 {

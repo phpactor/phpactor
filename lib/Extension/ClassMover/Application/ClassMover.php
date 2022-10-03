@@ -5,15 +5,15 @@ namespace Phpactor\Extension\ClassMover\Application;
 use Exception;
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
+use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
+use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\PathFinder\Exception\NoMatchingSourceException;
 use Phpactor\PathFinder\PathFinder;
 use Phpactor\Phpactor;
-use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\Filesystem\Domain\FilesystemRegistry;
-use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
-use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
 use RuntimeException;
 
 class ClassMover

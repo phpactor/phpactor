@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
-use Phpactor\CodeBuilder\Domain\Prototype\Type;
 use Phpactor\CodeBuilder\Domain\Prototype\DefaultValue;
 use Phpactor\CodeBuilder\Domain\Prototype\Parameter;
+use Phpactor\CodeBuilder\Domain\Prototype\Type;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 
 class ParameterBuilder extends AbstractBuilder

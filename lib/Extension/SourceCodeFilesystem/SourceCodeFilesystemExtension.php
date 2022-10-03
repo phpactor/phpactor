@@ -2,32 +2,32 @@
 
 namespace Phpactor\Extension\SourceCodeFilesystem;
 
+use Phpactor\Container\Container;
+use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
-use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Filesystem\Adapter\Composer\ComposerFileListProvider;
 use Phpactor\Filesystem\Adapter\Git\GitFilesystem;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\ChainFileListProvider;
-use Phpactor\Filesystem\Domain\FilePath;
-use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 use Phpactor\Filesystem\Domain\Exception\NotSupported;
 use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
-use Phpactor\Container\Extension;
-use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Container;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\Filesystem\Domain\MappedFilesystemRegistry;
 use Phpactor\MapResolver\Resolver;
 
 class SourceCodeFilesystemExtension implements Extension
 {
-    const FILESYSTEM_GIT = 'git';
-    const FILESYSTEM_COMPOSER = 'composer';
-    const FILESYSTEM_SIMPLE = 'simple';
-    const SERVICE_REGISTRY = 'source_code_filesystem.registry';
-    const SERVICE_FILESYSTEM_GIT = 'source_code_filesystem.git';
-    const SERVICE_FILESYSTEM_SIMPLE = 'source_code_filesystem.simple';
-    const SERVICE_FILESYSTEM_COMPOSER = 'source_code_filesystem.composer';
-    const PARAM_PROJECT_ROOT = 'source_code_filesystem.project_root';
+    public const FILESYSTEM_GIT = 'git';
+    public const FILESYSTEM_COMPOSER = 'composer';
+    public const FILESYSTEM_SIMPLE = 'simple';
+    public const SERVICE_REGISTRY = 'source_code_filesystem.registry';
+    public const SERVICE_FILESYSTEM_GIT = 'source_code_filesystem.git';
+    public const SERVICE_FILESYSTEM_SIMPLE = 'source_code_filesystem.simple';
+    public const SERVICE_FILESYSTEM_COMPOSER = 'source_code_filesystem.composer';
+    public const PARAM_PROJECT_ROOT = 'source_code_filesystem.project_root';
 
 
     public function configure(Resolver $schema): void

@@ -9,8 +9,8 @@ use Phpactor\MapResolver\Resolver;
 
 class FileInfoHandler extends AbstractHandler
 {
-    const NAME = 'file_info';
-    const PARAM_PATH = 'path';
+    public const NAME = 'file_info';
+    public const PARAM_PATH = 'path';
 
     private FileInfo $fileInfo;
 

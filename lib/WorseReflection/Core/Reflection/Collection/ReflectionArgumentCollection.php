@@ -2,11 +2,11 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionArgument;
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument as PhpactorReflectionArgument;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionArgument;
 
 /**
  * @extends AbstractReflectionCollection<PhpactorReflectionArgument>

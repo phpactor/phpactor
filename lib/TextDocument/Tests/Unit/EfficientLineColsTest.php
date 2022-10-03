@@ -4,8 +4,8 @@ namespace Phpactor\TextDocument\Tests\Unit;
 
 use Closure;
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\EfficientLineCols;
+use PHPUnit\Framework\TestCase;
 
 class EfficientLineColsTest extends TestCase
 {

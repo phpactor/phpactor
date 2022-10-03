@@ -7,11 +7,11 @@ use RuntimeException;
 
 final class WordAtOffset
 {
-    const SPLIT_WORD = '\s|;|\\\|%|\(|\)|\[|\]|:|\r|\r\n|\n';
+    public const SPLIT_WORD = '\s|;|\\\|%|\(|\)|\[|\]|:|\r|\r\n|\n';
 
     // see https://www.php.net/manual/en/language.oop5.basic.php
-    const SPLIT_PHP_NAME = '[^a-zA-Z0-9_\x80-\xff]';
-    const SPLIT_QUALIFIED_PHP_NAME = '[^a-zA-Z0-9_\x80-\xff\\\]';
+    public const SPLIT_PHP_NAME = '[^a-zA-Z0-9_\x80-\xff]';
+    public const SPLIT_QUALIFIED_PHP_NAME = '[^a-zA-Z0-9_\x80-\xff\\\]';
 
     private string $splitPattern;
 

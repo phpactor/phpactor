@@ -3,8 +3,8 @@
 namespace Phpactor\Indexer\Tests\Unit\Model;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Model\MemoryUsage;
+use PHPUnit\Framework\TestCase;
 
 class MemoryUsageTest extends TestCase
 {

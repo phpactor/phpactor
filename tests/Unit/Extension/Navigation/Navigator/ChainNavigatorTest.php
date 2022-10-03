@@ -2,18 +2,18 @@
 
 namespace Phpactor\Tests\Unit\Extension\Navigation\Navigator;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Navigator\Navigator;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class ChainNavigatorTest extends TestCase
 {
     use ProphecyTrait;
-    const TEST_PATH = '/path/to/test.php';
-    const TEST_DESTINATION_1 = '/destination1.php';
-    const TEST_DESTINATION_2 = '/destination2.php';
+    public const TEST_PATH = '/path/to/test.php';
+    public const TEST_DESTINATION_1 = '/destination1.php';
+    public const TEST_DESTINATION_2 = '/destination2.php';
 
     private ObjectProphecy $navigator1;
 

@@ -27,10 +27,10 @@ use RuntimeException;
 
 class NameImporterTest extends TestCase
 {
-    const EXAMPLE_CONTENT = 'hello this is some text';
-    const EXAMPLE_PATH = '/foobar.php';
-    const EXAMPLE_OFFSET = 12;
-    const EXAMPLE_PATH_URI = 'file:///foobar.php';
+    public const EXAMPLE_CONTENT = 'hello this is some text';
+    public const EXAMPLE_PATH = '/foobar.php';
+    public const EXAMPLE_OFFSET = 12;
+    public const EXAMPLE_PATH_URI = 'file:///foobar.php';
 
     /**
      * @var ObjectProphecy<RefactorImportName>

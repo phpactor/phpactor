@@ -2,10 +2,10 @@
 
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
+use Phpactor\CodeBuilder\Domain\Prototype\Constants;
+use Phpactor\CodeBuilder\Domain\Prototype\Methods;
 use Phpactor\CodeBuilder\Domain\Prototype\Properties;
 use Phpactor\CodeBuilder\Domain\Prototype\TraitPrototype;
-use Phpactor\CodeBuilder\Domain\Prototype\Methods;
-use Phpactor\CodeBuilder\Domain\Prototype\Constants;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 
 class TraitBuilder extends ClassLikeBuilder

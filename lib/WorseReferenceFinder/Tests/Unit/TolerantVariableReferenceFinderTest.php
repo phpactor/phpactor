@@ -2,17 +2,17 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
+use Exception;
 use Generator;
+use function iterator_to_array;
 use Microsoft\PhpParser\Parser;
-use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
-use function iterator_to_array;
-use Exception;
+use PHPUnit\Framework\TestCase;
 
 class TolerantVariableReferenceFinderTest extends TestCase
 {

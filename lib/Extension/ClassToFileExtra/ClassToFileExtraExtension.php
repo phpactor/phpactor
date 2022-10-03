@@ -2,15 +2,15 @@
 
 namespace Phpactor\Extension\ClassToFileExtra;
 
-use Phpactor\Container\Extension;
+use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
+use Phpactor\Container\Extension;
+use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
+use Phpactor\Extension\ClassToFileExtra\Command\FileInfoCommand;
 use Phpactor\Extension\ClassToFileExtra\Rpc\FileInfoHandler;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\Extension\ClassToFileExtra\Command\FileInfoCommand;
-use Phpactor\Container\Container;
-use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
 
 class ClassToFileExtraExtension implements Extension
 {

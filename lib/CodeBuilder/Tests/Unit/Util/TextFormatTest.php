@@ -2,8 +2,8 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Util;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Util\TextFormat;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class TextFormatTest extends TestCase

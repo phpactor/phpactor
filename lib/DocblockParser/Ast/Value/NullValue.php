@@ -2,8 +2,8 @@
 
 namespace Phpactor\DocblockParser\Ast\Value;
 
-use Phpactor\DocblockParser\Ast\ValueNode;
 use Phpactor\DocblockParser\Ast\Token;
+use Phpactor\DocblockParser\Ast\ValueNode;
 
 class NullValue extends ValueNode
 {

@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\Behat\Tests\Unit\ReferenceFinder;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Behat\Context;
 use Phpactor\Extension\Behat\Behat\Step;
 use Phpactor\Extension\Behat\Behat\StepGenerator;
@@ -12,14 +11,15 @@ use Phpactor\Extension\Behat\ReferenceFinder\StepDefinitionLocator;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class StepDefinitionLocatorTest extends TestCase
 {
     use ProphecyTrait;
-    const EXAMPLE_PATH = '/path/to.php';
-    const EXAMPLE_OFFSET = 6666;
+    public const EXAMPLE_PATH = '/path/to.php';
+    public const EXAMPLE_OFFSET = 6666;
 
     private StepDefinitionLocator $locator;
 

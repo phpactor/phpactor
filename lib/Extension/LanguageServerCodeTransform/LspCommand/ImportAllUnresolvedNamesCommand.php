@@ -2,16 +2,16 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 
+use function Amp\call;
 use Amp\Promise;
 use Generator;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\CandidateFinder;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameCandidate;
-use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
-use function Amp\call;
+use Phpactor\LanguageServerProtocol\MessageActionItem;
 
 class ImportAllUnresolvedNamesCommand implements Command
 {

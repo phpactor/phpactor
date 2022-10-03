@@ -2,18 +2,18 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Watcher;
 
+use function Amp\call;
 use Amp\Deferred;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\AmpFsWatch\ModifiedFileBuilder;
 use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\AmpFsWatch\WatcherProcess;
+use Phpactor\LanguageServer\Event\FilesChanged;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServerProtocol\FileEvent;
-use Phpactor\LanguageServer\Event\FilesChanged;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\EventDispatcher\ListenerProviderInterface;
-use function Amp\call;
 
 class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProviderInterface
 {

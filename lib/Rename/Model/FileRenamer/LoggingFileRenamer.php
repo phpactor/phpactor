@@ -2,11 +2,11 @@
 
 namespace Phpactor\Rename\Model\FileRenamer;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LoggerInterface;
-use function Amp\call;
 
 class LoggingFileRenamer implements FileRenamer
 {

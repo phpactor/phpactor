@@ -3,9 +3,9 @@
 namespace Phpactor\DocblockParser\Tests\Unit;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
-use Phpactor\DocblockParser\Lexer;
 use Phpactor\DocblockParser\Ast\Token;
+use Phpactor\DocblockParser\Lexer;
+use PHPUnit\Framework\TestCase;
 
 class LexerTest extends TestCase
 {

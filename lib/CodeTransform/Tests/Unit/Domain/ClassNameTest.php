@@ -2,8 +2,8 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\ClassName;
+use PHPUnit\Framework\TestCase;
 
 class ClassNameTest extends TestCase
 {

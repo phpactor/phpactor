@@ -6,9 +6,9 @@ use Microsoft\PhpParser\Parser;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerSelectionRange\Handler\SelectionRangeHandler;
 use Phpactor\Extension\LanguageServerSelectionRange\Model\RangeProvider;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerSelectionRangeExtension implements Extension

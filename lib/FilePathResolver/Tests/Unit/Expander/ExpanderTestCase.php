@@ -2,10 +2,10 @@
 
 namespace Phpactor\FilePathResolver\Tests\Unit\Expander;
 
-use PHPUnit\Framework\TestCase;
 use Phpactor\FilePathResolver\Expander;
 use Phpactor\FilePathResolver\Expanders;
 use Phpactor\FilePathResolver\Filter\TokenExpandingFilter;
+use PHPUnit\Framework\TestCase;
 
 abstract class ExpanderTestCase extends TestCase
 {

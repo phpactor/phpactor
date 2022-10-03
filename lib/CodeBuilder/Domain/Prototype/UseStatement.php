@@ -6,8 +6,8 @@ use RuntimeException;
 
 class UseStatement
 {
-    const TYPE_CLASS = 'class';
-    const TYPE_FUNCTION = 'function';
+    public const TYPE_CLASS = 'class';
+    public const TYPE_FUNCTION = 'function';
 
     private Type $className;
 

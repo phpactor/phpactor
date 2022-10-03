@@ -3,8 +3,8 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
 use Generator;
-use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 
 class ImplementContractsTest extends WorseTestCase
