@@ -9,7 +9,6 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
-use Phpactor\Extension\LanguageServer\Formatter\NoFormatterConfiguredFormatter;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
 use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
@@ -429,7 +428,7 @@ class LanguageServerExtension implements Extension
             }
 
             if ($formatter === null) {
-                $formatter = new NoFormatterConfiguredFormatter($container->get(ClientApi::class));
+                return null;
             }
 
             return new FormattingHandler(
