@@ -1,0 +1,50 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+interface SomethingToDecorate {
+    public function doSomething(): void;
+    public function doSomethingElse(): int;
+}
+
+class Bar<>foo implements SomethingToDecorate
+{
+}
+
+// File: expected
+<?php
+
+namespace Phpactor;
+
+interface SomethingToDecorate {
+    public function doSomething(): void;
+    public function doSomethingElse(): int;
+}
+
+class Barfoo implements SomethingToDecorate
+{
+    /**
+     * @var SomethingToDecorate
+     */
+    private $inner;
+    public function __construct(SomethingToDecorate $inner)
+    {
+        $this->inner = $inner;
+    }
+
+    public function doSomething(): void
+    {
+        $this->inner->doSomething();
+    }
+
+    public function doSomethingElse(): int
+    {
+        return $this->inner->doSomethingElse();
+    }
+}
+
+
+
+
+

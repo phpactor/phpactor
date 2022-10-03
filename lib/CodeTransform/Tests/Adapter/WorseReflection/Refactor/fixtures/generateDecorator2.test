@@ -1,0 +1,41 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+interface SomethingToDecorate {
+    public function doSomething(string $a, int $b);
+}
+
+class Bar<>foo implements SomethingToDecorate
+{
+}
+
+// File: expected
+<?php
+
+namespace Phpactor;
+
+interface SomethingToDecorate {
+    public function doSomething(string $a, int $b);
+}
+
+class Barfoo implements SomethingToDecorate
+{
+    /**
+     * @var SomethingToDecorate
+     */
+    private $inner;
+    public function __construct(SomethingToDecorate $inner)
+    {
+        $this->inner = $inner;
+    }
+
+    public function doSomething(string $a, int $b)
+    {
+        return $this->inner->doSomething($a, $b);
+    }
+}
+
+
+
