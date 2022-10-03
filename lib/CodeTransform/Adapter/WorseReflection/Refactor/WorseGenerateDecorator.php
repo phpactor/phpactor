@@ -9,10 +9,11 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 
 class WorseGenerateDecorator implements GenerateDecorator
 {
@@ -36,22 +37,32 @@ class WorseGenerateDecorator implements GenerateDecorator
         $builder->namespace($class->name()->namespace());
         $classBuilder = $builder->class($class->name()->short());
 
-        $classBuilder->property('inner')->visibility(Visibility::PRIVATE)->type($interfaceFQN);
+
+        $interfaceType = TypeFactory::class($interfaceFQN);
+        $interfaceType = $interfaceType->toLocalType($class->scope());
+
+        $property = $classBuilder->property('inner')
+            ->visibility(Visibility::PRIVATE)
+            ->type($interfaceType->toPhpString())
+            ->docType($interfaceType->__toString());
 
         $constructor = $classBuilder->method('__construct');
-        $constructor->parameter('inner')->type($interfaceFQN);
+        $constructor->parameter('inner')->type($interfaceType->toPhpString());
         $constructor->body()->line('$this->inner = $inner;');
 
         $interface = $this->reflector->reflectInterface($interfaceFQN);
         foreach ($interface->methods() as $interfaceMethod) {
             $method = $classBuilder->method($interfaceMethod->name());
 
-            if (!($interfaceMethod->returnType() instanceof MissingType)) {
-                $method->returnType($interfaceMethod->returnType());
+            if ($interfaceMethod->returnType()->isDefined()) {
+                $method->returnType($interfaceMethod->returnType()->toLocalType($class->scope())->toPhpString());
+                foreach ($interfaceMethod->returnType()->classNamedTypes() as $type) {
+                    $builder->use($type->name());
+                }
             }
             $method->visibility($interfaceMethod->visibility());
 
-            $this->attachParameters($method, $interfaceMethod);
+            $this->attachParameters($builder, $class, $method, $interfaceMethod);
 
             $method->body()->line($this->generateMethodBody($interfaceMethod));
         }
@@ -62,13 +73,18 @@ class WorseGenerateDecorator implements GenerateDecorator
     /**
      * Copying over the method parameters from the interface to the decoration
      */
-    private function attachParameters(MethodBuilder $method, ReflectionMethod $interfaceMethod): void
+    private function attachParameters(SourceCodeBuilder $builder, ReflectionClassLike $class, MethodBuilder $method, ReflectionMethod $interfaceMethod): void
     {
         foreach ($interfaceMethod->parameters() as $interfaceMethodParameter) {
             $parameter = $method->parameter($interfaceMethodParameter->name())
-                                ->type($interfaceMethodParameter->type());
+                ->type($interfaceMethodParameter->type()->toLocalType($class->scope())->toPhpString());
+
+            foreach ($interfaceMethodParameter->type()->classNamedTypes() as $type) {
+                $builder->use($type->name());
+            }
 
             $defaultValue = $interfaceMethodParameter->default();
+
             if ($defaultValue->isDefined()) {
                 $parameter ->defaultValue($interfaceMethodParameter->default()->value());
             }

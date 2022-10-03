@@ -25,10 +25,10 @@ interface SomethingToDecorate {
 class Barfoo implements SomethingToDecorate
 {
     /**
-     * @var Phpactor\SomethingToDecorate
+     * @var SomethingToDecorate
      */
     private $inner;
-    public function __construct(Phpactor\SomethingToDecorate $inner)
+    public function __construct(SomethingToDecorate $inner)
     {
         $this->inner = $inner;
     }
