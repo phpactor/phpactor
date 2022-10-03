@@ -585,6 +585,54 @@ After:
        }
    }
 
+.. _generate_decorator:
+
+Generate Decorator
+-------------------
+
+Given a skeleton class which implements an interface, add the methods required
+to convert that class into a `decorator
+<https://en.wikipedia.org/wiki/Decorator_pattern>`_.
+
+.. tabs::
+
+   .. tab:: LSP
+
+       Invoke code action on a class which has implemented no methods and
+       implements one or more interfaces.
+
+Before and After
+~~~~~~~~~~~~~~~~
+
+.. code:: php
+
+   <?php
+
+   class Foobar implements Countable
+   {
+   }
+
+After:
+
+.. code:: php
+
+   <?php
+
+   class Foobar implements Countable
+   {
+       private Countable $innerCounter;
+
+       public function __construct(Countable $innerCounter)
+       {
+           $this->innerCounter = $innerCounter;
+       }
+
+       public function count(): int
+       {
+           return $this->innerCounter->count();
+       }
+   }
+
 .. _refactoring_import_missing_class:
 
 Import Class
