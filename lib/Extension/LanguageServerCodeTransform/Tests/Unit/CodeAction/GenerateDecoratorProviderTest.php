@@ -84,6 +84,15 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
         , 1
         ];
 
+        yield 'interface provides no actions' => [
+            <<<'EOT'
+                <?php
+                interface S<>omeInterface {public function foo(): void {}}
+
+                EOT
+        , 0
+        ];
+
         yield 'class with multiple interfaces' => [
             <<<'EOT'
                 <?php

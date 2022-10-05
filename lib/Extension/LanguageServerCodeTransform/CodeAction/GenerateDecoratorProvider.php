@@ -40,7 +40,13 @@ class GenerateDecoratorProvider implements CodeActionProvider
                 return [];
             }
 
+
             $class = $classes->first();
+
+            if (!$class instanceof ReflectionClass) {
+                return [];
+            }
+
             assert($class instanceof ReflectionClass);
 
             $interfaces = $class->interfaces();
