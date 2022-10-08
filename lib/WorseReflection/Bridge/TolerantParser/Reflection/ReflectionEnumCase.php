@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase as CoreReflectionEnumCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
@@ -52,9 +53,15 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
 
     public function type(): Type
     {
+        if ($this->class()->isBacked()) {
+            return TypeFactory::enumBackedCaseType($this->class()->type(), $this->name(), $this->value());
+        }
         return TypeFactory::enumCaseType($this->class()->type(), $this->name());
     }
 
+    /**
+     * @return ReflectionEnum
+     */
     public function class(): ReflectionClassLike
     {
         return $this->enum;
@@ -73,19 +80,20 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
     {
         return false;
     }
+    
 
-    public function value()
+    public function value(): Type
     {
         if ($this->node->assignment === null) {
-            return null;
+            return new MissingType();
         }
 
-        return TypeUtil::valueOrNull($this->serviceLocator()
+        return $this->serviceLocator()
                     ->symbolContextResolver()
                     ->resolveNode(
                         new Frame('_'),
                         $this->node->assignment
-                    )->type());
+                    )->type();
     }
 
     public function memberType(): string

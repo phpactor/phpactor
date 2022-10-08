@@ -55,7 +55,8 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         /** @phpstan-ignore-next-line Constants is compatible with this */
         $members = $members->merge($this->ownMembers());
         try {
-            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface(\BackedEnum::class)->members($this);
+            $enumType = $this->isBacked() ? 'BackedEnum' : 'UnitEnum';
+            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface($enumType)->members();
             /** @phpstan-ignore-next-line It is fine */
             return $members->merge($enumMethods)->map(
                 fn (ReflectionMember $member) => $member->withClass($this)
@@ -118,5 +119,10 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
+    }
+
+    public function isBacked(): bool
+    {
+        return $this->node->enumType !== null;
     }
 }

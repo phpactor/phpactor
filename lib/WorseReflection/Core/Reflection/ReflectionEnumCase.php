@@ -2,10 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection;
 
+use Phpactor\WorseReflection\Core\Type;
+
 interface ReflectionEnumCase extends ReflectionMember
 {
-    /**
-     * @return mixed
-     */
-    public function value();
+    public function value(): Type;
 }
