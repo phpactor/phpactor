@@ -56,6 +56,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      * @dataProvider provideVariable
      * @dataProvider provideProperty
      * @dataProvider provideConstant
+     * @dataProvider provideEnum
      * @dataProvider provideEnumCase
      * @dataProvider provideTrait
      * @dataProvider provideFunction
@@ -541,6 +542,33 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
                 )->first()->properties()->get('foobar');
             },
             'property5.md',
+        ];
+    }
+
+    /**
+     * @return Generator<mixed>
+     */
+    public function provideEnum(): Generator
+    {
+        if (!defined('T_ENUM')) {
+            return;
+        }
+
+        yield 'enum' => [
+            '',
+            function (Reflector $reflector) {
+                return $reflector->reflectClassesIn(
+                    <<<'EOT'
+                        <?php
+
+                        enum Foobar
+                        {
+                            case FOOBAR;
+                        }
+                        EOT
+                )->first();
+            },
+            'enum.md',
         ];
     }
 

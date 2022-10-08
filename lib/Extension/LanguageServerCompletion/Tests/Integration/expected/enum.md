@@ -1,0 +1,3 @@
+enum Foobar {
+    case FOOBAR;
+}
