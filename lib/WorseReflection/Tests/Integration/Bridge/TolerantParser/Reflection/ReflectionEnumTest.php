@@ -95,7 +95,7 @@ class ReflectionEnumTest extends IntegrationTestCase
             function (ReflectionEnum $class): void {
                 $case = $class->cases()->get('FOOBAR');
                 self::assertEquals('FOOBAR', $case->name());
-                self::assertEquals(TypeFactory::unknown(), $case->type());
+                self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
                 self::assertNull($case->value());
             },
         ];

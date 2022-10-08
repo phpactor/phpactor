@@ -1,0 +1,9 @@
+<?php
+
+enum Foo {
+   const BAR = 'bar';
+   case FOO;
+}
+
+wrAssertType('Foo::FOO', Foo::FOO);
+wrAssertType('"bar"', Foo::BAR);

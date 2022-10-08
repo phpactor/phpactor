@@ -52,7 +52,7 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
 
     public function type(): Type
     {
-        return TypeFactory::unknown();
+        return TypeFactory::enumCaseType($this->class()->type(), $this->name());
     }
 
     public function class(): ReflectionClassLike

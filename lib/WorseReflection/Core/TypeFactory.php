@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\EnumCaseType;
 use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
@@ -355,6 +356,10 @@ class TypeFactory
         return new ThisType($type);
     }
 
+    public static function enumCaseType(ClassType $enumType, string $name): EnumCaseType
+    {
+        return new EnumCaseType($enumType, $name);
+    }
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
