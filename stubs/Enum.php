@@ -17,11 +17,13 @@ interface UnitEnum
     public static function cases(): array;
 }
 
-/**
- * @method static BackedEnumCase[] cases()
- */
 interface BackedEnum extends UnitEnum
 {
+    /**
+     * @return BackedEnumCase[]
+     */
+    public static function cases(): array;
+
     /**
      * @param int|string $value
      * @return static
