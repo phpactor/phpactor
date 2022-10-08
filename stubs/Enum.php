@@ -1,8 +1,11 @@
 <?php
 
-/**
- * @property string $name
- */
+class BackedEnumCase {
+    public string $name;
+    /** @var int|string */
+    public $value;
+}
+
 interface UnitEnum
 {
     /**
@@ -11,9 +14,6 @@ interface UnitEnum
     public static function cases(): array;
 }
 
-/**
- * @property int|string $value
- */
 interface BackedEnum extends UnitEnum
 {
     /**

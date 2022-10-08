@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class EnumCaseType extends Type implements ClassNamedType
 {
@@ -34,6 +35,6 @@ class EnumCaseType extends Type implements ClassNamedType
 
     public function name(): ClassName
     {
-        return $this->enumType->name();
+        return ClassName::fromString('BackedEnumCase');
     }
 }
