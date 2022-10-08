@@ -143,5 +143,23 @@ class TypeUtilTest extends TestCase
             ),
             'Bar|Baz',
         ];
+        yield 'Static' => [
+            TypeFactory::static(
+                TypeFactory::class('\Foo\Bar'),
+            ),
+            'static(Bar)',
+        ];
+        yield 'This' => [
+            TypeFactory::this(
+                TypeFactory::class('\Foo\Bar'),
+            ),
+            '$this(Bar)',
+        ];
+        yield 'Nullable (todo: fixme)' => [
+            TypeFactory::nullable(
+                TypeFactory::class('\Foo\Bar'),
+            ),
+            '?Foo\Bar',
+        ];
     }
 }

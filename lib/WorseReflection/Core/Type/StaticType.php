@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -10,7 +11,7 @@ class StaticType extends Type
 {
     protected ?Type $class;
 
-    public function __construct(?Type $class = null)
+    final public function __construct(?Type $class = null)
     {
         $this->class = $class;
     }
@@ -40,5 +41,13 @@ class StaticType extends Type
     public function accepts(Type $type): Trinary
     {
         return Trinary::maybe();
+    }
+
+    public function map(Closure $mapper): Type
+    {
+        if (!$this->class) {
+            return $mapper($this);
+        }
+        return $mapper(new static($mapper($this->class)));
     }
 }

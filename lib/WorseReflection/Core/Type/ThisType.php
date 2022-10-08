@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-class ThisType extends StaticType
+final class ThisType extends StaticType
 {
     public function __toString(): string
     {

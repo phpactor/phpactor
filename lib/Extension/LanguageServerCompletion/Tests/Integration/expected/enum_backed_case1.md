@@ -1,2 +1,1 @@
 case FOOBAR = "foo";
-

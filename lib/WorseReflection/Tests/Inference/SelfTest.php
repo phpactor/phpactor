@@ -27,7 +27,11 @@ class SelfTest extends IntegrationTestCase
     public function provideSelf(): Generator
     {
         foreach ((array)glob(__DIR__ . '/*/*.test') as $fname) {
-            yield basename(dirname($fname)) .' ' . basename((string)$fname) => [
+            $dirName = basename(dirname((string)$fname));
+            if ($dirName === 'enum' && !defined('T_ENUM')) {
+                continue;
+            }
+            yield $dirName .' ' . basename((string)$fname) => [
                 $fname
             ];
         }

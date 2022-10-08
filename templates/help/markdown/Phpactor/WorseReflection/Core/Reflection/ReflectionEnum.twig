@@ -1,0 +1,6 @@
+{% if object.deprecation.isDefined %}{{ render(object.deprecation) }}{% endif %}
+enum {{ object.name.short }}{% if object.isBacked %}: {{ render(object.backedType) }}{% endif %} {
+{% for member in object.members.byVisibilities(["public"]) -%}
+{{ '    ' ~ render(member) }}
+{% endfor -%}
+}

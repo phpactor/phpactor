@@ -95,6 +95,11 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
         return new self($this->serviceLocator, $class, $this->declaration, $this->node);
     }
 
+    public function isStatic(): bool
+    {
+        return true;
+    }
+
     protected function node(): Node
     {
         return $this->declaration;

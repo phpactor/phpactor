@@ -17,6 +17,8 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEnum
 {
@@ -55,7 +57,8 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         /** @phpstan-ignore-next-line Constants is compatible with this */
         $members = $members->merge($this->ownMembers());
         try {
-            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface('BackedEnum')->methods($this);
+            $enumType = $this->isBacked() ? 'BackedEnum' : 'UnitEnum';
+            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface($enumType)->members();
             /** @phpstan-ignore-next-line It is fine */
             return $members->merge($enumMethods)->map(
                 fn (ReflectionMember $member) => $member->withClass($this)
@@ -77,7 +80,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
 
     public function properties(): CoreReflectionPropertyCollection
     {
-        return $this->ownMembers()->properties();
+        return $this->members()->properties();
     }
 
     public function name(): ClassName
@@ -105,6 +108,16 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
             $this->node()->getLeadingCommentAndWhitespaceText(),
             $this->scope()
         );
+    }
+
+    public function isBacked(): bool
+    {
+        return $this->node->enumType !== null;
+    }
+
+    public function backedType(): Type
+    {
+        return NodeUtil::typeFromQualfiedNameLike($this->serviceLocator()->reflector(), $this->node, $this->node->enumType);
     }
 
     /**

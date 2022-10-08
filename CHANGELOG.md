@@ -9,9 +9,13 @@ Bug fixes:
   - [tp] Update tolerant parser library fixing issue with parsing `match` keyword #1873
   - [rpc] Fix regression with :PhpactorClassNew opening in `Untitled` buffer #1881
   - [ctf] Fix token issue with simple class-to-file converter #920
+  - [wr] Built-in enum members are reflected #1902
 
 Improvements:
 
+  - [wr] Better modelling of enums
+  - [wr] Add additional phpactor-specific stubs (e.g. for Enums)
+  - [lsp] Enum hover improvement
   - [lsp] Improve formating signature help parameters #1894
   - [lsp] Highlighting more 10x faster #1891
   - [cmp/lsp] inline type information for completion items

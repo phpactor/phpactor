@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\GenericTypeResolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type\ClassType;
@@ -92,6 +93,14 @@ class NodeContextFromMemberAccess
                 continue;
             }
             $types[] = $subType;
+
+            if ($reflection instanceof ReflectionEnum && $memberType === 'constant') {
+                foreach ($reflection->members()->byMemberType('enum')->byName($memberName) as $member) {
+                    // if multiple classes declare a member, always take the "top" one
+                    $memberTypes[$memberName] = $this->resolveMemberType($frame, $member, $node, $subType);
+                    break;
+                }
+            }
 
             foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
                 // if multiple classes declare a member, always take the "top" one

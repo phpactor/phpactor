@@ -14,6 +14,8 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\EnumBackedCaseType;
+use Phpactor\WorseReflection\Core\Type\EnumCaseType;
 use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\FloatLiteralType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
@@ -40,6 +42,7 @@ use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Type\StringType;
+use Phpactor\WorseReflection\Core\Type\ThisType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Reflector;
@@ -344,6 +347,25 @@ class TypeFactory
         return new ClassStringType(ClassName::fromString($classFqn));
     }
 
+    public static function static(?Type $type = null): StaticType
+    {
+        return new StaticType($type);
+    }
+
+    public static function this(?Type $type = null): ThisType
+    {
+        return new ThisType($type);
+    }
+
+    public static function enumCaseType(ClassType $enumType, string $name): EnumCaseType
+    {
+        return new EnumCaseType($enumType, $name);
+    }
+
+    public static function enumBackedCaseType(ClassType $enumType, string $name, Type $value): EnumBackedCaseType
+    {
+        return new EnumBackedCaseType($enumType, $name, $value);
+    }
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {

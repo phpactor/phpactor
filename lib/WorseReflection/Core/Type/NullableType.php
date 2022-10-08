@@ -2,11 +2,12 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
 
-class NullableType extends Type implements HasEmptyType
+final class NullableType extends Type implements HasEmptyType
 {
     public Type $type;
 
@@ -57,5 +58,10 @@ class NullableType extends Type implements HasEmptyType
     public function emptyType(): Type
     {
         return $this;
+    }
+
+    public function map(Closure $mapper): Type
+    {
+        return $mapper($this);
     }
 }
