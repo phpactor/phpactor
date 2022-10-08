@@ -570,6 +570,23 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'enum.md',
         ];
+
+        yield 'backed enum' => [
+            '',
+            function (Reflector $reflector) {
+                return $reflector->reflectClassesIn(
+                    <<<'EOT'
+                        <?php
+
+                        enum Foobar: string
+                        {
+                            case FOOBAR = "bar";
+                        }
+                        EOT
+                )->first();
+            },
+            'backed_enum.md',
+        ];
     }
 
     /**
