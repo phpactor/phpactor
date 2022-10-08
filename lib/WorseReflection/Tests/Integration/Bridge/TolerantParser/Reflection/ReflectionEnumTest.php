@@ -4,6 +4,8 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Refle
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\EnumBackedCaseType;
+use Phpactor\WorseReflection\Core\Type\EnumCaseType;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
@@ -97,6 +99,7 @@ class ReflectionEnumTest extends IntegrationTestCase
                 self::assertEquals('FOOBAR', $case->name());
                 self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
                 self::assertNull($case->value());
+                self::assertInstanceOf(EnumCaseType::class, $case->type());
             },
         ];
         yield 'Return backed case' => [
@@ -116,6 +119,7 @@ class ReflectionEnumTest extends IntegrationTestCase
                 self::assertEquals('FOOBAR', $case->name());
                 self::assertEquals('FOO', $case->value());
                 self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
+                self::assertInstanceOf(EnumBackedCaseType::class, $case->type());
             },
         ];
         yield 'Return backed methods' => [

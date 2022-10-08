@@ -6,4 +6,5 @@ enum Foo {
 }
 
 wrAssertType('Foo::FOO', Foo::FOO);
+wrAssertType('<missing>', Foo::FOO->value);
 wrAssertType('"bar"', Foo::BAR);

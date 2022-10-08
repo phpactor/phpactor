@@ -1,0 +1,8 @@
+<?php
+
+enum Foo: string 
+   case BAR = 'bar';
+}
+
+// need better generic support here
+wrAssertType('<missing>', Foo::FOO->value);
