@@ -40,6 +40,7 @@ use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 use Phpactor\WorseReflection\Core\Type\StringType;
+use Phpactor\WorseReflection\Core\Type\ThisType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Reflector;
@@ -452,5 +453,10 @@ class TypeFactory
     public static function static(?Type $type = null): StaticType
     {
         return new StaticType($type);
+    }
+
+    public static function this(?Type $type = null): ThisType
+    {
+        return new ThisType($type);
     }
 }
