@@ -448,4 +448,9 @@ class TypeFactory
 
         return self::floatLiteral((float)$value);
     }
+
+    public static function static(?Type $type = null): StaticType
+    {
+        return new StaticType($type);
+    }
 }

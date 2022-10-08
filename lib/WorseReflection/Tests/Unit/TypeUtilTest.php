@@ -143,5 +143,11 @@ class TypeUtilTest extends TestCase
             ),
             'Bar|Baz',
         ];
+        yield 'Static' => [
+            TypeFactory::static(
+                TypeFactory::class('\Foo\Bar'),
+            ),
+            'static(Bar)',
+        ];
     }
 }
