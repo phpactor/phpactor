@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
-use BackedEnum;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
