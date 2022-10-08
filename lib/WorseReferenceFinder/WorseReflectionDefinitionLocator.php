@@ -219,7 +219,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                 $members = $containingClass->constants();
                 break;
             case Symbol::PROPERTY:
-                assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionTrait);
+                assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionTrait || $containingClass instanceof ReflectionEnum);
                 $members = $containingClass->properties();
                 break;
             default:

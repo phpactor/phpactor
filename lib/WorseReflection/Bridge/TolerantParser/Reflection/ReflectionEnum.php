@@ -55,7 +55,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         /** @phpstan-ignore-next-line Constants is compatible with this */
         $members = $members->merge($this->ownMembers());
         try {
-            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface('BackedEnum')->methods($this);
+            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface(\BackedEnum::class)->members($this);
             /** @phpstan-ignore-next-line It is fine */
             return $members->merge($enumMethods)->map(
                 fn (ReflectionMember $member) => $member->withClass($this)
@@ -77,7 +77,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
 
     public function properties(): CoreReflectionPropertyCollection
     {
-        return $this->ownMembers()->properties();
+        return $this->members()->properties();
     }
 
     public function name(): ClassName
