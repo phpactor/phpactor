@@ -1575,26 +1575,25 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "e9b70229f9e705eaeb7b476e37d1113888c30ad5"
+                "reference": "290dabd216a5486c3faff32e5f84742e6c038108"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/e9b70229f9e705eaeb7b476e37d1113888c30ad5",
-                "reference": "e9b70229f9e705eaeb7b476e37d1113888c30ad5",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/290dabd216a5486c3faff32e5f84742e6c038108",
+                "reference": "290dabd216a5486c3faff32e5f84742e6c038108",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0",
-                "psr/log": "^1.0",
-                "webmozart/path-util": "^2.3"
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
+                "symfony/filesystem": "^4.2 || ^5.0 || ^6.0"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/phpstan": "~0.12.0",
+                "phpstan/phpstan": "^1.0",
                 "phpunit/phpunit": "^9.0",
-                "symfony/filesystem": "^4.2 || ^5.0",
                 "symfony/var-dumper": "^6.0 || ^5.0"
             },
             "default-branch": true,
@@ -1623,7 +1622,7 @@
             "support": {
                 "source": "https://github.com/phpactor/class-to-file/tree/master"
             },
-            "time": "2022-04-07T19:08:43+00:00"
+            "time": "2022-10-08T08:32:21+00:00"
         },
         {
             "name": "phpactor/container",
