@@ -108,6 +108,11 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         );
     }
 
+    public function isBacked(): bool
+    {
+        return $this->node->enumType !== null;
+    }
+
     /**
      * @return EnumDeclaration
      */
@@ -119,10 +124,5 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
-    }
-
-    public function isBacked(): bool
-    {
-        return $this->node->enumType !== null;
     }
 }

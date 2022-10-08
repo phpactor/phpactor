@@ -371,6 +371,14 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             $this->markTestSkipped('PHP8.1');
         }
         $location = $this->locate(<<<'EOT'
+            // File: stub.php
+            class BackedEnumCase {
+                public string $name;
+                /** @var int|string */
+                public $value;
+            }
+            interface UnitEnum {}
+            interface BackedEnum {}
             // File: FoobarEnum.php
             <?php enum FoobarEnum:string { case BAR = 'foo'; }
             EOT

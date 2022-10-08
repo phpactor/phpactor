@@ -9,7 +9,9 @@ use Phpactor\WorseReflection\Core\Type;
 class EnumBackedCaseType extends Type implements ClassNamedType
 {
     public ClassType $enumType;
+
     public string $name;
+
     public Type $value;
 
     public function __construct(ClassType $enumType, string $name, Type $value)

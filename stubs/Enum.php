@@ -1,7 +1,10 @@
 <?php
 
-class BackedEnumCase {
+class UnitEnumCase {
     public string $name;
+}
+
+class BackedEnumCase extends UnitEnumCase {
     /** @var int|string */
     public $value;
 }
@@ -9,11 +12,14 @@ class BackedEnumCase {
 interface UnitEnum
 {
     /**
-     * @return static[]
+     * @return UnitEnumCase[]
      */
     public static function cases(): array;
 }
 
+/**
+ * @method static BackedEnumCase[] cases()
+ */
 interface BackedEnum extends UnitEnum
 {
     /**

@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase as CoreReflectionEnumCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 
 class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreReflectionEnumCase
@@ -80,7 +79,7 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
     {
         return false;
     }
-    
+
 
     public function value(): Type
     {
@@ -112,6 +111,11 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
         return new self($this->serviceLocator, $class, $this->node);
     }
 
+    public function isStatic(): bool
+    {
+        return true;
+    }
+
     protected function node(): Node
     {
         return $this->node;
@@ -120,10 +124,5 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
-    }
-
-    public function isStatic(): bool
-    {
-        return true;
     }
 }

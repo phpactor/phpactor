@@ -13,4 +13,6 @@ interface ReflectionEnum extends ReflectionClassLike
     public function properties(): ReflectionPropertyCollection;
 
     public function cases(): ReflectionEnumCaseCollection;
+
+    public function isBacked(): bool;
 }

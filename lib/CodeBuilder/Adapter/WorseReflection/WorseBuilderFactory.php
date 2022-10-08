@@ -23,10 +23,8 @@ use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 
 class WorseBuilderFactory implements BuilderFactory
 {
-    /**
-     * @var Reflector|ClassName
-     */
-    private $reflector;
+
+    private Reflector $reflector;
 
     public function __construct(Reflector $reflector)
     {

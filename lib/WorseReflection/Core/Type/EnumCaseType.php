@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Type;
 class EnumCaseType extends Type implements ClassNamedType
 {
     public ClassType $enumType;
+
     public string $name;
 
     public function __construct(ClassType $enumType, string $name)
@@ -34,6 +35,6 @@ class EnumCaseType extends Type implements ClassNamedType
 
     public function name(): ClassName
     {
-        return ClassName::fromString('BackedEnumCase');
+        return ClassName::fromString('UnitEnumCase');
     }
 }
