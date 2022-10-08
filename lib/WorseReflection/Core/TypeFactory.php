@@ -345,6 +345,16 @@ class TypeFactory
         return new ClassStringType(ClassName::fromString($classFqn));
     }
 
+    public static function static(?Type $type = null): StaticType
+    {
+        return new StaticType($type);
+    }
+
+    public static function this(?Type $type = null): ThisType
+    {
+        return new ThisType($type);
+    }
+
 
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
@@ -448,15 +458,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    public static function static(?Type $type = null): StaticType
-    {
-        return new StaticType($type);
-    }
-
-    public static function this(?Type $type = null): ThisType
-    {
-        return new ThisType($type);
     }
 }
