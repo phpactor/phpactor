@@ -101,6 +101,7 @@ class ReflectionEnumTest extends IntegrationTestCase
                 self::assertInstanceOf(MissingType::class, $case->value());
                 self::assertInstanceOf(EnumCaseType::class, $case->type());
                 self::assertEquals('FOOBAR', $case->name());
+                self::assertFalse($class->isBacked());
             },
         ];
         yield 'Return backed case' => [
@@ -121,6 +122,8 @@ class ReflectionEnumTest extends IntegrationTestCase
                 self::assertEquals('"FOO"', $case->value()->__toString());
                 self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
                 self::assertInstanceOf(EnumBackedCaseType::class, $case->type());
+                self::assertTrue($class->isBacked());
+                self::assertEquals('string', $class->backedType());
             },
         ];
         yield 'Return backed methods' => [
@@ -130,7 +133,7 @@ class ReflectionEnumTest extends IntegrationTestCase
                             interface BackedEnum {
                                 public static function from(int|string $value): static;
                                 public static function tryFrom(int|string $value): ?static;
-                                public static function UnitEnum::cases(): array;
+                                public static function cases(): array;
                             }
 
                             enum Enum1:string
@@ -142,6 +145,7 @@ class ReflectionEnumTest extends IntegrationTestCase
             'Enum1',
             function (ReflectionEnum $class): void {
                 $method = $class->methods()->get('from');
+                self::assertTrue($class->methods()->has('cases'));
                 self::assertEquals('Enum1', $method->returnType()->__toString());
             },
         ];

@@ -97,8 +97,8 @@ class Phpactor
         $config[CoreExtension::PARAM_COMMAND] = $input->getFirstArgument();
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = array_merge([ IndexerExtension::PARAM_STUB_PATHS => [] ], $config);
-        $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/stubs';
         $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/vendor/jetbrains/phpstorm-stubs';
+        $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/stubs';
         $config = self::configureLanguageServer($config);
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {

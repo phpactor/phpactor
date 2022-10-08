@@ -17,6 +17,8 @@ use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEnum
 {
@@ -111,6 +113,11 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     public function isBacked(): bool
     {
         return $this->node->enumType !== null;
+    }
+
+    public function backedType(): Type
+    {
+        return NodeUtil::typeFromQualfiedNameLike($this->serviceLocator()->reflector(), $this->node, $this->node->enumType);
     }
 
     /**
