@@ -115,6 +115,7 @@ class ReflectionEnumTest extends IntegrationTestCase
                 $case = $class->cases()->get('FOOBAR');
                 self::assertEquals('FOOBAR', $case->name());
                 self::assertEquals('FOO', $case->value());
+                self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
             },
         ];
         yield 'Return backed methods' => [
