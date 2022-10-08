@@ -104,4 +104,9 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
     {
         return $this->serviceLocator;
     }
+
+    public function isStatic(): bool
+    {
+        return true;
+    }
 }

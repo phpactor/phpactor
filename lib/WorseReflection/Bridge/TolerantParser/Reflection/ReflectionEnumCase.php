@@ -113,4 +113,9 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
     {
         return $this->serviceLocator;
     }
+
+    public function isStatic(): bool
+    {
+        return true;
+    }
 }

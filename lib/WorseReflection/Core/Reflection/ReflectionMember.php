@@ -50,6 +50,8 @@ interface ReflectionMember
 
     public function isVirtual(): bool;
 
+    public function isStatic(): bool;
+
     /**
      * @return self::TYPE_*
      */
