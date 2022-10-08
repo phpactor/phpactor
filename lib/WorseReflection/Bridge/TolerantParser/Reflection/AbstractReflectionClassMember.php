@@ -61,7 +61,9 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
     public function visibility(): Visibility
     {
         $node = $this->node();
-        assert($node instanceof PropertyDeclaration || $node instanceof ClassConstDeclaration || $node instanceof MethodDeclaration);
+        if (!$node instanceof PropertyDeclaration && !$node instanceof ClassConstDeclaration && !$node instanceof MethodDeclaration) {
+            return Visibility::public();
+        }
         foreach ($node->modifiers as $token) {
             if ($token->kind === TokenKind::PrivateKeyword) {
                 return Visibility::private();
