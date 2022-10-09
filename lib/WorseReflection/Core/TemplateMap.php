@@ -89,4 +89,21 @@ final class TemplateMap
     {
         return count($this->map);
     }
+
+    /**
+     * @param Type[] $arguments
+     */
+    public function mapArguments(array $arguments): TemplateMap
+    {
+        $newMap = [];
+        foreach ($this->map as $key => $type) {
+            $argument = array_shift($arguments);
+            if (null === $argument) {
+                break;
+            }
+            $newMap[$key] = $argument;
+        }
+
+        return new self($newMap);
+    }
 }

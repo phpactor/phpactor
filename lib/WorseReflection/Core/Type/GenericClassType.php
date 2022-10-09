@@ -44,7 +44,7 @@ class GenericClassType extends ReflectedClassType implements IterableType, Class
 
     public function iterableValueType(): Type
     {
-        return IterableTypeResolver::resolveIterable($this, $this->arguments);
+        return IterableTypeResolver::resolveIterable($this->reflector, $this, $this->arguments);
     }
 
     public function toPhpString(): string

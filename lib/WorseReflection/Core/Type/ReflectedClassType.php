@@ -115,7 +115,7 @@ class ReflectedClassType extends ClassType
                 return new MissingType();
             }
 
-            $type = IterableTypeResolver::resolveIterable($genericType, $genericType->arguments());
+            $type = IterableTypeResolver::resolveIterable($this->reflector, $genericType, $genericType->arguments());
             if (!$type->isDefined()) {
                 continue;
             }
