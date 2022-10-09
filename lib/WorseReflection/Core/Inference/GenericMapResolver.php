@@ -26,6 +26,7 @@ class GenericMapResolver
         if (!$topClass instanceof ClassType) {
             return null;
         }
+
         $topReflection = $this->reflector->reflectClassLike($topClass->name());
 
         $templateMap = $topReflection->templateMap();

@@ -33,17 +33,5 @@ interface Collection extends \IteratorAggregate, \ArrayAccess
 }
 
 function foobar(Foos $foos) {
-    foreach ($foos->all() as $foo) {
-        wrAssertType('void', $foo->bar()); // OK
-    }
-
-    wrAssertType('Test\Collection<int,Test\Foo>', $foos->all());
     wrAssertType('Test\Foo', $foos->all()->first());
-    wrAssertType('void', $foos->all()->first()->bar());
-    wrAssertType('Test\Collection<int,Test\Foo>', $foos->all()->filter(fn($foo)));
-
-    $filtered = $foos->all()->filter(fn($foo) => $foo);
-    foreach ($filtered as $foo) {
-        wrAssertType('void', $foo->bar());
-    }
 }

@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
@@ -138,9 +139,9 @@ class NodeContextFromMemberAccess
 
 
         $declaringClass = GenericTypeResolver::declaringClass($member);
+
         if (count($declaringClass->templateMap())) {
-            $templateMap = $this->resolver->resolveClassTemplateMap($subType, $declaringClass->name());
-            //dump($templateMap->__toString());readline();
+            $templateMap = $this->resolver->resolveClassTemplateMap($subType, $declaringClass->name(), $subType instanceof GenericClassType ? $subType->arguments() : []);
             if ($templateMap && $templateMap->has($member->inferredType()->short())) {
                 $inferredType = $templateMap->get($member->inferredType()->short());
             }
