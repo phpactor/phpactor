@@ -26,7 +26,7 @@ class IntegrationTestCase extends TestCase
     {
         return ReflectorBuilder::create()
             ->addLocator(new StubSourceLocator(
-                ReflectorBuilder::create()->build(), 
+                ReflectorBuilder::create()->build(),
                 __DIR__ .'/../../../../stubs',
                 $this->workspace()->path('/')
             ))

@@ -34,7 +34,8 @@ class GenericMapResolver
 
         foreach (array_merge(
             $topReflection->docblock()->implements(),
-            $topReflection->docblock()->extends()) as $genericClass
+            $topReflection->docblock()->extends()
+        ) as $genericClass
         ) {
             if (!$genericClass instanceof GenericClassType) {
                 // todo: trigger a diagnostic?
@@ -47,6 +48,11 @@ class GenericMapResolver
                 }
                 return $type;
             });
+
+            if (!$genericClass instanceof GenericClassType) {
+                // should not happen
+                continue;
+            }
 
             if (null !== $templateMap = $this->resolveClassTemplateMap($genericClass, $bottomClass, $genericClass->arguments())) {
                 return $templateMap;

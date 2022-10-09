@@ -159,6 +159,11 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         );
     }
 
+    public function hierarchy(): ReflectionClassLikeCollection
+    {
+        return ReflectionClassLikeCollection::fromReflections((new ClassHierarchyResolver())->resolve($this));
+    }
+
     /**
      * @return InterfaceDeclaration
      */
@@ -170,10 +175,5 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
-    }
-
-    public function hierarchy(): ReflectionClassLikeCollection
-    {
-        return ReflectionClassLikeCollection::fromReflections((new ClassHierarchyResolver())->resolve($this));
     }
 }
