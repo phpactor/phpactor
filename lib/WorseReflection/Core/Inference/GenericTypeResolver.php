@@ -153,7 +153,7 @@ class GenericTypeResolver
         });
     }
 
-    private function declaringClass(ReflectionMember $member): ReflectionClassLike
+    public static function declaringClass(ReflectionMember $member): ReflectionClassLike
     {
         $reflectionClass = $member->declaringClass();
 

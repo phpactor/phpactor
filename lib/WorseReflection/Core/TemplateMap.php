@@ -2,9 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Countable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 
-final class TemplateMap
+final class TemplateMap implements Countable
 {
     /**
      * @var array<string,Type>

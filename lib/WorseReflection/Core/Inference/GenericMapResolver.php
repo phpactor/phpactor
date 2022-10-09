@@ -21,8 +21,11 @@ class GenericMapResolver
     /**
      * @param Type[] $arguments
      */
-    public function resolveClassTemplateMap(ClassType $topClass, ClassName $bottomClass, array $arguments = []): ?TemplateMap
+    public function resolveClassTemplateMap(Type $topClass, ClassName $bottomClass, array $arguments = []): ?TemplateMap
     {
+        if (!$topClass instanceof ClassType) {
+            return null;
+        }
         $topReflection = $this->reflector->reflectClassLike($topClass->name());
 
         $templateMap = $topReflection->templateMap();
@@ -54,8 +57,8 @@ class GenericMapResolver
                 continue;
             }
 
-            if (null !== $templateMap = $this->resolveClassTemplateMap($genericClass, $bottomClass, $genericClass->arguments())) {
-                return $templateMap;
+            if (null !== $resolved = $this->resolveClassTemplateMap($genericClass, $bottomClass, $genericClass->arguments())) {
+                return $resolved;
             }
         }
 

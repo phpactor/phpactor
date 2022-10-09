@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -30,11 +31,11 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 
 class NodeContextFromMemberAccess
 {
-    private GenericTypeResolver $genericResolver;
+    private GenericMapResolver $resolver;
 
-    public function __construct()
+    public function __construct(GenericMapResolver $resolver)
     {
-        $this->genericResolver = new GenericTypeResolver();
+        $this->resolver = $resolver;
     }
 
     public function infoFromMemberAccess(NodeContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
@@ -136,7 +137,14 @@ class NodeContextFromMemberAccess
         }
 
 
-        $inferredType = $this->genericResolver->resolveMemberType($subType, $member, $inferredType);
+        $declaringClass = GenericTypeResolver::declaringClass($member);
+        if (count($declaringClass->templateMap())) {
+            $templateMap = $this->resolver->resolveClassTemplateMap($subType, $declaringClass->name());
+            //dump($templateMap->__toString());readline();
+            if ($templateMap && $templateMap->has($member->inferredType()->short())) {
+                $inferredType = $templateMap->get($member->inferredType()->short());
+            }
+        }
 
         // unwrap static and self types (including $this which extends Static) and any nested globbed constant unions
         $inferredType = $inferredType->map(function (Type $type) {
