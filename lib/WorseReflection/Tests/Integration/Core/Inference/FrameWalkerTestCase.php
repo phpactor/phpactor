@@ -35,8 +35,7 @@ abstract class FrameWalkerTestCase extends IntegrationTestCase
 
     private function createReflectorWithWalker($source, Walker $frameWalker = null): Reflector
     {
-        $reflector = ReflectorBuilder::create();
-        $reflector->addSource($source);
+        $reflector = $this->createBuilder($source);
 
         if ($frameWalker) {
             $reflector->addFrameWalker($frameWalker);
