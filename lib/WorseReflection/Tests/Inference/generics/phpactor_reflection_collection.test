@@ -4,7 +4,7 @@ namespace Foo;
 
 /**
  * @template T
- * @extends IteratorAggregate<T>
+ * @extends \IteratorAggregate<T>
  */
 interface ReflectionCollection extends \IteratorAggregate, \Countable
 {

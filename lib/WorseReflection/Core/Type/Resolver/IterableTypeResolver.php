@@ -64,7 +64,11 @@ class IterableTypeResolver
             $templateMap = $genericMapResolver->resolveClassTemplateMap($class->type(), ClassName::fromString($iterableClassName), $type instanceof GenericClassType ? $type->arguments() : []);
 
             if (null !== $templateMap) {
-                return $templateMap->get('TValue');
+                $value = $templateMap->get('TValue');
+                if (!$value->isDefined()) {
+                    return $templateMap->get('TKey');
+                }
+                return $value;
             }
         }
 
