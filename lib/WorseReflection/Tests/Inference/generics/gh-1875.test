@@ -2,6 +2,13 @@
 
 /**
  * @template TKey
+ * @template TValue
+ */
+interface Iterator {
+}
+
+/**
+ * @template TKey
  * @implements Iterator<TKey, string>
  */
 abstract class Test1 implements Iterator
@@ -13,29 +20,9 @@ abstract class Test1 implements Iterator
  */
 class Test2 extends Test1
 {
-    public function current(): mixed
-    {
-    }
-
-    public function next(): void
-    {
-    }
-
-    public function key(): mixed
-    {
-    }
-
-    public function valid(): bool
-    {
-    }
-
-    public function rewind(): void
-    {
-    }
-
 }
 
 /** @var Test2 $a */
-foreach ($a as $value) {
+foreach ($a as $key => $value) {
     wrAssertType('string', $value);
 }

@@ -63,7 +63,7 @@ final class ClassHierarchyResolver
      */
     private function resolveReflectionClass(ReflectionClass $classLike, array $resolved): array
     {
-        $parent = $parent = $classLike->parent();
+        $parent = $classLike->parent();
         if ($parent) {
             $resolved = $this->doResolve($parent, $resolved);
         }

@@ -39,7 +39,7 @@ class GenericClassType extends ReflectedClassType implements IterableType, Class
      */
     public function arguments(): array
     {
-        return $this->arguments;
+        return array_values($this->arguments);
     }
 
     public function iterableValueType(): Type

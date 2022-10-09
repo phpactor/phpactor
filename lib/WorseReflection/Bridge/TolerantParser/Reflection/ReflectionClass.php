@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
@@ -96,7 +97,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             return $this->members;
         }
         $members = ClassLikeReflectionMemberCollection::empty();
-        foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
+        foreach ($this->hierarchy() as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
             $classLikeMembers = $classLikeMembers->merge($this->serviceLocator->methodProviders()->provideMembers(
                 $this->serviceLocator,
@@ -372,5 +373,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     protected function node(): Node
     {
         return $this->node;
+    }
+
+    public function hierarchy(): ReflectionClassLikeCollection
+    {
+        return ReflectionClassLikeCollection::fromReflections((new ClassHierarchyResolver())->resolve($this));
     }
 }
