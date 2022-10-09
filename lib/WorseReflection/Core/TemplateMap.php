@@ -100,7 +100,8 @@ final class TemplateMap implements Countable
         foreach ($this->map as $key => $type) {
             $argument = array_shift($arguments);
             if (null === $argument) {
-                break;
+                $newMap[$key] = $type;
+                continue;
             }
             $newMap[$key] = $argument;
         }
