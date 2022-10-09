@@ -11,6 +11,7 @@ $finder = Finder::create()
         'Assets/Cache',
         'Assets/Projects',
         'Assets/Workspace',
+        'InternalStubs',
     ])
 ;
 

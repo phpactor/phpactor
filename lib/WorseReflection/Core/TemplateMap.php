@@ -2,9 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Countable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 
-final class TemplateMap
+final class TemplateMap implements Countable
 {
     /**
      * @var array<string,Type>
@@ -88,5 +89,23 @@ final class TemplateMap
     public function count(): int
     {
         return count($this->map);
+    }
+
+    /**
+     * @param Type[] $arguments
+     */
+    public function mapArguments(array $arguments): TemplateMap
+    {
+        $newMap = [];
+        foreach ($this->map as $key => $type) {
+            $argument = array_shift($arguments);
+            if (null === $argument) {
+                $newMap[$key] = $type;
+                continue;
+            }
+            $newMap[$key] = $argument;
+        }
+
+        return new self($newMap);
     }
 }

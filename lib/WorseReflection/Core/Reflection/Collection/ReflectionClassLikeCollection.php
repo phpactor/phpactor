@@ -6,9 +6,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as PhpactorReflectionClass;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum as PhpactorReflectionEnum;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface as PhpactorReflectionInterface;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait as PhpactorReflectionTrait;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
@@ -20,7 +18,7 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
 
 /**
- * @extends AbstractReflectionCollection<PhpactorReflectionClass|PhpactorReflectionEnum|PhpactorReflectionTrait|PhpactorReflectionInterface>
+ * @extends AbstractReflectionCollection<ReflectionClassLike>
  */
 final class ReflectionClassLikeCollection extends AbstractReflectionCollection
 {
@@ -65,6 +63,7 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
 
     public function classes(): ReflectionClassCollection
     {
+        /** @phpstan-ignore-next-line */
         return new ReflectionClassCollection(iterator_to_array($this->byMemberClass(PhpactorReflectionClass::class)));
     }
 

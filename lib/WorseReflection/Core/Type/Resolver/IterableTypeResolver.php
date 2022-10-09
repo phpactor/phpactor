@@ -4,8 +4,11 @@ namespace Phpactor\WorseReflection\Core\Type\Resolver;
 
 use Phpactor\WorseReflection\Core\ClassName;
 
+use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
+use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
@@ -14,8 +17,10 @@ class IterableTypeResolver
     /**
      * @param Type[] $arguments
      */
-    public static function resolveIterable(Type $type, array $arguments): Type
+    public static function resolveIterable(ClassReflector $reflector, Type $type, array $arguments): Type
     {
+        $genericMapResolver = new GenericMapResolver($reflector);
+
         if (!$type instanceof ClassType) {
             return new MissingType();
         }
@@ -31,10 +36,10 @@ class IterableTypeResolver
         }
 
         $iterableClasses = [
-            'iterable',
-            'Traversable',
-            'Iterator',
             'IteratorAggregate',
+            'Iterator',
+            'Traversable',
+            'iterable',
         ];
 
         if (in_array($type->name()->__toString(), $iterableClasses)) {
@@ -56,7 +61,15 @@ class IterableTypeResolver
                 continue;
             }
 
-            return self::valueTypeFromArgs($arguments);
+            $templateMap = $genericMapResolver->resolveClassTemplateMap($class->type(), ClassName::fromString($iterableClassName), $type instanceof GenericClassType ? $type->arguments() : []);
+
+            if (null !== $templateMap) {
+                $value = $templateMap->get('TValue');
+                if (!$value->isDefined()) {
+                    return $templateMap->get('TKey');
+                }
+                return $value;
+            }
         }
 
         return new MissingType();

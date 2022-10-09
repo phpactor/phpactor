@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
+use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\DiagnosticsWalker;
@@ -142,7 +143,7 @@ class ServiceLocator
             (new DefaultResolverFactory(
                 $this->reflector,
                 $this->nameResolver,
-                new NodeContextFromMemberAccess()
+                new NodeContextFromMemberAccess(new GenericMapResolver($this->reflector))
             ))->createResolvers(),
         );
     }

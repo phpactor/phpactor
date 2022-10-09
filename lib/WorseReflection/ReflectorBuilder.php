@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Logger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\InternalLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NullSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -131,6 +132,7 @@ final class ReflectorBuilder
      */
     public function build(): Reflector
     {
+        $this->addLocator(InternalLocator::forInternalStubs(), 100);
         return (new ServiceLocator(
             $this->buildLocator(),
             $this->buildLogger(),

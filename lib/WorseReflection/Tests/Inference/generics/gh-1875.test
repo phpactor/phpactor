@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @template TKey
+ * @template TValue
+ */
+interface Iterator {
+}
+
+/**
+ * @template TKey
+ * @implements Iterator<TKey, string>
+ */
+abstract class Test1 implements Iterator
+{
+}
+
+/**
+ * @extends Test1<int>
+ */
+class Test2 extends Test1
+{
+}
+
+/** @var Test2 $a */
+foreach ($a as $key => $value) {
+    wrAssertType('string', $value);
+}

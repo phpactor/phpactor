@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection as CoreReflectionConstantCollection;
@@ -67,7 +68,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             return $this->members;
         }
         $members = ClassLikeReflectionMemberCollection::empty();
-        foreach ((new ClassHierarchyResolver())->resolve($this) as $reflectionClassLike) {
+        foreach ($this->hierarchy() as $reflectionClassLike) {
             /** @phpstan-ignore-next-line */
             $members = $members->merge($reflectionClassLike->ownMembers());
         }
@@ -156,6 +157,11 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             $this->node()->getLeadingCommentAndWhitespaceText(),
             $this->scope()
         );
+    }
+
+    public function hierarchy(): ReflectionClassLikeCollection
+    {
+        return ReflectionClassLikeCollection::fromReflections((new ClassHierarchyResolver())->resolve($this));
     }
 
     /**

@@ -10,6 +10,7 @@ Bug fixes:
   - [rpc] Fix regression with :PhpactorClassNew opening in `Untitled` buffer #1881
   - [ctf] Fix token issue with simple class-to-file converter #920
   - [wr] Built-in enum members are reflected #1902
+  - [wr] Fix iterable generic not being resolved properly #1875
 
 Improvements:
 
@@ -20,6 +21,7 @@ Improvements:
   - [lsp] Highlighting more 10x faster #1891
   - [cmp/lsp] inline type information for completion items
   - [cmp] complete `__construct` on `parent::` #1272
+  - [wr] Refactored generic handling
 
 Features:
 

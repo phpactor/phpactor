@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\DefaultResolverFactory;
+use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -1166,7 +1167,7 @@ class NodeContextResolverTest extends IntegrationTestCase
             (new DefaultResolverFactory(
                 $reflector,
                 $nameResolver,
-                new NodeContextFromMemberAccess()
+                new NodeContextFromMemberAccess(new GenericMapResolver($reflector))
             ))->createResolvers(),
         );
 
