@@ -42,7 +42,6 @@ class GenericMapResolver
         ) as $genericClass
         ) {
             if (!$genericClass instanceof GenericClassType) {
-                // todo: trigger a diagnostic?
                 continue;
             }
 
