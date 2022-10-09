@@ -62,6 +62,6 @@ final class NullableType extends Type implements HasEmptyType
 
     public function map(Closure $mapper): Type
     {
-        return $mapper($this);
+        return new NullableType($mapper($this->type));
     }
 }

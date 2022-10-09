@@ -129,12 +129,15 @@ class NodeContextFromMemberAccess
         $inferredType = $member->inferredType();
 
         if ($member instanceof ReflectionProperty) {
-            $inferredType = self::getFrameTypesForPropertyAtPosition(
+            $propertyType = self::getFrameTypesForPropertyAtPosition(
                 $frame,
                 $member->name(),
                 $subType,
                 $node->getEndPosition(),
             );
+            if ($propertyType) {
+                $inferredType = $propertyType;
+            }
         }
 
 
@@ -142,9 +145,12 @@ class NodeContextFromMemberAccess
 
         if (count($declaringClass->templateMap())) {
             $templateMap = $this->resolver->resolveClassTemplateMap($subType, $declaringClass->name(), $subType instanceof GenericClassType ? $subType->arguments() : []);
-            if ($templateMap && $templateMap->has($member->inferredType()->short())) {
-                $inferredType = $templateMap->get($member->inferredType()->short());
-            }
+            $inferredType = $inferredType->map(function (Type $type) use ($templateMap): Type {
+                if ($templateMap && $templateMap->has($type->short())) {
+                    return $templateMap->get($type->short());
+                }
+                return $type;
+            });
         }
 
         // unwrap static and self types (including $this which extends Static) and any nested globbed constant unions

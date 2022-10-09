@@ -155,11 +155,11 @@ class TypeUtilTest extends TestCase
             ),
             '$this(Bar)',
         ];
-        yield 'Nullable (todo: fixme)' => [
+        yield 'Nullable' => [
             TypeFactory::nullable(
                 TypeFactory::class('\Foo\Bar'),
             ),
-            '?Foo\Bar',
+            '?Bar',
         ];
     }
 }

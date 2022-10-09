@@ -59,7 +59,7 @@ class ReflectionEnumTest extends IntegrationTestCase
         'Barfoo',
         function ($class): void {
             $this->assertEquals('Barfoo', (string) $class->name()->short());
-            $this->assertEquals(['foobar'], $class->methods()->keys());
+            $this->assertEquals(['foobar', 'cases'], $class->methods()->keys());
         },
     ];
         yield 'Returns all members' => [
@@ -77,7 +77,7 @@ class ReflectionEnumTest extends IntegrationTestCase
         ,
         'Enum1',
         function (ReflectionEnum $class): void {
-            $this->assertCount(3, $class->members());
+            $this->assertCount(4, $class->members());
             $this->assertInstanceOf(ReflectionEnumCase::class, $class->members()->get('FOOBAR'));
         },
         ];
