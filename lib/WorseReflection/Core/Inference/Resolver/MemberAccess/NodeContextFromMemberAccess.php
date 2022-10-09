@@ -14,6 +14,10 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\GenericTypeResolver;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -141,7 +145,7 @@ class NodeContextFromMemberAccess
         }
 
 
-        $declaringClass = GenericTypeResolver::declaringClass($member);
+        $declaringClass = self::declaringClass($member);
 
         if (count($declaringClass->templateMap())) {
             $templateMap = $this->resolver->resolveClassTemplateMap($subType, $declaringClass->name(), $subType instanceof GenericClassType ? $subType->arguments() : []);
@@ -192,5 +196,37 @@ class NodeContextFromMemberAccess
         }
 
         return $variable->type();
+    }
+
+    private static function declaringClass(ReflectionMember $member): ReflectionClassLike
+    {
+        $reflectionClass = $member->declaringClass();
+
+        if (!$reflectionClass instanceof ReflectionClass) {
+            return $reflectionClass;
+        }
+
+        $interface = self::searchInterfaces($reflectionClass->interfaces(), $member->name());
+
+        if (!$interface) {
+            return $reflectionClass;
+        }
+
+        return $interface;
+    }
+
+    private static function searchInterfaces(ReflectionInterfaceCollection $collection, string $memberName): ?ReflectionInterface
+    {
+        foreach ($collection as $interface) {
+            if ($interface->methods()->has($memberName)) {
+                return $interface;
+            }
+
+            if (null !== $interface = self::searchInterfaces($interface->parents(), $memberName)) {
+                return $interface;
+            }
+        }
+
+        return null;
     }
 }
