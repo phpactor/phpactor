@@ -25,11 +25,6 @@ class IntegrationTestCase extends TestCase
     public function createBuilder(string $source): ReflectorBuilder
     {
         return ReflectorBuilder::create()
-            ->addLocator(new StubSourceLocator(
-                ReflectorBuilder::create()->build(),
-                __DIR__ .'/../../../../stubs',
-                $this->workspace()->path('/')
-            ))
             ->addSource($source)
             ->addMemberProvider(new DocblockMemberProvider())
             ->addFrameWalker(new TestAssertWalker($this))
