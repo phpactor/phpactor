@@ -489,7 +489,7 @@ class ReflectionMethodTest extends IntegrationTestCase
                 $this->assertEquals('', $methods->get('barfoo')->parameters()->first()->name());
                 $this->assertStringContainsString(
                     'Parameter has no variable',
-                    $logger->messages()[0]
+                    $logger->messages()[2]
                 );
             },
         ];

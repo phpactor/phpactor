@@ -27,7 +27,7 @@ class IntegrationTestCase extends TestCase
         return ReflectorBuilder::create()
             ->addLocator(new StubSourceLocator(
                 ReflectorBuilder::create()->build(), 
-                __DIR__ .'/../../../../vendor/jetbrains/phpstorm-stubs',
+                __DIR__ .'/../../../../stubs',
                 $this->workspace()->path('/')
             ))
             ->addSource($source)
