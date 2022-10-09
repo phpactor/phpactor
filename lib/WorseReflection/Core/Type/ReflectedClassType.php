@@ -112,7 +112,7 @@ class ReflectedClassType extends ClassType
 
         foreach ($genericTypes as $genericType) {
             if (!$genericType instanceof GenericClassType) {
-                return new MissingType();
+                continue;
             }
 
             $type = IterableTypeResolver::resolveIterable($this->reflector, $genericType, $genericType->arguments());

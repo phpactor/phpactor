@@ -46,6 +46,7 @@ wrAssertType('ReflectionArgumentCollection', $foo);
 
 foreach ($foo as $a => $bar) {
     $bar;
+    wrAssertType('ReflectionArgument', $bar);
 }
 
 wrAssertOffset('ReflectionArgument', 883);
