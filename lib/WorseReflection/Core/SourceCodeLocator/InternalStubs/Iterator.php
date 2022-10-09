@@ -38,7 +38,6 @@ interface IteratorAggregate extends Traversable
      * <b>Traversable</b>
      * @throws Exception on failure.
      */
-    #[TentativeType]
     public function getIterator(): Traversable;
 }
 
@@ -57,7 +56,6 @@ interface Iterator extends Traversable
      * @link https://php.net/manual/en/iterator.current.php
      * @return TValue Can return any type.
      */
-    #[TentativeType]
     public function current(): mixed;
 
     /**
@@ -65,7 +63,6 @@ interface Iterator extends Traversable
      * @link https://php.net/manual/en/iterator.next.php
      * @return void Any returned value is ignored.
      */
-    #[TentativeType]
     public function next(): void;
 
     /**
@@ -73,7 +70,6 @@ interface Iterator extends Traversable
      * @link https://php.net/manual/en/iterator.key.php
      * @return TKey|null TKey on success, or null on failure.
      */
-    #[TentativeType]
     public function key(): mixed;
 
     /**
@@ -82,7 +78,6 @@ interface Iterator extends Traversable
      * @return bool The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
      */
-    #[TentativeType]
     public function valid(): bool;
 
     /**
@@ -90,6 +85,5 @@ interface Iterator extends Traversable
      * @link https://php.net/manual/en/iterator.rewind.php
      * @return void Any returned value is ignored.
      */
-    #[TentativeType]
     public function rewind(): void;
 }
