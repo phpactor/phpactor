@@ -151,6 +151,9 @@ class NodeContextFromMemberAccess
         $templateMap = $member->docblock()->templateMap();
         if ($member instanceof ReflectionMethod && count($member->docblock()->templateMap())) {
             $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
+            if (null === $arguments) {
+                return $type;
+            }
             $templateMap = $this->resolver->mergeParameters($templateMap, $member->parameters(), $arguments);
 
             $inferredType = $inferredType->map(function (Type $type) use ($templateMap): Type {
@@ -248,10 +251,10 @@ class NodeContextFromMemberAccess
     /**
      * @return Type[]
      */
-    private function resolveArguments(NodeContextResolver $resolver, Frame $frame, ?Node $node): FunctionArguments
+    private function resolveArguments(NodeContextResolver $resolver, Frame $frame, ?Node $node): ?FunctionArguments
     {
         if (!$node || !$node instanceof CallExpression) {
-            return [];
+            return null;
         }
 
         return FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
