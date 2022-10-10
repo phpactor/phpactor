@@ -247,10 +247,11 @@ class TypeConverter
         $classType = $this->convert($type->type);
 
         if ($classType instanceof ClassStringType) {
-            if ($type->parameters()->count()) {
+            $parameters = $type->parameters();
+            if ($parameters->count()) {
                 return new ClassStringType(
                     ClassName::fromString($this->convert(
-                        $type->parameters()->types()->first()
+                        $parameters->types()->first()
                     )->__toString())
                 );
             }
