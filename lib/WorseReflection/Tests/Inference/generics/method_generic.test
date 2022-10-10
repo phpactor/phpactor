@@ -16,5 +16,4 @@ class Foo
 
 $f = new Foo();
 $res = $f->bar('hello');
-\PHPStan\dumpType($res);
 wrAssertType('"hello"', $res);

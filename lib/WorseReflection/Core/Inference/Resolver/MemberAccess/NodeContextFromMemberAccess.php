@@ -151,18 +151,16 @@ class NodeContextFromMemberAccess
         $templateMap = $member->docblock()->templateMap();
         if ($member instanceof ReflectionMethod && count($member->docblock()->templateMap())) {
             $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
-            if (null === $arguments) {
-                return $type;
+            if (null !== $arguments) {
+                $templateMap = $this->resolver->mergeParameters($templateMap, $member->parameters(), $arguments);
+
+                $inferredType = $inferredType->map(function (Type $type) use ($templateMap): Type {
+                    if ($templateMap->has($type->short())) {
+                        return $templateMap->get($type->short());
+                    }
+                    return $type;
+                });
             }
-            $templateMap = $this->resolver->mergeParameters($templateMap, $member->parameters(), $arguments);
-
-            $inferredType = $inferredType->map(function (Type $type) use ($templateMap): Type {
-                if ($templateMap->has($type->short())) {
-                    return $templateMap->get($type->short());
-                }
-                return $type;
-            });
-
         }
 
         if (count($declaringClass->docblock()->templateMap())) {
@@ -248,9 +246,6 @@ class NodeContextFromMemberAccess
         return null;
     }
 
-    /**
-     * @return Type[]
-     */
     private function resolveArguments(NodeContextResolver $resolver, Frame $frame, ?Node $node): ?FunctionArguments
     {
         if (!$node || !$node instanceof CallExpression) {
