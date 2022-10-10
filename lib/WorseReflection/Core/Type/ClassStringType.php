@@ -36,4 +36,9 @@ class ClassStringType extends StringType
 
         return Trinary::maybe();
     }
+
+    public function className(): ?ClassName
+    {
+        return $this->className;
+    }
 }

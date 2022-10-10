@@ -3,7 +3,7 @@
 
 class Foo {
     /**
-     * @tempalte T
+     * @template T
      * @param class-string<T> $class
      * @return T
      */
@@ -15,7 +15,6 @@ class Foo {
 $f = new Foo();
 $f = $f->foobar(Foo::class);
 
-// not supported yet
-wrAssertType('T', $f);
+wrAssertType('Foo', $f);
 
 

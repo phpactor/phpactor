@@ -4,10 +4,12 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
@@ -74,6 +76,11 @@ class GenericMapResolver
     {
         foreach ($parameters as $parameter) {
             $parameter->inferredType()->map(function (Type $type) use ($parameter, $templateMap, $arguments) {
+                if ($type instanceof ClassStringType && $type->className()) {
+                    $this->mapClassString($type, $templateMap, $arguments, $parameter);
+                    return $type;
+                }
+
                 if ($templateMap->has($type->short())) {
                     $templateMap->replace($type->short(), $arguments[$parameter->index()] ?? TypeFactory::undefined());
                 }
@@ -82,5 +89,21 @@ class GenericMapResolver
             });
         }
         return $templateMap;
+    }
+
+    /**
+     * @param Type[] $arguments
+     */
+    private function mapClassString(ClassStringType $type, TemplateMap $templateMap, array $arguments, ReflectionParameter $parameter): void
+    {
+        $argument = $arguments[$parameter->index()] ?? null;
+        if (null === $argument) {
+            return;
+        }
+        $classStringType = $type->className()->short();
+        dd($classStringType);
+        if ($templateMap->has($classStringType)) {
+            $templateMap->replace($classStringType, $argument);
+        }
     }
 }
