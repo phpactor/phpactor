@@ -63,7 +63,7 @@ Docblock Types
     Array Key        ``array-key``                   ✔          
     Array Literal    ``array{string,int}``           ✔
     Array Shape      ``array{foo:string,baz:int}``   ✔
-    Class String     ``class-string<T>``             🤷
+    Class String     ``class-string<T>``             ✔
     Closure          ``Closure(string, int): void``  ✔
     Float Literal    ``1234.12``                     ✔ 
     Generics         ``Foobar<Barfoo>``              ✔ 
