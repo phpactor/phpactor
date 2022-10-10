@@ -7,7 +7,7 @@ class Foo {
      * @param class-string<T> $class
      * @return Bar<T>
      */
-    public function foobar($class): object
+    public function foobar($class)
     {
     }
 }

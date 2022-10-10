@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -247,18 +248,12 @@ class NodeContextFromMemberAccess
     /**
      * @return Type[]
      */
-    private function resolveArguments(NodeContextResolver $resolver, Frame $frame, ?Node $node): array
+    private function resolveArguments(NodeContextResolver $resolver, Frame $frame, ?Node $node): FunctionArguments
     {
         if (!$node || !$node instanceof CallExpression) {
             return [];
         }
 
-        $arguments = [];
-        foreach ($node->argumentExpressionList->getChildNodes() as $child) {
-            $arg = $resolver->resolveNode($frame, $child)->type();
-            $arguments[] = $arg;
-        }
-
-        return $arguments;
+        return FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
     }
 }

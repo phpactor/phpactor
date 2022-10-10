@@ -70,10 +70,7 @@ class GenericMapResolver
         return null;
     }
 
-    /**
-     * @param Type[] $arguments
-     */
-    public function mergeParameters(TemplateMap $templateMap, ReflectionParameterCollection $parameters, array $arguments): TemplateMap
+    public function mergeParameters(TemplateMap $templateMap, ReflectionParameterCollection $parameters, FunctionArguments $arguments): TemplateMap
     {
         foreach ($parameters as $parameter) {
             $parameterType = $parameter->inferredType();
@@ -84,7 +81,7 @@ class GenericMapResolver
             $parameterType->map(function (Type $type) use ($parameter, $templateMap, $arguments) {
 
                 if ($templateMap->has($type->short())) {
-                    $templateMap->replace($type->short(), $arguments[$parameter->index()] ?? TypeFactory::undefined());
+                    $templateMap->replace($type->short(), $arguments->at($parameter->index())->type());
                 }
 
                 return $type;
@@ -93,13 +90,10 @@ class GenericMapResolver
         return $templateMap;
     }
 
-    /**
-     * @param Type[] $arguments
-     */
-    private function mapClassString(ClassStringType $type, TemplateMap $templateMap, array $arguments, ReflectionParameter $parameter): void
+    private function mapClassString(ClassStringType $type, TemplateMap $templateMap, FunctionArguments $arguments, ReflectionParameter $parameter): void
     {
-        $argument = $arguments[$parameter->index()] ?? null;
-        if (null === $argument) {
+        $argument = $arguments->at($parameter->index())->type();
+        if (!$argument->isDefined()) {
             return;
         }
         $classStringType = $type->className()->short();
