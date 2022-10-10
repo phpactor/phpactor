@@ -19,6 +19,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -102,14 +103,14 @@ class NodeContextFromMemberAccess
             if ($reflection instanceof ReflectionEnum && $memberType === 'constant') {
                 foreach ($reflection->members()->byMemberType('enum')->byName($memberName) as $member) {
                     // if multiple classes declare a member, always take the "top" one
-                    $memberTypes[$memberName] = $this->resolveMemberType($frame, $member, $node, $subType);
+                    $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $node, $subType);
                     break;
                 }
             }
 
             foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
                 // if multiple classes declare a member, always take the "top" one
-                $memberTypes[$memberName] = $this->resolveMemberType($frame, $member, $node, $subType);
+                $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $node, $subType);
                 break;
             }
         }
@@ -127,7 +128,7 @@ class NodeContextFromMemberAccess
         );
     }
 
-    private function resolveMemberType(Frame $frame, ReflectionMember $member, Node $node, Type $subType): Type
+    private function resolveMemberType(NodeContextResolver $resolver, Frame $frame, ReflectionMember $member, Node $node, Type $subType): Type
     {
         $inferredType = $member->inferredType();
 
@@ -146,7 +147,21 @@ class NodeContextFromMemberAccess
 
         $declaringClass = self::declaringClass($member);
 
-        if (count($declaringClass->templateMap())) {
+        $templateMap = $member->docblock()->templateMap();
+        if ($member instanceof ReflectionMethod && count($member->docblock()->templateMap())) {
+            $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
+            $templateMap = $this->resolver->mergeParameters($templateMap, $member->parameters(), $arguments);
+
+            $inferredType = $inferredType->map(function (Type $type) use ($templateMap): Type {
+                if ($templateMap->has($type->short())) {
+                    return $templateMap->get($type->short());
+                }
+                return $type;
+            });
+
+        }
+
+        if (count($declaringClass->docblock()->templateMap())) {
             $templateMap = $this->resolver->resolveClassTemplateMap($subType, $declaringClass->name(), $subType instanceof GenericClassType ? $subType->arguments() : []);
             $inferredType = $inferredType->map(function (Type $type) use ($templateMap): Type {
                 if ($templateMap && $templateMap->has($type->short())) {
@@ -227,5 +242,23 @@ class NodeContextFromMemberAccess
         }
 
         return null;
+    }
+
+    /**
+     * @return Type[]
+     */
+    private function resolveArguments(NodeContextResolver $resolver, Frame $frame, ?Node $node): array
+    {
+        if (!$node || !$node instanceof CallExpression) {
+            return [];
+        }
+
+        $arguments = [];
+        foreach ($node->argumentExpressionList->getChildNodes() as $child) {
+            $arg = $resolver->resolveNode($frame, $child)->type();
+            $arguments[] = $arg;
+        }
+
+        return $arguments;
     }
 }

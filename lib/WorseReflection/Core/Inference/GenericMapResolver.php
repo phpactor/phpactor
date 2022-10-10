@@ -3,9 +3,11 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
@@ -63,5 +65,22 @@ class GenericMapResolver
         }
 
         return null;
+    }
+
+    /**
+     * @param Type[] $arguments
+     */
+    public function mergeParameters(TemplateMap $templateMap, ReflectionParameterCollection $parameters, array $arguments): TemplateMap
+    {
+        foreach ($parameters as $parameter) {
+            $parameter->inferredType()->map(function (Type $type) use ($parameter, $templateMap, $arguments) {
+                if ($templateMap->has($type->short())) {
+                    $templateMap->replace($type->short(), $arguments[$parameter->index()] ?? TypeFactory::undefined());
+                }
+
+                return $type;
+            });
+        }
+        return $templateMap;
     }
 }

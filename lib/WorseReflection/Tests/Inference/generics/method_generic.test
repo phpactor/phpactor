@@ -9,9 +9,12 @@ class Foo
      */
     public function bar($foo)
     {
+        return $foo;
     }
 }
 
 
 $f = new Foo();
-wrAssertType('"hello"', $f->bar('hello'));
+$res = $f->bar('hello');
+\PHPStan\dumpType($res);
+wrAssertType('"hello"', $res);
