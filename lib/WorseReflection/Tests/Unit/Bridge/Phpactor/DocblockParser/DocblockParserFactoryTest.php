@@ -236,6 +236,11 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                 )
             )
         ];
+
+        yield 'class string generic' => [
+            '/** @return class-string<T> */',
+            TypeFactory::classString('T'),
+        ];
     }
 
     public function testClassConstant(): void
