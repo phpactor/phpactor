@@ -16,12 +16,4 @@ class StringType extends ScalarType implements HasEmptyType
     {
         return new StringLiteralType('');
     }
-
-    public function accepts(Type $type): Trinary
-    {
-        if ($type instanceof ClassStringType) {
-            return Trinary::true();
-        }
-        return parent::accepts($type);
-    }
 }
