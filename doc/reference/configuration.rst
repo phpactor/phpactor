@@ -1638,6 +1638,19 @@ For real-time indexers only: the time, in milliseconds, to buffer the results
 **Default**: ``500``
 
 
+.. _param_indexer.follow_symlinks:
+
+
+``indexer.follow_symlinks``
+"""""""""""""""""""""""""""
+
+
+To allow indexer to follow symlinks
+
+
+**Default**: ``false``
+
+
 .. _param_indexer.project_root:
 
 
