@@ -30,6 +30,13 @@ class ClassStringType extends StringType
 
     public function accepts(Type $type): Trinary
     {
+        if ($type instanceof ClassStringType) {
+            // this is not really true - we should not accept a class-string<Foo> for class-string<Bar>
+            // BUT also class-string<T> should accept class-string<Foo> as we
+            // can't (easily) resolve the template var early.
+            return Trinary::true();
+        }
+
         if (!$type instanceof StringType) {
             return Trinary::false();
         }
