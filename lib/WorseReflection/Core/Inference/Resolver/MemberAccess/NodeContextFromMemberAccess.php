@@ -22,6 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
+use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
@@ -150,17 +151,7 @@ class NodeContextFromMemberAccess
 
         $templateMap = $member->docblock()->templateMap();
         if ($member instanceof ReflectionMethod && count($member->docblock()->templateMap())) {
-            $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
-            if (null !== $arguments) {
-                $templateMap = $this->resolver->mergeParameters($templateMap, $member->parameters(), $arguments);
-
-                $inferredType = $inferredType->map(function (Type $type) use ($templateMap): Type {
-                    if ($templateMap->has($type->short())) {
-                        return $templateMap->get($type->short());
-                    }
-                    return $type;
-                });
-            }
+            $inferredType = $this->combineMethodTemplateVars($resolver, $frame, $node, $templateMap, $member, $inferredType);
         }
 
         if (count($declaringClass->docblock()->templateMap())) {
@@ -253,5 +244,24 @@ class NodeContextFromMemberAccess
         }
 
         return FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
+    }
+
+    private function combineMethodTemplateVars(NodeContextResolver $resolver, Frame $frame, Node $node, TemplateMap $templateMap, ReflectionMethod $member, Type $type): Type
+    {
+        $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
+
+        if (null === $arguments) {
+            return $type;
+        }
+
+        $templateMap = $this->resolver->mergeParameters($templateMap, $member->parameters(), $arguments);
+        $type = $type->map(function (Type $type) use ($templateMap): Type {
+            if ($templateMap->has($type->short())) {
+                return $templateMap->get($type->short());
+            }
+            return $type;
+        });
+
+        return $type;
     }
 }
