@@ -75,11 +75,12 @@ class GenericMapResolver
     public function mergeParameters(TemplateMap $templateMap, ReflectionParameterCollection $parameters, array $arguments): TemplateMap
     {
         foreach ($parameters as $parameter) {
-            $parameter->inferredType()->map(function (Type $type) use ($parameter, $templateMap, $arguments) {
-                if ($type instanceof ClassStringType && $type->className()) {
-                    $this->mapClassString($type, $templateMap, $arguments, $parameter);
-                    return $type;
-                }
+            $parameterType = $parameter->inferredType();
+            if ($parameterType instanceof ClassStringType && $parameterType->className()) {
+                $this->mapClassString($parameterType, $templateMap, $arguments, $parameter);
+                return $templateMap;
+            }
+            $parameterType->map(function (Type $type) use ($parameter, $templateMap, $arguments) {
 
                 if ($templateMap->has($type->short())) {
                     $templateMap->replace($type->short(), $arguments[$parameter->index()] ?? TypeFactory::undefined());
