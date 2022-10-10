@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Types;
@@ -41,5 +42,10 @@ class ParenthesizedType extends Type
     public function toTypes(): Types
     {
         return $this->type->toTypes();
+    }
+
+    public function map(Closure $mapper): Type
+    {
+        return new self($this->type->map($mapper));
     }
 }

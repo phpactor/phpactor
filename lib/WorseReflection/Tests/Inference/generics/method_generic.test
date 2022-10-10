@@ -1,0 +1,19 @@
+<?php
+
+class Foo
+{
+    /**
+     * @template T
+     * @param T $foo
+     * @return T
+     */
+    public function bar($foo)
+    {
+        return $foo;
+    }
+}
+
+
+$f = new Foo();
+$res = $f->bar('hello');
+wrAssertType('"hello"', $res);

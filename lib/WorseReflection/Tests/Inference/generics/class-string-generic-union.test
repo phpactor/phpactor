@@ -1,0 +1,19 @@
+<?php
+
+
+class Foo {
+    /**
+     * @template T
+     * @param class-string<T>|null $tagFqn
+     * @return ($tagFqn is string ? Generator<T> : Generator<TagNode>)
+     */
+    public function tags(?string $tagFqn = null): Generator
+    {
+    }
+}
+
+$f = new Foo();
+$f = $f->tags(Foo::class);
+
+wrAssertType('Generator<Foo>', $f);
+

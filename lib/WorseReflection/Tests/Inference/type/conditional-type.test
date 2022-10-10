@@ -21,7 +21,8 @@ interface TreeMapper
 
 function foo(TreeMapper $mapper) {
     $map = $mapper->map('foo', 'bar');
-
-    // conditional types are currently not supported
     wrAssertType('mixed', $map);
+
+    $map = $mapper->map(Foo::class, 'bar');
+    wrAssertType('Foo', $map);
 }

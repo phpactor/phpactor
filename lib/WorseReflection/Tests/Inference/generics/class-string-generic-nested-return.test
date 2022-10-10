@@ -5,9 +5,9 @@ class Foo {
     /**
      * @template T
      * @param class-string<T> $class
-     * @return T
+     * @return Bar<T>
      */
-    public function foobar($class): object
+    public function foobar($class)
     {
     }
 }
@@ -15,6 +15,6 @@ class Foo {
 $f = new Foo();
 $f = $f->foobar(Foo::class);
 
-wrAssertType('Foo', $f);
+wrAssertType('Bar<Foo>', $f);
 
 

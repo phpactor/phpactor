@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
@@ -78,5 +79,15 @@ class ConditionalType extends Type
         }
 
         return $evaluator($this->right);
+    }
+
+    public function map(Closure $mapper): Type
+    {
+        return new ConditionalType(
+            $this->variable,
+            $this->isType->map($mapper),
+            $this->left->map($mapper),
+            $this->right->map($mapper)
+        );
     }
 }
