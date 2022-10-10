@@ -25,6 +25,7 @@ Improvements:
 
 Features:
 
+  - [wr] Support for `class-string<T>` generic
   - [ct] Decorate interface #1879 @mamazu
   - [lsp] Document formatting via. php-cs-fixer #1897
   - [gtd] For member declarations, goto parent member definition if it exists #1886
