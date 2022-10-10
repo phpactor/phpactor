@@ -67,6 +67,8 @@ final class IndexAgentBuilder
      */
     private ?array $indexers = null;
 
+    private bool $followSymlinks = false;
+
     private LoggerInterface $logger;
 
     private function __construct(string $indexRoot, string $projectRoot)
@@ -151,6 +153,13 @@ final class IndexAgentBuilder
         return $this;
     }
 
+    public function setFollowSymlinks(bool $followSymlinks): self
+    {
+        $this->followSymlinks = $followSymlinks;
+
+        return $this;
+    }
+
     /**
      * @param array<string> $stubPaths
      */
@@ -220,7 +229,10 @@ final class IndexAgentBuilder
     {
         return new SimpleFilesystem(
             $this->indexRoot,
-            new SimpleFileListProvider(FilePath::fromString($root))
+            new SimpleFileListProvider(
+                FilePath::fromString($root),
+                $this->followSymlinks
+            )
         );
     }
 
