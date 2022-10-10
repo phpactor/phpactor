@@ -15,5 +15,5 @@ class Foo {
 $f = new Foo();
 $f = $f->tags(Foo::class);
 
-wrAssertType('Foo', $f);
+wrAssertType('Generator<Foo>', $f);
 

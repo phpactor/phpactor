@@ -79,6 +79,10 @@ class GenericMapResolver
                 return $templateMap;
             }
             $parameterType->map(function (Type $type) use ($parameter, $templateMap, $arguments) {
+                if ($type instanceof ClassStringType && $type->className()) {
+                    $this->mapClassString($type, $templateMap, $arguments, $parameter);
+                    return $type;
+                }
 
                 if ($templateMap->has($type->short())) {
                     $templateMap->replace($type->short(), $arguments->at($parameter->index())->type());
@@ -98,6 +102,7 @@ class GenericMapResolver
         }
         $classStringType = $type->className()->short();
         if ($templateMap->has($classStringType)) {
+
             if ($argument instanceof ClassStringType) {
                 $templateMap->replace($classStringType, TypeFactory::class($argument->className()));
             }
