@@ -59,6 +59,7 @@ class IndexerExtension implements Extension
     public const PARAM_INCLUDE_PATTERNS = 'indexer.include_patterns';
     public const PARAM_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     public const PARAM_INDEXER_BUFFER_TIME = 'indexer.buffer_time';
+    public const PARAM_INDEXER_FOLLOW_SYMLINKS = 'indexer.follow_symlinks';
     public const PARAM_REFERENCES_DEEP_REFERENCES = 'indexer.reference_finder.deep';
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
@@ -87,6 +88,7 @@ class IndexerExtension implements Extension
             self::PARAM_STUB_PATHS => [],
             self::PARAM_INDEXER_POLL_TIME => 5000,
             self::PARAM_INDEXER_BUFFER_TIME => 500,
+            self::PARAM_INDEXER_FOLLOW_SYMLINKS => false,
             self::PARAM_PROJECT_ROOT => '%project_root%',
             self::PARAM_REFERENCES_DEEP_REFERENCES => true,
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => true,
@@ -99,6 +101,7 @@ class IndexerExtension implements Extension
             self::PARAM_EXCLUDE_PATTERNS => 'Glob patterns to exclude while indexing',
             self::PARAM_INDEXER_POLL_TIME => 'For polling indexers only: the time, in milliseconds, between polls (e.g. filesystem scans)',
             self::PARAM_INDEXER_BUFFER_TIME => 'For real-time indexers only: the time, in milliseconds, to buffer the results',
+            self::PARAM_INDEXER_FOLLOW_SYMLINKS => 'To allow indexer to follow symlinks',
             self::PARAM_PROJECT_ROOT => 'The root path to use for scanning the index',
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'Recurse over class implementations to resolve all references',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
@@ -214,6 +217,9 @@ class IndexerExtension implements Extension
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
                 ->setIncludePatterns(
                     $container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS),
+                )
+                ->setFollowSymlinks(
+                    (bool) $container->getParameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS),
                 )
                 ->setStubPaths($container->getParameter(self::PARAM_STUB_PATHS));
         });
