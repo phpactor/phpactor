@@ -56,7 +56,7 @@ interface Iterator extends Traversable
      * @link https://php.net/manual/en/iterator.current.php
      * @return TValue Can return any type.
      */
-    public function current(): mixed;
+    public function current();
 
     /**
      * Move forward to next element
@@ -70,7 +70,7 @@ interface Iterator extends Traversable
      * @link https://php.net/manual/en/iterator.key.php
      * @return TKey|null TKey on success, or null on failure.
      */
-    public function key(): mixed;
+    public function key();
 
     /**
      * Checks if current position is valid

@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use RuntimeException;
+
 final class DiagnosticSeverity
 {
     public const ERROR = 1;
@@ -20,6 +22,20 @@ final class DiagnosticSeverity
     private function __construct(int $level)
     {
         $this->level = $level;
+
+        $validLevels = [
+            self::INFORMATION,
+            self::WARNING,
+            self::ERROR,
+            self::HINT
+        ];
+        if (!in_array($level, $validLevels)) {
+            throw new RuntimeException(sprintf(
+                'Severity must be one of DiagnosticSeverity::*, got: %d (valid values: %s)',
+                $level,
+                implode(', ', $validLevels)
+            ));
+        }
     }
 
     public static function ERROR(): self
@@ -44,7 +60,6 @@ final class DiagnosticSeverity
             case self::INFORMATION:
                 return 'INFO';
         }
-        return 'unknown';
     }
 
     public function isError(): bool
