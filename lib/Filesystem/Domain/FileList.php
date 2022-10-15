@@ -17,6 +17,9 @@ use Closure;
  */
 class FileList implements Iterator
 {
+    /**
+     * @var Iterator<SplFileInfo>
+     */
     private Iterator $iterator;
 
     private int $key = 0;
@@ -27,7 +30,7 @@ class FileList implements Iterator
     }
 
     /**
-     * @return FileList<SplFileInfo>
+     * @return FileList
      */
     public static function fromIterator(Iterator $iterator): self
     {
@@ -36,7 +39,7 @@ class FileList implements Iterator
 
     /**
      * @param string[] $filePaths
-     * @return FileList<SplFileInfo>
+     * @return FileList
      */
     public static function fromFilePaths(array $filePaths): self
     {
@@ -51,7 +54,7 @@ class FileList implements Iterator
     /**
      * @return Iterator<SplFileInfo>
      */
-    public function getIterator(): Traversable
+    public function getSplFileInfoIterator(): Traversable
     {
         return $this->iterator;
     }
