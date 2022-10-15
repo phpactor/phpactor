@@ -2,13 +2,8 @@
 
 namespace Phpactor\Filesystem\Domain;
 
-use SplFileInfo;
-
 interface Filesystem
 {
-    /**
-     * @return FileList<SplFileInfo>
-     */
     public function fileList(): FileList;
 
     /**

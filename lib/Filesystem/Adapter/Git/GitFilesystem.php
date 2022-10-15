@@ -30,9 +30,7 @@ class GitFilesystem extends SimpleFilesystem
         }
     }
 
-    /**
-     * @return FileList<SplFileInfo>
-     */
+
     public function fileList(): FileList
     {
         $gitFiles = $this->exec([

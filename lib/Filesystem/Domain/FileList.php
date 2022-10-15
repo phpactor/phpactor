@@ -12,11 +12,17 @@ use Webmozart\Glob\Glob;
 use ArrayIterator;
 use Closure;
 
+/**
+ * @implements Iterator<array-key,FilePath>
+ */
 class FileList implements Iterator
 {
-    private $iterator;
+    /**
+     * @var Iterator<SplFileInfo>
+     */
+    private Iterator $iterator;
 
-    private $key = 0;
+    private int $key = 0;
 
     private function __construct(Iterator $iterator)
     {
@@ -24,7 +30,7 @@ class FileList implements Iterator
     }
 
     /**
-     * @return FileList<SplFileInfo>
+     * @return FileList
      */
     public static function fromIterator(Iterator $iterator): self
     {
@@ -32,7 +38,8 @@ class FileList implements Iterator
     }
 
     /**
-     * @return FileList<SplFileInfo>
+     * @param string[] $filePaths
+     * @return FileList
      */
     public static function fromFilePaths(array $filePaths): self
     {
@@ -47,7 +54,7 @@ class FileList implements Iterator
     /**
      * @return Iterator<SplFileInfo>
      */
-    public function getIterator(): Traversable
+    public function getSplFileInfoIterator(): Traversable
     {
         return $this->iterator;
     }
@@ -76,6 +83,9 @@ class FileList implements Iterator
         })());
     }
 
+    /**
+     * @param string[] $globPatterns
+     */
     public function excludePatterns(array $globPatterns): self
     {
         return $this->filter(function (SplFileInfo $info) use ($globPatterns) {
@@ -89,6 +99,9 @@ class FileList implements Iterator
         });
     }
 
+    /**
+     * @param string[] $globPatterns
+     */
     public function includePatterns(array $globPatterns): self
     {
         return $this->filter(function (SplFileInfo $info) use ($globPatterns) {
@@ -135,7 +148,6 @@ class FileList implements Iterator
         $this->iterator->rewind();
     }
 
-    #[ReturnTypeWillChange]
     public function current()
     {
         $current = $this->iterator->current();

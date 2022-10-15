@@ -6,8 +6,14 @@ use AppendIterator;
 
 class ChainFileListProvider implements FileListProvider
 {
-    private $providers;
+    /**
+     * @var FileListProvider[]
+     */
+    private array $providers;
 
+    /**
+     * @param FileListProvider[] $providers
+     */
     public function __construct(array $providers)
     {
         foreach ($providers as $provider) {
@@ -19,7 +25,7 @@ class ChainFileListProvider implements FileListProvider
     {
         $iterator = new AppendIterator();
         foreach ($this->providers as $provider) {
-            $iterator->append($provider->fileList()->getIterator());
+            $iterator->append($provider->fileList()->getSplFileInfoIterator());
         }
 
         return FileList::fromIterator($iterator);

@@ -63,6 +63,6 @@ class FilesystemFileListProvider implements FileListProvider
             });
         }
 
-        return FileList::fromInfoIterator($files->getIterator());
+        return FileList::fromInfoIterator($files->getSplFileInfoIterator());
     }
 }
