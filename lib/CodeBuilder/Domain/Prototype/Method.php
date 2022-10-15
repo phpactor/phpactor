@@ -42,8 +42,8 @@ final class Method extends Prototype
         $this->parameters = $parameters ?: Parameters::empty();
         $this->returnType = $returnType ?: ReturnType::none();
         $this->docblock = $docblock ?: Docblock::none();
-        $this->isStatic = $modifierFlags & self::IS_STATIC;
-        $this->isAbstract = $modifierFlags & self::IS_ABSTRACT;
+        $this->isStatic = (bool)($modifierFlags & self::IS_STATIC);
+        $this->isAbstract = (bool)($modifierFlags & self::IS_ABSTRACT);
         $this->methodBody = $methodBody ?: MethodBody::empty();
     }
 

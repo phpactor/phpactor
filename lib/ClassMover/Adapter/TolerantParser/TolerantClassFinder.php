@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Adapter\TolerantParser;
 
+use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\QualifiedName as ParserQualifiedName;
@@ -169,7 +170,8 @@ class TolerantClassFinder implements ClassFinder
             return NamespaceReference::forRoot();
         }
 
-        if (null === $namespace->name) {
+        /** @phpstan-ignore-next-line */
+        if (null === $namespace->name || $namespace->name instanceof MissingToken) {
             return NamespaceReference::forRoot();
         }
 

@@ -145,7 +145,7 @@ abstract class AbstractMethodUpdater
 
         $renderedParameters = [];
         if ($methodDeclaration->parameters) {
-            $renderedParameters = array_combine(
+            $renderedParameters = (array)array_combine(
                 array_map(function (Parameter $parameter) {
                     return substr($parameter->variableName ? $parameter->variableName->getText($parameter->getFileContents()) : false, 1);
                 }, iterator_to_array($methodDeclaration->parameters->getElements())),
