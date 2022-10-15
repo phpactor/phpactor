@@ -731,11 +731,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Util/NodeHelper.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|Phpactor\\\\WorseReflection\\\\Reflector\\:\\:reflectClassesIn\\(\\)\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\WorseReflection\\\\WorseBuilderFactory\\:\\:fromSource\\(\\) has parameter \\$source with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
@@ -1811,11 +1806,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseFunctionCompletor.php
 
 		-
-			message: "#^Property Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseLocalVariableCompletor\\:\\:\\$reflector is never read, only written\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseLocalVariableCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\ChainSignatureHelper\\:\\:__construct\\(\\) has parameter \\$helpers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/ChainSignatureHelper.php
@@ -1824,11 +1814,6 @@ parameters:
 			message: "#^Property Phpactor\\\\Completion\\\\Core\\\\Completor\\\\ArrayCompletor\\:\\:\\$suggestions type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/Completor/ArrayCompletor.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\Completor\\\\NameSearcherCompletor\\:\\:createSuggestion\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\Range\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -4446,16 +4431,6 @@ parameters:
 			path: lib/FilePathResolver/Tests/Unit/Filter/TokenExpandingFilterTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:__construct\\(\\) has parameter \\$providers with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/ChainFileListProvider.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\ChainFileListProvider\\:\\:\\$providers has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/ChainFileListProvider.php
-
-		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:has\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Filesystem/Domain/FallbackFilesystemRegistry.php
@@ -4464,31 +4439,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Filesystem/Domain/FallbackFilesystemRegistry.php
-
-		-
-			message: "#^Class Phpactor\\\\Filesystem\\\\Domain\\\\FileList implements generic interface Iterator but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/Filesystem/Domain/FileList.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:excludePatterns\\(\\) has parameter \\$globPatterns with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FileList.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:fromFilePaths\\(\\) has parameter \\$filePaths with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FileList.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:includePatterns\\(\\) has parameter \\$globPatterns with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FileList.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\FileList\\:\\:\\$key has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FileList.php
 
 		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:asSplFileInfo\\(\\) has no return type specified\\.$#"
@@ -5504,11 +5454,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$items of class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection constructor expects array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionConstant\\>, array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant&T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
-
-		-
-			message: "#^Parameter \\#1 \\$items of class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionClassCollection constructor expects array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClass\\>, array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClass\\|Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionEnum\\|Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionInterface\\|Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionTrait\\> given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionClassLikeCollection.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionArgument\\:\\:value\\(\\) has no return type specified\\.$#"
