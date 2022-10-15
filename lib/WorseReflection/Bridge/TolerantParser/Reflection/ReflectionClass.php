@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\TokenKind;
 
@@ -163,9 +164,11 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             return null;
         }
 
+        $baseClass = $this->node->classBaseClause->baseClass;
+
         // incomplete class
         /** @phpstan-ignore-next-line */
-        if (!$this->node->classBaseClause->baseClass) {
+        if (!$baseClass instanceof QualifiedName) {
             return null;
         }
 
