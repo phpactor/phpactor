@@ -10,9 +10,13 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\Symfony\Completor\SymfonyContainerCompletor;
+use Phpactor\Extension\Symfony\Model\InMemorySymfonyContainerInspector;
+use Phpactor\Extension\Symfony\Model\SymfonyContainerService;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class SymfonyContainerCompletorTest extends TestCase
 {
@@ -20,12 +24,13 @@ class SymfonyContainerCompletorTest extends TestCase
 
     /**
      * @dataProvider provideComplete
+     * @param SymfonyContainerService[] $services
      */
-    public function testComplete(string $source, string $containerXml, Closure $assertion): void
+    public function testComplete(string $source, array $services, Closure $assertion): void
     {
         [$source, $start] = ExtractOffset::fromSource($source);
         $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$start);
-        $suggestions = iterator_to_array($this->completor()->complete(
+        $suggestions = iterator_to_array($this->completor($services)->complete(
             $node,
             TextDocumentBuilder::create($source)->language('php')->build(),
             ByteOffset::fromInt((int)$start)
@@ -34,38 +39,99 @@ class SymfonyContainerCompletorTest extends TestCase
     }
 
     /**
-     * @return Generator<string,array{string,string,Closure(Suggestion[]):void}>
+     * @return Generator<array-key,array{string,array<array-key,SymfonyContainerService>,Closure(Suggestion[]):void}>
      */
     public function provideComplete(): Generator
     {
-        yield 'all' => [
+        yield 'not on symfony container, get method' => [
+            <<<'EOT'
+            <?php
+
+            use Phpactor\Component\DependencyInjection\Container;
+            $container = new Container();
+            $foobar = $container->get(<>);
+            EOT
+            ,
+            [
+                new SymfonyContainerService('foobar', TypeFactory::class('Foobar')),
+                new SymfonyContainerService('foobar.barfoo', TypeFactory::class('Foobar\\Barfoo')),
+            ]
+            ,
+            /** @param Suggestion[] $suggestions */
+            function (array $suggestions): void
+            {
+                self::assertCount(0, $suggestions);
+            }
+        ];
+        yield 'on container, not get method' => [
             <<<'EOT'
             <?php
 
             use Symfony\Component\DependencyInjection\Container;
             $container = new Container();
-            $foobar = $container->get('foobar');
+            $foobar = $container->set(<>);
             EOT
             ,
-            <<<'EOT'
-            <?xml version="1.0" encoding="utf-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-              <services>
-                <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
-              </services>
-            </container>
-            EOT
+            [
+                new SymfonyContainerService('foobar', TypeFactory::class('Foobar')),
+                new SymfonyContainerService('foobar.barfoo', TypeFactory::class('Foobar\\Barfoo')),
+            ]
             ,
             /** @param Suggestion[] $suggestions */
             function (array $suggestions): void
             {
-                dump($suggestions);
+                self::assertCount(0, $suggestions);
+            }
+        ];
+        yield 'on container, no suggestions' => [
+            <<<'EOT'
+            <?php
+
+            use Symfony\Component\DependencyInjection\Container;
+            $container = new Container();
+            $foobar = $container->get(<>);
+            EOT
+            ,
+            [
+            ]
+            ,
+            /** @param Suggestion[] $suggestions */
+            function (array $suggestions): void
+            {
+                self::assertCount(0, $suggestions);
+            }
+        ];
+
+        yield 'on container with suggestions' => [
+            <<<'EOT'
+            <?php
+
+            use Symfony\Component\DependencyInjection\Container;
+            $container = new Container();
+            $foobar = $container->get(<>);
+            EOT
+            ,
+            [
+                new SymfonyContainerService('foobar', TypeFactory::class('Foobar')),
+                new SymfonyContainerService('foobar.barfoo', TypeFactory::class('Foobar\\Barfoo')),
+            ]
+            ,
+            /** @param Suggestion[] $suggestions */
+            function (array $suggestions): void
+            {
+                self::assertCount(2, $suggestions);
             }
         ];
     }
 
-    private function completor(): TolerantCompletor
+    /**
+     * @param SymfonyContainerService[] $services
+     */
+    private function completor(array $services): TolerantCompletor
     {
-        return new SymfonyContainerCompletor();
+        $reflector = ReflectorBuilder::create()->addSource(
+            '<?php namespace Symfony\Component\DependencyInjection { interface ContainerInterface{} class Container implements ContainerInterface{}}'
+        )->build();
+        return new SymfonyContainerCompletor($reflector, new InMemorySymfonyContainerInspector($services));
     }
 }
