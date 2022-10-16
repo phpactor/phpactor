@@ -8,4 +8,9 @@ interface SymfonyContainerInspector
      * @return SymfonyContainerService[]
      */
     public function services(): array;
+
+    /**
+     * @return SymfonyContainerParameter[]
+     */
+    public function parameters(): array;
 }

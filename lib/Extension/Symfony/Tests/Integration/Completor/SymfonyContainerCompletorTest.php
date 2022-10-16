@@ -11,6 +11,7 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\Symfony\Completor\SymfonyContainerCompletor;
 use Phpactor\Extension\Symfony\Model\InMemorySymfonyContainerInspector;
+use Phpactor\Extension\Symfony\Model\SymfonyContainerParameter;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerService;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
@@ -30,7 +31,7 @@ class SymfonyContainerCompletorTest extends TestCase
     {
         [$source, $start] = ExtractOffset::fromSource($source);
         $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$start);
-        $suggestions = iterator_to_array($this->completor($services)->complete(
+        $suggestions = iterator_to_array($this->completor($services, [])->complete(
             $node,
             TextDocumentBuilder::create($source)->language('php')->build(),
             ByteOffset::fromInt((int)$start)
@@ -126,12 +127,13 @@ class SymfonyContainerCompletorTest extends TestCase
 
     /**
      * @param SymfonyContainerService[] $services
+     * @param SymfonyContainerParameter[] $parameters
      */
-    private function completor(array $services): TolerantCompletor
+    private function completor(array $services, array $parameters): TolerantCompletor
     {
         $reflector = ReflectorBuilder::create()->addSource(
             '<?php namespace Symfony\Component\DependencyInjection { interface ContainerInterface{} class Container implements ContainerInterface{}}'
         )->build();
-        return new SymfonyContainerCompletor($reflector, new InMemorySymfonyContainerInspector($services));
+        return new SymfonyContainerCompletor($reflector, new InMemorySymfonyContainerInspector($services, $parameters));
     }
 }
