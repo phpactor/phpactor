@@ -99,5 +99,12 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
 
     public function service(string $id): ?SymfonyContainerService
     {
+        foreach ($this->services() as $service) {
+            if ($service->id === $id) {
+                return $service;
+            }
+        }
+
+        return null;
     }
 }

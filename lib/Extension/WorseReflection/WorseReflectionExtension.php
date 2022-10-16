@@ -38,6 +38,7 @@ class WorseReflectionExtension implements Extension
     const PARAM_ENABLE_CONTEXT_LOCATION = 'worse_reflection.enable_context_location';
     const SERVICE_PARSER = 'worse_reflection.tolerant_parser';
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
+    const TAG_MEMBER_TYPE_RESOLVER = 'worse_reflection.member_type_resolver';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
 
     public function configure(Resolver $schema): void
@@ -95,6 +96,10 @@ class WorseReflectionExtension implements Extension
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_FRAME_WALKER)) as $serviceId) {
                 $builder->addFrameWalker($container->get($serviceId));
+            }
+
+            foreach (array_keys($container->getServiceIdsForTag(self::TAG_MEMBER_TYPE_RESOLVER)) as $serviceId) {
+                $builder->addMemberContextResolver($container->get($serviceId));
             }
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_MEMBER_PROVIDER)) as $serviceId) {

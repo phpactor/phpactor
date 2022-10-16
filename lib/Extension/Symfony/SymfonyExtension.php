@@ -10,6 +10,7 @@ use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Symfony\Adapter\Symfony\XmlSymfonyContainerInspector;
 use Phpactor\Extension\Symfony\Completor\SymfonyContainerCompletor;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
+use Phpactor\Extension\Symfony\WorseReflection\SymfonyContainerContextResolver;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
@@ -32,6 +33,14 @@ class SymfonyExtension implements Extension
         }, [
             CompletionWorseExtension::TAG_TOLERANT_COMPLETOR => [
                 'name' => 'symfony',
+            ],
+        ]);
+        $container->register(SymfonyContainerContextResolver::class, function (Container $container) {
+            return new SymfonyContainerContextResolver(
+                $container->get(SymfonyContainerInspector::class)
+            );
+        }, [
+            WorseReflectionExtension::TAG_MEMBER_TYPE_RESOLVER => [
             ],
         ]);
     }
