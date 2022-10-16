@@ -4,7 +4,6 @@ namespace Phpactor\Extension\Symfony\WorseReflection;
 
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
-use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
