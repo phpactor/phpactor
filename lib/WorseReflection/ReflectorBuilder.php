@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
-use Phpactor\WorseReflection\Core\Logger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
@@ -240,5 +239,11 @@ final class ReflectorBuilder
         }
 
         return new NullCache();
+    }
+
+    public function addMemberContextResolver(MemberContextResolver $memberContextResolver): self
+    {
+        $this->memberContextResolvers[] = $memberContextResolver;
+        return $this;
     }
 }
