@@ -61,7 +61,7 @@ class SymfonyExtension implements Extension
             self::PARAM_COMPLETOR_ENABLED => true,
         ]);
         $schema->setDescriptions([
-            self::XML_PATH => 'Candidate paths to the development XML container dump',
+            self::XML_PATH => 'Path to the Symfony container XML dump file',
             self::PARAM_ENABLED => 'Enable the Symfony extension',
             self::PARAM_COMPLETOR_ENABLED => 'Enable/disable the Symfony completor - depends on Symfony extension being enabled',
         ]);
