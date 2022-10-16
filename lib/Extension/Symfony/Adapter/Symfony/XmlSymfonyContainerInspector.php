@@ -96,4 +96,8 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
         $xpath->registerNamespace('symfony', 'http://symfony.com/schema/dic/services');
         return $xpath;
     }
+
+    public function service(string $id): ?SymfonyContainerService
+    {
+    }
 }

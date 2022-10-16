@@ -101,6 +101,7 @@ class NodeContextFromMemberAccess
         }
 
         $types = $memberTypes = [];
+        $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
 
         // this could be a union or a nullable
         foreach ($classType->classNamedTypes() as $subType) {
@@ -112,7 +113,7 @@ class NodeContextFromMemberAccess
             $types[] = $subType;
 
             foreach ($this->memberResolvers as $memberResolver) {
-                if (null !== $customType = $memberResolver->resolveMemberContext($memberType, $memberName, $subType)) {
+                if (null !== $customType = $memberResolver->resolveMemberContext($memberType, $memberName, $subType, $arguments)) {
                     $memberTypes[$memberName] = $customType;
                     break;
                 }

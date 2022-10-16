@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\Symfony\Model;
 
+use RuntimeException;
+
 class InMemorySymfonyContainerInspector implements SymfonyContainerInspector
 {
     /**
@@ -33,5 +35,16 @@ class InMemorySymfonyContainerInspector implements SymfonyContainerInspector
     public function parameters(): array
     {
         return $this->parameters;
+    }
+
+    public function service(string $id): ?SymfonyContainerService
+    {
+        foreach ($this->services as $service) {
+            if ($service->id === $id) {
+                return $service;
+            }
+        }
+
+        return null;
     }
 }

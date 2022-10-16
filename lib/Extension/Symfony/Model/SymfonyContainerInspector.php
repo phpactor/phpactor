@@ -13,4 +13,6 @@ interface SymfonyContainerInspector
      * @return SymfonyContainerParameter[]
      */
     public function parameters(): array;
+
+    public function service(string $id): ?SymfonyContainerService;
 }

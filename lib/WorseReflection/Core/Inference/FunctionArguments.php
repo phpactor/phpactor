@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use Countable;
 use IteratorAggregate;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
@@ -10,7 +11,7 @@ use Traversable;
 /**
  * @implements IteratorAggregate<NodeContext>
  */
-class FunctionArguments implements IteratorAggregate
+class FunctionArguments implements IteratorAggregate, Countable
 {
     /**
      * @var ArgumentExpression[]
@@ -56,5 +57,10 @@ class FunctionArguments implements IteratorAggregate
         foreach ($this->arguments as $argument) {
             yield $this->resolver->resolveNode($this->frame, $argument);
         }
+    }
+
+    public function count(): int
+    {
+        return count($this->arguments);
     }
 }

@@ -27,7 +27,6 @@ class SymfonyContainerCompletor implements TolerantCompletor
 
     private SymfonyContainerInspector $inspector;
 
-
     public function __construct(Reflector $reflector, SymfonyContainerInspector $inspector)
     {
         $this->reflector = $reflector;
