@@ -38,6 +38,10 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
             }
             $id = $serviceEl->getAttribute('id');
             $class = $serviceEl->getAttribute('class');
+            $public = $serviceEl->getAttribute('public');
+            if ('true' !== $public) {
+                continue;
+            }
             if (empty($id) || empty($class)) {
                 continue;
             }

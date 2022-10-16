@@ -55,10 +55,19 @@ class SymfonyContainerCompletor implements TolerantCompletor
         }
 
         foreach ($this->inspector->services() as $service) {
-            yield Suggestion::createWithOptions($service->id, [
+            $suggestion = sprintf('\'%s\'', $service->id);
+            $import = null;
+            if ($service->type->isClass() && $service->id === $service->type->__toString()) {
+                $suggestion = $service->type->short() . '::class';
+                $import = $service->type->__toString();
+            }
+
+            yield Suggestion::createWithOptions($suggestion, [
                 'label' => $service->id,
-                'short_description' => $service->type->__toString(),
+                'short_description' => $service->id,
+                'documentation' => $service->type->__toString(),
                 'type' => Suggestion::TYPE_VALUE,
+                'name_import' => $import,
             ]);
         }
 
