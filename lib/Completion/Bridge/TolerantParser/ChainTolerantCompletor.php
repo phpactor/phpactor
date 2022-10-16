@@ -50,11 +50,9 @@ class ChainTolerantCompletor implements Completor
                 continue;
             }
 
-
             $suggestions = $tolerantCompletor->complete($completionNode, $source, $byteOffset);
-            foreach ($suggestions as $s) {
-                yield $s;
-            }
+
+            yield from $suggestions;
 
             $isComplete = $isComplete && $suggestions->getReturn();
         }
