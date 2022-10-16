@@ -18,6 +18,7 @@ class SymfonyExtension implements Extension
 {
     const XML_PATH = 'symfony.xml_path';
     const PARAM_ENABLED = 'symfony.enabled';
+    const PARAM_COMPLETOR_ENABLED = 'completion_worse.completor.symfony.enabled';
 
     public function load(ContainerBuilder $container): void
     {
@@ -57,10 +58,12 @@ class SymfonyExtension implements Extension
         $schema->setDefaults([
             self::PARAM_ENABLED => false,
             self::XML_PATH => '%project_root%/var/cache/dev/App_KernelDevDebugContainer.xml',
-            'completion_worse.completor.symfony.enabled' => true,
+            self::PARAM_COMPLETOR_ENABLED => true,
         ]);
         $schema->setDescriptions([
             self::XML_PATH => 'Candidate paths to the development XML container dump',
+            self::PARAM_ENABLED => 'Enable the Symfony extension',
+            self::PARAM_COMPLETOR_ENABLED => 'Enable/disable the Symfony completor - depends on Symfony extension being enabled',
         ]);
     }
 }

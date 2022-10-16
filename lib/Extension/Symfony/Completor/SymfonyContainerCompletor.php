@@ -49,7 +49,7 @@ class SymfonyContainerCompletor implements TolerantCompletor
             }
         }
 
-        $memberAccess = $memberAccessExpression ?: $node->callableExpression;
+        $memberAccess = $memberAccessExpression ?: ($node instanceof CallExpression ? $node->callableExpression : null);
 
         if (!$memberAccess instanceof MemberAccessExpression) {
             return;

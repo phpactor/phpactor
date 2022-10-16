@@ -75,7 +75,7 @@ class TestAssertWalker implements Walker
         return $frame;
     }
 
-    private function assertType(FrameResolver $resolver, Frame $frame, Node $node): void
+    private function assertType(FrameResolver $resolver, Frame $frame, CallExpression $node): void
     {
         $list = $node->argumentExpressionList->getElements();
         $args = [];
