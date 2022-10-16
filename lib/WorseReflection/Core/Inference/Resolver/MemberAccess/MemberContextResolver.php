@@ -7,5 +7,5 @@ use Phpactor\WorseReflection\Core\Type;
 
 interface MemberContextResolver
 {
-    public function resolveMemberContext(string $memberType, string $memberName, Type $containerType, FunctionArguments $arguments): ?Type;
+    public function resolveMemberContext(string $memberType, string $memberName, Type $containerType, ?FunctionArguments $arguments): ?Type;
 }
