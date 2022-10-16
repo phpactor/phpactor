@@ -15,6 +15,10 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
 {
     private string $xmlPath;
 
+    private int $mtime;
+
+    private ?DOMXPath $cache = null;
+
     public function __construct(string $xmlPath)
     {
         $this->xmlPath = $xmlPath;
@@ -77,7 +81,11 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
 
     public function service(string $id): ?SymfonyContainerService
     {
-        $list = $this->loadXPath()->query(sprintf("//symfony:service[@id='%s']", $id));
+        $xpath = $this->loadXPath();
+        if (null === $xpath) {
+            return null;
+        }
+        $list = $xpath->query(sprintf("//symfony:service[@id='%s']", $id));
         if ($list === false) {
             return null;
         }
@@ -92,10 +100,19 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
         if (!file_exists($this->xmlPath)) {
             return null;
         }
+        if (null !== $this->cache) {
+            clearstatcache();
+            $latest = filemtime($this->xmlPath) ?: 0;
+            if ($this->mtime === $latest) {
+                return $this->cache;
+            }
+        }
         $dom = new DOMDocument();
         $dom->load($this->xmlPath);
         $xpath = new DOMXPath($dom);
         $xpath->registerNamespace('symfony', 'http://symfony.com/schema/dic/services');
+        $this->cache = $xpath;
+        $this->mtime = filemtime($this->xmlPath) ?: 0;
         return $xpath;
     }
 
