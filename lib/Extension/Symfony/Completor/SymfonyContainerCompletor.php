@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Range;
 use Phpactor\Completion\Core\Suggestion;
@@ -35,7 +36,7 @@ class SymfonyContainerCompletor implements TolerantCompletor
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
-        if ($node instanceof SourceFileNode) {
+        if ($node instanceof SourceFileNode || $node instanceof CompoundStatementNode) {
             $node = NodeUtil::firstDescendantNodeBeforeOffset($node, $offset->toInt());
         }
 
@@ -89,7 +90,7 @@ class SymfonyContainerCompletor implements TolerantCompletor
             yield Suggestion::createWithOptions($suggestion, [
                 'label' => $service->id,
                 'short_description' => $service->id,
-                'documentation' => $service->type->__toString(),
+                'documentation' => sprintf('**Symfony Service**: %s', $service->type->__toString()),
                 'type' => Suggestion::TYPE_VALUE,
                 'name_import' => $import,
             ]);

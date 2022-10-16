@@ -214,6 +214,30 @@ class SymfonyContainerCompletorTest extends TestCase
                 self::assertEquals('Foobar', $suggestions[0]->label());
             }
         ];
+
+        yield 'string literal on compound statement node' => [
+            <<<'EOT'
+            <?php
+
+            use Symfony\Component\DependencyInjection\Container;
+            function (Container $container) {
+                $foobar = $container->get('<>
+            }
+
+            EOT
+            ,
+            [
+                new SymfonyContainerService('Foobar', TypeFactory::class('Foobar')),
+                new SymfonyContainerService('foobar.barfoo', TypeFactory::class('Foobar\\Barfoo')),
+            ]
+            ,
+            /** @param Suggestion[] $suggestions */
+            function (array $suggestions): void
+            {
+                self::assertCount(1, $suggestions);
+                self::assertEquals('foobar.barfoo', $suggestions[0]->label());
+            }
+        ];
     }
 
     /**
