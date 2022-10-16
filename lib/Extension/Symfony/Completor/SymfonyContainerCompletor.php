@@ -10,6 +10,7 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Range;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
+use Phpactor\Extension\Symfony\Model\SymfonyContainerService;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -18,6 +19,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class SymfonyContainerCompletor implements TolerantCompletor
 {
+    const CONTAINER_CLASS = 'Symfony\\Component\\DependencyInjection\\ContainerInterface';
+
     private Reflector $reflector;
 
     private SymfonyContainerInspector $inspector;
@@ -31,11 +34,20 @@ class SymfonyContainerCompletor implements TolerantCompletor
 
     public function complete(Node $containerType, TextDocument $source, ByteOffset $offset): Generator
     {
-        if (!$containerType instanceof CallExpression) {
-            return;
+        $node = NodeUtil::firstDescendantNodeBeforeOffset($containerType, $offset->toInt());
+
+        $memberAccessExpression = null;
+        $inQuote = false;
+        if (!$node instanceof CallExpression) {
+            if ($node->parent instanceof MemberAccessExpression) {
+                $memberAccessExpression = $node->parent;
+                $inQuote = true;
+            } else {
+                return;
+            }
         }
 
-        $memberAccess = $containerType->callableExpression;
+        $memberAccess = $memberAccessExpression ?: $node->callableExpression;
 
         if (!$memberAccess instanceof MemberAccessExpression) {
             return;
@@ -50,14 +62,23 @@ class SymfonyContainerCompletor implements TolerantCompletor
         $expression = $memberAccess->dereferencableExpression;
         $containerType = $this->reflector->reflectOffset($source, $expression->getStartPosition())->symbolContext()->type();
 
-        if ($containerType->instanceof(TypeFactory::class('Symfony\Component\DependencyInjection\ContainerInterface'))->isFalseOrMaybe()) {
+        if ($containerType->instanceof(TypeFactory::class(self::CONTAINER_CLASS))->isFalseOrMaybe()) {
             return;
         }
 
         foreach ($this->inspector->services() as $service) {
-            $suggestion = sprintf('\'%s\'', $service->id);
+            $suggestion = $inQuote ? $service->id  . '\'': sprintf('\'%s\'', $service->id);
             $import = null;
-            if ($service->type->isClass() && $service->id === $service->type->__toString()) {
+
+            if ($this->serviceIdIsFqn($service) && $inQuote) {
+                continue;
+            }
+
+            if (false === $this->serviceIdIsFqn($service) && false === $inQuote) {
+                continue;
+            }
+
+            if (false === $inQuote && $this->serviceIdIsFqn($service)) {
                 $suggestion = $service->type->short() . '::class';
                 $import = $service->type->__toString();
             }
@@ -72,5 +93,10 @@ class SymfonyContainerCompletor implements TolerantCompletor
         }
 
         return true;
+    }
+
+    private function serviceIdIsFqn(SymfonyContainerService $service): bool
+    {
+        return $service->type->isClass() && $service->id === $service->type->__toString();
     }
 }

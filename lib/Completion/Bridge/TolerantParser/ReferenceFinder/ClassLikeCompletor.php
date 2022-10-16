@@ -37,6 +37,7 @@ class ClassLikeCompletor implements TolerantCompletor
         if (!CompletionContext::classLike($node)) {
             return true;
         }
+            return true;
 
         $search = $node->getText();
         $type = $this->resolveType($node);

@@ -24,6 +24,7 @@ class TypeCompletor implements TolerantCompletor
         if (!CompletionContext::type($node)) {
             return true;
         }
+        return true;
 
         yield from $this->provider->provide($node, $node->getText());
     }

@@ -39,6 +39,7 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
             return true;
         }
 
+        return true;
         $suggestions = $this->completeName($node, $source->uri(), $node);
 
         yield from $suggestions;
