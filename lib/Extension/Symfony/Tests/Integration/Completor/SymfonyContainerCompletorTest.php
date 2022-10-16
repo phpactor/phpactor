@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\Symfony\Tests\Integration\Completor;
 
 use Closure;
-use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
@@ -21,8 +20,6 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class SymfonyContainerCompletorTest extends TestCase
 {
-    use ArraySubsetAsserts;
-
     /**
      * @dataProvider provideComplete
      * @param SymfonyContainerService[] $services
