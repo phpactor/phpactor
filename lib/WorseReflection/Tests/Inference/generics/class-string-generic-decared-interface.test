@@ -1,0 +1,24 @@
+<?php
+
+interface FooInterface {
+    /**
+     * @template T
+     * @param class-string<T> $class
+     * @return T
+     */
+    public function foobar($class): object;
+}
+
+
+class Foo implements FooInterface {
+    public function foobar($class): object
+    {
+    }
+}
+
+$f = new Foo();
+$f = $f->foobar(Foo::class);
+
+wrAssertType('Foo', $f);
+
+
