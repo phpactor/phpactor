@@ -148,6 +148,7 @@ class FileList implements Iterator
         $this->iterator->rewind();
     }
 
+    #[ReturnTypeWillChange]
     public function current()
     {
         $current = $this->iterator->current();
