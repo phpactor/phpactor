@@ -18,14 +18,16 @@ class XmlSymfonyContainerInspectorTest extends IntegrationTestCase
 
     public function testListsServicesFormValidXml(): void
     {
-        $this->workspace()->put('services.xml', <<<'EOT'
-            <?xml version="1.0" encoding="utf-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-              <services>
-                <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
-              </services>
-            </container>
-            EOT
+        $this->workspace()->put(
+            'services.xml',
+            <<<'EOT'
+                <?xml version="1.0" encoding="utf-8"?>
+                <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+                  <services>
+                    <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
+                  </services>
+                </container>
+                EOT
         );
         self::assertEquals([
             new SymfonyContainerService('service_container', TypeFactory::class('Symfony\Component\DependencyInjection\ContainerInterface')),
@@ -34,16 +36,18 @@ class XmlSymfonyContainerInspectorTest extends IntegrationTestCase
 
     public function testListsPublicServicesOnly(): void
     {
-        $this->workspace()->put('services.xml', <<<'EOT'
-            <?xml version="1.0" encoding="utf-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-              <services>
-                <service id="one" class="One" public="true" synthetic="true"/>
-                <service id="two" class="Two" public="false" synthetic="true"/>
-                <service id="two" class="Three" />
-              </services>
-            </container>
-            EOT
+        $this->workspace()->put(
+            'services.xml',
+            <<<'EOT'
+                <?xml version="1.0" encoding="utf-8"?>
+                <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+                  <services>
+                    <service id="one" class="One" public="true" synthetic="true"/>
+                    <service id="two" class="Two" public="false" synthetic="true"/>
+                    <service id="two" class="Three" />
+                  </services>
+                </container>
+                EOT
         );
         self::assertEquals([
             new SymfonyContainerService('one', TypeFactory::class('One')),
@@ -52,11 +56,13 @@ class XmlSymfonyContainerInspectorTest extends IntegrationTestCase
 
     public function testNoServices(): void
     {
-        $this->workspace()->put('services.xml', <<<'EOT'
-            <?xml version="1.0" encoding="utf-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-            </container>
-            EOT
+        $this->workspace()->put(
+            'services.xml',
+            <<<'EOT'
+                <?xml version="1.0" encoding="utf-8"?>
+                <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+                </container>
+                EOT
         );
         self::assertEquals([
         ], $this->inspect($this->workspace()->path('services.xml'))->services());
@@ -64,14 +70,16 @@ class XmlSymfonyContainerInspectorTest extends IntegrationTestCase
 
     public function testRetrieveService(): void
     {
-        $this->workspace()->put('services.xml', <<<'EOT'
-            <?xml version="1.0" encoding="utf-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-                <services>
-                    <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
-                </services>
-            </container>
-            EOT
+        $this->workspace()->put(
+            'services.xml',
+            <<<'EOT'
+                <?xml version="1.0" encoding="utf-8"?>
+                <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+                    <services>
+                        <service id="service_container" class="Symfony\Component\DependencyInjection\ContainerInterface" public="true" synthetic="true"/>
+                    </services>
+                </container>
+                EOT
         );
         self::assertEquals(
             new SymfonyContainerService(
@@ -84,14 +92,16 @@ class XmlSymfonyContainerInspectorTest extends IntegrationTestCase
 
     public function testDefinitionWithNoAttributes(): void
     {
-        $this->workspace()->put('services.xml', <<<'EOT'
-            <?xml version="1.0" encoding="utf-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-              <services>
-                <service/>
-              </services>
-            </container>
-            EOT
+        $this->workspace()->put(
+            'services.xml',
+            <<<'EOT'
+                <?xml version="1.0" encoding="utf-8"?>
+                <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+                  <services>
+                    <service/>
+                  </services>
+                </container>
+                EOT
         );
         self::assertEquals([
         ], $this->inspect($this->workspace()->path('services.xml'))->services());
@@ -99,15 +109,17 @@ class XmlSymfonyContainerInspectorTest extends IntegrationTestCase
 
     public function testParameters(): void
     {
-        $this->workspace()->put('services.xml', <<<'EOT'
-            <?xml version="1.0" encoding="utf-8"?>
-            <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-              <parameters>
-                <parameter key="kernel.project_dir">/app</parameter>
-                <parameter key="kernel.environment">dev</parameter>
-              </parameters>
-            </container>
-            EOT
+        $this->workspace()->put(
+            'services.xml',
+            <<<'EOT'
+                <?xml version="1.0" encoding="utf-8"?>
+                <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+                  <parameters>
+                    <parameter key="kernel.project_dir">/app</parameter>
+                    <parameter key="kernel.environment">dev</parameter>
+                  </parameters>
+                </container>
+                EOT
         );
         self::assertEquals([
             new SymfonyContainerParameter('kernel.project_dir', new StringLiteralType('/app')),

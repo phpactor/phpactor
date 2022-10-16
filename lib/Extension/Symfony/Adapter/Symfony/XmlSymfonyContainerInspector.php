@@ -85,6 +85,17 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
         return $parameters;
     }
 
+    public function service(string $id): ?SymfonyContainerService
+    {
+        foreach ($this->services() as $service) {
+            if ($service->id === $id) {
+                return $service;
+            }
+        }
+
+        return null;
+    }
+
     private function loadXPath(): ?DOMXPath
     {
         if (!file_exists($this->xmlPath)) {
@@ -95,16 +106,5 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
         $xpath = new DOMXPath($dom);
         $xpath->registerNamespace('symfony', 'http://symfony.com/schema/dic/services');
         return $xpath;
-    }
-
-    public function service(string $id): ?SymfonyContainerService
-    {
-        foreach ($this->services() as $service) {
-            if ($service->id === $id) {
-                return $service;
-            }
-        }
-
-        return null;
     }
 }

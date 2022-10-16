@@ -46,12 +46,12 @@ class SymfonyContainerCompletorTest extends TestCase
     {
         yield 'not on symfony container, get method' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Phpactor\Component\DependencyInjection\Container;
-            $container = new Container();
-            $foobar = $container->get(<>);
-            EOT
+                use Phpactor\Component\DependencyInjection\Container;
+                $container = new Container();
+                $foobar = $container->get(<>);
+                EOT
             ,
             [
                 new SymfonyContainerService('foobar', TypeFactory::class('Foobar')),
@@ -59,19 +59,18 @@ class SymfonyContainerCompletorTest extends TestCase
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(0, $suggestions);
             }
         ];
         yield 'on container, not get method' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Symfony\Component\DependencyInjection\Container;
-            $container = new Container();
-            $foobar = $container->set(<>);
-            EOT
+                use Symfony\Component\DependencyInjection\Container;
+                $container = new Container();
+                $foobar = $container->set(<>);
+                EOT
             ,
             [
                 new SymfonyContainerService('foobar', TypeFactory::class('Foobar')),
@@ -79,38 +78,36 @@ class SymfonyContainerCompletorTest extends TestCase
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(0, $suggestions);
             }
         ];
         yield 'on container, no suggestions' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Symfony\Component\DependencyInjection\Container;
-            $container = new Container();
-            $foobar = $container->get(<>);
-            EOT
+                use Symfony\Component\DependencyInjection\Container;
+                $container = new Container();
+                $foobar = $container->get(<>);
+                EOT
             ,
             [
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(0, $suggestions);
             }
         ];
 
         yield 'on container with string literal ID suggestions' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Symfony\Component\DependencyInjection\Container;
-            $container = new Container();
-            $foobar = $container->get('<>
-            EOT
+                use Symfony\Component\DependencyInjection\Container;
+                $container = new Container();
+                $foobar = $container->get('<>
+                EOT
             ,
             [
                 new SymfonyContainerService('foobar', TypeFactory::class('Foobar')),
@@ -118,8 +115,7 @@ class SymfonyContainerCompletorTest extends TestCase
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(2, $suggestions);
                 self::assertEquals('foobar', $suggestions[0]->name());
             }
@@ -127,13 +123,13 @@ class SymfonyContainerCompletorTest extends TestCase
 
         yield 'on container open quote' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Symfony\Component\DependencyInjection\Container;
-            $container = new Container();
-            $foobar = $container->get('<>
+                use Symfony\Component\DependencyInjection\Container;
+                $container = new Container();
+                $foobar = $container->get('<>
 
-            EOT
+                EOT
             ,
             [
                 new SymfonyContainerService('foobar', TypeFactory::class('Foobar')),
@@ -141,21 +137,20 @@ class SymfonyContainerCompletorTest extends TestCase
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(2, $suggestions);
             }
         ];
 
         yield 'on container open quote with string' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Symfony\Component\DependencyInjection\Container;
-            $container = new Container();
-            $foobar = $container->get('foo<>
+                use Symfony\Component\DependencyInjection\Container;
+                $container = new Container();
+                $foobar = $container->get('foo<>
 
-            EOT
+                EOT
             ,
             [
                 new SymfonyContainerService('foobar', TypeFactory::class('Foobar')),
@@ -163,21 +158,20 @@ class SymfonyContainerCompletorTest extends TestCase
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(2, $suggestions);
             }
         ];
 
         yield 'do not return classes in string literal' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Symfony\Component\DependencyInjection\Container;
-            $container = new Container();
-            $foobar = $container->get('foo<>
+                use Symfony\Component\DependencyInjection\Container;
+                $container = new Container();
+                $foobar = $container->get('foo<>
 
-            EOT
+                EOT
             ,
             [
                 new SymfonyContainerService('Foobar', TypeFactory::class('Foobar')),
@@ -185,8 +179,7 @@ class SymfonyContainerCompletorTest extends TestCase
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(1, $suggestions);
                 self::assertEquals('foobar.barfoo', $suggestions[0]->label());
             }
@@ -194,13 +187,13 @@ class SymfonyContainerCompletorTest extends TestCase
 
         yield 'do not return string literal service IDs without quote' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Symfony\Component\DependencyInjection\Container;
-            $container = new Container();
-            $foobar = $container->get(<>
+                use Symfony\Component\DependencyInjection\Container;
+                $container = new Container();
+                $foobar = $container->get(<>
 
-            EOT
+                EOT
             ,
             [
                 new SymfonyContainerService('Foobar', TypeFactory::class('Foobar')),
@@ -208,8 +201,7 @@ class SymfonyContainerCompletorTest extends TestCase
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(1, $suggestions);
                 self::assertEquals('Foobar', $suggestions[0]->label());
             }
@@ -217,14 +209,14 @@ class SymfonyContainerCompletorTest extends TestCase
 
         yield 'string literal on compound statement node' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            use Symfony\Component\DependencyInjection\Container;
-            function (Container $container) {
-                $foobar = $container->get('<>
-            }
+                use Symfony\Component\DependencyInjection\Container;
+                function (Container $container) {
+                    $foobar = $container->get('<>
+                }
 
-            EOT
+                EOT
             ,
             [
                 new SymfonyContainerService('Foobar', TypeFactory::class('Foobar')),
@@ -232,8 +224,7 @@ class SymfonyContainerCompletorTest extends TestCase
             ]
             ,
             /** @param Suggestion[] $suggestions */
-            function (array $suggestions): void
-            {
+            function (array $suggestions): void {
                 self::assertCount(1, $suggestions);
                 self::assertEquals('foobar.barfoo', $suggestions[0]->label());
             }

@@ -27,8 +27,7 @@ class SymfonyContainerContextResolver implements MemberContextResolver
         string $memberName,
         Type $containerType,
         ?FunctionArguments $arguments
-    ): ?Type
-    {
+    ): ?Type {
         if ($memberType !== ReflectionMember::TYPE_METHOD) {
             return null;
         }

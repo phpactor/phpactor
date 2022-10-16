@@ -166,7 +166,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
             '>',
             '$',
             '@',
-            '(', 
+            '(',
             '\'',
             '"'
         ]);

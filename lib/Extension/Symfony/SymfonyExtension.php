@@ -26,6 +26,9 @@ class SymfonyExtension implements Extension
             return new XmlSymfonyContainerInspector($xmlPath);
         });
         $container->register(SymfonyContainerCompletor::class, function (Container $container) {
+            if (false === $container->getParameter(self::PARAM_ENABLED)) {
+                return null;
+            }
             return new SymfonyContainerCompletor(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(SymfonyContainerInspector::class)
@@ -36,6 +39,9 @@ class SymfonyExtension implements Extension
             ],
         ]);
         $container->register(SymfonyContainerContextResolver::class, function (Container $container) {
+            if (false === $container->getParameter(self::PARAM_ENABLED)) {
+                return null;
+            }
             return new SymfonyContainerContextResolver(
                 $container->get(SymfonyContainerInspector::class)
             );

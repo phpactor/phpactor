@@ -99,7 +99,11 @@ class WorseReflectionExtension implements Extension
             }
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_MEMBER_TYPE_RESOLVER)) as $serviceId) {
-                $builder->addMemberContextResolver($container->get($serviceId));
+                $memberTypeResolver = $container->get($serviceId);
+                if (null === $memberTypeResolver) {
+                    continue;
+                }
+                $builder->addMemberContextResolver($memberTypeResolver);
             }
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_MEMBER_PROVIDER)) as $serviceId) {

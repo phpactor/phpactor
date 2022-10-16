@@ -158,12 +158,12 @@ class CompletionWorseExtension implements Extension
 
         $container->register(ChainTolerantCompletor::class, function (Container $container) {
             return new ChainTolerantCompletor(
-                array_map(function (string $serviceId) use ($container) {
+                array_filter(array_map(function (string $serviceId) use ($container) {
                     if ($container->getParameter(self::PARAM_DEBUG)) {
                         return new DebugTolerantCompletor($container->get($serviceId));
                     }
-                    return $container->get($serviceId);
-                }, $container->get(self::SERVICE_COMPLETOR_MAP)),
+                    return $container->get($serviceId) ?? false;
+                }, $container->get(self::SERVICE_COMPLETOR_MAP))),
                 $container->get('worse_reflection.tolerant_parser')
             );
         }, [ CompletionExtension::TAG_COMPLETOR => []]);

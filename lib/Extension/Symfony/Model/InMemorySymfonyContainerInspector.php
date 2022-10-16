@@ -2,8 +2,6 @@
 
 namespace Phpactor\Extension\Symfony\Model;
 
-use RuntimeException;
-
 class InMemorySymfonyContainerInspector implements SymfonyContainerInspector
 {
     /**

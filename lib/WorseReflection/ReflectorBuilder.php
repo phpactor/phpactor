@@ -198,6 +198,12 @@ final class ReflectorBuilder
         return $this;
     }
 
+    public function addMemberContextResolver(MemberContextResolver $memberContextResolver): self
+    {
+        $this->memberContextResolvers[] = $memberContextResolver;
+        return $this;
+    }
+
     private function buildLocator(): SourceCodeLocator
     {
         $locators = $this->locators;
@@ -239,11 +245,5 @@ final class ReflectorBuilder
         }
 
         return new NullCache();
-    }
-
-    public function addMemberContextResolver(MemberContextResolver $memberContextResolver): self
-    {
-        $this->memberContextResolvers[] = $memberContextResolver;
-        return $this;
     }
 }

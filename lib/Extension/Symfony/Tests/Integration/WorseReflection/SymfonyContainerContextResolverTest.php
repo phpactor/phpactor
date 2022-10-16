@@ -16,15 +16,14 @@ class SymfonyContainerContextResolverTest extends IntegrationTestCase
     {
         $this->resolve(
             <<<'EOT'
-            <?php
-            use Symfony\Component\DependencyInjection\ContainerInterface;
-            function (ContainerInterface $container) {
-                $foo = $container->get('foo.bar');
-                wrAssertType('Foo\Bar', $foo);
-            }
-            EOT
+                <?php
+                use Symfony\Component\DependencyInjection\ContainerInterface;
+                function (ContainerInterface $container) {
+                    $foo = $container->get('foo.bar');
+                    wrAssertType('Foo\Bar', $foo);
+                }
+                EOT
             ,
-
             [
                 new SymfonyContainerService('foo.bar', TypeFactory::class('Foo\Bar')),
             ]
@@ -35,15 +34,14 @@ class SymfonyContainerContextResolverTest extends IntegrationTestCase
     {
         $this->resolve(
             <<<'EOT'
-            <?php
-            use Symfony\Component\DependencyInjection\ContainerInterface;
-            function (ContainerInterface $container) {
-                $foo = $container->get(Foo::class);
-                wrAssertType('Foo\Bar', $foo);
-            }
-            EOT
+                <?php
+                use Symfony\Component\DependencyInjection\ContainerInterface;
+                function (ContainerInterface $container) {
+                    $foo = $container->get(Foo::class);
+                    wrAssertType('Foo\Bar', $foo);
+                }
+                EOT
             ,
-
             [
                 new SymfonyContainerService('Foo', TypeFactory::class('Foo\Bar')),
             ]
