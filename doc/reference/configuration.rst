@@ -1737,7 +1737,7 @@ Enable the Symfony extension
 """"""""""""""""""""
 
 
-Candidate paths to the development XML container dump
+Path to the Symfony container XML dump file
 
 
 **Default**: ``"%project_root%\/var\/cache\/dev\/App_KernelDevDebugContainer.xml"``
