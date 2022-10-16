@@ -54,4 +54,9 @@ class Trinary
     {
         return $this->maybe === true;
     }
+
+    public function isFalseOrMaybe(): bool
+    {
+        return $this->isFalse() || $this->isMaybe();
+    }
 }

@@ -6,9 +6,9 @@ use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
+use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
-use Phpactor\WorseReflection\Core\Logger;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
@@ -62,6 +62,11 @@ final class ReflectorBuilder
      * @var DiagnosticProvider[]
      */
     private array $diagnosticProviders = [];
+
+    /**
+     * @var MemberContextResolver[]
+     */
+    private array $memberContextResolvers = [];
 
     /**
      * Create a new instance of the builder
@@ -140,6 +145,7 @@ final class ReflectorBuilder
             $this->framewalkers,
             $this->memberProviders,
             $this->diagnosticProviders,
+            $this->memberContextResolvers,
             $this->buildCache(),
             $this->enableContextualSourceLocation
         ))->reflector();
@@ -189,6 +195,12 @@ final class ReflectorBuilder
     {
         $this->cacheLifetime = $lifetime;
 
+        return $this;
+    }
+
+    public function addMemberContextResolver(MemberContextResolver $memberContextResolver): self
+    {
+        $this->memberContextResolvers[] = $memberContextResolver;
         return $this;
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Tests\Inference;
+namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
@@ -75,7 +75,7 @@ class TestAssertWalker implements Walker
         return $frame;
     }
 
-    private function assertType(FrameResolver $resolver, Frame $frame, Node $node): void
+    private function assertType(FrameResolver $resolver, Frame $frame, CallExpression $node): void
     {
         $list = $node->argumentExpressionList->getElements();
         $args = [];

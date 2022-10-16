@@ -40,9 +40,18 @@ class NodeContextFromMemberAccess
 {
     private GenericMapResolver $resolver;
 
-    public function __construct(GenericMapResolver $resolver)
+    /**
+     * @var MemberContextResolver[]
+     */
+    private array $memberResolvers;
+
+    /**
+     * @param MemberContextResolver[] $memberResolvers
+     */
+    public function __construct(GenericMapResolver $resolver, array $memberResolvers)
     {
         $this->resolver = $resolver;
+        $this->memberResolvers = $memberResolvers;
     }
 
     public function infoFromMemberAccess(NodeContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
@@ -92,6 +101,7 @@ class NodeContextFromMemberAccess
         }
 
         $types = $memberTypes = [];
+        $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
 
         // this could be a union or a nullable
         foreach ($classType->classNamedTypes() as $subType) {
@@ -102,17 +112,24 @@ class NodeContextFromMemberAccess
             }
             $types[] = $subType;
 
+            foreach ($this->memberResolvers as $memberResolver) {
+                if (null !== $customType = $memberResolver->resolveMemberContext($memberType, $memberName, $subType, $arguments)) {
+                    $memberTypes[$memberName] = $customType;
+                    continue 2;
+                }
+            }
+
             if ($reflection instanceof ReflectionEnum && $memberType === 'constant') {
                 foreach ($reflection->members()->byMemberType('enum')->byName($memberName) as $member) {
                     // if multiple classes declare a member, always take the "top" one
-                    $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $node, $subType);
+                    $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
                     break;
                 }
             }
 
             foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
                 // if multiple classes declare a member, always take the "top" one
-                $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $node, $subType);
+                $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
                 break;
             }
         }
@@ -130,7 +147,7 @@ class NodeContextFromMemberAccess
         );
     }
 
-    private function resolveMemberType(NodeContextResolver $resolver, Frame $frame, ReflectionMember $member, Node $node, Type $subType): Type
+    private function resolveMemberType(NodeContextResolver $resolver, Frame $frame, ReflectionMember $member, ?FunctionArguments $arguments, Node $node, Type $subType): Type
     {
         $inferredType = $member->inferredType();
 
@@ -150,8 +167,8 @@ class NodeContextFromMemberAccess
         $declaringClass = self::declaringClass($member);
 
         $templateMap = $member->docblock()->templateMap();
-        if ($member instanceof ReflectionMethod && count($member->docblock()->templateMap())) {
-            $inferredType = $this->combineMethodTemplateVars($resolver, $frame, $node, $templateMap, $member, $inferredType);
+        if ($arguments && $member instanceof ReflectionMethod && count($member->docblock()->templateMap())) {
+            $inferredType = $this->combineMethodTemplateVars($arguments, $templateMap, $member, $inferredType);
         }
 
         if (count($declaringClass->docblock()->templateMap())) {
@@ -246,14 +263,8 @@ class NodeContextFromMemberAccess
         return FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
     }
 
-    private function combineMethodTemplateVars(NodeContextResolver $resolver, Frame $frame, Node $node, TemplateMap $templateMap, ReflectionMethod $member, Type $type): Type
+    private function combineMethodTemplateVars(FunctionArguments $arguments, TemplateMap $templateMap, ReflectionMethod $member, Type $type): Type
     {
-        $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
-
-        if (null === $arguments) {
-            return $type;
-        }
-
         $templateMap = $this->resolver->mergeParameters($templateMap, $member->parameters(), $arguments);
         $type = $type->map(function (Type $type) use ($templateMap): Type {
             if ($templateMap->has($type->short())) {

@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactor
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\DiagnosticsWalker;
@@ -60,9 +61,15 @@ class ServiceLocator
     private NodeToTypeConverter $nameResolver;
 
     /**
+     * @var MemberContextResolver[]
+     */
+    private array $memberContextResolvers;
+
+    /**
      * @param Walker[] $frameWalkers
      * @param ReflectionMemberProvider[] $methodProviders
      * @param DiagnosticProvider[] $diagnosticProviders
+     * @param MemberContextResolver[] $memberContextResolvers
      */
     public function __construct(
         SourceCodeLocator $sourceLocator,
@@ -71,6 +78,7 @@ class ServiceLocator
         array $frameWalkers,
         array $methodProviders,
         array $diagnosticProviders,
+        array $memberContextResolvers,
         Cache $cache,
         bool $enableContextualLocation = false
     ) {
@@ -108,6 +116,7 @@ class ServiceLocator
         $this->nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
 
         $this->methodProviders = $methodProviders;
+        $this->memberContextResolvers = $memberContextResolvers;
         $this->diagnosticProviders = $diagnosticProviders;
         $this->cache = $cache;
         $this->frameWalkers = $frameWalkers;
@@ -143,7 +152,10 @@ class ServiceLocator
             (new DefaultResolverFactory(
                 $this->reflector,
                 $this->nameResolver,
-                new NodeContextFromMemberAccess(new GenericMapResolver($this->reflector))
+                new NodeContextFromMemberAccess(
+                    new GenericMapResolver($this->reflector),
+                    $this->memberContextResolvers
+                )
             ))->createResolvers(),
         );
     }
