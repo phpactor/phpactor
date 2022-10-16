@@ -40,9 +40,18 @@ class NodeContextFromMemberAccess
 {
     private GenericMapResolver $resolver;
 
-    public function __construct(GenericMapResolver $resolver)
+    /**
+     * @var MemberContextResolver[]
+     */
+    private array $memberResolvers;
+
+    /**
+     * @param MemberContextResolver[] $memberResolvers
+     */
+    public function __construct(GenericMapResolver $resolver, array $memberResolvers)
     {
         $this->resolver = $resolver;
+        $this->memberResolvers = $memberResolvers;
     }
 
     public function infoFromMemberAccess(NodeContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
@@ -101,6 +110,13 @@ class NodeContextFromMemberAccess
                 continue;
             }
             $types[] = $subType;
+
+            foreach ($this->memberResolvers as $memberResolver) {
+                if (null !== $customType = $memberResolver->resolveMemberContext($memberType, $memberName, $subType)) {
+                    $memberTypes[$memberName] = $customType;
+                    break;
+                }
+            }
 
             if ($reflection instanceof ReflectionEnum && $memberType === 'constant') {
                 foreach ($reflection->members()->byMemberType('enum')->byName($memberName) as $member) {

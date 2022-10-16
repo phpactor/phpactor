@@ -59,6 +59,8 @@ class ServiceLocator
 
     private NodeToTypeConverter $nameResolver;
 
+    private array $memberContextResolvers;
+
     /**
      * @param Walker[] $frameWalkers
      * @param ReflectionMemberProvider[] $methodProviders
@@ -71,6 +73,7 @@ class ServiceLocator
         array $frameWalkers,
         array $methodProviders,
         array $diagnosticProviders,
+        array $memberContextResolvers,
         Cache $cache,
         bool $enableContextualLocation = false
     ) {
@@ -108,6 +111,7 @@ class ServiceLocator
         $this->nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
 
         $this->methodProviders = $methodProviders;
+        $this->memberContextResolvers = $memberContextResolvers;
         $this->diagnosticProviders = $diagnosticProviders;
         $this->cache = $cache;
         $this->frameWalkers = $frameWalkers;
@@ -143,7 +147,10 @@ class ServiceLocator
             (new DefaultResolverFactory(
                 $this->reflector,
                 $this->nameResolver,
-                new NodeContextFromMemberAccess(new GenericMapResolver($this->reflector))
+                new NodeContextFromMemberAccess(
+                    new GenericMapResolver($this->reflector),
+                    $this->memberContextResolvers
+                )
             ))->createResolvers(),
         );
     }
