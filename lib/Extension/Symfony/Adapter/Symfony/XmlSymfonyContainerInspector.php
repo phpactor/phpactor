@@ -4,6 +4,7 @@ namespace Phpactor\Extension\Symfony\Adapter\Symfony;
 
 use DOMDocument;
 use DOMElement;
+use DOMNode;
 use DOMXPath;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerParameter;
@@ -33,22 +34,11 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
             return [];
         }
         foreach ($serviceEls as $serviceEl) {
-            if (!$serviceEl instanceof DOMElement) {
+            $service = $this->serviceFromEl($serviceEl);
+            if (null === $service) {
                 continue;
             }
-            $id = $serviceEl->getAttribute('id');
-            $class = $serviceEl->getAttribute('class');
-            $public = $serviceEl->getAttribute('public');
-            if ('true' !== $public) {
-                continue;
-            }
-            if (empty($id) || empty($class)) {
-                continue;
-            }
-            $services[] = new SymfonyContainerService(
-                $id,
-                TypeFactory::fromString($class),
-            );
+            $services[] = $service;
         }
 
         return $services;
@@ -87,12 +77,13 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
 
     public function service(string $id): ?SymfonyContainerService
     {
-        foreach ($this->services() as $service) {
-            if ($service->id === $id) {
-                return $service;
-            }
+        $list = $this->loadXPath()->query(sprintf("//symfony:service[@id='%s']", $id));
+        if ($list === false) {
+            return null;
         }
-
+        foreach ($list as $serviceEl) {
+            return $this->serviceFromEl($serviceEl);
+        }
         return null;
     }
 
@@ -106,5 +97,25 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
         $xpath = new DOMXPath($dom);
         $xpath->registerNamespace('symfony', 'http://symfony.com/schema/dic/services');
         return $xpath;
+    }
+
+    private function serviceFromEl(DOMNode $serviceEl): ?SymfonyContainerService
+    {
+        if (!$serviceEl instanceof DOMElement) {
+            return null;
+        }
+        $id = $serviceEl->getAttribute('id');
+        $class = $serviceEl->getAttribute('class');
+        $public = $serviceEl->getAttribute('public');
+        if ('true' !== $public) {
+            return null;
+        }
+        if (empty($id) || empty($class)) {
+            return null;
+        }
+        return new SymfonyContainerService(
+            $id,
+            TypeFactory::fromString($class),
+        );
     }
 }
