@@ -1,7 +1,5 @@
 <?php
 
-namespace Foo;
-use Baz\Boo;
 
 class Foo {
     /**
@@ -15,8 +13,8 @@ class Foo {
 }
 
 $f = new Foo();
-$f = $f->foobar(Boo::class);
+$f = $f->foobar(Foo::class);
 
-wrAssertType('Baz\Boo', $f);
+wrAssertType('Foo', $f);
 
 
