@@ -61,5 +61,7 @@ class SymfonyContainerCompletor implements TolerantCompletor
                 'type' => Suggestion::TYPE_VALUE,
             ]);
         }
+
+        return true;
     }
 }

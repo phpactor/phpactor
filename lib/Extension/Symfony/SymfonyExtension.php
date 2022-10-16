@@ -5,29 +5,35 @@ namespace Phpactor\Extension\Symfony;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\Behat\Adapter\Symfony\SymfonyDiContextClassResolver;
-use Phpactor\Extension\Behat\Adapter\Worse\WorseContextClassResolver;
-use Phpactor\Extension\Behat\Adapter\Worse\WorseStepFactory;
-use Phpactor\Extension\Behat\Behat\BehatConfig;
-use Phpactor\Extension\Behat\Behat\ContextClassResolver;
-use Phpactor\Extension\Behat\Behat\ContextClassResolver\ChainContextClassResolver;
-use Phpactor\Extension\Behat\Behat\StepGenerator;
-use Phpactor\Extension\Behat\Behat\StepParser;
-use Phpactor\Extension\Behat\Completor\FeatureStepCompletor;
-use Phpactor\Extension\Behat\ReferenceFinder\StepDefinitionLocator;
-use Phpactor\Extension\Completion\CompletionExtension;
+use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
+use Phpactor\Extension\Symfony\Adapter\Symfony\XmlSymfonyContainerInspector;
+use Phpactor\Extension\Symfony\Completor\SymfonyContainerCompletor;
+use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
 class SymfonyExtension implements Extension
 {
-    const PARAM_XML_PATHS = 'symfony.xml_path';
+    const XML_PATH = 'symfony.xml_path';
     const PARAM_ENABLED = 'symfony.enabled';
 
     public function load(ContainerBuilder $container): void
     {
+        $container->register(SymfonyContainerInspector::class, function (Container $container) {
+            $xmlPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::XML_PATH));
+            return new XmlSymfonyContainerInspector($xmlPath);
+        });
+        $container->register(SymfonyContainerCompletor::class, function (Container $container) {
+            return new SymfonyContainerCompletor(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(SymfonyContainerInspector::class)
+            );
+        }, [
+            CompletionWorseExtension::TAG_TOLERANT_COMPLETOR => [
+                'name' => 'symfony',
+            ],
+        ]);
     }
 
 
@@ -35,12 +41,11 @@ class SymfonyExtension implements Extension
     {
         $schema->setDefaults([
             self::PARAM_ENABLED => false,
-            self::PARAM_XML_PATHS => [
-                '%project_root%/var/cache/dev/App_KernelDevDebugContainer.xml',
-            ],
+            self::XML_PATH => '%project_root%/var/cache/dev/App_KernelDevDebugContainer.xml',
+            'completion_worse.completor.symfony.enabled' => true,
         ]);
         $schema->setDescriptions([
-            self::PARAM_XML_PATHS => 'Candidate paths to the development XML container dump',
+            self::XML_PATH => 'Candidate paths to the development XML container dump',
         ]);
     }
 }

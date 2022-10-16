@@ -25,6 +25,7 @@ use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflecti
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\Symfony\SymfonyExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
@@ -158,7 +159,8 @@ class Phpactor
             LanguageServerPhpCsFixerExtension::class,
             BehatExtension::class,
             IndexerExtension::class,
-            ObjectRendererExtension::class
+            ObjectRendererExtension::class,
+            SymfonyExtension::class,
         ];
 
         if (class_exists(DebugExtension::class)) {
