@@ -1,6 +1,17 @@
 Changelog
 =========
 
+## master
+
+Features:
+
+  - [sf] New Symfony extension #1915
+
+Bug fixes:
+
+  - [wr] Fix member template params when declared in interface #1914
+
+
 ## 2022.10.11
 
 Bug fixes:

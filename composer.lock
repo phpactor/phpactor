@@ -1626,28 +1626,28 @@
         },
         {
             "name": "phpactor/container",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/container.git",
-                "reference": "61608993ac39ee7e45943f1b8f050c68e3ead515"
+                "reference": "14e98f4b381a7dd89d5509edb76deacb71d4deae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/container/zipball/61608993ac39ee7e45943f1b8f050c68e3ead515",
-                "reference": "61608993ac39ee7e45943f1b8f050c68e3ead515",
+                "url": "https://api.github.com/repos/phpactor/container/zipball/14e98f4b381a7dd89d5509edb76deacb71d4deae",
+                "reference": "14e98f4b381a7dd89d5509edb76deacb71d4deae",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.3 || ^8.0",
-                "phpactor/map-resolver": "^1.3.2",
+                "phpactor/map-resolver": "^1.4",
                 "psr/container": "^1.0"
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
-                "friendsofphp/php-cs-fixer": "^2.17",
+                "friendsofphp/php-cs-fixer": "^3.0",
                 "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/phpstan": "~0.12.0",
+                "phpstan/phpstan": "^1.0",
                 "phpunit/phpunit": "^9.0"
             },
             "type": "library",
@@ -1674,9 +1674,9 @@
             "description": "Phpactor's DI Container",
             "support": {
                 "issues": "https://github.com/phpactor/container/issues",
-                "source": "https://github.com/phpactor/container/tree/2.0.0"
+                "source": "https://github.com/phpactor/container/tree/2.0.2"
             },
-            "time": "2021-02-06T14:38:57+00:00"
+            "time": "2022-10-16T21:03:17+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -5220,16 +5220,16 @@
         },
         {
             "name": "phpbench/phpbench",
-            "version": "1.2.6",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpbench/phpbench.git",
-                "reference": "c30fac992e72b505a1f131790583647f4d3255c3"
+                "reference": "dce145304abbb16c8d9af69c19d96f47e9d0e670"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/c30fac992e72b505a1f131790583647f4d3255c3",
-                "reference": "c30fac992e72b505a1f131790583647f4d3255c3",
+                "url": "https://api.github.com/repos/phpbench/phpbench/zipball/dce145304abbb16c8d9af69c19d96f47e9d0e670",
+                "reference": "dce145304abbb16c8d9af69c19d96f47e9d0e670",
                 "shasum": ""
             },
             "require": {
@@ -5250,14 +5250,16 @@
                 "symfony/finder": "^4.2 || ^5.0 || ^6.0",
                 "symfony/options-resolver": "^4.2 || ^5.0 || ^6.0",
                 "symfony/process": "^4.2 || ^5.0 || ^6.0",
-                "webmozart/path-util": "^2.3"
+                "webmozart/glob": "^4.6"
             },
             "require-dev": {
                 "dantleech/invoke": "^2.0",
                 "friendsofphp/php-cs-fixer": "^3.0",
-                "jangregor/phpstan-prophecy": "^0.8.1",
+                "jangregor/phpstan-prophecy": "^1.0",
                 "phpspec/prophecy": "^1.12",
-                "phpstan/phpstan": "^0.12.7",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
                 "phpunit/phpunit": "^8.5.8 || ^9.0",
                 "symfony/error-handler": "^5.2 || ^6.0",
                 "symfony/var-dumper": "^4.0 || ^5.0 || ^6.0"
@@ -5296,7 +5298,7 @@
             "description": "PHP Benchmarking Framework",
             "support": {
                 "issues": "https://github.com/phpbench/phpbench/issues",
-                "source": "https://github.com/phpbench/phpbench/tree/1.2.6"
+                "source": "https://github.com/phpbench/phpbench/tree/1.2.7"
             },
             "funding": [
                 {
@@ -5304,7 +5306,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-07-19T19:52:39+00:00"
+            "time": "2022-10-15T09:57:51+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
