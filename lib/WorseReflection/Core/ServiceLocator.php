@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactor
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\DiagnosticsWalker;
@@ -59,12 +60,16 @@ class ServiceLocator
 
     private NodeToTypeConverter $nameResolver;
 
+    /**
+     * @var MemberContextResolver[]
+     */
     private array $memberContextResolvers;
 
     /**
      * @param Walker[] $frameWalkers
      * @param ReflectionMemberProvider[] $methodProviders
      * @param DiagnosticProvider[] $diagnosticProviders
+     * @param MemberContextResolver[] $memberContextResolvers
      */
     public function __construct(
         SourceCodeLocator $sourceLocator,
