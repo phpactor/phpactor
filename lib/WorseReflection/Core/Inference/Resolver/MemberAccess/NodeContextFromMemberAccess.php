@@ -163,12 +163,19 @@ class NodeContextFromMemberAccess
             }
         }
 
-
         $declaringClass = self::declaringClass($member);
 
-        $templateMap = $member->docblock()->templateMap();
-        if ($arguments && $member instanceof ReflectionMethod && count($member->docblock()->templateMap())) {
-            $inferredType = $this->combineMethodTemplateVars($arguments, $templateMap, $member, $inferredType);
+        if ($arguments && $member instanceof ReflectionMethod) {
+            try {
+                $declaringMember = $declaringClass->members()->byMemberType($member->memberType())->byName($member->name())->first();
+                if ($declaringMember instanceof ReflectionMethod) {
+                    $templateMap = $declaringMember->docblock()->templateMap();
+                    if (count($templateMap)) {
+                        $inferredType = $this->combineMethodTemplateVars($arguments, $templateMap, $declaringMember, $inferredType);
+                    }
+                }
+            } catch (NotFound $e) {
+            }
         }
 
         if (count($declaringClass->docblock()->templateMap())) {
