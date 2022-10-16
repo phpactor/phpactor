@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Benchmark\CodeAction;
 
+use Amp\CancellationTokenSource;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
 use Phpactor\TestUtils\ExtractOffset;
@@ -108,10 +109,12 @@ class ImportNameProviderBench extends IntegrationTestCase
         $subject = $this->workspace()->getContents('subject.php');
 
         [ $source, $offset ] = ExtractOffset::fromSource($subject);
+        $cancel = (new CancellationTokenSource())->getToken();
 
         $this->provider->provideActionsFor(
             ProtocolFactory::textDocumentItem('file:///foobar', $subject),
-            ProtocolFactory::range(0, 0, 0, 0)
+            ProtocolFactory::range(0, 0, 0, 0),
+            $cancel
         );
     }
 }
