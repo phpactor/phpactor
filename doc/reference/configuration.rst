@@ -1709,3 +1709,49 @@ Paths in which to look for templates for hover information.
 
 **Default**: ``["%project_config%\/templates\/markdown","%config%\/templates\/markdown"]``
 
+
+.. _SymfonyExtension:
+
+
+SymfonyExtension
+----------------
+
+
+.. _param_symfony.enabled:
+
+
+``symfony.enabled``
+"""""""""""""""""""
+
+
+Enable the Symfony extension
+
+
+**Default**: ``false``
+
+
+.. _param_symfony.xml_path:
+
+
+``symfony.xml_path``
+""""""""""""""""""""
+
+
+Candidate paths to the development XML container dump
+
+
+**Default**: ``"%project_root%\/var\/cache\/dev\/App_KernelDevDebugContainer.xml"``
+
+
+.. _param_completion_worse.completor.symfony.enabled:
+
+
+``completion_worse.completor.symfony.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable/disable the Symfony completor - depends on Symfony extension being enabled
+
+
+**Default**: ``true``
+
