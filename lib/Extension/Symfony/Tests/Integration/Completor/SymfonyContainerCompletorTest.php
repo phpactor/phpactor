@@ -5,17 +5,11 @@ namespace Phpactor\Extension\Symfony\Tests\Integration\Completor;
 use Closure;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
+use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
-use Phpactor\Container\PhpactorContainer;
-use Phpactor\Extension\Behat\BehatExtension;
-use Phpactor\Extension\ClassToFile\ClassToFileExtension;
-use Phpactor\Extension\Completion\CompletionExtension;
-use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\Logger\LoggingExtension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\Extension\Symfony\Completor\SymfonyContainerCompletor;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -27,18 +21,20 @@ class SymfonyContainerCompletorTest extends TestCase
     /**
      * @dataProvider provideComplete
      */
-    public function testComplete(string $source, Closure $assertion): void
+    public function testComplete(string $source, string $containerXml, Closure $assertion): void
     {
         [$source, $start] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$start);
         $suggestions = iterator_to_array($this->completor()->complete(
+            $node,
             TextDocumentBuilder::create($source)->language('php')->build(),
             ByteOffset::fromInt((int)$start)
         ));
-
+        $assertion($suggestions);
     }
 
     /**
-     * @return Generator<string,array{string,Closure(Suggestion[]):void}>
+     * @return Generator<string,array{string,string,Closure(Suggestion[]):void}>
      */
     public function provideComplete(): Generator
     {
@@ -60,30 +56,16 @@ class SymfonyContainerCompletorTest extends TestCase
             </container>
             EOT
             ,
-            /** @param Suggestion[] $suggestions */function (array $suggestions): void
+            /** @param Suggestion[] $suggestions */
+            function (array $suggestions): void
             {
-                \PHPStan\dumpType($suggestions);
+                dump($suggestions);
             }
         ];
     }
 
-    private function completor(): Completor
+    private function completor(): TolerantCompletor
     {
-        $container = PhpactorContainer::fromExtensions([
-            WorseReflectionExtension::class,
-            FilePathResolverExtension::class,
-            CompletionExtension::class,
-            BehatExtension::class,
-            ClassToFileExtension::class,
-            ComposerAutoloaderExtension::class,
-            LoggingExtension::class,
-        ], [
-            FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ . '/../../../../../..',
-            BehatExtension::PARAM_CONFIG_PATH => __DIR__ .'/behat.yml',
-            BehatExtension::PARAM_ENABLED => true,
-        ]);
-
-
-        return $container->get(CompletionExtension::SERVICE_REGISTRY)->completorForType('cucumber');
+        return new SymfonyContainerCompletor();
     }
 }

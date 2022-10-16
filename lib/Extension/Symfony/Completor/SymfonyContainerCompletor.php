@@ -8,10 +8,9 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Range;
+use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Symfony\Component\Console\Completion\Suggestion;
 
 class SymfonyContainerCompletor implements TolerantCompletor
 {
@@ -30,13 +29,13 @@ class SymfonyContainerCompletor implements TolerantCompletor
         $expression = $memberAccess->dereferencableExpression;
 
 
-        yield Suggestion::createWithOptions($suggestion, [
-            'label' => $step->pattern(),
-            'short_description' => $step->context()->class(),
+        yield Suggestion::createWithOptions('foo', [
+            'label' => 'asd',
+            'short_description' => 'asd',
             'type' => Suggestion::TYPE_SNIPPET,
             'range' => Range::fromStartAndEnd(
-                $startOffset,
-                $startOffset + strlen($partial)
+                0,
+                0
             )
         ]);
     }
