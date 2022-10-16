@@ -6,6 +6,7 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Range;
 use Phpactor\Completion\Core\Suggestion;
@@ -32,9 +33,11 @@ class SymfonyContainerCompletor implements TolerantCompletor
         $this->inspector = $inspector;
     }
 
-    public function complete(Node $containerType, TextDocument $source, ByteOffset $offset): Generator
+    public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
-        $node = NodeUtil::firstDescendantNodeBeforeOffset($containerType, $offset->toInt());
+        if ($node instanceof SourceFileNode) {
+            $node = NodeUtil::firstDescendantNodeBeforeOffset($node, $offset->toInt());
+        }
 
         $memberAccessExpression = null;
         $inQuote = false;
@@ -53,7 +56,7 @@ class SymfonyContainerCompletor implements TolerantCompletor
             return;
         }
 
-        $methodName = NodeUtil::nameFromTokenOrNode($containerType, $memberAccess->memberName);
+        $methodName = NodeUtil::nameFromTokenOrNode($node, $memberAccess->memberName);
 
         if ($methodName !== 'get') {
             return;
@@ -67,7 +70,7 @@ class SymfonyContainerCompletor implements TolerantCompletor
         }
 
         foreach ($this->inspector->services() as $service) {
-            $suggestion = $inQuote ? $service->id  . '\'': sprintf('\'%s\'', $service->id);
+            $suggestion = $inQuote ? $service->id : sprintf('\'%s\'', $service->id);
             $import = null;
 
             if ($this->serviceIdIsFqn($service) && $inQuote) {

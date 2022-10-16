@@ -103,13 +103,13 @@ class SymfonyContainerCompletorTest extends TestCase
             }
         ];
 
-        yield 'on container with suggestions' => [
+        yield 'on container with string literal ID suggestions' => [
             <<<'EOT'
             <?php
 
             use Symfony\Component\DependencyInjection\Container;
             $container = new Container();
-            $foobar = $container->get(<>);
+            $foobar = $container->get('<>
             EOT
             ,
             [
@@ -121,6 +121,7 @@ class SymfonyContainerCompletorTest extends TestCase
             function (array $suggestions): void
             {
                 self::assertCount(2, $suggestions);
+                self::assertEquals('foobar', $suggestions[0]->name());
             }
         ];
 
