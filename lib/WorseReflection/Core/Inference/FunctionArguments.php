@@ -32,6 +32,13 @@ class FunctionArguments implements IteratorAggregate, Countable
         $this->frame = $frame;
     }
 
+    public function __toString(): string
+    {
+        return implode(', ', array_map(function (NodeContext $type) {
+            return $type->type()->__toString();
+        }, iterator_to_array($this->getIterator())));
+    }
+
     public static function fromList(NodeContextResolver $resolver, Frame $frame, ?ArgumentExpressionList $list): self
     {
         if ($list === null) {

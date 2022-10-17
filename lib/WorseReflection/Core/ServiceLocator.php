@@ -152,6 +152,7 @@ class ServiceLocator
             (new DefaultResolverFactory(
                 $this->reflector,
                 $this->nameResolver,
+                new GenericMapResolver($this->reflector),
                 new NodeContextFromMemberAccess(
                     new GenericMapResolver($this->reflector),
                     $this->memberContextResolvers
