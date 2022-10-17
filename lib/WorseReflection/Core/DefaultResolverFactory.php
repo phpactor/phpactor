@@ -54,7 +54,6 @@ use Phpactor\WorseReflection\Core\Inference\FunctionStub\InArrayStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IsSomethingStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\IteratorToArrayStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ResetStub;
-use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\AnonymousFunctionCreationExpressionResolver;
@@ -108,19 +107,15 @@ final class DefaultResolverFactory
 
     private NodeContextFromMemberAccess $nodeContextFromMemberAccess;
 
-    private GenericMapResolver $genericResolver;
-
     public function __construct(
         Reflector $reflector,
         NodeToTypeConverter $nodeTypeConverter,
-        GenericMapResolver $genericResolver,
         NodeContextFromMemberAccess $nodeContextFromMemberAccess
     ) {
         $this->reflector = $reflector;
         $this->nodeTypeConverter = $nodeTypeConverter;
         $this->functionStubRegistry = $this->createStubRegistry();
         $this->nodeContextFromMemberAccess = $nodeContextFromMemberAccess;
-        $this->genericResolver = $genericResolver;
     }
 
     /**
@@ -147,7 +142,7 @@ final class DefaultResolverFactory
             TraitDeclaration::class => new ClassLikeResolver(),
             EnumDeclaration::class => new ClassLikeResolver(),
             FunctionDeclaration::class => new FunctionDeclarationResolver(),
-            ObjectCreationExpression::class => new ObjectCreationExpressionResolver($this->genericResolver),
+            ObjectCreationExpression::class => new ObjectCreationExpressionResolver(),
             SubscriptExpression::class => new SubscriptExpressionResolver(),
             StringLiteral::class => new StringLiteralResolver(),
             NumericLiteral::class => new NumericLiteralResolver(),

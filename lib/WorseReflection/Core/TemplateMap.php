@@ -108,12 +108,4 @@ final class TemplateMap implements Countable
 
         return new self($newMap);
     }
-
-    /**
-     * @return Type[]
-     */
-    public function toArguments(): array
-    {
-        return array_values($this->map);
-    }
 }
