@@ -31,7 +31,6 @@ class ObjectCreationExpressionResolver implements Resolver
             throw new CouldNotResolveNode(sprintf('Could not create object from "%s"', get_class($node)));
         }
 
-        $arguments = FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
 
         $classContext = $resolver->resolveNode($frame, $node->classTypeDesignator);
         $classType = $classContext->type();
@@ -46,7 +45,17 @@ class ObjectCreationExpressionResolver implements Resolver
                 return $classContext;
             }
             $templateMap = $reflection->docblock()->templateMap();
-            $templateMap = $this->resolver->mergeParameters($templateMap, $reflection->methods()->get('__construct')->parameters(), $arguments);
+
+            if (!count($templateMap)) {
+                return $classContext;
+            }
+
+            $arguments = FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
+            $templateMap = $this->resolver->mergeParameters(
+                $templateMap,
+                $reflection->methods()->get('__construct')->parameters(),
+                $arguments
+            );
             $classContext = $classContext->withType(new GenericClassType($resolver->reflector(), $classType->name(), $templateMap->toArguments()));
         }
 
