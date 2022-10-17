@@ -42,6 +42,9 @@ class ObjectCreationExpressionResolver implements Resolver
             } catch (NotFound $notFound) {
                 return $classContext;
             }
+            if (!$reflection->methods()->has('__construct')) {
+                return $classContext;
+            }
             $templateMap = $reflection->docblock()->templateMap();
             $templateMap = $this->resolver->mergeParameters($templateMap, $reflection->methods()->get('__construct')->parameters(), $arguments);
             $classContext = $classContext->withType(new GenericClassType($resolver->reflector(), $classType->name(), $templateMap->toArguments()));
