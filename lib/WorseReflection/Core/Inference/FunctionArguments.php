@@ -6,6 +6,7 @@ use Countable;
 use IteratorAggregate;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Phpactor\WorseReflection\Core\Type;
 use Traversable;
 
 /**
@@ -62,5 +63,12 @@ class FunctionArguments implements IteratorAggregate, Countable
     public function count(): int
     {
         return count($this->arguments);
+    }
+
+    public function __toString(): string
+    {
+        return implode(', ', array_map(function (NodeContext $type) {
+            return $type->type()->__toString();
+        }, iterator_to_array($this->getIterator())));
     }
 }

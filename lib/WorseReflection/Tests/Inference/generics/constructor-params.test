@@ -24,4 +24,5 @@ class Foo {
 }
 
 $f = new Foo('hello');
+wrAssertType('Foo<string>', $f);
 wrAssertType('string', $f->a());
