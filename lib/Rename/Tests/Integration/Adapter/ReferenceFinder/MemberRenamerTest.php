@@ -159,6 +159,32 @@ class MemberRenamerTest extends RenamerTestCase
             }
         ];
 
+        yield 'property declaration generic' => [
+            'member_renamer/property_declaration_public_generic',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $property = $reflection->properties()->get('foobar');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $propertyAccesses = $reflector->navigate(
+                    $this->workspace()->getContents('project/ClassTwo.php')
+                )->propertyAccesses();
+                $first = $propertyAccesses->first();
+                self::assertEquals('newName', $first->name());
+                $propertyAccesses = $reflector->navigate(
+                    $this->workspace()->getContents('project/test.php')
+                )->propertyAccesses();
+                $first = $propertyAccesses->first();
+                self::assertEquals('newName', $first->name());
+            }
+        ];
+
         // these tests verify that the code works using the current PHP runtime
         // so fail if the runtime doesn't support promoted properties
         if (version_compare(PHP_VERSION, '8.0', '>=')) {
