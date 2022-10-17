@@ -1167,7 +1167,6 @@ class NodeContextResolverTest extends IntegrationTestCase
             (new DefaultResolverFactory(
                 $reflector,
                 $nameResolver,
-                new GenericMapResolver($reflector),
                 new NodeContextFromMemberAccess(
                     new GenericMapResolver($reflector),
                     []
