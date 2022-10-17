@@ -6,6 +6,7 @@ Changelog
 Features:
 
   - [sf] New Symfony extension #1915
+  - [wr] Generic constructor parameters support #1920
 
 Bug fixes:
 
