@@ -1,0 +1,21 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+class Barfoo 
+{
+}
+
+new Ba<>rfoo();
+// File: expected
+<?php
+
+namespace Phpactor;
+
+class Barfoo 
+{
+}
+
+new Barfoo();
+

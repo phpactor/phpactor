@@ -10,7 +10,11 @@ Features:
 Bug fixes:
 
   - [wr] Fix member template params when declared in interface #1914
+  - [cb] Do not prompt to generate constructor when object is given no arguments #1911
 
+Improvements:
+
+  - [cb] Add properties _after_ constants #1917 @mamazu
 
 ## 2022.10.11
 
