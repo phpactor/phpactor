@@ -27,11 +27,9 @@ class WorseGenerateConstructorTest extends WorseTestCase
             ByteOffset::fromInt($offset)
         );
 
-        self::assertCount(1, $textDocumentEditsCollection);
-
-        $transformed = '';
+        $transformed = $source;
         foreach ($textDocumentEditsCollection as $textDocumentEdits) {
-            $transformed = $textDocumentEdits->textEdits()->apply($source);
+            $transformed = $textDocumentEdits->textEdits()->apply($transformed);
         }
 
         $this->assertEquals(trim($expected), trim($transformed));

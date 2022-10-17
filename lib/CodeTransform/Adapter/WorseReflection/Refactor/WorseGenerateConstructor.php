@@ -65,6 +65,10 @@ class WorseGenerateConstructor implements GenerateConstructor
 
         $arguments = $newObject->arguments();
 
+        if (count($arguments) === 0) {
+            return WorkspaceEdits::none();
+        }
+
         $builder = $this->factory->fromSource($newObject->class()->sourceCode());
         $class = $builder->class($newObject->class()->name()->short());
         $method = $class->method('__construct');
