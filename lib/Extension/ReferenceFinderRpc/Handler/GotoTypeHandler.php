@@ -42,6 +42,21 @@ class GotoTypeHandler implements Handler
             self::PARAM_SOURCE,
             self::PARAM_PATH,
         ]);
+        $resolver->setEnums([
+            self::PARAM_TARGET => OpenFileResponse::VALID_TARGETS,
+        ]);
+        $resolver->setTypes([
+            self::PARAM_OFFSET => 'integer',
+            self::PARAM_LANGUAGE => 'string',
+            self::PARAM_TARGET => 'string',
+        ]);
+        $resolver->setDescriptions([
+            self::PARAM_OFFSET => 'Number of character into the buffer',
+            self::PARAM_SOURCE => 'Content of the current file',
+            self::PARAM_PATH => 'Path of the current file',
+            self::PARAM_LANGUAGE => 'Language of the current file',
+            self::PARAM_TARGET => 'Where should the reference be opened',
+        ]);
     }
 
     public function handle(array $arguments)

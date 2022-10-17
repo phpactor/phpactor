@@ -1036,6 +1036,9 @@ _RpcHandler_GotoDefinitionHandler
 Type: string
 
 
+Language of the current file
+
+
 **Default**: ``"php"``
 
 
@@ -1049,7 +1052,13 @@ Type: string
 Type: string
 
 
+Where should the reference be opened
+
+
 **Default**: ``"focused_window"``
+
+
+**Allowed values**: "focused_window", "vsplit", "hsplit", "new_tab"
 
 
 .. _RpcCommand_goto_definition_offset:
@@ -1057,6 +1066,12 @@ Type: string
 
 ``offset``
 """"""""""
+
+
+Type: int
+
+
+Number of character into the buffer
 
 
 **Default**: ``null``
@@ -1069,6 +1084,9 @@ Type: string
 """"""""""
 
 
+Content of the current file
+
+
 **Default**: ``null``
 
 
@@ -1077,6 +1095,9 @@ Type: string
 
 ``path``
 """"""""
+
+
+Path of the current file
 
 
 **Default**: ``null``
@@ -1096,6 +1117,12 @@ _RpcHandler_GotoTypeHandler
 """"""""""""
 
 
+Type: string
+
+
+Language of the current file
+
+
 **Default**: ``"php"``
 
 
@@ -1106,7 +1133,16 @@ _RpcHandler_GotoTypeHandler
 """"""""""
 
 
+Type: string
+
+
+Where should the reference be opened
+
+
 **Default**: ``"focused_window"``
+
+
+**Allowed values**: "focused_window", "vsplit", "hsplit", "new_tab"
 
 
 .. _RpcCommand_goto_type_offset:
@@ -1114,6 +1150,12 @@ _RpcHandler_GotoTypeHandler
 
 ``offset``
 """"""""""
+
+
+Type: int
+
+
+Number of character into the buffer
 
 
 **Default**: ``null``
@@ -1126,6 +1168,9 @@ _RpcHandler_GotoTypeHandler
 """"""""""
 
 
+Content of the current file
+
+
 **Default**: ``null``
 
 
@@ -1134,6 +1179,9 @@ _RpcHandler_GotoTypeHandler
 
 ``path``
 """"""""
+
+
+Path of the current file
 
 
 **Default**: ``null``
@@ -1153,6 +1201,12 @@ _RpcHandler_GotoImplementationHandler
 """"""""""""
 
 
+Type: string
+
+
+Language of the current file
+
+
 **Default**: ``"php"``
 
 
@@ -1163,7 +1217,16 @@ _RpcHandler_GotoImplementationHandler
 """"""""""
 
 
+Type: string
+
+
+Where should the reference be opened
+
+
 **Default**: ``"focused_window"``
+
+
+**Allowed values**: "focused_window", "vsplit", "hsplit", "new_tab"
 
 
 .. _RpcCommand_goto_implementation_offset:
@@ -1171,6 +1234,12 @@ _RpcHandler_GotoImplementationHandler
 
 ``offset``
 """"""""""
+
+
+Type: int
+
+
+Number of character into the buffer
 
 
 **Default**: ``null``
@@ -1183,6 +1252,9 @@ _RpcHandler_GotoImplementationHandler
 """"""""""
 
 
+Content of the current file
+
+
 **Default**: ``null``
 
 
@@ -1191,6 +1263,9 @@ _RpcHandler_GotoImplementationHandler
 
 ``path``
 """"""""
+
+
+Path of the current file
 
 
 **Default**: ``null``
