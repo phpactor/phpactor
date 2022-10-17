@@ -85,7 +85,7 @@ class GenericMapResolver
                 }
 
                 if ($templateMap->has($type->short())) {
-                    $templateMap->replace($type->short(), $arguments->at($parameter->index())->type());
+                    $templateMap->replace($type->short(), $arguments->at($parameter->index())->type()->generalize());
                 }
 
                 return $type;

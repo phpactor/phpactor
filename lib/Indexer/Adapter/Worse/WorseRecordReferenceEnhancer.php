@@ -8,6 +8,7 @@ use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Psr\Log\LoggerInterface;
 use Safe\Exceptions\FilesystemException;
 use function Safe\file_get_contents;
@@ -63,6 +64,10 @@ class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 
         if (!($containerType->isDefined())) {
             return $reference;
+        }
+
+        if ($containerType instanceof ClassType) {
+            $containerType = $containerType->name()->__toString();
         }
 
         return $reference->withContainerType($containerType);

@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * @template T
+ */
+class Bar {
+  /**
+   * @return T
+   */
+   public function b()
+   {
+   }
+}
+
+/**
+ * @template T
+ * @extends Bar<T>
+ */
+class Foo extends Bar {
+    /**
+     * @var T
+     */
+    private $a;
+
+    /** @param T $a */
+    public function __construct($a) {
+        $this->a = $a;
+    }
+
+    /**
+     * @return T
+     */
+    public function a()
+    {
+        return $this->a;
+    }
+}
+
+$f = new Foo('hello');
+wrAssertType('Foo<string>', $f);
+wrAssertType('string', $f->b());
