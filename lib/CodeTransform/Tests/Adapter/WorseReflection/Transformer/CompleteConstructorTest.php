@@ -565,5 +565,37 @@ class CompleteConstructorTest extends WorseTestCase
                 EOT
 
         ];
+
+        yield 'Importing property before constants' => [
+            <<<'EOT'
+                <?php
+                class Foobar
+                {
+                    const FOO = 1;
+
+                    public function __construct(string $bar)
+                    {
+                    }
+                }
+                EOT
+        ,
+            <<<'EOT'
+                <?php
+                class Foobar
+                {
+                    const FOO = 1;
+                    /**
+                     * @var string
+                     */
+                    private $bar;
+
+                    public function __construct(string $bar)
+                    {
+                        $this->bar = $bar;
+                    }
+                }
+                EOT
+
+        ];
     }
 }

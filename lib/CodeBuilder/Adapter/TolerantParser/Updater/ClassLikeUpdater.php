@@ -3,10 +3,12 @@
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Token;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;
 use Phpactor\CodeBuilder\Domain\Prototype\ClassLikePrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
@@ -49,8 +51,8 @@ abstract class ClassLikeUpdater
             return;
         }
 
-        $lastProperty = $classMembers->openBrace;
         $memberDeclarations = $this->memberDeclarations($classMembers);
+        $lastProperty = $this->getInsertPlace($classMembers, $memberDeclarations);
 
         $nextMember = null;
         $existingPropertyNames = [];
@@ -85,5 +87,22 @@ abstract class ClassLikeUpdater
                 $edits->after($lastProperty, PHP_EOL);
             }
         }
+    }
+
+    /**
+     * @param Node[] $memberDeclarations
+    */
+    protected function getInsertPlace(Node $classNode, array $memberDeclarations): Token
+    {
+        $insert = $classNode->openBrace;
+        foreach ($memberDeclarations as $member) {
+            if ($member instanceof ClassConstDeclaration) {
+                $insert = $member->semicolon;
+            } else {
+                break;
+            }
+        }
+
+        return $insert;
     }
 }
