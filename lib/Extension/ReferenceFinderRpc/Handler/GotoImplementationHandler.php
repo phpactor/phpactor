@@ -25,7 +25,6 @@ class GotoImplementationHandler extends AbstractHandler
     const PARAM_PATH = 'path';
     const PARAM_LANGUAGE = 'language';
     const PARAM_TARGET = 'target';
-    const PARAM_SELECTED_PATH = 'selected_path';
 
     private ClassImplementationFinder $finder;
 
@@ -50,6 +49,21 @@ class GotoImplementationHandler extends AbstractHandler
             self::PARAM_OFFSET,
             self::PARAM_SOURCE,
             self::PARAM_PATH,
+        ]);
+        $resolver->setEnums([
+            self::PARAM_TARGET => OpenFileResponse::VALID_TARGETS,
+        ]);
+        $resolver->setTypes([
+            self::PARAM_OFFSET => 'integer',
+            self::PARAM_LANGUAGE => 'string',
+            self::PARAM_TARGET => 'string',
+        ]);
+        $resolver->setDescriptions([
+            self::PARAM_OFFSET => 'Number of character into the buffer',
+            self::PARAM_SOURCE => 'Content of the current file',
+            self::PARAM_PATH => 'Path of the current file',
+            self::PARAM_LANGUAGE => 'Language of the current file',
+            self::PARAM_TARGET => 'Where should the reference be opened',
         ]);
     }
 
