@@ -1571,16 +1571,16 @@
         },
         {
             "name": "phpactor/class-to-file",
-            "version": "0.5.1",
+            "version": "0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "0121674cfb0c350d18a65b4ec464c49268f4b611"
+                "reference": "290dabd216a5486c3faff32e5f84742e6c038108"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/0121674cfb0c350d18a65b4ec464c49268f4b611",
-                "reference": "0121674cfb0c350d18a65b4ec464c49268f4b611",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/290dabd216a5486c3faff32e5f84742e6c038108",
+                "reference": "290dabd216a5486c3faff32e5f84742e6c038108",
                 "shasum": ""
             },
             "require": {
@@ -1592,7 +1592,7 @@
                 "ergebnis/composer-normalize": "^2.0",
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/phpstan": "~0.12.0",
+                "phpstan/phpstan": "^1.0",
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^6.0 || ^5.0"
             },
@@ -1619,9 +1619,9 @@
             ],
             "description": "Library to covert class names to file paths and vice-versa",
             "support": {
-                "source": "https://github.com/phpactor/class-to-file/tree/0.5.1"
+                "source": "https://github.com/phpactor/class-to-file/tree/0.5.2"
             },
-            "time": "2022-08-15T14:15:35+00:00"
+            "time": "2022-10-08T08:32:21+00:00"
         },
         {
             "name": "phpactor/container",
