@@ -68,17 +68,12 @@ use function sprintf;
 
 class Phpactor
 {
-    private const LEGACY_EXTENSIONS = [
-        '\Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension',
-        '\Phpactor\Extension\LanguageServer\LanguageServerExtension',
-        '\Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension'
-    ];
-
     public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir): Container
     {
         $config = [];
 
         $projectRoot = getcwd();
+        $enableAllExtensions = false;
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $projectRoot = $input->getParameterOption([ '--working-dir', '-d' ]);
@@ -219,7 +214,7 @@ class Phpactor
         // > method configure container
         foreach ($extensions as $extension) {
             if ($extension instanceof NamedExtension) {
-                if (false === ($config[sprintf('%s.enabled', $extension->name())] ?? false)) {
+                if (false === $enableAllExtensions && false === ($config[sprintf('%s.enabled', $extension->name())] ?? false)) {
                     continue;
                 }
             }

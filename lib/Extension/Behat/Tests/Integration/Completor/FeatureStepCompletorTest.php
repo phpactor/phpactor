@@ -99,7 +99,6 @@ class FeatureStepCompletorTest extends TestCase
         ], [
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ . '/../../../../../..',
             BehatExtension::PARAM_CONFIG_PATH => __DIR__ .'/behat.yml',
-            'behat.enabled' => true,
         ]);
 
 

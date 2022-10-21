@@ -1588,57 +1588,11 @@ Path to pslam if different from vendor/bin/psalm
 **Default**: ``"%project_root%\/vendor\/bin\/psalm"``
 
 
-.. _param_language_server_psalm.enabled:
-
-
-``language_server_psalm.enabled``
-"""""""""""""""""""""""""""""""""
-
-
-**Default**: ``false``
-
-
-.. _LanguageServerBlackfireExtension:
-
-
-LanguageServerBlackfireExtension
---------------------------------
-
-
-.. _param_blackfire.enable:
-
-
-``blackfire.enable``
-""""""""""""""""""""
-
-
-Type: boolean
-
-
-Requires dev dependencies - enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls.
-
-
-**Default**: ``false``
-
-
 .. _LanguageServerPhpCsFixerExtension:
 
 
 LanguageServerPhpCsFixerExtension
 ---------------------------------
-
-
-.. _param_language_server_php_cs_fixer.enabled:
-
-
-``language_server_php_cs_fixer.enabled``
-""""""""""""""""""""""""""""""""""""""""
-
-
-Enable document formattig via. php-cs-fixer
-
-
-**Default**: ``false``
 
 
 .. _param_language_server_php_cs_fixer.bin:
@@ -1659,16 +1613,6 @@ Path to the php-cs-fixer executable
 
 BehatExtension
 --------------
-
-
-.. _param_behat.enabled:
-
-
-``behat.enabled``
-"""""""""""""""""
-
-
-**Default**: ``false``
 
 
 .. _param_behat.config_path:
@@ -1702,19 +1646,6 @@ If using Symfony, set this path to the XML container dump to find contexts which
 
 SymfonyExtension
 ----------------
-
-
-.. _param_symfony.enabled:
-
-
-``symfony.enabled``
-"""""""""""""""""""
-
-
-Enable the Symfony extension
-
-
-**Default**: ``false``
 
 
 .. _param_symfony.xml_path:
