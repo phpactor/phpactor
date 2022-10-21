@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerBlackfire;
 use Blackfire\Client;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Extension;
+use Phpactor\Container\NamedExtension;
 use Phpactor\Extension\LanguageServerBlackfire\Handler\BlackfireHandler;
 use Phpactor\Extension\LanguageServerBlackfire\Middleware\BlackfireMiddleware;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
@@ -13,16 +13,11 @@ use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 
-class LanguageServerBlackfireExtension implements Extension
+class LanguageServerBlackfireExtension implements NamedExtension
 {
-    const PARAM_BLACKFIRE_ENABLE = 'blackfire.enable';
-
     public function load(ContainerBuilder $container): void
     {
         $container->register(BlackfireHandler::class, function (Container $container) {
-            if (false === $container->getParameter(self::PARAM_BLACKFIRE_ENABLE)) {
-                return null;
-            }
             return new BlackfireHandler(
                 $container->get(BlackfireProfiler::class),
                 $container->get(ClientApi::class)
@@ -39,9 +34,6 @@ class LanguageServerBlackfireExtension implements Extension
         });
 
         $container->register(BlackfireMiddleware::class, function (Container $container) {
-            if (false === $container->getParameter(self::PARAM_BLACKFIRE_ENABLE)) {
-                return null;
-            }
             return new BlackfireMiddleware($container->get(BlackfireProfiler::class));
         }, [
             LanguageServerExtension::TAG_MIDDLEWARE => []
@@ -50,14 +42,10 @@ class LanguageServerBlackfireExtension implements Extension
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            self::PARAM_BLACKFIRE_ENABLE => false,
-        ]);
-        $schema->setDescriptions([
-            self::PARAM_BLACKFIRE_ENABLE => 'Requires dev dependencies - enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls.'
-        ]);
-        $schema->setTypes([
-            self::PARAM_BLACKFIRE_ENABLE => 'boolean',
-        ]);
+    }
+
+    public function name(): string
+    {
+        return 'blackfire';
     }
 }

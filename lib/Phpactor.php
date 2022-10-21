@@ -4,6 +4,7 @@ namespace Phpactor;
 
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
 use Phpactor\Container\Container;
+use Phpactor\Container\NamedExtension;
 use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
@@ -153,13 +154,14 @@ class Phpactor
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
+            IndexerExtension::class,
+            ObjectRendererExtension::class,
+
             LanguageServerPhpstanExtension::class,
             LanguageServerPsalmExtension::class,
             LanguageServerBlackfireExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             BehatExtension::class,
-            IndexerExtension::class,
-            ObjectRendererExtension::class,
             SymfonyExtension::class,
         ];
 
@@ -175,7 +177,7 @@ class Phpactor
 
         $masterSchema = new Resolver(true);
         $extensions = [];
-        foreach ($extensionNames as $extensionClass) {
+        foreach ($extensionNames as $indexOrName => $extensionClass) {
             $schema = new Resolver();
 
             if (!class_exists($extensionClass)) {
@@ -194,6 +196,14 @@ class Phpactor
                 ));
             }
 
+            if ($extension instanceof NamedExtension) {
+                (function (string $key) use ($schema): void {
+                    $schema->setDefaults([$key => false]);
+                    $schema->setDescriptions([$key => 'Enable or disable this extension']);
+                    $schema->setTypes([$key => 'boolean']);
+                })(sprintf('%s.enabled', $extension->name()));
+            }
+
             $extension->configure($schema);
             $extensions[] = $extension;
             $masterSchema = $masterSchema->merge($schema);
@@ -208,6 +218,11 @@ class Phpactor
 
         // > method configure container
         foreach ($extensions as $extension) {
+            if ($extension instanceof NamedExtension) {
+                if (false === ($config[sprintf('%s.enabled', $extension->name())] ?? false)) {
+                    continue;
+                }
+            }
             $extension->load($container);
         }
 
