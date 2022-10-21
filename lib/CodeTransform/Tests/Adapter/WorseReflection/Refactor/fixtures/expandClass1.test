@@ -1,0 +1,11 @@
+// File: source
+<?php
+use SomeNamespace\Foo;
+
+echo 'Debugging ' . F<>oo::class;
+
+// File: expected
+<?php
+use SomeNamespace\Foo;
+
+echo 'Debugging ' . SomeNamespace\Foo::class;

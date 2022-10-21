@@ -24,6 +24,7 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpres
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMethodFinder;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExpandClass;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateConstructor;
@@ -44,6 +45,7 @@ use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
 use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
+use Phpactor\CodeTransform\Domain\Refactor\ExpandClass;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
@@ -186,6 +188,12 @@ class CodeTransformExtension implements Extension
 
     private function registerRefactorings(ContainerBuilder $container): void
     {
+        $container->register(ExpandClass::class, function (Container $container) {
+            return new WorseExpandClass(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+            );
+        });
+
         $container->register(ExtractConstant::class, function (Container $container) {
             return new WorseExtractConstant(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),

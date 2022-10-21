@@ -1,0 +1,12 @@
+// File: source
+<?php
+use SomeNamespace\Foo;
+
+function test(F<>oo $foo) { }
+
+// File: expected
+<?php
+use SomeNamespace\Foo;
+
+function test(SomeNamespace\Foo $foo) { }
+
