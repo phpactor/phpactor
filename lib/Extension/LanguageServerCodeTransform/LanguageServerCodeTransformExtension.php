@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
+use Phpactor\CodeTransform\Domain\Refactor\SimplifyClassName;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
@@ -31,6 +32,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProv
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\SimplifyClassNameCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
@@ -134,8 +136,21 @@ class LanguageServerCodeTransformExtension implements Extension
         }, [
             LanguageServerExtension::TAG_COMMAND => [
                 'name' => ExtractMethodCommand::NAME
+        ],
+        ]);
+
+        $container->register(SimplifyClassNameCommand::class, function (Container $container) {
+            return new SimplifyClassNameCommand(
+                $container->get(ClientApi::class),
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->get(SimplifyClassName::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_COMMAND => [
+                'name' => SimplifyClassNameCommand::NAME
             ],
         ]);
+
         $container->register(ExtractConstantCommand::class, function (Container $container) {
             return new ExtractConstantCommand(
                 $container->get(ClientApi::class),
