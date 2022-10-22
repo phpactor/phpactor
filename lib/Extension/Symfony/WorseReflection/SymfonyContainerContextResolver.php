@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\Symfony\WorseReflection;
 
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -24,18 +25,13 @@ class SymfonyContainerContextResolver implements MemberContextResolver
         $this->inspector = $inspector;
     }
 
-    public function resolveMemberContext(
-        Reflector $reflector,
-        string $memberType,
-        string $memberName,
-        Type $containerType,
-        ?FunctionArguments $arguments
-    ): ?Type {
-        if ($memberType !== ReflectionMember::TYPE_METHOD) {
+    public function resolveMemberContext(Reflector $reflector, ReflectionMember $member, ?FunctionArguments $arguments): ?Type
+    {
+        if ($member->memberType() !== ReflectionMember::TYPE_METHOD) {
             return null;
         }
 
-        if ($memberName !== 'get') {
+        if ($member->name() !== 'get') {
             return null;
         }
 
@@ -43,7 +39,7 @@ class SymfonyContainerContextResolver implements MemberContextResolver
             return null;
         }
 
-        if ($containerType->instanceof(TypeFactory::class(self::CONTAINER_CLASS))->isFalseOrMaybe()) {
+        if (!$member->class()->isInstanceOf(ClassName::fromString(self::CONTAINER_CLASS))) {
             return null;
         }
 
