@@ -194,7 +194,6 @@ class Phpactor
             if ($extension instanceof NamedExtension) {
                 (function (string $key) use ($schema): void {
                     $schema->setDefaults([$key => false]);
-                    $schema->setDescriptions([$key => 'Enable or disable this extension']);
                     $schema->setTypes([$key => 'boolean']);
                 })(sprintf('%s.enabled', $extension->name()));
             }

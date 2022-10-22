@@ -1542,6 +1542,22 @@ LanguageServerPhpstanExtension
 ------------------------------
 
 
+.. _param_language_server_phpstan.enabled:
+
+
+``language_server_phpstan.enabled``
+"""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
 .. _param_language_server_phpstan.bin:
 
 
@@ -1575,6 +1591,22 @@ LanguageServerPsalmExtension
 ----------------------------
 
 
+.. _param_language_server_psalm.enabled:
+
+
+``language_server_psalm.enabled``
+"""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
 .. _param_language_server_psalm.bin:
 
 
@@ -1588,11 +1620,50 @@ Path to pslam if different from vendor/bin/psalm
 **Default**: ``"%project_root%\/vendor\/bin\/psalm"``
 
 
+.. _LanguageServerBlackfireExtension:
+
+
+LanguageServerBlackfireExtension
+--------------------------------
+
+
+.. _param_blackfire.enabled:
+
+
+``blackfire.enabled``
+"""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
 .. _LanguageServerPhpCsFixerExtension:
 
 
 LanguageServerPhpCsFixerExtension
 ---------------------------------
+
+
+.. _param_language_server_php_cs_fixer.enabled:
+
+
+``language_server_php_cs_fixer.enabled``
+""""""""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
 
 
 .. _param_language_server_php_cs_fixer.bin:
@@ -1613,6 +1684,22 @@ Path to the php-cs-fixer executable
 
 BehatExtension
 --------------
+
+
+.. _param_behat.enabled:
+
+
+``behat.enabled``
+"""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
 
 
 .. _param_behat.config_path:
@@ -1646,6 +1733,22 @@ If using Symfony, set this path to the XML container dump to find contexts which
 
 SymfonyExtension
 ----------------
+
+
+.. _param_symfony.enabled:
+
+
+``symfony.enabled``
+"""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
 
 
 .. _param_symfony.xml_path:
