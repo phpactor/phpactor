@@ -9,7 +9,6 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\InternalLocator;
 
 class ProphecyStubLocator implements SourceCodeLocator
 {
-
     private InternalLocator $locator;
 
     public function __construct()
@@ -19,6 +18,7 @@ class ProphecyStubLocator implements SourceCodeLocator
             'Prophecy\Prophecy\MethodProphecy' => __DIR__ . '/../stubs/Prophecy.stub'
         ]);
     }
+
     public function locate(Name $name): SourceCode
     {
         return $this->locator->locate($name);
