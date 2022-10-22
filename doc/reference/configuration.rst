@@ -1776,3 +1776,26 @@ Enable/disable the Symfony completor - depends on Symfony extension being enable
 
 **Default**: ``true``
 
+
+.. _ProphecyExtension:
+
+
+ProphecyExtension
+-----------------
+
+
+.. _param_prophecy.enabled:
+
+
+``prophecy.enabled``
+""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
