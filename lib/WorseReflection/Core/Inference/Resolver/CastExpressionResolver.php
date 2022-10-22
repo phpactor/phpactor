@@ -20,7 +20,7 @@ class CastExpressionResolver implements Resolver
 
         $type = NodeUtil::nameFromTokenOrNode($node, $node->castType);
         $type = rtrim(ltrim($type, '('), ')');
-        $type = TypeFactory::fromString($type);
+        $type = TypeFactory::fromStringWithReflector($type, $resolver->reflector());
 
         $context = NodeContextFactory::create(
             'cast',

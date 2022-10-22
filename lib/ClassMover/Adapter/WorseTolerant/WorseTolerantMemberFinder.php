@@ -377,7 +377,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         }
 
 
-        $accepts = $type->instanceof(TypeFactory::class($query->class()->__toString()));
+        $accepts = $type->instanceof(TypeFactory::reflectedClass($query->class()->__toString(), $this->reflector));
 
         if ($accepts->isMaybe()) {
             return $reference;
