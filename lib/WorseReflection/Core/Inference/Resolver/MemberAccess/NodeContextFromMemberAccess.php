@@ -26,6 +26,7 @@ use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
@@ -59,11 +60,11 @@ class NodeContextFromMemberAccess
         assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
 
         $memberName = NodeUtil::nameFromTokenOrNode($node, $node->memberName);
-        $memberType = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
+        $memberTypeName = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
 
         // support trait method-alias clauses, e.g. use  use A, B {A::foobar insteadof B; B::bigTalk insteadof A;}
-        if ($memberType === Symbol::PROPERTY && $node->parent->parent && $node->parent->parent instanceof TraitSelectOrAliasClauseList) {
-            $memberType = Symbol::METHOD;
+        if ($memberTypeName === Symbol::PROPERTY && $node->parent->parent && $node->parent->parent instanceof TraitSelectOrAliasClauseList) {
+            $memberTypeName = Symbol::METHOD;
         }
 
         if ($node->memberName instanceof Node) {
@@ -74,83 +75,48 @@ class NodeContextFromMemberAccess
         }
 
         if (
-            Symbol::PROPERTY === $memberType
+            Symbol::PROPERTY === $memberTypeName
             && $node instanceof ScopedPropertyAccessExpression
             && is_string($memberName)
             && substr($memberName, 0, 1) !== '$'
         ) {
-            $memberType = Symbol::CONSTANT;
+            $memberTypeName = Symbol::CONSTANT;
         }
 
-        $information = NodeContextFactory::create(
+        $context = NodeContextFactory::create(
             (string)$memberName,
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
-                'symbol_type' => $memberType,
+                'symbol_type' => $memberTypeName,
             ]
         );
 
-        if (Symbol::CONSTANT === $memberType) {
+        if (Symbol::CONSTANT === $memberTypeName) {
             if ($memberName === 'class') {
                 if (!$classType instanceof ClassType) {
-                    return $information;
+                    return $context;
                 }
-                return $information->withType(TypeFactory::classString($classType->name()->full()));
+                return $context->withType(TypeFactory::classString($classType->name()->full()));
             }
         }
 
-        $types = $memberTypes = [];
-        $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
-
-
-        // this could be a union or a nullable
-        foreach ($classType->classNamedTypes() as $subType) {
-            // upcast to ClassType to reflected type
-            if (get_class($subType) === ClassType::class) {
-                /** @phpstan-ignore-next-line */
-                $subType = $subType->asReflectedClasssType($resolver->reflector());
-            }
-            try {
-                $reflection = $resolver->reflector()->reflectClassLike($subType->name());
-            } catch (NotFound $e) {
-                continue;
-            }
-            $types[] = $subType;
-
-            foreach ($this->memberResolvers as $memberResolver) {
-                if (null !== $customType = $memberResolver->resolveMemberContext($resolver->reflector(), $memberType, $memberName, $subType, $arguments)) {
-                    $memberTypes[$memberName] = $customType;
-                    continue 2;
-                }
-            }
-
-            if ($reflection instanceof ReflectionEnum && $memberType === 'constant') {
-                foreach ($subType->members()->byMemberType('enum')->byName($memberName) as $member) {
-                    // if multiple classes declare a member, always take the "top" one
-                    $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
-                    break;
-                }
-            }
-
-            foreach ($subType->members()->byMemberType($memberType)->byName($memberName) as $member) {
-                // if multiple classes declare a member, always take the "top" one
-                $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
-                break;
-            }
-        }
-
-        $containerType = UnionType::fromTypes(...$types)->reduce();
+        [ $containerType, $memberType ] = $this->resolveContainerMemberType(
+            $resolver,
+            $frame,
+            $node,
+            $classType,
+            $memberTypeName,
+            $memberName
+        );
 
         if (!$containerType->isDefined()) {
             $containerType = $classType;
         }
 
-        return $information->withContainerType(
+        return $context->withContainerType(
             $containerType
-        )->withType(
-            (new UnionType(...array_values($memberTypes)))->clean()->reduce()
-        );
+        )->withType($memberType->reduce());
     }
 
     private function resolveMemberType(NodeContextResolver $resolver, Frame $frame, ReflectionMember $member, ?FunctionArguments $arguments, Node $node, Type $subType): Type
@@ -287,5 +253,63 @@ class NodeContextFromMemberAccess
         });
 
         return $type;
+    }
+
+    /**
+     * @return array{Type,Type}
+     */
+    private function resolveContainerMemberType(
+        NodeContextResolver $resolver,
+        Frame $frame,
+        Node $node,
+        Type $classType,
+        string $memberTypeName,
+        string $memberName
+    ): array
+    {
+        $types = [];
+        $memberType = TypeFactory::undefined();
+
+        $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
+        // this could be a union or a nullable
+        foreach ($classType->classNamedTypes() as $subType) {
+            // upcast to ClassType to reflected type
+            if (get_class($subType) === ClassType::class) {
+                /** @phpstan-ignore-next-line */
+                $subType = $subType->asReflectedClasssType($resolver->reflector());
+            }
+
+            try {
+                $reflection = $resolver->reflector()->reflectClassLike($subType->name());
+            } catch (NotFound $e) {
+                continue;
+            }
+
+            $types[] = $subType;
+
+            foreach ($this->memberResolvers as $memberResolver) {
+                if (null !== $customType = $memberResolver->resolveMemberContext($resolver->reflector(), $memberTypeName, $memberName, $subType, $arguments)) {
+                    $memberType = $customType;
+                    continue 2;
+                }
+            }
+
+            if ($reflection instanceof ReflectionEnum && $memberTypeName === 'constant') {
+                foreach ($subType->members()->byMemberType('enum')->byName($memberName) as $member) {
+                    // if multiple classes declare a member, always take the "top" one
+                    $memberType = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
+                    break;
+                }
+            }
+
+            foreach ($subType->members()->byMemberType($memberTypeName)->byName($memberName) as $member) {
+                // if multiple classes declare a member, always take the "top" one
+                $memberType = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
+                break;
+            }
+        }
+
+        $containerType = UnionType::fromTypes(...$types)->reduce();
+        return [$containerType, $memberType];
     }
 }
