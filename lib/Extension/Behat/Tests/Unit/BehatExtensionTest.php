@@ -30,7 +30,6 @@ class BehatExtensionTest extends TestCase
         ], [
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ . '/../../../../..',
             BehatExtension::PARAM_CONFIG_PATH => __DIR__ .'/../Integration/Completor/behat.yml',
-            BehatExtension::PARAM_ENABLED => true,
         ]);
 
         $locator = $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR);

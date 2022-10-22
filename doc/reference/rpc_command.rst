@@ -1068,7 +1068,7 @@ Where should the reference be opened
 """"""""""
 
 
-Type: int
+Type: integer
 
 
 Number of character into the buffer
@@ -1152,7 +1152,7 @@ Where should the reference be opened
 """"""""""
 
 
-Type: int
+Type: integer
 
 
 Number of character into the buffer
@@ -1236,7 +1236,7 @@ Where should the reference be opened
 """"""""""
 
 
-Type: int
+Type: integer
 
 
 Number of character into the buffer

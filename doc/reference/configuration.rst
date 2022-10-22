@@ -1365,181 +1365,6 @@ Show an error if a diagnostic name cannot be resolved - can produce false positi
 **Default**: ``true``
 
 
-.. _LanguageServerPhpstanExtension:
-
-
-LanguageServerPhpstanExtension
-------------------------------
-
-
-.. _param_language_server_phpstan.enabled:
-
-
-``language_server_phpstan.enabled``
-"""""""""""""""""""""""""""""""""""
-
-
-Enable PHPStan diagnostics
-
-
-**Default**: ``false``
-
-
-.. _param_language_server_phpstan.bin:
-
-
-``language_server_phpstan.bin``
-"""""""""""""""""""""""""""""""
-
-
-Path to the PHPStan executable
-
-
-**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
-
-
-.. _param_language_server_phpstan.level:
-
-
-``language_server_phpstan.level``
-"""""""""""""""""""""""""""""""""
-
-
-Override the PHPStan level
-
-
-**Default**: ``null``
-
-
-.. _LanguageServerPsalmExtension:
-
-
-LanguageServerPsalmExtension
-----------------------------
-
-
-.. _param_language_server_psalm.bin:
-
-
-``language_server_psalm.bin``
-"""""""""""""""""""""""""""""
-
-
-Path to pslam if different from vendor/bin/psalm
-
-
-**Default**: ``"%project_root%\/vendor\/bin\/psalm"``
-
-
-.. _param_language_server_psalm.enabled:
-
-
-``language_server_psalm.enabled``
-"""""""""""""""""""""""""""""""""
-
-
-**Default**: ``false``
-
-
-.. _LanguageServerBlackfireExtension:
-
-
-LanguageServerBlackfireExtension
---------------------------------
-
-
-.. _param_blackfire.enable:
-
-
-``blackfire.enable``
-""""""""""""""""""""
-
-
-Type: boolean
-
-
-Requires dev dependencies - enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls.
-
-
-**Default**: ``false``
-
-
-.. _LanguageServerPhpCsFixerExtension:
-
-
-LanguageServerPhpCsFixerExtension
----------------------------------
-
-
-.. _param_language_server_php_cs_fixer.enabled:
-
-
-``language_server_php_cs_fixer.enabled``
-""""""""""""""""""""""""""""""""""""""""
-
-
-Enable document formattig via. php-cs-fixer
-
-
-**Default**: ``false``
-
-
-.. _param_language_server_php_cs_fixer.bin:
-
-
-``language_server_php_cs_fixer.bin``
-""""""""""""""""""""""""""""""""""""
-
-
-Path to the php-cs-fixer executable
-
-
-**Default**: ``"%project_root%\/vendor\/bin\/php-cs-fixer"``
-
-
-.. _BehatExtension:
-
-
-BehatExtension
---------------
-
-
-.. _param_behat.enabled:
-
-
-``behat.enabled``
-"""""""""""""""""
-
-
-**Default**: ``false``
-
-
-.. _param_behat.config_path:
-
-
-``behat.config_path``
-"""""""""""""""""""""
-
-
-Path to the main behat.yml (including the filename behat.yml)
-
-
-**Default**: ``"%project_root%\/behat.yml"``
-
-
-.. _param_behat.symfony.di_xml_path:
-
-
-``behat.symfony.di_xml_path``
-"""""""""""""""""""""""""""""
-
-
-If using Symfony, set this path to the XML container dump to find contexts which are defined as services
-
-
-**Default**: ``null``
-
-
 .. _IndexerExtension:
 
 
@@ -1710,6 +1535,199 @@ Paths in which to look for templates for hover information.
 **Default**: ``["%project_config%\/templates\/markdown","%config%\/templates\/markdown"]``
 
 
+.. _LanguageServerPhpstanExtension:
+
+
+LanguageServerPhpstanExtension
+------------------------------
+
+
+.. _param_language_server_phpstan.enabled:
+
+
+``language_server_phpstan.enabled``
+"""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_phpstan.bin:
+
+
+``language_server_phpstan.bin``
+"""""""""""""""""""""""""""""""
+
+
+Path to the PHPStan executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
+
+
+.. _param_language_server_phpstan.level:
+
+
+``language_server_phpstan.level``
+"""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan level
+
+
+**Default**: ``null``
+
+
+.. _LanguageServerPsalmExtension:
+
+
+LanguageServerPsalmExtension
+----------------------------
+
+
+.. _param_language_server_psalm.enabled:
+
+
+``language_server_psalm.enabled``
+"""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_psalm.bin:
+
+
+``language_server_psalm.bin``
+"""""""""""""""""""""""""""""
+
+
+Path to pslam if different from vendor/bin/psalm
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/psalm"``
+
+
+.. _LanguageServerBlackfireExtension:
+
+
+LanguageServerBlackfireExtension
+--------------------------------
+
+
+.. _param_blackfire.enabled:
+
+
+``blackfire.enabled``
+"""""""""""""""""""""
+
+
+Type: boolean
+
+
+Requires dev dependencies - enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls.
+
+
+**Default**: ``false``
+
+
+.. _LanguageServerPhpCsFixerExtension:
+
+
+LanguageServerPhpCsFixerExtension
+---------------------------------
+
+
+.. _param_language_server_php_cs_fixer.enabled:
+
+
+``language_server_php_cs_fixer.enabled``
+""""""""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_php_cs_fixer.bin:
+
+
+``language_server_php_cs_fixer.bin``
+""""""""""""""""""""""""""""""""""""
+
+
+Path to the php-cs-fixer executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/php-cs-fixer"``
+
+
+.. _BehatExtension:
+
+
+BehatExtension
+--------------
+
+
+.. _param_behat.enabled:
+
+
+``behat.enabled``
+"""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_behat.config_path:
+
+
+``behat.config_path``
+"""""""""""""""""""""
+
+
+Path to the main behat.yml (including the filename behat.yml)
+
+
+**Default**: ``"%project_root%\/behat.yml"``
+
+
+.. _param_behat.symfony.di_xml_path:
+
+
+``behat.symfony.di_xml_path``
+"""""""""""""""""""""""""""""
+
+
+If using Symfony, set this path to the XML container dump to find contexts which are defined as services
+
+
+**Default**: ``null``
+
+
 .. _SymfonyExtension:
 
 
@@ -1724,7 +1742,10 @@ SymfonyExtension
 """""""""""""""""""
 
 
-Enable the Symfony extension
+Type: boolean
+
+
+Enable or disable this extension
 
 
 **Default**: ``false``

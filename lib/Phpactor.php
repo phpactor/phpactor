@@ -4,6 +4,7 @@ namespace Phpactor;
 
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
 use Phpactor\Container\Container;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
@@ -67,12 +68,6 @@ use function sprintf;
 
 class Phpactor
 {
-    private const LEGACY_EXTENSIONS = [
-        '\Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension',
-        '\Phpactor\Extension\LanguageServer\LanguageServerExtension',
-        '\Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension'
-    ];
-
     public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir): Container
     {
         $config = [];
@@ -153,13 +148,14 @@ class Phpactor
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
+            IndexerExtension::class,
+            ObjectRendererExtension::class,
+
             LanguageServerPhpstanExtension::class,
             LanguageServerPsalmExtension::class,
             LanguageServerBlackfireExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             BehatExtension::class,
-            IndexerExtension::class,
-            ObjectRendererExtension::class,
             SymfonyExtension::class,
         ];
 
@@ -194,6 +190,16 @@ class Phpactor
                 ));
             }
 
+            // This is duplicated in ExtensionDocumentor we should not
+            // continue to add behavior like this here and should extract
+            // this and other special logic.
+            if ($extension instanceof OptionalExtension) {
+                (function (string $key) use ($schema): void {
+                    $schema->setDefaults([$key => false]);
+                    $schema->setTypes([$key => 'boolean']);
+                })(sprintf('%s.enabled', $extension->name()));
+            }
+
             $extension->configure($schema);
             $extensions[] = $extension;
             $masterSchema = $masterSchema->merge($schema);
@@ -208,6 +214,11 @@ class Phpactor
 
         // > method configure container
         foreach ($extensions as $extension) {
+            if ($extension instanceof OptionalExtension) {
+                if (false === ($config[sprintf('%s.enabled', $extension->name())] ?? false)) {
+                    continue;
+                }
+            }
             $extension->load($container);
         }
 

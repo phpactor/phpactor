@@ -29,7 +29,7 @@ This configuration snippet enables the following commands:
 
 If you want to profile Phpactor for debugging purposes:
 
-- ``:LspPhpactorBlackfireStart``: Start :ref:`developing_blackfire_profiling` (if enabled with :ref:`param_blackfire.enable`)
+- ``:LspPhpactorBlackfireStart``: Start :ref:`developing_blackfire_profiling` (if enabled with :ref:`param_blackfire.enabled`)
 - ``:LspPhpactorBlackfireFinish``: Finish profiling and get the profiling URL
 
 .. code-block:: lua

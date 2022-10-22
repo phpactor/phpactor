@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\Debug\Model;
 
+use Phpactor\Container\Extension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 
@@ -70,7 +72,21 @@ class ExtensionDocumentor implements Documentor
 
         $extension = new $extensionClass;
 
+        if (!$extension instanceof Extension) {
+            throw new RuntimeException(sprintf(
+                'Expected "%s" to be an instanceof Phpactor\Container\Extension',
+                get_class($extension)
+            ));
+        }
+
         $resolver = new Resolver();
+        if ($extension instanceof OptionalExtension) {
+            (function (string $key) use ($resolver): void {
+                $resolver->setDefaults([$key => false]);
+                $resolver->setTypes([$key => 'boolean']);
+                $resolver->setDescriptions([$key => 'Enable or disable this extension']);
+            })(sprintf('%s.enabled', $extension->name()));
+        }
         $extension->configure($resolver);
 
         $hasDefinitions = false;

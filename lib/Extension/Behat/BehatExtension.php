@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Behat;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Extension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\Behat\Adapter\Symfony\SymfonyDiContextClassResolver;
 use Phpactor\Extension\Behat\Adapter\Worse\WorseContextClassResolver;
 use Phpactor\Extension\Behat\Adapter\Worse\WorseStepFactory;
@@ -21,11 +21,10 @@ use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
-class BehatExtension implements Extension
+class BehatExtension implements OptionalExtension
 {
     const PARAM_CONFIG_PATH = 'behat.config_path';
     const PARAM_SYMFONY_XML_PATH = 'behat.symfony.di_xml_path';
-    const PARAM_ENABLED = 'behat.enabled';
 
     public function load(ContainerBuilder $container): void
     {
@@ -53,9 +52,6 @@ class BehatExtension implements Extension
         });
 
         $container->register('behat.completion.feature_step_completor', function (Container $container) {
-            if (false === $container->getParameter(self::PARAM_ENABLED)) {
-                return null;
-            }
             return new FeatureStepCompletor(
                 $container->get('behat.step_generator'),
                 $container->get('behat.step_parser')
@@ -63,10 +59,6 @@ class BehatExtension implements Extension
         }, [ CompletionExtension::TAG_COMPLETOR => [ CompletionExtension::KEY_COMPLETOR_TYPES => [ 'cucumber' ]]]);
 
         $container->register('behat.reference_finder.step_definition_locator', function (Container $container) {
-            if (false === $container->getParameter(self::PARAM_ENABLED)) {
-                return null;
-            }
-
             return new StepDefinitionLocator($container->get('behat.step_generator'), $container->get('behat.step_parser'));
         }, [ ReferenceFinderExtension::TAG_DEFINITION_LOCATOR => []]);
 
@@ -90,7 +82,6 @@ class BehatExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_ENABLED => false,
             self::PARAM_CONFIG_PATH => '%project_root%/behat.yml',
             self::PARAM_SYMFONY_XML_PATH => null,
         ]);
@@ -98,5 +89,10 @@ class BehatExtension implements Extension
             self::PARAM_CONFIG_PATH => 'Path to the main behat.yml (including the filename behat.yml)',
             self::PARAM_SYMFONY_XML_PATH => 'If using Symfony, set this path to the XML container dump to find contexts which are defined as services',
         ]);
+    }
+
+    public function name(): string
+    {
+        return 'behat';
     }
 }

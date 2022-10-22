@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerPsalm;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\Extension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\LanguageServerPsalm\DiagnosticProvider\PsalmDiagnosticProvider;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter\PsalmLinter;
@@ -15,19 +15,13 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 
-class LanguageServerPsalmExtension implements Extension
+class LanguageServerPsalmExtension implements OptionalExtension
 {
     public const PARAM_PSALM_BIN = 'language_server_psalm.bin';
-    public const PARAM_ENABLED = 'language_server_psalm.enabled';
-
 
     public function load(ContainerBuilder $container): void
     {
         $container->register(PsalmDiagnosticProvider::class, function (Container $container) {
-            if (!$container->getParameter(self::PARAM_ENABLED)) {
-                return null;
-            }
-
             return new PsalmDiagnosticProvider(
                 $container->get(Linter::class)
             );
@@ -56,10 +50,14 @@ class LanguageServerPsalmExtension implements Extension
     {
         $schema->setDefaults([
             self::PARAM_PSALM_BIN => '%project_root%/vendor/bin/psalm',
-            self::PARAM_ENABLED => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_PSALM_BIN => 'Path to pslam if different from vendor/bin/psalm',
         ]);
+    }
+
+    public function name(): string
+    {
+        return 'language_server_psalm';
     }
 }
