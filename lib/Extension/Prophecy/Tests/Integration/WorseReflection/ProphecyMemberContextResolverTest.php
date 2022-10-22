@@ -65,6 +65,34 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
         );
     }
 
+    public function testProphesizeFromMethod(): void
+    {
+        $this->resolve(
+            <<<'EOT'
+                <?php
+                use Prophecy\Prophecy\ObjectProphecy;
+                class Hello {
+                    public function bar(): string
+                    {
+                    }
+                }
+
+                class TestCase {
+                    /**
+                     * @return ObjectProphecy<Hello>
+                     */
+                    public function foobar(): ObjectProphecy
+                   
+                    public function hello(): void
+                    {
+                        wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $this->foobar());
+                    }
+                }
+                EOT
+            ,
+        );
+    }
+
     public function resolve(string $sourceCode): void
     {
         $reflector = ReflectorBuilder::create()
