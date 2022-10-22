@@ -50,7 +50,7 @@ class ProphecyMemberContextResolver implements MemberContextResolver
         }
 
         $arg = $arguments->at(0)->type();
-        
+
         if (!$arg instanceof ClassStringType) {
             return null;
         }
@@ -62,7 +62,8 @@ class ProphecyMemberContextResolver implements MemberContextResolver
         return $this->fromGeneric($reflector, $type);
     }
 
-    private function fromGeneric(Reflector $reflector, GenericClassType $type): Type {
+    private function fromGeneric(Reflector $reflector, GenericClassType $type): Type
+    {
         $innerType = $type->arguments()[0];
         if (!$innerType instanceof ClassType) {
             return TypeFactory::undefined();

@@ -209,7 +209,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         }
 
         if ($classReflection instanceof ReflectionEnum) {
-            foreach ($members->cases() as $case) {
+            foreach ($members->enumCases() as $case) {
                 yield Suggestion::createWithOptions($case->name(), [
                     'type' => Suggestion::TYPE_ENUM,
                     'short_description' => fn () => $this->formatter->format($case),

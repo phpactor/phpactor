@@ -21,7 +21,7 @@ class ProphecyExtension implements OptionalExtension
         $container->register(SourceCodeLocator::class, function (Container $container) {
             return new ProphecyStubLocator();
         }, [ WorseReflectionExtension::TAG_SOURCE_LOCATOR => [
-            'priority' => 290 
+            'priority' => 290
         ]]);
     }
 

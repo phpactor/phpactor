@@ -9,9 +9,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\InternalLocator;
 
 class ProphecyStubLocator implements SourceCodeLocator
 {
-    /**
-     * @var InternalLocator
-     */
+
     private InternalLocator $locator;
 
     public function __construct()
