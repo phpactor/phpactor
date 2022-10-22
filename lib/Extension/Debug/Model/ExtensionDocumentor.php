@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\Debug\Model;
 
 use Phpactor\Container\Extension;
-use Phpactor\Container\NamedExtension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 
@@ -80,7 +80,7 @@ class ExtensionDocumentor implements Documentor
         }
 
         $resolver = new Resolver();
-        if ($extension instanceof NamedExtension) {
+        if ($extension instanceof OptionalExtension) {
             (function (string $key) use ($resolver): void {
                 $resolver->setDefaults([$key => false]);
                 $resolver->setTypes([$key => 'boolean']);

@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Behat;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\NamedExtension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\Behat\Adapter\Symfony\SymfonyDiContextClassResolver;
 use Phpactor\Extension\Behat\Adapter\Worse\WorseContextClassResolver;
 use Phpactor\Extension\Behat\Adapter\Worse\WorseStepFactory;
@@ -21,7 +21,7 @@ use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
-class BehatExtension implements NamedExtension
+class BehatExtension implements OptionalExtension
 {
     const PARAM_CONFIG_PATH = 'behat.config_path';
     const PARAM_SYMFONY_XML_PATH = 'behat.symfony.di_xml_path';

@@ -4,7 +4,7 @@ namespace Phpactor;
 
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
 use Phpactor\Container\Container;
-use Phpactor\Container\NamedExtension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
@@ -194,7 +194,7 @@ class Phpactor
             // This is duplicated in ExtensionDocumentor we should not
             // continue to add behavior like this here and should extract
             // this and other special logic.
-            if ($extension instanceof NamedExtension) {
+            if ($extension instanceof OptionalExtension) {
                 (function (string $key) use ($schema): void {
                     $schema->setDefaults([$key => false]);
                     $schema->setTypes([$key => 'boolean']);
@@ -215,7 +215,7 @@ class Phpactor
 
         // > method configure container
         foreach ($extensions as $extension) {
-            if ($extension instanceof NamedExtension) {
+            if ($extension instanceof OptionalExtension) {
                 if (false === $enableAllExtensions && false === ($config[sprintf('%s.enabled', $extension->name())] ?? false)) {
                     continue;
                 }

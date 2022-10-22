@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerPsalm;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\NamedExtension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\LanguageServerPsalm\DiagnosticProvider\PsalmDiagnosticProvider;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter\PsalmLinter;
@@ -15,7 +15,7 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 
-class LanguageServerPsalmExtension implements NamedExtension
+class LanguageServerPsalmExtension implements OptionalExtension
 {
     public const PARAM_PSALM_BIN = 'language_server_psalm.bin';
 

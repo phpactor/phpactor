@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Symfony;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\NamedExtension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Symfony\Adapter\Symfony\XmlSymfonyContainerInspector;
@@ -14,7 +14,7 @@ use Phpactor\Extension\Symfony\WorseReflection\SymfonyContainerContextResolver;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
-class SymfonyExtension implements NamedExtension
+class SymfonyExtension implements OptionalExtension
 {
     const XML_PATH = 'symfony.xml_path';
     const PARAM_COMPLETOR_ENABLED = 'completion_worse.completor.symfony.enabled';

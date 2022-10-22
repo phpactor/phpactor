@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerBlackfire;
 use Blackfire\Client;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\NamedExtension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\LanguageServerBlackfire\Handler\BlackfireHandler;
 use Phpactor\Extension\LanguageServerBlackfire\Middleware\BlackfireMiddleware;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
@@ -13,7 +13,7 @@ use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 
-class LanguageServerBlackfireExtension implements NamedExtension
+class LanguageServerBlackfireExtension implements OptionalExtension
 {
     public function load(ContainerBuilder $container): void
     {

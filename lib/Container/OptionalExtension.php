@@ -2,7 +2,7 @@
 
 namespace Phpactor\Container;
 
-interface NamedExtension extends Extension
+interface OptionalExtension extends Extension
 {
     /**
      * Return a short name for the extension which can be used to reference

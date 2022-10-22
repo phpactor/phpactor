@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerPhpstan;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Container\NamedExtension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\PhpstanLinter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanConfig;
@@ -15,7 +15,7 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
 
-class LanguageServerPhpstanExtension implements NamedExtension
+class LanguageServerPhpstanExtension implements OptionalExtension
 {
     public const PARAM_PHPSTAN_BIN = 'language_server_phpstan.bin';
     public const PARAM_LEVEL = 'language_server_phpstan.level';
