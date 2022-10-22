@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
+use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseTypeRenderer74Test extends TypeRendererTestCase
 {
@@ -30,7 +31,7 @@ class WorseTypeRenderer74Test extends TypeRendererTestCase
             'string',
         ];
         yield [
-            new ClosureType(),
+            new ClosureType(ReflectorBuilder::create()->build()),
             'Closure',
         ];
         yield [

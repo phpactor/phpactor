@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
@@ -52,5 +53,13 @@ class ClosureType extends ReflectedClassType implements ClassNamedType, Invokeab
     public function returnType(): Type
     {
         return $this->returnType;
+    }
+
+    public function map(Closure $mapper): Type
+    {
+        $new = clone $this;
+        $new->args = array_map(fn (Type $t) => $t->map($mapper), $this->args);
+        $new->returnType = $this->returnType->map($mapper);
+        return $new;
     }
 }
