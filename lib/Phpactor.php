@@ -73,7 +73,6 @@ class Phpactor
         $config = [];
 
         $projectRoot = getcwd();
-        $enableAllExtensions = false;
 
         if ($input->hasParameterOption([ '--working-dir', '-d' ])) {
             $projectRoot = $input->getParameterOption([ '--working-dir', '-d' ]);
@@ -216,7 +215,7 @@ class Phpactor
         // > method configure container
         foreach ($extensions as $extension) {
             if ($extension instanceof OptionalExtension) {
-                if (false === $enableAllExtensions && false === ($config[sprintf('%s.enabled', $extension->name())] ?? false)) {
+                if (false === ($config[sprintf('%s.enabled', $extension->name())] ?? false)) {
                     continue;
                 }
             }
