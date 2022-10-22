@@ -34,8 +34,4 @@ class VirtualReflectionProperty extends VirtualReflectionMember implements Refle
         $new->class = $class;
         return $new;
     }
-
-    public static function fromReflectionProperty(ReflectionProperty $property)
-    {
-    }
 }
