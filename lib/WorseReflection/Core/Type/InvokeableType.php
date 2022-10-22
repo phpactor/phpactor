@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\Type;
 
-interface InvokableType
+interface InvokeableType
 {
     /**
      * @return Type[]

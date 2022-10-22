@@ -6,7 +6,7 @@ use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class CallableType extends PrimitiveType implements InvokableType
+class CallableType extends PrimitiveType implements InvokeableType
 {
     /**
      * @var Type[]

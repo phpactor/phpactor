@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\InvokableType;
+use Phpactor\WorseReflection\Core\Type\InvokeableType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
@@ -51,7 +51,7 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
             return $type->__toString();
         }
 
-        if ($type instanceof InvokableType) {
+        if ($type instanceof InvokeableType) {
             return $type->toPhpString();
         }
 
