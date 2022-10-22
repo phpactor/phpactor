@@ -38,7 +38,7 @@ class WorseGenerateDecorator implements GenerateDecorator
         $classBuilder = $builder->class($class->name()->short());
 
 
-        $interfaceType = TypeFactory::class($interfaceFQN);
+        $interfaceType = TypeFactory::reflectedClass($this->reflector, $interfaceFQN);
         $interfaceType = $interfaceType->toLocalType($class->scope());
 
         $property = $classBuilder->property('inner')

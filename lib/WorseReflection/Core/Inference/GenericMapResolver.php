@@ -103,10 +103,10 @@ class GenericMapResolver
         $classStringType = $type->className()->short();
         if ($templateMap->has($classStringType)) {
             if ($argument instanceof ClassStringType) {
-                $templateMap->replace($classStringType, TypeFactory::class($argument->className()));
+                $templateMap->replace($classStringType, TypeFactory::reflectedClass($this->reflector, $argument->className()));
             }
             if ($argument instanceof StringLiteralType) {
-                $templateMap->replace($classStringType, TypeFactory::class($argument->value()));
+                $templateMap->replace($classStringType, TypeFactory::reflectedClass($this->reflector, $argument->value()));
             }
 
             return;

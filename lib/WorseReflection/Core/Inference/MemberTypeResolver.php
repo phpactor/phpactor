@@ -79,7 +79,7 @@ class MemberTypeResolver
             return $info;
         }
 
-        $info = $info->withContainerType(TypeFactory::class($class->name(), $this->reflector));
+        $info = $info->withContainerType(TypeFactory::reflectedClass($this->reflector, $class->name()));
 
         if (!method_exists($class, $memberType)) {
             $info = $info->withIssue(sprintf(

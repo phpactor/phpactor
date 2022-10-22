@@ -9,7 +9,9 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
+use Phpactor\WorseReflection\Reflector;
 
 class SymfonyContainerContextResolver implements MemberContextResolver
 {
@@ -23,6 +25,7 @@ class SymfonyContainerContextResolver implements MemberContextResolver
     }
 
     public function resolveMemberContext(
+        Reflector $reflector,
         string $memberType,
         string $memberName,
         Type $containerType,
@@ -57,7 +60,11 @@ class SymfonyContainerContextResolver implements MemberContextResolver
             if (null === $service) {
                 return TypeFactory::union(TypeFactory::object(), TypeFactory::null());
             }
-            return $service->type;
+            $type = $service->type;
+            if ($type instanceof ClassType) {
+                $type = $type->asReflectedClasssType($reflector);
+            }
+            return $type;
         }
 
         return TypeFactory::undefined();
