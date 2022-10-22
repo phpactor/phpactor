@@ -46,7 +46,7 @@ class WorseTypeFormatterTest extends TestCase
         ];
 
         yield 'typed array' => [
-            TypeFactory::array('string'),
+            TypeFactory::array(TypeFactory::string()),
             'string[]',
         ];
 

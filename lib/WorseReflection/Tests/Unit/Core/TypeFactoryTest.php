@@ -97,7 +97,7 @@ class TypeFactoryTest extends TestCase
         ];
 
         yield 'Typed array' => [
-            TypeFactory::array('string'),
+            TypeFactory::array(TypeFactory::string()),
             'string[]',
             'array',
         ];

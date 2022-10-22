@@ -195,7 +195,7 @@ class AggregateTypeTest extends TestCase
             'Foobar|array',
             TypeFactory::union(
                 TypeFactory::class('Foobar'),
-                TypeFactory::array('string')
+                TypeFactory::array(TypeFactory::string())
             )->toPhpString()
         );
     }

@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollecti
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Reflector;
 
 class ClassType extends Type implements ClassNamedType, HasEmptyType
 {
@@ -104,5 +105,13 @@ class ClassType extends Type implements ClassNamedType, HasEmptyType
     public function emptyType(): Type
     {
         return $this;
+    }
+
+    public function asReflectedClasssType(Reflector $reflector): ReflectedClassType
+    {
+        if ($this instanceof ReflectedClassType) {
+            return $this;
+        }
+        return new ReflectedClassType($reflector, $this->name());
     }
 }

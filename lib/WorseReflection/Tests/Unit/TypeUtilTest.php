@@ -49,7 +49,7 @@ class TypeUtilTest extends TestCase
 
         yield [
             '<?php use Foo\Baz as Boo; class Foo{}',
-            TypeFactory::array('Foo\Baz'),
+            TypeFactory::array(TypeFactory::class('Foo\Baz')),
             'Boo[]',
         ];
 
