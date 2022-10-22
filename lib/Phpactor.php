@@ -171,7 +171,7 @@ class Phpactor
 
         $masterSchema = new Resolver(true);
         $extensions = [];
-        foreach ($extensionNames as $indexOrName => $extensionClass) {
+        foreach ($extensionNames as $extensionClass) {
             $schema = new Resolver();
 
             if (!class_exists($extensionClass)) {
