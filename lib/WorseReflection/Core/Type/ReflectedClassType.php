@@ -4,9 +4,12 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
@@ -23,6 +26,7 @@ class ReflectedClassType extends ClassType
     {
         $this->name = $name;
         $this->reflector = $reflector;
+        $this->members = ClassLikeReflectionMemberCollection::empty();
     }
 
     public function __toString(): string
@@ -33,6 +37,19 @@ class ReflectedClassType extends ClassType
     public function toPhpString(): string
     {
         return $this->__toString();
+    }
+
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
+    public function members(): ReflectionMemberCollection
+    {
+        $reflection = $this->reflectionOrNull();
+        if (null === $reflection) {
+            return $this->members;
+        }
+
+        return $this->members->merge($reflection->members());
     }
 
     public function isInvokable(): bool

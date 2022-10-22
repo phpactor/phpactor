@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use AppendIterator;
+use Closure;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant;
@@ -258,5 +259,15 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
     private function add(ReflectionMemberCollection $collection): void
     {
         $this->collections[] = $collection;
+    }
+
+    public function map(Closure $mapper): static
+    {
+        $collections = [];
+        foreach ($this->collections as $collection) {
+            $collections[] = $collection->map($mapper);
+        }
+
+        return new static($collections);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Closure;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Visibility;
@@ -55,4 +56,10 @@ interface ReflectionMemberCollection extends ReflectionCollection
      * @return static
      */
     public function byMemberType(string $type): ReflectionCollection;
+
+
+    /**
+     * @param Closure(T): ReflectionMember $mapper
+     */
+    public function map(Closure $mapper): static;
 }

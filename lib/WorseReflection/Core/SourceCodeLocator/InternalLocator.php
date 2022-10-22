@@ -36,6 +36,8 @@ final class InternalLocator implements SourceCodeLocator
             'UnitEnum' => __DIR__ . '/InternalStubs/Enum.php',
             'BackedEnumCase' => __DIR__ . '/InternalStubs/Enum.php',
             'BackedEnum' => __DIR__ . '/InternalStubs/Enum.php',
+            'Prophecy\Prophecy\ObjectProphecy' => __DIR__ . '/InternalStubs/Prophecy.php',
+            'Prophecy\Prophecy\MethodProphecy' => __DIR__ . '/InternalStubs/Prophecy.php',
         ]);
     }
 

@@ -113,21 +113,21 @@ class NodeContextFromMemberAccess
             $types[] = $subType;
 
             foreach ($this->memberResolvers as $memberResolver) {
-                if (null !== $customType = $memberResolver->resolveMemberContext($memberType, $memberName, $subType, $arguments)) {
+                if (null !== $customType = $memberResolver->resolveMemberContext($resolver->reflector(), $memberType, $memberName, $subType, $arguments)) {
                     $memberTypes[$memberName] = $customType;
                     continue 2;
                 }
             }
 
             if ($reflection instanceof ReflectionEnum && $memberType === 'constant') {
-                foreach ($reflection->members()->byMemberType('enum')->byName($memberName) as $member) {
+                foreach ($subType->members()->byMemberType('enum')->byName($memberName) as $member) {
                     // if multiple classes declare a member, always take the "top" one
                     $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
                     break;
                 }
             }
 
-            foreach ($reflection->members()->byMemberType($memberType)->byName($memberName) as $member) {
+            foreach ($subType->members()->byMemberType($memberType)->byName($memberName) as $member) {
                 // if multiple classes declare a member, always take the "top" one
                 $memberTypes[$memberName] = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
                 break;

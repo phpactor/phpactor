@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Closure;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -138,5 +139,10 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
     protected function collectionType(): string
     {
         return HomogeneousReflectionMemberCollection::class;
+    }
+
+    public function map(Closure $mapper): static
+    {
+        return new static(array_map($mapper, $this->items));
     }
 }

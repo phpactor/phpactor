@@ -229,10 +229,11 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     /**
      * @return static
      */
-    public function map(Closure $closure): ReflectionCollection
+    public function map(Closure $closure): static
     {
         $new = new self([]);
         foreach (self::MEMBER_TYPES as $collection) {
+            /** @phpstan-ignore-next-line */
             $new->$collection = array_map($closure, $this->$collection);
         }
         $new->items = array_merge(...array_map(fn (string $type) => $this->$type, self::MEMBER_TYPES));
