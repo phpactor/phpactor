@@ -227,7 +227,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     }
 
 
-    public function map(Closure $closure): static
+    public function map(Closure $closure)
     {
         $new = new self([]);
         foreach (self::MEMBER_TYPES as $collection) {

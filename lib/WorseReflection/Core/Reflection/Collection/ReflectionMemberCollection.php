@@ -60,6 +60,7 @@ interface ReflectionMemberCollection extends ReflectionCollection
 
     /**
      * @param Closure(T): ReflectionMember $mapper
+     * @return static
      */
-    public function map(Closure $mapper): static;
+    public function map(Closure $mapper);
 }

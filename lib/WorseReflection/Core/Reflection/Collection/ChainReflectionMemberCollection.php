@@ -253,7 +253,7 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
         return new static($collections);
     }
 
-    public function map(Closure $mapper): static
+    public function map(Closure $mapper)
     {
         $collections = [];
         foreach ($this->collections as $collection) {

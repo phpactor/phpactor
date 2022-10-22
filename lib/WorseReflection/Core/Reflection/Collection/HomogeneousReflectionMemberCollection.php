@@ -136,7 +136,7 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
         }));
     }
 
-    public function map(Closure $mapper): static
+    public function map(Closure $mapper)
     {
         return new static(array_map($mapper, $this->items));
     }
