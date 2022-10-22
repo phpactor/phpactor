@@ -6,14 +6,14 @@ use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class CallableType extends PrimitiveType
+class CallableType extends PrimitiveType implements InvokableType
 {
     /**
      * @var Type[]
      */
-    public array $args;
+    private array $args;
 
-    public Type $returnType;
+    private Type $returnType;
 
     /**
      * @param Type[] $args
@@ -55,5 +55,15 @@ class CallableType extends PrimitiveType
         $new->args = array_map(fn (Type $t) => $t->map($mapper), $this->args);
         $new->returnType = $this->returnType->map($mapper);
         return $new;
+    }
+
+    public function arguments(): array
+    {
+        return $this->args;
+    }
+
+    public function returnType(): Type
+    {
+        return $this->returnType;
     }
 }

@@ -44,7 +44,7 @@ class ArrowFunctionCreationExpressionResolver implements Resolver
             $node->getStartPosition(),
             $node->getEndPosition(),
             [
-                'type' => new ClosureType($args, $returnType),
+                'type' => new ClosureType($resolver->reflector(), $args, $returnType),
             ]
         );
     }

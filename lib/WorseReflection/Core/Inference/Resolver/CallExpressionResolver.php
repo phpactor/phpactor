@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
+use Phpactor\WorseReflection\Core\Type\InvokableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -39,9 +40,9 @@ class CallExpressionResolver implements Resolver
                 ->withType($returnType->invokeType());
         }
 
-        if ($returnType instanceof CallableType) {
+        if ($returnType instanceof InvokableType) {
             return NodeContextFactory::forNode($node)
-                ->withType($returnType->returnType);
+                ->withType($returnType->returnType());
         }
 
         if (!$resolvableNode instanceof Variable) {
@@ -53,7 +54,7 @@ class CallExpressionResolver implements Resolver
                 ->withType($returnType->invokeType());
         }
 
-        if (!$returnType instanceof CallableType) {
+        if (!$returnType instanceof InvokableType) {
             return NodeContext::none();
         }
 
@@ -62,7 +63,7 @@ class CallExpressionResolver implements Resolver
             $resolvableNode->getStartPosition(),
             $resolvableNode->getEndPosition(),
             [
-                'type' => $returnType->returnType,
+                'type' => $returnType->returnType(),
             ]
         );
     }
