@@ -43,6 +43,7 @@ use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
+use Phpactor\WorseReflection\Core\Type\InvokeableType;
 use Phpactor\WorseReflection\Core\Type\ListType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
@@ -326,7 +327,10 @@ class TypeConverter
         return new ThisType();
     }
 
-    private function convertCallable(CallableNode $callableNode): CallableType
+    /**
+     * @return Type&InvokeableType
+     */
+    private function convertCallable(CallableNode $callableNode): Type
     {
         $parameters = array_map(function (TypeNode $type) {
             return $this->convert($type);
@@ -335,7 +339,7 @@ class TypeConverter
         $type = $this->convert($callableNode->type);
 
         if ($callableNode->name && $callableNode->name->toString() === 'Closure') {
-            return new ClosureType($parameters, $type);
+            return new ClosureType($this->reflector, $parameters, $type);
         }
 
         return new CallableType($parameters, $type);

@@ -25,6 +25,6 @@ class ArrayMapStub implements FunctionStub
             return $context;
         }
 
-        return $context->withType(TypeFactory::array($closureType->returnType));
+        return $context->withType(TypeFactory::array($closureType->returnType()));
     }
 }

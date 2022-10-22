@@ -35,7 +35,7 @@ class AnonymousFunctionCreationExpressionResolver implements Resolver
             }
         }
 
-        $type = new ClosureType($args, $type);
+        $type = new ClosureType($resolver->reflector(), $args, $type);
 
         return NodeContextFactory::create(
             $node->getText(),
