@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 $autoload = require __DIR__ . '/../../vendor/autoload.php';
 $path = __DIR__ . '/../..';

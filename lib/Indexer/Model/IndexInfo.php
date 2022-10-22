@@ -3,8 +3,8 @@
 namespace Phpactor\Indexer\Model;
 
 use Phpactor\Indexer\Util\Filesystem;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\Finder\SplFileInfo;
-use Webmozart\PathUtil\Path;
 
 class IndexInfo
 {

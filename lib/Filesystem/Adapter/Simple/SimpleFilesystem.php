@@ -7,11 +7,11 @@ use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem as SymfonyFilesystem;
-use Webmozart\PathUtil\Path;
 use Phpactor\Filesystem\Domain\FileListProvider;
 use Phpactor\Filesystem\Domain\CopyReport;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Symfony\Component\Filesystem\Path;
 
 class SimpleFilesystem implements Filesystem
 {

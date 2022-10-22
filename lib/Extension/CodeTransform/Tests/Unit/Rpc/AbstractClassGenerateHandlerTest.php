@@ -14,7 +14,7 @@ use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
 use Phpactor\TestUtils\Workspace;
 use Prophecy\Prophecy\ObjectProphecy;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 abstract class AbstractClassGenerateHandlerTest extends TestCase
 {

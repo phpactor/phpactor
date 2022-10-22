@@ -44,12 +44,10 @@ use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\TextDocument\TextDocumentUri;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\ReflectorBuilder;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class IndexerExtension implements Extension
 {
@@ -117,17 +115,6 @@ class IndexerExtension implements Extension
         $this->registerRpc($container);
         $this->registerReferenceFinderAdapters($container);
         $this->registerWatcher($container);
-    }
-
-    private function createReflector(Container $container): Reflector
-    {
-        $builder = ReflectorBuilder::create();
-        foreach (array_keys($container->getServiceIdsForTag(WorseReflectionExtension::TAG_SOURCE_LOCATOR)) as $serviceId) {
-            $builder->addLocator($container->get($serviceId), 128);
-        }
-        $builder->enableCache();
-
-        return $builder->build();
     }
 
     private function registerWorseAdapters(ContainerBuilder $container): void
@@ -231,7 +218,7 @@ class IndexerExtension implements Extension
         $container->register(self::SERVICE_INDEXER_EXCLUDE_PATTERNS, function (Container $container) {
             $projectRoot = $this->projectRoot($container);
             return array_map(function (string $pattern) use ($projectRoot) {
-                return Path::join([$projectRoot, $pattern]);
+                return Path::join($projectRoot, $pattern);
             }, $container->getParameter(self::PARAM_EXCLUDE_PATTERNS));
         });
 
@@ -239,7 +226,7 @@ class IndexerExtension implements Extension
             $projectRoot = $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT);
 
             return array_map(function (string $pattern) use ($projectRoot) {
-                return Path::join([$projectRoot, $pattern]);
+                return Path::join($projectRoot, $pattern);
             }, $container->getParameter(self::PARAM_INCLUDE_PATTERNS));
         });
 
