@@ -327,7 +327,10 @@ class TypeConverter
         return new ThisType();
     }
 
-    private function convertCallable(CallableNode $callableNode): InvokeableType
+    /**
+     * @return Type&InvokeableType
+     */
+    private function convertCallable(CallableNode $callableNode): Type
     {
         $parameters = array_map(function (TypeNode $type) {
             return $this->convert($type);
