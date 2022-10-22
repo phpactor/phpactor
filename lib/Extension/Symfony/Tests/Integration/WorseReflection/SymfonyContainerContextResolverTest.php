@@ -56,7 +56,7 @@ class SymfonyContainerContextResolverTest extends IntegrationTestCase
         $reflector = ReflectorBuilder::create()
             ->addFrameWalker(new TestAssertWalker($this))
             ->addSource(
-                '<?php namespace Symfony\Component\DependencyInjection { interface ContainerInterface{} class Container implements ContainerInterface{}}'
+                '<?php namespace Symfony\Component\DependencyInjection { interface ContainerInterface{public function get(string $id);} class Container implements ContainerInterface{}}'
             )
                 ->addMemberContextResolver(new SymfonyContainerContextResolver(
                     new InMemorySymfonyContainerInspector($services, [])
