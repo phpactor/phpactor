@@ -136,13 +136,13 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
         }));
     }
 
-    protected function collectionType(): string
-    {
-        return HomogeneousReflectionMemberCollection::class;
-    }
-
     public function map(Closure $mapper): static
     {
         return new static(array_map($mapper, $this->items));
+    }
+
+    protected function collectionType(): string
+    {
+        return HomogeneousReflectionMemberCollection::class;
     }
 }

@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Reflector;
 class ClassType extends Type implements ClassNamedType, HasEmptyType
 {
     public ClassName $name;
+
     /**
      * @var ReflectionMemberCollection<ReflectionMember>
      */

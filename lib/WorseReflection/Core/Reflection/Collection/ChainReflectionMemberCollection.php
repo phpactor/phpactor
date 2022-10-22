@@ -253,14 +253,6 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
         return new static($collections);
     }
 
-    /**
-     * @param ReflectionMemberCollection<ReflectionMember> $collection
-     */
-    private function add(ReflectionMemberCollection $collection): void
-    {
-        $this->collections[] = $collection;
-    }
-
     public function map(Closure $mapper): static
     {
         $collections = [];
@@ -269,5 +261,13 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
         }
 
         return new static($collections);
+    }
+
+    /**
+     * @param ReflectionMemberCollection<ReflectionMember> $collection
+     */
+    private function add(ReflectionMemberCollection $collection): void
+    {
+        $this->collections[] = $collection;
     }
 }
