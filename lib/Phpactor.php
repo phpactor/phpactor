@@ -191,6 +191,9 @@ class Phpactor
                 ));
             }
 
+            // This is duplicated in ExtensionDocumentor we should not
+            // continue to add behavior like this here and should extract
+            // this and other special logic.
             if ($extension instanceof NamedExtension) {
                 (function (string $key) use ($schema): void {
                     $schema->setDefaults([$key => false]);
