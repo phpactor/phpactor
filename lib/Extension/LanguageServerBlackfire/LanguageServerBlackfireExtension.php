@@ -42,6 +42,9 @@ class LanguageServerBlackfireExtension implements OptionalExtension
 
     public function configure(Resolver $schema): void
     {
+        $schema->setDescriptions([
+            sprintf('%s.enabled', $this->name()) => 'Requires dev dependencies - enable Blackfire profiles to be captured via. blackfire/start and blackfire/finish LSP method calls.'
+        ]);
     }
 
     public function name(): string
