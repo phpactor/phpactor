@@ -4,7 +4,7 @@ namespace Phpactor\TextDocument;
 
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use RuntimeException;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 final class TextDocumentBuilder
 {

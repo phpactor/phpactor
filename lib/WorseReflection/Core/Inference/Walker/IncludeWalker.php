@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class IncludeWalker implements Walker
 {
@@ -59,7 +59,7 @@ class IncludeWalker implements Walker
         }
 
         if (Path::isRelative($includeUri)) {
-            $includeUri = Path::join([dirname($uri), $includeUri]);
+            $includeUri = Path::join(dirname($uri), $includeUri);
         }
 
         if (!file_exists($includeUri)) {

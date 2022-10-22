@@ -3,7 +3,7 @@
 namespace Phpactor\TextDocument;
 
 use Phpactor\TextDocument\Exception\InvalidUriException;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class TextDocumentUri
 {

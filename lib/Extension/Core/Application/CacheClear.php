@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\Core\Application;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class CacheClear
 {

@@ -4,7 +4,7 @@ namespace Phpactor\ConfigLoader\Adapter\PathCandidate;
 
 use Phpactor\ConfigLoader\Core\PathCandidate;
 use RuntimeException;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class AbsolutePathCandidate implements PathCandidate
 {

@@ -3,7 +3,7 @@
 namespace Phpactor\FilePathResolver\Filter;
 
 use Phpactor\FilePathResolver\Filter;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class CanonicalizingPathFilter implements Filter
 {

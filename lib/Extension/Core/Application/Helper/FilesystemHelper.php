@@ -2,8 +2,8 @@
 
 namespace Phpactor\Extension\Core\Application\Helper;
 
+use Symfony\Component\Filesystem\Path;
 use Webmozart\Glob\Glob;
-use Webmozart\PathUtil\Path;
 use InvalidArgumentException;
 use Generator;
 
@@ -38,7 +38,7 @@ final class FilesystemHelper
             // if the src is not the same as the globbed src, then it is a wildcard
             // and we want to append the filename to the destination
             if ($src !== $globSrc) {
-                $globDest = Path::join($dest, Path::getFilename($globSrc));
+                $globDest = Path::join($dest, basename($globSrc));
             }
 
             yield $globSrc => $globDest;

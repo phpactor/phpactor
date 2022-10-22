@@ -4,7 +4,7 @@ namespace Phpactor\PathFinder;
 
 use Phpactor\PathFinder\Exception\NoPlaceHoldersException;
 use RuntimeException;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class Pattern
 {

@@ -9,8 +9,8 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use RuntimeException;
+use Symfony\Component\Filesystem\Path;
 use Throwable;
-use Webmozart\PathUtil\Path;
 
 class Analyser
 {

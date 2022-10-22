@@ -7,12 +7,12 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Composer\Autoload\ClassLoader;
 use Phpactor\Filesystem\Domain\FileListProvider;
 use AppendIterator;
-use Webmozart\PathUtil\Path;
 use SplFileInfo;
 use ArrayIterator;
 use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Symfony\Component\Filesystem\Path;
 
 class ComposerFileListProvider implements FileListProvider
 {

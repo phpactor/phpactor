@@ -3,7 +3,7 @@
 namespace Phpactor\ConfigLoader\Adapter\PathCandidate;
 
 use Phpactor\ConfigLoader\Core\PathCandidate;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 use XdgBaseDir\Xdg;
 
 class XdgPathCandidate implements PathCandidate
@@ -26,7 +26,7 @@ class XdgPathCandidate implements PathCandidate
 
     public function path(): string
     {
-        return Path::join([$this->xdg->getHomeConfigDir(), $this->appName, $this->filename]);
+        return Path::join($this->xdg->getHomeConfigDir(), $this->appName, $this->filename);
     }
 
     public function loader(): string

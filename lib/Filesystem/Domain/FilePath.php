@@ -4,8 +4,8 @@ namespace Phpactor\Filesystem\Domain;
 
 use RuntimeException;
 use SplFileInfo;
-use Webmozart\PathUtil\Path;
 use InvalidArgumentException;
+use Symfony\Component\Filesystem\Path;
 
 final class FilePath
 {
@@ -53,7 +53,7 @@ final class FilePath
 
     public static function fromParts(array $parts): FilePath
     {
-        $path = Path::join($parts);
+        $path = Path::join(...$parts);
         if (substr($path, 0, 1) !== '/') {
             $path = '/'.$path;
         }

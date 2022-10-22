@@ -6,8 +6,8 @@ use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Phpactor;
+use Symfony\Component\Filesystem\Path;
 use Webmozart\Glob\Glob;
-use Webmozart\PathUtil\Path;
 use Phpactor\Filesystem\Domain\CopyReport;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\ClassMover\Application\Logger\ClassCopyLogger;
@@ -72,7 +72,7 @@ class ClassCopy
             // if the src is not the same as the globbed src, then it is a wildcard
             // and we want to append the filename to the destination
             if ($srcPath !== $globPath) {
-                $globDest = Path::join($destPath, Path::getFilename($globPath));
+                $globDest = Path::join($destPath, basename($globPath));
             }
 
             try {

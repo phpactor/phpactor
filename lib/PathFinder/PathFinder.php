@@ -3,7 +3,7 @@
 namespace Phpactor\PathFinder;
 
 use Phpactor\PathFinder\Exception\NoMatchingSourceException;
-use Webmozart\PathUtil\Path;
+use Symfony\Component\Filesystem\Path;
 
 class PathFinder
 {
