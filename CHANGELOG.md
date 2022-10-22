@@ -16,6 +16,8 @@ Bug fixes:
 Improvements:
 
   - [cb] Add properties _after_ constants #1917 @mamazu
+  - [--] Remove dependency on webmozart/path-util @mamazu
+  - [wr] "invokable" type refactoring
 
 ## 2022.10.11
 
