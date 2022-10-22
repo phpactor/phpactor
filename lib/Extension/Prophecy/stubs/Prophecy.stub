@@ -14,9 +14,9 @@ use ReflectionType;
 use ReflectionUnionType;
 
 /**
- * @template T of object
+ * @template T
  */
-class ObjectProphecy implements ProphecyInterface
+class ObjectProphecy
 {
     /**
      * @return T

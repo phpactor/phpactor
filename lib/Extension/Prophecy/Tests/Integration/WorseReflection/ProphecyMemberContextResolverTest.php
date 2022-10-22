@@ -41,6 +41,7 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
         $this->resolve(
             <<<'EOT'
                 <?php
+                use Prophecy\Prophecy\ObjectProphecy;
                 class Hello {
                     public function bar(): string
                     {
@@ -55,8 +56,8 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
                    
                     public function hello(): void
                     {
-                        wrAssertType('ObjectProphecy<Hello>', $this->hello);
-                        wrAssertType('MethodProphecy<string>', $this->hello->bar());
+                        wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $this->hello);
+                        wrAssertType('Prophecy\Prophecy\MethodProphecy<string>', $this->hello->bar());
                     }
                 }
                 EOT
