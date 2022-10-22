@@ -76,11 +76,6 @@ parameters:
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 
 		-
-			message: "#^Method Microsoft\\\\PhpParser\\\\Node\\:\\:getText\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 3
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:collectMemberReferences\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
@@ -1001,16 +996,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Method.php
 
 		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\:\\:\\$isAbstract \\(bool\\) does not accept int\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Method.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\:\\:\\$isStatic \\(bool\\) does not accept int\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Method.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\MethodBody\\:\\:fromLines\\(\\) has parameter \\$lines with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/MethodBody.php
@@ -1271,11 +1256,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Functional/Adapter/TolerantParser/Util/NodeHelperTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$pos of method Microsoft\\\\PhpParser\\\\Node\\:\\:getDescendantNodeAtPosition\\(\\) expects int, string given\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Tests/Functional/Adapter/TolerantParser/Util/NodeHelperTest.php
-
-		-
 			message: "#^Argument of an invalid type array\\<int, string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/IntegrationTestCase.php
@@ -1286,9 +1266,9 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Adapter/TolerantParser/Util/ImporterNamesTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$pos of method Microsoft\\\\PhpParser\\\\Node\\:\\:getDescendantNodeAtPosition\\(\\) expects int, string given\\.$#"
+			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Type\\\\ClosureType constructor invoked with 0 parameters, 1\\-3 required\\.$#"
 			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Adapter/TolerantParser/Util/NodeHelperTest.php
+			path: lib/CodeBuilder/Tests/Unit/Adapter/WorseReflection/TypeRenderer/WorseTypeRenderer74Test.php
 
 		-
 			message: "#^Call to an undefined method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\:\\:build\\(\\)\\.$#"
@@ -1676,11 +1656,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseInterestingOffsetFinderTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseInterestingOffsetFinderTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractConstantTest\\:\\:provideExtractMethod\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseExtractConstantTest.php
@@ -1871,11 +1846,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/DoctrineAnnotationCompletorTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$pos of method Microsoft\\\\PhpParser\\\\Node\\:\\:getDescendantNodeAtPosition\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/Qualifier/TolerantQualifierTestCase.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletorTest\\:\\:provideImportClass\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletorTest.php
@@ -1976,24 +1946,9 @@ parameters:
 			path: lib/Completion/Tests/Integration/CompletorTestCase.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/CompletorTestCase.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:create\\(\\) has parameter \\$completors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$pos of method Microsoft\\\\PhpParser\\\\Node\\:\\:getDescendantNodeAtPosition\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/Helper/NodeQueryTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\LimitingCompletorTest\\:\\:primeInnerCompletor\\(\\) has parameter \\$suggestions with no value type specified in iterable type array\\.$#"
@@ -2781,11 +2736,6 @@ parameters:
 			path: lib/Extension/CodeTransformExtra/Application/Transformer.php
 
 		-
-			message: "#^Parameter \\#2 \\$basePath of static method Webmozart\\\\PathUtil\\\\Path\\:\\:makeAbsolute\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Application/Transformer.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Command\\\\ClassInflectCommand\\:\\:listGenerators\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Command/ClassInflectCommand.php
@@ -3449,11 +3399,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:handleFormattedType\\(\\) has parameter \\$diagnostics with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Core/Rpc/StatusHandler.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:configure\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/Debug/Model/ExtensionDocumentor.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Logger\\\\Formatter\\\\FormatterRegistry\\:\\:__construct\\(\\) has parameter \\$serviceMap with no value type specified in iterable type array\\.$#"
@@ -4761,21 +4706,6 @@ parameters:
 			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_static.php
 
 		-
-			message: "#^Static access to instance property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$classMap\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_static.php
-
-		-
-			message: "#^Static access to instance property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$prefixDirsPsr4\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_static.php
-
-		-
-			message: "#^Static access to instance property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$prefixLengthsPsr4\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_static.php
-
-		-
 			message: "#^Access to an undefined property Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FallbackFilesystemRegistryTest\\:\\:\\$filesystem1\\.$#"
 			count: 5
 			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
@@ -5036,11 +4966,6 @@ parameters:
 			path: lib/PathFinder/Tests/Unit/PathFinderTest.php
 
 		-
-			message: "#^Constant Phpactor\\\\Phpactor\\:\\:LEGACY_EXTENSIONS is unused\\.$#"
-			count: 1
-			path: lib/Phpactor.php
-
-		-
 			message: "#^Method Phpactor\\\\Phpactor\\:\\:isFile\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Phpactor.php
@@ -5096,11 +5021,6 @@ parameters:
 			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, string given\\.$#"
-			count: 2
-			path: lib/WorseReferenceFinder/Tests/Unit/WorseReflectionDefinitionLocatorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:isPotentialReferenceNode\\(\\) is unused\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
@@ -5129,6 +5049,11 @@ parameters:
 			message: "#^Property Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:\\$breakingChars type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
+
+		-
+			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\Phpactor\\\\DocblockParser\\\\TypeConverter\\:\\:convert\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Type but returns Phpactor\\\\WorseReflection\\\\Core\\\\Type\\\\InvokableType\\.$#"
+			count: 1
+			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/TypeConverter.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\PsrLog\\\\ArrayLogger\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -5194,11 +5119,6 @@ parameters:
 			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\ResolvedName will always evaluate to false\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionClassMember.php
-
-		-
-			message: "#^Method Microsoft\\\\PhpParser\\\\Node\\:\\:getText\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionArgument.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionArgument\\:\\:guessName\\(\\) should return string but returns bool\\|string\\|null\\.$#"
@@ -5439,11 +5359,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Position\\:\\:fromStartAndEnd\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Position.php
-
-		-
-			message: "#^Return type \\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ClassLikeReflectionMemberCollection\\) of method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ClassLikeReflectionMemberCollection\\:\\:byMemberClass\\(\\) should be compatible with return type \\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<T\\>\\) of method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\:\\:byMemberClass\\(\\)$#"
-			count: 2
-			path: lib/WorseReflection/Core/Reflection/Collection/ClassLikeReflectionMemberCollection.php
 
 		-
 			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant not found\\.$#"
