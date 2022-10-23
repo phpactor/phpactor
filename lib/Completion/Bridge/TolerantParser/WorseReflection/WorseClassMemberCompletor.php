@@ -20,6 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -119,6 +120,12 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
+        if (!$type instanceof ClassType) {
+            return;
+        }
+
+        $members = $type->members();
+
         if (!$isParent && $static) {
             yield Suggestion::createWithOptions('class', [
                 'type' => Suggestion::TYPE_CONSTANT,
@@ -133,7 +140,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        foreach ($classReflection->methods() as $method) {
+        foreach ($members->methods() as $method) {
             if (false === $isParent && $method->name() === '__construct') {
                 continue;
             }
@@ -161,7 +168,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
         if ($classReflection instanceof ReflectionClass) {
             /** @var ReflectionProperty $property */
-            foreach ($classReflection->properties() as $property) {
+            foreach ($members->properties() as $property) {
                 if ($publicOnly && false === $property->visibility()->isPublic()) {
                     continue;
                 }
@@ -192,7 +199,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         if (false === $isInstance && $classReflection instanceof ReflectionClass ||
             $classReflection instanceof ReflectionInterface
         ) {
-            foreach ($classReflection->constants() as $constant) {
+            foreach ($members->constants() as $constant) {
                 yield Suggestion::createWithOptions($constant->name(), [
                     'type' => Suggestion::TYPE_CONSTANT,
                     'short_description' => fn () => $this->formatter->format($constant),
@@ -202,7 +209,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         }
 
         if ($classReflection instanceof ReflectionEnum) {
-            foreach ($classReflection->cases() as $case) {
+            foreach ($members->enumCases() as $case) {
                 yield Suggestion::createWithOptions($case->name(), [
                     'type' => Suggestion::TYPE_ENUM,
                     'short_description' => fn () => $this->formatter->format($case),
