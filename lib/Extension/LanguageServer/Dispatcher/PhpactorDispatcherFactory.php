@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServer\Dispatcher;
 
+use Phpactor\Container\Extension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerSessionExtension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
@@ -68,7 +70,8 @@ class PhpactorDispatcherFactory implements DispatcherFactory
     ): Container {
         $container = new PhpactorContainer();
 
-        $extensions = array_map(function (string $class) {
+        $extensions = array_map(function (string $class): Extension {
+            /** @var Extension $class */
             return new $class;
         }, $extensionClasses);
         $extensions[] = new LanguageServerSessionExtension($transmitter, $params);
@@ -78,6 +81,15 @@ class PhpactorDispatcherFactory implements DispatcherFactory
             PhpactorContainer::PARAM_EXTENSION_CLASSES => $extensionClasses
         ]);
         foreach ($extensions as $extension) {
+            // This is duplicated in ExtensionDocumentor we should not
+            // continue to add behavior like this here and should extract
+            // this and other special logic.
+            if ($extension instanceof OptionalExtension) {
+                (function (string $key) use ($resolver): void {
+                    $resolver->setDefaults([$key => false]);
+                    $resolver->setTypes([$key => 'boolean']);
+                })(sprintf('%s.enabled', $extension->name()));
+            }
             $extension->configure($resolver);
         }
 
@@ -88,6 +100,11 @@ class PhpactorDispatcherFactory implements DispatcherFactory
         });
 
         foreach ($extensions as $extension) {
+            if ($extension instanceof OptionalExtension) {
+                if (false === ($parameters[sprintf('%s.enabled', $extension->name())] ?? false)) {
+                    continue;
+                }
+            }
             $extension->load($container);
         }
 
