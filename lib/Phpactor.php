@@ -207,13 +207,12 @@ class Phpactor
             $masterSchema = $masterSchema->merge($schema);
         }
         $masterSchema->setDefaults([
-            PhpactorContainer::PARAM_EXTENSION_CLASSES => $extensionNames,
-
             // enable the LSP watchern
             IndexerExtension::PARAM_ENABLED_WATCHERS => ['lsp', 'inotify', 'find', 'php']
         ]);
         $config = $masterSchema->resolve($config);
 
+        $registeredExtensions = [];
         // > method configure container
         foreach ($extensions as $extension) {
             if ($extension instanceof OptionalExtension) {
@@ -221,8 +220,10 @@ class Phpactor
                     continue;
                 }
             }
+            $registeredExtensions[] = get_class($extension);
             $extension->load($container);
         }
+        $config[PhpactorContainer::PARAM_EXTENSION_CLASSES] = $registeredExtensions;
 
         if (isset($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT])) {
             self::updateMinMemory($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT]);
