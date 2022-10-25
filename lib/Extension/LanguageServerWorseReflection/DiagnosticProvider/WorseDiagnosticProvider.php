@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider;
 
 use Amp\CancellationToken;
 use Amp\Promise;
-use LanguageServerProtocol\DiagnosticSeverity as LanguageServerProtocolDiagnosticSeverity;
+use Phpactor\LanguageServerProtocol\DiagnosticSeverity as LanguageServerProtocolDiagnosticSeverity;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -50,6 +50,9 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
         return 'worse';
     }
 
+    /**
+     * @return LanguageServerProtocolDiagnosticSeverity::*
+     */
     private static function toLspSeverity(DiagnosticSeverity $diagnosticSeverity): int
     {
         if ($diagnosticSeverity->isError()) {
