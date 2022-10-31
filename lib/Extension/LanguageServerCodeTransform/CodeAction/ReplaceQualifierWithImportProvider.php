@@ -4,10 +4,10 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
-use Phpactor\CodeTransform\Domain\Refactor\SimplifyClassName;
+use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\SimplifyClassNameCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ReplaceQualifierWithImportCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
@@ -15,17 +15,16 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use function Amp\call;
 
-class SimplifyClassNameProvider implements CodeActionProvider
+class ReplaceQualifierWithImportProvider implements CodeActionProvider
 {
     public const KIND = 'refactor.class.simplify';
 
-    private SimplifyClassName $simplifyClassName;
+    private ReplaceQualifierWithImport $replaceQualifierWithImport;
 
-    public function __construct(SimplifyClassName $simplifyClassName)
+    public function __construct(ReplaceQualifierWithImport $replaceQualifierWithImport)
     {
-        $this->simplifyClassName = $simplifyClassName;
+        $this->replaceQualifierWithImport = $replaceQualifierWithImport;
     }
-
 
     public function kinds(): array
     {
@@ -37,7 +36,7 @@ class SimplifyClassNameProvider implements CodeActionProvider
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument, $range) {
-            if (!$this->simplifyClassName->canSimplifyClassName(
+            if (!$this->replaceQualifierWithImport->canReplaceWithImport(
                 SourceCode::fromStringAndPath($textDocument->text, $textDocument->uri),
                 PositionConverter::positionToByteOffset($range->start, $textDocument->text)->toInt(),
             )) {
@@ -50,8 +49,8 @@ class SimplifyClassNameProvider implements CodeActionProvider
                     'kind' => self::KIND,
                     'diagnostics' => [],
                     'command' => new Command(
-                        'Expand class',
-                        SimplifyClassNameCommand::NAME,
+                        'Replace qualifier with import',
+                        ReplaceQualifierWithImportCommand::NAME,
                         [
                             $textDocument->uri,
                             PositionConverter::positionToByteOffset($range->start, $textDocument->text)->toInt(),

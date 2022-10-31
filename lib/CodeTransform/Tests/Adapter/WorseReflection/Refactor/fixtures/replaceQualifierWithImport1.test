@@ -6,11 +6,11 @@ class Foo {}
 
 // File: source
 <?php
-function test(\SomeNamespace\F<>oo $foo) { }
+echo 'Debugging ' . \SomeNamespace\F<>oo::class;
 
 // File: expected
 <?php
+
 use SomeNamespace\Foo;
 
-function test(Foo $foo) { }
-
+echo 'Debugging ' . Foo::class;

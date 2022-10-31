@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
-use Phpactor\CodeTransform\Domain\Refactor\SimplifyClassName;
+use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
@@ -32,7 +32,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProv
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\SimplifyClassNameCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ReplaceQualifierWithImportCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
@@ -139,15 +139,15 @@ class LanguageServerCodeTransformExtension implements Extension
         ],
         ]);
 
-        $container->register(SimplifyClassNameCommand::class, function (Container $container) {
-            return new SimplifyClassNameCommand(
+        $container->register(ReplaceQualifierWithImportCommand::class, function (Container $container) {
+            return new ReplaceQualifierWithImportCommand(
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(SimplifyClassName::class)
+                $container->get(ReplaceQualifierWithImport::class)
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
-                'name' => SimplifyClassNameCommand::NAME
+                'name' => ReplaceQualifierWithImportCommand::NAME
             ],
         ]);
 

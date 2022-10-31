@@ -3,11 +3,11 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseSimplifyClassName;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
-class SimplifyClassNameTest extends WorseTestCase
+class ReplaceQualifierWithImportTest extends WorseTestCase
 {
     /**
      * @dataProvider dataFQNToImport
@@ -16,12 +16,13 @@ class SimplifyClassNameTest extends WorseTestCase
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
 
-        $simplifyClassName = new WorseSimplifyClassName(
+        $ReplaceQualifierWithImport = new WorseReplaceQualifierWithImport(
             $this->reflectorForWorkspace($source),
-            new WorseBuilderFactory($this->reflectorForWorkspace($source))
+            new WorseBuilderFactory($this->reflectorForWorkspace($source)),
+            $this->updater()
         );
 
-        $textDocumentEdits = $simplifyClassName->getTextEdits(
+        $textDocumentEdits = $ReplaceQualifierWithImport->getTextEdits(
             SourceCode::fromStringAndPath($source, 'file:///source'),
             $offset
         );
@@ -40,8 +41,8 @@ class SimplifyClassNameTest extends WorseTestCase
     public function dataFQNToImport(): array
     {
         return [
-            'in an expression' => [ 'fqnToImport1.test' ],
-            'in a parameter' => [ 'fqnToImport2.test' ],
+            'in an expression' => [ 'replaceQualifierWithImport1.test' ],
+            'in a parameter' => [ 'replaceQualifierWithImport2.test' ],
         ];
     }
 }

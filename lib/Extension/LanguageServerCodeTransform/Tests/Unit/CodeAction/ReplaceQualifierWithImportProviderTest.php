@@ -5,10 +5,10 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 use Amp\CancellationTokenSource;
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\CodeTransform\Domain\Refactor\SimplifyClassName;
+use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\SimplifyClassNameProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\SimplifyClassNameCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ReplaceQualifierWithImportCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -17,20 +17,20 @@ use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use function Amp\Promise\wait;
 
-class SimplifyClassNameProviderTest extends TestCase
+class ReplaceQualifierWithImportProviderTest extends TestCase
 {
     use ProphecyTrait;
     const EXAMPLE_SOURCE = 'foobar';
     const EXAMPLE_FILE = 'file:///somefile.php';
 
     /**
-     * @var ObjectProphecy<SimplifyClassName>
+     * @var ObjectProphecy<ReplaceQualifierWithImport>
      */
-    private ObjectProphecy $simplifyClassName;
+    private ObjectProphecy $replaceQualifierWithImport;
 
     public function setUp(): void
     {
-        $this->simplifyClassName = $this->prophesize(SimplifyClassName::class);
+        $this->replaceQualifierWithImport = $this->prophesize(ReplaceQualifierWithImport::class);
     }
 
     /**
@@ -41,8 +41,8 @@ class SimplifyClassNameProviderTest extends TestCase
         $textDocumentItem = new TextDocumentItem(self::EXAMPLE_FILE, 'php', 1, self::EXAMPLE_SOURCE);
         $range = ProtocolFactory::range(0, 0, 0, 5);
 
-        $this->simplifyClassName
-            ->canSimplifyClassNameName(
+        $this->replaceQualifierWithImport
+            ->canReplaceWithImport(
                 SourceCode::fromStringAndPath($textDocumentItem->text, $textDocumentItem->uri),
                 $range->start->character,
             )
@@ -71,11 +71,11 @@ class SimplifyClassNameProviderTest extends TestCase
             [
                 CodeAction::fromArray([
                     'title' => 'Expand class name',
-                    'kind' => SimplifyClassNameProvider::KIND,
+                    'kind' => ReplaceQualifierWithImportProvider::KIND,
                     'diagnostics' => [],
                     'command' => new Command(
-                        'Expand class',
-                        SimplifyClassNameCommand::NAME,
+                        'Replace qualifier with import',
+                        ReplaceQualifierWithImportCommand::NAME,
                         [
                             self::EXAMPLE_FILE,
                             0
@@ -86,8 +86,8 @@ class SimplifyClassNameProviderTest extends TestCase
         ];
     }
 
-    private function createProvider(): SimplifyClassNameProvider
+    private function createProvider(): ReplaceQualifierWithImportProvider
     {
-        return new SimplifyClassNameProvider($this->simplifyClassName->reveal());
+        return new ReplaceQualifierWithImportProvider($this->replaceQualifierWithImport->reveal());
     }
 }

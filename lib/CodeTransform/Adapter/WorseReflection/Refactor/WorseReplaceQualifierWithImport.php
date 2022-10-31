@@ -5,7 +5,9 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use Phpactor\CodeTransform\Domain\Refactor\SimplifyClassName;
+use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextEdit;
@@ -13,22 +15,26 @@ use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 
-class WorseSimplifyClassName implements SimplifyClassName
+class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
 {
     private Reflector $reflector;
 
     private BuilderFactory $factory;
+
+    private Updater $updater;
 
     private Parser $parser;
 
     public function __construct(
         Reflector $reflector,
         BuilderFactory $sourceBuilder,
+        Updater $updater,
         Parser $parser = null
     ) {
         $this->reflector = $reflector;
         $this->factory = $sourceBuilder;
         $this->parser = $parser ?: new Parser();
+        $this->updater = $updater;
     }
 
     public function getTextEdits(SourceCode $sourceCode, int $offset): TextDocumentEdits
@@ -42,19 +48,20 @@ class WorseSimplifyClassName implements SimplifyClassName
             return new TextDocumentEdits($sourceCode->uri(), TextEdits::none());
         }
 
-        $sourceBuilder = $this->factory->fromSource($sourceCode);
-        $sourceBuilder->use((string) $type->name());
-        $sourceBuilder->build();
+        $textEdits = $this->getTextEditForImports($sourceCode, $type);
 
         $newClassName = $type->name()->short();
         $position = $symbolContext->symbol()->position();
 
-        return new TextDocumentEdits($sourceCode->uri(), TextEdits::fromTextEdits([
-            TextEdit::create($position->start(), $position->end() - $position->start(), $newClassName)
-        ]));
+        return new TextDocumentEdits(
+            $sourceCode->uri(),
+            $textEdits->merge(TextEdits::fromTextEdits([
+                TextEdit::create($position->start(), $position->end() - $position->start(), $newClassName)
+            ]))
+        );
     }
 
-    public function canSimplifyClassName(SourceCode $source, int $offset): bool
+    public function canReplaceWithImport(SourceCode $source, int $offset): bool
     {
         $node = $this->parser->parseSourceFile($source->__toString());
         $targetNode = $node->getDescendantNodeAtPosition($offset);
@@ -64,5 +71,16 @@ class WorseSimplifyClassName implements SimplifyClassName
         }
 
         return false;
+    }
+
+    private function getTextEditForImports(SourceCode $sourceCode, ClassType $type): TextEdits
+    {
+        $sourceBuilder = $this->factory->fromSource($sourceCode);
+        $sourceBuilder->use((string) $type->name());
+
+        return $this->updater->textEditsFor(
+            $sourceBuilder->build(),
+            Code::fromString((string) $sourceCode)
+        );
     }
 }

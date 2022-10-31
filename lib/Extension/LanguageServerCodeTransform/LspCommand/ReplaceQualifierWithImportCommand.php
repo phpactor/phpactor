@@ -11,26 +11,26 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
-use Phpactor\CodeTransform\Domain\Refactor\SimplifyClassName;
+use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 
-class SimplifyClassNameCommand implements Command
+class ReplaceQualifierWithImportCommand implements Command
 {
-    public const NAME = 'simplify_class';
+    public const NAME = 'replace_qualifier_with_import';
 
     private ClientApi $clientApi;
 
     private Workspace $workspace;
 
-    private SimplifyClassName $simplifyClassName;
+    private ReplaceQualifierWithImport $replaceQualifierWithImport;
 
     public function __construct(
         ClientApi $clientApi,
         Workspace $workspace,
-        SimplifyClassName $simplifyClassName
+        ReplaceQualifierWithImport $replaceQualifierWithImport
     ) {
         $this->clientApi = $clientApi;
         $this->workspace = $workspace;
-        $this->simplifyClassName = $simplifyClassName;
+        $this->replaceQualifierWithImport = $replaceQualifierWithImport;
     }
 
     /**
@@ -41,7 +41,7 @@ class SimplifyClassNameCommand implements Command
         $textDocument = $this->workspace->get($uri);
 
         try {
-            $textEdits = $this->simplifyClassName->getTextEdits(
+            $textEdits = $this->replaceQualifierWithImport->getTextEdits(
                 SourceCode::fromStringAndPath($textDocument->text, $textDocument->uri),
                 $offset
             );
