@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
+use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
@@ -29,8 +30,10 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructo
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ReplaceQualifierWithImportCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
@@ -134,8 +137,21 @@ class LanguageServerCodeTransformExtension implements Extension
         }, [
             LanguageServerExtension::TAG_COMMAND => [
                 'name' => ExtractMethodCommand::NAME
+        ],
+        ]);
+
+        $container->register(ReplaceQualifierWithImportCommand::class, function (Container $container) {
+            return new ReplaceQualifierWithImportCommand(
+                $container->get(ClientApi::class),
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->get(ReplaceQualifierWithImport::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_COMMAND => [
+                'name' => ReplaceQualifierWithImportCommand::NAME
             ],
         ]);
+
         $container->register(ExtractConstantCommand::class, function (Container $container) {
             return new ExtractConstantCommand(
                 $container->get(ClientApi::class),
@@ -206,6 +222,15 @@ class LanguageServerCodeTransformExtension implements Extension
                 $container->getParameter(CodeTransformExtension::PARAM_IMPORT_GLOBALS)
             );
         });
+
+        $container->register(ReplaceQualifierWithImportProvider::class, function (Container $container) {
+            return new ReplaceQualifierWithImportProvider(
+                $container->get(ReplaceQualifierWithImport::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
+        ]);
+
         $container->register(ImportNameProvider::class, function (Container $container) {
             return new ImportNameProvider(
                 $container->get(CandidateFinder::class),

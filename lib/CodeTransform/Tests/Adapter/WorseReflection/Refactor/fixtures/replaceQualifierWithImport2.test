@@ -1,0 +1,17 @@
+// File Foo.php
+<?php
+
+namespace SomeNamespace;
+class Foo {}
+
+// File: source
+<?php
+function test(\SomeNamespace\F<>oo $foo) { }
+
+// File: expected
+<?php
+
+use SomeNamespace\Foo;
+
+function test(Foo $foo) { }
+

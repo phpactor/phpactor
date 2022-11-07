@@ -1,0 +1,16 @@
+// File Foo.php
+<?php
+
+namespace SomeNamespace;
+class Foo {}
+
+// File: source
+<?php
+echo 'Debugging ' . \SomeNamespace\F<>oo::class;
+
+// File: expected
+<?php
+
+use SomeNamespace\Foo;
+
+echo 'Debugging ' . Foo::class;
