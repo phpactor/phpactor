@@ -70,7 +70,7 @@ class ReplaceQualifierWithImportProviderTest extends TestCase
             true,
             [
                 CodeAction::fromArray([
-                    'title' => 'Expand class name',
+                    'title' => 'Replace qualifier with import',
                     'kind' => ReplaceQualifierWithImportProvider::KIND,
                     'diagnostics' => [],
                     'command' => new Command(

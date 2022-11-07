@@ -16,13 +16,13 @@ class ReplaceQualifierWithImportTest extends WorseTestCase
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
 
-        $ReplaceQualifierWithImport = new WorseReplaceQualifierWithImport(
+        $replaceQualifierWithImport = new WorseReplaceQualifierWithImport(
             $this->reflectorForWorkspace($source),
             new WorseBuilderFactory($this->reflectorForWorkspace($source)),
             $this->updater()
         );
 
-        $textDocumentEdits = $ReplaceQualifierWithImport->getTextEdits(
+        $textDocumentEdits = $replaceQualifierWithImport->getTextEdits(
             SourceCode::fromStringAndPath($source, 'file:///source'),
             $offset
         );
@@ -32,7 +32,7 @@ class ReplaceQualifierWithImportTest extends WorseTestCase
             $textDocumentEdits->uri()->path()
         );
 
-        $this->assertEquals(trim($expected), trim($transformed));
+        self::assertEquals(trim($expected), trim($transformed));
     }
 
     /**

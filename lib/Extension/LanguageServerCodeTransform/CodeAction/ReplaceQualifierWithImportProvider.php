@@ -45,7 +45,7 @@ class ReplaceQualifierWithImportProvider implements CodeActionProvider
 
             return [
                 CodeAction::fromArray([
-                    'title' => 'Expand class name',
+                    'title' => 'Replace qualifier with import',
                     'kind' => self::KIND,
                     'diagnostics' => [],
                     'command' => new Command(
