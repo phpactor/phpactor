@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - [ct] Replace qualfier with import LSP refactoring #1939 @mamazu
   - [sf] New Symfony extension #1915
   - [wr] Generic constructor parameters support #1920
 
