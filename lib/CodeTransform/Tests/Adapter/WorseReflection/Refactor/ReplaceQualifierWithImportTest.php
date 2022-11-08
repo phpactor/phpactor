@@ -43,6 +43,7 @@ class ReplaceQualifierWithImportTest extends WorseTestCase
         return [
             'in an expression' => [ 'replaceQualifierWithImport1.test' ],
             'in a parameter' => [ 'replaceQualifierWithImport2.test' ],
+            'with already existing import' => [ 'replaceQualifierWithImport3.test' ],
         ];
     }
 }
