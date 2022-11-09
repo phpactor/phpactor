@@ -1,0 +1,4 @@
+<?php namespace Symfony\Component\DependencyInjection { 
+    interface ContainerInterface{} 
+    class Container implements ContainerInterface{}
+}
