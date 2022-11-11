@@ -9,7 +9,6 @@ use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Util\OffsetHelper;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ChainTolerantCompletor implements Completor
 {
@@ -78,7 +77,7 @@ class ChainTolerantCompletor implements Completor
         $truncatedSource = mb_substr($source, 0, $characterOffset);
 
         // the parser will get very confused if there is an unterminated open quote,
-        // if the very last non-whitepsace char is a quote, then add another to 
+        // if the very last non-whitepsace char is a quote, then add another to
         // create a string literal.
         if ($lastChar === '\'' || $lastChar === '"') {
             $truncatedSource .= $lastChar;

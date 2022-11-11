@@ -183,7 +183,7 @@ class NodeUtil
                 str_repeat('  ', $level) . $node->getNodeKindName(),
                 $node->getStartPosition(),
                 $node->getEndPosition(),
-                str_replace("\n", "\\n", $node->getText()),
+                str_replace("\n", '\\n', $node->getText()),
             )
         ];
 
