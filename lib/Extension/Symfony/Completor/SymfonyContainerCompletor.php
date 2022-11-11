@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
@@ -34,22 +35,17 @@ class SymfonyContainerCompletor implements TolerantCompletor
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
-        if ($node instanceof SourceFileNode || $node instanceof CompoundStatementNode) {
-            $node = NodeUtil::firstDescendantNodeBeforeOffset($node, $offset->toInt());
-        }
-
-        $memberAccessExpression = null;
         $inQuote = false;
-        if (!$node instanceof CallExpression) {
-            if ($node->parent instanceof MemberAccessExpression) {
-                $memberAccessExpression = $node->parent;
-                $inQuote = true;
-            } else {
-                return;
-            }
+        if ($node instanceof StringLiteral && $node->parent->parent) {
+            $inQuote = true;
+            $node = $node->getFirstAncestor(CallExpression::class);
         }
 
-        $memberAccess = $memberAccessExpression ?: ($node instanceof CallExpression ? $node->callableExpression : null);
+        if (!$node instanceof CallExpression) {
+            return;
+        }
+
+        $memberAccess = $node->callableExpression;
 
         if (!$memberAccess instanceof MemberAccessExpression) {
             return;

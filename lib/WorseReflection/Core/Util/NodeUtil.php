@@ -179,10 +179,11 @@ class NodeUtil
     {
         $out = [
             sprintf(
-                '%s %d:%d',
+                '%s %d:%d - %s',
                 str_repeat('  ', $level) . $node->getNodeKindName(),
                 $node->getStartPosition(),
-                $node->getEndPosition()
+                $node->getEndPosition(),
+                str_replace("\n", "\\n", $node->getText()),
             )
         ];
 
@@ -290,6 +291,25 @@ class NodeUtil
         }
 
         return $node;
+    }
+    public static function lastDescendantNodeBeforeOffsetOfType(Node $node, int $offset, string $fqn): Node
+    {
+        $best = null;
+        $bestPos = null;
+        foreach ($node->getDescendantNodes() as $descendant) {
+            if (!$descendant instanceof $fqn) {
+                continue;
+            }
+            if ($descendant->getEndPosition() > $offset) {
+                continue;
+            }
+            if (null === $bestPos || $descendant->getEndPosition() > $bestPos) {
+                $best = $descendant;
+                $bestPos = $descendant->getEndPosition();
+            }
+        }
+
+        return $best ?? $node;
     }
 
     public static function previousSibling(Node $node): ?Node
