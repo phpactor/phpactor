@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## master
+## 2022.11.12
 
 Features:
 
@@ -20,6 +20,10 @@ Improvements:
   - [--] Remove dependency on webmozart/path-util @mamazu
   - [wr] "invokable" type refactoring
   - [--] Do not register services for disabled extensions
+
+Documentation:
+
+  - Added Emacs LSP client guides @zonuexe
 
 ## 2022.10.11
 
