@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
@@ -18,7 +18,7 @@ class PropertyAccessGeneratorCommand implements Command
 {
     private string $name;
 
-    private GenerateAccessor $generateAccessor;
+    private PropertyAccessGenerator $generateAccessor;
 
     private ClientApi $clientApi;
 
@@ -28,7 +28,7 @@ class PropertyAccessGeneratorCommand implements Command
         string $name,
         ClientApi $clientApi,
         Workspace $workspace,
-        GenerateAccessor $generateAccessor,
+        PropertyAccessGenerator $generateAccessor,
         string $editLabel
     ) {
         $this->name = $name;

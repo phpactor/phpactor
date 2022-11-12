@@ -7,7 +7,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateAccessorHandler;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
@@ -43,7 +43,7 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
     public function setUp(): void
     {
         $this->reflector = ReflectorBuilder::create()->addSource(self::SOURCE)->build();
-        $this->generateAccessor = $this->prophesize(GenerateAccessor::class);
+        $this->generateAccessor = $this->prophesize(PropertyAccessGenerator::class);
     }
 
     public function createHandler(): Handler

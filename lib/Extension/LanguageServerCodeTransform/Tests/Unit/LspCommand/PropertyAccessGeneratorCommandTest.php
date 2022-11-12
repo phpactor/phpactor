@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
@@ -28,7 +28,7 @@ class PropertyAccessGeneratorCommandTest extends TestCase
     {
         $textEdits = new TextEdits(TextEdit::create(self::EXAMPLE_OFFSET, 1, 'test'));
 
-        $generateAccessors = $this->prophesize(GenerateAccessor::class);
+        $generateAccessors = $this->prophesize(PropertyAccessGenerator::class);
         $generateAccessors->generate(
             Argument::type(SourceCode::class),
             [

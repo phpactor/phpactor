@@ -50,10 +50,8 @@ use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMutator;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
@@ -229,7 +227,7 @@ class CodeTransformExtension implements Extension
             );
         });
 
-        $container->register(GenerateAccessor::class, function (Container $container) {
+        $container->register('code_transform.generate_accessor', function (Container $container) {
             return new WorseGenerateAccessor(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),
@@ -238,7 +236,7 @@ class CodeTransformExtension implements Extension
             );
         });
 
-        $container->register(GenerateMutator::class, function (Container $container) {
+        $container->register('code_transform.generate_mutator', function (Container $container) {
             return new WorseGenerateMutator(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),

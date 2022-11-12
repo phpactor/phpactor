@@ -3,13 +3,11 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMutator;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
@@ -169,7 +167,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'generate_accessors',
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(GenerateAccessor::class),
+                $container->get('code_transform.generate_accessor'),
                 'Generate accessors'
             );
         }, [
@@ -183,7 +181,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'generate_mutators',
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(GenerateMutator::class),
+                $container->get('code_transform.generate_mutator'),
                 'Generate mutators'
             );
         }, [

@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use InvalidArgumentException;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
+use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\MapResolver\Resolver;
@@ -26,11 +26,11 @@ class GenerateAccessorHandler extends AbstractHandler
 
     private Reflector $reflector;
 
-    private GenerateAccessor $generateAccessor;
+    private PropertyAccessGenerator $generateAccessor;
 
     public function __construct(
         Reflector $reflector,
-        GenerateAccessor $generateAccessor
+        PropertyAccessGenerator $generateAccessor
     ) {
         $this->reflector = $reflector;
         $this->generateAccessor = $generateAccessor;

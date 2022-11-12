@@ -6,7 +6,6 @@ use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
@@ -117,7 +116,7 @@ class CodeTransformExtraExtension implements Extension
         $container->register('code_transform.rpc.handler.generate_accessor', function (Container $container) {
             return new GenerateAccessorHandler(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(GenerateAccessor::class)
+                $container->get('code_transform.generate_accessor')
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => GenerateAccessorHandler::NAME] ]);
 
