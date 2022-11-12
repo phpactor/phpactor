@@ -6,8 +6,8 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\StringLiteral;
-use Microsoft\PhpParser\Token;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
@@ -39,6 +39,9 @@ class SymfonyContainerCompletor implements TolerantCompletor
             $inQuote = true;
             $node = $node->getFirstAncestor(CallExpression::class);
         }
+        if ($node instanceof QualifiedName) {
+            $node = $node->getFirstAncestor(CallExpression::class);
+        }
 
         if (!$node instanceof CallExpression) {
             return;
@@ -64,6 +67,7 @@ class SymfonyContainerCompletor implements TolerantCompletor
         }
 
         foreach ($this->inspector->services() as $service) {
+            $label = $service->id;
             $suggestion = $inQuote ? $service->id : sprintf('\'%s\'', $service->id);
             $import = null;
 
@@ -77,15 +81,17 @@ class SymfonyContainerCompletor implements TolerantCompletor
 
             if (false === $inQuote && $this->serviceIdIsFqn($service)) {
                 $suggestion = $service->type->short() . '::class';
+                $label = $service->type->short() . '::class';
                 $import = $service->type->__toString();
             }
 
             yield Suggestion::createWithOptions($suggestion, [
-                'label' => $service->id,
+                'label' => $label,
                 'short_description' => $service->id,
                 'documentation' => sprintf('**Symfony Service**: %s', $service->type->__toString()),
                 'type' => Suggestion::TYPE_VALUE,
                 'name_import' => $import,
+                'priority' => 555,
             ]);
         }
 

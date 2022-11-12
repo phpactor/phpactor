@@ -4,7 +4,6 @@ namespace Phpactor\Extension\Symfony\Tests\Integration\Completor;
 
 use Closure;
 use Generator;
-use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Bridge\TolerantParser\ChainTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
@@ -201,7 +200,7 @@ class SymfonyContainerCompletorTest extends TestCase
             /** @param Suggestion[] $suggestions */
             function (array $suggestions): void {
                 self::assertCount(1, $suggestions);
-                self::assertEquals('Foobar', $suggestions[0]->label());
+                self::assertEquals('Foobar::class', $suggestions[0]->label());
             }
         ];
 
@@ -239,6 +238,33 @@ class SymfonyContainerCompletorTest extends TestCase
 
                     public function foo() {
                         $this->container()->get(<>);
+                    }
+                }
+                EOT
+            ,
+            [
+                new SymfonyContainerService('Foobar', TypeFactory::class('Foobar')),
+                new SymfonyContainerService('foobar.barfoo', TypeFactory::class('Foobar\\Barfoo')),
+            ]
+            ,
+            /** @param Suggestion[] $suggestions */
+            function (array $suggestions): void {
+                self::assertCount(1, $suggestions);
+                self::assertEquals('Foobar::class', $suggestions[0]->name());
+            }
+                ];
+
+        yield 'on container property with class suggestions and partial' => [
+            <<<'EOT'
+                <?php
+
+                use Symfony\Component\DependencyInjection\Container;
+
+                class Foobar {
+                    private function container(): Container {}
+
+                    public function foo() {
+                        $this->container()->get(Foo<>);
                     }
                 }
                 EOT
