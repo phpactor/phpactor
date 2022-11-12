@@ -27,6 +27,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMethodFind
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateConstructor;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMutator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateDecorator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
@@ -52,6 +53,7 @@ use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMutator;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
@@ -87,6 +89,9 @@ class CodeTransformExtension implements Extension
     public const PARAM_INDENTATION = 'code_transform.indentation';
     public const PARAM_GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     public const PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
+    public const PARAM_GENERATE_MUTATOR_PREFIX = 'code_transform.refactor.generate_mutator.prefix';
+    public const PARAM_GENERATE_MUTATOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_mutator.upper_case_first';
+    public const PARAM_GENERATE_MUTATOR_FLUENT = 'code_transform.refactor.generate_mutator.fluent';
     public const PARAM_IMPORT_GLOBALS = 'code_transform.import_globals';
     public const PARAM_OBJECT_FILL_NAMED = 'code_transform.refactor.object_fill.named_parameters';
     public const PARAM_OBJECT_FILL_HINT = 'code_transform.refactor.object_fill.hint';
@@ -104,6 +109,9 @@ class CodeTransformExtension implements Extension
             self::PARAM_INDENTATION => '    ',
             self::PARAM_GENERATE_ACCESSOR_PREFIX => '',
             self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST => false,
+            self::PARAM_GENERATE_MUTATOR_PREFIX => 'set',
+            self::PARAM_GENERATE_MUTATOR_UPPER_CASE_FIRST => true,
+            self::PARAM_GENERATE_MUTATOR_FLUENT => false,
             self::PARAM_IMPORT_GLOBALS => false,
             self::PARAM_OBJECT_FILL_HINT => true,
             self::PARAM_OBJECT_FILL_NAMED => true,
@@ -114,6 +122,9 @@ class CodeTransformExtension implements Extension
             self::PARAM_INDENTATION => 'Indentation chars to use in code generation and transformation',
             self::PARAM_GENERATE_ACCESSOR_PREFIX => 'Prefix to use for generated accessors',
             self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST => 'If the first letter of a generated accessor should be made uppercase',
+            self::PARAM_GENERATE_MUTATOR_PREFIX => 'Prefix to use for generated mutators',
+            self::PARAM_GENERATE_MUTATOR_UPPER_CASE_FIRST => 'If the first letter of a generated mutator should be made uppercase',
+            self::PARAM_GENERATE_MUTATOR_FLUENT => 'If the mutator should be fluent',
             self::PARAM_IMPORT_GLOBALS => 'Import functions even if they are in the global namespace',
             self::PARAM_OBJECT_FILL_NAMED => 'Object fill refactoring: use named parameters',
             self::PARAM_OBJECT_FILL_HINT => 'Object fill refactoring: show hint as a comment',
@@ -224,6 +235,16 @@ class CodeTransformExtension implements Extension
                 $container->get(Updater::class),
                 $container->getParameter(self::PARAM_GENERATE_ACCESSOR_PREFIX),
                 $container->getParameter(self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST)
+            );
+        });
+
+        $container->register(GenerateMutator::class, function (Container $container) {
+            return new WorseGenerateMutator(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(Updater::class),
+                $container->getParameter(self::PARAM_GENERATE_MUTATOR_PREFIX),
+                $container->getParameter(self::PARAM_GENERATE_MUTATOR_UPPER_CASE_FIRST),
+                $container->getParameter(self::PARAM_GENERATE_MUTATOR_FLUENT)
             );
         });
 
