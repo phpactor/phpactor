@@ -157,9 +157,7 @@ class SymfonyContainerCompletorTest extends TestCase
             ,
             /** @param Suggestion[] $suggestions */
             function (array $suggestions): void {
-                // parser doesnt like this, and we already pass all the
-                // suggestions on the open quote, so irrelevant
-                self::assertCount(0, $suggestions);
+                self::assertCount(2, $suggestions);
             }
         ];
 
@@ -267,7 +265,7 @@ class SymfonyContainerCompletorTest extends TestCase
                     private function container(): Container {}
 
                     public function foo() {
-                        $this->container()->get('<>
+                        $this->container()->get('foo<>
                     }
                 }
                 EOT
