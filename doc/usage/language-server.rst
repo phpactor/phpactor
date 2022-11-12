@@ -6,11 +6,6 @@ Language Server
 Phpactor implements the `Language Server Protocol`_
 which is supported by many text editors and IDEs.
 
-.. note::
-
-    Note that the Language Server is a new feature, and should be treated as
-    ALPHA software
-
 Features
 --------
 
