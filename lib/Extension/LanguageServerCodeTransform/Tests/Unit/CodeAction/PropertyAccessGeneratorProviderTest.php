@@ -6,8 +6,8 @@ use Amp\CancellationTokenSource;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMutatorsProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMutatorsCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PropertyAccessGeneratorProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\PhpUnit\ProphecyTrait;
 use function Amp\Promise\wait;
 
-class GenerateMutatorProviderTest extends TestCase
+class PropertyAccessGeneratorProviderTest extends TestCase
 {
     use ProphecyTrait;
     const EXAMPLE_FILE = 'file:///somefile.php';
@@ -51,11 +51,11 @@ class GenerateMutatorProviderTest extends TestCase
             '<?php class Foo { <>private $foo;<> }',
             [
                 CodeAction::fromArray([
-                    'title' =>  'Generate 1 mutator(s)',
-                    'kind' => GenerateMutatorsProvider::KIND,
+                    'title' =>  'Generate 1 accessor(s)',
+                    'kind' => 'quickfix.generate_accessors',
                     'command' => new Command(
-                        'Generate 1 mutator(s)',
-                        GenerateMutatorsCommand::NAME,
+                        'Generate 1 accessor(s)',
+                        GenerateAccessorsCommand::NAME,
                         [
                             self::EXAMPLE_FILE,
                             18,
@@ -67,9 +67,14 @@ class GenerateMutatorProviderTest extends TestCase
         ];
     }
 
-    private function createProvider(string $sourceCode): GenerateMutatorsProvider
+    private function createProvider(string $sourceCode): PropertyAccessGeneratorProvider
     {
         $reflector = ReflectorBuilder::create()->addSource($sourceCode)->build();
-        return new GenerateMutatorsProvider($reflector);
+        return new PropertyAccessGeneratorProvider(
+            'quickfix.generate_accessors',
+            GenerateAccessorsCommand::NAME,
+            'accessor',
+            $reflector,
+        );
     }
 }

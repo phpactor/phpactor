@@ -26,11 +26,10 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantPro
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateAccessorsProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMutatorsProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PropertyAccessGeneratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
@@ -378,15 +377,23 @@ class LanguageServerCodeTransformExtension implements Extension
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
-        $container->register(GenerateAccessorsProvider::class, function (Container $container) {
-            return new GenerateAccessorsProvider(
+
+        $container->register('language_server_code_transform.generate_accessors_provider', function (Container $container) {
+            return new PropertyAccessGeneratorProvider(
+                'quickfix.generate_accessors',
+                GenerateAccessorsCommand::NAME,
+                'accessor',
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
-        $container->register(GenerateMutatorsProvider::class, function (Container $container) {
-            return new GenerateAccessorsProvider(
+
+        $container->register('language_server_code_transform.generate_mutators_provider', function (Container $container) {
+            return new PropertyAccessGeneratorProvider(
+                'quickfix.generate_mutators',
+                GenerateMutatorsCommand::NAME,
+                'mutator',
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [
