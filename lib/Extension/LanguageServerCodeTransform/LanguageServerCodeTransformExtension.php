@@ -34,12 +34,11 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMutatorsCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ReplaceQualifierWithImportCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\PropertyAccessGeneratorCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateDecoratorCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportAllUnresolvedNamesCommand;
@@ -165,26 +164,31 @@ class LanguageServerCodeTransformExtension implements Extension
                 'name' => ExtractConstantCommand::NAME
             ],
         ]);
-        $container->register(GenerateAccessorsCommand::class, function (Container $container) {
-            return new GenerateAccessorsCommand(
+        $container->register('language_server_code_transform.generate_accessors_command', function (Container $container) {
+            return new PropertyAccessGeneratorCommand(
+                'generate_accessors',
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(GenerateAccessor::class)
+                $container->get(GenerateAccessor::class),
+                'Generate accessors'
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
-                'name' => GenerateAccessorsCommand::NAME
+                'name' => 'generate_accessors'
             ],
         ]);
-        $container->register(GenerateMutatorsCommand::class, function (Container $container) {
-            return new GenerateAccessorsCommand(
+
+        $container->register('language_server_code_transform.generate_mutators_command', function (Container $container) {
+            return new PropertyAccessGeneratorCommand(
+                'generate_mutators',
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(GenerateMutator::class)
+                $container->get(GenerateMutator::class),
+                'Generate mutators'
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
-                'name' => GenerateMutatorsCommand::NAME
+                'name' => 'generate_mutators'
             ],
         ]);
 
@@ -381,7 +385,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register('language_server_code_transform.generate_accessors_provider', function (Container $container) {
             return new PropertyAccessGeneratorProvider(
                 'quickfix.generate_accessors',
-                GenerateAccessorsCommand::NAME,
+                'generate_accessors',
                 'accessor',
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
@@ -392,7 +396,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register('language_server_code_transform.generate_mutators_provider', function (Container $container) {
             return new PropertyAccessGeneratorProvider(
                 'quickfix.generate_mutators',
-                GenerateMutatorsCommand::NAME,
+                'generate_mutators',
                 'mutator',
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );

@@ -14,9 +14,9 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
-class GenerateAccessorsCommand implements Command
+class PropertyAccessGeneratorCommand implements Command
 {
-    public const NAME  = 'generate_accessors';
+    private string $name;
 
     private GenerateAccessor $generateAccessor;
 
@@ -25,13 +25,17 @@ class GenerateAccessorsCommand implements Command
     private Workspace $workspace;
 
     public function __construct(
+        string $name,
         ClientApi $clientApi,
         Workspace $workspace,
-        GenerateAccessor $generateAccessor
+        GenerateAccessor $generateAccessor,
+        string $editLabel
     ) {
+        $this->name = $name;
         $this->generateAccessor = $generateAccessor;
         $this->clientApi = $clientApi;
         $this->workspace = $workspace;
+        $this->editLabel = $editLabel;
     }
 
     /**
@@ -55,6 +59,6 @@ class GenerateAccessorsCommand implements Command
 
         return $this->clientApi->workspace()->applyEdit(new WorkspaceEdit([
              $uri => TextEditConverter::toLspTextEdits($textEdits, $textDocument->text)
-        ]), 'Generate accessors');
+        ]), $this->editLabel);
     }
 }

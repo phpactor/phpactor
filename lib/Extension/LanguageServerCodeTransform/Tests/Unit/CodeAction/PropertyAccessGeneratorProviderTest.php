@@ -7,7 +7,6 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PropertyAccessGeneratorProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -55,7 +54,7 @@ class PropertyAccessGeneratorProviderTest extends TestCase
                     'kind' => 'quickfix.generate_accessors',
                     'command' => new Command(
                         'Generate 1 accessor(s)',
-                        GenerateAccessorsCommand::NAME,
+                        'generate_accessors',
                         [
                             self::EXAMPLE_FILE,
                             18,
@@ -72,7 +71,7 @@ class PropertyAccessGeneratorProviderTest extends TestCase
         $reflector = ReflectorBuilder::create()->addSource($sourceCode)->build();
         return new PropertyAccessGeneratorProvider(
             'quickfix.generate_accessors',
-            GenerateAccessorsCommand::NAME,
+            'generate_accessors',
             'accessor',
             $reflector,
         );

@@ -6,11 +6,9 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
-use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\PropertyAccessGeneratorCommand;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
@@ -19,7 +17,7 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
-class GenerateAccessorsCommandTest extends TestCase
+class PropertyAccessGeneratorCommandTest extends TestCase
 {
     use ProphecyTrait;
     const EXAMPLE_SOURCE = '<?php ';
@@ -73,13 +71,12 @@ class GenerateAccessorsCommandTest extends TestCase
         $builder = LanguageServerTesterBuilder::createBare()
             ->enableTextDocuments()
             ->enableCommands();
-        $builder->addCommand('generate', new GenerateAccessorsCommand(
+        $builder->addCommand('generate', new PropertyAccessGeneratorCommand(
+            'generate_accessors',
             $builder->clientApi(),
             $builder->workspace(),
             $generateAccessors->reveal(),
-            InMemoryDocumentLocator::fromTextDocuments([
-                TextDocumentBuilder::create('foobar')->uri(self::EXAMPLE_URI)->build()
-            ])
+            'Generate accessors'
         ));
 
         $tester = $builder->build();
