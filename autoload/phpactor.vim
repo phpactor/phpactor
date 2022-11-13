@@ -395,6 +395,10 @@ function! phpactor#GenerateAccessors()
     call phpactor#rpc("generate_accessor", { "source": phpactor#_source(), "path": expand('%:p'), 'offset': phpactor#_offset() })
 endfunction
 
+function! phpactor#GenerateMutators()
+    call phpactor#rpc("generate_mutator", { "source": phpactor#_source(), "path": expand('%:p'), 'offset': phpactor#_offset() })
+endfunction
+
 """""""""""""""""""""""
 " Utility functions
 """""""""""""""""""""""

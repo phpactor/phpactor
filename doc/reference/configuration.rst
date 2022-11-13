@@ -201,6 +201,45 @@ If the first letter of a generated accessor should be made uppercase
 **Default**: ``false``
 
 
+.. _param_code_transform.refactor.generate_mutator.prefix:
+
+
+``code_transform.refactor.generate_mutator.prefix``
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Prefix to use for generated mutators
+
+
+**Default**: ``"set"``
+
+
+.. _param_code_transform.refactor.generate_mutator.upper_case_first:
+
+
+``code_transform.refactor.generate_mutator.upper_case_first``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+If the first letter of a generated mutator should be made uppercase
+
+
+**Default**: ``true``
+
+
+.. _param_code_transform.refactor.generate_mutator.fluent:
+
+
+``code_transform.refactor.generate_mutator.fluent``
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+If the mutator should be fluent
+
+
+**Default**: ``false``
+
+
 .. _param_code_transform.import_globals:
 
 

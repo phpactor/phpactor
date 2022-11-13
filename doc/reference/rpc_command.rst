@@ -11,11 +11,11 @@ Legacy RPC Commands
    :local:
 
 
-.. _RpcHandler_StatusHandler:
+.. _RpcHandler_status:
 
 
-_RpcHandler_StatusHandler
--------------------------
+_RpcHandler_status
+------------------
 
 
 .. _RpcCommand_status_type:
@@ -28,11 +28,11 @@ _RpcHandler_StatusHandler
 **Default**: ``"formatted"``
 
 
-.. _RpcHandler_FileInfoHandler:
+.. _RpcHandler_file_info:
 
 
-_RpcHandler_FileInfoHandler
----------------------------
+_RpcHandler_file_info
+---------------------
 
 
 .. _RpcCommand_file_info_path:
@@ -45,11 +45,11 @@ _RpcHandler_FileInfoHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ReferencesHandler:
+.. _RpcHandler_references:
 
 
-_RpcHandler_ReferencesHandler
------------------------------
+_RpcHandler_references
+----------------------
 
 
 .. _RpcCommand_references_mode:
@@ -112,11 +112,11 @@ _RpcHandler_ReferencesHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ClassCopyHandler:
+.. _RpcHandler_copy_class:
 
 
-_RpcHandler_ClassCopyHandler
-----------------------------
+_RpcHandler_copy_class
+----------------------
 
 
 .. _RpcCommand_copy_class_dest_path:
@@ -139,11 +139,11 @@ _RpcHandler_ClassCopyHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ClassMoveHandler:
+.. _RpcHandler_move_class:
 
 
-_RpcHandler_ClassMoveHandler
-----------------------------
+_RpcHandler_move_class
+----------------------
 
 
 .. _RpcCommand_move_class_dest_path:
@@ -186,11 +186,11 @@ _RpcHandler_ClassMoveHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ClassInflectHandler:
+.. _RpcHandler_class_inflect:
 
 
-_RpcHandler_ClassInflectHandler
--------------------------------
+_RpcHandler_class_inflect
+-------------------------
 
 
 .. _RpcCommand_class_inflect_new_path:
@@ -233,11 +233,11 @@ _RpcHandler_ClassInflectHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ClassNewHandler:
+.. _RpcHandler_class_new:
 
 
-_RpcHandler_ClassNewHandler
----------------------------
+_RpcHandler_class_new
+---------------------
 
 
 .. _RpcCommand_class_new_new_path:
@@ -280,11 +280,11 @@ _RpcHandler_ClassNewHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_TransformHandler:
+.. _RpcHandler_transform:
 
 
-_RpcHandler_TransformHandler
-----------------------------
+_RpcHandler_transform
+---------------------
 
 
 .. _RpcCommand_transform_transform:
@@ -317,11 +317,11 @@ _RpcHandler_TransformHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ExtractConstantHandler:
+.. _RpcHandler_extract_constant:
 
 
-_RpcHandler_ExtractConstantHandler
-----------------------------------
+_RpcHandler_extract_constant
+----------------------------
 
 
 .. _RpcCommand_extract_constant_constant_name:
@@ -374,11 +374,11 @@ _RpcHandler_ExtractConstantHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ExtractMethodHandler:
+.. _RpcHandler_extract_method:
 
 
-_RpcHandler_ExtractMethodHandler
---------------------------------
+_RpcHandler_extract_method
+--------------------------
 
 
 .. _RpcCommand_extract_method_method_name:
@@ -431,11 +431,11 @@ _RpcHandler_ExtractMethodHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_GenerateAccessorHandler:
+.. _RpcHandler_generate_accessor:
 
 
-_RpcHandler_GenerateAccessorHandler
------------------------------------
+_RpcHandler_generate_accessor
+-----------------------------
 
 
 .. _RpcCommand_generate_accessor_names:
@@ -478,11 +478,58 @@ _RpcHandler_GenerateAccessorHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_GenerateMethodHandler:
+.. _RpcHandler_generate_mutator:
 
 
-_RpcHandler_GenerateMethodHandler
----------------------------------
+_RpcHandler_generate_mutator
+----------------------------
+
+
+.. _RpcCommand_generate_mutator_names:
+
+
+``names``
+"""""""""
+
+
+**Default**: ``null``
+
+
+.. _RpcCommand_generate_mutator_path:
+
+
+``path``
+""""""""
+
+
+**Default**: ``null``
+
+
+.. _RpcCommand_generate_mutator_source:
+
+
+``source``
+""""""""""
+
+
+**Default**: ``null``
+
+
+.. _RpcCommand_generate_mutator_offset:
+
+
+``offset``
+""""""""""
+
+
+**Default**: ``null``
+
+
+.. _RpcHandler_generate_method:
+
+
+_RpcHandler_generate_method
+---------------------------
 
 
 .. _RpcCommand_generate_method_path:
@@ -515,11 +562,11 @@ _RpcHandler_GenerateMethodHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ImportClassHandler:
+.. _RpcHandler_import_class:
 
 
-_RpcHandler_ImportClassHandler
-------------------------------
+_RpcHandler_import_class
+------------------------
 
 
 .. _RpcCommand_import_class_qualified_name:
@@ -572,11 +619,11 @@ _RpcHandler_ImportClassHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_RenameVariableHandler:
+.. _RpcHandler_rename_variable:
 
 
-_RpcHandler_RenameVariableHandler
----------------------------------
+_RpcHandler_rename_variable
+---------------------------
 
 
 .. _RpcCommand_rename_variable_name:
@@ -639,11 +686,11 @@ _RpcHandler_RenameVariableHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ChangeVisiblityHandler:
+.. _RpcHandler_change_visibility:
 
 
-_RpcHandler_ChangeVisiblityHandler
-----------------------------------
+_RpcHandler_change_visibility
+-----------------------------
 
 
 .. _RpcCommand_change_visibility_path:
@@ -679,11 +726,11 @@ Type: integer
 **Default**: ``null``
 
 
-.. _RpcHandler_OverrideMethodHandler:
+.. _RpcHandler_override_method:
 
 
-_RpcHandler_OverrideMethodHandler
----------------------------------
+_RpcHandler_override_method
+---------------------------
 
 
 .. _RpcCommand_override_method_method_name:
@@ -726,11 +773,11 @@ _RpcHandler_OverrideMethodHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ExtractExpressionHandler:
+.. _RpcHandler_extract_expression:
 
 
-_RpcHandler_ExtractExpressionHandler
-------------------------------------
+_RpcHandler_extract_expression
+------------------------------
 
 
 .. _RpcCommand_extract_expression_variable_name:
@@ -783,11 +830,11 @@ _RpcHandler_ExtractExpressionHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ImportMissingClassesHandler:
+.. _RpcHandler_import_missing_classes:
 
 
-_RpcHandler_ImportMissingClassesHandler
----------------------------------------
+_RpcHandler_import_missing_classes
+----------------------------------
 
 
 .. _RpcCommand_import_missing_classes_path:
@@ -810,11 +857,11 @@ _RpcHandler_ImportMissingClassesHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_HoverHandler:
+.. _RpcHandler_hover:
 
 
-_RpcHandler_HoverHandler
-------------------------
+_RpcHandler_hover
+-----------------
 
 
 .. _RpcCommand_hover_source:
@@ -837,11 +884,11 @@ _RpcHandler_HoverHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_CompleteHandler:
+.. _RpcHandler_complete:
 
 
-_RpcHandler_CompleteHandler
----------------------------
+_RpcHandler_complete
+--------------------
 
 
 .. _RpcCommand_complete_type:
@@ -874,11 +921,11 @@ _RpcHandler_CompleteHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_NavigateHandler:
+.. _RpcHandler_navigate:
 
 
-_RpcHandler_NavigateHandler
----------------------------
+_RpcHandler_navigate
+--------------------
 
 
 .. _RpcCommand_navigate_source_path:
@@ -911,11 +958,11 @@ _RpcHandler_NavigateHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ContextMenuHandler:
+.. _RpcHandler_context_menu:
 
 
-_RpcHandler_ContextMenuHandler
-------------------------------
+_RpcHandler_context_menu
+------------------------
 
 
 .. _RpcCommand_context_menu_action:
@@ -958,11 +1005,11 @@ _RpcHandler_ContextMenuHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_EchoHandler:
+.. _RpcHandler_echo:
 
 
-_RpcHandler_EchoHandler
------------------------
+_RpcHandler_echo
+----------------
 
 
 .. _RpcCommand_echo_message:
@@ -975,11 +1022,11 @@ _RpcHandler_EchoHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_ClassSearchHandler:
+.. _RpcHandler_class_search:
 
 
-_RpcHandler_ClassSearchHandler
-------------------------------
+_RpcHandler_class_search
+------------------------
 
 
 .. _RpcCommand_class_search_short_name:
@@ -992,11 +1039,11 @@ _RpcHandler_ClassSearchHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_OffsetInfoHandler:
+.. _RpcHandler_offset_info:
 
 
-_RpcHandler_OffsetInfoHandler
------------------------------
+_RpcHandler_offset_info
+-----------------------
 
 
 .. _RpcCommand_offset_info_offset:
@@ -1019,11 +1066,11 @@ _RpcHandler_OffsetInfoHandler
 **Default**: ``null``
 
 
-.. _RpcHandler_GotoDefinitionHandler:
+.. _RpcHandler_goto_definition:
 
 
-_RpcHandler_GotoDefinitionHandler
----------------------------------
+_RpcHandler_goto_definition
+---------------------------
 
 
 .. _RpcCommand_goto_definition_language:
@@ -1103,11 +1150,11 @@ Path of the current file
 **Default**: ``null``
 
 
-.. _RpcHandler_GotoTypeHandler:
+.. _RpcHandler_goto_type:
 
 
-_RpcHandler_GotoTypeHandler
----------------------------
+_RpcHandler_goto_type
+---------------------
 
 
 .. _RpcCommand_goto_type_language:
@@ -1187,11 +1234,11 @@ Path of the current file
 **Default**: ``null``
 
 
-.. _RpcHandler_GotoImplementationHandler:
+.. _RpcHandler_goto_implementation:
 
 
-_RpcHandler_GotoImplementationHandler
--------------------------------------
+_RpcHandler_goto_implementation
+-------------------------------
 
 
 .. _RpcCommand_goto_implementation_language:
@@ -1271,11 +1318,11 @@ Path of the current file
 **Default**: ``null``
 
 
-.. _RpcHandler_IndexHandler:
+.. _RpcHandler_index:
 
 
-_RpcHandler_IndexHandler
-------------------------
+_RpcHandler_index
+-----------------
 
 
 .. _RpcCommand_index_watch:

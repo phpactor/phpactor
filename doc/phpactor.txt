@@ -148,6 +148,9 @@ COMMANDS                                                   *phpactor-commands*
 :[N]PhpactorGenerateAccessors                     *:PhpactorGenerateAccessors*
   Generate accessors for the current class
 
+:[N]PhpactorGenerateMutators                       *:PhpactorGenerateMutators*
+  Generate mutators for the current class
+
 :[N]PhpactorTransform                                     *:PhpactorTransform*
   Automatically add any missing properties to a class
 

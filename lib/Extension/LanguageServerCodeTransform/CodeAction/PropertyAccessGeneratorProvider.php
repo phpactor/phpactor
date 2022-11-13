@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
@@ -16,29 +15,39 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
 
-class GenerateAccessorsProvider implements CodeActionProvider
+class PropertyAccessGeneratorProvider implements CodeActionProvider
 {
-    public const KIND = 'quickfix.generate_accessors';
+    private string $kind;
+
+    private string $command;
+
+    private string $generatorRole;
 
     private Reflector $reflector;
 
-    public function __construct(Reflector $reflector)
-    {
+    public function __construct(
+        string $kind,
+        string $command,
+        string $generatorRole,
+        Reflector $reflector
+    ) {
+        $this->kind = $kind;
+        $this->command = $command;
+        $this->generatorRole = $generatorRole;
         $this->reflector = $reflector;
     }
-
 
     public function kinds(): array
     {
         return [
-             self::KIND
-         ];
+            $this->kind,
+        ];
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($range, $textDocument) {
-            // CoC will select the entire docyment if no range selected
+            // CoC will select the entire document if no range selected
             if ($range->start->line === 0 && $range->start->character === 0) {
                 return [];
             }
@@ -71,13 +80,19 @@ class GenerateAccessorsProvider implements CodeActionProvider
                 return [];
             }
 
+            $title = sprintf(
+                'Generate %s %s(s)',
+                count($propertyNames),
+                $this->generatorRole
+            );
+
             return [
                 CodeAction::fromArray([
-                    'title' => sprintf('Generate %s accessor(s)', count($propertyNames)),
-                    'kind' => self::KIND,
+                    'title' => $title,
+                    'kind' => $this->kind,
                     'command' => new Command(
-                        sprintf('Generate %s accessor(s)', count($propertyNames)),
-                        GenerateAccessorsCommand::NAME,
+                        $title,
+                        $this->command,
                         [
                             $textDocument->uri,
                             $startOffset,

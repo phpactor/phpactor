@@ -16,7 +16,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 
-class WorseGenerateAccessor implements PropertyAccessGenerator
+class WorseGenerateMutator implements PropertyAccessGenerator
 {
     private Reflector $reflector;
 
@@ -26,16 +26,20 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
 
     private bool $upperCaseFirst;
 
+    private bool $fluent;
+
     public function __construct(
         Reflector $reflector,
         Updater $updater,
         string $prefix = '',
-        bool $upperCaseFirst = null
+        bool $upperCaseFirst = null,
+        bool $fluent = false
     ) {
         $this->reflector = $reflector;
         $this->updater = $updater;
         $this->prefix = $prefix;
         $this->upperCaseFirst = ($prefix && $upperCaseFirst === null) || $upperCaseFirst;
+        $this->fluent = $fluent;
     }
 
     /**
@@ -80,11 +84,20 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
             $method = $builder
                 ->class($className->short())
                 ->method($this->formatName($reflectionProperty->name()));
-            $method->body()->line(sprintf('return $this->%s;', $reflectionProperty->name()));
+            $method->returnType('void');
 
             $type = $reflectionProperty->inferredType();
+
+            $parameter = $method->parameter($reflectionProperty->name());
             if ($type->isDefined()) {
-                $method->returnType($type->short(), $type);
+                $parameter->type($type->short(), $type);
+            }
+
+            $method->body()->line(sprintf('$this->%1$s = $%1$s;', $reflectionProperty->name()));
+
+            if ($this->fluent) {
+                $method->returnType('self');
+                $method->body()->line('return $this;');
             }
         }
 

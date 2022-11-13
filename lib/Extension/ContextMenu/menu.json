@@ -158,6 +158,15 @@
                 "offset": "%offset%"
             }
         },
+        "generate_mutator": {
+            "action": "generate_mutator",
+            "key": "s",
+            "parameters": {
+                "path": "%path%",
+                "source": "%source%",
+                "offset": "%offset%"
+            }
+        },
         "goto_implementation": {
             "action": "goto_implementation",
             "key": "_",
@@ -202,6 +211,7 @@
             "copy",
             "find_references",
             "generate_accessor",
+            "generate_mutator",
             "goto_definition",
             "goto_implementation",
             "hover",
@@ -218,6 +228,7 @@
             "cycle_visibility",
             "find_references",
             "generate_accessor",
+            "generate_mutator",
             "goto_definition",
             "goto_type",
             "hover",

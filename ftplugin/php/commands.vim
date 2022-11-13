@@ -67,6 +67,10 @@ command! -buffer -nargs=0 PhpactorChangeVisibility call phpactor#ChangeVisibilit
 command! -buffer -nargs=0 PhpactorGenerateAccessors call phpactor#GenerateAccessors()
 
 ""
+" Generate mutators for the current class
+command! -buffer -nargs=0 PhpactorGenerateMutators call phpactor#GenerateMutators()
+
+""
 " Automatically add any missing properties to a class
 command! -buffer -nargs=0 PhpactorTransform call phpactor#Transform()
 

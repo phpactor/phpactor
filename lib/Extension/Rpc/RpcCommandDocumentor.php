@@ -35,8 +35,8 @@ class RpcCommandDocumentor implements Documentor
             '   :local:',
             "\n",
         ];
-        foreach ($this->handlerRegistry->all() as $handler) {
-            $documentation = $this->documentHandler($handler);
+        foreach ($this->handlerRegistry->all() as $serviceId => $handler) {
+            $documentation = $this->documentHandler($serviceId, $handler);
             if (null === $documentation) {
                 continue;
             }
@@ -45,11 +45,11 @@ class RpcCommandDocumentor implements Documentor
         return implode("\n", $docs);
     }
 
-    private function documentHandler(Handler $handler): ?string
+    private function documentHandler(string $serviceId, Handler $handler): ?string
     {
         $handlerClass = get_class($handler);
         $parts = explode('\\', $handlerClass);
-        $documentedName = '_RpcHandler_'.end($parts);
+        $documentedName = '_RpcHandler_'.$serviceId;
 
         /** @phpstan-ignore-next-line */
         if (false === $documentedName) {

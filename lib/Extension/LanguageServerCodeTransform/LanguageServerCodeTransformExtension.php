@@ -8,7 +8,6 @@ use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateAccessor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
@@ -25,10 +24,10 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantPro
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateAccessorsProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PropertyAccessGeneratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
@@ -37,7 +36,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ReplaceQualifierWi
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateAccessorsCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\PropertyAccessGeneratorCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateDecoratorCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportAllUnresolvedNamesCommand;
@@ -163,15 +162,31 @@ class LanguageServerCodeTransformExtension implements Extension
                 'name' => ExtractConstantCommand::NAME
             ],
         ]);
-        $container->register(GenerateAccessorsCommand::class, function (Container $container) {
-            return new GenerateAccessorsCommand(
+        $container->register('language_server_code_transform.generate_accessors_command', function (Container $container) {
+            return new PropertyAccessGeneratorCommand(
+                'generate_accessors',
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(GenerateAccessor::class)
+                $container->get('code_transform.generate_accessor'),
+                'Generate accessors'
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
-                'name' => GenerateAccessorsCommand::NAME
+                'name' => 'generate_accessors'
+            ],
+        ]);
+
+        $container->register('language_server_code_transform.generate_mutators_command', function (Container $container) {
+            return new PropertyAccessGeneratorCommand(
+                'generate_mutators',
+                $container->get(ClientApi::class),
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->get('code_transform.generate_mutator'),
+                'Generate mutators'
+            );
+        }, [
+            LanguageServerExtension::TAG_COMMAND => [
+                'name' => 'generate_mutators'
             ],
         ]);
 
@@ -364,8 +379,23 @@ class LanguageServerCodeTransformExtension implements Extension
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
-        $container->register(GenerateAccessorsProvider::class, function (Container $container) {
-            return new GenerateAccessorsProvider(
+
+        $container->register('language_server_code_transform.generate_accessors_provider', function (Container $container) {
+            return new PropertyAccessGeneratorProvider(
+                'quickfix.generate_accessors',
+                'generate_accessors',
+                'accessor',
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register('language_server_code_transform.generate_mutators_provider', function (Container $container) {
+            return new PropertyAccessGeneratorProvider(
+                'quickfix.generate_mutators',
+                'generate_mutators',
+                'mutator',
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
             );
         }, [
