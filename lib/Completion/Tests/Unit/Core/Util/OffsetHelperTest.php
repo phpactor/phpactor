@@ -13,7 +13,7 @@ class OffsetHelperTest extends TestCase
      */
     public function testReturnsLastNonWhitespaceOffset(string $example): void
     {
-        list($source, $expectedOffset) = ExtractOffset::fromSource($example);
+        [$source, $expectedOffset] = ExtractOffset::fromSource($example);
         $characterOffset = OffsetHelper::lastNonWhitespaceCharacterOffset($source);
 
         $this->assertEquals(

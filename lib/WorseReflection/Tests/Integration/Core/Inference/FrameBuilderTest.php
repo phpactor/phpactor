@@ -15,7 +15,7 @@ class FrameBuilderTest extends IntegrationTestCase
      */
     public function testForMethod(string $source, array $classAndMethod, Closure $assertion): void
     {
-        list($className, $methodName) = $classAndMethod;
+        [$className, $methodName] = $classAndMethod;
         $reflector = $this->createReflector($source);
         $method = $reflector->reflectClassLike(ClassName::fromString($className))->methods()->get($methodName);
         $frame = $method->frame();

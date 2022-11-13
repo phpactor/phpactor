@@ -299,7 +299,7 @@ class CompleteTest extends SystemTestCase
 
     private function complete(string $source)
     {
-        list($source, $offset) = ExtractOffset::fromSource($source);
+        [$source, $offset] = ExtractOffset::fromSource($source);
         $complete = $this->container()->get('application.complete');
         assert($complete instanceof Complete);
         $result = $complete->complete($source, $offset);

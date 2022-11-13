@@ -131,7 +131,7 @@ class ClassMover
     private function replaceThoseReferences(ClassMoverLogger $logger, Filesystem $filesystem, array $files): void
     {
         foreach ($files as $paths) {
-            list($srcPath, $destPath) = $paths;
+            [$srcPath, $destPath] = $paths;
 
             $srcPath = $filesystem->createPath($srcPath);
             $destPath = $filesystem->createPath($destPath);

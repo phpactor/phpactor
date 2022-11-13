@@ -22,7 +22,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
     public function testReferences(string $source, bool $includeDefinition = false): void
     {
         $uri = 'file:///root/testDoc';
-        list($source, $selectionOffset, $expectedReferences) = $this->offsetsFromSource($source, $uri);
+        [$source, $selectionOffset, $expectedReferences] = $this->offsetsFromSource($source, $uri);
         $document = TextDocumentBuilder::create($source)
             ->uri($uri)
             ->language('php')

@@ -26,7 +26,7 @@ class SourceCode
 
     public function addNamespace(FullyQualifiedName $namespace): SourceCode
     {
-        list($phpDeclarationLineNb, $namespaceLineNb) = $this->significantLineNumbers();
+        [$phpDeclarationLineNb, $namespaceLineNb] = $this->significantLineNumbers();
 
         if (null !== $namespaceLineNb) {
             return $this;
@@ -50,7 +50,7 @@ class SourceCode
         $lastUseLineNb = null;
         $phpDeclarationLineNb = null;
 
-        list($phpDeclarationLineNb, $namespaceLineNb, $lastUseLineNb) = $this->significantLineNumbers();
+        [$phpDeclarationLineNb, $namespaceLineNb, $lastUseLineNb] = $this->significantLineNumbers();
 
         if ($lastUseLineNb) {
             return $this->insertAfter($lastUseLineNb, $useStmt);

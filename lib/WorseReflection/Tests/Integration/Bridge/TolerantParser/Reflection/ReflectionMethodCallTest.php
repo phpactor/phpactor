@@ -16,7 +16,7 @@ class ReflectionMethodCallTest extends IntegrationTestCase
      */
     public function testReflectMethodCall(string $source, array $frame, Closure $assertion): void
     {
-        list($source, $offset) = ExtractOffset::fromSource($source);
+        [$source, $offset] = ExtractOffset::fromSource($source);
         $reflection = $this->createReflector($source)->reflectMethodCall($source, $offset);
         $assertion($reflection);
     }

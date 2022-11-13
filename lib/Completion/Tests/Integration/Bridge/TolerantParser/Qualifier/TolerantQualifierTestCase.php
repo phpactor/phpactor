@@ -15,7 +15,7 @@ abstract class TolerantQualifierTestCase extends TestCase
      */
     public function testCouldComplete(string $source, Closure $assertion): void
     {
-        list($source, $offset) = ExtractOffset::fromSource($source);
+        [$source, $offset] = ExtractOffset::fromSource($source);
 
         $parser = new Parser();
         $root = $parser->parseSourceFile($source);

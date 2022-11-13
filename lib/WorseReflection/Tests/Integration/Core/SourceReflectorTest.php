@@ -75,7 +75,7 @@ class SourceReflectorTest extends IntegrationTestCase
             EOT
         ;
 
-        list($source, $offset) = ExtractOffset::fromSource($source);
+        [$source, $offset] = ExtractOffset::fromSource($source);
 
         $offset = $this->createReflector($source)->reflectOffset($source, (int)$offset);
         $this->assertEquals('1234', (string) $offset->symbolContext()->type());

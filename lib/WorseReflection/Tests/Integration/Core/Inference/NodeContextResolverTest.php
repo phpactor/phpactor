@@ -1154,7 +1154,7 @@ class NodeContextResolverTest extends IntegrationTestCase
     ): NodeContext {
         $frame = new Frame('test', $locals, $properties);
 
-        list($source, $offset) = ExtractOffset::fromSource($source);
+        [$source, $offset] = ExtractOffset::fromSource($source);
         $node = $this->parseSource($source)->getDescendantNodeAtPosition($offset);
 
         $reflector = $this->createReflector($source);

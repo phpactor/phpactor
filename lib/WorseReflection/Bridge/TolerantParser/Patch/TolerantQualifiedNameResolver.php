@@ -65,7 +65,7 @@ class TolerantQualifiedNameResolver
             return $node->getNamespacedName();
         }
 
-        list($namespaceImportTable, $functionImportTable, $constImportTable) = $node->getImportTablesForCurrentScope();
+        [$namespaceImportTable, $functionImportTable, $constImportTable] = $node->getImportTablesForCurrentScope();
 
         // QUALIFIED NAMES
         // - first segment of the name is translated according to the current class/namespace import table.
