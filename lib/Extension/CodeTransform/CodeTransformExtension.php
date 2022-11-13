@@ -64,12 +64,10 @@ use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
-use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Phpactor\CodeTransform\Domain\Transformers;
@@ -206,9 +204,8 @@ class CodeTransformExtension implements Extension
         $container->register(ReplaceQualifierWithImport::class, function (Container $container) {
             return new WorseReplaceQualifierWithImport(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(BuilderFactory::class),
-                $container->get(NameImporter::class),
-                $container->get(ClientApi::class)
+                $container->get(ImportName::class),
+                $container->get(Updater::class),
             );
         });
 

@@ -16,17 +16,24 @@ class ImportedNames implements IteratorAggregate
         $this->buildTable($node);
     }
 
-
+    /** @return Traversable<string, string> */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->classNamesFromNode());
     }
 
+    /** @return array<int, string> */
     public function classNames(): array
     {
         return array_values($this->classNamesFromNode());
     }
 
+    public function aliasMap(): array
+    {
+        return $this->table[0];
+    }
+
+    /** @return array<string|int, string> */
     public function functionNames(): array
     {
         $names = [];
@@ -37,6 +44,7 @@ class ImportedNames implements IteratorAggregate
         return $names;
     }
 
+    /** @return array<string, string> */
     private function classNamesFromNode(): array
     {
         $names = [];

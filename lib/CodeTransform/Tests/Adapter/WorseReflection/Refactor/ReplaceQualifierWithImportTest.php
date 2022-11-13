@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportName;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -18,6 +19,7 @@ class ReplaceQualifierWithImportTest extends WorseTestCase
 
         $replaceQualifierWithImport = new WorseReplaceQualifierWithImport(
             $this->reflectorForWorkspace($source),
+            new TolerantImportName($this->updater()),
             new WorseBuilderFactory($this->reflectorForWorkspace($source)),
             $this->updater()
         );
@@ -43,7 +45,7 @@ class ReplaceQualifierWithImportTest extends WorseTestCase
         return [
             'in an expression' => [ 'replaceQualifierWithImport1.test' ],
             'in a parameter' => [ 'replaceQualifierWithImport2.test' ],
-            'with already existing import' => [ 'replaceQualifierWithImport3.test' ],
+            'with a need to alias the name' => [ 'replaceQualifierWithImport3.test' ],
         ];
     }
 }

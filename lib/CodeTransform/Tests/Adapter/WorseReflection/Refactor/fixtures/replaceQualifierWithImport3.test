@@ -7,14 +7,16 @@ class Foo {}
 // File: source
 <?php
 
-use Othernamespace\Foo;
+use SomeOtherNameSpace\Foo;
 
 function test(\SomeNamespace\F<>oo $foo) { }
 
 // File: expected
 <?php
 
-use Othernamespace\Foo;
+use SomeNamespace\Foo as SomeNamespaceFoo;
+use SomeOtherNameSpace\Foo;
 
-function test(Foo $foo) { }
+function test(SomeNamespaceFoo $foo) { }
+
 

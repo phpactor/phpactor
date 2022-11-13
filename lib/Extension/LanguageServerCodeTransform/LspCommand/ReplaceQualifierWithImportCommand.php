@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
@@ -32,7 +33,7 @@ class ReplaceQualifierWithImportCommand implements Command
 
         try {
             $textEdits = $this->replaceQualifierWithImport->getTextEdits(
-                $textDocument,
+                SourceCode::fromStringAndPath($textDocument->text, $textDocument->uri),
                 $offset
             );
         } catch (TransformException $error) {

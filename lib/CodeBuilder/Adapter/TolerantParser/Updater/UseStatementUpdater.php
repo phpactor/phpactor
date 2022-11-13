@@ -14,9 +14,18 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\ImportedNames;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\UseStatementDeduplicator;
 
 class UseStatementUpdater
 {
+    private UseStatementDeduplicator $useStatementDeduplicator;
+
+    public function __construct(
+        UseStatementDeduplicator $useStatementDeduplicator
+    ) {
+        $this->useStatementDeduplicator = $useStatementDeduplicator;
+    }
+
     public function updateUseStatements(Edits $edits, SourceCode $prototype, SourceFileNode $node): void
     {
         if (0 === count($prototype->useStatements())) {
@@ -129,6 +138,7 @@ class UseStatementUpdater
     {
         $usePrototypes = $this->filterExisting($lastNode, $prototype);
         $usePrototypes = $this->filterSameNamespace($lastNode, $usePrototypes);
+        $usePrototypes = $this->useStatementDeduplicator->deduplicate($lastNode, $usePrototypes);
 
         return $usePrototypes;
     }
@@ -161,6 +171,7 @@ class UseStatementUpdater
 
         return $usePrototypes;
     }
+
     /**
      * @param array<UseStatement> $usePrototypes
      * @return list<UseStatement>

@@ -2,20 +2,19 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
-use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use Phpactor\CodeBuilder\Domain\Code;
+use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\TextDocument\TextDocumentEdits;
+use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
-use Webmozart\Assert\Assert;
+use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 
 class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
 {
@@ -23,39 +22,36 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
 
     public function __construct(
         private Reflector $reflector,
-        private NameImporter $nameImporter,
-        private ClientApi $client,
+        private ImportName $nameImporter,
+        private BuilderFactory $factory,
+        private Updater $updater,
         Parser $parser = null
     ) {
         $this->parser = $parser ?: new Parser();
     }
 
-    public function getTextEdits(TextDocumentItem $document, int $offset): TextDocumentEdits
+    public function getTextEdits(SourceCode $sourceCode, int $offset): TextDocumentEdits
     {
         $symbolContext = $this->reflector
-            ->reflectOffset($document->text, $offset)
+            ->reflectOffset($sourceCode->__toString(), $offset)
             ->symbolContext();
         $type = $symbolContext->type();
 
         if (!$type instanceof ClassType) {
-            return new TextDocumentEdits($document->uri, TextEdits::none());
+            return new TextDocumentEdits($sourceCode->uri(), TextEdits::none());
         }
 
+        $textEdits = $this->getTextEditForImports($sourceCode, $type);
+
+        $newClassName = $type->name()->short();
         $position = $symbolContext->symbol()->position();
 
-        $result = $this->nameImporter->__invoke(
-            $document,
-            $position->start(),
-            'class',
-            (string) $type->name(),
-            false
+        return new TextDocumentEdits(
+            $sourceCode->uri(),
+            $textEdits->merge(TextEdits::fromTextEdits([
+                TextEdit::create($position->start(), $position->end() - $position->start(), $newClassName)
+            ]))
         );
-
-        Assert::true($result->isSuccess());
-
-        return $this->client->workspace()->applyEdit(new WorkspaceEdit([
-            $uri => $result->getTextEdits() ?? []
-        ]), 'Import class');
     }
 
     public function canReplaceWithImport(SourceCode $source, int $offset): bool
@@ -68,5 +64,16 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
         }
 
         return false;
+    }
+
+    private function getTextEditForImports(SourceCode $sourceCode, ClassType $type): TextEdits
+    {
+        $sourceBuilder = $this->factory->fromSource($sourceCode);
+        $sourceBuilder->use((string) $type->name());
+
+        return $this->updater->textEditsFor(
+            $sourceBuilder->build(),
+            Code::fromString((string) $sourceCode)
+        );
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser;
 
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\UseStatementDeduplicator;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -50,7 +51,7 @@ class TolerantUpdater implements Updater
         $this->classUpdater = new ClassUpdater($renderer);
         $this->interfaceUpdater = new InterfaceUpdater($renderer);
         $this->traitUpdater = new TraitUpdater($renderer);
-        $this->useStatementUpdater = new UseStatementUpdater();
+        $this->useStatementUpdater = new UseStatementUpdater(new UseStatementDeduplicator());
     }
 
     public function textEditsFor(Prototype $prototype, Code $code): TextEdits
