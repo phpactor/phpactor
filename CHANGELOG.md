@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## master
+
+Features:
+
+  - [lsp] Generate mutator @florian-merle
+
 ## 2022.11.12
 
 Features:
