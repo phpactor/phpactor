@@ -8,7 +8,7 @@ use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
-use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateAccessorHandler;
+use Phpactor\Extension\CodeTransformExtra\Rpc\PropertyAccessGeneratorHandler;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\TextDocument\ByteOffset;
@@ -18,7 +18,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
 
-class GenerateAccessorHandlerTest extends HandlerTestCase
+class PropertyAccessGeneratorHandlerTest extends HandlerTestCase
 {
     const SOURCE = <<<'PHP'
         <?php
@@ -48,7 +48,8 @@ class GenerateAccessorHandlerTest extends HandlerTestCase
 
     public function createHandler(): Handler
     {
-        return new GenerateAccessorHandler(
+        return new PropertyAccessGeneratorHandler(
+            'generate_accessor',
             $this->reflector,
             $this->generateAccessor->reveal()
         );

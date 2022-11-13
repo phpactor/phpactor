@@ -16,29 +16,32 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
 
-class GenerateAccessorHandler extends AbstractHandler
+class PropertyAccessGeneratorHandler extends AbstractHandler
 {
-    const NAME = 'generate_accessor';
     const PARAM_NAMES = 'names';
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
     const PARAM_OFFSET = 'offset';
 
+    private string $name;
+
     private Reflector $reflector;
 
-    private PropertyAccessGenerator $generateAccessor;
+    private PropertyAccessGenerator $propertyAccessGenerator;
 
     public function __construct(
+        string $name,
         Reflector $reflector,
-        PropertyAccessGenerator $generateAccessor
+        PropertyAccessGenerator $propertyAccessGenerator
     ) {
+        $this->name = $name;
         $this->reflector = $reflector;
-        $this->generateAccessor = $generateAccessor;
+        $this->propertyAccessGenerator = $propertyAccessGenerator;
     }
 
     public function name(): string
     {
-        return self::NAME;
+        return $this->name;
     }
 
     public function configure(Resolver $resolver): void
@@ -90,7 +93,7 @@ class GenerateAccessorHandler extends AbstractHandler
         $originalSource = $arguments[self::PARAM_SOURCE];
         $newSource = SourceCode::fromStringAndPath($originalSource, $arguments[self::PARAM_PATH]);
 
-        $edits = $this->generateAccessor->generate(
+        $edits = $this->propertyAccessGenerator->generate(
             $newSource,
             (array)$arguments[self::PARAM_NAMES],
             $arguments[self::PARAM_OFFSET]
@@ -115,7 +118,7 @@ class GenerateAccessorHandler extends AbstractHandler
 
         if ($classes->count() > 1) {
             throw new InvalidArgumentException(
-                'Currently will only generates accessor by name in files with one class'
+                'Currently will only generates accessor/mutators by name in files with one class'
             );
         }
 
@@ -124,7 +127,7 @@ class GenerateAccessorHandler extends AbstractHandler
 
     private function propertiesChoices(ReflectionClass $class): array
     {
-        // Select only those from the current class because the accessor generator
+        // Select only those from the current class because the accessor/mutator generator
         // is not able to work with the parent class at the time
         $properties = $class->properties()->belongingTo($class->name());
 
@@ -139,7 +142,7 @@ class GenerateAccessorHandler extends AbstractHandler
 
     private function handleSingle(NodeContext $context, array $arguments)
     {
-        $newSource = $this->generateAccessor->generate(
+        $newSource = $this->propertyAccessGenerator->generate(
             SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]),
             [$context->symbol()->name()],
             $arguments[self::PARAM_OFFSET]

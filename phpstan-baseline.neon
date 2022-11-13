@@ -2823,42 +2823,42 @@ parameters:
 		-
 			message: "#^Call to an undefined method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:withMultiple\\(\\)\\.$#"
 			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:getPropertyContext\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:getPropertyContext\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handleClass\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleClass\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handleSingle\\(\\) has no return type specified\\.$#"
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleSingle\\(\\) has no return type specified\\.$#"
 			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:handleSingle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleSingle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateAccessorHandler\\:\\:propertiesChoices\\(\\) return type has no value type specified in iterable type array\\.$#"
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:propertiesChoices\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/GenerateAccessorHandler.php
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateMethodHandler\\:\\:determineOriginalSource\\(\\) has no return type specified\\.$#"
