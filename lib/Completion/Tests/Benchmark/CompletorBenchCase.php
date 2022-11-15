@@ -18,7 +18,7 @@ abstract class CompletorBenchCase
     public function setUp($params): void
     {
         $source = file_get_contents(__DIR__ . '/' . $params['source']);
-        list($source, $offset) = ExtractOffset::fromSource($source);
+        [$source, $offset] = ExtractOffset::fromSource($source);
         $this->source = $source;
         $this->offset = $offset;
         $this->completor = $this->create($source);

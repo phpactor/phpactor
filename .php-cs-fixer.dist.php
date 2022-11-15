@@ -36,6 +36,7 @@ return (new Config())
         'no_empty_phpdoc' => true,
         'phpdoc_trim' => true,
         'array_syntax' => ['syntax' => 'short'],
+        'list_syntax' => ['syntax' => 'short'],
         'void_return' => true,
         'ordered_class_elements' => true,
         'single_quote' => true,

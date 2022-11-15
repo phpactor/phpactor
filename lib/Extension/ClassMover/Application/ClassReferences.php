@@ -133,7 +133,7 @@ class ClassReferences
 
     private function serializeReference(string $code, ClassReference $reference)
     {
-        list($lineNumber, $colNumber, $line) = $this->line($code, $reference->position()->start());
+        [$lineNumber, $colNumber, $line] = $this->line($code, $reference->position()->start());
         return [
             'start' => $reference->position()->start(),
             'end' => $reference->position()->end(),

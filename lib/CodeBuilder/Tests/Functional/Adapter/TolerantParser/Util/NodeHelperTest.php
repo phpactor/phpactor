@@ -18,14 +18,14 @@ class NodeHelperTest extends TestCase
 
     public function testSelf(): void
     {
-        list($methodNode, $nameNode) = $this->findSelfNode();
+        [$methodNode, $nameNode] = $this->findSelfNode();
         $result = NodeHelper::resolvedShortName($methodNode, $nameNode);
         $this->assertEquals('self', $result);
     }
 
     private function findSelfNode()
     {
-        list($source, $methodOffset, $nameOffset) = ExtractOffset::fromSource('<?php class Foobar { public function f<>oo(): sel<>f() { return $this; }}');
+        [$source, $methodOffset, $nameOffset] = ExtractOffset::fromSource('<?php class Foobar { public function f<>oo(): sel<>f() { return $this; }}');
         $root = $this->parser->parseSourceFile($source);
         return [
             $root->getDescendantNodeAtPosition($methodOffset),

@@ -15,7 +15,7 @@ abstract class CompletorTestCase extends IntegrationTestCase
 
     public function assertCouldNotComplete(string $source): void
     {
-        list($source, $offset) = ExtractOffset::fromSource($source);
+        [$source, $offset] = ExtractOffset::fromSource($source);
         $completor = $this->createCompletor($source);
         $suggestions = $completor->complete(
             TextDocumentBuilder::create($source)->language('php')->uri('file:///tmp/test')->build(),
@@ -31,7 +31,7 @@ abstract class CompletorTestCase extends IntegrationTestCase
 
     protected function assertComplete(string $source, array $expected, bool $isComplete = true): void
     {
-        list($source, $offset) = ExtractOffset::fromSource($source);
+        [$source, $offset] = ExtractOffset::fromSource($source);
         $completor = $this->createCompletor($source);
         $suggestionGenerator = $completor->complete(
             TextDocumentBuilder::create($source)->language('php')->uri('file:///tmp/test')->build(),

@@ -138,7 +138,7 @@ class ReferencesHandler extends AbstractHandler
 
     private function findReferences(NodeContext $symbolContext, string $filesystem)
     {
-        list($source, $references) = $this->performFindOrReplaceReferences($symbolContext, $filesystem);
+        [$source, $references] = $this->performFindOrReplaceReferences($symbolContext, $filesystem);
 
         if (count($references) === 0) {
             return EchoResponse::fromMessage(self::MESSAGE_NO_REFERENCES_FOUND);
@@ -162,7 +162,7 @@ class ReferencesHandler extends AbstractHandler
         string $source
     ) {
         $originalSource = $source;
-        list($source, $references) = $this->performFindOrReplaceReferences(
+        [$source, $references] = $this->performFindOrReplaceReferences(
             $symbolContext,
             $filesystem,
             $source,

@@ -33,7 +33,7 @@ class ReflectionScope implements CoreReflectionScope
      */
     public function nameImports(): NameImports
     {
-        list($nameImports) = $this->node->getImportTablesForCurrentScope();
+        [$nameImports] = $this->node->getImportTablesForCurrentScope();
         return NameImports::fromNames(array_map(function (ResolvedName $name) {
             return Name::fromParts($name->getNameParts());
         }, $nameImports));
