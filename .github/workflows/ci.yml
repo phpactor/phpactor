@@ -180,7 +180,7 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run PHP-CS_Fixer"
-                run: "vendor/bin/php-cs-fixer fix --dry-run"
+                run: "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run"
     phpbench:
         name: "PHPBench smoke (${{ matrix.php-version }})"
 
