@@ -147,7 +147,7 @@ class NodeTest extends NodeTestCase
                     Markdown
                     ```
                     EOT
-, $docblock->prose());
+                    , $docblock->prose());
             }
         ];
     }

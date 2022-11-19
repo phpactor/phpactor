@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Reflector;
 
 class MemberRenamerTest extends RenamerTestCase
 {
-
     /**
      * @return Generator<string,array{string,Closure(Reflector,Renamer): Generator,Closure(Reflector): void}>
      */

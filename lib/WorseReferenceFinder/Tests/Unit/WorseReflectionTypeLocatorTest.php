@@ -20,7 +20,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 // File: Two.php
                 // <?php class Two {}
                 EOT
-        ,
+            ,
             <<<'EOT'
                 <?php
 
@@ -52,7 +52,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 // File: Two.php
                 // <?php class Two {}
                 EOT
-        ,
+            ,
             <<<'EOT'
                 <?php
 
@@ -83,7 +83,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 // File: Two.php
                 // <?php class Two {}
                 EOT
-        ,
+            ,
             <<<'EOT'
                 <?php
 
@@ -105,7 +105,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 // File: Two.php
                 // <?php class Two {}
                 EOT
-        ,
+            ,
             <<<'EOT'
                 <?php
 
@@ -136,7 +136,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 // File: Two.php
                 // <?php class Two {}
                 EOT
-        ,
+            ,
             <<<'EOT'
                 <?php
 
@@ -167,7 +167,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 // File: Two.php
                 // <?php class Two {}
                 EOT
-        ,
+            ,
             <<<'EOT'
                 <?php
 

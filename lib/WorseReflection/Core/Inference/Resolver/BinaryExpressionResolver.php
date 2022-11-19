@@ -110,74 +110,74 @@ class BinaryExpressionResolver implements Resolver
         }
         if ($left instanceof Concatable) {
             switch ($operator) {
-            case TokenKind::DotToken:
-            case TokenKind::DotEqualsToken:
-                return $left->concat($right);
+                case TokenKind::DotToken:
+                case TokenKind::DotEqualsToken:
+                    return $left->concat($right);
             }
         }
         if ($left instanceof Comparable) {
             switch ($operator) {
-            case TokenKind::EqualsEqualsEqualsToken:
-                return $left->identical($right);
-            case TokenKind::EqualsEqualsToken:
-                return $left->equal($right);
-            case TokenKind::GreaterThanToken:
-                return $left->greaterThan($right);
-            case TokenKind::GreaterThanEqualsToken:
-                return $left->greaterThanEqual($right);
-            case TokenKind::LessThanToken:
-                return $left->lessThan($right);
-            case TokenKind::LessThanEqualsToken:
-                return $left->lessThanEqual($right);
-            case TokenKind::ExclamationEqualsToken:
-                return $left->notEqual($right);
-            case TokenKind::ExclamationEqualsEqualsToken:
-                return $left->notIdentical($right);
+                case TokenKind::EqualsEqualsEqualsToken:
+                    return $left->identical($right);
+                case TokenKind::EqualsEqualsToken:
+                    return $left->equal($right);
+                case TokenKind::GreaterThanToken:
+                    return $left->greaterThan($right);
+                case TokenKind::GreaterThanEqualsToken:
+                    return $left->greaterThanEqual($right);
+                case TokenKind::LessThanToken:
+                    return $left->lessThan($right);
+                case TokenKind::LessThanEqualsToken:
+                    return $left->lessThanEqual($right);
+                case TokenKind::ExclamationEqualsToken:
+                    return $left->notEqual($right);
+                case TokenKind::ExclamationEqualsEqualsToken:
+                    return $left->notIdentical($right);
             }
         }
 
         switch ($operator) {
-        case TokenKind::OrKeyword:
-        case TokenKind::BarBarToken:
-            return TypeUtil::toBool($left)->or(TypeUtil::toBool($right));
-        case TokenKind::AndKeyword:
-        case TokenKind::AmpersandAmpersandToken:
-            return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
-        case TokenKind::XorKeyword:
-            return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
-        case TokenKind::PlusToken:
-            return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
-        case TokenKind::MinusToken:
-            return TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right));
-        case TokenKind::AsteriskToken:
-            return TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right));
-        case TokenKind::SlashToken:
-            return TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right));
-        case TokenKind::PercentToken:
-            return TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right));
-        case TokenKind::AsteriskAsteriskToken:
-            return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
+            case TokenKind::OrKeyword:
+            case TokenKind::BarBarToken:
+                return TypeUtil::toBool($left)->or(TypeUtil::toBool($right));
+            case TokenKind::AndKeyword:
+            case TokenKind::AmpersandAmpersandToken:
+                return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
+            case TokenKind::XorKeyword:
+                return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
+            case TokenKind::PlusToken:
+                return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
+            case TokenKind::MinusToken:
+                return TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right));
+            case TokenKind::AsteriskToken:
+                return TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right));
+            case TokenKind::SlashToken:
+                return TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right));
+            case TokenKind::PercentToken:
+                return TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right));
+            case TokenKind::AsteriskAsteriskToken:
+                return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
         }
 
         if ($left instanceof BitwiseOperable) {
             switch ($operator) {
-            case TokenKind::AmpersandToken:
-                return $left->bitwiseAnd($right);
-            case TokenKind::BarToken:
-                return $left->bitwiseOr($right);
-            case TokenKind::CaretToken:
-                return $left->bitwiseXor($right);
-            case TokenKind::LessThanLessThanToken:
-                return $left->shiftLeft($right);
-            case TokenKind::GreaterThanGreaterThanToken:
-                return $left->shiftRight($right);
+                case TokenKind::AmpersandToken:
+                    return $left->bitwiseAnd($right);
+                case TokenKind::BarToken:
+                    return $left->bitwiseOr($right);
+                case TokenKind::CaretToken:
+                    return $left->bitwiseXor($right);
+                case TokenKind::LessThanLessThanToken:
+                    return $left->shiftLeft($right);
+                case TokenKind::GreaterThanGreaterThanToken:
+                    return $left->shiftRight($right);
             }
         }
 
         if ($left instanceof ClassType) {
             switch ($operator) {
-            case TokenKind::InstanceOfKeyword:
-                return TypeFactory::boolLiteral(true);
+                case TokenKind::InstanceOfKeyword:
+                    return TypeFactory::boolLiteral(true);
             }
         }
 
@@ -203,7 +203,6 @@ class BinaryExpressionResolver implements Resolver
                 return $context->withTypeAssertions(
                     $leftContext->typeAssertions()->and($rightContext->typeAssertions())
                 );
-
         }
 
         if (!NodeUtil::canAcceptTypeAssertion($leftOperand, $rightOperand)) {

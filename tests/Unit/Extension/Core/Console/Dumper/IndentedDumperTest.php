@@ -35,7 +35,7 @@ class IndentedDumperTest extends DumperTestCase
               hai:ho
 
             EOT
-        , $output);
+            , $output);
     }
 
     protected function dumper()

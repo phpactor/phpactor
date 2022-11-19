@@ -58,7 +58,7 @@ class UpdateDocblockTransformer implements Transformer
                          * @return {$localReplacement->__toString()}
                          */
                         EOT
-                ,
+                    ,
                     1
                 ). "\n".$this->format->indent('', 1));
                 continue;

@@ -175,7 +175,7 @@ class IndexCleanCommand extends Command
            ->in([$this->indexDirectory])
            ->sortByName()
            ->depth('==0')
-       ;
+        ;
         $fileInfos = iterator_to_array($finder);
         $progress = new ProgressBar($output, count($fileInfos));
 

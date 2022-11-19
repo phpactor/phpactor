@@ -95,7 +95,7 @@ class ClassNameFixerTransformerTest extends AdapterTestCase
             namespace PathTo;
 
             EOT
-        , (string) $transformed->apply($source));
+            , (string) $transformed->apply($source));
     }
 
     private function initComposer(Workspace $workspace)

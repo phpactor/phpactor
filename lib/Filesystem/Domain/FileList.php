@@ -29,9 +29,7 @@ class FileList implements Iterator
         $this->iterator = $iterator;
     }
 
-    /**
-     * @return FileList
-     */
+
     public static function fromIterator(Iterator $iterator): self
     {
         return new self($iterator);
@@ -39,7 +37,6 @@ class FileList implements Iterator
 
     /**
      * @param string[] $filePaths
-     * @return FileList
      */
     public static function fromFilePaths(array $filePaths): self
     {
