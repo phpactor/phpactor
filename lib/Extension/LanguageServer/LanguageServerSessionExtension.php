@@ -15,14 +15,11 @@ use Phpactor\LanguageServer\Core\Server\RpcClient\JsonRpcClient;
 use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
 use Phpactor\LanguageServer\WorkDoneProgress\MessageProgressNotifier;
 use Phpactor\LanguageServer\WorkDoneProgress\ProgressNotifier;
-use Phpactor\LanguageServer\WorkDoneProgress\SilentWorkDoneProgressNotifier;
 use Phpactor\LanguageServer\WorkDoneProgress\WorkDoneProgressNotifier;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerSessionExtension implements Extension
 {
-    const PARAM_PROGRESS_NOTIFICATION_DISABLE = 'langauge_server_session.progress_notification_disable';
-
     private MessageTransmitter $transmitter;
 
     private InitializeParams $initializeParams;
@@ -63,10 +60,6 @@ class LanguageServerSessionExtension implements Extension
         });
 
         $container->register(ProgressNotifier::class, function (Container $container) {
-            if ($container->getParameter(self::PARAM_PROGRESS_NOTIFICATION_DISABLE)) {
-                return new SilentWorkDoneProgressNotifier();
-            }
-
             $capabilities = $container->get(ClientCapabilities::class);
             if ($capabilities->window['workDoneProgress'] ?? false) {
                 return new WorkDoneProgressNotifier($container->get(ClientApi::class));
@@ -79,14 +72,5 @@ class LanguageServerSessionExtension implements Extension
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            self::PARAM_PROGRESS_NOTIFICATION_DISABLE => false,
-        ]);
-        $schema->setDescriptions([
-            self::PARAM_PROGRESS_NOTIFICATION_DISABLE => 'Disable all progress notifications',
-        ]);
-        $schema->setTypes([
-            self::PARAM_PROGRESS_NOTIFICATION_DISABLE => 'boolean',
-        ]);
     }
 }
