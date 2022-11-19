@@ -29,7 +29,7 @@ class PhpCsFixerFormatter implements Formatter
      */
     public function __construct(string $binPath, array $env = [])
     {
-        $this->binPath = $binPath;
+        $this->binPath = realpath($binPath);
         $this->env = $env;
     }
 
@@ -67,9 +67,11 @@ class PhpCsFixerFormatter implements Formatter
             $exitCode = yield $process->join();
             if ($exitCode !== 0) {
                 throw new RuntimeException(sprintf(
-                    'php-cs-fixer exited with code "%s": %s',
+                    'php-cs-fixer exited with code "%s": cmd: %s stderr: %s, stdout: %s',
                     $exitCode,
-                    yield buffer($process->getStderr())
+                    $process->getCommand(),
+                    yield buffer($process->getStderr()),
+                    yield buffer($process->getStdout()),
                 ));
             }
 
