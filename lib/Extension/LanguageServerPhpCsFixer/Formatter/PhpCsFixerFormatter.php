@@ -18,9 +18,19 @@ class PhpCsFixerFormatter implements Formatter
 {
     private string $binPath;
 
-    public function __construct(string $binPath)
+    /**
+     * @var array<string,string>
+     */
+    private array $env;
+
+
+    /**
+     * @param array<string,string> $env
+     */
+    public function __construct(string $binPath, array $env = [])
     {
         $this->binPath = $binPath;
+        $this->env = $env;
     }
 
     public function format(TextDocumentItem $document): Promise
@@ -52,7 +62,7 @@ class PhpCsFixerFormatter implements Formatter
                 $this->binPath,
                 'fix',
                 $tempName
-            ]);
+            ], null, $this->env);
             $pid = yield $process->start();
             $exitCode = yield $process->join();
             if ($exitCode !== 0) {

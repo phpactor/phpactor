@@ -30,7 +30,12 @@ class PhpCsFormatterTest extends TestCase
      */
     private function format(string $document)
     {
-        $formatter = new PhpCsFixerFormatter(__DIR__ . '/../../../../../vendor/bin/php-cs-fixer');
+        $formatter = new PhpCsFixerFormatter(
+            __DIR__ . '/../../../../../vendor/bin/php-cs-fixer',
+            [
+                'PHP_CS_FIXER_IGNORE_ENV' => '1',
+            ]
+        );
         $edits = wait($formatter->format(ProtocolFactory::textDocumentItem('file:///foo.php', $document)));
         return $edits;
     }
