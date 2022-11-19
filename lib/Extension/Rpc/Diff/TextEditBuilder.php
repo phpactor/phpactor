@@ -36,7 +36,7 @@ class TextEditBuilder
                 case 0:
                     break;
 
-                // Added
+                    // Added
                 case 1:
                     $edits[] = [
                         'start' => [
@@ -51,7 +51,7 @@ class TextEditBuilder
                     ];
                     break;
 
-                // Removed
+                    // Removed
                 case 2:
                     $edits[] = [
                         'start' => [

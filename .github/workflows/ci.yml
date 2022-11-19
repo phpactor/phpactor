@@ -20,7 +20,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '7.4'
+                    - '8.0'
 
         steps:
             -
@@ -63,9 +63,9 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '7.4'
                     - '8.0'
                     - '8.1'
+                    - '8.2'
 
         steps:
             -
@@ -180,7 +180,7 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run PHP-CS_Fixer"
-                run: "vendor/bin/php-cs-fixer fix --dry-run"
+                run: "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run"
     phpbench:
         name: "PHPBench smoke (${{ matrix.php-version }})"
 
@@ -220,7 +220,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '7.4'
+                    - '8.0'
 
         steps:
             -

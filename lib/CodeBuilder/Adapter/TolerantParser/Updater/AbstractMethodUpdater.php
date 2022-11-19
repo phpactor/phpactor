@@ -58,7 +58,6 @@ abstract class AbstractMethodUpdater
 
         $ignoreMethods = [];
         foreach ($methodPrototypes as $methodPrototype) {
-
             /** @var MethodDeclaration $methodDeclaration */
             $methodDeclaration = $existingMethods[$methodPrototype->name()];
 

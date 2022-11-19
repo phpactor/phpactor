@@ -23,7 +23,7 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
             // File: Boo.php
             <?php namespace Baz { class Boo {} }
             EOT
-        , $text);
+            , $text);
 
         $this->assertEquals($this->workspace->path($expectedPath), $location->first()->location()->uri()->path());
     }

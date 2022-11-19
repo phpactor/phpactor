@@ -201,7 +201,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                 $node instanceof ClassConstDeclaration ||
                 ($node instanceof ExpressionList && $node->parent instanceof PropertyDeclaration) ||
                 ($node instanceof ConstElementList && $node->parent instanceof ClassConstDeclaration)
-                ;
+            ;
         });
     }
 }

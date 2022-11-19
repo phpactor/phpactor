@@ -88,7 +88,7 @@ class ClassSearch
         foreach ($declared as $declaredClass) {
             $short = $this->resolveShortName($declaredClass);
 
-            $namespace = substr($declaredClass, 0, strrpos($declaredClass, '\\'));
+            $namespace = substr($declaredClass, 0, intval(strrpos($declaredClass, '\\')));
 
             if ($name !== $short) {
                 continue;

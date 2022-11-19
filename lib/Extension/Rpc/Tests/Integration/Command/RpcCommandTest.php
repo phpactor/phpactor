@@ -9,6 +9,7 @@ use Phpactor\Extension\Rpc\Command\RpcCommand;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\Rpc\RpcVersion;
 use Phpactor\TestUtils\Workspace;
+use RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class RpcCommandTest extends TestCase
@@ -33,7 +34,7 @@ class RpcCommandTest extends TestCase
             ],
         ]);
 
-        $tester = $this->execute($stdin);
+        $tester = $this->execute((string)$stdin);
         $this->assertEquals(0, $tester->getStatusCode());
         $response = json_decode($tester->getDisplay(), true);
 
@@ -55,13 +56,13 @@ class RpcCommandTest extends TestCase
             ],
         ]);
 
-        $tester = $this->execute($stdin, [ '--pretty' => true ]);
+        $tester = $this->execute((string)$stdin, [ '--pretty' => true ]);
         $this->assertEquals(0, $tester->getStatusCode());
     }
 
     public function testReplaysLastRequest(): void
     {
-        $randomString = md5(rand(0, 100000));
+        $randomString = md5((string)rand(0, 100000));
         $stdin = json_encode([
             'action' => 'echo',
             'parameters' => [
@@ -69,7 +70,7 @@ class RpcCommandTest extends TestCase
             ],
         ]);
 
-        $tester = $this->execute($stdin);
+        $tester = $this->execute((string)$stdin);
         $this->assertEquals(0, $tester->getStatusCode());
 
         $tester = $this->execute('', [ '--replay' => true ]);
@@ -93,6 +94,9 @@ class RpcCommandTest extends TestCase
         ], []);
 
         $stream = fopen('php://temp', 'r+');
+        if (false === $stream) {
+            throw new RuntimeException('Could not open stream');
+        }
         fwrite($stream, $stdin);
         rewind($stream);
         $tester = new CommandTester(

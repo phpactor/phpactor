@@ -58,7 +58,7 @@ class JsonSchemaBuilderTest extends TestCase
                 }
             }
             EOT
-, $schema);
+            , $schema);
     }
 
     private function createExtension1(): Extension

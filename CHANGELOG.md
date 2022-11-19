@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Breaking changes:
+
+  - Minimum version of PHP changed to 8.0. **Phpactor will no longer run on PHP 7.4**.
+
 Features:
 
   - [lsp] Generate mutator @florian-merle

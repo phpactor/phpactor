@@ -207,26 +207,26 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             }
 
             switch ($symbolType) {
-            case Symbol::METHOD:
-                $members = $containingClass->methods();
-                break;
-            case Symbol::CONSTANT:
-                if ($containingClass instanceof ReflectionEnum) {
-                    $members = $containingClass->cases();
+                case Symbol::METHOD:
+                    $members = $containingClass->methods();
                     break;
-                }
-                assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionInterface);
-                $members = $containingClass->constants();
-                break;
-            case Symbol::PROPERTY:
-                assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionTrait || $containingClass instanceof ReflectionEnum);
-                $members = $containingClass->properties();
-                break;
-            default:
-                throw new CouldNotLocateDefinition(sprintf(
-                    'Unhandled symbol type "%s"',
-                    $symbolType
-                ));
+                case Symbol::CONSTANT:
+                    if ($containingClass instanceof ReflectionEnum) {
+                        $members = $containingClass->cases();
+                        break;
+                    }
+                    assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionInterface);
+                    $members = $containingClass->constants();
+                    break;
+                case Symbol::PROPERTY:
+                    assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionTrait || $containingClass instanceof ReflectionEnum);
+                    $members = $containingClass->properties();
+                    break;
+                default:
+                    throw new CouldNotLocateDefinition(sprintf(
+                        'Unhandled symbol type "%s"',
+                        $symbolType
+                    ));
             }
 
             if (false === $members->has($symbolName)) {

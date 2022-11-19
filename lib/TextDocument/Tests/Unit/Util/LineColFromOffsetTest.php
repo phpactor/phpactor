@@ -85,7 +85,7 @@ class LineColFromOffsetTest extends TestCase
             foo
             bar
             EOT
-        , 10);
+            , 10);
         assert($lineCol instanceof LineCol);
         self::assertEquals(2, $lineCol->line());
         self::assertEquals(4, $lineCol->col());

@@ -513,7 +513,7 @@ class ReflectionMethodTest extends IntegrationTestCase
                 $this->assertStringContainsString(<<<EOT
                     Hello this is a docblock.
                     EOT
-                , $methods->get('barfoo')->docblock()->raw());
+                    , $methods->get('barfoo')->docblock()->raw());
             },
         ];
         yield 'It returns the formatted docblock' => [
@@ -540,7 +540,7 @@ class ReflectionMethodTest extends IntegrationTestCase
 
                     Yes?
                     EOT
-                , $methods->get('barfoo')->docblock()->formatted());
+                    , $methods->get('barfoo')->docblock()->formatted());
             },
         ];
         yield 'It returns true if the method is static' => [

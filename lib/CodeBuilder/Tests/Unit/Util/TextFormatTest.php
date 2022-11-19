@@ -152,10 +152,10 @@ class TextFormatTest extends TestCase
                 foo
                 bar
             EOT
-        , (new TextFormat())->indentReplace(<<<'EOT'
-              foo
-              bar
-            EOT
-        , 1));
+            , (new TextFormat())->indentReplace(<<<'EOT'
+                  foo
+                  bar
+                EOT
+                , 1));
     }
 }

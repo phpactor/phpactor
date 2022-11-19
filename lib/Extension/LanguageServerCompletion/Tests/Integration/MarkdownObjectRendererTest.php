@@ -736,7 +736,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
                     <<<'EOT'
                         <?php
                         EOT
-                ,
+                    ,
                     1
                 );
             },

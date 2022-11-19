@@ -26,6 +26,6 @@ class ClassGeneratorTest extends AdapterTestCase
             {
             }
             EOT
-        , (string) $code);
+            , (string) $code);
     }
 }

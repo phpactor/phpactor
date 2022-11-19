@@ -9,10 +9,10 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.0",
         "ext-pcntl": "*",
         "composer/package-versions-deprecated": "^1.0",
-        "composer/xdebug-handler": "^2.0",
+        "composer/xdebug-handler": "^3.0",
         "symfony/yaml": "^5.1",
         "phpactor/container": "^2.0.0",
         "phpactor/class-to-file": "~0.5",
@@ -39,7 +39,7 @@
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
-        "friendsofphp/php-cs-fixer": "^3.1",
+        "friendsofphp/php-cs-fixer": "^3.13",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.0",
         "phpspec/prophecy-phpunit": "^2.0",
@@ -89,7 +89,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4.0"
+            "php": "8.0.0"
         },
         "allow-plugins": {
             "dantleech/what-changed": true,

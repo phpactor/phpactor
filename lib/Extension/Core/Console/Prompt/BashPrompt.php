@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Core\Console\Prompt;
 
+use RuntimeException;
 use Symfony\Component\Process\ExecutableFinder;
 
 class BashPrompt implements Prompt
@@ -20,7 +21,14 @@ class BashPrompt implements Prompt
         $cmd = str_replace('"', '\'', $cmd);
         $cmd = str_replace('__QUOTE__', '"', $cmd);
 
-        return exec($cmd);
+        $result = exec($cmd);
+        if (false === $result) {
+            throw new RuntimeException(sprintf(
+                'Could not run bash prompt "%s"',
+                $prompt
+            ));
+        }
+        return $result;
     }
 
     public function name(): string

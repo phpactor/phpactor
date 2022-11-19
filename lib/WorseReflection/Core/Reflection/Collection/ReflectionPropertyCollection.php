@@ -10,7 +10,6 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
  */
 final class ReflectionPropertyCollection extends HomogeneousReflectionMemberCollection
 {
-
     /**
      * @param PhpactorReflectionProperty[] $properties
      */
