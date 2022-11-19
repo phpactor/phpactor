@@ -1266,11 +1266,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Adapter/TolerantParser/Util/ImporterNamesTest.php
 
 		-
-			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Type\\\\ClosureType constructor invoked with 0 parameters, 1\\-3 required\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Adapter/WorseReflection/TypeRenderer/WorseTypeRenderer74Test.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\:\\:build\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/SourceCodeBuilderTest.php
@@ -2551,11 +2546,6 @@ parameters:
 			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
 
 		-
-			message: "#^Parameter \\#3 \\$choices of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:fromNameLabelChoicesAndDefault\\(\\) expects array, array\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassToFile\\\\Tests\\\\Unit\\\\ClassToFileExtensionTest\\:\\:create\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ClassToFile/Tests/Unit/ClassToFileExtensionTest.php
@@ -2776,11 +2766,6 @@ parameters:
 			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
 
 		-
-			message: "#^Parameter \\#3 \\$choices of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:fromNameLabelChoicesAndDefault\\(\\) expects array, array\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ChangeVisiblityHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Rpc/ChangeVisiblityHandler.php
@@ -2819,46 +2804,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ExtractMethodHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Rpc/ExtractMethodHandler.php
-
-		-
-			message: "#^Call to an undefined method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:withMultiple\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:getPropertyContext\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleClass\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleSingle\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleSingle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:propertiesChoices\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\GenerateMethodHandler\\:\\:determineOriginalSource\\(\\) has no return type specified\\.$#"
@@ -2954,6 +2899,46 @@ parameters:
 			message: "#^Strict comparison using \\=\\=\\= between null and Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClass will always evaluate to false\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Rpc/OverrideMethodHandler.php
+
+		-
+			message: "#^Call to an undefined method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:withMultiple\\(\\)\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:getPropertyContext\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleClass\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleSingle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:handleSingle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\PropertyAccessGeneratorHandler\\:\\:propertiesChoices\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/CodeTransformExtra/Rpc/PropertyAccessGeneratorHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\RenameVariableHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
@@ -3111,16 +3096,6 @@ parameters:
 			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
 
 		-
-			message: "#^Parameter \\#1 \\$keyMap of method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:withKeys\\(\\) expects array, array\\<int\\|string, string\\|null\\>\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
-
-		-
-			message: "#^Parameter \\#3 \\$choices of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:fromNameLabelChoices\\(\\) expects array, array\\<int\\|string, int\\|string\\>\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/ContextMenu/Handler/ContextMenuHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\Action\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ContextMenu/Model/Action.php
@@ -3147,11 +3122,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:forContext\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ContextMenu/Model/ContextMenu.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:forContext\\(\\) should return array but returns array\\<Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\Action\\>\\|false\\.$#"
 			count: 1
 			path: lib/Extension/ContextMenu/Model/ContextMenu.php
 
@@ -3492,11 +3462,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Handler/NavigateHandler.php
-
-		-
-			message: "#^Parameter \\#3 \\$choices of static method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:fromNameLabelChoices\\(\\) expects array, array\\<int\\|string, int\\|string\\>\\|false given\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/Handler/NavigateHandler.php
 
@@ -4116,31 +4081,6 @@ parameters:
 			path: lib/Extension/Rpc/Tests/Integration/Command/RpcCommandTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$fp of function fclose expects resource, resource\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Integration/Command/RpcCommandTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$fp of function fwrite expects resource, resource\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Integration/Command/RpcCommandTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$fp of function rewind expects resource, resource\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Integration/Command/RpcCommandTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$stdin of method Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Integration\\\\Command\\\\RpcCommandTest\\:\\:execute\\(\\) expects string, string\\|false given\\.$#"
-			count: 3
-			path: lib/Extension/Rpc/Tests/Integration/Command/RpcCommandTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$str of function md5 expects string, int\\<0, 100000\\> given\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Integration/Command/RpcCommandTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\Diff\\\\TextEditBuilderTest\\:\\:provideDiff\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Tests/Unit/Diff/TextEditBuilderTest.php
@@ -4277,11 +4217,6 @@ parameters:
 
 		-
 			message: "#^PHPDoc tag @var for variable \\$files contains unknown class Phpactor\\\\Extension\\\\SourceCodeFilesystemExtra\\\\SourceCodeFilestem\\\\Application\\\\FileList\\.$#"
-			count: 1
-			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
-
-		-
-			message: "#^Parameter \\#3 \\$length of function substr expects int, int\\<0, max\\>\\|false given\\.$#"
 			count: 1
 			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
 
@@ -4479,231 +4414,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\IntegrationTestCase\\:\\:workspacePath\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Filesystem/Tests/Adapter/IntegrationTestCase.php
-
-		-
-			message: "#^Function Composer\\\\Autoload\\\\includeFile\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Function Composer\\\\Autoload\\\\includeFile\\(\\) has parameter \\$file with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:add\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:add\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:addClassMap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:addClassMap\\(\\) has parameter \\$classMap with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:addPsr4\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:addPsr4\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:findFileWithExtension\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:findFileWithExtension\\(\\) has parameter \\$class with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:findFileWithExtension\\(\\) has parameter \\$ext with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:getClassMap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:getFallbackDirs\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:getFallbackDirsPsr4\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:getPrefixes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:getPrefixesPsr4\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:loadClass\\(\\) should return bool\\|null but return statement is missing\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:register\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:set\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:set\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:setApcuPrefix\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:setClassMapAuthoritative\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:setPsr4\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:setPsr4\\(\\) has parameter \\$paths with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:setUseIncludePath\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ClassLoader\\:\\:unregister\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Parameter \\#1 \\$autoload_function of function spl_autoload_register expects callable\\(string\\)\\: void, array\\{\\$this\\(Composer\\\\Autoload\\\\ClassLoader\\), 'loadClass'\\} given\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$apcuPrefix has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$classMap has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$classMapAuthoritative has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$fallbackDirsPsr0 has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$fallbackDirsPsr4 has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$missingClasses has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$prefixDirsPsr4 has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$prefixLengthsPsr4 has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$prefixesPsr0 has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ClassLoader\\:\\:\\$useIncludePath has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/ClassLoader.php
-
-		-
-			message: "#^Method ComposerAutoloaderInit0fa171f0aafce99fa34ab3187961e5d7\\:\\:getLoader\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_real.php
-
-		-
-			message: "#^Method ComposerAutoloaderInit0fa171f0aafce99fa34ab3187961e5d7\\:\\:loadClassLoader\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_real.php
-
-		-
-			message: "#^Method ComposerAutoloaderInit0fa171f0aafce99fa34ab3187961e5d7\\:\\:loadClassLoader\\(\\) has parameter \\$class with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_real.php
-
-		-
-			message: "#^Property ComposerAutoloaderInit0fa171f0aafce99fa34ab3187961e5d7\\:\\:\\$loader has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_real.php
-
-		-
-			message: "#^Method Composer\\\\Autoload\\\\ComposerStaticInit0fa171f0aafce99fa34ab3187961e5d7\\:\\:getInitializer\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_static.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ComposerStaticInit0fa171f0aafce99fa34ab3187961e5d7\\:\\:\\$classMap has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_static.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ComposerStaticInit0fa171f0aafce99fa34ab3187961e5d7\\:\\:\\$prefixDirsPsr4 has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_static.php
-
-		-
-			message: "#^Property Composer\\\\Autoload\\\\ComposerStaticInit0fa171f0aafce99fa34ab3187961e5d7\\:\\:\\$prefixLengthsPsr4 has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/workspace/vendor/composer/autoload_static.php
 
 		-
 			message: "#^Access to an undefined property Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FallbackFilesystemRegistryTest\\:\\:\\$filesystem1\\.$#"
@@ -5049,11 +4759,6 @@ parameters:
 			message: "#^Property Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:\\$breakingChars type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\Phpactor\\\\DocblockParser\\\\TypeConverter\\:\\:convert\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Type but returns Phpactor\\\\WorseReflection\\\\Core\\\\Type\\\\InvokableType\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/TypeConverter.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\PsrLog\\\\ArrayLogger\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
