@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c35ca99cc33f2f59608c5471b8bece0f",
+    "content-hash": "f87be8ad6c130dc1836294ab4b4b0e89",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1672,16 +1672,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "3.3.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "d20395c182c492ab606f9135ad1fe707620e9306"
+                "reference": "413b6580bef77bbb46b824760105dd0aec7919d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/d20395c182c492ab606f9135ad1fe707620e9306",
-                "reference": "d20395c182c492ab606f9135ad1fe707620e9306",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/413b6580bef77bbb46b824760105dd0aec7919d7",
+                "reference": "413b6580bef77bbb46b824760105dd0aec7919d7",
                 "shasum": ""
             },
             "require": {
@@ -1708,6 +1708,7 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.1"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1732,9 +1733,9 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/3.3.0"
+                "source": "https://github.com/phpactor/language-server/tree/master"
             },
-            "time": "2022-10-02T16:25:31+00:00"
+            "time": "2022-11-19T10:44:24+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -7721,6 +7722,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "phpactor/language-server": 20,
         "jetbrains/phpstorm-stubs": 20,
         "microsoft/tolerant-php-parser": 20,
         "dms/phpunit-arraysubset-asserts": 20

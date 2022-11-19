@@ -3,6 +3,9 @@
 namespace Phpactor\Extension\LanguageServerIndexer\Tests\Unit;
 
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\LanguageServerProtocol\ClientCapabilities;
+use Phpactor\LanguageServerProtocol\InitializeParams;
+use Phpactor\LanguageServerProtocol\InitializedParams;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
@@ -20,7 +23,10 @@ class IndexerHandlerTest extends IntegrationTestCase
             LanguageServerExtension::PARAM_FILE_EVENTS => false,
         ]);
         $this->tester = $container->get(LanguageServerBuilder::class)->tester(
-            ProtocolFactory::initializeParams($this->workspace()->path())
+            new InitializeParams(
+                rootUri: $this->workspace()->path(),
+                capabilities: new ClientCapabilities(window: ['workDoneProgress' => true])
+            )
         );
     }
 
@@ -80,7 +86,10 @@ class IndexerHandlerTest extends IntegrationTestCase
         $tester = $this->container([
             'indexer.enabled_watchers' => ['will_die'],
         ])->get(LanguageServerBuilder::class)->tester(
-            ProtocolFactory::initializeParams($this->workspace()->path())
+            new InitializeParams(
+                rootUri: $this->workspace()->path(),
+                capabilities: new ClientCapabilities(window: ['workDoneProgress' => true])
+            )
         );
 
         $tester->initialize();
