@@ -1718,6 +1718,19 @@ Path to the php-cs-fixer executable
 **Default**: ``"%project_root%\/vendor\/bin\/php-cs-fixer"``
 
 
+.. _param_language_server_php_cs_fixer.env:
+
+
+``language_server_php_cs_fixer.env``
+""""""""""""""""""""""""""""""""""""
+
+
+Environemnt for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)
+
+
+**Default**: ``[]``
+
+
 .. _BehatExtension:
 
 
