@@ -29,7 +29,7 @@ class PhpCsFixerFormatter implements Formatter
      */
     public function __construct(string $binPath, array $env = [])
     {
-        $this->binPath = realpath($binPath);
+        $this->binPath = $binPath;
         $this->env = $env;
     }
 
