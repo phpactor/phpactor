@@ -15,16 +15,10 @@ use Traversable;
 abstract class Collection implements IteratorAggregate, Countable
 {
     /**
-     * @var T[]
-     */
-    protected array $items = [];
-
-    /**
      * @param T[] $items
      */
-    protected function __construct(array $items)
+    protected function __construct(protected array $items)
     {
-        $this->items = $items;
     }
 
     /**

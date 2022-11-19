@@ -16,12 +16,8 @@ use Phpactor\WorseReflection\Core\Type;
 
 class VariableWalker implements Walker
 {
-    private DocBlockFactory $docblockFactory;
-
-    public function __construct(
-        DocBlockFactory $docblockFactory
-    ) {
-        $this->docblockFactory = $docblockFactory;
+    public function __construct(private DocBlockFactory $docblockFactory)
+    {
     }
 
 

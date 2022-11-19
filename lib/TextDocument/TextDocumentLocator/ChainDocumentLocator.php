@@ -10,16 +10,10 @@ use Phpactor\TextDocument\TextDocumentLocator;
 class ChainDocumentLocator implements TextDocumentLocator
 {
     /**
-     * @var TextDocumentLocator[]
-     */
-    private array $locators;
-
-    /**
      * @param TextDocumentLocator[] $locators
      */
-    public function __construct(array $locators)
+    public function __construct(private array $locators)
     {
-        $this->locators = $locators;
     }
 
 

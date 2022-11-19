@@ -20,24 +20,12 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
 {
-    private TypeLocator $typeLocator;
-
-    private Workspace $workspace;
-
-    private LocationConverter $locationConverter;
-
-    private ClientApi $client;
-
     public function __construct(
-        Workspace $workspace,
-        TypeLocator $typeLocator,
-        LocationConverter $locationConverter,
-        ClientApi $client
+        private Workspace $workspace,
+        private TypeLocator $typeLocator,
+        private LocationConverter $locationConverter,
+        private ClientApi $client
     ) {
-        $this->typeLocator = $typeLocator;
-        $this->workspace = $workspace;
-        $this->locationConverter = $locationConverter;
-        $this->client = $client;
     }
 
     /**

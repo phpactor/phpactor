@@ -33,14 +33,11 @@ class NodeToTypeConverter
 {
     private LoggerInterface $logger;
 
-    private Reflector $reflector;
-
     public function __construct(
-        Reflector $reflector,
+        private Reflector $reflector,
         ?LoggerInterface $logger = null
     ) {
         $this->logger = $logger ?: new NullLogger();
-        $this->reflector = $reflector;
     }
 
     /**

@@ -15,14 +15,8 @@ use function Safe\file_get_contents;
 
 class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 {
-    private SourceCodeReflector $reflector;
-
-    private LoggerInterface $logger;
-
-    public function __construct(SourceCodeReflector $reflector, LoggerInterface $logger)
+    public function __construct(private SourceCodeReflector $reflector, private LoggerInterface $logger)
     {
-        $this->reflector = $reflector;
-        $this->logger = $logger;
     }
 
     public function enhance(FileRecord $record, RecordReference $reference): RecordReference

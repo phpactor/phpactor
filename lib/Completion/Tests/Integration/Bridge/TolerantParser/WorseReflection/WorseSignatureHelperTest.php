@@ -98,6 +98,7 @@ class WorseSignatureHelperTest extends IntegrationTestCase
 
         yield 'constructor signature with no parameters inside another function 2' => [
             '<?php function hello() {}; class Hi { function __construct() {} }; hello(new Hi(<>)',
+
             new SignatureHelp(
                 [new SignatureInformation(
                     'pub __construct()',

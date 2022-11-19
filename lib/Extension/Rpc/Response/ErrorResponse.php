@@ -7,14 +7,8 @@ use Exception;
 
 class ErrorResponse implements Response
 {
-    private string $message;
-
-    private string $details;
-
-    private function __construct(string $message, string $details)
+    private function __construct(private string $message, private string $details)
     {
-        $this->message = $message;
-        $this->details = $details;
     }
 
     public static function fromMessageAndDetails(string $message, string $details): ErrorResponse

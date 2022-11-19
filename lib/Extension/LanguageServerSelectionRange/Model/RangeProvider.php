@@ -11,11 +11,8 @@ use Phpactor\TextDocument\ByteOffset;
 
 class RangeProvider
 {
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
+    public function __construct(private Parser $parser)
     {
-        $this->parser = $parser;
     }
 
     /**

@@ -15,17 +15,8 @@ class ParameterTag extends TagNode
         'default',
     ];
 
-    public ?TypeNode $type;
-
-    public ?VariableNode $name;
-
-    public ?ValueNode $default;
-
-    public function __construct(?TypeNode $type, ?VariableNode $name, ?ValueNode $default)
+    public function __construct(public ?TypeNode $type, public ?VariableNode $name, public ?ValueNode $default)
     {
-        $this->type = $type;
-        $this->name = $name;
-        $this->default = $default;
     }
 
     public function parameterName(): ?string

@@ -16,21 +16,12 @@ use RuntimeException;
 
 class ClassCopy
 {
-    private ClassFileNormalizer $classFileNormalizer;
-
-    private ClassMoverFacade $classMover;
-
-    private Filesystem $filesystem;
-
     // rename compositetransformer => classToFileConverter
     public function __construct(
-        ClassFileNormalizer $classFileNormalizer,
-        ClassMoverFacade $classMover,
-        Filesystem $filesystem
+        private ClassFileNormalizer $classFileNormalizer,
+        private ClassMoverFacade $classMover,
+        private Filesystem $filesystem
     ) {
-        $this->classFileNormalizer = $classFileNormalizer;
-        $this->classMover = $classMover;
-        $this->filesystem = $filesystem;
     }
 
     /**

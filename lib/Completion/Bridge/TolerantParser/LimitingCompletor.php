@@ -10,17 +10,8 @@ use Phpactor\TextDocument\TextDocument;
 
 class LimitingCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    /**
-     * @var TolerantCompletor|TolerantQualifiable
-     */
-    private $completor;
-
-    private int $limit;
-
-    public function __construct(TolerantCompletor $completor, int $limit = 50)
+    public function __construct(private TolerantCompletor $completor, private int $limit = 50)
     {
-        $this->completor = $completor;
-        $this->limit = $limit;
     }
 
 

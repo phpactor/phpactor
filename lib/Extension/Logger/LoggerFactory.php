@@ -7,11 +7,8 @@ use Psr\Log\LoggerInterface;
 
 class LoggerFactory
 {
-    private LoggerInterface $mainLogger;
-
-    public function __construct(LoggerInterface $mainLogger)
+    public function __construct(private LoggerInterface $mainLogger)
     {
-        $this->mainLogger = $mainLogger;
     }
 
     public function get(string $name): LoggerInterface

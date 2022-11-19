@@ -38,8 +38,6 @@ use Psr\Log\NullLogger;
 
 final class IndexAgentBuilder
 {
-    private string $indexRoot;
-
     private RecordReferenceEnhancer $enhancer;
 
     /**
@@ -60,8 +58,6 @@ final class IndexAgentBuilder
     private array $excludePatterns = [
     ];
 
-    private string $projectRoot;
-
     /**
      * @var array<TolerantIndexer>|null
      */
@@ -71,12 +67,10 @@ final class IndexAgentBuilder
 
     private LoggerInterface $logger;
 
-    private function __construct(string $indexRoot, string $projectRoot)
+    private function __construct(private string $indexRoot, private string $projectRoot)
     {
-        $this->indexRoot = $indexRoot;
         $this->enhancer = new NullRecordReferenceEnhancer();
         $this->logger = new NullLogger();
-        $this->projectRoot = $projectRoot;
     }
 
     public static function create(string $indexRootPath, string $projectRoot): self

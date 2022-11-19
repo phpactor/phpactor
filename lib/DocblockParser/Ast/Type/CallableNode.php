@@ -17,31 +17,13 @@ class CallableNode extends TypeNode
         'type'
     ];
 
-    public ?Token $name;
-
-    public ?Token $open;
-
-    public ?TypeList $parameters;
-
-    public ?Token $close;
-
-    public ?Token $colon;
-
-    public ?TypeNode $type;
-
     public function __construct(
-        Token $name,
-        ?Token $open,
-        ?TypeList $parameters,
-        ?Token $close,
-        ?Token $colon,
-        ?TypeNode $type
+        public ?Token $name,
+        public ?Token $open,
+        public ?TypeList $parameters,
+        public ?Token $close,
+        public ?Token $colon,
+        public ?TypeNode $type
     ) {
-        $this->name = $name;
-        $this->open = $open;
-        $this->parameters = $parameters;
-        $this->close = $close;
-        $this->type = $type;
-        $this->colon = $colon;
     }
 }

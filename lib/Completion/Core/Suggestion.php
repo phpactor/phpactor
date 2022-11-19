@@ -33,10 +33,6 @@ class Suggestion
     const PRIORITY_MEDIUM = 127;
     const PRIORITY_LOW = 255;
 
-    private ?string $type;
-
-    private string $name;
-
     /**
      * @var null|string|Closure
      */
@@ -44,43 +40,29 @@ class Suggestion
 
     private string $label;
 
-    private ?Range $range;
-
     /**
      * @var null|string|Closure
      */
     private $documentation;
-
-    private ?string $snippet;
-
-    private ?string $nameImport;
-
-    private ?int $priority;
 
     /**
      * @param null|string|Closure $documentation
      * @param null|string|Closure $shortDescription
      */
     private function __construct(
-        string $name,
-        ?string $type = null,
+        private string $name,
+        private ?string $type = null,
         $shortDescription = null,
-        ?string $nameImport = null,
+        private ?string $nameImport = null,
         ?string $label = null,
         $documentation = null,
-        ?Range $range = null,
-        ?string $snippet = null,
-        ?int $priority = null
+        private ?Range $range = null,
+        private ?string $snippet = null,
+        private ?int $priority = null
     ) {
-        $this->type = $type;
-        $this->name = $name;
         $this->shortDescription = $shortDescription;
         $this->label = $label ?: $name;
-        $this->range = $range;
         $this->documentation = $documentation;
-        $this->snippet = $snippet;
-        $this->nameImport = $nameImport;
-        $this->priority = $priority;
     }
 
     public static function create(string $name): self

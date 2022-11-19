@@ -7,17 +7,11 @@ use Phpactor\ClassMover\Domain\Model\Class_;
 
 class MemberReference
 {
-    private MemberName $method;
-
-    private Position $position;
-
-    private ?Class_ $class;
-
-    private function __construct(MemberName $method, Position $position, Class_ $class = null)
-    {
-        $this->method = $method;
-        $this->position = $position;
-        $this->class = $class;
+    private function __construct(
+        private MemberName $method,
+        private Position $position,
+        private ?Class_ $class = null
+    ) {
     }
 
     public function __toString()

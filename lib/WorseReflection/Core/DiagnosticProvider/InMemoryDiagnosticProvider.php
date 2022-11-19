@@ -12,16 +12,10 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 class InMemoryDiagnosticProvider implements DiagnosticProvider
 {
     /**
-     * @var Diagnostic[]
-     */
-    private array $diagnostics;
-
-    /**
      * @param Diagnostic[] $diagnostics
      */
-    public function __construct(array $diagnostics)
+    public function __construct(private array $diagnostics)
     {
-        $this->diagnostics = $diagnostics;
     }
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {

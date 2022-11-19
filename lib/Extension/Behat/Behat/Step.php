@@ -8,28 +8,13 @@ use Phpactor\Extension\Behat\Behat\Pattern\TurnipPatternPolicy;
 
 class Step
 {
-    private Context $context;
-
-    private string $method;
-
-    private string $pattern;
-
-    private string $path;
-
-    private int $startByteOffset;
-
     public function __construct(
-        Context $context,
-        string $method,
-        string $pattern,
-        string $path,
-        int $startByteOffset
+        private Context $context,
+        private string $method,
+        private string $pattern,
+        private string $path,
+        private int $startByteOffset
     ) {
-        $this->context = $context;
-        $this->method = $method;
-        $this->pattern = $pattern;
-        $this->path = $path;
-        $this->startByteOffset = $startByteOffset;
     }
 
     public function context(): Context

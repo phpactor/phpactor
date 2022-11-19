@@ -33,14 +33,10 @@ class TemporarySourceLocator implements SourceCodeLocator
 {
     private ?SourceCode $source = null;
 
-    private SourceCodeReflector $reflector;
-
-    private bool $locateFunctions;
-
-    public function __construct(SourceCodeReflector $reflector, bool $locateFunctions = false)
-    {
-        $this->reflector = $reflector;
-        $this->locateFunctions = $locateFunctions;
+    public function __construct(
+        private SourceCodeReflector $reflector,
+        private bool $locateFunctions = false
+    ) {
     }
 
     public function pushSourceCode(SourceCode $source): void

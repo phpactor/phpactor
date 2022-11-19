@@ -12,11 +12,8 @@ class FileInfoHandler extends AbstractHandler
     const NAME = 'file_info';
     const PARAM_PATH = 'path';
 
-    private FileInfo $fileInfo;
-
-    public function __construct(FileInfo $fileInfo)
+    public function __construct(private FileInfo $fileInfo)
     {
-        $this->fileInfo = $fileInfo;
     }
 
     public function name(): string

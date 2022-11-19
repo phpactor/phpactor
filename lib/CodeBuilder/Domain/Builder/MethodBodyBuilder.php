@@ -13,11 +13,8 @@ class MethodBodyBuilder
      */
     protected array $lines = [];
 
-    private MethodBuilder $parent;
-
-    public function __construct(MethodBuilder $parent)
+    public function __construct(private MethodBuilder $parent)
     {
-        $this->parent = $parent;
     }
 
     public function line(string $text): MethodBodyBuilder

@@ -26,14 +26,10 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollec
 
 class TolerantSourceCodeReflector implements SourceCodeReflector
 {
-    private ServiceLocator $serviceLocator;
-
-    private Parser $parser;
-
-    public function __construct(ServiceLocator $serviceLocator, Parser $parser)
-    {
-        $this->serviceLocator = $serviceLocator;
-        $this->parser = $parser;
+    public function __construct(
+        private ServiceLocator $serviceLocator,
+        private Parser $parser
+    ) {
     }
 
     /**

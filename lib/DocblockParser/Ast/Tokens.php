@@ -16,19 +16,13 @@ final class Tokens implements IteratorAggregate
      */
     public $current;
 
-    /**
-     * @var Token[]
-     */
-    private array $tokens;
-
     private int $position = 0;
 
     /**
      * @param Token[] $tokens
      */
-    public function __construct(array $tokens)
+    public function __construct(private array $tokens)
     {
-        $this->tokens = $tokens;
         if (count($tokens)) {
             $this->current = $tokens[$this->position];
         }

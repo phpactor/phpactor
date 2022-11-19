@@ -4,20 +4,12 @@ namespace Phpactor\Indexer\Model;
 
 class RecordReference
 {
-    private string $type;
-
-    private string $identifier;
-
-    private int $offset;
-
-    private ?string $contaninerType;
-
-    public function __construct(string $type, string $identifier, int $offset, ?string $contaninerType = null)
-    {
-        $this->type = $type;
-        $this->identifier = $identifier;
-        $this->offset = $offset;
-        $this->contaninerType = $contaninerType;
+    public function __construct(
+        private string $type,
+        private string $identifier,
+        private int $offset,
+        private ?string $contaninerType = null
+    ) {
     }
 
     public function offset(): int

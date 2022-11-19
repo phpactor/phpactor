@@ -7,14 +7,13 @@ use FilesystemIterator;
 class PhpVersionPathResolver
 {
     /**
-     * @var string In the form of "major.minor.release[extra]"
-     * @see https://www.php.net/manual/en/reserved.constants.php#reserved.constants.core
+     * @param string $phpVersion
+     *      String the form of "major.minor.release[extra]"
+     *      @see https://www.php.net/manual/en/reserved.constants.php#reserved.constants.core
      */
-    private string $phpVersion;
-
-    public function __construct(string $phpVersion)
-    {
-        $this->phpVersion = $phpVersion;
+    public function __construct(
+        private string $phpVersion
+    ) {
     }
 
     public function resolve(iterable $paths): iterable

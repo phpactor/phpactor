@@ -10,16 +10,10 @@ use Phpactor\WorseReflection\TypeUtil;
 class ArrayShapeType extends ArrayType implements Generalizable, ArrayAccessType
 {
     /**
-     * @var array<array-key,Type>
-     */
-    public array $typeMap;
-
-    /**
      * @param array<array-key,Type> $typeMap
      */
-    public function __construct(array $typeMap)
+    public function __construct(public array $typeMap)
     {
-        $this->typeMap = $typeMap;
         $this->keyType = TypeUtil::generalTypeFromTypes(TypeFactory::fromValues(array_keys($typeMap)));
         $this->valueType = TypeUtil::generalTypeFromTypes($typeMap);
     }

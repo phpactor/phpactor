@@ -8,11 +8,8 @@ use Phpactor\Indexer\Model\Record\HasShortName;
 
 class ShortNameBeginsWith extends Criteria
 {
-    private string $name;
-
-    public function __construct(string $name)
+    public function __construct(private string $name)
     {
-        $this->name = $name;
     }
 
     public function isSatisfiedBy(Record $record): bool

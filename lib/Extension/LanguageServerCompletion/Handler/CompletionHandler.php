@@ -35,37 +35,19 @@ use function Amp\call;
 
 class CompletionHandler implements Handler, CanRegisterCapabilities
 {
-    private TypedCompletorRegistry $registry;
-
-    private bool $provideTextEdit;
-
-    private SuggestionNameFormatter $suggestionNameFormatter;
-
-    private Workspace $workspace;
-
-    private bool $supportSnippets;
-
-    private NameImporter $nameImporter;
-
     /**
      * @var array<int,Closure(CompletionItem): CompletionItem>
      */
     private array $resolve = [];
 
     public function __construct(
-        Workspace $workspace,
-        TypedCompletorRegistry $registry,
-        SuggestionNameFormatter $suggestionNameFormatter,
-        NameImporter $nameImporter,
-        bool $supportSnippets,
-        bool $provideTextEdit = false
+        private Workspace $workspace,
+        private TypedCompletorRegistry $registry,
+        private SuggestionNameFormatter $suggestionNameFormatter,
+        private NameImporter $nameImporter,
+        private bool $supportSnippets,
+        private bool $provideTextEdit = false
     ) {
-        $this->registry = $registry;
-        $this->provideTextEdit = $provideTextEdit;
-        $this->workspace = $workspace;
-        $this->suggestionNameFormatter = $suggestionNameFormatter;
-        $this->nameImporter = $nameImporter;
-        $this->supportSnippets = $supportSnippets;
     }
 
     public function methods(): array

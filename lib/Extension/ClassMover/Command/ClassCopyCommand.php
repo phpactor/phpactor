@@ -18,17 +18,11 @@ class ClassCopyCommand extends Command
     const TYPE_CLASS = 'class';
     const TYPE_FILE = 'file';
 
-    private ClassCopy $copier;
-
-    private Prompt $prompt;
-
     public function __construct(
-        ClassCopy $copier,
-        Prompt $prompt
+        private ClassCopy $copier,
+        private Prompt $prompt
     ) {
         parent::__construct();
-        $this->copier = $copier;
-        $this->prompt = $prompt;
     }
 
     public function configure(): void

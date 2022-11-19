@@ -17,14 +17,8 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class SelectionRangeHandler implements Handler, CanRegisterCapabilities
 {
-    private Workspace $workspace;
-
-    private RangeProvider $provider;
-
-    public function __construct(Workspace $workspace, RangeProvider $provider)
+    public function __construct(private Workspace $workspace, private RangeProvider $provider)
     {
-        $this->workspace = $workspace;
-        $this->provider = $provider;
     }
 
 

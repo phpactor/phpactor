@@ -10,14 +10,8 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 
 class CachedParserFactory implements DocBlockFactory
 {
-    private Cache $cache;
-
-    private DocBlockFactory $innerFactory;
-
-    public function __construct(DocBlockFactory $innerFactory, Cache $cache)
+    public function __construct(private DocBlockFactory $innerFactory, private Cache $cache)
     {
-        $this->cache = $cache;
-        $this->innerFactory = $innerFactory;
     }
 
     public function create(string $docblock, ReflectionScope $scope): DocBlock

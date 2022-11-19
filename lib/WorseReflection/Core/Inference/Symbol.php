@@ -21,23 +21,14 @@ final class Symbol
     public const ARRAY = 'array';
     public const UNKNOWN = '<unknown>';
 
-    /**
-     * @var Symbol::*
-     */
-    private string $symbolType;
-
     private string $name;
-
-    private Position $position;
 
     /**
      * @param Symbol::* $symbolType
      */
-    private function __construct(string $symbolType, string $name, Position $position)
+    private function __construct(private string $symbolType, string $name, private Position $position)
     {
-        $this->symbolType = $symbolType;
         $this->name = ltrim($name, '$');
-        $this->position = $position;
     }
 
     public function __toString()

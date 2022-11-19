@@ -16,27 +16,15 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 
 class ReflectionDeclaredConstant extends AbstractReflectedNode implements PhpactorReflectionDeclaredConstant
 {
-    private ServiceLocator $serviceLocator;
-
-    private SourceCode $sourceCode;
-
-    /**
-     * @var Node\Expression\CallExpression
-     */
-    private CallExpression $node;
-
     private string $name;
 
     private ArgumentExpression $value;
 
     public function __construct(
-        ServiceLocator $serviceLocator,
-        SourceCode $sourceCode,
-        CallExpression $node
+        private ServiceLocator $serviceLocator,
+        private SourceCode $sourceCode,
+        private CallExpression $node
     ) {
-        $this->serviceLocator = $serviceLocator;
-        $this->sourceCode = $sourceCode;
-        $this->node = $node;
         $this->bindArguments();
     }
 

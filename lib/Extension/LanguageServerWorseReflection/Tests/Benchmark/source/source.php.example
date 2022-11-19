@@ -43,7 +43,9 @@ class HoverHandler implements Handler, CanRegisterCapabilities
      */
     private $workspace;
 
-    public function __construct(Workspace $workspace, Reflector $reflector, ObjectRenderer $renderer)
+    public function __construct(Workspace $workspace,
+ Reflector $reflector,
+ ObjectRenderer $renderer)
     {
         $this->reflector = $reflector;
         $this->renderer = $renderer;

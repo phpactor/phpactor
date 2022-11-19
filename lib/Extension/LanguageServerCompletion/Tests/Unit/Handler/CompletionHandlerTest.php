@@ -480,14 +480,10 @@ class CompletionHandlerTest extends TestCase
     private function createCompletor(array $suggestions, bool $isIncomplete = false): Completor
     {
         return new class($suggestions, $isIncomplete) implements Completor {
-            private $suggestions;
-
-            private $isIncomplete;
-
-            public function __construct(array $suggestions, bool $isIncomplete)
-            {
-                $this->suggestions = $suggestions;
-                $this->isIncomplete = $isIncomplete;
+            public function __construct(
+                private array $suggestions,
+                private bool $isIncomplete
+            ) {
             }
 
             public function complete(TextDocument $source, ByteOffset $offset): Generator

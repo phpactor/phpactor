@@ -9,16 +9,8 @@ use Phpactor\CodeBuilder\Domain\Code;
 
 class SourceBuilder
 {
-    private Renderer $generator;
-
-    private Updater $updater;
-
-    public function __construct(
-        Renderer $generator,
-        Updater $updater
-    ) {
-        $this->generator = $generator;
-        $this->updater = $updater;
+    public function __construct(private Renderer $generator, private Updater $updater)
+    {
     }
 
     public function render(Prototype\Prototype $prototype)

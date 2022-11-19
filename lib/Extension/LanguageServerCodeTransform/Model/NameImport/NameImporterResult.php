@@ -10,27 +10,12 @@ use Throwable;
 
 class NameImporterResult
 {
-    private bool $success;
-
-    private ?Throwable $error;
-
-    /**
-     * @var array<LspTextEdit>|null
-     */
-    private ?array $textEdits;
-
-    private ?NameImport $nameImport;
-
     private function __construct(
-        bool $success,
-        ?NameImport $nameImport,
-        ?array $textEdits,
-        ?Throwable $error
+        private bool $success,
+        private ?NameImport $nameImport,
+        private ?array $textEdits,
+        private ?Throwable $error
     ) {
-        $this->success = $success;
-        $this->nameImport = $nameImport;
-        $this->textEdits = $textEdits;
-        $this->error = $error;
     }
 
     public function hasTextEdits(): bool

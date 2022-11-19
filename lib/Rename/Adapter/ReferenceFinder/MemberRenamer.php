@@ -24,16 +24,13 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 class MemberRenamer extends AbstractReferenceRenamer
 {
-    private ClassImplementationFinder $implementationFinder;
-
     public function __construct(
         ReferenceFinder $referenceFinder,
         TextDocumentLocator $locator,
         Parser $parser,
-        ClassImplementationFinder $implementationFinder
+        private ClassImplementationFinder $implementationFinder
     ) {
         parent::__construct($referenceFinder, $locator, $parser);
-        $this->implementationFinder = $implementationFinder;
     }
 
     public function getRenameRangeForNode(Node $node): ?ByteOffsetRange

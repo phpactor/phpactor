@@ -8,11 +8,8 @@ use Phpactor\TextDocument\WorkspaceEdits;
 
 class WorkspaceEditConverter
 {
-    private TextDocumentLocator $locator;
-
-    public function __construct(TextDocumentLocator $locator)
+    public function __construct(private TextDocumentLocator $locator)
     {
-        $this->locator = $locator;
     }
 
     public function toLspWorkspaceEdit(WorkspaceEdits $edits): WorkspaceEdit

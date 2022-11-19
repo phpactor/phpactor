@@ -10,15 +10,8 @@ use RuntimeException;
 
 class LimitingCompletor implements Completor
 {
-    private Completor $innerCompletor;
-
-    private int $limit;
-
-    public function __construct(Completor $innerCompletor, int $limit = 32)
+    public function __construct(private Completor $innerCompletor, private int $limit = 32)
     {
-        $this->innerCompletor = $innerCompletor;
-        $this->limit = $limit;
-
         if ($limit < 0) {
             throw new RuntimeException(sprintf(
                 'Limit cannot be less than 0, got %d',

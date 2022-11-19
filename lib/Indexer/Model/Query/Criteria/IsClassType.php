@@ -8,11 +8,8 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
 
 class IsClassType extends Criteria
 {
-    private ?string $type;
-
-    public function __construct(?string $type)
+    public function __construct(private ?string $type)
     {
-        $this->type = $type;
     }
 
     public function isSatisfiedBy(Record $record): bool

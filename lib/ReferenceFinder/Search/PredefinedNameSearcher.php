@@ -8,16 +8,10 @@ use Phpactor\ReferenceFinder\NameSearcher;
 class PredefinedNameSearcher implements NameSearcher
 {
     /**
-     * @var NameSearchResult[]
-     */
-    private array $results;
-
-    /**
      * @param NameSearchResult[] $results
      */
-    public function __construct(array $results)
+    public function __construct(private array $results)
     {
-        $this->results = $results;
     }
 
     /**

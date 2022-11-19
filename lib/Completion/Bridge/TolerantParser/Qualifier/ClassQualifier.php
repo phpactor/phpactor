@@ -15,11 +15,8 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
  */
 class ClassQualifier implements TolerantQualifier
 {
-    private int $minimumLength;
-
-    public function __construct(int $minimumLength = 3)
+    public function __construct(private int $minimumLength = 3)
     {
-        $this->minimumLength = $minimumLength;
     }
 
     public function couldComplete(Node $node): ?Node

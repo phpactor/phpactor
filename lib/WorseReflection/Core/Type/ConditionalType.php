@@ -12,24 +12,8 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ConditionalType extends Type
 {
-    private Type $isType;
-
-    private Type $left;
-
-    private Type $right;
-
-    private string $variable;
-
-    public function __construct(
-        string $variable,
-        Type $isType,
-        Type $left,
-        Type $right
-    ) {
-        $this->isType = $isType;
-        $this->left = $left;
-        $this->right = $right;
-        $this->variable = $variable;
+    public function __construct(private string $variable, private Type $isType, private Type $left, private Type $right)
+    {
     }
 
     public function __toString(): string

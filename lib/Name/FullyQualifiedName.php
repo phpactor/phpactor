@@ -4,11 +4,8 @@ namespace Phpactor\Name;
 
 final class FullyQualifiedName implements Name
 {
-    private QualifiedName $qualifiedName;
-
-    private function __construct(QualifiedName $qualifiedName)
+    private function __construct(private QualifiedName $qualifiedName)
     {
-        $this->qualifiedName = $qualifiedName;
     }
 
     public function __toString(): string

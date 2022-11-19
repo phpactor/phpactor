@@ -11,11 +11,8 @@ use function Amp\call;
 
 class BlackfireMiddleware implements Middleware
 {
-    private BlackfireProfiler $profiler;
-
-    public function __construct(BlackfireProfiler $profiler)
+    public function __construct(private BlackfireProfiler $profiler)
     {
-        $this->profiler = $profiler;
     }
 
     public function process(Message $request, RequestHandler $handler): Promise

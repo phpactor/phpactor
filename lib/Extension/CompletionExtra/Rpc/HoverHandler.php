@@ -21,14 +21,8 @@ class HoverHandler implements Handler
     const PARAM_OFFSET = 'offset';
     const NAME = 'hover';
 
-    private Reflector $reflector;
-
-    private ObjectFormatter $formatter;
-
-    public function __construct(Reflector $reflector, ObjectFormatter $formatter)
+    public function __construct(private Reflector $reflector, private ObjectFormatter $formatter)
     {
-        $this->reflector = $reflector;
-        $this->formatter = $formatter;
     }
 
     public function name(): string

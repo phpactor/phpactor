@@ -18,12 +18,8 @@ use Phpactor\TextDocument\TextEdits;
 
 class NameImporter implements Command
 {
-    private ImportName $importName;
-
-    public function __construct(
-        ImportName $importName
-    ) {
-        $this->importName = $importName;
+    public function __construct(private ImportName $importName)
+    {
     }
 
     public function __invoke(

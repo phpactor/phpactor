@@ -9,18 +9,11 @@ class UseStatement
     const TYPE_CLASS = 'class';
     const TYPE_FUNCTION = 'function';
 
-    private Type $className;
-
-    private ?string $alias;
-
-    private ?string $type;
-
-    public function __construct(Type $className, string $alias = null, string $type = self::TYPE_CLASS)
-    {
-        $this->className = $className;
-        $this->alias = $alias;
-        $this->type = $type;
-
+    public function __construct(
+        private Type $className,
+        private ?string $alias = null,
+        private ?string $type = self::TYPE_CLASS
+    ) {
         if (!in_array($type, [ self::TYPE_CLASS, self::TYPE_FUNCTION ])) {
             throw new RuntimeException(sprintf(
                 'Invalid use type'

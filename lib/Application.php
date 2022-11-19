@@ -20,12 +20,9 @@ class Application extends SymfonyApplication
 {
     private Container $container;
 
-    private string $vendorDir;
-
-    public function __construct(string $vendorDir)
+    public function __construct(private string $vendorDir)
     {
         parent::__construct('Phpactor', Versions::getVersion('phpactor/phpactor'));
-        $this->vendorDir = $vendorDir;
     }
 
     public function doRun(InputInterface $input, OutputInterface $output)

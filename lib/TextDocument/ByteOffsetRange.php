@@ -4,14 +4,8 @@ namespace Phpactor\TextDocument;
 
 class ByteOffsetRange
 {
-    private ByteOffset $start;
-
-    private ByteOffset $end;
-
-    public function __construct(ByteOffset $start, ByteOffset $end)
+    public function __construct(private ByteOffset $start, private ByteOffset $end)
     {
-        $this->start = $start;
-        $this->end = $end;
     }
 
     public static function fromInts(int $start, int $end): self

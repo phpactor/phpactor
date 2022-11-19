@@ -17,14 +17,8 @@ class StatusHandler implements Handler
     const TYPE_FORMATTED = 'formatted';
     const TYPE_DETAILED = 'detailed';
 
-    private Status $status;
-
-    private PathCandidates $paths;
-
-    public function __construct(Status $status, PathCandidates $paths)
+    public function __construct(private Status $status, private PathCandidates $paths)
     {
-        $this->status = $status;
-        $this->paths = $paths;
     }
 
     public function name(): string

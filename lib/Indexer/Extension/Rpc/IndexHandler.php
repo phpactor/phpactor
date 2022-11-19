@@ -18,14 +18,8 @@ class IndexHandler implements Handler
     const PARAM_WATCH = 'watch';
     const PARAM_INTERVAL = 'interval';
 
-    private Indexer $indexer;
-
-    private Watcher $watcher;
-
-    public function __construct(Indexer $indexer, Watcher $watcher)
+    public function __construct(private Indexer $indexer, private Watcher $watcher)
     {
-        $this->indexer = $indexer;
-        $this->watcher = $watcher;
     }
 
     public function configure(Resolver $resolver): void

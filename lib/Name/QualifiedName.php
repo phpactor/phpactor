@@ -62,6 +62,9 @@ final class QualifiedName implements Name
         return array_slice($this->parts, 0, $name->count()) === $name->toArray();
     }
 
+    /**
+     * @return string[]
+     */
     public function toArray(): array
     {
         return $this->parts;

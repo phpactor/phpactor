@@ -9,14 +9,11 @@ use Symfony\Component\Filesystem\Path;
 
 class Transformer
 {
-    private CodeTransform $transform;
-
     private FilesystemHelper $filesystemHelper;
 
     public function __construct(
-        CodeTransform $transform
+        private CodeTransform $transform
     ) {
-        $this->transform = $transform;
         $this->filesystemHelper = new FilesystemHelper();
     }
 

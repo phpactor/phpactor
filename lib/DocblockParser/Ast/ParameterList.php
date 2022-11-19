@@ -18,16 +18,10 @@ class ParameterList extends Node implements IteratorAggregate, Countable
     ];
 
     /**
-     * @var array<ParameterTag|Token>
-     */
-    public array $list;
-
-    /**
      * @param array<ParameterTag|Token> $list
      */
-    public function __construct(array $list)
+    public function __construct(public array $list)
     {
-        $this->list = $list;
     }
 
     /**

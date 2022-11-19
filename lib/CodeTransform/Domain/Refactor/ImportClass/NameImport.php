@@ -9,17 +9,8 @@ class NameImport
     private const TYPE_CLASS = 'class';
     private const TYPE_FUNCTION = 'function';
 
-    private string $type;
-
-    private FullyQualifiedName $name;
-
-    private ?string $alias;
-
-    private function __construct(string $type, FullyQualifiedName $name, ?string $alias = null)
+    private function __construct(private string $type, private FullyQualifiedName $name, private ?string $alias = null)
     {
-        $this->type = $type;
-        $this->name = $name;
-        $this->alias = $alias;
     }
 
     public static function forClass(string $name, ?string $alias = null): self

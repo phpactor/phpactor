@@ -17,15 +17,7 @@ use Phpactor\WorseReflection\Core\Visibility;
 
 class VirtualReflectionMethod extends VirtualReflectionMember implements ReflectionMethod
 {
-    private ReflectionParameterCollection $parameters;
-
-    private NodeText $body;
-
     private Type $type;
-
-    private bool $isAbstract;
-
-    private bool $isStatic;
 
     public function __construct(
         Position $position,
@@ -38,17 +30,13 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
         Visibility $visiblity,
         Type $inferredType,
         Type $type,
-        ReflectionParameterCollection $parameters,
-        NodeText $body,
-        bool $isAbstract,
-        bool $isStatic,
+        private ReflectionParameterCollection $parameters,
+        private NodeText $body,
+        private bool $isAbstract,
+        private bool $isStatic,
         Deprecation $deprecation
     ) {
         parent::__construct($position, $declaringClass, $class, $name, $frame, $docblock, $scope, $visiblity, $inferredType, $type, $deprecation);
-        $this->body = $body;
-        $this->parameters = $parameters;
-        $this->isAbstract = $isAbstract;
-        $this->isStatic = $isStatic;
     }
 
     public static function fromReflectionMethod(ReflectionMethod $reflectionMethod): self

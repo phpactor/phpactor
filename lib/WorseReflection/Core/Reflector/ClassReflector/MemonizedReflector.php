@@ -27,23 +27,15 @@ class MemonizedReflector implements ClassReflector, FunctionReflector, ConstantR
     private const ENUM_PREFIX = '__enum__';
     private const CLASS_LIKE_PREFIX = '__class_like__';
 
-    private ClassReflector $classReflector;
-
-    private FunctionReflector $functionReflector;
-
     private ClassReflector $innerReflector;
 
-    private Cache $cache;
-
-    private ConstantReflector $constantReflector;
-
-    public function __construct(ClassReflector $innerReflector, FunctionReflector $functionReflector, ConstantReflector $constantReflector, Cache $cache)
-    {
-        $this->classReflector = $innerReflector;
-        $this->functionReflector = $functionReflector;
-        $this->innerReflector = $innerReflector;
-        $this->cache = $cache;
-        $this->constantReflector = $constantReflector;
+    public function __construct(
+        private ClassReflector $classReflector,
+        private FunctionReflector $functionReflector,
+        private ConstantReflector $constantReflector,
+        private Cache $cache
+    ) {
+        $this->innerReflector = $classReflector;
     }
 
     public function reflectClass($className): ReflectionClass

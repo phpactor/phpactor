@@ -15,14 +15,10 @@ use Phpactor\WorseReflection\Core\Visibility;
 
 final class InterfaceFromExistingGenerator implements GenerateFromExisting
 {
-    private Reflector $reflector;
-
-    private Renderer $renderer;
-
-    public function __construct(Reflector $reflector, Renderer $renderer)
-    {
-        $this->reflector = $reflector;
-        $this->renderer = $renderer;
+    public function __construct(
+        private Reflector $reflector,
+        private Renderer $renderer
+    ) {
     }
 
 

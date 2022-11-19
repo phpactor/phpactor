@@ -10,11 +10,8 @@ use function Amp\delay;
 
 class SelfDestructListener implements ListenerProviderInterface
 {
-    private int $selfDestructTimeout;
-
-    public function __construct(int $selfDestructTimeout)
+    public function __construct(private int $selfDestructTimeout)
     {
-        $this->selfDestructTimeout = $selfDestructTimeout;
     }
 
     /**

@@ -8,16 +8,10 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 final class TemplateMap implements Countable
 {
     /**
-     * @var array<string,Type>
-     */
-    private array $map;
-
-    /**
      * @param array<string,Type> $map
      */
-    public function __construct(array $map)
+    public function __construct(private array $map)
     {
-        $this->map = $map;
     }
 
     public function __toString(): string

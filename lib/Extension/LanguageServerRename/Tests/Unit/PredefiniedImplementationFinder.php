@@ -9,11 +9,8 @@ use Phpactor\TextDocument\TextDocument;
 
 class PredefiniedImplementationFinder implements ClassImplementationFinder
 {
-    private Locations $locations;
-
-    public function __construct(Locations $locations)
+    public function __construct(private Locations $locations)
     {
-        $this->locations = $locations;
     }
 
     public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations

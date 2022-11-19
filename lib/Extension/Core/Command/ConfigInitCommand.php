@@ -9,12 +9,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ConfigInitCommand extends Command
 {
-    private ConfigManipulator $initializer;
-
-    public function __construct(ConfigManipulator $initializer)
+    public function __construct(private ConfigManipulator $initializer)
     {
         parent::__construct();
-        $this->initializer = $initializer;
     }
 
     protected function configure(): void

@@ -7,11 +7,8 @@ class TextDocumentLanguage
     const LANGUAGE_UNDEFINED = 'undefined';
     const LANGUAGE_PHP = 'php';
 
-    private string $language;
-
-    private function __construct(string $language)
+    private function __construct(private string $language)
     {
-        $this->language = $language;
     }
 
     public function __toString(): string

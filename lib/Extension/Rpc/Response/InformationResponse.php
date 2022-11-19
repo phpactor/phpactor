@@ -6,11 +6,8 @@ use Phpactor\Extension\Rpc\Response;
 
 final class InformationResponse implements Response
 {
-    private $information;
-
-    private function __construct($information)
+    private function __construct(private $information)
     {
-        $this->information = $information;
     }
 
     public static function fromString(string $information): InformationResponse

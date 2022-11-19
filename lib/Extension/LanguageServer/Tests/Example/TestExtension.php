@@ -45,11 +45,8 @@ class TestExtension implements Extension
 
         $container->register('test.service', function (Container $container) {
             return new class($container->get(ClientApi::class)) implements ServiceProvider {
-                private ClientApi $api;
-
-                public function __construct(ClientApi $api)
+                public function __construct(private ClientApi $api)
                 {
-                    $this->api = $api;
                 }
 
                 public function services(): array

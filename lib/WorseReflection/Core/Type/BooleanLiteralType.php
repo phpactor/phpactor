@@ -9,11 +9,8 @@ class BooleanLiteralType extends BooleanType implements Literal, Generalizable
 {
     use LiteralTrait;
 
-    private bool $value;
-
-    public function __construct(bool $value)
+    public function __construct(private bool $value)
     {
-        $this->value = $value;
     }
 
     public function __toString(): string

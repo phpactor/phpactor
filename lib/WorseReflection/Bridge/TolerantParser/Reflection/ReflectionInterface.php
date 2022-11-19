@@ -27,18 +27,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollecti
 
 class ReflectionInterface extends AbstractReflectionClass implements CoreReflectionInterface
 {
-    private ServiceLocator $serviceLocator;
-
-    private InterfaceDeclaration $node;
-
-    private SourceCode $sourceCode;
-
     private ?ReflectionInterfaceCollection $parents = null;
-
-    /**
-     * @var array<string, bool>
-     */
-    private array $visited;
 
     private ?ClassLikeReflectionMemberCollection $ownMembers = null;
 
@@ -48,15 +37,11 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
      * @param array<string,bool> $visited
      */
     public function __construct(
-        ServiceLocator $serviceLocator,
-        SourceCode $sourceCode,
-        InterfaceDeclaration $node,
-        array $visited = []
+        private ServiceLocator $serviceLocator,
+        private SourceCode $sourceCode,
+        private InterfaceDeclaration $node,
+        private array $visited = []
     ) {
-        $this->serviceLocator = $serviceLocator;
-        $this->node = $node;
-        $this->sourceCode = $sourceCode;
-        $this->visited = $visited;
     }
 
     /**

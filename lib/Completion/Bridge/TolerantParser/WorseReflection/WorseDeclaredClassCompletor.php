@@ -18,14 +18,10 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 class WorseDeclaredClassCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    private ClassReflector $reflector;
-
-    private ObjectFormatter $formatter;
-
-    public function __construct(ClassReflector $reflector, ObjectFormatter $formatter)
-    {
-        $this->reflector = $reflector;
-        $this->formatter = $formatter;
+    public function __construct(
+        private ClassReflector $reflector,
+        private ObjectFormatter $formatter
+    ) {
     }
 
 

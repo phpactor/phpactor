@@ -12,16 +12,10 @@ use ArrayIterator;
 final class Problems implements IteratorAggregate, Countable
 {
     /**
-     * @var NodeContext[]
-     */
-    private array $problems = [];
-
-    /**
      * @param NodeContext[] $problems
      */
-    private function __construct(array $problems = [])
+    private function __construct(private array $problems = [])
     {
-        $this->problems = $problems;
     }
 
     public function __toString()

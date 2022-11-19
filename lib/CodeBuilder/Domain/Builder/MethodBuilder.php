@@ -13,8 +13,6 @@ use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
 
 class MethodBuilder extends AbstractBuilder implements NamedBuilder
 {
-    protected string $name;
-
     protected ?Visibility $visibility = null;
 
     protected ?ReturnType $returnType = null;
@@ -32,12 +30,8 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
 
     protected MethodBodyBuilder $bodyBuilder;
 
-    private ClassLikeBuilder $parent;
-
-    public function __construct(ClassLikeBuilder $parent, string $name)
+    public function __construct(private ClassLikeBuilder $parent, protected string $name)
     {
-        $this->parent = $parent;
-        $this->name = $name;
         $this->bodyBuilder = new MethodBodyBuilder($this);
     }
 

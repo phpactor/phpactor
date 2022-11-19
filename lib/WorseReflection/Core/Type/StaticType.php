@@ -9,11 +9,8 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class StaticType extends Type
 {
-    protected ?Type $class;
-
-    final public function __construct(?Type $class = null)
+    final public function __construct(protected ?Type $class = null)
     {
-        $this->class = $class;
     }
 
     public function __toString(): string

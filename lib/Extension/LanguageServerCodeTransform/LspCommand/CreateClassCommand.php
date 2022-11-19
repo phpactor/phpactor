@@ -25,24 +25,12 @@ class CreateClassCommand implements Command
 {
     public const NAME  = 'create_class';
 
-    private ClientApi $clientApi;
-
-    private Workspace $workspace;
-
-    private Generators $generators;
-
-    private FileToClass $fileToClass;
-
     public function __construct(
-        ClientApi $clientApi,
-        Workspace $workspace,
-        Generators $generators,
-        FileToClass $fileToClass
+        private ClientApi $clientApi,
+        private Workspace $workspace,
+        private Generators $generators,
+        private FileToClass $fileToClass
     ) {
-        $this->clientApi = $clientApi;
-        $this->workspace = $workspace;
-        $this->generators = $generators;
-        $this->fileToClass = $fileToClass;
     }
 
     /**

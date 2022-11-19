@@ -12,18 +12,12 @@ use Phpactor\WorseReflection\TypeUtil;
 
 final class OffsetInfo
 {
-    private Reflector $reflector;
-
     private FilesystemHelper $filesystemHelper;
 
-    private ClassFileNormalizer $classFileNormalizer;
-
     public function __construct(
-        Reflector $reflector,
-        ClassFileNormalizer $classFileNormalizer
+        private Reflector $reflector,
+        private ClassFileNormalizer $classFileNormalizer
     ) {
-        $this->reflector = $reflector;
-        $this->classFileNormalizer = $classFileNormalizer;
         $this->filesystemHelper = new FilesystemHelper();
     }
 

@@ -10,11 +10,8 @@ use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 
 class ComposerSourceLocator implements SourceCodeLocator
 {
-    private $classLoader;
-
-    public function __construct(ClassLoader $classLoader)
+    public function __construct(private ClassLoader $classLoader)
     {
-        $this->classLoader = $classLoader;
     }
 
     public function locate(Name $className): SourceCode

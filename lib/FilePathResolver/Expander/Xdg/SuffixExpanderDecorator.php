@@ -6,14 +6,8 @@ use Phpactor\FilePathResolver\Expander;
 
 class SuffixExpanderDecorator implements Expander
 {
-    private Expander $innerExpander;
-
-    private string $suffix;
-
-    public function __construct(Expander $innerExpander, string $suffix)
+    public function __construct(private Expander $innerExpander, private string $suffix)
     {
-        $this->innerExpander = $innerExpander;
-        $this->suffix = $suffix;
     }
 
     public function tokenName(): string

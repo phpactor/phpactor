@@ -18,24 +18,12 @@ use RuntimeException;
 
 class ClassMover
 {
-    private ClassFileNormalizer $classFileNormalizer;
-
-    private ClassMoverFacade $classMover;
-
-    private FilesystemRegistry $filesystemRegistry;
-
-    private PathFinder $pathFinder;
-
     public function __construct(
-        ClassFileNormalizer $classFileNormalizer,
-        ClassMoverFacade $classMover,
-        FilesystemRegistry $filesystemRegistry,
-        PathFinder $pathFinder
+        private ClassFileNormalizer $classFileNormalizer,
+        private ClassMoverFacade $classMover,
+        private FilesystemRegistry $filesystemRegistry,
+        private PathFinder $pathFinder
     ) {
-        $this->classFileNormalizer = $classFileNormalizer;
-        $this->filesystemRegistry = $filesystemRegistry;
-        $this->classMover = $classMover;
-        $this->pathFinder = $pathFinder;
     }
 
     public function getRelatedFiles(string $src): array

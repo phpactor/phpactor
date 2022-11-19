@@ -10,14 +10,8 @@ final class PotentialLocation
     private const CONFIDENCE_NOT = 'not';
     private const CONFIDENCE_MAYBE = 'maybe';
 
-    private Location $location;
-
-    private string $confidence;
-
-    public function __construct(Location $location, string $confidence)
+    public function __construct(private Location $location, private string $confidence)
     {
-        $this->location = $location;
-        $this->confidence = $confidence;
     }
 
     public static function maybe(Location $location): self

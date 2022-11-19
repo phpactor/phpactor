@@ -16,14 +16,10 @@ use function Amp\call;
 
 class FormattingHandler implements Handler, CanRegisterCapabilities
 {
-    private PhpCsFixerFormatter $formatter;
-
-    private TextDocumentLocator $locator;
-
-    public function __construct(PhpCsFixerFormatter $formatter, TextDocumentLocator $locator)
-    {
-        $this->formatter = $formatter;
-        $this->locator = $locator;
+    public function __construct(
+        private PhpCsFixerFormatter $formatter,
+        private TextDocumentLocator $locator
+    ) {
     }
 
     public function methods(): array

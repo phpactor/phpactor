@@ -6,11 +6,8 @@ use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 
 class Class_
 {
-    private FullyQualifiedName $name;
-
-    private function __construct(FullyQualifiedName $name)
+    private function __construct(private FullyQualifiedName $name)
     {
-        $this->name = $name;
     }
 
     public function __toString()

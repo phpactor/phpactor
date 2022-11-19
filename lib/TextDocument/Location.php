@@ -4,14 +4,8 @@ namespace Phpactor\TextDocument;
 
 class Location
 {
-    private TextDocumentUri $uri;
-
-    private ByteOffset $offset;
-
-    public function __construct(TextDocumentUri $uri, ByteOffset $offset)
+    public function __construct(private TextDocumentUri $uri, private ByteOffset $offset)
     {
-        $this->uri = $uri;
-        $this->offset = $offset;
     }
 
     public static function fromPathAndOffset(string $string, int $int): Location

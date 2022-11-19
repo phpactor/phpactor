@@ -9,11 +9,8 @@ class StringLiteralType extends StringType implements Literal, Generalizable, Co
 {
     use LiteralTrait;
 
-    public string $value;
-
-    public function __construct(string $value)
+    public function __construct(public string $value)
     {
-        $this->value = $value;
     }
 
     public function __toString(): string

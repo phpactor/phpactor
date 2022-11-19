@@ -15,20 +15,12 @@ class TemplateTag extends TagNode
         'type'
     ];
 
-    public Token $tag;
-
-    public ?Token $placeholder;
-
-    public ?Token $constraint;
-
-    public ?TypeNode $type;
-
-    public function __construct(Token $tag, ?Token $placeholder = null, ?Token $constraint = null, ?TypeNode $type = null)
-    {
-        $this->tag = $tag;
-        $this->placeholder = $placeholder;
-        $this->constraint = $constraint;
-        $this->type = $type;
+    public function __construct(
+        public Token $tag,
+        public ?Token $placeholder = null,
+        public ?Token $constraint = null,
+        public ?TypeNode $type = null
+    ) {
     }
 
     public function placeholder(): string

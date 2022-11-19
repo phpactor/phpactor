@@ -8,11 +8,8 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class FunctionReturnTypeResolver
 {
-    private ReflectionFunction $function;
-
-    public function __construct(ReflectionFunction $function)
+    public function __construct(private ReflectionFunction $function)
     {
-        $this->function = $function;
     }
 
     public function resolve(): Type

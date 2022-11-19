@@ -15,17 +15,11 @@ class ChainTolerantCompletor implements Completor
     private Parser $parser;
 
     /**
-     * @var TolerantCompletor[]
-     */
-    private array $tolerantCompletors = [];
-
-    /**
      * @param TolerantCompletor[] $tolerantCompletors
      */
-    public function __construct(array $tolerantCompletors, Parser $parser = null)
+    public function __construct(private array $tolerantCompletors, Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
-        $this->tolerantCompletors = $tolerantCompletors;
     }
 
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator

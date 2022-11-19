@@ -10,17 +10,8 @@ use RuntimeException;
 
 class SourceCode implements TextDocument
 {
-    private string $source;
-
-    /**
-     * @var string
-     */
-    private ?string $path;
-
-    private function __construct(string $source, string $path = null)
+    private function __construct(private string $source, private ?string $path = null)
     {
-        $this->source = $source;
-        $this->path = $path;
     }
 
     public function __toString()

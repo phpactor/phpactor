@@ -16,11 +16,8 @@ use function Amp\call;
 
 class WorseDiagnosticProvider implements DiagnosticsProvider
 {
-    private Reflector $reflector;
-
-    public function __construct(Reflector $reflector)
+    public function __construct(private Reflector $reflector)
     {
-        $this->reflector = $reflector;
     }
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise

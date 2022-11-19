@@ -10,11 +10,8 @@ use Exception;
 
 class ExceptionCatchingHandler implements RequestHandler
 {
-    private RequestHandler $innerHandler;
-
-    public function __construct(RequestHandler $innerHandler)
+    public function __construct(private RequestHandler $innerHandler)
     {
-        $this->innerHandler = $innerHandler;
     }
 
     public function handle(Request $request): Response

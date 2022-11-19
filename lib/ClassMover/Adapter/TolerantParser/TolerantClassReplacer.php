@@ -17,11 +17,8 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantClassReplacer implements ClassReplacer
 {
-    private Updater $updater;
-
-    public function __construct(Updater $updater)
+    public function __construct(private Updater $updater)
     {
-        $this->updater = $updater;
     }
 
     public function replaceReferences(

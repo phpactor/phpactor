@@ -4,11 +4,8 @@ namespace Phpactor\Extension\Php\Model;
 
 class ComposerPhpVersionResolver implements PhpVersionResolver
 {
-    private string $composerJsonPath;
-
-    public function __construct(string $composerJsonPath)
+    public function __construct(private string $composerJsonPath)
     {
-        $this->composerJsonPath = $composerJsonPath;
     }
 
 

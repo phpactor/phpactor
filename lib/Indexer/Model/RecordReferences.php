@@ -17,17 +17,14 @@ class RecordReferences implements IteratorAggregate
      */
     private array $references = [];
 
-    private FileRecord $file;
-
     /**
      * @param array<RecordReference> $references
      */
-    public function __construct(FileRecord $file, array $references)
+    public function __construct(private FileRecord $file, array $references)
     {
         foreach ($references as $reference) {
             $this->add($reference);
         }
-        $this->file = $file;
     }
 
     /**

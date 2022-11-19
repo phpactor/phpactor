@@ -13,11 +13,8 @@ final class WordAtOffset
     const SPLIT_PHP_NAME = '[^a-zA-Z0-9_\x80-\xff]';
     const SPLIT_QUALIFIED_PHP_NAME = '[^a-zA-Z0-9_\x80-\xff\\\]';
 
-    private string $splitPattern;
-
-    public function __construct(string $splitPattern = self::SPLIT_WORD)
+    public function __construct(private string $splitPattern = self::SPLIT_WORD)
     {
-        $this->splitPattern = $splitPattern;
     }
 
     public function __invoke(string $text, int $byteOffset): string

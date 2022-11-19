@@ -37,12 +37,6 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollecti
 
 class ReflectionClass extends AbstractReflectionClass implements CoreReflectionClass
 {
-    private ServiceLocator $serviceLocator;
-
-    private ClassDeclaration $node;
-
-    private SourceCode $sourceCode;
-
     private ?ReflectionInterfaceCollection $interfaces = null;
 
     private ?CoreReflectionClass $parent = null;
@@ -50,11 +44,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     private ?ReflectionClassCollection $ancestors = null;
 
     private ?ReflectionTraitCollection $traits = null;
-
-    /**
-     * @var array<string, bool>
-     */
-    private array $visited;
 
     private ?ClassLikeReflectionMemberCollection $ownMembers = null;
 
@@ -66,15 +55,11 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      * @param array<string,bool> $visited
      */
     public function __construct(
-        ServiceLocator $serviceLocator,
-        SourceCode $sourceCode,
-        ClassDeclaration $node,
-        array $visited = []
+        private ServiceLocator $serviceLocator,
+        private SourceCode $sourceCode,
+        private ClassDeclaration $node,
+        private array $visited = []
     ) {
-        $this->node = $node;
-        $this->sourceCode = $sourceCode;
-        $this->visited = $visited;
-        $this->serviceLocator = $serviceLocator;
     }
 
     public function isAbstract(): bool

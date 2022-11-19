@@ -18,17 +18,11 @@ use Phpactor\Extension\Core\Console\Handler\FilesystemHandler;
 
 class ReferencesMemberCommand extends Command
 {
-    private ClassMemberReferences $memberReferences;
-
-    private DumperRegistry $dumperRegistry;
-
     public function __construct(
-        ClassMemberReferences $memberReferences,
-        DumperRegistry $dumperRegistry
+        private ClassMemberReferences $memberReferences,
+        private DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->memberReferences = $memberReferences;
-        $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure(): void

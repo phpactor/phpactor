@@ -13,16 +13,7 @@ class ParenthesizedType extends TypeNode
         'closed',
     ];
 
-    public Token $open;
-
-    public ?TypeNode $node;
-
-    public ?Token $closed;
-
-    public function __construct(Token $open, ?TypeNode $node, ?Token $closed)
+    public function __construct(public Token $open, public ?TypeNode $node, public ?Token $closed)
     {
-        $this->open = $open;
-        $this->node = $node;
-        $this->closed = $closed;
     }
 }

@@ -4,12 +4,9 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class MethodBody extends Prototype
 {
-    private Lines $lines;
-
-    public function __construct(Lines $lines = null)
+    public function __construct(private ?Lines $lines = null)
     {
         parent::__construct();
-        $this->lines = $lines;
     }
 
     public static function fromLines(array $lines): MethodBody
@@ -27,7 +24,7 @@ final class MethodBody extends Prototype
         return new self();
     }
 
-    public function lines(): Lines
+    public function lines(): ?Lines
     {
         return $this->lines;
     }

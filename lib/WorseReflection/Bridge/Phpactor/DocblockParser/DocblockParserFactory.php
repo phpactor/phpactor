@@ -48,13 +48,13 @@ class DocblockParserFactory implements DocBlockFactory
 
     private Parser $parser;
 
-    private Reflector $reflector;
-
-    public function __construct(Reflector $reflector, ?Lexer $lexer = null, ?Parser $parser = null)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        ?Lexer $lexer = null,
+        ?Parser $parser = null
+    ) {
         $this->lexer = $lexer ?: new Lexer();
         $this->parser = $parser ?: new Parser();
-        $this->reflector = $reflector;
     }
 
     public function create(string $docblock, ReflectionScope $scope): DocBlock

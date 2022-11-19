@@ -19,11 +19,8 @@ class ExtractMethodHandler extends AbstractHandler
     const PARAM_OFFSET_END = 'offset_end';
     const INPUT_LABEL_NAME = 'Method name: ';
 
-    private ExtractMethod $extractMethod;
-
-    public function __construct(ExtractMethod $extractMethod)
+    public function __construct(private ExtractMethod $extractMethod)
     {
-        $this->extractMethod = $extractMethod;
     }
 
     public function name(): string

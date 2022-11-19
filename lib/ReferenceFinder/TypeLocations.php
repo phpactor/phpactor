@@ -13,16 +13,10 @@ use Traversable;
 class TypeLocations implements IteratorAggregate
 {
     /**
-     * @var TypeLocation[]
-     */
-    private array $typeLocations;
-
-    /**
      * @param TypeLocation[] $typeLocations
      */
-    public function __construct(array $typeLocations)
+    public function __construct(private array $typeLocations)
     {
-        $this->typeLocations = $typeLocations;
     }
 
     public function getIterator(): Traversable

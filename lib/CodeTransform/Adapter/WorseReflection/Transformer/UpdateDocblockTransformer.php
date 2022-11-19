@@ -16,20 +16,12 @@ use Phpactor\WorseReflection\Reflector;
 
 class UpdateDocblockTransformer implements Transformer
 {
-    private Reflector $reflector;
-
-    private Updater $updater;
-
-    private BuilderFactory $builderFactory;
-
-    private TextFormat $format;
-
-    public function __construct(Reflector $reflector, Updater $updater, BuilderFactory $builderFactory, TextFormat $format)
-    {
-        $this->reflector = $reflector;
-        $this->updater = $updater;
-        $this->builderFactory = $builderFactory;
-        $this->format = $format;
+    public function __construct(
+        private Reflector $reflector,
+        private Updater $updater,
+        private BuilderFactory $builderFactory,
+        private TextFormat $format
+    ) {
     }
 
     public function transform(SourceCode $code): TextEdits

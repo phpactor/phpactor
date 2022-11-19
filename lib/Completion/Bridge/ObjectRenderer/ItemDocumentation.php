@@ -4,17 +4,8 @@ namespace Phpactor\Completion\Bridge\ObjectRenderer;
 
 class ItemDocumentation
 {
-    private string $name;
-
-    private string $docs;
-
-    private object $object;
-
-    public function __construct(string $name, string $docs, object $object)
+    public function __construct(private string $name, private string $docs, private object $object)
     {
-        $this->name = $name;
-        $this->docs = $docs;
-        $this->object = $object;
     }
 
     public function docs(): string

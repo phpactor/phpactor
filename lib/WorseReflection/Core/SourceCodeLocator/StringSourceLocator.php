@@ -8,11 +8,8 @@ use Phpactor\WorseReflection\Core\SourceCode;
 
 class StringSourceLocator implements SourceCodeLocator
 {
-    private $source;
-
-    public function __construct(SourceCode $source)
+    public function __construct(private SourceCode $source)
     {
-        $this->source = $source;
     }
 
     public function locate(Name $className): SourceCode

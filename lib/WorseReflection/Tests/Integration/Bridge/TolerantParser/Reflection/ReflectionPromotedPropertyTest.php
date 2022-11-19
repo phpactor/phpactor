@@ -63,6 +63,7 @@ class ReflectionPromotedPropertyTest extends IntegrationTestCase
 
         yield 'Nullable' => [
                 '<?php class Barfoo { public function __construct(private ?string $foobar){}}',
+
                 'Barfoo',
                 function (ReflectionPropertyCollection $properties): void {
                     $this->assertEquals(

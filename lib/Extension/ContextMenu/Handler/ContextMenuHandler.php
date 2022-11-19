@@ -29,28 +29,13 @@ class ContextMenuHandler implements Handler
     const PARAMETER_ACTION = 'action';
     const PARAMETER_CURRENT_PATH = 'current_path';
 
-    private Reflector $reflector;
-
-    private InterestingOffsetFinder $offsetFinder;
-
-    private ContextMenu $menu;
-
-    private Container $container;
-
-    private ClassFileNormalizer $classFileNormalizer;
-
     public function __construct(
-        Reflector $reflector,
-        InterestingOffsetFinder $offsetFinder,
-        ClassFileNormalizer $classFileNormalizer,
-        ContextMenu $menu,
-        Container $container
+        private Reflector $reflector,
+        private InterestingOffsetFinder $offsetFinder,
+        private ClassFileNormalizer $classFileNormalizer,
+        private ContextMenu $menu,
+        private Container $container
     ) {
-        $this->reflector = $reflector;
-        $this->offsetFinder = $offsetFinder;
-        $this->menu = $menu;
-        $this->container = $container;
-        $this->classFileNormalizer = $classFileNormalizer;
     }
 
     public function name(): string

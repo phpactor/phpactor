@@ -11,10 +11,7 @@ class LiteralIntegerNode extends TypeNode
         'token',
     ];
 
-    public Token $token;
-
-    public function __construct(Token $token)
+    public function __construct(public Token $token)
     {
-        $this->token = $token;
     }
 }

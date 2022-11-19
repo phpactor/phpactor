@@ -23,20 +23,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class QualifiedNameResolver implements Resolver
 {
-    private Reflector $reflector;
-
-    private NodeToTypeConverter $nodeTypeConverter;
-
-    private FunctionStubRegistry $registry;
-
     public function __construct(
-        Reflector $reflector,
-        FunctionStubRegistry $registry,
-        NodeToTypeConverter $nodeTypeConverter
+        private Reflector $reflector,
+        private FunctionStubRegistry $registry,
+        private NodeToTypeConverter $nodeTypeConverter
     ) {
-        $this->reflector = $reflector;
-        $this->nodeTypeConverter = $nodeTypeConverter;
-        $this->registry = $registry;
     }
 
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext

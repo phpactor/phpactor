@@ -8,11 +8,8 @@ use Phpactor\WorseReflection\Core\Type;
 
 class PropertyTypeResolver
 {
-    private ReflectionProperty $property;
-
-    public function __construct(ReflectionProperty $property)
+    public function __construct(private ReflectionProperty $property)
     {
-        $this->property = $property;
     }
 
     public function resolve(): Type

@@ -10,23 +10,11 @@ class Pattern
 {
     const TOKEN_REGEX = '{<([a-z-]+?)>}';
 
-    private string $regex;
-
-    /**
-     * @var array<string>
-     */
-    private array $tokenNames;
-
-    private string $pattern;
-
     /**
      * @param array<string> $tokenNames
      */
-    public function __construct(string $regex, string $pattern, array $tokenNames)
+    public function __construct(private string $regex, private string $pattern, private array $tokenNames)
     {
-        $this->regex = $regex;
-        $this->tokenNames = $tokenNames;
-        $this->pattern = $pattern;
     }
 
     public static function fromPattern(string $pattern): self

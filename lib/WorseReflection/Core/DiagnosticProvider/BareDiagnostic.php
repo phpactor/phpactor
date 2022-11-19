@@ -8,17 +8,11 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
 class BareDiagnostic implements Diagnostic
 {
-    private ByteOffsetRange $range;
-
-    private DiagnosticSeverity $severity;
-
-    private string $message;
-
-    public function __construct(ByteOffsetRange $range, DiagnosticSeverity $severity, string $message)
-    {
-        $this->range = $range;
-        $this->severity = $severity;
-        $this->message = $message;
+    public function __construct(
+        private ByteOffsetRange $range,
+        private DiagnosticSeverity $severity,
+        private string $message
+    ) {
     }
 
     public function range(): ByteOffsetRange

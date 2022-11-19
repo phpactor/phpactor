@@ -17,16 +17,13 @@ use Closure;
  */
 class FileList implements Iterator
 {
-    /**
-     * @var Iterator<SplFileInfo>
-     */
-    private Iterator $iterator;
-
     private int $key = 0;
 
-    private function __construct(Iterator $iterator)
+    /**
+     * @param Iterator<SplFileInfo> $iterator
+     */
+    private function __construct(private Iterator $iterator)
     {
-        $this->iterator = $iterator;
     }
 
 

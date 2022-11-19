@@ -12,17 +12,11 @@ use Phpactor\Extension\ClassToFileExtra\Application\FileInfo;
 
 class FileInfoCommand extends Command
 {
-    private $infoForOffset;
-
-    private $dumperRegistry;
-
     public function __construct(
-        FileInfo $infoForOffset,
-        DumperRegistry $dumperRegistry
+        private FileInfo $infoForOffset,
+        private DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->infoForOffset = $infoForOffset;
-        $this->dumperRegistry = $dumperRegistry;
     }
 
     public function configure(): void

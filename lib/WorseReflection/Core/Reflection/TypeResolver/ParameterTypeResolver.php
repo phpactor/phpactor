@@ -8,11 +8,8 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class ParameterTypeResolver
 {
-    private ReflectionParameter $parameter;
-
-    public function __construct(ReflectionParameter $parameter)
+    public function __construct(private ReflectionParameter $parameter)
     {
-        $this->parameter = $parameter;
     }
 
     public function resolve(): Type

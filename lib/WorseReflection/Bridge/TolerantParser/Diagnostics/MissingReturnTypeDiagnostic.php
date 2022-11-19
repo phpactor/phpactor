@@ -9,24 +9,12 @@ use Phpactor\WorseReflection\Core\Type;
 
 class MissingReturnTypeDiagnostic implements Diagnostic
 {
-    private ByteOffsetRange $range;
-
-    private string $classType;
-
-    private string $methodName;
-
-    private Type $returnType;
-
     public function __construct(
-        ByteOffsetRange $range,
-        string $classType,
-        string $methodName,
-        Type $returnType
+        private ByteOffsetRange $range,
+        private string $classType,
+        private string $methodName,
+        private Type $returnType
     ) {
-        $this->range = $range;
-        $this->classType = $classType;
-        $this->methodName = $methodName;
-        $this->returnType = $returnType;
     }
 
     public function range(): ByteOffsetRange

@@ -10,22 +10,11 @@ use function array_reduce;
 final class OffsetExtractorResult
 {
     /**
-     * @var array<string,ByteOffset[]>
+     * @param array<string, \Phpactor\TextDocument\ByteOffset[]> $offsets
+     * @param array<string, \Phpactor\TextDocument\ByteOffsetRange[]> $ranges
      */
-    private array $offsets = [];
-
-    /**
-     * @var array<string,ByteOffsetRange[]>
-     */
-    private array $ranges = [];
-
-    private string $source;
-
-    public function __construct(string $source, array $offsetResults, array $rangeResults)
+    public function __construct(private string $source, private array $offsets, private array $ranges)
     {
-        $this->source = $source;
-        $this->offsets = $offsetResults;
-        $this->ranges = $rangeResults;
     }
 
     public function source(): string

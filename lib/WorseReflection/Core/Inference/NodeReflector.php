@@ -17,11 +17,8 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionStaticMe
 
 class NodeReflector
 {
-    private ServiceLocator $services;
-
-    public function __construct(ServiceLocator $services)
+    public function __construct(private ServiceLocator $services)
     {
-        $this->services = $services;
     }
 
     public function reflectNode(Frame $frame, Node $node): ReflectionNode

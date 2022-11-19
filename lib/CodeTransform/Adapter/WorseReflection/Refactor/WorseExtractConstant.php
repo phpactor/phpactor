@@ -23,16 +23,13 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class WorseExtractConstant implements ExtractConstant
 {
-    private Reflector $reflector;
-
-    private Updater $updater;
-
     private Parser $parser;
 
-    public function __construct(Reflector $reflector, Updater $updater, Parser $parser = null)
-    {
-        $this->reflector = $reflector;
-        $this->updater = $updater;
+    public function __construct(
+        private Reflector $reflector,
+        private Updater $updater,
+        Parser $parser = null
+    ) {
         $this->parser = $parser ?: new Parser();
     }
 

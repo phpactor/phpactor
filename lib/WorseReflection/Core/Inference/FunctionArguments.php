@@ -14,22 +14,10 @@ use Traversable;
 class FunctionArguments implements IteratorAggregate, Countable
 {
     /**
-     * @var ArgumentExpression[]
-     */
-    private array $arguments;
-
-    private NodeContextResolver $resolver;
-
-    private Frame $frame;
-
-    /**
      * @param ArgumentExpression[] $arguments
      */
-    public function __construct(NodeContextResolver $resolver, Frame $frame, array $arguments)
+    public function __construct(private NodeContextResolver $resolver, private Frame $frame, private array $arguments)
     {
-        $this->arguments = $arguments;
-        $this->resolver = $resolver;
-        $this->frame = $frame;
     }
 
     public function __toString(): string

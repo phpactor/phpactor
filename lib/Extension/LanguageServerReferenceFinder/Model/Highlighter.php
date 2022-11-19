@@ -27,11 +27,8 @@ use Phpactor\TextDocument\EfficientLineCols;
 
 class Highlighter
 {
-    private Parser $parser;
-
-    public function __construct(Parser $parser)
+    public function __construct(private Parser $parser)
     {
-        $this->parser = $parser;
     }
 
     public function highlightsFor(string $source, ByteOffset $offset): Highlights

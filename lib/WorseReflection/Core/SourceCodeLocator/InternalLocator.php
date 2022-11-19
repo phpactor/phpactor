@@ -13,16 +13,10 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 final class InternalLocator implements SourceCodeLocator
 {
     /**
-     * @var array<string,string>
-     */
-    private array $map;
-
-    /**
      * @param array<string,string> $map
      */
-    public function __construct(array $map)
+    public function __construct(private array $map)
     {
-        $this->map = $map;
     }
 
     public static function forInternalStubs(): self

@@ -6,14 +6,8 @@ use Phpactor\TextDocument\ByteOffsetRange;
 
 class MissingMethod
 {
-    public ByteOffsetRange $range;
-
-    private string $name;
-
-    public function __construct(string $name, ByteOffsetRange $range)
+    public function __construct(private string $name, public ByteOffsetRange $range)
     {
-        $this->name = $name;
-        $this->range = $range;
     }
 
     public function range(): ByteOffsetRange

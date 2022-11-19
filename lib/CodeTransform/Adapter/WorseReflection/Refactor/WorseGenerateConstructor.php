@@ -21,20 +21,12 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseGenerateConstructor implements GenerateConstructor
 {
-    private Reflector $reflector;
-
-    private BuilderFactory $factory;
-
-    private Updater $updater;
-
-    private Parser $parser;
-
-    public function __construct(Reflector $reflector, BuilderFactory $factory, Updater $updater, Parser $parser)
-    {
-        $this->reflector = $reflector;
-        $this->factory = $factory;
-        $this->updater = $updater;
-        $this->parser = $parser;
+    public function __construct(
+        private Reflector $reflector,
+        private BuilderFactory $factory,
+        private Updater $updater,
+        private Parser $parser
+    ) {
     }
 
     public function generateMethod(TextDocument $document, ByteOffset $offset): WorkspaceEdits

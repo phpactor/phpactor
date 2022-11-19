@@ -10,11 +10,8 @@ use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 
 class PhpstanDiagnosticProvider implements DiagnosticsProvider
 {
-    private Linter $linter;
-
-    public function __construct(Linter $linter)
+    public function __construct(private Linter $linter)
     {
-        $this->linter = $linter;
     }
 
 

@@ -20,14 +20,10 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
      */
     private string $type;
 
-    private string $memberName;
-
-    private ?string $containerType;
-
     /**
      * @param MemberRecord::TYPE_* $type
      */
-    public function __construct(string $type, string $memberName, string $containerType = null)
+    public function __construct(string $type, private string $memberName, private ?string $containerType = null)
     {
         if (!in_array($type, [
             self::TYPE_PROPERTY,
@@ -41,8 +37,6 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
         }
 
         $this->type = $type;
-        $this->memberName = $memberName;
-        $this->containerType = $containerType;
     }
 
     public static function fromMemberReference(MemberReference $memberReference): self

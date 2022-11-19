@@ -19,11 +19,8 @@ class ExtractConstantProvider implements CodeActionProvider
 {
     public const KIND = 'refactor.extract.constant';
 
-    private ExtractConstant $extractConstant;
-
-    public function __construct(ExtractConstant $extractConstant)
+    public function __construct(private ExtractConstant $extractConstant)
     {
-        $this->extractConstant = $extractConstant;
     }
 
 

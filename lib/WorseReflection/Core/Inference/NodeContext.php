@@ -9,15 +9,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 
 class NodeContext
 {
-    protected Symbol $symbol;
-
-    /**
-     * @var Type
-     */
-    protected ?Type $containerType = null;
-
-    protected Type $type;
-
     private TypeAssertions $typeAssertions;
 
     /**
@@ -25,17 +16,12 @@ class NodeContext
      */
     private array $issues = [];
 
-    /**
-     * @var ReflectionScope
-     */
-    private ?ReflectionScope $scope = null;
-
-    protected function __construct(Symbol $symbol, Type $type, Type $containerType = null, ReflectionScope $scope = null)
-    {
-        $this->symbol = $symbol;
-        $this->containerType = $containerType;
-        $this->type = $type;
-        $this->scope = $scope;
+    protected function __construct(
+        protected Symbol $symbol,
+        protected Type $type,
+        protected ?Type $containerType = null,
+        private ?ReflectionScope $scope = null
+    ) {
         $this->typeAssertions = new TypeAssertions([]);
     }
 

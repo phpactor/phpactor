@@ -12,11 +12,8 @@ final class TextDocumentBuilder
 
     private ?TextDocumentLanguage $language = null;
 
-    private string $text;
-
-    private function __construct(string $text)
+    private function __construct(private string $text)
     {
-        $this->text = $text;
     }
 
     public static function create(string $text): self

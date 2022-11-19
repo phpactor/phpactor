@@ -22,11 +22,8 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
     const PARAM_VARIANT = 'variant';
     const PARAM_OVERWRITE = 'overwrite';
 
-    protected AbstractClassGenerator $classGenerator;
-
-    public function __construct(AbstractClassGenerator $classGenerator)
+    public function __construct(protected AbstractClassGenerator $classGenerator)
     {
-        $this->classGenerator = $classGenerator;
     }
 
     public function configure(Resolver $resolver): void

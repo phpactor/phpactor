@@ -19,14 +19,8 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class StepDefinitionLocator implements DefinitionLocator
 {
-    private StepGenerator $generator;
-
-    private StepParser $parser;
-
-    public function __construct(StepGenerator $generator, StepParser $parser)
+    public function __construct(private StepGenerator $generator, private StepParser $parser)
     {
-        $this->generator = $generator;
-        $this->parser = $parser;
     }
 
 

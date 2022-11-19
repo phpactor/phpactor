@@ -10,19 +10,13 @@ use Phpactor\LanguageServer\Core\Server\ClientApi;
 
 class BlackfireHandler implements Handler
 {
-    private ClientApi $client;
-
-    private BlackfireProfiler $profiler;
-
     /**
      * @var null
      */
     private $probe;
 
-    public function __construct(BlackfireProfiler $profiler, ClientApi $client)
+    public function __construct(private BlackfireProfiler $profiler, private ClientApi $client)
     {
-        $this->client = $client;
-        $this->profiler = $profiler;
     }
 
     public function methods(): array

@@ -15,11 +15,8 @@ use function Amp\call;
 
 final class PhpLinter
 {
-    private string $phpBin;
-
-    public function __construct(string $phpBin)
+    public function __construct(private string $phpBin)
     {
-        $this->phpBin = $phpBin;
     }
 
     /**

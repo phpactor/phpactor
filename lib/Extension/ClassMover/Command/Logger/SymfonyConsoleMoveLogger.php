@@ -10,11 +10,8 @@ use Phpactor\Extension\ClassMover\Application\Logger\ClassMoverLogger;
 
 class SymfonyConsoleMoveLogger implements ClassMoverLogger
 {
-    private $output;
-
-    public function __construct(OutputInterface $output)
+    public function __construct(private OutputInterface $output)
     {
-        $this->output = $output;
     }
 
     public function moving(FilePath $srcPath, FilePath $destPath): void

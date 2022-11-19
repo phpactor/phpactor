@@ -15,16 +15,10 @@ use Traversable;
 final class Diagnostics implements IteratorAggregate, Countable
 {
     /**
-     * @var Diagnostic[]
-     */
-    private array $diagnostics;
-
-    /**
      * @param Diagnostic[] $diagnostics
      */
-    public function __construct(array $diagnostics)
+    public function __construct(private array $diagnostics)
     {
-        $this->diagnostics = $diagnostics;
     }
 
     public function getIterator(): Traversable

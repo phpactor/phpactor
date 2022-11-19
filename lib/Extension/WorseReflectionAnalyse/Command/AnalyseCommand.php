@@ -18,13 +18,9 @@ class AnalyseCommand extends Command
     const OPT_IGNORE_FAILURE = 'ignore-failure';
     const OPT_FORMAT = 'format';
 
-    private Analyser $analyser;
-
-    public function __construct(Analyser $analyser)
+    public function __construct(private Analyser $analyser)
     {
         parent::__construct();
-
-        $this->analyser = $analyser;
     }
 
     public function configure(): void

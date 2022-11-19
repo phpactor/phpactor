@@ -11,20 +11,11 @@ use Phpactor\TextDocument\TextDocument;
 
 class InMemoryRenamer implements Renamer
 {
-    private ?ByteOffsetRange $range;
-
-    /**
-     * @var LocatedTextEdit[]
-     */
-    private array $results;
-
     /**
      * @param LocatedTextEdit[] $results
      */
-    public function __construct(?ByteOffsetRange $range, array $results = [])
+    public function __construct(private ?ByteOffsetRange $range, private array $results = [])
     {
-        $this->results = $results;
-        $this->range = $range;
     }
 
     public function getRenameRange(TextDocument $textDocument, ByteOffset $offset): ?ByteOffsetRange

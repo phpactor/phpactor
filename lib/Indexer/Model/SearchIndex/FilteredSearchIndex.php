@@ -9,20 +9,11 @@ use Phpactor\Indexer\Model\SearchIndex;
 
 class FilteredSearchIndex implements SearchIndex
 {
-    private SearchIndex $innerIndex;
-
-    /**
-     * @var array<string>
-     */
-    private array $recordTypes;
-
     /**
      * @param array<string> $recordTypes
      */
-    public function __construct(SearchIndex $innerIndex, array $recordTypes)
+    public function __construct(private SearchIndex $innerIndex, private array $recordTypes)
     {
-        $this->innerIndex = $innerIndex;
-        $this->recordTypes = $recordTypes;
     }
 
 

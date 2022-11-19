@@ -4,11 +4,8 @@ namespace Phpactor\Indexer\Model\Name;
 
 class FullyQualifiedName
 {
-    private string $fqn;
-
-    public function __construct(string $fqn)
+    public function __construct(private string $fqn)
     {
-        $this->fqn = $fqn;
     }
 
     public function __toString(): string

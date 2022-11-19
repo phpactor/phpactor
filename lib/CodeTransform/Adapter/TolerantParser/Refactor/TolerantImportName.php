@@ -29,16 +29,12 @@ class TolerantImportName implements ImportName
 {
     private Parser $parser;
 
-    private Updater $updater;
-
-    private bool $importGlobals;
-
-    public function __construct(Updater $updater, Parser $parser = null, bool $importGlobals = false)
-    {
+    public function __construct(
+        private Updater $updater,
+        Parser $parser = null,
+        private bool $importGlobals = false
+    ) {
         $this->parser = $parser ?: new Parser();
-        ;
-        $this->updater = $updater;
-        $this->importGlobals = $importGlobals;
     }
 
     public function importName(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits

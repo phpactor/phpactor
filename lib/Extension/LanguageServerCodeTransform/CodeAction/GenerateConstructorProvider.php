@@ -18,14 +18,10 @@ class GenerateConstructorProvider implements CodeActionProvider
 {
     const KIND = 'quickfix.generate.constructor';
 
-    private $generateConstructor;
-
-    private WorkspaceEditConverter $converter;
-
-    public function __construct(GenerateConstructor $generateConstructor, WorkspaceEditConverter $converter)
-    {
-        $this->generateConstructor = $generateConstructor;
-        $this->converter = $converter;
+    public function __construct(
+        private GenerateConstructor $generateConstructor,
+        private WorkspaceEditConverter $converter
+    ) {
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise

@@ -11,11 +11,8 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class IndexerConstantSourceLocator implements SourceCodeLocator
 {
-    private IndexAccess $index;
-
-    public function __construct(IndexAccess $index)
+    public function __construct(private IndexAccess $index)
     {
-        $this->index = $index;
     }
 
 

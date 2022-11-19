@@ -21,17 +21,11 @@ class IndexBuildCommand extends Command
     const OPT_RESET = 'reset';
     const OPT_WATCH = 'watch';
 
-    private Indexer $indexer;
-
-    private Watcher $watcher;
-
     private MemoryUsage $usage;
 
-    public function __construct(Indexer $indexer, Watcher $watcher)
+    public function __construct(private Indexer $indexer, private Watcher $watcher)
     {
         parent::__construct();
-        $this->indexer = $indexer;
-        $this->watcher = $watcher;
         $this->usage = MemoryUsage::create();
     }
 

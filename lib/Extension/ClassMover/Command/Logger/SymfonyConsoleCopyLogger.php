@@ -10,11 +10,8 @@ use Phpactor\Extension\ClassMover\Application\Logger\ClassCopyLogger;
 
 class SymfonyConsoleCopyLogger implements ClassCopyLogger
 {
-    private $output;
-
-    public function __construct(OutputInterface $output)
+    public function __construct(private OutputInterface $output)
     {
-        $this->output = $output;
     }
 
     public function copying(FilePath $srcPath, FilePath $destPath): void

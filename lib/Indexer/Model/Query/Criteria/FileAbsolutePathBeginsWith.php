@@ -8,11 +8,8 @@ use Phpactor\Indexer\Model\Record\HasPath;
 
 class FileAbsolutePathBeginsWith extends Criteria
 {
-    private string $prefix;
-
-    public function __construct(string $prefix)
+    public function __construct(private string $prefix)
     {
-        $this->prefix = $prefix;
     }
 
     public function isSatisfiedBy(Record $record): bool

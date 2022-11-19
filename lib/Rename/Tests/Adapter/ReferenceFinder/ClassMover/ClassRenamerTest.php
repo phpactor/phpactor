@@ -168,11 +168,8 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         TextDocument $textDocument
     ): ClassRenamer {
         $nameToUriConverter = new class($namespaceRootDir) implements NameToUriConverter {
-            private string $namespaceRootDir;
-            public function __construct(
-                string $namespaceRootDir
-            ) {
-                $this->namespaceRootDir = $namespaceRootDir;
+            public function __construct(private string $namespaceRootDir)
+            {
             }
 
             public function convert(string $className): TextDocumentUri

@@ -8,28 +8,13 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
 class MissingMethodDiagnostic implements Diagnostic
 {
-    private string $message;
-
-    private DiagnosticSeverity $severity;
-
-    private ByteOffsetRange $range;
-
-    private string $classType;
-
-    private string $methodName;
-
     public function __construct(
-        ByteOffsetRange $range,
-        string $message,
-        DiagnosticSeverity $severity,
-        string $classType,
-        string $methodName
+        private ByteOffsetRange $range,
+        private string $message,
+        private DiagnosticSeverity $severity,
+        private string $classType,
+        private string $methodName
     ) {
-        $this->message = $message;
-        $this->severity = $severity;
-        $this->range = $range;
-        $this->classType = $classType;
-        $this->methodName = $methodName;
     }
 
     public function range(): ByteOffsetRange

@@ -22,24 +22,12 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollec
 
 class CompositeReflector implements Reflector
 {
-    private ClassReflector $classReflector;
-
-    private SourceCodeReflector $sourceCodeReflector;
-
-    private FunctionReflector $functionReflector;
-
-    private ConstantReflector $constantReflector;
-
     public function __construct(
-        ClassReflector $classReflector,
-        SourceCodeReflector $sourceCodeReflector,
-        FunctionReflector $functionReflector,
-        ConstantReflector $constantReflector
+        private ClassReflector $classReflector,
+        private SourceCodeReflector $sourceCodeReflector,
+        private FunctionReflector $functionReflector,
+        private ConstantReflector $constantReflector
     ) {
-        $this->classReflector = $classReflector;
-        $this->sourceCodeReflector = $sourceCodeReflector;
-        $this->functionReflector = $functionReflector;
-        $this->constantReflector = $constantReflector;
     }
 
     public function reflectClass($className): ReflectionClass

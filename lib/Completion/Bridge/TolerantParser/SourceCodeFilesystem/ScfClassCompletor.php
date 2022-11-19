@@ -23,16 +23,13 @@ use SplFileInfo;
 
 class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    private Filesystem $filesystem;
-
-    private FileToClass $fileToClass;
-
     private ClassQualifier $qualifier;
 
-    public function __construct(Filesystem $filesystem, FileToClass $fileToClass, ?ClassQualifier $qualifier = null)
-    {
-        $this->filesystem = $filesystem;
-        $this->fileToClass = $fileToClass;
+    public function __construct(
+        private Filesystem $filesystem,
+        private FileToClass $fileToClass,
+        ?ClassQualifier $qualifier = null
+    ) {
         $this->qualifier = $qualifier ?: new ClassQualifier();
     }
 

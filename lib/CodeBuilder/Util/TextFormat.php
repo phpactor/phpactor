@@ -6,14 +6,8 @@ use RuntimeException;
 
 class TextFormat
 {
-    private string $indentation;
-
-    private string $newLineChar;
-
-    public function __construct(string $indentation = '    ', string $newLineChar = "\n")
+    public function __construct(private string $indentation = '    ', private string $newLineChar = "\n")
     {
-        $this->indentation = $indentation;
-        $this->newLineChar = $newLineChar;
     }
 
     public function indent(string $string, int $level = 0): string

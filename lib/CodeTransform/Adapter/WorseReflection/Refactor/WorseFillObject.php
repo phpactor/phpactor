@@ -23,31 +23,16 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseFillObject implements FillObject
 {
-    private Reflector $reflector;
-
-    private Parser $parser;
-
     private EmptyValueRenderer $valueRenderer;
 
-    private Updater $updater;
-
-    private bool $namedParameters;
-
-    private bool $hint;
-
     public function __construct(
-        Reflector $reflector,
-        Parser $parser,
-        Updater $updater,
-        bool $namedParameters = true,
-        bool $hint = true
+        private Reflector $reflector,
+        private Parser $parser,
+        private Updater $updater,
+        private bool $namedParameters = true,
+        private bool $hint = true
     ) {
-        $this->reflector = $reflector;
-        $this->parser = $parser;
         $this->valueRenderer = new EmptyValueRenderer();
-        $this->updater = $updater;
-        $this->namedParameters = $namedParameters;
-        $this->hint = $hint;
     }
 
     public function fillObject(TextDocument $document, ByteOffset $offset): TextEdits

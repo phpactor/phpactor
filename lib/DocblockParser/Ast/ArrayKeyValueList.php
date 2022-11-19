@@ -16,16 +16,10 @@ class ArrayKeyValueList extends Node implements IteratorAggregate, Countable
     ];
 
     /**
-     * @var array<Token|ArrayKeyValueNode>
-     */
-    public array $list;
-
-    /**
      * @param array<Token|ArrayKeyValueNode> $list
      */
-    public function __construct(array $list)
+    public function __construct(public array $list)
     {
-        $this->list = $list;
     }
 
     /**

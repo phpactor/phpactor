@@ -41,29 +41,9 @@ class ServiceLocator
 
     private DocBlockFactory $docblockFactory;
 
-    /**
-     * @var array<int,ReflectionMemberProvider>
-     */
-    private array $methodProviders;
-
     private Cache $cache;
 
-    /**
-     * @var DiagnosticProvider[]
-     */
-    private array $diagnosticProviders;
-
-    /**
-     * @var Walker[]
-     */
-    private array $frameWalkers;
-
     private NodeToTypeConverter $nameResolver;
-
-    /**
-     * @var MemberContextResolver[]
-     */
-    private array $memberContextResolvers;
 
     /**
      * @param Walker[] $frameWalkers
@@ -75,10 +55,10 @@ class ServiceLocator
         SourceCodeLocator $sourceLocator,
         LoggerInterface $logger,
         SourceCodeReflectorFactory $reflectorFactory,
-        array $frameWalkers,
-        array $methodProviders,
-        array $diagnosticProviders,
-        array $memberContextResolvers,
+        private array $frameWalkers,
+        private array $methodProviders,
+        private array $diagnosticProviders,
+        private array $memberContextResolvers,
         Cache $cache,
         bool $enableContextualLocation = false
     ) {
@@ -114,12 +94,7 @@ class ServiceLocator
         $this->logger = $logger;
 
         $this->nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
-
-        $this->methodProviders = $methodProviders;
-        $this->memberContextResolvers = $memberContextResolvers;
-        $this->diagnosticProviders = $diagnosticProviders;
         $this->cache = $cache;
-        $this->frameWalkers = $frameWalkers;
     }
 
     public function reflector(): Reflector

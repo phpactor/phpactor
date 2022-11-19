@@ -7,11 +7,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class BehatConfig
 {
-    private string $path;
-
-    public function __construct(string $path)
+    public function __construct(private string $path)
     {
-        $this->path = $path;
     }
 
     /**

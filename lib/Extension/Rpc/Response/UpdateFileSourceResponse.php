@@ -7,20 +7,10 @@ use Phpactor\Extension\Rpc\Response;
 
 class UpdateFileSourceResponse implements Response
 {
-    private string $newSource;
-
-    private string $path;
-
-    private string $oldSource;
-
     private TextEditBuilder $textEditBuilder;
 
-    private function __construct(string $path, string $oldSource, string $newSource)
+    private function __construct(private string $path, private string $oldSource, private string $newSource)
     {
-        $this->newSource = $newSource;
-        $this->path = $path;
-        $this->oldSource = $oldSource;
-
         // TODO: This should be a service
         $this->textEditBuilder = new TextEditBuilder();
     }

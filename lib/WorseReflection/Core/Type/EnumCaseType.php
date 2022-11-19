@@ -9,15 +9,9 @@ use Phpactor\WorseReflection\Core\Type;
 
 class EnumCaseType extends ReflectedClassType implements ClassNamedType
 {
-    public ClassType $enumType;
-
-    public string $caseName;
-
-    public function __construct(ClassReflector $reflector, ClassType $enumType, string $caseName)
+    public function __construct(ClassReflector $reflector, public ClassType $enumType, public string $caseName)
     {
         parent::__construct($reflector, ClassName::fromString('UnitEnumCase'));
-        $this->enumType = $enumType;
-        $this->caseName = $caseName;
     }
 
     public function __toString(): string

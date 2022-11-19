@@ -7,20 +7,11 @@ use Symfony\Component\Filesystem\Path;
 
 class PathFinder
 {
-    private string $basePath;
-
-    /**
-     * @var array<string,Pattern>
-     */
-    private array $destinations = [];
-
     /**
      * @param array<string, Pattern> $destinations
      */
-    private function __construct(string $basePath, array $destinations)
+    private function __construct(private string $basePath, private array $destinations)
     {
-        $this->basePath = $basePath;
-        $this->destinations = $destinations;
     }
 
     /**

@@ -13,14 +13,8 @@ class DeprecatedTag extends TagNode
         'text',
     ];
 
-    public ?TextNode $text;
-
-    public Token $token;
-
-    public function __construct(Token $token, ?TextNode $text)
+    public function __construct(public Token $token, public ?TextNode $text)
     {
-        $this->text = $text;
-        $this->token = $token;
     }
 
     public function text(): ?string

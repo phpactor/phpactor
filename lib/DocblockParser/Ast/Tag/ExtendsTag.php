@@ -13,13 +13,7 @@ class ExtendsTag extends TagNode
         'type',
     ];
 
-    public Token $tag;
-
-    public ?TypeNode $type;
-
-    public function __construct(Token $tag, ?TypeNode $type = null)
+    public function __construct(public Token $tag, public ?TypeNode $type = null)
     {
-        $this->tag = $tag;
-        $this->type = $type;
     }
 }
