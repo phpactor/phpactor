@@ -14,16 +14,10 @@ use Traversable;
 class IndexInfos implements IteratorAggregate, Countable
 {
     /**
-     * @var IndexInfo[]
-     */
-    private array $infos;
-
-    /**
      * @param IndexInfo[] $infos
      */
-    public function __construct(array $infos)
+    public function __construct(private array $infos)
     {
-        $this->infos = $infos;
     }
 
     public function getIterator(): Traversable

@@ -12,29 +12,14 @@ use Phpactor\Indexer\Model\Index;
 class FilesystemFileListProvider implements FileListProvider
 {
     /**
-     * @var array<string>
-     */
-    private array $excludePatterns;
-
-    /**
-     * @var array<string>
-     */
-    private array $includePatterns;
-
-    private Filesystem $filesystem;
-
-    /**
      * @param array<string> $excludePatterns
      * @param array<string> $includePatterns
      */
     public function __construct(
-        Filesystem $filesystem,
-        array $includePatterns = [],
-        array $excludePatterns = []
+        private Filesystem $filesystem,
+        private array $includePatterns = [],
+        private array $excludePatterns = []
     ) {
-        $this->filesystem = $filesystem;
-        $this->includePatterns = $includePatterns;
-        $this->excludePatterns = $excludePatterns;
     }
 
     public function provideFileList(Index $index, ?string $subPath = null): FileList

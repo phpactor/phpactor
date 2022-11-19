@@ -42,28 +42,13 @@ class ReferencesHandler extends AbstractHandler
     const PARAMETER_REPLACEMENT = 'replacement';
     const MESSAGE_NO_REFERENCES_FOUND = 'No references found';
 
-    private ClassReferences $classReferences;
-
-    private string $defaultFilesystem;
-
-    private ClassMemberReferences $classMemberReferences;
-
-    private Reflector $reflector;
-
-    private FilesystemRegistry $registry;
-
     public function __construct(
-        Reflector $reflector,
-        ClassReferences $classReferences,
-        ClassMemberReferences $classMemberReferences,
-        FilesystemRegistry $registry,
-        string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_GIT
+        private Reflector $reflector,
+        private ClassReferences $classReferences,
+        private ClassMemberReferences $classMemberReferences,
+        private FilesystemRegistry $registry,
+        private string $defaultFilesystem = SourceCodeFilesystemExtension::FILESYSTEM_GIT
     ) {
-        $this->classReferences = $classReferences;
-        $this->defaultFilesystem = $defaultFilesystem;
-        $this->classMemberReferences = $classMemberReferences;
-        $this->reflector = $reflector;
-        $this->registry = $registry;
     }
 
     public function name(): string

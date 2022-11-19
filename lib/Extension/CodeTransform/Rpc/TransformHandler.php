@@ -18,11 +18,8 @@ class TransformHandler implements Handler
     const PARAM_PATH = 'path';
     const PARAM_SOURCE = 'source';
 
-    private CodeTransform $codeTransform;
-
-    public function __construct(CodeTransform $codeTransform)
+    public function __construct(private CodeTransform $codeTransform)
     {
-        $this->codeTransform = $codeTransform;
     }
 
     public function name(): string

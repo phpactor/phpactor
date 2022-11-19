@@ -9,14 +9,8 @@ use RuntimeException;
 
 final class SourceCode implements TextDocument
 {
-    private string $code;
-
-    private TextDocumentUri $path;
-
-    private function __construct(string $code, TextDocumentUri $path)
+    private function __construct(private string $code, private TextDocumentUri $path)
     {
-        $this->code = $code;
-        $this->path = $path;
     }
 
     public function __toString(): string

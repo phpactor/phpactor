@@ -4,14 +4,8 @@ namespace Phpactor\Filesystem\Domain;
 
 class FallbackFilesystemRegistry implements FilesystemRegistry
 {
-    private FilesystemRegistry $registry;
-
-    private string $fallback;
-
-    public function __construct(FilesystemRegistry $registry, string $fallback)
+    public function __construct(private FilesystemRegistry $registry, private string $fallback)
     {
-        $this->registry = $registry;
-        $this->fallback = $fallback;
     }
 
     public function get(string $name): Filesystem

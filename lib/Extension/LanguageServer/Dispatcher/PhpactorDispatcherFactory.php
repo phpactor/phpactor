@@ -21,11 +21,8 @@ use Phpactor\LanguageServer\Core\Server\Transmitter\MessageTransmitter;
 
 class PhpactorDispatcherFactory implements DispatcherFactory
 {
-    private Container $container;
-
-    public function __construct(Container $container)
+    public function __construct(private Container $container)
     {
-        $this->container = $container;
     }
 
     public function create(MessageTransmitter $transmitter, InitializeParams $initializeParams): Dispatcher

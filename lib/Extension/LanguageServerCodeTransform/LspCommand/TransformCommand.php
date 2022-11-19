@@ -16,20 +16,11 @@ class TransformCommand implements Command
 {
     public const NAME  = 'transform';
 
-    private Transformers $transformers;
-
-    private Workspace $workspace;
-
-    private ClientApi $clientApi;
-
     public function __construct(
-        ClientApi $clientApi,
-        Workspace $workspace,
-        Transformers $transformers
+        private ClientApi $clientApi,
+        private Workspace $workspace,
+        private Transformers $transformers
     ) {
-        $this->transformers = $transformers;
-        $this->workspace = $workspace;
-        $this->clientApi = $clientApi;
     }
 
     public function __invoke(string $uri, string $transform): Promise

@@ -18,19 +18,13 @@ use Phpactor\WorseReflection\Reflector;
 
 class RemoveUnusedImportsTransformer implements Transformer
 {
-    private Reflector $reflector;
-
-    private Parser $parser;
-
     /**
      * @var array<int, bool>
      */
     private array $fixed = [];
 
-    public function __construct(Reflector $reflector, Parser $parser)
+    public function __construct(private Reflector $reflector, private Parser $parser)
     {
-        $this->reflector = $reflector;
-        $this->parser = $parser;
     }
 
     public function transform(SourceCode $code): TextEdits

@@ -6,14 +6,8 @@ use Phpactor\DocblockParser\Ast\Node;
 
 final class DocblockParser
 {
-    private Lexer $lexer;
-
-    private Parser $parser;
-
-    public function __construct(Lexer $lexer, Parser $parser)
+    public function __construct(private Lexer $lexer, private Parser $parser)
     {
-        $this->lexer = $lexer;
-        $this->parser = $parser;
     }
 
     public static function create(): self

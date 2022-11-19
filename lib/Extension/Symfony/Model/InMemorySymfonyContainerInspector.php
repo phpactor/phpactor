@@ -5,24 +5,11 @@ namespace Phpactor\Extension\Symfony\Model;
 class InMemorySymfonyContainerInspector implements SymfonyContainerInspector
 {
     /**
-     * @var SymfonyContainerService[]
-     */
-    private array $services;
-
-    /**
-     * @var SymfonyContainerParameter[]
-     */
-    private array $parameters;
-
-
-    /**
      * @param SymfonyContainerService[] $services
      * @param SymfonyContainerParameter[] $parameters
      */
-    public function __construct(array $services, array $parameters)
+    public function __construct(private array $services, private array $parameters)
     {
-        $this->services = $services;
-        $this->parameters = $parameters;
     }
 
     public function services(): array

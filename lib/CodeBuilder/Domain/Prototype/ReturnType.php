@@ -4,12 +4,9 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class ReturnType extends Prototype
 {
-    private Type $type;
-
-    public function __construct(Type $type)
+    public function __construct(private Type $type)
     {
         parent::__construct();
-        $this->type = $type;
     }
 
     public function __toString()

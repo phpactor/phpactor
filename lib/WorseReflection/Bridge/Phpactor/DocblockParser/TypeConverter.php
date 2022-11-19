@@ -10,9 +10,9 @@ use Phpactor\DocblockParser\Ast\Type\LiteralFloatNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralIntegerNode;
 use Phpactor\DocblockParser\Ast\Type\LiteralStringNode;
 use Phpactor\DocblockParser\Ast\Type\NullableNode;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\DocblockParser\Ast\Type\ConstantNode;
 use Phpactor\DocblockParser\Ast\Type\ParenthesizedType;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\DocblockParser\Ast\Node;
 use Phpactor\DocblockParser\Ast\TypeNode;
@@ -66,14 +66,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class TypeConverter
 {
-    private Reflector $reflector;
-
-    private ?ReflectionScope $scope;
-
-    public function __construct(Reflector $reflector, ?ReflectionScope $scope)
+    public function __construct(private Reflector $reflector, private ?ReflectionScope $scope)
     {
-        $this->reflector = $reflector;
-        $this->scope = $scope;
     }
 
     public function convert(?TypeNode $type): Type

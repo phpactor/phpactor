@@ -8,11 +8,8 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 final class SelfType extends Type
 {
-    private ?Type $class;
-
-    public function __construct(?Type $class = null)
+    public function __construct(private ?Type $class = null)
     {
-        $this->class = $class;
     }
 
     public function __toString(): string

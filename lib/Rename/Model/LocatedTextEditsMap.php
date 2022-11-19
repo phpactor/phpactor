@@ -8,16 +8,10 @@ use Phpactor\TextDocument\TextEdits;
 final class LocatedTextEditsMap
 {
     /**
-     * @var array<string,TextEdits>
-     */
-    private array $map;
-
-    /**
      * @param array<string,TextEdits> $map
      */
-    public function __construct(array $map)
+    public function __construct(private array $map)
     {
-        $this->map = $map;
     }
 
     public static function create(): self

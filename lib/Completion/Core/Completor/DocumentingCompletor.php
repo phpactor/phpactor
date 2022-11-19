@@ -10,14 +10,8 @@ use Phpactor\TextDocument\TextDocument;
 
 class DocumentingCompletor implements Completor
 {
-    private Completor $innerCompletor;
-
-    private SuggestionDocumentor $documentor;
-
-    public function __construct(Completor $innerCompletor, SuggestionDocumentor $documentor)
+    public function __construct(private Completor $innerCompletor, private SuggestionDocumentor $documentor)
     {
-        $this->innerCompletor = $innerCompletor;
-        $this->documentor = $documentor;
     }
 
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator

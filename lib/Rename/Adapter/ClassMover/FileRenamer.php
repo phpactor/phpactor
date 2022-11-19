@@ -19,24 +19,12 @@ use function Amp\call;
 
 class FileRenamer implements PhpactorFileRenamer
 {
-    private QueryClient $client;
-
-    private ClassMover $mover;
-
-    private TextDocumentLocator $locator;
-
-    private UriToNameConverter $converter;
-
     public function __construct(
-        UriToNameConverter $converter,
-        TextDocumentLocator $locator,
-        QueryClient $client,
-        ClassMover $mover
+        private UriToNameConverter $converter,
+        private TextDocumentLocator $locator,
+        private QueryClient $client,
+        private ClassMover $mover
     ) {
-        $this->client = $client;
-        $this->mover = $mover;
-        $this->locator = $locator;
-        $this->converter = $converter;
     }
 
     /**

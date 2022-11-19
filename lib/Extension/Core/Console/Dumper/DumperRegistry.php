@@ -6,16 +6,13 @@ use InvalidArgumentException;
 
 final class DumperRegistry
 {
-    private $default;
-
     private $dumpers = [];
 
-    public function __construct(array $dumpers, string $default)
+    public function __construct(array $dumpers, private string $default)
     {
         foreach ($dumpers as $name => $dumper) {
             $this->add($name, $dumper);
         }
-        $this->default = $default;
     }
 
     public function get(string $name = null): Dumper

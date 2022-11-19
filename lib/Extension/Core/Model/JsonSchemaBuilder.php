@@ -10,19 +10,10 @@ use function json_encode;
 class JsonSchemaBuilder
 {
     /**
-     * @var class-string[]
-     */
-    private array $extensions;
-
-    private string $title;
-
-    /**
      * @param class-string[] $extensions
      */
-    public function __construct(string $title, array $extensions)
+    public function __construct(private string $title, private array $extensions)
     {
-        $this->extensions = $extensions;
-        $this->title = $title;
     }
 
     public function dump(): string

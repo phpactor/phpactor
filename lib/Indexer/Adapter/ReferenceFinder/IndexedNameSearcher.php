@@ -15,11 +15,8 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class IndexedNameSearcher implements NameSearcher
 {
-    private SearchClient $client;
-
-    public function __construct(SearchClient $client)
+    public function __construct(private SearchClient $client)
     {
-        $this->client = $client;
     }
 
     /**

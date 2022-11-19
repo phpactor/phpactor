@@ -9,11 +9,8 @@ use Phpactor\WorseReflection\Core\Types;
 
 class ParenthesizedType extends Type
 {
-    public Type $type;
-
-    public function __construct(Type $type)
+    public function __construct(public Type $type)
     {
-        $this->type = $type;
     }
 
     public function __toString(): string

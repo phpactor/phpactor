@@ -10,14 +10,8 @@ use function Amp\call;
 
 class LoggingFileRenamer implements FileRenamer
 {
-    private LoggerInterface $logger;
-
-    private FileRenamer $innerRenamer;
-
-    public function __construct(FileRenamer $innerRenamer, LoggerInterface $logger)
+    public function __construct(private FileRenamer $innerRenamer, private LoggerInterface $logger)
     {
-        $this->logger = $logger;
-        $this->innerRenamer = $innerRenamer;
     }
 
 

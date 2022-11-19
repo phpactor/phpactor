@@ -12,11 +12,8 @@ use Phpactor\TextDocument\TextDocument;
 
 class TypeCompletor implements TolerantCompletor
 {
-    private TypeSuggestionProvider $provider;
-
-    public function __construct(TypeSuggestionProvider $provider)
+    public function __construct(private TypeSuggestionProvider $provider)
     {
-        $this->provider = $provider;
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator

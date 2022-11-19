@@ -11,11 +11,8 @@ class NullNode extends TypeNode
         'null',
     ];
 
-    public Token $null;
-
-    public function __construct(Token $null)
+    public function __construct(public Token $null)
     {
-        $this->null = $null;
     }
 
     public function null(): Token

@@ -18,23 +18,14 @@ use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 
 class WorseGenerateAccessor implements PropertyAccessGenerator
 {
-    private Reflector $reflector;
-
-    private Updater $updater;
-
-    private string $prefix;
-
     private bool $upperCaseFirst;
 
     public function __construct(
-        Reflector $reflector,
-        Updater $updater,
-        string $prefix = '',
+        private Reflector $reflector,
+        private Updater $updater,
+        private string $prefix = '',
         bool $upperCaseFirst = null
     ) {
-        $this->reflector = $reflector;
-        $this->updater = $updater;
-        $this->prefix = $prefix;
         $this->upperCaseFirst = ($prefix && $upperCaseFirst === null) || $upperCaseFirst;
     }
 

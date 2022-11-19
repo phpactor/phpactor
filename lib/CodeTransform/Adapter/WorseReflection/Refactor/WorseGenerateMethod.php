@@ -23,19 +23,13 @@ use Phpactor\CodeBuilder\Domain\BuilderFactory;
 
 class WorseGenerateMethod implements GenerateMethod
 {
-    private Reflector $reflector;
-
-    private Updater $updater;
-
     private int $methodSuffixIndex = 0;
 
-    private BuilderFactory $factory;
-
-    public function __construct(Reflector $reflector, BuilderFactory $factory, Updater $updater)
-    {
-        $this->reflector = $reflector;
-        $this->updater = $updater;
-        $this->factory = $factory;
+    public function __construct(
+        private Reflector $reflector,
+        private BuilderFactory $factory,
+        private Updater $updater
+    ) {
     }
 
     public function generateMethod(SourceCode $sourceCode, int $offset, ?string $methodName = null): TextDocumentEdits

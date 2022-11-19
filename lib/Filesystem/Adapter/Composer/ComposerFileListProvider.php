@@ -16,14 +16,8 @@ use Symfony\Component\Filesystem\Path;
 
 class ComposerFileListProvider implements FileListProvider
 {
-    private $classLoader;
-
-    private $path;
-
-    public function __construct(FilePath $path, ClassLoader $classLoader)
+    public function __construct(private FilePath $path, private ClassLoader $classLoader)
     {
-        $this->path = $path;
-        $this->classLoader = $classLoader;
     }
 
     public function fileList(): FileList

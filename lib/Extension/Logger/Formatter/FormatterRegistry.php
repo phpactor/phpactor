@@ -8,14 +8,8 @@ use RuntimeException;
 
 class FormatterRegistry
 {
-    private ContainerInterface $container;
-
-    private array $serviceMap;
-
-    public function __construct(ContainerInterface $container, array $serviceMap)
+    public function __construct(private ContainerInterface $container, private array $serviceMap)
     {
-        $this->container = $container;
-        $this->serviceMap = $serviceMap;
     }
 
     public function get(string $alias): FormatterInterface

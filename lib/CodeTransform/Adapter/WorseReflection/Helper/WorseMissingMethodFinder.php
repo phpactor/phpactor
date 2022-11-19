@@ -10,11 +10,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseMissingMethodFinder implements MissingMethodFinder
 {
-    private Reflector $reflector;
-
-    public function __construct(Reflector $reflector)
+    public function __construct(private Reflector $reflector)
     {
-        $this->reflector = $reflector;
     }
 
 

@@ -19,11 +19,8 @@ class FillObjectProvider implements CodeActionProvider
 {
     const KIND = 'quickfix.fill.object';
 
-    private FillObject $fillObject;
-
-    public function __construct(FillObject $fillObject)
+    public function __construct(private FillObject $fillObject)
     {
-        $this->fillObject = $fillObject;
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise

@@ -21,14 +21,6 @@ use InvalidArgumentException;
 
 class ReflectionProperty extends AbstractReflectionClassMember implements CoreReflectionProperty
 {
-    private ServiceLocator $serviceLocator;
-
-    private PropertyDeclaration $propertyDeclaration;
-
-    private Variable $variable;
-
-    private ReflectionClassLike $class;
-
     private PropertyTypeResolver $typeResolver;
 
     private DeclaredMemberTypeResolver $memberTypeResolver;
@@ -36,15 +28,11 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
     private ?string $name = null;
 
     public function __construct(
-        ServiceLocator $serviceLocator,
-        ReflectionClassLike $class,
-        PropertyDeclaration $propertyDeclaration,
-        Variable $variable
+        private ServiceLocator $serviceLocator,
+        private ReflectionClassLike $class,
+        private PropertyDeclaration $propertyDeclaration,
+        private Variable $variable
     ) {
-        $this->serviceLocator = $serviceLocator;
-        $this->propertyDeclaration = $propertyDeclaration;
-        $this->variable = $variable;
-        $this->class = $class;
         $this->typeResolver = new PropertyTypeResolver($this);
         $this->memberTypeResolver = new DeclaredMemberTypeResolver($this->serviceLocator->reflector());
     }

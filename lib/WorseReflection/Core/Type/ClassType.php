@@ -12,16 +12,13 @@ use Phpactor\WorseReflection\Reflector;
 
 class ClassType extends Type implements ClassNamedType, HasEmptyType
 {
-    public ClassName $name;
-
     /**
      * @var ReflectionMemberCollection<ReflectionMember>
      */
     public ReflectionMemberCollection $members;
 
-    public function __construct(ClassName $name)
+    public function __construct(public ClassName $name)
     {
-        $this->name = $name;
         $this->members = ClassLikeReflectionMemberCollection::empty();
     }
 

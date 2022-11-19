@@ -4,11 +4,8 @@ namespace Phpactor\ClassMover\Domain\Name;
 
 class Label
 {
-    private $label;
-
-    private function __construct($label)
+    private function __construct(private $label)
     {
-        $this->label = $label;
     }
 
     public function __toString()

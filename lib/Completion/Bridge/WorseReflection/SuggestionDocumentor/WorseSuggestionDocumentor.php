@@ -12,14 +12,10 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseSuggestionDocumentor implements SuggestionDocumentor
 {
-    private Reflector $reflector;
-
-    private ObjectRenderer $renderer;
-
-    public function __construct(Reflector $reflector, ObjectRenderer $renderer)
-    {
-        $this->reflector = $reflector;
-        $this->renderer = $renderer;
+    public function __construct(
+        private Reflector $reflector,
+        private ObjectRenderer $renderer
+    ) {
     }
 
     public function document(Suggestion $suggestion): Closure

@@ -24,16 +24,13 @@ use Phpactor\WorseReflection\Reflector;
 
 abstract class AbstractParameterCompletor
 {
-    protected Reflector $reflector;
-
     protected VariableCompletionHelper $variableCompletionHelper;
 
-    private ObjectFormatter $formatter;
-
-    public function __construct(Reflector $reflector, ObjectFormatter $formatter, VariableCompletionHelper $variableCompletionHelper = null)
-    {
-        $this->reflector = $reflector;
-        $this->formatter = $formatter;
+    public function __construct(
+        protected Reflector $reflector,
+        private ObjectFormatter $formatter,
+        VariableCompletionHelper $variableCompletionHelper = null
+    ) {
         $this->variableCompletionHelper = $variableCompletionHelper ?: new VariableCompletionHelper($reflector);
     }
 

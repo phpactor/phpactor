@@ -4,17 +4,8 @@ namespace Phpactor\Extension\Rpc\Response;
 
 class ReturnOption
 {
-    private string $name;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    private function __construct(string $name, $value)
+    private function __construct(private string $name, private $value)
     {
-        $this->name = $name;
-        $this->value = $value;
     }
 
     public static function fromNameAndValue(string $name, $value)

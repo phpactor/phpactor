@@ -24,17 +24,11 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
 {
     public const KIND = 'quickfix.create_unresolable_class';
 
-    private SourceCodeReflector $reflector;
-
-    private ClassToFile $classToFile;
-
-    private Generators $generators;
-
-    public function __construct(SourceCodeReflector $reflector, Generators $generators, ClassToFile $classToFile)
-    {
-        $this->reflector = $reflector;
-        $this->classToFile = $classToFile;
-        $this->generators = $generators;
+    public function __construct(
+        private SourceCodeReflector $reflector,
+        private Generators $generators,
+        private ClassToFile $classToFile
+    ) {
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise

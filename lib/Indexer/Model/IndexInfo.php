@@ -10,28 +10,13 @@ class IndexInfo
 {
     private const SECONDS_IN_DAY = 3600 * 24;
 
-    private string $absolutePath;
-
-    private string $directoryName;
-
-    private ?int $size;
-
-    private float $createdAt;
-
-    private float $updatedAt;
-
     public function __construct(
-        string $absolutePath,
-        string $directoryName,
-        ?int $size,
-        float $createdAt,
-        float $updatedAt
+        private string $absolutePath,
+        private string $directoryName,
+        private ?int $size,
+        private float $createdAt,
+        private float $updatedAt
     ) {
-        $this->directoryName = $directoryName;
-        $this->size = $size;
-        $this->createdAt = $createdAt;
-        $this->absolutePath = $absolutePath;
-        $this->updatedAt = $updatedAt;
     }
 
     public static function fromSplFileInfo(SplFileInfo $fileInfo): self

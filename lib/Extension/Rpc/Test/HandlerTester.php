@@ -9,11 +9,8 @@ use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 
 class HandlerTester
 {
-    private Handler $handler;
-
-    public function __construct(Handler $handler)
+    public function __construct(private Handler $handler)
     {
-        $this->handler = $handler;
     }
 
     public function handle(string $actionName, array $parameters)

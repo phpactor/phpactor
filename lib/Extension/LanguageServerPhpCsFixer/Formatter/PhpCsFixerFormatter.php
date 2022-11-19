@@ -16,21 +16,11 @@ use function Amp\call;
 
 class PhpCsFixerFormatter implements Formatter
 {
-    private string $binPath;
-
-    /**
-     * @var array<string,string>
-     */
-    private array $env;
-
-
     /**
      * @param array<string,string> $env
      */
-    public function __construct(string $binPath, array $env = [])
+    public function __construct(private string $binPath, private array $env = [])
     {
-        $this->binPath = $binPath;
-        $this->env = $env;
     }
 
     public function format(TextDocumentItem $document): Promise

@@ -11,14 +11,8 @@ abstract class ClassLikeBuilder extends AbstractBuilder implements Builder
      */
     protected array $methods = [];
 
-    protected string $name;
-
-    private SourceCodeBuilder $parent;
-
-    public function __construct(SourceCodeBuilder $parent, string $name)
+    public function __construct(private SourceCodeBuilder $parent, protected string $name)
     {
-        $this->parent = $parent;
-        $this->name = $name;
     }
 
     public static function childNames(): array

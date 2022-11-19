@@ -15,24 +15,12 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ClassReferences
 {
-    private FilesystemRegistry $filesystemRegistry;
-
-    private ClassFinder $refFinder;
-
-    private ClassFileNormalizer $classFileNormalizerasd;
-
-    private ClassReplacer $refReplacer;
-
     public function __construct(
-        ClassFileNormalizer $classFileNormalizer,
-        ClassFinder $refFinder,
-        ClassReplacer $refReplacer,
-        FilesystemRegistry $filesystemRegistry
+        private ClassFileNormalizer $classFileNormalizerasd,
+        private ClassFinder $refFinder,
+        private ClassReplacer $refReplacer,
+        private FilesystemRegistry $filesystemRegistry
     ) {
-        $this->classFileNormalizerasd = $classFileNormalizer;
-        $this->filesystemRegistry = $filesystemRegistry;
-        $this->refFinder = $refFinder;
-        $this->refReplacer = $refReplacer;
     }
 
     public function replaceReferences(string $filesystemName, string $class, string $replace, bool $dryRun)

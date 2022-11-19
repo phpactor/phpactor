@@ -13,13 +13,7 @@ class ThrowsTag extends TagNode
         'exceptionClass'
     ];
 
-    public ?TypeNode $exceptionClass;
-
-    public Token $tag;
-
-    public function __construct(Token $tag, ?TypeNode $exceptionClass)
+    public function __construct(public Token $tag, public ?TypeNode $exceptionClass)
     {
-        $this->tag = $tag;
-        $this->exceptionClass = $exceptionClass;
     }
 }

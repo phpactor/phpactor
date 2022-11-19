@@ -4,28 +4,13 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 
 class ChoiceInput implements Input
 {
-    private string $name;
-
-    private string $label;
-
-    private ?string $default;
-
-    private array $choices;
-
-    private array $keyMap;
-
     private function __construct(
-        string $name,
-        string $label,
-        array $choices,
-        ?string $default = null,
-        array $keyMap = []
+        private string $name,
+        private string $label,
+        private array $choices,
+        private ?string $default = null,
+        private array $keyMap = []
     ) {
-        $this->name = $name;
-        $this->label = $label;
-        $this->default = $default;
-        $this->choices = $choices;
-        $this->keyMap = $keyMap;
     }
 
     public static function fromNameLabelChoicesAndDefault(string $name, string $label, array $choices, string $default = null): self

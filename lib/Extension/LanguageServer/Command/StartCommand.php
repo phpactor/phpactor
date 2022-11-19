@@ -16,12 +16,9 @@ class StartCommand extends Command
     private const OPT_ADDRESS = 'address';
     private const OPT_NO_LOOP = 'no-loop';
 
-    private LanguageServerBuilder $languageServerBuilder;
-
-    public function __construct(LanguageServerBuilder $languageServerBuilder)
+    public function __construct(private LanguageServerBuilder $languageServerBuilder)
     {
         parent::__construct();
-        $this->languageServerBuilder = $languageServerBuilder;
     }
 
     protected function configure(): void

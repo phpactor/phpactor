@@ -34,17 +34,8 @@ final class Token implements Element
     public const T_INVALID = 'INVALID';
     public const T_IS = 'IS';
 
-    public int $byteOffset;
-
-    public string $type;
-
-    public string $value;
-
-    public function __construct(int $byteOffset, string $type, string $value)
+    public function __construct(public int $byteOffset, public string $type, public string $value)
     {
-        $this->byteOffset = $byteOffset;
-        $this->type = $type;
-        $this->value = $value;
     }
 
     public function toString(): string

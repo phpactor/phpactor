@@ -14,16 +14,10 @@ use Traversable;
 final class Types implements IteratorAggregate
 {
     /**
-     * @var T[]
-     */
-    private array $types;
-
-    /**
      * @param T[] $types
      */
-    public function __construct(array $types)
+    public function __construct(private array $types)
     {
-        $this->types = $types;
     }
 
     public function getIterator(): Traversable

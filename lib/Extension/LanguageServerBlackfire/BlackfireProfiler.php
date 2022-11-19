@@ -7,17 +7,14 @@ use Blackfire\Probe;
 
 class BlackfireProfiler
 {
-    private Client $blackfire;
-
     private ?Probe $probe = null;
 
     private bool $profiling = false;
 
     private bool $probing = false;
 
-    public function __construct(Client $blackfire)
+    public function __construct(private Client $blackfire)
     {
-        $this->blackfire = $blackfire;
     }
 
     public function enable(): void

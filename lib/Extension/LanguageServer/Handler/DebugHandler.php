@@ -21,42 +21,18 @@ class DebugHandler implements Handler
     const METHOD_DEBUG_WORKSPACE = 'phpactor/debug/workspace';
     const METHOD_DEBUG_STATUS = 'phpactor/status';
 
-    private Container $container;
-
-    private ClientApi $client;
-
-    private Workspace $workspace;
-
-    private ServerStats $stats;
-
-    private ServiceManager $serviceManager;
-
-    private DiagnosticsProvider $diagnosticProvider;
-
-    /**
-     * @var StatusProvider[]
-     */
-    private array $statusProviders;
-
     /**
      * @param StatusProvider[] $statusProviders
      */
     public function __construct(
-        Container $container,
-        ClientApi $client,
-        Workspace $workspace,
-        ServerStats $stats,
-        ServiceManager $serviceManager,
-        DiagnosticsProvider $diagnosticProvider,
-        array $statusProviders
+        private Container $container,
+        private ClientApi $client,
+        private Workspace $workspace,
+        private ServerStats $stats,
+        private ServiceManager $serviceManager,
+        private DiagnosticsProvider $diagnosticProvider,
+        private array $statusProviders
     ) {
-        $this->container = $container;
-        $this->client = $client;
-        $this->workspace = $workspace;
-        $this->stats = $stats;
-        $this->serviceManager = $serviceManager;
-        $this->diagnosticProvider = $diagnosticProvider;
-        $this->statusProviders = $statusProviders;
     }
 
 

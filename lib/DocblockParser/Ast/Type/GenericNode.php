@@ -16,26 +16,11 @@ class GenericNode extends TypeNode
         'close'
     ];
 
-    public Token $open;
-
-    public Token $close;
-
-    /**
-     * @var TypeList<Element>
-     */
-    public TypeList $parameters;
-
-    public TypeNode $type;
-
     /**
      * @param TypeList<Element> $parameters
      */
-    public function __construct(Token $open, TypeNode $type, TypeList $parameters, Token $close)
+    public function __construct(public Token $open, public TypeNode $type, public TypeList $parameters, public Token $close)
     {
-        $this->open = $open;
-        $this->close = $close;
-        $this->parameters = $parameters;
-        $this->type = $type;
     }
 
     public function close(): Token

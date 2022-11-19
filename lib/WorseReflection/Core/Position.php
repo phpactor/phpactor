@@ -4,20 +4,8 @@ namespace Phpactor\WorseReflection\Core;
 
 final class Position
 {
-    private int $fullStart;
-
-    private int $start;
-
-    private int $end;
-
-    private function __construct(
-        int $fullStart,
-        int $start,
-        int $end
-    ) {
-        $this->fullStart = $fullStart;
-        $this->start = $start;
-        $this->end = $end;
+    private function __construct(private int $fullStart, private int $start, private int $end)
+    {
     }
 
     public static function fromFullStartStartAndEnd(int $fullStart, int $start, int $end)

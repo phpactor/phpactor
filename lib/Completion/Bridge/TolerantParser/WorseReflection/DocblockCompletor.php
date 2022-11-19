@@ -43,14 +43,10 @@ class DocblockCompletor implements TolerantCompletor
         '@extends',
     ];
 
-    private TypeSuggestionProvider $typeSuggestionProvider;
-
-    private Parser $parser;
-
-    public function __construct(TypeSuggestionProvider $typeSuggestionProvider, Parser $parser)
-    {
-        $this->typeSuggestionProvider = $typeSuggestionProvider;
-        $this->parser = $parser;
+    public function __construct(
+        private TypeSuggestionProvider $typeSuggestionProvider,
+        private Parser $parser
+    ) {
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $byteOffset): Generator

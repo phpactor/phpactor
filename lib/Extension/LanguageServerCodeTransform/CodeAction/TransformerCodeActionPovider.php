@@ -21,17 +21,11 @@ use function Amp\call;
 
 class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionProvider
 {
-    private string $title;
-
-    private Transformers $transformers;
-
-    private string $name;
-
-    public function __construct(Transformers $transformers, string $name, string $title)
-    {
-        $this->title = $title;
-        $this->transformers = $transformers;
-        $this->name = $name;
+    public function __construct(
+        private Transformers $transformers,
+        private string $name,
+        private string $title
+    ) {
     }
 
 

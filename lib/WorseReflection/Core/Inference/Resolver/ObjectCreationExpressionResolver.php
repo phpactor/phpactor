@@ -18,11 +18,8 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
 class ObjectCreationExpressionResolver implements Resolver
 {
-    private GenericMapResolver $resolver;
-
-    public function __construct(GenericMapResolver $resolver)
+    public function __construct(private GenericMapResolver $resolver)
     {
-        $this->resolver = $resolver;
     }
 
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext

@@ -7,11 +7,8 @@ use Phpactor\DocblockParser\Ast\Token;
 
 class NullValue extends ValueNode
 {
-    private Token $null;
-
-    public function __construct(Token $null)
+    public function __construct(private Token $null)
     {
-        $this->null = $null;
     }
 
     public function null(): Token

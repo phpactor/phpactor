@@ -4,11 +4,8 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 class QualifiedName
 {
-    private $name;
-
-    protected function __construct(string $name)
+    protected function __construct(private string $name)
     {
-        $this->name = $name;
     }
 
     public function __toString()

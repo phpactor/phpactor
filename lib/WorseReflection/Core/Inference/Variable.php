@@ -9,21 +9,14 @@ final class Variable
 {
     private string $name;
 
-    private Type $type;
-
-    private ?Type $classType;
-
-    private int $offset;
-
-    private bool $wasAssigned;
-
-    public function __construct(string $name, int $offset, Type $type, ?Type $classType = null, bool $wasAssigned = false)
-    {
+    public function __construct(
+        string $name,
+        private int $offset,
+        private Type $type,
+        private ?Type $classType = null,
+        private bool $wasAssigned = false
+    ) {
         $this->name = ltrim($name, '$');
-        $this->type = $type;
-        $this->classType = $classType;
-        $this->offset = $offset;
-        $this->wasAssigned = $wasAssigned;
     }
 
     public function __toString(): string

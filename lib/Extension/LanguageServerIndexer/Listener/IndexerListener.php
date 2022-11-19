@@ -11,11 +11,8 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 class IndexerListener implements ListenerProviderInterface
 {
-    private ServiceManager $manager;
-
-    public function __construct(ServiceManager $manager)
+    public function __construct(private ServiceManager $manager)
     {
-        $this->manager = $manager;
     }
 
 

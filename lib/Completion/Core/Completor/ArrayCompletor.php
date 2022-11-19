@@ -10,14 +10,11 @@ use Phpactor\TextDocument\TextDocument;
 
 class ArrayCompletor implements Completor
 {
-    private array $suggestions;
-
     /**
      * @param Suggestion[] $suggestions
      */
-    public function __construct(array $suggestions)
+    public function __construct(private array $suggestions)
     {
-        $this->suggestions = $suggestions;
     }
 
 

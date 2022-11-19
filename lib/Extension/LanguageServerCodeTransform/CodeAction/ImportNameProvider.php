@@ -22,14 +22,10 @@ use function Amp\delay;
 
 class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
 {
-    private CandidateFinder $finder;
-
-    private bool $reportNonExistingClasses;
-
-    public function __construct(CandidateFinder $finder, bool $reportNonExistingClasses = true)
-    {
-        $this->finder = $finder;
-        $this->reportNonExistingClasses = $reportNonExistingClasses;
+    public function __construct(
+        private CandidateFinder $finder,
+        private bool $reportNonExistingClasses = true
+    ) {
     }
 
     public function provideActionsFor(TextDocumentItem $item, Range $range, CancellationToken $cancel): Promise

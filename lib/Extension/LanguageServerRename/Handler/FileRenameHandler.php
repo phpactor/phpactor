@@ -20,14 +20,8 @@ use function Amp\call;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
 {
-    private FileRenamer $renamer;
-
-    private LocatedTextEditConverter $converter;
-
-    public function __construct(FileRenamer $renamer, LocatedTextEditConverter $converter)
+    public function __construct(private FileRenamer $renamer, private LocatedTextEditConverter $converter)
     {
-        $this->renamer = $renamer;
-        $this->converter = $converter;
     }
 
 

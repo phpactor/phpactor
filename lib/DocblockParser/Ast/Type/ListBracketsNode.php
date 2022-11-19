@@ -12,14 +12,8 @@ class ListBracketsNode extends TypeNode
         'listChars',
     ];
 
-    public TypeNode $type;
-
-    public Token $listChars;
-
-    public function __construct(TypeNode $type, Token $listChars)
+    public function __construct(public TypeNode $type, public Token $listChars)
     {
-        $this->type = $type;
-        $this->listChars = $listChars;
     }
 
     public function type(): TypeNode

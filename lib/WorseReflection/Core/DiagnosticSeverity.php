@@ -12,17 +12,10 @@ final class DiagnosticSeverity
     public const HINT = 4;
 
     /**
-     * @var self::*
-     */
-    private $level;
-
-    /**
      * @param self::* $level
      */
-    private function __construct(int $level)
+    private function __construct(private int $level)
     {
-        $this->level = $level;
-
         $validLevels = [
             self::INFORMATION,
             self::WARNING,

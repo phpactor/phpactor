@@ -17,16 +17,13 @@ class TtlCache implements Cache
      */
     private array $expires = [];
 
-    private float $lifetime;
-
     private ?float $lifetimeStart = null;
 
     /**
      * @var float $lifetime Lifetime in seconds
      */
-    public function __construct(float $lifetime = 5.0)
+    public function __construct(private float $lifetime = 5.0)
     {
-        $this->lifetime = $lifetime;
     }
 
     public function getOrSet(string $key, Closure $setter)

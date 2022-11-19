@@ -4,11 +4,8 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 class Docblock
 {
-    private $docblock;
-
-    private function __construct(string $docblock = null)
+    private function __construct(private ?string $docblock = null)
     {
-        $this->docblock = $docblock;
     }
 
     public function __toString()

@@ -16,11 +16,8 @@ use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 
 class GenericMapResolver
 {
-    private ClassReflector $reflector;
-
-    public function __construct(ClassReflector $reflector)
+    public function __construct(private ClassReflector $reflector)
     {
-        $this->reflector = $reflector;
     }
 
     /**

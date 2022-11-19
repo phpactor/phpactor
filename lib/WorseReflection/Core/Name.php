@@ -6,14 +6,8 @@ use InvalidArgumentException;
 
 class Name
 {
-    protected $parts;
-
-    private $wasFullyQualified;
-
-    final public function __construct(array $parts, bool $wasFullyQualified)
+    final public function __construct(protected array $parts, private bool $wasFullyQualified)
     {
-        $this->parts = $parts;
-        $this->wasFullyQualified = $wasFullyQualified;
     }
 
     public function __toString()

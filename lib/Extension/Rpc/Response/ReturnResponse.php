@@ -11,14 +11,8 @@ use Phpactor\Extension\Rpc\Response;
  */
 class ReturnResponse implements Response
 {
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    private function __construct($value)
+    private function __construct(private $value)
     {
-        $this->value = $value;
     }
 
     public function name(): string

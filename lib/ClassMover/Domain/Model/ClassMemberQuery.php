@@ -17,17 +17,13 @@ final class ClassMemberQuery
         self::TYPE_PROPERTY
     ];
 
-    private ?Class_ $class;
-
-    private ?MemberName $memberName;
-
     private ?string $type;
 
-    private function __construct(Class_ $class = null, MemberName $memberName = null, string $type = null)
-    {
-        $this->class = $class;
-        $this->memberName = $memberName;
-
+    private function __construct(
+        private ?Class_ $class = null,
+        private ?MemberName $memberName = null,
+        string $type = null
+    ) {
         if (null !== $type && false === in_array($type, $this->validTypes)) {
             throw new InvalidArgumentException(sprintf(
                 'Invalid member type "%s", valid types: "%s"',

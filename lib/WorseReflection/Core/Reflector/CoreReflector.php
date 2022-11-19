@@ -30,14 +30,8 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollec
 
 class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionReflector, ConstantReflector
 {
-    private SourceCodeReflector $sourceReflector;
-
-    private SourceCodeLocator $sourceLocator;
-
-    public function __construct(SourceCodeReflector $sourceReflector, SourceCodeLocator $sourceLocator)
+    public function __construct(private SourceCodeReflector $sourceReflector, private SourceCodeLocator $sourceLocator)
     {
-        $this->sourceReflector = $sourceReflector;
-        $this->sourceLocator = $sourceLocator;
     }
 
     /**

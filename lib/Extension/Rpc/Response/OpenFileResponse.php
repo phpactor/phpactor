@@ -18,20 +18,12 @@ class OpenFileResponse implements Response
         self::TARGET_NEW_TAB
     ];
 
-    private string $path;
-
-    private int $offset;
-
-    private bool $forceReload;
-
-    private string $target;
-
-    private function __construct(string $path, int $offset = 0, bool $forceReload = false, string $target = self::TARGET_FOCUSED_WINDOW)
-    {
-        $this->path = $path;
-        $this->offset = $offset;
-        $this->forceReload = $forceReload;
-        $this->target = $target;
+    private function __construct(
+        private string $path,
+        private int $offset = 0,
+        private bool $forceReload = false,
+        private string $target = self::TARGET_FOCUSED_WINDOW
+    ) {
     }
 
     public static function fromPath(string $path): OpenFileResponse

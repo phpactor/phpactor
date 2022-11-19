@@ -12,11 +12,8 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFro
 
 class MemberAccessExpressionResolver implements Resolver
 {
-    private NodeContextFromMemberAccess $nodeContextFromMemberAccess;
-
-    public function __construct(NodeContextFromMemberAccess $nodeContextFromMemberAccess)
+    public function __construct(private NodeContextFromMemberAccess $nodeContextFromMemberAccess)
     {
-        $this->nodeContextFromMemberAccess = $nodeContextFromMemberAccess;
     }
 
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext

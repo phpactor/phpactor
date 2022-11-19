@@ -17,14 +17,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class CandidateFinder
 {
-    private SearchClient $client;
-
-    private Reflector $reflector;
-
-    public function __construct(Reflector $reflector, SearchClient $client)
+    public function __construct(private Reflector $reflector, private SearchClient $client)
     {
-        $this->client = $client;
-        $this->reflector = $reflector;
     }
 
     public function unresolved(TextDocumentItem $item): NameWithByteOffsets

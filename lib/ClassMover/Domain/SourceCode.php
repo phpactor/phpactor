@@ -7,11 +7,8 @@ use InvalidArgumentException;
 
 class SourceCode
 {
-    private $source;
-
-    public function __construct(string $source)
+    public function __construct(private string $source)
     {
-        $this->source = $source;
     }
 
     public function __toString()

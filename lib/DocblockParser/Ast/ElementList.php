@@ -17,16 +17,10 @@ class ElementList extends Node implements IteratorAggregate
     ];
 
     /**
-     * @var T[]
-     */
-    public array $elements;
-
-    /**
      * @param T[] $elements
      */
-    public function __construct(array $elements)
+    public function __construct(public array $elements)
     {
-        $this->elements = $elements;
     }
 
     /**

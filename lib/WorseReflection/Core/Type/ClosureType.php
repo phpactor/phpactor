@@ -9,20 +9,14 @@ use Phpactor\WorseReflection\Core\Type;
 
 class ClosureType extends ReflectedClassType implements ClassNamedType, InvokeableType
 {
-    /**
-     * @var Type[]
-     */
-    private array $args;
-
     private Type $returnType;
 
     /**
      * @param Type[] $args
      */
-    public function __construct(ClassReflector $reflector, array $args = [], ?Type $returnType = null)
+    public function __construct(ClassReflector $reflector, private array $args = [], ?Type $returnType = null)
     {
         parent::__construct($reflector, ClassName::fromString('Closure'));
-        $this->args = $args;
         $this->returnType = $returnType ?? new MissingType();
     }
 

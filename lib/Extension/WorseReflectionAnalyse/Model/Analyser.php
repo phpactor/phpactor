@@ -14,14 +14,8 @@ use Throwable;
 
 class Analyser
 {
-    private SourceCodeReflector $reflector;
-
-    private FilesystemRegistry $filesystem;
-
-    public function __construct(FilesystemRegistry $filesystem, SourceCodeReflector $reflector)
+    public function __construct(private FilesystemRegistry $filesystem, private SourceCodeReflector $reflector)
     {
-        $this->reflector = $reflector;
-        $this->filesystem = $filesystem;
     }
 
     /**

@@ -9,11 +9,8 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class Complete
 {
-    private TypedCompletorRegistry $registry;
-
-    public function __construct(TypedCompletorRegistry $registry)
+    public function __construct(private TypedCompletorRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function complete(string $source, int $offset, string $type = 'php'): array

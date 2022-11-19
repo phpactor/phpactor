@@ -7,18 +7,11 @@ use Phpactor\Container\Container;
 
 class DocumentorRegistry
 {
-    /** @var array<string> */
-    private array $documentors;
-
-    private Container $container;
-
     /**
      * @param array<string> $documentors
      */
-    public function __construct(Container $container, array $documentors)
+    public function __construct(private Container $container, private array $documentors)
     {
-        $this->documentors = $documentors;
-        $this->container = $container;
     }
 
     public function get(string $string): Documentor

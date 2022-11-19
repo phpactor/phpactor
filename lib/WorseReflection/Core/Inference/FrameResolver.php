@@ -14,30 +14,15 @@ use RuntimeException;
 
 final class FrameResolver
 {
-    private NodeContextResolver $nodeContextResolver;
-
-    /**
-     * @var Walker[]
-     */
-    private array $globalWalkers;
-
-    /**
-     * @var array<class-string,Walker[]>
-     */
-    private array $nodeWalkers;
-
     /**
      * @param Walker[] $globalWalkers
      * @param array<class-string,Walker[]> $nodeWalkers
      */
     public function __construct(
-        NodeContextResolver $nodeContextResolver,
-        array $globalWalkers,
-        array $nodeWalkers
+        private NodeContextResolver $nodeContextResolver,
+        private array $globalWalkers,
+        private array $nodeWalkers
     ) {
-        $this->nodeContextResolver = $nodeContextResolver;
-        $this->globalWalkers = $globalWalkers;
-        $this->nodeWalkers = $nodeWalkers;
     }
 
     /**

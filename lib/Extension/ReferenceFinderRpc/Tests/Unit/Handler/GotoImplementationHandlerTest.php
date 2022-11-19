@@ -56,16 +56,10 @@ class GotoImplementationHandlerTest extends TestCase
     {
         $locator = new class($locations) implements ClassImplementationFinder {
             /**
-             * @var Location[]
-             */
-            private array $locations;
-
-            /**
              * @param Location[] $locations
              */
-            public function __construct(array $locations)
+            public function __construct(private array $locations)
             {
-                $this->locations = $locations;
             }
 
             public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations

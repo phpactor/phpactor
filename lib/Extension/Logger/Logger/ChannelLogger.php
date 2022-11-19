@@ -7,14 +7,8 @@ use Psr\Log\LoggerInterface;
 
 class ChannelLogger extends AbstractLogger
 {
-    private LoggerInterface $innerLogger;
-
-    private string $name;
-
-    public function __construct(string $name, LoggerInterface $innerLogger)
+    public function __construct(private string $name, private LoggerInterface $innerLogger)
     {
-        $this->innerLogger = $innerLogger;
-        $this->name = $name;
     }
 
     public function log($level, $message, array $context = []): void

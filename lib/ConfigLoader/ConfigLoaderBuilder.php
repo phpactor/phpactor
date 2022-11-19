@@ -11,6 +11,7 @@ use Phpactor\ConfigLoader\Core\Deserializer;
 use Phpactor\ConfigLoader\Core\Deserializers;
 use Phpactor\ConfigLoader\Core\PathCandidate;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use XdgBaseDir\Xdg;
 
 class ConfigLoaderBuilder
 {
@@ -43,7 +44,7 @@ class ConfigLoaderBuilder
 
     public function addXdgCandidate(string $appName, string $name, string $loader)
     {
-        $this->candidates[] = new XdgPathCandidate($appName, $name, $loader);
+        $this->candidates[] = new XdgPathCandidate($appName, $name, $loader, new Xdg());
         return $this;
     }
 

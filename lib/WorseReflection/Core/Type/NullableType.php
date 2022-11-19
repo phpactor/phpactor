@@ -9,11 +9,8 @@ use Phpactor\WorseReflection\Core\Types;
 
 final class NullableType extends Type implements HasEmptyType
 {
-    public Type $type;
-
-    public function __construct(Type $type)
+    public function __construct(public Type $type)
     {
-        $this->type = $type;
     }
 
     public function __toString(): string

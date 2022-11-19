@@ -27,15 +27,12 @@ class FileSearchIndex implements SearchIndex
      */
     private $subjects = [];
 
-    private string $path;
-
     private int $counter = 0;
 
     private bool $dirty = false;
 
-    public function __construct(string $path)
+    public function __construct(private string $path)
     {
-        $this->path = $path;
     }
 
 

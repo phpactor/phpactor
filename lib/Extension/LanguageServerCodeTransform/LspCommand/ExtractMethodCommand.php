@@ -19,20 +19,11 @@ class ExtractMethodCommand implements Command
     public const NAME  = 'extract_method';
     public const DEFAULT_METHOD_NAME  = 'newMethod';
 
-    private ExtractMethod $extractMethod;
-
-    private ClientApi $clientApi;
-
-    private Workspace $workspace;
-
     public function __construct(
-        ClientApi $clientApi,
-        Workspace $workspace,
-        ExtractMethod $extractMethod
+        private ClientApi $clientApi,
+        private Workspace $workspace,
+        private ExtractMethod $extractMethod
     ) {
-        $this->extractMethod = $extractMethod;
-        $this->clientApi = $clientApi;
-        $this->workspace = $workspace;
     }
 
     /**

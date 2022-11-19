@@ -10,19 +10,10 @@ use Phpactor\LanguageServerProtocol\Diagnostic;
 class TestLinter implements Linter
 {
     /**
-     * @var array<Diagnostic>
-     */
-    private array $diagnostics;
-
-    private int $delay;
-
-    /**
      * @param array<Diagnostic> $diagnostics
      */
-    public function __construct(array $diagnostics, int $delay)
+    public function __construct(private array $diagnostics, private int $delay)
     {
-        $this->diagnostics = $diagnostics;
-        $this->delay = $delay;
     }
 
     public function lint(string $url, ?string $text): Promise

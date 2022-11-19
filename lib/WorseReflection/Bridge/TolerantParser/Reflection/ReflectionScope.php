@@ -18,14 +18,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class ReflectionScope implements CoreReflectionScope
 {
-    private Node $node;
-
-    private Reflector $reflector;
-
-    public function __construct(Reflector $reflector, Node $node)
+    public function __construct(private Reflector $reflector, private Node $node)
     {
-        $this->node = $node;
-        $this->reflector = $reflector;
     }
 
     /**

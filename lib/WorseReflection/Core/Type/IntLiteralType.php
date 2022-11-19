@@ -9,11 +9,8 @@ class IntLiteralType extends IntType implements Literal, Generalizable
 {
     use LiteralTrait;
 
-    public int $value;
-
-    public function __construct(int $value)
+    public function __construct(public int $value)
     {
-        $this->value = $value;
     }
 
     public function __toString(): string

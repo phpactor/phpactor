@@ -12,11 +12,8 @@ use function Amp\call;
 
 class TraceMiddleware implements Middleware
 {
-    private LoggerInterface $logger;
-
-    public function __construct(LoggerInterface $logger)
+    public function __construct(private LoggerInterface $logger)
     {
-        $this->logger = $logger;
     }
 
     public function process(Message $request, RequestHandler $handler): Promise

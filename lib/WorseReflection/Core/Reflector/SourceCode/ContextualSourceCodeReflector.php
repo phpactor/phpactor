@@ -16,14 +16,10 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeColle
 
 class ContextualSourceCodeReflector implements SourceCodeReflector
 {
-    private SourceCodeReflector $innerReflector;
-
-    private TemporarySourceLocator $locator;
-
-    public function __construct(SourceCodeReflector $innerReflector, TemporarySourceLocator $locator)
-    {
-        $this->innerReflector = $innerReflector;
-        $this->locator = $locator;
+    public function __construct(
+        private SourceCodeReflector $innerReflector,
+        private TemporarySourceLocator $locator
+    ) {
     }
 
     public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection

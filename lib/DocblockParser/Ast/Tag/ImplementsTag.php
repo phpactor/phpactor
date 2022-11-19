@@ -13,20 +13,11 @@ class ImplementsTag extends TagNode
         'tokensAndTypes',
     ];
 
-    public Token $tag;
-
-    /**
-     * @var array<array-key, Token|TypeNode>
-     */
-    public array $tokensAndTypes;
-
     /**
      * @param array<array-key, Token|TypeNode> $tokensAndTypes
      */
-    public function __construct(Token $tag, array $tokensAndTypes = [])
+    public function __construct(public Token $tag, public array $tokensAndTypes = [])
     {
-        $this->tag = $tag;
-        $this->tokensAndTypes = $tokensAndTypes;
     }
 
     /**

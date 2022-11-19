@@ -11,12 +11,8 @@ use RuntimeException;
 
 class ClassToFileNameToUriConverter implements NameToUriConverter
 {
-    private ClassToFile $classToFile;
-
-    public function __construct(
-        ClassToFile $classToFile
-    ) {
-        $this->classToFile = $classToFile;
+    public function __construct(private ClassToFile $classToFile)
+    {
     }
 
 

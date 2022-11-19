@@ -12,14 +12,10 @@ use Twig\TwigFunction;
 
 class TwigExtension extends AbstractExtension
 {
-    private TextFormat $textFormat;
-
-    private WorseTypeRenderer $typeRenderer;
-
-    public function __construct(TextFormat $textFormat = null, WorseTypeRenderer $typeRenderer)
-    {
-        $this->textFormat = $textFormat ?: new TextFormat('    ');
-        $this->typeRenderer = $typeRenderer;
+    public function __construct(
+        private TextFormat $textFormat,
+        private WorseTypeRenderer $typeRenderer
+    ) {
     }
 
     /**

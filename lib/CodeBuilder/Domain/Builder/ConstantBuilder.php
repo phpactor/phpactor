@@ -8,19 +8,13 @@ use Phpactor\CodeBuilder\Domain\Prototype\Value;
 
 class ConstantBuilder extends AbstractBuilder implements NamedBuilder
 {
-    protected string $name;
-
     /**
      * @var mixed
      */
     protected $value;
 
-    private ClassBuilder $parent;
-
-    public function __construct(ClassLikeBuilder $parent, string $name, $value)
+    public function __construct(private ClassLikeBuilder $parent, protected string $name, $value)
     {
-        $this->parent = $parent;
-        $this->name = $name;
         $this->value = Value::fromValue($value);
     }
 

@@ -27,7 +27,8 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
     public function provideComplete(): Generator
     {
         yield 'new class instance' => [
-            '<?php class Foobar { public function __construct(int $cparam) {} } :int {}; new Foo<>', [
+            '<?php class Foobar { public function __construct(int $cparam) {} } :int {}; new Foo<>',
+ [
                 [
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'Foobar',

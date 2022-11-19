@@ -16,16 +16,10 @@ class TypeList extends Node implements IteratorAggregate, Countable
     ];
 
     /**
-     * @var array<Token|TypeNode>
-     */
-    public array $list;
-
-    /**
      * @param array<Token|TypeNode> $list
      */
-    public function __construct(array $list)
+    public function __construct(public array $list)
     {
-        $this->list = $list;
     }
 
     /**

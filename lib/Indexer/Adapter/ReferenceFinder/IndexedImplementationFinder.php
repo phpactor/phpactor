@@ -23,20 +23,14 @@ use Phpactor\WorseReflection\Reflector;
 
 class IndexedImplementationFinder implements ClassImplementationFinder
 {
-    private Reflector $reflector;
-
-    private QueryClient $query;
-
     private ContainerTypeResolver $containerTypeResolver;
 
-    private bool $deepReferences;
-
-    public function __construct(QueryClient $query, Reflector $reflector, bool $deepReferences = true)
-    {
-        $this->reflector = $reflector;
-        $this->query = $query;
+    public function __construct(
+        private QueryClient $query,
+        private Reflector $reflector,
+        private bool $deepReferences = true
+    ) {
         $this->containerTypeResolver = new ContainerTypeResolver($reflector);
-        $this->deepReferences = $deepReferences;
     }
 
     /**

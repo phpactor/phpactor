@@ -21,11 +21,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionTypeLocator implements TypeLocator
 {
-    private Reflector $reflector;
-
-    public function __construct(Reflector $reflector)
+    public function __construct(private Reflector $reflector)
     {
-        $this->reflector = $reflector;
     }
 
 

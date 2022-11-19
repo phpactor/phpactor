@@ -9,13 +9,10 @@ use Phpactor\CodeBuilder\Domain\Prototype\InterfacePrototype;
 
 class InterfaceUpdater
 {
-    private Renderer $renderer;
-
     private InterfaceMethodUpdater $methodUpdater;
 
-    public function __construct(Renderer $renderer)
+    public function __construct(private Renderer $renderer)
     {
-        $this->renderer = $renderer;
         $this->methodUpdater = new InterfaceMethodUpdater($renderer);
     }
 

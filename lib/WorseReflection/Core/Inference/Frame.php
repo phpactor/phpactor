@@ -16,16 +16,9 @@ class Frame
     private Problems $problems;
 
     /**
-     * @var Frame
-     */
-    private ?Frame $parent = null;
-
-    /**
      * @var Frame[]
      */
     private array $children = [];
-
-    private string $name;
 
     private ?Type $returnType = null;
 
@@ -34,18 +27,16 @@ class Frame
     private VarDocBuffer $varDocBuffer;
 
     public function __construct(
-        string $name,
+        private string $name,
         LocalAssignments $locals = null,
         PropertyAssignments $properties = null,
         Problems $problems = null,
-        Frame $parent = null
+        private ?Frame $parent = null
     ) {
         $this->properties = $properties ?: PropertyAssignments::create();
         $this->locals = $locals ?: LocalAssignments::create();
         $this->problems = $problems ?: Problems::create();
         $this->varDocBuffer = new VarDocBuffer();
-        $this->parent = $parent;
-        $this->name = $name;
     }
 
     public function __toString(): string

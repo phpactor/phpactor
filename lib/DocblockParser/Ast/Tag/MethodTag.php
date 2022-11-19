@@ -21,40 +21,16 @@ class MethodTag extends TagNode
         'text'
     ];
 
-    public ?TypeNode $type;
-
-    public ?Token $name;
-
-    public ?Token $static;
-
-    public ?ParameterList $parameters;
-
-    public ?TextNode $text;
-
-    public ?Token $parenOpen;
-
-    public ?Token $parenClose;
-
-    public ?Token $tag;
-
     public function __construct(
-        ?Token $tag,
-        ?TypeNode $type,
-        ?Token $name,
-        ?Token $static,
-        ?Token $parenOpen,
-        ?ParameterList $parameters,
-        ?Token $parenClose,
-        ?TextNode $text
+        public ?Token $tag,
+        public ?TypeNode $type,
+        public ?Token $name,
+        public ?Token $static,
+        public ?Token $parenOpen,
+        public ?ParameterList $parameters,
+        public ?Token $parenClose,
+        public ?TextNode $text
     ) {
-        $this->type = $type;
-        $this->name = $name;
-        $this->static = $static;
-        $this->parameters = $parameters;
-        $this->text = $text;
-        $this->parenOpen = $parenOpen;
-        $this->parenClose = $parenClose;
-        $this->tag = $tag;
     }
 
     public function methodName(): ?string

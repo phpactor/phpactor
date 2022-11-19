@@ -6,17 +6,11 @@ use Phpactor\WorseReflection\Core\Visibility;
 
 class TraitAlias
 {
-    private $originalName;
-
-    private $visiblity;
-
-    private $newName;
-
-    public function __construct(string $originalName, Visibility $visiblity = null, string $newName)
-    {
-        $this->originalName = $originalName;
-        $this->visiblity = $visiblity;
-        $this->newName = $newName;
+    public function __construct(
+        private string $originalName,
+        private ?Visibility $visiblity = null,
+        private string $newName
+    ) {
     }
 
     public function originalName(): string

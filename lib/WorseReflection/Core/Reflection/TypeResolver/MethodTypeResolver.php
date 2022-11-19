@@ -11,11 +11,8 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 
 class MethodTypeResolver
 {
-    private ReflectionMethod $method;
-
-    public function __construct(ReflectionMethod $method)
+    public function __construct(private ReflectionMethod $method)
     {
-        $this->method = $method;
     }
 
     public function resolve(ReflectionClassLike $contextClass): Type

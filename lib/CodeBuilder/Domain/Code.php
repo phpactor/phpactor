@@ -4,11 +4,8 @@ namespace Phpactor\CodeBuilder\Domain;
 
 class Code
 {
-    private $code;
-
-    private function __construct(string $code)
+    private function __construct(private string $code)
     {
-        $this->code = $code;
     }
 
     public function __toString()

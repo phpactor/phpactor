@@ -12,11 +12,8 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class WorkspaceTextDocumentLocator implements TextDocumentLocator
 {
-    private PhpactorWorkspace $workspace;
-
-    public function __construct(PhpactorWorkspace $workspace)
+    public function __construct(private PhpactorWorkspace $workspace)
     {
-        $this->workspace = $workspace;
     }
 
     public function get(TextDocumentUri $uri): TextDocument

@@ -10,16 +10,13 @@ use RuntimeException;
 
 class SymfonyDiContextClassResolver implements ContextClassResolver
 {
-    private string $xmlPath;
-
     /**
      * @var array<string,string>
      */
     private ?array $index = null;
 
-    public function __construct(string $xmlPath)
+    public function __construct(private string $xmlPath)
     {
-        $this->xmlPath = $xmlPath;
     }
 
     public function resolve(string $className): string

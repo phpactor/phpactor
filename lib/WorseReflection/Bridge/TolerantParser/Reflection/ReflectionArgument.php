@@ -20,17 +20,11 @@ use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 
 class ReflectionArgument implements CoreReflectionArgument
 {
-    private ServiceLocator $services;
-
-    private ArgumentExpression $node;
-
-    private Frame $frame;
-
-    public function __construct(ServiceLocator $services, Frame $frame, ArgumentExpression $node)
-    {
-        $this->services = $services;
-        $this->node = $node;
-        $this->frame = $frame;
+    public function __construct(
+        private ServiceLocator $services,
+        private Frame $frame,
+        private ArgumentExpression $node
+    ) {
     }
 
     public function guessName(): string

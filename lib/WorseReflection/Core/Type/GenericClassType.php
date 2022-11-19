@@ -12,17 +12,11 @@ use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
 class GenericClassType extends ReflectedClassType implements IterableType, ClassNamedType
 {
     /**
-     * @var Type[]
-     */
-    public array $arguments;
-
-    /**
      * @param Type[] $arguments
      */
-    public function __construct(ClassReflector $reflector, ClassName $name, array $arguments)
+    public function __construct(ClassReflector $reflector, ClassName $name, public array $arguments)
     {
         parent::__construct($reflector, $name);
-        $this->arguments = $arguments;
     }
 
     public function __toString(): string

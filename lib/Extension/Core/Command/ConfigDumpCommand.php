@@ -13,26 +13,13 @@ use Symfony\Component\Console\Terminal;
 
 class ConfigDumpCommand extends Command
 {
-    private array $config;
-
-    private DumperRegistry $registry;
-
-    private PathCandidates $paths;
-
-    private Expanders $expanders;
-
     public function __construct(
-        array $config,
-        DumperRegistry $registry,
-        PathCandidates $paths,
-        Expanders $expanders
+        private array $config,
+        private DumperRegistry $registry,
+        private PathCandidates $paths,
+        private Expanders $expanders
     ) {
         parent::__construct();
-
-        $this->config = $config;
-        $this->registry = $registry;
-        $this->paths = $paths;
-        $this->expanders = $expanders;
     }
 
     public function configure(): void

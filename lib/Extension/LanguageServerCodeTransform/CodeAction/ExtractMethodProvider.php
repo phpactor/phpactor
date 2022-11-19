@@ -19,11 +19,8 @@ class ExtractMethodProvider implements CodeActionProvider
 {
     public const KIND = 'refactor.extract.method';
 
-    private ExtractMethod $extractMethod;
-
-    public function __construct(ExtractMethod $extractMethod)
+    public function __construct(private ExtractMethod $extractMethod)
     {
-        $this->extractMethod = $extractMethod;
     }
 
 

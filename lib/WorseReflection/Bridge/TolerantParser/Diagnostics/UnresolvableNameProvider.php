@@ -28,11 +28,8 @@ use Phpactor\WorseReflection\Core\SourceCode;
 
 class UnresolvableNameProvider implements DiagnosticProvider
 {
-    private bool $importGlobals;
-
-    public function __construct(bool $importGlobals)
+    public function __construct(private bool $importGlobals)
     {
-        $this->importGlobals = $importGlobals;
     }
 
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable

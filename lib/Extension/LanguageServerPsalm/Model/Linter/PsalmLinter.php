@@ -11,11 +11,8 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class PsalmLinter implements Linter
 {
-    private PsalmProcess $process;
-
-    public function __construct(PsalmProcess $process)
+    public function __construct(private PsalmProcess $process)
     {
-        $this->process = $process;
     }
 
     public function lint(string $url, ?string $text): Promise

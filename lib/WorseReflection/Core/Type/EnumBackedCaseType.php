@@ -8,17 +8,8 @@ use Phpactor\WorseReflection\Core\Type;
 
 class EnumBackedCaseType extends Type implements ClassNamedType
 {
-    public ClassType $enumType;
-
-    public string $name;
-
-    public Type $value;
-
-    public function __construct(ClassType $enumType, string $name, Type $value)
+    public function __construct(public ClassType $enumType, public string $name, public Type $value)
     {
-        $this->enumType = $enumType;
-        $this->name = $name;
-        $this->value = $value;
     }
 
     public function __toString(): string

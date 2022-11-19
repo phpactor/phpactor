@@ -29,20 +29,11 @@ class ImportClassHandler extends AbstractHandler
     const PARAM_QUALIFIED_NAME = 'qualified_name';
     const NAME = 'import_class';
 
-    private ImportName $nameImport;
-
-    private ClassSearch $classSearch;
-
-    private string $filesystem;
-
     public function __construct(
-        ImportName $nameImport,
-        ClassSearch $classSearch,
-        string $filesystem
+        private ImportName $nameImport,
+        private ClassSearch $classSearch,
+        private string $filesystem
     ) {
-        $this->nameImport = $nameImport;
-        $this->classSearch = $classSearch;
-        $this->filesystem = $filesystem;
     }
 
     public function name(): string

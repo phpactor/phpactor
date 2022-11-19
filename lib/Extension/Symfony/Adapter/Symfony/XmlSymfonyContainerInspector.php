@@ -13,15 +13,12 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class XmlSymfonyContainerInspector implements SymfonyContainerInspector
 {
-    private string $xmlPath;
-
     private int $mtime;
 
     private ?DOMXPath $cache = null;
 
-    public function __construct(string $xmlPath)
+    public function __construct(private string $xmlPath)
     {
-        $this->xmlPath = $xmlPath;
     }
 
     public function services(): array

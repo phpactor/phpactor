@@ -15,16 +15,10 @@ use Traversable;
 class NavigatorElementCollection implements IteratorAggregate
 {
     /**
-     * @var T[]
-     */
-    private array $elements;
-
-    /**
      * @param array<T> $elements
      */
-    public function __construct(array $elements)
+    public function __construct(private array $elements)
     {
-        $this->elements = $elements;
     }
 
     /**

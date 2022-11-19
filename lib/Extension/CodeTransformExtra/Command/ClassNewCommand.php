@@ -17,17 +17,11 @@ use Phpactor\Extension\Core\Console\Handler\FormatHandler;
 
 class ClassNewCommand extends Command
 {
-    private DumperRegistry $dumperRegistry;
-
-    private ClassNew $classNew;
-
     public function __construct(
-        ClassNew $classNew,
-        DumperRegistry $dumperRegistry
+        private ClassNew $classNew,
+        private DumperRegistry $dumperRegistry
     ) {
         parent::__construct();
-        $this->dumperRegistry = $dumperRegistry;
-        $this->classNew = $classNew;
     }
 
     public function configure(): void

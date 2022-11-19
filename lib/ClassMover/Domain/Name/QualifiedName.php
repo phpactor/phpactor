@@ -6,14 +6,14 @@ use InvalidArgumentException;
 
 class QualifiedName
 {
-    protected $parts;
-
-    protected function __construct(array $parts)
+    /**
+     * @param string[] $parts
+     */
+    protected function __construct(protected array $parts)
     {
-        $this->parts = $parts;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return implode('\\', $this->parts);
     }
@@ -23,7 +23,7 @@ class QualifiedName
         return new static([]);
     }
 
-    public function isEqualTo(QualifiedName $name)
+    public function isEqualTo(QualifiedName $name): bool
     {
         return $name->__toString() == $this->__toString();
     }
@@ -82,12 +82,15 @@ class QualifiedName
         return new self(array_reverse(array_filter($newParts)));
     }
 
-    public function parts()
+    /**
+     * @return string[]
+     */
+    public function parts(): array
     {
         return $this->parts;
     }
 
-    public function isAlone()
+    public function isAlone(): bool
     {
         return count($this->parts) === 1;
     }

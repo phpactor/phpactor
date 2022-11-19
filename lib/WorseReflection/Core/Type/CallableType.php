@@ -8,19 +8,13 @@ use Phpactor\WorseReflection\Core\Type;
 
 class CallableType extends PrimitiveType implements InvokeableType
 {
-    /**
-     * @var Type[]
-     */
-    private array $args;
-
     private Type $returnType;
 
     /**
      * @param Type[] $args
      */
-    public function __construct(array $args = [], ?Type $returnType = null)
+    public function __construct(private array $args = [], ?Type $returnType = null)
     {
-        $this->args = $args;
         $this->returnType = $returnType ?? new MissingType();
     }
 

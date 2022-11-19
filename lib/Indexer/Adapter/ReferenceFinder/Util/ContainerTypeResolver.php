@@ -8,11 +8,8 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
 class ContainerTypeResolver
 {
-    private ClassReflector $reflector;
-
-    public function __construct(ClassReflector $reflector)
+    public function __construct(private ClassReflector $reflector)
     {
-        $this->reflector = $reflector;
     }
 
     /**

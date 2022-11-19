@@ -12,12 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DebugContainerCommand extends Command
 {
-    private Container $container;
-
-    public function __construct(Container $container)
+    public function __construct(private Container $container)
     {
         parent::__construct();
-        $this->container = $container;
     }
 
     protected function configure(): void

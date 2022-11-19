@@ -16,15 +16,12 @@ use RuntimeException;
 
 class ClassTransformCommand extends Command
 {
-    private Transformer $transformer;
-
     private Differ $differ;
 
     public function __construct(
-        Transformer $transformer
+        private Transformer $transformer
     ) {
         parent::__construct();
-        $this->transformer = $transformer;
         $this->differ = new Differ();
     }
 

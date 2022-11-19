@@ -8,11 +8,8 @@ class VariableNode extends Node
         'name'
     ];
 
-    public Token $name;
-
-    public function __construct(Token $name)
+    public function __construct(public Token $name)
     {
-        $this->name = $name;
     }
 
     public function name(): Token

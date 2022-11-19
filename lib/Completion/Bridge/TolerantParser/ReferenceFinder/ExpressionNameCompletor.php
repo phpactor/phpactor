@@ -18,16 +18,12 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class ExpressionNameCompletor extends CoreNameSearcherCompletor implements TolerantCompletor
 {
-    private ObjectFormatter $snippetFormatter;
-
     public function __construct(
         NameSearcher $nameSearcher,
-        ObjectFormatter $snippetFormatter,
+        private ObjectFormatter $snippetFormatter,
         DocumentPrioritizer $prioritizer = null
     ) {
         parent::__construct($nameSearcher, $prioritizer);
-
-        $this->snippetFormatter = $snippetFormatter;
     }
 
 

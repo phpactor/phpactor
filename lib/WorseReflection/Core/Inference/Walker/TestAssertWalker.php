@@ -22,11 +22,8 @@ use RuntimeException;
 
 class TestAssertWalker implements Walker
 {
-    private TestCase $testCase;
-
-    public function __construct(TestCase $testCase)
+    public function __construct(private TestCase $testCase)
     {
-        $this->testCase = $testCase;
     }
 
     public function nodeFqns(): array

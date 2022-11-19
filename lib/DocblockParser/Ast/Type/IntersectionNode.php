@@ -11,10 +11,7 @@ class IntersectionNode extends TypeNode
         'types',
     ];
 
-    public TypeList $types;
-
-    public function __construct(TypeList $types)
+    public function __construct(public TypeList $types)
     {
-        $this->types = $types;
     }
 }

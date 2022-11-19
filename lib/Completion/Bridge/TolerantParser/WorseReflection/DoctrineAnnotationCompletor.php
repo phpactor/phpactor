@@ -20,18 +20,14 @@ use Phpactor\WorseReflection\Reflector;
 
 class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Completor
 {
-    private Reflector $reflector;
-
     private Parser $parser;
 
     public function __construct(
         NameSearcher $nameSearcher,
-        Reflector $reflector,
+        private Reflector $reflector,
         Parser $parser = null
     ) {
         parent::__construct($nameSearcher, null);
-
-        $this->reflector = $reflector;
         $this->parser = $parser ?: new Parser();
     }
 

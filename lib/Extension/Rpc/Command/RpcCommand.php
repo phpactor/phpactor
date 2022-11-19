@@ -14,28 +14,13 @@ use InvalidArgumentException;
 
 class RpcCommand extends Command
 {
-    private RequestHandler $handler;
-
-    private bool $storeReplay;
-
-    private string $replayPath;
-
-    /**
-     * @var resource
-     */
-    private $inputStream;
-
     public function __construct(
-        RequestHandler $handler,
-        string $replayPath,
-        bool $storeReplay = false,
-        $inputStream = STDIN
+        private RequestHandler $handler,
+        private string $replayPath,
+        private bool $storeReplay = false,
+        private $inputStream = STDIN
     ) {
         parent::__construct();
-        $this->handler = $handler;
-        $this->storeReplay = $storeReplay;
-        $this->replayPath = $replayPath;
-        $this->inputStream = $inputStream;
     }
 
     public function configure(): void

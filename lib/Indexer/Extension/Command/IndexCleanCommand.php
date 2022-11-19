@@ -25,15 +25,9 @@ class IndexCleanCommand extends Command
     public const ARG_INDEX_NAME = 'name';
     public const OPT_CLEAN_ALL = 'all';
 
-    private string $indexDirectory;
-
-    private Filesystem $filesystem;
-
-    public function __construct(string $indexDirectory, Filesystem $filesystem)
+    public function __construct(private string $indexDirectory, private Filesystem $filesystem)
     {
         parent::__construct();
-        $this->indexDirectory = $indexDirectory;
-        $this->filesystem = $filesystem;
     }
 
     protected function configure(): void

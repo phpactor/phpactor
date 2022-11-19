@@ -100,27 +100,15 @@ use Phpactor\WorseReflection\Reflector;
 
 final class DefaultResolverFactory
 {
-    private Reflector $reflector;
-
-    private NodeToTypeConverter $nodeTypeConverter;
-
     private FunctionStubRegistry $functionStubRegistry;
 
-    private NodeContextFromMemberAccess $nodeContextFromMemberAccess;
-
-    private GenericMapResolver $genericResolver;
-
     public function __construct(
-        Reflector $reflector,
-        NodeToTypeConverter $nodeTypeConverter,
-        GenericMapResolver $genericResolver,
-        NodeContextFromMemberAccess $nodeContextFromMemberAccess
+        private Reflector $reflector,
+        private NodeToTypeConverter $nodeTypeConverter,
+        private GenericMapResolver $genericResolver,
+        private NodeContextFromMemberAccess $nodeContextFromMemberAccess
     ) {
-        $this->reflector = $reflector;
-        $this->nodeTypeConverter = $nodeTypeConverter;
         $this->functionStubRegistry = $this->createStubRegistry();
-        $this->nodeContextFromMemberAccess = $nodeContextFromMemberAccess;
-        $this->genericResolver = $genericResolver;
     }
 
     /**

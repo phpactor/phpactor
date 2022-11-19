@@ -28,14 +28,8 @@ use Exception;
 
 class TolerantVariableReferenceFinder implements ReferenceFinder
 {
-    private Parser $parser;
-
-    private bool $includeDefinition;
-
-    public function __construct(Parser $parser, bool $includeDefinition = false)
+    public function __construct(private Parser $parser, private bool $includeDefinition = false)
     {
-        $this->parser = $parser;
-        $this->includeDefinition = $includeDefinition;
     }
 
 

@@ -41,14 +41,8 @@ use function array_map;
 
 class ParsedDocblock implements DocBlock
 {
-    private ParserDocblock $node;
-
-    private TypeConverter $typeConverter;
-
-    public function __construct(ParserDocblock $node, TypeConverter $typeConverter)
+    public function __construct(private ParserDocblock $node, private TypeConverter $typeConverter)
     {
-        $this->node = $node;
-        $this->typeConverter = $typeConverter;
     }
 
 
@@ -110,7 +104,7 @@ class ParsedDocblock implements DocBlock
         $types = [];
         foreach ($this->node->tags(ParamTag::class) as $paramTag) {
             assert($paramTag instanceof ParamTag);
-            if (ltrim($paramTag->paramName(), '$') !== $paramName) {
+            if (ltrim($paramTag->paramName() ?? '', '$') !== $paramName) {
                 continue;
             }
             return $this->convertType($paramTag->type);

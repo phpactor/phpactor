@@ -4,8 +4,6 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class Property extends Prototype
 {
-    private string $name;
-
     private Visibility $visibility;
 
     private DefaultValue $defaultValue;
@@ -15,7 +13,7 @@ final class Property extends Prototype
     private Type $docType;
 
     public function __construct(
-        string $name,
+        private string $name,
         Visibility $visibility = null,
         DefaultValue $defaultValue = null,
         Type $type = null,
@@ -23,7 +21,6 @@ final class Property extends Prototype
         UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($updatePolicy);
-        $this->name = $name;
         $this->visibility = $visibility ?: Visibility::public();
         $this->defaultValue = $defaultValue ?: DefaultValue::none();
         $this->type = $type ?: Type::none();

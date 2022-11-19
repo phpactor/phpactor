@@ -19,20 +19,11 @@ use Phpactor\TextDocument\TextEdit as PhpactorTextEdit;
 
 abstract class AbstractReferenceRenamer implements Renamer
 {
-    private ReferenceFinder $referenceFinder;
-
-    private TextDocumentLocator $locator;
-
-    private Parser $parser;
-
     public function __construct(
-        ReferenceFinder $referenceFinder,
-        TextDocumentLocator $locator,
-        Parser $parser
+        private ReferenceFinder $referenceFinder,
+        private TextDocumentLocator $locator,
+        private Parser $parser
     ) {
-        $this->referenceFinder = $referenceFinder;
-        $this->locator = $locator;
-        $this->parser = $parser;
     }
 
     public function getRenameRange(TextDocument $textDocument, ByteOffset $offset): ?ByteOffsetRange

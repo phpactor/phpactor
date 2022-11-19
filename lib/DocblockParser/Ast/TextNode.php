@@ -9,16 +9,10 @@ class TextNode extends Node
     ];
 
     /**
-     * @var Token[]
-     */
-    public array $tokens;
-
-    /**
      * @param Token[] $tokens
      */
-    public function __construct(array $tokens)
+    public function __construct(public array $tokens)
     {
-        $this->tokens = $tokens;
     }
 
     public function toString(): string

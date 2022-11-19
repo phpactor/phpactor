@@ -22,8 +22,6 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
      */
     private Deferred $deferred;
 
-    private ?ClientCapabilities $clientCapabilities;
-
     /**
      * @var FileEvent[]
      */
@@ -31,10 +29,9 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
 
     private bool $running = false;
 
-    public function __construct(?ClientCapabilities $clientCapabilities)
+    public function __construct(private ?ClientCapabilities $clientCapabilities)
     {
         $this->deferred = new Deferred();
-        $this->clientCapabilities = $clientCapabilities;
     }
 
 

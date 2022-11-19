@@ -5,13 +5,10 @@ namespace Phpactor\Extension\Navigation\Navigator;
 class ChainNavigator implements Navigator
 {
     /**
-     * @var Navigator[]
+     * @param \Phpactor\Extension\Navigation\Navigator\Navigator[] $navigators
      */
-    private array $navigators;
-
-    public function __construct(array $navigators)
+    public function __construct(private array $navigators)
     {
-        $this->navigators = $navigators;
     }
 
     public function destinationsFor(string $path): array

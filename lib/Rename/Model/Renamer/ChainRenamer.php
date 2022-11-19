@@ -10,13 +10,9 @@ use Phpactor\TextDocument\TextDocument;
 
 class ChainRenamer implements Renamer
 {
-    /** @var Renamer[] */
-    private array $renamers;
-
     /** @param Renamer[] $renamers */
-    public function __construct(array $renamers)
+    public function __construct(private array $renamers)
     {
-        $this->renamers = $renamers;
     }
 
     public function getRenameRange(TextDocument $textDocument, ByteOffset $offset): ?ByteOffsetRange

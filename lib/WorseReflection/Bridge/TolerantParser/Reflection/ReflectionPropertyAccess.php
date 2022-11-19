@@ -12,18 +12,10 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 class ReflectionPropertyAccess
 {
     /**
-     * @var ScopedPropertyAccessExpression|MemberAccessExpression
-     */
-    private $node;
-
-
-    /**
      * @param ScopedPropertyAccessExpression|MemberAccessExpression $node
      */
-    public function __construct(
-        Node $node
-    ) {
-        $this->node = $node;
+    public function __construct(private Node $node)
+    {
     }
 
     public function position(): Position

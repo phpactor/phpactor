@@ -9,14 +9,8 @@ use SplFileInfo;
 
 class SearchAwareIndex implements Index
 {
-    private Index $innerIndex;
-
-    private SearchIndex $search;
-
-    public function __construct(Index $innerIndex, SearchIndex $search)
+    public function __construct(private Index $innerIndex, private SearchIndex $search)
     {
-        $this->innerIndex = $innerIndex;
-        $this->search = $search;
     }
 
     public function lastUpdate(): int

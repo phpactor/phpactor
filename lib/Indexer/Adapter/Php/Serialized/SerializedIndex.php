@@ -9,11 +9,8 @@ use SplFileInfo;
 
 class SerializedIndex implements Index
 {
-    private FileRepository $repository;
-
-    public function __construct(FileRepository $repository)
+    public function __construct(private FileRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function lastUpdate(): int

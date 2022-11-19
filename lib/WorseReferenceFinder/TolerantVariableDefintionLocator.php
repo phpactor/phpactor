@@ -15,11 +15,8 @@ use function assert;
 
 class TolerantVariableDefintionLocator implements DefinitionLocator
 {
-    private TolerantVariableReferenceFinder $finder;
-
-    public function __construct(TolerantVariableReferenceFinder $finder)
+    public function __construct(private TolerantVariableReferenceFinder $finder)
     {
-        $this->finder = $finder;
     }
 
 

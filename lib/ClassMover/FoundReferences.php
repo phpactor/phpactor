@@ -8,17 +8,8 @@ use Phpactor\TextDocument\TextDocument;
 
 final class FoundReferences
 {
-    private $source;
-
-    private $name;
-
-    private $references;
-
-    public function __construct(TextDocument $source, FullyQualifiedName $name, NamespacedClassReferences $list)
+    public function __construct(private TextDocument $source, private FullyQualifiedName $name, private NamespacedClassReferences $references)
     {
-        $this->source = $source;
-        $this->name = $name;
-        $this->references = $list;
     }
 
     public function source(): TextDocument

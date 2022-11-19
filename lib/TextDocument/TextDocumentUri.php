@@ -10,14 +10,8 @@ class TextDocumentUri
     public const SCHEME_FILE = 'file';
     public const SCHEME_UNTITLED = 'untitled';
 
-    private string $scheme;
-
-    private string $path;
-
-    final private function __construct(string $scheme, string $path)
+    final private function __construct(private string $scheme, private string $path)
     {
-        $this->scheme = $scheme;
-        $this->path = $path;
     }
 
     public function __toString(): string

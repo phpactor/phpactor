@@ -8,16 +8,8 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
 class UnusedImportDiagnostic implements Diagnostic
 {
-    private ByteOffsetRange $range;
-
-    private string $name;
-
-    private function __construct(
-        ByteOffsetRange $range,
-        string $name
-    ) {
-        $this->range = $range;
-        $this->name = $name;
+    private function __construct(private ByteOffsetRange $range, private string $name)
+    {
     }
 
     public static function for(ByteOffsetRange $range, string $name): self

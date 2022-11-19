@@ -7,8 +7,6 @@ final class Method extends Prototype
     const IS_STATIC = 1;
     const IS_ABSTRACT = 2;
 
-    private string $name;
-
     private Visibility $visibility;
 
     private Parameters $parameters;
@@ -27,7 +25,7 @@ final class Method extends Prototype
     private MethodBody $methodBody;
 
     public function __construct(
-        string $name,
+        private string $name,
         Visibility $visibility = null,
         Parameters $parameters = null,
         ReturnType $returnType = null,
@@ -37,7 +35,6 @@ final class Method extends Prototype
         UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($updatePolicy);
-        $this->name = $name;
         $this->visibility = $visibility ?: Visibility::public();
         $this->parameters = $parameters ?: Parameters::empty();
         $this->returnType = $returnType ?: ReturnType::none();

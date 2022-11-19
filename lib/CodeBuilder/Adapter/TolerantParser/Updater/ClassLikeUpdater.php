@@ -17,13 +17,10 @@ use InvalidArgumentException;
 
 abstract class ClassLikeUpdater
 {
-    protected Renderer $renderer;
-
     protected ClassMethodUpdater $methodUpdater;
 
-    public function __construct(Renderer $renderer)
+    public function __construct(protected Renderer $renderer)
     {
-        $this->renderer = $renderer;
         $this->methodUpdater = new ClassMethodUpdater($renderer);
     }
 

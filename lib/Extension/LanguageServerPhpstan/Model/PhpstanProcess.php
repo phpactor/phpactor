@@ -12,24 +12,15 @@ class PhpstanProcess
 {
     private DiagnosticsParser $parser;
 
-    private string $cwd;
-
-    private LoggerInterface $logger;
-
     private string $phpstanBin;
 
-    private PhpstanConfig $config;
-
     public function __construct(
-        string $cwd,
-        PhpstanConfig $config,
-        LoggerInterface $logger,
+        private string $cwd,
+        private PhpstanConfig $config,
+        private LoggerInterface $logger,
         DiagnosticsParser $parser = null
     ) {
         $this->parser = $parser ?: new DiagnosticsParser();
-        $this->cwd = $cwd;
-        $this->logger = $logger;
-        $this->config = $config;
     }
 
     /**

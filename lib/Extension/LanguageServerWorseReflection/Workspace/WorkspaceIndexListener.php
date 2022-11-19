@@ -11,14 +11,8 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 class WorkspaceIndexListener implements ListenerProviderInterface
 {
-    /**
-     * @var WorkspaceIndex
-     */
-    private $index;
-
-    public function __construct(WorkspaceIndex $index)
+    public function __construct(private WorkspaceIndex $index)
     {
-        $this->index = $index;
     }
 
     public function getListenersForEvent(object $event): iterable

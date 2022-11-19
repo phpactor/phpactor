@@ -9,16 +9,10 @@ use Phpactor\TextDocument\TextDocument;
 class ChainCompletor implements Completor
 {
     /**
-     * @var Completor[]
-     */
-    private array $completors;
-
-    /**
      * @param Completor[] $completors
      */
-    public function __construct(array $completors)
+    public function __construct(private array $completors)
     {
-        $this->completors = $completors;
     }
 
     public function complete(TextDocument $source, ByteOffset $offset): Generator

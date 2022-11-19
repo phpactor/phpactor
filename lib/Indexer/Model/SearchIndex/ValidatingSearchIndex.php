@@ -12,17 +12,11 @@ use Psr\Log\LoggerInterface;
 
 class ValidatingSearchIndex implements SearchIndex
 {
-    private SearchIndex $innerIndex;
-
-    private IndexAccess $index;
-
-    private LoggerInterface $logger;
-
-    public function __construct(SearchIndex $innerIndex, IndexAccess $index, LoggerInterface $logger)
-    {
-        $this->innerIndex = $innerIndex;
-        $this->index = $index;
-        $this->logger = $logger;
+    public function __construct(
+        private SearchIndex $innerIndex,
+        private IndexAccess $index,
+        private LoggerInterface $logger
+    ) {
     }
 
 

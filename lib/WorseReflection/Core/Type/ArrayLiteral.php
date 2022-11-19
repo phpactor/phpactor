@@ -10,16 +10,10 @@ use Phpactor\WorseReflection\TypeUtil;
 class ArrayLiteral extends ArrayType implements Literal, Generalizable, ArrayAccessType
 {
     /**
-     * @var array<array-key,Type>
-     */
-    private array $typeMap;
-
-    /**
      * @param array<array-key,Type> $typeMap
      */
-    public function __construct(array $typeMap)
+    public function __construct(private array $typeMap)
     {
-        $this->typeMap = $typeMap;
         $this->keyType = TypeUtil::generalTypeFromTypes($this->iterableKeyTypes());
         $this->valueType = TypeUtil::generalTypeFromTypes(array_values($typeMap));
     }

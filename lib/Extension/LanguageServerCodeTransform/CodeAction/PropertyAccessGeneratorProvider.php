@@ -17,24 +17,12 @@ use function Amp\call;
 
 class PropertyAccessGeneratorProvider implements CodeActionProvider
 {
-    private string $kind;
-
-    private string $command;
-
-    private string $generatorRole;
-
-    private Reflector $reflector;
-
     public function __construct(
-        string $kind,
-        string $command,
-        string $generatorRole,
-        Reflector $reflector
+        private string $kind,
+        private string $command,
+        private string $generatorRole,
+        private Reflector $reflector
     ) {
-        $this->kind = $kind;
-        $this->command = $command;
-        $this->generatorRole = $generatorRole;
-        $this->reflector = $reflector;
     }
 
     public function kinds(): array

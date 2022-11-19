@@ -5,16 +5,10 @@ namespace Phpactor\WorseReflection\Core\Inference;
 final class FunctionStubRegistry
 {
     /**
-     * @var array<string,FunctionStub>
-     */
-    private array $functionMap;
-
-    /**
      * @param array<string,FunctionStub> $functionMap
      */
-    public function __construct(array $functionMap)
+    public function __construct(private array $functionMap)
     {
-        $this->functionMap = $functionMap;
     }
 
 

@@ -25,8 +25,6 @@ class TolerantUpdater implements Updater
 {
     private Parser $parser;
 
-    private Renderer $renderer;
-
     /**
      * @var TextEdit[]
      */
@@ -43,13 +41,12 @@ class TolerantUpdater implements Updater
     private UseStatementUpdater $useStatementUpdater;
 
     public function __construct(
-        Renderer $renderer,
+        private Renderer $renderer,
         TextFormat $textFormat = null,
         Parser $parser = null
     ) {
         $this->parser = $parser ?: new Parser();
         $this->textFormat = $textFormat ?: new TextFormat();
-        $this->renderer = $renderer;
         $this->classUpdater = new ClassUpdater($renderer);
         $this->interfaceUpdater = new InterfaceUpdater($renderer);
         $this->traitUpdater = new TraitUpdater($renderer);

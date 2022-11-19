@@ -6,14 +6,8 @@ use RuntimeException;
 
 class ConfigLoader
 {
-    private Deserializers $deserializers;
-
-    private PathCandidates $candidates;
-
-    public function __construct(Deserializers $deserializers, PathCandidates $candidates)
+    public function __construct(private Deserializers $deserializers, private PathCandidates $candidates)
     {
-        $this->deserializers = $deserializers;
-        $this->candidates = $candidates;
     }
 
     public function load(): array

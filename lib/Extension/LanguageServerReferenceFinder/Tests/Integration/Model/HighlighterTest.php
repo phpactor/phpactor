@@ -105,6 +105,7 @@ class HighlighterTest extends TestCase
 
         yield 'promoted property read' => [
             '<?php class Foobar { public function __construct(private $f<>oobar) {} function bar() { return $this->foobar; }',
+
             function (Highlights $highlights): void {
                 self::assertCount(2, $highlights);
                 self::assertEquals(DocumentHighlightKind::TEXT, $highlights->at(0)->kind);

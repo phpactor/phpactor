@@ -13,7 +13,10 @@ final class ImportedName extends Namespace_
 
     public function getShortName(): string
     {
-        return end($this->parts);
+        /** @var string $lastPart */
+        $lastPart = end($this->parts);
+
+        return $lastPart;
     }
 
     public function qualifies(QualifiedName $name)

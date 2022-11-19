@@ -8,22 +8,10 @@ use Phpactor\Indexer\Model\Record\MemberRecord;
 class MemberReference
 {
     /**
-     * @var MemberRecord::TYPE_*
-     */
-    private string $type;
-
-    private ?FullyQualifiedName $name;
-
-    private ?string $memberName;
-
-    /**
      * @param MemberRecord::TYPE_* $type
      */
-    public function __construct(string $type, ?FullyQualifiedName $name, string $memberName)
+    public function __construct(private string $type, private ?FullyQualifiedName $name, private ?string $memberName)
     {
-        $this->type = $type;
-        $this->name = $name;
-        $this->memberName = $memberName;
     }
 
     /**

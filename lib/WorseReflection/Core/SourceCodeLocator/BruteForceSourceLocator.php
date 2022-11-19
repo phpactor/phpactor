@@ -13,19 +13,13 @@ use SplFileInfo;
 
 final class BruteForceSourceLocator implements SourceCodeLocator
 {
-    private Reflector $reflector;
-
-    private string $path;
-
     /**
      * @var null|array<string,string>
      */
     private ?array $map = null;
 
-    public function __construct(Reflector $reflector, string $path)
+    public function __construct(private Reflector $reflector, private string $path)
     {
-        $this->reflector = $reflector;
-        $this->path = $path;
     }
 
     public function locate(Name $name): SourceCode

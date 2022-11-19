@@ -11,16 +11,8 @@ use Phpactor\Extension\Rpc\Response\ErrorResponse;
 
 class LoggingHandler implements RequestHandler
 {
-    private RequestHandler $requestHandler;
-
-    private LoggerInterface $logger;
-
-    public function __construct(
-        RequestHandler $requestHandler,
-        LoggerInterface $logger
-    ) {
-        $this->requestHandler = $requestHandler;
-        $this->logger = $logger;
+    public function __construct(private RequestHandler $requestHandler, private LoggerInterface $logger)
+    {
     }
 
     public function handle(Request $request): Response

@@ -13,17 +13,11 @@ use SplFileInfo;
 
 final class StubSourceLocator implements SourceCodeLocator
 {
-    private string $cacheDir;
-
-    private Reflector $reflector;
-
-    private string $stubPath;
-
-    public function __construct(Reflector $reflector, string $stubPath, string $cacheDir)
-    {
-        $this->reflector = $reflector;
-        $this->stubPath = $stubPath;
-        $this->cacheDir = $cacheDir;
+    public function __construct(
+        private Reflector $reflector,
+        private string $stubPath,
+        private string $cacheDir
+    ) {
     }
 
     public function locate(Name $name): SourceCode

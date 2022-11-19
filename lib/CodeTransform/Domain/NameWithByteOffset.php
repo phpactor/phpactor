@@ -15,13 +15,9 @@ final class NameWithByteOffset
         self::TYPE_FUNCTION
     ];
 
-    private Name $name;
-
-    private ByteOffset $byteOffset;
-
     private string $type;
 
-    public function __construct(Name $name, ByteOffset $byteOffset, string $type = self::TYPE_CLASS)
+    public function __construct(private Name $name, private ByteOffset $byteOffset, string $type = self::TYPE_CLASS)
     {
         if (!in_array($type, self::VALID_TYPES)) {
             throw new RuntimeException(sprintf(
@@ -30,9 +26,6 @@ final class NameWithByteOffset
                 implode('", "', self::VALID_TYPES)
             ));
         }
-
-        $this->name = $name;
-        $this->byteOffset = $byteOffset;
         $this->type = $type;
     }
 

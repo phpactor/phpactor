@@ -12,11 +12,8 @@ use Phpactor\TextDocument\TextDocumentLocator;
 
 class LocationConverter
 {
-    private TextDocumentLocator $locator;
-
-    public function __construct(TextDocumentLocator $locator)
+    public function __construct(private TextDocumentLocator $locator)
     {
-        $this->locator = $locator;
     }
 
     public function toLspLocations(Locations $locations): array

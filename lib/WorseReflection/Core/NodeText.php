@@ -4,11 +4,8 @@ namespace Phpactor\WorseReflection\Core;
 
 final class NodeText
 {
-    private $nodeText;
-
-    private function __construct($nodeText)
+    private function __construct(private $nodeText)
     {
-        $this->nodeText = $nodeText;
     }
 
     public function __toString()

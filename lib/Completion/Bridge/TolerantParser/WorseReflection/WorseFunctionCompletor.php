@@ -20,20 +20,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseFunctionCompletor implements TolerantCompletor
 {
-    private Reflector $reflector;
-
-    private ObjectFormatter $formatter;
-
-    private ObjectFormatter $snippetFormatter;
-
     public function __construct(
-        Reflector $reflector,
-        ObjectFormatter $formatter,
-        ObjectFormatter $snippetFormatter
+        private Reflector $reflector,
+        private ObjectFormatter $formatter,
+        private ObjectFormatter $snippetFormatter
     ) {
-        $this->reflector = $reflector;
-        $this->formatter = $formatter;
-        $this->snippetFormatter = $snippetFormatter;
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator

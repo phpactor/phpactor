@@ -15,16 +15,10 @@ use RuntimeException;
 final class EfficientLineCols
 {
     /**
-     * @var array<int,LineCol>
-     */
-    private array $positions = [];
-
-    /**
      * @param array<int,LineCol> $positions
      */
-    private function __construct(array $positions)
+    private function __construct(private array $positions)
     {
-        $this->positions = $positions;
     }
 
     /**

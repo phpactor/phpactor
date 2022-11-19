@@ -20,20 +20,15 @@ use RuntimeException;
 
 class IndexedReferenceFinder implements ReferenceFinder
 {
-    private Reflector $reflector;
-
-    private QueryClient $query;
-
     private ContainerTypeResolver $containerTypeResolver;
 
-    private bool $deepReferences;
-
-    public function __construct(QueryClient $query, Reflector $reflector, ?ContainerTypeResolver $containerTypeResolver = null, bool $deepReferences = true)
-    {
-        $this->reflector = $reflector;
-        $this->query = $query;
+    public function __construct(
+        private QueryClient $query,
+        private Reflector $reflector,
+        ?ContainerTypeResolver $containerTypeResolver = null,
+        private bool $deepReferences = true
+    ) {
         $this->containerTypeResolver = $containerTypeResolver ?: new ContainerTypeResolver($reflector);
-        $this->deepReferences = $deepReferences;
     }
 
     /**

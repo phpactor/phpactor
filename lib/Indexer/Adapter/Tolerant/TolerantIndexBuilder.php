@@ -23,30 +23,18 @@ use Psr\Log\NullLogger;
 
 final class TolerantIndexBuilder implements IndexBuilder
 {
-    private Index $index;
-
     private Parser $parser;
-
-    /**
-     * @var TolerantIndexer[]
-     */
-    private array $indexers;
-
-    private LoggerInterface $logger;
 
     /**
      * @param TolerantIndexer[] $indexers
      */
     public function __construct(
-        Index $index,
-        array $indexers,
-        LoggerInterface $logger,
+        private Index $index,
+        private array $indexers,
+        private LoggerInterface $logger,
         ?Parser $parser = null
     ) {
-        $this->index = $index;
         $this->parser = $parser ?: new Parser();
-        $this->indexers = $indexers;
-        $this->logger = $logger;
     }
 
     public static function create(Index $index, ?LoggerInterface $logger = null): self

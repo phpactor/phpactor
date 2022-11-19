@@ -16,25 +16,13 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class PropertyAccessGeneratorCommand implements Command
 {
-    private string $name;
-
-    private PropertyAccessGenerator $generateAccessor;
-
-    private ClientApi $clientApi;
-
-    private Workspace $workspace;
-
     public function __construct(
-        string $name,
-        ClientApi $clientApi,
-        Workspace $workspace,
-        PropertyAccessGenerator $generateAccessor,
+        private string $name,
+        private ClientApi $clientApi,
+        private Workspace $workspace,
+        private PropertyAccessGenerator $generateAccessor,
         string $editLabel
     ) {
-        $this->name = $name;
-        $this->generateAccessor = $generateAccessor;
-        $this->clientApi = $clientApi;
-        $this->workspace = $workspace;
         $this->editLabel = $editLabel;
     }
 

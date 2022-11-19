@@ -19,14 +19,11 @@ class WorseLocalVariableCompletor implements TolerantCompletor
 {
     private ObjectFormatter $informationFormatter;
 
-    private VariableCompletionHelper $variableCompletionHelper;
-
     public function __construct(
-        VariableCompletionHelper $variableCompletionHelper,
+        private VariableCompletionHelper $variableCompletionHelper,
         ObjectFormatter $typeFormatter = null
     ) {
         $this->informationFormatter = $typeFormatter ?: new ObjectFormatter();
-        $this->variableCompletionHelper = $variableCompletionHelper;
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator

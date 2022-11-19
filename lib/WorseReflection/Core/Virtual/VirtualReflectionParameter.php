@@ -11,44 +11,17 @@ use Phpactor\WorseReflection\Core\Type;
 
 class VirtualReflectionParameter implements ReflectionParameter
 {
-    private string $name;
-
-    private ReflectionFunctionLike $functionLike;
-
-    private Type $inferredType;
-
-    private Type $type;
-
-    private DefaultValue $default;
-
-    private bool $byReference;
-
-    private ReflectionScope $scope;
-
-    private Position $position;
-
-    private int $index;
-
     public function __construct(
-        string $name,
-        ReflectionFunctionLike $functionLike,
-        Type $inferredType,
-        Type $type,
-        DefaultValue $default,
-        bool $byReference,
-        ReflectionScope $scope,
-        Position $position,
-        int $index
+        private string $name,
+        private ReflectionFunctionLike $functionLike,
+        private Type $inferredType,
+        private Type $type,
+        private DefaultValue $default,
+        private bool $byReference,
+        private ReflectionScope $scope,
+        private Position $position,
+        private int $index
     ) {
-        $this->name = $name;
-        $this->functionLike = $functionLike;
-        $this->inferredType = $inferredType;
-        $this->type = $type;
-        $this->default = $default;
-        $this->byReference = $byReference;
-        $this->scope = $scope;
-        $this->position = $position;
-        $this->index = $index;
     }
 
     public function scope(): ReflectionScope

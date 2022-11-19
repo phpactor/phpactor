@@ -7,13 +7,10 @@ use RuntimeException;
 
 class NameImportTable
 {
-    private $namespace;
-
     private $importedNameRefs = [];
 
-    private function __construct(Namespace_ $namespace, array $importedNamespaceNames)
+    private function __construct(private Namespace_ $namespace, array $importedNamespaceNames)
     {
-        $this->namespace = $namespace;
         foreach ($importedNamespaceNames as $importedNamespaceName) {
             $this->addImportedName($importedNamespaceName);
         }

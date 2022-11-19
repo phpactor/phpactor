@@ -14,14 +14,8 @@ final class ConfigManipulator
     public const ACTION_CREATED = 'created';
     public const ACTION_UPDATED = 'updated';
 
-    private string $schemaPath;
-
-    private string $configPath;
-
-    public function __construct(string $schemaPath, string $configPath)
+    public function __construct(private string $schemaPath, private string $configPath)
     {
-        $this->schemaPath = $schemaPath;
-        $this->configPath = $configPath;
     }
 
     public function configPath(): string

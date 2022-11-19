@@ -19,17 +19,11 @@ use Phpactor\CodeBuilder\Domain\BuilderFactory;
 
 class ImplementContracts implements Transformer
 {
-    private Reflector $reflector;
-
-    private Updater $updater;
-
-    private BuilderFactory $factory;
-
-    public function __construct(Reflector $reflector, Updater $updater, BuilderFactory $factory)
-    {
-        $this->updater = $updater;
-        $this->reflector = $reflector;
-        $this->factory = $factory;
+    public function __construct(
+        private Reflector $reflector,
+        private Updater $updater,
+        private BuilderFactory $factory
+    ) {
     }
 
     public function diagnostics(SourceCode $source): Diagnostics

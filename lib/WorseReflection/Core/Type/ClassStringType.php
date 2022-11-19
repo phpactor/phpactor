@@ -8,11 +8,8 @@ use Phpactor\WorseReflection\Core\ClassName;
 
 class ClassStringType extends StringType
 {
-    private ?ClassName $className;
-
-    public function __construct(?ClassName $className = null)
+    public function __construct(private ?ClassName $className = null)
     {
-        $this->className = $className;
     }
 
     public function __toString(): string

@@ -20,11 +20,8 @@ class TypeSuggestionProvider
         'never',
     ];
 
-    private NameSearcher $nameSearcher;
-
-    public function __construct(NameSearcher $nameSearcher)
+    public function __construct(private NameSearcher $nameSearcher)
     {
-        $this->nameSearcher = $nameSearcher;
     }
 
     /**

@@ -20,17 +20,11 @@ use Phpactor\CodeBuilder\Domain\BuilderFactory;
 
 class WorseOverrideMethod implements OverrideMethod
 {
-    private Updater $updater;
-
-    private Reflector $reflector;
-
-    private BuilderFactory $factory;
-
-    public function __construct(Reflector $reflector, BuilderFactory $factory, Updater $updater)
-    {
-        $this->factory = $factory;
-        $this->updater = $updater;
-        $this->reflector = $reflector;
+    public function __construct(
+        private Reflector $reflector,
+        private BuilderFactory $factory,
+        private Updater $updater
+    ) {
     }
 
     public function overrideMethod(SourceCode $source, string $className, string $methodName): string

@@ -13,16 +13,10 @@ use Traversable;
 abstract class AbstractReflectionCollection implements ReflectionCollection
 {
     /**
-     * @var array<array-key,T>
-     */
-    protected array $items = [];
-
-    /**
      * @param array<array-key,T> $items
      */
-    final protected function __construct(array $items)
+    final protected function __construct(protected array $items)
     {
-        $this->items = $items;
     }
 
     public function count(): int

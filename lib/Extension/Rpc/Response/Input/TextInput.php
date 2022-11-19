@@ -4,23 +4,8 @@ namespace Phpactor\Extension\Rpc\Response\Input;
 
 class TextInput implements Input
 {
-    private string $name;
-
-    private string $label;
-
-    private ?string $default;
-
-    /*
-     * @var string
-     */
-    private $type;
-
-    private function __construct(string $name, string $label, string $default = null, string $type = null)
+    private function __construct(private string $name, private string $label, private ?string $default = null, private ?string $type = null)
     {
-        $this->name = $name;
-        $this->label = $label;
-        $this->default = $default;
-        $this->type = $type;
     }
 
     public static function fromNameLabelAndDefault(string $name, string $label, string $default = null, string $type = null)
