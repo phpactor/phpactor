@@ -24,7 +24,8 @@ class BashPrompt implements Prompt
         $result = exec($cmd);
         if (false === $result) {
             throw new RuntimeException(sprintf(
-                'Could not run bash prompt "%s"', $prompt
+                'Could not run bash prompt "%s"',
+                $prompt
             ));
         }
         return $result;
