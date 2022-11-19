@@ -16,6 +16,7 @@ use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\LanguageServer\Core\Service\ServiceProvider;
+use Phpactor\LanguageServer\WorkDoneProgress\ProgressNotifier;
 use Phpactor\LanguageServer\WorkDoneProgress\WorkDoneToken;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -32,7 +33,8 @@ class IndexerHandler implements Handler, ServiceProvider
         private Watcher $watcher,
         private ClientApi $clientApi,
         private LoggerInterface $logger,
-        private EventDispatcherInterface $eventDispatcher
+        private EventDispatcherInterface $eventDispatcher,
+        private ProgressNotifier $progressNotifier,
     ) {
     }
 
@@ -66,8 +68,8 @@ class IndexerHandler implements Handler, ServiceProvider
             $size = $job->size();
             $token = WorkDoneToken::generate();
 
-            yield $this->clientApi->workDoneProgress()->create($token);
-            $this->clientApi->workDoneProgress()->begin($token, 'Indexing workspace', sprintf('%d PHP files', $size), 0);
+            yield $this->progressNotifier->create($token);
+            $this->progressNotifier->begin($token, 'Indexing workspace', sprintf('%d PHP files', $size), 0);
 
             $start = microtime(true);
             $index = 0;
@@ -76,7 +78,7 @@ class IndexerHandler implements Handler, ServiceProvider
 
                 if ($index % 500 === 0) {
                     $usage = MemoryUsage::create();
-                    $this->clientApi->workDoneProgress()->report(
+                    $this->progressNotifier->report(
                         $token,
                         sprintf(
                             '%s/%s (%s%%, %s)',
@@ -105,12 +107,15 @@ class IndexerHandler implements Handler, ServiceProvider
                 MemoryUsage::create()->memoryUsageFormatted(),
                 $this->watcher->describe()
             );
-            $this->clientApi->workDoneProgress()->end($token, $message);
+            $this->progressNotifier->end($token, $message);
 
             return yield from $this->watch($process, $cancel);
         });
     }
 
+    /**
+     * @return Promise<void>
+     */
     public function reindex(bool $soft = false): Promise
     {
         return \Amp\call(function () use ($soft): void {
