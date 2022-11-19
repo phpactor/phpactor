@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f87be8ad6c130dc1836294ab4b4b0e89",
+    "content-hash": "856fb1ef9574d5b462d3be6360e54c4e",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1672,7 +1672,7 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "dev-master",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
@@ -1708,7 +1708,6 @@
                 "phpunit/phpunit": "^9.0",
                 "symfony/var-dumper": "^5.1"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1733,7 +1732,7 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/master"
+                "source": "https://github.com/phpactor/language-server/tree/3.4.0"
             },
             "time": "2022-11-19T10:44:24+00:00"
         },
@@ -7722,7 +7721,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/language-server": 20,
         "jetbrains/phpstorm-stubs": 20,
         "microsoft/tolerant-php-parser": 20,
         "dms/phpunit-arraysubset-asserts": 20
