@@ -21,7 +21,6 @@ use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\WorkDoneProgress\ProgressNotifier;
-use Phpactor\LanguageServer\WorkDoneProgress\WorkDoneProgressNotifier;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Psr\EventDispatcher\EventDispatcherInterface;
