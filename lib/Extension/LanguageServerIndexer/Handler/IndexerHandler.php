@@ -27,28 +27,13 @@ class IndexerHandler implements Handler, ServiceProvider
 {
     const SERVICE_INDEXER = 'indexer';
 
-    private Indexer $indexer;
-
-    private Watcher $watcher;
-
-    private LoggerInterface $logger;
-
-    private ClientApi $clientApi;
-
-    private EventDispatcherInterface $eventDispatcher;
-
     public function __construct(
-        Indexer $indexer,
-        Watcher $watcher,
-        ClientApi $clientApi,
-        LoggerInterface $logger,
-        EventDispatcherInterface $eventDispatcher
+        private Indexer $indexer,
+        private Watcher $watcher,
+        private ClientApi $clientApi,
+        private LoggerInterface $logger,
+        private EventDispatcherInterface $eventDispatcher
     ) {
-        $this->indexer = $indexer;
-        $this->watcher = $watcher;
-        $this->logger = $logger;
-        $this->clientApi = $clientApi;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
