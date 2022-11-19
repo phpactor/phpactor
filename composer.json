@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.0",
         "ext-pcntl": "*",
         "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^2.0",
@@ -89,7 +89,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4.0"
+            "php": "8.0.0"
         },
         "allow-plugins": {
             "dantleech/what-changed": true,
