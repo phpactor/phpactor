@@ -11,6 +11,11 @@ Features:
 
   - [lsp] Generate mutator @florian-merle
 
+Bug fixes:
+
+  - [lsp] Do not send workDoneProgress notifications to clients that do not
+    support it #1951
+
 ## 2022.11.12
 
 Features:
