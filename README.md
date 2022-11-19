@@ -29,8 +29,8 @@ for installation instructions.
 Requirements
 ------------
 
-- PHP 7.4+
-- Composer
+- PHP 8.0+
+- [Composer](https://getcomposer.org/)
 
 Project Recommendations
 -----------------------
