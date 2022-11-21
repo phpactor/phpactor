@@ -8,7 +8,7 @@ class TraitAlias
 {
     public function __construct(
         private string $originalName,
-        private ?Visibility $visiblity = null,
+        private ?Visibility $visiblity,
         private string $newName
     ) {
     }

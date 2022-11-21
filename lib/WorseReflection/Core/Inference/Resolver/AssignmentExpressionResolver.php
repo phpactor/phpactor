@@ -187,6 +187,7 @@ class AssignmentExpressionResolver implements Resolver
                     continue;
                 }
 
+                // @phpstan-ignore-next-line TP lies
                 if ($rightContext->type() instanceof Literal) {
                     $frame->locals()->set(
                         $variable->withType(

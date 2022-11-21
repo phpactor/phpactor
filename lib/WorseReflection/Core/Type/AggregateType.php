@@ -183,5 +183,4 @@ abstract class AggregateType extends Type
 
         return false;
     }
-
 }
