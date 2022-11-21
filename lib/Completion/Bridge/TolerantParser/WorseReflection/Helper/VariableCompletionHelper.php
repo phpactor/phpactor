@@ -36,7 +36,7 @@ class VariableCompletionHelper
 
         try {
             $reflectionOffset = $this->reflector->reflectOffset($source, $offset);
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return [];
         }
 

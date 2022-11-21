@@ -18,7 +18,7 @@ class PathFinderNavigator implements Navigator
     {
         try {
             return $this->pathFinder->destinationsFor($path);
-        } catch (NoMatchingSourceException $e) {
+        } catch (NoMatchingSourceException) {
             return [];
         }
     }

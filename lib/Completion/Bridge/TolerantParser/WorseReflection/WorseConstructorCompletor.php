@@ -50,7 +50,7 @@ class WorseConstructorCompletor extends AbstractParameterCompletor implements To
 
         try {
             $reflectionClass = $this->reflectClass($source, $creationExpression);
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return true;
         }
 

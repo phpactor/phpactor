@@ -143,7 +143,7 @@ class NodeContextFromMemberAccess
 
             try {
                 $reflection = $resolver->reflector()->reflectClassLike($subType->name());
-            } catch (NotFound $e) {
+            } catch (NotFound) {
                 continue;
             }
 
@@ -202,7 +202,7 @@ class NodeContextFromMemberAccess
                         $inferredType = $this->combineMethodTemplateVars($arguments, $templateMap, $declaringMember, $inferredType);
                     }
                 }
-            } catch (NotFound $e) {
+            } catch (NotFound) {
             }
         }
 

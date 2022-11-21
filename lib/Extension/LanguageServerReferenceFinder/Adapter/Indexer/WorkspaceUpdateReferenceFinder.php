@@ -44,7 +44,7 @@ class WorkspaceUpdateReferenceFinder implements ReferenceFinder
                 $this->indexer->indexDirty(
                     TextDocumentBuilder::fromUri($document->uri)->text($document->text)->build()
                 );
-            } catch (TextDocumentNotFound $e) {
+            } catch (TextDocumentNotFound) {
             }
         }
     }

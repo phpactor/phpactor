@@ -50,7 +50,7 @@ class SignatureHelpHandler implements Handler, CanRegisterCapabilities
                     TextDocumentBuilder::create($textDocument->text)->language($languageId)->uri($textDocument->uri)->build(),
                     PositionConverter::positionToByteOffset($position, $textDocument->text)
                 ));
-            } catch (CouldNotHelpWithSignature $couldNotHelp) {
+            } catch (CouldNotHelpWithSignature) {
                 return null;
             }
         });

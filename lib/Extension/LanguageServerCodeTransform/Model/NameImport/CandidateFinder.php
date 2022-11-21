@@ -99,7 +99,7 @@ class CandidateFinder
                 $unresolvedName->name()->head()->__toString()
             );
             return true;
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
         }
 
         return false;

@@ -52,7 +52,7 @@ class StubSourceLocatorTest extends IntegrationTestCase
         try {
             $code = $this->sourceLocator->locate(Name::fromString('hello_world'));
             $this->fail('Non PHP file parsed');
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             $this->addToAssertionCount(1);
             return;
         }

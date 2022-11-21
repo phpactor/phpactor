@@ -39,7 +39,7 @@ class ConfigSetCommand extends Command
         if ($value !== null) {
             try {
                 $this->manipulator->set($key, json_decode($value, true, 512, JSON_THROW_ON_ERROR));
-            } catch (JsonException $e) {
+            } catch (JsonException) {
                 $output->writeln(sprintf('<error>Could not decode JSON value: %s</>', $value));
                 return 1;
             }

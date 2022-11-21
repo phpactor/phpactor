@@ -65,7 +65,7 @@ class ClassSearch
     {
         try {
             $reflectionClass = $this->reflector->reflectClassLike($name);
-        } catch (NotFound $exception) {
+        } catch (NotFound) {
             return;
         }
 

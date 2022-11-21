@@ -33,7 +33,7 @@ class MissingDocblockProvider implements DiagnosticProvider
                 return;
             }
             $method = $class->methods()->get($methodName);
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return;
         }
 

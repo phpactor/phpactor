@@ -132,7 +132,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
 
                 try {
                     $token->throwIfRequested();
-                } catch (CancelledException $cancellation) {
+                } catch (CancelledException) {
                     $this->resolve = [];
                     $isIncomplete = true;
                     break;

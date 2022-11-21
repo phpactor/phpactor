@@ -35,7 +35,7 @@ class SerializedIndex implements Index
     {
         try {
             $mtime = $fileInfo->getCTime();
-        } catch (RuntimeException $statFailed) {
+        } catch (RuntimeException) {
             // file likely doesn't exist
             return false;
         }

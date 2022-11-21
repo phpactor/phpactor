@@ -23,7 +23,7 @@ class WorkspaceTextDocumentLocator implements TextDocumentLocator
     {
         try {
             return TextDocumentConverter::fromLspTextItem($this->workspace->get($uri->__toString()));
-        } catch (UnknownDocument $unknown) {
+        } catch (UnknownDocument) {
         }
 
         throw TextDocumentNotFound::fromUri($uri);

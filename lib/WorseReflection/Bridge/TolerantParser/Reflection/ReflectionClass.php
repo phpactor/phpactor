@@ -197,7 +197,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             $this->parent = $reflectedClass;
 
             return $reflectedClass;
-        } catch (NotFound $e) {
+        } catch (NotFound) {
             return null;
         }
     }

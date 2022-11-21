@@ -198,7 +198,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         foreach ($containerType->classNamedTypes() as $namedType) {
             try {
                 $containingClass = $this->reflector->reflectClassLike($namedType->name());
-            } catch (NotFound $e) {
+            } catch (NotFound) {
                 continue;
             }
 
@@ -257,7 +257,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
     {
         try {
             $class = $this->reflector->reflectClass($symbolContext->classType()->name());
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return new TypeLocations([]);
         }
 

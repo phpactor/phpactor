@@ -48,7 +48,7 @@ class ObjectCreationExpressionResolver implements Resolver
     {
         try {
             $reflection = $resolver->reflector()->reflectClass($classType->name());
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return $classType;
         }
         if (!$reflection->methods()->has('__construct')) {

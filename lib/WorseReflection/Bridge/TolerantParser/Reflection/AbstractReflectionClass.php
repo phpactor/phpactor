@@ -81,7 +81,7 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
         foreach ($traitImports as $traitImport) {
             try {
                 $trait = $traits->get($traitImport->name());
-            } catch (NotFound $notFound) {
+            } catch (NotFound) {
                 continue;
             }
 

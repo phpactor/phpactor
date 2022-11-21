@@ -73,7 +73,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
 
         try {
             $code = $this->generate($arguments);
-        } catch (FileAlreadyExists $e) {
+        } catch (FileAlreadyExists) {
             return InputCallbackResponse::fromCallbackAndInputs(
                 Request::fromNameAndParameters(
                     $this->name(),

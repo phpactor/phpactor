@@ -106,7 +106,7 @@ class IndexerHandler implements Handler, ServiceProvider
 
                 try {
                     $cancel->throwIfRequested();
-                } catch (CancelledException $cancelled) {
+                } catch (CancelledException) {
                     break;
                 }
 
@@ -162,7 +162,7 @@ class IndexerHandler implements Handler, ServiceProvider
             while (null !== $file = yield $process->wait()) {
                 try {
                     $cancel->throwIfRequested();
-                } catch (CancelledException $cancelled) {
+                } catch (CancelledException) {
                     $process->stop();
                     break;
                 }
@@ -170,7 +170,7 @@ class IndexerHandler implements Handler, ServiceProvider
                 try {
                     $this->logger->debug(sprintf('Indexing %s', $file->path()));
                     $this->indexer->index(TextDocumentBuilder::fromUri($file->path())->build());
-                } catch (TextDocumentNotFound $error) {
+                } catch (TextDocumentNotFound) {
                     $this->logger->warning(sprintf(
                         'Trired to index non-existing file "%s"',
                         $file->path()

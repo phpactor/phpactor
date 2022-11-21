@@ -63,7 +63,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
             return $members->merge($enumMethods)->map(
                 fn (ReflectionMember $member) => $member->withClass($this)
             );
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
         }
 
         return $members;

@@ -108,7 +108,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
     {
         try {
             return $this->renderSymbolContext($nodeContext);
-        } catch (CouldNotFormat $e) {
+        } catch (CouldNotFormat) {
         }
 
         return null;
@@ -173,7 +173,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
                     ),
                     $member
                 ));
-            } catch (NotFound $e) {
+            } catch (NotFound) {
                 continue;
             }
         }

@@ -60,7 +60,7 @@ class ClassNewCommand extends Command
 
         try {
             $sourceCode = $this->generateSourceCode($src, $variant, $input, $output);
-        } catch (FileAlreadyExists $exception) {
+        } catch (FileAlreadyExists) {
             return [
                 'src' => $src,
                 'path' => null,

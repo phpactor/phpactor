@@ -147,7 +147,7 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
             if ($class instanceof ReflectionClass) {
                 try {
                     return $class->methods()->get($method->getName());
-                } catch (ItemNotFound $notFound) {
+                } catch (ItemNotFound) {
                 }
             }
         }
