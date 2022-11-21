@@ -45,6 +45,7 @@ class Highlighter
         $lspHighlights = [];
 
         foreach ($highlights as $highlight) {
+            assert($highlight instanceof Highlight);
             $startPos = $lineCols->get($highlight->start);
             $endPos = $lineCols->get($highlight->end);
             $lspHighlights[] = new DocumentHighlight(
@@ -122,7 +123,7 @@ class Highlighter
     }
 
     /**
-     * @return Generator<DocumentHighlight>
+     * @return Generator<Highlight>
      */
     private function variables(SourceFileNode $rootNode, string $name): Generator
     {
@@ -163,7 +164,7 @@ class Highlighter
     }
 
     /**
-     * @return Generator<DocumentHighlight>
+     * @return Generator<Highlight>
      */
     private function properties(Node $rootNode, string $name): Generator
     {
@@ -198,7 +199,7 @@ class Highlighter
     }
 
     /**
-     * @return Generator<DocumentHighlight>
+     * @return Generator<Highlight>
      */
     private function memberAccess(SourceFileNode $rootNode, Node $node, string $memberName): Generator
     {
@@ -214,7 +215,7 @@ class Highlighter
     }
 
     /**
-     * @return Generator<DocumentHighlight>
+     * @return Generator<Highlight>
      */
     private function methods(SourceFileNode $rootNode, string $name): Generator
     {
@@ -252,7 +253,7 @@ class Highlighter
     }
 
     /**
-     * @return Generator<DocumentHighlight>
+     * @return Generator<Highlight>
      */
     private function constants(SourceFileNode $rootNode, string $name): Generator
     {
@@ -281,7 +282,7 @@ class Highlighter
     }
 
     /**
-     * @return Generator<DocumentHighlight>
+     * @return Generator<Highlight>
      */
     private function namespacedNames(Node $rootNode, string $fullyQualfiiedName): Generator
     {
