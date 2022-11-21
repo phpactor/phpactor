@@ -206,7 +206,7 @@ class Highlighter
             return yield from $this->methods($rootNode, $memberName);
         }
 
-        if (false !== strpos($node->getText(), '$')) {
+        if (str_contains($node->getText(), '$')) {
             return yield from $this->properties($rootNode, $memberName);
         }
 

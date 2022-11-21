@@ -56,7 +56,7 @@ class TypeFactory
 
     public static function fromString(string $type, Reflector $reflector = null): Type
     {
-        if ('?' === substr($type, 0, 1)) {
+        if (str_starts_with($type, '?')) {
             return self::nullable(self::typeFromString(substr($type, 1)));
         }
 
@@ -464,7 +464,7 @@ class TypeFactory
             return new BinLiteralType($value);
         }
 
-        if (false === strpos($value, '.')) {
+        if (!str_contains($value, '.')) {
             return self::intLiteral((int)$value);
         }
 

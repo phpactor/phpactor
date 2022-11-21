@@ -57,7 +57,7 @@ class ComposerFileListProvider implements FileListProvider
                 //
                 // TODO: This could be more efficient.
                 foreach ($seenPaths as $seenPath) {
-                    if (0 === strpos($path, $seenPath)) {
+                    if (str_starts_with($path, $seenPath)) {
                         continue 2;
                     }
                 }

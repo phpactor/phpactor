@@ -544,7 +544,7 @@ final class Parser
             if ($this->tokens->current->type === Token::T_ASTERISK) {
                 break;
             }
-            if (false !== strpos($this->tokens->current->value, "\n")) {
+            if (str_contains($this->tokens->current->value, "\n")) {
                 break;
             }
             $text[] = $this->tokens->chomp();

@@ -54,7 +54,7 @@ final class FilePath
     public static function fromParts(array $parts): FilePath
     {
         $path = Path::join(...$parts);
-        if (substr($path, 0, 1) !== '/') {
+        if (!str_starts_with($path, '/')) {
             $path = '/'.$path;
         }
 
@@ -131,7 +131,7 @@ final class FilePath
 
     public function isWithin(FilePath $path)
     {
-        return 0 === strpos($this->path(), $path->path().'/');
+        return str_starts_with($this->path(), $path->path().'/');
     }
 
     public function isWithinOrSame(FilePath $path)

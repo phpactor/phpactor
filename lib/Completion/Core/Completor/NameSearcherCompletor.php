@@ -24,7 +24,7 @@ abstract class NameSearcherCompletor
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
         foreach ($this->nameSearcher->search($name) as $result) {
-            $wasAbsolute = strpos($name, '\\') === 0;
+            $wasAbsolute = str_starts_with($name, '\\');
             $options = $this->createSuggestionOptions($result, $sourceUri, $node, $wasAbsolute);
             yield $this->createSuggestion(
                 $result,

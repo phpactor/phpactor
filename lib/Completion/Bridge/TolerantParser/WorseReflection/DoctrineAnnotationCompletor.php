@@ -119,7 +119,7 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
             $reflectionClass = $this->reflector->reflectClass($suggestion->classImport());
             $docblock = $reflectionClass->docblock();
 
-            return false !== strpos($docblock->raw(), '@Annotation');
+            return str_contains($docblock->raw(), '@Annotation');
         } catch (NotFound) {
             return false;
         }

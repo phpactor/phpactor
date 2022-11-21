@@ -85,7 +85,7 @@ class JsonSchemaBuilder
                 return 'number';
             }
 
-            if (substr($type, -2) === '[]') {
+            if (str_ends_with($type, '[]')) {
                 return 'array';
             }
 

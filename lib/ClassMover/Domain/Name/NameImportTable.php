@@ -54,7 +54,7 @@ class NameImportTable
             }
         }
 
-        if (0 === strpos($name->__toString(), '\\')) {
+        if (str_starts_with($name->__toString(), '\\')) {
             return FullyQualifiedName::fromString($name->__toString());
         }
 

@@ -70,7 +70,7 @@ class NodeContextFromMemberAccess
             Symbol::PROPERTY === $memberTypeName
             && $node instanceof ScopedPropertyAccessExpression
             && is_string($memberName)
-            && substr($memberName, 0, 1) !== '$'
+            && !str_starts_with($memberName, '$')
         ) {
             $memberTypeName = Symbol::CONSTANT;
         }

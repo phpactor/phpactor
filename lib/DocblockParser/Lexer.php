@@ -102,11 +102,11 @@ final class Lexer
 
     private function resolveType(string $value): string
     {
-        if (false !== strpos($value, '/*')) {
+        if (str_contains($value, '/*')) {
             return Token::T_PHPDOC_OPEN;
         }
 
-        if (false !== strpos($value, '*/')) {
+        if (str_contains($value, '*/')) {
             return Token::T_PHPDOC_CLOSE;
         }
 
@@ -119,7 +119,7 @@ final class Lexer
         }
 
         if (is_numeric($value)) {
-            if (false !== strpos($value, '.')) {
+            if (str_contains($value, '.')) {
                 return Token::T_FLOAT;
             }
             return Token::T_INTEGER;

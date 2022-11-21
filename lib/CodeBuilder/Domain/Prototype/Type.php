@@ -48,7 +48,7 @@ final class Type extends Prototype
             return null;
         }
 
-        if (substr($type, 0, 1) === '?') {
+        if (str_starts_with($type, '?')) {
             $type = substr($type, 1);
         }
 

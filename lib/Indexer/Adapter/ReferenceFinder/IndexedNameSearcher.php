@@ -28,7 +28,7 @@ class IndexedNameSearcher implements NameSearcher
             return;
         }
 
-        $fullyQualified = substr($name, 0, 1) === '\\';
+        $fullyQualified = str_starts_with($name, '\\');
 
         if ($fullyQualified) {
             $criteria = Criteria::fqnBeginsWith(substr($name, 1));

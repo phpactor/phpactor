@@ -178,7 +178,7 @@ class FileList implements Iterator
                 return false;
             }
 
-            return false !== strpos($contents, $string);
+            return str_contains($contents, $string);
         });
     }
 }

@@ -88,7 +88,7 @@ class WorseFunctionCompletor implements TolerantCompletor
         foreach ($functions as $type => $functionNames) {
             foreach ($functionNames as $functionName) {
                 $functionName = Name::fromString($functionName);
-                if (0 === strpos($functionName->short(), $partialName)) {
+                if (str_starts_with($functionName->short(), $partialName)) {
                     yield $functionName;
                 }
             }

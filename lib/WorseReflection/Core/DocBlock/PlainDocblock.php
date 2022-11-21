@@ -30,7 +30,7 @@ class PlainDocblock implements DocBlock
 
     public function inherits(): bool
     {
-        return false !== strpos($this->raw, '@inheritDoc');
+        return str_contains($this->raw, '@inheritDoc');
     }
 
     public function vars(): DocBlockVars
@@ -52,13 +52,13 @@ class PlainDocblock implements DocBlock
     {
         $lines = [];
         foreach (explode("\n", $this->raw) as $line) {
-            if (false !== strpos($line, '@')) {
+            if (str_contains($line, '@')) {
                 continue;
             }
-            if (false !== strpos($line, '/*')) {
+            if (str_contains($line, '/*')) {
                 continue;
             }
-            if (false !== strpos($line, '*/')) {
+            if (str_contains($line, '*/')) {
                 continue;
             }
             $line = trim(preg_replace('{\s+\*}', '', $line, 1));

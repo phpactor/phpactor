@@ -13,7 +13,7 @@ class PhpactorToLspCompletionTypeTest extends TestCase
     {
         $reflection = new ReflectionClass(Suggestion::class);
         foreach ($reflection->getConstants() as $name => $constantValue) {
-            if (0 !== strpos($name, 'TYPE')) {
+            if (!str_starts_with($name, 'TYPE')) {
                 continue;
             }
             $this->assertNotNull(PhpactorToLspCompletionType::fromPhpactorType($constantValue), $constantValue);

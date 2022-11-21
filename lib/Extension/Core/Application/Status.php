@@ -94,7 +94,7 @@ class Status
 
         return [
             'phpactor_version' => $matches[1],
-            'phpactor_is_develop' => $this->warnOnDevelop && (false !== strpos($matches[2], 'develop'))
+            'phpactor_is_develop' => $this->warnOnDevelop && (str_contains($matches[2], 'develop'))
         ];
     }
 }

@@ -47,7 +47,7 @@ class ClassCopy
     public function copyFile(ClassCopyLogger $logger, string $srcPath, string $destPath): void
     {
         $srcPath = Phpactor::normalizePath($srcPath);
-        if (substr($destPath, -1, 1) === '/') {
+        if (str_ends_with($destPath, '/')) {
             $destPath = $destPath . basename($srcPath);
         }
 
