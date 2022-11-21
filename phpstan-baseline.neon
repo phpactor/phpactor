@@ -186,11 +186,6 @@ parameters:
 			path: lib/ClassMover/Domain/Name/Label.php
 
 		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\Label\\:\\:\\$label has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/Label.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/Label.php
@@ -231,11 +226,6 @@ parameters:
 			path: lib/ClassMover/Domain/Name/NameImportTable.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:__construct\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:base\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
@@ -256,27 +246,7 @@ parameters:
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:isAlone\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:isEqualTo\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:parts\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:transpose\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:\\$parts has no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
 
@@ -457,11 +427,6 @@ parameters:
 
 		-
 			message: "#^Property Acme\\\\Foobar\\\\Reflection\\\\ReflectionDefaultValue\\:\\:\\$undefined has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Assets/project/src/ReflectionDefaultValue.php
-
-		-
-			message: "#^Property Acme\\\\Foobar\\\\Reflection\\\\ReflectionDefaultValue\\:\\:\\$value has no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Tests/Assets/project/src/ReflectionDefaultValue.php
 
@@ -781,11 +746,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/ConstantBuilder.php
 
 		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ConstantBuilder\\:\\:\\$parent \\(Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassBuilder\\) does not accept Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ConstantBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\InterfaceBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/InterfaceBuilder.php
@@ -976,11 +936,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Line.php
 
 		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Line\\:\\:\\$line has no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Line.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\:\\:fromLines\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Lines.php
@@ -1122,11 +1077,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Value\\:\\:value\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Value.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Value\\:\\:\\$value has no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Value.php
 
@@ -1781,19 +1731,9 @@ parameters:
 			path: lib/Completion/Core/ChainSignatureHelper.php
 
 		-
-			message: "#^Property Phpactor\\\\Completion\\\\Core\\\\Completor\\\\ArrayCompletor\\:\\:\\$suggestions type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/ArrayCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\Range\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/Range.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\SignatureHelp\\:\\:__construct\\(\\) has parameter \\$signatures with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Core/SignatureHelp.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\SignatureInformation\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
@@ -3106,11 +3046,6 @@ parameters:
 			path: lib/Extension/ContextMenu/Model/Action.php
 
 		-
-			message: "#^Property Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\Action\\:\\:\\$parameters type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ContextMenu/Model/Action.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:__construct\\(\\) has parameter \\$actions with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ContextMenu/Model/ContextMenu.php
@@ -3132,11 +3067,6 @@ parameters:
 
 		-
 			message: "#^Property Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:\\$actions type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ContextMenu/Model/ContextMenu.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\ContextMenu\\\\Model\\\\ContextMenu\\:\\:\\$contexts type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ContextMenu/Model/ContextMenu.php
 
@@ -3172,11 +3102,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$messages of method Symfony\\\\Component\\\\Console\\\\Output\\\\OutputInterface\\:\\:writeln\\(\\) expects iterable\\|string, string\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/Core/Command/ConfigDumpCommand.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand\\:\\:\\$config type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Core/Command/ConfigDumpCommand.php
 
@@ -3331,11 +3256,6 @@ parameters:
 			path: lib/Extension/Core/Rpc/ConfigHandler.php
 
 		-
-			message: "#^Property Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\ConfigHandler\\:\\:\\$config type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Core/Rpc/ConfigHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\StatusHandler\\:\\:buildConfigFileMessage\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Core/Rpc/StatusHandler.php
@@ -3372,11 +3292,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Logger\\\\Formatter\\\\FormatterRegistry\\:\\:__construct\\(\\) has parameter \\$serviceMap with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Logger/Formatter/FormatterRegistry.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Logger\\\\Formatter\\\\FormatterRegistry\\:\\:\\$serviceMap type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Logger/Formatter/FormatterRegistry.php
 
@@ -3451,11 +3366,6 @@ parameters:
 			path: lib/Extension/Navigation/Application/Navigator.php
 
 		-
-			message: "#^Property Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:\\$autoCreateConfig type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/Handler/NavigateHandler.php
@@ -3464,11 +3374,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/Handler/NavigateHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\ChainNavigator\\:\\:__construct\\(\\) has parameter \\$navigators with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Navigator/ChainNavigator.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\ChainNavigator\\:\\:destinationsFor\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3681,11 +3586,6 @@ parameters:
 			path: lib/Extension/Rpc/Registry/LazyContainerHandlerRegistry.php
 
 		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Registry\\\\LazyContainerHandlerRegistry\\:\\:\\$serviceMap type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Registry/LazyContainerHandlerRegistry.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Request\\:\\:__construct\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Request.php
@@ -3712,11 +3612,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Request\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Request.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Request\\:\\:\\$parameters type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Request.php
 
@@ -3791,22 +3686,12 @@ parameters:
 			path: lib/Extension/Rpc/Response/FileReferencesResponse.php
 
 		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\FileReferencesResponse\\:\\:\\$references type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/FileReferencesResponse.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\InformationResponse\\:\\:__construct\\(\\) has parameter \\$information with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/InformationResponse.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\InformationResponse\\:\\:parameters\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/InformationResponse.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\InformationResponse\\:\\:\\$information has no type specified\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/InformationResponse.php
 
@@ -3842,16 +3727,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:withKeys\\(\\) has parameter \\$keyMap with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/Input/ChoiceInput.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:\\$choices type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/Input/ChoiceInput.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Input\\\\ChoiceInput\\:\\:\\$keyMap type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/Input/ChoiceInput.php
 
@@ -4301,11 +4176,6 @@ parameters:
 			path: lib/FilePathResolver/Expanders.php
 
 		-
-			message: "#^Method Phpactor\\\\FilePathResolver\\\\FilteringPathResolver\\:\\:__construct\\(\\) has parameter \\$filters with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/FilePathResolver/FilteringPathResolver.php
-
-		-
 			message: "#^Method Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Filter\\\\TokenExpandingFilterTest\\:\\:create\\(\\) has parameter \\$expanders with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/FilePathResolver/Tests/Unit/Filter/TokenExpandingFilterTest.php
@@ -4616,11 +4486,6 @@ parameters:
 			path: lib/Name/QualifiedName.php
 
 		-
-			message: "#^Method Phpactor\\\\Name\\\\QualifiedName\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Name/QualifiedName.php
-
-		-
 			message: "#^Property Phpactor\\\\Name\\\\QualifiedName\\:\\:\\$parts type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Name/QualifiedName.php
@@ -4881,11 +4746,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImport.php
 
 		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImport\\:\\:\\$traitAliases type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImport.php
-
-		-
 			message: "#^Argument of an invalid type Microsoft\\\\PhpParser\\\\Node\\\\DelimitedList\\\\TraitSelectOrAliasClauseList supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
@@ -4917,11 +4777,6 @@ parameters:
 
 		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\DefaultValue\\:\\:\\$undefined has no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DefaultValue.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\DefaultValue\\:\\:\\$value has no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/DefaultValue.php
 
@@ -5006,11 +4861,6 @@ parameters:
 			path: lib/WorseReflection/Core/Name.php
 
 		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Name\\:\\:\\$parts has no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Name.php
-
-		-
 			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\NameImports implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: lib/WorseReflection/Core/NameImports.php
@@ -5047,11 +4897,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\NodeText\\:\\:__construct\\(\\) has parameter \\$nodeText with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/NodeText.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\NodeText\\:\\:\\$nodeText has no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/NodeText.php
 
