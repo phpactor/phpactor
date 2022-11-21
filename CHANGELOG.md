@@ -15,6 +15,7 @@ Bug fixes:
 
   - [lsp] Do not send workDoneProgress notifications to clients that do not
     support it #1951
+  - [lsp] Fix highlighting on PHP 8.1 #1960
 
 ## 2022.11.12
 
