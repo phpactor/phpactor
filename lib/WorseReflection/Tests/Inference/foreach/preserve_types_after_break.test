@@ -28,7 +28,7 @@ class NoBackgroundWithSingleScenarioRule
             }
         }
 
-        wrAssertType('string|null', $background);
+        wrAssertType('?string', $background);
     }
 }
 

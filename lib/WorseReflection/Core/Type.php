@@ -219,4 +219,12 @@ abstract class Type
     {
         return $mapper($this);
     }
+
+    /**
+     * If this type can "consume" or replace the given type
+     */
+    public function consumes(Type $type2): Trinary
+    {
+        return Trinary::maybe();
+    }
 }

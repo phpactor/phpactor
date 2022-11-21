@@ -187,11 +187,18 @@ class AssignmentExpressionResolver implements Resolver
                     continue;
                 }
 
-                // array addition `$foo[] = `
-                // @phpstan-ignore-next-line TP lies
+                if ($rightContext->type() instanceof Literal) {
+                    $frame->locals()->set(
+                        $variable->withType(
+                            $type->add($rightContext->type())
+                        )->withOffset($leftOperand->getStartPosition())
+                    );
+                    continue;
+                }
+
                 $frame->locals()->set(
                     $variable->withType(
-                        $type->add($rightContext->type())
+                        TypeFactory::array($rightContext->type())
                     )->withOffset($leftOperand->getStartPosition())
                 );
             }

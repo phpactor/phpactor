@@ -1,0 +1,25 @@
+<?php
+
+class Bar {}
+
+/**
+ * @return Generator<Bar>
+ */
+function bar(): Generator {
+}
+
+$highlights = [];
+foreach (bar() as $highlight) {
+    wrAssertType("Bar", $highlight);
+    $highlights[] = $highlight;
+}
+
+
+wrAssertType("Bar[]", $highlights);
+
+$lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
+$lspHighlights = [];
+
+foreach ($highlights as $highlight) {
+    wrAssertType("Bar", $highlight);
+}
