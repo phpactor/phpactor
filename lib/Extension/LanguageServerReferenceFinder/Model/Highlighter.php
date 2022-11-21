@@ -45,7 +45,6 @@ class Highlighter
         $lspHighlights = [];
 
         foreach ($highlights as $highlight) {
-            assert($highlight instanceof Highlight);
             $startPos = $lineCols->get($highlight->start);
             $endPos = $lineCols->get($highlight->end);
             $lspHighlights[] = new DocumentHighlight(

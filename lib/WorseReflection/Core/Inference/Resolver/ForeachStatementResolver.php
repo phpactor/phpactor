@@ -214,8 +214,9 @@ class ForeachStatementResolver implements Resolver
                     continue;
                 }
                 if ($previous = $frame->locals()->lessThan($local->offset())->byName($local->name())->lastOrNull()) {
+                    $type = $previous->type()->addType($local->type())->reduce();
                     $frame->locals()->set(
-                        $previous->withType($previous->type()->addType($local->type()))->withOffset($compoundStatement->closeBrace->getEndPosition())
+                        $previous->withType($type)->withOffset($compoundStatement->closeBrace->getEndPosition())
                     );
                 }
             }

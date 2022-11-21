@@ -11,6 +11,10 @@ Features:
 
   - [lsp] Generate mutator @florian-merle
 
+Improvements:
+
+  - [wr] Fix inference of array subscript expressions #1961
+
 Bug fixes:
 
   - [lsp] Do not send workDoneProgress notifications to clients that do not

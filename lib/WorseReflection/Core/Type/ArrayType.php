@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Closure;
+use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
 class ArrayType extends PseudoIterableType implements IterableType, HasEmptyType
@@ -35,5 +36,15 @@ class ArrayType extends PseudoIterableType implements IterableType, HasEmptyType
     public function emptyType(): Type
     {
         return new ArrayLiteral([]);
+    }
+
+    public function consumes(Type $type): Trinary
+    {
+        // if type is an empty array, replace with this one
+        if ($type instanceof ArrayLiteral && count($type->types()) === 0) {
+            return Trinary::true();
+        }
+
+        return Trinary::maybe();
     }
 }

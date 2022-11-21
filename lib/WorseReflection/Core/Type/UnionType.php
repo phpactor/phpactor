@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
-final class UnionType extends AggregateType
+final class UnionType extends AggregateType implements Generalizable
 {
     public function __toString(): string
     {
