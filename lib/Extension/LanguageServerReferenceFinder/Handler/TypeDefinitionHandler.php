@@ -55,7 +55,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
                     TextDocumentBuilder::create($textDocument->text)->uri($textDocument->uri)->language('php')->build(),
                     $offset
                 );
-            } catch (CouldNotLocateType $type) {
+            } catch (CouldNotLocateType) {
                 return null;
             }
 

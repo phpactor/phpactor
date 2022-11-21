@@ -52,7 +52,7 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
 
         try {
             $reflectionFunctionLike = $this->reflectFunctionLike($source, $callableExpression);
-        } catch (NotFound $exception) {
+        } catch (NotFound) {
             return true;
         }
 

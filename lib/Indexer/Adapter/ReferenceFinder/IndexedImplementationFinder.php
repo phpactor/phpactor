@@ -111,7 +111,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
             try {
                 $reflection = $this->reflector->reflectClassLike($implementation->__toString());
                 $member = $reflection->members()->byMemberType($symbolType)->belongingTo($reflection->name())->get($methodName);
-            } catch (NotFound $notFound) {
+            } catch (NotFound) {
                 continue;
             }
 

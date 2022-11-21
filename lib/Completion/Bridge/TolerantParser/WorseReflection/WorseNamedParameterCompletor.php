@@ -74,7 +74,7 @@ class WorseNamedParameterCompletor implements TolerantCompletor
 
         try {
             $class = $this->reflector->reflectClass((string)$type->getResolvedName());
-        } catch (NotFound $e) {
+        } catch (NotFound) {
             return true;
         }
 
@@ -133,7 +133,7 @@ class WorseNamedParameterCompletor implements TolerantCompletor
                     $callableExpression->getNamespacedName()->__toString()
                 );
                 yield from $this->fromFunction($function);
-            } catch (NotFound $e) {
+            } catch (NotFound) {
                 return true;
             }
 
@@ -146,7 +146,7 @@ class WorseNamedParameterCompletor implements TolerantCompletor
                 $callableExpression->getEndPosition()
             );
             yield from $this->fromMethod($classLike->class(), $classLike->name());
-        } catch (NotFound $e) {
+        } catch (NotFound) {
             return true;
         }
 

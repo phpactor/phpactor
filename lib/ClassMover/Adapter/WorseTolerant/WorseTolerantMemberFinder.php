@@ -325,7 +325,7 @@ class WorseTolerantMemberFinder implements MemberFinder
     {
         try {
             return $this->reflector->reflectClassLike($className);
-        } catch (NotFound $e) {
+        } catch (NotFound) {
             return null;
         }
     }

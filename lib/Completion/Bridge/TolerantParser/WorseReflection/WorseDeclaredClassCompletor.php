@@ -36,7 +36,7 @@ class WorseDeclaredClassCompletor implements TolerantCompletor, TolerantQualifia
         foreach ($classes as $class) {
             try {
                 $reflectionClass = $this->reflector->reflectClass($class);
-            } catch (NotFound $e) {
+            } catch (NotFound) {
                 continue;
             }
 

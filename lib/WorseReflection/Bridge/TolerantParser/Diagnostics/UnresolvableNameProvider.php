@@ -121,7 +121,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
             if (!$this->nameContainedInSource('function', $source, $fqn->head()->__toString())) {
                 throw new NotFound();
             }
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             // if we are not importing globals then check the global namespace
             if (false === $this->importGlobals) {
                 try {
@@ -129,7 +129,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
                     if ($this->nameContainedInSource('function', $source, $fqn->head()->__toString())) {
                         return;
                     }
-                } catch (NotFound $notFound) {
+                } catch (NotFound) {
                 }
             }
 
@@ -169,7 +169,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
             if (!$this->nameContainedInSource('(class|trait|interface|enum)', $source, $fqn->head()->__toString())) {
                 throw new NotFound();
             }
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             yield UnresolvableNameDiagnostic::forClass(
                 ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
                 $fqn,

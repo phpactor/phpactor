@@ -19,7 +19,7 @@ class ChainContextClassResolver implements ContextClassResolver
         foreach ($this->contextClassResolvers as $resolver) {
             try {
                 return $resolver->resolve($className);
-            } catch (CouldNotResolverContextClass $couldNot) {
+            } catch (CouldNotResolverContextClass) {
             }
         }
 

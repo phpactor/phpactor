@@ -118,7 +118,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
     {
         try {
             return $node->getImportTablesForCurrentScope();
-        } catch (Exception $e) {
+        } catch (Exception) {
         }
 
         foreach ($node->getDescendantNodes() as $node) {
@@ -128,7 +128,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
                     continue;
                 }
                 return $imports;
-            } catch (Exception $e) {
+            } catch (Exception) {
             }
         }
 
@@ -142,13 +142,13 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
     {
         try {
             return $this->namespaceFromNode($node);
-        } catch (Exception $e) {
+        } catch (Exception) {
         }
 
         foreach ($node->getDescendantNodes() as $node) {
             try {
                 return $this->namespaceFromNode($node);
-            } catch (Exception $e) {
+            } catch (Exception) {
             }
         }
 

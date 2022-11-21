@@ -77,7 +77,7 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 
         try {
             $class = $resolver->reflector()->reflectClassLike($classNode->getNamespacedName()->__toString());
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return;
         }
 

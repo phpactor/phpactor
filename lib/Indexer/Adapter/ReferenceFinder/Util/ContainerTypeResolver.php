@@ -26,7 +26,7 @@ class ContainerTypeResolver
             $members = $classLike->members()->byMemberType($memberType);
 
             return $members->get($memberName)->original()->declaringClass()->name()->__toString();
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return $containerFqn;
         }
     }

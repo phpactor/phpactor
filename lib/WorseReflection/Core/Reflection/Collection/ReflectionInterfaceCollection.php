@@ -64,7 +64,7 @@ class ReflectionInterfaceCollection extends AbstractReflectionCollection
                     $visited
                 );
                 $items[$interface->name()->full()] = $interface;
-            } catch (NotFound $e) {
+            } catch (NotFound) {
             }
         }
 

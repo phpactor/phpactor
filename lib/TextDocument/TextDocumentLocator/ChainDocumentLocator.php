@@ -22,7 +22,7 @@ class ChainDocumentLocator implements TextDocumentLocator
         foreach ($this->locators as $workspace) {
             try {
                 return $workspace->get($uri);
-            } catch (TextDocumentNotFound $notFound) {
+            } catch (TextDocumentNotFound) {
             }
         }
 

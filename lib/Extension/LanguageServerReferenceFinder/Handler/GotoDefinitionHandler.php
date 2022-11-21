@@ -54,7 +54,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
                     )->build(),
                     $offset
                 );
-            } catch (CouldNotLocateDefinition $couldNotLocateDefinition) {
+            } catch (CouldNotLocateDefinition) {
                 return null;
             }
 

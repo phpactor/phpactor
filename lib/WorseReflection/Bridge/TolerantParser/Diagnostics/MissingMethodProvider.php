@@ -55,7 +55,7 @@ class MissingMethodProvider implements DiagnosticProvider
         }
         try {
             $name = $class->methods()->get($methodName);
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             yield new MissingMethodDiagnostic(
                 ByteOffsetRange::fromInts(
                     $memberName->getStartPosition(),

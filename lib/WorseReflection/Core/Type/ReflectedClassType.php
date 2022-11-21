@@ -77,7 +77,7 @@ class ReflectedClassType extends ClassType
 
         try {
             $reflectedThat = $this->reflector->reflectClassLike($type->name());
-        } catch (NotFound $e) {
+        } catch (NotFound) {
             return Trinary::maybe();
         }
 
@@ -105,7 +105,7 @@ class ReflectedClassType extends ClassType
     {
         try {
             return $this->reflector->reflectClassLike($this->name());
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
         }
         return null;
     }
@@ -204,7 +204,7 @@ class ReflectedClassType extends ClassType
 
         try {
             return $reflection->methods()->get('__invoke')->inferredType();
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return TypeFactory::undefined();
         }
     }

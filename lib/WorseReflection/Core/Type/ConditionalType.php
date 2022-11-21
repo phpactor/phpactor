@@ -41,7 +41,7 @@ class ConditionalType extends Type
     {
         try {
             $parameter = $functionLike->parameters()->get(ltrim($this->variable, '$'));
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return TypeFactory::undefined();
         }
 

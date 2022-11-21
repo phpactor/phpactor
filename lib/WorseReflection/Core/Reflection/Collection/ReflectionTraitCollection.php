@@ -32,7 +32,7 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
                 $traitName = TolerantQualifiedNameResolver::getResolvedName($traitName);
                 try {
                     $items[(string) $traitName] = $serviceLocator->reflector()->reflectTrait(ClassName::fromString($traitName));
-                } catch (NotFound $notFound) {
+                } catch (NotFound) {
                 }
             }
         }
@@ -55,7 +55,7 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
                 $traitName = TolerantQualifiedNameResolver::getResolvedName($traitName);
                 try {
                     $items[(string) $traitName] = $serviceLocator->reflector()->reflectTrait(ClassName::fromString($traitName), $visited);
-                } catch (NotFound $notFound) {
+                } catch (NotFound) {
                 }
             }
         }

@@ -39,7 +39,7 @@ class WorseGenerateConstructor implements GenerateConstructor
         }
         try {
             $newObject = $this->reflector->reflectNode($document, $node->getStartPosition());
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return WorkspaceEdits::none();
         }
 
@@ -51,7 +51,7 @@ class WorseGenerateConstructor implements GenerateConstructor
             if ($newObject->class()->methods()->has('__construct')) {
                 return WorkspaceEdits::none();
             }
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return WorkspaceEdits::none();
         }
 

@@ -42,7 +42,7 @@ class Step
         foreach ($policies as $policy) {
             try {
                 $regex = $policy->transformPatternToRegex($this->pattern);
-            } catch (InvalidPatternException $invalid) {
+            } catch (InvalidPatternException) {
                 continue;
             }
 

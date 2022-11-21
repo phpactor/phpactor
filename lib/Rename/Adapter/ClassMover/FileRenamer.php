@@ -56,7 +56,7 @@ class FileRenamer implements PhpactorFileRenamer
 
                 try {
                     $document = $this->locator->get($reference->location()->uri());
-                } catch (TextDocumentNotFound $notFound) {
+                } catch (TextDocumentNotFound) {
                     continue;
                 }
 

@@ -50,7 +50,7 @@ class WorseExtractConstant implements ExtractConstant
         $targetNode = $node->getDescendantNodeAtPosition($offset);
         try {
             $this->getComparableValue($targetNode);
-        } catch (TransformException $e) {
+        } catch (TransformException) {
             return false;
         }
         return true;

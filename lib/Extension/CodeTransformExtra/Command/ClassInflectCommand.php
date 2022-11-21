@@ -60,7 +60,7 @@ class ClassInflectCommand extends Command
 
         try {
             $response['path'] = $this->classInflect->generateFromExisting($src, $dest, $variant, $input->getOption('force'));
-        } catch (FileAlreadyExists $exception) {
+        } catch (FileAlreadyExists) {
             $questionHelper = new QuestionHelper();
             $question = new ConfirmationQuestion('<question>File already exists, overwrite? [y/n]</>', false);
 

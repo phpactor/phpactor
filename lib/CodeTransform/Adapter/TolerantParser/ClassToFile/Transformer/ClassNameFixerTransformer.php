@@ -67,7 +67,7 @@ class ClassNameFixerTransformer implements Transformer
         $rootNode = $this->parser->parseSourceFile((string) $code);
         try {
             $classFqn = $this->determineClassFqn($code);
-        } catch (RuntimeException $couldNotFindCandidate) {
+        } catch (RuntimeException) {
             return Diagnostics::none();
         }
         $correctClassName = $classFqn->name();

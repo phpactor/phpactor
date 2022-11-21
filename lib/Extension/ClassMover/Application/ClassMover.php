@@ -32,7 +32,7 @@ class ClassMover
             return array_filter($this->pathFinder->destinationsFor($src), function (string $filePath) {
                 return (bool) file_exists($filePath);
             });
-        } catch (NoMatchingSourceException $e) {
+        } catch (NoMatchingSourceException) {
             // TODO: Make pathfinder return it's own exception here, this is the class-to-file exception
             return [];
         }

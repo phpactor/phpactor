@@ -22,9 +22,9 @@ class LocationConverter
         foreach ($locations as $location) {
             try {
                 $lspLocations[] = $this->toLspLocation($location);
-            } catch (TextDocumentNotFound $notFound) {
+            } catch (TextDocumentNotFound) {
                 continue;
-            } catch (CouldNotLoadFileContents $couldNotLoad) {
+            } catch (CouldNotLoadFileContents) {
                 continue;
             }
         }

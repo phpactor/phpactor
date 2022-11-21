@@ -100,7 +100,7 @@ class WorseFunctionCompletor implements TolerantCompletor
         foreach ($functionNames as $functionName) {
             try {
                 yield $this->reflector->reflectFunction($functionName);
-            } catch (NotFound $e) {
+            } catch (NotFound) {
             }
         }
     }

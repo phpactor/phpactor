@@ -209,7 +209,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         // function
         try {
             $source = $this->sourceLocator->locate($name);
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             $name = Name::fromString($name->short());
             $source = $this->sourceLocator->locate($name);
         }
@@ -261,7 +261,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         // function
         try {
             $source = $this->sourceLocator->locate($name);
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             $name = Name::fromString($name->short());
             $source = $this->sourceLocator->locate($name);
         }
@@ -291,7 +291,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         // function
         try {
             $source = $this->sourceLocator->locate($name);
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             $name = Name::fromString($name->short());
             $source = $this->sourceLocator->locate($name);
         }

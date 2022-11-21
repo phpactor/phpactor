@@ -59,7 +59,7 @@ class WorseFillObject implements FillObject
 
         try {
             $constructor = $offset->class()->methods()->get('__construct');
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return TextEdits::none();
         }
 

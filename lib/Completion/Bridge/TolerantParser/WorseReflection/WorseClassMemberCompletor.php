@@ -124,7 +124,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
         try {
             $classReflection = $this->reflector->reflectClassLike($type->name());
-        } catch (NotFound $notFound) {
+        } catch (NotFound) {
             return;
         }
 

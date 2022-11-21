@@ -137,7 +137,7 @@ class HoverHandler implements Handler
     {
         try {
             return $this->renderSymbolContext($symbolContext);
-        } catch (CouldNotFormat $e) {
+        } catch (CouldNotFormat) {
         }
 
         return null;
