@@ -37,16 +37,10 @@ class StatusHandler implements Handler
     {
         $diagnostics = $this->status->check();
 
-        switch ($arguments[self::PARAM_TYPE]) {
-            case self::TYPE_FORMATTED:
-                $response = $this->handleFormattedType($diagnostics);
-                break;
-
-            case self::TYPE_DETAILED:
-            default:
-                $response = $this->handleDetailedType($diagnostics);
-                break;
-        }
+        $response = match ($arguments[self::PARAM_TYPE]) {
+            self::TYPE_FORMATTED => $this->handleFormattedType($diagnostics),
+            default => $this->handleDetailedType($diagnostics),
+        };
 
         return $response;
     }

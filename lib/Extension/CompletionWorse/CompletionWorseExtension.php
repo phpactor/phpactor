@@ -198,21 +198,18 @@ class CompletionWorseExtension implements Extension
         });
 
         $container->register(DocumentPrioritizer::class, function (Container $container) {
-            switch ($container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY)) {
-                case self::NAME_SEARCH_STRATEGY_PROXIMITY:
-                    return new SimilarityResultPrioritizer();
-                case self::NAME_SEARCH_STRATEGY_NONE:
-                    return new DefaultResultPrioritizer();
-                default:
-                    throw new RuntimeException(sprintf(
-                        'Unknown search priority strategy "%s", must be one of "%s"',
-                        $container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY),
-                        implode('", "', [
-                            self::NAME_SEARCH_STRATEGY_PROXIMITY,
-                            self::NAME_SEARCH_STRATEGY_NONE
-                        ])
-                    ));
-            }
+            return match ($container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY)) {
+                self::NAME_SEARCH_STRATEGY_PROXIMITY => new SimilarityResultPrioritizer(),
+                self::NAME_SEARCH_STRATEGY_NONE => new DefaultResultPrioritizer(),
+                default => throw new RuntimeException(sprintf(
+                    'Unknown search priority strategy "%s", must be one of "%s"',
+                    $container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY),
+                    implode('", "', [
+                        self::NAME_SEARCH_STRATEGY_PROXIMITY,
+                        self::NAME_SEARCH_STRATEGY_NONE
+                    ])
+                )),
+            };
         });
 
         $container->register('completion_worse.short_desc.formatters', function (Container $container) {

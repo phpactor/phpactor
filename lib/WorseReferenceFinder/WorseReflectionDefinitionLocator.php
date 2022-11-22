@@ -73,25 +73,16 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         if ($symbolContext instanceof MemberDeclarationContext) {
             return $this->gotoMethodDeclaration($symbolContext);
         }
-
-        switch ($symbolContext->symbol()->symbolType()) {
-            case Symbol::METHOD:
-            case Symbol::PROPERTY:
-            case Symbol::CONSTANT:
-            case Symbol::CASE:
-                return $this->gotoMember($symbolContext);
-            case Symbol::CLASS_:
-                return $this->gotoClass($symbolContext);
-            case Symbol::FUNCTION:
-                return $this->gotoFunction($symbolContext);
-            case Symbol::DECLARED_CONSTANT:
-                return $this->gotoDeclaredConstant($symbolContext);
-        }
-
-        throw new CouldNotLocateDefinition(sprintf(
-            'Do not know how to goto definition of symbol type "%s"',
-            $symbolContext->symbol()->symbolType()
-        ));
+        return match ($symbolContext->symbol()->symbolType()) {
+            Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT, Symbol::CASE => $this->gotoMember($symbolContext),
+            Symbol::CLASS_ => $this->gotoClass($symbolContext),
+            Symbol::FUNCTION => $this->gotoFunction($symbolContext),
+            Symbol::DECLARED_CONSTANT => $this->gotoDeclaredConstant($symbolContext),
+            default => throw new CouldNotLocateDefinition(sprintf(
+                'Do not know how to goto definition of symbol type "%s"',
+                $symbolContext->symbol()->symbolType()
+            )),
+        };
     }
 
     private function gotoClass(NodeContext $symbolContext): TypeLocations

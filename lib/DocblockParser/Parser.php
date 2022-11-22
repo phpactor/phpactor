@@ -88,46 +88,20 @@ final class Parser
     {
         $token = $this->tokens->current;
         $value = str_replace(['@psalm-', '@phpstan-'], '@', $token->value);
-
-        switch ($value) {
-            case '@param':
-                return $this->parseParam();
-
-            case '@var':
-                return $this->parseVar();
-
-            case '@throws':
-                return $this->parseThrows();
-
-            case '@deprecated':
-                return $this->parseDeprecated();
-
-            case '@method':
-                return $this->parseMethod();
-
-            case '@property':
-            case '@property-read':
-                return $this->parseProperty();
-
-            case '@mixin':
-                return $this->parseMixin();
-
-            case '@return':
-                return $this->parseReturn();
-
-            case '@template':
-                return $this->parseTemplate();
-
-            case '@extends':
-            case '@template-extends':
-                return $this->parseExtends();
-
-            case '@implements':
-            case '@template-implements':
-                return $this->parseImplements();
-        }
-
-        return new UnknownTag($this->tokens->chomp());
+        return match ($value) {
+            '@param' => $this->parseParam(),
+            '@var' => $this->parseVar(),
+            '@throws' => $this->parseThrows(),
+            '@deprecated' => $this->parseDeprecated(),
+            '@method' => $this->parseMethod(),
+            '@property', '@property-read' => $this->parseProperty(),
+            '@mixin' => $this->parseMixin(),
+            '@return' => $this->parseReturn(),
+            '@template' => $this->parseTemplate(),
+            '@extends', '@template-extends' => $this->parseExtends(),
+            '@implements', '@template-implements' => $this->parseImplements(),
+            default => new UnknownTag($this->tokens->chomp()),
+        };
     }
 
     private function parseParam(): ParamTag

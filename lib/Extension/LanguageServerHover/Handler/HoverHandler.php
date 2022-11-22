@@ -110,20 +110,13 @@ class HoverHandler implements Handler, CanRegisterCapabilities
 
     private function renderSymbolContext(NodeContext $nodeContext): ?string
     {
-        switch ($nodeContext->symbol()->symbolType()) {
-            case Symbol::METHOD:
-            case Symbol::PROPERTY:
-            case Symbol::CONSTANT:
-                return $this->renderMember($nodeContext);
-            case Symbol::CLASS_:
-                return $this->renderClass($nodeContext->type());
-            case Symbol::FUNCTION:
-                return $this->renderFunction($nodeContext);
-            case Symbol::DECLARED_CONSTANT:
-                return $this->renderDeclaredConstant($nodeContext);
-        }
-
-        return null;
+        return match ($nodeContext->symbol()->symbolType()) {
+            Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT => $this->renderMember($nodeContext),
+            Symbol::CLASS_ => $this->renderClass($nodeContext->type()),
+            Symbol::FUNCTION => $this->renderFunction($nodeContext),
+            Symbol::DECLARED_CONSTANT => $this->renderDeclaredConstant($nodeContext),
+            default => null,
+        };
     }
 
     private function renderMember(NodeContext $nodeContext): string

@@ -219,32 +219,28 @@ class BinaryExpressionResolver implements Resolver
         if (!NodeUtil::canAcceptTypeAssertion($reciever)) {
             return $context;
         }
+        return match ($operator) {
+            TokenKind::EqualsEqualsEqualsToken => $context->withTypeAssertion(TypeAssertion::forContext(
+                $recieverContext,
+                fn (Type $type) => $transmittingContext->type(),
 
-        switch ($operator) {
-            case TokenKind::EqualsEqualsEqualsToken:
-                return $context->withTypeAssertion(TypeAssertion::forContext(
-                    $recieverContext,
-                    fn (Type $type) => $transmittingContext->type(),
-
-                    // ???
-                    fn (Type $type) => TypeCombinator::subtract($transmittingContext->type(), $type),
-                ));
-            case TokenKind::InstanceOfKeyword:
-                return $context->withTypeAssertion(TypeAssertion::forContext(
-                    $recieverContext,
-                    function (Type $type) use ($transmittingContext) {
-                        $type = TypeCombinator::acceptedByType($type, TypeFactory::object());
-                        $type = TypeCombinator::narrowTo($type, $transmittingContext->type());
-                        return $type;
-                    },
-                    function (Type $type) use ($transmittingContext) {
-                        $subtracted = TypeCombinator::subtract($transmittingContext->type(), $type);
-                        return $subtracted;
-                    }
-                ));
-        }
-
-        return $context;
+                // ???
+                fn (Type $type) => TypeCombinator::subtract($transmittingContext->type(), $type),
+            )),
+            TokenKind::InstanceOfKeyword => $context->withTypeAssertion(TypeAssertion::forContext(
+                $recieverContext,
+                function (Type $type) use ($transmittingContext) {
+                    $type = TypeCombinator::acceptedByType($type, TypeFactory::object());
+                    $type = TypeCombinator::narrowTo($type, $transmittingContext->type());
+                    return $type;
+                },
+                function (Type $type) use ($transmittingContext) {
+                    $subtracted = TypeCombinator::subtract($transmittingContext->type(), $type);
+                    return $subtracted;
+                }
+            )),
+            default => $context,
+        };
     }
 
     private function negate(
