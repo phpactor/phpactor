@@ -116,47 +116,37 @@ class BinaryExpressionResolver implements Resolver
             }
         }
         if ($left instanceof Comparable) {
-            switch ($operator) {
-                case TokenKind::EqualsEqualsEqualsToken:
-                    return $left->identical($right);
-                case TokenKind::EqualsEqualsToken:
-                    return $left->equal($right);
-                case TokenKind::GreaterThanToken:
-                    return $left->greaterThan($right);
-                case TokenKind::GreaterThanEqualsToken:
-                    return $left->greaterThanEqual($right);
-                case TokenKind::LessThanToken:
-                    return $left->lessThan($right);
-                case TokenKind::LessThanEqualsToken:
-                    return $left->lessThanEqual($right);
-                case TokenKind::ExclamationEqualsToken:
-                    return $left->notEqual($right);
-                case TokenKind::ExclamationEqualsEqualsToken:
-                    return $left->notIdentical($right);
+            $value = null;
+            $value = match ($operator) {
+                TokenKind::EqualsEqualsEqualsToken => $left->identical($right),
+                TokenKind::EqualsEqualsToken => $left->equal($right),
+                TokenKind::GreaterThanToken => $left->greaterThan($right),
+                TokenKind::GreaterThanEqualsToken => $left->greaterThanEqual($right),
+                TokenKind::LessThanToken => $left->lessThan($right),
+                TokenKind::LessThanEqualsToken => $left->lessThanEqual($right),
+                TokenKind::ExclamationEqualsToken => $left->notEqual($right),
+                TokenKind::ExclamationEqualsEqualsToken => $left->notIdentical($right),
+                default => null,
+            };
+            if ($value !== null) {
+                return $value;
             }
         }
 
-        switch ($operator) {
-            case TokenKind::OrKeyword:
-            case TokenKind::BarBarToken:
-                return TypeUtil::toBool($left)->or(TypeUtil::toBool($right));
-            case TokenKind::AndKeyword:
-            case TokenKind::AmpersandAmpersandToken:
-                return TypeUtil::toBool($left)->and(TypeUtil::toBool($right));
-            case TokenKind::XorKeyword:
-                return TypeUtil::toBool($left)->xor(TypeUtil::toBool($right));
-            case TokenKind::PlusToken:
-                return TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right));
-            case TokenKind::MinusToken:
-                return TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right));
-            case TokenKind::AsteriskToken:
-                return TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right));
-            case TokenKind::SlashToken:
-                return TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right));
-            case TokenKind::PercentToken:
-                return TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right));
-            case TokenKind::AsteriskAsteriskToken:
-                return TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right));
+        $value = match ($operator) {
+            TokenKind::OrKeyword, TokenKind::BarBarToken => TypeUtil::toBool($left)->or(TypeUtil::toBool($right)),
+            TokenKind::AndKeyword, TokenKind::AmpersandAmpersandToken => TypeUtil::toBool($left)->and(TypeUtil::toBool($right)),
+            TokenKind::XorKeyword => TypeUtil::toBool($left)->xor(TypeUtil::toBool($right)),
+            TokenKind::PlusToken => TypeUtil::toNumber($left)->plus(TypeUtil::toNumber($right)),
+            TokenKind::MinusToken => TypeUtil::toNumber($left)->minus(TypeUtil::toNumber($right)),
+            TokenKind::AsteriskToken => TypeUtil::toNumber($left)->multiply(TypeUtil::toNumber($right)),
+            TokenKind::SlashToken => TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right)),
+            TokenKind::PercentToken => TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right)),
+            TokenKind::AsteriskAsteriskToken => TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right)),
+            default => null,
+        };
+        if ($value !== null) {
+            return $value;
         }
 
         if ($left instanceof BitwiseOperable) {
