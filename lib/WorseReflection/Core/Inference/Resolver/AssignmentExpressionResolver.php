@@ -111,7 +111,7 @@ class AssignmentExpressionResolver implements Resolver
         //       evaluate the variable (e.g. $this->$foobar);
         if ($memberNameNode instanceof Token) {
             $memberName = $memberNameNode->getText($leftOperand->getFileContents());
-        /** @phpstan-ignore-next-line */
+            /** @phpstan-ignore-next-line */
         } else {
             $memberType = $resolver->resolveNode($frame, $memberNameNode)->type();
 
