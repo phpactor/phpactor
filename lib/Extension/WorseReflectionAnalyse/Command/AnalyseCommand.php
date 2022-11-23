@@ -59,13 +59,10 @@ class AnalyseCommand extends Command
         $output->writeln('');
         $output->writeln('');
 
-        switch ($input->getOption(self::OPT_FORMAT)) {
-            case 'json':
-                $this->renderJson($output, $results);
-                break;
-            default:
-                $this->renderTable($output, $results, $start);
-        }
+        match ($input->getOption(self::OPT_FORMAT)) {
+            'json' => $this->renderJson($output, $results),
+            default => $this->renderTable($output, $results, $start),
+        };
 
         if ($input->getOption(self::OPT_IGNORE_FAILURE)) {
             return 0;

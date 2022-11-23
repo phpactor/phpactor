@@ -60,20 +60,13 @@ class HoverHandler implements Handler
 
     private function renderSymbolContext(NodeContext $symbolContext): ?string
     {
-        switch ($symbolContext->symbol()->symbolType()) {
-            case Symbol::METHOD:
-            case Symbol::PROPERTY:
-            case Symbol::CONSTANT:
-                return $this->renderMember($symbolContext);
-            case Symbol::CLASS_:
-                return $this->renderClass($symbolContext->type());
-            case Symbol::FUNCTION:
-                return $this->renderFunction($symbolContext);
-            case Symbol::VARIABLE:
-                return $this->renderVariable($symbolContext);
-        }
-
-        return null;
+        return match ($symbolContext->symbol()->symbolType()) {
+            Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT => $this->renderMember($symbolContext),
+            Symbol::CLASS_ => $this->renderClass($symbolContext->type()),
+            Symbol::FUNCTION => $this->renderFunction($symbolContext),
+            Symbol::VARIABLE => $this->renderVariable($symbolContext),
+            default => null,
+        };
     }
 
     private function renderMember(NodeContext $symbolContext): ?string
@@ -89,19 +82,12 @@ class HoverHandler implements Handler
             // methods but not all have constants or properties, so we play safe
             // with members() which is first-come-first-serve, rather than risk
             // a fatal error because of a non-existing method.
-            switch ($symbolContext->symbol()->symbolType()) {
-                case Symbol::METHOD:
-                    $member = $class->methods()->get($name);
-                    break;
-                case Symbol::CONSTANT:
-                    $member = $class->members()->get($name);
-                    break;
-                case Symbol::PROPERTY:
-                    $member = $class->members()->get($name);
-                    break;
-                default:
-                    throw new RuntimeException('Unknown member type');
-            }
+            $member = match ($symbolContext->symbol()->symbolType()) {
+                Symbol::METHOD => $class->methods()->get($name),
+                Symbol::CONSTANT => $class->members()->get($name),
+                Symbol::PROPERTY => $class->members()->get($name),
+                default => throw new RuntimeException('Unknown member type'),
+            };
 
 
             return $this->formatter->format($member);

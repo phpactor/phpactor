@@ -101,24 +101,20 @@ class ReferencesHandler extends AbstractHandler
         if ($this->hasMissingArguments($arguments)) {
             return $this->createInputCallback($arguments);
         }
-
-        switch ($arguments[self::PARAMETER_MODE]) {
-            case self::MODE_FIND:
-                return $this->findReferences($symbolContext, $arguments['filesystem']);
-            case self::MODE_REPLACE:
-                return $this->replaceReferences(
-                    $symbolContext,
-                    $arguments['filesystem'],
-                    $arguments[self::PARAMETER_REPLACEMENT],
-                    $arguments[self::PARAMETER_PATH],
-                    $arguments[self::PARAMETER_SOURCE]
-                );
-        }
-
-        throw new InvalidArgumentException(sprintf(
-            'Unknown references mode "%s"',
-            $arguments['mode']
-        ));
+        return match ($arguments[self::PARAMETER_MODE]) {
+            self::MODE_FIND => $this->findReferences($symbolContext, $arguments['filesystem']),
+            self::MODE_REPLACE => $this->replaceReferences(
+                $symbolContext,
+                $arguments['filesystem'],
+                $arguments[self::PARAMETER_REPLACEMENT],
+                $arguments[self::PARAMETER_PATH],
+                $arguments[self::PARAMETER_SOURCE]
+            ),
+            default => throw new InvalidArgumentException(sprintf(
+                'Unknown references mode "%s"',
+                $arguments['mode']
+            )),
+        };
     }
 
     private function findReferences(NodeContext $symbolContext, string $filesystem)
@@ -247,27 +243,18 @@ class ReferencesHandler extends AbstractHandler
         return [$source, $this->sortReferences($references)];
     }
 
-    private function doPerformFindOrReplaceReferences(
-        NodeContext $symbolContext,
-        string $filesystem,
-        string $source = null,
-        string $replacement = null
-    ) {
-        switch ($symbolContext->symbol()->symbolType()) {
-            case Symbol::CLASS_:
-                return $this->classReferences($filesystem, $symbolContext, $source, $replacement);
-            case Symbol::METHOD:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_METHOD, $source, $replacement);
-            case Symbol::PROPERTY:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_PROPERTY, $source, $replacement);
-            case Symbol::CONSTANT:
-                return $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $source, $replacement);
-        }
-
-        throw new RuntimeException(sprintf(
-            'Cannot find references for symbol type "%s"',
-            $symbolContext->symbol()->symbolType()
-        ));
+    private function doPerformFindOrReplaceReferences(NodeContext $symbolContext, string $filesystem, string $source = null, string $replacement = null)
+    {
+        return match ($symbolContext->symbol()->symbolType()) {
+            Symbol::CLASS_ => $this->classReferences($filesystem, $symbolContext, $source, $replacement),
+            Symbol::METHOD => $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_METHOD, $source, $replacement),
+            Symbol::PROPERTY => $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_PROPERTY, $source, $replacement),
+            Symbol::CONSTANT => $this->memberReferences($filesystem, $symbolContext, ClassMemberQuery::TYPE_CONSTANT, $source, $replacement),
+            default => throw new RuntimeException(sprintf(
+                'Cannot find references for symbol type "%s"',
+                $symbolContext->symbol()->symbolType()
+            )),
+        };
     }
 
     private function sortReferences(array $fileReferences): array

@@ -15,13 +15,10 @@ final class IndentedDumper implements Dumper
 
     private function doDump(OutputInterface $output, array $data, $padding = 0): void
     {
-        switch ($padding) {
-            case 1:
-                $style = 'info';
-                break;
-            default:
-                $style = 'comment';
-        }
+        $style = match ($padding) {
+            1 => 'info',
+            default => 'comment',
+        };
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $output->writeln(sprintf('%s<%s>%s</>:', str_repeat(self::PADDING, $padding), $style, $key));
