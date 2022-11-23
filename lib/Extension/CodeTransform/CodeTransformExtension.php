@@ -205,6 +205,7 @@ class CodeTransformExtension implements Extension
             return new WorseReplaceQualifierWithImport(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(ImportName::class),
+                $container->get(BuilderFactory::class),
                 $container->get(Updater::class),
             );
         });
