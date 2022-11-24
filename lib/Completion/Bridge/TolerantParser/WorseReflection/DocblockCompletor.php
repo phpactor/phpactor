@@ -76,7 +76,7 @@ class DocblockCompletor implements TolerantCompletor
         }
 
         foreach (self::SUPPORTED_TAGS as $supportedTag) {
-            if (0 === strpos($supportedTag, $tag)) {
+            if (str_starts_with($supportedTag, $tag)) {
                 yield Suggestion::createWithOptions(
                     $supportedTag,
                     [

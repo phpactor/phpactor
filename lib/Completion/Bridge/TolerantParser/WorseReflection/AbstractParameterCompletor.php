@@ -105,7 +105,7 @@ abstract class AbstractParameterCompletor
         // if we have a trailing comma, e.g. the argument list is `$foobar, `
         // then the above elements will contain only `$foobar` but the param
         // index should be incremented.
-        if (substr(trim($argumentList->getText()), -1, 1) === ',') {
+        if (str_ends_with(trim($argumentList->getText()), ',')) {
             return $index + 1;
         }
 

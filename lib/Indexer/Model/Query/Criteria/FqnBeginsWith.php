@@ -22,6 +22,6 @@ class FqnBeginsWith extends Criteria
             return false;
         }
 
-        return 0 === strpos($record->fqn()->__toString(), $this->name);
+        return str_starts_with($record->fqn()->__toString(), $this->name);
     }
 }

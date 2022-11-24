@@ -14,7 +14,7 @@ final class WorseTypeRendererFactory
     public function rendererFor(string $phpVersion): WorseTypeRenderer
     {
         foreach ($this->versionToRendererMap as $version => $renderer) {
-            if (0 === strpos($phpVersion, $version)) {
+            if (str_starts_with($phpVersion, $version)) {
                 return $renderer;
             }
         }

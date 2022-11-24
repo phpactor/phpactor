@@ -22,6 +22,6 @@ class ShortNameBeginsWith extends Criteria
             return false;
         }
 
-        return 0 === strpos($record->shortName(), $this->name);
+        return str_starts_with($record->shortName(), $this->name);
     }
 }

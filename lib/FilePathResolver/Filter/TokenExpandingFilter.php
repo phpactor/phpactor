@@ -13,7 +13,7 @@ class TokenExpandingFilter implements Filter
 
     public function apply(string $path): string
     {
-        if (false === strpos($path, '%')) {
+        if (!str_contains($path, '%')) {
             return $path;
         }
 

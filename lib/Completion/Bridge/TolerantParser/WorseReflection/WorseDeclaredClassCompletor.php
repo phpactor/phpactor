@@ -30,7 +30,7 @@ class WorseDeclaredClassCompletor implements TolerantCompletor, TolerantQualifia
         $classes = get_declared_classes();
         $classes = array_filter($classes, function ($class) use ($node) {
             $name = Name::fromString($class);
-            return 0 === strpos($name->short(), $node->getText());
+            return str_starts_with($name->short(), $node->getText());
         });
 
         foreach ($classes as $class) {

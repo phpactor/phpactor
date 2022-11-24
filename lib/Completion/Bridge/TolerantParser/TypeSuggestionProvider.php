@@ -49,7 +49,7 @@ class TypeSuggestionProvider
                 continue;
             }
 
-            $wasAbsolute = strpos($search, '\\') === 0;
+            $wasAbsolute = str_starts_with($search, '\\');
             yield Suggestion::createWithOptions($result->name()->head(), [
                 'short_description' => $result->name()->__toString(),
                 'name_import' => $wasAbsolute ? null : $result->name()->__toString(),

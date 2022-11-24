@@ -22,7 +22,7 @@ class Name
 
     public static function fromString(string $string): Name
     {
-        $fullyQualified = 0 === strpos($string, '\\');
+        $fullyQualified = str_starts_with($string, '\\');
         $parts = explode('\\', trim($string, '\\'));
 
         return new static($parts, $fullyQualified);

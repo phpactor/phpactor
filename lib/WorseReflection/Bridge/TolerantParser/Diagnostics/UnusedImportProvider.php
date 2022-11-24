@@ -135,7 +135,7 @@ class UnusedImportProvider implements DiagnosticProvider
     private function usedByAnnotation(string $contents, string $imported, $node): bool
     {
         $imported = explode(':', $imported)[1];
-        return false !== strpos($contents, '@' . $imported);
+        return str_contains($contents, '@' . $imported);
     }
 
     private function lastPart(string $name): string

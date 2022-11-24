@@ -44,7 +44,7 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
 
         if ($node instanceof QualifiedName) {
             $files = $files->filter(function (SplFileInfo $file) use ($node) {
-                return 0 === strpos($file->getFilename(), $node->getText());
+                return str_starts_with($file->getFilename(), $node->getText());
             });
         }
 
