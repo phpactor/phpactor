@@ -20,6 +20,7 @@ Bug fixes:
   - [lsp] Do not send workDoneProgress notifications to clients that do not
     support it #1951
   - [lsp] Fix highlighting on PHP 8.1 #1960
+  - [wr] Do not crash when encountering an array union operator #1971 @wouterj
 
 ## 2022.11.12
 
