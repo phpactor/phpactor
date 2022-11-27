@@ -20,6 +20,7 @@ use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
@@ -130,6 +131,13 @@ class BinaryExpressionResolver implements Resolver
             };
             if ($value !== null) {
                 return $value;
+            }
+        }
+
+        if ($left instanceof ArrayType) {
+            switch ($operator) {
+                case TokenKind::PlusToken:
+                    return $left->mergeType($right);
             }
         }
 
