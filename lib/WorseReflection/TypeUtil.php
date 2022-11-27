@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NumericType;
+use Phpactor\WorseReflection\Core\Type\ScalarType;
 
 class TypeUtil
 {
@@ -61,7 +62,7 @@ class TypeUtil
 
     public static function toNumber(Type $type): NumericType
     {
-        if ($type instanceof Literal) {
+        if ($type instanceof Literal && $type instanceof ScalarType) {
             $value = (string)$type->value();
             return TypeFactory::fromNumericString($value);
         }
