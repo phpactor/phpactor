@@ -7,7 +7,12 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
+use Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand\FormatCommand;
+use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
+use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerPhpCsFixerExtension implements OptionalExtension
@@ -17,11 +22,48 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
 
     public function load(ContainerBuilder $container): void
     {
+        $container->register(
+            PhpCsFixerProcess::class,
+            function (Container $container) {
+                $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PHP_CS_FIXER_BIN));
+
+                return new PhpCsFixerProcess(
+                    $path,
+                    LoggingExtension::channelLogger($container, 'php-cs-fixer'),
+                    $container->getParameter(self::PARAM_ENV),
+                );
+            }
+        );
+
         $container->register(PhpCsFixerFormatter::class, function (Container $container) {
-            $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PHP_CS_FIXER_BIN));
-            return new PhpCsFixerFormatter($path, $container->getParameter(self::PARAM_ENV));
+            return new PhpCsFixerFormatter($container->get(PhpCsFixerProcess::class));
         }, [
             LanguageServerExtension::TAG_FORMATTER => []
+        ]);
+
+        $container->register(PhpCsFixerDiagnosticsProvider::class, function (Container $container) {
+            return new PhpCsFixerDiagnosticsProvider(
+                $container->get(PhpCsFixerProcess::class),
+                LoggingExtension::channelLogger($container, 'php-cs-fixer')
+            );
+        }, [
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
+                'name' => 'php-cs-fixer'
+            ],
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(FormatCommand::class, function (Container $container) {
+            return new FormatCommand(
+                $container->get(PhpCsFixerProcess::class),
+                $container->get(ClientApi::class),
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                LoggingExtension::channelLogger($container, 'php-cs-fixer')
+            );
+        }, [
+            LanguageServerExtension::TAG_COMMAND => [
+                'name' => 'php_cs_fixer.fix'
+            ],
         ]);
     }
 
@@ -30,7 +72,6 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $schema->setDefaults([
             self::PARAM_PHP_CS_FIXER_BIN => '%project_root%/vendor/bin/php-cs-fixer',
             self::PARAM_ENV => [],
-
         ]);
 
         $schema->setDescriptions([
