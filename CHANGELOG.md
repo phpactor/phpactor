@@ -17,6 +17,8 @@ Improvements:
 
 Bug fixes:
 
+  - [ls] Log errors even if they are for a request @lumnn
+  - [ls] Do not include `results` key in JSON response when error @lumnn
   - [lsp] Do not send workDoneProgress notifications to clients that do not
     support it #1951
   - [lsp] Fix highlighting on PHP 8.1 #1960
