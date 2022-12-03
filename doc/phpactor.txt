@@ -167,15 +167,6 @@ COMMANDS                                                   *phpactor-commands*
 :PhpactorConfig                                              *:PhpactorConfig*
   Dump Phpactor's configuration
 
-:PhpactorExtensionList                                *:PhpactorExtensionList*
-  List all installed extensions
-
-:PhpactorExtensionInstall                          *:PhpactorExtensionInstall*
-  Install an extension
-
-:PhpactorExtensionRemove                            *:PhpactorExtensionRemove*
-  Remove an extension
-
 :PhpactorClassExpand                                    *:PhpactorClassExpand*
   Expand the class name under the cursor to it's fully-qualified-name
 

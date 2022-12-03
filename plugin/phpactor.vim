@@ -73,18 +73,6 @@ command! -nargs=0 PhpactorStatus call phpactor#Status()
 command! -nargs=0 PhpactorConfig call phpactor#Config()
 
 ""
-" List all installed extensions
-command! -nargs=0 PhpactorExtensionList call phpactor#ExtensionList()
-
-""
-" Install an extension
-command! -nargs=1 PhpactorExtensionInstall call phpactor#ExtensionInstall(<q-args>)
-
-""
-" Remove an extension
-command! -nargs=1 PhpactorExtensionRemove call phpactor#ExtensionRemove(<q-args>)
-
-""
 " Expand the class name under the cursor to it's fully-qualified-name
 command! -nargs=0 PhpactorClassExpand call phpactor#ClassExpand()
 
