@@ -9,9 +9,7 @@ use Symfony\Component\Filesystem\Path;
 
 final class FilePath
 {
-    private $path;
-
-    private function __construct(string $path)
+    private function __construct(private string $path)
     {
         if (false === Path::isAbsolute($path)) {
             throw new InvalidArgumentException(sprintf(
@@ -19,11 +17,9 @@ final class FilePath
                 $path
             ));
         }
-
-        $this->path = $path;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->path;
     }
@@ -90,17 +86,17 @@ final class FilePath
         ));
     }
 
-    public function isDirectory()
+    public function isDirectory(): bool
     {
         return is_dir($this->path);
     }
 
-    public function asSplFileInfo()
+    public function asSplFileInfo(): SplFileInfo
     {
         return new SplFileInfo($this->path());
     }
 
-    public function makeAbsoluteFromString(string $path)
+    public function makeAbsoluteFromString(string $path): FilePath
     {
         if (Path::isAbsolute($path)) {
             $path = self::fromString($path);
@@ -124,17 +120,17 @@ final class FilePath
         return Path::getExtension($this->path);
     }
 
-    public function concatPath(FilePath $path)
+    public function concatPath(FilePath $path): FilePath
     {
         return new self(Path::join($this->path(), (string) $path));
     }
 
-    public function isWithin(FilePath $path)
+    public function isWithin(FilePath $path): bool
     {
         return str_starts_with($this->path(), $path->path().'/');
     }
 
-    public function isWithinOrSame(FilePath $path)
+    public function isWithinOrSame(FilePath $path): bool
     {
         if ($this->path() == $path->path()) {
             return true;
@@ -148,7 +144,7 @@ final class FilePath
         return basename($this->path()) == $name;
     }
 
-    public function path()
+    public function path(): string
     {
         return $this->path;
     }
