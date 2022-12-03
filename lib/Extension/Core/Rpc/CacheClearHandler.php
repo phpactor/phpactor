@@ -24,7 +24,7 @@ class CacheClearHandler implements Handler
     {
     }
 
-    public function handle(array $arguments)
+    public function handle(array $arguments): EchoResponse
     {
         $this->cacheClear->clearCache();
 
