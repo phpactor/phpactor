@@ -36,7 +36,7 @@ class StringLiteralResolver implements Resolver
     private function getStringContentsText(StringLiteral $node): string
     {
         $children = $node->children;
-        if (is_array($children)) {
+        if (is_array($children) && array_key_exists(0, $children)) {
             $children = $children[0];
         }
 
