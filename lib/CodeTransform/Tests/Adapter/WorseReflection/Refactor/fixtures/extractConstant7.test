@@ -1,0 +1,24 @@
+// File: source
+<?php
+
+class extractMethod1
+{
+    public function bigMethod()
+    {
+        echo <<<EOT
+<>I am a HEREDOC
+EOT;
+    }
+}
+// File: expected
+<?php
+
+class extractMethod1
+{
+    const HELLO_WORLD = 'I am a HEREDOC';
+
+    public function bigMethod()
+    {
+        echo self::HELLO_WORLD;
+    }
+}

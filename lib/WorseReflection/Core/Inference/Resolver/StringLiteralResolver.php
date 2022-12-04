@@ -36,17 +36,20 @@ class StringLiteralResolver implements Resolver
     private function getStringContentsText(StringLiteral $node): string
     {
         $children = $node->children;
+        if (is_array($children)) {
+            $children = $children[0];
+        }
+
         if ($children instanceof Token) {
             $value = (string)$children->getText($node->getFileContents());
             $startQuote = substr($node, 0, 1);
 
-            if ($startQuote === '\'') {
-                return rtrim(substr($value, 1), '\'');
-            }
-
-            if ($startQuote === '"') {
-                return rtrim(substr($value, 1), '"');
-            }
+            return match ($startQuote) {
+                '\'' => rtrim(substr($value, 1), '\''),
+                '"' => rtrim(substr($value, 1), '"'),
+                '<' => trim($value),
+                default => ''
+            };
         }
 
         return '';
