@@ -23,6 +23,7 @@ Bug fixes:
     support it #1951
   - [lsp] Fix highlighting on PHP 8.1 #1960
   - [wr] Do not crash when encountering an array union operator #1971 @wouterj
+  - [wr] Fixing handling of HEREDOC in StringResolver #1977 @mamazu
 
 ## 2022.11.12
 
@@ -179,7 +180,7 @@ Features:
   - [cmp] Explicitly enable/disable completors and disable `keyword` completor by default.
   - [wr] Support `iterator_to_array`
   - [wr] Handle constant glob to union types (`@return Foo::BAR_*`).
-  - [lsp] show class category in offset hover info 
+  - [lsp] show class category in offset hover info
   - [lsp] jump to types in a union type
   - [wr] Type combination
   - [wr] Support for type assertions via. is_*, instanceof etc
@@ -317,7 +318,7 @@ Improvements:
 
   - [worse-reflection] Support for virtual methods in interfaces - @dantleech
   - [code-transform] Fix regression with importing from root namespace
- 
+
 ## 2020-06-09 (0.16.0)
 
 Features:
@@ -343,7 +344,7 @@ Improvements:
   - [language-server-bridge] Service to convert Phpactor Locations to LSP locations - @dantleech
   - [code-transform] Class import updates context name on alias - @dantleech
   - [documentation] Generate the configuration reference - @dantleech
-  - [completion-worse] Allow completors to be disabled via `completion_worse.disabled_completors` - @dantleech 
+  - [completion-worse] Allow completors to be disabled via `completion_worse.disabled_completors` - @dantleech
   - [indexer-extension] Validate search results (remove from search index if invalid).
   - [language-server] Exit session immediately if NULL given as CWD (instead of crashing).
   - [container] Adds command for introspecting the container (`container:dump`) - @dantleech
@@ -375,7 +376,7 @@ Features:
     processes) (#929) - @dantleech
   - [language-server] Included in the core - @dantleech
   - [indexer] Indexer included in the core - @dantleech
-  - [rpc] Add docblock prose to hover 
+  - [rpc] Add docblock prose to hover
   - [vim-plugin] Add support `:checkhealth` and provide `:PhpactorStatus` in
     terminal window (#974) - @elythyr
   - [ref-finder] Goto definition works for vars (https://github.com/phpactor/worse-reference-finder/pull/1) - @FatBoyXPC
@@ -785,7 +786,7 @@ Improvements:
     instead defaulting to either composer or full-filesystem search depending
     on env).
   - [ClassMover] (RPC) Will update current (unsaved) source.
-  - [vim-plugin] Correctly handle expanding class when at beginning of word, #438 thanks @greg0ire 
+  - [vim-plugin] Correctly handle expanding class when at beginning of word, #438 thanks @greg0ire
   - [vim-plugin] Reload file before replacing contents, fixes #445
   - [vim-plugin] File references, do not show quick fix list if all references
     are in current file.
@@ -885,7 +886,7 @@ Bugfixes:
    - [VimPlugin] Fixed goto definition, #398
    - [WorseReflection] [problem with name import](https://github.com/phpactor/worse-reflection/pull/37) (thanks @adeslade)
 
-## 0.1.0 
+## 0.1.0
 
 **2018-04-03**
 

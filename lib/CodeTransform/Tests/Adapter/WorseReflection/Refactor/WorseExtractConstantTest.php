@@ -54,6 +54,10 @@ class WorseExtractConstantTest extends WorseTestCase
                 'extractConstant6.test',
                 'HOUR'
             ],
+            'replace heredoc' => [
+                'extractConstant7.test',
+                'HELLO_WORLD'
+            ],
         ];
     }
 
