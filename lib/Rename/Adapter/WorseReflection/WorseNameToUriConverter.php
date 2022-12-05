@@ -18,7 +18,7 @@ class WorseNameToUriConverter implements NameToUriConverter
     public function convert(string $className): TextDocumentUri
     {
         try {
-            $uri = $this->reflector->reflectClass($className)->sourceCode()->uri();
+            $uri = $this->reflector->reflectClassLike($className)->sourceCode()->uri();
         } catch (NotFound $notFound) {
             throw new CouldNotConvertClassToUri($notFound->getMessage(), 0, $notFound);
         }
