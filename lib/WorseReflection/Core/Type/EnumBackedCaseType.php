@@ -3,10 +3,11 @@
 namespace Phpactor\WorseReflection\Core\Type;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 
-class EnumBackedCaseType extends Type implements ClassNamedType
+class EnumBackedCaseType extends Type implements ClassLikeType
 {
     public function __construct(public ClassType $enumType, public string $name, public Type $value)
     {
@@ -30,5 +31,10 @@ class EnumBackedCaseType extends Type implements ClassNamedType
     public function name(): ClassName
     {
         return ClassName::fromString('BackedEnumCase');
+    }
+
+    public function members(): ReflectionMemberCollection
+    {
+        return $this->enumType->members();
     }
 }

@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Reflector;
 
-class ClassType extends Type implements ClassNamedType, HasEmptyType
+class ClassType extends Type implements ClassLikeType, HasEmptyType
 {
     /**
      * @var ReflectionMemberCollection<ReflectionMember>

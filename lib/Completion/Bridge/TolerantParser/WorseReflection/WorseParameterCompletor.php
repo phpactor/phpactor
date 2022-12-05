@@ -75,7 +75,7 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
 
         $containerType = $offset->symbolContext()->containerType();
         if ($containerType->isDefined()) {
-            $containerType = $containerType->classNamedTypes()->firstOrNull();
+            $containerType = $containerType->classLikeTypes()->firstOrNull();
             if (!$containerType instanceof ReflectedClassType) {
                 return null;
             }

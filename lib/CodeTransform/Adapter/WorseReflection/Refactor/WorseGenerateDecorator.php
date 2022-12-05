@@ -48,7 +48,7 @@ class WorseGenerateDecorator implements GenerateDecorator
 
             if ($interfaceMethod->returnType()->isDefined()) {
                 $method->returnType($interfaceMethod->returnType()->toLocalType($class->scope())->toPhpString());
-                foreach ($interfaceMethod->returnType()->classNamedTypes() as $type) {
+                foreach ($interfaceMethod->returnType()->classLikeTypes() as $type) {
                     $builder->use($type->name());
                 }
             }
@@ -71,7 +71,7 @@ class WorseGenerateDecorator implements GenerateDecorator
             $parameter = $method->parameter($interfaceMethodParameter->name())
                 ->type($interfaceMethodParameter->type()->toLocalType($class->scope())->toPhpString());
 
-            foreach ($interfaceMethodParameter->type()->classNamedTypes() as $type) {
+            foreach ($interfaceMethodParameter->type()->classLikeTypes() as $type) {
                 $builder->use($type->name());
             }
 
