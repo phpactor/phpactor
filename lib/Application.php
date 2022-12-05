@@ -4,6 +4,7 @@ namespace Phpactor;
 
 use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
 use Symfony\Component\Console\Application as SymfonyApplication;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
@@ -25,7 +26,7 @@ class Application extends SymfonyApplication
         parent::__construct('Phpactor', Versions::getVersion('phpactor/phpactor'));
     }
 
-    public function doRun(InputInterface $input, OutputInterface $output)
+    public function doRun(InputInterface $input, OutputInterface $output): int
     {
         $this->initialize($input, $output);
         $this->setCatchExceptions(false);
@@ -62,7 +63,7 @@ class Application extends SymfonyApplication
         }
     }
 
-    protected function getDefaultInputDefinition()
+    protected function getDefaultInputDefinition(): InputDefinition
     {
         $definition = parent::getDefaultInputDefinition();
         $definition->addOption(new InputOption('working-dir', 'd', InputOption::VALUE_REQUIRED, 'Working directory'));
@@ -70,7 +71,7 @@ class Application extends SymfonyApplication
         return $definition;
     }
 
-    private function handleException(OutputInterface $output, string $dumper, Exception $e)
+    private function handleException(OutputInterface $output, string $dumper, Exception $e): int
     {
         $errors = [
             'error' => $this->serializeException($e),
@@ -89,7 +90,10 @@ class Application extends SymfonyApplication
         return 64;
     }
 
-    private function serializeException(Exception $e)
+    /**
+     * @return array<string, string>
+    */
+    private function serializeException(Exception $e): array
     {
         return [
             'class' => get_class($e),

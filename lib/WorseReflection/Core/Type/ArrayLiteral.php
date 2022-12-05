@@ -61,8 +61,10 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable, ArrayAcc
         return range(0, count($this->typeMap) - 1) === array_keys($this->typeMap);
     }
 
-
-    public function value()
+    /**
+     * @return mixed[]
+     */
+    public function value(): array
     {
         return array_map(
             fn (Type $type) => TypeUtil::valueOrNull($type),
@@ -87,7 +89,7 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable, ArrayAcc
         return new MissingType();
     }
 
-    public function withValue($value)
+    public function withValue($value): self
     {
         return $this;
     }
