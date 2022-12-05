@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+enum MyEnum: string
+{
+    case A = 'a';
+    case B = 'b';
+    case C = 'c';
+
+    public function isA(MyEnum $case): bool
+    {
+        return $case === self::A;
+    }
+}
+
+$a = MyEnum::A;
+wrAssertType('bool', $a->isA());

@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
 
-class ClosureType extends ReflectedClassType implements ClassNamedType, InvokeableType
+class ClosureType extends ReflectedClassType implements ClassLikeType, InvokeableType
 {
     private Type $returnType;
 

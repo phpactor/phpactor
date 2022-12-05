@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\Resolver\IterableTypeResolver;
 
-class GenericClassType extends ReflectedClassType implements IterableType, ClassNamedType
+class GenericClassType extends ReflectedClassType implements IterableType, ClassLikeType
 {
     /**
      * @param Type[] $arguments
