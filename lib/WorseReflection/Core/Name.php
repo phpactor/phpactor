@@ -6,16 +6,17 @@ use InvalidArgumentException;
 
 class Name
 {
+    /** @param array<string> $parts */
     final public function __construct(protected array $parts, private bool $wasFullyQualified)
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return implode('\\', $this->parts);
     }
 
-    public static function fromParts(array $parts)
+    public static function fromParts(array $parts): static
     {
         return new static($parts, false);
     }
@@ -54,7 +55,7 @@ class Name
      */
     public function head(): self
     {
-        return new self([ reset($this->parts) ], false);
+        return new self([ reset($this->parts) ?: '' ], false);
     }
 
     /**
@@ -93,7 +94,7 @@ class Name
 
     public function short(): string
     {
-        return end($this->parts);
+        return (string) end($this->parts);
     }
 
     public function wasFullyQualified(): bool
@@ -101,10 +102,7 @@ class Name
         return $this->wasFullyQualified;
     }
 
-    /**
-     * @return static
-     */
-    public function prepend($name)
+    public function prepend($name): static
     {
         $name = Name::fromUnknown($name);
         return self::fromString(join('\\', [(string) $name, $this->__toString()]));
@@ -116,7 +114,7 @@ class Name
         return $segment === $this->parts;
     }
 
-    public function substitute(Name $name, $alias)
+    public function substitute(Name $name, $alias): Name
     {
         $suffix = array_slice($this->parts, count($name->parts));
         return Name::fromParts(array_merge(

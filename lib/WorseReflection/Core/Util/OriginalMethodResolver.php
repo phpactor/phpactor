@@ -57,7 +57,7 @@ class OriginalMethodResolver
         return $member;
     }
 
-    private function resolveInterface(ReflectionInterface $classLike, ReflectionMember $member)
+    private function resolveInterface(ReflectionInterface $classLike, ReflectionMember $member): ReflectionMember
     {
         foreach ($classLike->parents() as $parent) {
             $member = $this->doResolveOriginalMember(

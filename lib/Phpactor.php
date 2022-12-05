@@ -266,7 +266,7 @@ class Phpactor
         return $path;
     }
 
-    public static function isFile(string $string)
+    public static function isFile(string $string): bool
     {
         $containsInvalidNamespaceChars = (bool) preg_match('{[\.\*/]}', $string);
 

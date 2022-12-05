@@ -18,10 +18,7 @@ class StringLiteralType extends StringType implements Literal, Generalizable, Co
         return sprintf('"%s"', $this->value);
     }
 
-    /**
-     * @return mixed
-     */
-    public function value()
+    public function value(): string
     {
         return $this->value;
     }

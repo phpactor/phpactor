@@ -138,7 +138,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
     /**
      * As with resolve import table, we try our best.
      */
-    private function resolveNamespace(Node $node)
+    private function resolveNamespace(Node $node): string
     {
         try {
             return $this->namespaceFromNode($node);

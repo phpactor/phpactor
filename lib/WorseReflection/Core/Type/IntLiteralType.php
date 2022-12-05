@@ -18,10 +18,8 @@ class IntLiteralType extends IntType implements Literal, Generalizable
         return (string)$this->value;
     }
 
-    /**
-     * @return int
-     */
-    public function value()
+
+    public function value(): int
     {
         return $this->value;
     }
@@ -41,7 +39,7 @@ class IntLiteralType extends IntType implements Literal, Generalizable
         return new self(-$this->value());
     }
 
-    public function withValue($value)
+    public function withValue($value): IntLiteralType
     {
         $new = clone $this;
         $new->value = (int)$value;

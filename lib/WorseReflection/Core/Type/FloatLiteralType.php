@@ -18,7 +18,7 @@ final class FloatLiteralType extends FloatType implements Literal, Generalizable
         return (string)$this->value;
     }
 
-    public function value()
+    public function value(): float
     {
         return $this->value;
     }
@@ -38,7 +38,7 @@ final class FloatLiteralType extends FloatType implements Literal, Generalizable
         return new self(-$this->value());
     }
 
-    public function withValue($value)
+    public function withValue($value): self
     {
         $new = clone $this;
         $new->value = $value;
