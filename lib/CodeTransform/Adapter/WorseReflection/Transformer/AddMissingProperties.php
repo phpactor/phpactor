@@ -49,7 +49,7 @@ class AddMissingProperties implements Transformer
                 ->visibility('private');
 
             if ($type->isDefined()) {
-                foreach ($type->classNamedTypes() as $importClass) {
+                foreach ($type->classLikeTypes() as $importClass) {
                     $sourceBuilder->use($importClass->name()->__toString());
                 }
                 $type = $type->toLocalType($class->scope());

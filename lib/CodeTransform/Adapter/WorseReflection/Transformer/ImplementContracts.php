@@ -77,13 +77,13 @@ class ImplementContracts implements Transformer
                 )->method($missingMethod->name());
 
                 $missingMethodReturnType = $missingMethod->returnType();
-                foreach ($missingMethodReturnType->classNamedTypes() as $type) {
+                foreach ($missingMethodReturnType->classLikeTypes() as $type) {
                     $sourceCodeBuilder->use($type->name());
                 }
 
                 foreach ($missingMethod->parameters() as $parameter) {
                     $parameterType = $parameter->type();
-                    foreach ($parameterType->classNamedTypes() as $classType) {
+                    foreach ($parameterType->classLikeTypes() as $classType) {
                         if ($classType->name()->namespace() != $class->name()->namespace()) {
                             $sourceCodeBuilder->use($classType->name());
                         }

@@ -87,14 +87,14 @@ class WorseOverrideMethod implements OverrideMethod
     {
         $usedClasses = [];
 
-        foreach ($method->returnType()->classNamedTypes() as $classType) {
+        foreach ($method->returnType()->classLikeTypes() as $classType) {
             $usedClasses[] = $classType;
         }
 
         /**
          * @var ReflectionParameter $parameter */
         foreach ($method->parameters() as $parameter) {
-            foreach ($parameter->type()->classNamedTypes() as $classType) {
+            foreach ($parameter->type()->classLikeTypes() as $classType) {
                 $usedClasses[] = $classType;
             }
         }

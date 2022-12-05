@@ -23,6 +23,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\TemplateMap;
+use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
@@ -127,7 +128,7 @@ class NodeContextFromMemberAccess
 
         $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
         // this could be a union or a nullable
-        foreach ($classType->classNamedTypes() as $subType) {
+        foreach ($classType->classLikeTypes() as $subType) {
             // upcast to ClassType to reflected type
             if (get_class($subType) === ClassType::class) {
                 /** @phpstan-ignore-next-line */

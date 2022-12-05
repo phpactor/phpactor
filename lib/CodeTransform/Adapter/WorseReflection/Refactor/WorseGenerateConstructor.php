@@ -68,7 +68,7 @@ class WorseGenerateConstructor implements GenerateConstructor
         foreach ($arguments->named() as $name => $argument) {
             assert($argument instanceof ReflectionArgument);
             $type = $argument->type();
-            foreach ($type->classNamedTypes() as $classType) {
+            foreach ($type->classLikeTypes() as $classType) {
                 $builder->use($classType->__toString());
             }
             $param = $method->parameter($name);

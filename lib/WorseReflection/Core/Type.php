@@ -38,9 +38,9 @@ abstract class Type
     abstract public function accepts(Type $type): Trinary;
 
     /**
-     * @return Types<Type&ClassNamedType>
+     * @return Types<Type&ClassLikeType>
      */
-    public function classNamedTypes(): Types
+    public function classLikeTypes(): Types
     {
         // @phpstan-ignore-next-line no support for conditional types https://github.com/phpstan/phpstan/issues/3853
         return $this->toTypes()->filter(fn (Type $type) => $type instanceof ClassLikeType);
