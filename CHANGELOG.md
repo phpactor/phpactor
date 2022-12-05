@@ -17,6 +17,7 @@ Improvements:
 
 Bug fixes:
 
+  - [wr] Fix crash on enum with custom methods #1966
   - [ls] Log errors even if they are for a request @lumnn
   - [ls] Do not include `results` key in JSON response when error @lumnn
   - [lsp] Do not send workDoneProgress notifications to clients that do not
