@@ -503,6 +503,76 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
             ],
         ];
 
+        yield 'Constant visibility from outside' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    const FOOBAR = 'foobar';
+                    private const BARFOO = 'barfoo';
+                    protected const BARFOX = 'barfox';
+                }
+
+                $foobar = new Foobar();
+                $foobar::<>
+
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'FOOBAR',
+                    'short_description' => 'FOOBAR = "foobar"',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'class',
+                    'short_description' => 'Foobar',
+                ],
+            ],
+        ];
+
+        yield 'Constant visibility from inside' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    const FOOBAR = 'foobar';
+                    private const BARFOO = 'barfoo';
+                    protected const BARFOX = 'barfox';
+
+                    public function fog(): void
+                    {
+                        $foobar = self::<>
+                    }
+                }
+
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'BARFOO',
+                    'short_description' => 'BARFOO = "barfoo"',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'BARFOX',
+                    'short_description' => 'BARFOX = "barfox"',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'FOOBAR',
+                    'short_description' => 'FOOBAR = "foobar"',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'class',
+                    'short_description' => 'Foobar',
+                ],
+            ],
+        ];
+
         yield 'Accessor on new line' => [
             <<<'EOT'
                 <?php
