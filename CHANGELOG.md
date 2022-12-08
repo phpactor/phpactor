@@ -17,6 +17,7 @@ Improvements:
 
 Bug fixes:
 
+  - [cmp] Constant visibility not taken into account for completion #1979 @przepompownia
   - [rn] Fix crash on rename interface #1982 @nataneb32
   - [wr] Fix crash on enum with custom methods #1966
   - [ls] Log errors even if they are for a request @lumnn
