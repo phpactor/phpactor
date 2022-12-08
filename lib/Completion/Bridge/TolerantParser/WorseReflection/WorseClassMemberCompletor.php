@@ -188,6 +188,10 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             $classReflection instanceof ReflectionInterface
         ) {
             foreach ($members->constants() as $constant) {
+                if ($publicOnly && false === $constant->visibility()->isPublic()) {
+                    continue;
+                }
+
                 yield Suggestion::createWithOptions($constant->name(), [
                     'type' => Suggestion::TYPE_CONSTANT,
                     'short_description' => fn () => $this->formatter->format($constant),
