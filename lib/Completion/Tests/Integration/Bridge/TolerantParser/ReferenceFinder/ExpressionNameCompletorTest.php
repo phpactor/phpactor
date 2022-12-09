@@ -116,6 +116,16 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+
+        yield 'nested class name inside class constant declaration' => [
+            '<?php class Foobar { private const FOO; private const BAR = [ sel<>  }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'self',
+                    'short_description' => 'self',
+                ]
+            ]
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -125,7 +135,7 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
             NameSearchResult::create('constant', 'FOO')
         ]);
         $searcher->search('sel')->willYield([
-            NameSearchResult::create('class', 'self')
+            NameSearchResult::create('constant', 'self')
         ]);
         $searcher->search('self::F')->willYield([
             NameSearchResult::create('constant', 'self::FOO')
