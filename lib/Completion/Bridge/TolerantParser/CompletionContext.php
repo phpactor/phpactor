@@ -43,10 +43,6 @@ class CompletionContext
             return false;
         }
 
-        if ($parent instanceof ConstElement) {
-            return true;
-        }
-
         if (self::classMembersBody($node)) {
             return false;
         }
@@ -54,6 +50,7 @@ class CompletionContext
         return
             $parent instanceof Expression ||
             $parent instanceof StatementNode ||
+            $parent instanceof ConstElement ||
             $parent instanceof ArrayElement // yield;
         ;
     }
@@ -140,6 +137,10 @@ class CompletionContext
         }
 
         if (null === $node->parent) {
+            return false;
+        }
+
+        if ($node->parent instanceof ConstElement) {
             return false;
         }
 
