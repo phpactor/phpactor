@@ -184,13 +184,13 @@ class CompletionContext
             return false;
         }
 
-        $methodDeclaration = $nodeBeforeOffset->getFirstAncestor(MethodDeclaration::class);
+        $memberDeclaration = $nodeBeforeOffset->getFirstAncestor(MethodDeclaration::class, ConstElement::class);
 
-        if (!$methodDeclaration) {
+        if (!$memberDeclaration) {
             return true;
         }
 
-        if ($methodDeclaration->getEndPosition() < $node->getStartPosition()) {
+        if ($memberDeclaration->getEndPosition() < $node->getStartPosition()) {
             return true;
         }
 

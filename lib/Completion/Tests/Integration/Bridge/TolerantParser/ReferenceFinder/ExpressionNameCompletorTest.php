@@ -135,7 +135,7 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
             NameSearchResult::create('constant', 'FOO')
         ]);
         $searcher->search('sel')->willYield([
-            NameSearchResult::create('constant', 'self')
+            NameSearchResult::create('class', 'self')
         ]);
         $searcher->search('self::F')->willYield([
             NameSearchResult::create('constant', 'self::FOO')
