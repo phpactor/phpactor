@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
+use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
@@ -40,6 +41,10 @@ class CompletionContext
 
         if (null === $parent) {
             return false;
+        }
+
+        if ($parent instanceof ConstElement) {
+            return true;
         }
 
         if (self::classMembersBody($node)) {
