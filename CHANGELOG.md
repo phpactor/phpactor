@@ -13,7 +13,6 @@ Features:
 
 Improvements:
 
-  - [ls] Change diagnostics to activate on save 
   - [wr] Fix inference of array subscript expressions #1961
 
 Bug fixes:
