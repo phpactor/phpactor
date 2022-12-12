@@ -6,6 +6,7 @@ Contents
 
    usage
    reference
+   tips
    integrations
    other
 
