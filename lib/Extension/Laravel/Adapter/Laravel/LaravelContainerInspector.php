@@ -7,7 +7,8 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 
 class LaravelContainerInspector
 {
-    public function __construct(private string $xmlPath)
+    private array $services = [];
+    public function __construct(private string $executablePath, private string $projectRoot)
     {
     }
 
@@ -15,7 +16,7 @@ class LaravelContainerInspector
     {
         foreach ($this->services() as $short => $service) {
             if ($short === $id || $service === $id) {
-                return TypeFactory::fromString($service);
+                return TypeFactory::fromString('\\' . $service);
             }
         }
         return null;
@@ -24,14 +25,13 @@ class LaravelContainerInspector
 
     public function services(): array
     {
-        $serviceCache = require $this->xmlPath;
-
-        $services = [];
-
-        foreach ($serviceCache['providers'] as $provider) {
-            $services[$provider] = $provider;
+        if ([] === $this->services) {
+            $output = shell_exec("php $this->executablePath container $this->projectRoot");
+            if ($output) {
+                $this->services = json_decode(trim($output), true);
+            }
         }
 
-        return $services;
+        return $this->services;
     }
 }

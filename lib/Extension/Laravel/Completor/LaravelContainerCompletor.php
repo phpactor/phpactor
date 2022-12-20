@@ -6,6 +6,7 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\StringLiteral;
@@ -15,6 +16,7 @@ use Phpactor\Extension\Laravel\Adapter\Laravel\LaravelContainerInspector;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
@@ -52,36 +54,47 @@ class LaravelContainerCompletor implements TolerantCompletor
 
         $memberAccess = $node->callableExpression;
 
-        if (!$memberAccess instanceof ScopedPropertyAccessExpression) {
+        if (
+            !$memberAccess instanceof ScopedPropertyAccessExpression &&
+            !$memberAccess instanceof MemberAccessExpression
+        ) {
             return;
         }
 
         $methodName = NodeUtil::nameFromTokenOrNode($node, $memberAccess->memberName);
 
-        if ($methodName !== 'get') {
+        if (!in_array($methodName, ['get', 'make'])) {
             return;
         }
 
-        $containerType = $this->reflector->reflectOffset($source, $memberAccess->scopeResolutionQualifier->getEndPosition())->symbolContext()->type();
+        $position = $memberAccess instanceof MemberAccessExpression ?
+            $memberAccess->dereferencableExpression->getEndPosition() :
+            $memberAccess->scopeResolutionQualifier->getEndPosition();
+
+        $containerType = $this->reflector->reflectOffset($source, $position)->symbolContext()->type();
 
         $isContainerClass = false;
 
         foreach (self::CONTAINER_CLASSES as $containerClass) {
-            dump('test: '. $containerClass);
-            if (!$containerType->instanceof(TypeFactory::class($containerClass))->isFalseOrMaybe()) {
+            if ($containerType instanceof UnionType) {
+                if (!$containerType->accepts(TypeFactory::class($containerClass))->isFalseOrMaybe()) {
+                    $isContainerClass = true;
+                    break;
+                }
+            }
+            elseif (!$containerType->instanceof(TypeFactory::class($containerClass))->isFalseOrMaybe()) {
                 $isContainerClass = true;
                 break;
             }
         }
 
         if (!$isContainerClass) {
-            dump('Not a container class.');
             return;
         }
 
-        foreach ($this->inspector->services() as $service) {
+        foreach ($this->inspector->services() as $short => $service) {
             $label = $service;
-            $suggestion = $inQuote ? $service : sprintf('\'%s\'', $service);
+            $suggestion = $inQuote ? $short : sprintf('\'%s\'', $service);
             $import = null;
 
             if (!$inQuote) {
@@ -91,11 +104,11 @@ class LaravelContainerCompletor implements TolerantCompletor
             }
 
             yield Suggestion::createWithOptions($suggestion, [
-                'label' => $label,
+                'label' => $short,
                 'short_description' => $service,
                 'documentation' => sprintf('**Laravel Service**: %s', $service),
                 'type' => Suggestion::TYPE_VALUE,
-                'name_import' => $import,
+                'name_import' => $inQuote ? '' : $import,
                 'priority' => 555,
             ]);
         }

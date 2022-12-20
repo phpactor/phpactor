@@ -15,14 +15,18 @@ use Phpactor\MapResolver\Resolver;
 
 class LaravelExtension implements OptionalExtension
 {
-    const XML_PATH = 'laravel.services.path';
+    const DEV_TOOLS_EXECUTABLE = 'laravel.devtools.path';
     const PARAM_COMPLETOR_ENABLED = 'completion_worse.completor.laravel.enabled';
 
     public function load(ContainerBuilder $container): void
     {
         $container->register(LaravelContainerInspector::class, function (Container $container) {
-            $xmlPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::XML_PATH));
-            return new LaravelContainerInspector($xmlPath);
+            $executablePath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)
+                                        ->resolve($container->getParameter(self::DEV_TOOLS_EXECUTABLE));
+            $projectRoot = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)
+                                     ->resolve('%project_root%');
+
+            return new LaravelContainerInspector($executablePath, $projectRoot);
         });
         $container->register(LaravelContainerCompletor::class, function (Container $container) {
             return new LaravelContainerCompletor(
@@ -48,11 +52,11 @@ class LaravelExtension implements OptionalExtension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::XML_PATH => '%project_root%/bootstrap/cache/services.php',
+            self::DEV_TOOLS_EXECUTABLE => '/Users/rob/.config/lsps/laravel-dev-generators/laravel-dev-tools',
             self::PARAM_COMPLETOR_ENABLED => true,
         ]);
         $schema->setDescriptions([
-            self::XML_PATH => 'Path to the Laravel services cache.',
+            self::DEV_TOOLS_EXECUTABLE => 'Path to the Laravel dev tools executable.',
             self::PARAM_COMPLETOR_ENABLED => 'Enable/disable the Laravel completor - depends on Laravel extension being enabled',
         ]);
     }

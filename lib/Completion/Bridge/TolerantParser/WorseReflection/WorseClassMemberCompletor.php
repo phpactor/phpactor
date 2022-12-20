@@ -76,10 +76,10 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $reflectionOffset = $this->reflector->reflectOffset($source, $memberStartOffset);
 
         $symbolContext = $reflectionOffset->symbolContext();
-        $type = $symbolContext->type();
+        $symbolType = $symbolContext->type();
         $static = $node instanceof ScopedPropertyAccessExpression;
 
-        foreach ($type->classLikeTypes() as $type) {
+        foreach ($symbolType->classLikeTypes() as $type) {
             foreach ($this->populateSuggestions($symbolContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
                 if ($partialMatch && 0 !== mb_strpos($suggestion->name(), $partialMatch)) {
                     continue;

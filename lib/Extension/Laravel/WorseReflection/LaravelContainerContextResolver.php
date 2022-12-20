@@ -59,18 +59,14 @@ class LaravelContainerContextResolver implements MemberContextResolver
             if (null === $service) {
                 return TypeFactory::union(TypeFactory::object(), TypeFactory::null());
             }
-            return $service->type;
+            return $service->asReflectedClasssType($reflector);
         }
         if ($argument instanceof ClassStringType && $argument->className()) {
             $service = $this->inspector->service($argument->className()->__toString());
-            if (null === $service) {
-                return TypeFactory::fromString($argument->className()->__toString());
-            }
-            $type = $service;
             if ($service instanceof ClassType) {
-                $type = $type->asReflectedClasssType($reflector);
+                return $service->asReflectedClasssType($reflector);
             }
-            return $type;
+            return TypeFactory::fromString($argument->className()->__toString());
         }
 
         return TypeFactory::undefined();
