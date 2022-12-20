@@ -25,6 +25,7 @@ use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRange
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
+use Phpactor\Extension\Laravel\LaravelExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
 use Phpactor\Extension\Prophecy\ProphecyExtension;
 use Phpactor\Extension\Symfony\SymfonyExtension;
@@ -158,6 +159,7 @@ class Phpactor
             LanguageServerPhpCsFixerExtension::class,
             BehatExtension::class,
             SymfonyExtension::class,
+            LaravelExtension::class,
             ProphecyExtension::class,
         ];
 
