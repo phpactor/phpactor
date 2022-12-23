@@ -101,8 +101,8 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
             '<?php class Foobar { private const FOO; private const BAR = self::F<>  }', [
                 [
                     'type'              => Suggestion::TYPE_CONSTANT,
-                    'name'              => 'self::FOO',
-                    'short_description' => 'self::FOO',
+                    'name'              => 'FOOCONST',
+                    'short_description' => 'FOOCONST',
                 ]
             ]
         ];
@@ -138,7 +138,7 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
             NameSearchResult::create('class', 'self')
         ]);
         $searcher->search('self::F')->willYield([
-            NameSearchResult::create('constant', 'self::FOO')
+            NameSearchResult::create('constant', 'FOOCONST')
         ]);
         $searcher->search('\Fo')->willYield([
             NameSearchResult::create('class', 'FOO')

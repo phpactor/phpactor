@@ -3,6 +3,12 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - Allow class completion within constant declaration in class #1985 @przepompownia
+
+## 2022.12.12
+
 Breaking changes:
 
   - Minimum version of PHP changed to 8.0. **Phpactor will no longer run on PHP 7.4**.
