@@ -1,0 +1,11 @@
+<?php
+
+class Foobar {
+    public function __construct()
+    {
+    }
+
+    public function __destruct()
+    {
+    }
+}

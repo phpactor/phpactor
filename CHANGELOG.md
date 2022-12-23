@@ -6,6 +6,8 @@ Changelog
 Bug fixes:
 
   - Allow class completion within constant declaration in class #1985 @przepompownia
+  - Do not suggest return type on `__destruct` #1992
+
 
 ## 2022.12.12
 
