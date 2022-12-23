@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
+use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
@@ -49,6 +50,7 @@ class CompletionContext
         return
             $parent instanceof Expression ||
             $parent instanceof StatementNode ||
+            $parent instanceof ConstElement ||
             $parent instanceof ArrayElement // yield;
         ;
     }
@@ -138,6 +140,10 @@ class CompletionContext
             return false;
         }
 
+        if ($node->parent instanceof ConstElement) {
+            return false;
+        }
+
         $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
         if ($node instanceof Variable) {
@@ -179,13 +185,13 @@ class CompletionContext
             return false;
         }
 
-        $methodDeclaration = $nodeBeforeOffset->getFirstAncestor(MethodDeclaration::class);
+        $memberDeclaration = $nodeBeforeOffset->getFirstAncestor(MethodDeclaration::class, ConstElement::class);
 
-        if (!$methodDeclaration) {
+        if (!$memberDeclaration) {
             return true;
         }
 
-        if ($methodDeclaration->getEndPosition() < $node->getStartPosition()) {
+        if ($memberDeclaration->getEndPosition() < $node->getStartPosition()) {
             return true;
         }
 

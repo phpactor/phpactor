@@ -96,6 +96,36 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+
+        yield 'class constant inside class constant declaration' => [
+            '<?php class Foobar { private const FOO; private const BAR = self::F<>  }', [
+                [
+                    'type'              => Suggestion::TYPE_CONSTANT,
+                    'name'              => 'self::FOO',
+                    'short_description' => 'self::FOO',
+                ]
+            ]
+        ];
+
+        yield 'class name inside class constant declaration' => [
+            '<?php class Foobar { private const FOO; private const BAR = sel<>  }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'self',
+                    'short_description' => 'self',
+                ]
+            ]
+        ];
+
+        yield 'nested class name inside class constant declaration' => [
+            '<?php class Foobar { private const FOO; private const BAR = [ sel<>  }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'self',
+                    'short_description' => 'self',
+                ]
+            ]
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -103,6 +133,12 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         $searcher = $this->prophesize(NameSearcher::class);
         $searcher->search('FO')->willYield([
             NameSearchResult::create('constant', 'FOO')
+        ]);
+        $searcher->search('sel')->willYield([
+            NameSearchResult::create('class', 'self')
+        ]);
+        $searcher->search('self::F')->willYield([
+            NameSearchResult::create('constant', 'self::FOO')
         ]);
         $searcher->search('\Fo')->willYield([
             NameSearchResult::create('class', 'FOO')

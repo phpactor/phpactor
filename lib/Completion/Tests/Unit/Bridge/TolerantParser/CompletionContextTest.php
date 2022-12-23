@@ -130,6 +130,14 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { private Foobles $foo; } $foo-><>',
             false,
         ];
+        yield 'const value' => [
+            '<?php class Foo { public const X = sel<> }',
+            false,
+        ];
+        yield 'const value 2' => [
+            '<?php class Foo { public const X = [sel<> }',
+            false,
+        ];
     }
 
     /**
