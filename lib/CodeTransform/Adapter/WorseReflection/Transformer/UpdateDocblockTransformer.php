@@ -22,7 +22,7 @@ class UpdateDocblockTransformer implements Transformer
         private Updater $updater,
         private BuilderFactory $builderFactory,
         private TextFormat $format,
-        private ?DocBlockUpdater $docblockUpdater = null,
+        private DocBlockUpdater $docblockUpdater,
     ) {
     }
 
