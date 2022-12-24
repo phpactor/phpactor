@@ -1851,3 +1851,26 @@ Enable or disable this extension
 
 **Default**: ``false``
 
+
+.. _PHPUnitExtension:
+
+
+PHPUnitExtension
+----------------
+
+
+.. _param_phpunit.enabled:
+
+
+``phpunit.enabled``
+"""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
