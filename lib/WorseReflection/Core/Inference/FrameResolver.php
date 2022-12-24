@@ -99,6 +99,12 @@ final class FrameResolver
             }
         }
 
+        if (isset($this->nodeWalkers[$nodeClass])) {
+            foreach ($this->nodeWalkers[$nodeClass] as $walker) {
+                $frame = $walker->exit($this, $frame, $node);
+            }
+        }
+
         foreach ($this->globalWalkers as $walker) {
             $frame = $walker->exit($this, $frame, $node);
         }
