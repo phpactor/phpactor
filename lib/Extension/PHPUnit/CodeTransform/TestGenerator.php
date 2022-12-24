@@ -8,7 +8,6 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 class TestGenerator implements GenerateNew
 {
-
     public function generateNew(ClassName $targetName): SourceCode
     {
         $namespace = $targetName->namespace();

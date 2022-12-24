@@ -13,7 +13,6 @@ use Phpactor\MapResolver\Resolver;
 
 class PHPUnitExtension implements OptionalExtension
 {
-
     public function load(ContainerBuilder $container): void
     {
         $this->registerWorseReflection($container);
