@@ -2,29 +2,13 @@
 
 namespace Phpactor\Extension\PHPUnit\Tests\Unit\FrameWalker;
 
-use Closure;
-use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\PHPUnit\FrameWalker\AssertInstanceOfWalker;
-use Phpactor\TestUtils\ExtractOffset;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
-use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class AssertInstanceOfWalkerTest extends TestCase
 {
-    /**
-     * @dataProvider provideWalk
-     */
-    public function estWalk(string $source, Closure $assertion): void
-    {
-        list($source, $offset) = ExtractOffset::fromSource($source);
-        $reflector = $this->createReflector($source);
-        $reflectionOffset = $reflector->reflectOffset($source, $offset);
-        $assertion($reflectionOffset->frame(), $offset);
-    }
-
     public function testStaticAssertCallWithClassConstant(): void
     {
         $this->resolve(<<<'EOT'
@@ -51,6 +35,21 @@ class AssertInstanceOfWalkerTest extends TestCase
             EOT);
     }
 
+    public function testStaticAssertCallWithClassStringOnPreviouslyTypedVar(): void
+    {
+        $this->resolve(<<<'EOT'
+            <?php
+
+            use PHPUnit\Framework\Assert;
+            use Foo\Bar;
+
+            function (Node $foo) {
+                Assert::assertInstanceOf(Bar::class, $foo);
+                wrAssertType('Foo\Bar', $foo);
+            }
+            EOT);
+    }
+
     public function testInstanceCall(): void
     {
         $this->resolve(
@@ -65,22 +64,6 @@ class AssertInstanceOfWalkerTest extends TestCase
                 EOT
         );
 
-    }
-
-    /**
-     * @return Generator<string,array{string,Closure(Frame): void}>
-     */
-    public function provideWalk(): Generator
-    {
-        yield 'member call' => [
-            <<<'EOT'
-<>
-EOT
-        , function (Frame $frame) {
-            $variable = $frame->locals()->byName('foo')->last();
-            $this->assertEquals('Bar\\Foo', $variable->type()->__toString());
-        }
-        ];
     }
 
     public function resolve(string $sourceCode): void

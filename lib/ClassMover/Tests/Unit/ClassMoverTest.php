@@ -47,6 +47,7 @@ class ClassMoverTest extends TestCase
         $references = $this->mover->findReferences($source, $fullName);
 
         $this->assertInstanceOf(FoundReferences::class, $references);
+
         $this->assertEquals($source, (string) $references->source());
         $this->assertEquals($fullName, (string) $references->targetName());
         $this->assertEquals([], iterator_to_array($references->references()));

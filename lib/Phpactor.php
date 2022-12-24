@@ -26,6 +26,7 @@ use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflecti
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\PHPUnit\PHPUnitExtension;
 use Phpactor\Extension\Prophecy\ProphecyExtension;
 use Phpactor\Extension\Symfony\SymfonyExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
@@ -159,6 +160,7 @@ class Phpactor
             BehatExtension::class,
             SymfonyExtension::class,
             ProphecyExtension::class,
+            PHPUnitExtension::class,
         ];
 
         if (class_exists(DebugExtension::class)) {
