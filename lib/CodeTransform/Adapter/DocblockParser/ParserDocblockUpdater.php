@@ -35,7 +35,17 @@ class ParserDocblockUpdater implements DocBlockUpdater
 
 
         if (count($edits) === 0) {
-            if ($open = $docblock->phpDocOpen()) {
+            if ($line = $docblock->lastMultilineContentToken()) {
+                $edits[] = TextEdit::create(
+                    $line->end(),
+                    0,
+                    sprintf(
+                        "* @return %s\n%s",
+                        $type->__toString(),
+                        str_repeat(' ', $docblock->indentationLevel()),
+                    ),
+                );
+            } elseif ($open = $docblock->phpDocOpen()) {
                 $edits[] = TextEdit::create(
                     $open->end(),
                     0,

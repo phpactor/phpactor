@@ -82,4 +82,37 @@ class Docblock extends Node
             return '';
         }, iterator_to_array($this->children, false))));
     }
+
+    public function lastMultilineContentToken(): ?Token
+    {
+        $hasLeading = false;
+        foreach ($this->tokens() as $child) {
+            if ($child->type === Token::T_ASTERISK) {
+                $hasLeading = true;
+            }
+            if ($child->type === Token::T_PHPDOC_CLOSE && $hasLeading) {
+                return $lastToken;
+            }
+            $lastToken = $child;
+        }
+
+        return null;
+    }
+
+    public function indentationLevel(): int
+    {
+        $previous = null;
+        foreach ($this->children->elements as $child) {
+            if (!$child instanceof Token) {
+                continue;
+            }
+            if ($child->type === Token::T_ASTERISK) {
+                return $previous->length();
+            }
+            $previous = $child;
+        }
+
+        return 0;
+
+    }
 }

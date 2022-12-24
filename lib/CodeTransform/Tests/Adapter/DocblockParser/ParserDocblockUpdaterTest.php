@@ -47,6 +47,24 @@ class ParserDocblockUpdaterTest extends TestCase
         ));
     }
 
+    public function testAddIfNotExistingMultiline(): void
+    {
+        self::assertEquals(<<<'EOT'
+                /** 
+                 *
+                 * @return string
+                 */
+            EOT, 
+                $this->createUpdater()->setReturnType(<<<'EOT'
+                /** 
+                 *
+                 */
+            EOT,
+                TypeFactory::string()
+        ));
+    }
+
+
     private function createUpdater(): ParserDocblockUpdater
     {
         return (new ParserDocblockUpdater(DocblockParser::create()));
