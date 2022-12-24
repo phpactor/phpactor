@@ -68,11 +68,11 @@ class AssertInstanceOfWalker implements Walker
         $type = $args->at(0)->type();
 
         if ($type instanceof StringLiteralType) {
-            $type = TypeFactory::class($type->value());
+            $type = TypeFactory::reflectedClass($resolver->reflector(), $type->value());
         }
 
         if ($type instanceof ClassStringType) {
-            $type = TypeFactory::class($type->className()?->__toString());
+            $type = TypeFactory::reflectedClass($resolver->reflector(), $type->className()?->__toString());
         }
 
         if (!$type instanceof ClassType) {
@@ -81,9 +81,7 @@ class AssertInstanceOfWalker implements Walker
 
         $var = $args->at(1);
 
-        $frame->locals()->set(Variable::fromSymbolContext(
-            $var->withType(TypeFactory::class($type->__toString()))
-        ));
+        $frame->locals()->set(Variable::fromSymbolContext($var->withType($type)));
 
         return $frame;
     }

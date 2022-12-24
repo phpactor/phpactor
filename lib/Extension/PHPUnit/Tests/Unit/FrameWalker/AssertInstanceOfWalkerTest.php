@@ -50,6 +50,22 @@ class AssertInstanceOfWalkerTest extends TestCase
             EOT);
     }
 
+    public function testInfersReflectedClass(): void
+    {
+        $this->resolve(<<<'EOT'
+            <?php
+
+            use PHPUnit\Framework\Assert;
+
+            class Bar { public function bar(): string {} }
+
+            function (Node $foo) {
+                Assert::assertInstanceOf(Bar::class, $foo);
+                wrAssertType('string', $foo->bar());
+            }
+            EOT);
+    }
+
     public function testInstanceCall(): void
     {
         $this->resolve(
