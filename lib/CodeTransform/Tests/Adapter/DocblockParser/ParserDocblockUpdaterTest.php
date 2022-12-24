@@ -19,24 +19,27 @@ class ParserDocblockUpdaterTest extends TestCase
 
     public function testUpdateReturnTypeWithMultipleTags(): void
     {
-        self::assertEquals(<<<'EOT'
+        self::assertEquals(
+            <<<'EOT'
                 /** 
                  * This is some text
                  * @param Foobar
                  * @return string 
                  * @return string 
-                 */
-                EOT, 
-                $this->createUpdater()->setReturnType(<<<'EOT'
-                /** 
-                 * This is some text
-                 * @param Foobar
-                 * @return Bazboo 
-                 * @return Foobar 
                  */
                 EOT,
+            $this->createUpdater()->setReturnType(
+                <<<'EOT'
+                    /** 
+                     * This is some text
+                     * @param Foobar
+                     * @return Bazboo 
+                     * @return Foobar 
+                     */
+                    EOT,
                 TypeFactory::string()
-        ));
+            )
+        );
     }
 
     public function testAddIfNotExisting(): void
@@ -49,34 +52,40 @@ class ParserDocblockUpdaterTest extends TestCase
 
     public function testAddIfNotExistingMultiline0(): void
     {
-        self::assertEquals(<<<'EOT'
-                /**
-                 * @return string
-                 */
-            EOT, 
-                $this->createUpdater()->setReturnType(<<<'EOT'
-                /**
-                 */
-            EOT,
+        self::assertEquals(
+            <<<'EOT'
+                    /**
+                     * @return string
+                     */
+                EOT,
+            $this->createUpdater()->setReturnType(
+                <<<'EOT'
+                        /**
+                         */
+                    EOT,
                 TypeFactory::string()
-        ));
+            )
+        );
     }
 
     public function testAddIfNotExistingMultiline(): void
     {
-        self::assertEquals(<<<'EOT'
-                /** 
-                 *
-                 * @return string
-                 */
-            EOT, 
-                $this->createUpdater()->setReturnType(<<<'EOT'
-                /** 
-                 *
-                 */
-            EOT,
+        self::assertEquals(
+            <<<'EOT'
+                    /** 
+                     *
+                     * @return string
+                     */
+                EOT,
+            $this->createUpdater()->setReturnType(
+                <<<'EOT'
+                        /** 
+                         *
+                         */
+                    EOT,
                 TypeFactory::string()
-        ));
+            )
+        );
     }
 
 

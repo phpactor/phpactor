@@ -48,9 +48,9 @@ abstract class Node implements Element
     }
 
     /**
-     * @template T
+     * @template T of Element
      * @param class-string<T> $elementFqn
-     * @return Generator<T>
+     * @return ($elementFqn is null ? Generator<Element> : Generator<T>)
      */
     public function descendantElements(?string $elementFqn = null): Generator
     {
@@ -66,6 +66,10 @@ abstract class Node implements Element
         }
     }
 
+    /**
+     * @template T of Element
+     * @param class-string<T> $elementFqn
+     */
     public function hasDescendant(string $elementFqn): bool
     {
         foreach ($this->descendantElements($elementFqn) as $element) {
@@ -142,6 +146,11 @@ abstract class Node implements Element
         return false;
     }
 
+    public function length(): int
+    {
+        return $this->end() - $this->start();
+    }
+
     /**
      * @param iterable<Element|array<Element>> $nodes
      *
@@ -190,11 +199,6 @@ abstract class Node implements Element
         }
 
         return 0;
-    }
-
-    public function length(): int
-    {
-        return $this->end() - $this->start();
     }
 
     /**

@@ -13,7 +13,6 @@ use Phpactor\DocblockParser\Ast\Type\GenericNode;
 use Phpactor\DocblockParser\Ast\Type\ListBracketsNode;
 use Phpactor\DocblockParser\Ast\Type\ScalarNode;
 use Phpactor\DocblockParser\Ast\Type\UnionNode;
-use Prophecy\Doubler\Generator\Node\MethodNode;
 
 class NodeTest extends NodeTestCase
 {
@@ -41,7 +40,8 @@ class NodeTest extends NodeTestCase
                 self::assertCount(7, iterator_to_array($methodNode->children()));
                 self::assertCount(1, iterator_to_array($methodNode->children(ClassNode::class)));
                 self::assertTrue($methodNode->hasDescendant(ScalarNode::class));
-                self::assertFalse($methodNode->hasDescendant(MethodNode::class));
+                /** @phpstan-ignore-next-line */
+                self::assertFalse($methodNode->hasDescendant('NotExisting'));
                 self::assertCount(2, iterator_to_array($methodNode->descendantElements(ScalarNode::class)));
                 self::assertInstanceOf(ScalarNode::class, $methodNode->firstDescendant(ScalarNode::class));
             }

@@ -56,7 +56,8 @@ class Docblock extends Node
         }
     }
 
-    public function phpDocOpen(): ?Token {
+    public function phpDocOpen(): ?Token
+    {
         foreach ($this->tokens() as $token) {
             if ($token->type === Token::T_PHPDOC_OPEN) {
                 return $token;
@@ -86,6 +87,7 @@ class Docblock extends Node
     public function lastMultilineContentToken(): ?Token
     {
         $hasLeading = false;
+        $lastToken = null;
         foreach ($this->tokens() as $child) {
             if ($child->type === Token::T_ASTERISK) {
                 $hasLeading = true;
@@ -116,6 +118,5 @@ class Docblock extends Node
         }
 
         return 0;
-
     }
 }
