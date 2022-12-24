@@ -9,6 +9,10 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 
 class ClassMemberQualifierTest extends TolerantQualifierTestCase
 {
+
+    /**
+     * @return Generator<string,array{string,Closure(<missing>): void}>
+     */
     public function provideCouldComplete(): Generator
     {
         yield 'non member access' => [

@@ -11,7 +11,7 @@ use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateDocblockTransformer implements Transformer
@@ -26,13 +26,13 @@ class UpdateDocblockTransformer implements Transformer
 
     public function transform(SourceCode $code): TextEdits
     {
-        $missingMethods = $this->methodsThatNeedFixing($code);
+        $diagnostics = $this->methodsThatNeedFixing($code);
         $builder = $this->builderFactory->fromSource($code);
 
         $class = null;
-        foreach ($missingMethods as $method) {
-            $class = $this->reflector->reflectClassLike($method->classType());
-            $method = $class->methods()->get($method->methodName());
+        foreach ($diagnostics as $diagnostic) {
+            $class = $this->reflector->reflectClassLike($diagnostic->classType());
+            $method = $class->methods()->get($diagnostic->methodName());
 
             $classBuilder = $builder->classLike($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
@@ -90,7 +90,7 @@ class UpdateDocblockTransformer implements Transformer
     private function methodsThatNeedFixing(SourceCode $code): array
     {
         $missingMethods = [];
-        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockDiagnostic::class);
+        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockReturnTypeDiagnostic::class);
 
         /** @var MissingDocblockDiagnostic $diagnostic */
         foreach ($diagnostics as $diagnostic) {

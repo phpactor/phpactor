@@ -5,7 +5,7 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection;
 use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
@@ -23,7 +23,7 @@ class WorseTestCase extends AdapterTestCase
         $builder = ReflectorBuilder::create();
         $builder->addMemberProvider(new DocblockMemberProvider());
         $builder->addDiagnosticProvider(new MissingMethodProvider());
-        $builder->addDiagnosticProvider(new MissingDocblockProvider());
+        $builder->addDiagnosticProvider(new MissingDocblockReturnTypeProvider());
         $builder->addDiagnosticProvider(new AssignmentToMissingPropertyProvider());
         $builder->addDiagnosticProvider(new MissingReturnTypeProvider());
         $builder->addDiagnosticProvider(new UnusedImportProvider());
