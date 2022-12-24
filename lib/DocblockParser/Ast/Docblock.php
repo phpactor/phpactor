@@ -56,6 +56,16 @@ class Docblock extends Node
         }
     }
 
+    public function phpDocOpen(): ?Token {
+        foreach ($this->tokens() as $token) {
+            if ($token->type === Token::T_PHPDOC_OPEN) {
+                return $token;
+            }
+        }
+
+        return null;
+    }
+
     public function prose(): string
     {
         return trim(implode('', array_map(function (Element $token): string {
