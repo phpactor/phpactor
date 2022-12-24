@@ -11,7 +11,6 @@ use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -21,16 +20,6 @@ use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 
 class AssertInstanceOfWalker implements Walker
 {
-    /**
-     * @var NodeContextFactory
-     */
-    private $symbolFactory;
-
-    public function __construct()
-    {
-        $this->symbolFactory = new NodeContextFactory();
-    }
-
     public function nodeFqns(): array
     {
         return [

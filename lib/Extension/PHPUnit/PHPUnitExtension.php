@@ -4,29 +4,30 @@ namespace Phpactor\Extension\PHPUnit;
 
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
-use Phpactor\Container\Extension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\PHPUnit\CodeTransform\TestGenerator;
 use Phpactor\Extension\PHPUnit\FrameWalker\AssertInstanceOfWalker;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
-class PHPUnitExtension implements Extension
+class PHPUnitExtension implements OptionalExtension
 {
-    /**
-     * {@inheritDoc}
-     */
+
     public function load(ContainerBuilder $container): void
     {
         $this->registerWorseReflection($container);
         $this->registerCodeTransform($container);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     public function configure(Resolver $schema): void
     {
+    }
+
+    public function name(): string
+    {
+        return 'phpunit';
     }
 
     private function registerWorseReflection(ContainerBuilder $container): void

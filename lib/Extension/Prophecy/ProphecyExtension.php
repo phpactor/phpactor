@@ -18,6 +18,7 @@ class ProphecyExtension implements OptionalExtension
         $container->register(ProphecyMemberContextResolver::class, function (Container $container) {
             return new ProphecyMemberContextResolver();
         }, [ WorseReflectionExtension::TAG_MEMBER_TYPE_RESOLVER => []]);
+
         $container->register(SourceCodeLocator::class, function (Container $container) {
             return new ProphecyStubLocator();
         }, [ WorseReflectionExtension::TAG_SOURCE_LOCATOR => [

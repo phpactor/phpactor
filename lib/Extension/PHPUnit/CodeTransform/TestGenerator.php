@@ -8,24 +8,22 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 class TestGenerator implements GenerateNew
 {
-    /**
-     * {@inheritDoc}
-     */
+
     public function generateNew(ClassName $targetName): SourceCode
     {
         $namespace = $targetName->namespace();
         $name = $targetName->short();
         $sourceCode = <<<EOT
-<?php
+            <?php
 
-namespace $namespace;
+            namespace $namespace;
 
-use PHPUnit\Framework\TestCase;
+            use PHPUnit\Framework\TestCase;
 
-class $name extends TestCase
-{
-}
-EOT
+            class $name extends TestCase
+            {
+            }
+            EOT
         ;
 
         return SourceCode::fromString($sourceCode);

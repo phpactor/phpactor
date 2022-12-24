@@ -42,9 +42,8 @@ class ClassMemberQualifierTest extends TolerantQualifierTestCase
 
         yield 'returns the scoped property access expression' => [
             '<?php Hello::<>',
-            function (Node $node): void {
+            function ($node): void {
                 self::assertInstanceOf(ScopedPropertyAccessExpression::class, $node);
-                $node;
             }
         ];
 

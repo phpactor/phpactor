@@ -79,7 +79,6 @@ class AssertInstanceOfWalkerTest extends TestCase
                 wrAssertType('stdClass', $foo);
                 EOT
         );
-
     }
 
     public function resolve(string $sourceCode): void
