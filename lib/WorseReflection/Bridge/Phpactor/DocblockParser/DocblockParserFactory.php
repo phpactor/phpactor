@@ -76,7 +76,8 @@ class DocblockParserFactory implements DocBlockFactory
         assert($node instanceof ParserDocblock);
         return new ParsedDocblock(
             $node,
-            new TypeConverter($this->reflector, $scope)
+            new TypeConverter($this->reflector, $scope),
+            $docblock
         );
     }
 }

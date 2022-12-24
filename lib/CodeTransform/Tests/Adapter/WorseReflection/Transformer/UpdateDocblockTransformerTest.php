@@ -4,10 +4,12 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
 use Generator;
 use Phpactor\CodeBuilder\Util\TextFormat;
+use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockTransformer;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
+use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateDocblockTransformerTest extends WorseTestCase
@@ -640,6 +642,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
 
                 trait Foobar {
                     /**
+                     *
                      */
                     public function baz(): array
                     {
@@ -661,6 +664,52 @@ class UpdateDocblockTransformerTest extends WorseTestCase
 
                 trait Foobar {
                     /**
+                     *
+                     * @return Generator<array{string,Closure(Bar): string}>
+                     */
+                    public function baz(): array
+                    {
+                        yield [
+                            'foobar',
+                            function (Bar $b): string {
+                            }
+                        ];
+                    }
+                }
+                EOT
+        ];
+
+        yield 'updates existing docblock with other tags' => [
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                trait Foobar {
+                    /**
+                     * @author Daniel Leech
+                     */
+                    public function baz(): array
+                    {
+                        yield [
+                            'foobar',
+                            function (Bar $b): string {
+                            }
+                        ];
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                use Generator;
+
+                trait Foobar {
+                    /**
+                     * @author Daniel Leech
                      * @return Generator<array{string,Closure(Bar): string}>
                      */
                     public function baz(): array
@@ -767,7 +816,8 @@ class UpdateDocblockTransformerTest extends WorseTestCase
             $reflector,
             $this->updater(),
             $this->builderFactory($reflector),
-            new TextFormat()
+            new TextFormat(),
+            new ParserDocblockUpdater(DocblockParser::create())
         );
     }
 }

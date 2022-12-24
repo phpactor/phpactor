@@ -8,6 +8,7 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
@@ -20,7 +21,8 @@ class UpdateDocblockTransformer implements Transformer
         private Reflector $reflector,
         private Updater $updater,
         private BuilderFactory $builderFactory,
-        private TextFormat $format
+        private TextFormat $format,
+        private DocBlockUpdater $docblockUpdater,
     ) {
     }
 
@@ -56,7 +58,9 @@ class UpdateDocblockTransformer implements Transformer
                 continue;
             }
 
-            $methodBuilder->docblock($method->docblock()->raw());
+            $methodBuilder->docblock(
+                $this->docblockUpdater->setReturnType($method->docblock()->raw(), $localReplacement)
+            );
         }
 
         return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
@@ -87,7 +91,7 @@ class UpdateDocblockTransformer implements Transformer
     }
 
     /**
-     * @return array<int,MissingDocblockDiagnostic>
+     * @return array<int,MissingDocblockReturnTypeDiagnostic>
      */
     private function methodsThatNeedFixing(SourceCode $code): array
     {

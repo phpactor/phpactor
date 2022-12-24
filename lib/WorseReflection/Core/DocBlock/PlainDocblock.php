@@ -20,7 +20,7 @@ class PlainDocblock implements DocBlock
 
     public function __construct(string $raw = '')
     {
-        $this->raw = trim($raw);
+        $this->raw = $raw;
     }
 
     public function methodType(string $methodName): Type
