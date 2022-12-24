@@ -1,16 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Phpactor\\\\Application\\:\\:handleException\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Application.php
-
-		-
-			message: "#^Method Phpactor\\\\Application\\:\\:serializeException\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Application.php
-
-		-
 			message: "#^Parameter \\#1 \\$e of method Phpactor\\\\Application\\:\\:serializeException\\(\\) expects Exception, Throwable given\\.$#"
 			count: 1
 			path: lib/Application.php
@@ -3226,11 +3216,6 @@ parameters:
 			path: lib/Extension/Core/Console/Prompt/Prompt.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\CacheClearHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Core/Rpc/CacheClearHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\CacheClearHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Core/Rpc/CacheClearHandler.php
@@ -4191,47 +4176,12 @@ parameters:
 			path: lib/Filesystem/Domain/FallbackFilesystemRegistry.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:asSplFileInfo\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:concatPath\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromParts\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Filesystem/Domain/FilePath.php
 
 		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromUnknown\\(\\) has parameter \\$path with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:isDirectory\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:isWithin\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:isWithinOrSame\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:makeAbsoluteFromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:path\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Filesystem/Domain/FilePath.php
 
@@ -4541,11 +4491,6 @@ parameters:
 			path: lib/PathFinder/Tests/Unit/PathFinderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Phpactor\\:\\:isFile\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Phpactor.php
-
-		-
 			message: "#^Parameter \\#1 \\$string of function strlen expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/Phpactor.php
@@ -4607,11 +4552,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:resolveImportTable\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:resolveNamespace\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
 
@@ -4826,16 +4766,6 @@ parameters:
 			path: lib/WorseReflection/Core/Inference/PropertyAssignments.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Name\\:\\:__construct\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Name.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Name\\:\\:fromParts\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Name.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Name\\:\\:fromParts\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Name.php
@@ -4847,11 +4777,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Name\\:\\:prepend\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Name\\) but returns Phpactor\\\\WorseReflection\\\\Core\\\\Name\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Name.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Name\\:\\:substitute\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Name.php
 
@@ -5009,11 +4934,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$source of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\OriginalMethodResolver\\:\\:resolveInterface\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/OriginalMethodResolver.php
 
 		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionMethod\\:\\:\\$type is unused\\.$#"
