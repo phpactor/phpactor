@@ -48,7 +48,9 @@ abstract class Node implements Element
     }
 
     /**
-     * @return Generator<Element>
+     * @template T
+     * @param class-string<T> $elementFqn
+     * @return Generator<T>
      */
     public function descendantElements(?string $elementFqn = null): Generator
     {
@@ -190,7 +192,7 @@ abstract class Node implements Element
         return 0;
     }
 
-    private function length(): int
+    public function length(): int
     {
         return $this->end() - $this->start();
     }

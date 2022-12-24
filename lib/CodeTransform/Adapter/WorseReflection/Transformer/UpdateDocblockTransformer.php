@@ -55,6 +55,8 @@ class UpdateDocblockTransformer implements Transformer
                 ). "\n".$this->format->indent('', 1));
                 continue;
             }
+
+            $methodBuilder->docblock($method->docblock()->raw());
         }
 
         return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
