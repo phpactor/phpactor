@@ -7,7 +7,7 @@ use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
@@ -165,8 +165,8 @@ class WorseReflectionExtension implements Extension
         $container->register(MissingMethodProvider::class, function (Container $container) {
             return new MissingMethodProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
-        $container->register(MissingDocblockProvider::class, function (Container $container) {
-            return new MissingDocblockProvider();
+        $container->register(MissingDocblockReturnTypeProvider::class, function (Container $container) {
+            return new MissingDocblockReturnTypeProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(AssignmentToMissingPropertyProvider::class, function (Container $container) {
             return new AssignmentToMissingPropertyProvider();

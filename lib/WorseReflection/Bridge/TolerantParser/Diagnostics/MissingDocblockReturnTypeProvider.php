@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
-class MissingDocblockProvider implements DiagnosticProvider
+class MissingDocblockReturnTypeProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
@@ -43,8 +43,9 @@ class MissingDocblockProvider implements DiagnosticProvider
         $claimedReturnType = $method->inferredType();
         $phpReturnType = $method->type();
 
-        // if there is already a docblock, ignore
-        if ($method->docblock()->isDefined()) {
+        // if there is already a return type, ignore. phpactor's guess
+        // will currently likely be wrong often.
+        if ($method->docblock()->returnType()->isDefined()) {
             return;
         }
 
@@ -69,7 +70,7 @@ class MissingDocblockProvider implements DiagnosticProvider
         }
 
         if ($actualReturnType->isClosure()) {
-            yield new MissingDocblockDiagnostic(
+            yield new MissingDocblockReturnTypeDiagnostic(
                 $method->nameRange(),
                 sprintf(
                     'Method "%s" is missing docblock return type: %s',
@@ -98,7 +99,7 @@ class MissingDocblockProvider implements DiagnosticProvider
             return;
         }
 
-        yield new MissingDocblockDiagnostic(
+        yield new MissingDocblockReturnTypeDiagnostic(
             $method->nameRange(),
             sprintf(
                 'Method "%s" is missing docblock return type: %s',

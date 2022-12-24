@@ -8,10 +8,11 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateDocblockTransformer implements Transformer
@@ -20,19 +21,20 @@ class UpdateDocblockTransformer implements Transformer
         private Reflector $reflector,
         private Updater $updater,
         private BuilderFactory $builderFactory,
-        private TextFormat $format
+        private TextFormat $format,
+        private DocBlockUpdater $docblockUpdater,
     ) {
     }
 
     public function transform(SourceCode $code): TextEdits
     {
-        $missingMethods = $this->methodsThatNeedFixing($code);
+        $diagnostics = $this->methodsThatNeedFixing($code);
         $builder = $this->builderFactory->fromSource($code);
 
         $class = null;
-        foreach ($missingMethods as $method) {
-            $class = $this->reflector->reflectClassLike($method->classType());
-            $method = $class->methods()->get($method->methodName());
+        foreach ($diagnostics as $diagnostic) {
+            $class = $this->reflector->reflectClassLike($diagnostic->classType());
+            $method = $class->methods()->get($diagnostic->methodName());
 
             $classBuilder = $builder->classLike($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
@@ -55,6 +57,10 @@ class UpdateDocblockTransformer implements Transformer
                 ). "\n".$this->format->indent('', 1));
                 continue;
             }
+
+            $methodBuilder->docblock(
+                $this->docblockUpdater->setReturnType($method->docblock()->raw(), $localReplacement)
+            );
         }
 
         return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
@@ -85,14 +91,14 @@ class UpdateDocblockTransformer implements Transformer
     }
 
     /**
-     * @return array<int,MissingDocblockDiagnostic>
+     * @return MissingDocblockReturnTypeDiagnostic[]
      */
     private function methodsThatNeedFixing(SourceCode $code): array
     {
         $missingMethods = [];
-        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockDiagnostic::class);
+        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockReturnTypeDiagnostic::class);
 
-        /** @var MissingDocblockDiagnostic $diagnostic */
+        /** @var MissingDocblockReturnTypeDiagnostic $diagnostic */
         foreach ($diagnostics as $diagnostic) {
             $missingMethods[] = $diagnostic;
         }

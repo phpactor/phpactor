@@ -12,6 +12,10 @@ Features:
 
   - Reintroduce the PHPUnit extension
 
+Improvements:
+
+  - Add return tags to existing docblocks #1995
+
 ## 2022.12.12
 
 Breaking changes:

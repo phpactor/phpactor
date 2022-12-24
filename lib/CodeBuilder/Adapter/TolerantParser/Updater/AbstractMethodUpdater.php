@@ -261,7 +261,7 @@ abstract class AbstractMethodUpdater
     {
         $edits->add(TextEdit::create(
             $methodDeclaration->getFullStartPosition(),
-            $methodDeclaration->getStartPosition() - $methodDeclaration->getFullStartPosition(),
+            strlen($methodDeclaration->getLeadingCommentAndWhitespaceText()),
             $methodPrototype->docblock()->__toString()
         ));
     }
