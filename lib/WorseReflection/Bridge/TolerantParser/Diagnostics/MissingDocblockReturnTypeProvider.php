@@ -43,6 +43,12 @@ class MissingDocblockReturnTypeProvider implements DiagnosticProvider
         $claimedReturnType = $method->inferredType();
         $phpReturnType = $method->type();
 
+        // if there is already a return type, ignore. phpactor's guess
+        // will currently likely be wrong often.
+        if ($method->docblock()->returnType()->isDefined()) {
+            return;
+        }
+
         // do not try it for overriden methods
         if ($method->original()->declaringClass()->name() != $class->name()) {
             return;

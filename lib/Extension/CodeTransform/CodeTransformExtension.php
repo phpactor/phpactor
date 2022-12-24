@@ -16,6 +16,7 @@ use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
+use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantChangeVisiblity;
@@ -42,6 +43,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImpor
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateReturnTypeTransformer;
 use Phpactor\CodeTransform\CodeTransform;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
@@ -57,6 +59,7 @@ use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
+use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
@@ -480,8 +483,13 @@ class CodeTransformExtension implements Extension
                 $container->get(Updater::class),
                 $container->get(BuilderFactory::class),
                 $container->get(TextFormat::class),
+                $container->get(DocBlockUpdater::class),
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_docblocks' ]]);
+
+        $container->register(DocBlockUpdater::class, function (Container $container) {
+            return new ParserDocblockUpdater(DocblockParser::create());
+        });
 
         $container->register(UpdateReturnTypeTransformer::class, function (Container $container) {
             return new UpdateReturnTypeTransformer(

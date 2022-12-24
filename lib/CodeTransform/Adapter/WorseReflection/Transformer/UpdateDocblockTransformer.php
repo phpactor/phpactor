@@ -22,7 +22,7 @@ class UpdateDocblockTransformer implements Transformer
         private Updater $updater,
         private BuilderFactory $builderFactory,
         private TextFormat $format,
-        private DocBlockUpdater $docblockUpdater,
+        private ?DocBlockUpdater $docblockUpdater = null,
     ) {
     }
 
@@ -91,14 +91,14 @@ class UpdateDocblockTransformer implements Transformer
     }
 
     /**
-     * @return array<int,MissingDocblockReturnTypeDiagnostic>
+     * @return MissingDocblockReturnTypeDiagnostic[]
      */
     private function methodsThatNeedFixing(SourceCode $code): array
     {
         $missingMethods = [];
         $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockReturnTypeDiagnostic::class);
 
-        /** @var MissingDocblockDiagnostic $diagnostic */
+        /** @var MissingDocblockReturnTypeDiagnostic $diagnostic */
         foreach ($diagnostics as $diagnostic) {
             $missingMethods[] = $diagnostic;
         }

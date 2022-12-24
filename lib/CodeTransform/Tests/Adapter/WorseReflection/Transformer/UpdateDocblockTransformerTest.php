@@ -520,7 +520,9 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                     /**
                      * @return Baz[]
                      */
-                    public function baz(): array {}
+                    public function baz(): array {
+                        return [];
+                    }
                 }
 
                 class Foobar extends Foobag {
@@ -538,7 +540,9 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                     /**
                      * @return Baz[]
                      */
-                    public function baz(): array {}
+                    public function baz(): array {
+                        return [];
+                    }
                 }
 
                 class Foobar extends Foobag {

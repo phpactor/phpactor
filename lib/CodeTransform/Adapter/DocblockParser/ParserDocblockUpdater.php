@@ -6,14 +6,14 @@ use Phpactor\CodeTransform\Domain\DocBlockUpdater;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\DocblockParser;
-use Phpactor\DocblockParser\Parser;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Type;
 
 class ParserDocblockUpdater implements DocBlockUpdater
 {
-    public function __construct(private DocblockParser $parser) {
+    public function __construct(private DocblockParser $parser)
+    {
     }
 
     public function setReturnType(string $docblockText, Type $type): string
@@ -24,7 +24,10 @@ class ParserDocblockUpdater implements DocBlockUpdater
             return $docblockText;
         }
 
+
         $edits = [];
+
+        // update
         foreach ($docblock->descendantElements(ReturnTag::class) as $returnTag) {
             $edits[] = TextEdit::create(
                 $returnTag->type()->start(),
@@ -33,10 +36,22 @@ class ParserDocblockUpdater implements DocBlockUpdater
             );
         }
 
-
+        // otherwise create
         if (count($edits) === 0) {
-            if ($line = $docblock->lastMultilineContentToken()) {
-                $edits[] = TextEdit::create(
+            $edits = $this->updateDocblock($docblock, $docblockText, $type);
+        }
+
+        return TextEdits::fromTextEdits($edits)->apply($docblockText);
+    }
+
+    /**
+     * @return array<int,TextEdit>
+     */
+    private function updateDocblock(Docblock $docblock, string $docblockText, Type $type): array
+    {
+        if ($line = $docblock->lastMultilineContentToken()) {
+            return [
+                TextEdit::create(
                     $line->end(),
                     0,
                     sprintf(
@@ -44,17 +59,36 @@ class ParserDocblockUpdater implements DocBlockUpdater
                         $type->__toString(),
                         str_repeat(' ', $docblock->indentationLevel()),
                     ),
-                );
-            } elseif ($open = $docblock->phpDocOpen()) {
-                $edits[] = TextEdit::create(
-                    $open->end(),
-                    0,
-                    sprintf(' @return %s', $type->__toString()),
-                );
-
-            }
+                )
+            ];
         }
 
-        return TextEdits::fromTextEdits($edits)->apply($docblockText);
+        if ($open = $docblock->phpDocOpen()) {
+            if (!str_contains($docblockText, "\n")) {
+                return [
+                    TextEdit::create(
+                        $open->end(),
+                        0,
+                        sprintf(
+                            ' @return %s',
+                            $type->__toString()
+                        ),
+                    )
+                ];
+            }
+            return [
+                TextEdit::create(
+                    $open->end(),
+                    0,
+                    sprintf(
+                        "\n%s* @return %s",
+                        str_repeat(' ', $docblock->indentationLevel()),
+                        $type->__toString()
+                    ),
+                )
+            ];
+        }
+
+        return [];
     }
 }

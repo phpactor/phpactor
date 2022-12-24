@@ -109,6 +109,9 @@ class Docblock extends Node
             if ($child->type === Token::T_ASTERISK) {
                 return $previous->length();
             }
+            if ($child->type === Token::T_PHPDOC_CLOSE) {
+                return $previous->length();
+            }
             $previous = $child;
         }
 
