@@ -631,6 +631,49 @@ class UpdateDocblockTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
+
+        yield 'updates existing docblock' => [
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                trait Foobar {
+                    /**
+                     */
+                    public function baz(): array
+                    {
+                        yield [
+                            'foobar',
+                            function (Bar $b): string {
+                            }
+                        ];
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                use Generator;
+
+                trait Foobar {
+                    /**
+                     * @return Generator<array{string,Closure(Bar): string}>
+                     */
+                    public function baz(): array
+                    {
+                        yield [
+                            'foobar',
+                            function (Bar $b): string {
+                            }
+                        ];
+                    }
+                }
+                EOT
+        ];
     }
 
     /**
