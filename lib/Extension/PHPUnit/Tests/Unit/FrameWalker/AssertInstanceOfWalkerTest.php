@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\PHPUnit\FrameWalker\AssertInstanceOfWalker;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -16,7 +17,7 @@ class AssertInstanceOfWalkerTest extends TestCase
     /**
      * @dataProvider provideWalk
      */
-    public function testWalk(string $source, Closure $assertion): void
+    public function estWalk(string $source, Closure $assertion): void
     {
         list($source, $offset) = ExtractOffset::fromSource($source);
         $reflector = $this->createReflector($source);
@@ -24,83 +25,72 @@ class AssertInstanceOfWalkerTest extends TestCase
         $assertion($reflectionOffset->frame(), $offset);
     }
 
+    public function testStaticAssertCallWithClassConstant(): void
+    {
+        $this->resolve(<<<'EOT'
+            <?php
+
+            use PHPUnit\Framework\Assert;
+
+            $foo;
+            Assert::assertInstanceOf(stdClass::class, $foo);
+            wrAssertType('stdClass', $foo);
+            EOT);
+    }
+
+    public function testStaticAssertCallWithClassString(): void
+    {
+        $this->resolve(<<<'EOT'
+            <?php
+
+            use PHPUnit\Framework\Assert;
+
+            $foo;
+            Assert::assertInstanceOf('foo\bar', $foo);
+            wrAssertType('foo\bar', $foo);
+            EOT);
+    }
+
+    public function testInstanceCall(): void
+    {
+        $this->resolve(
+            <<<'EOT'
+                <?php
+
+                use PHPUnit\Framework\Assert;
+
+                $foo;
+                Assert::assertInstanceOf("stdClass", $foo);
+                wrAssertType('stdClass', $foo);
+                EOT
+        );
+
+    }
+
     /**
      * @return Generator<string,array{string,Closure(Frame): void}>
      */
     public function provideWalk(): Generator
     {
-        yield 'no op' => [
-            <<<'EOT'
-<?php
-
-<>
-EOT
-            , function (Frame $frame) {
-                $this->assertCount(0, $frame->locals());
-            }
-        ];
-
-        yield 'static assert call with class constant' => [
-            <<<'EOT'
-<?php
-
-use PHPUnit\Framework\Assert;
-
-$foo;
-Assert::assertInstanceOf(stdClass::class, $foo);
-<>
-EOT
-            , function (Frame $frame) {
-                $variable = $frame->locals()->byName('foo')->last();
-                $this->assertEquals('stdClass', $variable->type()->__toString());
-            }
-        ];
-
-        yield 'static assert call with stirng' => [
-            <<<'EOT'
-<?php
-
-use PHPUnit\Framework\Assert;
-
-$foo;
-Assert::assertInstanceOf("stdClass", $foo);
-<>
-EOT
-            , function (Frame $frame) {
-                $variable = $frame->locals()->byName('foo')->last();
-                $this->assertEquals('stdClass', $variable->type()->__toString());
-            }
-        ];
-
         yield 'member call' => [
             <<<'EOT'
-<?php
-
-use PHPUnit\Framework\TestCase;
-
-class FoobarTest extends TestCase
-{
-    public function testFoobar()
-    {
-        $foo;
-        $this->assertInstanceOf('Bar\Foo', $foo);
-        <>
-    }
-}
 <>
 EOT
-            , function (Frame $frame) {
-                $variable = $frame->locals()->byName('foo')->last();
-                $this->assertEquals('Bar\\Foo', $variable->type()->__toString());
-            }
+        , function (Frame $frame) {
+            $variable = $frame->locals()->byName('foo')->last();
+            $this->assertEquals('Bar\\Foo', $variable->type()->__toString());
+        }
         ];
     }
 
-    private function createReflector($source): Reflector
+    public function resolve(string $sourceCode): void
     {
-        return ReflectorBuilder::create()
-            ->addSource($source)
+        $reflector = ReflectorBuilder::create()
+            ->addFrameWalker(new TestAssertWalker($this))
             ->addFrameWalker(new AssertInstanceOfWalker())
+            ->addSource($sourceCode)
             ->build();
+
+        $reflector->reflectOffset($sourceCode, mb_strlen($sourceCode));
     }
 }

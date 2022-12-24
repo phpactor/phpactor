@@ -3,24 +3,21 @@
 namespace Phpactor\Extension\PHPUnit\FrameWalker;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
-use Microsoft\PhpParser\Node\Expression\Variable as ParserVariable;
 use Microsoft\PhpParser\Node\QualifiedName;
-use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameBuilder;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
-use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Walker;
-use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ClassStringType;
+use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 
 class AssertInstanceOfWalker implements Walker
 {
@@ -57,45 +54,36 @@ class AssertInstanceOfWalker implements Walker
         if (!$callExpression instanceof CallExpression) {
             return $frame;
         }
-        $expresionList = $callExpression->argumentExpressionList;
 
-        if (!$expresionList instanceof ArgumentExpressionList) {
+        $args = FunctionArguments::fromList(
+            $resolver->resolver(),
+            $frame,
+            $callExpression->argumentExpressionList
+        );
+
+        if (count($args) < 2) {
             return $frame;
         }
 
-        $elements = iterator_to_array($expresionList->getElements());
+        $type = $args->at(0)->type();
 
-        if (!isset($elements[0])) {
+        if ($type instanceof StringLiteralType) {
+            $type = TypeFactory::class($type->value());
+        }
+
+        if ($type instanceof ClassStringType) {
+            $type = TypeFactory::class($type->className()?->__toString());
+        }
+
+        if (!$type instanceof ClassType) {
             return $frame;
         }
 
-        if (!isset($elements[1])) {
-            return $frame;
-        }
+        $var = $args->at(1);
 
-        $type = $this->resolveType($elements[0]);
-
-        if (null === $type) {
-            return $frame;
-        }
-
-        $name = $this->resolveVariableName($elements[1]);
-
-        if (null === $name) {
-            return $frame;
-        }
-
-        $frame->locals()->add(Variable::fromSymbolContext(
-            $this->symbolFactory->create(
-                $name,
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::VARIABLE,
-                    'type' => $type,
-                ]
-            )
-        ), $node->getStartPosition());
+        $frame->locals()->set(Variable::fromSymbolContext(
+            $var->withType(TypeFactory::class($type->__toString()))
+        ));
 
         return $frame;
     }
@@ -133,53 +121,5 @@ class AssertInstanceOfWalker implements Walker
         }
 
         return false;
-    }
-
-    public function walk(FrameResolver $builder, Frame $frame, Node $node): Frame
-    {
-    }
-
-    private function resolveType(ArgumentExpression $element): ?Type
-    {
-        $expression = $element->expression;
-        if ($expression instanceof ScopedPropertyAccessExpression) {
-            $memberName = $expression->memberName;
-
-            if (!$memberName instanceof Token) {
-                return null;
-            }
-
-            if ('class' === $memberName->getText($element->getFileContents())) {
-                $scopeResolutionQualifier = $expression->scopeResolutionQualifier;
-
-                if (!$scopeResolutionQualifier instanceof QualifiedName) {
-                    return null;
-                }
-
-                return TypeFactory::class((string) $scopeResolutionQualifier->getResolvedName());
-            }
-        }
-
-        if ($expression instanceof StringLiteral) {
-            return TypeFactory::class($expression->getStringContentsText());
-        }
-
-        return null;
-    }
-
-    private function resolveVariableName(ArgumentExpression $element): ?string
-    {
-        $expression = $element->expression;
-        if (!$expression instanceof ParserVariable) {
-            return null;
-        }
-
-        $name = $expression->name;
-
-        if (!$name instanceof Token) {
-            return null;
-        }
-
-        return substr((string) $name->getText($element->getFileContents()), 1);
     }
 }
