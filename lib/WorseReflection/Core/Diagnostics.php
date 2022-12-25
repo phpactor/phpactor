@@ -10,7 +10,8 @@ use RuntimeException;
 use Traversable;
 
 /**
- * @implements IteratorAggregate<Diagnostic>
+ * @template T of Diagnostic
+ * @implements IteratorAggregate<T>
  */
 final class Diagnostics implements IteratorAggregate, Countable
 {
@@ -32,7 +33,9 @@ final class Diagnostics implements IteratorAggregate, Countable
     }
 
     /**
-     * @param class-string $classFqn
+     * @template TD of Diagnostic
+     * @param class-string<TD> $classFqn
+     * @return Diagnostics<TD>
      */
     public function byClass(string $classFqn): self
     {

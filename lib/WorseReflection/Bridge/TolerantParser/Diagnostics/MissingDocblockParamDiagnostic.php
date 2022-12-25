@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\WorseReflection\Core\Type;
 
 class MissingDocblockParamDiagnostic implements Diagnostic
 {
@@ -13,7 +14,9 @@ class MissingDocblockParamDiagnostic implements Diagnostic
         private string $message,
         private DiagnosticSeverity $severity,
         private string $classType,
-        private string $methodName
+        private string $methodName,
+        private string $paramName,
+        private Type $paramType,
     ) {
     }
 
@@ -40,5 +43,15 @@ class MissingDocblockParamDiagnostic implements Diagnostic
     public function methodName(): string
     {
         return $this->methodName;
+    }
+
+    public function paramName(): string
+    {
+        return $this->paramName;
+    }
+
+    public function paramType(): Type
+    {
+        return $this->paramType;
     }
 }

@@ -41,6 +41,9 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
+
+                    /**
+                     */
                     public function baz(array $param): array
                     {
                     }

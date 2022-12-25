@@ -78,7 +78,9 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                 ),
                 DiagnosticSeverity::WARNING(),
                 $class->name()->__toString(),
-                $methodName
+                $methodName,
+                $parameter->name(),
+                $type,
             );
         }
     }
