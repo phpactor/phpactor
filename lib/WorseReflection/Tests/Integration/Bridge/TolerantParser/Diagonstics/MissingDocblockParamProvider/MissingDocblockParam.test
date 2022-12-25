@@ -3,6 +3,5 @@
 class Foobar
 {
     public function foo(array $foobar) {
-        return 'foobar';
     }
 }

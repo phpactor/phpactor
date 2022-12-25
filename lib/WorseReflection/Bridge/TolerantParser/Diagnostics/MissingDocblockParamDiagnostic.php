@@ -13,8 +13,7 @@ class MissingDocblockParamDiagnostic implements Diagnostic
         private string $message,
         private DiagnosticSeverity $severity,
         private string $classType,
-        private string $methodName,
-        private string $actualReturnType
+        private string $methodName
     ) {
     }
 
@@ -41,10 +40,5 @@ class MissingDocblockParamDiagnostic implements Diagnostic
     public function methodName(): string
     {
         return $this->methodName;
-    }
-
-    public function actualReturnType(): string
-    {
-        return $this->actualReturnType;
     }
 }
