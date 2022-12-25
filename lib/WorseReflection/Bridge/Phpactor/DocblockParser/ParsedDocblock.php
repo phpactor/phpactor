@@ -19,6 +19,8 @@ use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockParam;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockParams;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
@@ -97,6 +99,19 @@ class ParsedDocblock implements DocBlock
         }
 
         return new DocBlockVars($vars);
+    }
+
+    public function params(): DocBlockParams
+    {
+        $params = [];
+        foreach ($this->node->tags(ParamTag::class) as $paramTag) {
+            $params[] = new DocBlockParam(
+                $paramTag->paramName() ? ltrim($paramTag->paramName() ?? '', '$') : '',
+                $this->convertType($paramTag->type),
+            );
+        }
+
+        return new DocBlockParams($params);
     }
 
     public function parameterType(string $paramName): Type
