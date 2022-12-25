@@ -23,6 +23,13 @@ class MissingDocblockParamProviderTest extends DiagnosticsTestCase
         self::assertCount(0, $diagnostics);
     }
 
+    public function checkInferArrayType(Diagnostics $diagnostics): void
+    {
+        $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Method "foo" is missing docblock param: $foobars of type string[]', $diagnostics->at(0)->message());
+    }
+
     protected function provider(): DiagnosticProvider
     {
         return new MissingDocblockParamProvider();
