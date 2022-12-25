@@ -1,0 +1,11 @@
+<?php
+
+class Foobar
+{
+    /**
+     * @param string[] $foobar  
+     */
+    public function foo(array $foobar): array {
+    }
+}
+
