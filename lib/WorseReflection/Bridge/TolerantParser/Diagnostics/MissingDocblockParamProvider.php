@@ -10,8 +10,11 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MissingDocblockParamProvider implements DiagnosticProvider
@@ -44,12 +47,22 @@ class MissingDocblockParamProvider implements DiagnosticProvider
         $missingParams = [];
 
         foreach ($method->parameters() as $parameter) {
-            if (!$parameter->type() instanceof IterableType) {
+            $type = $parameter->type();
+            if ($type instanceof ReflectedClassType) {
+                $type = $type->upcastToGeneric();
+            }
+
+            if (!$type instanceof IterableType) {
                 continue;
             }
 
             if ($params->has($parameter->name())) {
                 continue;
+            }
+
+
+            if ($type instanceof ArrayType) {
+                $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
             }
 
             yield new MissingDocblockParamDiagnostic(
@@ -61,7 +74,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                     'Method "%s" is missing docblock param: $%s of type %s',
                     $methodName,
                     $parameter->name(),
-                    $parameter->type(),
+                    $type
                 ),
                 DiagnosticSeverity::WARNING(),
                 $class->name()->__toString(),
