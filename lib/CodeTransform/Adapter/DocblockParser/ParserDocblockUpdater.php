@@ -61,6 +61,18 @@ class ParserDocblockUpdater implements DocBlockUpdater
      */
     private function updateTag(Docblock $docblock, TagPrototype $prototype, string $tagText): array
     {
+        // create
+        if (strlen(trim($docblock->toString())) === 0) {
+            return [
+                TextEdit::create(
+                    $docblock->start(),
+                    0,
+                    sprintf("\n\n    /**\n     * %s\n     */\n    ", $tagText),
+                )
+            ];
+        }
+
+        // update
         $edits = [];
         foreach ($docblock->tags() as $tag) {
             if ($prototype->matches($tag)) {
