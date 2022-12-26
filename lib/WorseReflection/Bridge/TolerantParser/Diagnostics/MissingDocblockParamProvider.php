@@ -48,11 +48,14 @@ class MissingDocblockParamProvider implements DiagnosticProvider
 
         foreach ($method->parameters() as $parameter) {
             $type = $parameter->type();
+
             if ($type instanceof ReflectedClassType) {
                 $type = $type->upcastToGeneric();
             }
 
-            if (!$type instanceof IterableType) {
+            $type = $type->toLocalType($method->scope());
+
+            if (!$type instanceof IterableType && !$type instanceof GenericClassType) {
                 continue;
             }
 
@@ -62,15 +65,6 @@ class MissingDocblockParamProvider implements DiagnosticProvider
 
             if ($type instanceof ArrayType) {
                 $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
-            }
-
-            if ($type instanceof GenericClassType) {
-                $type = $type->withArguments([
-                    TypeFactory::int(),
-                    TypeFactory::mixed(),
-                    TypeFactory::void(),
-                    TypeFactory::void()
-                ]);
             }
 
             yield new MissingDocblockParamDiagnostic(

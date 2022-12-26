@@ -35,6 +35,7 @@ class DocblockParserFactory implements DocBlockFactory
         '@psalm-implements',
         '@phpstan-implements',
         '@template',
+        '@template-covariant',
         '@psalm-template',
         '@phpstan-template',
         '@template-extends',

@@ -9,6 +9,10 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 
 class MissingDocblockParamProviderTest extends DiagnosticsTestCase
 {
+
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
     public function checkMissingDocblockParam(Diagnostics $diagnostics): void
     {
         $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
@@ -16,6 +20,9 @@ class MissingDocblockParamProviderTest extends DiagnosticsTestCase
         self::assertEquals('Method "foo" is missing docblock param: $foobar of type array<int,mixed>', $diagnostics->at(0)->message());
     }
 
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
     public function checkGenerator(Diagnostics $diagnostics): void
     {
         $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
@@ -23,6 +30,9 @@ class MissingDocblockParamProviderTest extends DiagnosticsTestCase
         self::assertEquals('Method "foo" is missing docblock param: $foobar of type Generator<int,mixed,void,void>', $diagnostics->at(0)->message());
     }
 
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
     public function checkNoDiagnosticIfParamIsPresent(Diagnostics $diagnostics): void
     {
         $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
