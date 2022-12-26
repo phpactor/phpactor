@@ -31,7 +31,6 @@ final class InternalLocator implements SourceCodeLocator
             'BackedEnumCase' => __DIR__ . '/InternalStubs/Enum.php',
             'BackedEnum' => __DIR__ . '/InternalStubs/Enum.php',
             'Generator' => __DIR__ . '/InternalStubs/GenericTypes.php',
-            'Traversable' => __DIR__ . '/InternalStubs/GenericTypes.php',
             'ArrayAccess' => __DIR__ . '/InternalStubs/GenericTypes.php',
             'ArrayObject' => __DIR__ . '/InternalStubs/GenericTypes.php',
             'Serializable' => __DIR__ . '/InternalStubs/GenericTypes.php',

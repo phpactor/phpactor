@@ -20,7 +20,7 @@ class MissingDocblockParamProviderTest extends DiagnosticsTestCase
     {
         $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
         self::assertCount(1, $diagnostics);
-        self::assertEquals('Method "foo" is missing docblock param: $foobar of type Generator<<missing>,string>', $diagnostics->at(0)->message());
+        self::assertEquals('Method "foo" is missing docblock param: $foobar of type Generator<int,mixed,void,void>', $diagnostics->at(0)->message());
     }
 
     public function checkNoDiagnosticIfParamIsPresent(Diagnostics $diagnostics): void

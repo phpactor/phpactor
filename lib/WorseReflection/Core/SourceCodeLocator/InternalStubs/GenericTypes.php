@@ -3,20 +3,10 @@
 // stolen from Psalm
 
 /**
- * Interface to detect if a class is traversable using &foreach;.
- * @link http://php.net/manual/en/class.traversable.php
- *
- * @template-covariant TKey
- * @template-covariant TValue
- */
-interface Traversable {
-}
-
-/**
- * @template-covariant TKey
- * @template-covariant TValue
+ * @template TKey
+ * @template TValue
  * @template TSend
- * @template-covariant TReturn
+ * @template TReturn
  *
  * @template-implements Traversable<TKey, TValue>
  */

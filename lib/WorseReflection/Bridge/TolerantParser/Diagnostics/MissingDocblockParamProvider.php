@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -50,7 +51,6 @@ class MissingDocblockParamProvider implements DiagnosticProvider
             if ($type instanceof ReflectedClassType) {
                 $type = $type->upcastToGeneric();
             }
-            dump($type->__toString());
 
             if (!$type instanceof IterableType) {
                 continue;
@@ -60,9 +60,17 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                 continue;
             }
 
-
             if ($type instanceof ArrayType) {
                 $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
+            }
+
+            if ($type instanceof GenericClassType) {
+                $type = $type->withArguments([
+                    TypeFactory::int(),
+                    TypeFactory::mixed(),
+                    TypeFactory::void(),
+                    TypeFactory::void()
+                ]);
             }
 
             yield new MissingDocblockParamDiagnostic(
