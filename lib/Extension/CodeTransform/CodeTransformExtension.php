@@ -500,7 +500,7 @@ class CodeTransformExtension implements Extension
                 $container->get(BuilderFactory::class),
                 $container->get(DocBlockUpdater::class)
             );
-        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_return_types' ]]);
+        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_params' ]]);
 
         $container->register(UpdateReturnTypeTransformer::class, function (Container $container) {
             return new UpdateReturnTypeTransformer(

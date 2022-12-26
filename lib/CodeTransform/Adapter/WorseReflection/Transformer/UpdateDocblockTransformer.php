@@ -9,6 +9,7 @@ use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
@@ -59,7 +60,7 @@ class UpdateDocblockTransformer implements Transformer
             }
 
             $methodBuilder->docblock(
-                $this->docblockUpdater->setReturnType($method->docblock()->raw(), $localReplacement)
+                $this->docblockUpdater->set($method->docblock()->raw(), new ReturnTagPrototype($localReplacement))
             );
         }
 
