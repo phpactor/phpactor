@@ -36,6 +36,32 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
      */
     public function provideTransform(): Generator
     {
+        yield 'add missing docblock and param' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    public function baz(array $param): array
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    /**
+                     * @param array<int,mixed> $param
+                     */
+                    public function baz(array $param): array
+                    {
+                    }
+                }
+                EOT
+        ];
         yield 'add missing param' => [
             <<<'EOT'
                 <?php

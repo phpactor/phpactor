@@ -53,8 +53,6 @@ class ParserDocblockUpdater implements DocBlockUpdater
             return $docblockText;
         }
 
-        $edits = [];
-
         $edits = $this->updateParam($docblock, $docblockText, $paramName, $paramType);
 
         return TextEdits::fromTextEdits($edits)->apply($docblockText);
@@ -113,6 +111,20 @@ class ParserDocblockUpdater implements DocBlockUpdater
      */
     private function updateParam(Docblock $docblock, string $docblockText, string $paramName, Type $paramType): array
     {
+        if (0 === count($docblock->children->elements)) {
+            return [
+                TextEdit::create(
+                    $docblock->start(),
+                    0,
+                    sprintf(
+                        "\n\n    /**\n     * @param %s $%s%s\n     */\n    ",
+                        $paramType->__toString(),
+                        $paramName,
+                        str_repeat(' ', $docblock->indentationLevel()),
+                    ),
+                )
+            ];
+        }
         if ($line = $docblock->lastMultilineContentToken()) {
             return [
                 TextEdit::create(
