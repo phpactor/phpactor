@@ -15,6 +15,7 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportDiagnostic;
 use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\Core\Diagnostics as WorseDiagnostics;
 
 class RemoveUnusedImportsTransformer implements Transformer
 {
@@ -70,6 +71,9 @@ class RemoveUnusedImportsTransformer implements Transformer
         return TextEdits::fromTextEdits($edits);
     }
 
+    /**
+     * @return Diagnostics<Diagnostic>
+     */
     public function diagnostics(SourceCode $code): Diagnostics
     {
         $diagnostics = [];
@@ -84,7 +88,10 @@ class RemoveUnusedImportsTransformer implements Transformer
         return new Diagnostics($diagnostics);
     }
 
-    private function unusedImports(SourceCode $code): \Phpactor\WorseReflection\Core\Diagnostics
+    /**
+     * @return WorseDiagnostics<UnusedImportDiagnostic>
+     */
+    private function unusedImports(SourceCode $code): WorseDiagnostics
     {
         return $this->reflector->diagnostics($code->__toString())->byClass(UnusedImportDiagnostic::class);
     }

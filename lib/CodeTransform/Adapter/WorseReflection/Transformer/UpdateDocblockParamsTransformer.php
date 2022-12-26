@@ -5,7 +5,6 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;

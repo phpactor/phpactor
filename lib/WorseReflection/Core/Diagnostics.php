@@ -10,13 +10,13 @@ use RuntimeException;
 use Traversable;
 
 /**
- * @template T of Diagnostic
+ * @template-covariant T of Diagnostic
  * @implements IteratorAggregate<T>
  */
 final class Diagnostics implements IteratorAggregate, Countable
 {
     /**
-     * @param Diagnostic[] $diagnostics
+     * @param T[] $diagnostics
      */
     public function __construct(private array $diagnostics)
     {
@@ -54,6 +54,9 @@ final class Diagnostics implements IteratorAggregate, Countable
         return $this->diagnostics[$index];
     }
 
+    /**
+     * @return Diagnostics<T>
+     */
     public function withinRange(ByteOffsetRange $byteOffsetRange): self
     {
         return new self(array_filter(
@@ -64,6 +67,9 @@ final class Diagnostics implements IteratorAggregate, Countable
         ));
     }
 
+    /**
+     * @return Diagnostics<T>
+     */
     public function containingRange(ByteOffsetRange $byteOffsetRange): self
     {
         return new self(array_filter(

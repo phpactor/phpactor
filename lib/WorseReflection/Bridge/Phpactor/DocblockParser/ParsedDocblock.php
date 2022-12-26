@@ -106,7 +106,11 @@ class ParsedDocblock implements DocBlock
         $params = [];
         foreach ($this->node->tags(ParamTag::class) as $paramTag) {
             $params[] = new DocBlockParam(
-                $paramTag->paramName() ? ltrim($paramTag->paramName() ?? '', '$') : '',
+                $paramTag->paramName() ? ltrim(
+                    /** @phpstan-ignore-next-line */
+                    $paramTag->paramName() ?? '',
+                    '$'
+                ) : '',
                 $this->convertType($paramTag->type),
             );
         }

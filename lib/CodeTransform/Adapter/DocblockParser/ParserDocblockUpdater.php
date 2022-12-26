@@ -7,15 +7,10 @@ use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\TagPrototype;
 use Phpactor\DocblockParser\Ast\Docblock;
-use Phpactor\DocblockParser\Ast\TagNode;
-use Phpactor\DocblockParser\Ast\Tag\ParamTag;
-use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Core\Type;
 use RuntimeException;
-use function PHPUnit\Framework\matches;
 
 class ParserDocblockUpdater implements DocBlockUpdater
 {
@@ -32,7 +27,6 @@ class ParserDocblockUpdater implements DocBlockUpdater
         }
 
         return TextEdits::fromTextEdits($this->edits($docblock, $prototype))->apply($docblockText);
-
     }
 
     /**
@@ -118,71 +112,6 @@ class ParserDocblockUpdater implements DocBlockUpdater
                         "\n%s* %s",
                         str_repeat(' ', $docblock->indentationLevel()),
                         $tagText
-                    ),
-                )
-            ];
-        }
-
-        return [];
-    }
-
-    /**
-     * @return array<int,TextEdit>
-     */
-    private function updateParam(Docblock $docblock, string $docblockText, string $paramName, Type $paramType): array
-    {
-        if (0 === count($docblock->children->elements)) {
-            return [
-                TextEdit::create(
-                    $docblock->start(),
-                    0,
-                    sprintf(
-                        "\n\n    /**\n     * @param %s $%s%s\n     */\n    ",
-                        $paramType->__toString(),
-                        $paramName,
-                        str_repeat(' ', $docblock->indentationLevel()),
-                    ),
-                )
-            ];
-        }
-        if ($line = $docblock->lastMultilineContentToken()) {
-            return [
-                TextEdit::create(
-                    $line->end(),
-                    0,
-                    sprintf(
-                        "* @param %s $%s\n%s",
-                        $paramType->__toString(),
-                        $paramName,
-                        str_repeat(' ', $docblock->indentationLevel()),
-                    ),
-                )
-            ];
-        }
-
-        if ($open = $docblock->phpDocOpen()) {
-            if (!str_contains($docblockText, "\n")) {
-                return [
-                    TextEdit::create(
-                        $open->end(),
-                        0,
-                        sprintf(
-                            ' @param %s $%s',
-                            $paramType->__toString(),
-                            $paramName,
-                        ),
-                    )
-                ];
-            }
-            return [
-                TextEdit::create(
-                    $open->end(),
-                    0,
-                    sprintf(
-                        "\n%s* @param %s $%s",
-                        str_repeat(' ', $docblock->indentationLevel()),
-                        $paramType->__toString(),
-                        $paramName,
                     ),
                 )
             ];

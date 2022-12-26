@@ -60,7 +60,6 @@ use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
-use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer\UpdateDocblockParamsTransformerTest;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;

@@ -3,8 +3,6 @@
 namespace Phpactor\WorseReflection\Core\DocBlock;
 
 use IteratorAggregate;
-use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use ArrayIterator;
 use Traversable;
 
@@ -14,7 +12,7 @@ use Traversable;
 class DocBlockParams implements IteratorAggregate
 {
     /**
-     * @param DocBlockParam[]
+     * @var DocBlockParam[]
      */
     private array $params = [];
 
@@ -33,13 +31,13 @@ class DocBlockParams implements IteratorAggregate
         return new ArrayIterator($this->params);
     }
 
-    private function add(DocBlockParam $param): void
-    {
-        $this->params[$param->name()] = $param;
-    }
-
     public function has(string $name): bool
     {
         return isset($this->params[$name]);
+    }
+
+    private function add(DocBlockParam $param): void
+    {
+        $this->params[$param->name()] = $param;
     }
 }

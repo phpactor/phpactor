@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use RuntimeException;
@@ -19,7 +20,7 @@ class Analyser
     }
 
     /**
-     * @return Generator<string,Diagnostics>
+     * @return Generator<string,Diagnostics<Diagnostic>>
      */
     public function analyse(string $path): Generator
     {

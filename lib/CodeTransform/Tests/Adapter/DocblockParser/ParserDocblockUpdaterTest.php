@@ -31,17 +31,17 @@ class ParserDocblockUpdaterTest extends TestCase
     {
         self::assertEquals(
             <<<'EOT'
-            /** 
-             * @return array<string, int>
-             * @param string $foo
-             */
-            EOT,
-            $this->createUpdater()->set(
-                <<<'EOT'
                 /** 
                  * @return array<string, int>
+                 * @param string $foo
                  */
                 EOT,
+            $this->createUpdater()->set(
+                <<<'EOT'
+                    /** 
+                     * @return array<string, int>
+                     */
+                    EOT,
                 new ParamTagPrototype('foo', TypeFactory::string())
             )
         );
