@@ -126,6 +126,22 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+
+        yield 'class name inside attribute' => [
+            <<<'PHP'
+            <?php
+            #[At<>]
+            class X
+            {}
+            PHP,
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Attribute',
+                    'short_description' => 'Attribute',
+                ]
+            ]
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -154,6 +170,9 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         ]);
         $searcher->search('b')->willYield([
             NameSearchResult::create('class', 'Foo\\Bar'),
+        ]);
+        $searcher->search('At')->willYield([
+            NameSearchResult::create('class', 'Attribute'),
         ]);
 
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
