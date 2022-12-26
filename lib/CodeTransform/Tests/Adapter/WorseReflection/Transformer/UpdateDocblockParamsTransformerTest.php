@@ -98,7 +98,6 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
             $reflector,
             $this->updater(),
             $this->builderFactory($reflector),
-            new TextFormat(),
             new ParserDocblockUpdater(DocblockParser::create())
         );
     }

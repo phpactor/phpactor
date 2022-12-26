@@ -21,7 +21,6 @@ class UpdateDocblockParamsTransformer implements Transformer
         private Reflector $reflector,
         private Updater $updater,
         private BuilderFactory $builderFactory,
-        private TextFormat $format,
         private DocBlockUpdater $docblockUpdater,
     ) {
     }

@@ -40,6 +40,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockParamsTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateReturnTypeTransformer;
 use Phpactor\CodeTransform\CodeTransform;
@@ -59,6 +60,7 @@ use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
+use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer\UpdateDocblockParamsTransformerTest;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
@@ -342,6 +344,10 @@ class CodeTransformExtension implements Extension
         $container->register(BuilderFactory::class, function (Container $container) {
             return new WorseBuilderFactory($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
         });
+
+        $container->register(DocBlockUpdater::class, function (Container $container) {
+            return new ParserDocblockUpdater(DocblockParser::create());
+        });
     }
 
     private function registerFinders(ContainerBuilder $container): void
@@ -487,9 +493,14 @@ class CodeTransformExtension implements Extension
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_docblocks' ]]);
 
-        $container->register(DocBlockUpdater::class, function (Container $container) {
-            return new ParserDocblockUpdater(DocblockParser::create());
-        });
+        $container->register(UpdateDocblockParamsTransformer::class, function (Container $container) {
+            return new UpdateDocblockParamsTransformer(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(Updater::class),
+                $container->get(BuilderFactory::class),
+                $container->get(DocBlockUpdater::class)
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_return_types' ]]);
 
         $container->register(UpdateReturnTypeTransformer::class, function (Container $container) {
             return new UpdateReturnTypeTransformer(
