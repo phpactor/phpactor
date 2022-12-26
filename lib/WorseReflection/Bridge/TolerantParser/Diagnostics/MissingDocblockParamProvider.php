@@ -50,6 +50,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
             if ($type instanceof ReflectedClassType) {
                 $type = $type->upcastToGeneric();
             }
+            dump($type->__toString());
 
             if (!$type instanceof IterableType) {
                 continue;

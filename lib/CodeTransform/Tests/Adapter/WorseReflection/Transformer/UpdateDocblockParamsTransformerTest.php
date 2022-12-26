@@ -87,6 +87,35 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
+        yield 'add multiple missing param' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    /**
+                     */
+                    public function baz(array $param, array $baz): array
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+
+                    /**
+                     * @param array<int,mixed> $param
+                     * @param array<int,mixed> $baz
+                     */
+                    public function baz(array $param, array $baz): array
+                    {
+                    }
+                }
+                EOT
+        ];
     }
 
     private function createTransformer(Reflector $reflector): UpdateDocblockParamsTransformer

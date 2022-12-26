@@ -31,16 +31,19 @@ class UpdateDocblockParamsTransformer implements Transformer
         $builder = $this->builderFactory->fromSource($code);
 
         $class = null;
+        $docblocks = [];
         foreach ($diagnostics as $diagnostic) {
             $class = $this->reflector->reflectClassLike($diagnostic->classType());
             $method = $class->methods()->get($diagnostic->methodName());
 
             $classBuilder = $builder->classLike($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
+            $hash = $class->name()->__toString().'#'.$method->name();
+
 
             $methodBuilder->docblock(
                 $this->docblockUpdater->set(
-                    $method->docblock()->raw(),
+                    $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
                     new ParamTagPrototype(
                         $diagnostic->paramName(),
                         $diagnostic->paramType()
