@@ -127,23 +127,21 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
             ]
         ];
 
-        if (defined('T_ATTRIBUTE')) {
-            yield 'class name inside attribute' => [
-                <<<'PHP'
-                    <?php
-                    #[At<>]
-                    class X
-                    {}
-                    PHP,
+        yield 'class name inside attribute' => [
+            <<<'PHP'
+                <?php
+                #[At<>]
+                class X
+                {}
+                PHP,
+            [
                 [
-                    [
-                        'type'              => Suggestion::TYPE_CLASS,
-                        'name'              => 'Attribute',
-                        'short_description' => 'Attribute',
-                    ]
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Attribute',
+                    'short_description' => 'Attribute',
                 ]
-            ];
-        }
+            ]
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
