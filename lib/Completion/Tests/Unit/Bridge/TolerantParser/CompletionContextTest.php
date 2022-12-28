@@ -179,6 +179,47 @@ class CompletionContextTest extends TestCase
     }
 
     /**
+     * @dataProvider provideAttribute
+     */
+    public function testAttribute(string $source, bool $expected): void
+    {
+        [$source, $offset] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        self::assertEquals($expected, CompletionContext::attribute($node));
+    }
+
+    /**
+     * @return Generator<array<int,mixed>>
+     */
+    public function provideAttribute(): Generator
+    {
+        yield 'not attribute' => [
+            '<?php $hello<>',
+            false,
+        ];
+
+        yield 'in not mapped attribute' => [
+            '<?php #[Att<>]',
+            true,
+        ];
+
+        yield 'in not mapped attribute, empty name' => [
+            '<?php #[<>]',
+            true,
+        ];
+
+        yield 'in not mapped attribute, empty name of the second' => [
+            '<?php #[Attribute(), <>]',
+            true,
+        ];
+
+        yield 'in method attribute' => [
+            '<?php class X {#[Att<>] public function x()',
+            true,
+        ];
+    }
+
+    /**
      * @dataProvider provideAnonymousUse
      */
     public function testAnonymousUse(string $source, bool $expected): void

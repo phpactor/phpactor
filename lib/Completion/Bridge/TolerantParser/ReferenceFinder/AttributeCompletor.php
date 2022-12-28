@@ -5,10 +5,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
-use Phpactor\Completion\Bridge\TolerantParser\Qualifier\AttributeQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
-use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
-use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\ReferenceFinder\NameSearcher;
@@ -16,7 +13,7 @@ use Phpactor\ReferenceFinder\NameSearcherType;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 
-class AttributeCompletor implements TolerantCompletor, TolerantQualifiable
+class AttributeCompletor implements TolerantCompletor
 {
     public function __construct(
         private NameSearcher $nameSearcher,
@@ -44,10 +41,5 @@ class AttributeCompletor implements TolerantCompletor, TolerantQualifiable
         }
 
         return true;
-    }
-
-    public function qualifier(): TolerantQualifier
-    {
-        return new AttributeQualifier();
     }
 }
