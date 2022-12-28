@@ -495,6 +495,20 @@ Completion for class like contexts.
 
 **Default**: ``true``
 
+.. _param_completion_worse.completor.attribute.enabled:
+
+
+``completion_worse.completor.attribute.enabled``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the ``attribute`` completor.
+
+Completion for attribute contexts.
+
+
+**Default**: ``true``
+
 
 .. _param_completion_worse.completor.type.enabled:
 
