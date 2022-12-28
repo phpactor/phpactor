@@ -15,6 +15,7 @@ Features:
 Improvements:
 
   - Add return tags to existing docblocks #1995
+  - Naive support for attribute completion #2001 @przepompownia
 
 ## 2022.12.12
 
