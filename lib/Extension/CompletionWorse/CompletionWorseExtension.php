@@ -5,6 +5,7 @@ namespace Phpactor\Extension\CompletionWorse;
 use Closure;
 use Phpactor\Completion\Bridge\TolerantParser\DebugTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\AttributeCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ClassLikeCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\ExpressionNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\TypeCompletor;
@@ -386,6 +387,15 @@ class CompletionWorseExtension implements Extension
                 'Completion for use imports',
                 function (Container $container) {
                     return $this->limitCompletor($container, new UseNameCompletor(
+                        $container->get(NameSearcher::class),
+                        $container->get(DocumentPrioritizer::class)
+                    ));
+                },
+            ],
+            'attribute' => [
+                'Completion for attribute class names',
+                function (Container $container) {
+                    return $this->limitCompletor($container, new AttributeCompletor(
                         $container->get(NameSearcher::class),
                         $container->get(DocumentPrioritizer::class)
                     ));
