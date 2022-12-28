@@ -189,7 +189,7 @@ class CompletionContextTest extends TestCase
     }
 
     /**
-     * @return Generator<array<int,mixed>>
+     * @return Generator<string,array{string,bool}>
      */
     public function provideAttribute(): Generator
     {
