@@ -6,6 +6,8 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ArrayElement;
+use Microsoft\PhpParser\Node\Attribute;
+use Microsoft\PhpParser\Node\AttributeGroup;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
@@ -53,6 +55,18 @@ class CompletionContext
             $parent instanceof ConstElement ||
             $parent instanceof ArrayElement // yield;
         ;
+    }
+
+    public static function attribute(?Node $node): bool
+    {
+        if (null === $node) {
+            return false;
+        }
+
+        return
+            $node instanceof AttributeGroup ||
+            $node instanceof Attribute ||
+            $node->parent instanceof Attribute;
     }
 
     public static function useImport(?Node $node): bool
