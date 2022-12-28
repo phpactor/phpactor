@@ -34,10 +34,6 @@ class AttributeCompletor implements TolerantCompletor, TolerantQualifiable
         $type = NameSearcherType::CLASS_;
 
         foreach ($this->nameSearcher->search($search, $type) as $result) {
-            if (!$result->type()->isClass()) {
-                continue;
-            }
-
             yield Suggestion::createWithOptions($result->name()->head(), [
                 'type' => Suggestion::TYPE_CLASS,
                 'priority' => $this->prioritizer->priority($result->uri(), $source->uri()),
