@@ -10,10 +10,13 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
+use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -66,6 +69,8 @@ class MissingDocblockParamProvider implements DiagnosticProvider
             if ($type instanceof ArrayType) {
                 $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
             }
+
+            $type = $type->map(fn (Type $type) => $type instanceof MissingType ? new MixedType() : $type);
 
             yield new MissingDocblockParamDiagnostic(
                 ByteOffsetRange::fromInts(
