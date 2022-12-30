@@ -25,6 +25,41 @@ final class TextEditDiff
     }
 
     /**
+     * @param array<int, array<int,int>> $table
+     * @param list<string> $x
+     * @param list<string> $y
+     * @param list<array{string,string,int}> $ops
+     * @return list<array{string,string,int}>
+     */
+    public function resolveOps(array $table, array $x, array $y, int $i, int $j, array $ops = []): array
+    {
+        if ($i > 0 && $j > 0 && $x[$i] === $y[$j]) {
+            $ops = $this->resolveOps($table, $x, $y, $i-1, $j-1);
+            $ops[] = [self::NOOP, $x[$i], $i];
+            return $ops;
+        }
+
+        if ($j > 0 && ($i === 0 || $table[$i][$j-1] >= $table[$i-1][$j])) {
+            $ops = $this->resolveOps($table, $x, $y, $i, $j-1);
+            $ops[] = [self::ADD, $y[$j], $i + 1];
+            return $ops;
+        }
+
+        if ($i > 0 && ($j === 0 || $table[$i][$j-1] < $table[$i-1][$j])) {
+            $ops = $this->resolveOps($table, $x, $y, $i - 1, $j);
+            $ops[] = [self::DEL, $x[$i], $i];
+            return $ops;
+        }
+
+        if ($j === 0 && $i === 0 && $x[$i] !== $y[$j]) {
+            $ops[] = [self::REPLACE, $y[$i], $i];
+            return $ops;
+        }
+
+        return $ops;
+    }
+
+    /**
      * @return array<int,array<int, int>>
      */
     private function lcsTable(string $one, string $two): array
@@ -51,40 +86,6 @@ final class TextEditDiff
         }
 
         return $table;
-    }
-
-    /**
-     * @param array<int, array<int,int>> $table
-     * @param list<string> $x
-     * @param list<string> $y
-     * @param list<array{string,string,int}> $ops
-     * @return list<array{string,string,int}>
-     */
-    function resolveOps(array $table, array $x, array $y, int $i, int $j, array $ops = []): array {
-        if ($i > 0 && $j > 0 && $x[$i] === $y[$j]) {
-            $ops = $this->resolveOps($table, $x, $y, $i-1, $j-1);
-            $ops[] = [self::NOOP, $x[$i], $i];
-            return $ops;
-        } 
-
-        if ($j > 0 && ($i === 0 || $table[$i][$j-1] >= $table[$i-1][$j])) {
-            $ops = $this->resolveOps($table, $x, $y, $i, $j-1);
-            $ops[] = [self::ADD, $y[$j], $i + 1];
-            return $ops;
-        }
-        
-        if ($i > 0 && ($j === 0 || $table[$i][$j-1] < $table[$i-1][$j])) {
-            $ops = $this->resolveOps($table, $x, $y, $i - 1, $j);
-            $ops[] = [self::DEL, $x[$i], $i];
-            return $ops;
-        }
-
-        if ($j === 0 && $i === 0 && $x[$i] !== $y[$j]) {
-            $ops[] = [self::REPLACE, $y[$i], $i];
-            return $ops;
-        }
-
-        return $ops;
     }
 
     /**

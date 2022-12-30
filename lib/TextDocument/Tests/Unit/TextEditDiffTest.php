@@ -13,15 +13,16 @@ class TextEditDiffTest extends TestCase
      */
     public function testDiff(string $one, string $two): void
     {
+        $edits = (new TextEditDiff())->diff($one, $two);
         self::assertEquals(
             $two,
-            (new TextEditDiff())->diff($one, $two)->apply($one)
+            $edits->apply($one)
         );
-   }
+    }
 
     /**
-     * @return Generator<string,array{string,string}>
-     */
+      * @return Generator<string,array{string,string}>
+      */
     public function provideDiff(): Generator
     {
         yield 'add string' => [
@@ -56,6 +57,37 @@ class TextEditDiffTest extends TestCase
                 'by this still hearth',
                 'it little profits that an idle king',
             ])
+        ];
+
+        yield 'code' => [
+            implode("\n", [
+                '<?php',
+                'class Foobar {',
+                '    private $foobar;',
+                '    /**',
+                '     * @return array<int,foobar>',
+                '     */',
+                '    public function bar() {',
+                '    }',
+                '}'
+            ]),
+            implode("\n", [
+                '<?php',
+                'class Foobar {',
+                '',
+                '    /**',
+                '     * @var Foobars',
+                '     */',
+                '    private $foobar;',
+                '',
+                '    /**',
+                '     * @param array<int,foobar> $bar',
+                '     * @return array<string,foobar>',
+                '     */',
+                '    public function bar(array $bar) {',
+                '    }',
+                '}'
+            ]),
         ];
     }
 }
