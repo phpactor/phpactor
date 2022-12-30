@@ -32,5 +32,30 @@ class TextEditDiffTest extends TestCase
             'foo bar',
             'foo',
         ];
+        yield 'insert string' => [
+            'foo bar',
+            'foo baz boo bar bag',
+        ];
+
+        yield 'first char' => [
+            'i',
+            'b',
+        ];
+
+        yield 'differnet' => [
+            'it little profits',
+            'that an idle king',
+        ];
+
+        yield 'poem' => [
+            implode("\n", [
+                'it little profits that an idle king',
+                'matched with an aged wife',
+            ]),
+            implode("\n", [
+                'by this still hearth',
+                'it little profits that an idle king',
+            ])
+        ];
     }
 }
