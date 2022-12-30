@@ -46,7 +46,13 @@ class TextEditDiff
         return $table;
     }
 
+    /**
+     * @param array<int, array<int,int>> $table
+     * @param list<string> $x
+     * @param list<string> $y
+     */
     function printDiff(array $table, array $x, array $y, int $i, int $j): void {
+
         if ($i >= 0 && $j >= 0 && $x[$i] === $y[$j]) {
             $this->printDiff($table, $x, $y, $i-1, $j-1);
             echo $x[$i];
