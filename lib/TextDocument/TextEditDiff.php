@@ -2,23 +2,22 @@
 
 namespace Phpactor\TextDocument;
 
-class TextEditDiff
+final class TextEditDiff
 {
-    const REPLACE = 'r';
-    const NOOP = 'o';
-    const ADD = '+';
-    const DEL = '-';
-
+    private const REPLACE = 'r';
+    private const NOOP = 'o';
+    private const ADD = '+';
+    private const DEL = '-';
 
     public function diff(string $one, string $two): TextEdits
     {
         $table = $this->lcsTable($one, $two);
         $ops = $this->resolveOps(
             $table,
-            str_split($one),
-            str_split($two),
-            strlen($one) - 1,
-            strlen($two) - 1
+            mb_str_split($one),
+            mb_str_split($two),
+            mb_strlen($one) - 1,
+            mb_strlen($two) - 1
         );
         $edits = $this->textEdits($ops);
 
@@ -30,8 +29,8 @@ class TextEditDiff
      */
     private function lcsTable(string $one, string $two): array
     {
-        $m = strlen($one);
-        $n = strlen($two);
+        $m = mb_strlen($one);
+        $n = mb_strlen($two);
         $table = [];
 
         for ($i = 0; $i <= $m; $i++) {
