@@ -10,6 +10,7 @@ Bug fixes:
 
 Features:
 
+  - `@param` docblock generation
   - Reintroduce the PHPUnit extension
 
 Improvements:
