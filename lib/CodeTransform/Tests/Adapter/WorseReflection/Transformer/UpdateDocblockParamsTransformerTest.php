@@ -136,8 +136,8 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
             <<<'EOT'
                 <?php
 
-                use Namespaced\Generic;
                 use Namespaced\Baz;
+                use Namespaced\Generic;
 
                 class Foobar {
 

@@ -56,7 +56,6 @@ class MissingDocblockParamProvider implements DiagnosticProvider
         foreach ($method->parameters() as $parameter) {
             $type = $parameter->type();
             $type = $this->upcastType($type, $resolver);
-            $type = $type->toLocalType($method->scope());
 
             if ($docblockParams->has($parameter->name())) {
                 continue;

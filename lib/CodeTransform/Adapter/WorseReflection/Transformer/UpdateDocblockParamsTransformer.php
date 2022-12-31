@@ -48,7 +48,7 @@ class UpdateDocblockParamsTransformer implements Transformer
                     $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
                     new ParamTagPrototype(
                         $diagnostic->paramName(),
-                        $diagnostic->paramType()
+                        $diagnostic->paramType()->toLocalType($method->scope())
                     )
                 )
             );
