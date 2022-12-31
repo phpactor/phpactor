@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class GenericMapResolver
 {
@@ -93,20 +94,28 @@ class GenericMapResolver
 
     private function mapClassString(ClassStringType $type, TemplateMap $templateMap, FunctionArguments $arguments, ReflectionParameter $parameter): void
     {
-        $argument = $arguments->at($parameter->index())->type();
-        if (!$argument->isDefined()) {
+        $classStringType = $type->className()->short();
+        if (!$templateMap->has($classStringType)) {
             return;
         }
-        $classStringType = $type->className()->short();
-        if ($templateMap->has($classStringType)) {
-            if ($argument instanceof ClassStringType) {
-                $templateMap->replace($classStringType, TypeFactory::reflectedClass($this->reflector, $argument->className()));
-            }
-            if ($argument instanceof StringLiteralType) {
-                $templateMap->replace($classStringType, TypeFactory::reflectedClass($this->reflector, $argument->value()));
-            }
+        if ($parameter->isVariadic()) {
+            $arguments = $arguments->from($parameter->index());
+        } else {
+            $arguments = [$arguments->at($parameter->index())];
+        }
 
-            return;
+        $types = [];
+        foreach ($arguments as $argument) {
+            $argumentType = $argument->type();
+            if ($argumentType instanceof ClassStringType) {
+                $types[] = TypeFactory::reflectedClass($this->reflector, $argumentType->className());
+            }
+            if ($argumentType instanceof StringLiteralType) {
+                $types[] = TypeFactory::reflectedClass($this->reflector, $argumentType->value());
+            }
+            if ($types) {
+                $templateMap->replace($classStringType, UnionType::fromTypes(...$types));
+            }
         }
     }
 }
