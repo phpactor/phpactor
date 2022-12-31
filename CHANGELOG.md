@@ -16,6 +16,7 @@ Improvements:
 
   - Add return tags to existing docblocks #1995
   - Naive support for attribute completion #2001 @przepompownia
+  - Support union type from class-string variadic generic
 
 ## 2022.12.12
 
