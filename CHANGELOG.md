@@ -14,6 +14,7 @@ Features:
 
 Improvements:
 
+  - Reverts #1974 - which made the situation worse rather than better.
   - Change default WR cache TTL from 5 seconds to 1 second to avoid race with
     diagnostics timeout.
   - Add return tags to existing docblocks #1995
