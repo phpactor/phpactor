@@ -13,6 +13,8 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamDiagnostic;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Reflector;
 
 class UpdateDocblockParamsTransformer implements Transformer
@@ -39,9 +41,12 @@ class UpdateDocblockParamsTransformer implements Transformer
             $classBuilder = $builder->classLike($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
 
-            foreach ($diagnostic->paramType()->classLikeTypes() as $classType) {
-                $builder->use($classType->name()->__toString());
-            }
+            $diagnostic->paramType()->map(function (Type $t) use ($builder) {
+                if ($t instanceof ClassLikeType) {
+                    $builder->use($t->name()->__toString());
+                }
+                return $t;
+            });
 
             $methodBuilder->docblock(
                 $this->docblockUpdater->set(
