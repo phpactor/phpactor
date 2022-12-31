@@ -43,10 +43,9 @@ use function array_map;
 
 class ParsedDocblock implements DocBlock
 {
-    public function __construct(private ParserDocblock $node, private TypeConverter $typeConverter)
+    public function __construct(private ParserDocblock $node, private TypeConverter $typeConverter, private string $raw)
     {
     }
-
 
     public function rawNode(): ParserDocblock
     {
@@ -165,7 +164,7 @@ class ParsedDocblock implements DocBlock
 
     public function raw(): string
     {
-        return $this->node->toString();
+        return $this->raw;
     }
 
     public function isDefined(): bool
