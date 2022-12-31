@@ -58,4 +58,17 @@ class FunctionArguments implements IteratorAggregate, Countable
     {
         return count($this->arguments);
     }
+
+    public function from(int $offset): self
+    {
+        $newArgs = [];
+        foreach ($this->arguments as $argOffset => $argument) {
+            if ($argOffset < $offset) {
+                continue;
+            }
+            $newArgs[] = $argument;
+        }
+
+        return new self($this->resolver, $this->frame, $newArgs);
+    }
 }

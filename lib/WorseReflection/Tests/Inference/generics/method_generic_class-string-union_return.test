@@ -20,3 +20,5 @@ class Foo
 $f = new Foo();
 $res = $f->bar(A::class, B::class);
 wrAssertType('A|B', $res);
+$res = $f->bar(A::class, 'B');
+wrAssertType('A|B', $res);
