@@ -47,21 +47,13 @@ class UpdateDocblockTransformer implements Transformer
                 $builder->use($classType->toPhpString());
             }
 
-            if (!$method->docblock()->isDefined()) {
-                $methodBuilder->docblock("\n\n".$this->format->indent(
-                    <<<EOT
-                        /**
-                         * @return {$localReplacement->__toString()}
-                         */
-                        EOT
-                    ,
-                    1
-                ). "\n".$this->format->indent('', 1));
-                continue;
-            }
-
             $methodBuilder->docblock(
-                $this->docblockUpdater->set($method->docblock()->raw(), new ReturnTagPrototype($localReplacement))
+                $this->docblockUpdater->set(
+                    $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
+                    new ReturnTagPrototype(
+                        $localReplacement
+                    )
+                )
             );
         }
 

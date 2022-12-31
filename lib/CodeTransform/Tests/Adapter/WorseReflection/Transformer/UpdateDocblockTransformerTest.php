@@ -15,9 +15,9 @@ use Phpactor\WorseReflection\Reflector;
 class UpdateDocblockTransformerTest extends WorseTestCase
 {
     /**
-     * @dataProvider provideTransform
+     * @dataProvider provideUpdateReturn
      */
-    public function testTransform(string $example, string $expected): void
+    public function testUpdateReturn(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
         $this->workspace()->put(
@@ -33,7 +33,7 @@ class UpdateDocblockTransformerTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideTransform(): Generator
+    public function provideUpdateReturn(): Generator
     {
         yield 'add missing docblock' => [
             <<<'EOT'

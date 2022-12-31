@@ -38,7 +38,6 @@ class UpdateDocblockParamsTransformer implements Transformer
 
             $classBuilder = $builder->classLike($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
-            $hash = $class->name()->__toString().'#'.$method->name();
 
 
             $methodBuilder->docblock(
