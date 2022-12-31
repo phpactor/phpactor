@@ -4,14 +4,14 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
 use Generator;
 use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockTransformer;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockReturnTransformer;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\WorseReflection\Reflector;
 
-class UpdateDocblockTransformerTest extends WorseTestCase
+class UpdateDocblockReturnTransformerTest extends WorseTestCase
 {
     /**
      * @dataProvider provideUpdateReturn
@@ -813,9 +813,9 @@ class UpdateDocblockTransformerTest extends WorseTestCase
         ];
     }
 
-    private function createTransformer(Reflector $reflector): UpdateDocblockTransformer
+    private function createTransformer(Reflector $reflector): UpdateDocblockReturnTransformer
     {
-        return new UpdateDocblockTransformer(
+        return new UpdateDocblockReturnTransformer(
             $reflector,
             $this->updater(),
             $this->builderFactory($reflector),

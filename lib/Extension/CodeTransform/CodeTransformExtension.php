@@ -41,7 +41,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContract
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockParamsTransformer;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockTransformer;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockReturnTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateReturnTypeTransformer;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
@@ -482,8 +482,8 @@ class CodeTransformExtension implements Extension
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'fix_namespace_class_name' ]]);
 
-        $container->register(UpdateDocblockTransformer::class, function (Container $container) {
-            return new UpdateDocblockTransformer(
+        $container->register(UpdateDocblockReturnTransformer::class, function (Container $container) {
+            return new UpdateDocblockReturnTransformer(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),
                 $container->get(BuilderFactory::class),

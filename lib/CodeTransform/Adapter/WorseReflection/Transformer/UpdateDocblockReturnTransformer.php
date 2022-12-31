@@ -15,7 +15,7 @@ use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 
-class UpdateDocblockTransformer implements Transformer
+class UpdateDocblockReturnTransformer implements Transformer
 {
     public function __construct(
         private Reflector $reflector,
