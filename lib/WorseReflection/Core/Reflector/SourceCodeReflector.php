@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
@@ -54,6 +55,7 @@ interface SourceCodeReflector
 
     /**
      * @param TextDocument|string $sourceCode
+     * @return Diagnostics<Diagnostic>
      */
     public function diagnostics($sourceCode): Diagnostics;
 

@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\WorseReflectionAnalyse\Command;
 
 use Phpactor\Extension\WorseReflectionAnalyse\Model\Analyser;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -36,7 +37,7 @@ class AnalyseCommand extends Command
         $start = (float)microtime(true);
 
         /**
-         * @var array<string,Diagnostics> $results
+         * @var array<string,Diagnostics<Diagnostic>> $results
          */
         $results = [];
         $path = $input->getArgument(self::ARG_PATH);
@@ -72,7 +73,7 @@ class AnalyseCommand extends Command
     }
 
     /**
-     * @param array<string,Diagnostics> $results
+     * @param array<string,Diagnostics<Diagnostic>> $results
      */
     private function renderTable(OutputInterface $output, array $results, float $start): void
     {
@@ -105,7 +106,7 @@ class AnalyseCommand extends Command
     }
 
     /**
-     * @param array<string,Diagnostics> $results
+     * @param array<string,Diagnostics<Diagnostic>> $results
      */
     private function renderJson(OutputInterface $output, array $results): void
     {

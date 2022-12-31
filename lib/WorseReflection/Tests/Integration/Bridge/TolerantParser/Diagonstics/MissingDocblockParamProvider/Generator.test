@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @template TKey
+ * @template TValue of string
+ */
+class Generator {
+}
+
+class Foobar
+{
+    public function foo(Generator $foobar) {
+    }
+}

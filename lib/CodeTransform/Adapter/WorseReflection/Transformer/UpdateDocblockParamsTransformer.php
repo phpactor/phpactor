@@ -5,23 +5,22 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 
-class UpdateDocblockTransformer implements Transformer
+class UpdateDocblockParamsTransformer implements Transformer
 {
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
         private BuilderFactory $builderFactory,
-        private TextFormat $format,
         private DocBlockUpdater $docblockUpdater,
     ) {
     }
@@ -32,34 +31,26 @@ class UpdateDocblockTransformer implements Transformer
         $builder = $this->builderFactory->fromSource($code);
 
         $class = null;
+        $docblocks = [];
         foreach ($diagnostics as $diagnostic) {
             $class = $this->reflector->reflectClassLike($diagnostic->classType());
             $method = $class->methods()->get($diagnostic->methodName());
 
             $classBuilder = $builder->classLike($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
-            $replacement = $method->frame()->returnType();
-            $localReplacement = $replacement->toLocalType($method->scope())->generalize();
 
-            foreach ($replacement->classLikeTypes() as $classType) {
-                $builder->use($classType->toPhpString());
-            }
-
-            if (!$method->docblock()->isDefined()) {
-                $methodBuilder->docblock("\n\n".$this->format->indent(
-                    <<<EOT
-                        /**
-                         * @return {$localReplacement->__toString()}
-                         */
-                        EOT
-                    ,
-                    1
-                ). "\n".$this->format->indent('', 1));
-                continue;
+            foreach ($diagnostic->paramType()->classLikeTypes() as $classType) {
+                $builder->use($classType->name()->__toString());
             }
 
             $methodBuilder->docblock(
-                $this->docblockUpdater->setReturnType($method->docblock()->raw(), $localReplacement)
+                $this->docblockUpdater->set(
+                    $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
+                    new ParamTagPrototype(
+                        $diagnostic->paramName(),
+                        $diagnostic->paramType()->toLocalType($method->scope())
+                    )
+                )
             );
         }
 
@@ -73,14 +64,14 @@ class UpdateDocblockTransformer implements Transformer
     {
         $diagnostics = [];
 
-        $missingDocblocks = $this->methodsThatNeedFixing($code);
+        $missings = $this->methodsThatNeedFixing($code);
 
-        foreach ($missingDocblocks as $missingDocblock) {
+        foreach ($missings as $missing) {
             $diagnostics[] = new Diagnostic(
-                $missingDocblock->range(),
+                $missing->range(),
                 sprintf(
-                    'Missing @return %s',
-                    $missingDocblock->actualReturnType(),
+                    'Missing @param %s',
+                    $missing->paramName(),
                 ),
                 Diagnostic::WARNING
             );
@@ -91,18 +82,17 @@ class UpdateDocblockTransformer implements Transformer
     }
 
     /**
-     * @return MissingDocblockReturnTypeDiagnostic[]
+     * @return MissingDocblockParamDiagnostic[]
      */
     private function methodsThatNeedFixing(SourceCode $code): array
     {
-        $missingMethods = [];
-        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockReturnTypeDiagnostic::class);
+        $missings = [];
+        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockParamDiagnostic::class);
 
-        /** @var MissingDocblockReturnTypeDiagnostic $diagnostic */
         foreach ($diagnostics as $diagnostic) {
-            $missingMethods[] = $diagnostic;
+            $missings[] = $diagnostic;
         }
 
-        return $missingMethods;
+        return $missings;
     }
 }

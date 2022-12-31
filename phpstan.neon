@@ -12,6 +12,7 @@ parameters:
         - lib/Completion/Tests/Unit/Core/Util/OffsetHelperTest.php
         - */lib/ClassMover/Tests/Adapter/TolerantParser/examples/*
         - lib/Test.php
+        - lib/WorseReflection/Core/SourceCodeLocator/InternalStubs/*
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
 

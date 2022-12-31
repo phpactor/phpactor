@@ -3,12 +3,14 @@
 namespace Phpactor\CodeTransform\Adapter\DocblockParser;
 
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\TagPrototype;
 use Phpactor\DocblockParser\Ast\Docblock;
-use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Core\Type;
+use RuntimeException;
 
 class ParserDocblockUpdater implements DocBlockUpdater
 {
@@ -16,7 +18,7 @@ class ParserDocblockUpdater implements DocBlockUpdater
     {
     }
 
-    public function setReturnType(string $docblockText, Type $type): string
+    public function set(string $docblockText, TagPrototype $prototype): string
     {
         $docblock = $this->parser->parse($docblockText);
 
@@ -24,39 +26,77 @@ class ParserDocblockUpdater implements DocBlockUpdater
             return $docblockText;
         }
 
-
-        $edits = [];
-
-        // update
-        foreach ($docblock->descendantElements(ReturnTag::class) as $returnTag) {
-            $edits[] = TextEdit::create(
-                $returnTag->type()->start(),
-                $returnTag->type()->length(),
-                $type->__toString()
-            );
-        }
-
-        // otherwise create
-        if (count($edits) === 0) {
-            $edits = $this->updateDocblock($docblock, $docblockText, $type);
-        }
-
-        return TextEdits::fromTextEdits($edits)->apply($docblockText);
+        return TextEdits::fromTextEdits($this->edits($docblock, $prototype))->apply($docblockText);
     }
 
     /**
      * @return array<int,TextEdit>
      */
-    private function updateDocblock(Docblock $docblock, string $docblockText, Type $type): array
+    private function edits(Docblock $docblock, TagPrototype $prototype): array
     {
+        if ($prototype instanceof ReturnTagPrototype) {
+            return $this->updateTag(
+                $docblock,
+                $prototype,
+                sprintf('@return %s', $prototype->type->__toString())
+            );
+        }
+
+        if ($prototype instanceof ParamTagPrototype) {
+            return $this->updateTag(
+                $docblock,
+                $prototype,
+                sprintf('@param %s $%s', $prototype->type->__toString(), $prototype->name)
+            );
+        }
+
+        throw new RuntimeException(sprintf(
+            'Do not know how to update tag "%s"',
+            get_class($prototype)
+        ));
+    }
+
+    /**
+     * @return array<int,TextEdit>
+     */
+    private function updateTag(Docblock $docblock, TagPrototype $prototype, string $tagText): array
+    {
+        // create
+        if (strlen(trim($docblock->toString())) === 0) {
+            return [
+                TextEdit::create(
+                    $docblock->start(),
+                    0,
+                    sprintf("\n\n    /**\n     * %s\n     */\n    ", $tagText),
+                )
+            ];
+        }
+
+        // update
+        $edits = [];
+        foreach ($docblock->tags() as $tag) {
+            if ($prototype->matches($tag)) {
+                $edits[] =
+                    TextEdit::create(
+                        $tag->start(),
+                        $tag->length(),
+                        $tagText . ' '
+                    );
+            }
+        }
+
+        if ($edits) {
+            return $edits;
+        }
+
         if ($line = $docblock->lastMultilineContentToken()) {
             return [
                 TextEdit::create(
                     $line->end(),
                     0,
                     sprintf(
-                        "* @return %s\n%s",
-                        $type->__toString(),
+                        "* %s\n%s",
+                        $tagText,
                         str_repeat(' ', $docblock->indentationLevel()),
                     ),
                 )
@@ -64,14 +104,14 @@ class ParserDocblockUpdater implements DocBlockUpdater
         }
 
         if ($open = $docblock->phpDocOpen()) {
-            if (!str_contains($docblockText, "\n")) {
+            if (!str_contains($docblock->toString(), "\n")) {
                 return [
                     TextEdit::create(
                         $open->end(),
                         0,
                         sprintf(
-                            ' @return %s',
-                            $type->__toString()
+                            ' %s',
+                            $tagText
                         ),
                     )
                 ];
@@ -81,9 +121,9 @@ class ParserDocblockUpdater implements DocBlockUpdater
                     $open->end(),
                     0,
                     sprintf(
-                        "\n%s* @return %s",
+                        "\n%s* %s",
                         str_repeat(' ', $docblock->indentationLevel()),
-                        $type->__toString()
+                        $tagText
                     ),
                 )
             ];

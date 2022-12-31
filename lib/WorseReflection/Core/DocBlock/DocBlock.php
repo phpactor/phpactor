@@ -31,6 +31,8 @@ interface DocBlock
 
     public function vars(): DocBlockVars;
 
+    public function params(): DocBlockParams;
+
     public function inherits(): bool;
 
     public function deprecation(): Deprecation;

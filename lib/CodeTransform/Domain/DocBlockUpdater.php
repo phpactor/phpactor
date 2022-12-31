@@ -2,9 +2,9 @@
 
 namespace Phpactor\CodeTransform\Domain;
 
-use Phpactor\WorseReflection\Core\Type;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\TagPrototype;
 
 interface DocBlockUpdater
 {
-    public function setReturnType(string $docblock, Type $type): string;
+    public function set(string $docblock, TagPrototype $prototype): string;
 }

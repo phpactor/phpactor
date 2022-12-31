@@ -98,6 +98,7 @@ final class Parser
             '@mixin' => $this->parseMixin(),
             '@return' => $this->parseReturn(),
             '@template' => $this->parseTemplate(),
+            '@template-covariant' => $this->parseTemplate(),
             '@extends', '@template-extends' => $this->parseExtends(),
             '@implements', '@template-implements' => $this->parseImplements(),
             default => new UnknownTag($this->tokens->chomp()),

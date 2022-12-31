@@ -38,6 +38,11 @@ class PlainDocblock implements DocBlock
         return new DocBlockVars([]);
     }
 
+    public function params(): DocBlockParams
+    {
+        return new DocBlockParams([]);
+    }
+
     public function parameterType(string $paramName): Type
     {
         return TypeFactory::undefined();

@@ -30,6 +30,12 @@ final class InternalLocator implements SourceCodeLocator
             'UnitEnum' => __DIR__ . '/InternalStubs/Enum.php',
             'BackedEnumCase' => __DIR__ . '/InternalStubs/Enum.php',
             'BackedEnum' => __DIR__ . '/InternalStubs/Enum.php',
+            'Generator' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'ArrayAccess' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'ArrayObject' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'Serializable' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'WeakReference' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'WeakMap' => __DIR__ . '/InternalStubs/GenericTypes.php',
         ]);
     }
 
