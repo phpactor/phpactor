@@ -14,8 +14,6 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
-use Phpactor\WorseReflection\Core\Type\IterableType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -47,21 +45,15 @@ class MissingDocblockParamProvider implements DiagnosticProvider
         }
 
         $docblock = $method->docblock();
-        $params = $docblock->params();
+        $docblockParams = $docblock->params();
         $missingParams = [];
 
         foreach ($method->parameters() as $parameter) {
             $type = $parameter->type();
-
             $type = $this->upcastType($type, $resolver);
-
             $type = $type->toLocalType($method->scope());
 
-            if (!$type instanceof IterableType && !$type instanceof GenericClassType && !$type instanceof ClosureType) {
-                continue;
-            }
-
-            if ($params->has($parameter->name())) {
+            if ($docblockParams->has($parameter->name())) {
                 continue;
             }
 
@@ -70,6 +62,10 @@ class MissingDocblockParamProvider implements DiagnosticProvider
             }
 
             $type = $type->map(fn (Type $type) => $type instanceof MissingType ? new MixedType() : $type);
+
+            if ($type->__toString() === $parameter->type()->toPhpString()) {
+                continue;
+            }
 
             yield new MissingDocblockParamDiagnostic(
                 ByteOffsetRange::fromInts(
@@ -80,7 +76,6 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                     'Method "%s" is missing @param $%s',
                     $methodName,
                     $parameter->name(),
-                    $type
                 ),
                 DiagnosticSeverity::WARNING(),
                 $class->name()->__toString(),
