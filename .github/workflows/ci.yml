@@ -53,6 +53,9 @@ jobs:
                     git clone https://github.com/junegunn/vader.vim.git
 
             -
+                name: "Set the cache liftime to a greater number"
+                run: "./bin/phpactor config:set worse_reflection.cache_lifetime 5.0"
+            -
                 name: "Run VIM Tests"
                 run: "config/travis/vim-plugin-test.sh"
     phpunit:
