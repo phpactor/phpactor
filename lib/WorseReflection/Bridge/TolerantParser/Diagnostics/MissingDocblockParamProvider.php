@@ -44,6 +44,11 @@ class MissingDocblockParamProvider implements DiagnosticProvider
             return;
         }
 
+        // do not try it for overriden methods
+        if ($method->original()->declaringClass()->name() != $class->name()) {
+            return;
+        }
+
         $docblock = $method->docblock();
         $docblockParams = $docblock->params();
         $missingParams = [];

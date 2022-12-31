@@ -39,6 +39,10 @@ class UpdateDocblockParamsTransformer implements Transformer
             $classBuilder = $builder->classLike($method->class()->name()->short());
             $methodBuilder = $classBuilder->method($method->name());
 
+            foreach ($diagnostic->paramType()->classLikeTypes() as $classType) {
+                $builder->use($classType->name()->__toString());
+            }
+
             $methodBuilder->docblock(
                 $this->docblockUpdater->set(
                     $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),

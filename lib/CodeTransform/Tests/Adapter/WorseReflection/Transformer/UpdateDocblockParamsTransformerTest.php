@@ -22,6 +22,10 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
             'Example.php',
             '<?php namespace Namespaced; class NsTest { /** @return Baz[] */public function bazes(): array {}} class Baz{}'
         );
+        $this->workspace()->put(
+            'Example1.php',
+            '<?php namespace Namespaced; /** @template T of Baz */class Generic { }'
+        );
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
         $transformed = $transformer->transform($source)->apply($source);
@@ -111,6 +115,36 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
                      * @param array<int,mixed> $baz
                      */
                     public function baz(array $param, array $baz): array
+                    {
+                    }
+                }
+                EOT
+        ];
+        yield 'imports class' => [
+            <<<'EOT'
+                <?php
+
+                use Namespaced\Generic;
+
+                class Foobar {
+                    public function baz(Generic $gen): array
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Namespaced\Generic;
+                use Namespaced\Baz;
+
+                class Foobar {
+
+                    /**
+                     * @param Generic<Baz> $gen
+                     */
+                    public function baz(Generic $gen): array
                     {
                     }
                 }
