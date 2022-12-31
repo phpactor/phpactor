@@ -487,10 +487,9 @@ class CodeTransformExtension implements Extension
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(Updater::class),
                 $container->get(BuilderFactory::class),
-                $container->get(TextFormat::class),
                 $container->get(DocBlockUpdater::class),
             );
-        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_docblocks' ]]);
+        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_docblocks_return' ]]);
 
         $container->register(UpdateDocblockParamsTransformer::class, function (Container $container) {
             return new UpdateDocblockParamsTransformer(

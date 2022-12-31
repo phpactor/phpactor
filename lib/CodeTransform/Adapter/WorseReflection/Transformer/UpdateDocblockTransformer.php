@@ -5,7 +5,6 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
@@ -13,7 +12,6 @@ use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 
@@ -23,7 +21,6 @@ class UpdateDocblockTransformer implements Transformer
         private Reflector $reflector,
         private Updater $updater,
         private BuilderFactory $builderFactory,
-        private TextFormat $format,
         private DocBlockUpdater $docblockUpdater,
     ) {
     }
@@ -84,13 +81,13 @@ class UpdateDocblockTransformer implements Transformer
         return Diagnostics::fromArray($diagnostics);
     }
 
+    /**
+     * @return MissingDocblockReturnTypeDiagnostic[]
+     */
     private function methodsThatNeedFixing(SourceCode $code): array
     {
         $missingMethods = [];
-        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClasses(
-            MissingDocblockReturnTypeDiagnostic::class,
-            MissingDocblockParamDiagnostic::class
-        );
+        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClasses(MissingDocblockReturnTypeDiagnostic::class);
 
         foreach ($diagnostics as $diagnostic) {
             $missingMethods[] = $diagnostic;
