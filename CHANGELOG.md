@@ -14,6 +14,8 @@ Features:
 
 Improvements:
 
+  - Change default WR cache TTL from 5 seconds to 1 second to avoid race with
+    diagnostics timeout.
   - Add return tags to existing docblocks #1995
   - Naive support for attribute completion #2001 @przepompownia
 
