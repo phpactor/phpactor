@@ -42,6 +42,28 @@ final class Diagnostics implements IteratorAggregate, Countable
         return new self(array_filter($this->diagnostics, fn (Diagnostic $d) => $d instanceof $classFqn));
     }
 
+    /**
+     * @template DF of Diagnostic
+     * @param class-string<DF> $classFqns
+     * @return Diagnostics<DF>
+     */
+    public function byClasses(string ...$classFqns): self
+    {
+        /** @phpstan-ignore-next-line ??? */
+        return new self(array_filter(
+            $this->diagnostics,
+            function (Diagnostic $d) use ($classFqns) {
+                foreach ($classFqns as $fqn) {
+                    if ($d instanceof $fqn) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        ));
+    }
+
     public function at(int $index): Diagnostic
     {
         if (!isset($this->diagnostics[$index])) {

@@ -13,6 +13,7 @@ use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 
@@ -91,15 +92,14 @@ class UpdateDocblockTransformer implements Transformer
         return Diagnostics::fromArray($diagnostics);
     }
 
-    /**
-     * @return MissingDocblockReturnTypeDiagnostic[]
-     */
     private function methodsThatNeedFixing(SourceCode $code): array
     {
         $missingMethods = [];
-        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockReturnTypeDiagnostic::class);
+        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClasses(
+            MissingDocblockReturnTypeDiagnostic::class,
+            MissingDocblockParamDiagnostic::class
+        );
 
-        /** @var MissingDocblockReturnTypeDiagnostic $diagnostic */
         foreach ($diagnostics as $diagnostic) {
             $missingMethods[] = $diagnostic;
         }
