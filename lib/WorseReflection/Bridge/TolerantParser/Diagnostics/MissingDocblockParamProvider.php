@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IterableType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -52,13 +53,11 @@ class MissingDocblockParamProvider implements DiagnosticProvider
         foreach ($method->parameters() as $parameter) {
             $type = $parameter->type();
 
-            if ($type instanceof ReflectedClassType) {
-                $type = $type->upcastToGeneric();
-            }
+            $type = $this->upcastType($type, $resolver);
 
             $type = $type->toLocalType($method->scope());
 
-            if (!$type instanceof IterableType && !$type instanceof GenericClassType) {
+            if (!$type instanceof IterableType && !$type instanceof GenericClassType && !$type instanceof ClosureType) {
                 continue;
             }
 
@@ -78,7 +77,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                     $parameter->position()->end()
                 ),
                 sprintf(
-                    'Method "%s" is missing docblock param: $%s of type %s',
+                    'Method "%s" is missing @param $%s',
                     $methodName,
                     $parameter->name(),
                     $type
@@ -95,5 +94,18 @@ class MissingDocblockParamProvider implements DiagnosticProvider
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
+    }
+
+    private function upcastType(Type $type, NodeContextResolver $resolver): Type
+    {
+        if (!$type instanceof ReflectedClassType) {
+            return $type;
+        }
+
+        if ($type->name()->__toString() === 'Closure') {
+            return new ClosureType($resolver->reflector(), [], TypeFactory::void());
+        }
+
+        return $type->upcastToGeneric();
     }
 }
