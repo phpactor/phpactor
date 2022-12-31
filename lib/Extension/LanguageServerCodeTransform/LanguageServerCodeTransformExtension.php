@@ -340,7 +340,7 @@ class LanguageServerCodeTransformExtension implements Extension
             return new TransformerCodeActionPovider(
                 $container->get('code_transform.transformers'),
                 'add_missing_params',
-                'Add missing params'
+                'Add missing @param tags'
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
