@@ -5,6 +5,8 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Types;
 
 class ArrayType extends PseudoIterableType implements IterableType, HasEmptyType
 {
@@ -46,5 +48,10 @@ class ArrayType extends PseudoIterableType implements IterableType, HasEmptyType
         }
 
         return Trinary::maybe();
+    }
+
+    public function allTypes(): Types
+    {
+        return (new Types([TypeFactory::array()]))->merge(parent::allTypes());
     }
 }

@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @template T
+ */
+class Foobar {
+    /**
+     * @param T $fo
+     */
+    public function __construct($fo){}
+}
+
+/**
+ * @template T
+ */
+class Foo {
+    /** @param Foobar<T> $a */
+    public function __construct(Foobar $a) {}
+
+    /**
+     * @return T
+     */
+    public function a()
+    {
+    }
+}
+
+$f = new Foo(new Foobar('foobar'));
+\PHPStan\dumpType($f->a());
+wrAssertType('string', $f->a());
