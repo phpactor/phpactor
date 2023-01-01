@@ -133,10 +133,10 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
                 }
                 EOT
             ,
-            // this doesn't work: see https://github.com/phpactor/phpactor/issues/2009
             <<<'EOT'
                 <?php
 
+                use Namespaced\Baz;
                 use Namespaced\Generic;
 
                 class Foobar {

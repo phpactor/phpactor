@@ -46,6 +46,7 @@ abstract class Type
      */
     public function expandTypes(): Types
     {
+        /** @phpstan-ignore-next-line */
         return new Types([$this]);
     }
 
@@ -57,10 +58,11 @@ abstract class Type
      * - `MyGeneric<One,string,int>`: Will Return `MyGeneric`, `One`, `string` and `int`.
      * - `MyClass`: Will return `MyClass`.
      * - `Closure(Foobar,int): float`: Will return `Closure` (as a "class" type), `Foobar`, `int` and `float` `
-     * @return Types<list<Type>>
+     * @return Types<Type>
      */
     public function allTypes(): Types
     {
+        /** @phpstan-ignore-next-line */
         return new Types([$this]);
     }
 
