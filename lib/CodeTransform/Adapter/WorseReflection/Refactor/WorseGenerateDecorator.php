@@ -48,7 +48,7 @@ class WorseGenerateDecorator implements GenerateDecorator
 
             if ($interfaceMethod->returnType()->isDefined()) {
                 $method->returnType($interfaceMethod->returnType()->toLocalType($class->scope())->toPhpString());
-                foreach ($interfaceMethod->returnType()->expandTypes()->classLike() as $type) {
+                foreach ($interfaceMethod->returnType()->allTypes()->classLike() as $type) {
                     $builder->use($type->name());
                 }
             }
