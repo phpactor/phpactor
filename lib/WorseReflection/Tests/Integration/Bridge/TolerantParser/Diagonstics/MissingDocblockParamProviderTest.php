@@ -41,6 +41,14 @@ class MissingDocblockParamProviderTest extends DiagnosticsTestCase
         $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
         self::assertCount(0, $diagnostics);
     }
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
+    public function checkVariadic(Diagnostics $diagnostics): void
+    {
+        $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+        self::assertCount(0, $diagnostics);
+    }
 
     protected function provider(): DiagnosticProvider
     {

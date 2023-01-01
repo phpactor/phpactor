@@ -56,18 +56,29 @@ class MissingDocblockParamProvider implements DiagnosticProvider
         foreach ($method->parameters() as $parameter) {
             $type = $parameter->type();
             $type = $this->upcastType($type, $resolver);
+            $parameterType = $parameter->type();
 
             if ($docblockParams->has($parameter->name())) {
                 continue;
+            }
+
+            if ($parameter->isVariadic()) {
+                if ($type instanceof ArrayType) {
+                    $type = $type->iterableValueType();
+                }
+                if ($parameterType instanceof ArrayType) {
+                    $parameterType = $parameterType->iterableValueType();
+                }
             }
 
             if ($type instanceof ArrayType) {
                 $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
             }
 
+            // replace <undefined> with "mixed"
             $type = $type->map(fn (Type $type) => $type instanceof MissingType ? new MixedType() : $type);
 
-            if ($type->__toString() === $parameter->type()->toPhpString()) {
+            if ($type->__toString() === $parameterType->__toString()) {
                 continue;
             }
 
