@@ -14,35 +14,19 @@ use Phpactor\WorseReflection\Reflector;
 class DocblockParserFactory implements DocBlockFactory
 {
     const SUPPORTED_TAGS = [
-        '@property',
-        '@var',
-        '@psalm-var',
-        '@phpstan-var',
-        '@param',
-        '@psalm-param',
-        '@phpstan-param',
-        '@return',
-        '@psalm-return',
-        '@phpstan-return',
-        '@method',
-        '@psalm-method',
-        '@phpstan-method',
-        '@deprecated',
-        '@extends',
-        '@psalm-extends',
-        '@phpstan-extends',
-        '@implements',
-        '@psalm-implements',
-        '@phpstan-implements',
-        '@template',
-        '@template-covariant',
-        '@psalm-template',
-        '@phpstan-template',
-        '@template-extends',
-        '@psalm-template-extends',
-        '@phpstan-template-extends',
-        '@mixin',
-        '@throws',
+        'property',
+        'var',
+        'param',
+        'return',
+        'method',
+        'deprecated',
+        'extends',
+        'implements',
+        'template',
+        'template-covariant',
+        'template-extends',
+        'mixin',
+        'throws',
     ];
 
     private Lexer $lexer;
@@ -66,7 +50,7 @@ class DocblockParserFactory implements DocBlockFactory
 
         // if no supported tags in the docblock, do not parse it
         if (0 === preg_match(
-            sprintf('{(%s)}', implode('|', self::SUPPORTED_TAGS)),
+            sprintf('{@((psalm|phpstan|phan)-)?(%s)}', implode('|', self::SUPPORTED_TAGS)),
             $docblock,
             $matches
         )) {
