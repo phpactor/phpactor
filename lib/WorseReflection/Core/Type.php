@@ -37,7 +37,10 @@ abstract class Type
     abstract public function accepts(Type $type): Trinary;
 
     /**
-     * @return Types<Type>
+     * Return a collection of first-class types.
+     *
+     * If this type is an aggregate this method will
+     * return a collection types of that aggregate or intersection type.
      */
     public function expandTypes(): Types
     {

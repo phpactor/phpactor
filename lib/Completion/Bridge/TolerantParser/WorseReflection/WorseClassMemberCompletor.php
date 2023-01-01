@@ -102,7 +102,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $publicOnly = !in_array($symbolContext->symbol()->name(), ['this', 'self'], true);
 
 
-        $type = $type->toTypes()->classLike()->firstOrNull();
+        $type = $type->expandTypes()->classLike()->firstOrNull();
 
         if (!$type) {
             return;
