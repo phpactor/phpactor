@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\DocblockParser;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
@@ -118,9 +119,27 @@ class ParserDocblockUpdaterTest extends TestCase
         );
     }
 
+    public function testAddDocblock(): void
+    {
+        self::assertEquals(
+            <<<'EOT'
+
+                    /**
+                     * @return string
+                     */
+                    
+                EOT,
+            $this->createUpdater()->set(
+                <<<'EOT'
+                    EOT,
+                new ReturnTagPrototype(TypeFactory::string())
+            )
+        );
+    }
+
 
     private function createUpdater(): ParserDocblockUpdater
     {
-        return (new ParserDocblockUpdater(DocblockParser::create()));
+        return (new ParserDocblockUpdater(DocblockParser::create(), new TextFormat()));
     }
 }

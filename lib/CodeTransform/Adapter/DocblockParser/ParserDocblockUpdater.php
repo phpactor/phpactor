@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\DocblockParser;
 
+use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
@@ -12,9 +13,12 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use RuntimeException;
 
+/**
+ * TODO: Incorporate this into the "code builder"
+ */
 class ParserDocblockUpdater implements DocBlockUpdater
 {
-    public function __construct(private DocblockParser $parser)
+    public function __construct(private DocblockParser $parser, private TextFormat $textFormat)
     {
     }
 
@@ -63,11 +67,19 @@ class ParserDocblockUpdater implements DocBlockUpdater
     {
         // create
         if (strlen(trim($docblock->toString())) === 0) {
+            $indent = $this->textFormat->indent('', 1);
             return [
                 TextEdit::create(
                     $docblock->start(),
                     0,
-                    sprintf("\n\n    /**\n     * %s\n     */\n    ", $tagText),
+                    sprintf(
+                        "\n%s/**\n%s * %s\n%s */\n%s",
+                        $indent,
+                        $indent,
+                        $tagText,
+                        $indent,
+                        $indent,
+                    ),
                 )
             ];
         }

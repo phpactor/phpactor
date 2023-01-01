@@ -345,7 +345,7 @@ class CodeTransformExtension implements Extension
         });
 
         $container->register(DocBlockUpdater::class, function (Container $container) {
-            return new ParserDocblockUpdater(DocblockParser::create());
+            return new ParserDocblockUpdater(DocblockParser::create(), $container->get(TextFormat::class));
         });
     }
 
