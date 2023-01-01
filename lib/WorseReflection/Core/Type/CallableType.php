@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Type;
 use Closure;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Types;
 
 class CallableType extends PrimitiveType implements InvokeableType
 {
@@ -59,5 +60,13 @@ class CallableType extends PrimitiveType implements InvokeableType
     public function returnType(): Type
     {
         return $this->returnType;
+    }
+
+    public function allTypes(): Types
+    {
+        return new Types([
+            ...$this->args,
+            $this->returnType
+        ]);
     }
 }

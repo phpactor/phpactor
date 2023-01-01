@@ -79,7 +79,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $type = $symbolContext->type();
         $static = $node instanceof ScopedPropertyAccessExpression;
 
-        foreach ($type->classLikeTypes() as $type) {
+        foreach ($type->expandTypes()->classLike() as $type) {
             foreach ($this->populateSuggestions($symbolContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
                 if ($partialMatch && 0 !== mb_strpos($suggestion->name(), $partialMatch)) {
                     continue;
@@ -92,6 +92,9 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         return true;
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function populateSuggestions(NodeContext $symbolContext, Type $type, bool $static, bool $completeOnlyName, bool $isInstance): Generator
     {
         if (false === ($type->isDefined())) {
@@ -102,7 +105,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $publicOnly = !in_array($symbolContext->symbol()->name(), ['this', 'self'], true);
 
 
-        $type = $type->classLikeTypes()->firstOrNull();
+        $type = $type->expandTypes()->classLike()->firstOrNull();
 
         if (!$type) {
             return;

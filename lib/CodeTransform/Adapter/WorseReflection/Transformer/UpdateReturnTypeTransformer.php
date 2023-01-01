@@ -37,7 +37,7 @@ class UpdateReturnTypeTransformer implements Transformer
             $localReplacement = $replacement->toLocalType($method->scope())->generalize();
             $notNullReplacement = $replacement->stripNullable();
 
-            foreach ($replacement->classLikeTypes() as $classType) {
+            foreach ($replacement->allTypes()->classLike() as $classType) {
                 $builder->use($classType->name());
             }
 

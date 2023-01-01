@@ -125,7 +125,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         $container = $nodeContext->containerType();
         $infos = [];
 
-        foreach ($container->classLikeTypes() as $namedType) {
+        foreach ($container->expandTypes()->classLike() as $namedType) {
             try {
                 $class = $this->reflector->reflectClassLike((string) $namedType);
                 $member = null;
