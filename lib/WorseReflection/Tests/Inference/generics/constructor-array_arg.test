@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @template T
+ */
+class Foo {
+    /**
+     * @var T[]
+     */
+    private $a;
+
+    /** @param T[] $a */
+    public function __construct(array $a) {
+        $this->a = $a;
+    }
+
+    /**
+     * @return T
+     */
+    public function a()
+    {
+    }
+}
+
+$f = new Foo(['hello']);
+wrAssertType('string', $f->a());
