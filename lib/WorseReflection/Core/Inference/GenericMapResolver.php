@@ -76,18 +76,23 @@ class GenericMapResolver
                 $this->mapClassString($parameterType, $templateMap, $arguments, $parameter);
                 return $templateMap;
             }
-            $parameterType->map(function (Type $type) use ($parameter, $templateMap, $arguments) {
-                if ($type instanceof ClassStringType && $type->className()) {
-                    $this->mapClassString($type, $templateMap, $arguments, $parameter);
-                    return $type;
+            $paramTypes = $parameterType->allTypes();
+            $argumentTypes = $arguments->at($parameter->index())->type()->allTypes();
+
+            foreach ($paramTypes as $index => $paramType) {
+                $argumentType = $argumentTypes->at($index);
+
+                if ($paramType instanceof ClassStringType && $paramType->className()) {
+                    $this->mapClassString($paramType, $templateMap, $arguments, $parameter);
                 }
 
-                if ($templateMap->has($type->short())) {
-                    $templateMap->replace($type->short(), $arguments->at($parameter->index())->type()->generalize());
+                if ($templateMap->has($paramType->short())) {
+                    $templateMap->replace(
+                        $paramType->short(),
+                        $argumentType->generalize()
+                    );
                 }
-
-                return $type;
-            });
+            }
         }
         return $templateMap;
     }
