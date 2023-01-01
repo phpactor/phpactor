@@ -67,6 +67,16 @@ class PseudoIterableType extends Type implements IterableType
         return new Types([$this->iterableValueType()]);
     }
 
+    public function allTypes(): Types
+    {
+        $types = new Types([]);
+        foreach ($this->expandTypes() as $type) {
+            $types = $types->merge($type->allTypes());
+        }
+
+        return $types;
+    }
+
     public function map(Closure $mapper): Type
     {
         return new self(

@@ -37,6 +37,16 @@ final class NullableType extends Type implements HasEmptyType
         return new Types([new NullType(), $this->type]);
     }
 
+    public function allTypes(): Types
+    {
+        $types = new Types([]);
+        foreach ($this->expandTypes() as $type) {
+            $types = $types->merge($type->allTypes());
+        }
+
+        return $types;
+    }
+
     public function isNull(): bool
     {
         return true;

@@ -41,6 +41,11 @@ class ParenthesizedType extends Type
         return $this->type->expandTypes();
     }
 
+    public function allTypes(): Types
+    {
+        return $this->type->allTypes();
+    }
+
     public function map(Closure $mapper): Type
     {
         return new self($this->type->map($mapper));

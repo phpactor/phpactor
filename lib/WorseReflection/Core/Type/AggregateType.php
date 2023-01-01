@@ -134,7 +134,7 @@ abstract class AggregateType extends Type
     {
         $types = new Types([]);
         foreach ($this->expandTypes() as $type) {
-            $types = $type->merge($type->allTypes());
+            $types = $types->merge($type->allTypes());
         }
 
         return $types;
