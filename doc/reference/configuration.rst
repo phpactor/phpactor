@@ -481,6 +481,21 @@ Completion for use imports.
 **Default**: ``true``
 
 
+.. _param_completion_worse.completor.attribute.enabled:
+
+
+``completion_worse.completor.attribute.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the ``attribute`` completor.
+
+Completion for attribute class names.
+
+
+**Default**: ``true``
+
+
 .. _param_completion_worse.completor.class_like.enabled:
 
 
@@ -491,20 +506,6 @@ Completion for use imports.
 Enable or disable the ``class_like`` completor.
 
 Completion for class like contexts.
-
-
-**Default**: ``true``
-
-.. _param_completion_worse.completor.attribute.enabled:
-
-
-``completion_worse.completor.attribute.enabled``
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-Enable or disable the ``attribute`` completor.
-
-Completion for attribute contexts.
 
 
 **Default**: ``true``
@@ -799,7 +800,7 @@ If reflection caching should be enabled
 If caching is enabled, limit the amount of time a cache entry can stay alive
 
 
-**Default**: ``5``
+**Default**: ``1``
 
 
 .. _param_worse_reflection.enable_context_location:
