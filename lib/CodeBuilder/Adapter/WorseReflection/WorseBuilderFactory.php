@@ -150,7 +150,7 @@ class WorseBuilderFactory implements BuilderFactory
 
     private function importClassesForMemberType(ClassLikeBuilder $classBuilder, ClassName $classType, Type $type): void
     {
-        foreach ($type->classLikeTypes() as $type) {
+        foreach ($type->toTypes()->classLike() as $type) {
             if ($classType->namespace() == $type->name()->namespace()) {
                 return;
             }

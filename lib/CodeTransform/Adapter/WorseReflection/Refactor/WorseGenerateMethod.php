@@ -108,7 +108,7 @@ class WorseGenerateMethod implements GenerateMethod
             if ($type->isDefined()) {
                 $argumentBuilder->type($type->short(), $type);
 
-                foreach ($type->classLikeTypes() as $classType) {
+                foreach ($type->toTypes()->classLike() as $classType) {
                     $builder->use($classType->toPhpString());
                 }
             }

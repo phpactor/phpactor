@@ -120,7 +120,7 @@ class WorseSignatureHelper implements SignatureHelper
                 ));
             }
 
-            $containerType = $symbolContext->containerType()->classLikeTypes()->firstOrNull();
+            $containerType = $symbolContext->containerType()->toTypes()->classLike()->firstOrNull();
 
             if (!$containerType instanceof ClassType) {
                 throw new CouldNotHelpWithSignature(sprintf(

@@ -127,7 +127,7 @@ class NodeContextFromMemberAccess
 
         $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
         // this could be a union or a nullable
-        foreach ($classType->classLikeTypes() as $subType) {
+        foreach ($classType->toTypes()->classLike() as $subType) {
             // upcast to ClassType to reflected type
             if (get_class($subType) === ClassType::class) {
                 /** @phpstan-ignore-next-line */

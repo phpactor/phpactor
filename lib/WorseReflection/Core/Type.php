@@ -6,7 +6,6 @@ use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
@@ -36,15 +35,6 @@ abstract class Type
      * - ""             - does not accept string
      */
     abstract public function accepts(Type $type): Trinary;
-
-    /**
-     * @return Types<Type&ClassLikeType>
-     */
-    public function classLikeTypes(): Types
-    {
-        // @phpstan-ignore-next-line no support for conditional types https://github.com/phpstan/phpstan/issues/3853
-        return $this->toTypes()->filter(fn (Type $type) => $type instanceof ClassLikeType);
-    }
 
     /**
      * @return Types<Type>
