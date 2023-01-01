@@ -41,10 +41,26 @@ abstract class Type
      *
      * If this type is an aggregate this method will
      * return a collection types of that aggregate or intersection type.
+     *
+     * @return Types<Type>
      */
     public function expandTypes(): Types
     {
-        /** @phpstan-ignore-next-line */
+        return new Types([$this]);
+    }
+
+    /**
+     * Return ALL types referenced in this type.
+     *
+     * For example:
+     *
+     * - `MyGeneric<One,string,int>`: Will Return `MyGeneric`, `One`, `string` and `int`.
+     * - `MyClass`: Will return `MyClass`.
+     * - `Closure(Foobar,int): float`: Will return `Closure` (as a "class" type), `Foobar`, `int` and `float` `
+     * @return Types<list<Type>>
+     */
+    public function allTypes(): Types
+    {
         return new Types([$this]);
     }
 
