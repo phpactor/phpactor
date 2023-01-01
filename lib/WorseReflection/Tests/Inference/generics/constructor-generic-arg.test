@@ -26,5 +26,4 @@ class Foo {
 }
 
 $f = new Foo(new Foobar('foobar'));
-\PHPStan\dumpType($f->a());
 wrAssertType('string', $f->a());
