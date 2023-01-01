@@ -102,7 +102,7 @@ class GenericClassType extends ReflectedClassType implements IterableType, Class
     {
         return new Types([
             TypeFactory::reflectedClass($this->reflector, $this->name),
-            ...$this->arguments
+            ...array_values($this->arguments)
         ]);
     }
 }
