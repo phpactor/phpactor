@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
 use Generator;
+use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockParamsTransformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -53,7 +54,6 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @param array<int,mixed> $param
                      */
@@ -140,7 +140,6 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
                 use Namespaced\Generic;
 
                 class Foobar {
-
                     /**
                      * @param Generic<Baz> $gen
                      */
@@ -158,7 +157,7 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
             $reflector,
             $this->updater(),
             $this->builderFactory($reflector),
-            new ParserDocblockUpdater(DocblockParser::create())
+            new ParserDocblockUpdater(DocblockParser::create(), new TextFormat())
         );
     }
 }

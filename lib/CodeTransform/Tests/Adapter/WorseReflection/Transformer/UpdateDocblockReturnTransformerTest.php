@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
 use Generator;
+use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockReturnTransformer;
 use Phpactor\CodeTransform\Domain\Diagnostic;
@@ -56,7 +57,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @return array<string,Baz>
                      */
@@ -93,7 +93,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @return array<string,string>
                      */
@@ -133,7 +132,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @return array<string,string>
                      */
@@ -246,7 +244,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 class ConcreteFoo extends Foo {}
 
                 class Foobar {
-
                     /**
                      * @return ConcreteFoo<Baz>
                      */
@@ -306,7 +303,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @return Generator<string>
                      */
@@ -341,7 +337,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @return Generator<string,array{string,stdClass}>
                      */
@@ -376,7 +371,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @return null[]
                      */
@@ -438,7 +432,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @return Closure(string): int
                      */
@@ -466,7 +459,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 <?php
 
                 class Foobar {
-
                     /**
                      * @return int
                      */
@@ -499,7 +491,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 use Namespaced\NsTest;
 
                 class Foobar {
-
                     /**
                      * @return Baz[]
                      */
@@ -579,7 +570,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 use Generator;
 
                 class Foobar {
-
                     /**
                      * @return Generator<array{string,Closure(Bar): string}>
                      */
@@ -621,7 +611,6 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 use Generator;
 
                 trait Foobar {
-
                     /**
                      * @return Generator<array{string,Closure(Bar): string}>
                      */
@@ -819,7 +808,7 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
             $reflector,
             $this->updater(),
             $this->builderFactory($reflector),
-            new ParserDocblockUpdater(DocblockParser::create())
+            new ParserDocblockUpdater(DocblockParser::create(), new TextFormat())
         );
     }
 }
