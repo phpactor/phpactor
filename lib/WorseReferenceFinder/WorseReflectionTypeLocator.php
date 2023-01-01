@@ -44,7 +44,7 @@ class WorseReflectionTypeLocator implements TypeLocator
         )->symbolContext()->type();
 
         $typeLocations = [];
-        foreach ($type->toTypes() as $type) {
+        foreach ($type->expandTypes() as $type) {
             if ($type instanceof ArrayType) {
                 $type = $type->iterableValueType();
             }
@@ -78,7 +78,7 @@ class WorseReflectionTypeLocator implements TypeLocator
 
     private function resolveClassName(Type $type): ClassName
     {
-        foreach ($type->toTypes()->classLike() as $type) {
+        foreach ($type->expandTypes()->classLike() as $type) {
             return $type->name();
         }
 

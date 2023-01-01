@@ -121,11 +121,11 @@ abstract class AggregateType extends Type
         })))->reduce();
     }
 
-    public function toTypes(): Types
+    public function expandTypes(): Types
     {
         $types = new Types([]);
         foreach ($this->types as $type) {
-            $types = $types->merge($type->toTypes());
+            $types = $types->merge($type->expandTypes());
         }
         return $types;
     }

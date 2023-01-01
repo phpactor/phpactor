@@ -39,7 +39,7 @@ abstract class Type
     /**
      * @return Types<Type>
      */
-    public function toTypes(): Types
+    public function expandTypes(): Types
     {
         /** @phpstan-ignore-next-line */
         return new Types([$this]);

@@ -62,7 +62,7 @@ class PseudoIterableType extends Type implements IterableType
         return Trinary::fromBoolean($type instanceof ArrayType);
     }
 
-    public function toTypes(): Types
+    public function expandTypes(): Types
     {
         return new Types([$this->iterableValueType()]);
     }

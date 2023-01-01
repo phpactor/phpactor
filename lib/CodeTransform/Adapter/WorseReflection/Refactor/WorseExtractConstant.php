@@ -61,7 +61,7 @@ class WorseExtractConstant implements ExtractConstant
         $symbol = $symbolInformation->symbol();
 
         $builder = SourceCodeBuilder::create();
-        $classType = $symbolInformation->containerType()->toTypes()->classLike()->firstOrNull();
+        $classType = $symbolInformation->containerType()->expandTypes()->classLike()->firstOrNull();
 
         if (!$classType) {
             throw new TransformException(sprintf('Node does not belong to a class'));
