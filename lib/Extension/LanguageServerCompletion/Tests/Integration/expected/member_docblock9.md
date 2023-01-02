@@ -1,0 +1,2 @@
+**$foo**: Foobar<Foo>
+

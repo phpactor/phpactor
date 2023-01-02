@@ -65,7 +65,6 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      * @dataProvider provideDeclaredConstant
      * @dataProvider provideType
      * @dataProvider provideMemberDocblock
-     * @dataProvider provideParsedDocblock
      */
     public function testRender(string $manifest, Closure $objectFactory, string $expected, bool $capture = false): void
     {
@@ -1005,6 +1004,49 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'member_docblock7.md',
         ];
+
+        yield 'formatted member docblock' => [
+            '',
+            function (Reflector $reflector) {
+                return new MemberDocblock($reflector->reflectClassesIn(
+                    <<<'EOT'
+                        <?php
+
+                        class OneClass
+                        {
+                            /**
+                             * This is my docblock
+                             * @param Foobar<Foo> $foo
+                             * @throws Foobar
+                             * @unownTag bar
+                             */
+                            public function foo(Foobar $foo) {}
+                        }
+                        EOT
+                )->get('OneClass')->methods()->get('foo'));
+            },
+            'member_docblock8.md',
+        ];
+
+        yield 'formatted member docblock bare tag' => [
+            '',
+            function (Reflector $reflector) {
+                return new MemberDocblock($reflector->reflectClassesIn(
+                    <<<'EOT'
+                        <?php
+
+                        class OneClass
+                        {
+                            /**
+                             * @param Foobar<Foo> $foo
+                             */
+                            public function foo(Foobar $foo) {}
+                        }
+                        EOT
+                )->get('OneClass')->methods()->get('foo'));
+            },
+            'member_docblock9.md',
+        ];
     }
 
     /**
@@ -1020,36 +1062,6 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
                 return $variable;
             },
             'variable1.md',
-        ];
-    }
-
-    public function provideParsedDocblock(): Generator
-    {
-        $parser = DocblockParser::create();
-        yield 'docblock' => [
-            '',
-            function () use ($parser) {
-                $node = $parser->parse(
-                    <<<'EOT'
-                    /** 
-                     * Main title
-                     *
-                     * This is the body of the documentation
-                     * for this method
-                     *
-                     * @throws FooException
-                     * @param int $int
-                     * @param Foobar $foobar This is documentation for param
-                     * @param string $barfoo This is other documentation for param
-                     *
-                     * @return Foobar<Barfoo>
-                     *
-                    EOT
-                );
-
-                return $node;
-            },
-            'parsed_docblock1.md',
         ];
     }
 }
