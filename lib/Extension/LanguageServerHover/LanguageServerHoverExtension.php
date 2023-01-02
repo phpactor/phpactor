@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerHover;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
+use Phpactor\Extension\LanguageServerHover\Twig\TwigFunctions;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
@@ -22,6 +23,12 @@ class LanguageServerHoverExtension implements Extension
                 $container->get(ObjectRendererExtension::SERVICE_MARKDOWN_RENDERER)
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
+
+        $container->register(TwigFunctions::class, function (Container $container) {
+            return new TwigFunctions();
+        }, [
+            ObjectRendererExtension::TAG_TWIG_EXTENSION => [],
+        ]);
     }
 
     public function configure(Resolver $schema): void

@@ -42,7 +42,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
              ->enableInterfaceCandidates()
              ->enableAncestoralCandidates()
              ->configureTwig(function (Environment $env) {
-                 $env = TwigFunctions::add($env);
+                 (new TwigFunctions())->configure($env);
                  return $env;
              })
               ->build();
