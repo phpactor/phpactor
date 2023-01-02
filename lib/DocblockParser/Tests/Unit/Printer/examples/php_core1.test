@@ -28,7 +28,7 @@ Docblock: =
  ElementList: = /**
  * Sets a user-defined error handler function
  * 
-  UnknownTag: =  https://php.net/manual/en/function.set-error-handler.php
+  UnknownTag: = @link https://php.net/manual/en/function.set-error-handler.php
  * 
   ParamTag: = @param
    UnionNode: = 
