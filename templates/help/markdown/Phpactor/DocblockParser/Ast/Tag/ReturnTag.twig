@@ -1,1 +1,1 @@
-**Return** *{{ object.type.toString }}*: {{ object.text.toString }}
+**Return** {% if object.type %}*{{ object.type.toString }}*: {% endif %}{{ object.text.toString }}
