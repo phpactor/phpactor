@@ -15,6 +15,7 @@ Features:
 
 Improvements:
 
+  - More liberal support for vendor tags #2011 @ging-dev
   - Fix nested template type arguments #2016
   - Fix importing of nested types #2009
   - Reverts #1974 - which made the situation worse rather than better.
