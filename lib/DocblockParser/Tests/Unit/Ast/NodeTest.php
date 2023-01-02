@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Tag\MethodTag;
+use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
@@ -180,9 +181,9 @@ class NodeTest extends NodeTestCase
                 EOT
             , function (Docblock $docblock): void {
                 self::assertEquals(<<<'EOT'
-                    Applies the callback to the elements of the given arrays
+                    'Callback function to run for each element in each array.',
                     EOT
-                    , $docblock->prose());
+                    , $docblock->firstDescendant(ParamTag::class)->text()->toString());
             }
         ];
     }
