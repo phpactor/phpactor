@@ -1080,7 +1080,6 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'member_docblock10.md',
         ];
-
     }
 
     /**
