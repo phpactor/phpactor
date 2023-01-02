@@ -17,7 +17,7 @@ class TextNode extends Node
 
     public function toString(): string
     {
-        return implode('', array_filter(array_map(function (Token $token) {
+        return trim(implode('', array_filter(array_map(function (Token $token) {
             if (in_array($token->type, [
                 Token::T_PHPDOC_OPEN,
                 Token::T_PHPDOC_CLOSE,
@@ -29,6 +29,6 @@ class TextNode extends Node
                 return false;
             }
             return $token->value;
-        }, $this->tokens)));
+        }, $this->tokens))));
     }
 }
