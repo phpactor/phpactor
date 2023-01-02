@@ -7,7 +7,7 @@ Docblock: =
  * 
   VarTag: = @var
    GenericNode: = 
-    ArrayNode: = <
+    ArrayNode: = array<
     TypeList: = 
      ScalarNode: = string>
  */

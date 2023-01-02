@@ -19,7 +19,7 @@ class MemberDocblock
     public function ancestorsAndSelf(): array
     {
         return array_filter(array_reverse($this->buildAncestors($this->member->class())), function (ReflectionMember $member) {
-            return $member->docblock()->isDefined() && !empty(trim($member->docblock()->formatted()));
+            return $member->docblock()->isDefined() && !empty(trim($member->docblock()->raw()));
         });
     }
 

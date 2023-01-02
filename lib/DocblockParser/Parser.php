@@ -355,10 +355,10 @@ final class Parser
             return new NullNode($type);
         }
         if (strtolower($type->value) === 'array') {
-            return new ArrayNode();
+            return new ArrayNode($type);
         }
         if (strtolower($type->value) === 'list') {
-            return new ListNode();
+            return new ListNode($type);
         }
         if (in_array($type->value, self::SCALAR_TYPES)) {
             return new ScalarNode($type);

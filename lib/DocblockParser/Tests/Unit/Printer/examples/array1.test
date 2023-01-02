@@ -6,5 +6,5 @@ Docblock: =
  ElementList: = /**
  * 
   VarTag: = @var
-   ArrayNode: = 
+   ArrayNode: = array
  */

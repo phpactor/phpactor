@@ -141,12 +141,14 @@ class NodeTest extends NodeTestCase
                 EOT
             , function (Docblock $docblock): void {
                 self::assertEquals(<<<'EOT'
+
                     This is a docblock
                     With some text -
                     and maybe some
                     ```
                     Markdown
                     ```
+
                     EOT
                     , $docblock->prose());
             }
@@ -163,7 +165,9 @@ class NodeTest extends NodeTestCase
                 EOT
             , function (Docblock $docblock): void {
                 self::assertEquals(<<<'EOT'
+
                     Applies the callback to the elements of the given arrays
+
                     EOT
                     , $docblock->prose());
             }
@@ -181,7 +185,7 @@ class NodeTest extends NodeTestCase
                 EOT
             , function (Docblock $docblock): void {
                 self::assertEquals(<<<'EOT'
-                    <p>Callback function to run for each element in each array.</p>
+                    <p> Callback function to run for each element in each array. </p>
                     EOT
                     , $docblock->firstDescendant(ParamTag::class)->text()->toString());
             }

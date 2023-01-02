@@ -8,7 +8,7 @@ Docblock: =
  * 
   ParamTag: = @param
    GenericNode: = 
-    ArrayNode: = <
+    ArrayNode: = array<
     TypeList: = 
      ScalarNode: = int>
    VariableNode: = $arrayOfInt

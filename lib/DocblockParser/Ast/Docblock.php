@@ -38,6 +38,22 @@ class Docblock extends Node
     }
 
     /**
+     * @return class-string[]
+     */
+    public function tagTypes(): array
+    {
+        $types = [];
+        foreach ($this->tags() as $tag) {
+            if ($tag instanceof UnknownTag) {
+                continue;
+            }
+            $types[$tag::class] = true;
+        }
+
+        return array_keys($types);
+    }
+
+    /**
      * @template T of TagNode
      * @param class-string<T>|null $tagFqn
      * @return ($tagFqn is string ? Generator<T> : Generator<TagNode>)
@@ -92,7 +108,7 @@ class Docblock extends Node
             $prose[] = $child->value;
         }
 
-        return trim(implode('', $prose));
+        return implode("\n", array_map('trim', (explode("\n", implode('', $prose)))));
     }
 
     public function lastMultilineContentToken(): ?Token
