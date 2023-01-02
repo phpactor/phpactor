@@ -497,6 +497,11 @@ final class Parser
         return new ReturnTag($tag, $type, $this->parseText());
     }
 
+    /**
+     * Parse text until the next tag
+     *
+     * This method assumes that any prose after a tag belongs to the tag.
+     */
     private function parseText(): ?TextNode
     {
         if (null === $this->tokens->current) {
@@ -505,21 +510,8 @@ final class Parser
 
         $text = [];
 
-        if (
-            $this->tokens->current->type === Token::T_WHITESPACE &&
-            $this->tokens->next()->type === Token::T_LABEL
-        ) {
-            $this->tokens->chomp();
-        }
-
         while ($this->tokens->current) {
-            if ($this->tokens->current->type === Token::T_PHPDOC_CLOSE) {
-                break;
-            }
-            if ($this->tokens->current->type === Token::T_ASTERISK) {
-                break;
-            }
-            if (str_contains($this->tokens->current->value, "\n")) {
+            if ($this->tokens->current->type === Token::T_TAG) {
                 break;
             }
             $text[] = $this->tokens->chomp();
