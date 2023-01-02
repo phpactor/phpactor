@@ -38,6 +38,19 @@ class Docblock extends Node
     }
 
     /**
+     * @return class-string[]
+     */
+    public function tagTypes(): array
+    {
+        $types = [];
+        foreach ($this->tags() as $tag) {
+            $types[$tag::class] = true;
+        }
+
+        return array_keys($types);
+    }
+
+    /**
      * @template T of TagNode
      * @param class-string<T>|null $tagFqn
      * @return ($tagFqn is string ? Generator<T> : Generator<TagNode>)

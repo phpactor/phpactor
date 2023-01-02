@@ -26,7 +26,7 @@ class TextNode extends Node
                 return false;
             }
             if (str_contains($token->value, "\n")) {
-                return false;
+                return ' ';
             }
             return $token->value;
         }, $this->tokens))));
