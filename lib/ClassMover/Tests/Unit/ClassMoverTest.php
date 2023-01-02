@@ -11,16 +11,21 @@ use Phpactor\ClassMover\FoundReferences;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassMoverTest extends TestCase
 {
     use ProphecyTrait;
 
-    private $mover;
-
-    private $finder;
-
-    private $replacer;
+    /**
+     * @var ObjectProphecy<ClassFinder>
+     */
+    private ObjectProphecy $finder;
+    /**
+     * @var ObjectProphecy<ClassReplacer>
+     */
+    private ObjectProphecy $replacer;
+    private ClassMover $mover;
 
     public function setUp(): void
     {
@@ -36,13 +41,14 @@ class ClassMoverTest extends TestCase
     /**
      * It should delgate to the finder to find references.
      */
-    public function testFindReferences()
+    public function testFindReferences(): FoundReferences
     {
         $source = TextDocumentBuilder::create('<?php echo "hello";')->build();
         $fullName = 'Something';
         $refList = NamespacedClassReferences::empty();
 
         $this->finder->findIn($source)->willReturn($refList);
+
 
         $references = $this->mover->findReferences($source, $fullName);
 
