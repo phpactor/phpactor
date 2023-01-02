@@ -1,3 +1,4 @@
-- **$foo**: *Foobar<Foo>*
 
+
+- **$foo**: *Foobar<Foo>*
 

@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServerCompletion\Tests\Integration;
 
 use Closure;
 use Generator;
-use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
 use Phpactor\Extension\LanguageServerHover\Renderer\HoverInformation;
 use Phpactor\Extension\LanguageServerHover\Renderer\MemberDocblock;
@@ -1047,6 +1046,41 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'member_docblock9.md',
         ];
+
+        yield 'formatted member docblock 2' => [
+            '',
+            function (Reflector $reflector) {
+                return new MemberDocblock($reflector->reflectClassesIn(
+                    <<<'EOT'
+                        <?php
+
+                        class OneClass
+                        {
+                            /**
+                             * Computes the intersection of arrays using a callback function on the keys for comparison
+                             * @link https://php.net/manual/en/function.array-intersect-ukey.php
+                             * @param array $array <p>
+                             * Initial array for comparison of the arrays.
+                             * </p>
+                             * @param array $array2 <p>
+                             * First array to compare keys against.
+                             * </p>
+                             * @param callable $key_compare_func <p>
+                             * User supplied callback function to do the comparison.
+                             * </p>
+                             * @param ...$rest [optional]
+                             * @return array the values of array1 whose keys exist
+                             * in all the arguments.
+                             * @meta
+                             */
+                            public function foo(Foobar $foo) {}
+                        }
+                        EOT
+                )->get('OneClass')->methods()->get('foo'));
+            },
+            'member_docblock10.md',
+        ];
+
     }
 
     /**

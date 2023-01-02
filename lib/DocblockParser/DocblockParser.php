@@ -3,7 +3,7 @@
 namespace Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Docblock;
-use Phpactor\DocblockParser\Ast\Node;
+use RuntimeException;
 
 final class DocblockParser
 {
@@ -18,6 +18,14 @@ final class DocblockParser
 
     public function parse(string $docblock): Docblock
     {
-        return $this->parser->parse($this->lexer->lex($docblock));
+        $node = $this->parser->parse($this->lexer->lex($docblock));
+        if (!$node instanceof Docblock) {
+            throw new RuntimeException(sprintf(
+                'Expected a Docblock node from parser, but got "%s"',
+                get_class($node)
+            ));
+        }
+
+        return $node;
     }
 }

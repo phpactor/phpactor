@@ -1,1 +1,1 @@
-- **{{ object.paramName }}**: *{{ object.type.toString }}* {{ object.text.toString }}
+- {% if object.paramName %}**{{ object.paramName }}**: {% endif %}{% if object.type %}*{{ object.type.toString }}*{% endif %} {{ object.text.toString }}

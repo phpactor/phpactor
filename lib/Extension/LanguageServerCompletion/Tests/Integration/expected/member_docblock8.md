@@ -1,7 +1,6 @@
-This is my docblock- **$foo**: *Foobar<Foo>*
+This is my docblock
 
-Throws `Foobar`
+- **$foo**: *Foobar<Foo>*
 
-
-
+**Throws** `Foobar`
 

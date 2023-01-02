@@ -44,6 +44,9 @@ class Docblock extends Node
     {
         $types = [];
         foreach ($this->tags() as $tag) {
+            if ($tag instanceof UnknownTag) {
+                continue;
+            }
             $types[$tag::class] = true;
         }
 
@@ -105,7 +108,7 @@ class Docblock extends Node
             $prose[] = $child->value;
         }
 
-        return trim(implode('', $prose));
+        return implode("\n", array_map('trim', (explode("\n", implode('', $prose)))));
     }
 
     public function lastMultilineContentToken(): ?Token
