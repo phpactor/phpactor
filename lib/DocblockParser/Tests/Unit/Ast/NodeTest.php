@@ -150,5 +150,22 @@ class NodeTest extends NodeTestCase
                     , $docblock->prose());
             }
         ];
+
+        yield 'messed up docblock prose' => [
+            <<<'EOT'
+                /**
+                 * Applies the callback to the elements of the given arrays
+                 * @link https://php.net/manual/en/function.array-map.php
+                 * @param callable|null $callback
+                 * Callback function to run for each element in each array.
+                 */
+                EOT
+            , function (Docblock $docblock): void {
+                self::assertEquals(<<<'EOT'
+                    Applies the callback to the elements of the given arrays
+                    EOT
+                    , $docblock->prose());
+            }
+        ];
     }
 }
