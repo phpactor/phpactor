@@ -1,0 +1,8 @@
+{{ object.prose }}
+
+{% for param in object.tags("Phpactor\\DocblockParser\\Ast\\Tag\\ParamTag") %}
+**{{ param.paramName }}**: {{ param.type.toString() }}
+{% if param.text %}
+    {{ param.text.toString() }}
+{% endif %}
+{% endfor %}

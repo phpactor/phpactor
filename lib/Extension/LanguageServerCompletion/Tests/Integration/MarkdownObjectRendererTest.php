@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerCompletion\Tests\Integration;
 
 use Closure;
 use Generator;
+use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
 use Phpactor\Extension\LanguageServerHover\Renderer\HoverInformation;
 use Phpactor\Extension\LanguageServerHover\Renderer\MemberDocblock;
@@ -64,6 +65,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      * @dataProvider provideDeclaredConstant
      * @dataProvider provideType
      * @dataProvider provideMemberDocblock
+     * @dataProvider provideParsedDocblock
      */
     public function testRender(string $manifest, Closure $objectFactory, string $expected, bool $capture = false): void
     {
@@ -1018,6 +1020,36 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
                 return $variable;
             },
             'variable1.md',
+        ];
+    }
+
+    public function provideParsedDocblock(): Generator
+    {
+        $parser = DocblockParser::create();
+        yield 'docblock' => [
+            '',
+            function () use ($parser) {
+                $node = $parser->parse(
+                    <<<'EOT'
+                    /** 
+                     * Main title
+                     *
+                     * This is the body of the documentation
+                     * for this method
+                     *
+                     * @throws FooException
+                     * @param int $int
+                     * @param Foobar $foobar This is documentation for param
+                     * @param string $barfoo This is other documentation for param
+                     *
+                     * @return Foobar<Barfoo>
+                     *
+                    EOT
+                );
+
+                return $node;
+            },
+            'parsed_docblock1.md',
         ];
     }
 }

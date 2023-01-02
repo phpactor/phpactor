@@ -2,6 +2,7 @@
 
 namespace Phpactor\DocblockParser;
 
+use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Node;
 
 final class DocblockParser
@@ -15,7 +16,7 @@ final class DocblockParser
         return new self(new Lexer(), new Parser());
     }
 
-    public function parse(string $docblock): Node
+    public function parse(string $docblock): Docblock
     {
         return $this->parser->parse($this->lexer->lex($docblock));
     }
