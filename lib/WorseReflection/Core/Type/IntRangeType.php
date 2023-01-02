@@ -14,9 +14,4 @@ final class IntRangeType extends IntType
     {
         return sprintf('int<%s, %s>', $this->lower->__toString(), $this->upper->__toString());
     }
-
-    public function toPhpString(): string
-    {
-        return sprintf('int<%s, %s>', $this->lower->__toString(), $this->upper->__toString());
-    }
 }
