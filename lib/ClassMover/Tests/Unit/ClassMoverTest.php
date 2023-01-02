@@ -21,10 +21,12 @@ class ClassMoverTest extends TestCase
      * @var ObjectProphecy<ClassFinder>
      */
     private ObjectProphecy $finder;
+
     /**
      * @var ObjectProphecy<ClassReplacer>
      */
     private ObjectProphecy $replacer;
+
     private ClassMover $mover;
 
     public function setUp(): void
