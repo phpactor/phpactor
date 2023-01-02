@@ -16,6 +16,7 @@ Features:
 
 Improvements:
 
+  - Better docblock parsing and formatting #2004
   - More liberal support for vendor tags #2011 @ging-dev
   - Fix nested template type arguments #2016
   - Fix importing of nested types #2009
