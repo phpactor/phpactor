@@ -23,6 +23,7 @@ use Phpactor\WorseReflection\Core\Type\GeneratorType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\HexLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
+use Phpactor\WorseReflection\Core\Type\IntRangeType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -469,5 +470,10 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
+    }
+
+    public static function intRange(Type $lower, Type $upper): IntRangeType
+    {
+        return new IntRangeType($lower, $upper);
     }
 }
