@@ -62,7 +62,7 @@ Docblock: =
     TypeList: = 
      ScalarNode: = callable|
      NullNode: = null
-   TextNode: = a string containing the previously defined error handler (if any). If
+   TextNode: =  a string containing the previously defined error handler (if any). If
  * the built-in error handler is used null is returned. null is also returned
  * in case of an error such as an invalid callback. If the previous error handler
  * was a class method, this function will return an indexed array with the class

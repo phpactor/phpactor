@@ -13,4 +13,5 @@ Docblock: =
       ClassNode: = Barfoo[],
      ScalarNode: = string>
    VariableNode: = $foobar
+   TextNode: = 
  */

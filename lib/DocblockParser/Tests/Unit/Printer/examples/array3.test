@@ -40,4 +40,5 @@ Docblock: =
                    ScalarNode: = string>|
                  ScalarNode: = string>}>}>
    VariableNode: = $config
+   TextNode: = 
  */

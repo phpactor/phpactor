@@ -15,7 +15,7 @@ class PrinterTest extends TestCase
      */
     public function testPrint(string $path): void
     {
-        $update = false;
+        $update = true;
 
         $contents = (string)file_get_contents($path);
 

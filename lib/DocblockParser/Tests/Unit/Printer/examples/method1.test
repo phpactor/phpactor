@@ -7,4 +7,5 @@ Docblock: =
  * 
   MethodTag: = @method
    ClassNode: = Foobarfoobar()
+   TextNode: = 
  */
