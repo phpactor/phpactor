@@ -13,6 +13,7 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class MissingMethodProvider implements DiagnosticProvider
@@ -44,17 +45,12 @@ class MissingMethodProvider implements DiagnosticProvider
             return;
         }
 
-        $class = $containerType->reflectionOrNull();
-        if (!$class) {
-            return;
-        }
-
         $methodName = $memberName->getText($node->getFileContents());
         if (!is_string($methodName)) {
             return;
         }
         try {
-            $name = $class->methods()->get($methodName);
+            $name = $containerType->members()->byMemberType(ReflectionMember::TYPE_METHOD)->get($methodName);
         } catch (NotFound) {
             yield new MissingMethodDiagnostic(
                 ByteOffsetRange::fromInts(
@@ -67,7 +63,7 @@ class MissingMethodProvider implements DiagnosticProvider
                     $containerType->__toString()
                 ),
                 DiagnosticSeverity::ERROR(),
-                $class->name()->__toString(),
+                $containerType->name()->__toString(),
                 $methodName
             );
         }
