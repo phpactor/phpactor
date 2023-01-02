@@ -7,4 +7,6 @@ use Phpactor\DocblockParser\Ast\TagNode;
 interface TagPrototype
 {
     public function matches(TagNode $tag): bool;
+
+    public function endOffsetFor(TagNode $tag):int;
 }

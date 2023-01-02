@@ -511,6 +511,9 @@ final class Parser
         $text = [];
 
         while ($this->tokens->current) {
+            if ($this->tokens->current->type === Token::T_PHPDOC_CLOSE) {
+                break;
+            }
             if ($this->tokens->current->type === Token::T_TAG) {
                 break;
             }
