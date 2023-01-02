@@ -22,5 +22,5 @@ Docblock: =
      ScalarNode: = string
      VariableNode: = $propertyPath
      NullValue: = )
-   TextNode: = Assert that value is alphanumeric for all values.
+   TextNode: =  Assert that value is alphanumeric for all values.
  */

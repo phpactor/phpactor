@@ -28,4 +28,5 @@ Docblock: =
         ClassNode: = Name|
         NullNode: = null,}
    VariableNode: = $config
+   TextNode: = 
  */

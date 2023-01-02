@@ -16,4 +16,5 @@ Docblock: =
        ScalarNode: = string>,
      ScalarNode: = string>
    VariableNode: = $foobar
+   TextNode: = 
  */

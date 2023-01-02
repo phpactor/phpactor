@@ -69,19 +69,30 @@ class Docblock extends Node
 
     public function prose(): string
     {
-        return trim(implode('', array_map(function (Element $token): string {
-            if ($token instanceof Token) {
-                if (in_array($token->type, [
-                    Token::T_PHPDOC_OPEN,
-                    Token::T_PHPDOC_CLOSE,
-                    Token::T_ASTERISK
-                ])) {
-                    return '';
-                }
-                return $token->value;
+        $prose = [];
+        foreach ($this->descendantElements() as $child) {
+            if ($child instanceof TagNode) {
+                break;
             }
-            return '';
-        }, iterator_to_array($this->children, false))));
+            if (!$child instanceof Token) {
+                continue;
+            }
+
+            if (in_array($child->type, [
+                Token::T_PHPDOC_OPEN,
+                Token::T_PHPDOC_CLOSE,
+                Token::T_ASTERISK
+            ])) {
+                continue;
+            }
+
+            if ($child->type === Token::T_TAG) {
+                break;
+            }
+            $prose[] = $child->value;
+        }
+
+        return trim(implode('', $prose));
     }
 
     public function lastMultilineContentToken(): ?Token

@@ -8,4 +8,5 @@ Docblock: =
   ParamTag: = @param
    ClassNode: = Foobar
    VariableNode: = $foobar
+   TextNode: = 
  */

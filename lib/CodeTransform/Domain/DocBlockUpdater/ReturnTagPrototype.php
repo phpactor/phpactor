@@ -16,4 +16,10 @@ class ReturnTagPrototype implements TagPrototype
     {
         return $tag instanceof ReturnTag;
     }
+
+    public function endOffsetFor(TagNode $tag): int
+    {
+        assert($tag instanceof ReturnTag);
+        return $tag->type() ? $tag->type()->end() : $tag->end();
+    }
 }

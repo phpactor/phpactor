@@ -10,11 +10,11 @@ Docblock: =
   ParamTag: = @param
    ScalarNode: = bool
    VariableNode: = $bool
-   TextNode: = This is a boolean
+   TextNode: =  This is a boolean
  *                   multiline comments not currently supported
  * 
   ParamTag: = @param
    ScalarNode: = bool
    VariableNode: = $bool
-   TextNode: = This is a boolean
+   TextNode: =  This is a boolean
  */

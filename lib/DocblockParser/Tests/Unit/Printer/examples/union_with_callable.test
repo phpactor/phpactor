@@ -13,6 +13,7 @@ Docblock: =
     TypeList: = 
      ScalarNode: = int>
    VariableNode: = $arrayOfInt
+   TextNode: = 
  * 
   ParamTag: = @param
    UnionNode: = 
@@ -23,5 +24,6 @@ Docblock: =
        ScalarNode: = int):
       ScalarNode: = string
    VariableNode: = $callableOrNull
+   TextNode: = 
  */
 

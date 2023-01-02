@@ -17,4 +17,5 @@ Docblock: =
        ClassNode: = Foo:
        ClassNode: = Bar):
      ScalarNode: = string)
+   TextNode: = 
  */

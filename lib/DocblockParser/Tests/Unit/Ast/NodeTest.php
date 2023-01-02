@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Tag\MethodTag;
+use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
@@ -148,6 +149,41 @@ class NodeTest extends NodeTestCase
                     ```
                     EOT
                     , $docblock->prose());
+            }
+        ];
+
+        yield 'do not parse prose after first tag' => [
+            <<<'EOT'
+                /**
+                 * Applies the callback to the elements of the given arrays
+                 * @link https://php.net/manual/en/function.array-map.php
+                 * @param callable|null $callback
+                 * Callback function to run for each element in each array.
+                 */
+                EOT
+            , function (Docblock $docblock): void {
+                self::assertEquals(<<<'EOT'
+                    Applies the callback to the elements of the given arrays
+                    EOT
+                    , $docblock->prose());
+            }
+        ];
+
+        yield 'parse open / closing HTML tags' => [
+            <<<'EOT'
+                /**
+                 * Applies the callback to the elements of the given arrays
+                 * @link https://php.net/manual/en/function.array-map.php
+                 * @param callable|null $callback <p>
+                 * Callback function to run for each element in each array.
+                 * </p>
+                 */
+                EOT
+            , function (Docblock $docblock): void {
+                self::assertEquals(<<<'EOT'
+                    <p>Callback function to run for each element in each array.</p>
+                    EOT
+                    , $docblock->firstDescendant(ParamTag::class)->text()->toString());
             }
         ];
     }

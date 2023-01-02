@@ -91,8 +91,8 @@ class ParserDocblockUpdater implements DocBlockUpdater
                 $edits[] =
                     TextEdit::create(
                         $tag->start(),
-                        $tag->length(),
-                        $tagText . ' '
+                        $prototype->endOffsetFor($tag) - $tag->start(),
+                        $tagText
                     );
             }
         }

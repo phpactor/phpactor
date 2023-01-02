@@ -9,4 +9,5 @@ Docblock: =
    ConstantNode: = 
     ClassNode: = Foobar::BAR_*
    VariableNode: = $param
+   TextNode: = 
  */

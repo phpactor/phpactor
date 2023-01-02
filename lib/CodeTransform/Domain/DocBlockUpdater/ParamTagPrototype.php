@@ -16,4 +16,10 @@ class ParamTagPrototype implements TagPrototype
     {
         return $tag instanceof ParamTag && ltrim($tag->paramName(), '$') === $this->name;
     }
+
+    public function endOffsetFor(TagNode $tag): int
+    {
+        assert($tag instanceof ParamTag);
+        return $tag->variable ? $tag->variable->end() : $tag->end();
+    }
 }

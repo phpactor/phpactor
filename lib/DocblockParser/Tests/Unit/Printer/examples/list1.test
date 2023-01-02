@@ -10,9 +10,11 @@ Docblock: =
    ListBracketsNode: = 
     ClassNode: = Foobar[]
    VariableNode: = $foobar
+   TextNode: = 
  * 
   ParamTag: = @param
    ListBracketsNode: = 
     ScalarNode: = string[]
    VariableNode: = $strings
+   TextNode: = 
  */

@@ -6,4 +6,5 @@ Docblock: =
  ElementList: = /**
  * 
   DeprecatedTag: = @deprecated
+   TextNode: = 
  */

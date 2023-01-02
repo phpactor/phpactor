@@ -1,3 +1,3 @@
-// @deprecated This is deprecated 
+// @deprecated This is deprecated
 class Foobar {
 }
