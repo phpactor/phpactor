@@ -42,6 +42,8 @@ use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntMaxType;
+use Phpactor\WorseReflection\Core\Type\IntNegative;
+use Phpactor\WorseReflection\Core\Type\IntPositive;
 use Phpactor\WorseReflection\Core\Type\IntRangeType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
@@ -312,6 +314,13 @@ class TypeConverter
             return new VoidType();
         }
 
+        if ($name === 'positive-int') {
+            return new IntPositive();
+        }
+
+        if ($name === 'negative-int') {
+            return new IntNegative();
+        }
         $type = new ReflectedClassType(
             $this->reflector,
             ClassName::fromString(

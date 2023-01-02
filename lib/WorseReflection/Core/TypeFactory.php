@@ -23,6 +23,8 @@ use Phpactor\WorseReflection\Core\Type\GeneratorType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\HexLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
+use Phpactor\WorseReflection\Core\Type\IntNegative;
+use Phpactor\WorseReflection\Core\Type\IntPositive;
 use Phpactor\WorseReflection\Core\Type\IntRangeType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
@@ -368,6 +370,21 @@ class TypeFactory
         return new EnumBackedCaseType($enumType, $name, $value);
     }
 
+    public static function intRange(Type $lower, Type $upper): IntRangeType
+    {
+        return new IntRangeType($lower, $upper);
+    }
+
+    public static function intPositive(): IntPositive
+    {
+        return new IntPositive();
+    }
+
+    public static function intNegative(): IntNegative
+    {
+        return new IntNegative();
+    }
+
     private static function typeFromString(string $type, Reflector $reflector = null): Type
     {
         if ('' === $type) {
@@ -470,10 +487,5 @@ class TypeFactory
         }
 
         return self::floatLiteral((float)$value);
-    }
-
-    public static function intRange(Type $lower, Type $upper): IntRangeType
-    {
-        return new IntRangeType($lower, $upper);
     }
 }

@@ -259,6 +259,16 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                 new IntLiteralType(23),
             )
         ];
+
+        yield 'int positive' => [
+            '/** @return positive-int */',
+            TypeFactory::intPositive()
+        ];
+
+        yield 'int negative' => [
+            '/** @return negative-int */',
+            TypeFactory::intNegative()
+        ];
     }
 
     public function testClassConstant(): void

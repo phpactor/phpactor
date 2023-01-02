@@ -74,6 +74,9 @@ Docblock Types
     Float Literal    ``1234.12``                     ✔ 
     Generics         ``Foobar<Barfoo>``              ✔ 
     Int Literal      ``1234``                        ✔ 
+    Int Range        ``int<0,max>``                  ✔ 
+    Int Positive     ``positive-int``                ✔ 
+    Int Negative     ``negative-int``                ✔ 
     List             ``list<string>``                ✔ 
     Parenthesized    ``(Foo&Bar)|object``            ✔ 
     String Literal   ``"hello"``                     ✔ 

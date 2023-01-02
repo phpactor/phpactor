@@ -14,7 +14,7 @@ final class TwigFunctions implements ObjectRendererTwigExtension
 {
     public function configure(Environment $env): void
     {
-        $env->addFunction(new TwigFunction('docblockNode',function (Node $node) {
+        $env->addFunction(new TwigFunction('docblockNode', function (Node $node) {
             return $node->toString();
         }));
         $env->addFunction(new TwigFunction('typeShortName', new TypeShortName()));
