@@ -55,7 +55,7 @@ class PsalmProcessTest extends IntegrationTestCase
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),
-            new PsalmConfig($psalmBin, $shouldShowInfo),
+            new PsalmConfig($psalmBin, $shouldShowInfo, false),
             new NullLogger()
         );
 

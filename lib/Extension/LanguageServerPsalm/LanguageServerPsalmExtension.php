@@ -19,6 +19,7 @@ class LanguageServerPsalmExtension implements OptionalExtension
 {
     public const PARAM_PSALM_BIN = 'language_server_psalm.bin';
     public const PARAM_PSALM_SHOW_INFO = 'language_server_psalm.show_info';
+    public const PARAM_PSALM_USE_CACHE = 'language_server_psalm.use_cache';
 
     public function load(ContainerBuilder $container): void
     {
@@ -38,10 +39,11 @@ class LanguageServerPsalmExtension implements OptionalExtension
             $binPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PSALM_BIN));
             $root = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%');
             $shouldShowInfo = $container->getParameter(self::PARAM_PSALM_SHOW_INFO);
+            $useCache = $container->getParameter(self::PARAM_PSALM_USE_CACHE);
 
             return new PsalmProcess(
                 $root,
-                new PsalmConfig($binPath, $shouldShowInfo),
+                new PsalmConfig($binPath, $shouldShowInfo, $useCache),
                 LoggingExtension::channelLogger($container, 'PSALM')
             );
         });
@@ -53,10 +55,12 @@ class LanguageServerPsalmExtension implements OptionalExtension
         $schema->setDefaults([
             self::PARAM_PSALM_BIN => '%project_root%/vendor/bin/psalm',
             self::PARAM_PSALM_SHOW_INFO => true,
+            self::PARAM_PSALM_USE_CACHE => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_PSALM_BIN => 'Path to pslam if different from vendor/bin/psalm',
             self::PARAM_PSALM_SHOW_INFO => 'If infos from psalm should be displayed',
+            self::PARAM_PSALM_USE_CACHE => 'Does psalm should use cache (see `--no-cache` option)',
         ]);
     }
 

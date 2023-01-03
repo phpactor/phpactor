@@ -27,15 +27,21 @@ class PsalmProcess
     public function analyse(string $filename): Promise
     {
         return \Amp\call(function () use ($filename) {
-            $process = new Process([
+            $command = [
                 $this->config->psalmBin(),
-                '--no-cache',
                 sprintf(
                     '--show-info=%s',
                     $this->config->shouldShowInfo() ? 'true' : 'false',
                 ),
                 '--output-format=json',
-            ], $this->cwd);
+            ];
+
+            if (!$this->config->useCache()) {
+                $command[] = '--no-cache';
+            }
+            $command[] = $filename;
+
+            $process = new Process($command, $this->cwd);
 
             $start = microtime(true);
             $pid = yield $process->start();
