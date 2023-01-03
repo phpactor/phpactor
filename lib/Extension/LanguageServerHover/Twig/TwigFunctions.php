@@ -18,7 +18,7 @@ final class TwigFunctions implements ObjectRendererTwigExtension
         $env->addFunction(new TwigFunction('typeDefined', function (Type $type) {
             return ($type->isDefined());
         }));
-        $env->addFunction(new TwigFunction('class', function (Type $type) {
+        $env->addFunction(new TwigFunction('class', function ($type) {
             return get_class($type);
         }));
         $env->addFunction(new TwigFunction('typeType', new TypeType()));

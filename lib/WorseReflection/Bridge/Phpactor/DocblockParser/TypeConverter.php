@@ -41,6 +41,10 @@ use Phpactor\WorseReflection\Core\Type\FloatType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
+use Phpactor\WorseReflection\Core\Type\IntMaxType;
+use Phpactor\WorseReflection\Core\Type\IntNegative;
+use Phpactor\WorseReflection\Core\Type\IntPositive;
+use Phpactor\WorseReflection\Core\Type\IntRangeType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\InvokeableType;
@@ -210,6 +214,15 @@ class TypeConverter
             }
             return new ArrayType(new MissingType());
         }
+        if ($type->type instanceof ScalarNode && $type->type->name->value === 'int') {
+            $parameters = array_values(iterator_to_array($type->parameters()->types()));
+            if (count($parameters) === 2) {
+                return new IntRangeType(
+                    $this->convert($parameters[0]),
+                    $this->convert($parameters[1]),
+                );
+            }
+        }
 
         if ($type->type instanceof ListNode) {
             $parameters = array_values(iterator_to_array($type->parameters()->types()));
@@ -301,6 +314,13 @@ class TypeConverter
             return new VoidType();
         }
 
+        if ($name === 'positive-int') {
+            return new IntPositive();
+        }
+
+        if ($name === 'negative-int') {
+            return new IntNegative();
+        }
         $type = new ReflectedClassType(
             $this->reflector,
             ClassName::fromString(
@@ -366,6 +386,9 @@ class TypeConverter
 
     private function convertLiteralInteger(LiteralIntegerNode $type): Type
     {
+        if ((int)$type->token->value === PHP_INT_MAX) {
+            return new IntMaxType();
+        }
         return new IntLiteralType((int)$type->token->value);
     }
 

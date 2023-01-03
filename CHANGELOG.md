@@ -13,6 +13,7 @@ Features:
 
   - `@param` docblock generation
   - Reintroduce the PHPUnit extension
+  - Support integer range type e.g. `int<0, max>` #2024
 
 Improvements:
 

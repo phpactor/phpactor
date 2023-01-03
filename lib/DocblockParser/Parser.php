@@ -311,6 +311,9 @@ final class Parser
             if ($this->tokens->if(Token::T_LABEL)) {
                 $typeList = $this->parseTypeList();
             }
+            if ($this->tokens->if(Token::T_INTEGER)) {
+                $typeList = $this->parseTypeList();
+            }
 
             if (!$this->tokens->if(Token::T_BRACKET_ANGLE_CLOSE)) {
                 return null;
@@ -408,6 +411,8 @@ final class Parser
         $types = [];
         while (true) {
             if ($this->tokens->if(Token::T_LABEL)) {
+                $types[] = $this->parseTypes();
+            } elseif ($this->tokens->if(Token::T_INTEGER)) {
                 $types[] = $this->parseTypes();
             }
             if ($this->tokens->if(Token::T_COMMA)) {

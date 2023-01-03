@@ -14,6 +14,8 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
+use Phpactor\WorseReflection\Core\Type\IntLiteralType;
+use Phpactor\WorseReflection\Core\Type\IntMaxType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -240,6 +242,32 @@ class DocblockParserFactoryTest extends IntegrationTestCase
         yield 'class string generic' => [
             '/** @return class-string<T> */',
             TypeFactory::classString('T'),
+        ];
+
+        yield 'int range max' => [
+            '/** @return int<12, max> */',
+            TypeFactory::intRange(
+                new IntLiteralType(12),
+                new IntMaxType(PHP_INT_MAX)
+            )
+        ];
+
+        yield 'int range' => [
+            '/** @return int<12, 23> */',
+            TypeFactory::intRange(
+                new IntLiteralType(12),
+                new IntLiteralType(23),
+            )
+        ];
+
+        yield 'int positive' => [
+            '/** @return positive-int */',
+            TypeFactory::intPositive()
+        ];
+
+        yield 'int negative' => [
+            '/** @return negative-int */',
+            TypeFactory::intNegative()
         ];
     }
 
