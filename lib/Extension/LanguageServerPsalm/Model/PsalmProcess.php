@@ -30,8 +30,11 @@ class PsalmProcess
             $process = new Process([
                 $this->config->psalmBin(),
                 '--no-cache',
-                '--show-info=true',
-                '--output-format=json'
+                sprintf(
+                    '--show-info=%s',
+                    $this->config->shouldShowInfo() ? 'true' : 'false',
+                ),
+                '--output-format=json',
             ], $this->cwd);
 
             $start = microtime(true);

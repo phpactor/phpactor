@@ -18,6 +18,7 @@ use Phpactor\MapResolver\Resolver;
 class LanguageServerPsalmExtension implements OptionalExtension
 {
     public const PARAM_PSALM_BIN = 'language_server_psalm.bin';
+    public const PARAM_PSALM_SHOW_INFO = 'language_server_psalm.show_info';
 
     public function load(ContainerBuilder $container): void
     {
@@ -36,10 +37,11 @@ class LanguageServerPsalmExtension implements OptionalExtension
         $container->register(PsalmProcess::class, function (Container $container) {
             $binPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PSALM_BIN));
             $root = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%');
+            $shouldShowInfo = $container->getParameter(self::PARAM_PSALM_SHOW_INFO);
 
             return new PsalmProcess(
                 $root,
-                new PsalmConfig($binPath),
+                new PsalmConfig($binPath, $shouldShowInfo),
                 LoggingExtension::channelLogger($container, 'PSALM')
             );
         });
@@ -50,9 +52,11 @@ class LanguageServerPsalmExtension implements OptionalExtension
     {
         $schema->setDefaults([
             self::PARAM_PSALM_BIN => '%project_root%/vendor/bin/psalm',
+            self::PARAM_PSALM_SHOW_INFO => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_PSALM_BIN => 'Path to pslam if different from vendor/bin/psalm',
+            self::PARAM_PSALM_SHOW_INFO => 'If infos from psalm should be displayed',
         ]);
     }
 
