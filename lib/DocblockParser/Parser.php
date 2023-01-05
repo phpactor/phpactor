@@ -214,8 +214,9 @@ final class Parser
                 }
 
                 $elements[] = $delimiter;
-                $elements[] = $this->parseType();
+                $type = $this->parseType();
                 if (null !== $type) {
+                    $elements[] = $type;
                     continue;
                 }
             }
