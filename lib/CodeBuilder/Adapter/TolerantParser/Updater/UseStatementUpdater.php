@@ -4,6 +4,7 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
@@ -132,10 +133,12 @@ class UseStatementUpdater
         return $usePrototypes;
     }
 
-    private function filterExisting(Node $lastNode, SourceCode $prototype)
+    /**
+     * @return list<UseStatement>
+     */
+    private function filterExisting(Node $lastNode, SourceCode $prototype): array
     {
         $existingNames = new ImportedNames($lastNode);
-        /** @var UseStatement $usePrototype */
         $usePrototypes = $prototype->useStatements()->sorted();
 
         $usePrototypes = array_filter(iterator_to_array($usePrototypes), function (UseStatement $usePrototype) use ($existingNames) {
@@ -158,18 +161,27 @@ class UseStatementUpdater
 
         return $usePrototypes;
     }
-
-    private function filterSameNamespace(Node $lastNode, $usePrototypes)
+    /**
+     * @param array<UseStatement> $usePrototypes
+     * @return list<UseStatement>
+     */
+    private function filterSameNamespace(Node $lastNode, array $usePrototypes): array
     {
-        $sourceNamespace = $lastNode->getNamespaceDefinition()
-            ? $lastNode->getNamespaceDefinition()->name->__toString() : null;
+        $sourceNamespace = null;
+        if ($nsDef = $lastNode->getNamespaceDefinition()) {
+            if ($nsDef->name instanceof QualifiedName) {
+                $sourceNamespace = $nsDef->name->__toString();
+            }
+        }
 
         $usePrototypes = array_filter($usePrototypes, function (UseStatement $usePrototype) use ($sourceNamespace) {
             return $sourceNamespace !== $usePrototype->name()->namespace();
         });
         return $usePrototypes;
     }
-
+    /**
+     * @param mixed $usePrototype
+     */
     private function buildEditText($usePrototype): string
     {
         $editText = [
