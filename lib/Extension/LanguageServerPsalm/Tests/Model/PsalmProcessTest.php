@@ -27,7 +27,7 @@ class PsalmProcessTest extends IntegrationTestCase
     /**
      * @dataProvider provideLint
      */
-    public function testLint(string $source, array $expectedDiagnostics): void
+    public function testLint(string $source, array $expectedDiagnostics, int $level = 1, bool $shouldShowInfo = true): void
     {
         $psalmBin = __DIR__ . '/../../../../../vendor/bin/psalm';
         $this->workspace()->reset();
@@ -50,12 +50,12 @@ class PsalmProcessTest extends IntegrationTestCase
         );
         (Process::fromShellCommandline('composer install', $this->workspace()->path()))->mustRun();
 
-        (new Process([$psalmBin, '--init'], $this->workspace()->path()))->mustRun();
+        (new Process([$psalmBin, '--init', 'src', $level], $this->workspace()->path()))->mustRun();
         (new Process([$psalmBin, '--clear-cache'], $this->workspace()->path()))->mustRun();
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),
-            new PsalmConfig($psalmBin),
+            new PsalmConfig($psalmBin, $shouldShowInfo),
             new NullLogger()
         );
 
@@ -107,6 +107,49 @@ class PsalmProcessTest extends IntegrationTestCase
                     'source' => 'psalm'
                 ])
             ]
+        ];
+
+        yield [
+            '<?php $foobar = $barfoo;',
+            [
+                Diagnostic::fromArray([
+                    'range' => new Range(
+                        new Position(0, 5),
+                        new Position(0, 12)
+                    ),
+                    'message' => 'Unable to determine the type that $foobar is being assigned to',
+                    'severity' => DiagnosticSeverity::WARNING,
+                    'source' => 'psalm'
+                ]),
+                Diagnostic::fromArray([
+                    'range' => new Range(
+                        new Position(0, 15),
+                        new Position(0, 22)
+                    ),
+                    'message' => 'Cannot find referenced variable $barfoo in global scope',
+                    'severity' => DiagnosticSeverity::ERROR,
+                    'source' => 'psalm'
+                ])
+            ],
+            2,
+            true
+        ];
+
+        yield [
+            '<?php $foobar = $barfoo;',
+            [
+                Diagnostic::fromArray([
+                    'range' => new Range(
+                        new Position(0, 15),
+                        new Position(0, 22)
+                    ),
+                    'message' => 'Cannot find referenced variable $barfoo in global scope',
+                    'severity' => DiagnosticSeverity::ERROR,
+                    'source' => 'psalm'
+                ])
+            ],
+            2,
+            false
         ];
     }
 }
