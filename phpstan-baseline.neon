@@ -421,26 +421,6 @@ parameters:
 			path: lib/ClassMover/Tests/Assets/project/src/ReflectionDefaultValue.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\ClassMoverTest\\:\\:testFindReferences\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/ClassMoverTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\ClassMoverTest\\:\\:\\$finder has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/ClassMoverTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\ClassMoverTest\\:\\:\\$mover has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/ClassMoverTest.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\ClassMoverTest\\:\\:\\$replacer has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/ClassMoverTest.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\Label\\:\\:matches\\(\\)\\.$#"
 			count: 4
 			path: lib/ClassMover/Tests/Unit/Domain/Name/MemberNameTest.php
@@ -556,11 +536,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassLikeUpdater.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassLikeUpdater\\:\\:resolvePropertyName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassLikeUpdater.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassMethodUpdater\\:\\:memberDeclarations\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassMethodUpdater.php
@@ -624,31 +599,6 @@ parameters:
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\:\\:\\$traitMemberDeclarations\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/TraitUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\UseStatementUpdater\\:\\:buildEditText\\(\\) has parameter \\$usePrototype with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\UseStatementUpdater\\:\\:filterExisting\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\UseStatementUpdater\\:\\:filterSameNamespace\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\UseStatementUpdater\\:\\:filterSameNamespace\\(\\) has parameter \\$usePrototypes with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Variable \\$usePrototype in PHPDoc tag @var does not match assigned variable \\$usePrototypes\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
 
 		-
 			message: "#^Class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Util\\\\ImportedNames implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
@@ -744,11 +694,6 @@ parameters:
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBodyBuilder\\:\\:\\$lines \\(array\\<Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\>\\) does not accept array\\<Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Line\\|Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\>\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/MethodBodyBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBuilder\\:\\:build\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/MethodBuilder.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -1689,11 +1634,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletor\\:\\:filterNonQualifyingClasses\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletor\\:\\:getClassNameForImport\\(\\) has parameter \\$imports with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\Helper\\\\VariableCompletionHelper\\:\\:orderedVariablesUntilOffset\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -4546,22 +4486,7 @@ parameters:
 			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:__construct\\(\\) has parameter \\$breakingChars with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:resolveImportTable\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:\\$breakingChars is never read, only written\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:\\$breakingChars type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
 
