@@ -5,6 +5,7 @@ namespace Phpactor\WorseReferenceFinder;
 use Exception;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ReferenceFinder\DefinitionLocator;
@@ -157,7 +158,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 
         $name = $node->getNamespaceDefinition()->name;
 
-        if (null === $name) {
+        if (!$name instanceof QualifiedName) {
             return '';
         }
 
