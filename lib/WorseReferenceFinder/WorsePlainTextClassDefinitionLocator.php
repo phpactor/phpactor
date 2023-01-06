@@ -22,16 +22,10 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
 {
-    private array $breakingChars;
-
     private Parser $parser;
 
-    public function __construct(private Reflector $reflector, array $breakingChars = [])
+    public function __construct(private Reflector $reflector)
     {
-        $this->breakingChars = $breakingChars ?: [
-            ' ',
-            '"', '\'', '|', '%', '(', ')', '[', ']',':',"\r\n", "\n", "\r"
-        ];
         $this->parser = new Parser();
     }
 
