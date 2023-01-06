@@ -75,7 +75,9 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
 
         return true;
     }
-
+    /**
+     * @param array<int,ResolvedName[]> $imports
+     */
     private function getClassNameForImport(ClassName $candidate, array $imports, string $currentNamespace = null): ?string
     {
         $candidateNamespace = $candidate->namespace();
@@ -84,7 +86,6 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
             return null;
         }
 
-        /** @var ResolvedName $resolvedName */
         foreach ($imports[0] as $resolvedName) {
             if ($candidate->__toString() === $resolvedName->getFullyQualifiedNameText()) {
                 return null;
@@ -97,9 +98,13 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
     /**
      * @return string|null
      */
-    private function getCurrentNamespace(Node $node)
+    private function getCurrentNamespace(Node $node): ?string
     {
         $currentNamespaceDefinition = $node->getNamespaceDefinition();
+
+        if (!$currentNamespaceDefinition->name instanceof QualifiedName) {
+            return null;
+        }
 
         return null !== $currentNamespaceDefinition && null !== $currentNamespaceDefinition->name
             ? $currentNamespaceDefinition->name->getText()
