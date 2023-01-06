@@ -95,9 +95,7 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
         return $candidate->__toString();
     }
 
-    /**
-     * @return string|null
-     */
+
     private function getCurrentNamespace(Node $node): ?string
     {
         $currentNamespaceDefinition = $node->getNamespaceDefinition();
