@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5b488f19e13fb8fe60a3d5950f0d4bf8",
+    "content-hash": "b515962354cbb419ea0b47a92051ae3a",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1216,12 +1216,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "bb1a2d92910fa06a43d87caeffafdf82f0bbd2a8"
+                "reference": "91c14303c23db2e3b0cac0bbb6d5db19c60ee38c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/bb1a2d92910fa06a43d87caeffafdf82f0bbd2a8",
-                "reference": "bb1a2d92910fa06a43d87caeffafdf82f0bbd2a8",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/91c14303c23db2e3b0cac0bbb6d5db19c60ee38c",
+                "reference": "91c14303c23db2e3b0cac0bbb6d5db19c60ee38c",
                 "shasum": ""
             },
             "require-dev": {
@@ -1257,7 +1257,7 @@
             "support": {
                 "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2022-12-27T13:20:20+00:00"
+            "time": "2023-01-05T10:15:35+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -1381,49 +1381,6 @@
             },
             "abandoned": true,
             "time": "2018-11-22T07:55:51+00:00"
-        },
-        {
-            "name": "microsoft/tolerant-php-parser",
-            "version": "dev-encapsed-as-string-literal",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dantleech/tolerant-php-parser.git",
-                "reference": "b414788bb4c3bd0acff74b6a60e583ea743e9e94"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dantleech/tolerant-php-parser/zipball/b414788bb4c3bd0acff74b6a60e583ea743e9e94",
-                "reference": "b414788bb4c3bd0acff74b6a60e583ea743e9e94",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.5.15"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Microsoft\\PhpParser\\": [
-                        "src/"
-                    ]
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rob Lourens",
-                    "email": "roblou@microsoft.com"
-                }
-            ],
-            "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "support": {
-                "source": "https://github.com/dantleech/tolerant-php-parser/tree/encapsed-as-string-literal"
-            },
-            "time": "2022-11-11T22:45:54+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1912,6 +1869,52 @@
                 "source": "https://github.com/phly/phly-event-dispatcher"
             },
             "time": "2021-02-06T14:38:57+00:00"
+        },
+        {
+            "name": "phpactor/tolerant-php-parser",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/tolerant-php-parser.git",
+                "reference": "0dac21447d916ee3d1c6fc2736b93d5ef0efac57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/0dac21447d916ee3d1c6fc2736b93d5ef0efac57",
+                "reference": "0dac21447d916ee3d1c6fc2736b93d5ef0efac57",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^8.5.15"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Microsoft\\PhpParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Lourens",
+                    "email": "roblou@microsoft.com"
+                }
+            ],
+            "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
+            "support": {
+                "source": "https://github.com/phpactor/tolerant-php-parser/tree/main"
+            },
+            "time": "2023-01-07T16:31:32+00:00"
         },
         {
             "name": "psr/container",
@@ -4581,16 +4584,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.13.1",
+            "version": "v3.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "78d2251dd86b49c609a0fd37c20dcf0a00aea5a7"
+                "reference": "3952f08a81bd3b1b15e11c3de0b6bf037faa8496"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/78d2251dd86b49c609a0fd37c20dcf0a00aea5a7",
-                "reference": "78d2251dd86b49c609a0fd37c20dcf0a00aea5a7",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/3952f08a81bd3b1b15e11c3de0b6bf037faa8496",
+                "reference": "3952f08a81bd3b1b15e11c3de0b6bf037faa8496",
                 "shasum": ""
             },
             "require": {
@@ -4658,7 +4661,7 @@
             "description": "A tool to automatically fix PHP code style",
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.13.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.13.2"
             },
             "funding": [
                 {
@@ -4666,7 +4669,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-18T00:47:22+00:00"
+            "time": "2023-01-02T23:53:50+00:00"
         },
         {
             "name": "jangregor/phpstan-prophecy",
@@ -5639,16 +5642,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.4",
+            "version": "1.9.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "d03bccee595e2146b7c9d174486b84f4dc61b0f2"
+                "reference": "0501435cd342eac7664bd62155b1ef907fc60b6f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/d03bccee595e2146b7c9d174486b84f4dc61b0f2",
-                "reference": "d03bccee595e2146b7c9d174486b84f4dc61b0f2",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/0501435cd342eac7664bd62155b1ef907fc60b6f",
+                "reference": "0501435cd342eac7664bd62155b1ef907fc60b6f",
                 "shasum": ""
             },
             "require": {
@@ -5678,7 +5681,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.4"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.7"
             },
             "funding": [
                 {
@@ -5694,7 +5697,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-12-17T13:33:52+00:00"
+            "time": "2023-01-04T21:59:57+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -7789,7 +7792,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "jetbrains/phpstorm-stubs": 20,
-        "microsoft/tolerant-php-parser": 20,
+        "phpactor/tolerant-php-parser": 20,
         "dms/phpunit-arraysubset-asserts": 20
     },
     "prefer-stable": true,

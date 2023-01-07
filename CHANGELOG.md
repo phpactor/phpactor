@@ -9,6 +9,9 @@ Bug fixes:
   - Do not suggest return type on `__destruct` #1992
   - Do not report Prophecy methods as "not found" #2006
   - Do not add NULL to type list (fixes search bug) #2009
+  - Create a real package for the tolerant-parser fork and use it #2033
+  - Also highlight use statements when hovering on class #2039 @mamazu
+  - Fix priotity of "internal" stub locator - facilitating enum completion #2040
 
 Features:
 

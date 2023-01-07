@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -28,11 +29,15 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
     public function name(): string
     {
         $name = $this->node->name;
-        /** @phpstan-ignore-next-line Invalid type hint in TP */
         if ($name instanceof Token) {
-            return $name->getText($this->node->getFileContents());
+            return (string)$name->getText($this->node->getFileContents());
         }
-        return $this->node->name->__toString();
+        /** @phpstan-ignore-next-line just in case */
+        if ($name instanceof QualifiedName) {
+            return $name->__toString();
+        }
+
+        throw new RuntimeException('This shoud not happen');
     }
 
     public function nameRange(): ByteOffsetRange

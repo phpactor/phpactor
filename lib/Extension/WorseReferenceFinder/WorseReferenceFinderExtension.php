@@ -17,9 +17,6 @@ use Phpactor\WorseReflection\Core\Cache;
 
 class WorseReferenceFinderExtension implements Extension
 {
-    const PARAM_BREAK_CHARS = 'worse_reference_finder.plain_text_break_chars';
-
-
     public function load(ContainerBuilder $container): void
     {
         $container->register('worse_reference_finder.definition_locator.reflection', function (Container $container) {
@@ -37,7 +34,6 @@ class WorseReferenceFinderExtension implements Extension
         $container->register('worse_reference_finder.definition_locator.plain_text_class', function (Container $container) {
             return new WorsePlainTextClassDefinitionLocator(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->getParameter(self::PARAM_BREAK_CHARS)
             );
         }, [ ReferenceFinderExtension::TAG_DEFINITION_LOCATOR => []]);
 
@@ -60,11 +56,5 @@ class WorseReferenceFinderExtension implements Extension
 
     public function configure(Resolver $schema): void
     {
-        $schema->setDefaults([
-            self::PARAM_BREAK_CHARS => [' ', '"', '\'', '|', '%', '(', ')', '[', ']',':',"\r\n", "\n", "\r"]
-        ]);
-        $schema->setTypes([
-            self::PARAM_BREAK_CHARS => 'array',
-        ]);
     }
 }

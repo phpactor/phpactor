@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Util;
 
+use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Token;
@@ -70,11 +71,11 @@ class QualifiedNameListUtil
     }
 
     /**
-     * @return Token|QualifiedName|null
+     * @return MissingToken|Token|QualifiedName|null
      */
-    public static function firstQualifiedNameOrNullOrToken(?QualifiedNameList $types)
+    public static function firstQualifiedNameOrNullOrToken(QualifiedNameList|null|MissingToken $types)
     {
-        if (!$types) {
+        if (!$types instanceof QualifiedNameList) {
             return null;
         }
 

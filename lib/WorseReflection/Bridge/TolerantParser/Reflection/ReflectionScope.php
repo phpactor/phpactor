@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as CoreReflectionScope;
 use Microsoft\PhpParser\Node;
@@ -41,7 +42,7 @@ class ReflectionScope implements CoreReflectionScope
             return Name::fromString('');
         }
 
-        if (null === $namespaceDefinition->name) {
+        if (!$namespaceDefinition->name instanceof QualifiedName) {
             return Name::fromString('');
         }
 

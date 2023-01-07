@@ -137,7 +137,7 @@ final class ReflectorBuilder
      */
     public function build(): Reflector
     {
-        $this->addLocator(InternalLocator::forInternalStubs(), 100);
+        $this->addLocator(InternalLocator::forInternalStubs(), 255);
         return (new ServiceLocator(
             $this->buildLocator(),
             $this->buildLogger(),
