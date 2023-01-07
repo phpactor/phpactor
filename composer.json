@@ -5,6 +5,7 @@
     "require": {
         "php": "^8.0",
         "ext-pcntl": "*",
+        "ext-posix": "*",
         "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^3.0",
         "symfony/yaml": "^5.1",
