@@ -23,6 +23,11 @@ class NameImport
         return new self(self::TYPE_FUNCTION, FullyQualifiedName::fromString($name), $alias);
     }
 
+    public function isGlobalFunction(): bool
+    {
+        return $nameImport->isFunction() && $nameImport->name()->count() === 1;
+    }
+
     public function alias(): ?string
     {
         return $this->alias;

@@ -18,13 +18,9 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\UseStatementDeduplicator;
 
 class UseStatementUpdater
 {
-    private UseStatementDeduplicator $useStatementDeduplicator;
-
     public function __construct(
-        UseStatementDeduplicator $useStatementDeduplicator
-    ) {
-        $this->useStatementDeduplicator = $useStatementDeduplicator;
-    }
+        private UseStatementDeduplicator $useStatementDeduplicator
+    ) {}
 
     public function updateUseStatements(Edits $edits, SourceCode $prototype, SourceFileNode $node): void
     {

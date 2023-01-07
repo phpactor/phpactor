@@ -12,6 +12,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\UseStatements;
 use Phpactor\CodeBuilder\Domain\Prototype\Interfaces;
 use Phpactor\CodeBuilder\Domain\Prototype\Traits;
 use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
 
 class SourceCodeBuilder extends AbstractBuilder
 {
@@ -54,6 +55,17 @@ class SourceCodeBuilder extends AbstractBuilder
     public function namespace(string $namespace): SourceCodeBuilder
     {
         $this->namespace = NamespaceName::fromString($namespace);
+
+        return $this;
+    }
+
+    public function useName(NameImport $nameImport): SourceCodeBuilder
+    {
+        if ($nameImport->isFunction()) {
+            $this->useFunction($nameImport->name()->__toString(), $nameImport->alias());
+        } else {
+            $this->use($nameImport->name()->__toString(), $nameImport->alias());
+        }
 
         return $this;
     }

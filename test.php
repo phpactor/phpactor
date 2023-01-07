@@ -1,8 +1,9 @@
 <?php
 
 use SomeOtherNamespace\Foo;
-use SomeNamespace\Foo as SomeNamespaceFoo;
-use SomeOtherCkass;
+use SomeOtherClass;
 
 function (\SomeNamespace\Testing\Foo $foo): void {
+   echo Foo::class;
+   echo SomeOtherClass::class;
 }

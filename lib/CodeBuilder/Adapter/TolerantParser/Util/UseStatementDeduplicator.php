@@ -7,8 +7,21 @@ use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
 
 final class UseStatementDeduplicator
 {
+    private array $aliasedClasses = [];
+
+    /**
+     * Get a list of classes that have been newly aliased in the importing process
+     *
+     * @return array<string, string>
+     */
+    public function getAliasedClasses(): array
+    {
+        return $this->aliasedClasses;
+    }
+
     /**
      * @param array<UseStatement> $usePrototypes
+     *
      * @return UseStatement[]
      */
     public function deduplicate(Node $lastNode, array $usePrototypes): array
@@ -28,46 +41,14 @@ final class UseStatementDeduplicator
                 continue;
             }
 
-            // We have a duplicate to handle.
-            $usePrototype = new UseStatement(
-                $usePrototype->name(),
-                $this->getAlias($existingNames, (string) $usePrototype->name()),
-                $usePrototype->type()
-            );
+            $newAlias = str_replace('\\', '', (string) $usePrototype->name());
+
+            // Update the current use statement with the aliased one
+            $usePrototype = new UseStatement( $usePrototype->name(), $newAlias, $usePrototype->type());
+
+            $this->aliasedClasses[(string) $usePrototype->name()] = $newAlias;
         }
 
         return $usePrototypes;
-    }
-
-    /**
-     * Trying to find an alias that will not make a collision.
-     *
-     * If you are trying to import A\B\C\D it is going to try to alias it as:
-     * use A\B\C\D as AB;
-     * if that is taken
-     * use A\B\C\D as ABC;
-     *
-     * If all of the above doesn't work, then it has to be an already existing import which is handles somewhere else.
-     *
-     * @param array<string, string> $existingImports
-     */
-    private function getAlias(array $existingImports, string $nameToImport): string
-    {
-        $nameparts = explode('\\', $nameToImport);
-        $shortName = end($nameparts);
-
-        if (count($nameparts) === 1) {
-            return 'Aliased'.$shortName;
-        }
-
-        for ($i = 1; $i < count($nameparts); ++$i) {
-            $newAlias = implode('', array_slice($nameparts, 0, $i)).$shortName;
-            if (!array_key_exists($newAlias, $existingImports)) {
-                break;
-            }
-        }
-
-
-        return $newAlias;
     }
 }

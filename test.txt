@@ -1,0 +1,4 @@
+Array
+(
+    [SomeNamespace\Testing\Foo] => SomeNamespaceTestingFoo
+)
