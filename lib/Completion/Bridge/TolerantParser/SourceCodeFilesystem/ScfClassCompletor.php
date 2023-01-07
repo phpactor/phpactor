@@ -100,13 +100,15 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
     {
         $currentNamespaceDefinition = $node->getNamespaceDefinition();
 
+        if (!$currentNamespaceDefinition) {
+            return null;
+        }
+
         if (!$currentNamespaceDefinition->name instanceof QualifiedName) {
             return null;
         }
 
-        return null !== $currentNamespaceDefinition && null !== $currentNamespaceDefinition->name
-            ? $currentNamespaceDefinition->name->getText()
-            : null;
+        return $currentNamespaceDefinition->name->getText();
     }
 
     private function getRange(Node $node, ByteOffset $offset): Range
