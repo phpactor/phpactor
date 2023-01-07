@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer;
 
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
@@ -146,7 +147,7 @@ class ClassNameFixerTransformer implements Transformer
             return null;
         }
 
-        if ($namespaceDefinition->name) {
+        if ($namespaceDefinition->name instanceof QualifiedName) {
             if ($namespaceDefinition->name->__toString() === $correctNamespace) {
                 return null;
             }

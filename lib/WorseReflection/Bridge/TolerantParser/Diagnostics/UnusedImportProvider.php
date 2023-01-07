@@ -159,6 +159,9 @@ class UnusedImportProvider implements DiagnosticProvider
         if (null === $definition) {
             return '';
         }
+        if (!$definition->name instanceof QualifiedName) {
+            return '';
+        }
         return (string)$definition->name;
     }
 }

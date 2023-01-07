@@ -88,6 +88,10 @@ class BinaryExpressionResolver implements Resolver
             $operator
         );
 
+        if (!$node->leftOperand instanceof Node) {
+            return $context->withIssue(sprintf('Left operand was not a node, got "%s"', get_class($leftOperand)));
+        }
+
         // negate if there is a boolean comparison against an expression
         $context = $this->negate(
             $context,
