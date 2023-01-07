@@ -16,6 +16,7 @@ use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\LanguageServerProtocol\DocumentHighlight;
@@ -283,10 +284,20 @@ class Highlighter
     /**
      * @return Generator<Highlight>
      */
-    private function namespacedNames(Node $rootNode, string $fullyQualfiiedName): Generator
+    private function namespacedNames(Node $rootNode, string $fullyQualfiedName): Generator
     {
         foreach ($rootNode->getDescendantNodes() as $node) {
-            if ($node instanceof ClassDeclaration && (string)$node->getNamespacedName() === $fullyQualfiiedName) {
+            if ($node instanceof NamespaceUseClause && (string) $node->namespaceName === $fullyQualfiedName) {
+                $nameParts = $node->namespaceName->nameParts;
+                $name = end($nameParts);
+
+                yield new Highlight(
+                    $name->getStartPosition(),
+                    $name->getEndPosition(),
+                    DocumentHighlightKind::TEXT
+                );
+            }
+            if ($node instanceof ClassDeclaration && (string)$node->getNamespacedName() === $fullyQualfiedName) {
                 yield new Highlight(
                     $node->name->getStartPosition(),
                     $node->name->getEndPosition(),
@@ -294,7 +305,7 @@ class Highlighter
                 );
             }
             if ($node instanceof QualifiedName) {
-                if ($fullyQualfiiedName === (string)$node->getResolvedName()) {
+                if ($fullyQualfiedName === (string)$node->getResolvedName()) {
                     yield new Highlight(
                         $node->getStartPosition(),
                         $node->getEndPosition(),
