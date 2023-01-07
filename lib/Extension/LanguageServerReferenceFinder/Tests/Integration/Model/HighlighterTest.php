@@ -193,6 +193,20 @@ class HighlighterTest extends TestCase
                 self::assertEquals(DocumentHighlightKind::TEXT, $highlights->at(0)->kind);
             }
         ];
+
+        yield 'class in use statement' => [
+            '<?php use SomeNamespace\Foo; echo SomeNamespace\Fo<>o::class;',
+            function (Highlights $highlights): void {
+                self::assertCount(2, $highlights);
+            }
+        ];
+
+        yield 'class alias in use statement' => [
+            '<?php use Foo as Test; echo Tes<>t::class;',
+            function (Highlights $highlights): void {
+                self::assertCount(2, $highlights);
+            }
+        ];
     }
 
     /**
