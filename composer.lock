@@ -1876,12 +1876,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/tolerant-php-parser.git",
-                "reference": "ab178c76ad84b91b21de01edd802c9dc4fb1f0a6"
+                "reference": "0dac21447d916ee3d1c6fc2736b93d5ef0efac57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/ab178c76ad84b91b21de01edd802c9dc4fb1f0a6",
-                "reference": "ab178c76ad84b91b21de01edd802c9dc4fb1f0a6",
+                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/0dac21447d916ee3d1c6fc2736b93d5ef0efac57",
+                "reference": "0dac21447d916ee3d1c6fc2736b93d5ef0efac57",
                 "shasum": ""
             },
             "require": {
@@ -1910,11 +1910,11 @@
                     "email": "roblou@microsoft.com"
                 }
             ],
-            "description": "Fork of the Tolerant PHP-to-AST parser designed for IDE usage scenarios",
+            "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
             "support": {
                 "source": "https://github.com/phpactor/tolerant-php-parser/tree/main"
             },
-            "time": "2023-01-05T23:35:46+00:00"
+            "time": "2023-01-07T16:31:32+00:00"
         },
         {
             "name": "psr/container",
