@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
@@ -81,6 +82,19 @@ class ReflectorBuilderTest extends TestCase
         $class = $reflector->reflectClass('Foobar');
         $this->assertEquals('Foobar', $class->name()->__toString());
         $this->assertInstanceOf(Reflector::class, $reflector);
+    }
+
+    public function testInternalLocatorGetsHighestPriority(): void
+    {
+        $reflector = ReflectorBuilder::create()
+            ->addLocator(new StringSourceLocator(
+                SourceCode::fromString('<?php interface BackedEnum {}')
+            ), 100)
+            ->build();
+
+        $class = $reflector->reflectInterface('BackedEnum');
+        $this->assertEquals('BackedEnum', $class->name()->__toString());
+        $this->assertStringContainsString('InternalStubs', $class->sourceCode()->path());
     }
 
     public function testEnableCache(): void
