@@ -132,10 +132,12 @@ class UseStatementUpdater
         return $usePrototypes;
     }
 
-    private function filterExisting(Node $lastNode, SourceCode $prototype)
+    /**
+     * @return UseStatement[]
+     */
+    private function filterExisting(Node $lastNode, SourceCode $prototype): array
     {
         $existingNames = new ImportedNames($lastNode);
-        /** @var UseStatement $usePrototype */
         $usePrototypes = $prototype->useStatements()->sorted();
 
         $usePrototypes = array_filter(iterator_to_array($usePrototypes), function (UseStatement $usePrototype) use ($existingNames) {
@@ -159,7 +161,12 @@ class UseStatementUpdater
         return $usePrototypes;
     }
 
-    private function filterSameNamespace(Node $lastNode, $usePrototypes)
+    /**
+     * @param UseStatement[] $usePrototypes
+     *
+     * @return UseStatement[]
+     */
+    private function filterSameNamespace(Node $lastNode, array $usePrototypes): array
     {
         $sourceNamespace = $lastNode->getNamespaceDefinition()
             ? $lastNode->getNamespaceDefinition()->name->__toString() : null;
