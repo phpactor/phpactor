@@ -113,7 +113,11 @@ class GenericMapResolver
         foreach ($arguments as $argument) {
             $argumentType = $argument->type();
             if ($argumentType instanceof ClassStringType) {
-                $types[] = TypeFactory::reflectedClass($this->reflector, $argumentType->className());
+                $className = $argumentType->className();
+                if (null === $className) {
+                    continue;
+                }
+                $types[] = TypeFactory::reflectedClass($this->reflector, $className);
             }
             if ($argumentType instanceof StringLiteralType) {
                 $types[] = TypeFactory::reflectedClass($this->reflector, $argumentType->value());
