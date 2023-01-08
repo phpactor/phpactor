@@ -1,5 +1,5 @@
 filetype off
-let s:phpactorRootDir = expand('<sfile>:p:h:h:h')
+let s:phpactorRootDir = expand('<sfile>:p:h:h')
 let &runtimepath .= ',' . expand(s:phpactorRootDir . '/vader.vim')
 let &runtimepath .= ',' . s:phpactorRootDir
 let &runtimepath .= ',' . expand(s:phpactorRootDir . '/after')

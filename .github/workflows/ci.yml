@@ -57,7 +57,7 @@ jobs:
                 run: "./bin/phpactor config:set worse_reflection.cache_lifetime 5.0"
             -
                 name: "Run VIM Tests"
-                run: "config/travis/vim-plugin-test.sh"
+                run: ".github/vim-plugin-test.sh"
     phpunit:
         name: "PHPUnit (${{ matrix.php-version }})"
 

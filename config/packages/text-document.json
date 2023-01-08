@@ -1,8 +1,0 @@
-{
-  "name": "phpactor/text-document",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "1.1.0"
-  }
-}
