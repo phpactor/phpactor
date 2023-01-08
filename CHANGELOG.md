@@ -13,6 +13,7 @@ Bug fixes:
   - Also highlight use statements when hovering on class #2039 @mamazu
   - Fix priotity of "internal" stub locator - facilitating enum completion #2040
   - Require posix extension #2042 @dacianb
+  - Fix evaluation of replacement assignments #1705
 
 Features:
 
