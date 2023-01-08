@@ -1,8 +1,0 @@
-/vendor
-/tests/Workspace
-/tests/Assets/workspace
-/tests/Integration/Composer/project
-/phpbench.json
-/composer.lock
-/.php_cs.cache
-/stubs

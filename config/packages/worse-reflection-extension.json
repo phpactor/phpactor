@@ -1,8 +1,0 @@
-{
-  "name": "phpactor/worse-reflection-extension",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "0.2.2"
-  }
-}
