@@ -1084,26 +1084,6 @@ Whether to decorate messages (null for auto-guessing)
 **Allowed values**: true, false, null
 
 
-.. _WorseReferenceFinderExtension:
-
-
-WorseReferenceFinderExtension
------------------------------
-
-
-.. _param_worse_reference_finder.plain_text_break_chars:
-
-
-``worse_reference_finder.plain_text_break_chars``
-"""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-Type: array
-
-
-**Default**: ``[" ","\"","'","|","%","(",")","[","]",":","\r\n","\n","\r"]``
-
-
 .. _PhpExtension:
 
 
@@ -1672,6 +1652,19 @@ Path to pslam if different from vendor/bin/psalm
 
 
 **Default**: ``"%project_root%\/vendor\/bin\/psalm"``
+
+
+.. _param_language_server_psalm.show_info:
+
+
+``language_server_psalm.show_info``
+"""""""""""""""""""""""""""""""""""
+
+
+If infos from psalm should be displayed
+
+
+**Default**: ``true``
 
 
 .. _LanguageServerBlackfireExtension:
