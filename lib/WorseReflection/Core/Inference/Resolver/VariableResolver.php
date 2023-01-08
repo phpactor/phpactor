@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\BracedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
@@ -61,7 +60,7 @@ class VariableResolver implements Resolver
             // if we are dealintg with the right hand side of the assignement
             if ($assignment->leftOperand !== $node) {
                 // do not consider the variable being assigned to
-                $variables = $variables->notAtOffset($assignment->getStartPosition());
+                $variables = $variables->not($assignment->getStartPosition());
             }
         }
 
@@ -76,7 +75,6 @@ class VariableResolver implements Resolver
         $context = NodeContextFactory::forVariableAt(
             $frame,
             $node->getStartPosition(),
-            $node->getEndPosition(),
             $node->getEndPosition(),
             $variableName
         )->withTypeAssertion(TypeAssertion::variable(

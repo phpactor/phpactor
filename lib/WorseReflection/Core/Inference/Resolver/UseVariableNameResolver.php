@@ -21,7 +21,6 @@ class UseVariableNameResolver implements Resolver
             $frame,
             $node->getStartPosition(),
             $node->getEndPosition(),
-            $node->getEndPosition(),
             $name
         );
     }

@@ -180,7 +180,7 @@ abstract class Assignments implements Countable, IteratorAggregate
         }));
     }
 
-    public function notAtOffset(int $offset): Assignments
+    public function not(int $offset): Assignments
     {
         return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
             return $v->offset() !== $offset;

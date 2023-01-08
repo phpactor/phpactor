@@ -53,10 +53,10 @@ class NodeContextFactory
         );
     }
 
-    public static function forVariableAt(Frame $frame, int $start, int $end, int $before, string $name): NodeContext
+    public static function forVariableAt(Frame $frame, int $start, int $end, string $name): NodeContext
     {
         $varName = ltrim($name, '$');
-        $variables = $frame->locals()->lessThanOrEqualTo($before)->byName($varName);
+        $variables = $frame->locals()->lessThanOrEqualTo($end)->byName($varName);
 
         if (0 === $variables->count()) {
             return NodeContextFactory::create(
