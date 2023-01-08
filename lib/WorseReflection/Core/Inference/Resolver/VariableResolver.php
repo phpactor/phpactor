@@ -3,6 +3,8 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression;
+use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\BracedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -52,16 +54,29 @@ class VariableResolver implements Resolver
         }
 
         $variableName = $node->getText();
-        $frameVariable = $frame->locals()->byName($variableName)->lessThanOrEqualTo($node->getStartPosition())->lastOrNull();
+        $variables = $frame->locals()->byName($variableName);
+
+        // special handling for assignments
+        if ($assignment = $node->getFirstAncestor(AssignmentExpression::class)) {
+            // if we are dealintg with the right hand side of the assignement
+            if ($assignment->leftOperand !== $node) {
+                // do not consider the variable being assigned to
+                $variables = $variables->notAtOffset($assignment->getStartPosition());
+            }
+        }
+
+        $frameVariable = $variables->lessThanOrEqualTo($node->getStartPosition())->lastOrNull();
 
         $type = new MissingType();
         if ($frameVariable) {
             $type = $frameVariable->type();
         }
 
+
         $context = NodeContextFactory::forVariableAt(
             $frame,
             $node->getStartPosition(),
+            $node->getEndPosition(),
             $node->getEndPosition(),
             $variableName
         )->withTypeAssertion(TypeAssertion::variable(

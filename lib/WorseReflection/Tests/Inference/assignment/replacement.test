@@ -16,3 +16,5 @@ $foo = new Foo();
 $foo = $foo->withFoo($bar);
 
 wrAssertType('Test\Bar', $foo);
+wrAssertOffset('Test\Foo', 153);
+wrAssertOffset('Test\Bar', 145);
