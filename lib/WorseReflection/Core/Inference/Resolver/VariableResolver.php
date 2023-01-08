@@ -57,6 +57,7 @@ class VariableResolver implements Resolver
 
         // special handling for assignments
         if ($assignment = $node->getFirstAncestor(AssignmentExpression::class)) {
+            assert($assignment instanceof AssignmentExpression);
             // if we are dealintg with the right hand side of the assignement
             if ($assignment->leftOperand !== $node) {
                 // do not consider the variable being assigned to
