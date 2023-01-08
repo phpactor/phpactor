@@ -12,6 +12,7 @@ Bug fixes:
   - Create a real package for the tolerant-parser fork and use it #2033
   - Also highlight use statements when hovering on class #2039 @mamazu
   - Fix priotity of "internal" stub locator - facilitating enum completion #2040
+  - Require posix extension #2042 @dacianb
 
 Features:
 
