@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 
+use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record\ClassRecord;
@@ -53,6 +54,11 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
 
         // @phpstan-ignore-next-line because classBaseClause _can_ be NULL
         if (null === $baseClass = $baseClause->baseClass) {
+            return;
+        }
+
+        /** @phpstan-ignore-next-line */
+        if ($baseClass instanceof MissingToken) {
             return;
         }
 
