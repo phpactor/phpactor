@@ -12,11 +12,13 @@ use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\ConstElement;
+use Microsoft\PhpParser\Node\DelimitedList\MatchArmConditionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
+use Microsoft\PhpParser\Node\MatchArm;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
@@ -53,6 +55,8 @@ class CompletionContext
             $parent instanceof Expression ||
             $parent instanceof StatementNode ||
             $parent instanceof ConstElement ||
+            $parent instanceof MatchArmConditionList ||
+            $parent instanceof MatchArm ||
             $parent instanceof ArrayElement // yield;
         ;
     }
