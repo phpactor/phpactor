@@ -60,7 +60,7 @@ class LanguageServerPsalmExtension implements OptionalExtension
         $schema->setDescriptions([
             self::PARAM_PSALM_BIN => 'Path to pslam if different from vendor/bin/psalm',
             self::PARAM_PSALM_SHOW_INFO => 'If infos from psalm should be displayed',
-            self::PARAM_PSALM_USE_CACHE => 'Does psalm should use cache (see `--no-cache` option)',
+            self::PARAM_PSALM_USE_CACHE => 'If the Psalm cache should be used (see the `--no-cache` option)',
         ]);
     }
 

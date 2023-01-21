@@ -24,6 +24,7 @@ Features:
 
 Improvements:
 
+  - Support the Psalm cache #2046 @gbprod
   - Support completion inside match expression #2051 @przepompownia
   - Fixed typos in documentation #2050 @d-danilov
   - Psalm Extension: allow `info` diagnostics to be hidden #2032 @gbprod
