@@ -12,7 +12,7 @@ command! -buffer -range=% PhpactorExtractExpression call phpactor#ExtractExpress
 command! -buffer -nargs=0 PhpactorExtractConstant call phpactor#ExtractConstant()
 
 ""
-" Import the name under the cusor. If multiple options are available, you
+" Import the name under the cursor. If multiple options are available, you
 " are able to choose one.
 command! -buffer -nargs=0 PhpactorImportClass call phpactor#ImportClass()
 
