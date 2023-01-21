@@ -14,6 +14,7 @@ Bug fixes:
   - Fix priotity of "internal" stub locator - facilitating enum completion #2040
   - Require posix extension #2042 @dacianb
   - Fix evaluation of replacement assignments #1705
+  - Fix crash on missing token in Indexer #2049 @vlada-dudr
 
 Features:
 
@@ -23,6 +24,8 @@ Features:
 
 Improvements:
 
+  - Support completion inside match expression #2051 @przepompownia
+  - Fixed typos in documentation #2050 @d-danilov
   - Psalm Extension: allow `info` diagnostics to be hidden #2032 @gbprod
   - Better docblock parsing and formatting #2004
   - More liberal support for vendor tags #2011 @ging-dev
