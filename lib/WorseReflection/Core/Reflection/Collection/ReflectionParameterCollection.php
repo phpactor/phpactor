@@ -41,7 +41,7 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
                     $serviceLocator,
                     $reflectionMethod,
                     $parameter,
-                    $index
+                    $index++
                 );
             }
         }
