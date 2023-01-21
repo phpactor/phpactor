@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class AssertMemberContextResolver implements MemberContextResolver

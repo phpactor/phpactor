@@ -135,7 +135,7 @@ COMMANDS                                                   *phpactor-commands*
 
 :[N]PhpactorFindReferences                           *:PhpactorFindReferences*
   Attempt to find all references to the class name or method under the cursor.
-  The results will be loaded into the quick-fix list
+  The results will be loaded into the quik-fix list
 
 :[N]PhpactorNavigate                                       *:PhpactorNavigate*
   Navigate - jump to the parent class, interface, or any of the relationships
@@ -143,7 +143,7 @@ COMMANDS                                                   *phpactor-commands*
   https://phpactor.github.io/phpactor/configuration.html#reference
 
 :[N]PhpactorChangeVisibility                       *:PhpactorChangeVisibility*
-  Rotate the visibility of the method under the cursor
+  Rotate the visiblity of the method under the cursor
 
 :[N]PhpactorGenerateAccessors                     *:PhpactorGenerateAccessors*
   Generate accessors for the current class

@@ -1667,6 +1667,19 @@ If infos from psalm should be displayed
 **Default**: ``true``
 
 
+.. _param_language_server_psalm.use_cache:
+
+
+``language_server_psalm.use_cache``
+"""""""""""""""""""""""""""""""""""
+
+
+If the Psalm cache should be used (see the `--no-cache` option)
+
+
+**Default**: ``true``
+
+
 .. _LanguageServerBlackfireExtension:
 
 
