@@ -1,0 +1,8 @@
+<?php
+
+namespace Foo\Foobar;
+
+use Foo\{Ham, Spam};
+
+new Ham();
+new Spam();

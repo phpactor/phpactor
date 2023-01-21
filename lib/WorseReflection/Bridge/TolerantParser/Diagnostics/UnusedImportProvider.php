@@ -63,8 +63,7 @@ class UnusedImportProvider implements DiagnosticProvider
                         continue;
                     }
 
-                    $lastPart = $this->lastPart($groupClause->namespaceName->getNamespacedName()->__toString());
-                    $this->imported[$this->prefixedName($groupClause, $lastPart)] = $groupClause;
+                    $this->imported[$this->prefixedName($groupClause, $groupClause->__toString())] = $groupClause;
                 }
                 return [];
             }
@@ -138,6 +137,7 @@ class UnusedImportProvider implements DiagnosticProvider
         return str_contains($contents, '@' . $imported);
     }
 
+    /** @phpstan-ignore-next-line TP lies */
     private function lastPart(string $name): string
     {
         $parts = array_filter(explode('\\', $name));
