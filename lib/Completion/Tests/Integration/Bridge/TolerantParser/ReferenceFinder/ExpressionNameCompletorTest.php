@@ -126,6 +126,36 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+
+        yield 'class name inside the first match arm' => [
+            '<?php class Foobar {} match (true) { Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar',
+                ]
+            ],
+        ];
+
+        yield 'class name inside the second match arm' => [
+            '<?php class Foobar {} match (true) { 1, Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar',
+                ]
+            ],
+        ];
+
+        yield 'class name inside match expression' => [
+            '<?php class Foobar {} match (true) { 1 => Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar',
+                ]
+            ],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
