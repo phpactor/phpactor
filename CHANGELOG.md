@@ -15,6 +15,8 @@ Bug fixes:
   - Require posix extension #2042 @dacianb
   - Fix evaluation of replacement assignments #1705
   - Fix crash on missing token in Indexer #2049 @vlada-dudr
+  - Fix missing compact use name false positive #2052
+  - Fix `class-template<T>` when not in 1st arg position #2054
 
 Features:
 
