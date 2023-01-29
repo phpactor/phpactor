@@ -218,11 +218,22 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
         return \Amp\call(function () use ($rule) {
             $description = yield $this->phpCsFixer->describe($rule);
-            // remove first line that's not needed
 
-            if (preg_match("@Fixer class: [^\n]+\n(.+)\n@", $description, $matches)) {
-                $description = $matches[1];
-            }
+            // Look class linked below is respnsible for producing descriptions output
+            // @see https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/src/Console/Command/DescribeCommand.php
+
+            // preg_replace calls below are matching content generated from above class, not content of individual rules.
+
+            // remove a generic line
+            $description = preg_replace("/Description of ([\w\-\_ ]+) rule.*/", '', $description);
+
+            // remove configuration option descriptions, as that's not describing problem that's showing in code
+            $description = preg_replace('/Fixer is configurable using following option.*/s', '', $description);
+
+            // remove example diffs for the rule
+            $description = preg_replace('/Fixing examples:.*/s', '', $description);
+
+            $description = trim($description);
 
             $this->ruleDescriptions[$rule] = $description;
 
