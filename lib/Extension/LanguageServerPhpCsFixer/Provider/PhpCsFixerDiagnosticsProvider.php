@@ -160,7 +160,11 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
                             continue;
                         }
 
-                        if (count($changedLines) > 0) {
+                        if ($lastChangedLine) {
+                            if (empty($changedLines) || !$startLineNo) {
+                                throw new LogicException("Missing data that's expected to be set");
+                            }
+
                             $startPos = new Position($startLineNo, 0);
                             $lineLength = strlen($lastChangedLine->getContent());
                             $endPos = $lineLength
@@ -202,8 +206,17 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
                             continue;
                         }
 
-                        // new line additions
-                        if ($line->getType() === Line::ADDED && $chunk->getLines()[$index - 1]->getType() === Line::UNCHANGED) {
+                        $prevLine = $chunk->getLines()[$index - 1];
+
+                        if ($prevLine->getContent() === "\ No newline at end of file") {
+                            $contextLines = [];
+
+                            continue;
+                        }
+
+                        if ($line->getType() === Line::ADDED
+                            && $prevLine->getType() === Line::UNCHANGED
+                        ) {
                             $diagnostics[] = Diagnostic::fromArray([
                                 'message' => yield $this->explainRule($rule),
                                 'range' => new Range(new Position($lineNo, 0), new Position($lineNo, 1)),
