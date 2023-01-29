@@ -27,10 +27,14 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
     public function __construct(
         private PhpCsFixerProcess $phpCsFixer,
+        private bool $showDiagnostics,
         private LoggerInterface $logger,
     ) {
     }
 
+    /**
+     * @return Promise<array|false> False when there are no diagnostics available for file, array with diagnostics to show
+     */
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return \Amp\call(function () use ($textDocument) {
@@ -44,6 +48,10 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             $output = json_decode($outputJson, false, JSON_THROW_ON_ERROR);
 
             if (empty($output->files)) {
+                return false;
+            }
+
+            if (!$this->showDiagnostics) {
                 return [];
             }
 
@@ -169,7 +177,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
             $diagnostics = yield $this->provideDiagnostics($textDocument, $cancel);
 
-            if (count($diagnostics) === 0) {
+            if ($diagnostics === false) {
                 return [];
             }
 

@@ -19,6 +19,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
 {
     public const PARAM_PHP_CS_FIXER_BIN = 'language_server_php_cs_fixer.bin';
     public const PARAM_ENV = 'language_server_php_cs_fixer.env';
+    public const PARAM_SHOW_DIAGNOSTICS = 'language_server_php_cs_fixer.show_diagnostics';
 
     public function load(ContainerBuilder $container): void
     {
@@ -44,7 +45,8 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $container->register(PhpCsFixerDiagnosticsProvider::class, function (Container $container) {
             return new PhpCsFixerDiagnosticsProvider(
                 $container->get(PhpCsFixerProcess::class),
-                LoggingExtension::channelLogger($container, 'php-cs-fixer')
+                $container->getParameter(self::PARAM_SHOW_DIAGNOSTICS),
+                LoggingExtension::channelLogger($container, 'php-cs-fixer'),
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
@@ -72,11 +74,13 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $schema->setDefaults([
             self::PARAM_PHP_CS_FIXER_BIN => '%project_root%/vendor/bin/php-cs-fixer',
             self::PARAM_ENV => [],
+            self::PARAM_SHOW_DIAGNOSTICS => true,
         ]);
 
         $schema->setDescriptions([
             self::PARAM_PHP_CS_FIXER_BIN => 'Path to the php-cs-fixer executable',
             self::PARAM_ENV => 'Environemnt for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)',
+            self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP CS Fixer diagnostics are shown'
         ]);
     }
 
