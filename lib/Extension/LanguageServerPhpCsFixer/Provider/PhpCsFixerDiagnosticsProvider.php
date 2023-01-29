@@ -184,7 +184,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             $actions = [
                 CodeAction::fromArray([
                     'title' => $title,
-                    'kind' => 'quickfix',
+                    'kind' => 'source.fixAll.phpactor.phpCsFixer',
                     'diagnostics' => $diagnostics,
                     'command' => new Command(
                         $title,
@@ -202,7 +202,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
     public function kinds(): array
     {
-        return ['quickfix'];
+        return ['source.fixAll.phpactor.phpCsFixer'];
     }
 
     public function name(): string
