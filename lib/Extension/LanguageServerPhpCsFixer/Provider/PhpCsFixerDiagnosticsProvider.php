@@ -34,9 +34,64 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
     }
 
     /**
-     * @return Promise<array|false> False when there are no diagnostics available for file, array with diagnostics to show
+     * @return Promise<Diagnostic[]>
      */
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
+    {
+        if (!$this->showDiagnostics) {
+            return new Success([]);
+        }
+
+        return \Amp\call(function () use ($textDocument, $cancel) {
+            return yield $this->findDiagnostics($textDocument, $cancel);
+        });
+    }
+
+    public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
+    {
+        return \Amp\call(function () use ($textDocument, $cancel) {
+            $diagnostics = yield $this->findDiagnostics($textDocument, $cancel);
+
+            if ($diagnostics === false) {
+                return [];
+            }
+
+            $title = 'Format with PHP CS Fixer';
+
+            $actions = [
+                CodeAction::fromArray([
+                    'title' => $title,
+                    'kind' => 'source.fixAll.phpactor.phpCsFixer',
+                    'diagnostics' => $diagnostics,
+                    'command' => new Command(
+                        $title,
+                        'php_cs_fixer.fix',
+                        [
+                            $textDocument->uri
+                        ]
+                    )
+                ])
+            ];
+
+            return $actions;
+        });
+    }
+
+    public function kinds(): array
+    {
+        return ['source.fixAll.phpactor.phpCsFixer'];
+    }
+
+    public function name(): string
+    {
+        return 'php-cs-fixer';
+    }
+
+    /**
+     * @return Promise<Diagnostic[]> False when there are no diagnostics available for file, array othwerwise
+     *                               Array will contain diagnostics to show
+     */
+    private function findDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return \Amp\call(function () use ($textDocument) {
             $outputJson = yield $this->phpCsFixer->fix($textDocument->text, [
@@ -49,10 +104,6 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             $output = json_decode($outputJson, false, JSON_THROW_ON_ERROR);
 
             if (empty($output->files)) {
-                return false;
-            }
-
-            if (!$this->showDiagnostics) {
                 return [];
             }
 
@@ -80,8 +131,11 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
                     // diff is 1-indexed + in a line loop we update this number beforehand
                     $lineNo = $chunk->getStart() - 2;
 
+                    /** @var Line[] */
                     $changedLines = [];
+                    /** @var Line[]|null */
                     $replacedLines = null;
+                    /** @var int|null */
                     $startLineNo = null;
 
                     foreach ($chunk->getLines() as $index => $line) {
@@ -169,46 +223,6 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
             return $diagnostics;
         });
-    }
-
-    public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
-    {
-        return \Amp\call(function () use ($textDocument, $cancel) {
-            $title = 'Format with PHP CS Fixer';
-
-            $diagnostics = yield $this->provideDiagnostics($textDocument, $cancel);
-
-            if ($diagnostics === false) {
-                return [];
-            }
-
-            $actions = [
-                CodeAction::fromArray([
-                    'title' => $title,
-                    'kind' => 'source.fixAll.phpactor.phpCsFixer',
-                    'diagnostics' => $diagnostics,
-                    'command' => new Command(
-                        $title,
-                        'php_cs_fixer.fix',
-                        [
-                            $textDocument->uri
-                        ]
-                    )
-                ])
-            ];
-
-            return $actions;
-        });
-    }
-
-    public function kinds(): array
-    {
-        return ['source.fixAll.phpactor.phpCsFixer'];
-    }
-
-    public function name(): string
-    {
-        return 'php-cs-fixer';
     }
 
     /**
