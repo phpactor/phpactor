@@ -41,7 +41,7 @@ class StringSharedChars
         $strlen = strlen($a);
 
         return $end === $strlen
-            ? $end
+            ? 0
             : $strlen - $end;
     }
 }
