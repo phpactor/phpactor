@@ -17,11 +17,6 @@ class DiffLinesConsumer
         $this->origLine = $chunk->getStart();
     }
 
-    public function getPosition(): int
-    {
-        return $this->position;
-    }
-
     public function getOrigLine(): int
     {
         return $this->origLine;
@@ -42,6 +37,9 @@ class DiffLinesConsumer
         return $line;
     }
 
+    /**
+     * @return Line[]|null
+     */
     public function eatWhileType(int $type): ?array
     {
         $lines = [];
@@ -61,16 +59,25 @@ class DiffLinesConsumer
         return $lines;
     }
 
+    /**
+     * @return Line[]|null
+     */
     public function eatUnchanged(): ?array
     {
         return $this->eatWhileType(Line::UNCHANGED);
     }
 
+    /**
+     * @return Line[]|null
+     */
     public function eatRemoved(): ?array
     {
         return $this->eatWhileType(Line::REMOVED);
     }
 
+    /**
+     * @return Line[]|null
+     */
     public function eatAdded(): ?array
     {
         return $this->eatWhileType(Line::ADDED);

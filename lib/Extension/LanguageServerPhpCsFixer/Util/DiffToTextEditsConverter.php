@@ -43,7 +43,7 @@ class DiffToTextEditsConverter
                                 new Position($startLine, 0),
                                 new Position($startLine, 0)
                             ),
-                            $this->getLinesContent($added)
+                            $this->linesToString($added)
                         );
                     };
 
@@ -55,7 +55,7 @@ class DiffToTextEditsConverter
                                 new Position($startLine, 0),
                                 new Position($startLine + count($removed), 0)
                             ),
-                            $this->getLinesContent($added)
+                            $this->linesToString($added)
                         );
                     }
                 }
@@ -65,11 +65,10 @@ class DiffToTextEditsConverter
         return $edits;
     }
 
-
     /**
      * @param  Line[]|null  $lines
      */
-    public function getLinesContent(?array $lines): string
+    private function linesToString(?array $lines): string
     {
         if ($lines === null || count($lines) === 0) {
             return '';

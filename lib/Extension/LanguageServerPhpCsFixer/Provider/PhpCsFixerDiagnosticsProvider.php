@@ -23,6 +23,7 @@ use LogicException;
 
 class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionProvider
 {
+    /** @var array<string, string> **/
     private array $ruleDescriptions = [];
 
     public function __construct(
@@ -210,6 +211,9 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
         return 'php-cs-fixer';
     }
 
+    /**
+     * @return Promise<string>
+     */
     private function explainRule(string $rule): Promise
     {
         if (isset($this->ruleDescriptions[$rule])) {
@@ -219,8 +223,8 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
         return \Amp\call(function () use ($rule) {
             $description = yield $this->phpCsFixer->describe($rule);
 
-            // Look class linked below is respnsible for producing descriptions output
             // @see https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/src/Console/Command/DescribeCommand.php
+            // for a class producing descriptions output in php-cs-fixer
 
             // preg_replace calls below are matching content generated from above class, not content of individual rules.
 
