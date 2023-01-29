@@ -10,7 +10,7 @@ class PhpCsFixerError extends RuntimeException
     {
         parent::__construct(
             sprintf(
-                'php-cs-fixer exited with code "%s": cmd: %s stderr: %s, stdout: %s',
+                "php-cs-fixer exited with code '%s'; cmd: %s; stderr: '%s'; stdout: '%s'",
                 $exitCode,
                 $command,
                 $stderr,
