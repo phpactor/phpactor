@@ -1648,7 +1648,7 @@ Enable or disable this extension
 """""""""""""""""""""""""""""
 
 
-Path to pslam if different from vendor/bin/psalm
+Path to psalm if different from vendor/bin/psalm
 
 
 **Default**: ``"%project_root%\/vendor\/bin\/psalm"``
