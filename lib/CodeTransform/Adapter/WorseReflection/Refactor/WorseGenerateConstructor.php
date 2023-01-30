@@ -2,6 +2,8 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
@@ -14,9 +16,10 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\WorkspaceEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ClassInvocation;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseGenerateConstructor implements GenerateConstructor
@@ -31,38 +34,32 @@ class WorseGenerateConstructor implements GenerateConstructor
 
     public function generateMethod(TextDocument $document, ByteOffset $offset): WorkspaceEdits
     {
-        $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
-        $node = $node->getFirstAncestor(ObjectCreationExpression::class);
+        $reflectionNode = $this->reflectionNode($document, $offset);
 
-        if (!$node instanceof ObjectCreationExpression) {
-            return WorkspaceEdits::none();
-        }
-        try {
-            $newObject = $this->reflector->reflectNode($document, $node->getStartPosition());
-        } catch (NotFound) {
+        if (null === $reflectionNode) {
             return WorkspaceEdits::none();
         }
 
-        if (!$newObject instanceof ReflectionObjectCreationExpression) {
+        if (!$reflectionNode instanceof ClassInvocation) {
             return WorkspaceEdits::none();
         }
 
         try {
-            if ($newObject->class()->methods()->has('__construct')) {
+            if ($reflectionNode->class()->methods()->has('__construct')) {
                 return WorkspaceEdits::none();
             }
         } catch (NotFound) {
             return WorkspaceEdits::none();
         }
 
-        $arguments = $newObject->arguments();
+        $arguments = $reflectionNode->arguments();
 
         if (count($arguments) === 0) {
             return WorkspaceEdits::none();
         }
 
-        $builder = $this->factory->fromSource($newObject->class()->sourceCode());
-        $class = $builder->class($newObject->class()->name()->short());
+        $builder = $this->factory->fromSource($reflectionNode->class()->sourceCode());
+        $class = $builder->class($reflectionNode->class()->name()->short());
         $method = $class->method('__construct');
 
         foreach ($arguments->named() as $name => $argument) {
@@ -77,9 +74,42 @@ class WorseGenerateConstructor implements GenerateConstructor
 
         return new WorkspaceEdits(
             new TextDocumentEdits(
-                TextDocumentUri::fromString($newObject->class()->sourceCode()->mustGetUri()),
-                $this->updater->textEditsFor($builder->build(), Code::fromString($newObject->class()->sourceCode()))
+                TextDocumentUri::fromString($reflectionNode->class()->sourceCode()->mustGetUri()),
+                $this->updater->textEditsFor($builder->build(), Code::fromString($reflectionNode->class()->sourceCode()))
             )
         );
+    }
+
+    private function reflectionNode(TextDocument $document, ByteOffset $offset): ?ReflectionNode
+    {
+        $node = $this->node($document, $offset);
+        if (null === $node) {
+            return null;
+        }
+
+        try {
+            $newObject = $this->reflector->reflectNode($document, $node->getStartPosition());
+        } catch (NotFound) {
+            return null;
+        }
+
+        return $newObject;
+    }
+
+    private function node(TextDocument $document, ByteOffset $offset): ?Node
+    {
+        $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
+
+        if ($node->parent instanceof Attribute) {
+            return $node->parent;
+        }
+
+        $node = $node->getFirstAncestor(ObjectCreationExpression::class);
+
+        if ($node instanceof ObjectCreationExpression) {
+            return $node;
+        }
+
+        return null;
     }
 }

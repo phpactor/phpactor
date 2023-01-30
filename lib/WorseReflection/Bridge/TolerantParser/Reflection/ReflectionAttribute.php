@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
-use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\Attribute;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Position;
@@ -14,12 +14,12 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope as TolerantReflectionScope;
 
-class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCreationExpression, ClassInvocation
+class ReflectionAttribute implements PhpactorReflectionObjectCreationExpression, ClassInvocation
 {
     public function __construct(
         private ServiceLocator $locator,
         private Frame $frame,
-        private ObjectCreationExpression $node
+        private Attribute $node
     ) {
     }
 
@@ -39,7 +39,7 @@ class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCrea
 
     public function class(): ReflectionClassLike
     {
-        $type = $this->locator->symbolContextResolver()->resolveNode($this->frame, $this->node->classTypeDesignator)->type();
+        $type = $this->locator->symbolContextResolver()->resolveNode($this->frame, $this->node->name)->type();
 
         if (!$type instanceof ReflectedClassType) {
             throw new CouldNotResolveNode(sprintf('Expceted "%s" but got "%s"', ReflectedClassType::class, get_class($type)));
