@@ -1,0 +1,28 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+#[Attribute()]
+class Barfoo 
+{
+}
+
+#[Ba<>rfoo('foobar', 123)]
+class Foobar {}
+
+// File: expected
+<?php
+
+namespace Phpactor;
+
+#[Attribute()]
+class Barfoo 
+{
+    public function __construct(string $string, int $int)
+    {
+    }
+}
+
+#[Barfoo('foobar', 123)]
+class Foobar {}
