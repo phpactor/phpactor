@@ -35,22 +35,22 @@ class DiffToTextEditsConverterTest extends TestCase
 
         $edits = $converter->toTextEdits($diff);
 
-        $this->assertCount(3, $edits, '3 changes expected: removal of 2 first lines, adding extra line in middle, adding extra content on the end');
+        self::assertCount(3, $edits, '3 changes expected: removal of 2 first lines, adding extra line in middle, adding extra content on the end');
 
         // first - removal of 2 first lines
-        $this->assertEquals($edits[0]->range->start->line, 0);
-        $this->assertEquals($edits[0]->range->end->line, 2);
-        $this->assertEquals($edits[0]->newText, '');
+        self::assertEquals($edits[0]->range->start->line, 0);
+        self::assertEquals($edits[0]->range->end->line, 2);
+        self::assertEquals($edits[0]->newText, '');
 
         // second - removes line, and replaces it with new text (with extra new line)
-        $this->assertEquals($edits[1]->range->start->line, 3);
-        $this->assertEquals($edits[1]->range->end->line, 4);
-        $this->assertEquals($edits[1]->newText, "The named is the mother of all things.\n\n");
+        self::assertEquals($edits[1]->range->start->line, 3);
+        self::assertEquals($edits[1]->range->end->line, 4);
+        self::assertEquals($edits[1]->newText, "The named is the mother of all things.\n\n");
 
         // third - adds lines on the end
-        $this->assertEquals($edits[2]->range->start->line, 11);
-        $this->assertEquals($edits[2]->range->end->line, 11);
-        $this->assertEquals(
+        self::assertEquals($edits[2]->range->start->line, 11);
+        self::assertEquals($edits[2]->range->end->line, 11);
+        self::assertEquals(
             $edits[2]->newText,
             <<<EOF
                 They both may be called deep and profound.

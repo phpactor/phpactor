@@ -18,7 +18,7 @@ class PhpCsFixerProcessTest extends PhpCsFixerTestCase
             $process = yield $phpCsFixer->run('--version');
             $stdout = yield buffer($process->getStdout());
 
-            $this->assertStringContainsString('PHP CS Fixer ', $stdout, "Expected php-cs-fixer --version to return it's name followed with version, got '$stdout'");
+            self::assertStringContainsString('PHP CS Fixer ', $stdout, "Expected php-cs-fixer --version to return it's name followed with version, got '$stdout'");
         });
 
         wait($process);
@@ -39,7 +39,7 @@ class PhpCsFixerProcessTest extends PhpCsFixerTestCase
             ['--using-cache=no', '--format', 'json']
         ));
         $correctFix = json_decode($correctFix, true, 16, JSON_THROW_ON_ERROR);
-        $this->assertEmpty($correctFix['files']);
+        self::assertEmpty($correctFix['files']);
 
         $incorrectFix = wait($phpCsFixer->fix(
             <<<EOF
@@ -48,7 +48,7 @@ class PhpCsFixerProcessTest extends PhpCsFixerTestCase
                 \$foo = "bar";
                 EOF
         ));
-        $this->assertNotEmpty($incorrectFix, 'Expected non empty output for incorrectly formatted input');
+        self::assertNotEmpty($incorrectFix, 'Expected non empty output for incorrectly formatted input');
 
         $this->expectException(PhpCsFixerError::class);
         $incorrectFix = wait($phpCsFixer->fix('', ['--invalid-option']));
@@ -60,8 +60,8 @@ class PhpCsFixerProcessTest extends PhpCsFixerTestCase
 
         $description = wait($phpCsFixer->describe('braces'));
 
-        $this->assertIsString($description);
-        $this->assertStringStartsWith('Description of', $description);
+        self::assertIsString($description);
+        self::assertStringStartsWith('Description of', $description);
 
         $this->expectException(PhpCsFixerError::class);
         wait($phpCsFixer->describe('UNKNOWN_RULE'));

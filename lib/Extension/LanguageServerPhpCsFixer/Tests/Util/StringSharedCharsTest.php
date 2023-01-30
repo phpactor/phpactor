@@ -9,12 +9,12 @@ class StringSharedCharsTest extends TestCase
 {
     public function testStartLength(): void
     {
-        $this->assertEquals(5, StringSharedChars::startLength(
+        self::assertEquals(5, StringSharedChars::startLength(
             'Five shared characters in front',
             'Five common characters in front'
         ));
 
-        $this->assertEquals(11, StringSharedChars::startLength(
+        self::assertEquals(11, StringSharedChars::startLength(
             'Same length',
             'Same length'
         ));
@@ -22,7 +22,7 @@ class StringSharedCharsTest extends TestCase
 
     public function testEndLength(): void
     {
-        $this->assertEquals(22, StringSharedChars::endLength(
+        self::assertEquals(22, StringSharedChars::endLength(
             '22 shared characters on the end',
             '22 common characters on the end'
         ));
@@ -30,7 +30,7 @@ class StringSharedCharsTest extends TestCase
 
     public function testEndPos(): void
     {
-        $this->assertEquals(
+        self::assertEquals(
             21,
             StringSharedChars::endPos(
                 'Index of first shared character of same ends in those strings is 21',
@@ -38,6 +38,6 @@ class StringSharedCharsTest extends TestCase
             )
         );
 
-        $this->assertEquals(0, StringSharedChars::endPos('same', 'same'));
+        self::assertEquals(0, StringSharedChars::endPos('same', 'same'));
     }
 }
