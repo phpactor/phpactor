@@ -15,6 +15,7 @@ class PhpCsFixerTestCase extends TestCase
             new NullLogger(),
             [
                 'PHP_CS_FIXER_IGNORE_ENV' => '1',
+                'XDEBUG_MODE' => 'off'
             ],
         );
     }
