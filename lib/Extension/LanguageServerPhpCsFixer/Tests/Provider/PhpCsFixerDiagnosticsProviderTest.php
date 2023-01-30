@@ -6,98 +6,107 @@ use Amp\NullCancellationToken;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Tests\PhpCsFixerTestCase;
 use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
+use Phpactor\LanguageServer\Diagnostics\Diagnostics;
+use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Psr\Log\NullLogger;
 use function Amp\Promise\wait;
 
 class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
 {
-    public function testProvideDiagnostics(): void
-    {
-        $diagnosticsVisibleProvider = $this->getPhpCsFixerDiagnosticsProvider(true);
-        $diagnosticsInvisibleProvider = $this->getPhpCsFixerDiagnosticsProvider(false);
-
-        $cancel = new NullCancellationToken();
-        $invalidDocument = new TextDocumentItem(
-            '/tmp/test.php',
-            'php',
-            1,
-            <<<EOF
-                <?php
-
-                namespace Test;
-                \$foo = 'bar';
-                    \$test1 = true;
-                    \$test2 = true;
-                    \$test3 = true;
-                \$lao = "tzu";
-                EOF
-        );
-
-        $diagnostics = wait($diagnosticsVisibleProvider->provideDiagnostics($invalidDocument, $cancel));
-        $this->assertIsArray($diagnostics);
-        if (is_array($diagnostics)) {
-            // braces, quotes, blank_line_after_namespace, single_blank_line_at_eof
-            $this->assertCount(4, $diagnostics);
-        }
-
-        $diagnosticsInvisible = wait($diagnosticsInvisibleProvider->provideDiagnostics($invalidDocument, $cancel));
-        $this->assertIsArray($diagnosticsInvisible);
-        if (is_array($diagnosticsInvisible)) {
-            $this->assertCount(0, $diagnosticsInvisible);
-        }
-
-        $validDocument = new TextDocumentItem(
-            '/tmp/test.php',
-            'php',
-            1,
-            <<<EOF
-                <?php
-
-                \$foo = 'bar';
-
-                EOF
-        );
-
-        $diagnostics = wait($diagnosticsVisibleProvider->provideDiagnostics($validDocument, $cancel));
-        $this->assertIsArray($diagnostics);
-        if (is_array($diagnostics)) {
-            $this->assertCount(0, $diagnostics);
-        }
-    }
-
-    public function testProvideActionsFor(): void
+    /**
+     * @dataProvider fileProvider
+     */
+    public function testProvideDiagnosticsVisible(string $fileContent, int $expectedDiagnostics): void
     {
         $provider = $this->getPhpCsFixerDiagnosticsProvider(true);
 
         $cancel = new NullCancellationToken();
-        $invalidDocument = new TextDocumentItem(
-            '/tmp/test.php',
-            'php',
-            1,
-            <<<EOF
-                <?php
+        $document = ProtocolFactory::textDocumentItem('/tmp/test.php', $fileContent);
 
-                \$lao = "tzu";
+        $diagnostics = wait($provider->provideDiagnostics($document, $cancel));
+        self::assertIsArray($diagnostics);
+        foreach ($diagnostics as $diagnostic) {
+            self::assertInstanceOf(Diagnostic::class, $diagnostic);
+        }
+        self::assertCount($expectedDiagnostics, $diagnostics);
+    }
 
-                EOF
-        );
+    /**
+     * @dataProvider fileProvider
+     */
+    public function testProvideDiagnosticsHidden(string $fileContent): void
+    {
+        $provider = $this->getPhpCsFixerDiagnosticsProvider(false);
+
+        $cancel = new NullCancellationToken();
+        $document = ProtocolFactory::textDocumentItem('/tmp/test.php', $fileContent);
+
+        $diagnostics = wait($provider->provideDiagnostics($document, $cancel));
+        self::assertIsArray($diagnostics);
+        self::assertCount(0, $diagnostics);
+    }
+
+    /**
+     * @dataProvider fileProvider
+     */
+    public function testProvideActionsForVisibleDiagnostics(string $fileContent, int $expectedDiagnostics): void
+    {
+        $provider = $this->getPhpCsFixerDiagnosticsProvider(true);
+
+        $cancel = new NullCancellationToken();
+        $document = ProtocolFactory::textDocumentItem('/tmp/test.php', $fileContent);
 
         $actions = wait(
             $provider->provideActionsFor(
-            $invalidDocument,
-            Range::fromArray([
-                'start' => Position::fromArray(['line' => 0, 'character' => 0]),
-                'end' => Position::fromArray(['line' => 3, 'character' => 0]),
-            ]),
-            $cancel
-        )
+                $document,
+                new Range(
+                    new Position(0, 0),
+                    new Position(PHP_INT_MAX, PHP_INT_MAX)
+                ),
+                $cancel
+            )
         );
 
-        $this->assertIsArray($actions);
-        $this->assertInstanceOf(CodeAction::class, $actions[0] ?? null);
+        self::assertIsArray($actions);
+        if ($expectedDiagnostics > 0) {
+            self::assertTrue(count($actions) > 0, 'Expected at least one action if file has diagnostics');
+        }
+        foreach ($actions as $action) {
+            self::assertInstanceOf(CodeAction::class, $action);
+        }
+    }
+
+    /**
+     * @dataProvider fileProvider
+     */
+    public function testProvideActionsForHiddenDiagnostics(string $fileContent, int $expectedDiagnostics): void
+    {
+        $provider = $this->getPhpCsFixerDiagnosticsProvider(false);
+
+        $cancel = new NullCancellationToken();
+        $document = ProtocolFactory::textDocumentItem('/tmp/test.php', $fileContent);
+
+        $actions = wait(
+            $provider->provideActionsFor(
+                $document,
+                new Range(
+                    new Position(0, 0),
+                    new Position(PHP_INT_MAX, PHP_INT_MAX)
+                ),
+                $cancel
+            )
+        );
+
+        self::assertIsArray($actions);
+        if ($expectedDiagnostics > 0) {
+            self::assertTrue(count($actions) > 0, 'Expected at least one action if file has diagnostics');
+        }
+        foreach ($actions as $action) {
+            self::assertInstanceOf(CodeAction::class, $action);
+        }
     }
 
     public function getPhpCsFixerDiagnosticsProvider(bool $showDiagnostics): PhpCsFixerDiagnosticsProvider
@@ -109,5 +118,34 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
             $showDiagnostics,
             new NullLogger()
         );
+    }
+
+    public function fileProvider(): array
+    {
+        return [
+            [
+                <<<EOF
+                    <?php
+
+                    namespace Test;
+                    \$foo = 'bar';
+                        \$test1 = true;
+                        \$test2 = true;
+                        \$test3 = true;
+                    \$lao = "tzu";
+                    EOF,
+                // expected diagnostics
+                4,
+            ],
+            [
+                <<<EOF
+                    <?php
+
+                    \$foo = 'bar';
+
+                    EOF,
+                0
+            ]
+        ];
     }
 }
