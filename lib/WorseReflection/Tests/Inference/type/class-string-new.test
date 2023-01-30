@@ -1,0 +1,6 @@
+<?php
+
+$f = Foo::class;
+$f = new $f;
+
+wrAssertType('Foo', $f);
