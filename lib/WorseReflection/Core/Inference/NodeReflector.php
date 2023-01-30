@@ -3,9 +3,12 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\QualifiedName;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionAttribute;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression as PhpactorReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
@@ -33,6 +36,10 @@ class NodeReflector
 
         if ($node instanceof ObjectCreationExpression) {
             return $this->reflectObjectCreationExpression($frame, $node);
+        }
+
+        if ($node->parent instanceof Attribute) {
+            return $this->reflectAttribute($frame, $node->parent);
         }
 
         throw new CouldNotResolveNode(sprintf(
@@ -84,6 +91,15 @@ class NodeReflector
     private function reflectObjectCreationExpression(Frame $frame, ObjectCreationExpression $node): ReflectionObjectCreationExpression
     {
         return new PhpactorReflectionObjectCreationExpression(
+            $this->services,
+            $frame,
+            $node
+        );
+    }
+
+    private function reflectAttribute(Frame $frame, Attribute $node): ReflectionNode
+    {
+        return new ReflectionAttribute(
             $this->services,
             $frame,
             $node
