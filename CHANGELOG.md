@@ -5,6 +5,17 @@ Changelog
 
 Bug fixes:
 
+  - `new class-string<Foo>` now resolves to `new Foo` #2065
+
+Improvements:
+
+  - Allow generation of constructor for Attributes.
+
+
+## 2023.01.21
+
+Bug fixes:
+
   - Allow class completion within constant declaration in class #1985 @przepompownia
   - Do not suggest return type on `__destruct` #1992
   - Do not report Prophecy methods as "not found" #2006
