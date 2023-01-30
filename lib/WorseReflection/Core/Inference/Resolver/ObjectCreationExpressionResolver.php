@@ -36,6 +36,9 @@ class ObjectCreationExpressionResolver implements Resolver
         $classType = $classContext->type();
 
         if ($classType instanceof ClassStringType) {
+            if ($classType->className() === null) {
+                return $classContext->withType(TypeFactory::object());
+            }
             $classType = TypeFactory::class($classType->className());
         }
 
