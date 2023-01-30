@@ -17,7 +17,6 @@ use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\WorkspaceEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ClassInvocation;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
