@@ -40,7 +40,7 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
 
         $name = $node->__toString();
         if ($node instanceof QualifiedName && str_contains($name, '\\')) {
-            $name = $node->getResolvedName()->__toString();
+            $name = '\\' . $node->getResolvedName()->__toString();
         }
 
         $suggestions = $this->completeName($name, $source->uri(), $node);

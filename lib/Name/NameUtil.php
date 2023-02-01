@@ -4,7 +4,15 @@ namespace Phpactor\Name;
 
 final class NameUtil
 {
-    public static function relativeTo(string $search, string $fqn): string
+    /**
+     * Return the FQN relative to the search.
+     *
+     * @param string $search - an absolute (but probably incomplete) qualified name
+     * @param string $fqn - a fully qualfiied name
+     *
+     * @return string the name relative to the last namespace of the search.
+     */
+    public static function relativeToSearch(string $search, string $fqn): string
     {
         $fqn = explode('\\', $fqn);
         $search = explode('\\', $search);

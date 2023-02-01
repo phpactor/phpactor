@@ -8,9 +8,11 @@ use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\Suggestion;
+use Phpactor\Name\NameUtil;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocumentUri;
+use PhpBench\Remote as Bench;
 
 abstract class NameSearcherCompletor
 {
@@ -24,10 +26,12 @@ abstract class NameSearcherCompletor
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
         foreach ($this->nameSearcher->search($name) as $result) {
-            $wasAbsolute = str_starts_with($name, '\\');
-            $options = $this->createSuggestionOptions($result, $sourceUri, $node, $wasAbsolute);
+            $wasQualified = str_contains($name, '\\');
+            $options = $this->createSuggestionOptions($result, $sourceUri, $node, $wasQualified);
             yield $this->createSuggestion(
+                $name,
                 $result,
+                $wasQualified,
                 $node,
                 $options,
             );
@@ -39,12 +43,13 @@ abstract class NameSearcherCompletor
     /**
      * @param array<string,string> $options
      */
-    protected function createSuggestion(NameSearchResult $result, ?Node $node = null, array $options = []): Suggestion
+    protected function createSuggestion(string $search, NameSearchResult $result, bool $wasQualified, ?Node $node = null, array $options = []): Suggestion
     {
         $options = array_merge($this->createSuggestionOptions($result, null, $node), $options);
 
-        if ($node !== null && $node->getParent() instanceof NamespaceUseClause) {
-            return Suggestion::createWithOptions($result->name()->__toString(), $options);
+        if ($node !== null && $wasQualified) {
+            $name = NameUtil::relativeToSearch(ltrim($search, '\\'), $result->name()->__toString());
+            return Suggestion::createWithOptions($name, $options);
         }
 
         return Suggestion::createWithOptions($result->name()->head(), $options);
@@ -53,7 +58,7 @@ abstract class NameSearcherCompletor
     /**
      * @return array<string,mixed>
      */
-    protected function createSuggestionOptions(NameSearchResult $result, ?TextDocumentUri $sourceUri = null, ?Node $node = null, bool $wasAbsolute = false): array
+    protected function createSuggestionOptions(NameSearchResult $result, ?TextDocumentUri $sourceUri = null, ?Node $node = null, bool $wasFullyQualified = false): array
     {
         $options = [
             'short_description' => $result->name()->__toString(),
@@ -63,7 +68,8 @@ abstract class NameSearcherCompletor
             'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
         ];
 
-        if (!$wasAbsolute && ($node === null || !($node->getParent() instanceof NamespaceUseClause))) {
+        // needed?
+        if (!$wasFullyQualified && ($node === null || !($node->getParent() instanceof NamespaceUseClause))) {
             $options['class_import'] = $this->classImport($result);
             $options['name_import'] = $result->name()->__toString();
         }

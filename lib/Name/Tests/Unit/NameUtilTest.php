@@ -13,7 +13,7 @@ class NameUtilTest extends TestCase
      */
     public function testRelativeTo(string $search, string $fqn, string $expected): void
     {
-        self::assertEquals($expected, NameUtil::relativeTo($search, $fqn));
+        self::assertEquals($expected, NameUtil::relativeToSearch($search, $fqn));
     }
     /**
      * @return Generator<array{string,string,string}>
