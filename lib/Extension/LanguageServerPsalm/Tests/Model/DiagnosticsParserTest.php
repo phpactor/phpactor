@@ -11,9 +11,9 @@ class DiagnosticsParserTest extends TestCase
     /**
      * @dataProvider provideParse
      */
-    public function testParse(string $pslamJson, int $count): void
+    public function testParse(string $psalmJson, int $count): void
     {
-        self::assertCount($count, (new DiagnosticsParser())->parse($pslamJson, '/path/to.php'));
+        self::assertCount($count, (new DiagnosticsParser())->parse($psalmJson, '/path/to.php'));
     }
 
     public function provideParse()
