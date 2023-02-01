@@ -5,6 +5,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor as CoreNameSearcherCompletor;
@@ -27,6 +28,8 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
     }
 
 
+    // 1. If no namespace separator  - search by short name
+    // 2. If namespace separator - resolve namespace, search by FQN
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $parent = $node->parent;
@@ -35,7 +38,12 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
             return true;
         }
 
-        $suggestions = $this->completeName($node, $source->uri(), $node);
+        $name = $node->__toString();
+        if ($node instanceof QualifiedName && str_contains($name, '\\')) {
+            $name = $node->getResolvedName()->__toString();
+        }
+
+        $suggestions = $this->completeName($name, $source->uri(), $node);
 
         yield from $suggestions;
 
