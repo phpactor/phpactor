@@ -12,7 +12,6 @@ use Phpactor\Name\NameUtil;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocumentUri;
-use PhpBench\Remote as Bench;
 
 abstract class NameSearcherCompletor
 {
@@ -26,7 +25,7 @@ abstract class NameSearcherCompletor
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
         foreach ($this->nameSearcher->search($name) as $result) {
-            $wasQualified = str_contains($name, '\\');
+            $wasQualified = NameUtil::isQualified($name);
             $options = $this->createSuggestionOptions($result, $sourceUri, $node, $wasQualified);
             yield $this->createSuggestion(
                 $name,

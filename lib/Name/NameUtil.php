@@ -26,6 +26,11 @@ final class NameUtil
 
             $rel[] = $segment;
         }
-        return implode($rel);
+        return implode('\\', $rel);
+    }
+
+    public static function isQualified(string $name): bool
+    {
+        return str_contains($name, '\\');
     }
 }

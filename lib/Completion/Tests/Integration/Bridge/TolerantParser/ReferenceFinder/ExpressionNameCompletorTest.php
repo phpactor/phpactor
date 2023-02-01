@@ -175,7 +175,7 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 [
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'Foobar',
-                    'short_description' => 'Foobar',
+                    'short_description' => 'Foobar\Foo\Foobar',
                 ]
             ],
         ];
@@ -208,11 +208,11 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         $searcher->search('b')->willYield([
             NameSearchResult::create('class', 'Foo\\Bar'),
         ]);
-        $searcher->search('NS1\Foo\Fo')->willYield([
+        $searcher->search('\NS1\Foo\Fo')->willYield([
             NameSearchResult::create('class', 'Foobar')
         ]);
-        $searcher->search('Foobar\Foo\Fo')->willYield([
-            NameSearchResult::create('class', 'Foobar')
+        $searcher->search('\Foobar\Foo\Fo')->willYield([
+            NameSearchResult::create('class', 'Foobar\Foo\Foobar')
         ]);
 
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
