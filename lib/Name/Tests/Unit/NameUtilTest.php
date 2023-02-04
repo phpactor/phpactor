@@ -56,7 +56,7 @@ class NameUtilTest extends TestCase
         self::assertEquals($expected, NameUtil::childSegmentAtSearch($fqn, $search));
     }
     /**
-     * @return Generator<array{string,string,string}>
+     * @return Generator<array{string,string,array{(null|string),bool}}>
      */
     public function provideSegmentAtSearch(): Generator
     {

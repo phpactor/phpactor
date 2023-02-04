@@ -17,6 +17,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
 class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Completor
@@ -53,7 +54,7 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
             return true;
         }
 
-        $namespace = $node->getNamespaceDefinition()?->name->__toString();
+        $namespace = NodeUtil::namespace($node);
         if (NameUtil::isQualified($annotation) && $namespace) {
             $annotation = '\\' . NameUtil::join($namespace, $annotation);
         }

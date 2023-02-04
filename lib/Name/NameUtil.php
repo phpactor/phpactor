@@ -63,13 +63,7 @@ final class NameUtil
 
     public static function join(string ...$segments): string
     {
-        return implode('\\', array_map(fn(string $s) => self::normalize($s), $segments));
-    }
-
-    private static function normalize(string $name): string
-    {
-        // trim?
-        return ltrim($name, '\\');
+        return implode('\\', array_map(fn (string $s) => self::normalize($s), $segments));
     }
 
     public static function toFullyQualfiied(string $name): string
@@ -78,5 +72,11 @@ final class NameUtil
             return $name;
         }
         return '\\' . $name;
+    }
+
+    private static function normalize(string $name): string
+    {
+        // trim?
+        return ltrim($name, '\\');
     }
 }

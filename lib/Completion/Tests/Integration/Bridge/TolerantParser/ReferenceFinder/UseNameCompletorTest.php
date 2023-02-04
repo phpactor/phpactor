@@ -3,7 +3,7 @@
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceFinder;
 
 use Generator;
-use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\AttributeCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\UseNameCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\Suggestion;
@@ -13,7 +13,7 @@ use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
-class AttributeCompletorTest extends TolerantCompletorTestCase
+class UseNameCompletorTest extends TolerantCompletorTestCase
 {
     /**
      * @dataProvider provideComplete
@@ -30,8 +30,8 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
      */
     public function provideComplete(): Generator
     {
-        yield 'new class instance' => [
-            '<?php namespace Foo { #[Foo<>]class Bar{}',
+        yield 'first segment' => [
+            '<?php use Fo<>',
  [
                 [
                     'type'              => Suggestion::TYPE_CLASS,
@@ -40,45 +40,31 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
-
-        yield 'only show children for qualified names' => [
-            '<?php namespace Foo { #[Relative\<>]class Bar{}', [
-                [
-                    'type'              => Suggestion::TYPE_MODULE,
-                    'name'              => 'One',
-                    'short_description' => 'Foo\Relative\One',
-                ],
+        yield 'second segment' => [
+            '<?php use Foobar\Bar<>',
+ [
                 [
                     'type'              => Suggestion::TYPE_CLASS,
-                    'name'              => 'Two',
-                    'short_description' => 'Foo\Relative\Two',
-                ],
-                [
-                    'type'              => Suggestion::TYPE_MODULE,
-                    'name'              => 'Two',
-                    'short_description' => 'Foo\Relative\Two',
-                ],
-            ],
+                    'name'              => 'Barfoo',
+                    'short_description' => 'Foobar\Barfoo',
+                ]
+            ]
         ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
-        $searcher->search('Foo')->willYield([
+        $searcher->search('\Fo')->willYield([
             NameSearchResult::create('class', 'Foobar'),
         ]);
-        $searcher->search('\\Foo\\Relative')->willYield([
-            NameSearchResult::create('class', 'Foo\Relative\One\Blah\Boo'),
-            NameSearchResult::create('class', 'Foo\Relative\One\Glorm\Bar'),
-            NameSearchResult::create('class', 'Foo\Relative\One\Blah'),
-            NameSearchResult::create('class', 'Foo\Relative\Two'),
-            NameSearchResult::create('class', 'Foo\Relative\Two\Glorm\Bar'),
-        ]);
 
+        $searcher->search('\Foobar\Bar')->willYield([
+            NameSearchResult::create('class', 'Foobar\Barfoo'),
+        ]);
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
 
-        return new AttributeCompletor(
+        return new UseNameCompletor(
             $searcher->reveal(),
             new DefaultResultPrioritizer(),
         );

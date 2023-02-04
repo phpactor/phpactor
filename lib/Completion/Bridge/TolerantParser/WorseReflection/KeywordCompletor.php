@@ -32,6 +32,10 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
+        if (CompletionContext::attribute($node)) {
+            return true;
+        }
+
         if (
             CompletionContext::classMembersBody($node->parent)
         ) {
