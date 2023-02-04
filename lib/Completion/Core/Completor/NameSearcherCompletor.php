@@ -24,8 +24,25 @@ abstract class NameSearcherCompletor
 
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
+        $wasQualified = NameUtil::isQualified($name);
+        $seenSegments = [];
         foreach ($this->nameSearcher->search($name) as $result) {
-            $wasQualified = NameUtil::isQualified($name);
+            // if child segment is short name, suggest
+            // if child segment is namespace specifier, create suggestion if not already suggested
+            // otherwise continue
+            [$segment, $isLast] = NameUtil::namespaceSegmentAtSearch($result->name(), $name);
+            if (false === $isLast) {
+                if (isset($seenSegments[$segment])) {
+                    continue;
+                }
+
+                return Suggestion::createWithOptions($segment, [
+                    'short_description' => $result->name()->__toString(),
+                    'type' => Suggestion::TYPE_MODULE,
+                    'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
+                ]);
+            }
+
             $options = $this->createSuggestionOptions($result, $sourceUri, $node, $wasQualified);
             yield $this->createSuggestion(
                 $name,

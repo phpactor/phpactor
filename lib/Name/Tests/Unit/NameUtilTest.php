@@ -46,4 +46,56 @@ class NameUtilTest extends TestCase
             'Bar\Foobar',
         ];
     }
+
+    /**
+     * @dataProvider provideSegmentAtSearch
+     * @param array{string,bool} $expected
+     */
+    public function testSegmentAtSearch(string $fqn, string $search, array $expected): void
+    {
+        self::assertEquals($expected, NameUtil::childSegmentAtSearch($fqn, $search));
+    }
+    /**
+     * @return Generator<array{string,string,string}>
+     */
+    public function provideSegmentAtSearch(): Generator
+    {
+        yield [
+            'Foo',
+            'Foo',
+            [null, false],
+        ];
+
+        yield [
+            'Foo\Bar',
+            'Foo',
+            ['Bar', true],
+        ];
+
+        yield [
+            'Foo\Bar',
+            'Foo\Bar',
+            [null, false],
+        ];
+        yield [
+            'Foo\Bar\Foobar',
+            'Foo\Bar\F',
+            ['Foobar', true],
+        ];
+        yield [
+            'Foo\Bar\Foobar\Bar\Baz',
+            'Foo\Bar',
+            ['Foobar', false],
+        ];
+        yield [
+            'Foo\Bar\Foobar\Bar\Baz',
+            'Foo\Bar\\',
+            ['Foobar', false],
+        ];
+        yield [
+            'Foo\Bar\Foobar\Bar\Baz',
+            'Foo',
+            ['Bar', false],
+        ];
+    }
 }

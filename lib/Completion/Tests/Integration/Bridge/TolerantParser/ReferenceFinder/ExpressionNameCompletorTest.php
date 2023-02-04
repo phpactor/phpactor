@@ -179,6 +179,21 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ],
         ];
+
+        yield 'only show children for qualified names' => [
+            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Relative\<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'One',
+                    'short_description' => 'Relative\One',
+                ],
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'One',
+                    'short_description' => 'Relative\Two',
+                ],
+            ],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -213,6 +228,13 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         ]);
         $searcher->search('\Foobar\Foo\Fo')->willYield([
             NameSearchResult::create('class', 'Foobar\Foo\Foobar')
+        ]);
+        $searcher->search('\\NS1\\Relative')->willYield([
+            NameSearchResult::create('class', 'NS1\Relative\One\Blah\Boo'),
+            NameSearchResult::create('class', 'NS1\Relative\One\Glorm\Bar'),
+            NameSearchResult::create('class', 'NS1\Relative\One\Blah'),
+            NameSearchResult::create('class', 'NS1\Relative\Two'),
+            NameSearchResult::create('class', 'NS1\Relative\Two\Glorm\Bar'),
         ]);
 
         $reflector = ReflectorBuilder::create()->addSource($source)->build();

@@ -33,4 +33,27 @@ final class NameUtil
     {
         return str_contains($name, '\\');
     }
+
+    /**
+     * Return the child segment name relative to the given search.
+     *
+     * @return array{?string,bool}
+     */
+    public static function childSegmentAtSearch(string $fqn, string $search): array
+    {
+        $fqn = explode('\\', $fqn);
+        $search = explode('\\', $search);
+        $rel = [];
+
+        foreach ($fqn as $index => $segment) {
+            $seg = array_shift($search);
+            if ($segment === $seg) {
+                continue;
+            }
+
+            return [$segment, $index === count($fqn) - 1];
+        }
+
+        return [null, false];
+    }
 }
