@@ -24,6 +24,7 @@ abstract class NameSearcherCompletor
 
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
+        dump($name);
         $wasQualified = NameUtil::isQualified($name);
         $visitedChildSegments = [];
         foreach ($this->nameSearcher->search($name) as $result) {
