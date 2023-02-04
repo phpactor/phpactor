@@ -71,4 +71,12 @@ final class NameUtil
         // trim?
         return ltrim($name, '\\');
     }
+
+    public static function toFullyQualfiied(string $name): string
+    {
+        if (substr($name, 0, 1) == '\\') {
+            return $name;
+        }
+        return '\\' . $name;
+    }
 }

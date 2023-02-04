@@ -28,7 +28,6 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
         parent::__construct($nameSearcher, $prioritizer);
     }
 
-
     // 1. If no namespace separator  - search by short name
     // 2. If namespace separator - resolve namespace, search by FQN
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
@@ -41,7 +40,7 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
 
         $name = $node->__toString();
         if ($node instanceof QualifiedName && NameUtil::isQualified($name)) {
-            $name = '\\' . $node->getResolvedName()->__toString();
+            $name = NameUtil::toFullyQualfiied((string)$node->getResolvedName());
         }
 
         $suggestions = $this->completeName($name, $source->uri(), $node);
