@@ -97,5 +97,15 @@ class NameUtilTest extends TestCase
             'Foo',
             ['Bar', false],
         ];
+        yield [
+            '\Foo\Bar\Foobar\Bar\Baz',
+            'Foo',
+            ['Bar', false],
+        ];
+        yield [
+            'Foo\Bar\Foobar\Bar\Baz',
+            '\Foo\Bar',
+            ['Foobar', false],
+        ];
     }
 }

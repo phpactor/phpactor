@@ -10,6 +10,7 @@ use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Util\OffsetHelper;
+use Phpactor\Name\NameUtil;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\ByteOffset;
@@ -50,6 +51,11 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
         if (!$annotation = $this->extractAnnotation($truncatedSource)) {
             // Ignore if not an annotation
             return true;
+        }
+
+        $namespace = $node->getNamespaceDefinition()?->name->__toString();
+        if (NameUtil::isQualified($annotation) && $namespace) {
+            $annotation = '\\' . NameUtil::join($namespace, $annotation);
         }
 
         $suggestions = $this->completeName($annotation, $source->uri());

@@ -37,7 +37,7 @@ abstract class CompletorTestCase extends IntegrationTestCase
             TextDocumentBuilder::create($source)->language('php')->uri('file:///tmp/test')->build(),
             ByteOffset::fromInt((int)$offset)
         );
-        $suggestions = iterator_to_array($suggestionGenerator);
+        $suggestions = iterator_to_array($suggestionGenerator, false);
         usort($suggestions, function (Suggestion $suggestion1, Suggestion $suggestion2) {
             return $suggestion1->name() <=> $suggestion2->name();
         });

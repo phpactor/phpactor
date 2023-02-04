@@ -11,6 +11,7 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor as CoreNameSearcherCompletor;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
+use Phpactor\Name\NameUtil;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\ByteOffset;
@@ -39,7 +40,7 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
         }
 
         $name = $node->__toString();
-        if ($node instanceof QualifiedName && str_contains($name, '\\')) {
+        if ($node instanceof QualifiedName && NameUtil::isQualified($name)) {
             $name = '\\' . $node->getResolvedName()->__toString();
         }
 

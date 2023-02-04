@@ -14,6 +14,8 @@ final class NameUtil
      */
     public static function relativeToSearch(string $search, string $fqn): string
     {
+        // $fqn = ltrim($fqn, '\\');
+        // $search = ltrim($search, '\\');
         $fqn = explode('\\', $fqn);
         $search = explode('\\', $search);
         $rel = [];
@@ -41,6 +43,8 @@ final class NameUtil
      */
     public static function childSegmentAtSearch(string $fqn, string $search): array
     {
+        $fqn = self::normalize($fqn);
+        $search = self::normalize($search);
         $fqn = explode('\\', $fqn);
         $search = explode('\\', $search);
         $rel = [];
@@ -55,5 +59,16 @@ final class NameUtil
         }
 
         return [null, false];
+    }
+
+    public static function join(string ...$segments): string
+    {
+        return implode('\\', array_map(fn(string $s) => self::normalize($s), $segments));
+    }
+
+    private static function normalize(string $name): string
+    {
+        // trim?
+        return ltrim($name, '\\');
     }
 }

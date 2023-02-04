@@ -25,31 +25,23 @@ abstract class NameSearcherCompletor
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
         $wasQualified = NameUtil::isQualified($name);
-        $seenSegments = [];
+        $visitedChildSegments = [];
         foreach ($this->nameSearcher->search($name) as $result) {
-            // if child segment is short name, suggest
-            // if child segment is namespace specifier, create suggestion if not already suggested
-            // otherwise continue
-            [$segment, $isLast] = NameUtil::namespaceSegmentAtSearch($result->name(), $name);
-            if (false === $isLast) {
-                if (isset($seenSegments[$segment])) {
-                    continue;
-                }
 
-                return Suggestion::createWithOptions($segment, [
-                    'short_description' => $result->name()->__toString(),
-                    'type' => Suggestion::TYPE_MODULE,
-                    'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
-                ]);
+            // if the child segment relative to the search is not the last segment
+            // then suggest the child segment only
+            [$segment, $isLast] = NameUtil::childSegmentAtSearch($result->name(), $name);
+            if ($wasQualified && $segment && false === $isLast) {
+                yield from $this->suggestChildSegment($visitedChildSegments, $name, $result, $sourceUri, $segment);
+                continue;
             }
 
-            $options = $this->createSuggestionOptions($result, $sourceUri, $node, $wasQualified);
             yield $this->createSuggestion(
                 $name,
                 $result,
                 $wasQualified,
                 $node,
-                $options,
+                $this->createSuggestionOptions($result, $sourceUri, $node, $wasQualified),
             );
         }
 
@@ -117,5 +109,25 @@ abstract class NameSearcherCompletor
         }
 
         return null;
+    }
+    /**
+     * @param array<string,bool> $visitedSegments
+     * @return Generator<Suggestion>
+     */
+    private function suggestChildSegment(&$visitedSegments, string $search, NameSearchResult $result, TextDocumentUri $sourceUri, string $segment): Generator
+    {
+        if (isset($visitedSegments[$segment])) {
+            return;
+        }
+        $visitedSegments[$segment] = true;
+
+        yield Suggestion::createWithOptions($segment, [
+            'short_description' => NameUtil::join(
+                NameUtil::relativeToSearch($result->name()->__toString(), $search),
+                $segment
+            ),
+            'type' => Suggestion::TYPE_MODULE,
+            'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
+        ]);
     }
 }

@@ -183,14 +183,19 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         yield 'only show children for qualified names' => [
             '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Relative\<> }', [
                 [
-                    'type'              => Suggestion::TYPE_CLASS,
+                    'type'              => Suggestion::TYPE_MODULE,
                     'name'              => 'One',
-                    'short_description' => 'Relative\One',
+                    'short_description' => 'NS1\Relative\One',
                 ],
                 [
                     'type'              => Suggestion::TYPE_CLASS,
-                    'name'              => 'One',
-                    'short_description' => 'Relative\Two',
+                    'name'              => 'Two',
+                    'short_description' => 'NS1\Relative\Two',
+                ],
+                [
+                    'type'              => Suggestion::TYPE_MODULE,
+                    'name'              => 'Two',
+                    'short_description' => 'NS1\Relative\Two',
                 ],
             ],
         ];
