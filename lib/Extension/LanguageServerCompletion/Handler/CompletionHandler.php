@@ -150,7 +150,8 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
             '@',
             '(',
             '\'',
-            '"'
+            '"',
+            '\\'
         ]);
         $capabilities->signatureHelpProvider = new SignatureHelpOptions(['(', ',']);
         $capabilities->completionProvider->resolveProvider = true;

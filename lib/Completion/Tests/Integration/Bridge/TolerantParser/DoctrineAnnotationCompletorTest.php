@@ -59,19 +59,19 @@ class DoctrineAnnotationCompletorTest extends CompletorTestCase
             <<<'EOT'
                 <?php
 
-                namespace App\Annotation;
+                namespace App\Annotation {
+                    /**
+                     * @Annotation
+                     */
+                    class Entity {}
+                }
 
-                /**
-                 * @Annotation
-                 */
-                class Entity {}
-
-                namespace App;
-
-                /**
-                 * @Ent<>
-                 */
-                class Foo {}
+                namespace App {
+                    /**
+                     * @Ent<>
+                     */
+                    class Foo {}
+                }
                 EOT
         , [
             [

@@ -329,4 +329,19 @@ class NodeUtil
 
         return null;
     }
+
+    public static function namespace(Node $node): ?string
+    {
+        $namespace = $node->getNamespaceDefinition();
+
+        if (null === $namespace) {
+            return null;
+        }
+
+        if (!$namespace->name instanceof QualifiedName) {
+            return null;
+        }
+
+        return $namespace->name->__toString();
+    }
 }

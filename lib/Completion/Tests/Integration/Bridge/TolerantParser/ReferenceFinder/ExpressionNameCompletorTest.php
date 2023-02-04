@@ -17,13 +17,16 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
     /**
      * @dataProvider provideComplete
      *
-     * @param array<mixed> $expected
+     * @param array{string,array<int,array<string,string>>} $expected
      */
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
+    /**
+     * @return Generator<string,array{string,array<int,array<string,string>>}>
+     */
     public function provideComplete(): Generator
     {
         yield 'new class instance' => [
@@ -156,6 +159,46 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ],
         ];
+
+        yield 'within namespace with no import match' => [
+            '<?php namespace NS1{class Foobar {} match (true) { 1 => Foo\Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar',
+                ]
+            ],
+        ];
+
+        yield 'within namespace with with import match' => [
+            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Foo\Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar\Foo\Foobar',
+                ]
+            ],
+        ];
+
+        yield 'only show children for qualified names' => [
+            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Relative\<> }', [
+                [
+                    'type'              => Suggestion::TYPE_MODULE,
+                    'name'              => 'One',
+                    'short_description' => 'NS1\Relative\One',
+                ],
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Two',
+                    'short_description' => 'NS1\Relative\Two',
+                ],
+                [
+                    'type'              => Suggestion::TYPE_MODULE,
+                    'name'              => 'Two',
+                    'short_description' => 'NS1\Relative\Two',
+                ],
+            ],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -184,6 +227,19 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         ]);
         $searcher->search('b')->willYield([
             NameSearchResult::create('class', 'Foo\\Bar'),
+        ]);
+        $searcher->search('\NS1\Foo\Fo')->willYield([
+            NameSearchResult::create('class', 'Foobar')
+        ]);
+        $searcher->search('\Foobar\Foo\Fo')->willYield([
+            NameSearchResult::create('class', 'Foobar\Foo\Foobar')
+        ]);
+        $searcher->search('\\NS1\\Relative')->willYield([
+            NameSearchResult::create('class', 'NS1\Relative\One\Blah\Boo'),
+            NameSearchResult::create('class', 'NS1\Relative\One\Glorm\Bar'),
+            NameSearchResult::create('class', 'NS1\Relative\One\Blah'),
+            NameSearchResult::create('class', 'NS1\Relative\Two'),
+            NameSearchResult::create('class', 'NS1\Relative\Two\Glorm\Bar'),
         ]);
 
         $reflector = ReflectorBuilder::create()->addSource($source)->build();

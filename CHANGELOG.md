@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Features:
+
+  - Hierarchical namespace segment completion #2070
+
 Bug fixes:
 
   - `new class-string<Foo>` now resolves to `new Foo` #2065

@@ -138,6 +138,10 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { public const X = [sel<> }',
             false,
         ];
+        yield 'attribute' => [
+            '<?php class Foo { public function baz(){} #[Foo\<>]public function bar(){}}',
+            false,
+        ];
     }
 
     /**
