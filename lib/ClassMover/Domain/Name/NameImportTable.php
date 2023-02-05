@@ -7,8 +7,10 @@ use RuntimeException;
 
 class NameImportTable
 {
-    private $importedNameRefs = [];
+    /** @var ImportedNameReference[] */
+    private array $importedNameRefs = [];
 
+    /** @param ImportedNameReference[] $importedNamespaceNames */
     private function __construct(private Namespace_ $namespace, array $importedNamespaceNames)
     {
         foreach ($importedNamespaceNames as $importedNamespaceName) {
@@ -16,12 +18,13 @@ class NameImportTable
         }
     }
 
+    /** @param ImportedNameReference[] $importedNameRefs */
     public static function fromImportedNameRefs(Namespace_ $namespace, array $importedNameRefs): NameImportTable
     {
         return new self($namespace, $importedNameRefs);
     }
 
-    public function isNameImported(QualifiedName $name)
+    public function isNameImported(QualifiedName $name): bool
     {
         foreach ($this->importedNameRefs as $importedNameRef) {
             if ($importedNameRef->importedName()->qualifies($name)) {
@@ -46,7 +49,7 @@ class NameImportTable
         ));
     }
 
-    public function resolveClassName(QualifiedName $name)
+    public function resolveClassName(QualifiedName $name): FullyQualifiedName
     {
         foreach ($this->importedNameRefs as $importedNameRef) {
             if ($importedNameRef->importedName()->qualifies($name)) {
@@ -66,7 +69,7 @@ class NameImportTable
         return $this->namespace;
     }
 
-    public function isAliased(QualifiedName $name)
+    public function isAliased(QualifiedName $name): bool
     {
         foreach ($this->importedNameRefs as $importedNameRef) {
             if ($importedNameRef->importedName()->qualifies($name)) {

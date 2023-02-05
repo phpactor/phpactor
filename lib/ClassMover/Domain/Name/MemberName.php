@@ -4,7 +4,7 @@ namespace Phpactor\ClassMover\Domain\Name;
 
 class MemberName extends Label
 {
-    public function matches(string $name)
+    public function matches(string $name): bool
     {
         $compare = ltrim($name, '$');
         $thisName = ltrim((string) $this, '$');
