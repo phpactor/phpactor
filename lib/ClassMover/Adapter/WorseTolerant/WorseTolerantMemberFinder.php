@@ -194,7 +194,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         return $memberNodes;
     }
 
-    private function isMethodAccess(Node $node)
+    private function isMethodAccess(Node $node): bool
     {
         if (false === $node instanceof CallExpression) {
             return false;
@@ -392,7 +392,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         return $reference->withClass(Class_::fromString((string) $type->name()->full()));
     }
 
-    private function memberStartPosition(Node $memberNode)
+    private function memberStartPosition(Node $memberNode): int
     {
         assert($memberNode instanceof MethodDeclaration || $memberNode instanceof ConstElement || $memberNode instanceof Variable);
         $start = $memberNode->name->start;

@@ -28,16 +28,16 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
 
     public function name(): string
     {
+        /** @var object $name */
         $name = $this->node->name;
         if ($name instanceof Token) {
             return (string)$name->getText($this->node->getFileContents());
         }
-        /** @phpstan-ignore-next-line just in case */
         if ($name instanceof QualifiedName) {
             return $name->__toString();
         }
 
-        throw new RuntimeException('This shoud not happen');
+        throw new RuntimeException('This should not happen');
     }
 
     public function nameRange(): ByteOffsetRange

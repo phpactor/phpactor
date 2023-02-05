@@ -28,7 +28,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class TolerantClassFinder implements ClassFinder
 {
-    private $parser;
+    private Parser $parser;
 
     public function __construct(Parser $parser = null)
     {
@@ -47,7 +47,8 @@ class TolerantClassFinder implements ClassFinder
         return NamespacedClassReferences::fromNamespaceAndClassRefs($namespaceRef, $classRefs);
     }
 
-    private function resolveClassNames($source, NameImportTable $env, $ast): array
+    /** @return array<ClassReference> */
+    private function resolveClassNames(TextDocument $source, NameImportTable $env, $ast): array
     {
         $classRefs = [];
         $nodes = $ast->getDescendantNodes();
@@ -125,7 +126,7 @@ class TolerantClassFinder implements ClassFinder
         return $classRefs;
     }
 
-    private function getClassEnvironment(Namespace_ $namespace, SourceFileNode $node)
+    private function getClassEnvironment(Namespace_ $namespace, SourceFileNode $node): NameImportTable
     {
         $useImportRefs = [];
         foreach ($node->getChildNodes() as $childNode) {
@@ -139,7 +140,10 @@ class TolerantClassFinder implements ClassFinder
         return NameImportTable::fromImportedNameRefs($namespace, $useImportRefs);
     }
 
-    private function populateUseImportRefs(NamespaceUseDeclaration $useDeclaration, &$useImportRefs): void
+    /**
+     * @param array<ImportedNameReference> $useImportRefs
+     */
+    private function populateUseImportRefs(NamespaceUseDeclaration $useDeclaration, array &$useImportRefs): void
     {
         if (null === $useDeclaration->useClauses) {
             return;

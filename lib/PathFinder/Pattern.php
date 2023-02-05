@@ -59,7 +59,6 @@ class Pattern
             ));
         }
 
-        /** @phpstan-ignore-next-line */
         return array_intersect_key($matches, (array)array_combine($this->tokenNames, $this->tokenNames));
     }
 

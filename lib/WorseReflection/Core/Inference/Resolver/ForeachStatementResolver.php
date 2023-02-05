@@ -73,7 +73,6 @@ class ForeachStatementResolver implements Resolver
             return;
         }
 
-        /** @phpstan-ignore-next-line */
         $itemName = $expression->name->getText($node->getFileContents());
 
         if (!is_string($itemName)) {

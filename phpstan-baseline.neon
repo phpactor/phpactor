@@ -6,49 +6,9 @@ parameters:
 			path: lib/Application.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:getClassEnvironment\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:populateUseImportRefs\\(\\) has parameter \\$useImportRefs with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:resolveClassNames\\(\\) has parameter \\$ast with no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:resolveClassNames\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:resolveClassNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacer\\:\\:classIsTheOriginalInstance\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassReplacer.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacer\\:\\:classIsTheOriginalInstance\\(\\) has parameter \\$originalName with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassReplacer.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacer\\:\\:replaceOriginalInstanceNamespace\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassReplacer.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacer\\:\\:shouldImportClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassReplacer.php
 
 		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\BracedExpression\\|Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\Variable\\|Microsoft\\\\PhpParser\\\\Token\\:\\:\\$start\\.$#"
@@ -82,16 +42,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:getScopedPropertyAccessReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:isMethodAccess\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:memberStartPosition\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 
@@ -131,16 +81,6 @@ parameters:
 			path: lib/ClassMover/Domain/Model/ClassMemberQuery.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\Class_\\:\\:fromFullyQualifiedName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/Class_.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\Class_\\:\\:fromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Model/Class_.php
-
-		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\FullyQualifiedName\\:\\:fromString\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/FullyQualifiedName.php
@@ -151,69 +91,14 @@ parameters:
 			path: lib/ClassMover/Domain/Name/ImportedName.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\ImportedName\\:\\:isAlias\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/ImportedName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\ImportedName\\:\\:qualifies\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/ImportedName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\ImportedName\\:\\:withAlias\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/ImportedName.php
-
-		-
 			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\ImportedName\\:\\:\\$alias has no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/ImportedName.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\Label\\:\\:__construct\\(\\) has parameter \\$label with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/Label.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/Label.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\MemberName\\:\\:matches\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/MemberName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\NameImportTable\\:\\:__construct\\(\\) has parameter \\$importedNamespaceNames with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/NameImportTable.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\NameImportTable\\:\\:fromImportedNameRefs\\(\\) has parameter \\$importedNameRefs with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/NameImportTable.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\NameImportTable\\:\\:isAliased\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/NameImportTable.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\NameImportTable\\:\\:isNameImported\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/NameImportTable.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\NameImportTable\\:\\:resolveClassName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/NameImportTable.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\NameImportTable\\:\\:\\$importedNameRefs has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/NameImportTable.php
 
 		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:base\\(\\) has no return type specified\\.$#"
@@ -269,26 +154,6 @@ parameters:
 			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ClassReference\\:\\:\\$position has no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Reference/ClassReference.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ImportedNameReference\\:\\:exists\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/ImportedNameReference.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ImportedNameReference\\:\\:importedName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/ImportedNameReference.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ImportedNameReference\\:\\:none\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/ImportedNameReference.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\ImportedNameReference\\:\\:position\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/ImportedNameReference.php
 
 		-
 			message: "#^Class Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReferences implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"

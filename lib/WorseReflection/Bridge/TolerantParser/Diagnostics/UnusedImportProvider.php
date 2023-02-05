@@ -141,7 +141,6 @@ class UnusedImportProvider implements DiagnosticProvider
     private function lastPart(string $name): string
     {
         $parts = array_filter(explode('\\', $name));
-        /** @phpstan-ignore-next-line TP lies */
         if (!$parts) {
             return '';
         }

@@ -19,7 +19,7 @@ final class ImportedName extends Namespace_
         return $lastPart;
     }
 
-    public function qualifies(QualifiedName $name)
+    public function qualifies(QualifiedName $name): bool
     {
         $head = $this->alias ?: $this->head();
         $qualifies = $head === $name->base();
@@ -32,7 +32,7 @@ final class ImportedName extends Namespace_
         return FullyQualifiedName::fromString($this->parentNamespace()->__toString().'\\'.$name->__toString());
     }
 
-    public function withAlias(string $alias)
+    public function withAlias(string $alias): self
     {
         $new = new self($this->parts);
         $new->alias = $alias;
@@ -40,7 +40,7 @@ final class ImportedName extends Namespace_
         return $new;
     }
 
-    public function isAlias()
+    public function isAlias(): bool
     {
         return null !== $this->alias;
     }
