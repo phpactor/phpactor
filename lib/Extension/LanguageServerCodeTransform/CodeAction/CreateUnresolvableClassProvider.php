@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
+use LanguageServerProtocol\CodeActionKind;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
 use Phpactor\CodeTransform\Domain\Generators;
@@ -76,7 +77,8 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND
+            self::KIND,
+            CodeActionKind::QUICK_FIX,
         ];
     }
 }

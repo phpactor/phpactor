@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
+use LanguageServerProtocol\CodeActionKind;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
@@ -32,7 +33,8 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
     public function kinds(): array
     {
         return [
-            $this->kind()
+            $this->kind(),
+            CodeActionKind::REFACTOR_REWRITE,
         ];
     }
 

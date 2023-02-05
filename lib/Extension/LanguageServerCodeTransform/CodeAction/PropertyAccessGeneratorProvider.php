@@ -13,6 +13,7 @@ use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Reflector;
+use LanguageServerProtocol\CodeActionKind;
 use function Amp\call;
 
 class PropertyAccessGeneratorProvider implements CodeActionProvider
@@ -29,6 +30,7 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
     {
         return [
             $this->kind,
+            CodeActionKind::REFACTOR_REWRITE,
         ];
     }
 

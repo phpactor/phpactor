@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
+use LanguageServerProtocol\CodeActionKind;
 use Phpactor\CodeTransform\Domain\NameWithByteOffset;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportAllUnresolvedNamesCommand;
@@ -22,6 +23,8 @@ use function Amp\delay;
 
 class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
 {
+    public const KIND = 'quickfix.import_class';
+
     public function __construct(
         private CandidateFinder $finder,
         private bool $reportNonExistingClasses = true
@@ -49,7 +52,8 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
     public function kinds(): array
     {
         return [
-            'quickfix.import_class'
+            self::KIND,
+            CodeActionKind::QUICK_FIX,
         ];
     }
 

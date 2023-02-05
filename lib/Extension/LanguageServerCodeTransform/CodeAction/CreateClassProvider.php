@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
+use LanguageServerProtocol\CodeActionKind;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
@@ -31,7 +32,8 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND
+            self::KIND,
+            CodeActionKind::QUICK_FIX,
         ];
     }
 

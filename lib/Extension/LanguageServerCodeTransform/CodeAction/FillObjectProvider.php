@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
+use LanguageServerProtocol\CodeActionKind;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
@@ -49,6 +50,9 @@ class FillObjectProvider implements CodeActionProvider
 
     public function kinds(): array
     {
-        return [self::KIND];
+        return [
+            self::KIND,
+            CodeActionKind::REFACTOR_REWRITE,
+        ];
     }
 }
