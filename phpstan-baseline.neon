@@ -6,27 +6,7 @@ parameters:
 			path: lib/Application.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:getClassEnvironment\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:populateUseImportRefs\\(\\) has parameter \\$useImportRefs with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:resolveClassNames\\(\\) has parameter \\$ast with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:resolveClassNames\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:resolveClassNames\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
 

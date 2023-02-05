@@ -324,7 +324,6 @@ final class Parser
                 return null;
             }
 
-            /** @phpstan-ignore-next-line */
             return new GenericNode(
                 $open,
                 $this->createTypeFromToken($type),

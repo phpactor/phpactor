@@ -152,7 +152,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $baseClass = $this->node->classBaseClause->baseClass;
 
         // incomplete class
-        /** @phpstan-ignore-next-line */
         if (!$baseClass instanceof QualifiedName) {
             return null;
         }
@@ -282,7 +281,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         // do not try and reflect the parents if we can locally see that it is
         // an instance of the given class
         $baseClause = $this->node->classInterfaceClause;
-        /** @phpstan-ignore-next-line */
         if ($baseClause instanceof ClassInterfaceClause) {
             if (NodeUtil::qualifiedNameListContains($baseClause->interfaceNameList, $className->__toString())) {
                 return true;

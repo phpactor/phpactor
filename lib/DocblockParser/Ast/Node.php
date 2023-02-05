@@ -87,7 +87,6 @@ abstract class Node implements Element
     public function firstDescendant(string $elementFqn): ?Element
     {
         foreach ($this->descendantElements($elementFqn) as $element) {
-            /** @phpstan-ignore-next-line */
             return $element;
         }
 

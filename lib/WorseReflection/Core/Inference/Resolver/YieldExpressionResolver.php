@@ -29,7 +29,6 @@ class YieldExpressionResolver implements Resolver
         $yieldFrom = $from->kind === TokenKind::YieldFromKeyword;
         $returnType = $frame->returnType();
 
-        /** @phpstan-ignore-next-line No trust */
         if (!$arrayElement) {
             return $context;
         }

@@ -92,7 +92,6 @@ class CompletionWorseExtension implements Extension
             array_keys($completors)
         ));
 
-        /** @phpstan-ignore-next-line */
         $defaults['completion_worse.completor.constant.enabled'] = false;
 
         $schema->setDefaults(array_merge($defaults, [
@@ -116,7 +115,6 @@ class CompletionWorseExtension implements Extension
             $completors
         ));
 
-        /** @phpstan-ignore-next-line */
         $schema->setDescriptions(array_merge($descriptions, [
             self::PARAM_DEBUG => 'Include debug info in completion results',
             self::PARAM_SNIPPETS => 'Enable or disable completion snippets',

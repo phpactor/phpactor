@@ -34,14 +34,10 @@ class ReflectionDeclaredConstantCollection extends AbstractReflectionCollection
 
             $callable = $descendentNode->callableExpression;
 
-            /**
-             * @phpstan-ignore-next-line TP lies
-             */
             if (!$callable instanceof QualifiedName) {
                 continue;
             }
 
-            /** @phpstan-ignore-next-line */
             if ('define' !== NodeUtil::shortName($callable)) {
                 continue;
             }
