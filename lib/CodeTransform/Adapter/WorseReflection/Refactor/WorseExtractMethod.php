@@ -214,12 +214,9 @@ class WorseExtractMethod implements ExtractMethod
 
     private function createMethodBuilder(ReflectionMethod $reflectionMethod, SourceCodeBuilder $builder, string $name): MethodBuilder
     {
-        $methodBuilder = $builder->class(
-            $reflectionMethod->class()->name()->short()
-        )->method($name);
-        $methodBuilder->visibility('private');
+        $classLikeBuilder = $builder->classLike($reflectionMethod->class()->name()->short());
 
-        return $methodBuilder;
+        return $classLikeBuilder->method($name)->visibility('private');
     }
 
     private function reflectMethod(int $offsetEnd, string $source, string $name): ReflectionMethod
@@ -238,7 +235,7 @@ class WorseExtractMethod implements ExtractMethod
         }
         $className = $type->name();
 
-        $reflectionClass = $this->reflector->reflectClass((string) $className);
+        $reflectionClass = $this->reflector->reflectClassLike((string) $className);
 
         $methods = $reflectionClass->methods();
         if ($methods->belongingTo($className)->has($name)) {

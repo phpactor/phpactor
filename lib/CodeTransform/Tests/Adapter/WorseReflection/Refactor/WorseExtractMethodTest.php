@@ -14,7 +14,7 @@ class WorseExtractMethodTest extends WorseTestCase
     /**
      * @dataProvider provideExtractMethod
      */
-    public function testExtractMethod(string $test, ?string $name, ?string $expectedExceptionMessage = null): void
+    public function testExtractMethod(string $test, string $name, ?string $expectedExceptionMessage = null): void
     {
         [$source, $expected, $offsetStart, $offsetEnd] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
 
@@ -175,13 +175,17 @@ class WorseExtractMethodTest extends WorseTestCase
                 'extractMethod30.test',
                 'newMethod',
             ],
-            'ignore scoped variables: anonimous function' => [
+            'ignore scoped variables: anonymous function' => [
                 'extractMethod31.test',
                 'newMethod',
             ],
             'union argument' => [
                 'extractMethod32.test',
                 'newMethod',
+            ],
+            'extract method from trait' => [
+                'extractMethod33.test',
+                'newMethod'
             ],
         ];
     }
