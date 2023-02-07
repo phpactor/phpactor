@@ -3,7 +3,6 @@
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
 use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
-use Phpactor\CodeBuilder\Domain\Builder\ConstructorBuilder;
 
 abstract class ClassLikeBuilder extends AbstractBuilder implements Builder
 {
@@ -33,17 +32,13 @@ abstract class ClassLikeBuilder extends AbstractBuilder implements Builder
         throw new InvalidBuilderException($this, $builder);
     }
 
-    public function method(string $name): MethodBuilder|ConstructorBuilder
+    public function method(string $name): MethodBuilder
     {
         if (isset($this->methods[$name])) {
             return $this->methods[$name];
         }
 
-        $builder = match($name) {
-            '__construct' => new ConstructorBuilder($this, $name),
-            default => new MethodBuilder($this, $name),
-        };
-        $this->methods[$name] = $builder;
+        $this->methods[$name] = $builder = new MethodBuilder($this, $name);
 
         return $builder;
     }

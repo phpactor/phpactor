@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -21,7 +22,7 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideClassImport()
+    public function provideClassImport(): Generator
     {
         yield 'It does nothing when given an empty source code prototype' => [
 
@@ -1220,107 +1221,104 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideMethods()
+    public function provideMethods(): Generator
     {
-        //yield 'It adds a method' => [
-                //<<<'EOT'
-                    //class Aardvark
-                    //{
-                    //}
-                    //EOT
-                //, SourceCodeBuilder::create()
-                    //->class('Aardvark')
-                        //->method('methodOne')->end()
-                    //->end()
-                    //->build(),
-                //<<<'EOT'
-                    //class Aardvark
-                    //{
-                        //public function methodOne()
-                        //{
-                        //}
-                    //}
-                    //EOT
-            //];
+        yield 'It adds a method' => [
+                <<<'EOT'
+                    class Aardvark
+                    {
+                    }
+                    EOT
+                , SourceCodeBuilder::create()
+                    ->class('Aardvark')
+                        ->method('methodOne')->end()
+                    ->end()
+                    ->build(),
+                <<<'EOT'
+                    class Aardvark
+                    {
+                        public function methodOne()
+                        {
+                        }
+                    }
+                    EOT
+            ];
 
-        //yield 'It adds multiple methods' => [
-                //<<<'EOT'
-                    //class Aardvark
-                    //{
-                    //}
-                    //EOT
-                //, SourceCodeBuilder::create()
-                    //->class('Aardvark')
-                        //->method('methodOne')->end()
-                        //->method('methodTwo')->end()
-                    //->end()
-                    //->build(),
-                //<<<'EOT'
-                    //class Aardvark
-                    //{
-                        //public function methodOne()
-                        //{
-                        //}
+        yield 'It adds multiple methods' => [
+                <<<'EOT'
+                    class Aardvark
+                    {
+                    }
+                    EOT
+                , SourceCodeBuilder::create()
+                    ->class('Aardvark')
+                        ->method('methodOne')->end()
+                        ->method('methodTwo')->end()
+                    ->end()
+                    ->build(),
+                <<<'EOT'
+                    class Aardvark
+                    {
+                        public function methodOne()
+                        {
+                        }
 
-                        //public function methodTwo()
-                        //{
-                        //}
-                    //}
-                    //EOT
-            //];
+                        public function methodTwo()
+                        {
+                        }
+                    }
+                    EOT
+            ];
 
-        //yield 'It generates a constructor' => [
-            //<<<'EOT'
-            //EOT,
-            //SourceCodeBuilder::create()
-            //->class('Foo')
-                //->method('__construct')
-                    //->parameter('config')
-                        //->type('int')
-                    //->end()
-                //->end()
-            //->end()
-            //->build(),
-            //<<<'EOT'
-
-            //class Foo
-            //{
-                //public function __construct(int $config)
-                //{
-                //}
-            //}
-            //EOT
-        //];
-
-        yield 'It generates a constructor with promoted properties' => [
+        yield 'It generates a constructor' => [
             <<<'EOT'
-            class Foo
-            {
-
-            }
-            EOT,
+                EOT,
             SourceCodeBuilder::create()
             ->class('Foo')
                 ->method('__construct')
                     ->parameter('config')
                         ->type('int')
-                        ->visibility(Visibility::private())
                     ->end()
                 ->end()
             ->end()
             ->build(),
             <<<'EOT'
 
-            class Foo
-            {
-                public function __construct(private int $config)
+                class Foo
                 {
+                    public function __construct(int $config)
+                    {
+                    }
                 }
-            }
-            EOT
+                EOT
         ];
 
-        return;
+        yield 'It generates a constructor with promoted properties' => [
+            <<<'EOT'
+                class Foo
+                {
+                }
+                EOT,
+            SourceCodeBuilder::create()
+                ->class('Foo')
+                    ->method('__construct')
+                        ->parameter('config')
+                            ->type('int')
+                            ->visibility(Visibility::private())
+                        ->end()
+                    ->end()
+                ->end()
+                ->build(),
+            <<<'EOT'
+                class Foo
+                {
+                    public function __construct(private int $config)
+                    {
+                    }
+                }
+                EOT
+        ];
+
         yield 'It adds parameterized method' => [
                 <<<'EOT'
                     class Aardvark
@@ -1600,12 +1598,12 @@ abstract class UpdaterTestCase extends TestCase
 
         yield 'It modifies parameter types' => [
                 <<<'EOT'
-                class Foo {
-                    public function changeMe(OldClass $dependency)
-                    {
+                    class Foo {
+                        public function changeMe(OldClass $dependency)
+                        {
+                        }
                     }
-                }
-                EOT,
+                    EOT,
                 SourceCodeBuilder::create()
                     ->class('Foo')
                         ->method('changeMe')
@@ -1617,12 +1615,12 @@ abstract class UpdaterTestCase extends TestCase
                     ->build()
                 ,
                 <<<'EOT'
-                class Foo {
-                    public function changeMe(SomeOtherClass $dependency)
-                    {
+                    class Foo {
+                        public function changeMe(SomeOtherClass $dependency)
+                        {
+                        }
                     }
-                }
-                EOT
+                    EOT
         ];
 
         yield 'It does not modify existing methods with imported names' => [
@@ -1874,7 +1872,7 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-    public function provideMethodParameters()
+    public function provideMethodParameters(): Generator
     {
         yield 'It adds parameters' => [
                 <<<'EOT'

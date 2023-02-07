@@ -15,7 +15,7 @@ final class Parameter extends Prototype
         private bool $byReference = false,
         UpdatePolicy $updatePolicy = null,
         private bool $isVariadic = false,
-        private ?Visibility $Visibility = null
+        private ?Visibility $visibility = null
     ) {
         parent::__construct($updatePolicy);
         $this->type = $type ?: Type::none();
@@ -43,7 +43,7 @@ final class Parameter extends Prototype
         return $this->byReference;
     }
 
-    public function visibility(): Visibility
+    public function visibility(): ?Visibility
     {
         return $this->visibility;
     }

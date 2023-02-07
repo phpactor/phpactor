@@ -6,6 +6,8 @@ use Phpactor\CodeBuilder\Domain\Prototype\Type;
 use Phpactor\CodeBuilder\Domain\Prototype\DefaultValue;
 use Phpactor\CodeBuilder\Domain\Prototype\Parameter;
 use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
+use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
+use Exception;
 
 class ParameterBuilder extends AbstractBuilder
 {
@@ -16,6 +18,8 @@ class ParameterBuilder extends AbstractBuilder
     protected bool $byReference = false;
 
     protected bool $variadic = false;
+
+    protected ?Visibility $visibility = null;
 
     public function __construct(private MethodBuilder $parent, protected string $name)
     {
@@ -39,6 +43,17 @@ class ParameterBuilder extends AbstractBuilder
         return $this;
     }
 
+    public function visibility(?Visibility $visibility): ParameterBuilder
+    {
+        $methodName = $this->parent->builderName();
+        if ($methodName !== '__construct') {
+            throw new Exception('Only constructors can have parameters with visibility. Current function: '.$methodName);
+        }
+        $this->visibility = $visibility;
+
+        return $this;
+    }
+
     public function defaultValue($value): ParameterBuilder
     {
         $this->defaultValue = DefaultValue::fromValue($value);
@@ -55,6 +70,7 @@ class ParameterBuilder extends AbstractBuilder
             $this->byReference,
             UpdatePolicy::fromModifiedState($this->isModified()),
             $this->variadic,
+            $this->visibility
         );
     }
 

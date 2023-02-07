@@ -3,11 +3,10 @@
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Builder;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\CodeBuilder\Domain\Builder\ConstructorBuilder;
-use Phpactor\CodeBuilder\Domain\Builder\ConstructorParameterBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
 use Phpactor\CodeBuilder\Domain\Builder\NamedBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 
 class MethodBuilderTest extends TestCase
 {
@@ -26,9 +25,16 @@ class MethodBuilderTest extends TestCase
     public function testBuildingAConstructor(): void
     {
         $methodBuilder = SourceCodeBuilder::create() ->class('One') ->method('__construct');
-        $property = $methodBuilder->parameter('someParam');
+        $methodBuilder->parameter('config')->visibility(Visibility::public());
 
-        $this->assertInstanceOf(ConstructorBuilder::class, $methodBuilder);
-        $this->assertInstanceOf(ConstructorParameterBuilder::class, $property);
+        $result = $methodBuilder->build();
+        $this->assertSame((string) Visibility::public(), (string) $result->parameters()->first()->visibility());
+    }
+
+    public function testNoVisibilityForNormalMethods(): void
+    {
+        $this->expectExceptionMessage('Only constructors can have parameters with visibility. Current function: doStuff');
+        $methodBuilder = SourceCodeBuilder::create()->class('One')->method('doStuff')
+            ->parameter('config')->visibility(Visibility::public());
     }
 }

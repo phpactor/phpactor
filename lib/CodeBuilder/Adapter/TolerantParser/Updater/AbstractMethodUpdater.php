@@ -148,13 +148,14 @@ abstract class AbstractMethodUpdater
             // This is an array [variableName => 'rendered parameter node as string']
             $renderedParameters = (array)array_combine(
                 array_map(function (Parameter $parameter) {
-                    return substr($parameter->variableName ?
+                    return substr(
+                        $parameter->variableName ?
                         $parameter->variableName->getText($parameter->getFileContents()):
                         false,
                         1
                     );
                 }, $existingParameters),
-                array_map( fn(Parameter $parameter) => $parameter->getText(), $existingParameters)
+                array_map(fn (Parameter $parameter) => $parameter->getText(), $existingParameters)
             );
         }
 
