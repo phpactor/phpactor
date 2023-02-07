@@ -15,7 +15,7 @@ class ParameterBuilder extends AbstractBuilder
 
     protected bool $byReference = false;
 
-    private bool $variadic = false;
+    protected bool $variadic = false;
 
     public function __construct(private MethodBuilder $parent, protected string $name)
     {

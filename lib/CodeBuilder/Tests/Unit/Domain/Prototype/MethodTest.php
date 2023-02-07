@@ -25,8 +25,8 @@ class MethodTest extends TestCase
         $this->assertTrue($method->isStatic());
     }
 
-    private function createMethodModifier($modifier)
+    private function createMethodModifier(int $modifier): Method
     {
-        return new Method('test', null, null, null, null, $modifier);
+        return new Method('test', modifierFlags: $modifier);
     }
 }

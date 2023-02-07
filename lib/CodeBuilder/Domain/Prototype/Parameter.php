@@ -14,7 +14,8 @@ final class Parameter extends Prototype
         DefaultValue $defaultValue = null,
         private bool $byReference = false,
         UpdatePolicy $updatePolicy = null,
-        private bool $isVariadic = false
+        private bool $isVariadic = false,
+        private ?Visibility $Visibility = null
     ) {
         parent::__construct($updatePolicy);
         $this->type = $type ?: Type::none();
@@ -40,6 +41,11 @@ final class Parameter extends Prototype
     public function byReference(): bool
     {
         return $this->byReference;
+    }
+
+    public function visibility(): Visibility
+    {
+        return $this->visibility;
     }
 
     public function isVariadic(): bool
