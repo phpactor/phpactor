@@ -140,17 +140,26 @@ abstract class AbstractMethodUpdater
         }
 
         $renderedParameters = [];
+
+        // Copying over existing parameters
         if ($methodDeclaration->parameters) {
+            $existingParameters = iterator_to_array($methodDeclaration->parameters->getElements());
+
+            // This is an array [variableName => 'rendered parameter node as string']
             $renderedParameters = (array)array_combine(
                 array_map(function (Parameter $parameter) {
-                    return substr($parameter->variableName ? $parameter->variableName->getText($parameter->getFileContents()) : false, 1);
-                }, iterator_to_array($methodDeclaration->parameters->getElements())),
-                array_map(function (Parameter $parameter) {
-                    return $parameter->getText();
-                }, iterator_to_array($methodDeclaration->parameters->getElements()))
+                    return substr(
+                        $parameter->variableName ?
+                        $parameter->variableName->getText($parameter->getFileContents()):
+                        false,
+                        1
+                    );
+                }, $existingParameters),
+                array_map(fn (Parameter $parameter) => $parameter->getText(), $existingParameters)
             );
         }
 
+        // Adding new parameters to the mix
         foreach ($parameters as $parameter) {
             assert($parameter instanceof PhpactorParameter);
             if (!isset($renderedParameters[$parameter->name()])) {

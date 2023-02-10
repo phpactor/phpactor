@@ -2,7 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
+use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -20,9 +22,9 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideClassImport()
+    public function provideClassImport(): Generator
     {
-        yield 'It does nothing when given an empty source code protoytpe' => [
+        yield 'It does nothing when given an empty source code prototype' => [
 
                 <<<'EOT'
                     class Aardvark
@@ -1219,7 +1221,7 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideMethods()
+    public function provideMethods(): Generator
     {
         yield 'It adds a method' => [
                 <<<'EOT'
@@ -1267,6 +1269,55 @@ abstract class UpdaterTestCase extends TestCase
                     }
                     EOT
             ];
+
+        yield 'It generates a constructor' => [
+            <<<'EOT'
+                EOT,
+            SourceCodeBuilder::create()
+            ->class('Foo')
+                ->method('__construct')
+                    ->parameter('config')
+                        ->type('int')
+                    ->end()
+                ->end()
+            ->end()
+            ->build(),
+            <<<'EOT'
+
+                class Foo
+                {
+                    public function __construct(int $config)
+                    {
+                    }
+                }
+                EOT
+        ];
+
+        yield 'It generates a constructor with promoted properties' => [
+            <<<'EOT'
+                class Foo
+                {
+                }
+                EOT,
+            SourceCodeBuilder::create()
+                ->class('Foo')
+                    ->method('__construct')
+                        ->parameter('config')
+                            ->type('int')
+                            ->visibility(Visibility::private())
+                        ->end()
+                    ->end()
+                ->end()
+                ->build(),
+            <<<'EOT'
+                class Foo
+                {
+                    public function __construct(private int $config)
+                    {
+                    }
+                }
+                EOT
+        ];
 
         yield 'It adds parameterized method' => [
                 <<<'EOT'
@@ -1794,7 +1845,7 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-    public function provideMethodParameters()
+    public function provideMethodParameters(): Generator
     {
         yield 'It adds parameters' => [
                 <<<'EOT'
