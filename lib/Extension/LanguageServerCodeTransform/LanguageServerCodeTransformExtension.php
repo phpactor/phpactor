@@ -27,6 +27,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PromotePropertyProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PropertyAccessGeneratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
@@ -419,6 +420,14 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(FillObjectProvider::class, function (Container $container) {
             return new FillObjectProvider(
                 $container->get(FillObject::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(PromotePropertyProvider::class, function (Container $container) {
+            return new PromotePropertyProvider(
+                $container->get(PromoteProperty::class),
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []

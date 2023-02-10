@@ -1,0 +1,14 @@
+// File: source
+<?php
+
+class DTO
+{
+    public function __construct(st<>ring $one) {}
+}
+// File: expected
+<?php
+
+class DTO
+{
+    public function __construct(private string $one) {}
+}

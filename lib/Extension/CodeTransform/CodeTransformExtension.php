@@ -29,6 +29,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMutator;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorsePromoteProperty;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateDecorator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
@@ -57,6 +58,7 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
+use Phpactor\CodeTransform\Domain\Refactor\PromoteProperty;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
@@ -281,6 +283,15 @@ class CodeTransformExtension implements Extension
                 $container->getParameter(self::PARAM_IMPORT_GLOBALS),
             );
         });
+
+        $container->register(PromoteProperty::class, function (Container $container) {
+            return new WorsePromoteProperty(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->get(Updater::class),
+            );
+        });
+
         $container->register(FillObject::class, function (Container $container) {
             return new WorseFillObject(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
