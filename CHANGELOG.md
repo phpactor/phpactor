@@ -10,6 +10,7 @@ Features:
 Bug fixes:
 
   - `new class-string<Foo>` now resolves to `new Foo` #2065
+  - Fix extract method within trait #2076 @mamazu
 
 Improvements:
 
