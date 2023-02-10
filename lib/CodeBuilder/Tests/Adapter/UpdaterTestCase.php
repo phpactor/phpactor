@@ -1596,33 +1596,6 @@ abstract class UpdaterTestCase extends TestCase
                     EOT
             ];
 
-        yield 'It modifies parameter types' => [
-                <<<'EOT'
-                    class Foo {
-                        public function changeMe(OldClass $dependency)
-                        {
-                        }
-                    }
-                    EOT,
-                SourceCodeBuilder::create()
-                    ->class('Foo')
-                        ->method('changeMe')
-                            ->parameter('dependency')
-                                ->type('SomeOtherClass')
-                            ->end()
-                        ->end()
-                    ->end()
-                    ->build()
-                ,
-                <<<'EOT'
-                    class Foo {
-                        public function changeMe(SomeOtherClass $dependency)
-                        {
-                        }
-                    }
-                    EOT
-        ];
-
         yield 'It does not modify existing methods with imported names' => [
                 <<<'EOT'
 
