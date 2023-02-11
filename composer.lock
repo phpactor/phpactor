@@ -1712,12 +1712,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-protocol.git",
-                "reference": "004b9dc909750585386ca46efe6417bf4a4051a6"
+                "reference": "068b36c745b015e94ef1aaca8fc86c435189f19c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/004b9dc909750585386ca46efe6417bf4a4051a6",
-                "reference": "004b9dc909750585386ca46efe6417bf4a4051a6",
+                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/068b36c745b015e94ef1aaca8fc86c435189f19c",
+                "reference": "068b36c745b015e94ef1aaca8fc86c435189f19c",
                 "shasum": ""
             },
             "require": {
@@ -1756,7 +1756,7 @@
                 "issues": "https://github.com/phpactor/language-server-protocol/issues",
                 "source": "https://github.com/phpactor/language-server-protocol/tree/3.17-2"
             },
-            "time": "2023-02-10T22:21:43+00:00"
+            "time": "2023-02-11T13:04:18+00:00"
         },
         {
             "name": "phpactor/map-resolver",
