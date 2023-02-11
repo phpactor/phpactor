@@ -71,12 +71,12 @@ class GenerateMethodProviderTest extends TestCase
                 new MissingMethod(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
             ],
             [
-                Diagnostic::fromArray([
-                    'range' => ProtocolFactory::range(0, 0, 0, 5),
-                    'message' => 'Method "foobar" does not exist',
-                    'severity' => DiagnosticSeverity::WARNING,
-                    'source' => 'phpactor',
-                ])
+                new Diagnostic(
+                    range: ProtocolFactory::range(0, 0, 0, 5),
+                    message: 'Method "foobar" does not exist',
+                    severity: DiagnosticSeverity::WARNING,
+                    source: 'phpactor',
+                )
             ]
         ];
     }
@@ -118,12 +118,12 @@ class GenerateMethodProviderTest extends TestCase
                     'title' =>  'Fix "Method "foobar" does not exist"',
                     'kind' => GenerateMethodProvider::KIND,
                     'diagnostics' => [
-                        Diagnostic::fromArray([
-                            'range' => ProtocolFactory::range(0, 0, 0, 5),
-                            'message' => 'Method "foobar" does not exist',
-                            'severity' => DiagnosticSeverity::WARNING,
-                            'source' => 'phpactor',
-                        ])
+                        new Diagnostic(
+                            range: ProtocolFactory::range(0, 0, 0, 5),
+                            message: 'Method "foobar" does not exist',
+                            severity: DiagnosticSeverity::WARNING,
+                            source: 'phpactor',
+                        )
                     ],
                     'command' => new Command(
                         'Generate method',

@@ -24,10 +24,10 @@ class DiagnosticsParser
                 $lineNo = (int)$lineNo > 0 ? $lineNo : 0;
 
                 $diagnostics[] = Diagnostic::fromArray([
-                    'message' => $message['message'],
-                    'range' => new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
-                    'severity' => DiagnosticSeverity::ERROR,
-                    'source' => 'phpstan'
+                    message: $message['message'],
+                    range: new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
+                    severity: DiagnosticSeverity::ERROR,
+                    source: 'phpstan'
                 ]);
             }
         }
