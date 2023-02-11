@@ -543,7 +543,7 @@ class LanguageServerExtension implements Extension
     }
 
     /**
-     * @return array{name:string,version:string,reference:string,version:string}
+     * @return array{name:string,version:string,version:string}
      */
     private function serverInfo(): array
     {
@@ -551,7 +551,6 @@ class LanguageServerExtension implements Extension
         return [
             'name' => $package['name'],
             'version' => $package['pretty_version'],
-            'reference' => $package['reference'],
         ];
     }
 }

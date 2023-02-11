@@ -164,7 +164,6 @@ class LanguageServerCodeTransformExtension implements Extension
         ]);
         $container->register('language_server_code_transform.generate_accessors_command', function (Container $container) {
             return new PropertyAccessGeneratorCommand(
-                'generate_accessors',
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get('code_transform.generate_accessor'),
@@ -178,7 +177,6 @@ class LanguageServerCodeTransformExtension implements Extension
 
         $container->register('language_server_code_transform.generate_mutators_command', function (Container $container) {
             return new PropertyAccessGeneratorCommand(
-                'generate_mutators',
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get('code_transform.generate_mutator'),
@@ -234,7 +232,6 @@ class LanguageServerCodeTransformExtension implements Extension
             return new CandidateFinder(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 $container->get(SearchClient::class),
-                $container->getParameter(CodeTransformExtension::PARAM_IMPORT_GLOBALS)
             );
         });
 

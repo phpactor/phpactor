@@ -10,11 +10,16 @@ use RuntimeException;
 class LazyAggregateProvider implements ListenerProviderInterface
 {
     private ?ListenerProviderAggregate $aggregateProvider = null;
-
+    /**
+     * @param list<string> $serviceIds
+     */
     public function __construct(private ContainerInterface $container, private array $serviceIds)
     {
     }
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         if (null === $this->aggregateProvider) {

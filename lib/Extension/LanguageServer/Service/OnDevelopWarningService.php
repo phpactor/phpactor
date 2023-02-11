@@ -26,6 +26,9 @@ class OnDevelopWarningService implements ServiceProvider
         ];
     }
 
+    /**
+     * @return Promise<void>
+     */
     public function serviceAnnouncements(): Promise
     {
         return call(function (): void {

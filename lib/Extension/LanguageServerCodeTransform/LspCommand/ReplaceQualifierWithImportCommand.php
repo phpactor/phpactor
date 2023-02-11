@@ -25,7 +25,7 @@ class ReplaceQualifierWithImportCommand implements Command
     }
 
     /**
-     * @return Promise<?ApplyWorkspaceEditResponse>
+     * @return Promise<?ApplyWorkspaceEditResult>
      */
     public function __invoke(string $uri, int $offset): Promise
     {

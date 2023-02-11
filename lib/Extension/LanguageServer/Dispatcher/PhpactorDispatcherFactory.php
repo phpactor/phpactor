@@ -58,7 +58,10 @@ class PhpactorDispatcherFactory implements DispatcherFactory
 
         return $container;
     }
-
+    /**
+     * @param list<class-string> $extensionClasses
+     * @param array<string,mixed> $parameters
+     */
     private function buildContainer(
         array $extensionClasses,
         array $parameters,

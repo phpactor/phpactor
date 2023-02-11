@@ -64,7 +64,8 @@ class PropertyAccessGeneratorCommandTest extends TestCase
     }
 
     /**
-     * @return {LanguageServerTester,LanguageServerTesterBuilder]
+     * @param ObjectProphecy<PropertyAccessGenerator> $generateAccessors
+     * @return array{LanguageServerTester,LanguageServerTesterBuilder}
      */
     private function createTester(ObjectProphecy $generateAccessors): array
     {
@@ -72,7 +73,6 @@ class PropertyAccessGeneratorCommandTest extends TestCase
             ->enableTextDocuments()
             ->enableCommands();
         $builder->addCommand('generate', new PropertyAccessGeneratorCommand(
-            'generate_accessors',
             $builder->clientApi(),
             $builder->workspace(),
             $generateAccessors->reveal(),

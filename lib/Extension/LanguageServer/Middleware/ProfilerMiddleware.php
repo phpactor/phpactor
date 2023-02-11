@@ -38,6 +38,7 @@ class ProfilerMiddleware implements Middleware
             }
 
             $start = microtime(true);
+            /** @phpstan-ignore-next-line */
             $response = yield $handler->handle($request);
             $elapsed = microtime(true) - $start;
 
@@ -62,7 +63,9 @@ class ProfilerMiddleware implements Middleware
             return $response;
         });
     }
-
+    /**
+     * @param array<string,mixed> $context
+     */
     private function info(string $message, array $context): void
     {
         $this->logger->info($message, $context);

@@ -39,7 +39,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return new Success($this->getDiagnostics($textDocument, $cancel));
+        return new Success($this->getDiagnostics($textDocument));
     }
 
 

@@ -39,7 +39,7 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return new Success($this->getDiagnostics($textDocument, $cancel));
+        return new Success($this->getDiagnostics($textDocument));
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise

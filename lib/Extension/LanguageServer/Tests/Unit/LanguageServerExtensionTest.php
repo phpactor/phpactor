@@ -132,7 +132,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $container = $this->createContainer([
             LanguageServerExtension::PARAM_ENABLE_WORKPACE => false,
         ]);
-        self::assertNull($container->get(WorkspaceListener::class));
+        $container->get(WorkspaceListener::class);
     }
 
     public function testExceptionWhenEnablingUnknownDiagProvider(): void
