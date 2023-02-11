@@ -263,4 +263,42 @@ class CompletionContextTest extends TestCase
             false,
         ];
     }
+
+    /**
+     * @dataProvider providePromotedProperty
+     */
+    public function testPromotedProperty(string $source, bool $expected): void
+    {
+        [$source, $offset] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        self::assertEquals($expected, CompletionContext::promotedPropertyVisibility($node));
+    }
+
+    /**
+     * @return Generator<array<int,mixed>>
+     */
+    public function providePromotedProperty(): Generator
+    {
+        yield [
+            '<?php class A { public function __construct(<>',
+            true,
+        ];
+        yield [
+            '<?php class A { public function __construct($a, <> }',
+            true,
+        ];
+        yield [
+            '<?php class A { public function __construct($a, p<> }',
+            true,
+        ];
+
+        yield [
+            '<?php class A { public function a(<>',
+            false,
+        ];
+        yield [
+            '<?php class A { public function a(<>$a) { ',
+            false,
+        ];
+    }
 }
