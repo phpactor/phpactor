@@ -14,6 +14,7 @@ Bug fixes:
 
 Improvements:
 
+  - Show full FQN for classes in hover #2081
   - Upgrade to 3.17 of the language server protocol #2082
   - Facilitate changing visiblity on promoted properties @mamazu
   - Allow generation of constructor for Attributes.
