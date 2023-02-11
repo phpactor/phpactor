@@ -17,13 +17,11 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 class PropertyAccessGeneratorCommand implements Command
 {
     public function __construct(
-        private string $name,
         private ClientApi $clientApi,
         private Workspace $workspace,
         private PropertyAccessGenerator $generateAccessor,
-        string $editLabel
+        private string $editLabel
     ) {
-        $this->editLabel = $editLabel;
     }
 
     /**

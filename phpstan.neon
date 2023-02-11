@@ -14,6 +14,9 @@ parameters:
         - lib/WorseReflection/Core/SourceCodeLocator/InternalStubs/*
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
+    ignoreErrors:
+        - '#Yield can be used only with these return types: Generator, Iterator, Traversable, iterable.#'
+
 
 includes:
     - phpstan-baseline.neon
