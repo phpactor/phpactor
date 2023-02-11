@@ -64,7 +64,8 @@ class PropertyAccessGeneratorCommandTest extends TestCase
     }
 
     /**
-     * @return array{LanguageServerTester,LanguageServerTesterBuilder]
+     * @param ObjectProphecy<PropertyAccessGenerator> $generateAccessors
+     * @return array{LanguageServerTester,LanguageServerTesterBuilder}
      */
     private function createTester(ObjectProphecy $generateAccessors): array
     {
