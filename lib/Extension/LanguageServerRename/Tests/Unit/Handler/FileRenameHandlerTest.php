@@ -26,7 +26,7 @@ class FileRenameHandlerTest extends IntegrationTestCase
         $server = $this->createServer();
         $result = $server->initialize();
 
-        self::assertInstanceOf(FileOperationRegistrationOptions::class, $result->capabilities->workspace['fileOperations']['willRename']);
+        self::assertInstanceOf(FileOperationRegistrationOptions::class, $result->capabilities->workspace['fileOperations']->willRename);
     }
 
     public function testMoveFileNoEdits(): void
