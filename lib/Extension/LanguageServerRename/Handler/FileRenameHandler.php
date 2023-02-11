@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerRename\Handler;
 
 use Amp\Promise;
+use Phpactor\LanguageServerProtocol\FileOperationOptions;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
@@ -51,10 +52,14 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
-        $capabilities->workspace['fileOperations']['willRename'] = new FileOperationRegistrationOptions([
-            new FileOperationFilter(
-                new FileOperationPattern('**/*.php')
-            )
-        ]);
+        $capabilities->workspace['fileOperations'] = new FileOperationOptions(willRename: new FileOperationRegistrationOptions(
+            filters: [
+                new FileOperationFilter(
+                    new FileOperationPattern(
+                        glob: '**/*.php'
+                    )
+                ),
+            ]
+        ));
     }
 }

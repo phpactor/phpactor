@@ -106,15 +106,14 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
             return [
                 false,
                 new Diagnostic(
-                    $range,
-                    sprintf(
+                    range: $range,
+                    message: sprintf(
                         '%s "%s" does not exist',
                         ucfirst($unresolvedName->type()),
                         $unresolvedName->name()->head()->__toString()
                     ),
-                    DiagnosticSeverity::ERROR,
-                    null,
-                    'phpactor'
+                    severity: DiagnosticSeverity::ERROR,
+                    source: 'phpactor'
                 )
             ];
         }
@@ -122,15 +121,14 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         return [
             true,
             new Diagnostic(
-                $range,
-                sprintf(
+                range: $range,
+                message: sprintf(
                     '%s "%s" has not been imported',
                     ucfirst($unresolvedName->type()),
                     $unresolvedName->name()->head()->__toString()
                 ),
-                DiagnosticSeverity::HINT,
-                null,
-                'phpactor'
+                severity: DiagnosticSeverity::HINT,
+                source: 'phpactor'
             )
         ];
     }

@@ -47,12 +47,12 @@ final class PhpLinter
 
             return [
                 new Diagnostic(
-                    new Range(
+                    range: new Range(
                         new Position($line, $range->start()->col()),
                         new Position($line, $range->end()->col())
                     ),
-                    $err,
-                    DiagnosticSeverity::ERROR
+                    message: $err,
+                    severity: DiagnosticSeverity::ERROR
                 )
             ];
         });

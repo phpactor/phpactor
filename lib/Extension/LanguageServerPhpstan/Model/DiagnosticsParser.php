@@ -23,12 +23,12 @@ class DiagnosticsParser
                 $lineNo = (int)$message['line'] - 1;
                 $lineNo = (int)$lineNo > 0 ? $lineNo : 0;
 
-                $diagnostics[] = Diagnostic::fromArray([
-                    'message' => $message['message'],
-                    'range' => new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
-                    'severity' => DiagnosticSeverity::ERROR,
-                    'source' => 'phpstan'
-                ]);
+                $diagnostics[] = new Diagnostic(
+                    message: $message['message'],
+                    range: new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
+                    severity: DiagnosticSeverity::ERROR,
+                    source: 'phpstan'
+                );
             }
         }
 

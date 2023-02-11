@@ -89,16 +89,15 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
 
         return [
             new Diagnostic(
-                new Range(
+                range: new Range(
                     new Position(1, 1),
                     new Position(1, 1)
                 ),
-                sprintf(
+                message: sprintf(
                     'Empty file (use create-class code action to create a new class)',
                 ),
-                DiagnosticSeverity::INFORMATION,
-                null,
-                'phpactor'
+                severity: DiagnosticSeverity::INFORMATION,
+                source: 'phpactor'
             )
         ];
     }
