@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\AmpFsWatch\ModifiedFile;
 use Phpactor\Extension\LanguageServerIndexer\Watcher\LanguageServerWatcher;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
-use Phpactor\LanguageServerProtocol\DidChangeConfigurationClientCapabilities;
 use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesClientCapabilities;
 use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesParams;
 use Phpactor\LanguageServerProtocol\FileChangeType;

@@ -8,7 +8,6 @@ use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\LanguageServerProtocol\RenameFile;
 use Phpactor\LanguageServerProtocol\TextDocumentEdit;
-use Phpactor\LanguageServerProtocol\VersionedTextDocumentIdentifier;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\TextDocument\TextDocumentLocator;
