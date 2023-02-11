@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
-use Generator;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression;
@@ -24,7 +23,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 {
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): Generator
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof AssignmentExpression) {
             return;
