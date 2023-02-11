@@ -8,7 +8,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\TransformCommand;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\TextDocument\TextEdits;
@@ -37,10 +37,10 @@ class TransformCommandTest extends TestCase
             'file:///foobar',
             self::EXAMPLE_TRANSFORM_NAME
         ]);
-        $watcher->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $watcher->resolveLastResponse(new ApplyWorkspaceEditResult(true));
         $response = wait($promise);
         self::assertInstanceOf(ResponseMessage::class, $response);
-        self::assertInstanceOf(ApplyWorkspaceEditResponse::class, $response->result);
+        self::assertInstanceOf(ApplyWorkspaceEditResult::class, $response->result);
 
         self::assertNotNull($testTransformer->code);
         self::assertEquals('/foobar', $testTransformer->code->path());

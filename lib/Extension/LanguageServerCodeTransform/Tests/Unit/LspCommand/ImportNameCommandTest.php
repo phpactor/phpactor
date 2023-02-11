@@ -11,7 +11,7 @@ use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Server\RpcClient\TestRpcClient;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\TextEdit;
 use Phpactor\TestUtils\PHPUnit\TestCase;
@@ -111,7 +111,7 @@ class ImportNameCommandTest extends TestCase
 
     private function assertWorkspaceResponse(Promise $promise): void
     {
-        $expectedResponse = new ApplyWorkspaceEditResponse(true, null);
+        $expectedResponse = new ApplyWorkspaceEditResult(true, null);
         $this->rpcClient->responseWatcher()->resolveLastResponse($expectedResponse);
         $result = \Amp\Promise\wait($promise);
         $this->assertEquals($expectedResponse, $result);

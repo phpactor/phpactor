@@ -12,7 +12,7 @@ use Phpactor\CodeTransform\Domain\GenerateNew;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\Core\Server\ResponseWatcher\TestResponseWatcher;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
@@ -31,10 +31,10 @@ class CreateClassCommandTest extends TestCase
             'file:///foobar',
             self::EXAMPLE_VARIANT
         ]);
-        $watcher->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $watcher->resolveLastResponse(new ApplyWorkspaceEditResult(true));
         $response = wait($promise);
         self::assertInstanceOf(ResponseMessage::class, $response);
-        self::assertInstanceOf(ApplyWorkspaceEditResponse::class, $response->result);
+        self::assertInstanceOf(ApplyWorkspaceEditResult::class, $response->result);
     }
 
     public function testAppliesTransformForNonExistingClass(): void
@@ -44,10 +44,10 @@ class CreateClassCommandTest extends TestCase
             'file:///foobar',
             self::EXAMPLE_VARIANT
         ]);
-        $watcher->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $watcher->resolveLastResponse(new ApplyWorkspaceEditResult(true));
         $response = wait($promise);
         self::assertInstanceOf(ResponseMessage::class, $response);
-        self::assertInstanceOf(ApplyWorkspaceEditResponse::class, $response->result);
+        self::assertInstanceOf(ApplyWorkspaceEditResult::class, $response->result);
     }
 
     /**
