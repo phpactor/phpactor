@@ -6,6 +6,7 @@ Changelog
 Features:
 
   - Hierarchical namespace segment completion #2070
+  - Completion for promoted property visiblity #2087
 
 Bug fixes:
 

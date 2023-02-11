@@ -312,18 +312,6 @@ class CompletionContext
         return true;
     }
 
-    private static function isClassClause(?Node $node): bool
-    {
-        if (null === $node) {
-            return false;
-        }
-        return
-            $node instanceof InterfaceBaseClause ||
-            $node instanceof ClassInterfaceClause ||
-            $node instanceof TraitUseClause ||
-            $node instanceof ClassBaseClause;
-    }
-
     public static function promotedPropertyVisibility(Node $node): bool
     {
         $methodDeclaration = $node->getFirstAncestor(MethodDeclaration::class);
@@ -345,5 +333,17 @@ class CompletionContext
         }
 
         return false;
+    }
+
+    private static function isClassClause(?Node $node): bool
+    {
+        if (null === $node) {
+            return false;
+        }
+        return
+            $node instanceof InterfaceBaseClause ||
+            $node instanceof ClassInterfaceClause ||
+            $node instanceof TraitUseClause ||
+            $node instanceof ClassBaseClause;
     }
 }
