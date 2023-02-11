@@ -54,9 +54,9 @@ final class WorkspaceSymbolProvider
     {
         if ($record instanceof ClassRecord) {
             return new SymbolInformation(
-                $record->fqn()->__toString(),
-                SymbolKind::CLASS_,
-                new Location(
+                name: $record->fqn()->__toString(),
+                kind: SymbolKind::CLASS_,
+                location: new Location(
                     TextDocumentUri::fromString($record->filePath()),
                     new Range(
                         $this->toLspPosition($record->start(), $record->filePath()),
@@ -68,9 +68,9 @@ final class WorkspaceSymbolProvider
 
         if ($record instanceof FunctionRecord) {
             return new SymbolInformation(
-                $record->fqn()->__toString(),
-                SymbolKind::FUNCTION,
-                new Location(
+                name: $record->fqn()->__toString(),
+                kind: SymbolKind::FUNCTION,
+                location: new Location(
                     TextDocumentUri::fromString($record->filePath()),
                     new Range(
                         $this->toLspPosition($record->start(), $record->filePath()),
@@ -82,9 +82,9 @@ final class WorkspaceSymbolProvider
 
         if ($record instanceof ConstantRecord) {
             return new SymbolInformation(
-                $record->fqn()->__toString(),
-                SymbolKind::CONSTANT,
-                new Location(
+                name: $record->fqn()->__toString(),
+                kind: SymbolKind::CONSTANT,
+                location: new Location(
                     TextDocumentUri::fromString($record->filePath()),
                     new Range(
                         $this->toLspPosition($record->start(), $record->filePath()),
