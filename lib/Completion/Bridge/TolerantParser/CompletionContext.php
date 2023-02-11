@@ -312,6 +312,29 @@ class CompletionContext
         return true;
     }
 
+    public static function promotedPropertyVisibility(Node $node): bool
+    {
+        $methodDeclaration = $node->getFirstAncestor(MethodDeclaration::class);
+        if (!$methodDeclaration instanceof MethodDeclaration) {
+            return false;
+        }
+        if ($methodDeclaration->getName() !== '__construct') {
+            return false;
+        }
+        if ($node instanceof CompoundStatementNode) {
+            return true;
+        }
+        $parameter = $node->getFirstAncestor(Parameter::class);
+        if (!$parameter instanceof Parameter) {
+            return false;
+        }
+        if (NodeUtil::nullOrMissing($parameter->variableName)) {
+            return true;
+        }
+
+        return false;
+    }
+
     private static function isClassClause(?Node $node): bool
     {
         if (null === $node) {

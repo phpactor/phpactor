@@ -16,6 +16,10 @@ class KeywordCompletor implements TolerantCompletor
 {
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
+        if (CompletionContext::promotedPropertyVisibility($node)) {
+            yield from $this->keywords(['private ', 'public ', 'protected ', ]);
+            return true;
+        }
         if (CompletionContext::classClause($node, $offset)) {
             yield from $this->keywords(['implements ', 'extends ']);
             return true;
