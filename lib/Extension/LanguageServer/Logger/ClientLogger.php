@@ -66,6 +66,6 @@ class ClientLogger implements LoggerInterface
 
     public function log($level, $message, array $context = []): void
     {
-        $this->innerLogger->log($message, $context);
+        $this->innerLogger->log($level, $message, $context);
     }
 }

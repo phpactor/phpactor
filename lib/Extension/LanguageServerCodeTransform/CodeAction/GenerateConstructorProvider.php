@@ -10,13 +10,14 @@ use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\WorkspaceEditConverter;
 use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 
 class GenerateConstructorProvider implements CodeActionProvider
 {
-    const KIND = 'quickfix.generate.constructor';
+    const KIND = CodeActionKind::REFACTOR;
 
     public function __construct(
         private GenerateConstructor $generateConstructor,
@@ -37,11 +38,11 @@ class GenerateConstructorProvider implements CodeActionProvider
 
         return new Success([
             new CodeAction(
-                'Generate constructor',
-                self::KIND,
-                [],
-                false,
-                $this->converter->toLspWorkspaceEdit($edits)
+                title: 'Generate constructor',
+                kind: self::KIND,
+                diagnostics: [],
+                isPreferred: false,
+                edit: $this->converter->toLspWorkspaceEdit($edits)
             )
         ]);
     }

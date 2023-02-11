@@ -18,7 +18,6 @@ Improvements:
   - Facilitate changing visiblity on promoted properties @mamazu
   - Allow generation of constructor for Attributes.
 
-
 ## 2023.01.21
 
 Bug fixes:

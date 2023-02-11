@@ -24,7 +24,9 @@ class LanguageServerTestCase extends TestCase
     {
         return Workspace::create(__DIR__ . '/../../Workspace');
     }
-
+    /**
+     * @param array<string,mixed> $params
+     */
     protected function createContainer(array $params = []): Container
     {
         return PhpactorContainer::fromExtensions([
@@ -37,7 +39,9 @@ class LanguageServerTestCase extends TestCase
             LanguageServerExtension::PARAM_CATCH_ERRORS => false,
         ], $params));
     }
-
+    /**
+     * @param array<string,mixed> $config
+     */
     protected function createTester(?InitializeParams $params = null, array $config = []): LanguageServerTester
     {
         $builder = $this->createContainer($config)->get(

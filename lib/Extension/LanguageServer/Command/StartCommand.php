@@ -28,7 +28,7 @@ class StartCommand extends Command
         $this->addOption(self::OPT_NO_LOOP, null, InputOption::VALUE_NONE, 'Do not run the event loop (debug)');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $address = $input->getOption(self::OPT_ADDRESS);
         $noLoop = (bool)$input->getOption(self::OPT_NO_LOOP);
@@ -57,23 +57,6 @@ class StartCommand extends Command
     {
         assert(is_string($address));
         $builder->tcpServer($address);
-    }
-
-    private function assertIsWritable(?string $filename = null): string
-    {
-        if (null === $filename) {
-            $filename = 'language-server-request.log';
-        }
-
-        if (!file_exists(dirname($filename))) {
-            throw new RuntimeException(sprintf('Directory "%s" does not exist', dirname($filename)));
-        }
-
-        if (file_exists($filename) && !is_writable($filename)) {
-            throw new RuntimeException(sprintf('File at "%s" is not writable', $filename));
-        }
-
-        return $filename;
     }
 
     private function logMessage(OutputInterface $output, string $message): void

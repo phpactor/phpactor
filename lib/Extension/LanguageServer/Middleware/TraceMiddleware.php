@@ -20,6 +20,7 @@ class TraceMiddleware implements Middleware
     {
         return call(function () use ($request, $handler) {
             $this->logger->info($this->format($request), (array)$request);
+            /** @phpstan-ignore-next-line */
             $response = yield $handler->handle($request);
             if ($response !== null) {
                 $this->logger->info($this->format($response), (array)$response);
