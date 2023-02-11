@@ -8,7 +8,7 @@ use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -27,7 +27,7 @@ class ExtractConstantCommand implements Command
     }
 
     /**
-     * @return Promise<?ApplyWorkspaceEditResponse>
+     * @return Promise<?ApplyWorkspaceEditResult>
      */
     public function __invoke(string $uri, int $offset): Promise
     {
