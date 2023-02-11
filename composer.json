@@ -18,7 +18,7 @@
         "phpactor/amp-fswatch": "^0.2.0",
         "thecodingmachine/safe": "^1.0",
         "phpactor/phly-event-dispatcher": "^2.0.0",
-        "phpactor/language-server": "dev-protocol-3.17",
+        "phpactor/language-server": "^4.0",
         "dantleech/object-renderer": "^0.1.1",
         "monolog/monolog": "^1.23",
         "sebastian/diff": "^4.0",

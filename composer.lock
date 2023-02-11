@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "059e0339b6b203e641c5708ff617e419",
+    "content-hash": "78c4d458a6ab968bc456a1ab0c32fd03",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1642,16 +1642,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "dev-protocol-3.17",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "801c7ecf515db3280bedac8281a8cb62d74e3f9a"
+                "reference": "af911fed14f30bcc35ffdca00378e100580c5f59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/801c7ecf515db3280bedac8281a8cb62d74e3f9a",
-                "reference": "801c7ecf515db3280bedac8281a8cb62d74e3f9a",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/af911fed14f30bcc35ffdca00378e100580c5f59",
+                "reference": "af911fed14f30bcc35ffdca00378e100580c5f59",
                 "shasum": ""
             },
             "require": {
@@ -1659,7 +1659,7 @@
                 "dantleech/argument-resolver": "^1.1",
                 "dantleech/invoke": "^2.0",
                 "php": "^8.0",
-                "phpactor/language-server-protocol": "dev-3.17-2",
+                "phpactor/language-server-protocol": "^3.17",
                 "psr/event-dispatcher": "^1.0",
                 "psr/log": "^1.0",
                 "ramsey/uuid": "^4.0",
@@ -1702,22 +1702,22 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/protocol-3.17"
+                "source": "https://github.com/phpactor/language-server/tree/4.0.0"
             },
-            "time": "2023-02-10T22:50:44+00:00"
+            "time": "2023-02-11T13:45:57+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
-            "version": "dev-3.17-2",
+            "version": "3.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-protocol.git",
-                "reference": "54de2ede9d2498564b03b10b0a3ac63905ab6b83"
+                "reference": "95e18dbf4a009aef16858874b08ba57c623ca852"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/54de2ede9d2498564b03b10b0a3ac63905ab6b83",
-                "reference": "54de2ede9d2498564b03b10b0a3ac63905ab6b83",
+                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/95e18dbf4a009aef16858874b08ba57c623ca852",
+                "reference": "95e18dbf4a009aef16858874b08ba57c623ca852",
                 "shasum": ""
             },
             "require": {
@@ -1754,9 +1754,9 @@
             "description": "Langauge Server Protocol for PHP (transpiled)",
             "support": {
                 "issues": "https://github.com/phpactor/language-server-protocol/issues",
-                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17-2"
+                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17.0"
             },
-            "time": "2023-02-11T13:18:14+00:00"
+            "time": "2023-02-11T13:31:37+00:00"
         },
         {
             "name": "phpactor/map-resolver",
@@ -7798,7 +7798,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/language-server": 20,
         "jetbrains/phpstorm-stubs": 20,
         "phpactor/tolerant-php-parser": 20,
         "dms/phpunit-arraysubset-asserts": 20
