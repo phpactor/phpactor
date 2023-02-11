@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerIndexer\Tests\Unit;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServerProtocol\InitializeParams;
+use Phpactor\LanguageServerProtocol\WindowClientCapabilities;
 use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\Extension\LanguageServerIndexer\Tests\IntegrationTestCase;
@@ -23,7 +24,7 @@ class IndexerHandlerTest extends IntegrationTestCase
         $this->tester = $container->get(LanguageServerBuilder::class)->tester(
             new InitializeParams(
                 rootUri: $this->workspace()->path(),
-                capabilities: new ClientCapabilities(window: ['workDoneProgress' => true])
+                capabilities: new ClientCapabilities(window: new WindowClientCapabilities(workDoneProgress: true))
             )
         );
     }
@@ -86,7 +87,7 @@ class IndexerHandlerTest extends IntegrationTestCase
         ])->get(LanguageServerBuilder::class)->tester(
             new InitializeParams(
                 rootUri: $this->workspace()->path(),
-                capabilities: new ClientCapabilities(window: ['workDoneProgress' => true])
+                capabilities: new ClientCapabilities(window: new WindowClientCapabilities(workDoneProgress: true))
             )
         );
 
