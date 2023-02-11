@@ -72,7 +72,6 @@ class PropertyAccessGeneratorCommandTest extends TestCase
             ->enableTextDocuments()
             ->enableCommands();
         $builder->addCommand('generate', new PropertyAccessGeneratorCommand(
-            'generate_accessors',
             $builder->clientApi(),
             $builder->workspace(),
             $generateAccessors->reveal(),

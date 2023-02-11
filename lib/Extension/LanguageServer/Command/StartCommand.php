@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\LanguageServer\Command;
 
 use Phpactor\LanguageServer\LanguageServerBuilder;
-use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;

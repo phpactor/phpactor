@@ -164,7 +164,6 @@ class LanguageServerCodeTransformExtension implements Extension
         ]);
         $container->register('language_server_code_transform.generate_accessors_command', function (Container $container) {
             return new PropertyAccessGeneratorCommand(
-                'generate_accessors',
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get('code_transform.generate_accessor'),
