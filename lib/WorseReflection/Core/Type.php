@@ -238,4 +238,15 @@ abstract class Type
     {
         return Trinary::maybe();
     }
+
+    /**
+     * If the type has been augmented with more information
+     * than a standard PHP type (e.g. typed arrays, generics, closures, etc).
+     *
+     * For example augmented types should have a php doc.
+     */
+    public function isAugmented(): bool
+    {
+        return $this->isDefined() && !$this->isPrimitive() && $this->__toString() !== $this->toPhpString();
+    }
 }

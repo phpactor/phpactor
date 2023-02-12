@@ -15,6 +15,8 @@ Bug fixes:
 
 Improvements:
 
+  - Include (complex) docblock params when generating method
+  - Take into account named parameters when "guessing" parameter names #2090
   - Show full FQN for classes in hover #2081
   - Upgrade to 3.17 of the language server protocol #2082
   - Facilitate changing visiblity on promoted properties @mamazu

@@ -99,20 +99,37 @@ class WorseGenerateMethod implements GenerateMethod
             $methodBuilder->static();
         }
 
+        $docblockTypes = [];
+
         /** @var ReflectionArgument $argument */
         foreach ($methodCall->arguments()->named() as $name => $argument) {
             $type = $argument->type();
 
-            $argumentBuilder = $methodBuilder->parameter($name);
+            if ($type->isAugmented()) {
+                $docblockTypes[$name] = $type->toLocalType($reflectionClass->scope());
+            }
+
+            $parameterBuilder = $methodBuilder->parameter($name);
 
             if ($type->isDefined()) {
-                $argumentBuilder->type($type->short(), $type);
+                $parameterBuilder->type($type->short(), $type);
 
                 foreach ($type->allTypes()->classLike() as $classType) {
                     $builder->use($classType->toPhpString());
                 }
             }
         }
+
+        // TODO: this should be handled by the code updater (e.g. $docblock->addParam(new ParamPrototype(...)))
+        $docblock = [];
+        foreach ($docblockTypes as $name => $type) {
+            $docblock[] = sprintf('@param %s $%s', $type->__toString(), $name);
+        }
+
+        if ($docblock) {
+            $methodBuilder->docblock(implode("\n", $docblock));
+        }
+
 
         $inferredType = $methodCall->inferredReturnType();
         if ($inferredType->isDefined()) {

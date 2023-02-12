@@ -28,6 +28,9 @@ class generateMethod
         return $this->generate($foo);
     }
 
+    /**
+     * @param "foo"|"bar"|"baz" $foo
+     */
     private function generate(string $foo): void
     {
     }

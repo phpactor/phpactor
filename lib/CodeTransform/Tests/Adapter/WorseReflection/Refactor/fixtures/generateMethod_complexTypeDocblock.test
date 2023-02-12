@@ -1,0 +1,35 @@
+// File: source
+
+<?php
+
+class generateMethod
+{
+    /**
+     * @param array<string,int> $one
+     */
+    public function name(array $one)
+    {
+        $this->f<>oobar($one);
+    }
+}
+// File: expected
+
+<?php
+
+class generateMethod
+{
+    /**
+     * @param array<string,int> $one
+     */
+    public function name(array $one)
+    {
+        $this->foobar($one);
+    }
+
+    /**
+     * @param array<string,int> $one
+     */
+    private function foobar(array $one)
+    {
+    }
+}

@@ -80,6 +80,9 @@ class WorseGenerateMethodTest extends WorseTestCase
             'duplicated type guesses' => [
                 'generateMethod_duplicateNameGuesses.test',
             ],
+            'docblock for complex type' => [
+                'generateMethod_complexTypeDocblock.test',
+            ],
         ];
     }
 
@@ -116,7 +119,11 @@ class WorseGenerateMethodTest extends WorseTestCase
         $worseSourceCode = WorseSourceCode::fromPathAndString('file:///source', $source);
         $reflector = $this->reflectorForWorkspace($worseSourceCode);
 
-        $generateMethod = new WorseGenerateMethod($reflector, new WorseBuilderFactory($reflector), $this->updater());
+        $generateMethod = new WorseGenerateMethod(
+            $reflector,
+            new WorseBuilderFactory($reflector),
+            $this->updater()
+        );
         $sourceCode = SourceCode::fromStringAndPath($source, 'file:///source');
         $textDocumentEdits = $generateMethod->generateMethod($sourceCode, $start, $name);
 

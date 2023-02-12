@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Position;
 
 use Phpactor\WorseReflection\Core\Type;
@@ -14,6 +15,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument as CoreReflectio
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
 use RuntimeException;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
@@ -29,6 +31,10 @@ class ReflectionArgument implements CoreReflectionArgument
 
     public function guessName(): string
     {
+        if ($this->node->name instanceof Token) {
+            return NodeUtil::nameFromTokenOrQualifiedName($this->node, $this->node->name);
+        }
+
         if ($this->node->expression instanceof Variable) {
             $name = $this->node->expression->name->getText($this->node->getFileContents());
 
@@ -36,7 +42,7 @@ class ReflectionArgument implements CoreReflectionArgument
                 return substr($name, 1);
             }
 
-            return $name;
+            return (string)$name;
         }
 
         $type = $this->type();
@@ -64,7 +70,7 @@ class ReflectionArgument implements CoreReflectionArgument
         return $this->info()->type();
     }
 
-    public function value()
+    public function value(): mixed
     {
         return TypeUtil::valueOrNull($this->info()->type());
     }

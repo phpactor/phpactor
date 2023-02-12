@@ -112,5 +112,17 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 },
             ],
         ];
+        yield 'It infers named parameters' => [
+            <<<'EOT'
+                <?php
+
+                $foo->b<>ar(foo: $integer);
+                EOT
+            , [
+            ],
+            function (ReflectionArgumentCollection $arguments): void {
+                self::assertEquals('foo', $arguments->first()->guessName());
+            },
+        ];
     }
 }
