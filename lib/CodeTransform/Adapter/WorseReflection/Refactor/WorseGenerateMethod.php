@@ -6,8 +6,6 @@ use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
-use Phpactor\CodeTransform\Domain\DocBlockUpdater\TagPrototype;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;

@@ -2,13 +2,9 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
-use Phpactor\CodeBuilder\Tests\Unit\Util\TextFormatTest;
-use Phpactor\CodeBuilder\Util\TextFormat;
-use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
