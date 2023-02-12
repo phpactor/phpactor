@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Util\DiffToTextEditsConverter;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -24,7 +24,9 @@ class FormatCommand implements Command
     }
 
     /**
-     * @return Promise<ApplyWorkspaceEditResponse>
+     * @param  string[]|null  $rules  List of rules to use for formatting
+     *
+     * @return Promise<ApplyWorkspaceEditResult>
      */
     public function __invoke(string $uri, ?array $rules = null): Promise
     {

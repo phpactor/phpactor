@@ -21,6 +21,7 @@ use SebastianBergmann\Diff\Diff;
 use SebastianBergmann\Diff\Line;
 use SebastianBergmann\Diff\Parser;
 use LogicException;
+use RuntimeException;
 
 class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionProvider
 {
@@ -291,6 +292,10 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
             // remove example diffs for the rule
             $description = preg_replace('/Fixing examples:.*/s', '', $description);
+
+            if (!is_string($description)) {
+                throw new RuntimeException(sprintf('Description was epxected to be string, got %s', gettype($description)));
+            }
 
             $description = trim($description);
 

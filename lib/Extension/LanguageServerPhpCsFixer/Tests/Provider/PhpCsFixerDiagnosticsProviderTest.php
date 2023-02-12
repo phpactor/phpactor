@@ -120,6 +120,9 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
         );
     }
 
+    /**
+     * @return array{0: string, 1:int}[]
+     */
     public function fileProvider(): array
     {
         return [
