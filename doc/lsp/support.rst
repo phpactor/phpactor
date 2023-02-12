@@ -40,7 +40,7 @@ See the `Language Server Specification`_ for details.
 +-------------------------+---+-------------------------------------+
 | Color Presentation      | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
-| Formatting              | ✘ |                                     |
+| Formatting              | ✔ | [#formatting]                       |
 +-------------------------+---+-------------------------------------+
 | Range Formatting        | ✘ |                                     |
 +-------------------------+---+-------------------------------------+
@@ -57,4 +57,5 @@ See the `Language Server Specification`_ for details.
 .. [#code] See :doc:`/lsp/code-actions`.
 .. [#references] For class like references, functions and member accesses (static and object instances)
 .. [#rename] Native LSP support for renaming variables and class members, with support planned for renaming classes and namespaces. RPC fills the gap: :ref:`refactoring_rename_class`
-.. [#diagnostics] Basic PHP linting and also support for integrating with :ref:`phpstan <param_language_server_phpstan.enabled>` and :ref:`Psalm <param_language_server_psalm.enabled>`.
+.. [#formatting] With php-cs-fixer :ref:`php-cs-fixer <param_language_server_php_cs_fixer.enabled>`.
+.. [#diagnostics] Basic PHP linting and also support for integrating with :ref:`phpstan <param_language_server_phpstan.enabled>`, :ref:`Psalm <param_language_server_psalm.enabled>` and :ref:`php-cs-fixer <param_language_server_php_cs_fixer.enabled>`.

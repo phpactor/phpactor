@@ -1216,12 +1216,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "b3489cf8249f2ff09184fc84db45cde226284492"
+                "reference": "de53302780aee15d724360f2ee728946a4527659"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/b3489cf8249f2ff09184fc84db45cde226284492",
-                "reference": "b3489cf8249f2ff09184fc84db45cde226284492",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/de53302780aee15d724360f2ee728946a4527659",
+                "reference": "de53302780aee15d724360f2ee728946a4527659",
                 "shasum": ""
             },
             "require-dev": {
@@ -1257,7 +1257,7 @@
             "support": {
                 "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2023-02-09T19:40:56+00:00"
+            "time": "2023-02-11T17:45:35+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -1642,16 +1642,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "323f7565b16b47bc10b5bddd88390b977cb65487"
+                "reference": "b68058e7b1561d88ddbaad729c861dfa3bb9c2c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/323f7565b16b47bc10b5bddd88390b977cb65487",
-                "reference": "323f7565b16b47bc10b5bddd88390b977cb65487",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/b68058e7b1561d88ddbaad729c861dfa3bb9c2c1",
+                "reference": "b68058e7b1561d88ddbaad729c861dfa3bb9c2c1",
                 "shasum": ""
             },
             "require": {
@@ -1702,22 +1702,22 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/4.0.1"
+                "source": "https://github.com/phpactor/language-server/tree/4.0.2"
             },
-            "time": "2023-02-11T17:42:20+00:00"
+            "time": "2023-02-12T12:15:43+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
-            "version": "3.17.0",
+            "version": "3.17.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-protocol.git",
-                "reference": "95e18dbf4a009aef16858874b08ba57c623ca852"
+                "reference": "15c42028812ac25b487ef405dbfba9bf7c715fa7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/95e18dbf4a009aef16858874b08ba57c623ca852",
-                "reference": "95e18dbf4a009aef16858874b08ba57c623ca852",
+                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/15c42028812ac25b487ef405dbfba9bf7c715fa7",
+                "reference": "15c42028812ac25b487ef405dbfba9bf7c715fa7",
                 "shasum": ""
             },
             "require": {
@@ -1754,9 +1754,9 @@
             "description": "Langauge Server Protocol for PHP (transpiled)",
             "support": {
                 "issues": "https://github.com/phpactor/language-server-protocol/issues",
-                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17.0"
+                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17.1"
             },
-            "time": "2023-02-11T13:31:37+00:00"
+            "time": "2023-02-12T12:13:19+00:00"
         },
         {
             "name": "phpactor/map-resolver",
