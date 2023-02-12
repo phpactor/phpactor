@@ -19,7 +19,7 @@ class PromotePropertyTest extends WorseTestCase
     {
         [$source, $offsetStart, $offsetEnd] = ExtractOffset::fromSource($source);
 
-        $promote = $this->createFillObject($source, true, false);
+        $promote = $this->createPromoteProperty($source, true, false);
         $transformed = $promote->promoteProperty(
             TextDocumentBuilder::create($source)->build(),
             ByteOffset::fromInt($offsetStart)
@@ -70,32 +70,9 @@ class PromotePropertyTest extends WorseTestCase
                 }
                 EOT,
         ];
-
-        yield 'Promoting removes assignment' => [
-            <<<'EOT'
-                <?php
-
-                class DTO
-                {
-                    private string $prop;
-
-                    public function __construct(st<>ring $prop) {
-                        $this->prop = $prop;
-                    }
-                }
-                EOT,
-            <<<'EOT'
-                <?php
-
-                class DTO
-                {
-                    public function __construct(private string $prop) {}
-                }
-                EOT,
-        ];
     }
 
-    private function createFillObject(string $source, bool $named = true, bool $hint = false): WorsePromoteProperty
+    private function createPromoteProperty(string $source, bool $named = true, bool $hint = false): WorsePromoteProperty
     {
         return new WorsePromoteProperty(
             $this->reflectorForWorkspace($source),

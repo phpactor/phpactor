@@ -19,13 +19,13 @@ class PromotePropertyProvider implements CodeActionProvider
 {
     const KIND = 'quickfix.constructor.promote_property';
 
-    public function __construct(private PromoteProperty $fillObject)
+    public function __construct(private PromoteProperty $promoteProperty)
     {
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
-        $edits = $this->fillObject->promoteProperty(
+        $edits = $this->promoteProperty->promoteProperty(
             TextDocumentConverter::fromLspTextItem($textDocument),
             RangeConverter::toPhpactorRange($range, $textDocument->text)->start()
         );
@@ -36,7 +36,7 @@ class PromotePropertyProvider implements CodeActionProvider
 
         return new Success([
             new CodeAction(
-                'Fill object',
+                'Promote property',
                 self::KIND,
                 [],
                 false,
