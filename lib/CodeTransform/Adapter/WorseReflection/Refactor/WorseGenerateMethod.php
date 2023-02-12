@@ -99,14 +99,16 @@ class WorseGenerateMethod implements GenerateMethod
             $methodBuilder->static();
         }
 
+        $docblockTypes = [];
+
         /** @var ReflectionArgument $argument */
         foreach ($methodCall->arguments()->named() as $name => $argument) {
             $type = $argument->type();
 
-            $argumentBuilder = $methodBuilder->parameter($name);
+            $parameterBuilder = $methodBuilder->parameter($name);
 
             if ($type->isDefined()) {
-                $argumentBuilder->type($type->short(), $type);
+                $parameterBuilder->type($type->short(), $type);
 
                 foreach ($type->allTypes()->classLike() as $classType) {
                     $builder->use($classType->toPhpString());

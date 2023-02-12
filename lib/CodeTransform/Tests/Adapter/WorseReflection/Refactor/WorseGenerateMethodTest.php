@@ -80,6 +80,9 @@ class WorseGenerateMethodTest extends WorseTestCase
             'duplicated type guesses' => [
                 'generateMethod_duplicateNameGuesses.test',
             ],
+            'docblock for complex type' => [
+                'generateMethod_complexTypeDocblock.test',
+            ],
         ];
     }
 

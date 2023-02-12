@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Position;
 
 use Phpactor\WorseReflection\Core\Type;
@@ -30,7 +31,7 @@ class ReflectionArgument implements CoreReflectionArgument
 
     public function guessName(): string
     {
-        if (!NodeUtil::nullOrMissing($this->node->name)) {
+        if ($this->node->name instanceof Token) {
             return NodeUtil::nameFromTokenOrQualifiedName($this->node, $this->node->name);
         }
 
