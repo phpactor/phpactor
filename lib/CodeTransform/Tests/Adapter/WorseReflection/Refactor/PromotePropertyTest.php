@@ -3,14 +3,12 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
 use Generator;
-use GlobIterator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorsePromoteProperty;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use SplFileInfo;
 
 class PromotePropertyTest extends WorseTestCase
 {
@@ -37,40 +35,63 @@ class PromotePropertyTest extends WorseTestCase
     {
         yield 'Promoting inside a non constructor does nothing' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            class DTO
-            {
-                public function randomMethod(st<>ring $one) {}
-            }
-            EOT,
+                class DTO
+                {
+                    public function randomMethod(st<>ring $one) {}
+                }
+                EOT,
             <<<'EOT'
-            <?php
+                <?php
 
-            class DTO
-            {
-                public function randomMethod(string $one) {}
-            }
-            EOT,
+                class DTO
+                {
+                    public function randomMethod(string $one) {}
+                }
+                EOT,
         ];
 
         yield 'Promoting inside a constructor' => [
             <<<'EOT'
-            <?php
+                <?php
 
-            class DTO
-            {
-                public function __construct(st<>ring $one) {}
-            }
-            EOT,
+                class DTO
+                {
+                    public function __construct(st<>ring $one) {}
+                }
+                EOT,
             <<<'EOT'
-            <?php
+                <?php
 
-            class DTO
-            {
-                public function __construct(private string $one) {}
-            }
-            EOT,
+                class DTO
+                {
+                    public function __construct(private string $one) {}
+                }
+                EOT,
+        ];
+
+        yield 'Promoting removes assignment' => [
+            <<<'EOT'
+                <?php
+
+                class DTO
+                {
+                    private string $prop;
+
+                    public function __construct(st<>ring $prop) {
+                        $this->prop = $prop;
+                    }
+                }
+                EOT,
+            <<<'EOT'
+                <?php
+
+                class DTO
+                {
+                    public function __construct(private string $prop) {}
+                }
+                EOT,
         ];
     }
 

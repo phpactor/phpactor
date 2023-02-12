@@ -39,23 +39,19 @@ class CompleteConstructor implements Transformer
             $constructMethod = $class->methods()->get('__construct');
             $methodBody = (string) $constructMethod->body();
 
-            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+            $nonPromotedParameters = $constructMethod->parameters()->notPromoted();
+            foreach ($nonPromotedParameters as $parameter) {
                 if (preg_match('{this\s*->' . $parameter->name() . '}', $methodBody)) {
                     continue;
                 }
                 $methodBuilder->body()->line('$this->' . $parameter->name() . ' = $' . $parameter->name() .';');
             }
 
-            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
-                if ($parameter->isPromoted()) {
-                    continue;
-                }
-
+            foreach ($nonPromotedParameters as $parameter) {
                 assert($parameter instanceof ReflectionParameter);
                 if (true === $class->properties()->has($parameter->name())) {
                     continue;
                 }
-
 
                 $propertyBuilder = $classBuilder->property($parameter->name());
                 $propertyBuilder->visibility($this->visibility);

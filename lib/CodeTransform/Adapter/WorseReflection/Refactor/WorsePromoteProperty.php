@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
@@ -13,9 +15,6 @@ use Phpactor\CodeTransform\Domain\Refactor\PromoteProperty;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 
 class WorsePromoteProperty implements PromoteProperty
@@ -40,20 +39,23 @@ class WorsePromoteProperty implements PromoteProperty
             return TextEdits::none();
         }
 
-        if(count($methodNode->parameters->children) === 0) {
+        $parameter = $node->getFirstAncestor(Parameter::class);
+        if (!$parameter instanceof Parameter) {
             return TextEdits::none();
         }
+        $parameterName = $parameter->getName();
 
-        $parameterNode = $node->getFirstAncestor(Parameter::class);
-        if (!$parameterNode instanceof Parameter::class) {
-            return TextEdits::none();
-        }
+        $classNode = $node->getFirstAncestor(ClassDeclaration::class);
+        // You can't have method declarations outside of classes
+        assert($classNode instanceof ClassDeclaration);
 
-        $parameter = $this->reflector->reflectNode($parameterNode, $methodNode->getStartPosition());
-        if (!$parameter instanceof ReflectionParameter) {
-            return TextEdits::none();
-        }
+        $className = $classNode->name->getText((string) $document);
 
-        // Todo stuff
+        $sourceCode = SourceCodeBuilder::create();
+        $methodBuilder = $sourceCode->class($className)->method('__construct');
+
+        $methodBuilder->parameter($parameterName)->visibility(Visibility::private());
+
+        return $this->updater->textEditsFor($sourceCode->build(), Code::fromString($document->__toString()));
     }
 }
