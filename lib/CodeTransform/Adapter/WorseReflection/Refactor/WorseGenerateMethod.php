@@ -120,6 +120,7 @@ class WorseGenerateMethod implements GenerateMethod
             }
         }
 
+        // TODO: this should be handled by the code updater (e.g. $docblock->addParam(new ParamPrototype(...)))
         $docblock = [];
         foreach ($docblockTypes as $name => $type) {
             $docblock[] = sprintf('@param %s $%s', $type->__toString(), $name);
