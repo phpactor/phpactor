@@ -6,6 +6,7 @@ use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateDecoratorCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -16,8 +17,6 @@ use function Amp\call;
 
 class GenerateDecoratorProvider implements CodeActionProvider
 {
-    public const KIND = 'quickfix.generate_decorator';
-
     public function __construct(private Reflector $reflector)
     {
     }
@@ -25,7 +24,7 @@ class GenerateDecoratorProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND,
+            CodeActionKind::QUICK_FIX
         ];
     }
 
@@ -65,7 +64,7 @@ class GenerateDecoratorProvider implements CodeActionProvider
             return [
                 CodeAction::fromArray([
                     'title' => sprintf('Decorate "%s"', $interfaceFQN),
-                    'kind' => self::KIND,
+                    'kind' => $this->kinds()[0],
                     'command' => new Command(
                         'Generate decorator',
                         GenerateDecoratorCommand::NAME,

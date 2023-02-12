@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
-use LanguageServerProtocol\CodeActionKind;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
 use Phpactor\CodeTransform\Domain\Generators;
@@ -23,8 +23,6 @@ use function Amp\call;
 
 class CreateUnresolvableClassProvider implements CodeActionProvider
 {
-    public const KIND = 'quickfix.create_unresolable_class';
-
     public function __construct(
         private SourceCodeReflector $reflector,
         private Generators $generators,
@@ -53,7 +51,7 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
                         $title = sprintf('Create %s file for "%s"', $name, $diagnostic->name()->__toString());
                         $actions[] = CodeAction::fromArray([
                             'title' =>  $title,
-                            'kind' => self::KIND,
+                            'kind' => $this->kinds()[0],
                             'diagnostics' => [
                                 ProtocolFactory::diagnostic(RangeConverter::toLspRange($diagnostic->range(), $textDocument->text), $diagnostic->message())
                             ],
@@ -77,7 +75,6 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND,
             CodeActionKind::QUICK_FIX,
         ];
     }

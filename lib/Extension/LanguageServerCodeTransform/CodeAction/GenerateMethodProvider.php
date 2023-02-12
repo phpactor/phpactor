@@ -10,6 +10,7 @@ use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
@@ -22,8 +23,6 @@ use function Amp\call;
 
 class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 {
-    public const KIND = 'quickfix.generate_method';
-
     public function __construct(private MissingMethodFinder $missingMethodFinder)
     {
     }
@@ -32,7 +31,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
     public function kinds(): array
     {
         return [
-             self::KIND
+            CodeActionKind::QUICK_FIX
          ];
     }
 
@@ -51,7 +50,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
             return array_map(function (Diagnostic $diagnostic) use ($textDocument) {
                 return CodeAction::fromArray([
                     'title' => sprintf('Fix "%s"', $diagnostic->message),
-                    'kind' => self::KIND,
+                    'kind' => $this->kinds()[0],
                     'diagnostics' => [
                         $diagnostic
                     ],

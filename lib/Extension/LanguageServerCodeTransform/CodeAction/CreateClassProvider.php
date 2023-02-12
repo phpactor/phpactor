@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
-use LanguageServerProtocol\CodeActionKind;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
@@ -19,11 +18,10 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use function Amp\call;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 
 class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
 {
-    public const KIND = 'quickfix.create_class';
-
     public function __construct(private Generators $generators, private Parser $parser)
     {
     }
@@ -32,7 +30,6 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND,
             CodeActionKind::QUICK_FIX,
         ];
     }
@@ -58,7 +55,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
                 $title = sprintf('Create new "%s" class', $name);
                 $actions[] = CodeAction::fromArray([
                     'title' =>  $title,
-                    'kind' => self::KIND,
+                    'kind' => $this->kinds()[0],
                     'diagnostics' => $diagnostics,
                     'command' => new Command(
                         $title,
@@ -102,10 +99,5 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
                 source: 'phpactor'
             )
         ];
-    }
-
-    private function kind(): string
-    {
-        return self::KIND;
     }
 }

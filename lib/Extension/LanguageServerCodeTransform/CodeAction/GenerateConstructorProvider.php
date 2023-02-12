@@ -17,8 +17,6 @@ use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 
 class GenerateConstructorProvider implements CodeActionProvider
 {
-    const KIND = CodeActionKind::REFACTOR;
-
     public function __construct(
         private GenerateConstructor $generateConstructor,
         private WorkspaceEditConverter $converter
@@ -39,7 +37,7 @@ class GenerateConstructorProvider implements CodeActionProvider
         return new Success([
             new CodeAction(
                 title: 'Generate constructor',
-                kind: self::KIND,
+                kind: $this->kinds()[0],
                 diagnostics: [],
                 isPreferred: false,
                 edit: $this->converter->toLspWorkspaceEdit($edits)
@@ -49,6 +47,8 @@ class GenerateConstructorProvider implements CodeActionProvider
 
     public function kinds(): array
     {
-        return [self::KIND];
+        return [
+            CodeActionKind::REFACTOR
+        ];
     }
 }
