@@ -6,6 +6,8 @@ use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\TagPrototype;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -105,6 +107,10 @@ class WorseGenerateMethod implements GenerateMethod
         foreach ($methodCall->arguments()->named() as $name => $argument) {
             $type = $argument->type();
 
+            if ($type->isDefined() && !$type->isPrimitive() && $type->__toString() !== $type->toPhpString()) {
+                $docblockTypes[$name] = $type->toLocalType($reflectionClass->scope());
+            }
+
             $parameterBuilder = $methodBuilder->parameter($name);
 
             if ($type->isDefined()) {
@@ -115,6 +121,16 @@ class WorseGenerateMethod implements GenerateMethod
                 }
             }
         }
+
+        $docblock = [];
+        foreach ($docblockTypes as $name => $type) {
+            $docblock[] = sprintf('@param %s $%s', $type->__toString(), $name);
+        }
+
+        if ($docblock) {
+            $methodBuilder->docblock(implode("\n", $docblock));
+        }
+
 
         $inferredType = $methodCall->inferredReturnType();
         if ($inferredType->isDefined()) {
