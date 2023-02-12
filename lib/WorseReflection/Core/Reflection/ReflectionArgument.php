@@ -11,7 +11,7 @@ interface ReflectionArgument
 
     public function type(): Type;
 
-    public function value();
+    public function value(): mixed;
 
     public function position(): Position;
 }
