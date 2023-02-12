@@ -73,7 +73,9 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
     {
         $schema->setDefaults([
             self::PARAM_PHP_CS_FIXER_BIN => '%project_root%/vendor/bin/php-cs-fixer',
-            self::PARAM_ENV => [],
+            self::PARAM_ENV => [
+                'XDEBUG_MODE' => 'off',
+            ],
             self::PARAM_SHOW_DIAGNOSTICS => true,
         ]);
 
