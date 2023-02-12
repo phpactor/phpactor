@@ -62,14 +62,28 @@ class WorseGenerateConstructor implements GenerateConstructor
         $class = $builder->class($reflectionNode->class()->name()->short());
         $method = $class->method('__construct');
 
+        $docblockTypes = [];
         foreach ($arguments->named() as $name => $argument) {
             assert($argument instanceof ReflectionArgument);
             $type = $argument->type();
+            if ($type->isAugmented()) {
+                $docblockTypes[$name] = $type->toLocalType($reflectionNode->scope());
+            }
             foreach ($type->allTypes()->classLike() as $classType) {
                 $builder->use($classType->__toString());
             }
             $param = $method->parameter($name);
             $param->type($argument->type()->short());
+        }
+
+        // TODO: this should be handled by the code updater (e.g. $docblock->addParam(new ParamPrototype(...)))
+        $docblock = [];
+        foreach ($docblockTypes as $name => $type) {
+            $docblock[] = sprintf('@param %s $%s', $type->__toString(), $name);
+        }
+
+        if ($docblock) {
+            $method->docblock(implode("\n", $docblock));
         }
 
         return new WorkspaceEdits(
