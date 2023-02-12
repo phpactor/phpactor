@@ -105,7 +105,7 @@ class WorseGenerateMethod implements GenerateMethod
         foreach ($methodCall->arguments()->named() as $name => $argument) {
             $type = $argument->type();
 
-            if ($type->isDefined() && !$type->isPrimitive() && $type->__toString() !== $type->toPhpString()) {
+            if ($type->isAugmented()) {
                 $docblockTypes[$name] = $type->toLocalType($reflectionClass->scope());
             }
 
