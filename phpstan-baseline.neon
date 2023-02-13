@@ -3526,16 +3526,6 @@ parameters:
 			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
 
 		-
-			message: "#^Parameter \\#7 \\$deprecated of class Phpactor\\\\LanguageServerProtocol\\\\DocumentSymbol constructor expects bool\\|null, array given\\.$#"
-			count: 3
-			path: lib/Extension/LanguageServerSymbolProvider/Adapter/TolerantDocumentSymbolProvider.php
-
-		-
-			message: "#^Parameter \\#7 \\$deprecated of class Phpactor\\\\LanguageServerProtocol\\\\DocumentSymbol constructor expects bool\\|null, array\\<Phpactor\\\\LanguageServerProtocol\\\\DocumentSymbol\\> given\\.$#"
-			count: 4
-			path: lib/Extension/LanguageServerSymbolProvider/Adapter/TolerantDocumentSymbolProvider.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerSymbolProvider\\\\Handler\\\\DocumentSymbolProviderHandler\\:\\:documentSymbols\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerSymbolProvider/Handler/DocumentSymbolProviderHandler.php

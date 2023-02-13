@@ -56,19 +56,17 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
     {
         if ($node instanceof FunctionDeclaration) {
             return new DocumentSymbol(
-                (string)$node->name->getText($source),
-                SymbolKind::FUNCTION,
-                new Range(
+                name: (string)$node->name->getText($source),
+                kind: SymbolKind::FUNCTION,
+                range: new Range(
                     PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $source),
                     PositionConverter::intByteOffsetToPosition($node->getEndPosition(), $source)
                 ),
-                new Range(
+                selectionRange: new Range(
                     PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
                     PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
                 ),
-                null,
-                null,
-                $this->buildNodes($this->memberNodes($node), $source)
+                children: $this->buildNodes($this->memberNodes($node), $source)
             );
         }
 
@@ -84,9 +82,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                     PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
                     PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
                 ),
-                null,
-                null,
-                $this->buildNodes($this->memberNodes($node), $source)
+                children: $this->buildNodes($this->memberNodes($node), $source)
             );
         }
 
@@ -102,9 +98,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                     PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
                     PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
                 ),
-                null,
-                null,
-                $this->buildNodes($this->memberNodes($node), $source)
+                children: $this->buildNodes($this->memberNodes($node), $source)
             );
         }
 
@@ -121,9 +115,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                     PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
                     PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
                 ),
-                null,
-                null,
-                $this->buildNodes($this->memberNodes($node), $source)
+                children: $this->buildNodes($this->memberNodes($node), $source)
             );
         }
 
@@ -140,9 +132,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                     PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
                     PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
                 ),
-                null,
-                null,
-                []
+                children: []
             );
         }
 
@@ -159,9 +149,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                         PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $source),
                         PositionConverter::intByteOffsetToPosition($node->getEndPosition(), $source)
                     ),
-                    null,
-                    null,
-                    []
+                    children: []
                 );
             }
         }
@@ -178,9 +166,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                     PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
                     PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
                 ),
-                null,
-                null,
-                []
+                children: []
             );
         }
 
