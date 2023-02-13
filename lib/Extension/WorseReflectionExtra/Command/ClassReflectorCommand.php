@@ -28,7 +28,10 @@ class ClassReflectorCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $reflection = $this->reflector->reflect($input->getArgument('name'));
+        /** @var string $name */
+        $name = $input->getArgument('name');
+
+        $reflection = $this->reflector->reflect($name);
         $this->dumperRegistry->get($input->getOption('format'))->dump($output, $reflection);
 
         return 0;

@@ -15,9 +15,6 @@ parameters:
         - lib/Extension/LanguageServerCodeTransform/Tests/Stub/*
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
-    ignoreErrors:
-        - '#Yield can be used only with these return types: Generator, Iterator, Traversable, iterable.#'
-
 
 includes:
     - phpstan-baseline.neon

@@ -89,7 +89,7 @@ class ArrayLiteral extends ArrayType implements Literal, Generalizable, ArrayAcc
         return new MissingType();
     }
 
-    public function withValue($value): self
+    public function withValue(mixed $value): self
     {
         return $this;
     }
