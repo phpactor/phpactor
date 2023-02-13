@@ -6,11 +6,6 @@ parameters:
 			path: lib/Application.php
 
 		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:resolveClassNames\\(\\) has parameter \\$ast with no type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
@@ -18,11 +13,6 @@ parameters:
 		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\BracedExpression\\|Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\Variable\\|Microsoft\\\\PhpParser\\\\Token\\:\\:\\$start\\.$#"
 			count: 1
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 3
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 
 		-
@@ -386,11 +376,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
 
 		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator given\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
 			message: "#^Parameter \\#1 \\$string of function substr expects string, bool\\|string\\|null given\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
@@ -407,11 +392,6 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\:\\:\\$openBrace\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassLikeUpdater.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassLikeUpdater.php
 
@@ -443,11 +423,6 @@ parameters:
 		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\:\\:\\$openBrace\\.$#"
 			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
 
 		-
@@ -491,36 +466,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/TraitUpdater.php
 
 		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 4
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Instanceof between Microsoft\\\\PhpParser\\\\Node\\\\SourceFileNode and Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\InlineHtml will always evaluate to false\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Instanceof between Microsoft\\\\PhpParser\\\\Node\\\\SourceFileNode and Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\NamespaceDefinition will always evaluate to false\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Instanceof between Microsoft\\\\PhpParser\\\\Node\\\\SourceFileNode and Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\NamespaceUseDeclaration will always evaluate to false\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Result of && is always false\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Right side of && is always false\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
 			message: "#^Class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Util\\\\ImportedNames implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Util/ImportedNames.php
@@ -556,11 +501,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/WorseReflection/WorseBuilderFactory.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\Builder, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Domain/Builder/AbstractBuilder.php
-
-		-
 			message: "#^Argument of an invalid type Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\AbstractBuilder supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/AbstractBuilder.php
@@ -571,24 +511,9 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/AbstractBuilder.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\Builder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/Builder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ClassBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassBuilder\\:\\:constant\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/ClassBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ClassLikeBuilder.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ConstantBuilder\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
@@ -596,44 +521,14 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/ConstantBuilder.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ConstantBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ConstantBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\InterfaceBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/InterfaceBuilder.php
-
-		-
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBodyBuilder\\:\\:\\$lines \\(array\\<Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\>\\) does not accept array\\<Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Line\\|Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\>\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/MethodBodyBuilder.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/MethodBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:defaultValue\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\PropertyBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/PropertyBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\SourceCodeBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/SourceCodeBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\TraitBuilder\\:\\:childNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/TraitBuilder.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\TraitBuilder\\:\\:constant\\(\\) has parameter \\$value with no type specified\\.$#"
@@ -1046,24 +941,9 @@ parameters:
 			path: lib/CodeBuilder/Tests/IntegrationTestCase.php
 
 		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Adapter/TolerantParser/Util/ImporterNamesTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Adapter\\\\TolerantParser\\\\Util\\\\ImporterNamesTest\\:\\:parse\\(\\) has parameter \\$source with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Adapter/TolerantParser/Util/ImporterNamesTest.php
-
-		-
-			message: "#^Call to an undefined method Generator\\:\\:current\\(\\)\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/SourceCodeBuilderTest.php
-
-		-
-			message: "#^Call to an undefined method Generator\\:\\:next\\(\\)\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/SourceCodeBuilderTest.php
 
 		-
 			message: "#^Call to an undefined method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\:\\:build\\(\\)\\.$#"
@@ -1236,54 +1116,14 @@ parameters:
 			path: lib/CodeBuilder/Util/TextUtil.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\TagNode, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/DocblockParser/ParserDocblockUpdater.php
-
-		-
-			message: "#^If condition is always false\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/DocblockParser/ParserDocblockUpdater.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantExtractExpression.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantImportName.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantImportName\\:\\:findExistingImport\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantImportName.php
 
 		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantRenameVariable.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantRenameVariable\\:\\:textEditsToRename\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantRenameVariable.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractConstant.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:addParametersAndGetArgs\\(\\) has parameter \\$freeVariables with no value type specified in iterable type array\\.$#"
@@ -1336,11 +1176,6 @@ parameters:
 			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
 
 		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
 			message: "#^Variable \\$stmt on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 2
 			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
@@ -1354,11 +1189,6 @@ parameters:
 			message: "#^Constant Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\AddMissingProperties\\:\\:LENGTH_OF_THIS_PREFIX is unused\\.$#"
 			count: 1
 			path: lib/CodeTransform/Adapter/WorseReflection/Transformer/AddMissingProperties.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClass, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/CodeTransform/Adapter/WorseReflection/Transformer/CompleteConstructor.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\ImplementContracts\\:\\:missingClassMethods\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -1571,16 +1401,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Unit/Domain/Utils/TextUtilsTest.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletor\\:\\:filterNonQualifyingClasses\\(\\) is unused\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
@@ -1591,129 +1411,9 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/DebugTolerantCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/DebugTolerantCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/LimitingCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/LimitingCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/AttributeCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\Search\\\\NameSearchResult, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/ClassLikeCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/ExpressionNameCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/ExpressionNameCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/TypeCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/UseNameCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 3
-			path: lib/Completion/Bridge/TolerantParser/TypeSuggestionProvider.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\Search\\\\NameSearchResult, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/TypeSuggestionProvider.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/AbstractParameterCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator passed to yield from, only iterables are supported\\.$#"
-			count: 2
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DocblockCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DocblockCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DocblockCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\Helper\\\\VariableCompletionHelper\\:\\:orderedVariablesUntilOffset\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/Helper/VariableCompletionHelper.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 5
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/KeywordCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseClassMemberCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseConstructorCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseConstructorCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseFunctionCompletor.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseFunctionCompletor\\:\\:definedNamesFor\\(\\) has parameter \\$reflectedFunctions with no value type specified in iterable type array\\.$#"
@@ -1731,104 +1431,9 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseFunctionCompletor.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseLocalVariableCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator passed to yield from, only iterables are supported\\.$#"
-			count: 5
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseNamedParameterCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseParameterCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseParameterCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseSignatureHelper.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/ChainCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Core/ChainCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\ChainSignatureHelper\\:\\:__construct\\(\\) has parameter \\$helpers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/ChainSignatureHelper.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/DedupeCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/DedupeCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/DocumentingCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/DocumentingCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/LabelFormattingCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/LabelFormattingCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/LimitingCompletor.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/LimitingCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/NameSearcherCompletion.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\Search\\\\NameSearchResult, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/NameSearcherCompletion.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\Search\\\\NameSearchResult, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\Range\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -1857,11 +1462,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Benchmark\\\\CompletorBenchCase\\:\\:setUp\\(\\) has parameter \\$params with no type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Benchmark/CompletorBenchCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Benchmark/CompletorBenchCase.php
 
@@ -1904,16 +1504,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletorTest\\:\\:testImportClass\\(\\) has parameter \\$source with no type specified\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/TypeSuggestionProviderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/DocblockCompletorTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseClassMemberCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
@@ -1991,39 +1581,14 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/WorseReflection/Formatter/MethodFormatterTest.php
 
 		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Integration/CompletorTestCase.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\CompletorTestCase\\:\\:assertComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/CompletorTestCase.php
 
 		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Integration/CompletorTestCase.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 3
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:create\\(\\) has parameter \\$completors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 3
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 4
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\LimitingCompletorTest\\:\\:primeInnerCompletor\\(\\) has parameter \\$suggestions with no value type specified in iterable type array\\.$#"
@@ -2042,11 +1607,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\LimitingCompletor\\:\\:complete\\(\\) expects Microsoft\\\\PhpParser\\\\Node, object given\\.$#"
-			count: 4
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, Generator\\<mixed, Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed, mixed\\> given\\.$#"
 			count: 4
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
 
@@ -2071,11 +1631,6 @@ parameters:
 			path: lib/Completion/Tests/Unit/Bridge/WorseReflection/Formatter/FunctionLikeSnippetFormatterTest.php
 
 		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 5
-			path: lib/Completion/Tests/Unit/CompletorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) has parameter \\$completors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/CompletorTest.php
@@ -2087,16 +1642,6 @@ parameters:
 
 		-
 			message: "#^PHPDoc tag @var for variable \\$completors contains unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/CompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/CompletorTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
 			count: 2
 			path: lib/Completion/Tests/Unit/CompletorTest.php
 
@@ -2181,31 +1726,6 @@ parameters:
 			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
 
 		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/Core/Completor/DedupeCompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/Core/Completor/DedupeCompletorTest.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/Core/Completor/LimitingCompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/Core/Completor/LimitingCompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/Core/TypedCompletorRegistryTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\Util\\\\Snippet\\\\PlaceholderTest\\:\\:providePlaceholders\\(\\) return type has no value type specified in iterable type iterable\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Core/Util/Snippet/PlaceholderTest.php
@@ -2276,121 +1796,6 @@ parameters:
 			path: lib/ConfigLoader/Tests/Integration/ConfigLoaderTest.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/DocblockParser/Ast/Docblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\TagNode, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/DocblockParser/Ast/Docblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Token, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/DocblockParser/Ast/Docblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 4
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Token, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 3
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Token, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, T of Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Parameter \\#1 \\$elements of method Phpactor\\\\DocblockParser\\\\Ast\\\\Node\\:\\:startOf\\(\\) expects iterable\\<array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Element\\>\\|Phpactor\\\\DocblockParser\\\\Ast\\\\Element\\>, Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Parameter \\#1 \\$nodes of method Phpactor\\\\DocblockParser\\\\Ast\\\\Node\\:\\:findTokens\\(\\) expects iterable\\<array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Element\\>\\|Phpactor\\\\DocblockParser\\\\Ast\\\\Element\\>, Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Parameter \\#1 \\$nodes of method Phpactor\\\\DocblockParser\\\\Ast\\\\Node\\:\\:traverseNodes\\(\\) expects iterable\\<array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Element\\>\\|Phpactor\\\\DocblockParser\\\\Ast\\\\Element\\>, Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> given\\.$#"
-			count: 3
-			path: lib/DocblockParser/Ast/Node.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/DocblockParser/Printer/TestPrinter.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, mixed, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 4
-			path: lib/DocblockParser/Tests/Unit/Ast/NodeTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> given\\.$#"
-			count: 2
-			path: lib/DocblockParser/Tests/Unit/Ast/NodeTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ScalarNode, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Tests/Unit/Ast/NodeTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/DocblockParser/Tests/Unit/Ast/NodeTestCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Element, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Tests/Unit/Ast/NodeTestCase.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Extension\\\\Behat\\\\Behat\\\\Context, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 3
-			path: lib/Extension/Behat/Behat/BehatConfig.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Extension\\\\Behat\\\\Behat\\\\Context, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/Behat/Behat/BehatConfig.php
-
-		-
-			message: "#^Argument of an invalid type Generator passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/Behat/Behat/StepGenerator.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator given\\.$#"
-			count: 1
-			path: lib/Extension/Behat/Tests/Integration/Adapter/Worse/WorseStepFactoryTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 1
-			path: lib/Extension/Behat/Tests/Integration/Completor/FeatureStepCompletorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassCopy\\:\\:copy\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassCopy.php
@@ -2454,11 +1859,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReferenceList\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:directoryMap\\(\\) has no return type specified\\.$#"
@@ -2936,11 +2336,6 @@ parameters:
 			path: lib/Extension/CodeTransformExtra/Application/AbstractClassGenerator.php
 
 		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\CodeTransform\\\\Domain\\\\Generator\\:\\:generateFromExisting\\(\\)\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
@@ -3221,11 +2616,6 @@ parameters:
 			path: lib/Extension/CompletionExtra/Application/Complete.php
 
 		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 1
-			path: lib/Extension/CompletionExtra/Application/Complete.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:renderClass\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
@@ -3244,11 +2634,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\CompletionExtra\\\\Rpc\\\\HoverHandler\\:\\:renderVariable\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 1
-			path: lib/Extension/CompletionRpc/Handler/CompleteHandler.php
 
 		-
 			message: "#^Access to an undefined property Phpactor\\\\Extension\\\\CompletionRpc\\\\Tests\\\\Unit\\\\Handler\\\\CompleteHandlerTest\\:\\:\\$registry\\.$#"
@@ -3616,69 +3001,9 @@ parameters:
 			path: lib/Extension/LanguageServerBridge/Tests/Converter/TextEditConverterTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\CreateClassProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'quickfix\\.create…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/CreateClassProvider.php
-
-		-
 			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\CreateClassProvider\\:\\:\\$parser is never read, only written\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/CodeAction/CreateClassProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\CreateUnresolvableClassProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'quickfix\\.create…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/CreateUnresolvableClassProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\ExtractConstantProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'refactor\\.extract…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ExtractConstantProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\ExtractExpressionProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'refactor\\.extract…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ExtractExpressionProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\ExtractMethodProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'refactor\\.extract…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ExtractMethodProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\FillObjectProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'quickfix\\.fill\\.object'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/FillObjectProvider.php
-
-		-
-			message: "#^Parameter \\$kind of class Phpactor\\\\LanguageServerProtocol\\\\CodeAction constructor expects ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\|null, 'quickfix\\.fill\\.object' given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/FillObjectProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\GenerateDecoratorProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'quickfix\\.generate…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/GenerateDecoratorProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\GenerateMethodProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'quickfix\\.generate…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/GenerateMethodProvider.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Model\\\\NameImport\\\\NameCandidate, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ImportNameProvider.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Model\\\\NameImport\\\\NameCandidate, mixed, mixed\\>\\:\\:current\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ImportNameProvider.php
-
-		-
-			message: "#^Comparison operation \"\\>\" between 0 and 1 is always false\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ImportNameProvider.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\ImportNameProvider\\:\\:diagnosticsFromUnresolvedName\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3686,44 +3011,9 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ImportNameProvider.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\ImportNameProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'quickfix\\.import…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ImportNameProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\PropertyAccessGeneratorProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{string\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/PropertyAccessGeneratorProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\ReplaceQualifierWithImportProvider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{'refactor\\.class…'\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/ReplaceQualifierWithImportProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\TransformerCodeActionPovider\\:\\:kinds\\(\\) should return array\\<int, ''\\|'quickfix'\\|'refactor'\\|'refactor\\.extract'\\|'refactor\\.inline'\\|'refactor\\.rewrite'\\|'source'\\|'source\\.fixAll'\\|'source…'\\> but returns array\\{string\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/TransformerCodeActionPovider.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Converter\\\\DiagnosticsConverter\\:\\:toLspDiagnostics\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Converter/DiagnosticsConverter.php
-
-		-
-			message: "#^Class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor invoked with 5 parameters, 4 required\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$clientApi of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Server\\\\ClientApi, string given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, Phpactor\\\\LanguageServer\\\\Core\\\\Server\\\\ClientApi given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\GenerateDecoratorCommand\\:\\:__invoke\\(\\) has invalid return type Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ApplyWorkspaceEditResult\\.$#"
@@ -3744,11 +3034,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\GenerateMethodCommand\\:\\:__invoke\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ApplyWorkspaceEditResult\\|null\\> but returns Amp\\\\Promise\\<Phpactor\\\\LanguageServerProtocol\\\\ApplyWorkspaceEditResult\\>\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/LspCommand/GenerateMethodCommand.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Model\\\\NameImport\\\\NameCandidate, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LspCommand/ImportAllUnresolvedNamesCommand.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ImportAllUnresolvedNamesCommand\\:\\:candidates\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3781,16 +3066,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/LspCommand/TransformCommand.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Model\\\\NameImport\\\\NameCandidate, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Model/NameImport/CandidateFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Model/NameImport/CandidateFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Model\\\\NameImport\\\\NameImporterResult\\:\\:__construct\\(\\) has parameter \\$textEdits with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Model/NameImport/NameImporterResult.php
@@ -3809,21 +3084,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/IntegrationTestCase.php
-
-		-
-			message: "#^Class Generator has @implements tag, but does not implement any interface\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Stub/Generator.php
-
-		-
-			message: "#^Function array_keys\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Stub/Generator.php
-
-		-
-			message: "#^Function explode\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Stub/Generator.php
 
 		-
 			message: "#^Method Phpactor\\\\LanguageServer\\\\Test\\\\LanguageServerTester\\\\TextDocumentTester\\:\\:save\\(\\) invoked with 2 parameters, 1 required\\.$#"
@@ -4021,69 +3281,9 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ImportNameCommandTest.php
 
 		-
-			message: "#^Class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor invoked with 5 parameters, 4 required\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\PropertyAccessGeneratorCommandTest\\:\\:createTester\\(\\) has parameter \\$generateAccessors with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy but does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\PropertyAccessGeneratorCommandTest\\:\\:createTester\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
-			message: "#^PHPDoc tag @return has invalid value \\(array\\{LanguageServerTester,LanguageServerTesterBuilder\\]\\)\\: Unexpected token \"\\]\", expected '\\}' at offset 73$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$changes of class Phpactor\\\\LanguageServerProtocol\\\\WorkspaceEdit constructor expects array\\{\\}\\|null, array\\{file\\:///file\\.php\\: array\\<Phpactor\\\\LanguageServerProtocol\\\\TextEdit\\>\\} given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$clientApi of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Server\\\\ClientApi, string given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, Phpactor\\\\LanguageServer\\\\Core\\\\Server\\\\ClientApi given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
-			message: "#^Parameter \\#3 \\$generateAccessor of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Refactor\\\\PropertyAccessGenerator, Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
-			message: "#^Parameter \\#4 \\$editLabel of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor expects string, object given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/PropertyAccessGeneratorCommandTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Handler/CompletionHandler.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Handler/CompletionHandler.php
-
-		-
-			message: "#^Left side of \\|\\| is always false\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Handler/CompletionHandler.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\CompletionHandler\\:\\:\\$resolve \\(array\\<int, Closure\\(Phpactor\\\\LanguageServerProtocol\\\\CompletionItem\\)\\: Phpactor\\\\LanguageServerProtocol\\\\CompletionItem\\>\\) does not accept non\\-empty\\-array\\<int\\|string, Closure\\(Phpactor\\\\LanguageServerProtocol\\\\CompletionItem\\)\\: Phpactor\\\\LanguageServerProtocol\\\\CompletionItem\\>\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Handler/CompletionHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\SignatureHelpHandler\\:\\:signatureHelp\\(\\) return type with generic interface Amp\\\\Promise does not specify its types\\: TValue$#"
@@ -4171,31 +3371,6 @@ parameters:
 			path: lib/Extension/LanguageServerHover/Renderer/MemberDocblock.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, mixed, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerIndexer/Handler/IndexerHandler.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, string, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerIndexer/Handler/IndexerHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Listener\\\\IndexerListener\\:\\:getListenersForEvent\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerIndexer/Listener/IndexerListener.php
-
-		-
-			message: "#^PHPDoc tag @return with type Generator\\<mixed, callable, mixed, mixed\\> is incompatible with native type iterable\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerIndexer/Listener/IndexerListener.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerIndexer/Tests/IntegrationTestCase.php
@@ -4214,16 +3389,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Watcher\\\\LanguageServerWatcher\\:\\:getListenersForEvent\\(\\) return type has no value type specified in iterable type iterable\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerIndexer/Watcher/LanguageServerWatcher.php
-
-		-
-			message: "#^Parameter \\#1 \\$document of method Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\Formatter\\\\PhpCsFixerFormatter\\:\\:format\\(\\) expects Phpactor\\\\LanguageServerProtocol\\\\TextDocumentItem, Phpactor\\\\TextDocument\\\\TextDocument given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/Handler/FormattingHandler.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Amp\\\\Promise\\<array\\<Phpactor\\\\LanguageServerProtocol\\\\Diagnostic\\>\\>, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpstan/Model/Linter/PhpstanLinter.php
 
 		-
 			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerPhpstan\\\\Model\\\\PhpstanProcess\\:\\:\\$phpstanBin is unused\\.$#"
@@ -4251,11 +3416,6 @@ parameters:
 			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Amp\\\\Promise\\<array\\<Phpactor\\\\LanguageServerProtocol\\\\Diagnostic\\>\\>, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/Linter/PsalmLinter.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerPsalm\\\\Tests\\\\Model\\\\DiagnosticsParserTest\\:\\:provideParse\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerPsalm/Tests/Model/DiagnosticsParserTest.php
@@ -4264,11 +3424,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerPsalm\\\\Tests\\\\Model\\\\PsalmProcessTest\\:\\:testLint\\(\\) has parameter \\$expectedDiagnostics with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerPsalm/Tests/Model/PsalmProcessTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Adapter/Indexer/WorkspaceUpdateReferenceFinder.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\GotoImplementationHandler\\:\\:gotoImplementation\\(\\) return type with generic interface Amp\\\\Promise does not specify its types\\: TValue$#"
@@ -4281,11 +3436,6 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Handler/GotoImplementationHandler.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Handler/ReferencesHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler\\:\\:references\\(\\) return type with generic interface Amp\\\\Promise does not specify its types\\: TValue$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/Handler/ReferencesHandler.php
@@ -4296,37 +3446,12 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Handler/ReferencesHandler.php
 
 		-
-			message: "#^Ternary operator condition is always false\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Handler/ReferencesHandler.php
-
-		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\MissingToken\\|Microsoft\\\\PhpParser\\\\Node\\\\QualifiedName\\:\\:\\$nameParts\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/Model/Highlighter.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Model\\\\Highlight, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 12
-			path: lib/Extension/LanguageServerReferenceFinder/Model/Highlighter.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Model\\\\Highlight, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Model/Highlighter.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 5
-			path: lib/Extension/LanguageServerReferenceFinder/Model/Highlighter.php
-
-		-
 			message: "#^Cannot cast Microsoft\\\\PhpParser\\\\MissingToken\\|Microsoft\\\\PhpParser\\\\Node\\\\QualifiedName to string\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Model/Highlighter.php
-
-		-
-			message: "#^Empty array passed to foreach\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/Model/Highlighter.php
 
@@ -4339,16 +3464,6 @@ parameters:
 			message: "#^Property Phpactor\\\\LanguageServerProtocol\\\\ServerCapabilities\\:\\:\\$workspace \\(array\\{workspaceFolders\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\|null\\) does not accept array\\{workspaceFolders\\?\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Handler/RenameHandler.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Handler/RenameHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
@@ -4409,16 +3524,6 @@ parameters:
 			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractor\\:\\:\\$rangeOpenMarkers type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerSymbolProvider/Adapter/TolerantDocumentSymbolProvider.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerSymbolProvider\\\\Adapter\\\\TolerantDocumentSymbolProvider\\:\\:memberNodes\\(\\) should return Generator but returns array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerSymbolProvider/Adapter/TolerantDocumentSymbolProvider.php
 
 		-
 			message: "#^Parameter \\#7 \\$deprecated of class Phpactor\\\\LanguageServerProtocol\\\\DocumentSymbol constructor expects bool\\|null, array given\\.$#"
@@ -5276,26 +4381,6 @@ parameters:
 			path: lib/Extension/SourceCodeFilesystemExtra/SourceCodeFilestem/Application/ClassSearch.php
 
 		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<int, Phpactor\\\\Completion\\\\Core\\\\Suggestion, null, bool\\> given\\.$#"
-			count: 1
-			path: lib/Extension/Symfony/Tests/Integration/Completor/SymfonyContainerCompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Extension/WorseReferenceFinder/Tests/Unit/WorseReferenceFinderExtensionTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<string, Phpactor\\\\WorseReflection\\\\Core\\\\Diagnostics\\<Phpactor\\\\WorseReflection\\\\Core\\\\Diagnostic\\>, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionAnalyse/Command/AnalyseCommand.php
-
-		-
-			message: "#^Ternary operator condition is always false\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionAnalyse/Command/AnalyseCommand.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:constants\\(\\)\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
@@ -5389,11 +4474,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Filesystem/Domain/FallbackFilesystemRegistry.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of class Phpactor\\\\Filesystem\\\\Domain\\\\FileList constructor expects Iterator\\<mixed, SplFileInfo\\>, Generator\\<int, SplFileInfo, mixed, void\\> given\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FileList.php
 
 		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromParts\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
@@ -5526,69 +4606,9 @@ parameters:
 			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Name\\\\FullyQualifiedName, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedImplementationFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Name\\\\FullyQualifiedName, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedImplementationFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedNameSearcher.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\LocationConfidence, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 4
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedReferenceFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\LocationConfidence, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedReferenceFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, string, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedReferenceFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, string, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedReferenceFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/Indexer/Adapter/Tolerant/Indexer/ConstantDeclarationIndexer.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, string, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/Indexer/Extension/Command/IndexBuildCommand.php
-
-		-
 			message: "#^Property Phpactor\\\\Indexer\\\\Extension\\\\Command\\\\IndexBuildCommand\\:\\:\\$usage is never read, only written\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/Command/IndexBuildCommand.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\LocationConfidence, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/Command/IndexQueryCommand.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/Command/IndexSearchCommand.php
 
 		-
 			message: "#^Constant Phpactor\\\\Indexer\\\\Extension\\\\IndexerExtension\\:\\:INDEXER_TOLERANT is unused\\.$#"
@@ -5606,16 +4626,6 @@ parameters:
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$splFileInfos of static method Phpactor\\\\Indexer\\\\Model\\\\FileList\\:\\:fromInfoIterator\\(\\) expects Iterator\\<mixed, SplFileInfo\\>, Generator\\<mixed, SplFileInfo, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/FileListProvider/DirtyFileListProvider.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, string, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/IndexJob.php
-
-		-
 			message: "#^Property Phpactor\\\\Indexer\\\\Model\\\\QueryClient\\:\\:\\$enhancer is never read, only written\\.$#"
 			count: 1
 			path: lib/Indexer/Model/QueryClient.php
@@ -5624,26 +4634,6 @@ parameters:
 			message: "#^Property Phpactor\\\\Indexer\\\\Model\\\\QueryClient\\:\\:\\$index is never read, only written\\.$#"
 			count: 1
 			path: lib/Indexer/Model/QueryClient.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Model/SearchClient/HydratingSearchClient.php
-
-		-
-			message: "#^Unable to resolve the template type TRecord in call to method Phpactor\\\\Indexer\\\\Model\\\\IndexAccess\\:\\:get\\(\\)$#"
-			count: 1
-			path: lib/Indexer/Model/SearchClient/HydratingSearchClient.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Model/SearchIndex/ValidatingSearchIndex.php
-
-		-
-			message: "#^Unable to resolve the template type TRecord in call to method Phpactor\\\\Indexer\\\\Model\\\\IndexAccess\\:\\:get\\(\\)$#"
-			count: 1
-			path: lib/Indexer/Model/SearchIndex/ValidatingSearchIndex.php
 
 		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\IndexBuilderTestCase\\:\\:provideIndexesClassLike\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -5659,56 +4649,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\Php\\\\FileSearchIndexTest\\:\\:search\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/Adapter/Php/FileSearchIndexTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/Php/FileSearchIndexTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\Search\\\\NameSearchResult, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 4
-			path: lib/Indexer/Tests/Adapter/ReferenceFinder/IndexedNameSearcherTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\Search\\\\NameSearchResult, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/ReferenceFinder/IndexedNameSearcherTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/ReferenceFinder/IndexedReferenceFinderTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/Tolerant/Indexer/ClassDeclarationIndexerTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\LocationConfidence, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/Tolerant/Indexer/ClassLikeReferenceIndexerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> given\\.$#"
-			count: 3
-			path: lib/Indexer/Tests/Adapter/Tolerant/Indexer/ConstantDeclarationIndexerTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\LocationConfidence, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/Tolerant/Indexer/MemberIndexerTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Benchmark/IndexedReferenceFinderBench.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\Record, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/Indexer/Tests/Benchmark/SearchBench.php
 
 		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Benchmark\\\\SearchBench\\:\\:benchBareFileSearch\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
@@ -5731,11 +4671,6 @@ parameters:
 			path: lib/Indexer/Tests/Extension/Command/IndexSearchCommandTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, string, mixed, mixed\\> given\\.$#"
-			count: 2
-			path: lib/Indexer/Tests/Extension/IndexerExtensionTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/IntegrationTestCase.php
@@ -5749,11 +4684,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\ReferenceFinder\\\\Util\\\\ContainerTypeResolverTest\\:\\:testResolve\\(\\) has parameter \\$manifest with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/Unit/Adapter/ReferenceFinder/Util/ContainerTypeResolverTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator given\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Unit/Model/SearchIndex/ValidatingSearchIndexTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Name\\\\FullyQualifiedName\\:\\:fromArray\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
@@ -5876,11 +4806,6 @@ parameters:
 			path: lib/ReferenceFinder/ChainDefinitionLocationProvider.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/ChainReferenceFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\ReferenceFinder\\\\ChainReferenceFinder\\:\\:__construct\\(\\) has parameter \\$finders with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/ChainReferenceFinder.php
@@ -5891,19 +4816,9 @@ parameters:
 			path: lib/ReferenceFinder/ChainTypeLocator.php
 
 		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/DefinitionAndReferenceFinder.php
-
-		-
 			message: "#^Class Phpactor\\\\TextDocument\\\\Locations constructor invoked with 2 parameters, 1 required\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/Tests/Unit/ChainImplementationFinderTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
 
 		-
 			message: "#^Property Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\ChainReferenceFinderTest\\:\\:\\$locator1 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\ReferenceFinder\\\\ClassReferenceFinder\\>\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\ReferenceFinder\\\\ReferenceFinder\\>\\.$#"
@@ -5926,184 +4841,14 @@ parameters:
 			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> given\\.$#"
-			count: 2
-			path: lib/ReferenceFinder/Tests/Unit/DefinitionAndReferenceFinderTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Indexer\\\\Model\\\\LocationConfidence, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Rename/Adapter/ClassMover/FileRenamer.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Rename/Adapter/ReferenceFinder/AbstractReferenceRenamer.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Rename/Adapter/ReferenceFinder/AbstractReferenceRenamer.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Rename/Adapter/ReferenceFinder/ClassMover/ClassRenamer.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Rename/Adapter/ReferenceFinder/MemberRenamer.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Rename/Model/Renamer/ChainRenamer.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Rename/Model/Renamer/ChainRenamer.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\>\\:\\:getReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ReferenceFinder/ClassMover/ClassRenamerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ReferenceFinder/ClassMover/ClassRenamerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ReferenceFinder/MemberRenamerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ReferenceFinder/VariableRenamerTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<string, array\\<int, \\(Closure\\)\\|\\(Closure\\)\\|string\\>, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 5
-			path: lib/Rename/Tests/Integration/Adapter/ReferenceFinder/MemberRenamerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Model/Renamer/ChainRenamerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdit, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/RenamerTestCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/TolerantVariableReferenceFinderTest.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/TolerantVariableDefintionLocator.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\> passed to yield from, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\>\\:\\:next\\(\\)\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
-
-		-
-			message: "#^Call to an undefined method Generator\\<mixed, Phpactor\\\\ReferenceFinder\\\\PotentialLocation, mixed, mixed\\>\\:\\:valid\\(\\)\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:isPotentialReferenceNode\\(\\) is unused\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
 
 		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:resolveImportTable\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\DeprecatedTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ExtendsTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ImplementsTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\MethodTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\MixinTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ParamTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ParameterTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\PropertyTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ReturnTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\TemplateTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\VarTag, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/Phpactor/DocblockParser/ParsedDocblock.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\PsrLog\\\\ArrayLogger\\:\\:messages\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -6114,16 +4859,6 @@ parameters:
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\PsrLog\\\\ArrayLogger\\:\\:\\$messages has no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/PsrLog/ArrayLogger.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\CallableNode, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Diagnostics/UnusedImportProvider.php
-
-		-
-			message: "#^Argument of an invalid type Generator\\<mixed, Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ClassNode, mixed, mixed\\> supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Diagnostics/UnusedImportProvider.php
 
 		-
 			message: "#^Expression on left side of \\?\\? is always null\\.$#"
@@ -6181,34 +4916,9 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionClassMember.php
 
 		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionArgument.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionArgument\\:\\:guessName\\(\\) should return string but returns bool\\|string\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionArgument.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionArgument\\:\\:value\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionArgument.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionDeclaredConstant.php
-
-		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionMethodCall\\:\\:\\$node is unused\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethodCall.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 3
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionNavigation.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has no return type specified\\.$#"
@@ -6257,11 +4967,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImports\\:\\:visiblity\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
 
@@ -6316,11 +5021,6 @@ parameters:
 			path: lib/WorseReflection/Core/Inference/Frame.php
 
 		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/FrameResolver.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\LocalAssignments\\:\\:fromArray\\(\\) has parameter \\$assignments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/LocalAssignments.php
@@ -6339,66 +5039,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\PropertyAssignments\\:\\:fromArray\\(\\) has parameter \\$assignments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/PropertyAssignments.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Resolver/AnonymousFunctionCreationExpressionResolver.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Resolver/ArrayCreationExpressionResolver.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Resolver/ArrowFunctionCreationExpressionResolver.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Token\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Resolver/AssignmentExpressionResolver.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReflection/Core/Inference/Resolver/IfStatementResolver.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Resolver/QualifiedNameListResolver.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReflection/Core/Inference/Walker/FunctionLikeWalker.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 3
-			path: lib/WorseReflection/Core/Inference/Walker/TestAssertWalker.php
-
-		-
-			message: "#^Offset 0 does not exist on array\\{\\}\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Walker/TestAssertWalker.php
-
-		-
-			message: "#^Offset 1 does not exist on array\\{\\}\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Walker/TestAssertWalker.php
-
-		-
-			message: "#^Offset 2 on array\\{\\} on left side of \\?\\? does not exist\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Walker/TestAssertWalker.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Walker/TestAssertWalker.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Name\\:\\:fromParts\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
@@ -6471,11 +5111,6 @@ parameters:
 			path: lib/WorseReflection/Core/Position.php
 
 		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ClassLikeReflectionMemberCollection.php
-
-		-
 			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant not found\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
@@ -6484,36 +5119,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$items of class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection constructor expects array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionConstant\\>, array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant&T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionArgumentCollection.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionClassLikeCollection.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionDeclaredConstantCollection.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionFunctionCollection.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 2
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionParameterCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionArgument\\:\\:value\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionArgument.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClass\\:\\:isFinal\\(\\) has no return type specified\\.$#"
@@ -6599,36 +5204,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$source of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
-			message: "#^Argument of an invalid type Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 3
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Node\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 3
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Argument of an invalid type array\\<Microsoft\\\\PhpParser\\\\Token\\>\\|Generator supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:getEndPosition\\(\\)\\.$#"
-			count: 3
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\NodeUtil\\:\\:lastDescendantNodeBeforeOffsetOfType\\(\\) should return Microsoft\\\\PhpParser\\\\Node but returns object\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Parameter \\#1 \\$iterator of function iterator_to_array expects Traversable, Generator given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
 
 		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionMethod\\:\\:\\$type is unused\\.$#"
