@@ -1371,26 +1371,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Transformer/CompleteConstructorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\WorseTestCase\\:\\:reflectorForWorkspace\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$filePath of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$filename of function file_get_contents expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
-			message: "#^Parameter \\#2 \\$source of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Unit\\\\CodeTransformTest\\:\\:create\\(\\) has parameter \\$transformers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Unit/CodeTransformTest.php

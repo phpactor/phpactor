@@ -39,6 +39,6 @@ class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
             throw new SourceNotFound(sprintf('Unable to locate file for function: "%s"', (string) $name));
         }
 
-        return SourceCode::fromPathAndString($fileName, (string) file_get_contents($fileName));
+        return SourceCode::fromPath($fileName);
     }
 }

@@ -16,9 +16,7 @@ class WorseStepFactoryTest extends TestCase
     public function testGeneratesSteps(): void
     {
         $path = __DIR__ . '/TestContext.php';
-        $reflector = ReflectorBuilder::create()->addSource(
-            SourceCode::fromPathAndString($path, (string)file_get_contents($path))
-        )->build();
+        $reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath($path))->build();
         $stepGenerator = new WorseStepFactory($reflector, new WorseContextClassResolver($reflector));
         $parser = new StepParser();
         $context = new Context('default', TestContext::class);
