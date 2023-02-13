@@ -1631,13 +1631,18 @@ parameters:
 			path: lib/Completion/Tests/Unit/Bridge/WorseReflection/Formatter/FunctionLikeSnippetFormatterTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) has parameter \\$completors with no value type specified in iterable type array\\.$#"
+			message: "#^Parameter \\#1 \\$completors of class Phpactor\\\\Completion\\\\Core\\\\ChainCompletor constructor expects array\\<Phpactor\\\\Completion\\\\Core\\\\Completor\\>, array\\<Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\> given\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/CompletorTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$completors of method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) expects array\\<Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\>, array\\<int, Phpactor\\\\Completion\\\\Core\\\\Completor\\|Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\> given\\.$#"
 			count: 2
+			path: lib/Completion/Tests/Unit/CompletorTest.php
+
+		-
+			message: "#^Parameter \\$completors of method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) has invalid type Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\.$#"
+			count: 1
 			path: lib/Completion/Tests/Unit/CompletorTest.php
 
 		-

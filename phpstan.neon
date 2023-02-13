@@ -13,7 +13,7 @@ parameters:
         - lib/Test.php
         - lib/WorseReflection/Core/SourceCodeLocator/InternalStubs/*
         - lib/Extension/LanguageServerCodeTransform/Tests/Stub/*
-    reportUnmatchedIgnoredErrors: true
+    reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
 
 includes:
