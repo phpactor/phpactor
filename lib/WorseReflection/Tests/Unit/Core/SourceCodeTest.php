@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\SourceCode;
 use InvalidArgumentException;
-use stdClass;
 
 class SourceCodeTest extends TestCase
 {

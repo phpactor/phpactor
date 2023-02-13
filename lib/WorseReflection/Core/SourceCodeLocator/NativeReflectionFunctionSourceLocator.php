@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use ReflectionFunction;
+use InvalidArgumentException;
 
 class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
 {
@@ -25,18 +26,18 @@ class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
 
     private function sourceFromFunctionName(Name $name): SourceCode
     {
-        $function = new ReflectionFunction($name->__toString());
-
+        $functionName = (string) $name;
+        $function = new ReflectionFunction($functionName);
         $fileName = $function->getFileName();
+
         if ($function->isInternal()) {
             throw new SourceNotFound(sprintf(
                 'Function "%s" is an internal function, there is another locator for that',
                 $name->__toString()
             ));
         }
-
-        if (!$fileName || !file_exists($fileName)) {
-            throw new SourceNotFound(sprintf('Unable to locate file for function: "%s"', (string) $name));
+        if ($fileName === false) {
+            throw new InvalidArgumentException(sprintf('Function "%s" has no file', $functionName));
         }
 
         return SourceCode::fromPath($fileName);
