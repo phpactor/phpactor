@@ -19,10 +19,7 @@ class SourceCode implements TextDocument
         return $this->source;
     }
 
-    /**
-     * @param SourceCode|TextDocument|string $value
-     */
-    public static function fromUnknown($value): SourceCode
+    public static function fromUnknown(SourceCode|TextDocument|string $value): SourceCode
     {
         if ($value instanceof SourceCode) {
             return $value;
@@ -40,15 +37,7 @@ class SourceCode implements TextDocument
             );
         }
 
-        if (is_string($value)) {
-            return self::fromString($value);
-        }
-
-        /** @phpstan-ignore-next-line */
-        throw new InvalidArgumentException(sprintf(
-            'Do not know how to create source code from type "%s"',
-            is_object($value) ? get_class($value) : gettype($value)
-        ));
+        return self::fromString($value);
     }
 
     public static function fromString(string $source): self

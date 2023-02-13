@@ -5141,48 +5141,13 @@ parameters:
 			path: lib/WorseReflection/Core/SourceCodeLocator/ChainSourceLocator.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\NativeReflectionFunctionSourceLocator\\:\\:sourceFromFunctionName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$filePath of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$filename of function file_get_contents expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
-			message: "#^Parameter \\#2 \\$source of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionMethod\\:\\:\\$type is unused\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionMethod.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:create\\(\\) has parameter \\$visibility with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
 			message: "#^Cannot use array destructuring on Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\.$#"
 			count: 2
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:addSource\\(\\) has parameter \\$code with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:buildReflectorFactory\\(\\) has no return type specified\\.$#"
-			count: 1
 			path: lib/WorseReflection/ReflectorBuilder.php
 
 		-

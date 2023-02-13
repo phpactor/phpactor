@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
@@ -12,7 +13,7 @@ class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
 {
     public function locate(Name $name): SourceCode
     {
-        if (function_exists($name)) {
+        if (function_exists((string) $name)) {
             return $this->sourceFromFunctionName($name);
         }
 
@@ -22,10 +23,11 @@ class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
         ));
     }
 
-    private function sourceFromFunctionName(Name $name)
+    private function sourceFromFunctionName(Name $name): SourceCode
     {
         $function = new ReflectionFunction($name->__toString());
 
+        $fileName = $function->getFileName();
         if ($function->isInternal()) {
             throw new SourceNotFound(sprintf(
                 'Function "%s" is an internal function, there is another locator for that',
@@ -33,6 +35,10 @@ class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
             ));
         }
 
-        return SourceCode::fromPathAndString($function->getFileName(), file_get_contents($function->getFileName()));
+        if (!$fileName || !file_exists($fileName)) {
+            throw new SourceNotFound(sprintf('Unable to locate file for function: "%s"', (string) $name));
+        }
+
+        return SourceCode::fromPathAndString($fileName, (string) file_get_contents($fileName));
     }
 }

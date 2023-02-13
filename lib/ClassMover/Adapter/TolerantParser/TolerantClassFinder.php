@@ -174,7 +174,6 @@ class TolerantClassFinder implements ClassFinder
             return NamespaceReference::forRoot();
         }
 
-        /** @phpstan-ignore-next-line */
         if (null === $namespace->name || $namespace->name instanceof MissingToken) {
             return NamespaceReference::forRoot();
         }
