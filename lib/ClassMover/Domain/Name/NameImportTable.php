@@ -27,7 +27,7 @@ class NameImportTable
     public function isNameImported(QualifiedName $name): bool
     {
         foreach ($this->importedNameRefs as $importedNameRef) {
-            if ($importedNameRef->importedName()->qualifies($name)) {
+            if ($importedNameRef->importedName()?->qualifies($name)) {
                 return true;
             }
         }
@@ -38,7 +38,7 @@ class NameImportTable
     public function getImportedNameRefFor(QualifiedName $name): ?ImportedNameReference
     {
         foreach ($this->importedNameRefs as $importedNameRef) {
-            if ($importedNameRef->importedName()->qualifies($name)) {
+            if ($importedNameRef->importedName()?->qualifies($name)) {
                 return $importedNameRef;
             }
         }
@@ -52,7 +52,7 @@ class NameImportTable
     public function resolveClassName(QualifiedName $name): FullyQualifiedName
     {
         foreach ($this->importedNameRefs as $importedNameRef) {
-            if ($importedNameRef->importedName()->qualifies($name)) {
+            if ($importedNameRef->importedName()?->qualifies($name)) {
                 return $importedNameRef->importedName()->qualify($name);
             }
         }
@@ -72,8 +72,13 @@ class NameImportTable
     public function isAliased(QualifiedName $name): bool
     {
         foreach ($this->importedNameRefs as $importedNameRef) {
-            if ($importedNameRef->importedName()->qualifies($name)) {
-                return $importedNameRef->importedName()->isAlias();
+            $importedName = $importedNameRef->importedName();
+            if ($importedName === null) {
+                continue;
+            }
+
+            if ($importedName->qualifies($name)) {
+                return $importedName->isAlias();
             }
         }
 
