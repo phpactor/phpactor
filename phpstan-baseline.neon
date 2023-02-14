@@ -1371,26 +1371,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Transformer/CompleteConstructorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\WorseTestCase\\:\\:reflectorForWorkspace\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$filePath of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
-			message: "#^Parameter \\#1 \\$filename of function file_get_contents expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
-			message: "#^Parameter \\#2 \\$source of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/WorseTestCase.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Unit\\\\CodeTransformTest\\:\\:create\\(\\) has parameter \\$transformers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Unit/CodeTransformTest.php
@@ -1631,18 +1611,18 @@ parameters:
 			path: lib/Completion/Tests/Unit/Bridge/WorseReflection/Formatter/FunctionLikeSnippetFormatterTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) has parameter \\$completors with no value type specified in iterable type array\\.$#"
+			message: "#^Parameter \\#1 \\$completors of class Phpactor\\\\Completion\\\\Core\\\\ChainCompletor constructor expects array\\<Phpactor\\\\Completion\\\\Core\\\\Completor\\>, array\\<Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\> given\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/CompletorTest.php
 
 		-
-			message: "#^PHPDoc tag @var above a method has no effect\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/CompletorTest.php
-
-		-
-			message: "#^PHPDoc tag @var for variable \\$completors contains unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\.$#"
+			message: "#^Parameter \\#1 \\$completors of method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) expects array\\<Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\>, array\\<int, Phpactor\\\\Completion\\\\Core\\\\Completor\\|Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\> given\\.$#"
 			count: 2
+			path: lib/Completion/Tests/Unit/CompletorTest.php
+
+		-
+			message: "#^Parameter \\$completors of method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) has invalid type Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\.$#"
+			count: 1
 			path: lib/Completion/Tests/Unit/CompletorTest.php
 
 		-
@@ -5141,59 +5121,9 @@ parameters:
 			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:empty\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCode.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPath\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCode.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCode.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCode.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromString\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCode.php
-
-		-
-			message: "#^Parameter \\#1 \\$source of class Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode constructor expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCode.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\ChainSourceLocator\\:\\:__construct\\(\\) has parameter \\$sourceLocators with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/SourceCodeLocator/ChainSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\NativeReflectionFunctionSourceLocator\\:\\:sourceFromFunctionName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$filePath of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$filename of function file_get_contents expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
-
-		-
-			message: "#^Parameter \\#2 \\$source of static method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode\\:\\:fromPathAndString\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/NativeReflectionFunctionSourceLocator.php
 
 		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionMethod\\:\\:\\$type is unused\\.$#"
@@ -5201,23 +5131,8 @@ parameters:
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionMethod.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Visibility\\:\\:create\\(\\) has parameter \\$visibility with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Visibility.php
-
-		-
 			message: "#^Cannot use array destructuring on Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\.$#"
 			count: 2
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:addSource\\(\\) has parameter \\$code with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:buildReflectorFactory\\(\\) has no return type specified\\.$#"
-			count: 1
 			path: lib/WorseReflection/ReflectorBuilder.php
 
 		-

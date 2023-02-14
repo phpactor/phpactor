@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\SourceCode;
 use InvalidArgumentException;
-use stdClass;
 
 class SourceCodeTest extends TestCase
 {
@@ -45,12 +44,6 @@ class SourceCodeTest extends TestCase
         $sourceCode = SourceCode::fromUnknown(self::SOURCE_CODE);
 
         $this->assertEquals(SourceCode::fromString(self::SOURCE_CODE), $sourceCode);
-    }
-
-    public function testFromUnknownInvalid(): void
-    {
-        $this->expectExceptionMessage('Do not know how to create source code');
-        SourceCode::fromUnknown(new stdClass);
     }
 
     public function testFromTextDocument(): void

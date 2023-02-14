@@ -19,7 +19,8 @@ class ComposerPhpVersionResolver implements PhpVersionResolver
             return null;
         }
 
-        if (!$json = json_decode($contents, true)) {
+        $json = json_decode($contents, true);
+        if (!$json || !is_array($json)) {
             return null;
         }
 

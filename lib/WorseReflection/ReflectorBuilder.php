@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection;
 
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
@@ -23,9 +24,6 @@ use Psr\Log\LoggerInterface;
 
 final class ReflectorBuilder
 {
-    /**
-     * @var LoggerInterface
-     */
     private ?LoggerInterface $logger = null;
 
     /**
@@ -105,7 +103,7 @@ final class ReflectorBuilder
     /**
      * Add some source code
      */
-    public function addSource($code): ReflectorBuilder
+    public function addSource(SourceCode|TextDocument|string $code): ReflectorBuilder
     {
         $source = SourceCode::fromUnknown($code);
 
@@ -233,7 +231,7 @@ final class ReflectorBuilder
         return $this->logger ?: new ArrayLogger();
     }
 
-    private function buildReflectorFactory()
+    private function buildReflectorFactory(): SourceCodeReflectorFactory
     {
         return $this->sourceReflectorFactory ?: new TolerantFactory();
     }
