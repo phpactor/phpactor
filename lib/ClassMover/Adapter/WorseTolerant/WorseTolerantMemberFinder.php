@@ -109,82 +109,15 @@ class WorseTolerantMemberFinder implements MemberFinder
         $memberName = null;
 
         if (false === $query->hasType() || $query->type() === ClassMemberQuery::TYPE_METHOD) {
-            if ($node instanceof MethodDeclaration) {
-                $memberName = $node->name->getText($node->getFileContents());
-
-                if ($query->matchesMemberName($memberName)) {
-                    $memberNodes[] = $node;
-                }
-            }
-
-            if ($this->isMethodAccess($node)) {
-                assert($node instanceof CallExpression);
-                $callableExpression = $node->callableExpression;
-                assert($callableExpression instanceof ScopedPropertyAccessExpression || $callableExpression instanceof MemberAccessExpression);
-                $memberName = $callableExpression->memberName->getText($node->getFileContents());
-
-                if ($query->matchesMemberName($memberName)) {
-                    $memberNodes[] = $node->callableExpression;
-                }
-            }
+            $this->collectMethods($node, $query, $memberNodes);
         }
 
         if (false === $query->hasType() || $query->type() === ClassMemberQuery::TYPE_PROPERTY) {
-            /** @var PropertyDeclaration $node */
-            if ($node instanceof PropertyDeclaration) {
-                if ($node->propertyElements->children) {
-                    foreach ($node->propertyElements->getChildNodes() as $propertyElement) {
-                        if ($propertyElement instanceof AssignmentExpression) {
-                            $propertyElement = $propertyElement->leftOperand;
-                        }
-
-                        if ($propertyElement instanceof Variable) {
-                            $memberName = $propertyElement->name->getText($propertyElement->getFileContents());
-                            if ($query->matchesMemberName($memberName)) {
-                                $memberNodes[] = $propertyElement;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // property access - only if it is not part of a call() expression
-            if ($node instanceof MemberAccessExpression && false === $node->parent instanceof CallExpression) {
-                $memberName = $node->memberName->getText($node->getFileContents());
-                if (is_string($memberName) && $query->matchesMemberName($memberName)) {
-                    $memberNodes[] = $node;
-                }
-            }
-
-            if ($node instanceof ScopedPropertyAccessExpression && false === $node->parent instanceof CallExpression) {
-                $memberName = $node->memberName->getText($node->getFileContents());
-
-                // TODO: Some better way to determine if member names are properties
-                if (substr($memberName, 0, 1) == '$' && $query->matchesMemberName($memberName)) {
-                    $memberNodes[] = $node;
-                }
-            }
+            $this->collectProperties($node, $query, $memberNodes);
         }
 
         if (false === $query->hasType() || $query->type() === ClassMemberQuery::TYPE_CONSTANT) {
-            if ($node instanceof ClassConstDeclaration) {
-                if ($node->constElements->children) {
-                    foreach ($node->constElements->getChildNodes() as $constElement) {
-                        assert($constElement instanceof ConstElement);
-                        $memberName = $constElement->name->getText($constElement->getFileContents());
-                        if ($query->matchesMemberName($memberName)) {
-                            $memberNodes[] = $constElement;
-                        }
-                    }
-                }
-            }
-
-            if ($node instanceof ScopedPropertyAccessExpression && false === $node->parent instanceof CallExpression) {
-                $memberName = $node->memberName->getText($node->getFileContents());
-                if ($query->matchesMemberName($memberName)) {
-                    $memberNodes[] = $node;
-                }
-            }
+            $this->collectConstants($node, $query, $memberNodes);
         }
 
         foreach ($node->getChildNodes() as $childNode) {
@@ -192,6 +125,90 @@ class WorseTolerantMemberFinder implements MemberFinder
         }
 
         return $memberNodes;
+    }
+
+    /** @param array<Node> $memberNodes */
+    private function collectMethods(Node $node, ClassMemberQuery $query, array &$memberNodes): void
+    {
+        if ($node instanceof MethodDeclaration) {
+            $memberName = (string) $node->name?->getText($node->getFileContents());
+
+            if ($query->matchesMemberName($memberName)) {
+                $memberNodes[] = $node;
+            }
+        }
+
+        if ($this->isMethodAccess($node)) {
+            assert($node instanceof CallExpression);
+            $callableExpression = $node->callableExpression;
+            assert($callableExpression instanceof ScopedPropertyAccessExpression || $callableExpression instanceof MemberAccessExpression);
+            $memberName = $callableExpression->memberName->getText($node->getFileContents());
+
+            if ($query->matchesMemberName($memberName)) {
+                $memberNodes[] = $node->callableExpression;
+            }
+        }
+    }
+
+    /** @param array<Node> $memberNodes */
+    private function collectConstants(Node $node, ClassMemberQuery $query, array &$memberNodes): void
+    {
+        if ($node instanceof ClassConstDeclaration) {
+            if ($node->constElements->children) {
+                foreach ($node->constElements->getChildNodes() as $constElement) {
+                    assert($constElement instanceof ConstElement);
+                    $memberName = (string) $constElement->name->getText($constElement->getFileContents());
+                    if ($query->matchesMemberName($memberName)) {
+                        $memberNodes[] = $constElement;
+                    }
+                }
+            }
+        }
+
+        if ($node instanceof ScopedPropertyAccessExpression && false === $node->parent instanceof CallExpression) {
+            $memberName = (string) $node->memberName->getText($node->getFileContents());
+            if ($query->matchesMemberName($memberName)) {
+                $memberNodes[] = $node;
+            }
+        }
+    }
+
+    /** @param array<Node> $memberNodes */
+    private function collectProperties(Node $node, ClassMemberQuery $query, array &$memberNodes): void
+    {
+        if ($node instanceof PropertyDeclaration) {
+            if ($node->propertyElements->children) {
+                foreach ($node->propertyElements->getChildNodes() as $propertyElement) {
+                    if ($propertyElement instanceof AssignmentExpression) {
+                        $propertyElement = $propertyElement->leftOperand;
+                    }
+
+                    if ($propertyElement instanceof Variable) {
+                        $memberName = (string) $propertyElement->name->getText($propertyElement->getFileContents());
+                        if ($query->matchesMemberName($memberName)) {
+                            $memberNodes[] = $propertyElement;
+                        }
+                    }
+                }
+            }
+        }
+
+        // property access - only if it is not part of a call() expression
+        if ($node instanceof MemberAccessExpression && false === $node->parent instanceof CallExpression) {
+            $memberName = $node->memberName->getText($node->getFileContents());
+            if (is_string($memberName) && $query->matchesMemberName($memberName)) {
+                $memberNodes[] = $node;
+            }
+        }
+
+        if ($node instanceof ScopedPropertyAccessExpression && false === $node->parent instanceof CallExpression) {
+            $memberName = (string) $node->memberName->getText($node->getFileContents());
+
+            // TODO: Some better way to determine if member names are properties
+            if (substr($memberName, 0, 1) == '$' && $query->matchesMemberName($memberName)) {
+                $memberNodes[] = $node;
+            }
+        }
     }
 
     private function isMethodAccess(Node $node): bool
@@ -380,7 +397,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         }
 
 
-        $accepts = $type->instanceof(TypeFactory::reflectedClass($this->reflector, $query->class()->__toString()));
+        $accepts = $type->instanceof(TypeFactory::reflectedClass($this->reflector, (string) $query->class()));
 
         if ($accepts->isMaybe()) {
             return $reference;
@@ -395,7 +412,9 @@ class WorseTolerantMemberFinder implements MemberFinder
     private function memberStartPosition(Node $memberNode): int
     {
         assert($memberNode instanceof MethodDeclaration || $memberNode instanceof ConstElement || $memberNode instanceof Variable);
-        $start = $memberNode->name->start;
+        $name = $memberNode->name;
+        assert($name !== null);
+        $start = $name->start;
 
         if ($memberNode->getFirstAncestor(PropertyDeclaration::class)) {
             return $start + 1; // ignore the dollar sign
