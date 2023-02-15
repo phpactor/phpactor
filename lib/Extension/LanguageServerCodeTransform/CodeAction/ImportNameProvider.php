@@ -23,6 +23,8 @@ use function Amp\delay;
 
 class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
 {
+    public const KIND = 'quickfix.import_class';
+
     public function __construct(
         private CandidateFinder $finder,
         private bool $reportNonExistingClasses = true
@@ -51,6 +53,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
     {
         return [
             CodeActionKind::QUICK_FIX,
+            self::KIND,
         ];
     }
 

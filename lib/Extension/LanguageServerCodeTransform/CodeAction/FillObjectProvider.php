@@ -18,6 +18,8 @@ use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 
 class FillObjectProvider implements CodeActionProvider
 {
+    public const KIND = 'quickfix.fill_object';
+
     public function __construct(private FillObject $fillObject)
     {
     }
@@ -50,6 +52,7 @@ class FillObjectProvider implements CodeActionProvider
     {
         return [
             CodeActionKind::REFACTOR_REWRITE,
+            self::KIND,
         ];
     }
 }

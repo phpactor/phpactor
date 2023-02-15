@@ -18,6 +18,8 @@ use function Amp\call;
 
 class ExtractExpressionProvider implements CodeActionProvider
 {
+    public const KIND = 'refactor.extract.expression';
+
     public function __construct(private ExtractExpression $extractExpression)
     {
     }

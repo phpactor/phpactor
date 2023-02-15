@@ -29,11 +29,11 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
     ) {
     }
 
-
     public function kinds(): array
     {
         return [
             CodeActionKind::QUICK_FIX,
+            $this->kind()
         ];
     }
 
@@ -72,6 +72,11 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
     public function name(): string
     {
         return $this->name;
+    }
+
+    private function kind(): string
+    {
+        return 'quickfix.'.$this->name;
     }
 
     /**

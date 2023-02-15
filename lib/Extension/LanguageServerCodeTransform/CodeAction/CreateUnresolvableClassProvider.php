@@ -23,6 +23,8 @@ use function Amp\call;
 
 class CreateUnresolvableClassProvider implements CodeActionProvider
 {
+    public const KIND = 'quickfix.create_unresolable_class';
+
     public function __construct(
         private SourceCodeReflector $reflector,
         private Generators $generators,

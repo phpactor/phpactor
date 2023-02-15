@@ -4,12 +4,12 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
-use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -18,6 +18,8 @@ use function Amp\call;
 
 class ExtractMethodProvider implements CodeActionProvider
 {
+    public const KIND = 'refactor.extract.method';
+
     public function __construct(private ExtractMethod $extractMethod)
     {
     }
@@ -27,6 +29,7 @@ class ExtractMethodProvider implements CodeActionProvider
     {
         return [
             CodeActionKind::REFACTOR_EXTRACT,
+            self::KIND
         ];
     }
 

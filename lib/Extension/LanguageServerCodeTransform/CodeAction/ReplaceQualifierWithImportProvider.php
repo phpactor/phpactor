@@ -18,6 +18,8 @@ use function Amp\call;
 
 class ReplaceQualifierWithImportProvider implements CodeActionProvider
 {
+    public const KIND = 'refactor.class.simplify';
+
     public function __construct(private ReplaceQualifierWithImport $replaceQualifierWithImport)
     {
     }
@@ -26,6 +28,7 @@ class ReplaceQualifierWithImportProvider implements CodeActionProvider
     {
         return [
             CodeActionKind::REFACTOR_REWRITE,
+            self::KIND,
         ];
     }
 

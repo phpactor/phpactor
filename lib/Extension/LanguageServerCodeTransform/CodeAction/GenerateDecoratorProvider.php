@@ -17,6 +17,8 @@ use function Amp\call;
 
 class GenerateDecoratorProvider implements CodeActionProvider
 {
+    public const KIND = 'quickfix.generate_decorator';
+
     public function __construct(private Reflector $reflector)
     {
     }
@@ -24,7 +26,8 @@ class GenerateDecoratorProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            CodeActionKind::QUICK_FIX
+            CodeActionKind::QUICK_FIX,
+            self::KIND,
         ];
     }
 

@@ -29,8 +29,8 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            $this->kind,
             CodeActionKind::REFACTOR_REWRITE,
+            $this->kind,
         ];
     }
 
@@ -79,7 +79,7 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
             return [
                 CodeAction::fromArray([
                     'title' => $title,
-                    'kind' => $this->kind,
+                    'kind' => $this->kinds()[0],
                     'command' => new Command(
                         $title,
                         $this->command,

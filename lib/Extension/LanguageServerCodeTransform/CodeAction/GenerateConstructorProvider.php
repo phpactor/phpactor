@@ -17,6 +17,8 @@ use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 
 class GenerateConstructorProvider implements CodeActionProvider
 {
+    const KIND = CodeActionKind::REFACTOR;
+
     public function __construct(
         private GenerateConstructor $generateConstructor,
         private WorkspaceEditConverter $converter
@@ -48,7 +50,8 @@ class GenerateConstructorProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            CodeActionKind::REFACTOR
+            CodeActionKind::REFACTOR,
+            self::KIND,
         ];
     }
 }

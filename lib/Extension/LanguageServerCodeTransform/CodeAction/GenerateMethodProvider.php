@@ -23,6 +23,8 @@ use function Amp\call;
 
 class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 {
+    public const KIND = 'quickfix.generate_method';
+
     public function __construct(private MissingMethodFinder $missingMethodFinder)
     {
     }
@@ -31,8 +33,9 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
     public function kinds(): array
     {
         return [
-            CodeActionKind::QUICK_FIX
-         ];
+            CodeActionKind::QUICK_FIX,
+            self::KIND,
+        ];
     }
 
 
