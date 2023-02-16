@@ -31,42 +31,22 @@ parameters:
 			path: lib/Application.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\TolerantParser\\\\TolerantClassFinder\\:\\:resolveClassNames\\(\\) has parameter \\$ast with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/TolerantParser/TolerantClassFinder.php
-
-		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\BracedExpression\\|Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\Variable\\|Microsoft\\\\PhpParser\\\\Token\\:\\:\\$start\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:collectMemberReferences\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:getMemberAccessReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:getMemberDeclarationReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:getScopedPropertyAccessReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinder\\:\\:reflectClass\\(\\) has no return type specified\\.$#"
+			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:interfaces\\(\\)\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 
 		-
 			message: "#^Parameter \\#1 \\$memberName of method Phpactor\\\\ClassMover\\\\Domain\\\\Model\\\\ClassMemberQuery\\:\\:matchesMemberName\\(\\) expects string, bool\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMethod\\>\\:\\:has\\(\\) expects string, Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\MemberName\\|null given\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 

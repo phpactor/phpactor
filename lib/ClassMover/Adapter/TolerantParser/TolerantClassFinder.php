@@ -49,7 +49,7 @@ class TolerantClassFinder implements ClassFinder
     }
 
     /** @return array<ClassReference> */
-    private function resolveClassNames(TextDocument $source, NameImportTable $env, $ast): array
+    private function resolveClassNames(TextDocument $source, NameImportTable $env, SourceFileNode $ast): array
     {
         $classRefs = [];
         $nodes = $ast->getDescendantNodes();
