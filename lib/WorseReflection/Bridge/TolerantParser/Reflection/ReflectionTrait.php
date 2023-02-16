@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as PhpactorReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
@@ -57,6 +58,11 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
 
         $this->members = $members->map(fn (ReflectionMember $member) => $member->withClass($this));
         return $this->members;
+    }
+
+    public function constants(): ReflectionConstantCollection
+    {
+        return $this->members()->constants();
     }
 
     public function ownMembers(): ReflectionMemberCollection

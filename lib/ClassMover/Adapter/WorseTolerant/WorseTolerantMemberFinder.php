@@ -2,42 +2,43 @@
 
 namespace Phpactor\ClassMover\Adapter\WorseTolerant;
 
-use Phpactor\ClassMover\Domain\MemberFinder;
-use Phpactor\ClassMover\Domain\Reference\MemberReferences;
-use Phpactor\ClassMover\Domain\SourceCode;
-use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
-use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
-use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
-use Phpactor\ClassMover\Domain\Reference\MemberReference;
-use Phpactor\ClassMover\Domain\Reference\Position;
-use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\ClassMover\Domain\Model\Class_;
-use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
-use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
-use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\ClassMover\Domain\Name\MemberName;
-use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Microsoft\PhpParser\Token;
-use Microsoft\PhpParser\Node\MethodDeclaration;
-use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
-use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
-use Phpactor\WorseReflection\ReflectorBuilder;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Microsoft\PhpParser\Node\PropertyDeclaration;
-use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Parser;
+use Microsoft\PhpParser\Token;
+use Phpactor\ClassMover\Domain\MemberFinder;
+use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
+use Phpactor\ClassMover\Domain\Model\Class_;
+use Phpactor\ClassMover\Domain\Name\MemberName;
+use Phpactor\ClassMover\Domain\Reference\MemberReference;
+use Phpactor\ClassMover\Domain\Reference\MemberReferences;
+use Phpactor\ClassMover\Domain\Reference\Position;
+use Phpactor\ClassMover\Domain\SourceCode;
+use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Reflector;
+use Phpactor\WorseReflection\ReflectorBuilder;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 
 class WorseTolerantMemberFinder implements MemberFinder
 {
@@ -270,7 +271,7 @@ class WorseTolerantMemberFinder implements MemberFinder
 
         // if the references class is not an instance of the requested class, or the requested class is not
         // an instance of the referenced class then ignore it.
-        if (false === $reflectionClass->isTrait() && false === $reflectionClass->isInstanceOf($queryClass->name())) {
+        if ((!$reflectionClass instanceof ReflectionTrait) && false === $reflectionClass->isInstanceOf($queryClass->name())) {
             return null;
         }
 

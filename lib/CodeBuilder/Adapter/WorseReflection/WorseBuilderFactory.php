@@ -4,22 +4,23 @@ namespace Phpactor\CodeBuilder\Adapter\WorseReflection;
 
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Builder\ClassBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\TraitBuilder;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
-use Phpactor\CodeBuilder\Domain\Builder\MethodBuilder;
-use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 
 class WorseBuilderFactory implements BuilderFactory
 {
@@ -38,20 +39,13 @@ class WorseBuilderFactory implements BuilderFactory
         $classes = $this->reflector->reflectClassesIn($source);
         $builder = SourceCodeBuilder::create();
 
-        foreach ($classes as $class) {
-            if ($class->isClass()) {
-                $this->build('class', $builder, $class);
-                continue;
-            }
-
-            if ($class->isInterface()) {
-                $this->build('interface', $builder, $class);
-                continue;
-            }
-
-            if ($class->isTrait()) {
-                $this->build('trait', $builder, $class);
-                continue;
+        foreach ($classes as $classLike) {
+            if ($classLike instanceof ReflectionClass) {
+                $this->build('class', $builder, $classLike);
+            } elseif ($classLike instanceof ReflectionInterface) {
+                $this->build('interface', $builder, $classLike);
+            } elseif ($classLike instanceof ReflectionTrait) {
+                $this->build('trait', $builder, $classLike);
             }
         }
 

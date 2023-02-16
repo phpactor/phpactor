@@ -4,6 +4,7 @@ namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -86,7 +87,7 @@ class ClassReflector
             $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
         }
 
-        if (false === $reflection->isTrait()) {
+        if (!($reflection instanceof ReflectionEnum)) {
             foreach ($reflection->constants() as $constant) {
                 $return['constants'][$constant->name()] = [
                     'name' => $constant->name()

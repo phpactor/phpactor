@@ -9,6 +9,7 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyDiagnostic;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
@@ -96,7 +97,7 @@ class AddMissingProperties implements Transformer
     {
         $name = $class->name()->short();
 
-        if ($class->isTrait()) {
+        if ($class instanceof ReflectionTrait) {
             return $sourceBuilder->trait($name);
         }
 

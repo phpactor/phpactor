@@ -9286,11 +9286,6 @@ parameters:
 			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionParameterCollection.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClass\\:\\:isFinal\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionClass.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/ReflectionOffset.php

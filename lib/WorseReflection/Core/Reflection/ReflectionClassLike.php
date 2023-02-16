@@ -39,10 +39,6 @@ interface ReflectionClassLike extends ReflectionNode
 
     public function isInstanceOf(ClassName $className): bool;
 
-    /**
-     * @deprecated Use instanceof instead
-     */
-    public function isTrait(): bool;
 
     /**
      * @deprecated Use instanceof instead
