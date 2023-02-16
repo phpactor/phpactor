@@ -87,7 +87,7 @@ class ClassReflector
             $return['methods'][$method->name()]['docblock'] = $method->docblock()->formatted();
         }
 
-        if (!($reflection instanceof ReflectionEnum)) {
+        if (!$reflection instanceof ReflectionEnum) {
             foreach ($reflection->constants() as $constant) {
                 $return['constants'][$constant->name()] = [
                     'name' => $constant->name()
@@ -100,8 +100,8 @@ class ClassReflector
             return $return;
         }
 
-        /** @var $property ReflectionProperty */
         foreach ($reflection->properties() as $property) {
+            /** @var ReflectionProperty $property */
             $propertyType = $property->inferredType();
             $return['properties'][$property->name()] = [
                 'name' => $property->name(),

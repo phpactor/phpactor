@@ -22,51 +22,47 @@ interface SourceCodeReflector
     /**
      * Reflect all classes (or class-likes) in the given source code.
      *
-     * @param SourceCode|string $sourceCode
      * @param array<string,bool> $visited
      */
-    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection;
+    public function reflectClassesIn(
+        SourceCode|TextDocument|string $sourceCode,
+        array $visited = []
+    ): ReflectionClassLikeCollection;
 
     /**
      * Reflect all functions in the given source code.
-     * @param SourceCode|TextDocument|string $sourceCode
+     *
      * @return ReflectionFunctionCollection<ReflectionFunction>
      */
-    public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection;
+    public function reflectFunctionsIn(SourceCode|TextDocument|string $sourceCode): ReflectionFunctionCollection;
 
     /**
      * Return the information for the given offset in the given file, including the value
      * and type of a variable and the frame information.
-     * @param SourceCode|TextDocument|string $sourceCode
-     * @param Offset|ByteOffset|int $offset
      */
-    public function reflectOffset($sourceCode, $offset): ReflectionOffset;
+    public function reflectOffset(
+        SourceCode|TextDocument|string $sourceCode,
+        Offset|ByteOffset|int $offset
+    ): ReflectionOffset;
+
+    public function reflectMethodCall(
+        SourceCode|TextDocument|string $sourceCode,
+        Offset|ByteOffset|int $offset
+    ): ReflectionMethodCall;
+
+    public function navigate(SourceCode|TextDocument|string $sourceCode): ReflectionNavigation;
 
     /**
-     * @param SourceCode|TextDocument|string $sourceCode
-     * @param Offset|ByteOffset|int $offset
-     */
-    public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall;
-
-    /**
-     * @param TextDocument|string $sourceCode
-     */
-    public function navigate($sourceCode): ReflectionNavigation;
-
-    /**
-     * @param TextDocument|string $sourceCode
      * @return Diagnostics<Diagnostic>
      */
-    public function diagnostics($sourceCode): Diagnostics;
+    public function diagnostics(SourceCode|TextDocument|string $sourceCode): Diagnostics;
 
-    /**
-     * @param TextDocument|string $sourceCode
-     * @param Offset|ByteOffset|int $offset
-     */
-    public function reflectNode($sourceCode, $offset): ReflectionNode;
+    public function reflectNode(
+        SourceCode|TextDocument|string $sourceCode,
+        Offset|ByteOffset|int $offset
+    ): ReflectionNode;
 
-    /**
-     * @param TextDocument|string $sourceCode
-     */
-    public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection;
+    public function reflectConstantsIn(
+        SourceCode|TextDocument|string $sourceCode
+    ): ReflectionDeclaredConstantCollection;
 }

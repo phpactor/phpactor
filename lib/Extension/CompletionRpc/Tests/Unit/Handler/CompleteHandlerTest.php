@@ -18,7 +18,10 @@ class CompleteHandlerTest extends TestCase
 {
     use ProphecyTrait;
 
+    /** @var ObjectProphecy<Completor> $completor */
     private ObjectProphecy $completor;
+
+    private TypedCompletorRegistry $registry;
 
     public function setUp(): void
     {

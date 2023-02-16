@@ -21,10 +21,7 @@ final class Offset
         $this->offset = $offset;
     }
 
-    /**
-     * @param Offset|ByteOffset|int $value
-     */
-    public static function fromUnknown($value): self
+    public static function fromUnknown(Offset|ByteOffset|int $value): self
     {
         if ($value instanceof ByteOffset) {
             return self::fromInt($value->toInt());
@@ -34,15 +31,7 @@ final class Offset
             return $value;
         }
 
-        if (is_int($value)) {
-            return self::fromInt($value);
-        }
-
-        /** @phpstan-ignore-next-line */
-        throw new InvalidArgumentException(sprintf(
-            'Do not know how to create offset from type "%s"',
-            is_object($value) ? get_class($value) : gettype($value)
-        ));
+        return self::fromInt($value);
     }
 
     public static function fromInt(int $offset): Offset

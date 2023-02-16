@@ -28,7 +28,7 @@ class WorseBuilderFactory implements BuilderFactory
     {
     }
 
-    public function fromSource($source): SourceCodeBuilder
+    public function fromSource(TextDocument|string $source): SourceCodeBuilder
     {
         if (!$source instanceof TextDocument) {
             $source = TextDocumentBuilder::create($source)
@@ -42,10 +42,17 @@ class WorseBuilderFactory implements BuilderFactory
         foreach ($classes as $classLike) {
             if ($classLike instanceof ReflectionClass) {
                 $this->build('class', $builder, $classLike);
-            } elseif ($classLike instanceof ReflectionInterface) {
+                continue;
+            }
+
+            if ($classLike instanceof ReflectionInterface) {
                 $this->build('interface', $builder, $classLike);
-            } elseif ($classLike instanceof ReflectionTrait) {
+                continue;
+            }
+
+            if ($classLike instanceof ReflectionTrait) {
                 $this->build('trait', $builder, $classLike);
+                continue;
             }
         }
 
