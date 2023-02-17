@@ -38,7 +38,7 @@ class ClassLikeReferenceIndexerTest extends TolerantIndexerTestCase
     public function provideClasses(): Generator
     {
         yield 'single ref' => [
-            "// File: src/file1.php\n<?php Foobar::static()",
+            "// File: src/file1.php\n<?php Foobar::bar()",
             'Foobar',
             [0, 0, 1]
         ];

@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
+use Phpactor\Indexer\Model\Exception\CannotIndexNode;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -20,6 +21,12 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
     public function index(Index $index, TextDocument $document, Node $node): void
     {
         assert($node instanceof ClassDeclaration);
+        if ($node->name instanceof MissingToken) {
+            throw new CannotIndexNode(sprintf(
+                'Class name is missing (maybe a reserved word) in: %s',
+                $document->uri()->path()
+            ));
+        }
         $record = $this->getClassLikeRecord(ClassRecord::TYPE_CLASS, $node, $index, $document);
 
         $this->removeImplementations($index, $record);
