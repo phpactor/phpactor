@@ -61,6 +61,12 @@ class ClassDeclarationIndexerTest extends TolerantIndexerTestCase
             'Foobar',
             1
         ];
+
+        yield 'gh-2098' => [
+            file_get_contents(__DIR__ . '/fixture/gh-2098.test'),
+            'Match',
+            1,
+        ];
     }
 
     /**
