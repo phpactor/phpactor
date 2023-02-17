@@ -132,7 +132,7 @@ class CompletorTest extends TestCase
     }
 
     /**
-     * @var CouldComplete[] $completors
+     * @param CouldComplete[] $completors
      */
     public function create(array $completors): ChainCompletor
     {

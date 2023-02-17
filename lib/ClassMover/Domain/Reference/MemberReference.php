@@ -14,7 +14,7 @@ class MemberReference
     ) {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf(
             '[%s:%s] %s',
@@ -54,7 +54,7 @@ class MemberReference
         return new self($this->method, $this->position, $class);
     }
 
-    public function class(): Class_
+    public function class(): ?Class_
     {
         return $this->class;
     }

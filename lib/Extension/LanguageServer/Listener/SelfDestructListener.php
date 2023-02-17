@@ -31,7 +31,6 @@ class SelfDestructListener implements ListenerProviderInterface
     public function handleShutdown(WillShutdown $willShutdown): void
     {
         asyncCall(function () {
-            /** @phpstan-ignore-next-line */
             yield delay($this->selfDestructTimeout);
             throw new ExitSession(sprintf(
                 'Waited "%s" seconds after shutdown request for exit notification but did not get one so I\'m self destructing.',

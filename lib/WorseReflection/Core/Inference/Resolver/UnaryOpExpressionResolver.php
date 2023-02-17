@@ -67,12 +67,10 @@ class UnaryOpExpressionResolver implements Resolver
 
     private function shouldDoubleNegate(UnaryExpression $node): bool
     {
-        /** @phpstan-ignore-next-line TPTodo */
         if (!$node->operand instanceof BinaryExpression) {
             return false;
         }
 
-        /** @phpstan-ignore-next-line TPTodo */
         if (!$node->operand->leftOperand instanceof UnaryExpression) {
             return false;
         }

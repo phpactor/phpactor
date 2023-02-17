@@ -19,7 +19,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseTestCase extends AdapterTestCase
 {
-    public function reflectorForWorkspace($source = null): Reflector
+    public function reflectorForWorkspace(?string $source = null): Reflector
     {
         $builder = ReflectorBuilder::create();
         $builder->addMemberProvider(new DocblockMemberProvider());
@@ -31,12 +31,16 @@ class WorseTestCase extends AdapterTestCase
         $builder->addDiagnosticProvider(new MissingDocblockParamProvider());
 
         foreach ((array)glob($this->workspace()->path('/*.php')) as $file) {
+            if ($file === false) {
+                continue;
+            }
+
             $locator = new TemporarySourceLocator(ReflectorBuilder::create()->build(), true);
-            $locator->pushSourceCode(SourceCode::fromPathAndString($file, file_get_contents($file)));
+            $locator->pushSourceCode(SourceCode::fromPath($file));
             $builder->addLocator($locator);
         }
 
-        if ($source) {
+        if ($source !== null) {
             $builder->addSource(SourceCode::fromPathAndString('/foo', $source));
         }
 

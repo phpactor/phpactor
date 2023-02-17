@@ -14,15 +14,12 @@ class SourceCode implements TextDocument
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->source;
     }
 
-    /**
-     * @param SourceCode|TextDocument|string $value
-     */
-    public static function fromUnknown($value): SourceCode
+    public static function fromUnknown(SourceCode|TextDocument|string $value): SourceCode
     {
         if ($value instanceof SourceCode) {
             return $value;
@@ -40,23 +37,15 @@ class SourceCode implements TextDocument
             );
         }
 
-        if (is_string($value)) {
-            return self::fromString($value);
-        }
-
-        /** @phpstan-ignore-next-line */
-        throw new InvalidArgumentException(sprintf(
-            'Do not know how to create source code from type "%s"',
-            is_object($value) ? get_class($value) : gettype($value)
-        ));
+        return self::fromString($value);
     }
 
-    public static function fromString($source)
+    public static function fromString(string $source): self
     {
         return new self($source);
     }
 
-    public static function fromPath(string $filePath)
+    public static function fromPath(string $filePath): self
     {
         if (!file_exists($filePath)) {
             throw new InvalidArgumentException(sprintf(
@@ -65,15 +54,15 @@ class SourceCode implements TextDocument
             ));
         }
 
-        return new self(file_get_contents($filePath), $filePath);
+        return new self((string) file_get_contents($filePath), $filePath);
     }
 
-    public static function empty()
+    public static function empty(): self
     {
         return new self('');
     }
 
-    public static function fromPathAndString(string $filePath, string $source)
+    public static function fromPathAndString(string $filePath, string $source): self
     {
         return new self($source, $filePath);
     }

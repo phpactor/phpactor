@@ -45,7 +45,7 @@ final class ImportedName extends Namespace_
         return null !== $this->alias;
     }
 
-    public static function fromStringAsAlias(string $string)
+    public static function fromStringAsAlias(string $string): self
     {
         $new = parent::fromString($string);
         $new->isAlias = true;

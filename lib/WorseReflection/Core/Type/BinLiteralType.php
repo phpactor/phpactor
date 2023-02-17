@@ -15,7 +15,7 @@ final class BinLiteralType extends IntType implements Literal
         return (string)$this->value;
     }
 
-    public function value()
+    public function value(): int|float
     {
         return bindec(substr($this->value, 2));
     }

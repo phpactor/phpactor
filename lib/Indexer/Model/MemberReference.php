@@ -36,7 +36,7 @@ class MemberReference
         return $this->name;
     }
 
-    public function memberName(): string
+    public function memberName(): ?string
     {
         return $this->memberName;
     }

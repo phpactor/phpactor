@@ -38,7 +38,6 @@ class ProfilerMiddleware implements Middleware
             }
 
             $start = microtime(true);
-            /** @phpstan-ignore-next-line */
             $response = yield $handler->handle($request);
             $elapsed = microtime(true) - $start;
 
