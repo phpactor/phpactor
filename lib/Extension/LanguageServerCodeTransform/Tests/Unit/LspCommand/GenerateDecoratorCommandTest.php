@@ -57,7 +57,7 @@ class GenerateDecoratorCommandTest extends TestCase
     }
 
     /**
-     * @return {LanguageServerTester,LanguageServerTesterBuilder]
+     * @return array{LanguageServerTester,LanguageServerTesterBuilder}
      */
     private function createTester(ObjectProphecy $generateAccessors): array
     {

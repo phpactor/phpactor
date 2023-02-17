@@ -19,21 +19,24 @@ class VirtualReflectionParameterTest extends TestCase
 {
     use ProphecyTrait;
 
-    private $position;
+    private Position $position;
 
+    /** @var ObjectProphecy<ReflectionClass> */
     private ObjectProphecy $class;
 
     private string $name;
 
-    private ObjectProphecy $frame;
-
+    /** @var ObjectProphecy<ReflectionScope> */
     private ObjectProphecy $scope;
 
     private Type $type;
 
+    /** @var ObjectProphecy<ReflectionMethod> */
     private ObjectProphecy $method;
 
     private DefaultValue $defaults;
+
+    private bool $byReference;
 
     public function setUp(): void
     {

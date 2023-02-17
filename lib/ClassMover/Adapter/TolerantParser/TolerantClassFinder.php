@@ -164,7 +164,7 @@ class TolerantClassFinder implements ClassFinder
             $aliasClause = $useClause->namespaceAliasingClause;
             if ($useClause->namespaceAliasingClause !== null) {
                 $alias = $useClause->namespaceAliasingClause->name->getText($useDeclaration->getFileContents());
-                $importedName = $importedName->withAlias($alias);
+                $importedName = $importedName->withAlias((string) $alias);
             }
 
             $useImportRefs[] = ImportedNameReference::fromImportedNameAndPosition($importedName, Position::fromStartAndEnd(

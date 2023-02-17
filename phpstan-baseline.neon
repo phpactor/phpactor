@@ -51,32 +51,12 @@ parameters:
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\FullyQualifiedName\\:\\:fromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/FullyQualifiedName.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\ImportedName\\:\\:\\$alias has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/ImportedName.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/Label.php
 
 		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:base\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:equals\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:fromString\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
 
@@ -94,46 +74,6 @@ parameters:
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 3
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
-			message: "#^Class Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReferences implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/MemberReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReferences\\:\\:__construct\\(\\) has parameter \\$methodReferences with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/MemberReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReferences\\:\\:fromMemberReferences\\(\\) has parameter \\$methodReferences with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/MemberReferences.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\MemberReferences\\:\\:\\$methodReferences has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/MemberReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespaceReference\\:\\:fromNameAndPosition\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/NamespaceReference.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespaceReference\\:\\:\\$namespace has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/NamespaceReference.php
-
-		-
-			message: "#^Property Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\NamespaceReference\\:\\:\\$position has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/NamespaceReference.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Reference\\\\Position\\:\\:fromStartAndEnd\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Reference/Position.php
 
 		-
 			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\SourceCode\\:\\:insertAfter\\(\\) has no return type specified\\.$#"
@@ -2476,11 +2416,6 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:replaceInSource\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReference\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
@@ -2951,21 +2886,6 @@ parameters:
 			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:execute\\(\\) has parameter \\$bar with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:execute\\(\\) should return int but empty return statement found\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:renderTable\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Command\\\\ReferencesMemberCommand\\:\\:renderTable\\(\\) has parameter \\$results with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
@@ -2997,11 +2917,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#5 \\$replace of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) expects string\\|null, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
-
-		-
-			message: "#^Parameter \\#6 \\$dryRun of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:findOrReplaceReferences\\(\\) expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Command/ReferencesMemberCommand.php
 
@@ -3057,11 +2972,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Rpc\\\\ReferencesHandler\\:\\:memberReferences\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Rpc/ReferencesHandler.php
 
@@ -5581,16 +5491,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateDecoratorCommandTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\GenerateDecoratorCommandTest\\:\\:createTester\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateDecoratorCommandTest.php
-
-		-
-			message: "#^PHPDoc tag @return has invalid value \\(\\{LanguageServerTester,LanguageServerTesterBuilder\\]\\)\\: Unexpected token \"\\{\", expected type at offset 19$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateDecoratorCommandTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$changes of class Phpactor\\\\LanguageServerProtocol\\\\WorkspaceEdit constructor expects array\\{\\}\\|null, array\\{file\\:///file\\.php\\: array\\<Phpactor\\\\LanguageServerProtocol\\\\TextEdit\\>\\} given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateDecoratorCommandTest.php
@@ -5606,17 +5506,7 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateMethodCommandTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\GenerateMethodCommandTest\\:\\:createTester\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateMethodCommandTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\GenerateMethodCommandTest\\:\\:provideExceptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateMethodCommandTest.php
-
-		-
-			message: "#^PHPDoc tag @return has invalid value \\(\\{LanguageServerTester,LanguageServerTesterBuilder\\]\\)\\: Unexpected token \"\\{\", expected type at offset 19$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateMethodCommandTest.php
 
@@ -6906,51 +6796,6 @@ parameters:
 			path: lib/Extension/Rpc/Handler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:createInputCallback\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:createInputCallback\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:hasMissingArguments\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:hasMissingArguments\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:inputsFromMissingArguments\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:inputsFromMissingArguments\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:missingArguments\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:missingArguments\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\AbstractHandler\\:\\:\\$requiredArguments has no type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Handler/AbstractHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Handler\\\\EchoHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Handler/EchoHandler.php
@@ -7421,36 +7266,6 @@ parameters:
 			path: lib/Extension/Rpc/Tests/Unit/Registry/ActiveHandlerRegistryTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$request of method Phpactor\\\\Extension\\\\Rpc\\\\RequestHandler\\\\ExceptionCatchingHandler\\:\\:handle\\(\\) expects Phpactor\\\\Extension\\\\Rpc\\\\Request, object given\\.$#"
-			count: 2
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/ExceptionCatchingHandlerTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\ExceptionCatchingHandlerTest\\:\\:\\$innerHandler with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/ExceptionCatchingHandlerTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\ExceptionCatchingHandlerTest\\:\\:\\$request with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/ExceptionCatchingHandlerTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\ExceptionCatchingHandlerTest\\:\\:\\$response with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/ExceptionCatchingHandlerTest.php
-
-		-
-			message: "#^Access to an undefined property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\LoggingHandlerTest\\:\\:\\$expectedRequestData\\.$#"
-			count: 2
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
-
-		-
-			message: "#^Access to an undefined property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandler\\\\LoggingHandlerTest\\:\\:\\$expectedResponseData\\.$#"
-			count: 2
-			path: lib/Extension/Rpc/Tests/Unit/RequestHandler/LoggingHandlerTest.php
-
-		-
 			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\RequestHandlerTest\\:\\:\\$handler with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
 			count: 1
 			path: lib/Extension/Rpc/Tests/Unit/RequestHandlerTest.php
@@ -7492,11 +7307,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$classLoader of class Phpactor\\\\Filesystem\\\\Adapter\\\\Composer\\\\ComposerFileListProvider constructor expects Composer\\\\Autoload\\\\ClassLoader, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/SourceCodeFilesystem/SourceCodeFilesystemExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/SourceCodeFilesystem/SourceCodeFilesystemExtension.php
 
@@ -7766,21 +7576,6 @@ parameters:
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:infoForOffset\\(\\) has parameter \\$showFrame with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:infoForOffset\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
-			message: "#^PHPDoc tag @var has invalid value \\(\\$local Variable\\)\\: Unexpected token \"\\$local\", expected type at offset 9$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/OffsetInfo.php
-
-		-
 			message: "#^Parameter \\#1 \\$name of method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry\\:\\:get\\(\\) expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Command/ClassReflectorCommand.php
@@ -7797,6 +7592,11 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$offset of method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:infoForOffset\\(\\) expects int, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
+
+		-
+			message: "#^Parameter \\#3 \\$showFrame of method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\OffsetInfo\\:\\:infoForOffset\\(\\) expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Command/OffsetInfoCommand.php
 
@@ -7916,11 +7716,6 @@ parameters:
 			path: lib/Filesystem/Adapter/Simple/SimpleFilesystem.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:has\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FallbackFilesystemRegistry.php
-
-		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Filesystem/Domain/FallbackFilesystemRegistry.php
@@ -7936,34 +7731,9 @@ parameters:
 			path: lib/Filesystem/Domain/FilePath.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\:\\:has\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilesystemRegistry.php
-
-		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Filesystem/Domain/FilesystemRegistry.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:__construct\\(\\) has parameter \\$filesystemMap with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/MappedFilesystemRegistry.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:has\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/MappedFilesystemRegistry.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/MappedFilesystemRegistry.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Domain\\\\MappedFilesystemRegistry\\:\\:\\$filesystems has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/MappedFilesystemRegistry.php
 
 		-
 			message: "#^Property Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\AdapterTestCase\\:\\:\\$filesystem has no type specified\\.$#"
@@ -7984,46 +7754,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\IntegrationTestCase\\:\\:workspacePath\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Filesystem/Tests/Adapter/IntegrationTestCase.php
-
-		-
-			message: "#^Access to an undefined property Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FallbackFilesystemRegistryTest\\:\\:\\$filesystem1\\.$#"
-			count: 5
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: "#^Call to an undefined method Phpactor\\\\Filesystem\\\\Domain\\\\Filesystem\\:\\:willReturn\\(\\)\\.$#"
-			count: 2
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: "#^Call to method get\\(\\) on an unknown class Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\ObjectProphecy\\.$#"
-			count: 2
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: "#^Call to method has\\(\\) on an unknown class Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\ObjectProphecy\\.$#"
-			count: 2
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: "#^Call to method names\\(\\) on an unknown class Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: "#^Cannot call method willReturn\\(\\) on array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FallbackFilesystemRegistryTest\\:\\:\\$innerRegistry \\(Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\|Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\>\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FallbackFilesystemRegistryTest\\:\\:\\$innerRegistry has unknown class Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:provideUnknown\\(\\) has no return type specified\\.$#"

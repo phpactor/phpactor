@@ -5,7 +5,6 @@ namespace Phpactor\Extension\WorseReflectionExtra\Application;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\TypeUtil;
@@ -21,7 +20,8 @@ final class OffsetInfo
         $this->filesystemHelper = new FilesystemHelper();
     }
 
-    public function infoForOffset(string $sourcePath, int $offset, $showFrame = false): array
+    /** @return array<string, mixed> */
+    public function infoForOffset(string $sourcePath, int $offset, bool $showFrame = false): array
     {
         $result = $this->reflector->reflectOffset(
             SourceCode::fromString(
@@ -47,7 +47,6 @@ final class OffsetInfo
             $frame = [];
 
             foreach (['locals', 'properties'] as $assignmentType) {
-                /** @var $local Variable */
                 foreach ($result->frame()->$assignmentType() as $local) {
                     $info = sprintf(
                         '%s = (%s) %s',

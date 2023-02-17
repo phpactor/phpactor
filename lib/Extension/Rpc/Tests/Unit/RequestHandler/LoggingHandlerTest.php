@@ -16,6 +16,14 @@ use Prophecy\PhpUnit\ProphecyTrait;
 class LoggingHandlerTest extends TestCase
 {
     use ProphecyTrait;
+    private const EXPECTED_REQUEST_DATA = [
+        'action' => 'req-name',
+        'parameters' => [ 'p1' => 'v1' ]
+    ];
+    private const EXPECTED_RESPONSE_DATA = [
+        'action' => 'res-name',
+        'parameters' => [ 'p1' => 'v1' ]
+    ];
 
     /**
      * @var ObjectProphecy<RequestHandler>
@@ -52,9 +60,6 @@ class LoggingHandlerTest extends TestCase
         $this->request->parameters()->willReturn(['p1' => 'v1' ]);
         $this->response->name()->willReturn('res-name');
         $this->response->parameters()->willReturn(['p1' => 'v1' ]);
-
-        $this->expectedRequestData = [ 'action' => 'req-name', 'parameters' => [ 'p1' => 'v1' ] ];
-        $this->expectedResponseData = [ 'action' => 'res-name', 'parameters' => [ 'p1' => 'v1' ] ];
     }
 
     public function testLogging(): void
@@ -68,8 +73,8 @@ class LoggingHandlerTest extends TestCase
             $response
         );
 
-        $this->logger->debug('REQUEST', $this->expectedRequestData)->shouldHaveBeenCalled();
-        $this->logger->log(LogLevel::DEBUG, 'RESPONSE', $this->expectedResponseData)->shouldHaveBeenCalled();
+        $this->logger->debug('REQUEST', self::EXPECTED_REQUEST_DATA)->shouldHaveBeenCalled();
+        $this->logger->log(LogLevel::DEBUG, 'RESPONSE', self::EXPECTED_RESPONSE_DATA)->shouldHaveBeenCalled();
     }
 
     public function testLoggingWithError(): void

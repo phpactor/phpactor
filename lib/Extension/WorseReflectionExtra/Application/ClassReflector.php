@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 
 class ClassReflector
 {
@@ -101,7 +100,6 @@ class ClassReflector
         }
 
         foreach ($reflection->properties() as $property) {
-            /** @var ReflectionProperty $property */
             $propertyType = $property->inferredType();
             $return['properties'][$property->name()] = [
                 'name' => $property->name(),

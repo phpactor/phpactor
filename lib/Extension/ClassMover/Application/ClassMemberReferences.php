@@ -62,7 +62,7 @@ class ClassMemberReferences
         string $memberName,
         string $memberType,
         string $replacement
-    ) {
+    ):string {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
         $query = $this->createQuery($className, $memberName, $memberType);
 

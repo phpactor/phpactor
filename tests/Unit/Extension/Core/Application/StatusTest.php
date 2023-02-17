@@ -15,11 +15,15 @@ class StatusTest extends TestCase
 {
     use ProphecyTrait;
 
+    /** @var ObjectProphecy<FilesystemRegistry> */
     private ObjectProphecy $registry;
 
+    /** @var ObjectProphecy<PhpVersionResolver> */
     private ObjectProphecy $resolver;
 
     private PathCandidates $paths;
+
+    private Status $status;
 
     public function setUp(): void
     {

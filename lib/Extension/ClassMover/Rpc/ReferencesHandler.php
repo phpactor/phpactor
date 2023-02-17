@@ -196,21 +196,22 @@ class ReferencesHandler extends AbstractHandler
         return [$updatedSource, $references['references']];
     }
 
+    /** @return array{string|null, mixed} */
     private function memberReferences(
         string $filesystem,
         NodeContext $symbolContext,
         string $memberType,
-        string $source = null,
-        string $replacement = null
-    ) {
+        ?string $source = null,
+        ?string $replacement = null
+    ): array {
         $classType = (string) $symbolContext->containerType();
 
         $references = $this->classMemberReferences->findOrReplaceReferences(
-            $filesystem,
-            $classType,
-            $symbolContext->symbol()->name(),
-            $memberType,
-            $replacement
+            scope: $filesystem,
+            class: $classType,
+            memberName: $symbolContext->symbol()->name(),
+            memberType: $memberType,
+            replace: $replacement
         );
 
         $updatedSource = null;
@@ -230,8 +231,8 @@ class ReferencesHandler extends AbstractHandler
     private function performFindOrReplaceReferences(
         NodeContext $symbolContext,
         string $filesystem,
-        string $source = null,
-        string $replacement = null
+        ?string $source = null,
+        ?string $replacement = null
     ) {
         [$source, $references] = $this->doPerformFindOrReplaceReferences(
             $symbolContext,

@@ -28,7 +28,7 @@ class QualifiedName
         return $name->__toString() == $this->__toString();
     }
 
-    public static function fromString(string $string)
+    public static function fromString(string $string): static
     {
         if (empty($string)) {
             throw new InvalidArgumentException(
@@ -46,7 +46,7 @@ class QualifiedName
         return reset($this->parts);
     }
 
-    public function parentNamespace(): QualifiedName
+    public function parentNamespace(): static
     {
         $parts = $this->parts;
         array_pop($parts);
@@ -54,7 +54,7 @@ class QualifiedName
         return new static($parts);
     }
 
-    public function equals(QualifiedName $qualifiedName)
+    public function equals(QualifiedName $qualifiedName): bool
     {
         return $qualifiedName->__toString() == $this->__toString();
     }
