@@ -23,7 +23,7 @@ class TraitDeclarationIndexer extends AbstractClassLikeIndexer
         if ($node->name instanceof MissingToken) {
             throw new CannotIndexNode(sprintf(
                 'Class name is missing (maybe a reserved word) in: %s',
-                $document->uri()->path()
+                $document->uri()?->path() ?? '?',
             ));
         }
         $record = $this->getClassLikeRecord(ClassRecord::TYPE_TRAIT, $node, $index, $document);
