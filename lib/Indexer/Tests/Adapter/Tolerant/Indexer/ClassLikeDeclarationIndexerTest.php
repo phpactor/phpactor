@@ -4,6 +4,9 @@ namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
+use Phpactor\Indexer\Adapter\Tolerant\Indexer\EnumDeclarationIndexer;
+use Phpactor\Indexer\Adapter\Tolerant\Indexer\InterfaceDeclarationIndexer;
+use Phpactor\Indexer\Adapter\Tolerant\Indexer\TraitDeclarationIndexer;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Tests\Adapter\Tolerant\TolerantIndexerTestCase;
@@ -11,7 +14,7 @@ use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
-class ClassDeclarationIndexerTest extends TolerantIndexerTestCase
+class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
 {
     use \Prophecy\PhpUnit\ProphecyTrait;
 
@@ -25,7 +28,7 @@ class ClassDeclarationIndexerTest extends TolerantIndexerTestCase
 
         $agent = $this->indexAgentBuilder('src')
             ->setIndexers([
-                new ClassDeclarationIndexer()
+                new ClassDeclarationIndexer(),
             ])->buildAgent();
 
         $agent->indexer()->getJob()->run();
@@ -71,8 +74,21 @@ class ClassDeclarationIndexerTest extends TolerantIndexerTestCase
     {
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
-        $agent = $this->runIndexer(new ClassDeclarationIndexer(), 'src');
+        $agent = $this->runIndexer(
+            [
+                new ClassDeclarationIndexer(),
+                new EnumDeclarationIndexer(),
+                new InterfaceDeclarationIndexer(),
+                new TraitDeclarationIndexer(),
+            ],
+            'src'
+        );
         $foundRecords = $agent->search()->search(new ShortNameBeginsWith($search));
+
+        if (empty($expectedRecords)) {
+            self::assertCount(0, iterator_to_array($foundRecords));
+            return;
+        }
 
         foreach ($expectedRecords as $record) {
             foreach ($foundRecords as $foundRecord) {
@@ -114,6 +130,12 @@ class ClassDeclarationIndexerTest extends TolerantIndexerTestCase
             'Barfoo',
             [ClassRecord::fromName('Bar\Barfoo')->setFilePath($this->workspace()->path('src/file1.php'))]
         ];
+
+        yield 'gh-2098: does not index reserved class name' => [
+            file_get_contents(__DIR__ . '/fixture/gh-2098.test'),
+            'Query',
+            [],
+        ];
     }
 
     /**
@@ -130,7 +152,7 @@ class ClassDeclarationIndexerTest extends TolerantIndexerTestCase
 
         $agent = $this->indexAgentBuilder('src')
             ->setIndexers([
-                new ClassDeclarationIndexer()
+                new ClassDeclarationIndexer(),
             ])->setLogger($logger->reveal())->buildAgent();
 
         $agent->indexer()->getJob()->run();
@@ -144,7 +166,7 @@ class ClassDeclarationIndexerTest extends TolerantIndexerTestCase
     {
         yield 'no class name' => [
             "// File: src/file1.php\n<?php class {}",
-            'Name is empty',
+            'Class name is missing',
         ];
     }
 }
