@@ -52,7 +52,8 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
             foreach ($attributeGroup->attributes->children as $attribute) {
                 /** @var Attribute $attribute */
                 if ($attribute->name->getText() === 'Attribute') {
-                    $record->setType(ClassRecord::TYPE_ATTRIBUTE);
+                    $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
+                    return;
                 }
             }
         }
