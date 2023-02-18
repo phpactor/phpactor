@@ -278,7 +278,9 @@ class LanguageServerCodeTransformExtension implements Extension
                 $container->get('worse_reflection.tolerant_parser')
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
+                'channel' => 'phpactor',
+            ],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -309,7 +311,9 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Implement contracts'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
+                'channel' => 'phpactor',
+            ],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -320,7 +324,9 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Fix PSR namespace and class name'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
+                'channel' => 'phpactor',
+            ],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 

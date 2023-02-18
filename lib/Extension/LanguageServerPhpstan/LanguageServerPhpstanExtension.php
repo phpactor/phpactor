@@ -29,7 +29,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER=> [
-                'name' => 'phpstan'
+                'name' => 'phpstan',
             ],
         ]);
 

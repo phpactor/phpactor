@@ -22,7 +22,8 @@ class LanguageServerDiagnosticsExtension implements Extension
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
-                'name' => 'php'
+                'name' => 'php',
+                'channel' => 'phpactor',
             ]
         ]);
     }

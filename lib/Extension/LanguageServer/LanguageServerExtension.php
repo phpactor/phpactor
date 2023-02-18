@@ -508,6 +508,7 @@ class LanguageServerExtension implements Extension
         }, [
             self::TAG_DIAGNOSTICS_PROVIDER => [
                 'name' => 'code-action'
+                'channel' => 'phpactor',
             ],
         ]);
     }

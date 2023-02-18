@@ -50,7 +50,8 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
-                'name' => 'php-cs-fixer'
+                'name' => 'php-cs-fixer',
+                'channel' => 'phpactor',
             ],
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
