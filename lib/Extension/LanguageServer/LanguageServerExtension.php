@@ -193,7 +193,7 @@ class LanguageServerExtension implements Extension
 
         $container->register(DiagnosticsCommand::class, function (Container $container) {
             /** @var AggregateDiagnosticsProvider $provider */
-            $provider = $container->get(AggregateDiagnosticsProvider::class . '.all');
+            $provider = $container->get(AggregateDiagnosticsProvider::class . '.outsourced');
             return new DiagnosticsCommand($provider);
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => DiagnosticsCommand::NAME ]]);
     }
@@ -489,7 +489,7 @@ class LanguageServerExtension implements Extension
             );
         });
 
-        $container->register(AggregateDiagnosticsProvider::class.'.all', function (Container $container) {
+        $container->register(AggregateDiagnosticsProvider::class.'.outsourced', function (Container $container) {
             $providers = $this->collectDiagnosticProviders($container, true);
 
             return new AggregateDiagnosticsProvider(
@@ -552,15 +552,16 @@ class LanguageServerExtension implements Extension
     /**
      * @return DiagnosticsProvider[]
      */
-    private function collectDiagnosticProviders(Container $container, bool $withOutsourced): array
+    private function collectDiagnosticProviders(Container $container, bool $outsourced): array
     {
         $providers = [];
         foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
             Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
 
             if (
-                $withOutsourced &&
                 ($attrs[DiagnosticProviderTag::OUTSOURCE] ?? false)
+                !==
+                $outsourced
             ) {
                 continue;
             }

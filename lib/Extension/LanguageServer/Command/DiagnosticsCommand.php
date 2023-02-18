@@ -6,6 +6,7 @@ use Amp\CancellationTokenSource;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -31,7 +32,13 @@ class DiagnosticsCommand extends Command
         $diagnostics = wait(
             $this->provider->provideDiagnostics($textDocument, (new CancellationTokenSource())->getToken())
         );
-        $output->write(json_encode($diagnostics));
+        $decoded = json_encode($diagnostics);
+        if (false === $decoded) {
+            throw new RuntimeException(
+                'Could not encode diagnostics',
+            );
+        }
+        $output->write($decoded);
         return 0;
     }
 

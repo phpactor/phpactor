@@ -60,6 +60,6 @@ class LanguageServerWorseReflectionExtension implements Extension
 
         $container->register(WorseDiagnosticProvier::class, function (Container $container) {
             return new WorseDiagnosticProvider($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
-        }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action') ]);
+        }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', true) ]);
     }
 }
