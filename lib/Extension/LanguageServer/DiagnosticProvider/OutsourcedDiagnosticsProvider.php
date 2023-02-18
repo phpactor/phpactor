@@ -23,13 +23,17 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return call(function () use ($textDocument) {
-            $process = new Process($this->command);
+        return call(function () use ($textDocument, $cancel) {
+            $process = new Process(array_merge($this->command, [
+                '--uri=' . escapeshellarg($textDocument->uri)
+            ]));
             $pid = yield $process->start();
+
             $stdin = $process->getStdin();
 
             yield $stdin->write($textDocument->text);
             $stdin->close();
+            $json = yield buffer($process->getStdout());
 
             $exitCode = yield $process->join();
             if ($exitCode !== 0) {
@@ -39,7 +43,6 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
                     yield buffer($process->getStderr())
                 ));
             }
-            $json = yield buffer($process->getStdout());
             $array = json_decode($json, true);
             if (!is_array($array)) {
                 throw new RuntimeException(sprintf(

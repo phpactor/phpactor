@@ -9,12 +9,15 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use function Amp\Promise\wait;
 
 class DiagnosticsCommand extends Command
 {
     public const NAME = 'language-server:diagnostics';
+    const PARAM_URI = 'uri';
+
 
     public function __construct(private DiagnosticsProvider $provider)
     {
@@ -24,11 +27,14 @@ class DiagnosticsCommand extends Command
     protected function configure(): void
     {
         $this->setDescription('Internal: resolve diagnostics in JSON for document provided over STDIN');
+        $this->addOption(self::PARAM_URI, null, InputOption::VALUE_REQUIRED, 'The URL for the document provided over STDIN');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $textDocument = ProtocolFactory::textDocumentItem('undefined:///', $this->stdin());
+        $uri = $input->getOption(self::PARAM_URI) ?: 'untitled:///new';
+
+        $textDocument = ProtocolFactory::textDocumentItem($uri, $this->stdin());
         $diagnostics = wait(
             $this->provider->provideDiagnostics($textDocument, (new CancellationTokenSource())->getToken())
         );
@@ -46,7 +52,7 @@ class DiagnosticsCommand extends Command
     {
         $in = '';
 
-        while ($line = fgets(STDIN)) {
+        while (false !== $line = fgets(STDIN)) {
             $in .= $line;
         }
 

@@ -8,6 +8,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
+use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
@@ -114,7 +115,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => true,
             self::PARAM_DIAGNOSTIC_ON_OPEN => true,
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
-            self::PARAM_DIAGNOSTIC_OUTSOURCE => false,
+            self::PARAM_DIAGNOSTIC_OUTSOURCE => true,
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
@@ -504,6 +505,19 @@ class LanguageServerExtension implements Extension
             );
         }, [
             self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', outsource: true),
+        ]);
+
+        $container->register(OutsourcedDiagnosticsProvider::class, function (Container $container) {
+            if (false === $container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)) {
+                return null;
+            }
+
+            return new OutsourcedDiagnosticsProvider([
+                __DIR__ . '/../../../bin/phpactor',
+                'language-server:diagnostics'
+            ]);
+        }, [
+            self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('outsourced'),
         ]);
     }
 
