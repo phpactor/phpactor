@@ -10,6 +10,7 @@ use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand\FormatCommand;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -49,10 +50,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                 LoggingExtension::channelLogger($container, 'php-cs-fixer'),
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
-                'name' => 'php-cs-fixer',
-                'channel' => 'phpactor',
-            ],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('php-cs-fixer'),
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 

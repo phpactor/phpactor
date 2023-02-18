@@ -90,6 +90,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_ON_SAVE = 'language_server.diagnostics_on_save';
     public const PARAM_DIAGNOSTIC_ON_OPEN = 'language_server.diagnostics_on_open';
     public const PARAM_DIAGNOSTIC_PROVIDERS = 'language_server.diagnostic_providers';
+    public const PARAM_DIAGNOSTIC_CHANNELS = 'language_server.diagnostic_channels';
     public const PARAM_FILE_EVENTS = 'language_server,file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
     public const PARAM_PROFILE = 'language_server.profile';
@@ -110,6 +111,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => true,
             self::PARAM_DIAGNOSTIC_ON_OPEN => true,
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
+            self::PARAM_DIAGNOSTIC_CHANNELS => ['phpactor'],
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
@@ -131,6 +133,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => 'Perform diagnostics when the text document is saved',
             self::PARAM_DIAGNOSTIC_ON_OPEN => 'Perform diagnostics when opening a text document',
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
+            self::PARAM_DIAGNOSTIC_CHANNELS => 'Determine which diagnostic channels will run in this process',
             self::PARAM_FILE_EVENTS => 'Register to recieve file events',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time to wait before responding to a shutdown notification',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time after a shutdown request before self-destructing',
@@ -506,10 +509,7 @@ class LanguageServerExtension implements Extension
                 ...$this->taggedServices($container, self::TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER)
             );
         }, [
-            self::TAG_DIAGNOSTICS_PROVIDER => [
-                'name' => 'code-action'
-                'channel' => 'phpactor',
-            ],
+            self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', outsource: true),
         ]);
     }
 
