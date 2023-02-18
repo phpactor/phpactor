@@ -32,12 +32,17 @@ interface ReflectionClassLike extends ReflectionNode
 
     public function sourceCode(): SourceCode;
 
+    /**
+     * @deprecated Use instanceof instead
+     */
     public function isInterface(): bool;
 
     public function isInstanceOf(ClassName $className): bool;
 
-    public function isTrait(): bool;
 
+    /**
+     * @deprecated Use instanceof instead
+     */
     public function isClass(): bool;
 
     public function isEnum(): bool;

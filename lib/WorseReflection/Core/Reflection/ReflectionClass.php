@@ -30,5 +30,5 @@ interface ReflectionClass extends ReflectionClassLike
 
     public function memberListPosition(): Position;
 
-    public function isFinal();
+    public function isFinal(): bool;
 }

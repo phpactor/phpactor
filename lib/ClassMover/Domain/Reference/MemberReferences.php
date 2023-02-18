@@ -7,17 +7,23 @@ use Countable;
 use ArrayIterator;
 use Traversable;
 
+/**
+ * @implements IteratorAggregate<MemberReference>
+ */
 final class MemberReferences implements IteratorAggregate, Countable
 {
-    private $methodReferences = [];
+    /** @var array<MemberReference> */
+    private array $methodReferences = [];
 
-    private function __construct($methodReferences)
+    /** @param array<MemberReference> $methodReferences */
+    private function __construct(array $methodReferences)
     {
         foreach ($methodReferences as $item) {
             $this->add($item);
         }
     }
 
+    /** @param array<MemberReference> $methodReferences */
     public static function fromMemberReferences(array $methodReferences): MemberReferences
     {
         return new self($methodReferences);

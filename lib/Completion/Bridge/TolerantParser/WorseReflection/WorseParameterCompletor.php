@@ -66,10 +66,7 @@ class WorseParameterCompletor extends AbstractParameterCompletor implements Tole
         return $suggestions->getReturn();
     }
 
-    /**
-     * @return ReflectionFunctionLike|null
-     */
-    private function reflectFunctionLike(TextDocument $source, Node $callableExpression)
+    private function reflectFunctionLike(TextDocument $source, Node $callableExpression): ?ReflectionFunctionLike
     {
         $offset = $this->reflector->reflectOffset($source, $callableExpression->getEndPosition());
 

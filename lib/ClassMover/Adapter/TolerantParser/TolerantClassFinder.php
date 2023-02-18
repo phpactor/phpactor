@@ -49,7 +49,7 @@ class TolerantClassFinder implements ClassFinder
     }
 
     /** @return array<ClassReference> */
-    private function resolveClassNames(TextDocument $source, NameImportTable $env, $ast): array
+    private function resolveClassNames(TextDocument $source, NameImportTable $env, SourceFileNode $ast): array
     {
         $classRefs = [];
         $nodes = $ast->getDescendantNodes();
@@ -164,7 +164,7 @@ class TolerantClassFinder implements ClassFinder
             $aliasClause = $useClause->namespaceAliasingClause;
             if ($useClause->namespaceAliasingClause !== null) {
                 $alias = $useClause->namespaceAliasingClause->name->getText($useDeclaration->getFileContents());
-                $importedName = $importedName->withAlias($alias);
+                $importedName = $importedName->withAlias((string) $alias);
             }
 
             $useImportRefs[] = ImportedNameReference::fromImportedNameAndPosition($importedName, Position::fromStartAndEnd(

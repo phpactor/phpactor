@@ -18,6 +18,7 @@ abstract class HandlerTestCase extends TestCase
 
     abstract protected function createHandler(): Handler;
 
+    /** @param array<mixed> $parameters */
     protected function handle(string $actionName, array $parameters): Response
     {
         $registry = new ActiveHandlerRegistry([

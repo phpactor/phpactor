@@ -6,30 +6,27 @@ use Phpactor\ClassMover\Domain\Name\Namespace_;
 
 final class NamespaceReference
 {
-    private $position;
+    private function __construct(
+        private Namespace_ $namespace,
+        private Position $position,
+    ) {
+    }
 
-    private $namespace;
-
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->namespace;
     }
 
-    public static function fromNameAndPosition(Namespace_ $namespace, Position $position)
+    public static function fromNameAndPosition(Namespace_ $namespace, Position $position): self
     {
-        $new = new self();
-        $new->position = $position;
-        $new->namespace = $namespace;
-
-        return $new;
+        return new self($namespace, $position);
     }
 
-    public static function forRoot(): NamespaceReference
+    public static function forRoot(): self
     {
-        $new = new self();
-        $new->namespace = Namespace_::root();
-
-        return $new;
+        /** @var Namespace_ $rootNamespace */
+        $rootNamespace = Namespace_::root();
+        return new self($rootNamespace, Position::fromStartAndEnd(0, 0));
     }
 
     public function position(): Position
