@@ -131,6 +131,10 @@ class WorseExtractMethod implements ExtractMethod
 
         $locals = $this->scopeLocalVariables($source, $offsetStart, $offsetEnd);
 
+        if ($reflectionMethod->isStatic()) {
+            $methodBuilder->static();
+        }
+
         $parameterVariables = $this->parameterVariables($locals->lessThan($offsetStart), $selection, $offsetStart);
         $args = $this->addParametersAndGetArgs($parameterVariables, $methodBuilder, $builder);
 
