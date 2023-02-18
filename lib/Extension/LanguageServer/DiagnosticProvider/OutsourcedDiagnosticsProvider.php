@@ -23,7 +23,7 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return call(function () use ($textDocument, $cancel) {
+        return call(function () use ($textDocument) {
             $process = new Process(array_merge($this->command, [
                 '--uri=' . escapeshellarg($textDocument->uri)
             ]));

@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServer\Command;
 use Amp\CancellationTokenSource;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use Phpactor\TextDocument\TextDocumentBuilder;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -32,6 +31,7 @@ class DiagnosticsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $uri */
         $uri = $input->getOption(self::PARAM_URI) ?: 'untitled:///new';
 
         $textDocument = ProtocolFactory::textDocumentItem($uri, $this->stdin());

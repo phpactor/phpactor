@@ -10,6 +10,7 @@ use Phpactor\Extension\LanguageServerPsalm\Model\Linter;
 use Phpactor\Extension\LanguageServerPsalm\Model\Linter\PsalmLinter;
 use Phpactor\Extension\LanguageServerPsalm\Model\PsalmConfig;
 use Phpactor\Extension\LanguageServerPsalm\Model\PsalmProcess;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;

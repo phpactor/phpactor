@@ -482,7 +482,10 @@ class LanguageServerExtension implements Extension
         });
 
         $container->register(AggregateDiagnosticsProvider::class, function (Container $container) {
-            $providers = $this->collectDiagnosticProviders($container, false);
+            $providers = $this->collectDiagnosticProviders(
+                $container,
+                outsourced: $container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE) ? false : true,
+            );
 
             return new AggregateDiagnosticsProvider(
                 $this->logger($container, 'LSPDIAG'),
@@ -508,7 +511,8 @@ class LanguageServerExtension implements Extension
         ]);
 
         $container->register(OutsourcedDiagnosticsProvider::class, function (Container $container) {
-            if (false === $container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)) {
+            // only register this if we should call out to an external process for diagnostics
+            if (!$container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)) {
                 return null;
             }
 
@@ -572,11 +576,7 @@ class LanguageServerExtension implements Extension
         foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
             Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
 
-            if (
-                ($attrs[DiagnosticProviderTag::OUTSOURCE] ?? false)
-                !==
-                $outsourced
-            ) {
+            if (($attrs[DiagnosticProviderTag::OUTSOURCE] ?? false) !== $outsourced) {
                 continue;
             }
 
