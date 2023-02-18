@@ -38,6 +38,24 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
      */
     public function provideIndexesClassLike(): Generator
     {
+        yield 'attribute' => [
+            <<<DOC
+                    // File: project/attribute.php
+                    <?php
+
+                    #[Attribute]
+                    class IamAnAttribute {}
+                DOC,
+            'IamAnAttribute',
+            function (ClassRecord $record): void {
+                self::assertInstanceOf(ClassRecord::class, $record);
+                self::assertEquals($this->workspace()->path('project/attribute.php'), $record->filePath());
+                self::assertEquals('IamAnAttribute', $record->fqn());
+                self::assertEquals(7, $record->start()->toInt());
+                self::assertEquals(ClassRecord::TYPE_ATTRIBUTE, $record->type());
+            }
+        ];
+
         yield 'class' => [
             "// File: project/test.php\n<?php class ThisClass {}",
             'ThisClass',

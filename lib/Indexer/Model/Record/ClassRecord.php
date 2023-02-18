@@ -15,6 +15,7 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     public const TYPE_INTERFACE = 'interface';
     public const TYPE_TRAIT = 'trait';
     public const TYPE_ENUM = 'enum';
+    public const TYPE_ATTRIBUTE = 'attribute';
 
     /**
      * @var array<string>
@@ -27,7 +28,7 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     private array $implements = [];
 
     /**
-     * Type of "class": class, interface or trait
+     * Type of "class": class, interface or trait, etc
      */
     private ?string $type = null;
 
