@@ -477,7 +477,10 @@ class LanguageServerExtension implements Extension
             foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
                 Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
 
-                if ($attrs[DiagnosticProviderTag::OUTSOURCE] ?? false) {
+                if (
+                    $container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE) &&
+                    ($attrs[DiagnosticProviderTag::OUTSOURCE] ?? false)
+                ) {
                     continue;
                 }
 
@@ -487,7 +490,7 @@ class LanguageServerExtension implements Extension
                     continue;
                 }
 
-                $providers[$attrs[DiagnosticProviderTag::OUTSOURCE] ?? $serviceId] = $provider;
+                $providers[$attrs[DiagnosticProviderTag::NAME] ?? $serviceId] = $provider;
             }
 
             $enabled = $container->getParameter(self::PARAM_DIAGNOSTIC_PROVIDERS);

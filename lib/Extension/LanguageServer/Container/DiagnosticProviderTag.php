@@ -4,8 +4,8 @@ namespace Phpactor\Extension\LanguageServer\Container;
 
 class DiagnosticProviderTag
 {
-    const NAME = 'name';
-    const OUTSOURCE = 'outsource';
+    public const NAME = 'name';
+    public const OUTSOURCE = 'outsource';
 
     /**
      * @param bool $outsource if this diagnostic provider should be outsourced to different process.
@@ -14,8 +14,8 @@ class DiagnosticProviderTag
     public static function create(string $name, bool $outsource = false): array
     {
         return [
-            'name' => $name,
-            'outsource' => $outsource,
+            self::NAME  => $name,
+            self::OUTSOURCE => $outsource,
         ];
     }
 }
