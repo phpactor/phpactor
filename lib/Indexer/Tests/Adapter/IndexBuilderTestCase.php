@@ -32,9 +32,8 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
 
         $assertions($class);
     }
-
     /**
-     * @return Generator<string, array>
+     * @return Generator<string,array{string,string,Closure(ClassRecord): void}>
      */
     public function provideIndexesClassLike(): Generator
     {

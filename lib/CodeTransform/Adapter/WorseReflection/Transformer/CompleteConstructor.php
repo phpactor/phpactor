@@ -124,7 +124,7 @@ class CompleteConstructor implements Transformer
         foreach ($this->candidateClasses($source) as $class) {
             $constructMethod = $class->methods()->get('__construct');
             foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
-                $edits[] = TextEdit::create($parameter->position()->start(), 0, 'private ');
+                $edits[] = TextEdit::create($parameter->position()->start(), 0, sprintf('%s ', $this->visibility));
             }
         }
 
