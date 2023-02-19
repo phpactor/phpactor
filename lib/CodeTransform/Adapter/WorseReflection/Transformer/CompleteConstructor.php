@@ -8,6 +8,7 @@ use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -24,11 +25,21 @@ class CompleteConstructor implements Transformer
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
-        private string $visibility
+        private string $visibility,
+        private bool $promote = false
     ) {
     }
 
     public function transform(SourceCode $source): TextEdits
+    {
+        if (false === $this->promote) {
+            return $this->transformAssign($source);
+        }
+
+        return $this->transformPromote($source);
+    }
+
+    private function transformAssign(SourceCode $source): TextEdits
     {
         $edits = [];
         $sourceCodeBuilder = SourceCodeBuilder::create();
@@ -69,6 +80,21 @@ class CompleteConstructor implements Transformer
         }
 
         return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
+    }
+
+    private function transformPromote(SourceCode $source): TextEdits
+    {
+        $edits = [];
+
+        foreach ($this->candidateClasses($source) as $class) {
+            $constructMethod = $class->methods()->get('__construct');
+            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+                $edits[] = TextEdit::create($parameter->position()->start(), 0, 'private ');
+            }
+
+        }
+
+        return TextEdits::fromTextEdits($edits);
     }
 
 
