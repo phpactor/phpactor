@@ -15,7 +15,6 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     public const TYPE_INTERFACE = 'interface';
     public const TYPE_TRAIT = 'trait';
     public const TYPE_ENUM = 'enum';
-    public const FLAG_ATTRIBUTE = 1;
 
     /**
      * @var array<string>
@@ -28,11 +27,9 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     private array $implements = [];
 
     /**
-     * Type of "class": class, interface or trait, etc
+     * Type of "class": class, interface or trait
      */
     private ?string $type = null;
-
-    private int $flags = 0;
 
     public static function fromName(string $name): self
     {
@@ -112,24 +109,5 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
         $clone = clone $this;
         $clone->type = $type;
         return $clone;
-    }
-
-    public function setFlags(int $flags): self
-    {
-        $this->flags = $flags;
-
-        return $this;
-    }
-
-    public function addFlag(int $flag): self
-    {
-        $this->flags = $this->flags | $flag;
-
-        return $this;
-    }
-
-    public function hasFlag(int $flag): bool
-    {
-        return (bool) ($this->flags & $flag);
     }
 }
