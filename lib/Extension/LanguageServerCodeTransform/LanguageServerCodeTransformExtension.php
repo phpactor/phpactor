@@ -321,7 +321,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Fix PSR namespace and class name'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('transformer', false),
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('transformer', true),
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
