@@ -12,7 +12,7 @@ use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoImplementationH
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\HighlightHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\ReferencesHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\TypeDefinitionHandler;
-use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
+use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\TolerantHighlighter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer\WorkspaceUpdateReferenceFinder;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
@@ -76,7 +76,7 @@ class LanguageServerReferenceFinderExtension implements Extension
         $container->register(HighlightHandler::class, function (Container $container) {
             return new HighlightHandler(
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                new Highlighter(new Parser())
+                new TolerantHighlighter(new Parser())
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
     }

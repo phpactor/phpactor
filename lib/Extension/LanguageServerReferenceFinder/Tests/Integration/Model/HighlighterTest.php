@@ -6,7 +6,7 @@ use Closure;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
+use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\TolerantHighlighter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlights;
 use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
 use Phpactor\TestUtils\ExtractOffset;
@@ -25,7 +25,7 @@ class HighlighterTest extends TestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
         $assertion(
-            (new Highlighter(new Parser()))->highlightsFor(
+            (new TolerantHighlighter(new Parser()))->highlightsFor(
                 $source,
                 ByteOffset::fromInt((int)$offset)
             )

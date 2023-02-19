@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerReferenceFinder\Model;
+namespace Phpactor\Extension\LanguageServerReferenceFinder\Adapter;
 
 use Generator;
 use Microsoft\PhpParser\Node;
@@ -19,6 +19,9 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
+use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlight;
+use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
+use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlights;
 use Phpactor\LanguageServerProtocol\DocumentHighlight;
 use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
 use Phpactor\LanguageServerProtocol\Position;
@@ -26,7 +29,7 @@ use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\EfficientLineCols;
 
-class Highlighter
+class TolerantHighlighter implements Highlighter
 {
     public function __construct(private Parser $parser)
     {
