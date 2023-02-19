@@ -4,12 +4,13 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Attribute;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\Indexer\Model\Exception\CannotIndexNode;
+use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record\ClassRecord;
-use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\Indexer\Model\Index;
 
 class ClassDeclarationIndexer extends AbstractClassLikeIndexer
 {
@@ -35,7 +36,27 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
         $this->indexClassInterfaces($index, $record, $node);
         $this->indexBaseClass($index, $record, $node);
 
+        $this->indexAttributes($record, $node);
+
         $index->write($record);
+    }
+
+    public function indexAttributes(ClassRecord $record, ClassDeclaration $node): void
+    {
+        $attributes = $node->attributes ?? [];
+        if (count($attributes) === 0) {
+            return;
+        }
+
+        foreach ($attributes as $attributeGroup) {
+            foreach ($attributeGroup->attributes->children as $attribute) {
+                /** @var Attribute $attribute */
+                if ($attribute->name->getText() === 'Attribute') {
+                    $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
+                    return;
+                }
+            }
+        }
     }
 
     private function indexClassInterfaces(Index $index, ClassRecord $classRecord, ClassDeclaration $node): void
