@@ -36,6 +36,7 @@ class TextDocumentBuilderTest extends TestCase
 
         $this->assertEquals('foobar', $doc->__toString());
         $this->assertEquals('file:///foobar/asd', $doc->uri()->__toString());
+        $this->assertEquals('/foobar/asd', $doc->uri()->path());
         $this->assertEquals('foo', $doc->language()->__toString());
     }
 
