@@ -7,8 +7,11 @@ use Psr\Log\LoggerInterface;
 
 class ChannelLogger extends AbstractLogger
 {
+    private int $pid;
+
     public function __construct(private string $name, private LoggerInterface $innerLogger)
     {
+        $this->pid = getmypid() ?: 0;
     }
 
     public function log($level, $message, array $context = []): void
@@ -17,8 +20,10 @@ class ChannelLogger extends AbstractLogger
             $level,
             $message,
             array_merge([
+                'pid' => $this->pid,
                 'channel' => $this->name,
             ], $context),
         );
+
     }
 }

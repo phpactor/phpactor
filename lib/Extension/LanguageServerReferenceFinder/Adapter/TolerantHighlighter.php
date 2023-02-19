@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Adapter;
 
+use Amp\Promise;
+use Amp\Success;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ConstElement;
@@ -35,7 +37,7 @@ class TolerantHighlighter implements Highlighter
     {
     }
 
-    public function highlightsFor(string $source, ByteOffset $offset): Highlights
+    public function highlightsFor(string $source, ByteOffset $offset): Promise
     {
         $offsets = [];
         $highlights = [];
@@ -59,7 +61,7 @@ class TolerantHighlighter implements Highlighter
                 $highlight->kind
             );
         }
-        return new Highlights(...$lspHighlights);
+        return new Success(new Highlights(...$lspHighlights));
     }
 
     /**

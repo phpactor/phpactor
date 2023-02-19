@@ -13,6 +13,7 @@ use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
+use function Amp\call;
 
 class HighlightHandler implements Handler, CanRegisterCapabilities
 {
@@ -33,10 +34,12 @@ class HighlightHandler implements Handler, CanRegisterCapabilities
      */
     public function highlight(DocumentHighlightParams $params): Promise
     {
-        $textDocument = $this->workspace->get($params->textDocument->uri);
-        $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
+        return call(function () use ($params) {
+            $textDocument = $this->workspace->get($params->textDocument->uri);
+            $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
 
-        return new Success($this->highlighter->highlightsFor($textDocument->text, $offset)->toArray());
+            return (yield $this->highlighter->highlightsFor($textDocument->text, $offset))->toArray();
+        });
     }
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void

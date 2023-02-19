@@ -134,9 +134,11 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
      */
     public function resolveItem(RequestMessage $request): Promise
     {
-        return call(function () use ($request) {
-            $item = CompletionItem::fromArray($request->params);
-            $item = $this->resolve[$item->data]($item);
+        return call(function () use ($request): CompletionItem {
+            $item = CompletionItem::fromArray((array)$request->params);
+            if (isset($this->resolve[$item->data])) {
+                $item = $this->resolve[$item->data]($item);
+            }
             return $item;
         });
     }
