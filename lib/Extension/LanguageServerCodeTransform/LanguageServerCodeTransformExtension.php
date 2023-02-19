@@ -44,6 +44,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\TransformCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\CandidateFinder;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Indexer\Model\SearchClient;
@@ -278,7 +279,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 $container->get('worse_reflection.tolerant_parser')
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('create-class', outsource: true),
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -309,7 +310,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Implement contracts'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('implement-contracts', outsource: true),
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -320,7 +321,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Fix PSR namespace and class name'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('transformer', true),
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 

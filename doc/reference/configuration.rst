@@ -1227,6 +1227,19 @@ Specify which diagnostic providers should be active (default to all)
 **Default**: ``null``
 
 
+.. _param_language_server.diagnostic_outsource:
+
+
+``language_server.diagnostic_outsource``
+""""""""""""""""""""""""""""""""""""""""
+
+
+If applicable diagnostics should be "outsourced" to a different process
+
+
+**Default**: ``false``
+
+
 .. _param_language_server,file_events:
 
 

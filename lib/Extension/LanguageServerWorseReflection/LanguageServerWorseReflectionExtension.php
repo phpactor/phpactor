@@ -9,6 +9,7 @@ use Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider\WorseDia
 use Phpactor\Extension\LanguageServerWorseReflection\SourceLocator\WorkspaceSourceLocator;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndexListener;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
@@ -59,6 +60,6 @@ class LanguageServerWorseReflectionExtension implements Extension
 
         $container->register(WorseDiagnosticProvier::class, function (Container $container) {
             return new WorseDiagnosticProvider($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
-        }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [] ]);
+        }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', true) ]);
     }
 }

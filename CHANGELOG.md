@@ -7,6 +7,7 @@ Features:
 
   - Hierarchical namespace segment completion #2070
   - Completion for promoted property visiblity #2087
+  - Option `language_server.diagnostic_outsource` to outsource diagnostics in separate process #2105
 
 Bug fixes:
 

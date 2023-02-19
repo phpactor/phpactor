@@ -1351,11 +1351,6 @@ parameters:
 			path: lib/CodeTransform/Domain/SourceCode.php
 
 		-
-			message: "#^Parameter \\#2 \\$path of class Phpactor\\\\CodeTransform\\\\Domain\\\\SourceCode constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Domain/SourceCode.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Domain\\\\Transformers\\:\\:in\\(\\) has parameter \\$transformerNames with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/Domain/Transformers.php
@@ -4902,11 +4897,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\LanguageServer\\\\Handler\\\\TextDocument\\\\CodeActionHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\.\\.\\.\\$providers of class Phpactor\\\\LanguageServer\\\\Core\\\\Diagnostics\\\\AggregateDiagnosticsProvider constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Diagnostics\\\\DiagnosticsProvider, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 

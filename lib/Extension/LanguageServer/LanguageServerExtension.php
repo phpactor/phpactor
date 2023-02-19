@@ -7,6 +7,9 @@ use Phly\EventDispatcher\EventDispatcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
+use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
@@ -15,14 +18,17 @@ use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
 use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
 use Phpactor\Extension\LanguageServer\Middleware\TraceMiddleware;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
+use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
 use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsEngine;
+use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Diagnostics\CodeActionDiagnosticsProvider;
 use Phpactor\LanguageServer\Handler\System\StatsHandler;
 use Phpactor\LanguageServer\Handler\TextDocument\CodeActionHandler;
@@ -90,6 +96,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_ON_SAVE = 'language_server.diagnostics_on_save';
     public const PARAM_DIAGNOSTIC_ON_OPEN = 'language_server.diagnostics_on_open';
     public const PARAM_DIAGNOSTIC_PROVIDERS = 'language_server.diagnostic_providers';
+    public const PARAM_DIAGNOSTIC_OUTSOURCE = 'language_server.diagnostic_outsource';
     public const PARAM_FILE_EVENTS = 'language_server,file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
     public const PARAM_PROFILE = 'language_server.profile';
@@ -110,6 +117,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => true,
             self::PARAM_DIAGNOSTIC_ON_OPEN => true,
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
+            self::PARAM_DIAGNOSTIC_OUTSOURCE => false,
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
@@ -131,6 +139,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => 'Perform diagnostics when the text document is saved',
             self::PARAM_DIAGNOSTIC_ON_OPEN => 'Perform diagnostics when opening a text document',
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
+            self::PARAM_DIAGNOSTIC_OUTSOURCE => 'If applicable diagnostics should be "outsourced" to a different process',
             self::PARAM_FILE_EVENTS => 'Register to recieve file events',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time to wait before responding to a shutdown notification',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time after a shutdown request before self-destructing',
@@ -184,6 +193,12 @@ class LanguageServerExtension implements Extension
         $container->register('language_server.command.lsp_start', function (Container $container) {
             return new StartCommand($container->get(LanguageServerBuilder::class));
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => StartCommand::NAME ]]);
+
+        $container->register(DiagnosticsCommand::class, function (Container $container) {
+            /** @var AggregateDiagnosticsProvider $provider */
+            $provider = $container->get(AggregateDiagnosticsProvider::class . '.outsourced');
+            return new DiagnosticsCommand($provider);
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => DiagnosticsCommand::NAME ]]);
     }
 
     private function registerSession(ContainerBuilder $container): void
@@ -469,34 +484,22 @@ class LanguageServerExtension implements Extension
         });
 
         $container->register(AggregateDiagnosticsProvider::class, function (Container $container) {
-            $providers = [];
-            foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
-                Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
-                $provider = $container->get($serviceId);
-
-                if (null === $provider) {
-                    continue;
-                }
-
-                $providers[$attrs['name'] ?? $serviceId] = $provider;
-            }
-
-            $enabled = $container->getParameter(self::PARAM_DIAGNOSTIC_PROVIDERS);
-
-            if (null !== $enabled) {
-                Assert::isArray($enabled);
-                if ($diff = array_diff($enabled, array_keys($providers))) {
-                    throw new RuntimeException(sprintf(
-                        'Unknown diagnostic provider(s) "%s", known providers: "%s"',
-                        implode('", "', $diff),
-                        implode('", "', array_keys($providers))
-                    ));
-                }
-                $providers = array_intersect_key($providers, array_flip($enabled));
-            }
+            $providers = $this->collectDiagnosticProviders(
+                $container,
+                outsourced: $container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE) ? false : true,
+            );
 
             return new AggregateDiagnosticsProvider(
                 $this->logger($container, 'LSPDIAG'),
+                ...array_values($providers)
+            );
+        });
+
+        $container->register(AggregateDiagnosticsProvider::class.'.outsourced', function (Container $container) {
+            $providers = $this->collectDiagnosticProviders($container, true);
+
+            return new AggregateDiagnosticsProvider(
+                $this->logger($container, 'OUTLSPDIAG'),
                 ...array_values($providers)
             );
         });
@@ -506,9 +509,24 @@ class LanguageServerExtension implements Extension
                 ...$this->taggedServices($container, self::TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER)
             );
         }, [
-            self::TAG_DIAGNOSTICS_PROVIDER => [
-                'name' => 'code-action'
-            ],
+            self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', outsource: true),
+        ]);
+
+        $container->register(OutsourcedDiagnosticsProvider::class, function (Container $container) {
+            /** @var PathResolver $resolver */
+            $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
+            $projectPath = $resolver->resolve('%project_root%');
+            // only register this if we should call out to an external process for diagnostics
+            if (!$container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)) {
+                return null;
+            }
+
+            return new OutsourcedDiagnosticsProvider([
+                __DIR__ . '/../../../bin/phpactor',
+                'language-server:diagnostics'
+            ], $projectPath);
+        }, [
+            self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('outsourced'),
         ]);
     }
 
@@ -552,5 +570,45 @@ class LanguageServerExtension implements Extension
             'name' => $package['name'],
             'version' => $package['pretty_version'],
         ];
+    }
+
+    /**
+     * @return DiagnosticsProvider[]
+     */
+    private function collectDiagnosticProviders(Container $container, bool $outsourced): array
+    {
+        $providers = [];
+        foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
+            Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
+
+            if (($attrs[DiagnosticProviderTag::OUTSOURCE] ?? false) !== $outsourced) {
+                continue;
+            }
+
+            $provider = $container->get($serviceId);
+
+            if (null === $provider) {
+                continue;
+            }
+
+            $providers[$attrs[DiagnosticProviderTag::NAME] ?? $serviceId] = $provider;
+        }
+
+        $enabled = $container->getParameter(self::PARAM_DIAGNOSTIC_PROVIDERS);
+
+        if (null !== $enabled) {
+            Assert::isArray($enabled);
+            if ($diff = array_diff($enabled, array_keys($providers))) {
+                throw new RuntimeException(sprintf(
+                    'Unknown diagnostic provider(s) "%s", known providers: "%s"',
+                    implode('", "', $diff),
+                    implode('", "', array_keys($providers))
+                ));
+            }
+            $providers = array_intersect_key($providers, array_flip($enabled));
+        }
+
+        /** @var DiagnosticsProvider[] $providers */
+        return $providers;
     }
 }

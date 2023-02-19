@@ -44,7 +44,9 @@ class LanguageServerTestCase extends TestCase
      */
     protected function createTester(?InitializeParams $params = null, array $config = []): LanguageServerTester
     {
-        $builder = $this->createContainer($config)->get(
+        $builder = $this->createContainer(array_merge($config, [
+            LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
+        ]))->get(
             LanguageServerBuilder::class
         );
 
