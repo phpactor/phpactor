@@ -467,6 +467,23 @@ class CodeTransformExtension implements Extension
                 'public',
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor_public' ]]);
+        $container->register('code_transform.transformer.promote_constructor_private', function (Container $container) {
+            return new CompleteConstructor(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(Updater::class),
+                'private',
+                true,
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'promote_constructor' ]]);
+
+        $container->register('code_transform.transformer.promote_constructor_public', function (Container $container) {
+            return new CompleteConstructor(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(Updater::class),
+                'public',
+                true,
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'promote_constructor_public' ]]);
 
         $container->register('code_transform.transformer.implement_contracts', function (Container $container) {
             return new ImplementContracts(

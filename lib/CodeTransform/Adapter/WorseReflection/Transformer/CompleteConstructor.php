@@ -39,6 +39,41 @@ class CompleteConstructor implements Transformer
         return $this->transformPromote($source);
     }
 
+
+    public function diagnostics(SourceCode $source): Diagnostics
+    {
+        $diagnostics = [];
+        foreach ($this->candidateClasses($source) as $class) {
+            $constructMethod = $class->methods()->belongingTo($class->name())->get('__construct');
+            assert($constructMethod instanceof ReflectionMethod);
+            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+                assert($parameter instanceof ReflectionParameter);
+                $frame = $constructMethod->frame();
+
+                $isUsed = $frame->locals()->byName($parameter->name())->count() > 0;
+                $hasProperty = $class->properties()->has($parameter->name());
+
+                if ($isUsed && $hasProperty) {
+                    continue;
+                }
+
+                $diagnostics[] = new Diagnostic(
+                    ByteOffsetRange::fromInts(
+                        $parameter->position()->start(),
+                        $parameter->position()->end() + 5 + strlen($class->name()->__toString())
+                    ),
+                    sprintf(
+                        'Parameter "%s" may not have been assigned',
+                        $parameter->name()
+                    ),
+                    Diagnostic::WARNING
+                );
+            }
+        }
+
+        return new Diagnostics($diagnostics);
+    }
+
     private function transformAssign(SourceCode $source): TextEdits
     {
         $edits = [];
@@ -91,45 +126,9 @@ class CompleteConstructor implements Transformer
             foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
                 $edits[] = TextEdit::create($parameter->position()->start(), 0, 'private ');
             }
-
         }
 
         return TextEdits::fromTextEdits($edits);
-    }
-
-
-    public function diagnostics(SourceCode $source): Diagnostics
-    {
-        $diagnostics = [];
-        foreach ($this->candidateClasses($source) as $class) {
-            $constructMethod = $class->methods()->belongingTo($class->name())->get('__construct');
-            assert($constructMethod instanceof ReflectionMethod);
-            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
-                assert($parameter instanceof ReflectionParameter);
-                $frame = $constructMethod->frame();
-
-                $isUsed = $frame->locals()->byName($parameter->name())->count() > 0;
-                $hasProperty = $class->properties()->has($parameter->name());
-
-                if ($isUsed && $hasProperty) {
-                    continue;
-                }
-
-                $diagnostics[] = new Diagnostic(
-                    ByteOffsetRange::fromInts(
-                        $parameter->position()->start(),
-                        $parameter->position()->end() + 5 + strlen($class->name()->__toString())
-                    ),
-                    sprintf(
-                        'Parameter "%s" may not have been assigned',
-                        $parameter->name()
-                    ),
-                    Diagnostic::WARNING
-                );
-            }
-        }
-
-        return new Diagnostics($diagnostics);
     }
 
     /**

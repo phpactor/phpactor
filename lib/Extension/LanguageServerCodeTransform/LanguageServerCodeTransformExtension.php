@@ -253,6 +253,26 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
         ]);
 
+        $container->register(TransformerCodeActionPovider::class.'promote_constructor_private', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'promote_constructor',
+                'Promote Constructor (private)'
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(TransformerCodeActionPovider::class.'promote_constructor_public', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'promote_constructor_public',
+                'Promote Constructor (public)'
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
         $container->register(TransformerCodeActionPovider::class.'complete_constructor_private', function (Container $container) {
             return new TransformerCodeActionPovider(
                 $container->get('code_transform.transformers'),
