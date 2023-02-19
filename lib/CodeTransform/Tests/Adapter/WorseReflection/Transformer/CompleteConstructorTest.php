@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use Generator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
@@ -15,11 +16,13 @@ class CompleteConstructorTest extends WorseTestCase
     public function testDiagnostics(string $example, int $expectedCount): void
     {
         $source = SourceCode::fromString($example);
-        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private');
+        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', promote: false);
         $this->assertCount($expectedCount, $transformer->diagnostics($source));
     }
-
-    public function provideDiagnostics()
+    /**
+     * @return Generator<string,array{string,int}>
+     */
+    public function provideDiagnostics(): Generator
     {
         yield 'empty' => [
             <<<'EOT'
@@ -53,8 +56,10 @@ class CompleteConstructorTest extends WorseTestCase
         $transformed = $transformer->transform($source);
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
-
-    public function provideCompleteConstructor()
+    /**
+     * @return Generator<string,array{string,string}>
+     */
+    public function provideCompleteConstructor(): Generator
     {
         yield 'It does nothing on source with no classes' => [
             <<<'EOT'
@@ -592,6 +597,72 @@ class CompleteConstructorTest extends WorseTestCase
                     public function __construct(string $bar)
                     {
                         $this->bar = $bar;
+                    }
+                }
+                EOT
+
+        ];
+    }
+
+    /**
+     * @dataProvider provideCompleteConstructorPromote
+     */
+    public function testCompleteConstructorPromote(string $example, string $expected): void
+    {
+        $source = SourceCode::fromString($example);
+        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', true);
+        $transformed = $transformer->transform($source);
+        $this->assertEquals((string) $expected, (string) $transformed->apply($source));
+    }
+    /**
+     * @return Generator<string,array{string,string}>
+     */
+    public function provideCompleteConstructorPromote(): Generator
+    {
+        yield  'It does adds assignations and properties' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct($foo, $bar)
+                    {
+                    }
+                }
+                EOT
+        ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct(private $foo, private $bar)
+                    {
+                    }
+                }
+                EOT
+
+        ];
+
+        yield  'It does adds assignations and properties with types' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct(string $foo, string $bar)
+                    {
+                    }
+                }
+                EOT
+        ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct(private string $foo, private string $bar)
+                    {
                     }
                 }
                 EOT

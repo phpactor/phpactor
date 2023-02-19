@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "78c4d458a6ab968bc456a1ab0c32fd03",
+    "content-hash": "d8deca24822582d6080969edd5d97b9a",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1216,12 +1216,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "de53302780aee15d724360f2ee728946a4527659"
+                "reference": "e6a62f12b44d89658badaac11268f59e4fbae430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/de53302780aee15d724360f2ee728946a4527659",
-                "reference": "de53302780aee15d724360f2ee728946a4527659",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/e6a62f12b44d89658badaac11268f59e4fbae430",
+                "reference": "e6a62f12b44d89658badaac11268f59e4fbae430",
                 "shasum": ""
             },
             "require-dev": {
@@ -1257,7 +1257,7 @@
             "support": {
                 "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2023-02-11T17:45:35+00:00"
+            "time": "2023-02-16T12:12:17+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -1588,20 +1588,20 @@
         },
         {
             "name": "phpactor/container",
-            "version": "2.0.2",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/container.git",
-                "reference": "14e98f4b381a7dd89d5509edb76deacb71d4deae"
+                "reference": "0ff1ec3e99063e75e136947672bedfe685b84777"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/container/zipball/14e98f4b381a7dd89d5509edb76deacb71d4deae",
-                "reference": "14e98f4b381a7dd89d5509edb76deacb71d4deae",
+                "url": "https://api.github.com/repos/phpactor/container/zipball/0ff1ec3e99063e75e136947672bedfe685b84777",
+                "reference": "0ff1ec3e99063e75e136947672bedfe685b84777",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3 || ^8.0",
+                "php": "^7.4 || ^8.0",
                 "phpactor/map-resolver": "^1.4",
                 "psr/container": "^1.0"
             },
@@ -1636,9 +1636,9 @@
             "description": "Phpactor's DI Container",
             "support": {
                 "issues": "https://github.com/phpactor/container/issues",
-                "source": "https://github.com/phpactor/container/tree/2.0.2"
+                "source": "https://github.com/phpactor/container/tree/2.1.0"
             },
-            "time": "2022-10-16T21:03:17+00:00"
+            "time": "2023-02-19T10:24:36+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -5649,16 +5649,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.9.17",
+            "version": "1.9.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "204e459e7822f2c586463029f5ecec31bb45a1f2"
+                "reference": "f2d5cf71be91172a57c649770b73c20ebcffb0bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/204e459e7822f2c586463029f5ecec31bb45a1f2",
-                "reference": "204e459e7822f2c586463029f5ecec31bb45a1f2",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f2d5cf71be91172a57c649770b73c20ebcffb0bf",
+                "reference": "f2d5cf71be91172a57c649770b73c20ebcffb0bf",
                 "shasum": ""
             },
             "require": {
@@ -5688,7 +5688,7 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.9.17"
+                "source": "https://github.com/phpstan/phpstan/tree/1.9.18"
             },
             "funding": [
                 {
@@ -5704,7 +5704,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-02-08T12:25:00+00:00"
+            "time": "2023-02-17T15:01:27+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
