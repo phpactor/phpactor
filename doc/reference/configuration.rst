@@ -1237,7 +1237,7 @@ Specify which diagnostic providers should be active (default to all)
 If applicable diagnostics should be "outsourced" to a different process
 
 
-**Default**: ``true``
+**Default**: ``false``
 
 
 .. _param_language_server,file_events:
