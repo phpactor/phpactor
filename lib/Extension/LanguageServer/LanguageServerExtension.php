@@ -7,6 +7,7 @@ use Phly\EventDispatcher\EventDispatcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
@@ -511,6 +512,7 @@ class LanguageServerExtension implements Extension
         ]);
 
         $container->register(OutsourcedDiagnosticsProvider::class, function (Container $container) {
+            $projectPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%');
             // only register this if we should call out to an external process for diagnostics
             if (!$container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)) {
                 return null;
@@ -519,7 +521,7 @@ class LanguageServerExtension implements Extension
             return new OutsourcedDiagnosticsProvider([
                 __DIR__ . '/../../../bin/phpactor',
                 'language-server:diagnostics'
-            ]);
+            ], $projectPath);
         }, [
             self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('outsourced'),
         ]);

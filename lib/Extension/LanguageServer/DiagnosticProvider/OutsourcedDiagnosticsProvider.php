@@ -17,7 +17,7 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
     /**
      * @param list<string> $command
      */
-    public function __construct(private array $command)
+    public function __construct(private array $command, private string $cwd)
     {
     }
 
@@ -25,8 +25,8 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
     {
         return call(function () use ($textDocument) {
             $process = new Process(array_merge($this->command, [
-                '--uri=' . escapeshellarg($textDocument->uri)
-            ]));
+                '--uri=' . $textDocument->uri
+            ]), $this->cwd);
             $pid = yield $process->start();
 
             $stdin = $process->getStdin();

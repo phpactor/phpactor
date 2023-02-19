@@ -15,7 +15,7 @@ class OutsourcedDiagnosticsProvierTest extends LanguageServerTestCase
         $provider = new OutsourcedDiagnosticsProvider([
             __DIR__ . '/../../../../../../bin/phpactor',
             'language-server:diagnostics',
-        ]);
+        ], $this->workspace()->path());
         $diagnostics = wait($provider->provideDiagnostics(
             ProtocolFactory::textDocumentItem('file:///foo', '<?php echo Hello::class'),
             (new CancellationTokenSource())->getToken()
