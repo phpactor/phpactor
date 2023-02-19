@@ -92,6 +92,11 @@ final class SourceCode implements TextDocument
      */
     public static function fromTextDocument(TextDocument $textDocument): self
     {
+        if (null === $textDocument->uri()) {
+            throw new RuntimeException(
+                'Cannot create source code from text document with no URI'
+            );
+        }
         return new self($textDocument->__toString(), $textDocument->uri());
     }
 }

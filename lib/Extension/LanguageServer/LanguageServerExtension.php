@@ -22,6 +22,7 @@ use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
+use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
@@ -512,7 +513,9 @@ class LanguageServerExtension implements Extension
         ]);
 
         $container->register(OutsourcedDiagnosticsProvider::class, function (Container $container) {
-            $projectPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%');
+            /** @var PathResolver $resolver */
+            $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
+            $projectPath = $resolver->resolve('%project_root%');
             // only register this if we should call out to an external process for diagnostics
             if (!$container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)) {
                 return null;
