@@ -1466,11 +1466,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseExtractConstantTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethodTest\\:\\:provideExtractMethod\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseExtractMethodTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateAccessorTest\\:\\:provideExtractAccessor\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseGenerateAccessorTest.php
@@ -1504,16 +1499,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethodTest\\:\\:testOverrideMethod\\(\\) has parameter \\$methodName with no type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\CompleteConstructorTest\\:\\:provideCompleteConstructor\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Transformer/CompleteConstructorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\CompleteConstructorTest\\:\\:provideDiagnostics\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Transformer/CompleteConstructorTest.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Unit\\\\CodeTransformTest\\:\\:create\\(\\) has parameter \\$transformers with no value type specified in iterable type array\\.$#"
@@ -3162,111 +3147,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$phpVersion of method Phpactor\\\\CodeBuilder\\\\Adapter\\\\WorseReflection\\\\TypeRenderer\\\\WorseTypeRendererFactory\\:\\:rendererFor\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeBuilder\\\\Adapter\\\\WorseReflection\\\\WorseBuilderFactory constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\GenerateFromExisting\\\\InterfaceFromExistingGenerator constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseInterestingOffsetFinder constructor expects Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCodeReflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseMissingMethodFinder constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractConstant constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseFillObject constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateAccessor constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateConstructor constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateDecorator constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateMethod constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateMutator constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethod constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseReplaceQualifierWithImport constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\AddMissingProperties constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\CompleteConstructor constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 2
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\ImplementContracts constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\RemoveUnusedImportsTransformer constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\UpdateDocblockParamsTransformer constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\UpdateDocblockReturnTransformer constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\UpdateReturnTypeTransformer constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
@@ -5111,21 +4991,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\CreateUnresolvableClassProvider constructor expects Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCodeReflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\GenerateDecoratorProvider constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Model\\\\NameImport\\\\CandidateFinder constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$transformers of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\TransformerCodeActionPovider constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Transformers, mixed given\\.$#"
 			count: 9
 			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
@@ -5146,88 +5011,13 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
 
 		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\CreateClassCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ExtractConstantCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ExtractExpressionCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ExtractMethodCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\GenerateDecoratorCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\GenerateMethodCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ImportAllUnresolvedNamesCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ImportNameCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ReplaceQualifierWithImportCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\TransformCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
 			message: "#^Parameter \\#3 \\$classToFile of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\CreateUnresolvableClassProvider constructor expects Phpactor\\\\ClassFileConverter\\\\Domain\\\\ClassToFile, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
 
 		-
 			message: "#^Parameter \\#3 \\$generateAccessor of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\PropertyAccessGeneratorCommand constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Refactor\\\\PropertyAccessGenerator, mixed given\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$generators of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\CreateClassCommand constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Generators, mixed given\\.$#"
 			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$transformers of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\TransformCommand constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Transformers, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#4 \\$fileToClass of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\CreateClassCommand constructor expects Phpactor\\\\ClassFileConverter\\\\Domain\\\\FileToClass, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#4 \\$reflector of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\PropertyAccessGeneratorProvider constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 2
 			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
 
 		-
@@ -8084,11 +7874,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Indexer\\\\Model\\\\RecordSerializer\\\\PhpSerializer\\:\\:deserialize\\(\\) should return Phpactor\\\\Indexer\\\\Model\\\\Record\\|null but returns mixed\\.$#"
 			count: 1
 			path: lib/Indexer/Model/RecordSerializer/PhpSerializer.php
-
-		-
-			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\IndexBuilderTestCase\\:\\:provideIndexesClassLike\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Adapter/IndexBuilderTestCase.php
 
 		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Adapter\\\\IndexBuilderTestCase\\:\\:provideIndexesReferences\\(\\) return type has no value type specified in iterable type array\\.$#"

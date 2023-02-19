@@ -9,7 +9,7 @@
         "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^3.0",
         "symfony/yaml": "^5.1",
-        "phpactor/container": "^2.0.0",
+        "phpactor/container": "^2.1.0",
         "phpactor/class-to-file": "~0.5",
         "twig/twig": "^2.4",
         "dnoegel/php-xdg-base-dir": "^0.1.0",

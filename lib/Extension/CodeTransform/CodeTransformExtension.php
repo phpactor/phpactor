@@ -68,6 +68,7 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\WorseReflection\Reflector;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Phpactor\CodeTransform\Domain\Transformers;
@@ -203,7 +204,7 @@ class CodeTransformExtension implements Extension
     {
         $container->register(ReplaceQualifierWithImport::class, function (Container $container) {
             return new WorseReplaceQualifierWithImport(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
                 $container->get(Updater::class)
             );
@@ -211,21 +212,21 @@ class CodeTransformExtension implements Extension
 
         $container->register(ExtractConstant::class, function (Container $container) {
             return new WorseExtractConstant(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class)
             );
         });
 
         $container->register(GenerateDecorator::class, function (Container $container) {
             return new WorseGenerateDecorator(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
             );
         });
 
         $container->register(GenerateMethod::class, function (Container $container) {
             return new WorseGenerateMethod(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
                 $container->get(Updater::class)
             );
@@ -233,7 +234,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.generate_accessor', function (Container $container) {
             return new WorseGenerateAccessor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 $container->getParameter(self::PARAM_GENERATE_ACCESSOR_PREFIX),
                 $container->getParameter(self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST)
@@ -242,7 +243,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.generate_mutator', function (Container $container) {
             return new WorseGenerateMutator(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 $container->getParameter(self::PARAM_GENERATE_MUTATOR_PREFIX),
                 $container->getParameter(self::PARAM_GENERATE_MUTATOR_UPPER_CASE_FIRST),
@@ -256,7 +257,7 @@ class CodeTransformExtension implements Extension
 
         $container->register(OverrideMethod::class, function (Container $container) {
             return new WorseOverrideMethod(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
                 $container->get(Updater::class)
             );
@@ -264,7 +265,7 @@ class CodeTransformExtension implements Extension
 
         $container->register(ExtractMethod::class, function (Container $container) {
             return new WorseExtractMethod(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
                 $container->get(Updater::class)
             );
@@ -283,7 +284,7 @@ class CodeTransformExtension implements Extension
         });
         $container->register(FillObject::class, function (Container $container) {
             return new WorseFillObject(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),
                 $container->get(Updater::class),
                 $container->getParameter(self::PARAM_OBJECT_FILL_NAMED),
@@ -293,7 +294,7 @@ class CodeTransformExtension implements Extension
 
         $container->register(GenerateConstructor::class, function (Container $container) {
             return new WorseGenerateConstructor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
                 $container->get(Updater::class),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),
@@ -323,7 +324,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform_extra.from_existing_generator', function (Container $container) {
             return new InterfaceFromExistingGenerator(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get('code_transform.renderer')
             );
         }, [ CodeTransformExtension::TAG_FROM_EXISTING_GENERATOR => [
@@ -341,7 +342,7 @@ class CodeTransformExtension implements Extension
             );
         });
         $container->register(BuilderFactory::class, function (Container $container) {
-            return new WorseBuilderFactory($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
+            return new WorseBuilderFactory($container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class));
         });
 
         $container->register(DocBlockUpdater::class, function (Container $container) {
@@ -353,12 +354,12 @@ class CodeTransformExtension implements Extension
     {
         $container->register(InterestingOffsetFinder::class, function (Container $container) {
             return new WorseInterestingOffsetFinder(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
             );
         });
         $container->register(MissingMethodFinder::class, function (Container $container) {
             return new WorseMissingMethodFinder(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
             );
         });
     }
@@ -454,7 +455,7 @@ class CodeTransformExtension implements Extension
     {
         $container->register('code_transform.transformer.complete_constructor_private', function (Container $container) {
             return new CompleteConstructor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 'private',
             );
@@ -462,14 +463,14 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.transformer.complete_constructor_public', function (Container $container) {
             return new CompleteConstructor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 'public',
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'complete_constructor_public' ]]);
         $container->register('code_transform.transformer.promote_constructor_private', function (Container $container) {
             return new CompleteConstructor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 'private',
                 true,
@@ -478,7 +479,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.transformer.promote_constructor_public', function (Container $container) {
             return new CompleteConstructor(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 'public',
                 true,
@@ -487,7 +488,7 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.transformer.implement_contracts', function (Container $container) {
             return new ImplementContracts(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 $container->get(BuilderFactory::class)
             );
@@ -501,7 +502,7 @@ class CodeTransformExtension implements Extension
 
         $container->register(UpdateDocblockReturnTransformer::class, function (Container $container) {
             return new UpdateDocblockReturnTransformer(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 $container->get(BuilderFactory::class),
                 $container->get(DocBlockUpdater::class),
@@ -510,7 +511,7 @@ class CodeTransformExtension implements Extension
 
         $container->register(UpdateDocblockParamsTransformer::class, function (Container $container) {
             return new UpdateDocblockParamsTransformer(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 $container->get(BuilderFactory::class),
                 $container->get(DocBlockUpdater::class)
@@ -519,7 +520,7 @@ class CodeTransformExtension implements Extension
 
         $container->register(UpdateReturnTypeTransformer::class, function (Container $container) {
             return new UpdateReturnTypeTransformer(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
                 $container->get(BuilderFactory::class)
             );
@@ -527,14 +528,14 @@ class CodeTransformExtension implements Extension
 
         $container->register('code_transform.transformer.add_missing_properties', function (Container $container) {
             return new AddMissingProperties(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class)
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_properties' ]]);
 
         $container->register('code_transform.transformer.remove_unused_imports', function (Container $container) {
             return new RemoveUnusedImportsTransformer(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'remove_unused_imports' ]]);
