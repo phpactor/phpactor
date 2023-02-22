@@ -2,16 +2,20 @@
 
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
+use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\Node\InterfaceMembers;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\TraitMembers;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
 use RuntimeException;
+use Microsoft\PhpParser\Node;
 
 class ClassMethodUpdater extends AbstractMethodUpdater
 {
-    public function memberDeclarationsNode(ClassLike $classNode)
+    public function memberDeclarationsNode(ClassLike $classNode): ClassMembersNode|TraitMembers|InterfaceMembers
     {
         if ($classNode instanceof ClassDeclaration) {
             return $classNode->classMembers;
@@ -21,19 +25,20 @@ class ClassMethodUpdater extends AbstractMethodUpdater
         }
 
         throw new RuntimeException(sprintf(
-            'Cnanot get member declarations for "%s"',
+            'Can not get member declarations for "%s"',
             get_class($classNode)
         ));
     }
 
-    public function renderMethod(Renderer $renderer, Method $method)
+    public function renderMethod(Renderer $renderer, Method $method): string
     {
         return $renderer->render($method) .
             PHP_EOL .
             $renderer->render($method->body());
     }
 
-    protected function memberDeclarations(ClassLike $classNode)
+    /** @return array<Node> */
+    protected function memberDeclarations(ClassLike $classNode): array
     {
         if ($classNode instanceof ClassDeclaration) {
             return $classNode->classMembers->classMemberDeclarations;
@@ -43,7 +48,7 @@ class ClassMethodUpdater extends AbstractMethodUpdater
         }
 
         throw new RuntimeException(sprintf(
-            'Cnanot get member declarations for "%s"',
+            'Can not get member declarations for "%s"',
             get_class($classNode)
         ));
     }

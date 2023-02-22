@@ -40,6 +40,7 @@ abstract class ClassLikeUpdater
         ));
     }
 
+    /** @return array<Node> */
     abstract protected function memberDeclarations(Node $node): array;
 
     protected function updateProperties(Edits $edits, ClassLikePrototype $classPrototype, Node $classMembers): void

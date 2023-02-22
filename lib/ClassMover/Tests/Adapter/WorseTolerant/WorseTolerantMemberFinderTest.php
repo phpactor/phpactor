@@ -19,7 +19,8 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
         $this->assertCount($expectedRiskyCount, $members->withoutClasses());
     }
 
-    public function provideFindMember()
+    /** @return array<array{0: string, 1: ClassMemberQuery, 2: int, 3?:int}> */
+    public function provideFindMember(): array
     {
         return [
             'It returns zero references when there are no methods at all' => [
@@ -572,7 +573,8 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
         $assertion(iterator_to_array($methods));
     }
 
-    public function provideOffset()
+    /** @return array<array{string, ClassMemberQuery, Closure}> */
+    public function provideOffset(): array
     {
         return [
             'Start and end from static call' => [

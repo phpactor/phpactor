@@ -7,7 +7,7 @@ use InvalidArgumentException;
 class QualifiedName
 {
     /**
-     * @param string[] $parts
+     * @param non-empty-array<string> $parts
      */
     protected function __construct(protected array $parts)
     {
@@ -36,12 +36,13 @@ class QualifiedName
             );
         }
 
+        /** @var non-empty-array<string> $parts */
         $parts = explode('\\', trim($string));
 
         return new static($parts);
     }
 
-    public function base()
+    public function base(): string
     {
         return reset($this->parts);
     }
@@ -59,12 +60,12 @@ class QualifiedName
         return $qualifiedName->__toString() == $this->__toString();
     }
 
-    public function head()
+    public function head(): string
     {
         return end($this->parts);
     }
 
-    public function transpose(QualifiedName $name)
+    public function transpose(QualifiedName $name): self
     {
         // both fully qualified names? great, nothing to see here.
         if ($this instanceof FullyQualifiedName && $name instanceof FullyQualifiedName) {
