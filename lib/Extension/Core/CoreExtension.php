@@ -12,7 +12,7 @@ use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\Core\Model\ConfigManipulator;
+use Phpactor\Configurator\ConfigManipulator;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;

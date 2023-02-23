@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\Core\Tests\Unit\Model;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Core\Model\ConfigManipulator;
+use Phpactor\Configurator\ConfigManipulator;
 use Phpactor\TestUtils\Workspace;
 
 class ConfigManipulatorTest extends TestCase

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\Core\Model;
+namespace Phpactor\Configurator;
 
 use RuntimeException;
 use stdClass;
