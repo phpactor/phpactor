@@ -7,15 +7,15 @@ use Phpactor\Configurator\Change;
 class PhpactorConfigChange implements Change
 {
     /**
-     * @var array<string,mixed> $keyValues
+     * @param array<string,mixed> $keyValues
      */
-    public function __construct(private string $description, private array $keyValues)
+    public function __construct(private string $prompt, private array $keyValues)
     {
     }
 
-    public function describe(): string
+    public function prompt(): string
     {
-        return $this->description;
+        return $this->prompt;
     }
 
     /**

@@ -4,5 +4,5 @@ namespace Phpactor\Configurator;
 
 interface Change
 {
-    public function describe(): string;
+    public function prompt(): string;
 }
