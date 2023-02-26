@@ -15,12 +15,23 @@ class ComposerInspectorTest extends TestCase
         $this->workspace = new Workspace(__DIR__ . '/Workspace');
     }
 
-    public function testInspectComposer(): void
+    public function testReturnsPackage(): void
     {
         $this->putComposer('{"require":{"phpstan/phpstan":"^1.0"}}');
         $package = $this->inspector()->package('phpstan/phpstan');
         self::assertNotNull($package);
         self::assertEquals('phpstan/phpstan', $package->name);
+        self::assertEquals('^1.0', $package->version);
+        self::assertFalse($package->isDev);
+    }
+
+    public function testReturnsDevPackage(): void
+    {
+        $this->putComposer('{"require-dev":{"phpstan/phpstan":"^1.0"}}');
+        $package = $this->inspector()->package('phpstan/phpstan');
+        self::assertNotNull($package);
+        self::assertEquals('phpstan/phpstan', $package->name);
+        self::assertTrue($package->isDev);
     }
 
     private function inspector(): ComposerInspector
@@ -28,7 +39,7 @@ class ComposerInspectorTest extends TestCase
         return (new ComposerInspector($this->workspace->path('composer.json')));
     }
 
-    private function putComposer(string $file)
+    private function putComposer(string $file): void
     {
         $this->workspace->put('composer.json', $file);
     }
