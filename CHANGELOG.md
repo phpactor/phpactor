@@ -23,6 +23,7 @@ Bug fixes:
 
 Improvements:
 
+  - Generating constructor at the top of the file #2113 @mamazu
   - Include (complex) docblock params when generating method
   - Take into account named parameters when "guessing" parameter names #2090
   - Show full FQN for classes in hover #2081
