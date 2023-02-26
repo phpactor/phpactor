@@ -8,7 +8,7 @@ class ConfigInitializeCommandTest extends SystemTestCase
 {
     public function testStatus(): void
     {
-        $process = $this->phpactor('config:initialize');
+        $process = $this->phpactorFromStringArgs('config:initialize');
         $this->assertSuccess($process);
     }
 }

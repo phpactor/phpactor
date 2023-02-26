@@ -8,7 +8,7 @@ class ContainerDumpCommandTest extends SystemTestCase
 {
     public function testConfigDump(): void
     {
-        $process = $this->phpactor('container:dump --services --tags --tag=worse_reflection.source_locator');
+        $process = $this->phpactorFromStringArgs('container:dump --services --tags --tag=worse_reflection.source_locator');
         $this->assertSuccess($process);
     }
 }

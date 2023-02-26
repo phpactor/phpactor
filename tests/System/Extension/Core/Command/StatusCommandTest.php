@@ -8,7 +8,7 @@ class StatusCommandTest extends SystemTestCase
 {
     public function testStatus(): void
     {
-        $process = $this->phpactor('status');
+        $process = $this->phpactorFromStringArgs('status');
         $this->assertSuccess($process);
     }
 }
