@@ -31,7 +31,7 @@ class LanguageServerPhpstanSuggestExtension implements Extension
                     }
 
                     return Changes::from([
-                        new PhpactorConfigChange('Phpstan detected, enable?', function (bool $enable) {
+                        new PhpactorConfigChange('Phpstan detected, enable PHPStan extension?', function (bool $enable) {
                             return [
                                 LanguageServerPhpstanExtension::PARAM_ENABLED => $enable,
                             ];

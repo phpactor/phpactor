@@ -45,7 +45,14 @@ class AutoConfigListener implements ListenerProviderInterface
                     new MessageActionItem(self::NO)
                 );
                 $this->configurator->apply($change, $res->title === self::YES);
-                yield delay(10);
+                $changes++;
+
+                // artificial delay to prevent neovim from producing concatenated prompts
+                yield delay(100);
+            }
+
+            if ($changes) {
+                $this->clientApi->window()->showMessage()->info(sprintf('%d changes applied to .phpactor.json, restart the language server for them to take affect', $changes));
             }
         });
     }

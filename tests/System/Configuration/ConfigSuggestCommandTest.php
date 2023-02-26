@@ -23,6 +23,7 @@ class ConfigSuggestCommandTest extends IntegrationTestCase
     public function testSuggestWhereFileNotExisting(): void
     {
         $this->phpactor(['config:auto'])->mustRun();
+
         $this->addToAssertionCount(1);
     }
     /**
