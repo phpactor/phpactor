@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\Core\Tests\Unit\Model;
+namespace Phpactor\Extension\Configuration\Tests\Unit\Model;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
+use Phpactor\Extension\Configuration\Model\JsonSchemaBuilder;
 use Phpactor\MapResolver\Resolver;
 
 class JsonSchemaBuilderTest extends TestCase

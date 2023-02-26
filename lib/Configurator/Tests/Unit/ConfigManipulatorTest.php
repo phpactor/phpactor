@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\Core\Tests\Unit\Model;
+namespace Phpactor\Configurator\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Configurator\ConfigManipulator;
