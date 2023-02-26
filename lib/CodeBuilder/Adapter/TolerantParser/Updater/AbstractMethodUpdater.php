@@ -39,6 +39,7 @@ abstract class AbstractMethodUpdater
         $newLine = false;
         $existingMethodNames = [];
         $existingMethods = [];
+        $firstMethod = null;
         foreach ($this->memberDeclarations($classNode) as $memberNode) {
             if ($memberNode instanceof PropertyDeclaration) {
                 $lastMember = $memberNode;
@@ -46,6 +47,9 @@ abstract class AbstractMethodUpdater
             }
 
             if ($memberNode instanceof MethodDeclaration) {
+                if ($firstMethod === null) {
+                    $firstMethod = $memberNode;
+                }
                 $lastMember = $memberNode;
                 $existingMethodNames[] = $memberNode->getName();
                 $existingMethods[$memberNode->getName()] = $memberNode;
@@ -95,6 +99,19 @@ abstract class AbstractMethodUpdater
         }
 
         foreach ($methodPrototypes as $methodPrototype) {
+            // If class has methods add the constructor before it.
+            if ($methodPrototype->name() === '__construct' && $firstMethod !== null) {
+                // We can't use the first method's starting location because this is already indented to we unindent the code
+                $edits->add(
+                    TextEdit::create(
+                        $firstMethod->getStartPosition() - 4,
+                        0,
+                        $edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1).PHP_EOL.PHP_EOL
+                    )
+                );
+                continue;
+            }
+
             $edits->after(
                 $lastMember,
                 PHP_EOL . $edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)

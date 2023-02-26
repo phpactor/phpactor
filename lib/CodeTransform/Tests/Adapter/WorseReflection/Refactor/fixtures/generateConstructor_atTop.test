@@ -1,0 +1,30 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+class Barfoo
+{
+    public function someMethod(): void {
+    }
+}
+
+new Ba<>rfoo(12);
+// File: expected
+<?php
+
+namespace Phpactor;
+
+class Barfoo
+{
+    public function __construct(int $int)
+    {
+    }
+
+    public function someMethod(): void {
+    }
+
+}
+
+new Barfoo(12);
+
