@@ -9,6 +9,10 @@ use function file_put_contents;
 use function json_decode;
 use function json_encode;
 
+/**
+ * @deprecated This class is specifically for Phpactor configuration, we should
+ * generalize this.
+ */
 final class ConfigManipulator
 {
     public const ACTION_CREATED = 'created';
