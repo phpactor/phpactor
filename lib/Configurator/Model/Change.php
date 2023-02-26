@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Configurator;
+namespace Phpactor\Configurator\Model;
 
 interface Change
 {

@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Configuration;
 
-use Phpactor\Configurator\ConfigManipulator;
+use Phpactor\Configurator\Model\ConfigManipulator;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;

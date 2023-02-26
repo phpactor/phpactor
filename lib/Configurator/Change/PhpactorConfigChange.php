@@ -2,7 +2,7 @@
 
 namespace Phpactor\Configurator\Change;
 
-use Phpactor\Configurator\Change;
+use Phpactor\Configurator\Model\Change;
 
 class PhpactorConfigChange implements Change
 {

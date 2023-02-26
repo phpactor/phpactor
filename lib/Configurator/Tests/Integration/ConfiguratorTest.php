@@ -5,8 +5,8 @@ namespace Phpactor\Configurator\Tests\Integration;
 use Phpactor\Configurator\ChangeSuggestor\TestChangeSuggestor;
 use Phpactor\Configurator\Change\PhpactorConfigChange;
 use Phpactor\Configurator\Change\PhpactorConfigChangeApplicator;
-use Phpactor\Configurator\Changes;
-use Phpactor\Configurator\ConfigManipulator;
+use Phpactor\Configurator\Model\Changes;
+use Phpactor\Configurator\Model\ConfigManipulator;
 use Phpactor\Configurator\Configurator;
 use Phpactor\Configurator\Tests\IntegrationTestCase;
 

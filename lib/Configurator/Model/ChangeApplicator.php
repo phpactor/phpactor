@@ -1,6 +1,8 @@
 <?php
 
-namespace Phpactor\Configurator;
+namespace Phpactor\Configurator\Model;
+
+use Phpactor\Configurator\Model\Change;
 
 interface ChangeApplicator
 {

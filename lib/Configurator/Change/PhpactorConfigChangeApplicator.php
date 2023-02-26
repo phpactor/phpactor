@@ -2,9 +2,9 @@
 
 namespace Phpactor\Configurator\Change;
 
-use Phpactor\Configurator\Change;
-use Phpactor\Configurator\ChangeApplicator;
-use Phpactor\Configurator\ConfigManipulator;
+use Phpactor\Configurator\Model\Change;
+use Phpactor\Configurator\Model\ChangeApplicator;
+use Phpactor\Configurator\Model\ConfigManipulator;
 
 class PhpactorConfigChangeApplicator implements ChangeApplicator
 {

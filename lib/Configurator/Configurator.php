@@ -2,6 +2,8 @@
 
 namespace Phpactor\Configurator;
 
+use Phpactor\Configurator\Model\Changes;
+
 class Configurator
 {
     /**

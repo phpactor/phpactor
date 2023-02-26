@@ -3,8 +3,8 @@
 namespace Phpactor\Configurator\ChangeSuggestor;
 
 use Closure;
-use Phpactor\Configurator\ChangeSuggestor;
-use Phpactor\Configurator\Changes;
+use Phpactor\Configurator\Model\ChangeSuggestor;
+use Phpactor\Configurator\Model\Changes;
 
 class TestChangeSuggestor implements ChangeSuggestor
 {
