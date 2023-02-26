@@ -12,6 +12,7 @@ use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
 use Phpactor\Extension\LanguageServerConfiguration\LanguageServerConfigurationExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
+use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
@@ -21,6 +22,7 @@ use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanSuggestExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
+use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmSuggestExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameWorseExtension;
@@ -163,8 +165,12 @@ class Phpactor
             LanguageServerPhpstanExtension::class,
             LanguageServerPhpstanSuggestExtension::class,
             LanguageServerPsalmExtension::class,
-            LanguageServerBlackfireExtension::class,
+            LanguageServerPsalmSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
+            LanguageServerPhpCsFixerSuggestExtension::class,
+
+            LanguageServerBlackfireExtension::class,
+
             BehatExtension::class,
             SymfonyExtension::class,
             ProphecyExtension::class,

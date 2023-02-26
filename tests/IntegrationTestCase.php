@@ -23,6 +23,19 @@ abstract class IntegrationTestCase extends TestCase
         return Workspace::create($this->workspaceDir());
     }
 
+    /**
+     * @param list<string> $cmd
+     */
+    public function phpactor(array $cmd): Process
+    {
+        $p = new Process(array_merge(
+            [__DIR__ . '/../bin/phpactor'],
+            $cmd
+        ), $this->workspace()->path());
+
+        return $p;
+    }
+
     protected function assertSuccess(Process $process): void
     {
         if (true === $process->isSuccessful()) {
