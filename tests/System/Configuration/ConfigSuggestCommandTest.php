@@ -8,6 +8,7 @@ use Phpactor\Configurator\Model\JsonConfig;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
+use Phpactor\Extension\Prophecy\ProphecyExtension;
 use Phpactor\Tests\IntegrationTestCase;
 
 class ConfigSuggestCommandTest extends IntegrationTestCase
@@ -57,6 +58,12 @@ class ConfigSuggestCommandTest extends IntegrationTestCase
             ['packages' => [['name' => 'friendsofphp/php-cs-fixer', 'version' => '^1.0']]],
             function (JsonConfig $phpactorConfig): void {
                 self::assertTrue($phpactorConfig->has(LanguageServerPhpCsFixerExtension::PARAM_ENABLED));
+            }
+        ];
+        yield 'prophecy' => [
+            ['packages' => [['name' => 'phpspec/prophecy', 'version' => '^1.0']]],
+            function (JsonConfig $phpactorConfig): void {
+                self::assertTrue($phpactorConfig->has(ProphecyExtension::PARAM_ENABLED));
             }
         ];
     }

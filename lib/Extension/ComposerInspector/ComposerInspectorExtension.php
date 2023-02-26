@@ -15,7 +15,7 @@ class ComposerInspectorExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register(ComposerInspector::class, function (Container $container) {
-            $path = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class)->resolve('%project_root%/composer.json');
+            $path = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class)->resolve('%project_root%/composer.lock');
             return new ComposerInspector($path);
         });
     }

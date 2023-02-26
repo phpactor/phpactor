@@ -34,6 +34,7 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
 use Phpactor\Extension\PHPUnit\PHPUnitExtension;
 use Phpactor\Extension\Prophecy\ProphecyExtension;
+use Phpactor\Extension\Prophecy\ProphecySuggestExtension;
 use Phpactor\Extension\Symfony\SymfonyExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
@@ -171,9 +172,11 @@ class Phpactor
 
             LanguageServerBlackfireExtension::class,
 
+            ProphecyExtension::class,
+            ProphecySuggestExtension::class,
+
             BehatExtension::class,
             SymfonyExtension::class,
-            ProphecyExtension::class,
             PHPUnitExtension::class,
         ];
 
