@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Configurator\Tests\Unit\Model\Config;
+namespace Phpactor\Configurator\Tests\Unit\Model;
 
-use Phpactor\Configurator\Config\JsonConfig;
+use Phpactor\Configurator\Model\JsonConfig;
 use Phpactor\Configurator\Tests\IntegrationTestCase;
 
 class JsonConfigTest extends IntegrationTestCase

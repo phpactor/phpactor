@@ -1,7 +1,8 @@
 <?php
 
-namespace Phpactor\Configurator\Change;
+namespace Phpactor\Configurator\Adapter\Phpactor;
 
+use Phpactor\Configurator\Adapter\Phpactor\PhpactorConfigChange;
 use Phpactor\Configurator\Model\Change;
 use Phpactor\Configurator\Model\ChangeApplicator;
 use Phpactor\Configurator\Model\ConfigManipulator;

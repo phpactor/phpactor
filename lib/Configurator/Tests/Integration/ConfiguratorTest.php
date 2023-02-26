@@ -2,9 +2,9 @@
 
 namespace Phpactor\Configurator\Tests\Integration;
 
-use Phpactor\Configurator\ChangeSuggestor\TestChangeSuggestor;
-use Phpactor\Configurator\Change\PhpactorConfigChange;
-use Phpactor\Configurator\Change\PhpactorConfigChangeApplicator;
+use Phpactor\Configurator\Adapter\Test\TestChangeSuggestor;
+use Phpactor\Configurator\Adapter\Phpactor\PhpactorConfigChange;
+use Phpactor\Configurator\Adapter\Phpactor\PhpactorConfigChangeApplicator;
 use Phpactor\Configurator\Model\Changes;
 use Phpactor\Configurator\Model\ConfigManipulator;
 use Phpactor\Configurator\Configurator;

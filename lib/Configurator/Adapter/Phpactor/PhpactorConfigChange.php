@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Configurator\Change;
+namespace Phpactor\Configurator\Adapter\Phpactor;
 
 use Phpactor\Configurator\Model\Change;
 

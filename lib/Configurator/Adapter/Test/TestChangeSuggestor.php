@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Configurator\ChangeSuggestor;
+namespace Phpactor\Configurator\Adapter\Test;
 
 use Closure;
 use Phpactor\Configurator\Model\ChangeSuggestor;
