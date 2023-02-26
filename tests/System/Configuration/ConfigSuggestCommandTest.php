@@ -82,7 +82,7 @@ class ConfigSuggestCommandTest extends IntegrationTestCase
         $this->workspace()->put('var/cache/dev/App_KernelDevDebugContainer.xml', '');
         $phpactor = $this->phpactor(['config:auto']);
         $phpactor->mustRun();
-        self::assertStringContainsString('1 changes applied', $phpactor->getErrorOutput());
+        self::assertStringContainsString('2 changes applied', $phpactor->getErrorOutput());
         $phpactorConfig = JsonConfig::fromPath($this->workspace()->path('.phpactor.json'));
         self::assertTrue($phpactorConfig->has(SymfonyExtension::PARAM_ENABLED));
     }

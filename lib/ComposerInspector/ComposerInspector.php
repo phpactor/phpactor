@@ -10,7 +10,7 @@ final class ComposerInspector
     /**
      * @var array<string,Package>
      */
-    private $packages = [];
+    private array $packages = [];
 
     private bool $loaded = false;
 

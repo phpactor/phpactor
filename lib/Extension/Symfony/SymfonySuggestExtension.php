@@ -31,20 +31,37 @@ class SymfonySuggestExtension implements Extension
                     $xmlPath = $container->expect(
                         FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER,
                         PathResolver::class
-                    )->resolve($container->getParameter(SymfonyExtension::XML_PATH));
+                    )->resolve(
+                        /** @phpstan-ignore-next-line */
+                        $container->getParameter(SymfonyExtension::XML_PATH)
+                    );
 
                     dump($xmlPath);
                     if (!file_exists($xmlPath)) {
                         return Changes::none();
                     }
-
-                    return Changes::from([
-                        new PhpactorConfigChange('Symfony BDD framework detected, enable Symfony extension?', function (bool $enable) {
+                    $changes = [
+                        new PhpactorConfigChange('Symfony framework detected, enable Symfony extension?', function (bool $enable) {
                             return [
                                 SymfonyExtension::PARAM_ENABLED => $enable,
                             ];
-                        })
-                    ]);
+                        }),
+                    ];
+
+                    if (!$config->has('indexer.exclude_patterns')) {
+                        $changes[] = new PhpactorConfigChange('Add common Symfony exclude paths?', function (bool $enable) {
+                            return [
+                                'indexer.exclude_patterns' => [
+                                    '/vendor/**/Tests/**/*',
+                                    '/vendor/**/tests/**/*',
+                                    '/var/cache/**/*',
+                                    '/vendor/composer/**/*'
+                                ]
+                            ];
+                        });
+                    }
+
+                    return Changes::from($changes);
                 }
             );
         }, [
