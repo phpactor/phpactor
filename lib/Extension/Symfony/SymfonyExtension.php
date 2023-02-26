@@ -18,6 +18,7 @@ class SymfonyExtension implements OptionalExtension
 {
     const XML_PATH = 'symfony.xml_path';
     const PARAM_COMPLETOR_ENABLED = 'completion_worse.completor.symfony.enabled';
+    const PARAM_ENABLED = 'symfony.enabled';
 
     public function load(ContainerBuilder $container): void
     {

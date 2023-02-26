@@ -5,10 +5,12 @@ namespace Phpactor\Tests\System\Configuration;
 use Closure;
 use Generator;
 use Phpactor\Configurator\Model\JsonConfig;
+use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
 use Phpactor\Extension\Prophecy\ProphecyExtension;
+use Phpactor\Extension\Symfony\SymfonyExtension;
 use Phpactor\Tests\IntegrationTestCase;
 
 class ConfigSuggestCommandTest extends IntegrationTestCase
@@ -66,6 +68,22 @@ class ConfigSuggestCommandTest extends IntegrationTestCase
                 self::assertTrue($phpactorConfig->has(ProphecyExtension::PARAM_ENABLED));
             }
         ];
+        yield 'behat' => [
+            ['packages' => [['name' => 'behat/behat', 'version' => '^1.0']]],
+            function (JsonConfig $phpactorConfig): void {
+                self::assertTrue($phpactorConfig->has(BehatExtension::PARAM_ENABLED));
+            }
+        ];
+    }
+
+    public function testSymfonyExtensionSuggestion(): void
+    {
+        $this->workspace()->put('var/cache/dev/App_KernelDevDebugContainer.xml', '');
+        $phpactor = $this->phpactor(['config:auto']);
+        $phpactor->mustRun();
+        self::assertStringContainsString('1 changes applied', $phpactor->getErrorOutput());
+        $phpactorConfig = JsonConfig::fromPath($this->workspace()->path('.phpactor.json'));
+        self::assertTrue($phpactorConfig->has(SymfonyExtension::PARAM_ENABLED));
     }
 
     public function testDoNotSuggestPhpstanIfAlreadyDisabled(): void

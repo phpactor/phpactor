@@ -25,6 +25,7 @@ class BehatExtension implements OptionalExtension
 {
     const PARAM_CONFIG_PATH = 'behat.config_path';
     const PARAM_SYMFONY_XML_PATH = 'behat.symfony.di_xml_path';
+    const PARAM_ENABLED = 'behat.enabled';
 
     public function load(ContainerBuilder $container): void
     {
