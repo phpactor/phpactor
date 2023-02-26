@@ -38,7 +38,9 @@ class TolerantClassReplacerTest extends TestCase
         self::assertStringContainsString($stripEmptyLines($expectedSource), $stripEmptyLines($edits->apply($source->__toString())));
     }
 
-    /** @return array<array<string>> */
+    /**
+     * @return array<string, array<string>>
+     */
     public function provideTestFind(): array
     {
         return [

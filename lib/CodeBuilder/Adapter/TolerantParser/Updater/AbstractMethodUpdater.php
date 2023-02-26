@@ -6,6 +6,7 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\DelimitedList\ParameterDeclarationList;
+use Microsoft\PhpParser\Node\EnumMembers;
 use Microsoft\PhpParser\Node\InterfaceMembers;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
@@ -106,10 +107,12 @@ abstract class AbstractMethodUpdater
         }
     }
 
-    /** @return array<Node> */
+    /**
+    * @return array<Node>
+    */
     abstract protected function memberDeclarations(ClassLike $classNode): array;
 
-    abstract protected function memberDeclarationsNode(ClassLike $classNode): ClassMembersNode|TraitMembers|InterfaceMembers;
+    abstract protected function memberDeclarationsNode(ClassLike $classNode): ClassMembersNode|TraitMembers|InterfaceMembers|EnumMembers;
 
     abstract protected function renderMethod(Renderer $renderer, Method $method): string;
 

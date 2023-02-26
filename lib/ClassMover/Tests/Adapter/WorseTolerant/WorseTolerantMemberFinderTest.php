@@ -19,7 +19,9 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
         $this->assertCount($expectedRiskyCount, $members->withoutClasses());
     }
 
-    /** @return array<array{0: string, 1: ClassMemberQuery, 2: int, 3?:int}> */
+    /**
+    * @return array<string, array{0: string, 1: ClassMemberQuery, 2: int, 3?:int}>
+    */
     public function provideFindMember(): array
     {
         return [
@@ -573,7 +575,9 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
         $assertion(iterator_to_array($methods));
     }
 
-    /** @return array<array{string, ClassMemberQuery, Closure}> */
+    /**
+     * @return array<array{string, ClassMemberQuery, Closure}>
+     */
     public function provideOffset(): array
     {
         return [
