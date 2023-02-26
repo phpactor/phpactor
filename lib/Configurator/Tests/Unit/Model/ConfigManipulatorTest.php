@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\Core\Tests\Unit\Model;
+namespace Phpactor\Configurator\Tests\Unit\Model;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\Core\Model\ConfigManipulator;
+use Phpactor\Configurator\Model\ConfigManipulator;
 use Phpactor\TestUtils\Workspace;
 
 class ConfigManipulatorTest extends TestCase

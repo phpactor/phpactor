@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - Auto configuration - automatically suggest and apply configuration #2114
   - Transform to "promote" unassigned consturctor properties #2106
   - Hierarchical namespace segment completion #2070
   - Completion for promoted property visiblity #2087

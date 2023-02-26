@@ -14,7 +14,7 @@ class CacheClearCommandTest extends SystemTestCase
 
     public function testCacheClear(): void
     {
-        $process = $this->phpactor('cache:clear');
+        $process = $this->phpactorFromStringArgs('cache:clear');
         $this->assertSuccess($process);
         $this->assertStringContainsString('Cache cleared', $process->getOutput());
     }

@@ -1693,29 +1693,6 @@ If the Psalm cache should be used (see the `--no-cache` option)
 **Default**: ``true``
 
 
-.. _LanguageServerBlackfireExtension:
-
-
-LanguageServerBlackfireExtension
---------------------------------
-
-
-.. _param_blackfire.enabled:
-
-
-``blackfire.enabled``
-"""""""""""""""""""""
-
-
-Type: boolean
-
-
-Enable or disable this extension
-
-
-**Default**: ``false``
-
-
 .. _LanguageServerPhpCsFixerExtension:
 
 
@@ -1776,6 +1753,52 @@ Whether PHP CS Fixer diagnostics are shown
 
 
 **Default**: ``true``
+
+
+.. _LanguageServerBlackfireExtension:
+
+
+LanguageServerBlackfireExtension
+--------------------------------
+
+
+.. _param_blackfire.enabled:
+
+
+``blackfire.enabled``
+"""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _ProphecyExtension:
+
+
+ProphecyExtension
+-----------------
+
+
+.. _param_prophecy.enabled:
+
+
+``prophecy.enabled``
+""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
 
 
 .. _BehatExtension:
@@ -1874,29 +1897,6 @@ Enable/disable the Symfony completor - depends on Symfony extension being enable
 
 
 **Default**: ``true``
-
-
-.. _ProphecyExtension:
-
-
-ProphecyExtension
------------------
-
-
-.. _param_prophecy.enabled:
-
-
-``prophecy.enabled``
-""""""""""""""""""""
-
-
-Type: boolean
-
-
-Enable or disable this extension
-
-
-**Default**: ``false``
 
 
 .. _PHPUnitExtension:

@@ -11,7 +11,7 @@ use Phpactor\Extension\Debug\Command\GenerateDocumentationCommand;
 use Phpactor\Extension\Debug\Model\ExtensionDocumentor;
 use Phpactor\Extension\Debug\Model\DocumentorRegistry;
 use Phpactor\Extension\Debug\Model\DefinitionDocumentor;
-use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
+use Phpactor\Extension\Configuration\Model\JsonSchemaBuilder;
 use Phpactor\MapResolver\Resolver;
 use RuntimeException;
 
@@ -62,6 +62,7 @@ class DebugExtension implements Extension
         $container->register(JsonSchemaBuilder::class, function (Container $container) {
             return new JsonSchemaBuilder(
                 'Phpactor Configration Schema',
+                /** @phpstan-ignore-next-line */
                 $container->getParameter(PhpactorContainer::PARAM_EXTENSION_CLASSES)
             );
         });

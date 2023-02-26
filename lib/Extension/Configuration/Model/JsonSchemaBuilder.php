@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\Core\Model;
+namespace Phpactor\Extension\Configuration\Model;
 
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Definition;

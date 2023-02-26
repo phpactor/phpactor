@@ -17,7 +17,7 @@ class ClassSearchCommandTest extends SystemTestCase
      */
     public function testSearchName(): void
     {
-        $process = $this->phpactor('class:search "Badger"');
+        $process = $this->phpactorFromStringArgs('class:search "Badger"');
         $this->assertSuccess($process);
         $this->assertStringContainsString('Badger.php', $process->getOutput());
     }
@@ -27,14 +27,14 @@ class ClassSearchCommandTest extends SystemTestCase
      */
     public function testSearchNameJson(): void
     {
-        $process = $this->phpactor('class:search "Badger" --format=json');
+        $process = $this->phpactorFromStringArgs('class:search "Badger" --format=json');
         $this->assertSuccess($process);
         $this->assertStringContainsString('Badger.php"', $process->getOutput());
     }
 
     public function testSearchByQualifiedName(): void
     {
-        $process = $this->phpactor('class:search "Badger\\Carnivorous" --format=json');
+        $process = $this->phpactorFromStringArgs('class:search "Badger\\Carnivorous" --format=json');
         $this->assertSuccess($process);
         $this->assertStringContainsString('Carnivorous.php"', $process->getOutput());
     }
@@ -44,7 +44,7 @@ class ClassSearchCommandTest extends SystemTestCase
      */
     public function testSearchNameInternalName(): void
     {
-        $process = $this->phpactor('class:search "DateTime" --format=json');
+        $process = $this->phpactorFromStringArgs('class:search "DateTime" --format=json');
         $this->assertSuccess($process);
         $this->assertStringContainsString('DateTime', $process->getOutput());
     }

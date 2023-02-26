@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\Core\Model;
+namespace Phpactor\Configurator\Model;
 
 use RuntimeException;
 use stdClass;
@@ -9,6 +9,10 @@ use function file_put_contents;
 use function json_decode;
 use function json_encode;
 
+/**
+ * @deprecated This class is specifically for Phpactor configuration, we should
+ * generalize this.
+ */
 final class ConfigManipulator
 {
     public const ACTION_CREATED = 'created';
@@ -79,7 +83,7 @@ final class ConfigManipulator
         }
 
         $json = json_decode($config);
-        if (null === $json) {
+        if (!$json instanceof stdClass) {
             throw new RuntimeException(sprintf(
                 'Could not decode JSON file "%s"',
                 $this->configPath

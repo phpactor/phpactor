@@ -20,7 +20,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
 {
     public const PARAM_PHPSTAN_BIN = 'language_server_phpstan.bin';
     public const PARAM_LEVEL = 'language_server_phpstan.level';
-
+    public const PARAM_ENABLED = 'language_server_phpstan.enabled';
 
     public function load(ContainerBuilder $container): void
     {

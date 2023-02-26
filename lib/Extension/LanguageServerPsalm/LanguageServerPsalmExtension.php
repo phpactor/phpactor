@@ -21,6 +21,7 @@ class LanguageServerPsalmExtension implements OptionalExtension
     public const PARAM_PSALM_BIN = 'language_server_psalm.bin';
     public const PARAM_PSALM_SHOW_INFO = 'language_server_psalm.show_info';
     public const PARAM_PSALM_USE_CACHE = 'language_server_psalm.use_cache';
+    public const PARAM_ENABLED = 'language_server_psalm.enabled';
 
     public function load(ContainerBuilder $container): void
     {

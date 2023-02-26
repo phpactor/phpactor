@@ -19,7 +19,7 @@ class ClassMoveCommandTest extends SystemTestCase
      */
     public function testSmokeSuccess($command, array $fileMap = []): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
         $this->assertSuccess($process);
 
         foreach ($fileMap as $filePath => $shouldExist) {
@@ -89,7 +89,7 @@ class ClassMoveCommandTest extends SystemTestCase
     public function testOutdatedGitIndex(): void
     {
         rename($this->workspaceDir() . '/lib/Badger.php', $this->workspaceDir() . '/lib/Crow.php');
-        $process = $this->phpactor('class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php');
+        $process = $this->phpactorFromStringArgs('class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php');
         $this->assertSuccess($process);
     }
 
@@ -102,7 +102,7 @@ class ClassMoveCommandTest extends SystemTestCase
             ]
         ]));
         $this->workspace()->put('lib/BadgerTest.php', '<?php namespace Animals; class BadgerTest {}');
-        $process = $this->phpactor('class:move lib/Badger.php lib/Fox.php --related');
+        $process = $this->phpactorFromStringArgs('class:move lib/Badger.php lib/Fox.php --related');
         $this->assertSuccess($process);
         $this->assertFileExists($this->workspace()->path('/lib/FoxTest.php'));
     }
@@ -114,7 +114,7 @@ class ClassMoveCommandTest extends SystemTestCase
      */
     public function testSmokeFailure($command, $expectedMessage = null): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
         $this->assertFailure($process, $expectedMessage);
     }
 

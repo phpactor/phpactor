@@ -21,6 +21,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
     public const PARAM_PHP_CS_FIXER_BIN = 'language_server_php_cs_fixer.bin';
     public const PARAM_ENV = 'language_server_php_cs_fixer.env';
     public const PARAM_SHOW_DIAGNOSTICS = 'language_server_php_cs_fixer.show_diagnostics';
+    public const PARAM_ENABLED = 'language_server_php_cs_fixer.enabled';
 
     public function load(ContainerBuilder $container): void
     {

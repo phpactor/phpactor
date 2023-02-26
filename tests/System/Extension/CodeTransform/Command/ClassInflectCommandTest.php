@@ -19,7 +19,7 @@ class ClassInflectCommandTest extends SystemTestCase
      */
     public function testInflectClass($command, $expectedFilePath, $expectedContents): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
         $this->assertSuccess($process);
 
         $expectedFilePath = $this->workspaceDir() . '/' . $expectedFilePath;
@@ -61,12 +61,12 @@ class ClassInflectCommandTest extends SystemTestCase
     public function testInflectClassExistingAndForce(): void
     {
         $filePath =  'lib/Badger/Carnivorous.php';
-        $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface --no-interaction');
+        $process = $this->phpactorFromStringArgs('class:inflect '.$filePath. ' ' . $filePath . ' interface --no-interaction');
         $this->assertSuccess($process);
         $this->assertStringContainsString('exists:true', $process->getOutput());
         $this->assertStringNotContainsString('interface', file_get_contents($filePath));
 
-        $process = $this->phpactor('class:inflect '.$filePath. ' ' . $filePath . ' interface --force');
+        $process = $this->phpactorFromStringArgs('class:inflect '.$filePath. ' ' . $filePath . ' interface --force');
         $this->assertStringContainsString('interface', file_get_contents($filePath));
     }
 
@@ -77,7 +77,7 @@ class ClassInflectCommandTest extends SystemTestCase
      */
     public function testSmokeFailure($command, $expectedMessage = null): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
         $this->assertFailure($process, $expectedMessage);
     }
 

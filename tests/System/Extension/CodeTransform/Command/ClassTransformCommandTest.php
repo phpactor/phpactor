@@ -29,7 +29,7 @@ class ClassTransformCommandTest extends SystemTestCase
      */
     public function testSmokeSuccess($command, string $expectedOutput, $error = false): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
 
         if ($error) {
             $this->assertStringContainsString($expectedOutput, $process->getErrorOutput());

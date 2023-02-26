@@ -13,6 +13,18 @@ use Phpactor\Phpactor;
 
 abstract class IntegrationTestCase extends TestCase
 {
+    /**
+     * @param list<string> $cmd
+     */
+    public function phpactor(array $cmd): Process
+    {
+        $p = new Process(array_merge(
+            [__DIR__ . '/../bin/phpactor'],
+            $cmd
+        ), $this->workspace()->path());
+
+        return $p;
+    }
     protected function workspaceDir()
     {
         return __DIR__ . '/Assets/Workspace';
