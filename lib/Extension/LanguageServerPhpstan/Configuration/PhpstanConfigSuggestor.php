@@ -26,9 +26,11 @@ class PhpstanConfigSuggestor implements ChangeSuggestor
         }
 
         return Changes::from([
-            new PhpactorConfigChange('Phpstan detected, enable PHPStan?', [
-                LanguageServerPhpstanExtension::PARAM_ENABLED => true,
-            ])
+            new PhpactorConfigChange('Phpstan detected, enable PHPStan?', function (bool $enable) {
+                return [
+                    LanguageServerPhpstanExtension::PARAM_ENABLED => $enable,
+                ];
+            })
         ]);
     }
 }

@@ -10,6 +10,7 @@ use Phpactor\Extension\ComposerInspector\ComposerInspectorExtension;
 use Phpactor\Extension\Configuration\ConfigurationExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
+use Phpactor\Extension\LanguageServerConfiguration\LanguageServerConfigurationExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
@@ -155,6 +156,7 @@ class Phpactor
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
+            LanguageServerConfigurationExtension::class,
             IndexerExtension::class,
             ObjectRendererExtension::class,
 

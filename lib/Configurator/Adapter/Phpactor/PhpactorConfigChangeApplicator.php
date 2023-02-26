@@ -12,13 +12,13 @@ class PhpactorConfigChangeApplicator implements ChangeApplicator
     {
     }
 
-    public function apply(Change $change): bool
+    public function apply(Change $change, bool $enable): bool
     {
         if (!$change instanceof PhpactorConfigChange) {
             return false;
         }
 
-        foreach ($change->keyValues() as $key => $value) {
+        foreach (($change->keyValues())($enable) as $key => $value) {
             $this->maipulator->set($key, $value);
         }
 

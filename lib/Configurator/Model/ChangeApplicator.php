@@ -9,5 +9,5 @@ interface ChangeApplicator
      * Note that acceptance means consuming - no other applicators
      * will be called for the provided change.
      */
-    public function apply(Change $change): bool;
+    public function apply(Change $change, bool $enable): bool;
 }

@@ -30,13 +30,13 @@ class Configurator
         return new Changes($changes);
     }
 
-    public function apply(Change|Changes $changes): void
+    public function apply(Change|Changes $changes, bool $enable): void
     {
         $changes = $changes instanceof Changes ? $changes : Changes::from([$changes]);
 
         foreach ($changes as $change) {
             foreach ($this->applicators as $applicator) {
-                if ($applicator->apply($change)) {
+                if ($applicator->apply($change, $enable)) {
                     continue 2;
                 }
             }

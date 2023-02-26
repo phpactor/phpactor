@@ -19,15 +19,15 @@ class ConfiguratorTest extends IntegrationTestCase
         $configurator = new Configurator([
             new TestChangeSuggestor(function (): Changes {
                 return new Changes([
-                    new PhpactorConfigChange('Symfony detected: enable Symfony extension', [
-                        'symfony.enable' => true,
+                    new PhpactorConfigChange('Symfony detected: enable Symfony extension', fn(bool $enable) => [
+                        'symfony.enable' => $enable,
                         'indexer.ignore' => ['var'],
                     ])
                 ]);
             }),
             new TestChangeSuggestor(function (): Changes {
                 return new Changes([
-                    new PhpactorConfigChange('PHPUnit detected: enable the PHPUnit extension', [
+                    new PhpactorConfigChange('PHPUnit detected: enable the PHPUnit extension', fn (bool $enable) => [
                         'phpunit.enable' => true,
                     ])
                 ]);
@@ -42,7 +42,7 @@ class ConfiguratorTest extends IntegrationTestCase
         $changes = $configurator->suggestChanges();
         self::assertCount(2, $changes);
 
-        $configurator->apply($changes);
+        $configurator->apply($changes, true);
 
         self::assertEquals([
             '$schema' => 'schemaPath.json',
