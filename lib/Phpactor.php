@@ -6,6 +6,7 @@ use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension
 use Phpactor\Container\Container;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\Behat\BehatExtension;
+use Phpactor\Extension\ComposerInspector\ComposerInspectorExtension;
 use Phpactor\Extension\Configuration\ConfigurationExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
@@ -17,6 +18,7 @@ use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtensio
 use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
+use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanSuggestExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameExtension;
@@ -138,6 +140,7 @@ class Phpactor
             ReferenceFinderExtension::class,
             PhpExtension::class,
             ConfigurationExtension::class,
+            ComposerInspectorExtension::class,
             LanguageServerExtension::class,
             LanguageServerCompletionExtension::class,
             LanguageServerReferenceFinderExtension::class,
@@ -156,6 +159,7 @@ class Phpactor
             ObjectRendererExtension::class,
 
             LanguageServerPhpstanExtension::class,
+            LanguageServerPhpstanSuggestExtension::class,
             LanguageServerPsalmExtension::class,
             LanguageServerBlackfireExtension::class,
             LanguageServerPhpCsFixerExtension::class,

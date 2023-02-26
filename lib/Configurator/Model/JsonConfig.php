@@ -5,41 +5,51 @@ namespace Phpactor\Configurator\Model;
 use RuntimeException;
 use stdClass;
 
-final class JsonConfig
+class JsonConfig
 {
-    private function __construct(private stdClass $object)
+    private bool $loaded = false;
+
+    private stdClass $object;
+
+    private function __construct(private string $path)
     {
+        $this->object = new stdClass();
     }
 
     public function has(string $key): bool
     {
+        $this->load();
         return isset($this->object->$key);
     }
 
     public static function fromPath(string $path): JsonConfig
     {
-        if (!file_exists($path)) {
-            throw new RuntimeException(sprintf(
-                'File "%s" does not exist',
-                $path
-            ));
+        return new self($path);
+    }
+
+    private function load(): void
+    {
+        if ($this->loaded) {
+            return;
+        }
+        $this->loaded = true;
+
+        if (!file_exists($this->path)) {
+            return;
         }
 
-        $contents = file_get_contents($path);
+        $contents = file_get_contents($this->path);
 
         if (false === $contents) {
-            throw new RuntimeException(sprintf(
-                'Could not read file "%s"',
-                $path
-            ));
+            return;
         }
 
         $obj = json_decode($contents);
 
         if (!$obj instanceof stdClass) {
-            return new self(new stdClass());
+            return;
         }
 
-        return new self($obj);
+        $this->object = $obj;
     }
 }

@@ -2,7 +2,11 @@
 
 namespace Phpactor\Configurator;
 
+use Phpactor\Configurator\Model\Change;
+use Phpactor\Configurator\Model\ChangeApplicator;
+use Phpactor\Configurator\Model\ChangeSuggestor;
 use Phpactor\Configurator\Model\Changes;
+use RuntimeException;
 
 class Configurator
 {
@@ -26,12 +30,21 @@ class Configurator
         return new Changes($changes);
     }
 
-    public function apply(Changes $changes): void
+    public function apply(Change|Changes $changes): void
     {
-        foreach ($this->applicators as $applicator) {
-            foreach ($changes as $change) {
-                $applicator->apply($change);
+        $changes = $changes instanceof Changes ? $changes : Changes::from([$changes]);
+
+        foreach ($changes as $change) {
+            foreach ($this->applicators as $applicator) {
+                if ($applicator->apply($change)) {
+                    continue 2;
+                }
             }
+
+            throw new RuntimeException(sprintf(
+                'Could not find change applicator for "%s"',
+                $change::class
+            ));
         }
     }
 }

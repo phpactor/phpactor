@@ -10,7 +10,7 @@ use Traversable;
 /**
  * @implements IteratorAggregate<Change>
  */
-class Changes implements IteratorAggregate, Countable
+final class Changes implements IteratorAggregate, Countable
 {
     /**
      * @param list<Change> $changes
@@ -27,5 +27,18 @@ class Changes implements IteratorAggregate, Countable
     public function count(): int
     {
         return count($this->changes);
+    }
+
+    public static function none(): self
+    {
+        return new self([]);
+    }
+
+    /**
+     * @param array<int,Change> $changes
+     */
+    public static function from(array $changes): self
+    {
+        return new self($changes);
     }
 }

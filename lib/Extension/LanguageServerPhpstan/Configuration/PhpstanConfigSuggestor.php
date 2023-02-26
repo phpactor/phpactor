@@ -2,24 +2,33 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Configuration;
 
-use Composer\Autoload\ClassLoader;
-use Phpactor\Configurator\ChangeSuggestor;
+use Phpactor\ComposerInspector\ComposerInspector;
+use Phpactor\Configurator\Adapter\Phpactor\PhpactorConfigChange;
+use Phpactor\Configurator\Model\ChangeSuggestor;
 use Phpactor\Configurator\Model\Changes;
 use Phpactor\Configurator\Model\JsonConfig;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 
 class PhpstanConfigSuggestor implements ChangeSuggestor
 {
-    public function __construct(private JsonConfig $phpactorConfig, ClassLoader $classLoader)
+    public function __construct(private JsonConfig $phpactorConfig, private ComposerInspector $composerInspector)
     {
     }
 
     public function suggestChanges(): Changes
     {
         if ($this->phpactorConfig->has(LanguageServerPhpstanExtension::PARAM_ENABLED)) {
-            return new Changes([]);
+            return Changes::none();
         }
 
-        return new Changes([]);
+        if (!$this->composerInspector->package('phpstan/phpstan')) {
+            return Changes::none();
+        }
+
+        return Changes::from([
+            new PhpactorConfigChange('Phpstan detected, enable PHPStan?', [
+                LanguageServerPhpstanExtension::PARAM_ENABLED => true,
+            ])
+        ]);
     }
 }

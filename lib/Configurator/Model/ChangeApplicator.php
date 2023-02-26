@@ -2,9 +2,12 @@
 
 namespace Phpactor\Configurator\Model;
 
-use Phpactor\Configurator\Model\Change;
-
 interface ChangeApplicator
 {
-    public function apply(Change $change): void;
+    /**
+     * Return true if the applicator accepted the change.
+     * Note that acceptance means consuming - no other applicators
+     * will be called for the provided change.
+     */
+    public function apply(Change $change): bool;
 }
