@@ -20,7 +20,7 @@ class PhpactorConfigChange implements Change
     }
 
     /**
-     * @return array<string,Closure<bool>:array<string,mixed>>
+     * @return Closure(bool):array<string,mixed>
      */
     public function keyValues(): Closure
     {

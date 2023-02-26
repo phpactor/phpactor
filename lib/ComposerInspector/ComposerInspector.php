@@ -53,10 +53,10 @@ final class ComposerInspector
         }
 
         foreach ($obj->{'packages'} ?? [] as $pkg) {
-            $this->packages[$pkg->{'name'}] = $this->forVersion($pkg->{'name'}, $pkg->{'version'}, false);
+            $this->packages[(string)$pkg->{'name'}] = $this->forVersion($pkg->{'name'}, $pkg->{'version'}, false);
         }
         foreach ($obj->{'packages-dev'} ?? [] as $pkg) {
-            $this->packages[$pkg->{'name'}] = $this->forVersion($pkg->{'name'}, $pkg->{'version'}, true);
+            $this->packages[(string)$pkg->{'name'}] = $this->forVersion($pkg->{'name'}, $pkg->{'version'}, true);
         }
     }
 

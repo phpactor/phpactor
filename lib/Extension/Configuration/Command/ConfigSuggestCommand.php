@@ -29,9 +29,9 @@ class ConfigSuggestCommand extends Command
         $question = new QuestionHelper();
         $nbChanges = 0;
         foreach ($this->configurator->suggestChanges() as $change) {
-            $apply = $question->ask($input, $output, new ConfirmationQuestion($change->prompt()));
+            $enable = $question->ask($input, $output, new ConfirmationQuestion($change->prompt()));
             try {
-                $this->configurator->apply($change, $apply);
+                $this->configurator->apply($change, is_bool($enable) ? $enable : false);
                 $nbChanges++;
             } catch (Exception $e) {
                 $output->writeln(sprintf('<error>Could not apply change: </error>: %s', $e->getMessage()));

@@ -62,6 +62,7 @@ class DebugExtension implements Extension
         $container->register(JsonSchemaBuilder::class, function (Container $container) {
             return new JsonSchemaBuilder(
                 'Phpactor Configration Schema',
+                /** @phpstan-ignore-next-line */
                 $container->getParameter(PhpactorContainer::PARAM_EXTENSION_CLASSES)
             );
         });

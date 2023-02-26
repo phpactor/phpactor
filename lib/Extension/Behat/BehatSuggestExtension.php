@@ -12,7 +12,6 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\Configuration\ChangeSuggestor\PhpactorComposerSuggestor;
 use Phpactor\Extension\Configuration\ConfigurationExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\Symfony\SymfonyExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\MapResolver\Resolver;
 

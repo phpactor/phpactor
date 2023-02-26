@@ -83,7 +83,7 @@ final class ConfigManipulator
         }
 
         $json = json_decode($config);
-        if (null === $json) {
+        if (!$json instanceof stdClass) {
             throw new RuntimeException(sprintf(
                 'Could not decode JSON file "%s"',
                 $this->configPath
