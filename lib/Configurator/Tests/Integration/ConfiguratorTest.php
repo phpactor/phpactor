@@ -12,10 +12,13 @@ use Phpactor\Configurator\Tests\IntegrationTestCase;
 
 class ConfiguratorTest extends IntegrationTestCase
 {
+    protected function setUp(): void
+    {
+        $this->workspace()->reset();
+    }
+
     public function testConfigurator(): void
     {
-        $this->workspace()->path();
-
         $configurator = new Configurator([
             new TestChangeSuggestor(function (): Changes {
                 return new Changes([
