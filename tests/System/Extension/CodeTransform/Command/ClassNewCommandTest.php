@@ -30,7 +30,7 @@ class ClassNewCommandTest extends SystemTestCase
      */
     public function testNewClass($command, $expected, $expectedFile): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
         $this->assertSuccess($process);
 
         $this->assertStringContainsString($expected, trim($process->getOutput()));
