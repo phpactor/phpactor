@@ -29,7 +29,7 @@ class ConfigSuggestCommandTest extends IntegrationTestCase
      */
     public function testSuggest(array $composerJson, Closure $assertion): void
     {
-        $this->workspace()->put('composer.json', (string)json_encode($composerJson));
+        $this->workspace()->put('composer.lock', (string)json_encode($composerJson));
         $phpactor = $this->phpactor(['config:auto']);
         $phpactor->mustRun();
         self::assertStringContainsString('1 changes applied', $phpactor->getErrorOutput());
@@ -42,19 +42,19 @@ class ConfigSuggestCommandTest extends IntegrationTestCase
     public function provideSuggest(): Generator
     {
         yield 'phpstan' => [
-            ['require-dev' => ['phpstan/phpstan' => '^1.0']],
+            ['packages' => [['name' => 'phpstan/phpstan', 'version' => '^1.0']]],
             function (JsonConfig $phpactorConfig): void {
                 self::assertTrue($phpactorConfig->has(LanguageServerPhpstanExtension::PARAM_ENABLED));
             }
         ];
         yield 'psalm' => [
-            ['require-dev' => ['vimeo/psalm' => '^1.0']],
+            ['packages' => [['name' => 'vimeo/psalm', 'version' => '^1.0']]],
             function (JsonConfig $phpactorConfig): void {
                 self::assertTrue($phpactorConfig->has(LanguageServerPsalmExtension::PARAM_ENABLED));
             }
         ];
         yield 'php-cs-fixer' => [
-            ['require-dev' => ['friendsofphp/php-cs-fixer' => '^1.0']],
+            ['packages' => [['name' => 'friendsofphp/php-cs-fixer', 'version' => '^1.0']]],
             function (JsonConfig $phpactorConfig): void {
                 self::assertTrue($phpactorConfig->has(LanguageServerPhpCsFixerExtension::PARAM_ENABLED));
             }

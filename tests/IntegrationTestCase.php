@@ -13,16 +13,6 @@ use Phpactor\Phpactor;
 
 abstract class IntegrationTestCase extends TestCase
 {
-    protected function workspaceDir()
-    {
-        return __DIR__ . '/Assets/Workspace';
-    }
-
-    protected function workspace(): Workspace
-    {
-        return Workspace::create($this->workspaceDir());
-    }
-
     /**
      * @param list<string> $cmd
      */
@@ -34,6 +24,15 @@ abstract class IntegrationTestCase extends TestCase
         ), $this->workspace()->path());
 
         return $p;
+    }
+    protected function workspaceDir()
+    {
+        return __DIR__ . '/Assets/Workspace';
+    }
+
+    protected function workspace(): Workspace
+    {
+        return Workspace::create($this->workspaceDir());
     }
 
     protected function assertSuccess(Process $process): void

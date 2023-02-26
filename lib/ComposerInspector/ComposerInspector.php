@@ -7,29 +7,34 @@ use RuntimeException;
 
 final class ComposerInspector
 {
+    /**
+     * @var array<string,Package>
+     */
+    private $packages = [];
+
+    private bool $loaded = false;
+
     public function __construct(private string $path)
     {
     }
 
     public function package(string $name): ?Package
     {
-        $composer = $this->readFile();
-        if (isset($composer->{'require'}->{$name})) {
-            $version = $composer->{'require'}->{$name};
-            return $this->forVersion($name, $version, false);
-        }
-        if (isset($composer->{'require-dev'}->{$name})) {
-            $version = $composer->{'require-dev'}->{$name};
-            return $this->forVersion($name, $version, true);
+        $this->readFile();
+        if (!isset($this->packages[$name])) {
+            return null;
         }
 
-        return null;
+        return $this->packages[$name];
     }
 
-    private function readFile(): stdClass
+    private function readFile(): void
     {
+        if ($this->loaded) {
+            return;
+        }
         if (!file_exists($this->path)) {
-            return new stdClass();
+            return;
         }
 
         $contents = file_get_contents($this->path);
@@ -44,10 +49,15 @@ final class ComposerInspector
         $obj = json_decode($contents);
 
         if (!$obj instanceof stdClass) {
-            return new stdClass();
+            return;
         }
 
-        return $obj;
+        foreach ($obj->{'packages'} ?? [] as $pkg) {
+            $this->packages[$pkg->{'name'}] = $this->forVersion($pkg->{'name'}, $pkg->{'version'}, false);
+        }
+        foreach ($obj->{'packages-dev'} ?? [] as $pkg) {
+            $this->packages[$pkg->{'name'}] = $this->forVersion($pkg->{'name'}, $pkg->{'version'}, true);
+        }
     }
 
     private function forVersion(string $name, string $version, bool $isDev): Package
