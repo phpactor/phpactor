@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\Configuration;
 
-use Phpactor\Configurator\Adapter\Phpactor\PhpactorConfig;
 use Phpactor\Configurator\Adapter\Phpactor\PhpactorConfigChangeApplicator;
 use Phpactor\Configurator\Model\ChangeSuggestor;
 use Phpactor\Configurator\Configurator;

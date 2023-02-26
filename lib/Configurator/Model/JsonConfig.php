@@ -2,7 +2,6 @@
 
 namespace Phpactor\Configurator\Model;
 
-use RuntimeException;
 use stdClass;
 
 class JsonConfig

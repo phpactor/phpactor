@@ -9,6 +9,7 @@ use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Event\Initialized;
 use Psr\EventDispatcher\ListenerProviderInterface;
 use function Amp\asyncCall;
+use function Amp\delay;
 
 class AutoConfigListener implements ListenerProviderInterface
 {
@@ -44,6 +45,7 @@ class AutoConfigListener implements ListenerProviderInterface
                     new MessageActionItem(self::NO)
                 );
                 $this->configurator->apply($change, $res->title === self::YES);
+                yield delay(10);
             }
         });
     }

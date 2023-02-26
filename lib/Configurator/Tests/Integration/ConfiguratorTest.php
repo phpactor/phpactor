@@ -19,7 +19,7 @@ class ConfiguratorTest extends IntegrationTestCase
         $configurator = new Configurator([
             new TestChangeSuggestor(function (): Changes {
                 return new Changes([
-                    new PhpactorConfigChange('Symfony detected: enable Symfony extension', fn(bool $enable) => [
+                    new PhpactorConfigChange('Symfony detected: enable Symfony extension', fn (bool $enable) => [
                         'symfony.enable' => $enable,
                         'indexer.ignore' => ['var'],
                     ])

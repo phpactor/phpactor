@@ -2,13 +2,9 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan;
 
-use Phpactor\ComposerInspector\ComposerInspector;
-use Phpactor\Configurator\Model\JsonConfig;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
-use Phpactor\Extension\Configuration\ConfigurationExtension;
-use Phpactor\Extension\LanguageServerPhpstan\Configuration\PhpstanConfigSuggestor;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\PhpstanLinter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanConfig;

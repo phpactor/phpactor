@@ -4,7 +4,6 @@ namespace Phpactor\ComposerInspector;
 
 use stdClass;
 use RuntimeException;
-use function Amp\Dns\isValidName;
 
 final class ComposerInspector
 {
