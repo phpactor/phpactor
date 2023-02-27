@@ -36,6 +36,11 @@ final class DiagnosticSeverity
         return new self(self::ERROR);
     }
 
+    public static function INFORMATION(): self
+    {
+        return new self(self::INFORMATION);
+    }
+
     public static function WARNING(): self
     {
         return new self(self::WARNING);
