@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -22,6 +23,11 @@ class MemberAccessExpressionResolver implements Resolver
 
         $class = $resolver->resolveNode($frame, $node->dereferencableExpression);
 
-        return $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $frame, $class->type(), $node);
+        $context = $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $frame, $class->type(), $node);
+        return new MemberAccessContext(
+            $context->symbol(),
+            $context->type(),
+            $context->containerType(),
+        );
     }
 }
