@@ -69,4 +69,9 @@ final class DiagnosticSeverity
     {
         return $this->level === self::WARNING;
     }
+
+    public function isHint(): bool
+    {
+        return $this->level === self::HINT;
+    }
 }

@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\DelimitedList\TraitSelectOrAliasClauseList;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Context\MethodCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -116,6 +117,7 @@ class NodeContextFromMemberAccess
                 $context->symbol(),
                 $memberType->reduce(),
                 $containerType,
+                ByteOffsetRange::fromInts($node->memberName->getStartPosition(), $node->memberName->getEndPosition()),
                 $member,
             );
         }
