@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\Context\MethodCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
@@ -55,7 +56,11 @@ class NodeContextFromMemberAccess
         $memberTypeName = $node->getParent() instanceof CallExpression ? Symbol::METHOD : Symbol::PROPERTY;
 
         // support trait method-alias clauses, e.g. use  use A, B {A::foobar insteadof B; B::bigTalk insteadof A;}
-        if ($memberTypeName === Symbol::PROPERTY && $node->parent->parent && $node->parent->parent instanceof TraitSelectOrAliasClauseList) {
+        if (
+            $memberTypeName === Symbol::PROPERTY &&
+            $node->parent?->parent &&
+            $node->parent->parent instanceof TraitSelectOrAliasClauseList
+        ) {
             $memberTypeName = Symbol::METHOD;
         }
 
@@ -93,7 +98,7 @@ class NodeContextFromMemberAccess
             }
         }
 
-        [ $containerType, $memberType ] = $this->resolveContainerMemberType(
+        [ $containerType, $memberType, $member ] = $this->resolveContainerMemberType(
             $resolver,
             $frame,
             $node,
@@ -106,13 +111,22 @@ class NodeContextFromMemberAccess
             $containerType = $classType;
         }
 
+        if ($member instanceof ReflectionMethod) {
+            return new MethodCallContext(
+                $context->symbol(),
+                $memberType->reduce(),
+                $containerType,
+                $member,
+            );
+        }
+
         return $context->withContainerType(
             $containerType
         )->withType($memberType->reduce());
     }
 
     /**
-     * @return array{Type,Type}
+     * @return array{Type,Type,?ReflectionMember}
      */
     private function resolveContainerMemberType(
         NodeContextResolver $resolver,
@@ -124,6 +138,7 @@ class NodeContextFromMemberAccess
     ): array {
         $types = [];
         $memberType = TypeFactory::undefined();
+        $member = null;
 
         $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
         // this could be a union or a nullable
@@ -158,7 +173,7 @@ class NodeContextFromMemberAccess
         }
 
         $containerType = UnionType::fromTypes(...$types)->reduce();
-        return [$containerType, $memberType];
+        return [$containerType, $memberType, $member];
     }
 
     private function resolveMemberType(NodeContextResolver $resolver, Frame $frame, ReflectionMember $member, ?FunctionArguments $arguments, Node $node, Type $subType): Type
@@ -232,20 +247,20 @@ class NodeContextFromMemberAccess
         Type $classType,
         int $position
     ): ?Type {
-        if (!$classType instanceof ClassType) {
-            return null;
-        }
+    if (!$classType instanceof ClassType) {
+        return null;
+    }
 
-        $variable = $frame->properties()
+    $variable = $frame->properties()
         ->lessThanOrEqualTo($position)
         ->byName($propertyName)
         ->lastOrNull();
 
-        if (null === $variable) {
-            return null;
-        }
+    if (null === $variable) {
+        return null;
+    }
 
-        return $variable->type();
+    return $variable->type();
     }
 
     private static function declaringClass(ReflectionMember $member): ReflectionClassLike
