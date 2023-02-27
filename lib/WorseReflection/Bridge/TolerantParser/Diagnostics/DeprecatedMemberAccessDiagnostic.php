@@ -19,7 +19,7 @@ class DeprecatedMemberAccessDiagnostic implements Diagnostic
 
     public function severity(): DiagnosticSeverity
     {
-        return DiagnosticSeverity::HINT();
+        return DiagnosticSeverity::WARNING();
     }
 
     public function message(): string

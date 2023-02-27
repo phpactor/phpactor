@@ -48,7 +48,7 @@ final class DiagnosticSeverity
 
     public static function HINT(): self
     {
-        return new self(self::HINT());
+        return new self(self::HINT);
     }
 
     public function toString(): string
