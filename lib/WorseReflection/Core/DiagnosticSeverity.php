@@ -41,6 +41,11 @@ final class DiagnosticSeverity
         return new self(self::WARNING);
     }
 
+    public static function HINT(): self
+    {
+        return new self(self::HINT());
+    }
+
     public function toString(): string
     {
         switch ($this->level) {
