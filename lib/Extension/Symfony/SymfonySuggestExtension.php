@@ -36,7 +36,6 @@ class SymfonySuggestExtension implements Extension
                         $container->getParameter(SymfonyExtension::XML_PATH)
                     );
 
-                    dump($xmlPath);
                     if (!file_exists($xmlPath)) {
                         return Changes::none();
                     }
