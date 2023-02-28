@@ -3,17 +3,18 @@
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
 use Microsoft\PhpParser\ClassLike;
-use Microsoft\PhpParser\Node\ClassMembersNode;
-use Microsoft\PhpParser\Node\EnumMembers;
 use Microsoft\PhpParser\Node\InterfaceMembers;
-use Microsoft\PhpParser\Node\TraitMembers;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
 use Microsoft\PhpParser\Node;
 
+/**
+ * @template T
+ * @extends AbstractMethodUpdate<InterfaceMembers>
+ */
 class InterfaceMethodUpdater extends AbstractMethodUpdater
 {
-    public function memberDeclarationsNode(ClassLike $classNode): ClassMembersNode|TraitMembers|InterfaceMembers|EnumMembers
+    public function memberDeclarationsNode(ClassLike $classNode)
     {
         return $classNode->interfaceMembers;
     }

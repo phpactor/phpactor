@@ -4,19 +4,20 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
 use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\ClassLike;
-use Microsoft\PhpParser\Node\EnumMembers;
-use Microsoft\PhpParser\Node\InterfaceMembers;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
-use Microsoft\PhpParser\Node\TraitMembers;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
 use RuntimeException;
 use Microsoft\PhpParser\Node;
 
+/**
+ * @template T
+ * @extends AbstractMethodUpdate<ClassMembersNode>
+ */
 class ClassMethodUpdater extends AbstractMethodUpdater
 {
-    public function memberDeclarationsNode(ClassLike $classNode): ClassMembersNode|TraitMembers|InterfaceMembers|EnumMembers
+    public function memberDeclarationsNode(ClassLike $classNode)
     {
         if ($classNode instanceof ClassDeclaration) {
             return $classNode->classMembers;

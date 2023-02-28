@@ -4,15 +4,11 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\DelimitedList\ParameterDeclarationList;
-use Microsoft\PhpParser\Node\EnumMembers;
-use Microsoft\PhpParser\Node\InterfaceMembers;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
-use Microsoft\PhpParser\Node\TraitMembers;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
 use Phpactor\CodeBuilder\Domain\Prototype\ClassLikePrototype;
@@ -24,6 +20,9 @@ use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 
+/**
+ * @template TMembersNodeType of Node
+ */
 abstract class AbstractMethodUpdater
 {
     public function __construct(private Renderer $renderer)
@@ -112,7 +111,8 @@ abstract class AbstractMethodUpdater
     */
     abstract protected function memberDeclarations(ClassLike $classNode): array;
 
-    abstract protected function memberDeclarationsNode(ClassLike $classNode): ClassMembersNode|TraitMembers|InterfaceMembers|EnumMembers;
+    /** @return TMembersNodeType */
+    abstract protected function memberDeclarationsNode(ClassLike $classNode);
 
     abstract protected function renderMethod(Renderer $renderer, Method $method): string;
 
