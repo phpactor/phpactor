@@ -1324,6 +1324,7 @@ abstract class UpdaterTestCase extends TestCase
                     public function __construct(private int $config)
                     {
                     }
+
                 }
                 EOT
         ];

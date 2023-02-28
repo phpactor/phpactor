@@ -5,8 +5,11 @@ namespace Phpactor;
 
 class Barfoo
 {
+    public string $test = 'testing';
+
     public function someMethod(): void {
     }
+
 }
 
 new Ba<>rfoo(12);
@@ -17,12 +20,15 @@ namespace Phpactor;
 
 class Barfoo
 {
+    public string $test = 'testing';
+
     public function __construct(int $int)
     {
     }
 
     public function someMethod(): void {
     }
+
 }
 
 new Barfoo(12);
