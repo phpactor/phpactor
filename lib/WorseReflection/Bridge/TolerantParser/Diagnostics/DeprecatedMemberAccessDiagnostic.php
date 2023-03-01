@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
 class DeprecatedMemberAccessDiagnostic implements Diagnostic
 {
-    public function __construct(private ByteOffsetRange $range, private string $memberName, private string $message)
+    public function __construct(private ByteOffsetRange $range, private string $memberName, private string $message, private string $memberType)
     {
     }
 
@@ -24,6 +24,6 @@ class DeprecatedMemberAccessDiagnostic implements Diagnostic
 
     public function message(): string
     {
-        return sprintf('Call to deprecated member "%s": %s', $this->memberName, $this->message);
+        return sprintf('Call to deprecated %s "%s": %s', $this->memberType, $this->memberName, $this->message);
     }
 }

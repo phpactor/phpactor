@@ -9,7 +9,9 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Context\MethodCallContext;
+use Phpactor\WorseReflection\Core\Inference\Context\PropertyAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
@@ -114,6 +116,16 @@ class NodeContextFromMemberAccess
 
         if ($member instanceof ReflectionMethod) {
             return new MethodCallContext(
+                $context->symbol(),
+                $memberType->reduce(),
+                $containerType,
+                ByteOffsetRange::fromInts($node->memberName->getStartPosition(), $node->memberName->getEndPosition()),
+                $member,
+            );
+        }
+
+        if ($member instanceof ReflectionMember) {
+            return new MemberAccessContext(
                 $context->symbol(),
                 $memberType->reduce(),
                 $containerType,

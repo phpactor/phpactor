@@ -8,8 +8,8 @@ class Foobar
     public string $notDeprecated;
 
     public function foo(Closure $foobar) {
-        $this->deprecated;
-        $this->notDeprecated();
+        $fo = $this->deprecated;
+        $ba = $this->notDeprecated;
     }
 }
 

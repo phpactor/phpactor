@@ -15,7 +15,7 @@ class DeprecatedMemberAccessDiagnosticProviderTest extends DiagnosticsTestCase
     public function checkDeprecatedMethod(Diagnostics $diagnostics): void
     {
         self::assertCount(1, $diagnostics);
-        self::assertEquals('Call to deprecated member "deprecated": This is deprecated', $diagnostics->at(0)->message());
+        self::assertEquals('Call to deprecated method "deprecated": This is deprecated', $diagnostics->at(0)->message());
     }
 
     /**
@@ -24,7 +24,16 @@ class DeprecatedMemberAccessDiagnosticProviderTest extends DiagnosticsTestCase
     public function checkDeprecatedProperty(Diagnostics $diagnostics): void
     {
         self::assertCount(1, $diagnostics);
-        self::assertEquals('Call to deprecated member "deprecated": This is deprecated', $diagnostics->at(0)->message());
+        self::assertEquals('Call to deprecated property "deprecated": This is deprecated', $diagnostics->at(0)->message());
+    }
+
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
+    public function checkDeprecatedConstant(Diagnostics $diagnostics): void
+    {
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Call to deprecated constant "FOO": This is deprecated', $diagnostics->at(0)->message());
     }
 
     protected function provider(): DiagnosticProvider
