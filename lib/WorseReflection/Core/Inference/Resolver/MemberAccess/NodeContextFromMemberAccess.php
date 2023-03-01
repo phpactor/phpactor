@@ -114,16 +114,6 @@ class NodeContextFromMemberAccess
             $containerType = $classType;
         }
 
-        if ($member instanceof ReflectionMethod) {
-            return new MethodCallContext(
-                $context->symbol(),
-                $memberType->reduce(),
-                $containerType,
-                ByteOffsetRange::fromInts($node->memberName->getStartPosition(), $node->memberName->getEndPosition()),
-                $member,
-            );
-        }
-
         if ($member instanceof ReflectionMember) {
             return new MemberAccessContext(
                 $context->symbol(),
