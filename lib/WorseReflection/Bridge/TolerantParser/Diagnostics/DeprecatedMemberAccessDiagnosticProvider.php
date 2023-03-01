@@ -36,9 +36,6 @@ class DeprecatedMemberAccessDiagnosticProvider implements DiagnosticProvider
         }
     }
 
-    /**
-     * @deprecated This is fobar
-     */
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
