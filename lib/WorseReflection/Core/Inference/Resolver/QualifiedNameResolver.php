@@ -5,7 +5,9 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\Context\ClassLikeContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
@@ -104,7 +106,11 @@ class QualifiedNameResolver implements Resolver
             if (!$node->getRoot()->uri) {
                 return $context->withType(TypeFactory::string());
             }
-            return $context->withType(TypeFactory::stringLiteral(dirname($node->getUri())));
+            $uri = $node->getUri();
+            if (null === $uri) {
+                return $context->withType(TypeFactory::string());
+            }
+            return $context->withType(TypeFactory::stringLiteral(dirname($uri)));
         }
 
         $type = $this->nodeTypeConverter->resolve($node);
@@ -114,8 +120,12 @@ class QualifiedNameResolver implements Resolver
                 // fast but inaccurate check to see if class exists
                 $this->reflector->sourceCodeForClassLike($type->name());
                 // accurate check to see if class exists
-                $this->reflector->reflectClassLike($type->name());
-                return $context->withType($type);
+                $class = $this->reflector->reflectClassLike($type->name());
+                return new ClassLikeContext(
+                    $context->symbol(),
+                    ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition()),
+                    $class
+                );
             } catch (NotFound) {
                 // resolve the name of the potential constant
                 [$_, $_, $constImportTable] = $node->getImportTablesForCurrentScope();

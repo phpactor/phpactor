@@ -123,4 +123,9 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     {
         return $this->serviceLocator;
     }
+
+    public function classLikeType(): string
+    {
+        return 'enum';
+    }
 }

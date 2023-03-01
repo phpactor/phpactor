@@ -243,8 +243,6 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
                     continue;
                 }
-
-                throw new LogicException('This is not intended to be reached');
             }
         }
 

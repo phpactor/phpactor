@@ -1,0 +1,14 @@
+<?php
+
+/** @deprecated */
+class Deprecated {
+    public static foo(): void {}
+}
+
+class NotDeprecated {
+    public static foo(): void {}
+}
+
+$fo = new Deprecated();
+Deprecated::foo();
+new NotDeprecated();

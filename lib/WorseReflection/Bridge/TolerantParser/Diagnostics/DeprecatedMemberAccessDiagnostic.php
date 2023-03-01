@@ -24,6 +24,10 @@ class DeprecatedMemberAccessDiagnostic implements Diagnostic
 
     public function message(): string
     {
+        if (!$this->message) {
+            return sprintf('Call to deprecated %s "%s"', $this->memberType, $this->memberName);
+        }
+
         return sprintf('Call to deprecated %s "%s": %s', $this->memberType, $this->memberName, $this->message);
     }
 }

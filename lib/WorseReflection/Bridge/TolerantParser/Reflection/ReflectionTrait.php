@@ -126,4 +126,9 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     {
         return $this->serviceLocator;
     }
+
+    public function classLikeType(): string
+    {
+        return 'trait';
+    }
 }

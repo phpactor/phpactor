@@ -161,4 +161,9 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
     {
         return $this->serviceLocator;
     }
+
+    public function classLikeType(): string
+    {
+        return 'interface';
+    }
 }

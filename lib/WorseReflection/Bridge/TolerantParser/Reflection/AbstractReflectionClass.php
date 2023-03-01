@@ -96,4 +96,6 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
 
         return $methods;
     }
+
+    abstract function classLikeType(): string;
 }

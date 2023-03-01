@@ -365,4 +365,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     {
         return $this->node;
     }
+
+    public function classLikeType(): string
+    {
+        return 'class';
+    }
 }
