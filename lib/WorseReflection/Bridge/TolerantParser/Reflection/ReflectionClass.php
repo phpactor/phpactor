@@ -361,13 +361,13 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return ReflectionClassLikeCollection::fromReflections((new ClassHierarchyResolver())->resolve($this));
     }
 
-    protected function node(): Node
-    {
-        return $this->node;
-    }
-
     public function classLikeType(): string
     {
         return 'class';
+    }
+
+    protected function node(): Node
+    {
+        return $this->node;
     }
 }

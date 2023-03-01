@@ -114,6 +114,11 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     {
         return PhpactorReflectionTraitCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $this->visited);
     }
+
+    public function classLikeType(): string
+    {
+        return 'trait';
+    }
     /**
      * @return TraitDeclaration
      */
@@ -125,10 +130,5 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
-    }
-
-    public function classLikeType(): string
-    {
-        return 'trait';
     }
 }

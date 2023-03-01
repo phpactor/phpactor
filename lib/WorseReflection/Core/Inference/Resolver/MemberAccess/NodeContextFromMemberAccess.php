@@ -10,8 +10,6 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
-use Phpactor\WorseReflection\Core\Inference\Context\MethodCallContext;
-use Phpactor\WorseReflection\Core\Inference\Context\PropertyAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
@@ -251,20 +249,20 @@ class NodeContextFromMemberAccess
         Type $classType,
         int $position
     ): ?Type {
-    if (!$classType instanceof ClassType) {
-        return null;
-    }
+        if (!$classType instanceof ClassType) {
+            return null;
+        }
 
-    $variable = $frame->properties()
-        ->lessThanOrEqualTo($position)
-        ->byName($propertyName)
-        ->lastOrNull();
+        $variable = $frame->properties()
+            ->lessThanOrEqualTo($position)
+            ->byName($propertyName)
+            ->lastOrNull();
 
-    if (null === $variable) {
-        return null;
-    }
+        if (null === $variable) {
+            return null;
+        }
 
-    return $variable->type();
+        return $variable->type();
     }
 
     private static function declaringClass(ReflectionMember $member): ReflectionClassLike
