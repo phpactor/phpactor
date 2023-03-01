@@ -7,7 +7,7 @@ use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedMemberAccessDiagnosticProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
@@ -185,8 +185,8 @@ class WorseReflectionExtension implements Extension
         $container->register(UnusedImportProvider::class, function (Container $container) {
             return new UnusedImportProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
-        $container->register(DeprecatedMemberAccessDiagnosticProvider::class, function (Container $container) {
-            return new DeprecatedMemberAccessDiagnosticProvider();
+        $container->register(DeprecatedUsageDiagnosticProvider::class, function (Container $container) {
+            return new DeprecatedUsageDiagnosticProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 }

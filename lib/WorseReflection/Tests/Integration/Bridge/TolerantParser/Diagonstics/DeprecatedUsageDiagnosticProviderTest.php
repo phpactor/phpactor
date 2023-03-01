@@ -2,12 +2,12 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diagonstics;
 
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedMemberAccessDiagnosticProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
 
-class DeprecatedMemberAccessDiagnosticProviderTest extends DiagnosticsTestCase
+class DeprecatedUsageDiagnosticProviderTest extends DiagnosticsTestCase
 {
     /**
      * @param Diagnostics<Diagnostic> $diagnostics
@@ -74,6 +74,6 @@ class DeprecatedMemberAccessDiagnosticProviderTest extends DiagnosticsTestCase
 
     protected function provider(): DiagnosticProvider
     {
-        return new DeprecatedMemberAccessDiagnosticProvider();
+        return new DeprecatedUsageDiagnosticProvider();
     }
 }

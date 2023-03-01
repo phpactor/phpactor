@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 
-class DeprecatedMemberAccessDiagnosticProvider implements DiagnosticProvider
+class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
 {
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
@@ -52,7 +52,7 @@ class DeprecatedMemberAccessDiagnosticProvider implements DiagnosticProvider
             return;
         }
 
-        yield new DeprecatedMemberAccessDiagnostic(
+        yield new DeprecatedUsageDiagnostic(
             $resolved->memberNameRange(),
             $member->name(),
             $member->deprecation()->message(),
@@ -69,7 +69,7 @@ class DeprecatedMemberAccessDiagnosticProvider implements DiagnosticProvider
             return;
         }
 
-        yield new DeprecatedMemberAccessDiagnostic(
+        yield new DeprecatedUsageDiagnostic(
             $resolved->range(),
             $reflectionClass->name(),
             $reflectionClass->deprecation()->message(),
@@ -86,7 +86,7 @@ class DeprecatedMemberAccessDiagnosticProvider implements DiagnosticProvider
             return;
         }
 
-        yield new DeprecatedMemberAccessDiagnostic(
+        yield new DeprecatedUsageDiagnostic(
             $resolved->range(),
             $reflectionFunction->name(),
             $reflectionFunction->docblock()->deprecation()->message(),

@@ -6,7 +6,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
-class DeprecatedMemberAccessDiagnostic implements Diagnostic
+class DeprecatedUsageDiagnostic implements Diagnostic
 {
     public function __construct(private ByteOffsetRange $range, private string $memberName, private string $message, private string $memberType)
     {
