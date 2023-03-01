@@ -59,6 +59,10 @@ class DeprecatedUsageDiagnosticProviderTest extends DiagnosticsTestCase
      */
     public function checkDeprecatedEnum(Diagnostics $diagnostics): void
     {
+        if (version_compare(PHP_VERSION, '8.1', '<')) {
+            return;
+        }
+
         self::assertCount(2, $diagnostics);
         self::assertEquals('Call to deprecated enum "Deprecated"', $diagnostics->at(0)->message());
     }
