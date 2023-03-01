@@ -3,9 +3,8 @@
 /** @deprecated */
 function bar(): void {}
 
-/** @deprecated */
 function notDeprecated(): void {}
 
-foo();
+bar();
 
 notDeprecated();

@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Context\ClassLikeContext;
+use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -29,6 +30,9 @@ class DeprecatedMemberAccessDiagnosticProvider implements DiagnosticProvider
         }
         if ($resolved instanceof ClassLikeContext) {
             yield from $this->classLikeDiagnostics($resolved);
+        }
+        if ($resolved instanceof FunctionCallContext) {
+            yield from $this->functionDiagnostics($resolved);
         }
     }
 
@@ -73,6 +77,23 @@ class DeprecatedMemberAccessDiagnosticProvider implements DiagnosticProvider
             $reflectionClass->name(),
             $reflectionClass->deprecation()->message(),
             $reflectionClass->classLikeType(),
+        );
+    }
+    /**
+     * @return Generator<DeprecatedMemberAccessDiagnostic>
+     */
+    private function functionDiagnostics(FunctionCallContext $resolved): Generator
+    {
+        $reflectionFunction = $resolved->function();
+        if (!$reflectionFunction->docblock()->deprecation()->isDefined()) {
+            return;
+        }
+
+        yield new DeprecatedMemberAccessDiagnostic(
+            $resolved->range(),
+            $reflectionFunction->name(),
+            $reflectionFunction->docblock()->deprecation()->message(),
+            'function',
         );
     }
 }

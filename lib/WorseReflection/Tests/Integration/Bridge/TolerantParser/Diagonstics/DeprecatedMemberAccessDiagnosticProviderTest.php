@@ -68,8 +68,8 @@ class DeprecatedMemberAccessDiagnosticProviderTest extends DiagnosticsTestCase
      */
     public function checkDeprecatedFunction(Diagnostics $diagnostics): void
     {
-        self::assertCount(2, $diagnostics);
-        self::assertEquals('Call to deprecated enum "Deprecated"', $diagnostics->at(0)->message());
+        self::assertCount(1, $diagnostics);
+        self::assertEquals('Call to deprecated function "bar"', $diagnostics->at(0)->message());
     }
 
     protected function provider(): DiagnosticProvider
