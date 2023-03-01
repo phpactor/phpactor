@@ -6091,11 +6091,6 @@ parameters:
 			path: lib/Extension/LanguageServerWorseReflection/DiagnosticProvider/WorseDiagnosticProvider.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\DiagnosticProvider\\\\WorseDiagnosticProvider\\:\\:toLspSeverity\\(\\) never returns 4 so it can be removed from the return type\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerWorseReflection/DiagnosticProvider/WorseDiagnosticProvider.php
-
-		-
 			message: "#^Class Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\WorseDiagnosticProvier not found\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerWorseReflection/LanguageServerWorseReflectionExtension.php
@@ -8501,11 +8496,6 @@ parameters:
 			path: lib/WorseReflection/Core/Inference/Resolver/FunctionDeclarationResolver.php
 
 		-
-			message: "#^Cannot access property \\$parent on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
-			count: 2
-			path: lib/WorseReflection/Core/Inference/Resolver/MemberAccess/NodeContextFromMemberAccess.php
-
-		-
 			message: "#^Cannot call method getEndPosition\\(\\) on Microsoft\\\\PhpParser\\\\Token\\|null\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/Resolver/MethodDeclarationResolver.php
@@ -8524,11 +8514,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\NodeContextResolver\\:\\:resolveNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node\\|Microsoft\\\\PhpParser\\\\Token, Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\ClassDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\InterfaceDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\TraitDeclaration\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/Resolver/MethodDeclarationResolver.php
-
-		-
-			message: "#^Parameter \\#1 \\$path of function dirname expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Resolver/QualifiedNameResolver.php
 
 		-
 			message: "#^Parameter \\#1 \\$offset of method Phpactor\\\\WorseReflection\\\\Core\\\\Type\\\\ArrayAccessType\\:\\:typeAtOffset\\(\\) expects \\(int\\|string\\), mixed given\\.$#"

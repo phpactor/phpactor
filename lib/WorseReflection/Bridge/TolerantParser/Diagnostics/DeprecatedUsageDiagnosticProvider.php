@@ -43,7 +43,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
 
     /**
      * @param MemberAccessContext<ReflectionMember> $resolved
-     * @return Generator<DeprecatedMemberAccessDiagnostic>
+     * @return Generator<DeprecatedUsageDiagnostic>
      */
     private function memberAccessDiagnostics(MemberAccessContext $resolved): Generator
     {
@@ -60,7 +60,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         );
     }
     /**
-     * @return Generator<DeprecatedMemberAccessDiagnostic>
+     * @return Generator<DeprecatedUsageDiagnostic>
      */
     private function classLikeDiagnostics(ClassLikeContext $resolved): Generator
     {
@@ -77,7 +77,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         );
     }
     /**
-     * @return Generator<DeprecatedMemberAccessDiagnostic>
+     * @return Generator<DeprecatedUsageDiagnostic>
      */
     private function functionDiagnostics(FunctionCallContext $resolved): Generator
     {
