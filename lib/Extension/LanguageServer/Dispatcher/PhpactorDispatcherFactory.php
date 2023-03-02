@@ -42,17 +42,23 @@ class PhpactorDispatcherFactory implements DispatcherFactory
         $parameters[FilePathResolverExtension::PARAM_PROJECT_ROOT] = TextDocumentUri::fromString(
             $this->resolveRootUri($params)
         )->path();
-        $parameters[WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION] = false;
+
+        if (isset($parameters[WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION])) {
+            $parameters[WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION] = false;
+        }
 
         $extensionClasses = $container->getParameter(
             PhpactorContainer::PARAM_EXTENSION_CLASSES
         );
 
         // merge in any language-server specific configuration
+        // @phpstan-ignore-next-line */
         $parameters = array_merge($parameters, $container->getParameter(LanguageServerExtension::PARAM_SESSION_PARAMETERS));
 
         $container = $this->buildContainer(
+            /** @phpstan-ignore-next-line */
             $extensionClasses,
+            /** @phpstan-ignore-next-line */
             array_merge($parameters, $params->initializationOptions ?? []),
             $transmitter,
             $params
