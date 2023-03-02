@@ -7,6 +7,7 @@ use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerSessionExtension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServer\Core\Dispatcher\Dispatcher\MiddlewareDispatcher;
 use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
 use Phpactor\Container\Container;
@@ -41,6 +42,7 @@ class PhpactorDispatcherFactory implements DispatcherFactory
         $parameters[FilePathResolverExtension::PARAM_PROJECT_ROOT] = TextDocumentUri::fromString(
             $this->resolveRootUri($params)
         )->path();
+        $parameters[WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION] = false;
 
         $extensionClasses = $container->getParameter(
             PhpactorContainer::PARAM_EXTENSION_CLASSES
