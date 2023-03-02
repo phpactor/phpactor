@@ -4,7 +4,9 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
+use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\CodeActionContext;
 use Phpactor\LanguageServerProtocol\CodeActionParams;
 use Phpactor\LanguageServerProtocol\CodeActionRequest;
@@ -28,8 +30,8 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
         $tester = $this->container([])->get(LanguageServerBuilder::class)->tester(
             ProtocolFactory::initializeParams($this->workspace()->path())
         );
-        $tester->initialize();
         $tester->textDocument()->open('file:///foobar', $source);
+        $tester->initialize();
 
         $result = $tester->requestAndWait(CodeActionRequest::METHOD, new CodeActionParams(
             ProtocolFactory::textDocumentIdentifier('file:///foobar'),
@@ -40,8 +42,11 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
             new CodeActionContext([])
         ));
         $tester->assertSuccess($result);
+        $actions = array_filter($result->result, function (CodeAction $action) {
+            return $action->kind === GenerateDecoratorProvider::KIND;
+        });
 
-        self::assertCount($expectedCount, $result->result, 'Number of code actions');
+        self::assertCount($expectedCount, $actions, 'Number of code actions');
     }
 
     /**
@@ -83,12 +88,12 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
         yield 'class with multiple interfaces' => [
             <<<'EOT'
                 <?php
-                interface SomeInterface {public function foo(): void {}}
-                interface OtherInterface {public function foo(): void {}}
+                interface SomeInterface {public function foo(): void;}
+                interface OtherInterface {public function foo(): void;}
                 class FooBar implements SomeInterface, Ot<>herInterface {}
 
                 EOT
-        , 1
+        , 0
         ];
     }
 }
