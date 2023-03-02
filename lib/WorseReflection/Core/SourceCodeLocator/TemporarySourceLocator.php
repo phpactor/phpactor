@@ -31,8 +31,6 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
  */
 class TemporarySourceLocator implements SourceCodeLocator
 {
-    const BUFFER_SIZE = 10;
-
     /**
      * @var SourceCode[]
      */
@@ -40,13 +38,14 @@ class TemporarySourceLocator implements SourceCodeLocator
 
     public function __construct(
         private SourceCodeReflector $reflector,
-        private bool $locateFunctions = false
+        private bool $locateFunctions = false,
+        private int $bufferSize = 10
     ) {
     }
 
     public function pushSourceCode(SourceCode $source): void
     {
-        if (count($this->sources) > self::BUFFER_SIZE) {
+        if (count($this->sources) > $this->bufferSize) {
             array_shift($this->sources);
         }
 
