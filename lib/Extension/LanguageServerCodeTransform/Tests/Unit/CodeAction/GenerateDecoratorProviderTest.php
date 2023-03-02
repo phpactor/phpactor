@@ -12,7 +12,6 @@ use Phpactor\LanguageServerProtocol\CodeActionParams;
 use Phpactor\LanguageServerProtocol\CodeActionRequest;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServer\LanguageServerBuilder;
-use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TestUtils\ExtractOffset;
 
@@ -41,8 +40,10 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
             ),
             new CodeActionContext([])
         ));
+        self::assertNotNull($result);
         $tester->assertSuccess($result);
-        $actions = array_filter($result->result, function (CodeAction $action) {
+        $actions = array_filter((array)$result->result, function (mixed $action) {
+            assert($action instanceof CodeAction);
             return $action->kind === GenerateDecoratorProvider::KIND;
         });
 
