@@ -3,7 +3,9 @@
 namespace Phpactor\Extension\Prophecy\WorseReflection;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
+use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -12,6 +14,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Reflector;
 
@@ -68,14 +71,19 @@ class ProphecyMemberContextResolver implements MemberContextResolver
         if (!$innerType instanceof ClassType) {
             return TypeFactory::undefined();
         }
-        $innerReflection = $reflector->reflectClassLike($innerType->name());
-        return $type->mergeMembers($innerReflection->members()->map(function (ReflectionMember $member) use ($reflector) {
+
+        try {
+            $innerReflection = $reflector->reflectClassLike($innerType->name());
+        } catch (NotFound) {
+            return TypeFactory::unknown();
+        }
+        return $type->mergeMembers($innerReflection->members()->map(function (ReflectionMember $member) use ($reflector, $innerType) {
             if (!$member instanceof ReflectionMethod) {
                 return $member;
             }
             return VirtualReflectionMethod::fromReflectionMethod($member)->withInferredType(
                 new GenericClassType($reflector, ClassName::fromString('Prophecy\Prophecy\MethodProphecy'), [
-                    $member->inferredType()
+                    $innerType
                 ])
             );
         }));

@@ -29,7 +29,8 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
 
                 $prophet = (new Foobar())->prophesize(Hello::class);
                 wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $prophet);
-                wrAssertType('Prophecy\Prophecy\MethodProphecy<string>', $prophet->bar());
+                wrAssertType('Prophecy\Prophecy\MethodProphecy<Hello>', $prophet->bar());
+                wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $prophet->bar()->getObjectProphecy());
                 wrAssertType('Hello', $prophet->reveal());
                 EOT
             ,
@@ -57,7 +58,7 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
                     public function hello(): void
                     {
                         wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $this->hello);
-                        wrAssertType('Prophecy\Prophecy\MethodProphecy<string>', $this->hello->bar());
+                        wrAssertType('Prophecy\Prophecy\MethodProphecy<Hello>', $this->hello->bar());
                     }
                 }
                 EOT
