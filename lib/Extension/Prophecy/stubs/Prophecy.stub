@@ -277,7 +277,7 @@ class MethodProphecy
     /**
      * Returns object prophecy this method prophecy is tied to.
      *
-     * @return ObjectProphecy
+     * @return ObjectProphecy<T>
      */
     public function getObjectProphecy()
     {
