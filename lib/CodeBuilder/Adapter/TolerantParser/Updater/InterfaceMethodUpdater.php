@@ -9,11 +9,13 @@ use Phpactor\CodeBuilder\Domain\Prototype\Method;
 use Microsoft\PhpParser\Node;
 
 /**
- * @template T
- * @extends AbstractMethodUpdate<InterfaceMembers>
+ * @extends AbstractMethodUpdater<InterfaceMembers>
  */
 class InterfaceMethodUpdater extends AbstractMethodUpdater
 {
+    /**
+     * @return InterfaceMembers
+     */
     public function memberDeclarationsNode(ClassLike $classNode)
     {
         return $classNode->interfaceMembers;

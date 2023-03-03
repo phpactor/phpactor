@@ -6,17 +6,20 @@ use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\TraitMembers;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
 use RuntimeException;
 use Microsoft\PhpParser\Node;
 
 /**
- * @template T
- * @extends AbstractMethodUpdate<ClassMembersNode>
+ * @extends AbstractMethodUpdater<ClassMembersNode|TraitMembers>
  */
 class ClassMethodUpdater extends AbstractMethodUpdater
 {
+    /**
+    * @return ClassMembersNode|TraitMembers
+    */
     public function memberDeclarationsNode(ClassLike $classNode)
     {
         if ($classNode instanceof ClassDeclaration) {

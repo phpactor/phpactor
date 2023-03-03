@@ -101,7 +101,12 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/TolerantUpdater.php
 
 		-
-			message: "#^Parameter \\#3 \\$bodyNode of method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\AbstractMethodUpdater\\:\\:appendLinesToMethod\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\CompoundStatementNode\\|Microsoft\\\\PhpParser\\\\Token given\\.$#"
+			message: "#^Access to an undefined property TMembersNodeType of Microsoft\\\\PhpParser\\\\Node\\:\\:\\$openBrace\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
+
+		-
+			message: "#^Parameter \\#3 \\$bodyNode of method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\AbstractMethodUpdater\\<TMembersNodeType of Microsoft\\\\PhpParser\\\\Node\\>\\:\\:appendLinesToMethod\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\CompoundStatementNode\\|Microsoft\\\\PhpParser\\\\Token given\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
 
@@ -172,16 +177,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method getStartPosition\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Cannot call method type\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Cannot cast mixed to string\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
 
