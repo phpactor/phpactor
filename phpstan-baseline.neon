@@ -1066,11 +1066,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/SourceCodeBuilderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\Builder\\\\SourceCodeBuilderTest\\:\\:assertInstanceOfAndPopNode\\(\\) has parameter \\$className with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/SourceCodeBuilderTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\Prototype\\\\TestCollection\\:\\:fromArray\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/CollectionTest.php
@@ -4356,31 +4351,6 @@ parameters:
 			path: lib/Extension/Core/Command/ConfigJsonSchemaCommand.php
 
 		-
-			message: "#^Parameter \\#1 \\$json of function json_decode expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/Command/ConfigSetCommand.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of method Phpactor\\\\Extension\\\\Core\\\\Model\\\\ConfigManipulator\\:\\:delete\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/Command/ConfigSetCommand.php
-
-		-
-			message: "#^Parameter \\#1 \\$key of method Phpactor\\\\Extension\\\\Core\\\\Model\\\\ConfigManipulator\\:\\:set\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/Command/ConfigSetCommand.php
-
-		-
-			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			count: 3
-			path: lib/Extension/Core/Command/ConfigSetCommand.php
-
-		-
-			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/Command/ConfigSetCommand.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\Dumper\\:\\:dump\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Core/Console/Dumper/Dumper.php
@@ -4546,29 +4516,9 @@ parameters:
 			path: lib/Extension/Core/CoreExtension.php
 
 		-
-			message: "#^Parameter \\#2 \\$registry of class Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand constructor expects Phpactor\\\\Extension\\\\Core\\\\Console\\\\Dumper\\\\DumperRegistry, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$paths of class Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand constructor expects Phpactor\\\\ConfigLoader\\\\Core\\\\PathCandidates, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
-			message: "#^Parameter \\#4 \\$expanders of class Phpactor\\\\Extension\\\\Core\\\\Command\\\\ConfigDumpCommand constructor expects Phpactor\\\\FilePathResolver\\\\Expanders, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
 			message: "#^Parameter \\#6 \\$warnOnDevelop of class Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status constructor expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Core/CoreExtension.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Model\\\\ConfigManipulator\\:\\:openConfig\\(\\) should return stdClass but returns mixed\\.$#"
-			count: 1
-			path: lib/Extension/Core/Model/ConfigManipulator.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\CacheClearHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
@@ -4647,11 +4597,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$extensionFqns of class Phpactor\\\\Extension\\\\Debug\\\\Model\\\\ExtensionDocumentor constructor expects array\\<string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Debug/DebugExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$extensions of class Phpactor\\\\Extension\\\\Core\\\\Model\\\\JsonSchemaBuilder constructor expects array\\<class\\-string\\>, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Debug/DebugExtension.php
 
@@ -4916,11 +4861,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/CodeAction/CreateClassProvider.php
 
 		-
-			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\CreateClassProvider\\:\\:\\$parser is never read, only written\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/CodeAction/CreateClassProvider.php
-
-		-
 			message: "#^Cannot cast mixed to string\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/CodeAction/CreateUnresolvableClassProvider.php
@@ -4997,11 +4937,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$generators of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\CreateUnresolvableClassProvider constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Generators, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$parser of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\CreateClassProvider constructor expects Microsoft\\\\PhpParser\\\\Parser, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
 
@@ -6449,21 +6384,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$version of class Phpactor\\\\Extension\\\\Php\\\\Model\\\\ConstantPhpVersionResolver constructor expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Php/PhpExtension.php
-
-		-
-			message: "#^Cannot call method at\\(\\) on Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FunctionArguments\\|null\\.$#"
-			count: 1
-			path: lib/Extension/Prophecy/WorseReflection/ProphecyMemberContextResolver.php
-
-		-
-			message: "#^Cannot call method count\\(\\) on Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FunctionArguments\\|null\\.$#"
-			count: 1
-			path: lib/Extension/Prophecy/WorseReflection/ProphecyMemberContextResolver.php
-
-		-
-			message: "#^Parameter \\#1 \\$className of static method Phpactor\\\\WorseReflection\\\\Core\\\\TypeFactory\\:\\:class\\(\\) expects Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|string, Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/Prophecy/WorseReflection/ProphecyMemberContextResolver.php
 
 		-
 			message: "#^Parameter \\#1 \\$finders of class Phpactor\\\\ReferenceFinder\\\\ChainImplementationFinder constructor expects array\\<Phpactor\\\\ReferenceFinder\\\\ClassImplementationFinder\\>, array\\<int, mixed\\> given\\.$#"

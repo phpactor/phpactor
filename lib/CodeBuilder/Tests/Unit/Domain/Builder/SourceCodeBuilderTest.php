@@ -306,10 +306,4 @@ class SourceCodeBuilderTest extends TestCase
     {
         return SourceCodeBuilder::create();
     }
-
-    private function assertInstanceOfAndPopNode($className, Generator $nodes): void
-    {
-        $this->assertInstanceOf($className, $nodes->current());
-        $nodes->next();
-    }
 }

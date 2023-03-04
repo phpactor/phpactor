@@ -301,8 +301,7 @@ class LanguageServerCodeTransformExtension implements Extension
 
         $container->register(CreateClassProvider::class, function (Container $container) {
             return new CreateClassProvider(
-                $container->get(CodeTransformExtension::SERVICE_CLASS_GENERATORS),
-                $container->get('worse_reflection.tolerant_parser')
+                $container->get(CodeTransformExtension::SERVICE_CLASS_GENERATORS)
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('create-class', outsource: true),
