@@ -31,6 +31,7 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
                 wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $prophet);
                 wrAssertType('Prophecy\Prophecy\MethodProphecy<Hello>', $prophet->bar());
                 wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $prophet->bar()->getObjectProphecy());
+                wrAssertType('string', $prophet->bar()->getMethodName());
                 wrAssertType('Hello', $prophet->reveal());
                 EOT
             ,
