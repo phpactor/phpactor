@@ -29,11 +29,12 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
 
                 $prophet = (new Foobar())->prophesize(Hello::class);
 
-                //wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $prophet);
-                //wrAssertType('Prophecy\Prophecy\MethodProphecy<Hello>', $prophet->bar());
-                //wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $prophet->bar()->getObjectProphecy());
-                //
+                wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $prophet);
+                wrAssertType('Prophecy\Prophecy\MethodProphecy<Hello>', $prophet->bar());
+                wrAssertType('Prophecy\Prophecy\MethodProphecy<Hello>', $prophet->bar()->will());
+                wrAssertType('Prophecy\Prophecy\ObjectProphecy<Hello>', $prophet->bar()->getObjectProphecy());
                 wrAssertType('Prophecy\Prophecy\MethodProphecy<Hello>', $prophet->bar()->getObjectProphecy()->bar());
+                wrAssertType('Prophecy\Prophecy\MethodProphecy<Hello>', $prophet->bar()->willReturn('')->getObjectProphecy()->bar());
                 wrAssertType('string', $prophet->bar()->getMethodName());
                 wrAssertType('Hello', $prophet->reveal());
                 EOT
