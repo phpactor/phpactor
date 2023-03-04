@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
-use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
@@ -23,7 +22,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
 {
     public const KIND = 'quickfix.create_class';
 
-    public function __construct(private Generators $generators, private Parser $parser)
+    public function __construct(private Generators $generators)
     {
     }
 
@@ -100,10 +99,5 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
                 source: 'phpactor'
             )
         ];
-    }
-
-    private function kind(): string
-    {
-        return self::KIND;
     }
 }
