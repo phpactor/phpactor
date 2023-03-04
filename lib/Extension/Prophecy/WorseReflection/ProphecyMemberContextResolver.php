@@ -25,13 +25,11 @@ class ProphecyMemberContextResolver implements MemberContextResolver
     public function resolveMemberContext(
         Reflector $reflector,
         ReflectionMember $member,
+        Type $type,
         ?FunctionArguments $arguments
     ): ?Type {
         $memberType = $member->inferredType();
         if ($memberType instanceof GenericClassType && $memberType->instanceof(TypeFactory::reflectedClass($reflector, 'Prophecy\Prophecy\ObjectProphecy'))->isTrue()) {
-            if ($member->name() === self::OBJECT_PROPHECY_METHOD_NAME) {
-                return null;
-            }
             return $this->fromGeneric($reflector, $memberType);
         }
 

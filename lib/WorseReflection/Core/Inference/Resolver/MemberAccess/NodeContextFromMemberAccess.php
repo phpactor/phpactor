@@ -163,14 +163,8 @@ class NodeContextFromMemberAccess
 
     private function resolveMemberType(NodeContextResolver $resolver, Frame $frame, ReflectionMember $member, ?FunctionArguments $arguments, Node $node, Type $subType): Type
     {
-        foreach ($this->memberResolvers as $memberResolver) {
-            if (null !== $customType = $memberResolver->resolveMemberContext($resolver->reflector(), $member, $arguments)) {
-                return $customType;
-            }
-        }
-
-
         $inferredType = $member->inferredType();
+        $declaringClass = self::declaringClass($member);
 
         if ($member instanceof ReflectionProperty) {
             $propertyType = self::getFrameTypesForPropertyAtPosition(
@@ -183,8 +177,6 @@ class NodeContextFromMemberAccess
                 $inferredType = $propertyType;
             }
         }
-
-        $declaringClass = self::declaringClass($member);
 
         if ($arguments && $member instanceof ReflectionMethod) {
             try {
@@ -223,6 +215,12 @@ class NodeContextFromMemberAccess
         // expand globbed constants
         if ($inferredType instanceof GlobbedConstantUnionType) {
             $inferredType = $inferredType->toUnion();
+        }
+
+        foreach ($this->memberResolvers as $memberResolver) {
+            if (null !== $customType = $memberResolver->resolveMemberContext($resolver->reflector(), $member, $inferredType, $arguments)) {
+                $inferredType = $customType;
+            }
         }
 
         return $inferredType;
