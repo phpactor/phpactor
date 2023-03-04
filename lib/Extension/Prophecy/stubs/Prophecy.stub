@@ -36,7 +36,7 @@ class MethodProphecy
      *
      * @param array|Argument\ArgumentsWildcard $arguments
      *
-     * @return $this
+     * @return MethodProphecy<T>
      *
      * @throws \Prophecy\Exception\InvalidArgumentException
      */
@@ -49,7 +49,7 @@ class MethodProphecy
      *
      * @param callable|Promise\PromiseInterface $promise
      *
-     * @return $this
+     * @return MethodProphecy<T>
      *
      * @throws \Prophecy\Exception\InvalidArgumentException
      */
@@ -62,7 +62,7 @@ class MethodProphecy
      *
      * @see \Prophecy\Promise\ReturnPromise
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function willReturn()
     {
@@ -72,7 +72,7 @@ class MethodProphecy
      * @param array $items
      * @param mixed $return
      *
-     * @return $this
+     * @return MethodProphecy<T>
      *
      * @throws \Prophecy\Exception\InvalidArgumentException
      */
@@ -87,7 +87,7 @@ class MethodProphecy
      *
      * @see \Prophecy\Promise\ReturnArgumentPromise
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function willReturnArgument($index = 0)
     {
@@ -100,7 +100,7 @@ class MethodProphecy
      *
      * @param string|\Exception $exception Exception class or instance
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function willThrow($exception)
     {
@@ -111,7 +111,7 @@ class MethodProphecy
      *
      * @param callable|Prediction\PredictionInterface $prediction
      *
-     * @return $this
+     * @return MethodProphecy<T>
      *
      * @throws \Prophecy\Exception\InvalidArgumentException
      */
@@ -124,7 +124,7 @@ class MethodProphecy
      *
      * @see \Prophecy\Prediction\CallPrediction
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldBeCalled()
     {
@@ -135,7 +135,7 @@ class MethodProphecy
      *
      * @see \Prophecy\Prediction\NoCallsPrediction
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldNotBeCalled()
     {
@@ -148,7 +148,7 @@ class MethodProphecy
      *
      * @param $count
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldBeCalledTimes($count)
     {
@@ -159,7 +159,7 @@ class MethodProphecy
      *
      * @see \Prophecy\Prediction\CallTimesPrediction
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldBeCalledOnce()
     {
@@ -170,7 +170,7 @@ class MethodProphecy
      *
      * @param callable|Prediction\PredictionInterface $prediction
      *
-     * @return $this
+     * @return MethodProphecy<T>
      *
      * @throws \Prophecy\Exception\InvalidArgumentException
      */
@@ -183,11 +183,11 @@ class MethodProphecy
      *
      * @see \Prophecy\Prediction\CallPrediction
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldHaveBeenCalled()
     {
-        return $this->shouldHave(new Prediction\CallPrediction);
+        return MethodProphecy<T>->shouldHave(new Prediction\CallPrediction);
     }
 
     /**
@@ -195,11 +195,11 @@ class MethodProphecy
      *
      * @see \Prophecy\Prediction\NoCallsPrediction
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldNotHaveBeenCalled()
     {
-        return $this->shouldHave(new Prediction\NoCallsPrediction);
+        return MethodProphecy<T>->shouldHave(new Prediction\NoCallsPrediction);
     }
 
     /**
@@ -208,11 +208,11 @@ class MethodProphecy
      * @see \Prophecy\Prediction\NoCallsPrediction
      * @deprecated
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldNotBeenCalled()
     {
-        return $this->shouldNotHaveBeenCalled();
+        return MethodProphecy<T>->shouldNotHaveBeenCalled();
     }
 
     /**
@@ -222,11 +222,11 @@ class MethodProphecy
      *
      * @param int $count
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldHaveBeenCalledTimes($count)
     {
-        return $this->shouldHave(new Prediction\CallTimesPrediction($count));
+        return MethodProphecy<T>->shouldHave(new Prediction\CallTimesPrediction($count));
     }
 
     /**
@@ -234,7 +234,7 @@ class MethodProphecy
      *
      * @see \Prophecy\Prediction\CallTimesPrediction
      *
-     * @return $this
+     * @return MethodProphecy<T>
      */
     public function shouldHaveBeenCalledOnce()
     {
