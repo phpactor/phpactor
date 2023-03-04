@@ -62,7 +62,7 @@ Troubleshooting
 
 You need to open a PHP file before using Phpactor.
 
-``Phpactor requires at least PHP 7.3.0``
+``Phpactor requires at least PHP 8.0``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you run an older version of PHP by default, you will need to install
