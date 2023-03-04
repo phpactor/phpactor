@@ -11,13 +11,17 @@ use Phpactor\WorseReflection\Reflector;
 
 class AssertMemberContextResolver implements MemberContextResolver
 {
-    public function resolveMemberContext(Reflector $reflector, ReflectionMember $member, ?FunctionArguments $arguments): ?Type
+    public function resolveMemberContext(Reflector $reflector, ReflectionMember $member, Type $type, ?FunctionArguments $arguments): ?Type
     {
         if ($member->memberType() !== ReflectionMember::TYPE_METHOD) {
             return null;
         }
 
         if ($member->name() !== 'assertInstanceOf') {
+            return null;
+        }
+
+        if (null === $arguments) {
             return null;
         }
 

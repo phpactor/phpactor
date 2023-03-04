@@ -1739,7 +1739,7 @@ Path to the php-cs-fixer executable
 Environemnt for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)
 
 
-**Default**: ``{"XDEBUG_MODE":"off"}``
+**Default**: ``{"XDEBUG_MODE":"off","PHP_CS_FIXER_IGNORE_ENV":true}``
 
 
 .. _param_language_server_php_cs_fixer.show_diagnostics:
