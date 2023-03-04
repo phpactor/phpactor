@@ -5,7 +5,6 @@ namespace Phpactor\Extension\Prophecy\WorseReflection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
-use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -14,13 +13,14 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Reflector;
 
 class ProphecyMemberContextResolver implements MemberContextResolver
 {
     const PROPHECY_CLASS = 'Prophecy\Prophecy\ProphecyInterface';
+    const OBJECT_PROPHECY_METHOD_NAME = 'getObjectProphecy';
+
 
     public function resolveMemberContext(
         Reflector $reflector,
@@ -29,7 +29,7 @@ class ProphecyMemberContextResolver implements MemberContextResolver
     ): ?Type {
         $memberType = $member->inferredType();
         if ($memberType instanceof GenericClassType && $memberType->instanceof(TypeFactory::reflectedClass($reflector, 'Prophecy\Prophecy\ObjectProphecy'))->isTrue()) {
-            if ($member->name() === 'getObjectProphecy') {
+            if ($member->name() === self::OBJECT_PROPHECY_METHOD_NAME) {
                 return null;
             }
             return $this->fromGeneric($reflector, $memberType);
@@ -51,6 +51,10 @@ class ProphecyMemberContextResolver implements MemberContextResolver
             return null;
         }
 
+        if (null === $arguments) {
+            return null;
+        }
+
         if ($arguments->count() !== 1) {
             return null;
         }
@@ -61,7 +65,13 @@ class ProphecyMemberContextResolver implements MemberContextResolver
             return null;
         }
 
-        $innerType = TypeFactory::class($arg->className());
+        $className = $arg->className();
+
+        if (null === $className) {
+            return null;
+        }
+
+        $innerType = TypeFactory::class($className);
 
         $type = new GenericClassType($reflector, ClassName::fromString('Prophecy\Prophecy\ObjectProphecy'), [$innerType]);
 
