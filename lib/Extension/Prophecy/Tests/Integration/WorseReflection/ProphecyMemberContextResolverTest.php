@@ -121,6 +121,39 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
         );
     }
 
+    public function testProphesizeSelfInATrait(): void
+    {
+        $this->resolve(
+            <<<'EOT'
+                <?php
+
+                trait StorageManagerHelperTrait
+                {
+                    abstract protected function prophesize(?string $classOrInterface = null): ObjectProphecy;
+
+                    protected function getStorageManager(): ObjectProphecy
+                    {
+                        return $this->prophesize(self::class);
+                    }
+                }
+
+                class TestCase {
+                    use StorageManagerHelperTrait;
+                    /**
+                     * @return ObjectProphecy<Hello>
+                     */
+                    public function foobar(): ObjectProphecy
+                   
+                    public function hello(): void
+                    {
+                        wrAssertType('ObjectProphecy', $this->getStorageManager());
+                    }
+                }
+                EOT
+            ,
+        );
+    }
+
     public function resolve(string $sourceCode): void
     {
         $reflector = ReflectorBuilder::create()
