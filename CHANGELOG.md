@@ -13,6 +13,7 @@ Features:
 
 Bug fixes:
 
+  - Prophecy: Do not crash when used in trait #2129
   - Prophecy: fixing chaining of methods via. `getObjectProphecy` #2122
   - `new class-string<Foo>` now resolves to `new Foo` #2065
   - Fix extract method within trait #2076 @mamazu

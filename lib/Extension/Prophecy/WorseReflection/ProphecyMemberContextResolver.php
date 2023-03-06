@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type;
@@ -21,13 +22,16 @@ class ProphecyMemberContextResolver implements MemberContextResolver
     const PROPHECY_CLASS = 'Prophecy\Prophecy\ProphecyInterface';
     const OBJECT_PROPHECY_METHOD_NAME = 'getObjectProphecy';
 
-
     public function resolveMemberContext(
         Reflector $reflector,
         ReflectionMember $member,
         Type $type,
         ?FunctionArguments $arguments
     ): ?Type {
+        if (!$member->class() instanceof ReflectionClass) {
+            return null;
+        }
+
         if ($type instanceof GenericClassType && $type->instanceof(TypeFactory::reflectedClass($reflector, 'Prophecy\Prophecy\ObjectProphecy'))->isTrue()) {
             return $this->fromGeneric($reflector, $type);
         }

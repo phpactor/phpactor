@@ -138,6 +138,7 @@ class QualifiedNameResolver implements Resolver
             }
         }
 
+
         return $context->withType($type);
     }
 }
