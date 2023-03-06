@@ -24,6 +24,16 @@ class ChainReflectionMemberCollectionTest extends TestCase
 
     private ObjectProphecy $member1;
 
+    /**
+     * @var ObjectProphecy<ReflectionMemberCollection>
+     */
+    private ObjectProphecy $collection3;
+
+    /**
+     * @var ObjectProphecy<ReflectionMemberCollection>
+     */
+    private ObjectProphecy $collection4;
+
     public function setUp(): void
     {
         $this->collection1 = $this->prophesize(ReflectionMemberCollection::class);
