@@ -1241,56 +1241,6 @@ parameters:
 			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantRenameVariable.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:addParametersAndGetArgs\\(\\) has parameter \\$freeVariables with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:addParametersAndGetArgs\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:addReturnAndGetAssignment\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:addReturnAndGetAssignment\\(\\) has parameter \\$returnVariables with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:extractVariableNamesFromNode\\(\\) has parameter \\$ignoreNames with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:extractVariableNamesFromNode\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:parameterVariables\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:replacement\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:returnVariables\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractMethod\\:\\:variableNames\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
-
-		-
 			message: "#^Variable \\$stmt on left side of \\?\\? always exists and is not nullable\\.$#"
 			count: 2
 			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
@@ -4636,16 +4586,6 @@ parameters:
 			path: lib/Extension/FilePathResolver/Tests/Unit/FilePathResolverExtensionTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$extensionClasses of method Phpactor\\\\Extension\\\\LanguageServer\\\\Dispatcher\\\\PhpactorDispatcherFactory\\:\\:buildContainer\\(\\) expects array\\<int, class\\-string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Dispatcher/PhpactorDispatcherFactory.php
-
-		-
-			message: "#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServer/Dispatcher/PhpactorDispatcherFactory.php
-
-		-
 			message: "#^Parameter \\#1 \\$object of function get_class expects object, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/EventDispatcher/LazyAggregateProvider.php
@@ -5081,21 +5021,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/ExtractMethodProviderTest.php
 
 		-
-			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/GenerateDecoratorProviderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$response of method Phpactor\\\\LanguageServer\\\\Test\\\\LanguageServerTester\\:\\:assertSuccess\\(\\) expects Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage, Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null given\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/GenerateDecoratorProviderTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/GenerateDecoratorProviderTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\CodeAction\\\\GenerateMethodProviderTest\\:\\:provideActionsTestData\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 2
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/GenerateMethodProviderTest.php
@@ -5124,21 +5049,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\CodeAction\\\\GenerateMethodProviderTest\\:\\:testProvideActions\\(\\) has parameter \\$missingMethods with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/GenerateMethodProviderTest.php
-
-		-
-			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/ImportNameProviderTest.php
-
-		-
-			message: "#^Offset 'diagnostics' does not exist on array\\<string, mixed\\>\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/ImportNameProviderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$response of method Phpactor\\\\LanguageServer\\\\Test\\\\LanguageServerTester\\:\\:assertSuccess\\(\\) expects Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage, Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/ImportNameProviderTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\CodeAction\\\\PropertyAccessGeneratorProviderTest\\:\\:testProvideActions\\(\\) has parameter \\$expectedActions with no value type specified in iterable type array\\.$#"
@@ -6354,16 +6264,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$className of static method Phpactor\\\\WorseReflection\\\\Core\\\\TypeFactory\\:\\:reflectedClass\\(\\) expects Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/PHPUnit/FrameWalker/AssertInstanceOfWalker.php
-
-		-
-			message: "#^Cannot call method at\\(\\) on Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FunctionArguments\\|null\\.$#"
-			count: 1
-			path: lib/Extension/PHPUnit/MemberContextResolver/AssertMemberContextResolver.php
-
-		-
-			message: "#^Parameter \\#1 \\$value of function count expects array\\|Countable, Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FunctionArguments\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/PHPUnit/MemberContextResolver/AssertMemberContextResolver.php
 
 		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(string\\|false\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: string\\|null given\\.$#"
