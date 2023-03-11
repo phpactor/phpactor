@@ -80,6 +80,7 @@ class QualifiedNameResolver implements Resolver
                     'symbol_type' => Symbol::FUNCTION,
                 ]
             );
+
             return new FunctionCallContext(
                 $context->symbol(),
                 ByteOffsetRange::fromInts(
@@ -110,13 +111,11 @@ class QualifiedNameResolver implements Resolver
         // magic constants
         if ($text === '__DIR__') {
             // TODO: [TP] tolerant parser `getUri` returns NULL or string but only declares NULL
-            if (!$node->getRoot()->uri) {
+            $uri = $node->getRoot()->uri;
+            if (!$uri) {
                 return $context->withType(TypeFactory::string());
             }
-            $uri = $node->getUri();
-            if (null === $uri) {
-                return $context->withType(TypeFactory::string());
-            }
+
             return $context->withType(TypeFactory::stringLiteral(dirname($uri)));
         }
 
