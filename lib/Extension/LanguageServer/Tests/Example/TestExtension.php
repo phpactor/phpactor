@@ -125,7 +125,7 @@ class TestExtension implements Extension
                     return 'dp1';
                 }
             };
-        }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('dp1', true)]);
+        }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('dp1', false)]);
 
         $container->register('test.diagnostic_provider.outsourced', function (Container $container) {
             return new class implements DiagnosticsProvider {

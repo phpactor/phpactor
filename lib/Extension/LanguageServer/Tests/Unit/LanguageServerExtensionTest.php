@@ -8,6 +8,7 @@ use Phpactor\LanguageServerProtocol\CodeActionRequest;
 use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesClientCapabilities;
 use Phpactor\LanguageServerProtocol\InitializeParams;
 use Phpactor\LanguageServerProtocol\WorkspaceClientCapabilities;
+use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
 use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
@@ -45,8 +46,9 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $container = $this->createContainer([
             LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
         ]);
-        $providers = $container->getServiceIdsForTag(LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER);
-        self::assertCount(4, $providers);
+        $providers = $container->get(AggregateDiagnosticsProvider::class);
+        self::assertContains('dp1', $providers->names());
+        self::assertContains('dp2', $providers->names());
     }
 
     public function testLoadsOnlyNonOutsourcedProvidersIfOutsourceIsTrue(): void
@@ -54,8 +56,9 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $container = $this->createContainer([
             LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => true,
         ]);
-        $providers = $container->getServiceIdsForTag(LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER);
-        self::assertCount(3, $providers);
+        $providers = $container->get(AggregateDiagnosticsProvider::class);
+        self::assertContains('dp1', $providers->names());
+        self::assertNotContains('dp2.outsourced', $providers->names());
     }
 
     public function testReturnsStats(): void
