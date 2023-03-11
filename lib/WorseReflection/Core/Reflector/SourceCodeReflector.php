@@ -7,6 +7,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
@@ -65,4 +66,10 @@ interface SourceCodeReflector
     public function reflectConstantsIn(
         SourceCode|TextDocument|string $sourceCode
     ): ReflectionDeclaredConstantCollection;
+
+    /**
+     * Walk the given source code's AST with the provided walker.
+     * The walker is able to resolve nodes and has access to the frame.
+     */
+    public function walk(TextDocument $sourceCode, Walker $walker): void;
 }
