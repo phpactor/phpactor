@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
  * it handles source code without a path.
  *
  * During a given process many calls maybe made to the reflector, and any code
- * provided directory (rather than located from the filesystem) should have
+ * provided directly (rather than located from the filesystem) should have
  * precedence over other code.
  *
  * Because it's possible to provide source without a path (which is a mistake)
@@ -31,38 +31,42 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
  */
 class TemporarySourceLocator implements SourceCodeLocator
 {
-    private ?SourceCode $source = null;
+    /**
+     * @var SourceCode[]
+     */
+    private array $sources = [];
 
     public function __construct(
         private SourceCodeReflector $reflector,
-        private bool $locateFunctions = false
+        private bool $locateFunctions = false,
+        private int $bufferSize = 10
     ) {
     }
 
     public function pushSourceCode(SourceCode $source): void
     {
-        $this->source = $source;
+        if (count($this->sources) > $this->bufferSize) {
+            array_shift($this->sources);
+        }
+
+        $this->sources[] = $source;
     }
 
     public function locate(Name $name): SourceCode
     {
-        if (null === $this->source) {
-            throw new SourceNotFound(sprintf(
-                'No source in temporary source locator yet',
-            ));
-        }
+        foreach ($this->sources as $source) {
+            $classes = $this->reflector->reflectClassesIn($source);
 
-        $classes = $this->reflector->reflectClassesIn($this->source);
+            if ($classes->has((string) $name)) {
+                return $source;
+            }
 
-        if ($classes->has((string) $name)) {
-            return $this->source;
-        }
+            if ($this->locateFunctions) {
+                $functions = $this->reflector->reflectFunctionsIn($source);
 
-        if ($this->locateFunctions) {
-            $functions = $this->reflector->reflectFunctionsIn($this->source);
-
-            if ($functions->has((string) $name)) {
-                return $this->source;
+                if ($functions->has((string) $name)) {
+                    return $source;
+                }
             }
         }
 

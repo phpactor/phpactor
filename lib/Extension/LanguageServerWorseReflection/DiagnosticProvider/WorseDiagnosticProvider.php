@@ -59,6 +59,9 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
         if ($diagnosticSeverity->isWarning()) {
             return LanguageServerProtocolDiagnosticSeverity::WARNING;
         }
+        if ($diagnosticSeverity->isHint()) {
+            return LanguageServerProtocolDiagnosticSeverity::HINT;
+        }
 
         return LanguageServerProtocolDiagnosticSeverity::INFORMATION;
     }

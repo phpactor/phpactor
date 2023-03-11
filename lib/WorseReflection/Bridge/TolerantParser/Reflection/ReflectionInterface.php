@@ -149,6 +149,11 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         return ReflectionClassLikeCollection::fromReflections((new ClassHierarchyResolver())->resolve($this));
     }
 
+    public function classLikeType(): string
+    {
+        return 'interface';
+    }
+
     /**
      * @return InterfaceDeclaration
      */

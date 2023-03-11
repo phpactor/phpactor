@@ -1,0 +1,16 @@
+<?php
+
+class Foobar
+{
+    public function foo(Closure $foobar) {
+        $this->deprecated();
+        $this->notDeprecated();
+    }
+
+    /** @deprecated This is deprecated */
+    public function deprecated(): void {}
+
+    public function notDeprecated(): void {}
+}
+
+

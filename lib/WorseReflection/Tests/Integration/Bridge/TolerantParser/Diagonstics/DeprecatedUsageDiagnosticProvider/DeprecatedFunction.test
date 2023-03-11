@@ -1,0 +1,10 @@
+<?php
+
+/** @deprecated */
+function bar(): void {}
+
+function notDeprecated(): void {}
+
+bar();
+
+notDeprecated();

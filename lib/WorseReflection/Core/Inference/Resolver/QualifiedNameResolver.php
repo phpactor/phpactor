@@ -5,7 +5,10 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\Context\ClassLikeContext;
+use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
@@ -78,7 +81,14 @@ class QualifiedNameResolver implements Resolver
                 ]
             );
 
-            return $context->withType($function->inferredType()->reduce());
+            return new FunctionCallContext(
+                $context->symbol(),
+                ByteOffsetRange::fromInts(
+                    $node->getStartPosition(),
+                    $node->getEndPosition(),
+                ),
+                $function
+            );
         }
 
 
@@ -101,10 +111,12 @@ class QualifiedNameResolver implements Resolver
         // magic constants
         if ($text === '__DIR__') {
             // TODO: [TP] tolerant parser `getUri` returns NULL or string but only declares NULL
-            if (!$node->getRoot()->uri) {
+            $uri = $node->getRoot()->uri;
+            if (!$uri) {
                 return $context->withType(TypeFactory::string());
             }
-            return $context->withType(TypeFactory::stringLiteral(dirname($node->getUri())));
+
+            return $context->withType(TypeFactory::stringLiteral(dirname($uri)));
         }
 
         $type = $this->nodeTypeConverter->resolve($node);
@@ -114,8 +126,12 @@ class QualifiedNameResolver implements Resolver
                 // fast but inaccurate check to see if class exists
                 $this->reflector->sourceCodeForClassLike($type->name());
                 // accurate check to see if class exists
-                $this->reflector->reflectClassLike($type->name());
-                return $context->withType($type);
+                $class = $this->reflector->reflectClassLike($type->name());
+                return new ClassLikeContext(
+                    $context->symbol(),
+                    ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition()),
+                    $class
+                );
             } catch (NotFound) {
                 // resolve the name of the potential constant
                 [$_, $_, $constImportTable] = $node->getImportTablesForCurrentScope();

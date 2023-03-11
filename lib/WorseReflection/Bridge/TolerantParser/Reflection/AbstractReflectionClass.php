@@ -62,6 +62,8 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
         return TypeFactory::reflectedClass($this->serviceLocator()->reflector(), $this->name());
     }
 
+    abstract public function classLikeType(): string;
+
     protected function resolveTraitMethods(
         TraitImports $traitImports,
         ReflectionClassLike $contextClass,

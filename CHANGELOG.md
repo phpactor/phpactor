@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - Deprecation diagnostics #2120
   - Auto configuration - automatically suggest and apply configuration #2114
   - Transform to "promote" unassigned consturctor properties #2106
   - Hierarchical namespace segment completion #2070

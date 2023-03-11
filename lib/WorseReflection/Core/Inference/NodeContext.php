@@ -107,9 +107,6 @@ class NodeContext
         return $new;
     }
 
-    /**
-     * @deprecated
-     */
     public function type(): Type
     {
         return $this->type ?? new MissingType();

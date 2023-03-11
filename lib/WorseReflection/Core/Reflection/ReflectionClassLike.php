@@ -56,4 +56,6 @@ interface ReflectionClassLike extends ReflectionNode
     public function templateMap(): TemplateMap;
 
     public function type(): ReflectedClassType;
+
+    public function classLikeType(): string;
 }

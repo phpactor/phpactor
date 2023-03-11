@@ -1,0 +1,19 @@
+<?php
+
+trait FoobarTrait {
+    /** @deprecated This is deprecated */
+    public function deprecated(): void {}
+}
+
+class Foobar
+{
+    use FoobarTrait;
+    public function foo(Closure $foobar) {
+        $this->deprecated();
+        $this->notDeprecated();
+    }
+
+    public function notDeprecated(): void {}
+}
+
+

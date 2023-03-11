@@ -3,7 +3,7 @@ Given php ():
 
   use Phpactor\Phpactor;
   
-  class Foobar
+  class Foobar981aa
   {
       public function foobar()
       {
@@ -19,7 +19,7 @@ Expect php (assignments to be added):
 
   use Phpactor\Phpactor;
   
-  class Foobar
+  class Foobar981aa
   {
       private Phpactor $phpactor;
       private string $foobar;
