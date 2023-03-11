@@ -23,6 +23,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     {
         $serverTester = $this->createTester();
         $result = $serverTester->initialize();
+        self::assertNotNull($result->serverInfo);
         self::assertEquals('phpactor/phpactor', $result->serverInfo['name']);
     }
 
@@ -35,18 +36,20 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     public function testLoadsHandlers(): void
     {
         $serverTester = $this->createTester();
-        $response = $serverTester->requestAndWait('test', []);
+        $response = $serverTester->mustRequestAndWait('test', []);
         $this->assertSuccess($response);
     }
 
     public function testReturnsStats(): void
     {
         $serverTester = $this->createTester();
-        $response = $serverTester->requestAndWait('phpactor/stats', []);
+        $response = $serverTester->mustRequestAndWait('phpactor/stats', []);
         $this->assertSuccess($response);
         $message = $serverTester->transmitter()->shift();
         self::assertNotNull($message);
         assert($message instanceof NotificationMessage);
+        self::assertArrayHasKey('message', $message->params ?? []);
+        self::assertIsString($message->params['message']);
         self::assertStringContainsString('requests: 0', $message->params['message']);
     }
 
@@ -60,6 +63,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $message = $serverTester->transmitter()->shift();
         self::assertNotNull($message);
         assert($message instanceof NotificationMessage);
+        self::assertArrayHasKey('message', $message->params ?? []);
         self::assertEquals('service started', $message->params['message']);
     }
 
@@ -82,7 +86,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     public function testRegistersCommands(): void
     {
         $serverTester = $this->createTester();
-        $response = $serverTester->requestAndWait('workspace/executeCommand', [
+        $response = $serverTester->mustRequestAndWait('workspace/executeCommand', [
             'command' => 'echo',
             'arguments' => [
                 'hello',
@@ -96,7 +100,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     {
         $serverTester = $this->createTester();
         $serverTester->textDocument()->open('file://foo', 'bar');
-        $response = $serverTester->requestAndWait(CodeActionRequest::METHOD, [
+        $response = $serverTester->mustRequestAndWait(CodeActionRequest::METHOD, [
             'textDocument' => [
                 'uri' => 'file://foo'
             ],
@@ -109,6 +113,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
             ],
         ]);
         $this->assertSuccess($response);
+        self::assertIsArray($response->result);
         self::assertCount(2, $response->result);
     }
 
