@@ -3,13 +3,12 @@
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
 use Phpactor\CodeBuilder\Domain\Prototype\Line;
-use Phpactor\CodeBuilder\Domain\Prototype\Lines;
 use Phpactor\CodeBuilder\Domain\Prototype\MethodBody;
 
 class MethodBodyBuilder
 {
     /**
-     * @var Lines[]
+     * @var Line[]
      */
     protected array $lines = [];
 

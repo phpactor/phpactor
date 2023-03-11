@@ -7,12 +7,15 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
  */
 class Lines extends Collection
 {
-    public function __toString()
+    public function __toString(): string
     {
         return implode(PHP_EOL, $this->items);
     }
 
-    public static function fromLines(array $lines)
+    /**
+     * @param array<Line> $lines
+     */
+    public static function fromLines(array $lines): self
     {
         return new self($lines);
     }
