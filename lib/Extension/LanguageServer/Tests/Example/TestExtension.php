@@ -5,8 +5,10 @@ namespace Phpactor\Extension\LanguageServer\Tests\Example;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\CodeAction;
+use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\MessageType;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
@@ -16,6 +18,7 @@ use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\Command as CoreCommand;
+use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -105,6 +108,42 @@ class TestExtension implements Extension
                 }
             };
         }, [ LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []]);
+
+        $container->register('test.diagnostic_provider', function (Container $container) {
+            return new class implements DiagnosticsProvider {
+                /**
+                 * @return Promise<array<Diagnostic>>
+                 */
+                public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
+                {
+                    return new Success([
+                    ]);
+                }
+
+                public function name(): string
+                {
+                    return 'dp1';
+                }
+            };
+        }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('dp1', true)]);
+
+        $container->register('test.diagnostic_provider.outsourced', function (Container $container) {
+            return new class implements DiagnosticsProvider {
+                /**
+                 * @return Promise<array<Diagnostic>>
+                 */
+                public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
+                {
+                    return new Success([
+                    ]);
+                }
+
+                public function name(): string
+                {
+                    return 'dp2';
+                }
+            };
+        }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('dp2.outsourced', true)]);
     }
 
 

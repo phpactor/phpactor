@@ -40,6 +40,24 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $this->assertSuccess($response);
     }
 
+    public function testLoadsAllDiagnosticProvidersIfOutsourceIfFalse(): void
+    {
+        $container = $this->createContainer([
+            LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
+        ]);
+        $providers = $container->getServiceIdsForTag(LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER);
+        self::assertCount(4, $providers);
+    }
+
+    public function testLoadsOnlyNonOutsourcedProvidersIfOutsourceIsTrue(): void
+    {
+        $container = $this->createContainer([
+            LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => true,
+        ]);
+        $providers = $container->getServiceIdsForTag(LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER);
+        self::assertCount(3, $providers);
+    }
+
     public function testReturnsStats(): void
     {
         $serverTester = $this->createTester();
