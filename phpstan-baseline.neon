@@ -21,16 +21,6 @@ parameters:
 			path: lib/Application.php
 
 		-
-			message: "#^Parameter \\#1 \\$e of method Phpactor\\\\Application\\:\\:serializeException\\(\\) expects Exception, Throwable given\\.$#"
-			count: 1
-			path: lib/Application.php
-
-		-
-			message: "#^Parameter \\#2 \\$dumper of method Phpactor\\\\Application\\:\\:handleException\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Application.php
-
-		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\BracedExpression\\|Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\Variable\\|Microsoft\\\\PhpParser\\\\Token\\:\\:\\$start\\.$#"
 			count: 1
 			path: lib/ClassMover/Adapter/WorseTolerant/WorseTolerantMemberFinder.php
@@ -56,17 +46,12 @@ parameters:
 			path: lib/ClassMover/Domain/Name/Label.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:base\\(\\) has no return type specified\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between int\\<1, max\\> and 0 will always evaluate to false\\.$#"
 			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
+			path: lib/ClassMover/Domain/Name/Namespace_.php
 
 		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:head\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName\\:\\:transpose\\(\\) has no return type specified\\.$#"
+			message: "#^Parameter \\#1 \\$parts of class Phpactor\\\\ClassMover\\\\Domain\\\\Name\\\\QualifiedName constructor expects non\\-empty\\-array\\<string\\>, array\\<int, non\\-falsy\\-string\\> given\\.$#"
 			count: 1
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
 
@@ -74,26 +59,6 @@ parameters:
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 3
 			path: lib/ClassMover/Domain/Name/QualifiedName.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\SourceCode\\:\\:insertAfter\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/SourceCode.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\SourceCode\\:\\:insertAfter\\(\\) has parameter \\$text with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/SourceCode.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\SourceCode\\:\\:replaceSource\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/SourceCode.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Domain\\\\SourceCode\\:\\:significantLineNumbers\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Domain/SourceCode.php
 
 		-
 			message: "#^Parameter \\#1 \\$finder of class Phpactor\\\\ClassMover\\\\ClassMover constructor expects Phpactor\\\\ClassMover\\\\Domain\\\\ClassFinder\\|null, mixed given\\.$#"
@@ -104,106 +69,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$replacer of class Phpactor\\\\ClassMover\\\\ClassMover constructor expects Phpactor\\\\ClassMover\\\\Domain\\\\ClassReplacer\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/ClassMover/Extension/ClassMoverExtension.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\AdapterTestCase\\:\\:getProjectAutoloader\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/AdapterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\AdapterTestCase\\:\\:workspacePath\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/AdapterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacerTest\\:\\:provideTestFind\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/TolerantParser/TolerantClassReplacerTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacerTest\\:\\:testFind\\(\\) has parameter \\$classFqn with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/TolerantParser/TolerantClassReplacerTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacerTest\\:\\:testFind\\(\\) has parameter \\$expectedSource with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/TolerantParser/TolerantClassReplacerTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacerTest\\:\\:testFind\\(\\) has parameter \\$fileName with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/TolerantParser/TolerantClassReplacerTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\TolerantParser\\\\TolerantClassReplacerTest\\:\\:testFind\\(\\) has parameter \\$replaceWithFqn with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/TolerantParser/TolerantClassReplacerTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinderTest\\:\\:provideFindMember\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/WorseTolerant/WorseTolerantMemberFinderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberFinderTest\\:\\:provideOffset\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/WorseTolerant/WorseTolerantMemberFinderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Adapter\\\\WorseTolerant\\\\WorseTolerantMemberReplacerTest\\:\\:provideTestReplace\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Adapter/WorseTolerant/WorseTolerantMemberReplacerTest.php
-
-		-
-			message: "#^Method Acme\\\\Foobar\\\\Reflection\\\\ReflectionDefaultValue\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Assets/project/src/ReflectionDefaultValue.php
-
-		-
-			message: "#^Method Acme\\\\Foobar\\\\Reflection\\\\ReflectionDefaultValue\\:\\:fromValue\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Assets/project/src/ReflectionDefaultValue.php
-
-		-
-			message: "#^Method Acme\\\\Foobar\\\\Reflection\\\\ReflectionDefaultValue\\:\\:value\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Assets/project/src/ReflectionDefaultValue.php
-
-		-
-			message: "#^Property Acme\\\\Foobar\\\\Reflection\\\\ReflectionDefaultValue\\:\\:\\$undefined has no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Assets/project/src/ReflectionDefaultValue.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\Domain\\\\SourceCodeTest\\:\\:provideAddUse\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/Domain/SourceCodeTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\Domain\\\\SourceCodeTest\\:\\:provideNamespaceAdd\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/Domain/SourceCodeTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\Domain\\\\SourceCodeTest\\:\\:testAddUse\\(\\) has parameter \\$expected with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/Domain/SourceCodeTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\Domain\\\\SourceCodeTest\\:\\:testAddUse\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/Domain/SourceCodeTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\Domain\\\\SourceCodeTest\\:\\:testNamespaceAdd\\(\\) has parameter \\$expected with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/Domain/SourceCodeTest.php
-
-		-
-			message: "#^Method Phpactor\\\\ClassMover\\\\Tests\\\\Unit\\\\Domain\\\\SourceCodeTest\\:\\:testNamespaceAdd\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/ClassMover/Tests/Unit/Domain/SourceCodeTest.php
 
 		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\:\\:\\$name\\.$#"
@@ -236,62 +101,12 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/TolerantUpdater.php
 
 		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\TolerantUpdater\\:\\:\\$edits has unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\TextEdit as its type\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/TolerantUpdater.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\TolerantUpdater\\:\\:\\$edits is never read, only written\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/TolerantUpdater.php
-
-		-
-			message: "#^Argument of an invalid type Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\|null supplied for foreach, only iterables are supported\\.$#"
+			message: "#^Access to an undefined property TMembersNodeType of Microsoft\\\\PhpParser\\\\Node\\:\\:\\$openBrace\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
 
 		-
-			message: "#^Cannot call method count\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\AbstractMethodUpdater\\:\\:memberDeclarations\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\AbstractMethodUpdater\\:\\:memberDeclarationsNode\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\AbstractMethodUpdater\\:\\:prototypeSameAsDeclaration\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\AbstractMethodUpdater\\:\\:renderMethod\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(Microsoft\\\\PhpParser\\\\Node\\\\Parameter\\)\\: string given\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function substr expects string, bool\\|string\\|null given\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
-
-		-
-			message: "#^Parameter \\#3 \\$bodyNode of method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\AbstractMethodUpdater\\:\\:appendLinesToMethod\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\CompoundStatementNode\\|Microsoft\\\\PhpParser\\\\Token given\\.$#"
+			message: "#^Parameter \\#3 \\$bodyNode of method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\AbstractMethodUpdater\\<TMembersNodeType of Microsoft\\\\PhpParser\\\\Node\\>\\:\\:appendLinesToMethod\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\CompoundStatementNode\\|Microsoft\\\\PhpParser\\\\Token given\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/AbstractMethodUpdater.php
 
@@ -306,29 +121,9 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassLikeUpdater.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassLikeUpdater\\:\\:memberDeclarations\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassLikeUpdater.php
-
-		-
 			message: "#^Parameter \\#1 \\$property of method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassLikeUpdater\\:\\:resolvePropertyName\\(\\) expects Microsoft\\\\PhpParser\\\\Node\\|Microsoft\\\\PhpParser\\\\Token, mixed given\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassLikeUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassMethodUpdater\\:\\:memberDeclarations\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassMethodUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassMethodUpdater\\:\\:memberDeclarationsNode\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassMethodUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ClassMethodUpdater\\:\\:renderMethod\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassMethodUpdater.php
 
 		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\:\\:\\$classMemberDeclarations\\.$#"
@@ -371,21 +166,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/InterfaceMethodUpdater.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\InterfaceMethodUpdater\\:\\:memberDeclarations\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/InterfaceMethodUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\InterfaceMethodUpdater\\:\\:memberDeclarationsNode\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/InterfaceMethodUpdater.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\InterfaceMethodUpdater\\:\\:renderMethod\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/InterfaceMethodUpdater.php
-
-		-
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\InterfaceUpdater\\:\\:\\$renderer is never read, only written\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/InterfaceUpdater.php
@@ -397,16 +177,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method getStartPosition\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Cannot call method type\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
-
-		-
-			message: "#^Cannot cast mixed to string\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/UseStatementUpdater.php
 

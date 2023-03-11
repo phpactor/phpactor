@@ -74,9 +74,6 @@ class ClassUpdater extends ClassLikeUpdater
         }
     }
 
-    /**
-     * @return Node[]
-     */
     protected function memberDeclarations(Node $node): array
     {
         return $node->classMemberDeclarations;

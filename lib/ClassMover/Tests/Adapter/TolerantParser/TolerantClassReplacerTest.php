@@ -17,7 +17,7 @@ class TolerantClassReplacerTest extends TestCase
      * @testdox It finds all class references.
      * @dataProvider provideTestFind
      */
-    public function testFind($fileName, $classFqn, $replaceWithFqn, $expectedSource): void
+    public function testFind(string $fileName, string $classFqn, string $replaceWithFqn, string $expectedSource): void
     {
         $parser = new Parser();
         $tolerantRefFinder = new TolerantClassFinder($parser);
@@ -38,7 +38,10 @@ class TolerantClassReplacerTest extends TestCase
         self::assertStringContainsString($stripEmptyLines($expectedSource), $stripEmptyLines($edits->apply($source->__toString())));
     }
 
-    public function provideTestFind()
+    /**
+     * @return array<string, array<string>>
+     */
+    public function provideTestFind(): array
     {
         return [
             'Change references of moved class' => [

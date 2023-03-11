@@ -17,7 +17,7 @@ abstract class AdapterTestCase extends TestCase
         $filesystem->mkdir($this->workspacePath());
     }
 
-    protected function workspacePath()
+    protected function workspacePath(): string
     {
         return __DIR__ . '/../Assets/workspace';
     }
@@ -31,7 +31,7 @@ abstract class AdapterTestCase extends TestCase
         exec('composer dumpautoload 2> /dev/null');
     }
 
-    protected function getProjectAutoloader()
+    protected function getProjectAutoloader(): mixed
     {
         return require(__DIR__ . '/project/vendor/autoload.php');
     }
