@@ -19,6 +19,7 @@
         "thecodingmachine/safe": "^1.0",
         "phpactor/phly-event-dispatcher": "^2.0.0",
         "phpactor/language-server": "^4.0",
+        "phpactor/language-server-protocol": "dev-master as 3.17.1",
         "dantleech/object-renderer": "^0.1.1",
         "monolog/monolog": "^1.23",
         "sebastian/diff": "^4.0",

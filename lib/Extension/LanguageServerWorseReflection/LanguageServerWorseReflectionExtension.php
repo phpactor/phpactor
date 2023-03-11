@@ -6,6 +6,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider\WorseDiagnosticProvider;
+use Phpactor\Extension\LanguageServerWorseReflection\Handler\InlayHintHandler;
 use Phpactor\Extension\LanguageServerWorseReflection\SourceLocator\WorkspaceSourceLocator;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndexListener;
@@ -61,5 +62,9 @@ class LanguageServerWorseReflectionExtension implements Extension
         $container->register(WorseDiagnosticProvier::class, function (Container $container) {
             return new WorseDiagnosticProvider($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
         }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', true) ]);
+
+        $container->register(InlayHintHandler::class, function (Container $container) {
+            return new InlayHintHandler();
+        }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
     }
 }
