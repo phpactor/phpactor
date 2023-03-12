@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
+use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
@@ -122,7 +123,10 @@ class ServiceLocator
             $this->reflector,
             $this->docblockFactory,
             $this->logger,
-            $this->cache(),
+            // use a cache which is local to this resolver instance
+            // this avoids issues with stale cache data while also
+            // providing memoised caching for this resolver instance.
+            new StaticCache(),
             (new DefaultResolverFactory(
                 $this->reflector,
                 $this->nameResolver,

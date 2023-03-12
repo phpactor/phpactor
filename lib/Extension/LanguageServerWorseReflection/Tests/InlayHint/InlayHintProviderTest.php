@@ -34,6 +34,9 @@ class InlayHintProviderTest extends IntegrationTestCase
         ));
     }
 
+    /**
+     * @return Generator<string,array{string,Closure(array): void}>
+     */
     public function provideInlayHintProvider(): Generator
     {
         yield 'inlay hint for member' => [
