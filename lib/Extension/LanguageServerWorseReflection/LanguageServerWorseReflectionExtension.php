@@ -14,12 +14,16 @@ use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndexLis
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class LanguageServerWorseReflectionExtension implements Extension
 {
     const PARAM_UPDATE_INTERVAL = 'language_server_worse_reflection.workspace_index.update_interval';
+    const PARAM_INLAY_HINTS_ENABLE = 'language_server_worse_reflection.inlay_hints.enable';
+
 
 
     public function load(ContainerBuilder $container): void
@@ -31,6 +35,7 @@ class LanguageServerWorseReflectionExtension implements Extension
     {
         $schema->setDefaults([
             self::PARAM_UPDATE_INTERVAL => 100,
+            self::PARAM_INLAY_HINTS_ENABLE => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_UPDATE_INTERVAL => 'Minimum interval to update the workspace index as documents are updated (in milliseconds)'
@@ -65,11 +70,14 @@ class LanguageServerWorseReflectionExtension implements Extension
         }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', true) ]);
 
         $container->register(InlayHintHandler::class, function (Container $container) {
+            if (false === $container->get(self::PARAM_INLAY_HINTS_ENABLE)) {
+                return null;
+            }
             return new InlayHintHandler(
                 new InlayHintProvider(
-                    $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                    $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, SourceCodeReflector::class),
                 ),
-                    $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE)
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class)
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
     }

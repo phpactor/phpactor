@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerWorseReflection\InlayHint;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\InlayHint;
 use Phpactor\LanguageServerProtocol\InlayHintKind;
@@ -21,6 +22,7 @@ class InlayHintWalker implements Walker
      * @var InlayHint[]
      */
     private array $hints = [];
+
     public function __construct(private ByteOffsetRange $range)
     {
     }
@@ -43,16 +45,35 @@ class InlayHintWalker implements Walker
         if ($node->getEndPosition() > $this->range->end()->toInt()) {
             return $frame;
         }
-        if (!$node instanceof CallExpression) {
+        if ($node instanceof Variable) {
+            $this->fromVariable($resolver, $frame, $node);
             return $frame;
         }
+        if ($node instanceof CallExpression) {
+            $this->fromCall($resolver, $frame, $node);
+            return $frame;
+        }
+        return $frame;
+    }
+
+
+    /**
+     * @return InlayHint[]
+     */
+    public function hints(): array
+    {
+        return $this->hints;
+    }
+
+    private function fromCall(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    {
         $context = $resolver->resolveNode($frame, $node);
         if (!$context instanceof MemberAccessContext) {
-            return $frame;
+            return;
         }
         $method = $context->accessedMember();
         if (!$method instanceof ReflectionMethod) {
-            return $frame;
+            return;
         }
 
         $parameters = $method->parameters();
@@ -72,14 +93,20 @@ class InlayHintWalker implements Walker
                 tooltip: $parameter->type()->__toString(),
             );
         }
-        return $frame;
     }
 
-    /**
-     * @return InlayHint[]
-     */
-    public function hints(): array
+    private function fromVariable(FrameResolver $resolver, Frame $frame, Variable $node): void
     {
-        return $this->hints;
+        $name = $node->getName();
+        $variable = $frame->locals()->byName($name)->lastOrNull();
+        if (null === $variable) {
+            return;
+        }
+        $this->hints[] = new InlayHint(
+            position: PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $node->getFileContents()),
+            label: $variable->type()->__toString(),
+            kind: InlayHintKind::TYPE,
+            textEdits: null,
+        );
     }
 }

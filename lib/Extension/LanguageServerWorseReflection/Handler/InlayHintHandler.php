@@ -33,7 +33,6 @@ class InlayHintHandler implements Handler, CanRegisterCapabilities
     public function inlayHint(TextDocumentIdentifier $textDocument, Range $range): Promise
     {
         $document = $this->workspace->get($textDocument->uri);
-        dump($range);
 
         return new Success($this->provider->inlayHints(
             TextDocumentConverter::fromLspTextItem($document),
