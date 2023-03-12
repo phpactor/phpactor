@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f413767c746a45e4d299a83bb5e89e6b",
+    "content-hash": "7bd24f37ef14513f31642820e3bc52b3",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1588,20 +1588,20 @@
         },
         {
             "name": "phpactor/container",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/container.git",
-                "reference": "0ff1ec3e99063e75e136947672bedfe685b84777"
+                "reference": "d81d93ec171fe852252b19a8dc675557b06ced0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/container/zipball/0ff1ec3e99063e75e136947672bedfe685b84777",
-                "reference": "0ff1ec3e99063e75e136947672bedfe685b84777",
+                "url": "https://api.github.com/repos/phpactor/container/zipball/d81d93ec171fe852252b19a8dc675557b06ced0e",
+                "reference": "d81d93ec171fe852252b19a8dc675557b06ced0e",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0",
+                "php": "^8.0",
                 "phpactor/map-resolver": "^1.4",
                 "psr/container": "^1.0"
             },
@@ -1636,9 +1636,9 @@
             "description": "Phpactor's DI Container",
             "support": {
                 "issues": "https://github.com/phpactor/container/issues",
-                "source": "https://github.com/phpactor/container/tree/2.1.0"
+                "source": "https://github.com/phpactor/container/tree/2.2.0"
             },
-            "time": "2023-02-19T10:24:36+00:00"
+            "time": "2023-03-12T11:35:18+00:00"
         },
         {
             "name": "phpactor/language-server",
@@ -1708,7 +1708,7 @@
         },
         {
             "name": "phpactor/language-server-protocol",
-            "version": "dev-master",
+            "version": "3.17.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-protocol.git",
@@ -1730,7 +1730,6 @@
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.2"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1755,7 +1754,7 @@
             "description": "Langauge Server Protocol for PHP (transpiled)",
             "support": {
                 "issues": "https://github.com/phpactor/language-server-protocol/issues",
-                "source": "https://github.com/phpactor/language-server-protocol/tree/master"
+                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17.3"
             },
             "time": "2023-03-11T13:19:45+00:00"
         },
@@ -7796,17 +7795,9 @@
             "time": "2022-11-06T20:37:08+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "phpactor/language-server-protocol",
-            "version": "9999999-dev",
-            "alias": "3.17.1",
-            "alias_normalized": "3.17.1.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/language-server-protocol": 20,
         "jetbrains/phpstorm-stubs": 20,
         "phpactor/tolerant-php-parser": 20,
         "dms/phpunit-arraysubset-asserts": 20
