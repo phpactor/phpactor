@@ -22,12 +22,10 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class LanguageServerWorseReflectionExtension implements Extension
 {
-    const PARAM_UPDATE_INTERVAL = 'language_server_worse_reflection.workspace_index.update_interval';
-    const PARAM_INLAY_HINTS_ENABLE = 'language_server_worse_reflection.inlay_hints.enable';
-    const PARAM_INLAY_HINTS_TYPES = 'language_server_worse_reflection.inlay_hints.types';
-    const PARAM_INLAY_HINTS_PARAMS = 'language_server_worse_reflection.inlay_hints.params';
-
-
+    public const PARAM_UPDATE_INTERVAL = 'language_server_worse_reflection.workspace_index.update_interval';
+    public const PARAM_INLAY_HINTS_ENABLE = 'language_server_worse_reflection.inlay_hints.enable';
+    public const PARAM_INLAY_HINTS_TYPES = 'language_server_worse_reflection.inlay_hints.types';
+    public const PARAM_INLAY_HINTS_PARAMS = 'language_server_worse_reflection.inlay_hints.params';
 
     public function load(ContainerBuilder $container): void
     {
@@ -43,7 +41,10 @@ class LanguageServerWorseReflectionExtension implements Extension
             self::PARAM_INLAY_HINTS_PARAMS => true,
         ]);
         $schema->setDescriptions([
-            self::PARAM_UPDATE_INTERVAL => 'Minimum interval to update the workspace index as documents are updated (in milliseconds)'
+            self::PARAM_UPDATE_INTERVAL => 'Minimum interval to update the workspace index as documents are updated (in milliseconds)',
+            self::PARAM_INLAY_HINTS_ENABLE => 'Enable inlay hints',
+            self::PARAM_INLAY_HINTS_TYPES => 'Show inlay type hints for variables (experimental)',
+            self::PARAM_INLAY_HINTS_PARAMS => 'Show inlay hints for parameters',
         ]);
     }
 
