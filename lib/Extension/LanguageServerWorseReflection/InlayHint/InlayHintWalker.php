@@ -104,7 +104,8 @@ class InlayHintWalker implements Walker
         }
         $this->hints[] = new InlayHint(
             position: PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $node->getFileContents()),
-            label: $variable->type()->__toString(),
+            label: $variable->type()->short(),
+            tooltip: $variable->type()->__toString(),
             kind: InlayHintKind::TYPE,
             textEdits: null,
         );

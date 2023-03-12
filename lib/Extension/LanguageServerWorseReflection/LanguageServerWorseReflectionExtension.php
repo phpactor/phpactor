@@ -70,7 +70,7 @@ class LanguageServerWorseReflectionExtension implements Extension
         }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', true) ]);
 
         $container->register(InlayHintHandler::class, function (Container $container) {
-            if (false === $container->get(self::PARAM_INLAY_HINTS_ENABLE)) {
+            if (false === $container->getParameter(self::PARAM_INLAY_HINTS_ENABLE)) {
                 return null;
             }
             return new InlayHintHandler(
