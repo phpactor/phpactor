@@ -37,14 +37,14 @@ class LanguageServerWorseReflectionExtension implements Extension
     {
         $schema->setDefaults([
             self::PARAM_UPDATE_INTERVAL => 100,
-            self::PARAM_INLAY_HINTS_ENABLE => true,
+            self::PARAM_INLAY_HINTS_ENABLE => false,
             self::PARAM_INLAY_HINTS_TYPES => false,
             self::PARAM_INLAY_HINTS_PARAMS => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_UPDATE_INTERVAL => 'Minimum interval to update the workspace index as documents are updated (in milliseconds)',
-            self::PARAM_INLAY_HINTS_ENABLE => 'Enable inlay hints',
-            self::PARAM_INLAY_HINTS_TYPES => 'Show inlay type hints for variables (experimental)',
+            self::PARAM_INLAY_HINTS_ENABLE => 'Enable inlay hints (experimental)',
+            self::PARAM_INLAY_HINTS_TYPES => 'Show inlay type hints for variables',
             self::PARAM_INLAY_HINTS_PARAMS => 'Show inlay hints for parameters',
         ]);
     }
