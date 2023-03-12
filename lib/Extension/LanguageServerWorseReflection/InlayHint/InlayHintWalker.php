@@ -5,12 +5,10 @@ namespace Phpactor\Extension\LanguageServerWorseReflection\InlayHint;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
-use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\InlayHint;
 use Phpactor\LanguageServerProtocol\InlayHintKind;
-use Phpactor\LanguageServerProtocol\Position;
-use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
@@ -23,6 +21,9 @@ class InlayHintWalker implements Walker
      * @var InlayHint[]
      */
     private array $hints = [];
+    public function __construct(private ByteOffsetRange $range)
+    {
+    }
 
     public function nodeFqns(): array
     {
@@ -36,6 +37,12 @@ class InlayHintWalker implements Walker
 
     public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
     {
+        if ($node->getStartPosition() < $this->range->start()->toInt()) {
+            return $frame;
+        }
+        if ($node->getEndPosition() > $this->range->end()->toInt()) {
+            return $frame;
+        }
         if (!$node instanceof CallExpression) {
             return $frame;
         }

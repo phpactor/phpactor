@@ -123,7 +123,7 @@ class ServiceLocator
             $this->reflector,
             $this->docblockFactory,
             $this->logger,
-            new StaticCache(),
+            $this->cache(),
             (new DefaultResolverFactory(
                 $this->reflector,
                 $this->nameResolver,
