@@ -1375,6 +1375,45 @@ Minimum interval to update the workspace index as documents are updated (in mill
 **Default**: ``100``
 
 
+.. _param_language_server_worse_reflection.inlay_hints.enable:
+
+
+``language_server_worse_reflection.inlay_hints.enable``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable inlay hints (experimental)
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_worse_reflection.inlay_hints.types:
+
+
+``language_server_worse_reflection.inlay_hints.types``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Show inlay type hints for variables
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_worse_reflection.inlay_hints.params:
+
+
+``language_server_worse_reflection.inlay_hints.params``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Show inlay hints for parameters
+
+
+**Default**: ``true``
+
+
 .. _LanguageServerIndexerExtension:
 
 
