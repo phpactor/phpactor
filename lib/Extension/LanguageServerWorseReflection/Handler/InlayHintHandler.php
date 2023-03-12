@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\LanguageServerWorseReflection\Handler;
 
 use Amp\Promise;
-use Amp\Success;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintProvider;

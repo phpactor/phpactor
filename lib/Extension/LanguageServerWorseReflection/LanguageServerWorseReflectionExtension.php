@@ -18,6 +18,7 @@ use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class LanguageServerWorseReflectionExtension implements Extension
@@ -67,24 +68,26 @@ class LanguageServerWorseReflectionExtension implements Extension
         $container->register(WorkspaceIndex::class, function (Container $container) {
             return new WorkspaceIndex(
                 ReflectorBuilder::create()->build(),
-                $container->getParameter(self::PARAM_UPDATE_INTERVAL)
+                $container->parameter(self::PARAM_UPDATE_INTERVAL)->int()
             );
         });
 
-        $container->register(WorseDiagnosticProvier::class, function (Container $container) {
-            return new WorseDiagnosticProvider($container->get(WorseReflectionExtension::SERVICE_REFLECTOR));
+        $container->register(WorseDiagnosticProvider::class, function (Container $container) {
+            return new WorseDiagnosticProvider(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
+            );
         }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', true) ]);
 
         $container->register(InlayHintHandler::class, function (Container $container) {
-            if (false === $container->getParameter(self::PARAM_INLAY_HINTS_ENABLE)) {
+            if (false === $container->parameter(self::PARAM_INLAY_HINTS_ENABLE)->bool()) {
                 return null;
             }
             return new InlayHintHandler(
                 new InlayHintProvider(
                     $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, SourceCodeReflector::class),
                     new InlayHintOptions(
-                        $container->getParameter(self::PARAM_INLAY_HINTS_TYPES),
-                        $container->getParameter(self::PARAM_INLAY_HINTS_PARAMS),
+                        $container->parameter(self::PARAM_INLAY_HINTS_TYPES)->bool(),
+                        $container->parameter(self::PARAM_INLAY_HINTS_PARAMS)->bool(),
                     )
                 ),
                 $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class)
