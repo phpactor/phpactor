@@ -30,27 +30,27 @@ final class Visibility
         $this->visibility = $visibility;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->visibility;
     }
 
-    public static function fromString(string $string)
+    public static function fromString(string $string): self
     {
         return new self($string);
     }
 
-    public static function private()
+    public static function private(): self
     {
         return new self(self::PRIVATE);
     }
 
-    public static function protected()
+    public static function protected(): self
     {
         return new self(self::PROTECTED);
     }
 
-    public static function public()
+    public static function public(): self
     {
         return new self(self::PUBLIC);
     }

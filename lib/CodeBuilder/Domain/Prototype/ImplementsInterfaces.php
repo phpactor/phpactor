@@ -7,7 +7,7 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
  */
 class ImplementsInterfaces extends Collection
 {
-    public function __toString()
+    public function __toString(): string
     {
         return implode(', ', array_reduce($this->items, function ($acc, $interfaceName) {
             $acc[] = $interfaceName->__toString();
@@ -15,7 +15,7 @@ class ImplementsInterfaces extends Collection
         }));
     }
 
-    public static function fromTypes(array $types)
+    public static function fromTypes(array $types): self
     {
         return new static(array_reduce($types, function ($acc, $type) {
             $acc[(string) $type] = $type;

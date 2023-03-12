@@ -251,11 +251,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/ConstantBuilder.php
 
 		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\MethodBodyBuilder\\:\\:\\$lines \\(array\\<Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\>\\) does not accept array\\<Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Line\\|Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\>\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/MethodBodyBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:defaultValue\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
@@ -311,79 +306,9 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Collection.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Constants\\:\\:fromConstants\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Constants.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Constants\\:\\:fromConstants\\(\\) has parameter \\$constants with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Constants.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Constants.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\DefaultValue\\:\\:none\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/DefaultValue.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\DefaultValue\\:\\:notNone\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/DefaultValue.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\DefaultValue\\:\\:\\$none has no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/DefaultValue.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Docblock\\:\\:__toString\\(\\) should return string but returns string\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Docblock.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Docblock\\:\\:asLines\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Docblock.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Docblock\\:\\:fromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Docblock.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Docblock\\:\\:none\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Docblock.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Docblock\\:\\:notNone\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Docblock.php
-
-		-
-			message: "#^Parameter \\#2 \\$string of function explode expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Docblock.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsClass\\:\\:fromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ExtendsClass.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsClass\\:\\:fromString\\(\\) has parameter \\$string with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ExtendsClass.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsClass\\:\\:none\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ExtendsClass.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsInterfaces\\:\\:fromTypes\\(\\) has no return type specified\\.$#"
@@ -394,11 +319,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsInterfaces\\:\\:fromTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/ExtendsInterfaces.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces\\:\\:fromTypes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ImplementsInterfaces.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces\\:\\:fromTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
@@ -421,56 +341,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Interfaces.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Line\\:\\:__construct\\(\\) has parameter \\$line with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Line.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\:\\:fromLines\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Lines.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Lines\\:\\:fromLines\\(\\) has parameter \\$lines with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Lines.php
-
-		-
-			message: "#^Property Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\:\\:\\$docblock has no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Method.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\MethodBody\\:\\:fromLines\\(\\) has parameter \\$lines with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/MethodBody.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\MethodBody\\:\\:none\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/MethodBody.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Parameters\\:\\:fromParameters\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Parameters.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Parameters\\:\\:fromParameters\\(\\) has parameter \\$parameters with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Parameters.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Properties\\:\\:fromProperties\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Properties.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Properties\\:\\:fromProperties\\(\\) has parameter \\$properties with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Properties.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Properties.php
@@ -486,31 +356,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/QualifiedName.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ReturnType\\:\\:fromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ReturnType.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ReturnType\\:\\:fromString\\(\\) has parameter \\$string with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ReturnType.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ReturnType\\:\\:none\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ReturnType.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Traits\\:\\:fromTraits\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Traits.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Traits\\:\\:fromTraits\\(\\) has parameter \\$traits with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Traits.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Traits.php
@@ -521,52 +366,7 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/UpdatePolicy.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\UseStatement\\:\\:alias\\(\\) should return string but returns string\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/UseStatement.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\UseStatement\\:\\:fromNameAliasAndType\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/UseStatement.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\UseStatement\\:\\:fromNameAndAlias\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/UseStatement.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\UseStatement\\:\\:fromType\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/UseStatement.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\UseStatement\\:\\:type\\(\\) should return string but returns string\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/UseStatement.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\UseStatements\\:\\:fromUseStatements\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/UseStatements.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\UseStatements\\:\\:fromUseStatements\\(\\) has parameter \\$useStatements with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/UseStatements.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Value\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Value.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Value\\:\\:export\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Value.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Value\\:\\:fromValue\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Value.php
 
@@ -584,26 +384,6 @@ parameters:
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Value.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Visibility\\:\\:fromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Visibility\\:\\:private\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Visibility\\:\\:protected\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Visibility.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Visibility\\:\\:public\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Visibility.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\TemplatePathResolver\\\\PhpVersionPathResolver\\:\\:resolve\\(\\) has parameter \\$paths with no value type specified in iterable type iterable\\.$#"
