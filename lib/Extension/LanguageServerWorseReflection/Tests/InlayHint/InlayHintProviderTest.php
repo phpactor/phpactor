@@ -47,12 +47,22 @@ class InlayHintProviderTest extends IntegrationTestCase
             '<?php class Foo{ function bar(string $bar): void {}} (new Foo())->bar("hello");',
             function (array $hints): void {
                 self::assertCount(1, $hints);
+                $hint = reset($hints);
+                assert($hint instanceof InlayHint);
+                self::assertEquals(0, $hint->position->line);
+                self::assertEquals('bar', $hint->label);
+                self::assertEquals('string', $hint->tooltip);
             }
         ];
         yield 'inlay hint for variable' => [
             '<?php $foo = "foo"; $foo;',
             function (array $hints): void {
                 self::assertCount(2, $hints);
+                $hint = $hints[1];
+                assert($hint instanceof InlayHint);
+                self::assertEquals(0, $hint->position->line);
+                self::assertEquals('string', $hint->label);
+                self::assertEquals('"foo"', $hint->tooltip);
             }
         ];
     }
