@@ -98,10 +98,12 @@ class InlayHintWalker implements Walker
     private function fromVariable(FrameResolver $resolver, Frame $frame, Variable $node): void
     {
         $name = $node->getName();
-        $variable = $frame->locals()->byName($name)->lastOrNull();
-        if (null === $variable) {
+        $variable = $resolver->resolveNode($frame, $node);
+
+        if (false === $variable->type()->isDefined()) {
             return;
         }
+
         $this->hints[] = new InlayHint(
             position: PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $node->getFileContents()),
             label: $variable->type()->short(),
