@@ -8,7 +8,7 @@ class UpdatePolicy
     {
     }
 
-    public static function fromModifiedState(bool $modified)
+    public static function fromModifiedState(bool $modified): self
     {
         return new self($modified);
     }

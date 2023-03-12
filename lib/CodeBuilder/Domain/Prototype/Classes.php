@@ -7,6 +7,9 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
  */
 class Classes extends Collection
 {
+    /**
+     * @param list<ClassPrototype> $classes
+     */
     public static function fromClasses(array $classes): self
     {
         return new static(array_reduce($classes, function ($acc, $class) {

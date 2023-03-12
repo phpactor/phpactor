@@ -719,7 +719,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideTraits()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideTraits(): Generator
     {
         yield 'It does nothing when prototype has only the trait' => [
 
@@ -835,7 +838,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideProperties()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideProperties(): Generator
     {
         yield 'It adds a property' => [
                 <<<'EOT'
@@ -1054,7 +1060,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideTraitProperties()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideTraitProperties(): Generator
     {
         yield 'trait: It adds a property' => [
                 <<<'EOT'
@@ -1659,7 +1668,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideConstants()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideConstants(): Generator
     {
         yield 'It adds a constant' => [
                 <<<'EOT'
@@ -1798,7 +1810,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideInterfaces()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideInterfaces(): Generator
     {
         yield 'It adds an interface' => [
 

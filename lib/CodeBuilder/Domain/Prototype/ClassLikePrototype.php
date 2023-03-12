@@ -23,7 +23,7 @@ abstract class ClassLikePrototype extends Prototype
         $this->constants = $constants ?: Constants::empty();
     }
 
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }

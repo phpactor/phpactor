@@ -151,16 +151,6 @@ parameters:
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
 
 		-
-			message: "#^PHPDoc tag @var for variable \\$memberNode contains unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Updater\\\\ConstDeclaration\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
-
-		-
-			message: "#^Variable \\$memberNode in PHPDoc tag @var does not match any variable in the foreach loop\\: \\$variable$#"
-			count: 1
-			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/ClassUpdater.php
-
-		-
 			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\ClassLike\\:\\:\\$interfaceMembers\\.$#"
 			count: 2
 			path: lib/CodeBuilder/Adapter/TolerantParser/Updater/InterfaceMethodUpdater.php
@@ -261,16 +251,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/TraitBuilder.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Code\\:\\:fromString\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Code.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassLikePrototype\\:\\:name\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ClassLikePrototype.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype\\:\\:extendsClass\\(\\) should return Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsClass but returns Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsClass\\|null\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/ClassPrototype.php
@@ -279,11 +259,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype\\:\\:implementsInterfaces\\(\\) should return Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces but returns Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces\\|null\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/ClassPrototype.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Classes\\:\\:fromClasses\\(\\) has parameter \\$classes with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/Classes.php
 
 		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
@@ -309,16 +284,6 @@ parameters:
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Constants.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsInterfaces\\:\\:fromTypes\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ExtendsInterfaces.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsInterfaces\\:\\:fromTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ExtendsInterfaces.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces\\:\\:fromTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
@@ -361,11 +326,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Traits.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\UpdatePolicy\\:\\:fromModifiedState\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/UpdatePolicy.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Value\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Value.php
@@ -386,33 +346,8 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Value.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\TemplatePathResolver\\\\PhpVersionPathResolver\\:\\:resolve\\(\\) has parameter \\$paths with no value type specified in iterable type iterable\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/TemplatePathResolver/PhpVersionPathResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\TemplatePathResolver\\\\PhpVersionPathResolver\\:\\:resolve\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/TemplatePathResolver/PhpVersionPathResolver.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\SourceBuilder\\:\\:apply\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/SourceBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\SourceBuilder\\:\\:render\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/SourceBuilder.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ClassLikeBuilder\\:\\:property\\(\\)\\.$#"
 			count: 2
-			path: lib/CodeBuilder/Tests/Adapter/GeneratorTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\GeneratorTestCase\\:\\:provideRender\\(\\) has no return type specified\\.$#"
-			count: 1
 			path: lib/CodeBuilder/Tests/Adapter/GeneratorTestCase.php
 
 		-
@@ -431,32 +366,7 @@ parameters:
 			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideConstants\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideFunctionImport\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideInterfaces\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideProperties\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideTraitProperties\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideTraits\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
 
@@ -476,27 +386,7 @@ parameters:
 			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
 
 		-
-			message: "#^Cannot call method methods\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype\\|null\\.$#"
-			count: 15
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method methods\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\InterfacePrototype\\|null\\.$#"
-			count: 4
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
 			message: "#^Cannot call method methods\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\TraitPrototype\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\InterfacePrototype\\|null\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
 
@@ -523,11 +413,6 @@ parameters:
 		-
 			message: "#^Cannot call method parameters\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\|null\\.$#"
 			count: 9
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method properties\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype\\|null\\.$#"
-			count: 8
 			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
 
 		-
@@ -566,7 +451,7 @@ parameters:
 			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Functional\\\\Adapter\\\\TolerantParser\\\\Util\\\\NodeHelperTest\\:\\:findSelfNode\\(\\) has no return type specified\\.$#"
+			message: "#^Parameter \\#2 \\$type of static method Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\Util\\\\NodeHelper\\:\\:resolvedShortName\\(\\) expects Microsoft\\\\PhpParser\\\\Node\\\\QualifiedName\\|Microsoft\\\\PhpParser\\\\Token\\|null, Microsoft\\\\PhpParser\\\\Node given\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Functional/Adapter/TolerantParser/Util/NodeHelperTest.php
 
@@ -1344,31 +1229,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\WorseReflection\\\\Formatter\\\\FunctionLikeSnippetFormatterTest\\:\\:provideReflectionToFormat\\(\\) return type has no value type specified in iterable type iterable\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/WorseReflection/Formatter/FunctionLikeSnippetFormatterTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$completors of class Phpactor\\\\Completion\\\\Core\\\\ChainCompletor constructor expects array\\<Phpactor\\\\Completion\\\\Core\\\\Completor\\>, array\\<Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\> given\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/CompletorTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$completors of method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) expects array\\<Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\>, array\\<int, Phpactor\\\\Completion\\\\Core\\\\Completor\\|Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\> given\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/CompletorTest.php
-
-		-
-			message: "#^Parameter \\$completors of method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:create\\(\\) has invalid type Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/CompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:\\$completor1 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete\\>\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Core\\\\Completor\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/CompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CompletorTest\\:\\:\\$completor1 has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\CouldComplete as its type\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/CompletorTest.php
 
 		-
 			message: "#^Call to an undefined method Phpactor\\\\Completion\\\\Core\\\\SignatureHelp\\:\\:willReturn\\(\\)\\.$#"
@@ -4281,36 +4141,6 @@ parameters:
 			path: lib/Extension/LanguageServer/Tests/Unit/Handler/DebugHandlerTest.php
 
 		-
-			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Offset 'message' does not exist on array\\<string, mixed\\>\\|null\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Offset 'name' does not exist on array\\{name\\: string, version\\: string\\}\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$response of method Phpactor\\\\Extension\\\\LanguageServer\\\\Tests\\\\Unit\\\\LanguageServerTestCase\\:\\:assertSuccess\\(\\) expects Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage, Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null given\\.$#"
-			count: 4
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
 			message: "#^Parameter \\#4 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerTestCase.php
@@ -5549,21 +5379,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\DiagnosticProvider\\\\WorseDiagnosticProvider\\:\\:provideDiagnostics\\(\\) should return Amp\\\\Promise\\<array\\<Phpactor\\\\LanguageServerProtocol\\\\Diagnostic\\>\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerWorseReflection/DiagnosticProvider/WorseDiagnosticProvider.php
-
-		-
-			message: "#^Class Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\WorseDiagnosticProvier not found\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerWorseReflection/LanguageServerWorseReflectionExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\DiagnosticProvider\\\\WorseDiagnosticProvider constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerWorseReflection/LanguageServerWorseReflectionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$updateInterval of class Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\Workspace\\\\WorkspaceIndex constructor expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerWorseReflection/LanguageServerWorseReflectionExtension.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\Tests\\\\Benchmark\\\\WorkspaceIndexBench\\:\\:benchUpdate\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
@@ -7859,11 +7674,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:root\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:build\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame but returns Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/FrameResolver.php
 
 		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
