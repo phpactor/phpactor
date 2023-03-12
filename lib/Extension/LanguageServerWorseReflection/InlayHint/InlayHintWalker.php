@@ -3,11 +3,19 @@
 namespace Phpactor\Extension\LanguageServerWorseReflection\InlayHint;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\InlayHint;
+use Phpactor\LanguageServerProtocol\InlayHintKind;
+use Phpactor\LanguageServerProtocol\Position;
+use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 class InlayHintWalker implements Walker
 {
@@ -32,6 +40,31 @@ class InlayHintWalker implements Walker
             return $frame;
         }
         $context = $resolver->resolveNode($frame, $node);
+        if (!$context instanceof MemberAccessContext) {
+            return $frame;
+        }
+        $method = $context->accessedMember();
+        if (!$method instanceof ReflectionMethod) {
+            return $frame;
+        }
+
+        $parameters = $method->parameters();
+        foreach ($node->argumentExpressionList?->getValues() ?? [] as $index => $argument) {
+            if (!$argument instanceof ArgumentExpression) {
+                continue;
+            }
+            $parameter = $parameters->at($index);
+            if (null === $parameter) {
+                break;
+            }
+            $this->hints[] = new InlayHint(
+                position: PositionConverter::intByteOffsetToPosition($argument->getStartPosition(), $node->getFileContents()),
+                label: $parameter->name(),
+                kind: InlayHintKind::PARAMETER,
+                textEdits: null,
+                tooltip: $parameter->type()->__toString(),
+            );
+        }
         return $frame;
     }
 

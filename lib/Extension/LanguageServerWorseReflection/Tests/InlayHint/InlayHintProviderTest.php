@@ -21,14 +21,14 @@ class InlayHintProviderTest extends IntegrationTestCase
         Closure $assertion
     ): void {
         $assertion((new InlayHintProvider(
-            ReflectorBuilder::create()->build()
+            ReflectorBuilder::create()->addSource($source)->build()
         ))->inlayHints(TextDocumentBuilder::create($source)->build()));
     }
 
     public function provideInlayHintProvider(): Generator
     {
-        yield 'inlay hint for argument' => [
-            '<?php function foo(string $bar) {} foo("hello");',
+        yield 'inlay hint for member' => [
+            '<?php class Foo{ function bar(string $bar): void {}} (new Foo())->bar("hello");',
             function (array $hints): void {
                 dump($hints);
             }
