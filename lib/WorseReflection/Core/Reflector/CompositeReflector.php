@@ -2,8 +2,11 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector;
 
+use Generator;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
@@ -118,5 +121,10 @@ class CompositeReflector implements Reflector
     public function sourceCodeForConstant($name): SourceCode
     {
         return $this->constantReflector->sourceCodeForConstant($name);
+    }
+
+    public function walk(TextDocument $sourceCode, Walker $walker): Generator
+    {
+        return $this->sourceCodeReflector->walk($sourceCode, $walker);
     }
 }

@@ -2,8 +2,11 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector\SourceCode;
 
+use Generator;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
@@ -82,5 +85,10 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
     public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection
     {
         return $this->innerReflector->reflectConstantsIn($sourceCode);
+    }
+
+    public function walk(TextDocument $sourceCode, Walker $walker): Generator
+    {
+        return $this->innerReflector->walk($sourceCode, $walker);
     }
 }

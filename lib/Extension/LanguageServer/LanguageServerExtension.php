@@ -486,7 +486,7 @@ class LanguageServerExtension implements Extension
         $container->register(AggregateDiagnosticsProvider::class, function (Container $container) {
             $providers = $this->collectDiagnosticProviders(
                 $container,
-                outsourced: $container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE) ? false : true,
+                outsourced: $container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE) ? false : null,
             );
 
             return new AggregateDiagnosticsProvider(
@@ -575,13 +575,13 @@ class LanguageServerExtension implements Extension
     /**
      * @return DiagnosticsProvider[]
      */
-    private function collectDiagnosticProviders(Container $container, bool $outsourced): array
+    private function collectDiagnosticProviders(Container $container, ?bool $outsourced): array
     {
         $providers = [];
         foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
             Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
 
-            if (($attrs[DiagnosticProviderTag::OUTSOURCE] ?? false) !== $outsourced) {
+            if (null !== $outsourced && ($attrs[DiagnosticProviderTag::OUTSOURCE] ?? false) !== $outsourced) {
                 continue;
             }
 

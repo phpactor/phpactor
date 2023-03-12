@@ -123,6 +123,9 @@ class ServiceLocator
             $this->reflector,
             $this->docblockFactory,
             $this->logger,
+            // use a cache which is local to this resolver instance
+            // this avoids issues with stale cache data while also
+            // providing memoised caching for this resolver instance.
             new StaticCache(),
             (new DefaultResolverFactory(
                 $this->reflector,

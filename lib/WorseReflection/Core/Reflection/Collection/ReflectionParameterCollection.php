@@ -91,4 +91,16 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
     {
         $this->items[$parameter->name()] = $parameter;
     }
+
+    public function at(int $index): ?PhpactorReflectionParameter
+    {
+        $offset = 0;
+        foreach ($this->items as $item) {
+            if ($offset++ === $index) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
 }
