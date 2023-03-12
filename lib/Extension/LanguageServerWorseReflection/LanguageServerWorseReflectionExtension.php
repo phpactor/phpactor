@@ -7,6 +7,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider\WorseDiagnosticProvider;
 use Phpactor\Extension\LanguageServerWorseReflection\Handler\InlayHintHandler;
+use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintOptions;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintProvider;
 use Phpactor\Extension\LanguageServerWorseReflection\SourceLocator\WorkspaceSourceLocator;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
@@ -23,6 +24,8 @@ class LanguageServerWorseReflectionExtension implements Extension
 {
     const PARAM_UPDATE_INTERVAL = 'language_server_worse_reflection.workspace_index.update_interval';
     const PARAM_INLAY_HINTS_ENABLE = 'language_server_worse_reflection.inlay_hints.enable';
+    const PARAM_INLAY_HINTS_TYPES = 'language_server_worse_reflection.inlay_hints.types';
+    const PARAM_INLAY_HINTS_PARAMS = 'language_server_worse_reflection.inlay_hints.params';
 
 
 
@@ -36,6 +39,8 @@ class LanguageServerWorseReflectionExtension implements Extension
         $schema->setDefaults([
             self::PARAM_UPDATE_INTERVAL => 100,
             self::PARAM_INLAY_HINTS_ENABLE => true,
+            self::PARAM_INLAY_HINTS_TYPES => false,
+            self::PARAM_INLAY_HINTS_PARAMS => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_UPDATE_INTERVAL => 'Minimum interval to update the workspace index as documents are updated (in milliseconds)'
@@ -76,6 +81,10 @@ class LanguageServerWorseReflectionExtension implements Extension
             return new InlayHintHandler(
                 new InlayHintProvider(
                     $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, SourceCodeReflector::class),
+                    new InlayHintOptions(
+                        $container->getParameter(self::PARAM_INLAY_HINTS_TYPES),
+                        $container->getParameter(self::PARAM_INLAY_HINTS_PARAMS),
+                    )
                 ),
                 $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class)
             );

@@ -4,12 +4,14 @@ namespace Phpactor\Extension\LanguageServerWorseReflection\Tests\InlayHint;
 
 use Closure;
 use Generator;
+use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintOptions;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintProvider;
 use Phpactor\Extension\LanguageServerWorseReflection\Tests\IntegrationTestCase;
 use Phpactor\LanguageServerProtocol\InlayHint;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use function Amp\Promise\wait;
 
 class InlayHintProviderTest extends IntegrationTestCase
 {
@@ -21,8 +23,9 @@ class InlayHintProviderTest extends IntegrationTestCase
         string $source,
         Closure $assertion
     ): void {
-        $assertion((new InlayHintProvider(
+        $hints = wait((new InlayHintProvider(
             ReflectorBuilder::create()->addSource($source)->build(),
+            new InlayHintOptions(true, true),
         ))->inlayHints(
             TextDocumentBuilder::create(
                 $source
@@ -32,10 +35,11 @@ class InlayHintProviderTest extends IntegrationTestCase
                 strlen($source)
             )
         ));
+        $assertion($hints);
     }
 
     /**
-     * @return Generator<string,array{string,Closure(array): void}>
+     * @return Generator<string,array{string,Closure(list<InlayHint>): void}>
      */
     public function provideInlayHintProvider(): Generator
     {

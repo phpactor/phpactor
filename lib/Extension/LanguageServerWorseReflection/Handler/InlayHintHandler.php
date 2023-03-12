@@ -34,10 +34,10 @@ class InlayHintHandler implements Handler, CanRegisterCapabilities
     {
         $document = $this->workspace->get($textDocument->uri);
 
-        return new Success($this->provider->inlayHints(
+        return $this->provider->inlayHints(
             TextDocumentConverter::fromLspTextItem($document),
             RangeConverter::toPhpactorRange($range, $document->text)
-        ));
+        );
     }
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void

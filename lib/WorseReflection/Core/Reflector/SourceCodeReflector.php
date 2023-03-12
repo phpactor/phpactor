@@ -2,11 +2,13 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector;
 
+use Generator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
@@ -70,6 +72,7 @@ interface SourceCodeReflector
     /**
      * Walk the given source code's AST with the provided walker.
      * The walker is able to resolve nodes and has access to the frame.
+     * @return Generator<int,null,null,?Frame>
      */
-    public function walk(TextDocument $sourceCode, Walker $walker): void;
+    public function walk(TextDocument $sourceCode, Walker $walker): Generator;
 }

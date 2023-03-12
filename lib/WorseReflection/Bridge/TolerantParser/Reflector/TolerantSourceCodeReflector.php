@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
+use Generator;
 use Phpactor\TextDocument\ByteOffset;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\TextDocument\TextDocument;
@@ -79,11 +80,11 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         );
     }
 
-    public function walk(TextDocument $sourceCode, Walker $walker): void
+    public function walk(TextDocument $sourceCode, Walker $walker): Generator
     {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
         $rootNode = $this->parseSourceCode($sourceCode);
-        $this->serviceLocator->frameBuilder()->withWalker($walker)->build($rootNode);
+        return $this->serviceLocator->frameBuilder()->withWalker($walker)->buildGenerator($rootNode);
     }
 
     public function reflectMethodCall(

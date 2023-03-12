@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector\SourceCode;
 
+use Generator;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostics;
@@ -86,8 +87,8 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
         return $this->innerReflector->reflectConstantsIn($sourceCode);
     }
 
-    public function walk(TextDocument $sourceCode, Walker $walker): void
+    public function walk(TextDocument $sourceCode, Walker $walker): Generator
     {
-        $this->innerReflector->walk($sourceCode, $walker);
+        return $this->innerReflector->walk($sourceCode, $walker);
     }
 }

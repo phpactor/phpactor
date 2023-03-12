@@ -23,7 +23,7 @@ class InlayHintWalker implements Walker
      */
     private array $hints = [];
 
-    public function __construct(private ByteOffsetRange $range)
+    public function __construct(private ByteOffsetRange $range, private InlayHintOptions $options)
     {
     }
 
@@ -45,11 +45,11 @@ class InlayHintWalker implements Walker
         if ($node->getEndPosition() > $this->range->end()->toInt()) {
             return $frame;
         }
-        if ($node instanceof Variable) {
+        if ($this->options->types && $node instanceof Variable) {
             $this->fromVariable($resolver, $frame, $node);
             return $frame;
         }
-        if ($node instanceof CallExpression) {
+        if ($this->options->params && $node instanceof CallExpression) {
             $this->fromCall($resolver, $frame, $node);
             return $frame;
         }
