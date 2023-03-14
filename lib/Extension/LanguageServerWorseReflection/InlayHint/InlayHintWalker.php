@@ -47,11 +47,9 @@ class InlayHintWalker implements Walker
         }
         if ($this->options->types && $node instanceof Variable) {
             $this->fromVariable($resolver, $frame, $node);
-            return $frame;
         }
         if ($this->options->params && $node instanceof CallExpression) {
             $this->fromCall($resolver, $frame, $node);
-            return $frame;
         }
         return $frame;
     }

@@ -6,6 +6,7 @@ use Amp\CancellationTokenSource;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Tests\Unit\LanguageServerTestCase;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Psr\Log\NullLogger;
 use function Amp\Promise\wait;
 
 class OutsourcedDiagnosticsProvierTest extends LanguageServerTestCase
@@ -15,7 +16,7 @@ class OutsourcedDiagnosticsProvierTest extends LanguageServerTestCase
         $provider = new OutsourcedDiagnosticsProvider([
             __DIR__ . '/../../../../../../bin/phpactor',
             'language-server:diagnostics',
-        ], $this->workspace()->path());
+        ], $this->workspace()->path(), new NullLogger());
         $diagnostics = wait($provider->provideDiagnostics(
             ProtocolFactory::textDocumentItem('file:///foo', '<?php echo Hello::class'),
             (new CancellationTokenSource())->getToken()

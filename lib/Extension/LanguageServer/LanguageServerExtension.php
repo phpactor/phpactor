@@ -104,6 +104,7 @@ class LanguageServerExtension implements Extension
     public const LOG_CHANNEL = 'LSP';
     public const PARAM_SHUTDOWN_GRACE_PERIOD = 'language_server.shutdown_grace_period';
     public const PARAM_SELF_DESTRUCT_TIMEOUT = 'language_server.self_destruct_timeout';
+    const PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT = 'language_server.diagnostic_outsource_timeout';
 
     public function configure(Resolver $schema): void
     {
@@ -124,6 +125,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_TRACE => false,
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 200,
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 2500,
+            self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 5,
         ]);
         $schema->setDescriptions([
             self::PARAM_TRACE => 'Log incoming and outgoing messages (needs log formatter to be set to ``json``)',
@@ -140,6 +142,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_OPEN => 'Perform diagnostics when opening a text document',
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
             self::PARAM_DIAGNOSTIC_OUTSOURCE => 'If applicable diagnostics should be "outsourced" to a different process',
+            self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 'Kill the diagnostics process if it outlives this timeout',
             self::PARAM_FILE_EVENTS => 'Register to recieve file events',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time to wait before responding to a shutdown notification',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time after a shutdown request before self-destructing',
@@ -208,7 +211,7 @@ class LanguageServerExtension implements Extension
         });
 
         $container->register(WorkspaceListener::class, function (Container $container) {
-            if ($container->getParameter(self::PARAM_ENABLE_WORKPACE) === false) {
+            if ($container->parameter(self::PARAM_ENABLE_WORKPACE)->bool() === false) {
                 return null;
             }
 
@@ -227,7 +230,7 @@ class LanguageServerExtension implements Extension
         ]);
 
         $container->register(SelfDestructListener::class, function (Container $container) {
-            return new SelfDestructListener($container->getParameter(self::PARAM_SELF_DESTRUCT_TIMEOUT));
+            return new SelfDestructListener($container->parameter(self::PARAM_SELF_DESTRUCT_TIMEOUT)->int());
         }, [
             self::TAG_LISTENER_PROVIDER => [],
         ]);
@@ -235,7 +238,8 @@ class LanguageServerExtension implements Extension
         $container->register(DidChangeWatchedFilesListener::class, function (Container $container) {
             return new DidChangeWatchedFilesListener(
                 $container->get(ClientApi::class),
-                $container->getParameter(self::PARAM_FILE_EVENT_GLOBS),
+                /** @phpstan-ignore-next-line */
+                $container->parameter(self::PARAM_FILE_EVENT_GLOBS)->value(),
                 $container->get(ClientCapabilities::class),
             );
         }, [
@@ -341,7 +345,7 @@ class LanguageServerExtension implements Extension
         $container->register(MiddlewareDispatcher::class, function (Container $container) {
             $stack = [];
 
-            if ($container->getParameter(self::PARAM_PROFILE)) {
+            if ($container->parameter(self::PARAM_PROFILE)->bool()) {
                 $stack[] = new ProfilerMiddleware($this->logger($container));
             }
 
@@ -353,11 +357,11 @@ class LanguageServerExtension implements Extension
                 $stack[] = $service;
             }
 
-            if ($container->getParameter(self::PARAM_TRACE)) {
+            if ($container->parameter(self::PARAM_TRACE)->bool()) {
                 $stack[] = new TraceMiddleware($this->logger($container));
             }
 
-            if ($container->getParameter(self::PARAM_CATCH_ERRORS)) {
+            if ($container->parameter(self::PARAM_CATCH_ERRORS)->bool()) {
                 $stack[] = new ErrorHandlingMiddleware($this->logger($container));
             }
 
@@ -367,10 +371,11 @@ class LanguageServerExtension implements Extension
                 $this->serverInfo()
             );
 
-            $stack[] = new ShutdownMiddleware($container->get(EventDispatcherInterface::class), $container->getParameter(self::PARAM_SHUTDOWN_GRACE_PERIOD));
+            $stack[] = new ShutdownMiddleware($container->get(EventDispatcherInterface::class), $container->parameter(self::PARAM_SHUTDOWN_GRACE_PERIOD)->int());
             $stack[] = new CancellationMiddleware($container->get(MethodRunner::class));
 
-            $stack[] = new MethodAliasMiddleware($container->getParameter(self::PARAM_METHOD_ALIAS_MAP));
+            /** @phpstan-ignore-next-line*/
+            $stack[] = new MethodAliasMiddleware($container->parameter(self::PARAM_METHOD_ALIAS_MAP)->value());
             $stack[] = new ResponseHandlingMiddleware($container->get(ResponseWatcher::class));
 
             $stack[] = new HandlerMiddleware(
@@ -427,8 +432,9 @@ class LanguageServerExtension implements Extension
 
         $container->register(CodeActionHandler::class, function (Container $container) {
             return new CodeActionHandler(
+                /** @phpstan-ignore-next-line */
                 new AggregateCodeActionProvider(...$this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER)),
-                $container->get(self::SERVICE_SESSION_WORKSPACE)
+                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class)
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
@@ -461,11 +467,11 @@ class LanguageServerExtension implements Extension
         $container->register(DiagnosticsService::class, function (Container $container) {
             return new DiagnosticsService(
                 $container->get(DiagnosticsEngine::class),
-                $container->getParameter(self::PARAM_DIAGNOSTIC_ON_UPDATE),
-                $container->getParameter(self::PARAM_DIAGNOSTIC_ON_SAVE),
+                $container->parameter(self::PARAM_DIAGNOSTIC_ON_UPDATE)->bool(),
+                $container->parameter(self::PARAM_DIAGNOSTIC_ON_SAVE)->bool(),
                 $container->get(self::SERVICE_SESSION_WORKSPACE),
                 true,
-                $container->getParameter(self::PARAM_DIAGNOSTIC_ON_OPEN)
+                $container->parameter(self::PARAM_DIAGNOSTIC_ON_OPEN)->bool()
             );
         }, [
             self::TAG_SERVICE_PROVIDER => [],
@@ -479,7 +485,7 @@ class LanguageServerExtension implements Extension
             return new DiagnosticsEngine(
                 $container->get(ClientApi::class),
                 $container->get(AggregateDiagnosticsProvider::class),
-                $container->getParameter(self::PARAM_DIAGNOSTIC_SLEEP_TIME)
+                $container->parameter(self::PARAM_DIAGNOSTIC_SLEEP_TIME)->int()
             );
         });
 
@@ -517,14 +523,14 @@ class LanguageServerExtension implements Extension
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $projectPath = $resolver->resolve('%project_root%');
             // only register this if we should call out to an external process for diagnostics
-            if (!$container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)) {
+            if (!$container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)->bool()) {
                 return null;
             }
 
             return new OutsourcedDiagnosticsProvider([
                 __DIR__ . '/../../../bin/phpactor',
-                'language-server:diagnostics'
-            ], $projectPath);
+                'language-server:diagnostics',
+            ], $projectPath, $this->logger($container), $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT)->int());
         }, [
             self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('outsourced'),
         ]);
