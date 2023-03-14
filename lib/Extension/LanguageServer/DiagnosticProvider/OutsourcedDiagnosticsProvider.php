@@ -26,8 +26,7 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
         private string $cwd,
         private LoggerInterface $logger,
         private int $timeout = 5,
-    )
-    {
+    ) {
     }
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise

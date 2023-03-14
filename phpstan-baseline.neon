@@ -4366,17 +4366,7 @@ parameters:
 			path: lib/Extension/LanguageServer/Handler/DebugHandler.php
 
 		-
-			message: "#^Parameter \\#1 \\$aliasMap of class Phpactor\\\\LanguageServer\\\\Middleware\\\\MethodAliasMiddleware constructor expects array, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$commandMap of class Phpactor\\\\LanguageServer\\\\Core\\\\Command\\\\CommandDispatcher constructor expects array\\<string, Phpactor\\\\LanguageServer\\\\Core\\\\Command\\\\Command\\>, array\\<string, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$selfDestructTimeout of class Phpactor\\\\Extension\\\\LanguageServer\\\\Listener\\\\SelfDestructListener constructor expects int, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
@@ -4401,11 +4391,6 @@ parameters:
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\.\\.\\.\\$providers of class Phpactor\\\\LanguageServer\\\\Core\\\\CodeAction\\\\AggregateCodeActionProvider constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\CodeAction\\\\CodeActionProvider, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\.\\.\\.\\$providers of class Phpactor\\\\LanguageServer\\\\Diagnostics\\\\CodeActionDiagnosticsProvider constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\CodeAction\\\\CodeActionProvider, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
@@ -4416,47 +4401,12 @@ parameters:
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
 		-
-			message: "#^Parameter \\#2 \\$globPatterns of class Phpactor\\\\LanguageServer\\\\Listener\\\\DidChangeWatchedFilesListener constructor expects array, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$gracePeriod of class Phpactor\\\\LanguageServer\\\\Middleware\\\\ShutdownMiddleware constructor expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$lintOnUpdate of class Phpactor\\\\LanguageServer\\\\Service\\\\DiagnosticsService constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$workspace of class Phpactor\\\\LanguageServer\\\\Handler\\\\TextDocument\\\\CodeActionHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$lintOnSave of class Phpactor\\\\LanguageServer\\\\Service\\\\DiagnosticsService constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$sleepTime of class Phpactor\\\\LanguageServer\\\\Core\\\\Diagnostics\\\\DiagnosticsEngine constructor expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
 			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServer\\\\Handler\\\\DebugHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
 		-
 			message: "#^Parameter \\#4 \\$workspace of class Phpactor\\\\LanguageServer\\\\Service\\\\DiagnosticsService constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace\\|null, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#6 \\$lintOnOpen of class Phpactor\\\\LanguageServer\\\\Service\\\\DiagnosticsService constructor expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
@@ -4499,36 +4449,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$response of method Phpactor\\\\Extension\\\\LanguageServer\\\\Tests\\\\Unit\\\\LanguageServerTestCase\\:\\:assertSuccess\\(\\) expects Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage, Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null given\\.$#"
 			count: 4
 			path: lib/Extension/LanguageServer/Tests/Unit/Handler/DebugHandlerTest.php
-
-		-
-			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Offset 'message' does not exist on array\\<string, mixed\\>\\|null\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Offset 'name' does not exist on array\\{name\\: string, version\\: string\\}\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$response of method Phpactor\\\\Extension\\\\LanguageServer\\\\Tests\\\\Unit\\\\LanguageServerTestCase\\:\\:assertSuccess\\(\\) expects Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage, Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null given\\.$#"
-			count: 4
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringContainsString\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Tests/Unit/LanguageServerExtensionTest.php
 
 		-
 			message: "#^Parameter \\#4 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
@@ -5769,21 +5689,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\DiagnosticProvider\\\\WorseDiagnosticProvider\\:\\:provideDiagnostics\\(\\) should return Amp\\\\Promise\\<array\\<Phpactor\\\\LanguageServerProtocol\\\\Diagnostic\\>\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerWorseReflection/DiagnosticProvider/WorseDiagnosticProvider.php
-
-		-
-			message: "#^Class Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\WorseDiagnosticProvier not found\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerWorseReflection/LanguageServerWorseReflectionExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\DiagnosticProvider\\\\WorseDiagnosticProvider constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerWorseReflection/LanguageServerWorseReflectionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$updateInterval of class Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\Workspace\\\\WorkspaceIndex constructor expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerWorseReflection/LanguageServerWorseReflectionExtension.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerWorseReflection\\\\Tests\\\\Benchmark\\\\WorkspaceIndexBench\\:\\:benchUpdate\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
@@ -8079,11 +7984,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:root\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:build\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame but returns Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/FrameResolver.php
 
 		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
