@@ -523,8 +523,8 @@ class LanguageServerExtension implements Extension
 
             return new OutsourcedDiagnosticsProvider([
                 __DIR__ . '/../../../bin/phpactor',
-                'language-server:diagnostics'
-            ], $projectPath);
+                'language-server:diagnostics',
+            ], $projectPath, $this->logger($container));
         }, [
             self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('outsourced'),
         ]);
