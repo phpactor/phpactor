@@ -17,7 +17,7 @@ class CompletorTest extends TestCase
     const EXAMPLE_OFFSET = 1234;
 
     /**
-     * @var ObjectProphecy|CouldComplete
+     * @var ObjectProphecy|Completor
      */
     private $completor1;
 
@@ -132,7 +132,7 @@ class CompletorTest extends TestCase
     }
 
     /**
-     * @param CouldComplete[] $completors
+     * @param Completor[] $completors
      */
     public function create(array $completors): ChainCompletor
     {

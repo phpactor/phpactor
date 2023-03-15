@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\ClassMover\Command;
 
+use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
 class ClassMoveCommandTest extends SystemTestCase
@@ -15,9 +16,11 @@ class ClassMoveCommandTest extends SystemTestCase
     /**
      * Application level smoke tests
      *
+     * @param array<string, bool> $fileMap
+     *
      * @dataProvider provideSmokeSuccess
      */
-    public function testSmokeSuccess($command, array $fileMap = []): void
+    public function testSmokeSuccess(string $command, array $fileMap): void
     {
         $process = $this->phpactorFromStringArgs($command);
         $this->assertSuccess($process);
@@ -34,55 +37,60 @@ class ClassMoveCommandTest extends SystemTestCase
         }
     }
 
-    public function provideSmokeSuccess()
+    /**
+     * @return Generator<string, array{string,array<string, bool>}>
+     */
+    public function provideSmokeSuccess(): Generator
     {
-        return [
-            'Move file 1' => [
-                'class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php',
+        yield 'Move file 1' => [
+            'class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php',
+            [],
+        ];
+        yield 'Move file 2' => [
+            'class:move lib/Aardvark/Edentate.php lib/Foobar.php',
+            [
+                'lib/Foobar.php' => true,
+                'lib/Aardvark/Edentate.php' => false,
             ],
-            'Move file 2' => [
-                'class:move lib/Aardvark/Edentate.php lib/Foobar.php',
-                [
-                    'lib/Foobar.php' => true,
-                    'lib/Aardvark/Edentate.php' => false,
-                ],
+        ];
+        yield 'Move file non-existing folder' => [
+            'class:move lib/Aardvark/Edentate.php lib/Hello/World/Foobar.php',
+            [
+                'lib/Hello/World/Foobar.php' => true,
             ],
-            'Move file non-existing folder' => [
-                'class:move lib/Aardvark/Edentate.php lib/Hello/World/Foobar.php',
-                [
-                    'lib/Hello/World/Foobar.php' => true,
-                ],
+        ];
+        yield 'Move file to folder' => [
+            'class:move lib/Aardvark/Edentate.php lib/Hello/World/',
+            [
+                'lib/Hello/World/Edentate.php' => true,
             ],
-            'Move file to folder' => [
-                'class:move lib/Aardvark/Edentate.php lib/Hello/World/',
-                [
-                    'lib/Hello/World/Edentate.php' => true,
-                ],
+        ];
+        yield 'Move file force' => [
+            'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=file',
+            [],
+        ];
+        yield'Move folder 1' => [
+            'class:move lib/Aardvark lib/Elephant',
+            [
+                'lib/Aardvark' => false,
+                'lib/Elephant/Edentate.php' => true,
             ],
-            'Move file force' => [
-                'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=file',
+        ];
+        yield 'Move wildcard' => [
+            'class:move "lib/*" lib/Foobar',
+            [
+                'lib/Foobar/Aardvark' => true,
+                'lib/Foobar/Badger.php' => true,
+                'lib/Badger.php' => false,
             ],
-            'Move folder 1' => [
-                'class:move lib/Aardvark lib/Elephant',
-                [
-                    'lib/Aardvark' => false,
-                    'lib/Elephant/Edentate.php' => true,
-                ],
-            ],
-            'Move wildcard' => [
-                'class:move "lib/*" lib/Foobar',
-                [
-                    'lib/Foobar/Aardvark' => true,
-                    'lib/Foobar/Badger.php' => true,
-                    'lib/Badger.php' => false,
-                ],
-            ],
-            'Move class by name 1' => [
-                'class:move "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious"',
-            ],
-            'Move class by name force' => [
-                'class:move "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious" --type=class',
-            ],
+        ];
+        yield 'Move class by name 1' => [
+            'class:move "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious"',
+            [],
+        ];
+        yield 'Move class by name force' => [
+            'class:move "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious" --type=class',
+            [],
         ];
     }
 
@@ -100,7 +108,7 @@ class ClassMoveCommandTest extends SystemTestCase
                 'source' => 'lib/<kernel>.php',
                 'test' => 'lib/<kernel>Test.php'
             ]
-        ]));
+        ], JSON_THROW_ON_ERROR));
         $this->workspace()->put('lib/BadgerTest.php', '<?php namespace Animals; class BadgerTest {}');
         $process = $this->phpactorFromStringArgs('class:move lib/Badger.php lib/Fox.php --related');
         $this->assertSuccess($process);
@@ -112,27 +120,30 @@ class ClassMoveCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeFailure
      */
-    public function testSmokeFailure($command, $expectedMessage = null): void
+    public function testSmokeFailure(string $command, ?string $expectedMessage = null): void
     {
         $process = $this->phpactorFromStringArgs($command);
         $this->assertFailure($process, $expectedMessage);
     }
 
-    public function provideSmokeFailure()
+    /**
+     * @return Generator<string, array{string, string|null}>
+     */
+    public function provideSmokeFailure(): Generator
     {
-        return [
-            'Move class by name force file' => [
-                'mv "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious" --type=file',
-                null,
-            ],
-            'Move class by file force class' => [
-                'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=class',
-                null,
-            ],
-            'Move invalid type' => [
-                'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=foobar',
-                'Invalid type "foobar", must be one of: "auto", "file", "class"',
-            ],
+        yield 'Move class by name force file' => [
+            'mv "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious" --type=file',
+            null,
+        ];
+
+        yield 'Move class by file force class' => [
+            'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=class',
+            null,
+        ];
+
+        yield 'Move invalid type' => [
+            'class:move lib/Aardvark/Edentate.php lib/Foobar.php --type=foobar',
+            'Invalid type "foobar", must be one of: "auto", "file", "class"',
         ];
     }
 }

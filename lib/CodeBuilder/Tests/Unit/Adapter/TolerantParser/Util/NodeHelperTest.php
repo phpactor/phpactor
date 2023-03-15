@@ -21,7 +21,7 @@ class NodeHelperTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<array{string, int}>
      */
     public function provideEmptyLinesPrecedingNode(): Generator
     {

@@ -3,6 +3,7 @@
 namespace Phpactor\CodeBuilder\Tests\Adapter\WorseReflection;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
@@ -19,56 +20,55 @@ class WorseBuilderFactoryTest extends TestCase
     public function testSimpleClass(): void
     {
         $source = $this->build('<?php class Foobar {}');
-        $classes = $source->classes();
-        $this->assertCount(1, $classes);
-        $this->assertEquals('Foobar', $classes->first()->name());
+        $this->assertEquals('Foobar', $this->getFirstClass($source)->name());
     }
 
     public function testSimpleClassWithNamespace(): void
     {
         $source = $this->build('<?php namespace Foobar; class Foobar {}');
-        $classes = $source->classes();
-        $this->assertCount(1, $classes);
+        $this->getFirstClass($source);
         $this->assertEquals('Foobar', $source->namespace());
     }
 
     public function testClassWithProperty(): void
     {
         $source = $this->build('<?php class Foobar { public $foo; }');
-        $this->assertCount(1, $source->classes()->first()->properties());
-        $this->assertEquals('foo', $source->classes()->first()->properties()->first()->name());
+        $firstClass = $this->getFirstClass($source);
+        $this->assertCount(1, $firstClass->properties());
+        $this->assertEquals('foo', $firstClass->properties()->first()->name());
     }
 
     public function testClassWithProtectedProperty(): void
     {
         $source = $this->build('<?php class Foobar { private $foo; }');
-        $this->assertCount(1, $source->classes()->first()->properties());
-        $this->assertEquals('private', (string) $source->classes()->first()->properties()->first()->visibility());
+        $firstClass = $this->getFirstClass($source);
+        $this->assertCount(1, $firstClass->properties());
+        $this->assertEquals('private', (string) $firstClass->properties()->first()->visibility());
     }
 
     public function testClassWithPropertyDefaultValue(): void
     {
         $this->markTestSkipped('Worse reflection doesn\'t support default property values atm');
         $source = $this->build('<?php class Foobar { private $foo = "foobar"; }');
-        $this->assertEquals('foobar', $source->classes()->first()->properties()->first()->defaultValue()->export());
+        $this->assertEquals('foobar', $this->getFirstClass($source)->properties()->first()->defaultValue()->export());
     }
 
     public function testClassWithPropertyTyped(): void
     {
         $source = $this->build('<?php class Foobar { /** @var Foobar */private $foo = "foobar"; }');
-        $this->assertEquals('Foobar', $source->classes()->first()->properties()->first()->type()->__toString());
+        $this->assertEquals('Foobar', $this->getFirstClass($source)->properties()->first()->type()->__toString());
     }
 
     public function testClassWithPropertyScalarTyped(): void
     {
         $source = $this->build('<?php class Foobar { /** @var string */private $foo = "foobar"; }');
-        $this->assertEquals('string', $source->classes()->first()->properties()->first()->type()->__toString());
+        $this->assertEquals('string', $this->getFirstClass($source)->properties()->first()->type()->__toString());
     }
 
     public function testClassWithPropertyImportedType(): void
     {
         $source = $this->build('<?php use Bar\Foobar; class Foobar { /** @var Foobar */private $foo = "foobar"; }');
-        $this->assertEquals('Foobar', $source->classes()->first()->properties()->first()->type()->__toString());
+        $this->assertEquals('Foobar', $this->getFirstClass($source)->properties()->first()->type()->__toString());
         $this->assertEquals('Bar\Foobar', (string) $source->useStatements()->first());
     }
 
@@ -91,8 +91,9 @@ class WorseBuilderFactoryTest extends TestCase
     public function testTraitWithProperty(): void
     {
         $source = $this->build('<?php trait Foobar { public $foo; }');
-        $this->assertCount(1, $source->traits()->first()->properties());
-        $this->assertEquals('foo', $source->traits()->first()->properties()->first()->name());
+        $firstTrait = $source->traits()->first();
+        $this->assertCount(1, $firstTrait->properties());
+        $this->assertEquals('foo', $firstTrait->properties()->first()->name());
     }
 
     public function testTraitWithMethod(): void
@@ -104,95 +105,92 @@ class WorseBuilderFactoryTest extends TestCase
     public function testMethod(): void
     {
         $source = $this->build('<?php class Foobar { public function method() {} }');
-        $this->assertEquals('method', $source->classes()->first()->methods()->first()->name());
+        $this->assertEquals('method', $this->getFirstClass($source)->methods()->first()->name());
     }
 
     public function testNoVirtualMethod(): void
     {
         $source = $this->build('<?php /** @method stdClass foobar() */class Foobar {  }');
-        $this->assertCount(0, $source->classes()->first()->methods());
+        $this->assertCount(0, $this->getFirstClass($source)->methods());
     }
 
     public function testMethodWithReturnType(): void
     {
         $source = $this->build('<?php class Foobar { public function method(): string {} }');
-        $this->assertEquals('string', $source->classes()->first()->methods()->first()->returnType());
+        $this->assertEquals('string', $this->getFirstClass($source)->methods()->first()->returnType());
     }
 
     public function testMethodWithNullableReturnType(): void
     {
         $source = $this->build('<?php class Foobar { public function method(): ?string {} }');
         // TODO: Changed this from `?string`, not sure how it worked before
-        $this->assertEquals(
-            '?string',
-            $source->classes()->first()->methods()->first()->returnType()->__toString(),
-        );
+        $this->assertEquals('?string', $this->getFirstClass($source)->methods()->first()->returnType()->__toString());
     }
 
     public function testMethodProtected(): void
     {
         $source = $this->build('<?php class Foobar { protected function method() {} }');
-        $this->assertEquals('protected', $source->classes()->first()->methods()->first()->visibility());
+        $this->assertEquals('protected', $this->getFirstClass($source)->methods()->first()->visibility());
     }
 
     public function testMethodWithParameter(): void
     {
         $source = $this->build('<?php class Foobar { public function method($param) {} }');
-        $this->assertEquals('param', $source->classes()->first()->methods()->first()->parameters()->first()->name());
+        $this->assertEquals('param', $this->getFirstClass($source)->methods()->first()->parameters()->first()->name());
     }
 
     public function testMethodWithNullableParameter(): void
     {
         $source = $this->build('<?php class Foobar { public function method(?string $param) {} }');
-        self::assertEquals('?string', (string)$source->classes()->first()->methods()->first()->parameters()->first()->type());
+        self::assertEquals('?string', (string)$this->getFirstClass($source)->methods()->first()->parameters()->first()->type());
     }
 
     public function testMethodWithParameterByReference(): void
     {
         $source = $this->build('<?php class Foobar { public function method(&$param) {} }');
-        $this->assertTrue($source->classes()->first()->methods()->first()->parameters()->first()->byReference());
+        $this->assertTrue($this->getFirstClass($source)->methods()->first()->parameters()->first()->byReference());
     }
 
     public function testMethodWithTypedParameter(): void
     {
         $source = $this->build('<?php class Foobar { public function method(string $param) {} }');
-        $this->assertEquals('string', (string) $source->classes()->first()->methods()->first()->parameters()->first()->type());
+        $this->assertEquals('string', (string) $this->getFirstClass($source)->methods()->first()->parameters()->first()->type());
     }
 
     public function testMethodWithVariadicParameter(): void
     {
         $source = $this->build('<?php class Foobar { public function method(string ...$param) {} }');
-        $this->assertEquals('string', (string) $source->classes()->first()->methods()->first()->parameters()->first()->type());
+        $this->assertEquals('string', (string) $this->getFirstClass($source)->methods()->first()->parameters()->first()->type());
     }
 
     public function testMethodWithMissingParameterType(): void
     {
         $source = $this->build('<?php class Foobar { public function method(...$param) {} }');
-        $this->assertEquals('', (string) $source->classes()->first()->methods()->first()->parameters()->first()->type());
+        $this->assertEquals('', (string) $this->getFirstClass($source)->methods()->first()->parameters()->first()->type());
     }
 
     public function testMethodWithAliasedParameter(): void
     {
         $source = $this->build('<?php use Foobar as Barfoo; class Foobar { public function method(Barfoo $param) {} }');
-        $this->assertEquals('Barfoo', (string) $source->classes()->first()->methods()->first()->parameters()->first()->type());
+        $this->assertEquals('Barfoo', (string) $this->getFirstClass($source)->methods()->first()->parameters()->first()->type());
     }
 
     public function testMethodWithDefaultValue(): void
     {
         $source = $this->build('<?php class Foobar { public function method($param = 1234) {} }');
-        $this->assertEquals(1234, (string) $source->classes()->first()->methods()->first()->parameters()->first()->defaultValue()->value());
+        $this->assertEquals(1234, (string) $this->getFirstClass($source)->methods()->first()->parameters()->first()->defaultValue()->value());
     }
 
     public function testMethodWithDefaultValueQuoted(): void
     {
         $source = $this->build('<?php class Foobar { public function method($param = "1234") {} }');
-        $this->assertEquals('1234', (string) $source->classes()->first()->methods()->first()->parameters()->first()->defaultValue()->value());
+        $this->assertEquals('1234', (string) $this->getFirstClass($source)->methods()->first()->parameters()->first()->defaultValue()->value());
     }
 
     public function testStaticMethod(): void
     {
         $source = $this->build('<?php class Foobar { public static function method($param = "1234") {} }');
-        $this->assertTrue($source->classes()->first()->methods()->first()->isStatic());
+        $this->assertTrue($this->getFirstClass($source)->methods()->first()->isStatic());
     }
 
     public function testClassWhichExtendsClassWithMethods(): void
@@ -221,27 +219,40 @@ class WorseBuilderFactoryTest extends TestCase
     public function testInterface(): void
     {
         $source = $this->build('<?php interface Foobar {}');
-        $this->assertEquals('Foobar', (string) $source->interfaces()->first()->name());
+        $firstInterface = $source->interfaces()->first();
+        $this->assertNotNull($firstInterface);
+        $this->assertEquals('Foobar', (string) $firstInterface->name());
     }
 
     public function testInterfaceWithMethod(): void
     {
         $source = $this->build('<?php interface Foobar { public function hello(World $world); }');
-        $this->assertEquals('hello', (string) $source->interfaces()->first()->methods()->get('hello')->name());
+        $firstInterface = $source->interfaces()->first();
+        $this->assertNotNull($firstInterface);
+        $this->assertEquals('hello', (string) $firstInterface->methods()->get('hello')->name());
     }
 
     public function testInterfaceWithMethodParameters(): void
     {
         $source = $this->build('<?php interface Foobar { public function hello(World $world, string $bar, $foo); }');
-        $this->assertEquals('hello', (string) $source->interfaces()->first()->methods()->get('hello')->name());
-        $this->assertEquals('world', (string) $source->interfaces()->first()->methods()->get('hello')->parameters()->first()->name());
-        $this->assertEquals('foo', (string) $source->interfaces()->first()->methods()->get('hello')->parameters()->get('foo')->name());
+        $firstInterface = $source->interfaces()->first();
+        $this->assertNotNull($firstInterface);
+        $this->assertEquals('hello', (string) $firstInterface->methods()->get('hello')->name());
+        $this->assertEquals('world', (string) $firstInterface->methods()->get('hello')->parameters()->first()->name());
+        $this->assertEquals('foo', (string) $firstInterface->methods()->get('hello')->parameters()->get('foo')->name());
     }
 
     public function testDoesNotBuildPHP8PromotedProperties(): void
     {
         $source = $this->build('<?php class Foobar { function __construct(private $foobar){}}');
-        self::assertEquals(0, $source->classes()->first()->properties()->count());
+        self::assertEquals(0, $this->getFirstClass($source)->properties()->count());
+    }
+
+    private function getFirstClass(SourceCode $sourceCode): ClassPrototype
+    {
+        $class = $sourceCode->classes()->first();
+        self::assertNotNull($class);
+        return $class;
     }
 
     private function build(string $source): SourceCode

@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
 use Phpactor\TestUtils\ExtractOffset;
+use Microsoft\PhpParser\Node;
 
 class NodeHelperTest extends TestCase
 {
@@ -23,7 +24,10 @@ class NodeHelperTest extends TestCase
         $this->assertEquals('self', $result);
     }
 
-    private function findSelfNode()
+    /**
+     * @return array{Node, Node}
+     */
+    private function findSelfNode(): array
     {
         [$source, $methodOffset, $nameOffset] = ExtractOffset::fromSource('<?php class Foobar { public function f<>oo(): sel<>f() { return $this; }}');
         $root = $this->parser->parseSourceFile($source);

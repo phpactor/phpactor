@@ -89,7 +89,7 @@ class WorseBuilderFactory implements BuilderFactory
         $propertyBuilder->visibility((string) $property->visibility());
 
         $type = $property->inferredType();
-        if (($type->isDefined())) {
+        if ($type->isDefined()) {
             $this->importClassesForMemberType($classBuilder, $property->class()->name(), $type);
             $propertyBuilder->type($type->short(), $type);
             $propertyBuilder->docType((string)$type);

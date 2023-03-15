@@ -25,7 +25,8 @@ abstract class IntegrationTestCase extends TestCase
 
         return $p;
     }
-    protected function workspaceDir()
+
+    protected function workspaceDir(): string
     {
         return __DIR__ . '/Assets/Workspace';
     }
@@ -50,7 +51,7 @@ abstract class IntegrationTestCase extends TestCase
         ));
     }
 
-    protected function assertFailure(Process $process, $message): void
+    protected function assertFailure(Process $process, ?string $message): void
     {
         if (true === $process->isSuccessful()) {
             $this->fail('Process was a success');
@@ -63,7 +64,7 @@ abstract class IntegrationTestCase extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    protected function loadProject($name): void
+    protected function loadProject(string $name): void
     {
         $filesystem = new Filesystem();
 
@@ -88,12 +89,12 @@ abstract class IntegrationTestCase extends TestCase
         return Phpactor::boot(new ArrayInput([]), new BufferedOutput(), __DIR__ . '/../vendor');
     }
 
-    private function cacheDir(string $name)
+    private function cacheDir(string $name): string
     {
         return __DIR__ . '/Assets/Cache/'.$name;
     }
 
-    private function cacheWorkspace($name): void
+    private function cacheWorkspace(string $name): void
     {
         $filesystem = new Filesystem();
         $cacheDir = $this->cacheDir($name);
