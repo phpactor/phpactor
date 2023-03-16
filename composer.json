@@ -34,7 +34,7 @@
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
-        "friendsofphp/php-cs-fixer": "^3.13",
+        "friendsofphp/php-cs-fixer": "^3.15",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.0",
         "phpspec/prophecy-phpunit": "^2.0",
