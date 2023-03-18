@@ -22,7 +22,7 @@ final class ReflectionOffset implements CoreReflectionOffset
         return $this->frame;
     }
 
-    public function symbolContext(): NodeContext
+    public function nodeContext(): NodeContext
     {
         return $this->symbolContext;
     }

@@ -45,8 +45,8 @@ class HoverHandler implements Handler
     {
         $offset = $this->reflector->reflectOffset($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
 
-        $type = $offset->symbolContext()->type();
-        $symbolContext = $offset->symbolContext();
+        $type = $offset->nodeContext()->type();
+        $symbolContext = $offset->nodeContext();
 
         $info = $this->messageFromSymbolContext($symbolContext);
         $info = $info ?: sprintf(

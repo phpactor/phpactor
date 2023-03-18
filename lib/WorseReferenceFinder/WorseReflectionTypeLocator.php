@@ -41,7 +41,7 @@ class WorseReflectionTypeLocator implements TypeLocator
         $type = $this->reflector->reflectOffset(
             $sourceCode,
             $byteOffset->toInt()
-        )->symbolContext()->type();
+        )->nodeContext()->type();
 
         $typeLocations = [];
         foreach ($type->expandTypes() as $type) {

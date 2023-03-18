@@ -110,7 +110,7 @@ class WorseSignatureHelper implements SignatureHelper
 
         if ($callable instanceof MemberAccessExpression) {
             $reflectionOffset = $this->reflector->reflectOffset($textDocument, $callable->getEndPosition());
-            $symbolContext = $reflectionOffset->symbolContext();
+            $symbolContext = $reflectionOffset->nodeContext();
 
             if ($symbolContext->symbol()->symbolType() !== Symbol::METHOD) {
                 throw new CouldNotHelpWithSignature(sprintf(
@@ -157,7 +157,7 @@ class WorseSignatureHelper implements SignatureHelper
 
         $offset = $this->reflector->reflectOffset($node->getFileContents(), $name->getStartPosition());
 
-        $reflectionClass = $this->reflector->reflectClass($offset->symbolContext()->type()->__toString());
+        $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
         $constructor = $reflectionClass->methods()->get('__construct');
 
         return $this->createSignatureHelp($constructor, $position);
@@ -190,7 +190,7 @@ class WorseSignatureHelper implements SignatureHelper
 
         $offset = $this->reflector->reflectOffset($node->getFileContents(), $scopeResolutionQualifier->getStartPosition());
 
-        $reflectionClass = $this->reflector->reflectClass($offset->symbolContext()->type()->__toString());
+        $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
 
         $memberName = $callable->memberName;
 
@@ -221,7 +221,7 @@ class WorseSignatureHelper implements SignatureHelper
 
         $offset = $this->reflector->reflectOffset($attrNode->getFileContents(), $name->getStartPosition());
 
-        $reflectionClass = $this->reflector->reflectClass($offset->symbolContext()->type()->__toString());
+        $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
         $constructor = $reflectionClass->methods()->get('__construct');
 
         return $this->createSignatureHelp($constructor, $position);

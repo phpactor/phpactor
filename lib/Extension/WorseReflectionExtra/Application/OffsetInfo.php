@@ -30,7 +30,7 @@ final class OffsetInfo
             Offset::fromInt($offset)
         );
 
-        $symbolContext = $result->symbolContext();
+        $symbolContext = $result->nodeContext();
         $return = [
             'symbol' => $symbolContext->symbol()->name(),
             'symbol_type' => $symbolContext->symbol()->symbolType(),

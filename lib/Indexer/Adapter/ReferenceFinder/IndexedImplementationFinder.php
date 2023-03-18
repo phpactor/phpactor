@@ -41,7 +41,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         $symbolContext = $this->reflector->reflectOffset(
             $document->__toString(),
             $byteOffset->toInt()
-        )->symbolContext();
+        )->nodeContext();
 
         $symbolType = $symbolContext->symbol()->symbolType();
 

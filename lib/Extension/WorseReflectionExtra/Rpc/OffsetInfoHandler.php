@@ -50,7 +50,7 @@ class OffsetInfoHandler implements Handler
 
     private function serialize(int $offset, ReflectionOffset $reflectionOffset)
     {
-        $symbolContext = $reflectionOffset->symbolContext();
+        $symbolContext = $reflectionOffset->nodeContext();
 
         $return = [
             'symbol' => $symbolContext->symbol()->name(),

@@ -79,7 +79,7 @@ class ReferencesHandler extends AbstractHandler
             ),
             Offset::fromInt($arguments[self::PARAMETER_OFFSET])
         );
-        $symbolContext = $offset->symbolContext();
+        $symbolContext = $offset->nodeContext();
 
         if (null === $arguments[self::PARAMETER_FILESYSTEM]) {
             $this->requireInput(ChoiceInput::fromNameLabelChoicesAndDefault(

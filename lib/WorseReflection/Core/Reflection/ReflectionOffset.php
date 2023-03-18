@@ -11,5 +11,5 @@ interface ReflectionOffset
 
     public function frame(): Frame;
 
-    public function symbolContext(): NodeContext;
+    public function nodeContext(): NodeContext;
 }

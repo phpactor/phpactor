@@ -139,7 +139,7 @@ class ContextMenuHandler implements Handler
 
     private function replaceTokens(array $parameters, ReflectionOffset $offset, array $arguments)
     {
-        $symbolContext = $offset->symbolContext();
+        $symbolContext = $offset->nodeContext();
         foreach ($parameters as $parameterName => $parameterValue) {
             switch ($parameterValue) {
                 case '%current_path%':

@@ -75,7 +75,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
         $reflectionOffset = $this->reflector->reflectOffset($source, $memberStartOffset);
 
-        $symbolContext = $reflectionOffset->symbolContext();
+        $symbolContext = $reflectionOffset->nodeContext();
         $type = $symbolContext->type();
         $static = $node instanceof ScopedPropertyAccessExpression;
 

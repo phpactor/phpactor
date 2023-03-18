@@ -32,7 +32,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
     {
         $symbolContext = $this->reflector
             ->reflectOffset($sourceCode->__toString(), $offset)
-            ->symbolContext();
+            ->nodeContext();
         $type = $symbolContext->type();
 
         if (!$type instanceof ClassType) {

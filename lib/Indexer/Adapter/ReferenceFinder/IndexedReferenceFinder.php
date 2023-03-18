@@ -40,7 +40,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             $symbolContext = $this->reflector->reflectOffset(
                 $document->__toString(),
                 $byteOffset->toInt()
-            )->symbolContext();
+            )->nodeContext();
         } catch (NotFound) {
             return;
         }

@@ -68,7 +68,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
     private function gotoDefinition(TextDocument $document, ReflectionOffset $offset): TypeLocations
     {
-        $symbolContext = $offset->symbolContext();
+        $symbolContext = $offset->nodeContext();
 
         if ($symbolContext instanceof MemberDeclarationContext) {
             return $this->gotoMethodDeclaration($symbolContext);
