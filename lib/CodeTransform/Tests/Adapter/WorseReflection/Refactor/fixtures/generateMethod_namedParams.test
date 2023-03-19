@@ -1,0 +1,23 @@
+// File: source
+
+<?php
+class GenerateMethod
+{
+    public function name()
+    {
+        $this->b<>arfoo(testing: true, foo: 10);
+    }
+}
+// File: expected
+<?php
+class GenerateMethod
+{
+    public function name()
+    {
+        $this->barfoo(testing: true, foo: 10);
+    }
+
+    private function barfoo(bool $testing, int $foo)
+    {
+    }
+}
