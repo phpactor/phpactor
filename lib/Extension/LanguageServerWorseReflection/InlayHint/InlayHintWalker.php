@@ -81,9 +81,11 @@ class InlayHintWalker implements Walker
                 }
                 return $method->parameters();
             }
+
             if ($context instanceof FunctionCallContext) {
                 return $context->function()->parameters();
             }
+
             return null;
         })($resolver->resolveNode($frame, $node));
 

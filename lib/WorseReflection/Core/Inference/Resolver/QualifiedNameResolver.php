@@ -55,13 +55,14 @@ class QualifiedNameResolver implements Resolver
 
             $stub = $this->registry->get($name->short());
 
+            $type = null;
             if ($stub) {
                 $arguments = FunctionArguments::fromList(
                     $resolver,
                     $frame,
                     $parent->argumentExpressionList
                 );
-                return $stub->resolve($frame, $context, $arguments);
+                $type = $stub->resolve($frame, $context, $arguments)->type();
             }
 
             try {
@@ -81,7 +82,7 @@ class QualifiedNameResolver implements Resolver
                 ]
             );
 
-            return new FunctionCallContext(
+            $context = new FunctionCallContext(
                 $context->symbol(),
                 ByteOffsetRange::fromInts(
                     $node->getStartPosition(),
@@ -89,6 +90,10 @@ class QualifiedNameResolver implements Resolver
                 ),
                 $function
             );
+            if ($type !== null && $type->isDefined()) {
+                return $context->withType($type);
+            }
+            return $context;
         }
 
 

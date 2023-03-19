@@ -85,5 +85,15 @@ class InlayHintProviderTest extends IntegrationTestCase
                 self::assertEquals('b', $hint->label);
             }
         ];
+        yield 'inlay hint for stub function' => [
+            '<?php function array_map($func, $arr){}array_map("trim", []);',
+            function (array $hints): void {
+                self::assertCount(2, $hints);
+                $hint = $hints[1];
+                assert($hint instanceof InlayHint);
+                self::assertEquals(0, $hint->position->line);
+                self::assertEquals('arr', $hint->label);
+            }
+        ];
     }
 }
