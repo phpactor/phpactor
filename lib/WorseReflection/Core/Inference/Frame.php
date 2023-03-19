@@ -14,11 +14,6 @@ class Frame
 
     private Problems $problems;
 
-    /**
-     * @var Frame[]
-     */
-    private array $children = [];
-
     private ?Type $returnType = null;
 
     private int $version = 1;
@@ -48,7 +43,6 @@ class Frame
     public function new(string $name): Frame
     {
         $frame = new self($name, null, null, null, $this);
-        $this->children[] = $frame;
 
         return $frame;
     }
@@ -83,11 +77,6 @@ class Frame
         }
 
         return $this->parent->root();
-    }
-
-    public function children(): array
-    {
-        return $this->children;
     }
 
     public function name(): string
