@@ -158,7 +158,7 @@ class CompletionWorseExtension implements Extension
         $container->register(ChainTolerantCompletor::class, function (Container $container) {
             return new ChainTolerantCompletor(
                 array_filter(array_map(function (string $serviceId) use ($container) {
-                    if ($container->getParameter(self::PARAM_DEBUG)) {
+                    if ($container->parameter(self::PARAM_DEBUG)->bool()) {
                         return new DebugTolerantCompletor($container->get($serviceId));
                     }
                     return $container->get($serviceId) ?? false;
@@ -197,12 +197,13 @@ class CompletionWorseExtension implements Extension
         });
 
         $container->register(DocumentPrioritizer::class, function (Container $container) {
-            return match ($container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY)) {
+            $priority = $container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY);
+            return match ($priority) {
                 self::NAME_SEARCH_STRATEGY_PROXIMITY => new SimilarityResultPrioritizer(),
                 self::NAME_SEARCH_STRATEGY_NONE => new DefaultResultPrioritizer(),
                 default => throw new RuntimeException(sprintf(
                     'Unknown search priority strategy "%s", must be one of "%s"',
-                    $container->getParameter(self::PARAM_NAME_COMPLETION_PRIORITY),
+                    $priority,
                     implode('", "', [
                         self::NAME_SEARCH_STRATEGY_PROXIMITY,
                         self::NAME_SEARCH_STRATEGY_NONE
@@ -233,7 +234,7 @@ class CompletionWorseExtension implements Extension
             function (Container $container) {
                 $reflector = $container->get(WorseReflectionExtension::SERVICE_REFLECTOR);
 
-                if (!$container->getParameter(self::PARAM_SNIPPETS)) {
+                if (!$container->parameter(self::PARAM_SNIPPETS)->bool()) {
                     return [];
                 }
 
@@ -242,7 +243,7 @@ class CompletionWorseExtension implements Extension
                     new ParametersSnippetFormatter(),
                 ];
 
-                if ($container->getParameter(self::PARAM_EXPERIMENTAL)) {
+                if ($container->parameter(self::PARAM_EXPERIMENTAL)->bool()) {
                     $formatters = array_merge($formatters, [
                         new NameSearchResultFunctionSnippetFormatter($reflector),
                         new NameSearchResultClassSnippetFormatter($reflector),
@@ -452,10 +453,7 @@ class CompletionWorseExtension implements Extension
 
     private function limitCompletor(Container $container, TolerantCompletor $completor): TolerantCompletor
     {
-        $limit = $container->getParameter(self::PARAM_CLASS_COMPLETOR_LIMIT);
-        if (null === $limit) {
-            return $completor;
-        }
+        $limit = $container->parameter(self::PARAM_CLASS_COMPLETOR_LIMIT)->int();
 
         return new LimitingCompletor($completor, $limit);
     }

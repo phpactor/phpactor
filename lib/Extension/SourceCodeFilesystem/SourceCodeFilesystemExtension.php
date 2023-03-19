@@ -95,6 +95,6 @@ class SourceCodeFilesystemExtension implements Extension
 
     private function projectRoot(Container $container): string
     {
-        return $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PROJECT_ROOT));
+        return $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_PROJECT_ROOT)->string());
     }
 }

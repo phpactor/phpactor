@@ -96,7 +96,7 @@ class ConfigurationExtension implements Extension
         $container->register(ConfigManipulator::class, function (Container $container) {
             return new ConfigManipulator(
                 realpath(__DIR__ . '/../../..') . '/phpactor.schema.json',
-                $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT) . '/.phpactor.json'
+                $container->parameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)->string() . '/.phpactor.json'
             );
         });
     }

@@ -2486,11 +2486,6 @@ parameters:
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$indentation of class Phpactor\\\\CodeBuilder\\\\Util\\\\TextFormat constructor expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$loader of class Twig\\\\Environment constructor expects Twig\\\\Loader\\\\LoaderInterface, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
@@ -2561,52 +2556,12 @@ parameters:
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
-			message: "#^Parameter \\#3 \\$importGlobals of class Phpactor\\\\CodeTransform\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantImportName constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
 			message: "#^Parameter \\#3 \\$parser of class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\TolerantUpdater constructor expects Microsoft\\\\PhpParser\\\\Parser\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
-			message: "#^Parameter \\#3 \\$prefix of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateAccessor constructor expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$prefix of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateMutator constructor expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#4 \\$namedParameters of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseFillObject constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
 			message: "#^Parameter \\#4 \\$parser of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateConstructor constructor expects Microsoft\\\\PhpParser\\\\Parser, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#4 \\$upperCaseFirst of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateAccessor constructor expects bool\\|null, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#4 \\$upperCaseFirst of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateMutator constructor expects bool\\|null, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#5 \\$fluent of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateMutator constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#5 \\$hint of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseFillObject constructor expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
@@ -3406,11 +3361,6 @@ parameters:
 			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
 
 		-
-			message: "#^Parameter \\#2 \\$limit of class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\LimitingCompletor constructor expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
-
-		-
 			message: "#^Parameter \\#2 \\$parser of class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletor constructor expects Microsoft\\\\PhpParser\\\\Parser\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/CompletionWorse/CompletionWorseExtension.php
@@ -4057,11 +4007,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$status of class Phpactor\\\\Extension\\\\LanguageServer\\\\Service\\\\OnDevelopWarningService constructor expects Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtraExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$warnOnDevelop of class Phpactor\\\\Extension\\\\LanguageServer\\\\Service\\\\OnDevelopWarningService constructor expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtraExtension.php
 
@@ -5541,27 +5486,12 @@ parameters:
 			path: lib/Extension/ObjectRenderer/ObjectRendererBuilder.php
 
 		-
-			message: "#^Cannot access an offset on mixed\\.$#"
-			count: 1
-			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
-
-		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
 			count: 1
 			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: mixed given\\.$#"
-			count: 1
-			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$phpVersion of class Phpactor\\\\CodeBuilder\\\\Domain\\\\TemplatePathResolver\\\\PhpVersionPathResolver constructor expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
 
@@ -6401,21 +6331,6 @@ parameters:
 			path: lib/Extension/WorseReflection/WorseReflectionExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$importGlobals of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Diagnostics\\\\UnresolvableNameProvider constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflection/WorseReflectionExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$lifetime of class Phpactor\\\\WorseReflection\\\\Core\\\\Cache\\\\TtlCache constructor expects float, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflection/WorseReflectionExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$lifetime of method Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:cacheLifetime\\(\\) expects float, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflection/WorseReflectionExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$locator of method Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:addLocator\\(\\) expects Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflection/WorseReflectionExtension.php
@@ -6826,26 +6741,6 @@ parameters:
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
-			message: "#^Constant Phpactor\\\\Indexer\\\\Extension\\\\IndexerExtension\\:\\:INDEXER_TOLERANT is unused\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Constant Phpactor\\\\Indexer\\\\Extension\\\\IndexerExtension\\:\\:INDEXER_WORSE is unused\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Constant Phpactor\\\\Indexer\\\\Extension\\\\IndexerExtension\\:\\:SERVICE_FILESYSTEM is unused\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of function array_diff expects array, mixed given\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: string given\\.$#"
 			count: 2
 			path: lib/Indexer/Extension/IndexerExtension.php
@@ -6891,16 +6786,6 @@ parameters:
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
-			message: "#^Parameter \\#2 \\$interval of class Phpactor\\\\AmpFsWatch\\\\Watcher\\\\BufferedWatcher\\\\BufferedWatcher constructor expects int, mixed given\\.$#"
-			count: 2
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$pollInterval of class Phpactor\\\\AmpFsWatch\\\\WatcherConfig constructor expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
 			message: "#^Parameter \\#2 \\$reflector of class Phpactor\\\\Indexer\\\\Adapter\\\\ReferenceFinder\\\\IndexedImplementationFinder constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/IndexerExtension.php
@@ -6911,22 +6796,7 @@ parameters:
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
-			message: "#^Parameter \\#3 \\$deepReferences of class Phpactor\\\\Indexer\\\\Adapter\\\\ReferenceFinder\\\\IndexedImplementationFinder constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$enabledWatchers of closure expects array, mixed given\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
 			message: "#^Parameter \\#3 \\$excludePatterns of class Phpactor\\\\AmpFsWatch\\\\Watcher\\\\PatternMatching\\\\PatternMatchingWatcher constructor expects array\\<string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Parameter \\#4 \\$deepReferences of class Phpactor\\\\Indexer\\\\Adapter\\\\ReferenceFinder\\\\IndexedReferenceFinder constructor expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/IndexerExtension.php
 

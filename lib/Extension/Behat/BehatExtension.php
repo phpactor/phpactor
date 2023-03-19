@@ -49,7 +49,7 @@ class BehatExtension implements OptionalExtension
         });
 
         $container->register('behat.config', function (Container $container) {
-            return new BehatConfig($container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_CONFIG_PATH)));
+            return new BehatConfig($container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_CONFIG_PATH)->string()));
         });
 
         $container->register('behat.completion.feature_step_completor', function (Container $container) {

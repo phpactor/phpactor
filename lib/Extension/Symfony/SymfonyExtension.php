@@ -23,7 +23,8 @@ class SymfonyExtension implements OptionalExtension
     public function load(ContainerBuilder $container): void
     {
         $container->register(SymfonyContainerInspector::class, function (Container $container) {
-            $xmlPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::XML_PATH));
+            $xmlPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)
+                ->resolve($container->getParameter(self::XML_PATH));
             return new XmlSymfonyContainerInspector($xmlPath);
         });
         $container->register(SymfonyContainerCompletor::class, function (Container $container) {
