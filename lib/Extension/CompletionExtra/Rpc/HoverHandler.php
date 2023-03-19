@@ -45,34 +45,34 @@ class HoverHandler implements Handler
     {
         $offset = $this->reflector->reflectOffset($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
 
-        $type = $offset->symbolContext()->type();
-        $symbolContext = $offset->symbolContext();
+        $type = $offset->nodeContext()->type();
+        $nodeContext = $offset->nodeContext();
 
-        $info = $this->messageFromSymbolContext($symbolContext);
+        $info = $this->messageFromSymbolContext($nodeContext);
         $info = $info ?: sprintf(
             '%s %s',
-            $symbolContext->symbol()->symbolType(),
-            $symbolContext->symbol()->name()
+            $nodeContext->symbol()->symbolType(),
+            $nodeContext->symbol()->name()
         );
 
         return EchoResponse::fromMessage($info);
     }
 
-    private function renderSymbolContext(NodeContext $symbolContext): ?string
+    private function renderSymbolContext(NodeContext $nodeContext): ?string
     {
-        return match ($symbolContext->symbol()->symbolType()) {
-            Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT => $this->renderMember($symbolContext),
-            Symbol::CLASS_ => $this->renderClass($symbolContext->type()),
-            Symbol::FUNCTION => $this->renderFunction($symbolContext),
-            Symbol::VARIABLE => $this->renderVariable($symbolContext),
+        return match ($nodeContext->symbol()->symbolType()) {
+            Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT => $this->renderMember($nodeContext),
+            Symbol::CLASS_ => $this->renderClass($nodeContext->type()),
+            Symbol::FUNCTION => $this->renderFunction($nodeContext),
+            Symbol::VARIABLE => $this->renderVariable($nodeContext),
             default => null,
         };
     }
 
-    private function renderMember(NodeContext $symbolContext): ?string
+    private function renderMember(NodeContext $nodeContext): ?string
     {
-        $name = $symbolContext->symbol()->name();
-        $container = $symbolContext->containerType();
+        $name = $nodeContext->symbol()->name();
+        $container = $nodeContext->containerType();
 
         try {
             $class = $this->reflector->reflectClassLike((string) $container);
@@ -82,7 +82,7 @@ class HoverHandler implements Handler
             // methods but not all have constants or properties, so we play safe
             // with members() which is first-come-first-serve, rather than risk
             // a fatal error because of a non-existing method.
-            $member = match ($symbolContext->symbol()->symbolType()) {
+            $member = match ($nodeContext->symbol()->symbolType()) {
                 Symbol::METHOD => $class->methods()->get($name),
                 Symbol::CONSTANT => $class->members()->get($name),
                 Symbol::PROPERTY => $class->members()->get($name),
@@ -96,17 +96,17 @@ class HoverHandler implements Handler
         }
     }
 
-    private function renderFunction(NodeContext $symbolContext)
+    private function renderFunction(NodeContext $nodeContext)
     {
-        $name = $symbolContext->symbol()->name();
+        $name = $nodeContext->symbol()->name();
         $function = $this->reflector->reflectFunction($name);
 
         return $this->formatter->format($function);
     }
 
-    private function renderVariable(NodeContext $symbolContext)
+    private function renderVariable(NodeContext $nodeContext)
     {
-        return $this->formatter->format($symbolContext->type());
+        return $this->formatter->format($nodeContext->type());
     }
 
     private function renderClass(Type $type)
@@ -119,10 +119,10 @@ class HoverHandler implements Handler
         }
     }
 
-    private function messageFromSymbolContext(NodeContext $symbolContext): ?string
+    private function messageFromSymbolContext(NodeContext $nodeContext): ?string
     {
         try {
-            return $this->renderSymbolContext($symbolContext);
+            return $this->renderSymbolContext($nodeContext);
         } catch (CouldNotFormat) {
         }
 

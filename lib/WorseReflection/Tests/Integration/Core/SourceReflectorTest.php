@@ -58,7 +58,7 @@ class SourceReflectorTest extends IntegrationTestCase
         ;
 
         $offset = $this->createReflector($source)->reflectOffset($source, 27);
-        $this->assertEquals('"Hello"', (string) $offset->symbolContext()->type());
+        $this->assertEquals('"Hello"', (string) $offset->nodeContext()->type());
     }
 
     /**
@@ -78,6 +78,6 @@ class SourceReflectorTest extends IntegrationTestCase
         [$source, $offset] = ExtractOffset::fromSource($source);
 
         $offset = $this->createReflector($source)->reflectOffset($source, (int)$offset);
-        $this->assertEquals('1234', (string) $offset->symbolContext()->type());
+        $this->assertEquals('1234', (string) $offset->nodeContext()->type());
     }
 }

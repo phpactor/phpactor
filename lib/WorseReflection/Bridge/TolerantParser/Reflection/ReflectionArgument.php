@@ -86,7 +86,7 @@ class ReflectionArgument implements CoreReflectionArgument
 
     private function info(): NodeContext
     {
-        return $this->services->symbolContextResolver()->resolveNode($this->frame, $this->node);
+        return $this->services->nodeContextResolver()->resolveNode($this->frame, $this->node);
     }
 
     private function index(): int

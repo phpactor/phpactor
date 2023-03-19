@@ -40,7 +40,9 @@ class HoverHandlerTest extends HandlerTestCase
 
         $this->assertEquals($expectedMessage, $response->message());
     }
-
+    /**
+     * @return Generator<string,array{string,string}>
+     */
     public function provideHover(): Generator
     {
         yield 'method' => [
@@ -94,7 +96,9 @@ class HoverHandlerTest extends HandlerTestCase
 
         $this->assertEquals($expectedMessage, $response->message());
     }
-
+    /**
+     * @return Generator<string,array{string,string}>
+     */
     public function provideHoverWithFormatter(): Generator
     {
         yield 'method' => [

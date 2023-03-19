@@ -60,8 +60,8 @@ class PropertyAccessGeneratorHandler extends AbstractHandler
     {
         $offset = $this->reflector->reflectOffset($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_OFFSET]);
 
-        if ($offset->symbolContext()->symbol()->symbolType() === Symbol::PROPERTY) {
-            return $offset->symbolContext();
+        if ($offset->nodeContext()->symbol()->symbolType() === Symbol::PROPERTY) {
+            return $offset->nodeContext();
         }
 
         return null;

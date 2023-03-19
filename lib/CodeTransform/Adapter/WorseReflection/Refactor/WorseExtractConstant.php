@@ -37,7 +37,7 @@ class WorseExtractConstant implements ExtractConstant
     {
         $symbolInformation = $this->reflector
             ->reflectOffset($sourceCode->__toString(), $offset)
-            ->symbolContext();
+            ->nodeContext();
 
         $textEdits = $this->addConstant($sourceCode, $symbolInformation, $constantName);
         $textEdits = $textEdits->merge($this->replaceValues($sourceCode, $offset, $constantName));

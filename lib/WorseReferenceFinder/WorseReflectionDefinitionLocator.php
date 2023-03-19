@@ -68,26 +68,26 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
     private function gotoDefinition(TextDocument $document, ReflectionOffset $offset): TypeLocations
     {
-        $symbolContext = $offset->symbolContext();
+        $nodeContext = $offset->nodeContext();
 
-        if ($symbolContext instanceof MemberDeclarationContext) {
-            return $this->gotoMethodDeclaration($symbolContext);
+        if ($nodeContext instanceof MemberDeclarationContext) {
+            return $this->gotoMethodDeclaration($nodeContext);
         }
-        return match ($symbolContext->symbol()->symbolType()) {
-            Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT, Symbol::CASE => $this->gotoMember($symbolContext),
-            Symbol::CLASS_ => $this->gotoClass($symbolContext),
-            Symbol::FUNCTION => $this->gotoFunction($symbolContext),
-            Symbol::DECLARED_CONSTANT => $this->gotoDeclaredConstant($symbolContext),
+        return match ($nodeContext->symbol()->symbolType()) {
+            Symbol::METHOD, Symbol::PROPERTY, Symbol::CONSTANT, Symbol::CASE => $this->gotoMember($nodeContext),
+            Symbol::CLASS_ => $this->gotoClass($nodeContext),
+            Symbol::FUNCTION => $this->gotoFunction($nodeContext),
+            Symbol::DECLARED_CONSTANT => $this->gotoDeclaredConstant($nodeContext),
             default => throw new CouldNotLocateDefinition(sprintf(
                 'Do not know how to goto definition of symbol type "%s"',
-                $symbolContext->symbol()->symbolType()
+                $nodeContext->symbol()->symbolType()
             )),
         };
     }
 
-    private function gotoClass(NodeContext $symbolContext): TypeLocations
+    private function gotoClass(NodeContext $nodeContext): TypeLocations
     {
-        $className = $symbolContext->type();
+        $className = $nodeContext->type();
 
         if (!$className instanceof ClassType) {
             throw new CouldNotLocateDefinition(sprintf(
@@ -119,9 +119,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         ))]);
     }
 
-    private function gotoFunction(NodeContext $symbolContext): TypeLocations
+    private function gotoFunction(NodeContext $nodeContext): TypeLocations
     {
-        $functionName = $symbolContext->symbol()->name();
+        $functionName = $nodeContext->symbol()->name();
 
         try {
             $function = $this->reflector->reflectFunction($functionName);
@@ -146,9 +146,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         ]);
     }
 
-    private function gotoDeclaredConstant(NodeContext $symbolContext): TypeLocations
+    private function gotoDeclaredConstant(NodeContext $nodeContext): TypeLocations
     {
-        $constantName = $symbolContext->symbol()->name();
+        $constantName = $nodeContext->symbol()->name();
 
         try {
             $constant = $this->reflector->reflectConstant($constantName);
@@ -173,11 +173,11 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         ]);
     }
 
-    private function gotoMember(NodeContext $symbolContext): TypeLocations
+    private function gotoMember(NodeContext $nodeContext): TypeLocations
     {
-        $symbolName = $symbolContext->symbol()->name();
-        $symbolType = $symbolContext->symbol()->symbolType();
-        $containerType = $symbolContext->containerType();
+        $symbolName = $nodeContext->symbol()->name();
+        $symbolType = $nodeContext->symbol()->symbolType();
+        $containerType = $nodeContext->containerType();
 
         $locations = [];
         foreach ($containerType->expandTypes()->classLike() as $namedType) {
@@ -238,10 +238,10 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         return new TypeLocations($locations);
     }
 
-    private function gotoMethodDeclaration(MemberDeclarationContext $symbolContext): TypeLocations
+    private function gotoMethodDeclaration(MemberDeclarationContext $nodeContext): TypeLocations
     {
         try {
-            $class = $this->reflector->reflectClass($symbolContext->classType()->name());
+            $class = $this->reflector->reflectClass($nodeContext->classType()->name());
         } catch (NotFound) {
             return new TypeLocations([]);
         }
@@ -254,7 +254,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                 }
             }
             return null;
-        })($symbolContext->name());
+        })($nodeContext->name());
 
         if (null === $member) {
             return new TypeLocations([]);
@@ -270,7 +270,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ));
         }
 
-        return new TypeLocations([new TypeLocation($symbolContext->classType(), new Location(
+        return new TypeLocations([new TypeLocation($nodeContext->classType(), new Location(
             TextDocumentUri::fromString($path),
             ByteOffset::fromInt($member->position()->start())
         ))]);

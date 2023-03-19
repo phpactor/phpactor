@@ -75,12 +75,12 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
         $reflectionOffset = $this->reflector->reflectOffset($source, $memberStartOffset);
 
-        $symbolContext = $reflectionOffset->symbolContext();
-        $type = $symbolContext->type();
+        $nodeContext = $reflectionOffset->nodeContext();
+        $type = $nodeContext->type();
         $static = $node instanceof ScopedPropertyAccessExpression;
 
         foreach ($type->expandTypes()->classLike() as $type) {
-            foreach ($this->populateSuggestions($symbolContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
+            foreach ($this->populateSuggestions($nodeContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
                 if ($partialMatch && 0 !== mb_strpos($suggestion->name(), $partialMatch)) {
                     continue;
                 }
@@ -95,14 +95,14 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
     /**
      * @return Generator<Suggestion>
      */
-    private function populateSuggestions(NodeContext $symbolContext, Type $type, bool $static, bool $completeOnlyName, bool $isInstance): Generator
+    private function populateSuggestions(NodeContext $nodeContext, Type $type, bool $static, bool $completeOnlyName, bool $isInstance): Generator
     {
         if (false === ($type->isDefined())) {
             return;
         }
 
-        $isParent = $symbolContext->symbol()->name() === 'parent';
-        $publicOnly = !in_array($symbolContext->symbol()->name(), ['this', 'self'], true);
+        $isParent = $nodeContext->symbol()->name() === 'parent';
+        $publicOnly = !in_array($nodeContext->symbol()->name(), ['this', 'self'], true);
 
 
         $type = $type->expandTypes()->classLike()->firstOrNull();
