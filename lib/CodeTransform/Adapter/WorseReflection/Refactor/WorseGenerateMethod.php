@@ -23,8 +23,6 @@ use Phpactor\CodeBuilder\Domain\BuilderFactory;
 
 class WorseGenerateMethod implements GenerateMethod
 {
-    private int $methodSuffixIndex = 0;
-
     public function __construct(
         private Reflector $reflector,
         private BuilderFactory $factory,
