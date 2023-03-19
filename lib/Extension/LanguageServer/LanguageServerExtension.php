@@ -143,7 +143,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
             self::PARAM_DIAGNOSTIC_OUTSOURCE => 'If applicable diagnostics should be "outsourced" to a different process',
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 'Kill the diagnostics process if it outlives this timeout',
-            self::PARAM_FILE_EVENTS => 'Register to recieve file events',
+            self::PARAM_FILE_EVENTS => 'Register to receive file events',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time to wait before responding to a shutdown notification',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time after a shutdown request before self-destructing',
         ]);
@@ -492,7 +492,7 @@ class LanguageServerExtension implements Extension
         $container->register(AggregateDiagnosticsProvider::class, function (Container $container) {
             $providers = $this->collectDiagnosticProviders(
                 $container,
-                outsourced: $container->getParameter(self::PARAM_DIAGNOSTIC_OUTSOURCE) ? false : null,
+                outsourced: $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)->bool() ? false : null,
             );
 
             return new AggregateDiagnosticsProvider(
@@ -554,7 +554,7 @@ class LanguageServerExtension implements Extension
     private function resolveListeners(Container $container): array
     {
         return array_filter(array_keys($container->getServiceIdsForTag(self::TAG_LISTENER_PROVIDER)), function (string $service) use ($container) {
-            if (false === $container->getParameter(self::PARAM_FILE_EVENTS) && $service === DidChangeWatchedFilesListener::class) {
+            if (false === $container->parameter(self::PARAM_FILE_EVENTS)->bool() && $service === DidChangeWatchedFilesListener::class) {
                 return false;
             }
             return true;

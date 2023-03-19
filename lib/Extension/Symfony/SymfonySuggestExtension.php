@@ -28,13 +28,15 @@ class SymfonySuggestExtension implements Extension
                         return Changes::none();
                     }
 
+                    $symfonyXML = $container->getParameter(SymfonyExtension::XML_PATH);
+                    if (!is_string($symfonyXML)) {
+                        return Changes::none();
+                    }
+
                     $xmlPath = $container->expect(
                         FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER,
                         PathResolver::class
-                    )->resolve(
-                        /** @phpstan-ignore-next-line */
-                        $container->getParameter(SymfonyExtension::XML_PATH)
-                    );
+                    )->resolve($symfonyXML);
 
                     if (!file_exists($xmlPath)) {
                         return Changes::none();

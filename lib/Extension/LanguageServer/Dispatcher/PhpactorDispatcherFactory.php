@@ -52,8 +52,9 @@ class PhpactorDispatcherFactory implements DispatcherFactory
         );
 
         // merge in any language-server specific configuration
-        // @phpstan-ignore-next-line */
-        $parameters = array_merge($parameters, $container->getParameter(LanguageServerExtension::PARAM_SESSION_PARAMETERS));
+        /** @var array<mixed> $sessionParameters */
+        $sessionParameters = $container->getParameter(LanguageServerExtension::PARAM_SESSION_PARAMETERS);
+        $parameters = array_merge($parameters, $sessionParameters);
 
         $container = $this->buildContainer(
             /** @phpstan-ignore-next-line */

@@ -236,8 +236,8 @@ class CodeTransformExtension implements Extension
             return new WorseGenerateAccessor(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
-                $container->getParameter(self::PARAM_GENERATE_ACCESSOR_PREFIX),
-                $container->getParameter(self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST)
+                $container->parameter(self::PARAM_GENERATE_ACCESSOR_PREFIX)->string(),
+                $container->parameter(self::PARAM_GENERATE_ACCESSOR_UPPER_CASE_FIRST)->bool()
             );
         });
 
@@ -245,9 +245,9 @@ class CodeTransformExtension implements Extension
             return new WorseGenerateMutator(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(Updater::class),
-                $container->getParameter(self::PARAM_GENERATE_MUTATOR_PREFIX),
-                $container->getParameter(self::PARAM_GENERATE_MUTATOR_UPPER_CASE_FIRST),
-                $container->getParameter(self::PARAM_GENERATE_MUTATOR_FLUENT)
+                $container->parameter(self::PARAM_GENERATE_MUTATOR_PREFIX)->string(),
+                $container->parameter(self::PARAM_GENERATE_MUTATOR_UPPER_CASE_FIRST)->bool(),
+                $container->parameter(self::PARAM_GENERATE_MUTATOR_FLUENT)->bool()
             );
         });
 
@@ -279,7 +279,7 @@ class CodeTransformExtension implements Extension
             return new TolerantImportName(
                 $container->get(Updater::class),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),
-                $container->getParameter(self::PARAM_IMPORT_GLOBALS),
+                $container->parameter(self::PARAM_IMPORT_GLOBALS)->bool(),
             );
         });
         $container->register(FillObject::class, function (Container $container) {
@@ -287,8 +287,8 @@ class CodeTransformExtension implements Extension
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),
                 $container->get(Updater::class),
-                $container->getParameter(self::PARAM_OBJECT_FILL_NAMED),
-                $container->getParameter(self::PARAM_OBJECT_FILL_HINT),
+                $container->parameter(self::PARAM_OBJECT_FILL_NAMED)->bool(),
+                $container->parameter(self::PARAM_OBJECT_FILL_HINT)->bool(),
             );
         });
 
@@ -413,7 +413,7 @@ class CodeTransformExtension implements Extension
         });
 
         $container->register(TextFormat::class, function (Container $container) {
-            return new TextFormat($container->getParameter(self::PARAM_INDENTATION));
+            return new TextFormat($container->parameter(self::PARAM_INDENTATION)->string());
         });
     }
 

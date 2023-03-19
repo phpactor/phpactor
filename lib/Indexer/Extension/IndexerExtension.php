@@ -64,9 +64,6 @@ class IndexerExtension implements Extension
     const TAG_WATCHER = 'indexer.watcher';
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
-    private const INDEXER_TOLERANT = 'tolerant';
-    private const INDEXER_WORSE = 'worse';
-    private const SERVICE_FILESYSTEM = 'indexer.filesystem';
     private const PARAM_PROJECT_ROOT = 'indexer.project_root';
 
 
@@ -103,6 +100,19 @@ class IndexerExtension implements Extension
             self::PARAM_PROJECT_ROOT => 'The root path to use for scanning the index',
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'Recurse over class implementations to resolve all references',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
+        ]);
+        $schema->setTypes([
+            self::PARAM_ENABLED_WATCHERS => 'array',
+            self::PARAM_INDEX_PATH => 'string',
+            self::PARAM_INCLUDE_PATTERNS => 'array',
+            self::PARAM_EXCLUDE_PATTERNS => 'array',
+            self::PARAM_STUB_PATHS => 'array',
+            self::PARAM_INDEXER_POLL_TIME => 'integer',
+            self::PARAM_INDEXER_BUFFER_TIME => 'integer',
+            self::PARAM_INDEXER_FOLLOW_SYMLINKS => 'boolean',
+            self::PARAM_PROJECT_ROOT => 'string',
+            self::PARAM_REFERENCES_DEEP_REFERENCES => 'boolean',
+            self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'boolean',
         ]);
     }
 
@@ -155,7 +165,7 @@ class IndexerExtension implements Extension
         $container->register(IndexCleanCommand::class, function (Container $container) {
             $indexPath = $container->get(
                 FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
-            )->resolve($container->getParameters()['indexer.index_path']);
+            )->resolve($container->parameter(self::PARAM_INDEX_PATH)->string());
 
             $indexPath = dirname($indexPath);
             return new IndexCleanCommand($indexPath, new Filesystem());
@@ -197,14 +207,10 @@ class IndexerExtension implements Extension
             $resolver = $container->get(
                 FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
             );
-            $indexPath = $resolver->resolve(
-                $container->getParameter(self::PARAM_INDEX_PATH)
-            );
+            $indexPath = $resolver->resolve($container->parameter(self::PARAM_INDEX_PATH)->string());
             return IndexAgentBuilder::create($indexPath, $this->projectRoot($container))
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
-                ->setIncludePatterns(
-                    $container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS),
-                )
+                ->setIncludePatterns($container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS))
                 ->setFollowSymlinks(
                     (bool) $container->getParameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS),
                 )
@@ -244,7 +250,7 @@ class IndexerExtension implements Extension
             return new IndexedImplementationFinder(
                 $container->get(QueryClient::class),
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->getParameter(self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES)
+                $container->parameter(self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES)->bool()
             );
         }, [ ReferenceFinderExtension::TAG_IMPLEMENTATION_FINDER => []]);
 
@@ -253,7 +259,7 @@ class IndexerExtension implements Extension
                 $container->get(QueryClient::class),
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                 new ContainerTypeResolver($container->get(WorseReflectionExtension::SERVICE_REFLECTOR)),
-                $container->getParameter(self::PARAM_REFERENCES_DEEP_REFERENCES)
+                $container->parameter(self::PARAM_REFERENCES_DEEP_REFERENCES)->bool()
             );
         }, [ ReferenceFinderExtension::TAG_REFERENCE_FINDER => []]);
 
@@ -287,8 +293,6 @@ class IndexerExtension implements Extension
         $container->register(Watcher::class, function (Container $container) {
             $watchers = [];
 
-            $enabledWatchers = $container->getParameter(self::PARAM_ENABLED_WATCHERS);
-
             foreach ($container->getServiceIdsForTag(self::TAG_WATCHER) as $serviceId => $attrs) {
                 if (!isset($attrs['name'])) {
                     throw new RuntimeException(sprintf(
@@ -300,6 +304,8 @@ class IndexerExtension implements Extension
                 $watchers[$attrs['name']] = $serviceId;
             }
 
+            /** @var list<string> $enabledWatchers */
+            $enabledWatchers = $container->getParameter(self::PARAM_ENABLED_WATCHERS);
             if ($diff = array_diff($enabledWatchers, array_keys($watchers))) {
                 throw new RuntimeException(sprintf(
                     'Unknown watchers "%s" specified, available watchers: "%s"',
@@ -346,7 +352,7 @@ class IndexerExtension implements Extension
 
             return new WatcherConfig([
                 $path->path()
-            ], $container->getParameter(self::PARAM_INDEXER_POLL_TIME));
+            ], $container->parameter(self::PARAM_INDEXER_POLL_TIME)->int());
         });
 
         // register watchers - order of registration currently determines
@@ -356,7 +362,7 @@ class IndexerExtension implements Extension
             return new BufferedWatcher(new WatchmanWatcher(
                 $container->get(WatcherConfig::class),
                 $this->logger($container)
-            ), $container->getParameter(self::PARAM_INDEXER_BUFFER_TIME));
+            ), $container->parameter(self::PARAM_INDEXER_BUFFER_TIME)->int());
         }, [
             self::TAG_WATCHER => [
                 'name' => 'watchman',
@@ -367,7 +373,7 @@ class IndexerExtension implements Extension
             return new BufferedWatcher(new InotifyWatcher(
                 $container->get(WatcherConfig::class),
                 $this->logger($container)
-            ), $container->getParameter(self::PARAM_INDEXER_BUFFER_TIME));
+            ), $container->parameter(self::PARAM_INDEXER_BUFFER_TIME)->int());
         }, [
             self::TAG_WATCHER => [
                 'name' => 'inotify',
@@ -412,7 +418,7 @@ class IndexerExtension implements Extension
     {
         return $container->get(
             FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
-        )->resolve($container->getParameter(self::PARAM_PROJECT_ROOT));
+        )->resolve($container->parameter(self::PARAM_PROJECT_ROOT)->string());
     }
 
     private function logger(Container $container): LoggerInterface

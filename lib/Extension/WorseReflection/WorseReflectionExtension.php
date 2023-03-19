@@ -81,13 +81,13 @@ class WorseReflectionExtension implements Extension
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
             $builder = ReflectorBuilder::create()
                 ->withSourceReflectorFactory(new TolerantFactory($container->get(self::SERVICE_PARSER)))
-                ->cacheLifetime($container->getParameter(self::PARAM_CACHE_LIFETIME));
+                ->cacheLifetime($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
 
-            if ($container->getParameter(self::PARAM_ENABLE_CONTEXT_LOCATION)) {
+            if ($container->parameter(self::PARAM_ENABLE_CONTEXT_LOCATION)->bool()) {
                 $builder->enableContextualSourceLocation();
             }
 
-            if ($container->getParameter(self::PARAM_ENABLE_CACHE)) {
+            if ($container->parameter(self::PARAM_ENABLE_CACHE)->bool()) {
                 $builder->enableCache();
                 $builder->withCache($container->get(Cache::class));
             }
@@ -131,7 +131,7 @@ class WorseReflectionExtension implements Extension
         });
 
         $container->register(Cache::class, function (Container $container) {
-            return new TtlCache($container->getParameter(self::PARAM_CACHE_LIFETIME));
+            return new TtlCache($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
         });
     }
 
@@ -141,8 +141,8 @@ class WorseReflectionExtension implements Extension
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             return new StubSourceLocator(
                 ReflectorBuilder::create()->build(),
-                $resolver->resolve($container->getParameter(self::PARAM_STUB_DIR)),
-                $resolver->resolve($container->getParameter(self::PARAM_STUB_CACHE_DIR))
+                $resolver->resolve($container->parameter(self::PARAM_STUB_DIR)->string()),
+                $resolver->resolve($container->parameter(self::PARAM_STUB_CACHE_DIR)->string())
             );
         }, [ self::TAG_SOURCE_LOCATOR => []]);
 
@@ -180,7 +180,7 @@ class WorseReflectionExtension implements Extension
             return new MissingReturnTypeProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UnresolvableNameProvider::class, function (Container $container) {
-            return new UnresolvableNameProvider($container->getParameter(self::PARAM_IMPORT_GLOBALS));
+            return new UnresolvableNameProvider($container->parameter(self::PARAM_IMPORT_GLOBALS)->bool());
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UnusedImportProvider::class, function (Container $container) {
             return new UnusedImportProvider();
