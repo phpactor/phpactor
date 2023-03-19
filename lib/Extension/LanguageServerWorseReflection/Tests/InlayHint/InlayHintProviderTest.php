@@ -75,5 +75,15 @@ class InlayHintProviderTest extends IntegrationTestCase
                 self::assertEquals('b', $hint->label);
             }
         ];
+        yield 'inlay hint for function call' => [
+            '<?php function foobar($a, $b) {} foobar(1, 2);',
+            function (array $hints): void {
+                self::assertCount(2, $hints);
+                $hint = $hints[1];
+                assert($hint instanceof InlayHint);
+                self::assertEquals(0, $hint->position->line);
+                self::assertEquals('b', $hint->label);
+            }
+        ];
     }
 }
