@@ -5496,27 +5496,12 @@ parameters:
 			path: lib/Extension/ObjectRenderer/ObjectRendererBuilder.php
 
 		-
-			message: "#^Cannot access an offset on mixed\\.$#"
-			count: 1
-			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
-
-		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
 			count: 1
 			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: mixed given\\.$#"
-			count: 1
-			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$phpVersion of class Phpactor\\\\CodeBuilder\\\\Domain\\\\TemplatePathResolver\\\\PhpVersionPathResolver constructor expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
 
