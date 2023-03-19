@@ -4,7 +4,7 @@
 namespace Phpactor;
 
 #[Attribute()]
-class Barfoo 
+class Barfoo
 {
 }
 
@@ -17,11 +17,12 @@ class Foobar {}
 namespace Phpactor;
 
 #[Attribute()]
-class Barfoo 
+class Barfoo
 {
     public function __construct(string $string, int $int)
     {
     }
+
 }
 
 #[Barfoo('foobar', 123)]

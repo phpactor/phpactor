@@ -36,6 +36,8 @@ abstract class AbstractMethodUpdater
         }
 
         $lastMember = $this->memberDeclarationsNode($classNode)->openBrace;
+        $lastNonMethodMember = null;
+        $methodHasBeenEncountered = false;
         $newLine = false;
         $existingMethodNames = [];
         $existingMethods = [];
@@ -43,6 +45,9 @@ abstract class AbstractMethodUpdater
             if ($memberNode instanceof PropertyDeclaration) {
                 $lastMember = $memberNode;
                 $newLine = true;
+                if (!$methodHasBeenEncountered) {
+                    $lastNonMethodMember = $memberNode;
+                }
             }
 
             if ($memberNode instanceof MethodDeclaration) {
@@ -50,6 +55,7 @@ abstract class AbstractMethodUpdater
                 $existingMethodNames[] = $memberNode->getName();
                 $existingMethods[$memberNode->getName()] = $memberNode;
                 $newLine = true;
+                $methodHasBeenEncountered = true;
             }
         }
 
@@ -90,11 +96,32 @@ abstract class AbstractMethodUpdater
             return;
         }
 
+        // Don't add new line if it's only inserting the constructor
+        if (1 === count($methodPrototypes) && $methodPrototypes->has('__construct')) {
+            $newLine = false;
+        }
+
         if ($newLine) {
             $edits->after($lastMember, PHP_EOL);
         }
 
         foreach ($methodPrototypes as $methodPrototype) {
+            // If class has methods add the constructor before it.
+            if ($methodPrototype->name() === '__construct') {
+                if ($lastNonMethodMember === null) {
+                    $edits->after(
+                        $this->memberDeclarationsNode($classNode)->openBrace,
+                        PHP_EOL.$edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1).PHP_EOL
+                    );
+                } else {
+                    $edits->after(
+                        $lastNonMethodMember,
+                        PHP_EOL.PHP_EOL.$edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)
+                    );
+                }
+                continue;
+            }
+
             $edits->after(
                 $lastMember,
                 PHP_EOL . $edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)
