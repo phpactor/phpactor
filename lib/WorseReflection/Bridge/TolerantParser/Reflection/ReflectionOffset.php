@@ -12,7 +12,7 @@ final class ReflectionOffset implements CoreReflectionOffset
     {
     }
 
-    public static function fromFrameAndSymbolContext($frame, $nodeContext)
+    public static function fromFrameAndSymbolContext(Frame $frame, NodeContext $nodeContext): CoreReflectionOffset
     {
         return new self($frame, $nodeContext);
     }

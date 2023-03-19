@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServer\Tests\Unit\Handler;
 
-use Composer\InstalledVersions;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Tests\Unit\LanguageServerTestCase;
 
