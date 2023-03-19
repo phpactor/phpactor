@@ -39,7 +39,7 @@ class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCrea
 
     public function class(): ReflectionClassLike
     {
-        $type = $this->locator->symbolContextResolver()->resolveNode($this->frame, $this->node->classTypeDesignator)->type();
+        $type = $this->locator->nodeContextResolver()->resolveNode($this->frame, $this->node->classTypeDesignator)->type();
 
         if (!$type instanceof ReflectedClassType) {
             throw new CouldNotResolveNode(sprintf('Expceted "%s" but got "%s"', ReflectedClassType::class, get_class($type)));

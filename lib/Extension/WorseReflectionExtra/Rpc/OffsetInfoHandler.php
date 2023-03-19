@@ -50,16 +50,16 @@ class OffsetInfoHandler implements Handler
 
     private function serialize(int $offset, ReflectionOffset $reflectionOffset)
     {
-        $symbolContext = $reflectionOffset->nodeContext();
+        $nodeContext = $reflectionOffset->nodeContext();
 
         $return = [
-            'symbol' => $symbolContext->symbol()->name(),
-            'symbol_type' => $symbolContext->symbol()->symbolType(),
-            'start' => $symbolContext->symbol()->position()->start(),
-            'end' => $symbolContext->symbol()->position()->end(),
-            'type' => (string) $symbolContext->type(),
-            'container_type' => (string) $symbolContext->containerType(),
-            'value' => var_export(TypeUtil::valueOrNull($symbolContext->type()), true),
+            'symbol' => $nodeContext->symbol()->name(),
+            'symbol_type' => $nodeContext->symbol()->symbolType(),
+            'start' => $nodeContext->symbol()->position()->start(),
+            'end' => $nodeContext->symbol()->position()->end(),
+            'type' => (string) $nodeContext->type(),
+            'container_type' => (string) $nodeContext->containerType(),
+            'value' => var_export(TypeUtil::valueOrNull($nodeContext->type()), true),
             'offset' => $offset,
             'type_path' => null,
         ];
@@ -81,7 +81,7 @@ class OffsetInfoHandler implements Handler
         }
         $return['frame'] = $frame;
 
-        if (false === ($symbolContext->type()->isDefined())) {
+        if (false === ($nodeContext->type()->isDefined())) {
             return $return;
         }
 

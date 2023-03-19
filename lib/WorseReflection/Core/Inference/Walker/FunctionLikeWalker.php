@@ -97,7 +97,7 @@ class FunctionLikeWalker implements Walker
         foreach ($node->parameters->getElements() as $parameterNode) {
             $parameterName = $parameterNode->variableName->getText($node->getFileContents());
 
-            $symbolContext = $resolver->resolveNode($frame, $parameterNode);
+            $nodeContext = $resolver->resolveNode($frame, $parameterNode);
 
             $context = NodeContextFactory::create(
                 (string)$parameterName,
@@ -105,7 +105,7 @@ class FunctionLikeWalker implements Walker
                 $parameterNode->getEndPosition(),
                 [
                     'symbol_type' => Symbol::VARIABLE,
-                    'type' => $symbolContext->type(),
+                    'type' => $nodeContext->type(),
                 ]
             );
 

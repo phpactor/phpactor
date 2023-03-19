@@ -57,7 +57,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $rootNode = $this->parseSourceCode($sourceCode);
         $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
-        $resolver = $this->serviceLocator->symbolContextResolver();
+        $resolver = $this->serviceLocator->nodeContextResolver();
         $frame = $this->serviceLocator->frameBuilder()->build($node);
 
         return TolerantReflectionOffset::fromFrameAndSymbolContext($frame, $resolver->resolveNode($frame, $node));

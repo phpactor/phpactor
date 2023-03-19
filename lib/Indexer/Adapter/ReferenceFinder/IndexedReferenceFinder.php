@@ -37,7 +37,7 @@ class IndexedReferenceFinder implements ReferenceFinder
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         try {
-            $symbolContext = $this->reflector->reflectOffset(
+            $nodeContext = $this->reflector->reflectOffset(
                 $document->__toString(),
                 $byteOffset->toInt()
             )->nodeContext();
@@ -45,7 +45,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             return;
         }
 
-        foreach ($this->resolveReferences($symbolContext) as $locationConfidence) {
+        foreach ($this->resolveReferences($nodeContext) as $locationConfidence) {
             if ($locationConfidence->isSurely()) {
                 yield PotentialLocation::surely($locationConfidence->location());
                 continue;
@@ -63,22 +63,22 @@ class IndexedReferenceFinder implements ReferenceFinder
     /**
      * @return Generator<LocationConfidence>
      */
-    private function resolveReferences(NodeContext $symbolContext): Generator
+    private function resolveReferences(NodeContext $nodeContext): Generator
     {
-        $symbolType = $symbolContext->symbol()->symbolType();
+        $symbolType = $nodeContext->symbol()->symbolType();
         if ($symbolType === Symbol::CLASS_) {
-            foreach ($this->implementationsOf($symbolContext->type()->__toString()) as $implementationFqn) {
+            foreach ($this->implementationsOf($nodeContext->type()->__toString()) as $implementationFqn) {
                 yield from $this->query->class()->referencesTo($implementationFqn);
             }
             return;
         }
 
         if ($symbolType === Symbol::FUNCTION) {
-            yield from $this->query->function()->referencesTo($symbolContext->symbol()->name());
+            yield from $this->query->function()->referencesTo($nodeContext->symbol()->name());
             return;
         }
 
-        $memberType = $symbolContext->symbol()->symbolType();
+        $memberType = $nodeContext->symbol()->symbolType();
         if (in_array($memberType, [
             Symbol::METHOD,
             Symbol::CONSTANT,
@@ -87,15 +87,15 @@ class IndexedReferenceFinder implements ReferenceFinder
             Symbol::CASE,
         ])) {
             $containerType = $this->containerTypeResolver->resolveDeclaringContainerType(
-                $this->symbolTypeToMemberType($symbolContext),
-                $symbolContext->symbol()->name(),
-                $symbolContext->containerType()
+                $this->symbolTypeToMemberType($nodeContext),
+                $nodeContext->symbol()->name(),
+                $nodeContext->containerType()
             );
 
             if (null === $containerType) {
                 yield from $this->query->member()->referencesTo(
-                    $this->symbolTypeToReferenceType($symbolContext),
-                    $symbolContext->symbol()->name(),
+                    $this->symbolTypeToReferenceType($nodeContext),
+                    $nodeContext->symbol()->name(),
                     null
                 );
                 return;
@@ -105,8 +105,8 @@ class IndexedReferenceFinder implements ReferenceFinder
             // the number of NOT and MAYBE matches
             foreach ($this->implementationsOf($containerType) as $containerType) {
                 yield from $this->query->member()->referencesTo(
-                    $this->symbolTypeToReferenceType($symbolContext),
-                    $symbolContext->symbol()->name(),
+                    $this->symbolTypeToReferenceType($nodeContext),
+                    $nodeContext->symbol()->name(),
                     $containerType
                 );
             }
@@ -133,9 +133,9 @@ class IndexedReferenceFinder implements ReferenceFinder
     /**
      * @return ReflectionMember::TYPE_*
      */
-    private function symbolTypeToMemberType(NodeContext $symbolContext): string
+    private function symbolTypeToMemberType(NodeContext $nodeContext): string
     {
-        $symbolType = $symbolContext->symbol()->symbolType();
+        $symbolType = $nodeContext->symbol()->symbolType();
 
         if ($symbolType === Symbol::CASE) {
             return ReflectionMember::TYPE_ENUM;
@@ -162,9 +162,9 @@ class IndexedReferenceFinder implements ReferenceFinder
     /**
      * @return MemberRecord::TYPE_*
      */
-    private function symbolTypeToReferenceType(NodeContext $symbolContext): string
+    private function symbolTypeToReferenceType(NodeContext $nodeContext): string
     {
-        $symbolType = $symbolContext->symbol()->symbolType();
+        $symbolType = $nodeContext->symbol()->symbolType();
 
         if ($symbolType === Symbol::CASE) {
             return MemberRecord::TYPE_CONSTANT;

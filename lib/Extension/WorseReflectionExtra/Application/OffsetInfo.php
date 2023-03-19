@@ -30,15 +30,15 @@ final class OffsetInfo
             Offset::fromInt($offset)
         );
 
-        $symbolContext = $result->nodeContext();
+        $nodeContext = $result->nodeContext();
         $return = [
-            'symbol' => $symbolContext->symbol()->name(),
-            'symbol_type' => $symbolContext->symbol()->symbolType(),
-            'start' => $symbolContext->symbol()->position()->start(),
-            'end' => $symbolContext->symbol()->position()->end(),
-            'type' => (string) $symbolContext->type(),
-            'class_type' => (string) $symbolContext->containerType(),
-            'value' => var_export(TypeUtil::valueOrNull($symbolContext->type()), true),
+            'symbol' => $nodeContext->symbol()->name(),
+            'symbol_type' => $nodeContext->symbol()->symbolType(),
+            'start' => $nodeContext->symbol()->position()->start(),
+            'end' => $nodeContext->symbol()->position()->end(),
+            'type' => (string) $nodeContext->type(),
+            'class_type' => (string) $nodeContext->containerType(),
+            'value' => var_export(TypeUtil::valueOrNull($nodeContext->type()), true),
             'offset' => $offset,
             'type_path' => null,
         ];
@@ -51,8 +51,8 @@ final class OffsetInfo
                     $info = sprintf(
                         '%s = (%s) %s',
                         $local->name(),
-                        $local->symbolContext()->type(),
-                        str_replace(PHP_EOL, '', var_export($local->symbolContext()->value(), true))
+                        $local->nodeContext()->type(),
+                        str_replace(PHP_EOL, '', var_export($local->nodeContext()->value(), true))
                     );
 
                     $frame[$assignmentType][$local->offset()->toInt()] = $info;
@@ -61,12 +61,12 @@ final class OffsetInfo
             $return['frame'] = $frame;
         }
 
-        if (false === ($symbolContext->type()->isDefined())) {
+        if (false === ($nodeContext->type()->isDefined())) {
             return $return;
         }
 
-        $return['type_path'] = $symbolContext->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolContext->type(), true) : null;
-        $return['class_type_path'] = $symbolContext->containerType()->isDefined() && $symbolContext->containerType()->isClass() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
+        $return['type_path'] = $nodeContext->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $nodeContext->type(), true) : null;
+        $return['class_type_path'] = $nodeContext->containerType()->isDefined() && $nodeContext->containerType()->isClass() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
 
         return $return;
     }

@@ -117,7 +117,7 @@ class ServiceLocator
         return $this->docblockFactory;
     }
 
-    public function symbolContextResolver(): NodeContextResolver
+    public function nodeContextResolver(): NodeContextResolver
     {
         return new NodeContextResolver(
             $this->reflector,
@@ -142,7 +142,7 @@ class ServiceLocator
     public function frameBuilder(): FrameResolver
     {
         return FrameResolver::create(
-            $this->symbolContextResolver(),
+            $this->nodeContextResolver(),
             array_merge([
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),
