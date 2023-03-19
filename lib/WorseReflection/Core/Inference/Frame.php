@@ -107,7 +107,7 @@ class Frame
         return $this->name;
     }
 
-    public function withReturnType(Type $type): self
+    public function setReturnType(Type $type): self
     {
         $this->returnType = $type;
         $this->version++;
