@@ -65,5 +65,16 @@ class InlayHintProviderTest extends IntegrationTestCase
                 self::assertEquals('"foo"', $hint->tooltip);
             }
         ];
+        yield 'inlay hint for class instantiation' => [
+            '<?php class A { function __construct($a, $b) {}} new A(1, 2)',
+            function (array $hints): void {
+                self::assertCount(2, $hints);
+                $hint = $hints[1];
+                assert($hint instanceof InlayHint);
+                self::assertEquals(0, $hint->position->line);
+                self::assertEquals('string', $hint->label);
+                self::assertEquals('"foo"', $hint->tooltip);
+            }
+        ];
     }
 }
