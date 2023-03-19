@@ -91,7 +91,15 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
             );
         }
 
-        return reset($this->items);
+        return reset($this->items) ?: null;
+    }
+
+    /**
+     * @return T|null
+     */
+    public function firstOrNull()
+    {
+        return reset($this->items) ?: null;
     }
 
     /**

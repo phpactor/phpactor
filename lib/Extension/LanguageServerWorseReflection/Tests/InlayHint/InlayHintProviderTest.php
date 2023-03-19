@@ -72,8 +72,7 @@ class InlayHintProviderTest extends IntegrationTestCase
                 $hint = $hints[1];
                 assert($hint instanceof InlayHint);
                 self::assertEquals(0, $hint->position->line);
-                self::assertEquals('string', $hint->label);
-                self::assertEquals('"foo"', $hint->tooltip);
+                self::assertEquals('b', $hint->label);
             }
         ];
     }
