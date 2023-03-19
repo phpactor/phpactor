@@ -448,7 +448,7 @@ class WorseExtractMethod implements ExtractMethod
     {
         $newMethodBody = 'return ' . $newMethodBody .';';
         $offset = $this->reflector->reflectOffset($source->__toString(), $offsetEnd);
-        $expressionType = $offset->symbolContext()->type();
+        $expressionType = $offset->nodeContext()->type();
 
         if ($expressionType->isDefined()) {
             $methodBuilder->returnType($expressionType->short(), $expressionType);

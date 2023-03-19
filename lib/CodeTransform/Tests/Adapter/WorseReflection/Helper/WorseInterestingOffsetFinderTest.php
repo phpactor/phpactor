@@ -24,7 +24,7 @@ class WorseInterestingOffsetFinderTest extends WorseTestCase
         $newOffset = (new WorseInterestingOffsetFinder($reflector))->find($document, $offset);
         $reflectionOffset = $reflector->reflectOffset($document, $newOffset);
 
-        $this->assertEquals($expectedSymbolType, $reflectionOffset->symbolContext()->symbol()->symbolType());
+        $this->assertEquals($expectedSymbolType, $reflectionOffset->nodeContext()->symbol()->symbolType());
     }
 
     public function provideFindSomethingInterestingWhen()

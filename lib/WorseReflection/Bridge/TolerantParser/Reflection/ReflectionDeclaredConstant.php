@@ -35,7 +35,7 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
 
     public function type(): Type
     {
-        return $this->serviceLocator->symbolContextResolver()->resolveNode(new Frame(''), $this->value)->type();
+        return $this->serviceLocator->nodeContextResolver()->resolveNode(new Frame(''), $this->value)->type();
     }
 
     public function sourceCode(): SourceCode

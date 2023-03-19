@@ -386,7 +386,7 @@ class WorseTolerantMemberFinder implements MemberFinder
 
     private function attachClassInfoToReference(MemberReference $reference, ClassMemberQuery $query, ReflectionOffset $offset): ?MemberReference
     {
-        $type = $offset->symbolContext()->type()->expandTypes()->classLike()->firstOrNull();
+        $type = $offset->nodeContext()->type()->expandTypes()->classLike()->firstOrNull();
 
         if ($query->hasMember() && !$type) {
             return $reference;

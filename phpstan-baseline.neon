@@ -4076,18 +4076,8 @@ parameters:
 			path: lib/Extension/LanguageServer/Tests/Unit/Command/StartCommandTest.php
 
 		-
-			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Tests/Unit/Handler/DebugHandlerTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$actualJson of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertJson\\(\\) expects string, mixed given\\.$#"
 			count: 1
-			path: lib/Extension/LanguageServer/Tests/Unit/Handler/DebugHandlerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$response of method Phpactor\\\\Extension\\\\LanguageServer\\\\Tests\\\\Unit\\\\LanguageServerTestCase\\:\\:assertSuccess\\(\\) expects Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage, Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null given\\.$#"
-			count: 4
 			path: lib/Extension/LanguageServer/Tests/Unit/Handler/DebugHandlerTest.php
 
 		-
@@ -7511,21 +7501,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethodCall.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionOffset.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has parameter \\$frame with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionOffset.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has parameter \\$symbolContext with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionOffset.php
-
-		-
 			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\ResolvedName will always evaluate to false\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionProperty.php
@@ -7869,21 +7844,6 @@ parameters:
 			message: "#^Parameter \\#3 \\$parameter of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionParameter constructor expects Microsoft\\\\PhpParser\\\\Node\\\\Parameter, mixed given\\.$#"
 			count: 2
 			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionParameterCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionOffset.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has parameter \\$frame with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionOffset.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionOffset\\:\\:fromFrameAndSymbolContext\\(\\) has parameter \\$symbolInformation with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionOffset.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionSourceCode\\:\\:findClass\\(\\) has no return type specified\\.$#"

@@ -48,7 +48,7 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
 
     public function class(): ReflectionClassLike
     {
-        $info = $this->services->symbolContextResolver()->resolveNode($this->frame, $this->node);
+        $info = $this->services->nodeContextResolver()->resolveNode($this->frame, $this->node);
         $containerType = $info->containerType();
 
         if (!$containerType instanceof ReflectedClassType) {

@@ -171,7 +171,7 @@ class TestAssertWalker implements Walker
             );
         }
         $offset = $resolver->reflector()->reflectOffset($node->getFileContents(), $type->value());
-        $this->assertTypeIs($node, $offset->symbolContext()->type(), $expectedType);
+        $this->assertTypeIs($node, $offset->nodeContext()->type(), $expectedType);
     }
 
     /**
