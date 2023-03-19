@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Closure;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
@@ -14,11 +13,6 @@ class Frame
     private LocalAssignments $locals;
 
     private Problems $problems;
-
-    /**
-     * @var Frame[]
-     */
-    private array $children = [];
 
     private ?Type $returnType = null;
 
@@ -49,7 +43,6 @@ class Frame
     public function new(string $name): Frame
     {
         $frame = new self($name, null, null, null, $this);
-        $this->children[] = $frame;
 
         return $frame;
     }
@@ -77,17 +70,6 @@ class Frame
         return $this->parent;
     }
 
-    public function reduce(Closure $closure, $initial = null)
-    {
-        $initial = $closure($this, $initial);
-
-        foreach ($this->children as $childFrame) {
-            $initial = $childFrame->reduce($closure, $initial);
-        }
-
-        return $initial;
-    }
-
     public function root()
     {
         if (null === $this->parent) {
@@ -97,17 +79,12 @@ class Frame
         return $this->parent->root();
     }
 
-    public function children(): array
-    {
-        return $this->children;
-    }
-
     public function name(): string
     {
         return $this->name;
     }
 
-    public function withReturnType(Type $type): self
+    public function setReturnType(Type $type): self
     {
         $this->returnType = $type;
         $this->version++;

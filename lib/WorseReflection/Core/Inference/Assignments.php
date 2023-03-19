@@ -152,14 +152,12 @@ abstract class Assignments implements Countable, IteratorAggregate
         return new ArrayIterator(array_values($this->variables));
     }
 
-    public function merge(Assignments $variables): Assignments
+    public function merge(Assignments $variables): void
     {
         foreach ($variables->variables as $offset => $variable) {
             $this->variables[$offset] = $variable;
         }
         $this->sort();
-
-        return $this;
     }
 
     public function replace(Variable $existing, Variable $replacement): void
