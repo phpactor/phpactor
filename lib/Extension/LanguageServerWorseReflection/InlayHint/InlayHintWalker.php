@@ -12,10 +12,13 @@ use Phpactor\LanguageServerProtocol\InlayHint;
 use Phpactor\LanguageServerProtocol\InlayHintKind;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Context\ClassLikeContext;
+use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 class InlayHintWalker implements Walker
@@ -70,16 +73,24 @@ class InlayHintWalker implements Walker
 
     private function fromCall(FrameResolver $resolver, Frame $frame, CallExpression $node): void
     {
-        $context = $resolver->resolveNode($frame, $node);
-        if (!$context instanceof MemberAccessContext) {
-            return;
-        }
-        $method = $context->accessedMember();
-        if (!$method instanceof ReflectionMethod) {
+        $parameters = (function (NodeContext $context): ?ReflectionParameterCollection {
+            if ($context instanceof MemberAccessContext) {
+                $method = $context->accessedMember();
+                if (!$method instanceof ReflectionMethod) {
+                    return null;
+                }
+                return $method->parameters();
+            }
+            if ($context instanceof FunctionCallContext) {
+                return $context->function()->parameters();
+            }
+            return null;
+        })($resolver->resolveNode($frame, $node));
+
+        if (null === $parameters) {
             return;
         }
 
-        $parameters = $method->parameters();
         foreach ($node->argumentExpressionList?->getValues() ?? [] as $index => $argument) {
             if (!$argument instanceof ArgumentExpression) {
                 continue;
