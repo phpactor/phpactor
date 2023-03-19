@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Closure;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
@@ -75,17 +74,6 @@ class Frame
     public function parent(): Frame
     {
         return $this->parent;
-    }
-
-    public function reduce(Closure $closure, $initial = null)
-    {
-        $initial = $closure($this, $initial);
-
-        foreach ($this->children as $childFrame) {
-            $initial = $childFrame->reduce($closure, $initial);
-        }
-
-        return $initial;
     }
 
     public function root()
