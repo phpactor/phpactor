@@ -59,7 +59,7 @@ class ReflectionMethodCallTest extends IntegrationTestCase
                 function (ReflectionMethodCall $method): void {
                     $this->assertInstanceOf(ByteOffsetRange::class, $method->position());
                     $this->assertEquals(7, $method->position()->start()->toInt());
-                    $this->assertEquals(21, $method->position()->endAsInt());
+                    $this->assertEquals(21, $method->position()->end()->toInt());
                 },
             ],
             'It returns the containing class' => [

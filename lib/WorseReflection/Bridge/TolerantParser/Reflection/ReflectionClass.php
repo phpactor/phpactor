@@ -250,8 +250,8 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     public function memberListPosition(): ByteOffsetRange
     {
         return ByteOffsetRange::fromInts(
-        $this->node->classMembers->openBrace->start,
-        $this->node->classMembers->openBrace->start + $this->node->classMembers->openBrace->length
+            $this->node->classMembers->openBrace->start,
+            $this->node->classMembers->openBrace->start + $this->node->classMembers->openBrace->length
         );
     }
 

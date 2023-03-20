@@ -25,7 +25,7 @@ final class Problems implements IteratorAggregate, Countable
             $lines[] = sprintf(
                 '%s:%s %s',
                 $symbolInformation->symbol()->position()->start()->toInt(),
-                $symbolInformation->symbol()->position()->endAsInt(),
+                $symbolInformation->symbol()->position()->end()->toInt(),
                 implode(', ', $symbolInformation->issues())
             );
         }

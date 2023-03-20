@@ -14,6 +14,6 @@ class PositionTest extends TestCase
     {
         $position = ByteOffsetRange::fromInts(15, 35);
         $this->assertEquals(15, $position->start()->toInt());
-        $this->assertEquals(35, $position->endAsInt());
+        $this->assertEquals(35, $position->end()->toInt());
     }
 }

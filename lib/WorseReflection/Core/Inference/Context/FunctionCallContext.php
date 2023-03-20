@@ -13,8 +13,7 @@ class FunctionCallContext extends NodeContext
         Symbol $symbol,
         private ByteOffsetRange $byteOffsetRange,
         private ReflectionFunction $function,
-    )
-    {
+    ) {
         parent::__construct(
             $symbol,
             $function->inferredType()->reduce()

@@ -77,7 +77,7 @@ abstract class VirtualReflectionMember implements ReflectionMember
     {
         return ByteOffsetRange::fromInts(
             $this->position()->start()->toInt(),
-            $this->position()->endAsInt(),
+            $this->position()->end()->toInt(),
         );
     }
 

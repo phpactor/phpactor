@@ -13,7 +13,7 @@ class AssertStub implements FunctionStub
     {
         $frame->applyTypeAssertions(
             $args->at(0)->typeAssertions(),
-            $context->symbol()->position()->endAsInt()
+            $context->symbol()->position()->end()->toInt()
         );
         return $context;
     }

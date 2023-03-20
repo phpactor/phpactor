@@ -60,7 +60,7 @@ class CompleteConstructor implements Transformer
                 $diagnostics[] = new Diagnostic(
                     ByteOffsetRange::fromInts(
                         $parameter->position()->start()->toInt(),
-                        $parameter->position()->endAsInt() + 5 + strlen($class->name()->__toString())
+                        $parameter->position()->end()->toInt() + 5 + strlen($class->name()->__toString())
                     ),
                     sprintf(
                         'Parameter "%s" may not have been assigned',

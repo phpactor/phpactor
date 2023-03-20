@@ -30,20 +30,4 @@ class ByteOffsetRange
     {
         return $this->end;
     }
-
-    /**
-     * @deprecated Use start() or start()->toInt() instead
-     */
-    public function startAsInt(): int
-    {
-        return $this->start->toInt();
-    }
-
-    /**
-     * @deprecated Use end() or end()->toInt() instead
-     */
-    public function endAsInt(): int
-    {
-        return $this->end->toInt();
-    }
 }
