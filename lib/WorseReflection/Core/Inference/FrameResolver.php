@@ -76,12 +76,12 @@ final class FrameResolver
     /**
      * @param Node|Token|MissingToken $node
      */
-    public function resolveNode(Frame $frame, $node): NodeContext
+    public function resolveNode(FrameStack $frameStack, $node): NodeContext
     {
-        $info = $this->nodeContextResolver->resolveNode($frame, $node);
+        $info = $this->nodeContextResolver->resolveNode($frameStack, $node);
 
         if ($info->issues()) {
-            $frame->problems()->add($info);
+            $frameStack->current()->problems()->add($info);
         }
 
         return $info;

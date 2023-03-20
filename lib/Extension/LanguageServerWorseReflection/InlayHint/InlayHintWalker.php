@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
@@ -37,29 +38,27 @@ class InlayHintWalker implements Walker
         return [];
     }
 
-    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
-        return $frame;
     }
 
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function exit(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
         if ($node->getStartPosition() < $this->range->start()->toInt()) {
-            return $frame;
+            return;
         }
         if ($node->getEndPosition() > $this->range->end()->toInt()) {
-            return $frame;
+            return;
         }
         if ($this->options->types && $node instanceof Variable) {
-            $this->fromVariable($resolver, $frame, $node);
+            $this->fromVariable($resolver, $frameStack, $node);
         }
         if ($this->options->params && $node instanceof CallExpression) {
-            $this->fromCall($resolver, $frame, $node);
+            $this->fromCall($resolver, $frameStack, $node);
         }
         if ($this->options->params && $node instanceof ObjectCreationExpression) {
-            $this->fromObjectCreation($resolver, $frame, $node);
+            $this->fromObjectCreation($resolver, $frameStack, $node);
         }
-        return $frame;
     }
 
 
@@ -71,7 +70,7 @@ class InlayHintWalker implements Walker
         return $this->hints;
     }
 
-    private function fromCall(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    private function fromCall(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
         $parameters = (function (NodeContext $context): ?ReflectionParameterCollection {
             if ($context instanceof MemberAccessContext) {
@@ -87,7 +86,7 @@ class InlayHintWalker implements Walker
             }
 
             return null;
-        })($resolver->resolveNode($frame, $node));
+        })($resolver->resolveNode($frameStack, $node));
 
         if (null === $parameters) {
             return;
@@ -111,10 +110,10 @@ class InlayHintWalker implements Walker
         }
     }
 
-    private function fromVariable(FrameResolver $resolver, Frame $frame, Variable $node): void
+    private function fromVariable(FrameResolver $resolver, FrameStack $frameStack, Variable $node): void
     {
         $name = $node->getName();
-        $variable = $resolver->resolveNode($frame, $node);
+        $variable = $resolver->resolveNode($frameStack, $node);
 
         if (false === $variable->type()->isDefined()) {
             return;
@@ -129,9 +128,9 @@ class InlayHintWalker implements Walker
         );
     }
 
-    private function fromObjectCreation(FrameResolver $resolver, Frame $frame, ObjectCreationExpression $node): void
+    private function fromObjectCreation(FrameResolver $resolver, FrameStack $frameStack, ObjectCreationExpression $node): void
     {
-        $context = $resolver->resolveNode($frame, $node);
+        $context = $resolver->resolveNode($frameStack, $node);
         if (!$context instanceof ClassLikeContext) {
             return;
         }
