@@ -19,7 +19,6 @@ use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
-use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -48,7 +47,7 @@ class FunctionLikeWalker implements Walker
         );
 
         if (!$node instanceof ArrowFunctionCreationExpression) {
-            $frame = $frame->new($node->getNodeKindName() . '#' . $this->functionName($node));
+            $frame = $frame->new();
         }
 
         $this->walkFunctionLike($resolver, $frame, $node);
@@ -122,6 +121,9 @@ class FunctionLikeWalker implements Walker
         }
 
         $parentFrame = $frame->parent();
+        if (null === $parentFrame) {
+            return;
+        }
         $parentVars = $parentFrame->locals()->lessThanOrEqualTo($node->getStartPosition());
 
         if (null === $useClause->useVariableNameList) {
@@ -160,27 +162,6 @@ class FunctionLikeWalker implements Walker
 
             $frame->locals()->set(Variable::fromSymbolContext($variableContext));
         }
-    }
-
-    private function functionName(FunctionLike $node): string
-    {
-        if ($node instanceof MethodDeclaration) {
-            return (string)$node->getName();
-        }
-
-        if ($node instanceof FunctionDeclaration) {
-            return array_reduce($node->getNameParts(), function ($accumulator, Token $part) {
-                return $accumulator
-                    . '\\' .
-                    $part->getText();
-            }, '');
-        }
-
-        if ($node instanceof AnonymousFunctionCreationExpression) {
-            return '<anonymous>';
-        }
-
-        return '<unknown>';
     }
 
     private function addClassContext(Node $node, Type $classType, Frame $frame): void

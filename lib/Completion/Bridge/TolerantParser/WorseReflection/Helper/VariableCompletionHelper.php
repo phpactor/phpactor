@@ -43,6 +43,10 @@ class VariableCompletionHelper
             $frame = $frame->parent();
         }
 
+        if (null === $frame) {
+            return [];
+        }
+
         // Get all declared variables up until the start of the current
         // expression. The most recently declared variables should be first
         // (which is why we reverse the array).
