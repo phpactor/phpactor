@@ -36,11 +36,12 @@ class IfStatementResolver implements Resolver
         if (!$node->expression instanceof Expression) {
             return $context;
         }
+        $frame = $frameStack->current();
 
         // apply type assertions only within the if block
         $this->ifBranch(
             $resolver,
-            $frame,
+            $frameStack,
             $node,
             $node->getStartPosition(),
             $this->resolveInitialEndPosition($node)
@@ -50,7 +51,7 @@ class IfStatementResolver implements Resolver
         foreach ($node->elseIfClauses as $clause) {
             $this->ifBranch(
                 $resolver,
-                $frame,
+                $frameStack,
                 $clause,
                 $clause->getStartPosition(),
                 $clause->getEndPosition(),
@@ -73,7 +74,7 @@ class IfStatementResolver implements Resolver
         // add any new assignments as a union
         $this->ifBranchTermination(
             $resolver,
-            $frame,
+            $frameStack,
             $node,
             $node->getStartPosition(),
             $node->getEndPosition()
@@ -83,7 +84,7 @@ class IfStatementResolver implements Resolver
         foreach ($node->elseIfClauses as $clause) {
             $this->ifBranchTermination(
                 $resolver,
-                $frame,
+                $frameStack,
                 $clause,
                 $node->getStartPosition(),
                 $clause->getEndPosition(),
@@ -103,19 +104,19 @@ class IfStatementResolver implements Resolver
      */
     private function ifBranch(
         NodeContextResolver $resolver,
-        Frame $frame,
+        FrameStack $frameStack,
         $node,
         int $start,
         int $end
     ): void {
         $context = $resolver->resolveNode($frameStack, $node->expression);
-        $frame->applyTypeAssertions($context->typeAssertions(), $start);
+        $frameStack->applyTypeAssertions($context->typeAssertions(), $start);
 
         foreach ($node->getChildNodes() as $child) {
             $resolver->resolveNode($frameStack, $child);
         }
 
-        $frame->applyTypeAssertions(
+        $frameStack->applyTypeAssertions(
             $context->typeAssertions()->negate(),
             $start,
             $end
@@ -127,16 +128,16 @@ class IfStatementResolver implements Resolver
      */
     private function ifBranchTermination(
         NodeContextResolver $resolver,
-        Frame $frame,
+        FrameStack $frameStack,
         $node,
         int $start,
         int $end
     ): void {
         $context = $resolver->resolveNode($frameStack, $node->expression);
-        $terminates = $this->branchTerminates($resolver, $frame, $node);
+        $terminates = $this->branchTerminates($resolver, $frameStack, $node);
 
         if ($terminates) {
-            $frame->applyTypeAssertions(
+            $frameStack->current()->applyTypeAssertions(
                 $context->typeAssertions()->negate(),
                 $start,
                 $end
@@ -144,7 +145,7 @@ class IfStatementResolver implements Resolver
             return;
         }
 
-        $this->combineVariableAssignments($frame, $node, $end);
+        $this->combineVariableAssignments($frameStack->current(), $node, $end);
     }
 
     private function combineVariableAssignments(Frame $frame, Node $node, int $end): void
@@ -159,7 +160,7 @@ class IfStatementResolver implements Resolver
     /**
      * @param IfStatementNode|ElseIfClauseNode $node
      */
-    private function branchTerminates(NodeContextResolver $resolver, Frame $frame, $node): bool
+    private function branchTerminates(NodeContextResolver $resolver, FrameStack $frameStack, $node): bool
     {
         /** @phpstan-ignore-next-line lies */
         foreach ($node->statements as $list) {
