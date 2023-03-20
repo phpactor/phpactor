@@ -32,10 +32,13 @@ class NodeContextResolver
     }
 
     /**
-     * @param Node|Token|MissingToken $node
+     * @param Node|Token|MissingToken|null $node
      */
     public function resolveNode(FrameStack $frameStack, $node): NodeContext
     {
+        if ($node === null) {
+            return NodeContext::none();
+        }
         try {
             return $this->doResolveNodeWithCache($frameStack, $node);
         } catch (CouldNotResolveNode $couldNotResolveNode) {

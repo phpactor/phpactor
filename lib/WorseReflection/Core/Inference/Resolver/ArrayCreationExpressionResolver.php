@@ -33,9 +33,9 @@ class ArrayCreationExpressionResolver implements Resolver
         }
 
         foreach ($node->arrayElements->getElements() as $element) {
-            $value = $resolver->resolveNode($frame, $element->elementValue)->type();
+            $value = $resolver->resolveNode($frameStackStack, $element->elementValue)->type();
             if ($element->elementKey) {
-                $key = $resolver->resolveNode($frame, $element->elementKey)->type();
+                $key = $resolver->resolveNode($frameStackStack, $element->elementKey)->type();
                 $keyValue = TypeUtil::valueOrNull($key);
                 if (null === $keyValue) {
                     continue;
