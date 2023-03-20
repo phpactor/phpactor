@@ -19,9 +19,11 @@ use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Name;
+use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionFunction;
 use Phpactor\WorseReflection\Reflector;
 
 class QualifiedNameResolver implements Resolver
@@ -123,6 +125,25 @@ class QualifiedNameResolver implements Resolver
         }
 
         $name = Name::fromString((string) $name);
+        $position = Position::fromStartAndEnd(
+            $node->getStartPosition(),
+            $node->getEndPosition(),
+        );
+
+        try {
+            $function = $this->reflector->reflectFunction($name);
+        } catch (NotFound $exception) {
+            $function = VirtualReflectionFunction::empty($name, $position)
+        }
+
+        $context = FunctionCallContext::create(
+            $name,
+            ByteOffsetRange::fromInts(
+                $position->start(),
+                $position->end(),
+            ),
+            $function
+        );
         $context = NodeContextFactory::create(
             $name->full(),
             $node->getStartPosition(),
@@ -141,12 +162,6 @@ class QualifiedNameResolver implements Resolver
                 $parent->argumentExpressionList
             );
             return $stub->resolve($frame, $context, $arguments);
-        }
-
-        try {
-            $function = $this->reflector->reflectFunction($name);
-        } catch (NotFound $exception) {
-            return $context->withIssue($exception->getMessage());
         }
 
         // the function may have been resolved to a global, so create

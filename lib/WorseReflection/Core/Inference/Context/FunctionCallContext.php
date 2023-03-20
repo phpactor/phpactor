@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Context;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 
 class FunctionCallContext extends NodeContext
