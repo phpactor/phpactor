@@ -33,7 +33,7 @@ class TestExtension implements Extension
 
 class TestFrameWalker implements Walker
 {
-    public function enter(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $builder, Frame $frame, Node $node): void
     {
         if ($frame->locals()->byName('test_variable')->count()) {
             return $frame;
@@ -47,7 +47,7 @@ class TestFrameWalker implements Walker
         return $frame;
     }
 
-    public function exit(FrameResolver $builder, Frame $frame, Node $node): Frame
+    public function exit(FrameResolver $builder, Frame $frame, Node $node): void
     {
         return $frame;
     }

@@ -5,6 +5,8 @@ namespace Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Expression\Variable as MicrosoftVariable;
+use Microsoft\PhpParser\Node\UseVariableName;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -12,6 +14,7 @@ use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -37,7 +40,7 @@ class FunctionLikeWalker implements Walker
         ];
     }
 
-    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
         assert(
             $node instanceof MethodDeclaration ||
@@ -47,23 +50,23 @@ class FunctionLikeWalker implements Walker
         );
 
         if (!$node instanceof ArrowFunctionCreationExpression) {
-            $frame = $frame->new();
+            $frameStack->newFrame();
         }
 
-        $this->walkFunctionLike($resolver, $frame, $node);
+        $this->walkFunctionLike($resolver, $frameStack, $node);
 
-        return $frame;
+        return;
     }
 
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function exit(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
-        return $frame;
+        return;
     }
 
     /**
      * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression|ArrowFunctionCreationExpression $node
      */
-    private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
+    private function walkFunctionLike(FrameResolver $resolver, FrameStack $frameStack, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
         $classNode = $node->getFirstAncestor(
@@ -73,7 +76,7 @@ class FunctionLikeWalker implements Walker
         );
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
-            $this->addAnonymousImports($frame, $node);
+            $this->addAnonymousImports($frameStack->current(), $node);
 
             // if this is a static anonymous function, set classNode to NULL
             // so that we don't add the class context
@@ -84,8 +87,8 @@ class FunctionLikeWalker implements Walker
 
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
-            $classType = $resolver->resolveNode($frame, $classNode)->type();
-            $this->addClassContext($node, $classType, $frame);
+            $classType = $resolver->resolveNode($frameStack, $classNode)->type();
+            $this->addClassContext($node, $classType, $frameStack->current());
         }
 
         if (null === $node->parameters) {
@@ -96,7 +99,7 @@ class FunctionLikeWalker implements Walker
         foreach ($node->parameters->getElements() as $parameterNode) {
             $parameterName = $parameterNode->variableName->getText($node->getFileContents());
 
-            $nodeContext = $resolver->resolveNode($frame, $parameterNode);
+            $nodeContext = $resolver->resolveNode($frameStack, $parameterNode);
 
             $context = NodeContextFactory::create(
                 (string)$parameterName,
@@ -108,7 +111,7 @@ class FunctionLikeWalker implements Walker
                 ]
             );
 
-            $frame->locals()->set(Variable::fromSymbolContext($context));
+            $frameStack->current()->locals()->set(Variable::fromSymbolContext($context));
         }
     }
 
@@ -135,7 +138,13 @@ class FunctionLikeWalker implements Walker
         }
 
         foreach ($useClause->useVariableNameList->getElements() as $element) {
+            if (!$element instanceof UseVariableName) {
+                continue;
+            }
             $varName = $element->variableName->getText($node->getFileContents());
+            if (!is_string($varName)) {
+                $varName = '';
+            }
 
             $variableContext = NodeContextFactory::create(
                 $varName,

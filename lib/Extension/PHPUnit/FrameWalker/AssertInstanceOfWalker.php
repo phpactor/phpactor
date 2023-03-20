@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Walker;
@@ -28,30 +29,30 @@ class AssertInstanceOfWalker implements Walker
         ];
     }
 
-    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
-        return $frame;
+        return;
     }
 
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function exit(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
         if (!$this->canWalk($node)) {
-            return $frame;
+            return;
         }
 
         $callExpression = $node->parent;
         if (!$callExpression instanceof CallExpression) {
-            return $frame;
+            return;
         }
 
         $args = FunctionArguments::fromList(
             $resolver->resolver(),
-            $frame,
+            $frameStack->current(),
             $callExpression->argumentExpressionList
         );
 
         if (count($args) < 2) {
-            return $frame;
+            return;
         }
 
         $type = $args->at(0)->type();
@@ -65,14 +66,14 @@ class AssertInstanceOfWalker implements Walker
         }
 
         if (!$type instanceof ClassType) {
-            return $frame;
+            return;
         }
 
         $var = $args->at(1);
 
         $frame->locals()->set(Variable::fromSymbolContext($var->withType($type)));
 
-        return $frame;
+        return;
     }
 
     private function canWalk(Node $node): bool

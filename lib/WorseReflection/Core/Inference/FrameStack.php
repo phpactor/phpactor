@@ -32,7 +32,7 @@ final class FrameStack
     public function newFrame(): self
     {
         $this->frames[] = $this->current;
-        $this->current = new Frame();
+        $this->current = new Frame(null, null, null, $this->current);
 
         return $this;
     }
