@@ -43,7 +43,7 @@ class SymbolFactoryTest extends TestCase
         $symbol = $information->symbol();
 
         $this->assertEquals('hello', $symbol->name());
-        $this->assertEquals(10, $symbol->position()->startAsInt());
+        $this->assertEquals(10, $symbol->position()->start()->asInt());
         $this->assertEquals(20, $symbol->position()->endAsInt());
     }
 

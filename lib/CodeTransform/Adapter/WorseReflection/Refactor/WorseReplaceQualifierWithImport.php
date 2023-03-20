@@ -47,7 +47,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
         return new TextDocumentEdits(
             $sourceCode->uri(),
             $textEdits->merge(TextEdits::fromTextEdits([
-                TextEdit::create($position->startAsInt(), $position->endAsInt() - $position->startAsInt(), $newClassName)
+                TextEdit::create($position->start()->asInt(), $position->endAsInt() - $positistart()->asInt->startAsInt(), $newClassName)
             ]))
         );
     }

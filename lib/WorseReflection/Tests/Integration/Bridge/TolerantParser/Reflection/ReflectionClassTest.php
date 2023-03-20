@@ -144,7 +144,7 @@ class ReflectionClassTest extends IntegrationTestCase
         ,
             'Class2',
             function (ReflectionClass $class): void {
-                $this->assertEquals(7, $class->position()->startAsInt());
+                $this->assertEquals(7, $class->position()->start()->asInt());
             },
         ];
 
@@ -166,7 +166,7 @@ class ReflectionClassTest extends IntegrationTestCase
         ,
             'Class2',
             function (ReflectionClass $class): void {
-                $this->assertEquals(20, $class->memberListPosition()->startAsInt());
+                $this->assertEquals(20, $class->memberListPosition()->start()->asInt());
             },
         ];
 

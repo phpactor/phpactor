@@ -13,7 +13,7 @@ final class ByteOffsetRange
         return new self($start, $end);
     }
 
-    public function startAsInt(): int
+    public function start(): int
     {
         return $this->start;
     }

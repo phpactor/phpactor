@@ -62,7 +62,7 @@ final class TypeAssertion
         if ($context->symbol()->symbolType() === Symbol::PROPERTY) {
             return TypeAssertion::property(
                 $context->symbol()->name(),
-                $context->symbol()->position()->startAsInt(),
+                $context->symbol()->position()->start()->asInt(),
                 $true,
                 $false,
                 $context->containerType(),
@@ -70,7 +70,7 @@ final class TypeAssertion
         }
 
         if ($context->symbol()->symbolType() === Symbol::VARIABLE) {
-            return TypeAssertion::variable($context->symbol()->name(), $context->symbol()->position()->startAsInt(), $true, $false);
+            return TypeAssertion::variable($context->symbol()->name(), $context->symbol()->position()->start()->asInt(), $true, $false);
         }
 
         throw new RuntimeException(sprintf(

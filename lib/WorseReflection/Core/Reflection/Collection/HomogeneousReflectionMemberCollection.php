@@ -62,7 +62,7 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
     public function atOffset(int $offset): HomogeneousReflectionMemberCollection
     {
         return new static(array_filter($this->items, function (ReflectionMember $item) use ($offset) {
-            return $item->position()->startAsInt() <= $offset && $item->position()->endAsInt() >= $offset;
+            return $item->position()->start()->asInt() <= $offset && $item->position()->endAsInt() >= $offset;
         }));
     }
 

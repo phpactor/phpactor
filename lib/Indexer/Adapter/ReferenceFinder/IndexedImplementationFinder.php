@@ -139,7 +139,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
 
             $locations[] = Location::fromPathAndOffset(
                 $path,
-                $member->position()->startAsInt()
+                $member->position()->start()->asInt()
             );
         }
 

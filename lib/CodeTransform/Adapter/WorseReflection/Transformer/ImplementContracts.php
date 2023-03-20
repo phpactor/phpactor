@@ -38,8 +38,8 @@ class ImplementContracts implements Transformer
             }
             $diagnostics[] = new Diagnostic(
                 ByteOffsetRange::fromInts(
-                    $class->position()->startAsInt(),
-                    $class->position()->startAsInt() + 5 + strlen($class->name()->__toString())
+                    $class->position()->start()->asInt(),
+                    $class->position()->start()->asInt() + 5 + strlen($class->name()->__toString())
                 ),
                 sprintf(
                     'Missing methods "%s"',

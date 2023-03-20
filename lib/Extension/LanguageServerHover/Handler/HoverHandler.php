@@ -71,7 +71,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
 
             return new Hover($string, new Range(
                 PositionConverter::byteOffsetToPosition(
-                    ByteOffset::fromInt($nodeContext->symbol()->position()->startAsInt()),
+                    ByteOffset::fromInt($nodeContext->symbol()->position()->start()->asInt()),
                     $document->__toString()
                 ),
                 PositionConverter::byteOffsetToPosition(

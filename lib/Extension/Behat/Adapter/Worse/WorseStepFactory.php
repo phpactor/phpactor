@@ -39,7 +39,7 @@ class WorseStepFactory implements StepFactory
                         $method->name(),
                         $step,
                         $class->sourceCode()->path(),
-                        $method->position()->startAsInt()
+                        $method->position()->start()->asInt()
                     );
                 }
             }
