@@ -14,6 +14,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
@@ -96,7 +97,7 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
             ),
             $class->name()->__toString(),
             $memberName,
-            $this->resolvePropertyType($resolver, $frame, $rightOperand, $accessExpression),
+            $this->resolvePropertyType($resolver, $frameStack, $rightOperand, $accessExpression),
             $accessExpression ? true : false,
         );
     }
@@ -108,18 +109,18 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 
     private function resolvePropertyType(
         NodeContextResolver $resolver,
-        Frame $frame,
+        FrameStack $frameStack,
         Expression $rightOperand,
         Node|MissingToken|null $accessExpression
     ): Type {
-        $type = $resolver->resolveNode($frame, $rightOperand)->type();
+        $type = $resolver->resolveNode($frameStack, $rightOperand)->type();
 
         if (!$accessExpression instanceof Node) {
             return $type;
         }
 
         return new ArrayType(
-            $accessExpression instanceof SubscriptExpression ? null : $resolver->resolveNode($frame, $accessExpression)->type(),
+            $accessExpression instanceof SubscriptExpression ? null : $resolver->resolveNode($frameStack, $accessExpression)->type(),
             $type
         );
     }
