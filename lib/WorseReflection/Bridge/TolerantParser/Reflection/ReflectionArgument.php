@@ -77,8 +77,7 @@ class ReflectionArgument implements CoreReflectionArgument
 
     public function position(): Position
     {
-        return Position::fromFullStartStartAndEnd(
-            $this->node->getFullStartPosition(),
+        return Position::fromStartAndEnd(
             $this->node->getStartPosition(),
             $this->node->getEndPosition()
         );

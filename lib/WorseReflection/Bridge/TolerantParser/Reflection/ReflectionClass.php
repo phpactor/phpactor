@@ -249,10 +249,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function memberListPosition(): Position
     {
-        return Position::fromFullStartStartAndEnd(
-            $this->node->classMembers->openBrace->fullStart,
-            $this->node->classMembers->openBrace->start,
-            $this->node->classMembers->openBrace->start + $this->node->classMembers->openBrace->length
+        return Position::fromStartAndEnd(
+        $this->node->classMembers->openBrace->start,
+        $this->node->classMembers->openBrace->start + $this->node->classMembers->openBrace->length
         );
     }
 
