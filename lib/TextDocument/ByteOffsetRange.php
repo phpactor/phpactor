@@ -34,7 +34,7 @@ class ByteOffsetRange
     /**
      * @deprecated Use start() or start()->toInt() instead
      */
-    public function start()->asInt(): int
+    public function startAsInt(): int
     {
         return $this->start->toInt();
     }

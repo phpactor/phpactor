@@ -107,7 +107,7 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionArgumentCollection $arguments): void {
-                    self::assertEquals(17, $arguments->first()->position()->start()->asInt());
+                    self::assertEquals(17, $arguments->first()->position()->start()->toInt());
                     self::assertEquals(25, $arguments->first()->position()->endAsInt());
                 },
             ],

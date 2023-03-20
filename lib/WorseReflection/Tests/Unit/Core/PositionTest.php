@@ -13,7 +13,7 @@ class PositionTest extends TestCase
     public function testWidth(): void
     {
         $position = ByteOffsetRange::fromInts(15, 35);
-        $this->assertEquals(15, $position->start()->asInt());
+        $this->assertEquals(15, $position->start()->toInt());
         $this->assertEquals(35, $position->endAsInt());
     }
 }

@@ -52,12 +52,12 @@ class NodeContextResolverTest extends IntegrationTestCase
             $variable = Variable::fromSymbolContext($varSymbolInfo);
 
             if (Symbol::PROPERTY === $varSymbolInfo->symbol()->symbolType()) {
-                $properties[$varSymbolInfo->symbol()->position()->start()->asInt()] = $variable;
+                $properties[$varSymbolInfo->symbol()->position()->start()->toInt()] = $variable;
 
                 continue;
             }
 
-            $variables[$varSymbolInfo->symbol()->position()->start()->asInt()] = $variable;
+            $variables[$varSymbolInfo->symbol()->position()->start()->toInt()] = $variable;
         }
 
         $symbolInfo = $this->resolveNodeAtOffset(

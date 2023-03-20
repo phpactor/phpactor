@@ -59,7 +59,7 @@ class CompleteConstructor implements Transformer
 
                 $diagnostics[] = new Diagnostic(
                     ByteOffsetRange::fromInts(
-                        $parameter->position()->start()->asInt(),
+                        $parameter->position()->start()->toInt(),
                         $parameter->position()->endAsInt() + 5 + strlen($class->name()->__toString())
                     ),
                     sprintf(
@@ -124,7 +124,7 @@ class CompleteConstructor implements Transformer
         foreach ($this->candidateClasses($source) as $class) {
             $constructMethod = $class->methods()->get('__construct');
             foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
-                $edits[] = TextEdit::create($parameter->position()->start()->asInt(), 0, sprintf('%s ', $this->visibility));
+                $edits[] = TextEdit::create($parameter->position()->start()->toInt(), 0, sprintf('%s ', $this->visibility));
             }
         }
 

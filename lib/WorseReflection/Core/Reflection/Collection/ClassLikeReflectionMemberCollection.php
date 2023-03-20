@@ -181,7 +181,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
     public function atOffset(int $offset): ReflectionMemberCollection
     {
         return $this->filter(function (ReflectionMember $member) use ($offset) {
-            return $member->position()->start()->asInt() <= $offset && $member->position()->endAsInt() >= $offset;
+            return $member->position()->start()->toInt() <= $offset && $member->position()->endAsInt() >= $offset;
         });
     }
 

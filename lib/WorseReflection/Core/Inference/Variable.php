@@ -28,7 +28,7 @@ final class Variable
     {
         return new self(
             $nodeContext->symbol()->name(),
-            $nodeContext->symbol()->position()->start()->asInt(),
+            $nodeContext->symbol()->position()->start()->toInt(),
             $nodeContext->type(),
             $nodeContext->symbol()->symbolType() === Symbol::PROPERTY ? $nodeContext->containerType() : null
         );
