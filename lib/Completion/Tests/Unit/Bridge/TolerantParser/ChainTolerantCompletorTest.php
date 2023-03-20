@@ -62,7 +62,7 @@ class ChainTolerantCompletorTest extends TestCase
             TextDocumentBuilder::create('<?php ')->build(),
             ByteOffset::fromInt(1)
         );
-        $this->assertCount(0, $suggestions);
+        $this->assertCount(0, iterator_to_array($suggestions, false));
         $this->assertTrue($suggestions->getReturn());
     }
 
@@ -85,7 +85,7 @@ class ChainTolerantCompletorTest extends TestCase
             TextDocumentBuilder::create('<?php ')->build(),
             ByteOffset::fromInt(1)
         );
-        $this->assertCount(1, $suggestions);
+        $this->assertCount(1, iterator_to_array($suggestions, false));
         $this->assertFalse($suggestions->getReturn());
     }
 
@@ -157,7 +157,7 @@ class ChainTolerantCompletorTest extends TestCase
             TextDocumentBuilder::create('<?php ')->build(),
             ByteOffset::fromInt(1)
         );
-        $this->assertCount(1, $suggestions);
+        $this->assertCount(1, iterator_to_array($suggestions, false));
         $this->assertTrue($suggestions->getReturn());
     }
 
