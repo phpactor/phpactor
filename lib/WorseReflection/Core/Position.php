@@ -13,18 +13,13 @@ final class Position
         return new self($start, $end);
     }
 
-    public function start(): int
+    public function startAsInt(): int
     {
         return $this->start;
     }
 
-    public function end(): int
+    public function endAsInt(): int
     {
         return $this->end;
-    }
-
-    public function width(): int
-    {
-        return $this->end - $this->start;
     }
 }

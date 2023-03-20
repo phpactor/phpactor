@@ -24,8 +24,8 @@ final class Problems implements IteratorAggregate, Countable
         foreach ($this->problems as $symbolInformation) {
             $lines[] = sprintf(
                 '%s:%s %s',
-                $symbolInformation->symbol()->position()->start(),
-                $symbolInformation->symbol()->position()->end(),
+                $symbolInformation->symbol()->position()->startAsInt(),
+                $symbolInformation->symbol()->position()->endAsInt(),
                 implode(', ', $symbolInformation->issues())
             );
         }

@@ -59,8 +59,8 @@ class CompleteConstructor implements Transformer
 
                 $diagnostics[] = new Diagnostic(
                     ByteOffsetRange::fromInts(
-                        $parameter->position()->start(),
-                        $parameter->position()->end() + 5 + strlen($class->name()->__toString())
+                        $parameter->position()->startAsInt(),
+                        $parameter->position()->endAsInt() + 5 + strlen($class->name()->__toString())
                     ),
                     sprintf(
                         'Parameter "%s" may not have been assigned',
@@ -124,7 +124,7 @@ class CompleteConstructor implements Transformer
         foreach ($this->candidateClasses($source) as $class) {
             $constructMethod = $class->methods()->get('__construct');
             foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
-                $edits[] = TextEdit::create($parameter->position()->start(), 0, sprintf('%s ', $this->visibility));
+                $edits[] = TextEdit::create($parameter->position()->startAsInt(), 0, sprintf('%s ', $this->visibility));
             }
         }
 

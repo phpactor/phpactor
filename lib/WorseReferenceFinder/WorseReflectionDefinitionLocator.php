@@ -115,7 +115,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
         return new TypeLocations([new TypeLocation($className, new Location(
             TextDocumentUri::fromString($path),
-            ByteOffset::fromInt($class->position()->start())
+            ByteOffset::fromInt($class->position()->startAsInt())
         ))]);
     }
 
@@ -141,7 +141,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         return new TypeLocations([
             new TypeLocation(TypeFactory::unknown(), new Location(
                 TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($function->position()->start())
+                ByteOffset::fromInt($function->position()->startAsInt())
             ))
         ]);
     }
@@ -168,7 +168,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         return new TypeLocations([
             new TypeLocation(TypeFactory::unknown(), new Location(
                 TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($constant->position()->start())
+                ByteOffset::fromInt($constant->position()->startAsInt())
             ))
         ]);
     }
@@ -231,7 +231,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
             $locations[] = new TypeLocation($namedType, new Location(
                 TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($member->position()->start())
+                ByteOffset::fromInt($member->position()->startAsInt())
             ));
         }
 

@@ -40,7 +40,7 @@ trait FullyQualifiedReferenceTrait
         return FullyQualifiedName::fromString($this->fqn);
     }
 
-    public function start(): ByteOffset
+    public function startAsInt(): ByteOffset
     {
         return ByteOffset::fromInt($this->start);
     }

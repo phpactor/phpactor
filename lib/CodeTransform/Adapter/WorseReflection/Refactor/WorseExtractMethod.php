@@ -198,7 +198,7 @@ class WorseExtractMethod implements ExtractMethod
             $tail = mb_substr(
                 $source,
                 $offsetEnd,
-                $reflectionMethod->position()->end() - $offsetEnd
+                $reflectionMethod->position()->endAsInt() - $offsetEnd
             )
         );
 

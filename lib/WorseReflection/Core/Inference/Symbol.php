@@ -33,7 +33,7 @@ final class Symbol
 
     public function __toString()
     {
-        return sprintf('%s:%s [%s] %s', $this->position->start(), $this->position->end(), $this->symbolType, $this->name);
+        return sprintf('%s:%s [%s] %s', $this->position->startAsInt(), $this->position->endAsInt(), $this->symbolType, $this->name);
     }
 
     public static function unknown(): Symbol

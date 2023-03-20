@@ -34,8 +34,8 @@ final class OffsetInfo
         $return = [
             'symbol' => $nodeContext->symbol()->name(),
             'symbol_type' => $nodeContext->symbol()->symbolType(),
-            'start' => $nodeContext->symbol()->position()->start(),
-            'end' => $nodeContext->symbol()->position()->end(),
+            'start' => $nodeContext->symbol()->position()->startAsInt(),
+            'end' => $nodeContext->symbol()->position()->endAsInt(),
             'type' => (string) $nodeContext->type(),
             'class_type' => (string) $nodeContext->containerType(),
             'value' => var_export(TypeUtil::valueOrNull($nodeContext->type()), true),

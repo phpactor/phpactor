@@ -58,8 +58,8 @@ class ReflectionMethodCallTest extends IntegrationTestCase
                 ],
                 function (ReflectionMethodCall $method): void {
                     $this->assertInstanceOf(Position::class, $method->position());
-                    $this->assertEquals(7, $method->position()->start());
-                    $this->assertEquals(21, $method->position()->end());
+                    $this->assertEquals(7, $method->position()->startAsInt());
+                    $this->assertEquals(21, $method->position()->endAsInt());
                 },
             ],
             'It returns the containing class' => [

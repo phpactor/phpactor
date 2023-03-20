@@ -207,7 +207,7 @@ class FunctionLikeWalker implements Walker
         }
         foreach ($reflection->members()->byMemberType(ReflectionMember::TYPE_PROPERTY) as $property) {
             assert($property instanceof ReflectionProperty);
-            $frame->properties()->set(new Variable($property->name(), $property->position()->start(), $property->inferredType(), $classType));
+            $frame->properties()->set(new Variable($property->name(), $property->position()->startAsInt(), $property->inferredType(), $classType));
         }
     }
 }

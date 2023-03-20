@@ -114,7 +114,7 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
         foreach ($classes as $class) {
             $position = $class->position();
 
-            if ($position->start() <= $offset && $offset <= $position->end()) {
+            if ($position->startAsInt() <= $offset && $offset <= $position->endAsInt()) {
                 return $class;
             }
         }

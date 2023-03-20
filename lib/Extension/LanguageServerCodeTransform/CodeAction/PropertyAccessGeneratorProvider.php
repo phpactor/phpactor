@@ -58,7 +58,7 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
             $propertyNames = [];
             foreach ($reflectionClass->properties() as $property) {
                 assert($property instanceof ReflectionProperty);
-                if ($property->position()->start() < $startOffset || $property->position()->end() > $endOffset) {
+                if ($property->position()->startAsInt() < $startOffset || $property->position()->endAsInt() > $endOffset) {
                     continue;
                 }
                 $propertyNames[] = $property->name();
