@@ -7,7 +7,7 @@ use Phpactor\WorseReflection\Core\Inference\Assignments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use RuntimeException;
 
 abstract class AssignmentstTestCase extends TestCase
@@ -21,7 +21,7 @@ abstract class AssignmentstTestCase extends TestCase
             Symbol::fromTypeNameAndPosition(
                 Symbol::VARIABLE,
                 'hello',
-                Position::fromInts(0, 0)
+                ByteOffsetRange::fromInts(0, 0)
             )
         );
 
@@ -92,7 +92,7 @@ abstract class AssignmentstTestCase extends TestCase
         return Variable::fromSymbolContext(NodeContext::for(Symbol::fromTypeNameAndPosition(
             Symbol::VARIABLE,
             $name,
-            Position::fromInts($start, $end)
+            ByteOffsetRange::fromInts($start, $end)
         )));
     }
 }

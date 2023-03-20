@@ -2,12 +2,11 @@
 
 namespace Phpactor\WorseReflection\Core\Virtual;
 
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\MemberTypeContextualiser;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
@@ -19,7 +18,7 @@ abstract class VirtualReflectionMember implements ReflectionMember
     private MemberTypeContextualiser $contextualizer;
 
     public function __construct(
-        private Position $position,
+        private ByteOffsetRange $position,
         private ReflectionClassLike $declaringClass,
         protected ReflectionClassLike $class,
         private string $name,
@@ -34,7 +33,7 @@ abstract class VirtualReflectionMember implements ReflectionMember
         $this->contextualizer = new MemberTypeContextualiser();
     }
 
-    public function position(): Position
+    public function position(): ByteOffsetRange
     {
         return $this->position;
     }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core;
+namespace Phpactor\TextDocument;
 
-final class Position
+final class ByteOffsetRange
 {
     private function __construct(private int $start, private int $end)
     {

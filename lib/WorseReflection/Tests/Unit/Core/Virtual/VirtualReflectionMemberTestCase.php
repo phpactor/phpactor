@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
@@ -19,7 +19,7 @@ abstract class VirtualReflectionMemberTestCase extends TestCase
 {
     use ProphecyTrait;
 
-    protected Position $position;
+    protected ByteOffsetRange $position;
 
     protected ObjectProphecy $declaringClass;
 
@@ -39,7 +39,7 @@ abstract class VirtualReflectionMemberTestCase extends TestCase
 
     public function setUp(): void
     {
-        $this->position = Position::fromInts(0, 0);
+        $this->position = ByteOffsetRange::fromInts(0, 0);
         $this->declaringClass = $this->prophesize(ReflectionClass::class);
         $this->class = $this->prophesize(ReflectionClass::class);
         $this->name = 'test_name';

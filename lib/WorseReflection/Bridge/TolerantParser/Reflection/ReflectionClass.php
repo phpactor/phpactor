@@ -22,7 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -247,9 +247,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $traits;
     }
 
-    public function memberListPosition(): Position
+    public function memberListPosition(): ByteOffsetRange
     {
-        return Position::fromInts(
+        return ByteOffsetRange::fromInts(
         $this->node->classMembers->openBrace->start,
         $this->node->classMembers->openBrace->start + $this->node->classMembers->openBrace->length
         );

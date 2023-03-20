@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use InvalidArgumentException;
 
 final class Symbol
@@ -26,7 +26,7 @@ final class Symbol
     /**
      * @param Symbol::* $symbolType
      */
-    private function __construct(private string $symbolType, string $name, private Position $position)
+    private function __construct(private string $symbolType, string $name, private ByteOffsetRange $position)
     {
         $this->name = ltrim($name, '$');
     }
@@ -38,7 +38,7 @@ final class Symbol
 
     public static function unknown(): Symbol
     {
-        return new self(self::UNKNOWN, self::UNKNOWN, Position::fromInts(0, 0));
+        return new self(self::UNKNOWN, self::UNKNOWN, ByteOffsetRange::fromInts(0, 0));
     }
 
     public function isKnown(): bool
@@ -63,7 +63,7 @@ final class Symbol
         return $symbolType;
     }
 
-    public static function fromTypeNameAndPosition(string $symbolType, string $name, Position $position): Symbol
+    public static function fromTypeNameAndPosition(string $symbolType, string $name, ByteOffsetRange $position): Symbol
     {
         $symbolType = self::castSymbolType($symbolType);
         return new self($symbolType, $name, $position);
@@ -82,7 +82,7 @@ final class Symbol
         return $this->name;
     }
 
-    public function position(): Position
+    public function position(): ByteOffsetRange
     {
         return $this->position;
     }

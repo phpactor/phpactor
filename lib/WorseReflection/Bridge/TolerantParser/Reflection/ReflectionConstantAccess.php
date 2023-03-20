@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -18,9 +18,9 @@ class ReflectionConstantAccess
     {
     }
 
-    public function position(): Position
+    public function position(): ByteOffsetRange
     {
-        return Position::fromInts(
+        return ByteOffsetRange::fromInts(
             $this->node->getStartPosition(),
             $this->node->getEndPosition()
         );

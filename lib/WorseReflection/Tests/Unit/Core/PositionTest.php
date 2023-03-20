@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 
 class PositionTest extends TestCase
 {
@@ -12,7 +12,7 @@ class PositionTest extends TestCase
      */
     public function testWidth(): void
     {
-        $position = Position::fromInts(15, 35);
+        $position = ByteOffsetRange::fromInts(15, 35);
         $this->assertEquals(15, $position->startAsInt());
         $this->assertEquals(35, $position->endAsInt());
     }

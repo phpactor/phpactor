@@ -4,11 +4,11 @@ namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollection;
 
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 
 interface ReflectionObjectCreationExpression extends ReflectionNode
 {
-    public function position(): Position;
+    public function position(): ByteOffsetRange;
 
     public function class(): ReflectionClassLike;
 

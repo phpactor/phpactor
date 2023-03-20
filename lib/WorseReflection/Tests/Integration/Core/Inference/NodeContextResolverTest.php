@@ -18,7 +18,7 @@ use Phpactor\WorseReflection\Core\Inference\LocalAssignments;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TestUtils\ExtractOffset;
 use RuntimeException;
 
@@ -44,7 +44,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     Symbol::fromTypeNameAndPosition(
                         'variable',
                         $name,
-                        Position::fromInts($offset, $offset)
+                        ByteOffsetRange::fromInts($offset, $offset)
                     )
                 )->withType($varSymbolInfo);
             }
@@ -96,7 +96,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     NodeContext::for(Symbol::fromTypeNameAndPosition(
                         Symbol::CLASS_,
                         'bar',
-                        Position::fromInts(0, 0)
+                        ByteOffsetRange::fromInts(0, 0)
                     ))->withType(TypeFactory::fromString('Foobar'))
                 )
             ]),
@@ -772,7 +772,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                 , [
                     'foobar' => TypeFactory::fromString('Foobar'),
                     'barfoo' => NodeContext::for(
-                        Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', Position::fromInts(0, 0))
+                        Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', ByteOffsetRange::fromInts(0, 0))
                     )->withType(TypeFactory::stringLiteral('hello'))
                 ], ['type' => 'string'],
             ];
@@ -840,7 +840,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                 'bar' => NodeContext::for(Symbol::fromTypeNameAndPosition(
                     Symbol::PROPERTY,
                     'bar',
-                    Position::fromInts(0, 0),
+                    ByteOffsetRange::fromInts(0, 0),
                 ))
                     ->withContainerType(TypeFactory::class('Foobar\Barfoo\Foobar'))
                     ->withType(TypeFactory::class('Acme\Factory')),
