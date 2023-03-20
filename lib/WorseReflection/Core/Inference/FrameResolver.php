@@ -52,25 +52,23 @@ final class FrameResolver
         return new self($nodeContextResolver, $globalWalkers, $nodeWalkers);
     }
 
-    public function build(Node $node): Frame
+    public function build(Node $node): FrameStack
     {
-        $generator = $this->walkNode($this->resolveScopeNode($node), $node);
+        $frameStack = FrameStack::new();
+        $generator = $this->walkNode($this->resolveScopeNode($node), $node, $frameStack);
         foreach ($generator as $_) {
         }
 
-        $frame = $generator->getReturn();
-        if (!$frame) {
-            throw new RuntimeException(
-                'Walker did not return a Frame, this should never happen'
-            );
-        }
-
-        return $frame;
+        return $frameStack;
     }
-
+    /**
+     * @return Generator<int,null,null,FrameStack>
+     */
     public function buildGenerator(Node $node): Generator
     {
-        return $this->walkNode($this->resolveScopeNode($node), $node);
+        $frameStack = FrameStack::new();
+        yield from $this->walkNode($this->resolveScopeNode($node), $node, $frameStack);
+        return $frameStack;
     }
 
     /**
@@ -122,56 +120,52 @@ final class FrameResolver
     }
 
     /**
-     * @return Generator<int,null,null,?Frame>
+     * @return Generator<int,null,null,bool>
      */
-    private function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): Generator
+    private function walkNode(Node $node, Node $targetNode, FrameStack $frameStack): Generator
     {
-        if ($frame === null) {
-            $frame = new Frame();
-        }
-
         foreach ($this->globalWalkers as $walker) {
-            $frame = $walker->enter($this, $frame, $node);
+            $walker->enter($this, $frameStack, $node);
         }
 
         $nodeClass = get_class($node);
 
         if (isset($this->nodeWalkers[$nodeClass])) {
             foreach ($this->nodeWalkers[$nodeClass] as $walker) {
-                $frame = $walker->enter($this, $frame, $node);
+                $walker->enter($this, $frameStack, $node);
             }
         }
 
         foreach ($node->getChildNodes() as $childNode) {
-            $generator = $this->walkNode($childNode, $targetNode, $frame);
+            $generator = $this->walkNode($childNode, $targetNode, $frameStack);
             yield from $generator;
-            if ($found = $generator->getReturn()) {
-                return $found;
+            if (true === $generator->getReturn()) {
+                return true;
             }
             yield;
         }
 
         if (isset($this->nodeWalkers[$nodeClass])) {
             foreach ($this->nodeWalkers[$nodeClass] as $walker) {
-                $frame = $walker->exit($this, $frame, $node);
+                $walker->exit($this, $frameStack, $node);
             }
         }
 
         foreach ($this->globalWalkers as $walker) {
-            $frame = $walker->exit($this, $frame, $node);
+            $walker->exit($this, $frameStack, $node);
         }
 
         // if we found what we were looking for then return it
         if ($node === $targetNode) {
-            return $frame;
+            return true;
         }
 
         // we start with the source node and we finish with the source node.
         if ($node instanceof SourceFileNode) {
-            return $frame;
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     private function resolveScopeNode(Node $node): Node

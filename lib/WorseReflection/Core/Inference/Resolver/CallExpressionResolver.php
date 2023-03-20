@@ -8,7 +8,7 @@ use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
-use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FramStacke;
 use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -29,7 +29,7 @@ class CallExpressionResolver implements Resolver
         assert($node instanceof CallExpression);
         $resolvableNode = $node->callableExpression;
 
-        $context = $resolver->resolveNode($frame, $resolvableNode);
+        $context = $resolver->resolveNode($frameStack, $resolvableNode);
         $returnType = $context->type();
         $containerType = $context->containerType();
 
@@ -75,7 +75,7 @@ class CallExpressionResolver implements Resolver
         Type $containerType,
         NodeContext $context,
         NodeContextResolver $resolver,
-        Frame $frame,
+        FrameStack $frameStack,
         CallExpression $node
     ): NodeContext {
         if ($containerType instanceof ReflectedClassType) {

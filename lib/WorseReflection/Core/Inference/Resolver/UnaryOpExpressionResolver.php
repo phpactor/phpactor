@@ -22,7 +22,7 @@ class UnaryOpExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, FrameStack $frameStack, Node $node): NodeContext
     {
         assert($node instanceof UnaryExpression);
-        $operand = $resolver->resolveNode($frame, $node->operand);
+        $operand = $resolver->resolveNode($frameStack, $node->operand);
 
         // see sister hack in BinaryExpressionResolver
         // https://github.com/Microsoft/tolerant-php-parser/issues/19

@@ -32,12 +32,12 @@ class ArrowFunctionCreationExpressionResolver implements Resolver
                 if (!$parameter instanceof Parameter) {
                     continue;
                 }
-                $args[] = $resolver->resolveNode($frame, $parameter)->type();
+                $args[] = $resolver->resolveNode($frameStack, $parameter)->type();
             }
         }
 
         if (!$returnType->isDefined()) {
-            $returnType = $resolver->resolveNode($frame, $node->resultExpression)->type()->generalize();
+            $returnType = $resolver->resolveNode($frameStack, $node->resultExpression)->type()->generalize();
         }
 
         return NodeContextFactory::create(

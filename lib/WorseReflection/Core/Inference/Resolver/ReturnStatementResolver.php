@@ -22,7 +22,7 @@ class ReturnStatementResolver implements Resolver
             return $context;
         }
 
-        $type = $resolver->resolveNode($frame, $node->expression)->type();
+        $type = $resolver->resolveNode($frameStack, $node->expression)->type();
         $context = $context->withType($type);
 
         if ($frame->returnType()->isVoid()) {

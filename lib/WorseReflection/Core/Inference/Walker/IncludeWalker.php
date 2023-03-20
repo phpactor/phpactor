@@ -71,10 +71,11 @@ class IncludeWalker implements Walker
         $parentNode = $node->parent;
 
         if ($parentNode instanceof AssignmentExpression) {
-            return $this->processAssignment($sourceNode, $resolver, $frame, $parentNode, $node);
+            $this->processAssignment($sourceNode, $resolver, $frameStack, $parentNode, $node);
+            return;
         }
 
-        $frame->locals()->merge($includedFrame->locals());
+        $frameStack->current()->locals()->merge($includedFrame->locals());
 
         return;
     }

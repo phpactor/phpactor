@@ -46,8 +46,8 @@ class BinaryExpressionResolver implements Resolver
             ]
         );
 
-        $left = $resolver->resolveNode($frame, $node->leftOperand);
-        $right = $resolver->resolveNode($frame, $node->rightOperand);
+        $left = $resolver->resolveNode($frameStack, $node->leftOperand);
+        $right = $resolver->resolveNode($frameStack, $node->rightOperand);
 
         // merge type assertions from left AND right
         $context = $context->withTypeAssertions(
@@ -68,7 +68,7 @@ class BinaryExpressionResolver implements Resolver
         $leftOperand = $node->leftOperand;
         if ($leftOperand instanceof UnaryExpression) {
             $leftOperand = $leftOperand->operand;
-            $left = $resolver->resolveNode($frame, $leftOperand);
+            $left = $resolver->resolveNode($frameStack, $leftOperand);
         }
 
         if (!$leftOperand instanceof Node) {

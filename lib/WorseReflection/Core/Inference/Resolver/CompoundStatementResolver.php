@@ -17,7 +17,7 @@ class CompoundStatementResolver implements Resolver
     {
         assert($node instanceof CompoundStatementNode);
         foreach ($node->statements as $statement) {
-            $resolver->resolveNode($frame, $statement);
+            $resolver->resolveNode($frameStack, $statement);
         }
 
         return NodeContextFactory::forNode($node);

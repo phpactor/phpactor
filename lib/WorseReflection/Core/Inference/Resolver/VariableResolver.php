@@ -36,7 +36,7 @@ class VariableResolver implements Resolver
         }
 
         if ($node->name instanceof BracedExpression) {
-            return $resolver->resolveNode($frame, $node->name->expression);
+            return $resolver->resolveNode($frameStack, $node->name->expression);
         }
 
         $parent = $node->parent;
@@ -48,7 +48,7 @@ class VariableResolver implements Resolver
             $parent instanceof ScopedPropertyAccessExpression &&
             $parent->memberName === $node
         ) {
-            $containerType = $resolver->resolveNode($frame, $parent->scopeResolutionQualifier);
+            $containerType = $resolver->resolveNode($frameStack, $parent->scopeResolutionQualifier);
             $access =  $this->resolveStaticPropertyAccess($resolver, $containerType->type(), $node);
             return $access;
         }

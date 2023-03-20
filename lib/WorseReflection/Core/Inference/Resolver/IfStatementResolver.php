@@ -60,7 +60,7 @@ class IfStatementResolver implements Resolver
         // evaluate the nodes in the else clause
         if ($node->elseClause) {
             foreach ($node->elseClause->getChildNodes() as $child) {
-                $resolver->resolveNode($frame, $child);
+                $resolver->resolveNode($frameStack, $child);
             }
         }
 
@@ -108,11 +108,11 @@ class IfStatementResolver implements Resolver
         int $start,
         int $end
     ): void {
-        $context = $resolver->resolveNode($frame, $node->expression);
+        $context = $resolver->resolveNode($frameStack, $node->expression);
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
 
         foreach ($node->getChildNodes() as $child) {
-            $resolver->resolveNode($frame, $child);
+            $resolver->resolveNode($frameStack, $child);
         }
 
         $frame->applyTypeAssertions(
@@ -132,7 +132,7 @@ class IfStatementResolver implements Resolver
         int $start,
         int $end
     ): void {
-        $context = $resolver->resolveNode($frame, $node->expression);
+        $context = $resolver->resolveNode($frameStack, $node->expression);
         $terminates = $this->branchTerminates($resolver, $frame, $node);
 
         if ($terminates) {
@@ -180,7 +180,7 @@ class IfStatementResolver implements Resolver
                     }
 
                     if ($callExpression = $statement->getFirstDescendantNode(CallExpression::class)) {
-                        $context = $resolver->resolveNode($frame, $callExpression);
+                        $context = $resolver->resolveNode($frameStack, $callExpression);
 
                         if ($context->type() instanceof NeverType) {
                             return true;

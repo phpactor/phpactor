@@ -36,12 +36,12 @@ class YieldExpressionResolver implements Resolver
 
         $key = new MissingType();
         if ($arrayElement->elementKey) {
-            $key = $resolver->resolveNode($frame, $arrayElement->elementKey)->type();
+            $key = $resolver->resolveNode($frameStack, $arrayElement->elementKey)->type();
         }
         $value = new MissingType();
         /** @phpstan-ignore-next-line No trust */
         if ($arrayElement->elementValue) {
-            $value = $resolver->resolveNode($frame, $arrayElement->elementValue)->type();
+            $value = $resolver->resolveNode($frameStack, $arrayElement->elementValue)->type();
 
             if ($yieldFrom) {
                 $frame->setReturnType($value);

@@ -28,7 +28,7 @@ class QualifiedNameListResolver implements Resolver
             if (null === $firstType) {
                 $firstType = $child;
             }
-            $types[] = $resolver->resolveNode($frame, $child)->type();
+            $types[] = $resolver->resolveNode($frameStack, $child)->type();
         }
 
         $type = new UnionType(...$types);

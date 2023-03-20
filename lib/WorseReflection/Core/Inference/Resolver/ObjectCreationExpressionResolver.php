@@ -33,7 +33,7 @@ class ObjectCreationExpressionResolver implements Resolver
         }
 
 
-        $classContext = $resolver->resolveNode($frame, $node->classTypeDesignator);
+        $classContext = $resolver->resolveNode($frameStack, $node->classTypeDesignator);
         $classType = $classContext->type();
 
         if ($classType instanceof ClassStringType) {

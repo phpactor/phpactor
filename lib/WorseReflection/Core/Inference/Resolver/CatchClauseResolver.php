@@ -27,7 +27,7 @@ class CatchClauseResolver implements Resolver
         }
 
         /** @phpstan-ignore-next-line Lies */
-        $type = $resolver->resolveNode($frame, $node->qualifiedNameList)->type();
+        $type = $resolver->resolveNode($frameStack, $node->qualifiedNameList)->type();
         $variableName = $node->variableName;
 
         if (null === $variableName) {
