@@ -39,61 +39,7 @@ class QualifiedNameResolver implements Resolver
 
         $parent = $node->parent;
         if ($parent instanceof CallExpression) {
-            $name = $node->getResolvedName();
-            if (null === $name) {
-                $name = $node->getNamespacedName();
-            }
-            $name = Name::fromString((string) $name);
-            $context = NodeContextFactory::create(
-                $name->full(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::FUNCTION,
-                ]
-            );
-
-            $stub = $this->registry->get($name->short());
-
-            $type = null;
-            if ($stub) {
-                $arguments = FunctionArguments::fromList(
-                    $resolver,
-                    $frame,
-                    $parent->argumentExpressionList
-                );
-                $type = $stub->resolve($frame, $context, $arguments)->type();
-            }
-
-            try {
-                $function = $this->reflector->reflectFunction($name);
-            } catch (NotFound $exception) {
-                return $context->withIssue($exception->getMessage());
-            }
-
-            // the function may have been resolved to a global, so create
-            // the context again with the potentially shorter name
-            $context = NodeContextFactory::create(
-                $function->name()->__toString(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'symbol_type' => Symbol::FUNCTION,
-                ]
-            );
-
-            $context = new FunctionCallContext(
-                $context->symbol(),
-                ByteOffsetRange::fromInts(
-                    $node->getStartPosition(),
-                    $node->getEndPosition(),
-                ),
-                $function
-            );
-            if ($type !== null && $type->isDefined()) {
-                return $context->withType($type);
-            }
-            return $context;
+            return $this->resolveContextFromCall($resolver, $frame, $parent, $node);
         }
 
 
@@ -161,5 +107,66 @@ class QualifiedNameResolver implements Resolver
 
 
         return $context->withType($type);
+    }
+
+    private function resolveContextFromCall(
+        NodeContextResolver $resolver,
+        Frame $frame,
+        CallExpression $parent,
+        QualifiedName $node
+    ): NodeContext
+    {
+        $name = $node->getResolvedName();
+
+        if (null === $name) {
+            $name = $node->getNamespacedName();
+        }
+
+        $name = Name::fromString((string) $name);
+        $context = NodeContextFactory::create(
+            $name->full(),
+            $node->getStartPosition(),
+            $node->getEndPosition(),
+            [
+                'symbol_type' => Symbol::FUNCTION,
+            ]
+        );
+
+        $stub = $this->registry->get($name->short());
+
+        if ($stub) {
+            $arguments = FunctionArguments::fromList(
+                $resolver,
+                $frame,
+                $parent->argumentExpressionList
+            );
+            return $stub->resolve($frame, $context, $arguments);
+        }
+
+        try {
+            $function = $this->reflector->reflectFunction($name);
+        } catch (NotFound $exception) {
+            return $context->withIssue($exception->getMessage());
+        }
+
+        // the function may have been resolved to a global, so create
+        // the context again with the potentially shorter name
+        $context = NodeContextFactory::create(
+            $function->name()->__toString(),
+            $node->getStartPosition(),
+            $node->getEndPosition(),
+            [
+                'symbol_type' => Symbol::FUNCTION,
+            ]
+        );
+
+        return new FunctionCallContext(
+            $context->symbol(),
+            ByteOffsetRange::fromInts(
+                $node->getStartPosition(),
+                $node->getEndPosition(),
+            ),
+            $function
+        );
     }
 }
