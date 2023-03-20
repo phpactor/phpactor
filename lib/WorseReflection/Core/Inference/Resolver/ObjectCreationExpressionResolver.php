@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -24,7 +25,7 @@ class ObjectCreationExpressionResolver implements Resolver
     {
     }
 
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, FrameStack $frameStack, Node $node): NodeContext
     {
         assert($node instanceof ObjectCreationExpression);
         if (false === $node->classTypeDesignator instanceof Node) {

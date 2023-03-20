@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Parameter;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -15,7 +16,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class AnonymousFunctionCreationExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, FrameStack $frameStack, Node $node): NodeContext
     {
         assert($node instanceof AnonymousFunctionCreationExpression);
         $type = NodeUtil::typeFromQualfiedNameLike(
@@ -31,7 +32,7 @@ class AnonymousFunctionCreationExpressionResolver implements Resolver
                 if (!$parameter instanceof Parameter) {
                     continue;
                 }
-                $args[] = $resolver->resolveNode($frame, $parameter)->type();
+                $args[] = $resolver->resolveNode($frameStack, $parameter)->type();
             }
         }
 
