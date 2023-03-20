@@ -42,7 +42,8 @@ class AssignmentExpressionResolver implements Resolver
         $context = NodeContextFactory::create('assignment', $node->getStartPosition(), $node->getEndPosition());
         assert($node instanceof AssignmentExpression);
 
-        $rightContext = $resolver->resolveNode($frame, $node->rightOperand);
+        $rightContext = $resolver->resolveNode($frameStack, $node->rightOperand);
+        $frame = $frameStack->current();
 
         if ($this->hasMissingTokens($node)) {
             return $context;

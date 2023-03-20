@@ -23,6 +23,6 @@ class MemberAccessExpressionResolver implements Resolver
 
         $class = $resolver->resolveNode($frameStack, $node->dereferencableExpression);
 
-        return $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $frame, $class->type(), $node);
+        return $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $frameStack, $class->type(), $node);
     }
 }

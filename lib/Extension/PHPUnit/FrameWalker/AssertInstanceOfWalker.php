@@ -47,7 +47,7 @@ class AssertInstanceOfWalker implements Walker
 
         $args = FunctionArguments::fromList(
             $resolver->resolver(),
-            $frameStack->current(),
+            $frameStack,
             $callExpression->argumentExpressionList
         );
 

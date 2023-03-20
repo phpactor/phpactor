@@ -11,6 +11,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -49,7 +50,7 @@ class NodeContextFromMemberAccess
     ) {
     }
 
-    public function infoFromMemberAccess(NodeContextResolver $resolver, Frame $frame, Type $classType, Node $node): NodeContext
+    public function infoFromMemberAccess(NodeContextResolver $resolver, FrameStack $frameStack, Type $classType, Node $node): NodeContext
     {
         assert($node instanceof MemberAccessExpression || $node instanceof ScopedPropertyAccessExpression);
 
@@ -66,7 +67,7 @@ class NodeContextFromMemberAccess
         }
 
         if ($node->memberName instanceof Node) {
-            $memberNameType = $resolver->resolveNode($frame, $node->memberName)->type();
+            $memberNameType = $resolver->resolveNode($frameStack, $node->memberName)->type();
             if ($memberNameType instanceof StringLiteralType) {
                 $memberName = $memberNameType->value;
             }
@@ -101,7 +102,7 @@ class NodeContextFromMemberAccess
 
         [ $containerType, $memberType, $member ] = $this->resolveContainerMemberType(
             $resolver,
-            $frame,
+            $frameStack,
             $node,
             $classType,
             $memberTypeName,
@@ -132,7 +133,7 @@ class NodeContextFromMemberAccess
      */
     private function resolveContainerMemberType(
         NodeContextResolver $resolver,
-        Frame $frame,
+        FrameStack $frameStack,
         Node $node,
         Type $classType,
         string $memberTypeName,
@@ -142,7 +143,7 @@ class NodeContextFromMemberAccess
         $memberType = TypeFactory::undefined();
         $member = null;
 
-        $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
+        $arguments = $this->resolveArguments($resolver, $frameStack, $node->parent);
         // this could be a union or a nullable
         foreach ($classType->expandTypes()->classLike() as $subType) {
             // upcast to ClassType to reflected type
@@ -162,14 +163,14 @@ class NodeContextFromMemberAccess
             if ($reflection instanceof ReflectionEnum && $memberTypeName === 'constant') {
                 foreach ($subType->members()->byMemberType('enum')->byName($memberName) as $member) {
                     // if multiple classes declare a member, always take the "top" one
-                    $memberType = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
+                    $memberType = $this->resolveMemberType($resolver, $frameStack, $member, $arguments, $node, $subType);
                     break;
                 }
             }
 
             foreach ($subType->members()->byMemberType($memberTypeName)->byName($memberName) as $member) {
                 // if multiple classes declare a member, always take the "top" one
-                $memberType = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
+                $memberType = $this->resolveMemberType($resolver, $frameStack, $member, $arguments, $node, $subType);
                 break;
             }
         }
@@ -178,14 +179,14 @@ class NodeContextFromMemberAccess
         return [$containerType, $memberType, $member];
     }
 
-    private function resolveMemberType(NodeContextResolver $resolver, Frame $frame, ReflectionMember $member, ?FunctionArguments $arguments, Node $node, Type $subType): Type
+    private function resolveMemberType(NodeContextResolver $resolver, FrameStack $frameStack, ReflectionMember $member, ?FunctionArguments $arguments, Node $node, Type $subType): Type
     {
         $inferredType = $member->inferredType();
         $declaringClass = self::declaringClass($member);
 
         if ($member instanceof ReflectionProperty) {
             $propertyType = self::getFrameTypesForPropertyAtPosition(
-                $frame,
+                $frameStack,
                 $member->name(),
                 $subType,
                 $node->getEndPosition(),
@@ -244,7 +245,7 @@ class NodeContextFromMemberAccess
     }
 
     private static function getFrameTypesForPropertyAtPosition(
-        Frame $frame,
+        FrameStack $frameStack,
         string $propertyName,
         Type $classType,
         int $position
@@ -253,7 +254,7 @@ class NodeContextFromMemberAccess
             return null;
         }
 
-        $variable = $frame->properties()
+        $variable = $frameStack->current()->properties()
             ->lessThanOrEqualTo($position)
             ->byName($propertyName)
             ->lastOrNull();
@@ -297,13 +298,13 @@ class NodeContextFromMemberAccess
         return null;
     }
 
-    private function resolveArguments(NodeContextResolver $resolver, Frame $frame, ?Node $node): ?FunctionArguments
+    private function resolveArguments(NodeContextResolver $resolver, FrameStack $frameStack, ?Node $node): ?FunctionArguments
     {
         if (!$node || !$node instanceof CallExpression) {
             return null;
         }
 
-        return FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
+        return FunctionArguments::fromList($resolver, $frameStack, $node->argumentExpressionList);
     }
 
     private function combineMethodTemplateVars(FunctionArguments $arguments, TemplateMap $templateMap, ReflectionMethod $member, Type $type): Type

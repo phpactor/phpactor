@@ -86,7 +86,7 @@ class CallExpressionResolver implements Resolver
             $method = $reflection->methods()->get($context->symbol()->name());
             return $context->withType($type->evaluate(
                 $method,
-                FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
+                FunctionArguments::fromList($resolver, $frameStack, $node->argumentExpressionList)
             ));
         }
 
@@ -101,7 +101,7 @@ class CallExpressionResolver implements Resolver
                 $function
             ))->withType($type->evaluate(
                 $function,
-                FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
+                FunctionArguments::fromList($resolver, $frameStack, $node->argumentExpressionList)
             ));
         }
 

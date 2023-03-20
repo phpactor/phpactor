@@ -54,7 +54,7 @@ class VariableResolver implements Resolver
         }
 
         $variableName = $node->getText();
-        $variables = $frame->locals()->byName($variableName);
+        $variables = $frameStack->current()->locals()->byName($variableName);
 
         // special handling for assignments
         if ($assignment = $node->getFirstAncestor(AssignmentExpression::class)) {
@@ -75,7 +75,7 @@ class VariableResolver implements Resolver
 
 
         $context = NodeContextFactory::forVariableAt(
-            $frame,
+            $frameStack->current(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             $variableName
@@ -88,11 +88,11 @@ class VariableResolver implements Resolver
             fn (Type $type) => TypeCombinator::intersection(TypeFactory::unionEmpty(), $type),
         ))->withType($type);
 
-        $varDocType = $frame->varDocBuffer()->yank($variableName);
+        $varDocType = $frameStack->current()->varDocBuffer()->yank($variableName);
 
         if (null !== $varDocType) {
             $context = $context->withType($varDocType);
-            $this->applyVarDoc($context, $frame, $varDocType);
+            $this->applyVarDoc($context, $frameStack->current(), $varDocType);
         }
 
         return $context;

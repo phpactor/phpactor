@@ -16,7 +16,7 @@ class FunctionArguments implements IteratorAggregate, Countable
     /**
      * @param ArgumentExpression[] $arguments
      */
-    public function __construct(private NodeContextResolver $resolver, private Frame $frame, private array $arguments)
+    public function __construct(private NodeContextResolver $resolver, private FrameStack $frame, private array $arguments)
     {
     }
 
@@ -27,12 +27,12 @@ class FunctionArguments implements IteratorAggregate, Countable
         }, iterator_to_array($this->getIterator())));
     }
 
-    public static function fromList(NodeContextResolver $resolver, Frame $frame, ?ArgumentExpressionList $list): self
+    public static function fromList(NodeContextResolver $resolver, FrameStack $frameStack, ?ArgumentExpressionList $list): self
     {
         if ($list === null) {
-            return new self($resolver, $frame, []);
+            return new self($resolver, $frameStack, []);
         }
-        return new self($resolver, $frame, array_values(array_filter(
+        return new self($resolver, $frameStack, array_values(array_filter(
             $list->children,
             fn ($nodeOrToken) => $nodeOrToken instanceof ArgumentExpression
         )));

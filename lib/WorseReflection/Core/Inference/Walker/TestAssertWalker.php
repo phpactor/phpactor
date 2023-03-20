@@ -83,7 +83,7 @@ class TestAssertWalker implements Walker
                 continue;
             }
 
-            $args[] = $resolver->resolveNode($frameStackStack, $expression);
+            $args[] = $resolver->resolveNode($frameStack, $expression);
             $exprs[] = $expression;
         }
 
