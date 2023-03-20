@@ -86,7 +86,7 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
         return $this->serviceLocator()
                     ->nodeContextResolver()
                     ->resolveNode(
-                        new Frame('_'),
+                        new Frame(),
                         $this->node->assignment
                     )->type();
     }

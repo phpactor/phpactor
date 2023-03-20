@@ -21,7 +21,6 @@ class Frame
     private VarDocBuffer $varDocBuffer;
 
     public function __construct(
-        private string $name,
         LocalAssignments $locals = null,
         PropertyAssignments $properties = null,
         Problems $problems = null,
@@ -40,9 +39,9 @@ class Frame
         }, [$this->properties, $this->locals], ['properties', 'locals']));
     }
 
-    public function new(string $name): Frame
+    public function new(): Frame
     {
-        $frame = new self($name, null, null, null, $this);
+        $frame = new self(null, null, null, $this);
 
         return $frame;
     }
@@ -65,23 +64,18 @@ class Frame
         return $this->problems;
     }
 
-    public function parent(): Frame
+    public function parent(): ?Frame
     {
         return $this->parent;
     }
 
-    public function root()
+    public function root(): Frame
     {
         if (null === $this->parent) {
             return $this;
         }
 
         return $this->parent->root();
-    }
-
-    public function name(): string
-    {
-        return $this->name;
     }
 
     public function setReturnType(Type $type): self
