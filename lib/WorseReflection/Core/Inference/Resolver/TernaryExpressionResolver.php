@@ -15,6 +15,7 @@ class TernaryExpressionResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, FrameStack $frameStack, Node $node): NodeContext
     {
+        $frame = $frameStack->current();
         assert($node instanceof TernaryExpression);
 
         $condition = $resolver->resolveNode($frameStack, $node->condition);

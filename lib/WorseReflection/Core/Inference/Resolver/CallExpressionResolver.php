@@ -34,7 +34,7 @@ class CallExpressionResolver implements Resolver
         $containerType = $context->containerType();
 
         if ($returnType instanceof ConditionalType) {
-            $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $frame, $node);
+            $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $frameStack, $node);
         }
 
         if ($resolvableNode instanceof ParenthesizedExpression && $returnType instanceof ReflectedClassType && $returnType->isInvokable()) {

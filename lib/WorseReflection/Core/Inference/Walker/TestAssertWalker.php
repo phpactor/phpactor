@@ -123,7 +123,7 @@ class TestAssertWalker implements Walker
     private function assertSymbolName(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
         $argList = $node->argumentExpressionList;
-        $args = $this->resolveArgs($argList, $resolver, $frame);
+        $args = $this->resolveArgs($argList, $resolver, $frameStack);
 
         $actual = $args[1]->symbol()->name();
         $expected = $args[0]->type();
@@ -145,8 +145,9 @@ class TestAssertWalker implements Walker
 
     private function assertReturnType(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
+        $frame = $frameStack->current();
         $returnType = $frame->returnType();
-        $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);
+        $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frameStack);
         if (!isset($args[0])) {
             throw new RuntimeException(
                 'wrAssertReturnType requires an expected type argument'
@@ -163,7 +164,7 @@ class TestAssertWalker implements Walker
 
     private function assertOffset(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
-        $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);
+        $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frameStack);
         $expectedType = $args[0]->type();
         $type = $args[1]->type();
         if (!$type instanceof IntLiteralType) {
@@ -187,7 +188,7 @@ class TestAssertWalker implements Walker
                 continue;
             }
 
-            $args[] = $resolver->resolveNode($frameStackStack, $expression);
+            $args[] = $resolver->resolveNode($frameStack, $expression);
         }
         return $args;
     }

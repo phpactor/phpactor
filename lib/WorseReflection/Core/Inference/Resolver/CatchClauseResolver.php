@@ -18,6 +18,7 @@ class CatchClauseResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, FrameStack $frameStack, Node $node): NodeContext
     {
+        $frame = $frameStack->current();
         $context = NodeContextFactory::create('catch', $node->getStartPosition(), $node->getEndPosition());
         assert($node instanceof CatchClause);
 

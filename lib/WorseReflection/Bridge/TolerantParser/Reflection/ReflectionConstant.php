@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -40,7 +41,7 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
 
     public function type(): Type
     {
-        $value = $this->serviceLocator->nodeContextResolver()->resolveNode(new Frame(), $this->node->assignment);
+        $value = $this->serviceLocator->nodeContextResolver()->resolveNode(FrameStack::new(), $this->node->assignment);
         return $value->type();
     }
 

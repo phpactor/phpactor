@@ -15,6 +15,7 @@ class ReturnStatementResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, FrameStack $frameStack, Node $node): NodeContext
     {
+        $frame = $frameStack->current();
         $context = NodeContextFactory::forNode($node);
         assert($node instanceof ReturnStatement);
 

@@ -21,6 +21,7 @@ class YieldExpressionResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, FrameStack $frameStack, Node $node): NodeContext
     {
+        $frame = $frameStack->current();
         assert($node instanceof YieldExpression);
         $context = NodeContextFactory::forNode($node);
 

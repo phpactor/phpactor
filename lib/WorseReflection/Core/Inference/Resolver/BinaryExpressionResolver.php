@@ -101,7 +101,7 @@ class BinaryExpressionResolver implements Resolver
             $operator
         );
 
-        $this->addVariable($operator, $frame, $leftOperand, $context);
+        $this->addVariable($operator, $frameStack->current(), $leftOperand, $context);
 
         return $context;
     }

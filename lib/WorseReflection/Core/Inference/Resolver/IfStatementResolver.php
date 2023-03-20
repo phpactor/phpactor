@@ -110,13 +110,13 @@ class IfStatementResolver implements Resolver
         int $end
     ): void {
         $context = $resolver->resolveNode($frameStack, $node->expression);
-        $frameStack->applyTypeAssertions($context->typeAssertions(), $start);
+        $frameStack->current()->applyTypeAssertions($context->typeAssertions(), $start);
 
         foreach ($node->getChildNodes() as $child) {
             $resolver->resolveNode($frameStack, $child);
         }
 
-        $frameStack->applyTypeAssertions(
+        $frameStack->current()->applyTypeAssertions(
             $context->typeAssertions()->negate(),
             $start,
             $end

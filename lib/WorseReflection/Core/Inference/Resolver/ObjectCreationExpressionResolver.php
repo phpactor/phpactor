@@ -44,14 +44,14 @@ class ObjectCreationExpressionResolver implements Resolver
         }
 
         if ($classType instanceof ClassType) {
-            return $classContext->withType($this->resolveClassType($resolver, $frame, $node, $classType));
+            return $classContext->withType($this->resolveClassType($resolver, $frameStack, $node, $classType));
         }
 
 
         return $classContext;
     }
 
-    private function resolveClassType(NodeContextResolver $resolver, Frame $frame, ObjectCreationExpression $node, ClassType $classType): Type
+    private function resolveClassType(NodeContextResolver $resolver, FrameStack $frameStack, ObjectCreationExpression $node, ClassType $classType): Type
     {
         try {
             $reflection = $resolver->reflector()->reflectClass($classType->name());
@@ -67,7 +67,7 @@ class ObjectCreationExpressionResolver implements Resolver
             return $classType;
         }
 
-        $arguments = FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
+        $arguments = FunctionArguments::fromList($resolver, $frameStack, $node->argumentExpressionList);
         $templateMap = $this->resolver->mergeParameters(
             $templateMap,
             $reflection->methods()->get('__construct')->parameters(),

@@ -65,12 +65,12 @@ class AssignmentExpressionResolver implements Resolver
         }
 
         if ($node->leftOperand instanceof MemberAccessExpression) {
-            $this->walkMemberAccessExpression($resolver, $frame, $node->leftOperand, $rightContext);
+            $this->walkMemberAccessExpression($resolver, $frameStack, $node->leftOperand, $rightContext);
             return $context;
         }
 
         if ($node->leftOperand instanceof SubscriptExpression) {
-            $this->walkSubscriptExpression($resolver, $frame, $node->leftOperand, $rightContext);
+            $this->walkSubscriptExpression($resolver, $frameStack, $node->leftOperand, $rightContext);
             return $context;
         }
 
@@ -95,7 +95,7 @@ class AssignmentExpressionResolver implements Resolver
 
     private function walkMemberAccessExpression(
         NodeContextResolver $resolver,
-        Frame $frame,
+        FrameStack $frameStack,
         MemberAccessExpression $leftOperand,
         NodeContext $typeContext
     ): void {
@@ -115,7 +115,7 @@ class AssignmentExpressionResolver implements Resolver
             $memberName = $memberNameNode->getText($leftOperand->getFileContents());
             /** @phpstan-ignore-next-line */
         } else {
-            $memberType = $resolver->resolveNode($frame, $memberNameNode)->type();
+            $memberType = $resolver->resolveNode($frameStack, $memberNameNode)->type();
 
             if (!$memberType instanceof StringType) {
                 return;
@@ -134,7 +134,7 @@ class AssignmentExpressionResolver implements Resolver
             ]
         );
 
-        $frame->properties()->set(WorseVariable::fromSymbolContext($context));
+        $frameStack->current()->properties()->set(WorseVariable::fromSymbolContext($context));
     }
 
     private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, NodeContext $nodeContext): void
@@ -157,8 +157,9 @@ class AssignmentExpressionResolver implements Resolver
         $this->walkArrayElements($list->children, $leftOperand, $nodeContext->type(), $frame);
     }
 
-    private function walkSubscriptExpression(NodeContextResolver $resolver, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
+    private function walkSubscriptExpression(NodeContextResolver $resolver, FrameStack $frameStack, SubscriptExpression $leftOperand, NodeContext $rightContext): void
     {
+        $frame = $frameStack->current();
         if ($leftOperand->postfixExpression instanceof Variable) {
             foreach ($frame->locals()->byName((string)$leftOperand->postfixExpression->getName()) as $variable) {
                 $type = $variable->type();
@@ -170,7 +171,7 @@ class AssignmentExpressionResolver implements Resolver
                 // array key specified, e.g. `$foo['bar'] = `
                 // @phpstan-ignore-next-line TP lies
                 if ($leftOperand->accessExpression) {
-                    $accessType = $resolver->resolveNode($frame, $leftOperand->accessExpression)->type();
+                    $accessType = $resolver->resolveNode($frameStack, $leftOperand->accessExpression)->type();
 
                     if (!$accessType instanceof Literal) {
                         $frame->locals()->set(
@@ -209,7 +210,7 @@ class AssignmentExpressionResolver implements Resolver
 
         if ($leftOperand->postfixExpression instanceof MemberAccessExpression) {
             $rightContext = $rightContext->withType(TypeFactory::array());
-            $this->walkMemberAccessExpression($resolver, $frame, $leftOperand->postfixExpression, $rightContext);
+            $this->walkMemberAccessExpression($resolver, $frameStack, $leftOperand->postfixExpression, $rightContext);
         }
     }
 

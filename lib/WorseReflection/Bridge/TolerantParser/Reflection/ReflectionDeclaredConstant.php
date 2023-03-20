@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant as PhpactorReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -35,7 +36,7 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
 
     public function type(): Type
     {
-        return $this->serviceLocator->nodeContextResolver()->resolveNode(new Frame(), $this->value)->type();
+        return $this->serviceLocator->nodeContextResolver()->resolveNode(FrameStack::new(), $this->value)->type();
     }
 
     public function sourceCode(): SourceCode
