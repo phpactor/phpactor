@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as PhpactorReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
@@ -26,36 +27,36 @@ class VariableWalker implements Walker
         return [];
     }
 
-    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
         $scope = new ReflectionScope($resolver->reflector(), $node);
-        $docblockType = $this->injectVariablesFromComment($scope, $frame, $node);
+        $docblockType = $this->injectVariablesFromComment($scope, $frameStack, $node);
 
         if (null === $docblockType) {
-            return $frame;
+            return;
         }
 
         if (!$node instanceof Variable) {
-            return $frame;
+            return;
         }
 
         $token = $node->name;
         if (false === $token instanceof Token) {
-            return $frame;
+            return;
         }
 
         $name = (string)$token->getText($node->getFileContents());
-        $frame->varDocBuffer()->set($name, $docblockType);
+        $frameStack->current()->varDocBuffer()->set($name, $docblockType);
 
-        return $frame;
+        return;
     }
 
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function exit(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
-        return $frame;
+        return;
     }
 
-    private function injectVariablesFromComment(PhpactorReflectionScope $scope, Frame $frame, Node $node): ?Type
+    private function injectVariablesFromComment(PhpactorReflectionScope $scope, FrameStack $frameStack, Node $node): ?Type
     {
         $comment = $node->getLeadingCommentAndWhitespaceText();
         $docblock = $this->docblockFactory->create($comment, $scope);
@@ -75,7 +76,7 @@ class VariableWalker implements Walker
                 return $type;
             }
 
-            $frame->varDocBuffer()->set('$' . $var->name(), $type);
+            $frameStack->current()->varDocBuffer()->set('$' . $var->name(), $type);
         }
 
         return null;
