@@ -109,22 +109,22 @@ class NodeContextResolverTest extends IntegrationTestCase
     public function provideGeneral()
     {
         yield 'It should return none value for whitespace' => [
-                '  <>  ', [],
-                ['type' => '<missing>'],
-            ];
+            '  <>  ', [],
+            ['type' => '<missing>'],
+        ];
 
         yield 'It should return the name of a class' => [
-                <<<'EOT'
+            <<<'EOT'
                     <?php
 
                     $foo = new Cl<>assName();
 
-                    EOT
-                , [], ['type' => 'ClassName', 'symbol_type' => Symbol::CLASS_]
-                ];
+EOT
+        , [], ['type' => 'ClassName', 'symbol_type' => Symbol::CLASS_]
+        ];
 
         yield 'It should return the fully qualified name of a class' => [
-                <<<'EOT'
+            <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -132,11 +132,11 @@ class NodeContextResolverTest extends IntegrationTestCase
                     $foo = new Cl<>assName();
 
                     EOT
-                , [], ['type' => 'Foobar\Barfoo\ClassName']
-                ];
+                        , [], ['type' => 'Foobar\Barfoo\ClassName']
+        ];
 
-        yield 'It should return the fully qualified name of a with an imported name.' => [
-                <<<'EOT'
+                    yield 'It should return the fully qualified name of a with an imported name.' => [
+                        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -146,11 +146,11 @@ class NodeContextResolverTest extends IntegrationTestCase
                     $foo = new Clas<>sName();
 
                     EOT
-                , [], ['type' => 'BarBar\ClassName', 'symbol_type' => Symbol::CLASS_, 'symbol_name' => 'ClassName']
-                ];
+                        , [], ['type' => 'BarBar\ClassName', 'symbol_type' => Symbol::CLASS_, 'symbol_name' => 'ClassName']
+                    ];
 
-        yield 'It should return the fully qualified name of a use definition' => [
-                <<<'EOT'
+                    yield 'It should return the fully qualified name of a use definition' => [
+                        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -160,11 +160,11 @@ class NodeContextResolverTest extends IntegrationTestCase
                     $foo = new ClassName();
 
                     EOT
-                , [], ['type' => 'BarBar\ClassName']
-                ];
+                        , [], ['type' => 'BarBar\ClassName']
+                    ];
 
-        yield 'It returns the FQN of a method parameter with a default' => [
-                <<<'EOT'
+                    yield 'It returns the FQN of a method parameter with a default' => [
+                        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -176,12 +176,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                         }
                     }
 
-                    EOT
-                , [], ['type' => 'Foobar\Barfoo\Barfoo', 'symbol_type' => Symbol::VARIABLE, 'symbol_name' => 'barfoo']
-                ];
+    EOT
+        , [], ['type' => 'Foobar\Barfoo\Barfoo', 'symbol_type' => Symbol::VARIABLE, 'symbol_name' => 'barfoo']
+                    ];
 
-        yield 'It returns the type and value of a scalar method parameter' => [
-                <<<'EOT'
+    yield 'It returns the type and value of a scalar method parameter' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -193,12 +193,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                         }
                     }
 
-                    EOT
-                , [], ['type' => 'string']
-                ];
+    EOT
+        , [], ['type' => 'string']
+    ];
 
-        yield 'It returns the value of a method parameter with a constant' => [
-                <<<'EOT'
+    yield 'It returns the value of a method parameter with a constant' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -210,12 +210,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                         }
                     }
 
-                    EOT
-                , [], ['type' => 'string']
-                ];
+    EOT
+        , [], ['type' => 'string']
+    ];
 
-        yield 'It returns the FQN of a method parameter in an interface' => [
-                <<<'EOT'
+    yield 'It returns the FQN of a method parameter in an interface' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -227,12 +227,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                         public function hello(World $wor<>ld);
                     }
 
-                    EOT
-                , [], ['type' => 'Foobar\Barfoo\World']
-                ];
+    EOT
+        , [], ['type' => 'Foobar\Barfoo\World']
+    ];
 
-        yield 'It returns the FQN of a method parameter in a trait' => [
-                <<<'EOT'
+    yield 'It returns the FQN of a method parameter in a trait' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -246,12 +246,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                         }
                     }
 
-                    EOT
-                , [], ['type' => 'Foobar\Barfoo\World', 'symbol_type' => Symbol::CLASS_, 'symbol_name' => 'World']
-                ];
+    EOT
+        , [], ['type' => 'Foobar\Barfoo\World', 'symbol_type' => Symbol::CLASS_, 'symbol_name' => 'World']
+    ];
 
-        yield 'It returns the value of a method parameter' => [
-                <<<'EOT'
+    yield 'It returns the value of a method parameter' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -263,12 +263,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                         }
                     }
 
-                    EOT
-                , [], ['type' => 'string']
-                ];
+    EOT
+        , [], ['type' => 'string']
+    ];
 
-        yield 'Ignores parameter on anonymous class' => [
-            <<<'EOT'
+    yield 'Ignores parameter on anonymous class' => [
+        <<<'EOT'
                 <?php
 
                 class Foobar {
@@ -279,12 +279,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                     }
                 }
 
-                EOT
-            , [], ['type' => '<missing>', 'symbol_type' => '<unknown>', 'symbol_name' => 'Parameter']
-            ];
+    EOT
+        , [], ['type' => '<missing>', 'symbol_type' => '<unknown>', 'symbol_name' => 'Parameter']
+    ];
 
-        yield 'It returns the FQN of a static call' => [
-                <<<'EOT'
+    yield 'It returns the FQN of a static call' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -294,11 +294,11 @@ class NodeContextResolverTest extends IntegrationTestCase
                     $foo = Fac<>tory::create();
 
                     EOT
-                , [], ['type' => 'Acme\Factory', 'symbol_type' => Symbol::CLASS_]
-                ];
+                        , [], ['type' => 'Acme\Factory', 'symbol_type' => Symbol::CLASS_]
+    ];
 
-        yield 'It returns the FQN of a method parameter' => [
-                <<<'EOT'
+                    yield 'It returns the FQN of a method parameter' => [
+                        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -312,34 +312,34 @@ class NodeContextResolverTest extends IntegrationTestCase
                         }
                     }
 
-                    EOT
-                , [], ['type' => 'Foobar\Barfoo\World']
-                ];
+    EOT
+        , [], ['type' => 'Foobar\Barfoo\World']
+                    ];
 
-        yield 'It resolves a anonymous function use' => [
-                <<<'EOT'
+    yield 'It resolves a anonymous function use' => [
+        <<<'EOT'
                     <?php
 
                     function ($blah) use ($f<>oo) {
 
                     }
 
-                    EOT
-            , [ 'foo' => TypeFactory::fromString('string') ], ['type' => 'string', 'symbol_type' => Symbol::VARIABLE, 'symbol_name' => 'foo']
-        ];
+    EOT
+        , [ 'foo' => TypeFactory::fromString('string') ], ['type' => 'string', 'symbol_type' => Symbol::VARIABLE, 'symbol_name' => 'foo']
+    ];
 
-        yield 'It resolves an undeclared variable' => [
-                <<<'EOT'
+    yield 'It resolves an undeclared variable' => [
+        <<<'EOT'
                     <?php
 
                     $b<>lah;
 
-                    EOT
-            , [], ['type' => '<missing>', 'symbol_type' => Symbol::VARIABLE, 'symbol_name' => 'blah']
-        ];
+EOT
+    , [], ['type' => '<missing>', 'symbol_type' => Symbol::VARIABLE, 'symbol_name' => 'blah']
+    ];
 
-        yield 'It returns the FQN of variable assigned in frame' => [
-                <<<'EOT'
+    yield 'It returns the FQN of variable assigned in frame' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -354,12 +354,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                         }
                     }
 
-                    EOT
-                , [ 'world' => TypeFactory::fromString('World') ], ['type' => 'World', 'symbol_type' => Symbol::VARIABLE, 'symbol_name' => 'world']
-                ];
+    EOT
+        , [ 'world' => TypeFactory::fromString('World') ], ['type' => 'World', 'symbol_type' => Symbol::VARIABLE, 'symbol_name' => 'world']
+    ];
 
-        yield 'It returns type for a call access expression' => [
-                <<<'EOT'
+    yield 'It returns type for a call access expression' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -397,19 +397,19 @@ class NodeContextResolverTest extends IntegrationTestCase
                             $this->foobar->type2()->type3(<>);
                         }
                     }
-                    EOT
-            , [
-                'this' => TypeFactory::fromString('Foobar\Barfoo\Foobar'),
-            ], [
-                'type' => 'Foobar\Barfoo\Type3',
-                'symbol_type' => Symbol::METHOD,
-                'symbol_name' => 'type3',
-                'container_type' => 'Foobar\Barfoo\Type2',
-            ],
-        ];
+    EOT
+        , [
+            'this' => TypeFactory::fromString('Foobar\Barfoo\Foobar'),
+        ], [
+            'type' => 'Foobar\Barfoo\Type3',
+            'symbol_type' => Symbol::METHOD,
+            'symbol_name' => 'type3',
+            'container_type' => 'Foobar\Barfoo\Type2',
+        ],
+    ];
 
-        yield 'It returns type for a method which returns an interface type' => [
-                <<<'EOT'
+    yield 'It returns type for a method which returns an interface type' => [
+        <<<'EOT'
                     <?php
 
                     interface Barfoo
@@ -428,19 +428,19 @@ class NodeContextResolverTest extends IntegrationTestCase
                             $this->hello()->foo(<>);
                         }
                     }
-                    EOT
-            , [
-                'this' => TypeFactory::fromString('Foobar'),
-            ], [
-                'type' => 'string',
-                'symbol_type' => Symbol::METHOD,
-                'symbol_name' => 'foo',
-                'container_type' => 'Barfoo',
-            ],
-        ];
+    EOT
+        , [
+            'this' => TypeFactory::fromString('Foobar'),
+        ], [
+            'type' => 'string',
+            'symbol_type' => Symbol::METHOD,
+            'symbol_name' => 'foo',
+            'container_type' => 'Barfoo',
+        ],
+    ];
 
-        yield 'It returns class type for parent class for parent method' => [
-                <<<'EOT'
+    yield 'It returns class type for parent class for parent method' => [
+        <<<'EOT'
                     <?php
 
                     class Type3 {}
@@ -464,19 +464,19 @@ class NodeContextResolverTest extends IntegrationTestCase
                             $this->type3(<>);
                         }
                     }
-                    EOT
-            , [
-                'this' => TypeFactory::fromString('Foobar'),
-            ], [
-                'type' => 'Type3',
-                'symbol_type' => Symbol::METHOD,
-                'symbol_name' => 'type3',
-                'container_type' => 'Foobar',
-            ],
-        ];
+    EOT
+        , [
+            'this' => TypeFactory::fromString('Foobar'),
+        ], [
+            'type' => 'Type3',
+            'symbol_type' => Symbol::METHOD,
+            'symbol_name' => 'type3',
+            'container_type' => 'Foobar',
+        ],
+    ];
 
-        yield 'It returns type for a property access when class has method of same name' => [
-                <<<'EOT'
+    yield 'It returns type for a property access when class has method of same name' => [
+        <<<'EOT'
                     <?php
 
                     class Type1
@@ -502,139 +502,139 @@ class NodeContextResolverTest extends IntegrationTestCase
                             $this->foobar->asString(<>);
                         }
                     }
-                    EOT
-            , [
-                'this' => TypeFactory::fromString('Foobar'),
-            ], ['type' => 'string'],
-        ];
+    EOT
+        , [
+            'this' => TypeFactory::fromString('Foobar'),
+        ], ['type' => 'string'],
+    ];
 
-        yield 'It returns type for a new instantiation' => [
-                <<<'EOT'
+    yield 'It returns type for a new instantiation' => [
+        <<<'EOT'
                     <?php
 
                     new <>Bar();
-                    EOT
-                , [], ['type' => 'Bar'],
-                ];
+EOT
+    , [], ['type' => 'Bar'],
+    ];
 
-        yield 'It returns type for a new instantiation from a variable' => [
-                <<<'EOT'
+    yield 'It returns type for a new instantiation from a variable' => [
+        <<<'EOT'
                     <?php
 
                     new $<>foobar;
-                    EOT
-        , [
-                'foobar' => TypeFactory::fromString('Foobar'),
-        ], ['type' => 'Foobar'],
+EOT
+    , [
+        'foobar' => TypeFactory::fromString('Foobar'),
+    ], ['type' => 'Foobar'],
     ];
 
-        yield 'It returns type for string literal' => [
-                <<<'EOT'
+    yield 'It returns type for string literal' => [
+        <<<'EOT'
                     <?php
 
                     'bar<>';
-                    EOT
-                , [], ['type' => '"bar"', 'symbol_type' => Symbol::STRING ]
-                ];
+EOT
+    , [], ['type' => '"bar"', 'symbol_type' => Symbol::STRING ]
+    ];
 
-        yield 'It returns type for float' => [
-                <<<'EOT'
+    yield 'It returns type for float' => [
+        <<<'EOT'
                     <?php
 
                     1.<>2;
-                    EOT
-                , [], ['type' => '1.2', 'symbol_type' => Symbol::NUMBER],
-                ];
+EOT
+    , [], ['type' => '1.2', 'symbol_type' => Symbol::NUMBER],
+    ];
 
-        yield 'It returns type for integer' => [
-                <<<'EOT'
+    yield 'It returns type for integer' => [
+        <<<'EOT'
                     <?php
 
                     12<>;
-                    EOT
-                , [], ['type' => '12', 'symbol_type' => Symbol::NUMBER],
-                ];
+EOT
+    , [], ['type' => '12', 'symbol_type' => Symbol::NUMBER],
+    ];
 
-        yield 'It returns type for octal integer' => [
-                <<<'EOT'
+    yield 'It returns type for octal integer' => [
+        <<<'EOT'
                     <?php
 
                     012<>;
-                    EOT
-                , [], ['type' => '012', 'symbol_type' => Symbol::NUMBER],
-                ];
+EOT
+    , [], ['type' => '012', 'symbol_type' => Symbol::NUMBER],
+    ];
 
-        yield 'It returns type for hexadecimal integer' => [
-                <<<'EOT'
+    yield 'It returns type for hexadecimal integer' => [
+        <<<'EOT'
                     <?php
 
                     0x1A<>;
-                    EOT
-                , [], ['type' => '0x1A', 'symbol_type' => Symbol::NUMBER],
-                ];
+EOT
+    , [], ['type' => '0x1A', 'symbol_type' => Symbol::NUMBER],
+    ];
 
-        yield 'It returns type for binary integer' => [
-                <<<'EOT'
+    yield 'It returns type for binary integer' => [
+        <<<'EOT'
                     <?php
 
                     0b11<>;
-                    EOT
-                , [], ['type' => '0b11', 'symbol_type' => Symbol::NUMBER],
-                ];
+EOT
+    , [], ['type' => '0b11', 'symbol_type' => Symbol::NUMBER],
+    ];
 
-        yield 'It returns type for bool true' => [
-                <<<'EOT'
+    yield 'It returns type for bool true' => [
+        <<<'EOT'
                     <?php
 
                     tr<>ue;
-                    EOT
-                , [], ['type' => 'true', 'symbol_type' => Symbol::BOOLEAN],
-                ];
+EOT
+    , [], ['type' => 'true', 'symbol_type' => Symbol::BOOLEAN],
+    ];
 
-        yield 'It returns type for bool false' => [
-                <<<'EOT'
+    yield 'It returns type for bool false' => [
+        <<<'EOT'
                     <?php
 
                     <>false;
-                    EOT
-                , [], ['type' => 'false', 'symbol_type' => Symbol::BOOLEAN],
-                ];
+EOT
+    , [], ['type' => 'false', 'symbol_type' => Symbol::BOOLEAN],
+    ];
 
-        yield 'It returns type null' => [
-                <<<'EOT'
+    yield 'It returns type null' => [
+        <<<'EOT'
                     <?php
 
                     n<>ull;
-                    EOT
-                , [], ['type' => 'null',   ]             ];
+EOT
+    , [], ['type' => 'null',   ]             ];
 
-        yield 'It returns type null case insensitive' => [
-                <<<'EOT'
+    yield 'It returns type null case insensitive' => [
+        <<<'EOT'
                     <?php
 
                     N<>ULL;
-                    EOT
-                , [], ['type' => 'null',   ]             ];
+EOT
+    , [], ['type' => 'null',   ]             ];
 
-        yield 'It returns type and value for an array' => [
-                <<<'EOT'
+    yield 'It returns type and value for an array' => [
+        <<<'EOT'
                     <?php
 
                     [ 'one' => 'two', 'three' => 3 <>];
-                    EOT
-                , [], ['type' => 'array{one:"two",three:3}'],
-                ];
+EOT
+    , [], ['type' => 'array{one:"two",three:3}'],
+    ];
 
-        yield 'Empty array' => [
-                <<<'EOT'
+    yield 'Empty array' => [
+        <<<'EOT'
                     <?php
 
                     [  <>];
-                    EOT
-                , [], ['type' => 'array{}']];
+EOT
+    , [], ['type' => 'array{}']];
 
-        yield 'It type for a class constant' => [
-                <<<'EOT'
+    yield 'It type for a class constant' => [
+        <<<'EOT'
                     <?php
 
                     $foo = Foobar::HELL<>O;
@@ -643,12 +643,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                     {
                         const HELLO = 'string';
                     }
-                    EOT
-                , [], ['type' => '"string"'],
-                ];
+    EOT
+        , [], ['type' => '"string"'],
+    ];
 
-        yield 'Static method access' => [
-                <<<'EOT'
+    yield 'Static method access' => [
+        <<<'EOT'
                     <?php
 
                     class Foobar
@@ -661,12 +661,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                     class Hello
                     {
                     }
-                    EOT
-              , [], ['type' => 'Hello'],
-              ];
+    EOT
+        , [], ['type' => 'Hello'],
+    ];
 
-        yield 'Static constant access' => [
-                <<<'EOT'
+    yield 'Static constant access' => [
+        <<<'EOT'
                     <?php
 
                     Foobar::HELLO_<>CONSTANT;
@@ -675,12 +675,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                     {
                         const HELLO_CONSTANT = 'hello';
                     }
-                    EOT
-                , [], ['type' => '"hello"'],
-                ];
+    EOT
+        , [], ['type' => '"hello"'],
+    ];
 
-        yield 'Static property access' => [
-                    <<<'EOT'
+    yield 'Static property access' => [
+        <<<'EOT'
                         <?php
 
                         Foobar::$my<>Property;
@@ -690,17 +690,17 @@ class NodeContextResolverTest extends IntegrationTestCase
                             /** @var string */
                             public static $myProperty = 'hello';
                         }
-                        EOT
-                    , [], [
-                        'type' => 'string',
-                        'symbol_type' => Symbol::PROPERTY,
-                        'symbol_name' => 'myProperty',
-                        'container_type' => 'Foobar',
-                    ],
-                ];
+    EOT
+        , [], [
+            'type' => 'string',
+            'symbol_type' => Symbol::PROPERTY,
+            'symbol_name' => 'myProperty',
+            'container_type' => 'Foobar',
+        ],
+    ];
 
-        yield 'Static property access 2' => [
-                    <<<'EOT'
+    yield 'Static property access 2' => [
+        <<<'EOT'
                         <?php
 
                         class Foobar
@@ -712,17 +712,17 @@ class NodeContextResolverTest extends IntegrationTestCase
                                 self::$my<>Property = 5;
                             }
                         }
-                        EOT
-                    , [], [
-                        'type' => 'string',
-                        'symbol_type' => Symbol::PROPERTY,
-                        'symbol_name' => 'myProperty',
-                        'container_type' => 'Foobar',
-                    ],
-                ];
+    EOT
+        , [], [
+            'type' => 'string',
+            'symbol_type' => Symbol::PROPERTY,
+            'symbol_name' => 'myProperty',
+            'container_type' => 'Foobar',
+        ],
+    ];
 
-        yield 'Static property access instance)' => [
-            <<<'EOT'
+    yield 'Static property access instance)' => [
+        <<<'EOT'
                 <?php
 
                 class Foobar
@@ -734,18 +734,18 @@ class NodeContextResolverTest extends IntegrationTestCase
                 $foobar = new Foobar();
                 $foobar::$my<>Property = 5;
                 EOT
-            , [
-                'foobar' => TypeFactory::fromString('Foobar')
-            ], [
-                'type' => 'string',
-                'symbol_type' => Symbol::PROPERTY,
-                'symbol_name' => 'myProperty',
-                'container_type' => 'Foobar',
-            ],
-        ];
+                    , [
+                        'foobar' => TypeFactory::fromString('Foobar')
+                    ], [
+                        'type' => 'string',
+                        'symbol_type' => Symbol::PROPERTY,
+                        'symbol_name' => 'myProperty',
+                        'container_type' => 'Foobar',
+                    ],
+    ];
 
-        yield 'Member access with variable' => [
-                <<<'EOT'
+                yield 'Member access with variable' => [
+                    <<<'EOT'
                     <?php
 
                     $foobar = new Foobar();
@@ -754,12 +754,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                     class Foobar
                     {
                     }
-                    EOT
-                , [], ['type' => '<missing>'],
+    EOT
+        , [], ['type' => '<missing>'],
                 ];
 
-        yield 'Member access with valued variable' => [
-                <<<'EOT'
+    yield 'Member access with valued variable' => [
+        <<<'EOT'
                     <?php
 
                     class Foobar
@@ -769,16 +769,16 @@ class NodeContextResolverTest extends IntegrationTestCase
 
                     $foobar->$barfoo(<>);
                     EOT
-                , [
-                    'foobar' => TypeFactory::fromString('Foobar'),
-                    'barfoo' => NodeContext::for(
-                        Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', ByteOffsetRange::fromInts(0, 0))
-                    )->withType(TypeFactory::stringLiteral('hello'))
-                ], ['type' => 'string'],
-            ];
+                        , [
+                            'foobar' => TypeFactory::fromString('Foobar'),
+                            'barfoo' => NodeContext::for(
+                                Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', ByteOffsetRange::fromInts(0, 0))
+                            )->withType(TypeFactory::stringLiteral('hello'))
+                        ], ['type' => 'string'],
+    ];
 
-        yield 'It returns type of property' => [
-                <<<'EOT'
+                    yield 'It returns type of property' => [
+                        <<<'EOT'
                     <?php
 
                     class Foobar
@@ -788,30 +788,30 @@ class NodeContextResolverTest extends IntegrationTestCase
                          */
                         private $std<>Class;
                     }
-                    EOT
-                , [], ['type' => 'stdClass', 'symbol_name' => 'stdClass'],
-                ];
+    EOT
+        , [], ['type' => 'stdClass', 'symbol_name' => 'stdClass'],
+                    ];
 
-        yield 'It returns type for parenthesised new object' => [
-                <<<'EOT'
+    yield 'It returns type for parenthesised new object' => [
+        <<<'EOT'
                     <?php
 
                     (new stdClass())<>;
-                    EOT
-                , [], ['type' => 'stdClass', 'symbol_name' => 'stdClass'],
-                ];
+EOT
+    , [], ['type' => 'stdClass', 'symbol_name' => 'stdClass'],
+    ];
 
-        yield 'It resolves a clone expression' => [
-                <<<'EOT'
+    yield 'It resolves a clone expression' => [
+        <<<'EOT'
                     <?php
 
                     (clone new stdClass())<>;
-                    EOT
-                , [], ['type' => 'stdClass', 'symbol_name' => 'stdClass'],
-                ];
+EOT
+    , [], ['type' => 'stdClass', 'symbol_name' => 'stdClass'],
+    ];
 
-        yield 'It returns the FQN of variable assigned in frame 2' => [
-                <<<'EOT'
+    yield 'It returns the FQN of variable assigned in frame 2' => [
+        <<<'EOT'
                     <?php
 
                     namespace Foobar\Barfoo;
@@ -834,30 +834,30 @@ class NodeContextResolverTest extends IntegrationTestCase
                         }
                     }
 
-                    EOT
-            , [
-                'this' => TypeFactory::class('Foobar\Barfoo\Foobar'),
-                'bar' => NodeContext::for(Symbol::fromTypeNameAndPosition(
-                    Symbol::PROPERTY,
-                    'bar',
-                    ByteOffsetRange::fromInts(0, 0),
-                ))
-                    ->withContainerType(TypeFactory::class('Foobar\Barfoo\Foobar'))
-                    ->withType(TypeFactory::class('Acme\Factory')),
-            ], [
-                'types' => [
-                    TypeFactory::class('Acme\Factory'),
-                ],
-                'symbol_type' => Symbol::PROPERTY,
-                'symbol_name' => 'bar',
-            ]
-        ];
+    EOT
+        , [
+            'this' => TypeFactory::class('Foobar\Barfoo\Foobar'),
+            'bar' => NodeContext::for(Symbol::fromTypeNameAndPosition(
+                Symbol::PROPERTY,
+                'bar',
+                ByteOffsetRange::fromInts(0, 0),
+            ))
+                ->withContainerType(TypeFactory::class('Foobar\Barfoo\Foobar'))
+                ->withType(TypeFactory::class('Acme\Factory')),
+        ], [
+            'types' => [
+                TypeFactory::class('Acme\Factory'),
+            ],
+            'symbol_type' => Symbol::PROPERTY,
+            'symbol_name' => 'bar',
+        ]
+    ];
     }
 
     public function provideValues()
     {
         yield 'It returns type for self' => [
-                <<<'EOT'
+            <<<'EOT'
                     <?php
 
                     class Foobar
@@ -867,12 +867,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                             sel<>f::
                         }
                     }
-                    EOT
-                , [], ['type' => 'Foobar']
-                ];
+    EOT
+        , [], ['type' => 'Foobar']
+        ];
 
-        yield 'It returns type for static' => [
-                <<<'EOT'
+    yield 'It returns type for static' => [
+        <<<'EOT'
                     <?php
 
                     class Foobar
@@ -882,12 +882,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                             stat<>ic::
                         }
                     }
-                    EOT
-                , [], ['type' => 'Foobar']
-                ];
+    EOT
+        , [], ['type' => 'Foobar']
+    ];
 
-        yield 'It returns type for parent' => [
-                <<<'EOT'
+    yield 'It returns type for parent' => [
+        <<<'EOT'
                     <?php
 
                     class ParentClass {}
@@ -899,30 +899,30 @@ class NodeContextResolverTest extends IntegrationTestCase
                             pare<>nt::
                         }
                     }
-                    EOT
-                , [], ['type' => 'ParentClass']
-                ];
+    EOT
+        , [], ['type' => 'ParentClass']
+    ];
 
-        yield 'It assumes true for ternary expressions' => [
-                <<<'EOT'
+    yield 'It assumes true for ternary expressions' => [
+        <<<'EOT'
                     <?php
 
                     $barfoo ? <>'foobar' : 'barfoo';
-                    EOT
-                , [], ['type' => '"foobar"', ]
-                ];
+EOT
+    , [], ['type' => '"foobar"', ]
+    ];
 
-        yield 'It uses condition value if ternery "if" is empty' => [
-                <<<'EOT'
+    yield 'It uses condition value if ternery "if" is empty' => [
+        <<<'EOT'
                     <?php
 
                     'string' ?:<> new \stdClass();
-                    EOT
-                , [], ['type' => '"string"', ]
-                ];
+EOT
+    , [], ['type' => '"string"', ]
+    ];
 
-        yield 'It shows the symbol name for a method declartion' => [
-                <<<'EOT'
+    yield 'It shows the symbol name for a method declartion' => [
+        <<<'EOT'
                     <?php
 
                     class Foobar
@@ -931,113 +931,113 @@ class NodeContextResolverTest extends IntegrationTestCase
                         {
                         }
                     }
-                    EOT
-                , [], [
-                    'symbol_type' => Symbol::METHOD,
-                    'symbol_name' => 'method',
-                    'container_type' => 'Foobar',
-                ]
-            ];
+    EOT
+        , [], [
+            'symbol_type' => Symbol::METHOD,
+            'symbol_name' => 'method',
+            'container_type' => 'Foobar',
+        ]
+    ];
 
-        yield 'Class name' => [
-                <<<'EOT'
+    yield 'Class name' => [
+        <<<'EOT'
                     <?php
 
                     class Fo<>obar
                     {
                     }
-                    EOT
-                , [], ['type' => 'Foobar', 'symbol_type' => Symbol::CLASS_, 'symbol_name' => 'Foobar'],
-                ];
+    EOT
+        , [], ['type' => 'Foobar', 'symbol_type' => Symbol::CLASS_, 'symbol_name' => 'Foobar'],
+    ];
 
-        yield 'Property name' => [
-                <<<'EOT'
+    yield 'Property name' => [
+        <<<'EOT'
                     <?php
 
                     class Foobar
                     {
                         private $a<>aa = 'asd';
                     }
-                    EOT
-                , [], ['type' => '<missing>', 'symbol_type' => Symbol::PROPERTY, 'symbol_name' => 'aaa', 'container_type' => 'Foobar'],
-                ];
+    EOT
+        , [], ['type' => '<missing>', 'symbol_type' => Symbol::PROPERTY, 'symbol_name' => 'aaa', 'container_type' => 'Foobar'],
+    ];
 
-        yield 'Constant name' => [
-                <<<'EOT'
+    yield 'Constant name' => [
+        <<<'EOT'
                     <?php
 
                     class Foobar
                     {
                         const AA<>A = 'aaa';
                     }
-                    EOT
-                , [], [
-                    'type' => '<missing>',
-                    'symbol_type' => Symbol::CONSTANT,
-                    'symbol_name' => 'AAA',
-                    'container_type' => 'Foobar'
-                ],
-        ];
+    EOT
+        , [], [
+            'type' => '<missing>',
+            'symbol_type' => Symbol::CONSTANT,
+            'symbol_name' => 'AAA',
+            'container_type' => 'Foobar'
+        ],
+    ];
 
-        // 8.1 only
-        if (defined('T_ENUM')) {
-            yield 'Enum case name' => [
-                    <<<'EOT'
+    // 8.1 only
+    if (defined('T_ENUM')) {
+        yield 'Enum case name' => [
+            <<<'EOT'
                         <?php
 
                         enum Foobar
                         {
                             case AA<>A = 'aaa';
                         }
-                        EOT
-                    , [], [
-                        'type' => '<missing>',
-                        'symbol_type' => Symbol::CASE,
-                        'symbol_name' => 'AAA',
-                        'container_type' => 'Foobar'
-                    ],
-                ];
-        }
+    EOT
+        , [], [
+            'type' => '<missing>',
+            'symbol_type' => Symbol::CASE,
+            'symbol_name' => 'AAA',
+            'container_type' => 'Foobar'
+        ],
+        ];
+    }
 
-        yield 'Function name' => [
-                <<<'EOT'
+    yield 'Function name' => [
+        <<<'EOT'
                     <?php
 
                     function f<>oobar()
                     {
                     }
-                    EOT
-                , [], ['symbol_type' => Symbol::FUNCTION, 'symbol_name' => 'foobar'],
-                ];
+    EOT
+        , [], ['symbol_type' => Symbol::FUNCTION, 'symbol_name' => 'foobar'],
+    ];
 
 
-        yield 'Function call' => [
-                <<<'EOT'
+    yield 'Function call' => [
+        <<<'EOT'
                     <?php
 
                     function hello(): string;
 
                     hel<>lo();
                     EOT
-                , [], ['type' => 'string', 'symbol_type' => Symbol::FUNCTION, 'symbol_name' => 'hello'],
-                ];
+                        , [], ['type' => 'string', 'symbol_type' => Symbol::FUNCTION, 'symbol_name' => 'hello'],
+    ];
 
-        yield 'Trait name' => [
-                <<<'EOT'
+                    yield 'Trait name' => [
+                        <<<'EOT'
                     <?php
 
                     trait Bar<>bar
                     {
                     }
-                    EOT
-                , [], ['symbol_type' => 'class', 'symbol_name' => 'Barbar', 'type' => 'Barbar' ],
-                ];
+    EOT
+        , [], ['symbol_type' => 'class', 'symbol_name' => 'Barbar', 'type' => 'Barbar' ],
+                    ];
     }
 
     public function provideNotResolvableClass()
     {
         yield 'Calling property method for non-existing class' => [
-                <<<'EOT'
+            <<<'EOT'
                     <?php
 
                     class Foobar
@@ -1052,11 +1052,11 @@ class NodeContextResolverTest extends IntegrationTestCase
                             $this->hello->foobar(<>);
                         }
                     }
-                    EOT
-            ];
+    EOT
+        ];
 
-        yield 'Class extends non-existing class' => [
-            <<<'EOT'
+    yield 'Class extends non-existing class' => [
+        <<<'EOT'
                 <?php
 
                 class Foobar extends NonExisting
@@ -1066,11 +1066,11 @@ class NodeContextResolverTest extends IntegrationTestCase
                         $hello = $this->foobar(<>);
                     }
                 }
-                EOT
-        ];
+    EOT
+    ];
 
-        yield 'Method returns non-existing class' => [
-            <<<'EOT'
+    yield 'Method returns non-existing class' => [
+        <<<'EOT'
                 <?php
 
                 class Foobar
@@ -1084,11 +1084,11 @@ class NodeContextResolverTest extends IntegrationTestCase
                         $this->hai()->foo(<>);
                     }
                 }
-                EOT
-        ];
+    EOT
+    ];
 
-        yield 'Method returns class which extends non-existing class' => [
-            <<<'EOT'
+    yield 'Method returns class which extends non-existing class' => [
+        <<<'EOT'
                 <?php
 
                 class Foobar
@@ -1106,12 +1106,12 @@ class NodeContextResolverTest extends IntegrationTestCase
                 class Hai extends NonExisting
                 {
                 }
-                EOT
-        ];
+    EOT
+    ];
 
 
-        yield 'Static method returns non-existing class' => [
-            <<<'EOT'
+    yield 'Static method returns non-existing class' => [
+        <<<'EOT'
                 <?php
 
                 ArrGoo::hai()->foo(<>);
@@ -1122,8 +1122,8 @@ class NodeContextResolverTest extends IntegrationTestCase
                     {
                     }
                 }
-                EOT
-        ];
+    EOT
+    ];
     }
 
     public function testAttachesScope(): void
@@ -1138,13 +1138,13 @@ class NodeContextResolverTest extends IntegrationTestCase
 
             new Foob<>o;
             EOT
-        ;
-        $context = $this->resolveNodeAtOffset(
-            LocalAssignments::create(),
-            PropertyAssignments::create(),
-            $source,
-        );
-        $this->assertCount(2, $context->scope()->nameImports());
+                ;
+            $context = $this->resolveNodeAtOffset(
+                LocalAssignments::create(),
+                PropertyAssignments::create(),
+                $source,
+            );
+            $this->assertCount(2, $context->scope()->nameImports());
     }
 
     private function resolveNodeAtOffset(
@@ -1152,7 +1152,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         PropertyAssignments $properties,
         string $source
     ): NodeContext {
-        $frame = new Frame('test', $locals, $properties);
+        $frame = new Frame($locals, $properties);
 
         [$source, $offset] = ExtractOffset::fromSource($source);
         $node = $this->parseSource($source)->getDescendantNodeAtPosition($offset);

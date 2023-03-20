@@ -28,7 +28,7 @@ class ReflectionNavigation
                 if (!$node->parent instanceof CallExpression) {
                     continue;
                 }
-                $calls[] = new ReflectionMethodCall($this->locator, new Frame('test'), $node);
+                $calls[] = new ReflectionMethodCall($this->locator, new Frame(), $node);
             }
         }
         return new NavigatorElementCollection($calls);

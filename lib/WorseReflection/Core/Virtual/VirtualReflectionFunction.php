@@ -38,7 +38,7 @@ final class VirtualReflectionFunction implements ReflectionFunction
         return new self(
             $range,
             NodeText::fromString(''),
-            new Frame(name: 'foo'),
+            new Frame(),
             new PlainDocblock(),
             new DummyReflectionScope(),
             TypeFactory::undefined(),

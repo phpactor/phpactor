@@ -69,7 +69,7 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         if (null === $this->parameter->default) {
             return DefaultValue::undefined();
         }
-        $value = $this->serviceLocator->nodeContextResolver()->resolveNode(new Frame('test'), $this->parameter->default)->type();
+        $value = $this->serviceLocator->nodeContextResolver()->resolveNode(new Frame(), $this->parameter->default)->type();
 
         return DefaultValue::fromValue(TypeUtil::valueOrNull($value));
     }
