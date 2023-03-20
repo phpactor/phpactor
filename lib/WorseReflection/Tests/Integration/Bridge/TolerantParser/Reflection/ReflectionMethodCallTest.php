@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Refle
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TestUtils\ExtractOffset;
 use Closure;
 
@@ -57,9 +57,9 @@ class ReflectionMethodCallTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionMethodCall $method): void {
-                    $this->assertInstanceOf(Position::class, $method->position());
-                    $this->assertEquals(7, $method->position()->start());
-                    $this->assertEquals(21, $method->position()->end());
+                    $this->assertInstanceOf(ByteOffsetRange::class, $method->position());
+                    $this->assertEquals(7, $method->position()->start()->toInt());
+                    $this->assertEquals(21, $method->position()->end()->toInt());
                 },
             ],
             'It returns the containing class' => [
@@ -84,7 +84,7 @@ class ReflectionMethodCallTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionMethodCall $method): void {
-                    $this->assertInstanceOf(Position::class, $method->position());
+                    $this->assertInstanceOf(ByteOffsetRange::class, $method->position());
                     $this->assertEquals(ClassName::fromString('BBB'), $method->class()->name());
                 },
             ],
@@ -102,7 +102,7 @@ class ReflectionMethodCallTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionMethodCall $method): void {
-                    $this->assertInstanceOf(Position::class, $method->position());
+                    $this->assertInstanceOf(ByteOffsetRange::class, $method->position());
                     $this->assertTrue($method->isStatic());
                     $this->assertEquals(ClassName::fromString('AAA'), $method->class()->name());
                 },
@@ -123,7 +123,7 @@ class ReflectionMethodCallTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionMethodCall $method): void {
-                    $this->assertInstanceOf(Position::class, $method->position());
+                    $this->assertInstanceOf(ByteOffsetRange::class, $method->position());
                     $this->assertEquals('a', $method->arguments()->first()->guessName());
                 },
             ],

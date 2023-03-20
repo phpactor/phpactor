@@ -2,9 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection;
 
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Deprecation;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Visibility;
@@ -17,7 +16,7 @@ interface ReflectionMember
     public const TYPE_CONSTANT = 'constant';
     public const TYPE_ENUM = 'enum';
 
-    public function position(): Position;
+    public function position(): ByteOffsetRange;
 
     public function declaringClass(): ReflectionClassLike;
 

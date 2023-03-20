@@ -9,9 +9,15 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 
 class FunctionCallContext extends NodeContext
 {
-    public function __construct(Symbol $symbol, private ByteOffsetRange $byteOffsetRange, private ReflectionFunction $function)
-    {
-        parent::__construct($symbol, $function->inferredType()->reduce());
+    public function __construct(
+        Symbol $symbol,
+        private ByteOffsetRange $byteOffsetRange,
+        private ReflectionFunction $function,
+    ) {
+        parent::__construct(
+            $symbol,
+            $function->inferredType()->reduce()
+        );
     }
 
     public function range(): ByteOffsetRange

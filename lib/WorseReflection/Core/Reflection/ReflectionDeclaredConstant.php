@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
 
@@ -14,5 +14,5 @@ interface ReflectionDeclaredConstant
     public function type(): Type;
     public function sourceCode(): SourceCode;
     public function docblock(): DocBlock;
-    public function position(): Position;
+    public function position(): ByteOffsetRange;
 }

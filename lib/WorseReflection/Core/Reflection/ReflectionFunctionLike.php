@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection;
 
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Type;
@@ -18,7 +18,7 @@ interface ReflectionFunctionLike
 
     public function body(): NodeText;
 
-    public function position(): Position;
+    public function position(): ByteOffsetRange;
 
     public function frame(): Frame;
 

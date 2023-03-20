@@ -6,7 +6,7 @@ use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -20,7 +20,7 @@ class VirtualReflectionMethod extends VirtualReflectionMember implements Reflect
     private Type $type;
 
     public function __construct(
-        Position $position,
+        ByteOffsetRange $position,
         ReflectionClassLike $declaringClass,
         ReflectionClassLike $class,
         string $name,

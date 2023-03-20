@@ -52,7 +52,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
                 $reflectionClass->type(),
                 new Location(
                     TextDocumentUri::fromString($path),
-                    ByteOffset::fromInt($reflectionClass->position()->start())
+                    ByteOffset::fromInt($reflectionClass->position()->start()->toInt())
                 )
             )
         ]);

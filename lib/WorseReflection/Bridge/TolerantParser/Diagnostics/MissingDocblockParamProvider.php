@@ -84,8 +84,8 @@ class MissingDocblockParamProvider implements DiagnosticProvider
 
             yield new MissingDocblockParamDiagnostic(
                 ByteOffsetRange::fromInts(
-                    $parameter->position()->start(),
-                    $parameter->position()->end()
+                    $parameter->position()->start()->toInt(),
+                    $parameter->position()->end()->toInt()
                 ),
                 sprintf(
                     'Method "%s" is missing @param $%s',

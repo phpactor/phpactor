@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Refle
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Closure;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 
 class ReflectionFunctionTest extends IntegrationTestCase
@@ -30,7 +30,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
                 EOT
             , 'hello', function (ReflectionFunction $function): void {
                 $this->assertEquals('hello', $function->name());
-                $this->assertEquals(Position::fromStartAndEnd(6, 26), $function->position());
+                $this->assertEquals(ByteOffsetRange::fromInts(6, 26), $function->position());
             }
         ];
 

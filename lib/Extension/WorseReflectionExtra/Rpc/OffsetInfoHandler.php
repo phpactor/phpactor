@@ -55,8 +55,8 @@ class OffsetInfoHandler implements Handler
         $return = [
             'symbol' => $nodeContext->symbol()->name(),
             'symbol_type' => $nodeContext->symbol()->symbolType(),
-            'start' => $nodeContext->symbol()->position()->start(),
-            'end' => $nodeContext->symbol()->position()->end(),
+            'start' => $nodeContext->symbol()->position()->start()->toInt(),
+            'end' => $nodeContext->symbol()->position()->end()->toInt(),
             'type' => (string) $nodeContext->type(),
             'container_type' => (string) $nodeContext->containerType(),
             'value' => var_export(TypeUtil::valueOrNull($nodeContext->type()), true),

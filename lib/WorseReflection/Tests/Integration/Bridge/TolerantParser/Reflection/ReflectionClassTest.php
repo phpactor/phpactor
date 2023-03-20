@@ -143,8 +143,8 @@ class ReflectionClassTest extends IntegrationTestCase
                 EOT
         ,
             'Class2',
-            function ($class): void {
-                $this->assertEquals(7, $class->position()->start());
+            function (ReflectionClass $class): void {
+                $this->assertEquals(7, $class->position()->start()->toInt());
             },
         ];
 
@@ -165,8 +165,8 @@ class ReflectionClassTest extends IntegrationTestCase
                 EOT
         ,
             'Class2',
-            function ($class): void {
-                $this->assertEquals(20, $class->memberListPosition()->start());
+            function (ReflectionClass $class): void {
+                $this->assertEquals(20, $class->memberListPosition()->start()->toInt());
             },
         ];
 

@@ -124,7 +124,7 @@ class WorseGenerateMutator implements PropertyAccessGenerator
         foreach ($classes as $class) {
             $position = $class->position();
 
-            if ($position->start() <= $offset && $offset <= $position->end()) {
+            if ($position->start()->toInt() <= $offset && $offset <= $position->end()->toInt()) {
                 return $class;
             }
         }
