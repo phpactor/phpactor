@@ -19,7 +19,6 @@ use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -116,8 +115,7 @@ class QualifiedNameResolver implements Resolver
         Frame $frame,
         CallExpression $parent,
         QualifiedName $node
-    ): NodeContext
-    {
+    ): NodeContext {
         $name = $node->getResolvedName();
 
         if (null === $name) {
@@ -125,7 +123,7 @@ class QualifiedNameResolver implements Resolver
         }
 
         $name = Name::fromString((string) $name);
-        $position = Position::fromStartAndEnd(
+        $range = ByteOffsetRange::fromInts(
             $node->getStartPosition(),
             $node->getEndPosition(),
         );
@@ -133,25 +131,11 @@ class QualifiedNameResolver implements Resolver
         try {
             $function = $this->reflector->reflectFunction($name);
         } catch (NotFound $exception) {
-            $function = VirtualReflectionFunction::empty($name, $position)
+            // create dummy function
+            $function = VirtualReflectionFunction::empty($name, $range);
         }
 
-        $context = FunctionCallContext::create(
-            $name,
-            ByteOffsetRange::fromInts(
-                $position->start(),
-                $position->end(),
-            ),
-            $function
-        );
-        $context = NodeContextFactory::create(
-            $name->full(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'symbol_type' => Symbol::FUNCTION,
-            ]
-        );
+        $context = FunctionCallContext::create($name, $range, $function);
 
         $stub = $this->registry->get($name->short());
 
@@ -166,22 +150,6 @@ class QualifiedNameResolver implements Resolver
 
         // the function may have been resolved to a global, so create
         // the context again with the potentially shorter name
-        $context = NodeContextFactory::create(
-            $function->name()->__toString(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'symbol_type' => Symbol::FUNCTION,
-            ]
-        );
-
-        return new FunctionCallContext(
-            $context->symbol(),
-            ByteOffsetRange::fromInts(
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-            ),
-            $function
-        );
+        return $context->withSymbolName($function->name()->__toString());
     }
 }

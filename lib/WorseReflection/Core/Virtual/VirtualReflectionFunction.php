@@ -2,25 +2,24 @@
 
 namespace Phpactor\WorseReflection\Core\Virtual;
 
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\NodeText;
-use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 
 final class VirtualReflectionFunction implements ReflectionFunction
 {
     public function __construct(
-        private Position $position,
-        private NodeText $text,
+        private ByteOffsetRange $range,
+        private NodeText $body,
         private Frame $frame,
         private DocBlock $docblock,
         private ReflectionScope $scope,
@@ -28,22 +27,25 @@ final class VirtualReflectionFunction implements ReflectionFunction
         private Type $type,
         private SourceCode $source,
         private Name $name,
-    ) {}
+        private ReflectionParameterCollection $parameters,
+    ) {
+    }
 
     public static function empty(
         Name $name,
-        Position $position
-    ) {
+        ByteOffsetRange $range
+    ): self {
         return new self(
-            $position,
+            $range,
             NodeText::fromString(''),
             new Frame(name: 'foo'),
             new PlainDocblock(),
             new DummyReflectionScope(),
             TypeFactory::undefined(),
             TypeFactory::undefined(),
-            new SourceCode(''),
-            $name
+            SourceCode::empty(),
+            $name,
+            ReflectionParameterCollection::empty(),
         );
     }
 
@@ -58,9 +60,9 @@ final class VirtualReflectionFunction implements ReflectionFunction
         return $this->body;
     }
 
-    public function position(): Position
+    public function position(): ByteOffsetRange
     {
-        return $this->position;
+        return $this->range;
     }
 
     public function frame(): Frame
@@ -70,12 +72,12 @@ final class VirtualReflectionFunction implements ReflectionFunction
 
     public function docblock(): DocBlock
     {
-        return $this->frame;
+        return $this->docblock;
     }
 
     public function scope(): ReflectionScope
     {
-        return $this->docblock;
+        return $this->scope;
     }
 
     public function inferredType(): Type
@@ -90,7 +92,7 @@ final class VirtualReflectionFunction implements ReflectionFunction
 
     public function sourceCode(): SourceCode
     {
-        return $this->sourceCode;
+        return $this->source;
     }
 
     public function name(): Name
