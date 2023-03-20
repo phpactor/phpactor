@@ -3,10 +3,8 @@
 namespace Phpactor\Extension\WorseReflection\Command;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
-use Phpactor\Extension\Debug\Model\DocumentorRegistry;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

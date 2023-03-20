@@ -22,6 +22,5 @@ class DumpAstCommandTest extends TestCase
         ]), $output);
         self::assertEquals(0, $exitCode);
         self::assertStringContainsString('Parsing time', $output->fetch());
-
     }
 }
