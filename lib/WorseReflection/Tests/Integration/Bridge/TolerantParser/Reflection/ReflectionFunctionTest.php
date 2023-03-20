@@ -30,7 +30,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
                 EOT
             , 'hello', function (ReflectionFunction $function): void {
                 $this->assertEquals('hello', $function->name());
-                $this->assertEquals(Position::fromStartAndEnd(6, 26), $function->position());
+                $this->assertEquals(Position::fromInts(6, 26), $function->position());
             }
         ];
 

@@ -36,7 +36,7 @@ class NodeContextFactory
         }
 
         $config = array_merge($defaultConfig, $config);
-        $position = Position::fromStartAndEnd($start, $end);
+        $position = Position::fromInts($start, $end);
         $symbol = Symbol::fromTypeNameAndPosition(
             $config['symbol_type'],
             $symbolName,

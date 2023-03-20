@@ -28,7 +28,7 @@ class MethodDeclarationResolver implements Resolver
             Symbol::fromTypeNameAndPosition(
                 Symbol::METHOD,
                 (string)$node->name->getText($node->getFileContents()),
-                Position::fromStartAndEnd(
+                Position::fromInts(
                     $node->name->getStartPosition(),
                     $node->name->getEndPosition()
                 )

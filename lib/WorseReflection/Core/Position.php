@@ -8,7 +8,7 @@ final class Position
     {
     }
 
-    public static function fromStartAndEnd(int $start, int $end)
+    public static function fromInts(int $start, int $end)
     {
         return new self($start, $start, $end);
     }

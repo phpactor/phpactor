@@ -84,9 +84,9 @@ class HomogeneousReflectionMemberCollectionTest extends TestCase
             $this->member3->reveal(),
         ]);
 
-        $this->member1->position()->willReturn(Position::fromStartAndEnd(0, 10));
-        $this->member2->position()->willReturn(Position::fromStartAndEnd(11, 11));
-        $this->member3->position()->willReturn(Position::fromStartAndEnd(13, 16));
+        $this->member1->position()->willReturn(Position::fromInts(0, 10));
+        $this->member2->position()->willReturn(Position::fromInts(11, 11));
+        $this->member3->position()->willReturn(Position::fromInts(13, 16));
 
         $collection = $collection->atOffset(11);
         $this->assertCount(1, $collection);

@@ -38,7 +38,7 @@ final class Symbol
 
     public static function unknown(): Symbol
     {
-        return new self(self::UNKNOWN, self::UNKNOWN, Position::fromStartAndEnd(0, 0));
+        return new self(self::UNKNOWN, self::UNKNOWN, Position::fromInts(0, 0));
     }
 
     public function isKnown(): bool

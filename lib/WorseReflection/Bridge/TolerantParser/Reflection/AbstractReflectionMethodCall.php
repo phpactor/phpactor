@@ -39,7 +39,7 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
 
     public function position(): Position
     {
-        return Position::fromStartAndEnd(
+        return Position::fromInts(
             $this->node->getStartPosition(),
             $this->node->getEndPosition()
         );

@@ -44,7 +44,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     Symbol::fromTypeNameAndPosition(
                         'variable',
                         $name,
-                        Position::fromStartAndEnd($offset, $offset)
+                        Position::fromInts($offset, $offset)
                     )
                 )->withType($varSymbolInfo);
             }
@@ -96,7 +96,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                     NodeContext::for(Symbol::fromTypeNameAndPosition(
                         Symbol::CLASS_,
                         'bar',
-                        Position::fromStartAndEnd(0, 0)
+                        Position::fromInts(0, 0)
                     ))->withType(TypeFactory::fromString('Foobar'))
                 )
             ]),
@@ -772,7 +772,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                 , [
                     'foobar' => TypeFactory::fromString('Foobar'),
                     'barfoo' => NodeContext::for(
-                        Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', Position::fromStartAndEnd(0, 0))
+                        Symbol::fromTypeNameAndPosition(Symbol::STRING, 'barfoo', Position::fromInts(0, 0))
                     )->withType(TypeFactory::stringLiteral('hello'))
                 ], ['type' => 'string'],
             ];
@@ -840,7 +840,7 @@ class NodeContextResolverTest extends IntegrationTestCase
                 'bar' => NodeContext::for(Symbol::fromTypeNameAndPosition(
                     Symbol::PROPERTY,
                     'bar',
-                    Position::fromStartAndEnd(0, 0),
+                    Position::fromInts(0, 0),
                 ))
                     ->withContainerType(TypeFactory::class('Foobar\Barfoo\Foobar'))
                     ->withType(TypeFactory::class('Acme\Factory')),

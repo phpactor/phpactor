@@ -30,7 +30,7 @@ class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCrea
 
     public function position(): Position
     {
-        return Position::fromStartAndEnd(
+        return Position::fromInts(
             $this->node->getStartPosition(),
             $this->node->getEndPosition()
         );

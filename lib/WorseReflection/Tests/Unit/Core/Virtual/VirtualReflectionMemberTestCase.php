@@ -39,7 +39,7 @@ abstract class VirtualReflectionMemberTestCase extends TestCase
 
     public function setUp(): void
     {
-        $this->position = Position::fromStartAndEnd(0, 0);
+        $this->position = Position::fromInts(0, 0);
         $this->declaringClass = $this->prophesize(ReflectionClass::class);
         $this->class = $this->prophesize(ReflectionClass::class);
         $this->name = 'test_name';

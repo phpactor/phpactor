@@ -21,7 +21,7 @@ abstract class AssignmentstTestCase extends TestCase
             Symbol::fromTypeNameAndPosition(
                 Symbol::VARIABLE,
                 'hello',
-                Position::fromStartAndEnd(0, 0)
+                Position::fromInts(0, 0)
             )
         );
 
@@ -92,7 +92,7 @@ abstract class AssignmentstTestCase extends TestCase
         return Variable::fromSymbolContext(NodeContext::for(Symbol::fromTypeNameAndPosition(
             Symbol::VARIABLE,
             $name,
-            Position::fromStartAndEnd($start, $end)
+            Position::fromInts($start, $end)
         )));
     }
 }
