@@ -12,6 +12,7 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
@@ -32,27 +33,27 @@ class IncludeWalker implements Walker
         return [ScriptInclusionExpression::class];
     }
 
-    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
         assert($node instanceof ScriptInclusionExpression);
         $context = $resolver->resolveNode($frame, $node->expression);
         $includeUri = TypeUtil::valueOrNull($context->type());
 
         if (!is_string($includeUri)) {
-            return $frame;
+            return;
         }
 
         $sourceNode = $node->getFirstAncestor(SourceFileNode::class);
 
         if (!$sourceNode instanceof SourceFileNode) {
-            return $frame;
+            return;
         }
 
         $uri = $sourceNode->uri;
 
         if (!$uri) {
             $this->logger->warning('source code has no path associated with it, cannot process include');
-            return $frame;
+            return;
         }
 
         if (Path::isRelative($includeUri)) {
@@ -61,7 +62,7 @@ class IncludeWalker implements Walker
 
         if (!file_exists($includeUri)) {
             $this->logger->warning('require/include "%s" does not exist');
-            return $frame;
+            return;
         }
 
         $sourceNode = $this->parser->parseSourceFile((string)file_get_contents($includeUri));
@@ -75,40 +76,45 @@ class IncludeWalker implements Walker
 
         $frame->locals()->merge($includedFrame->locals());
 
-        return $frame;
+        return;
     }
 
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function exit(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
-        return $frame;
+        return;
     }
 
-    private function processAssignment(SourceFileNode $sourceNode, FrameResolver $resolver, Frame $frame, AssignmentExpression $parentNode, ScriptInclusionExpression $node): Frame
+    private function processAssignment(SourceFileNode $sourceNode, FrameResolver $resolver, FrameStack $frameStack, AssignmentExpression $parentNode, ScriptInclusionExpression $node): void
     {
         $return = $sourceNode->getFirstDescendantNode(ReturnStatement::class);
         assert($return instanceof ReturnStatement);
-        $returnValueContext = $resolver->resolveNode($frame->new(), $return->expression);
+        $frameStack->newFrame();
+        if (!$return->expression) {
+            return;
+        }
+        $returnValueContext = $resolver->resolveNode($frameStack, $return->expression);
+        $frameStack->popFrame();
 
         if (!$parentNode->leftOperand instanceof Variable) {
-            return $frame;
+            return;
         }
 
         $name = $parentNode->leftOperand->name;
 
         if (!$name instanceof Token) {
-            return $frame;
+            return;
         }
 
         $name = $name->getText($node->getFileContents());
 
-        foreach ($frame->locals()->byName((string)$name) as $variable) {
-            $frame->locals()->replace(
+        foreach ($frameStack->current()->locals()->byName((string)$name) as $variable) {
+            $frameStack->current()->locals()->replace(
                 $variable,
                 $variable->withType($returnValueContext->type())
             );
-            return $frame;
+            return;
         }
 
-        return $frame;
+        return;
     }
 }
