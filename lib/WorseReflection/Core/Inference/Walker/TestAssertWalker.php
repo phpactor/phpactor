@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Type;
@@ -31,48 +32,48 @@ class TestAssertWalker implements Walker
         return [CallExpression::class];
     }
 
-    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
         assert($node instanceof CallExpression);
         $name = $node->callableExpression->getText();
 
         if ($name === 'wrFrame') {
-            dump($frame->__toString());
-            return $frame;
+            dump($frameStack->current()->__toString());
+            return;
         }
         if ($node->argumentExpressionList === null) {
-            return $frame;
+            return;
         }
         if ($name === 'wrAssertType') {
-            $this->assertType($resolver, $frame, $node);
-            return $frame;
+            $this->assertType($resolver, $frameStack, $node);
+            return;
         }
         if ($name === 'wrAssertOffset') {
-            $this->assertOffset($resolver, $frame, $node);
-            return $frame;
+            $this->assertOffset($resolver, $frameStack, $node);
+            return;
         }
         if ($name === 'wrReturnType') {
-            $this->assertReturnType($resolver, $frame, $node);
-            return $frame;
+            $this->assertReturnType($resolver, $frameStack, $node);
+            return;
         }
         if ($name === 'wrAssertEval') {
-            $this->assertEval($resolver, $frame, $node);
-            return $frame;
+            $this->assertEval($resolver, $frameStack, $node);
+            return;
         }
         if ($name === 'wrAssertSymbolName') {
-            $this->assertSymbolName($resolver, $frame, $node);
-            return $frame;
+            $this->assertSymbolName($resolver, $frameStack, $node);
+            return;
         }
 
-        return $frame;
+        return;
     }
 
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function exit(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
-        return $frame;
+        return;
     }
 
-    private function assertType(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    private function assertType(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
         $list = $node->argumentExpressionList->getElements();
         $args = [];
@@ -82,7 +83,7 @@ class TestAssertWalker implements Walker
                 continue;
             }
 
-            $args[] = $resolver->resolveNode($frame, $expression);
+            $args[] = $resolver->resolveNode($frameStackStack, $expression);
             $exprs[] = $expression;
         }
 
@@ -92,7 +93,7 @@ class TestAssertWalker implements Walker
         $this->assertTypeIs($node, $actualType, $expectedType, $args[2]??null);
     }
 
-    private function assertEval(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    private function assertEval(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
         $list = $node->argumentExpressionList->getElements();
         $args = [];
@@ -104,7 +105,7 @@ class TestAssertWalker implements Walker
             }
 
             $toEval = $expression->getText();
-            $resolvedType = $resolver->resolveNode($frame, $expression)->type();
+            $resolvedType = $resolver->resolveNode($frameStack, $expression)->type();
             break;
         }
 
@@ -119,7 +120,7 @@ class TestAssertWalker implements Walker
         );
     }
 
-    private function assertSymbolName(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    private function assertSymbolName(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
         $argList = $node->argumentExpressionList;
         $args = $this->resolveArgs($argList, $resolver, $frame);
@@ -142,7 +143,7 @@ class TestAssertWalker implements Walker
         $this->testCase->addToAssertionCount(1);
     }
 
-    private function assertReturnType(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    private function assertReturnType(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
         $returnType = $frame->returnType();
         $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);
@@ -160,7 +161,7 @@ class TestAssertWalker implements Walker
         $this->assertTypeIs($node, $frame->returnType(), $expected);
     }
 
-    private function assertOffset(FrameResolver $resolver, Frame $frame, CallExpression $node): void
+    private function assertOffset(FrameResolver $resolver, FrameStack $frameStack, CallExpression $node): void
     {
         $args = $this->resolveArgs($node->argumentExpressionList, $resolver, $frame);
         $expectedType = $args[0]->type();
@@ -177,7 +178,7 @@ class TestAssertWalker implements Walker
     /**
      * @return array<int,NodeContext>
      */
-    private function resolveArgs(?ArgumentExpressionList $argList, FrameResolver $resolver, Frame $frame): array
+    private function resolveArgs(?ArgumentExpressionList $argList, FrameResolver $resolver, FrameStack $frameStack): array
     {
         $list = $argList->getElements();
         $args = [];
@@ -186,7 +187,7 @@ class TestAssertWalker implements Walker
                 continue;
             }
 
-            $args[] = $resolver->resolveNode($frame, $expression);
+            $args[] = $resolver->resolveNode($frameStackStack, $expression);
         }
         return $args;
     }

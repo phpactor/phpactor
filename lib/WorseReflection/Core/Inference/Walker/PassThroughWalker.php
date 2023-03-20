@@ -14,6 +14,7 @@ use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
+use Phpactor\WorseReflection\Core\Inference\FrameStack;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 
 /**
@@ -37,15 +38,15 @@ class PassThroughWalker implements Walker
         ];
     }
 
-    public function enter(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function enter(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
-        $resolver->resolveNode($frame, $node);
+        $resolver->resolveNode($frameStack, $node);
 
-        return $frame;
+        return;
     }
 
-    public function exit(FrameResolver $resolver, Frame $frame, Node $node): Frame
+    public function exit(FrameResolver $resolver, FrameStack $frameStack, Node $node): void
     {
-        return $frame;
+        return;
     }
 }
