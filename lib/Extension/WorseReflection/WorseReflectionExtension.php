@@ -2,9 +2,12 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
+use Microsoft\PhpParser\Parser;
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\WorseReflection\Command\DumpAstCommand;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
@@ -70,6 +73,7 @@ class WorseReflectionExtension implements Extension
 
     public function load(ContainerBuilder $container): void
     {
+        $this->registerCommands($container);
         $this->registerReflection($container);
         $this->registerSourceLocators($container);
         $this->registerMemberProviders($container);
@@ -188,5 +192,16 @@ class WorseReflectionExtension implements Extension
         $container->register(DeprecatedUsageDiagnosticProvider::class, function (Container $container) {
             return new DeprecatedUsageDiagnosticProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+    }
+
+    private function registerCommands(ContainerBuilder $container): void
+    {
+        $container->register(DumpAstCommand::class, function (Container $container) {
+            return new DumpAstCommand($container->expect(self::SERVICE_PARSER, Parser::class));
+        }, [
+            ConsoleExtension::TAG_COMMAND => [
+                'name' => 'worse:dump-ast',
+            ]
+        ]);
     }
 }
