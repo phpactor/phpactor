@@ -41,7 +41,7 @@ class TestFrameWalker implements Walker
 
         $frame->locals()->set(
             Variable::fromSymbolContext(
-                NodeContext::for(Symbol::fromTypeNameAndPosition('variable', 'test_variable', ByteOffsetRange::fromFullStartStartAndEnd(0, 1, 10)))
+                NodeContext::for(Symbol::fromTypeNameAndPosition('variable', 'test_variable', ByteOffsetRange::fromInts(1, 10)))
             )
         );
         return $frame;

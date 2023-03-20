@@ -272,7 +272,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
         return new TypeLocations([new TypeLocation($nodeContext->classType(), new Location(
             TextDocumentUri::fromString($path),
-            ByteOffset::fromInt($member->position()->start())
+            $member->position()->start()
         ))]);
     }
 }
