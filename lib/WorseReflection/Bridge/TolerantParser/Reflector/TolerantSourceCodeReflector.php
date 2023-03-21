@@ -12,6 +12,7 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
@@ -57,7 +58,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
         $rootNode = $this->parseSourceCode($sourceCode);
 
-        $rootContext = $this->serviceLocator->nodeContextResolver()->resolveNode(new Frame(), $rootNode);
+        $rootContext = $this->serviceLocator->nodeContextResolver()->resolveNode(NodeContext::none(), $rootNode);
         $nodeContext = $rootContext->descendantContextAt($offset);
 
         return TolerantReflectionOffset::fromFrameAndSymbolContext($nodeContext->frame() ?? new Frame(), $nodeContext);

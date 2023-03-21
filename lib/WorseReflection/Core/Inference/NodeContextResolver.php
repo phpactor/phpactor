@@ -78,7 +78,7 @@ class NodeContextResolver
             ));
         }
 
-        if (isset($this->resolverMap[get_class($node)])) {
+        if (!isset($this->resolverMap[get_class($node)])) {
             throw new CouldNotResolveNode(sprintf(
                 'Did not know how to resolve node of type "%s" with text "%s"',
                 get_class($node),
