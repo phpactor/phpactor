@@ -8,12 +8,12 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\TokenKind;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -41,13 +41,13 @@ class FunctionLikeResolver implements Resolver
         );
 
         if (!$node instanceof ArrowFunctionCreationExpression) {
-            $frame = $frame->new();
+            $context = $context->withFrame($context->frame()->new());
         }
 
-        $this->walkFunctionLike($resolver, $frame, $node);
+        $this->walkFunctionLike($resolver, $context, $node);
 
         if ($this->inner) {
-            return $this->inner->resolve($resolver, $frame, $node);
+            return $this->inner->resolve($resolver, $context, $node);
         }
 
         return NodeContext::none();
@@ -56,7 +56,7 @@ class FunctionLikeResolver implements Resolver
     /**
      * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression|ArrowFunctionCreationExpression $node
      */
-    private function walkFunctionLike(NodeContextResolver $resolver, Frame $frame, FunctionLike $node): void
+    private function walkFunctionLike(NodeContextResolver $resolver, NodeContext $context, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
         $classNode = $node->getFirstAncestor(
@@ -66,7 +66,7 @@ class FunctionLikeResolver implements Resolver
         );
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
-            $this->addAnonymousImports($frame, $node);
+            $this->addAnonymousImports($context, $node);
 
             // if this is a static anonymous function, set classNode to NULL
             // so that we don't add the class context
@@ -77,8 +77,8 @@ class FunctionLikeResolver implements Resolver
 
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
-            $classType = $resolver->resolveNode($frame, $classNode)->type();
-            $this->addClassContext($node, $classType, $frame);
+            $classType = $resolver->resolveNode($context, $classNode)->type();
+            $this->addClassContext($node, $classType, $context);
         }
 
         if (null === $node->parameters) {
@@ -89,7 +89,7 @@ class FunctionLikeResolver implements Resolver
         foreach ($node->parameters->getElements() as $parameterNode) {
             $parameterName = $parameterNode->variableName->getText($node->getFileContents());
 
-            $nodeContext = $resolver->resolveNode($frame, $parameterNode);
+            $nodeContext = $resolver->resolveNode($context, $parameterNode);
 
             $context = NodeContextFactory::create(
                 (string)$parameterName,
@@ -101,11 +101,11 @@ class FunctionLikeResolver implements Resolver
                 ]
             );
 
-            $frame->locals()->set(Variable::fromSymbolContext($context));
+            $context->frame()->locals()->set(Variable::fromSymbolContext($context));
         }
     }
 
-    private function addAnonymousImports(Frame $frame, AnonymousFunctionCreationExpression $node): void
+    private function addAnonymousImports(NodeContext $context, AnonymousFunctionCreationExpression $node): void
     {
         $useClause = $node->anonymousFunctionUseClause;
 
@@ -113,7 +113,7 @@ class FunctionLikeResolver implements Resolver
             return;
         }
 
-        $parentFrame = $frame->parent();
+        $parentFrame = $context->frame()->parent();
         if (null === $parentFrame) {
             return;
         }
@@ -144,7 +144,7 @@ class FunctionLikeResolver implements Resolver
             // add it with above context and continue
             // TODO: Do we infer the type hint??
             if (0 === $parentVars->byName($varName)->count()) {
-                $frame->locals()->set(Variable::fromSymbolContext($variableContext));
+                $context->frame()->locals()->set(Variable::fromSymbolContext($variableContext));
                 continue;
             }
 
@@ -153,11 +153,11 @@ class FunctionLikeResolver implements Resolver
             $variableContext = $variableContext
                 ->withType($variable->type());
 
-            $frame->locals()->set(Variable::fromSymbolContext($variableContext));
+            $context->frame()->locals()->set(Variable::fromSymbolContext($variableContext));
         }
     }
 
-    private function addClassContext(Node $node, Type $classType, Frame $frame): void
+    private function addClassContext(Node $node, Type $classType, NodeContext $context): void
     {
         $context = NodeContextFactory::create(
             'this',
@@ -170,7 +170,7 @@ class FunctionLikeResolver implements Resolver
         );
 
         // add this and self
-        $frame->locals()->set(Variable::fromSymbolContext($context));
+        $context->frame()->locals()->set(Variable::fromSymbolContext($context));
 
         if (!$classType instanceof ReflectedClassType) {
             return;
