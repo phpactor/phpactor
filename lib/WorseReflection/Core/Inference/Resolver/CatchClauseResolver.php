@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 
 class CatchClauseResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         $context = NodeContextFactory::create('catch', $node->getStartPosition(), $node->getEndPosition());
         assert($node instanceof CatchClause);

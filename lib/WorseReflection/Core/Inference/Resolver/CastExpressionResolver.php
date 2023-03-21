@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CastExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof CastExpression);
 

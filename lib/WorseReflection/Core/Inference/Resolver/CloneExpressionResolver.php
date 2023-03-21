@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 
 class CloneExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof CloneExpression);
         return $resolver->resolveNode($frame, $node->expression);
