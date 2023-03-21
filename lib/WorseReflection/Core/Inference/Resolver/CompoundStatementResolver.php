@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -16,7 +15,7 @@ class CompoundStatementResolver implements Resolver
     {
         assert($node instanceof CompoundStatementNode);
         foreach ($node->statements as $statement) {
-            $resolver->resolveNode($frame, $statement);
+            $resolver->resolveNode($context, $statement);
         }
 
         return NodeContextFactory::forNode($node);

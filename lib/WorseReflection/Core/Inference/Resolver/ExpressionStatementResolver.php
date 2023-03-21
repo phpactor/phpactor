@@ -15,7 +15,6 @@ class ExpressionStatementResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof ExpressionStatement);
-        $resolver->resolveNode($frame, $node->expression);
-        return NodeContextFactory::forNode($node);
+        return $resolver->resolveNode($context, $node->expression);
     }
 }
