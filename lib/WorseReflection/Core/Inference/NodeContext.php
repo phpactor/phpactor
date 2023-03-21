@@ -19,7 +19,7 @@ class NodeContext
      */
     private array $issues = [];
 
-    private ?Frame $frame = null;
+    private Frame $frame;
 
     /**
      * @var NodeContext[]
@@ -33,6 +33,7 @@ class NodeContext
         private ?ReflectionScope $scope = null
     ) {
         $this->typeAssertions = new TypeAssertions([]);
+        $this->frame = new Frame();
     }
 
     public function __toString(): string
@@ -179,7 +180,7 @@ class NodeContext
         return $this;
     }
 
-    public function frame(): ?Frame
+    public function frame(): Frame
     {
         return $this->frame;
     }

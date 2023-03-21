@@ -36,10 +36,10 @@ class NodeContextResolver
     /**
      * @param Node|Token|MissingToken $node
      */
-    public function resolveNode(Frame $frame, $node): NodeContext
+    public function resolveNode(NodeContext $parentContext, $node): NodeContext
     {
         try {
-            return $this->doResolveNodeWithCache($frame, $node);
+            return $this->doResolve($parentContext, $node);
         } catch (CouldNotResolveNode $couldNotResolveNode) {
             $this->logger->warning(sprintf('No resolver for: %s', get_class($node)));
             return NodeContext::none();
@@ -64,49 +64,38 @@ class NodeContextResolver
      *
      * @param Node|Token|MissingToken|array<MissingToken> $node
      */
-    private function doResolveNodeWithCache(Frame $frame, $node): NodeContext
+    private function doResolve(NodeContext $parentContext, $node): NodeContext
     {
         // somehow we can get an array of missing tokens here instead of an object...
         if (!is_object($node)) {
             return NodeContext::none();
         }
 
-        $key = 'sc:'.spl_object_id($node).':'.$frame->version();
-
-        return $this->cache->getOrSet($key, function () use ($frame, $node) {
-            if (false === $node instanceof Node) {
-                throw new CouldNotResolveNode(sprintf(
-                    'Non-node class passed to resolveNode, got "%s"',
-                    get_class($node)
-                ));
-            }
-
-            $context = $this->doResolveNode($frame, $node);
-            $context = $context->withScope(new ReflectionScope($this->reflector, $node));
-
-            return $context;
-        });
-    }
-
-    private function doResolveNode(Frame $frame, Node $node): NodeContext
-    {
-        if (isset($this->resolverMap[get_class($node)])) {
-            $resolver = $this->resolverMap[get_class($node)];
-            $this->logger->debug(sprintf('Resolving: %s with %s', get_class($node), $resolver::class));
-            $context = $resolver->resolve($this, $frame, $node);
-            if (null === $context->frame()) {
-                $context = $context->withFrame($frame);
-            }
-            foreach ($this->visitors->visitorsFor(get_class($node)) as $visitor) {
-                $context = $visitor->visit($context);
-            }
-            return $context;
+        if (false === $node instanceof Node) {
+            throw new CouldNotResolveNode(sprintf(
+                'Non-node class passed to resolveNode, got "%s"',
+                get_class($node)
+            ));
         }
 
-        throw new CouldNotResolveNode(sprintf(
-            'Did not know how to resolve node of type "%s" with text "%s"',
-            get_class($node),
-            $node->getText()
-        ));
+        if (isset($this->resolverMap[get_class($node)])) {
+            throw new CouldNotResolveNode(sprintf(
+                'Did not know how to resolve node of type "%s" with text "%s"',
+                get_class($node),
+                $node->getText()
+            ));
+        }
+
+        $resolver = $this->resolverMap[get_class($node)];
+        $this->logger->debug(sprintf('Resolving: %s with %s', get_class($node), $resolver::class));
+        $context = $resolver->resolve(
+            $this,
+            NodeContextFactory::forNode($node)->withFrame($parentContext->frame()),
+            $node
+        );
+        foreach ($this->visitors->visitorsFor(get_class($node)) as $visitor) {
+            $context = $visitor->visit($context);
+        }
+        return $context->withScope(new ReflectionScope($this->reflector, $node));
     }
 }

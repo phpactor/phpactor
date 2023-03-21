@@ -11,9 +11,9 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 
 class ArgumentExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $context, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof ArgumentExpression);
-        return $resolver->resolveNode($frame, $node->expression);
+        return $resolver->resolveNode($context, $node->expression);
     }
 }
