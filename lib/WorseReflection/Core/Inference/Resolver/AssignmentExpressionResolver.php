@@ -6,11 +6,12 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\DelimitedList\ListExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
-use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -35,46 +36,46 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class AssignmentExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
-        $context = $parentContext->addChild(NodeContextFactory::create('assignment', $node->getStartPosition(), $node->getEndPosition()));
+        $context = NodeContextFactory::create('assignment', $node->getStartPosition(), $node->getEndPosition());
         assert($node instanceof AssignmentExpression);
 
-        $rightContext = $resolver->resolveNode($context, $node->rightOperand);
+        $rightContext = $resolver->resolveNode($frame, $node->rightOperand);
 
         if ($this->hasMissingTokens($node)) {
             return $context;
         }
 
         if ($node->leftOperand instanceof Variable) {
-            $this->walkParserVariable($context, $node->leftOperand, $rightContext);
+            $this->walkParserVariable($frame, $node->leftOperand, $rightContext);
             return $context;
         }
 
         if ($node->leftOperand instanceof ListIntrinsicExpression) {
-            $this->walkList($context, $node->leftOperand, $rightContext);
+            $this->walkList($frame, $node->leftOperand, $rightContext);
             return $context;
         }
 
         if ($node->leftOperand instanceof ArrayCreationExpression) {
-            $this->walkArrayCreation($context, $node->leftOperand, $rightContext);
+            $this->walkArrayCreation($frame, $node->leftOperand, $rightContext);
             return $context;
         }
 
         if ($node->leftOperand instanceof MemberAccessExpression) {
-            $this->walkMemberAccessExpression($resolver, $context, $node->leftOperand, $rightContext);
+            $this->walkMemberAccessExpression($resolver, $frame, $node->leftOperand, $rightContext);
             return $context;
         }
 
         if ($node->leftOperand instanceof SubscriptExpression) {
-            $this->walkSubscriptExpression($resolver, $context, $node->leftOperand, $rightContext);
+            $this->walkSubscriptExpression($resolver, $frame, $node->leftOperand, $rightContext);
             return $context;
         }
 
         return $context;
     }
 
-    private function walkParserVariable(NodeContext $context, Variable $leftOperand, NodeContext $rightContext): void
+    private function walkParserVariable(Frame $frame, Variable $leftOperand, NodeContext $rightContext): void
     {
         $name = NodeUtil::nameFromTokenOrNode($leftOperand, $leftOperand->name);
         $context = NodeContextFactory::create(
@@ -87,12 +88,12 @@ class AssignmentExpressionResolver implements Resolver
             ]
         );
 
-        $context->frame()->locals()->set(WorseVariable::fromSymbolContext($context)->asAssignment());
+        $frame->locals()->set(WorseVariable::fromSymbolContext($context)->asAssignment());
     }
 
     private function walkMemberAccessExpression(
         NodeContextResolver $resolver,
-        NodeContext $context,
+        Frame $frame,
         MemberAccessExpression $leftOperand,
         NodeContext $typeContext
     ): void {
@@ -112,7 +113,7 @@ class AssignmentExpressionResolver implements Resolver
             $memberName = $memberNameNode->getText($leftOperand->getFileContents());
             /** @phpstan-ignore-next-line */
         } else {
-            $memberType = $resolver->resolveNode($context, $memberNameNode)->type();
+            $memberType = $resolver->resolveNode($frame, $memberNameNode)->type();
 
             if (!$memberType instanceof StringType) {
                 return;
@@ -131,33 +132,33 @@ class AssignmentExpressionResolver implements Resolver
             ]
         );
 
-        $context->frame()->properties()->set(WorseVariable::fromSymbolContext($context));
+        $frame->properties()->set(WorseVariable::fromSymbolContext($context));
     }
 
-    private function walkArrayCreation(NodeContext $context, ArrayCreationExpression $leftOperand, NodeContext $nodeContext): void
+    private function walkArrayCreation(Frame $frame, ArrayCreationExpression $leftOperand, NodeContext $nodeContext): void
     {
         $list = $leftOperand->arrayElements;
         if (!$list instanceof ArrayElementList) {
             return;
         }
 
-        $this->walkArrayElements($list->children, $leftOperand, $nodeContext->type(), $context);
+        $this->walkArrayElements($list->children, $leftOperand, $nodeContext->type(), $frame);
     }
 
-    private function walkList(NodeContext $context, ListIntrinsicExpression $leftOperand, NodeContext $nodeContext): void
+    private function walkList(Frame $frame, ListIntrinsicExpression $leftOperand, NodeContext $nodeContext): void
     {
         $list = $leftOperand->listElements;
         if (!$list instanceof ListExpressionList) {
             return;
         }
 
-        $this->walkArrayElements($list->children, $leftOperand, $nodeContext->type(), $context);
+        $this->walkArrayElements($list->children, $leftOperand, $nodeContext->type(), $frame);
     }
 
-    private function walkSubscriptExpression(NodeContextResolver $resolver, NodeContext $context, SubscriptExpression $leftOperand, NodeContext $rightContext): void
+    private function walkSubscriptExpression(NodeContextResolver $resolver, Frame $frame, SubscriptExpression $leftOperand, NodeContext $rightContext): void
     {
         if ($leftOperand->postfixExpression instanceof Variable) {
-            foreach ($context->frame()->locals()->byName((string)$leftOperand->postfixExpression->getName()) as $variable) {
+            foreach ($frame->locals()->byName((string)$leftOperand->postfixExpression->getName()) as $variable) {
                 $type = $variable->type();
 
                 if (!$type instanceof ArrayLiteral) {
@@ -167,10 +168,10 @@ class AssignmentExpressionResolver implements Resolver
                 // array key specified, e.g. `$foo['bar'] = `
                 // @phpstan-ignore-next-line TP lies
                 if ($leftOperand->accessExpression) {
-                    $accessType = $resolver->resolveNode($context, $leftOperand->accessExpression)->type();
+                    $accessType = $resolver->resolveNode($frame, $leftOperand->accessExpression)->type();
 
                     if (!$accessType instanceof Literal) {
-                        $context->frame()->locals()->set(
+                        $frame->locals()->set(
                             $variable->withType(
                                 new ArrayType(TypeFactory::undefined(), $rightContext->type())
                             )
@@ -178,7 +179,7 @@ class AssignmentExpressionResolver implements Resolver
                         return;
                     }
 
-                    $context->frame()->locals()->set(
+                    $frame->locals()->set(
                         $variable->withType(
                             $type->set($accessType->value(), $rightContext->type())
                         )->withOffset($leftOperand->getStartPosition())
@@ -188,7 +189,7 @@ class AssignmentExpressionResolver implements Resolver
 
                 // @phpstan-ignore-next-line TP lies
                 if ($rightContext->type() instanceof Literal) {
-                    $context->frame()->locals()->set(
+                    $frame->locals()->set(
                         $variable->withType(
                             $type->add($rightContext->type())
                         )->withOffset($leftOperand->getStartPosition())
@@ -196,7 +197,7 @@ class AssignmentExpressionResolver implements Resolver
                     continue;
                 }
 
-                $context->frame()->locals()->set(
+                $frame->locals()->set(
                     $variable->withType(
                         TypeFactory::array($rightContext->type())
                     )->withOffset($leftOperand->getStartPosition())
@@ -206,7 +207,7 @@ class AssignmentExpressionResolver implements Resolver
 
         if ($leftOperand->postfixExpression instanceof MemberAccessExpression) {
             $rightContext = $rightContext->withType(TypeFactory::array());
-            $this->walkMemberAccessExpression($resolver, $context, $leftOperand->postfixExpression, $rightContext);
+            $this->walkMemberAccessExpression($resolver, $frame, $leftOperand->postfixExpression, $rightContext);
         }
     }
 
@@ -229,7 +230,7 @@ class AssignmentExpressionResolver implements Resolver
     /**
      * @param mixed[] $elements
      */
-    private function walkArrayElements(array $elements, Node $leftOperand, Type $type, NodeContext $context): void
+    private function walkArrayElements(array $elements, Node $leftOperand, Type $type, Frame $frame): void
     {
         $index = -1;
         foreach ($elements as $element) {
@@ -245,7 +246,7 @@ class AssignmentExpressionResolver implements Resolver
                     return;
                 }
                 $accessType = $this->offsetType($type, $index);
-                $this->walkArrayElements($list->children, $leftOperand, $accessType, $context);
+                $this->walkArrayElements($list->children, $leftOperand, $accessType, $frame);
                 continue;
             }
             if (!$elementValue instanceof Variable) {
@@ -270,7 +271,7 @@ class AssignmentExpressionResolver implements Resolver
 
 
             $variableContext = $variableContext->withType($this->offsetType($type, $index));
-            $context->frame()->locals()->set(WorseVariable::fromSymbolContext($variableContext));
+            $frame->locals()->set(WorseVariable::fromSymbolContext($variableContext));
         }
     }
 

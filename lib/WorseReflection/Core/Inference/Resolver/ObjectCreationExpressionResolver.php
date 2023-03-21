@@ -24,7 +24,7 @@ class ObjectCreationExpressionResolver implements Resolver
     {
     }
 
-    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof ObjectCreationExpression);
         if (false === $node->classTypeDesignator instanceof Node) {

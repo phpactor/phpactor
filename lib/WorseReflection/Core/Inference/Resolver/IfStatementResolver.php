@@ -22,7 +22,7 @@ use Phpactor\WorseReflection\Core\Type\NeverType;
 
 class IfStatementResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         $context = NodeContextFactory::forNode($node);
         assert($node instanceof IfStatementNode);

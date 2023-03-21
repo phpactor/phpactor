@@ -3,8 +3,6 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Generator;
-use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
@@ -21,7 +19,7 @@ class NodeContext
      */
     private array $issues = [];
 
-    private Frame $frame;
+    private ?Frame $frame = null;
 
     /**
      * @var NodeContext[]
@@ -35,7 +33,6 @@ class NodeContext
         private ?ReflectionScope $scope = null
     ) {
         $this->typeAssertions = new TypeAssertions([]);
-        $this->frame = new Frame();
     }
 
     public function __toString(): string
@@ -182,7 +179,7 @@ class NodeContext
         return $this;
     }
 
-    public function frame(): Frame
+    public function frame(): ?Frame
     {
         return $this->frame;
     }
@@ -193,10 +190,11 @@ class NodeContext
         return $this;
     }
 
-    public function addChild(NodeContext $context): NodeContext
+    public function addChild(NodeContext $context): self
     {
         $this->children[] = $context;
-        return $context->withFrame($this->frame());
+
+        return $this;
     }
 
     public function range(): ByteOffsetRange
@@ -226,10 +224,5 @@ class NodeContext
             yield $child;
             yield from $child->allDescendantContexts();
         }
-    }
-
-    public function addChildFromNode(Node $node): NodeContext
-    {
-        return $this->addChild(NodeContextFactory::forNode($node));
     }
 }

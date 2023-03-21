@@ -31,16 +31,22 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class BinaryExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof BinaryExpression);
 
         $operator = $node->operator->kind;
 
-        $context = $parentContext->addChildFromNode($node);
+        $context = NodeContextFactory::create(
+            $node->getText(),
+            $node->getStartPosition(),
+            $node->getEndPosition(),
+            [
+            ]
+        );
 
-        $left = $resolver->resolveNode($context, $node->leftOperand);
-        $right = $resolver->resolveNode($context, $node->rightOperand);
+        $left = $resolver->resolveNode($frame, $node->leftOperand);
+        $right = $resolver->resolveNode($frame, $node->rightOperand);
 
         // merge type assertions from left AND right
         $context = $context->withTypeAssertions(
@@ -61,7 +67,7 @@ class BinaryExpressionResolver implements Resolver
         $leftOperand = $node->leftOperand;
         if ($leftOperand instanceof UnaryExpression) {
             $leftOperand = $leftOperand->operand;
-            $left = $resolver->resolveNode($context, $leftOperand);
+            $left = $resolver->resolveNode($frame, $leftOperand);
         }
 
         if (!$leftOperand instanceof Node) {
@@ -94,7 +100,7 @@ class BinaryExpressionResolver implements Resolver
             $operator
         );
 
-        $this->addVariable($operator, $leftOperand, $context);
+        $this->addVariable($operator, $frame, $leftOperand, $context);
 
         return $context;
     }
@@ -281,6 +287,7 @@ class BinaryExpressionResolver implements Resolver
 
     private function addVariable(
         int $operator,
+        Frame $frame,
         Node $leftOperand,
         NodeContext $context
     ): void {
@@ -296,8 +303,6 @@ class BinaryExpressionResolver implements Resolver
         }
 
         $name = NodeUtil::nameFromTokenOrNode($leftOperand, $leftOperand->name);
-
-        // TODO: What is going on here?
         $context = NodeContextFactory::create(
             $name,
             $leftOperand->getStartPosition(),
@@ -307,6 +312,7 @@ class BinaryExpressionResolver implements Resolver
                 'type' => $context->type(),
             ]
         );
-        $context->frame()->locals()->set(PhpactorVariable::fromSymbolContext($context));
+
+        $frame->locals()->set(PhpactorVariable::fromSymbolContext($context));
     }
 }

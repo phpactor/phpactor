@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver;
 
 class SourceFileNodeResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof SourceFileNode);
         $context = NodeContext::none();
