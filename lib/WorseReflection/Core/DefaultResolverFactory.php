@@ -72,6 +72,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ExpressionStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\FunctionLikeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\IfStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
@@ -147,7 +148,7 @@ final class DefaultResolverFactory
             CloneExpression::class => new CloneExpressionResolver(),
             AssignmentExpression::class => new AssignmentExpressionResolver(),
             CastExpression::class => new CastExpressionResolver(),
-            ArrowFunctionCreationExpression::class => new ArrowFunctionCreationExpressionResolver(),
+            ArrowFunctionCreationExpression::class => new FunctionLikeResolver(new ArrowFunctionCreationExpressionResolver()),
             AnonymousFunctionCreationExpression::class => new AnonymousFunctionCreationExpressionResolver(),
             CatchClause::class => new CatchClauseResolver(),
             ForeachStatement::class => new ForeachStatementResolver(),

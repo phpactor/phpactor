@@ -14,11 +14,9 @@ use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
-use Phpactor\WorseReflection\Core\Inference\NodeConte
-use Phpactor\WorseReflection\Core\Inference\Symbol;xt;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -29,7 +27,7 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class FunctionLikeResolver implements Resolver
 {
-    public function __construct(private NodeContextResolver $inner)
+    public function __construct(private ?Resolver $inner = null)
     {
     }
 
@@ -48,14 +46,17 @@ class FunctionLikeResolver implements Resolver
 
         $this->walkFunctionLike($resolver, $frame, $node);
 
-        return $frame;
+        if ($this->inner) {
+            return $this->inner->resolve($resolver, $frame, $node);
+        }
 
+        return NodeContext::none();
     }
 
     /**
      * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression|ArrowFunctionCreationExpression $node
      */
-    private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
+    private function walkFunctionLike(NodeContextResolver $resolver, Frame $frame, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
         $classNode = $node->getFirstAncestor(

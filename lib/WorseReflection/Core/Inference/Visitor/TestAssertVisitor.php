@@ -10,6 +10,8 @@ use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\NodeContextVisitor;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\TypeUtil;
 
 class TestAssertVisitor implements NodeContextVisitor
