@@ -20,8 +20,8 @@ class MemberAccessExpressionResolver implements Resolver
     {
         assert($node instanceof MemberAccessExpression);
 
-        $class = $resolver->resolveNode($frame, $node->dereferencableExpression);
+        $class = $resolver->resolveNode($context, $node->dereferencableExpression);
 
-        return $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $frame, $class->type(), $node);
+        return $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $context, $class->type(), $node);
     }
 }
