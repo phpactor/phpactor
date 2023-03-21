@@ -21,7 +21,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -157,6 +156,7 @@ class VariableResolver implements Resolver
     private function injectDocblockType(NodeContextResolver $resolver, Frame $frame, Variable $node): Frame
     {
         $scope = new PhpactorReflectionScope($resolver->reflector(), $node);
+        dd($varDocType);
         $docblockType = $this->injectVariablesFromComment($resolver, $scope, $frame, $node);
 
         if (null === $docblockType) {
