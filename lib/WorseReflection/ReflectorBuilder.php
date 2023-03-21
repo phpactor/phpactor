@@ -20,7 +20,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflectorFactory;
-use Phpactor\WorseReflection\Core\TestAssertVisitor;
+use Phpactor\WorseReflection\Core\Inference\Visitor\TestAssertVisitor;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Psr\Log\LoggerInterface;
 
