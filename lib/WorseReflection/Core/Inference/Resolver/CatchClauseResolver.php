@@ -4,9 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Variable;
@@ -17,7 +15,6 @@ class CatchClauseResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
-        $context = NodeContextFactory::create('catch', $node->getStartPosition(), $node->getEndPosition());
         assert($node instanceof CatchClause);
 
         /** @phpstan-ignore-next-line Lies */
@@ -26,24 +23,18 @@ class CatchClauseResolver implements Resolver
         }
 
         /** @phpstan-ignore-next-line Lies */
-        $type = $resolver->resolveNode($frame, $node->qualifiedNameList)->type();
+        $type = $resolver->resolveNode($context, $node->qualifiedNameList)->type();
         $variableName = $node->variableName;
 
         if (null === $variableName) {
             return $context;
         }
 
-        $context = NodeContextFactory::create(
+        $context = $context->withSymbolName(
             (string)$variableName->getText($node->getFileContents()),
-            $variableName->getStartPosition(),
-            $variableName->getEndPosition(),
-            [
-                'symbol_type' => Symbol::VARIABLE,
-                'type' => $type,
-            ]
-        );
+        )->withSymbolType(Symbol::VARIABLE)->withType($type);
 
-        $frame->locals()->set(Variable::fromSymbolContext($context));
+        $context->frame()->locals()->set(Variable::fromSymbolContext($context));
 
         return $context;
     }

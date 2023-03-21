@@ -4,9 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CastExpression;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -21,15 +19,7 @@ class CastExpressionResolver implements Resolver
         $type = NodeUtil::nameFromTokenOrNode($node, $node->castType);
         $type = rtrim(ltrim($type, '('), ')');
         $type = TypeFactory::fromStringWithReflector($type, $resolver->reflector());
-
-        $context = NodeContextFactory::create(
-            'cast',
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'type' => $type,
-            ]
-        );
+        $context = $context->withType($type);
 
         if (!in_array($type->__toString(), [
             'string',
