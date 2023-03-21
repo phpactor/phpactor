@@ -24,6 +24,7 @@ class TestAssertVisitor implements NodeContextVisitor
 
     public function visit(NodeContext $context): NodeContext
     {
+        dd('fuck');
         if (!$context instanceof FunctionCallContext) {
             return $context;
         }

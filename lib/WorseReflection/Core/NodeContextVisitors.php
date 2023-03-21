@@ -37,7 +37,6 @@ class NodeContextVisitors
             }
         }
 
-        /** @phpstan-ignore-next-line */
-        return new self($visitors);
+        return new self($byClass);
     }
 }
