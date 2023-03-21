@@ -39,7 +39,7 @@ class NodeContextResolver
         try {
             return $this->doResolveNodeWithCache($frame, $node);
         } catch (CouldNotResolveNode $couldNotResolveNode) {
-            throw $couldNotResolveNode;
+            return NodeContext::none();
         }
     }
 
