@@ -26,6 +26,12 @@ class ClassLikeResolver implements Resolver
             $node instanceof InterfaceDeclaration
         );
 
+        if ($node instanceof ClassDeclaration) {
+            foreach ($node->classMembers->classMemberDeclarations as $classMember) {
+                $resolver->resolveNode($frame, $classMember);
+            }
+        }
+
         return NodeContextFactory::create(
             (string)$node->name->getText((string)$node->getFileContents()),
             $node->name->getStartPosition(),
