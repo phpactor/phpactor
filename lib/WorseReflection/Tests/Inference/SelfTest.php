@@ -14,7 +14,8 @@ class SelfTest extends IntegrationTestCase
     {
         $source = (string)file_get_contents($path);
         $reflector = $this->createBuilder($source)->enableCache()->build();
-        $reflector->reflectOffset($source, mb_strlen($source));
+        $reflected = $reflector->reflectOffset($source, mb_strlen($source));
+        dump($reflected->nodeContext()->__toString());
 
         // the wrAssertType function in the source code will cause
         // an exception to be thrown if it fails

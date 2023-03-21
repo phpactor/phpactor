@@ -50,6 +50,7 @@ class ServiceLocator
      * @param ReflectionMemberProvider[] $methodProviders
      * @param DiagnosticProvider[] $diagnosticProviders
      * @param MemberContextResolver[] $memberContextResolvers
+     * @param NodeContextVisitor[] $nodeContextVisitors
      */
     public function __construct(
         SourceCodeLocator $sourceLocator,
@@ -60,7 +61,8 @@ class ServiceLocator
         private array $diagnosticProviders,
         private array $memberContextResolvers,
         Cache $cache,
-        bool $enableContextualLocation = false
+        bool $enableContextualLocation = false,
+        private array $nodeContextVisitors,
     ) {
         $sourceReflector = $reflectorFactory->create($this);
 
@@ -136,6 +138,7 @@ class ServiceLocator
                     $this->memberContextResolvers
                 )
             ))->createResolvers(),
+            NodeContextVisitors::fromVisitors(...$this->nodeContextVisitors)
         );
     }
 

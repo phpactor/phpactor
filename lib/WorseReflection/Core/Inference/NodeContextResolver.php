@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
+use Phpactor\WorseReflection\Core\NodeContextVisitors;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Psr\Log\LoggerInterface;
@@ -22,7 +23,8 @@ class NodeContextResolver
         private DocBlockFactory $docblockFactory,
         private LoggerInterface $logger,
         private Cache $cache,
-        private array $resolverMap = []
+        private array $resolverMap = [],
+        private NodeContextVisitors $visitors
     ) {
     }
 
@@ -91,7 +93,11 @@ class NodeContextResolver
 
         if (isset($this->resolverMap[get_class($node)])) {
             $resolver = $this->resolverMap[get_class($node)];
-            return $resolver->resolve($this, $frame, $node);
+            $context = $resolver->resolve($this, $frame, $node);
+            foreach ($this->visitors->visitorsFor(get_class($node)) as $visitor) {
+                $context = $visitor->visit($context);
+            }
+            return $context;
         }
 
         throw new CouldNotResolveNode(sprintf(

@@ -6,6 +6,7 @@ use Phpactor\TestUtils\Workspace;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
+use Phpactor\WorseReflection\Core\TestAssertVisitor;
 use Phpactor\WorseReflection\Reflector;
 use PHPUnit\Framework\TestCase;
 use Microsoft\PhpParser\Parser;
@@ -28,6 +29,7 @@ class IntegrationTestCase extends TestCase
             ->addSource($source)
             ->addMemberProvider(new DocblockMemberProvider())
             ->addFrameWalker(new TestAssertWalker($this))
+            ->addNodeContextVisitor(new TestAssertVisitor($this))
             ->withLogger($this->logger());
     }
 

@@ -29,13 +29,13 @@ class TestAssertVisitor implements NodeContextVisitor
         return [CallExpression::class];
     }
 
-    public function exit(NodeContext $context, Node $node): NodeContext
+    public function visit(NodeContext $context): NodeContext
     {
         if (!$context instanceof FunctionCallContext) {
             return $context;
         }
 
-        $name = $node->callableExpression->getText();
+        $name = $context->function()->name()->short();
         $frame = $context->frame() ?? new Frame();
 
         if ($name === 'wrFrame') {

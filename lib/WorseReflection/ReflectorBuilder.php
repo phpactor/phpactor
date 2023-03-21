@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
+use Phpactor\WorseReflection\Core\NodeContextVisitor;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
@@ -19,6 +20,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflectorFactory;
+use Phpactor\WorseReflection\Core\TestAssertVisitor;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Psr\Log\LoggerInterface;
 
@@ -65,6 +67,11 @@ final class ReflectorBuilder
      * @var MemberContextResolver[]
      */
     private array $memberContextResolvers = [];
+
+    /**
+     * @var NodeContextVisitor[]
+     */
+    private array $visitors = [];
 
     /**
      * Create a new instance of the builder
@@ -145,7 +152,8 @@ final class ReflectorBuilder
             $this->diagnosticProviders,
             $this->memberContextResolvers,
             $this->buildCache(),
-            $this->enableContextualSourceLocation
+            $this->enableContextualSourceLocation,
+            $this->visitors,
         ))->reflector();
     }
 
@@ -243,5 +251,12 @@ final class ReflectorBuilder
         }
 
         return new NullCache();
+    }
+
+    public function addNodeContextVisitor(NodeContextVisitor $visitor): self
+    {
+        $this->visitors[] = $visitor;
+
+        return $this;
     }
 }
