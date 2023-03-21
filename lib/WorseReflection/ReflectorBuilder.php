@@ -152,8 +152,8 @@ final class ReflectorBuilder
             $this->diagnosticProviders,
             $this->memberContextResolvers,
             $this->buildCache(),
-            $this->enableContextualSourceLocation,
             $this->visitors,
+            $this->enableContextualSourceLocation,
         ))->reflector();
     }
 

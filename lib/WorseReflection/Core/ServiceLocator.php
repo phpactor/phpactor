@@ -61,8 +61,8 @@ class ServiceLocator
         private array $diagnosticProviders,
         private array $memberContextResolvers,
         Cache $cache,
-        bool $enableContextualLocation = false,
         private array $nodeContextVisitors,
+        bool $enableContextualLocation = false,
     ) {
         $sourceReflector = $reflectorFactory->create($this);
 
