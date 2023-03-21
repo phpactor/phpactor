@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Generator;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -225,5 +226,14 @@ class NodeContext
             yield $child;
             yield from $child->allDescendantContexts();
         }
+    }
+
+    /**
+     * Replace the default context with a customised implementation.
+     * This method will enforce frame consistency and other constraints.
+     */
+    public function replace(NodeContext $nodeContext): NodeContext
+    {
+        return $nodeContext->withFrame($this->frame());
     }
 }

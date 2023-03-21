@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -20,23 +19,25 @@ class MethodDeclarationResolver implements Resolver
     {
         assert($node instanceof MethodDeclaration);
 
-
         $classNode = NodeUtil::nodeContainerClassLikeDeclaration($node);
-        $classSymbolContext = $resolver->resolveNode($frame, $classNode);
+        if (null === $classNode) {
+            return $context;
+        }
+        $classSymbolContext = $resolver->resolveNode($context, $classNode);
 
-        $resolver->resolveNode($frame, $node->compoundStatementOrSemicolon);
+        $resolver->resolveNode($context, $node->compoundStatementOrSemicolon);
 
-        return new MemberDeclarationContext(
+        return $context->replace(new MemberDeclarationContext(
             Symbol::fromTypeNameAndPosition(
                 Symbol::METHOD,
-                (string)$node->name->getText($node->getFileContents()),
+                (string)$node->name?->getText($node->getFileContents()),
                 ByteOffsetRange::fromInts(
-                    $node->name->getStartPosition(),
-                    $node->name->getEndPosition()
+                    $node->name?->getStartPosition() ?? $node->getStartPosition(),
+                    $node->name?->getEndPosition() ?? $node->getEndPosition()
                 )
             ),
             TypeFactory::unknown(),
             $classSymbolContext->type()
-        );
+        ));
     }
 }
