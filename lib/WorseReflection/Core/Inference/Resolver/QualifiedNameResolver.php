@@ -40,7 +40,7 @@ class QualifiedNameResolver implements Resolver
 
         $parent = $node->parent;
         if ($parent instanceof CallExpression) {
-            return $this->resolveContextFromCall($resolver, $frame, $parent, $node);
+            return $this->resolveContextFromCall($resolver, $context, $parent, $node);
         }
 
 
@@ -112,7 +112,7 @@ class QualifiedNameResolver implements Resolver
 
     private function resolveContextFromCall(
         NodeContextResolver $resolver,
-        Frame $frame,
+        NodeContext $context,
         CallExpression $parent,
         QualifiedName $node
     ): NodeContext {
@@ -137,15 +137,15 @@ class QualifiedNameResolver implements Resolver
 
         $arguments = FunctionArguments::fromList(
             $resolver,
-            $frame,
+            $context,
             $parent->argumentExpressionList
         );
-        $context = FunctionCallContext::create($name, $range, $function, $arguments);
+        $context = $context->replace(FunctionCallContext::create($name, $range, $function, $arguments));
 
         $stub = $this->registry->get($name->short());
 
         if ($stub) {
-            return $stub->resolve($frame, $context, $arguments);
+            return $stub->resolve($context, $arguments);
         }
 
         // the function may have been resolved to a global, so create

@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\UseVariableName;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -17,11 +16,11 @@ class UseVariableNameResolver implements Resolver
         assert($node instanceof UseVariableName);
         $name = (string)$node->getName();
 
-        return NodeContextFactory::forVariableAt(
-            $frame,
+        return $context->replace(NodeContextFactory::forVariableAt(
+            $context->frame(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             $name
-        );
+        ));
     }
 }

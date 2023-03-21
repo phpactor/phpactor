@@ -14,10 +14,9 @@ class SourceFileNodeResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof SourceFileNode);
-        $context = NodeContext::none();
 
         foreach ($node->statementList as $statement) {
-            $context->addChild($resolver->resolveNode($frame, $statement));
+            $resolver->resolveNode($context, $statement);
         }
 
         return $context;

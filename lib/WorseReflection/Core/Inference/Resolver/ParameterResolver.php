@@ -11,9 +11,7 @@ use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -35,11 +33,11 @@ class ParameterResolver implements Resolver
         );
 
         if ($method instanceof MethodDeclaration) {
-            return $this->resolveParameterFromMethodReflection($resolver->reflector(), $method, $node);
+            return $this->resolveParameterFromMethodReflection($context, $resolver->reflector(), $method, $node);
         }
 
         if ($method instanceof FunctionDeclaration) {
-            return $this->resolveParameterFromFunctionReflection($resolver->reflector(), $method, $node);
+            return $this->resolveParameterFromFunctionReflection($context, $resolver->reflector(), $method, $node);
         }
 
         $typeDeclaration = $node->typeDeclarationList;
@@ -54,18 +52,15 @@ class ParameterResolver implements Resolver
             $type = TypeFactory::nullable($type);
         }
 
-        return NodeContextFactory::create(
-            (string)$node->variableName->getText($node->getFileContents()),
-            $node->variableName->getStartPosition(),
-            $node->variableName->getEndPosition(),
-            [
-                'symbol_type' => Symbol::VARIABLE,
-                'type' => $type,
-            ]
-        );
+        return $context
+            ->withSymbolName(
+                (string)$node->variableName->getText($node->getFileContents()),
+            )
+            ->withSymbolType(Symbol::VARIABLE)
+            ->withType($type);
     }
 
-    private function resolveParameterFromFunctionReflection(Reflector $reflector, FunctionDeclaration $function, Parameter $node): NodeContext
+    private function resolveParameterFromFunctionReflection(NodeContext $context, Reflector $reflector, FunctionDeclaration $function, Parameter $node): NodeContext
     {
         $name = $function->getNamespacedName();
 
@@ -87,19 +82,20 @@ class ParameterResolver implements Resolver
             ), 0, $notFound);
         }
 
-        return NodeContextFactory::create(
-            (string)$node->variableName->getText($node->getFileContents()),
-            $node->variableName->getStartPosition(),
-            $node->variableName->getEndPosition(),
-            [
-                'symbol_type' => Symbol::VARIABLE,
-                'type' => $parameter->inferredType(),
-            ]
-        );
+        return $context
+            ->withSymbolName(
+                (string)$node->variableName->getText($node->getFileContents()),
+            )
+            ->withSymbolType(Symbol::VARIABLE)
+            ->withType($parameter->inferredType());
     }
 
-    private function resolveParameterFromMethodReflection(Reflector $reflector, MethodDeclaration $method, Parameter $node): NodeContext
-    {
+    private function resolveParameterFromMethodReflection(
+        NodeContext $context,
+        Reflector $reflector,
+        MethodDeclaration $method,
+        Parameter $node
+    ): NodeContext {
         $class = NodeUtil::nodeContainerClassLikeDeclaration($node);
 
         if (null === $class) {
@@ -145,15 +141,12 @@ class ParameterResolver implements Resolver
 
         $reflectionParameter = $reflectionMethod->parameters()->get($node->getName());
 
-        return NodeContextFactory::create(
-            (string)$node->variableName->getText($node->getFileContents()),
-            $node->variableName->getStartPosition(),
-            $node->variableName->getEndPosition(),
-            [
-                'symbol_type' => Symbol::VARIABLE,
-                'type' => $reflectionParameter->inferredType(),
-                'container_type' => $reflectionClass->type(),
-            ]
-        );
+        return $context
+            ->withSymbolName(
+                (string)$node->variableName->getText($node->getFileContents()),
+            )
+            ->withSymbolType(Symbol::VARIABLE)
+            ->withType($reflectionParameter->inferredType())
+            ->withContainerType($reflectionClass->type());
     }
 }

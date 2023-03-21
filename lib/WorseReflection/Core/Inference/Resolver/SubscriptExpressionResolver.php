@@ -18,7 +18,7 @@ class SubscriptExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof SubscriptExpression);
-        $info = $resolver->resolveNode($frame, $node->postfixExpression);
+        $info = $resolver->resolveNode($context, $node->postfixExpression);
 
         if (null === $node->accessExpression) {
             $info = $info->withIssue(sprintf(
@@ -53,7 +53,7 @@ class SubscriptExpressionResolver implements Resolver
         }
 
         if ($node instanceof StringLiteral) {
-            $string = $resolver->resolveNode($frame, $node);
+            $string = $resolver->resolveNode($context, $node);
 
             $type = $arrayLiteralType->typeAtOffset(TypeUtil::valueOrNull($string->type()));
             if (($type->isDefined())) {

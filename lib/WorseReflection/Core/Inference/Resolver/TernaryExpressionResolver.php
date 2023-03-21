@@ -16,7 +16,7 @@ class TernaryExpressionResolver implements Resolver
     {
         assert($node instanceof TernaryExpression);
 
-        $condition = $resolver->resolveNode($frame, $node->condition);
+        $condition = $resolver->resolveNode($context, $node->condition);
         $context = NodeContextFactory::create('trinary', $node->getStartPosition(), $node->getEndPosition());
         $left = NodeContext::none();
         $right = NodeContext::none();
@@ -24,8 +24,8 @@ class TernaryExpressionResolver implements Resolver
 
         /** @phpstan-ignore-next-line */
         if ($node->ifExpression) {
-            $frame->applyTypeAssertions($condition->typeAssertions(), $node->ifExpression->getStartPosition());
-            $left = $resolver->resolveNode($frame, $node->ifExpression);
+            $context->frame()->applyTypeAssertions($condition->typeAssertions(), $node->ifExpression->getStartPosition());
+            $left = $resolver->resolveNode($context, $node->ifExpression);
         }
 
         /** @phpstan-ignore-next-line */
@@ -35,8 +35,8 @@ class TernaryExpressionResolver implements Resolver
 
         /** @phpstan-ignore-next-line */
         if ($node->elseExpression) {
-            $frame->applyTypeAssertions($condition->typeAssertions()->negate(), $node->elseExpression->getStartPosition());
-            $right = $resolver->resolveNode($frame, $node->elseExpression);
+            $context->frame()->applyTypeAssertions($condition->typeAssertions()->negate(), $node->elseExpression->getStartPosition());
+            $right = $resolver->resolveNode($context, $node->elseExpression);
         }
 
         $empty = $condition->type()->isEmpty();

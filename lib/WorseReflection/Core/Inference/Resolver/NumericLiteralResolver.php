@@ -4,9 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NumericLiteral;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -22,15 +20,13 @@ class NumericLiteralResolver implements Resolver
 
         $type = TypeFactory::fromNumericString($node->getText());
         assert($type instanceof Literal);
-        return NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'symbol_type' => Symbol::NUMBER,
-                'type' => $type,
-                'container_type' => NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node),
-            ]
-        );
+        return $context
+            ->withSymbolName($node->getText())
+            ->withSymbolType(Symbol::NUMBER)
+            ->withType($type)
+            ->withContainerType(
+                NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node)
+            );
     }
+
 }

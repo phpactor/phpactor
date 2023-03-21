@@ -33,14 +33,14 @@ class VariableResolver implements Resolver
     {
         assert($node instanceof Variable);
 
-        $this->injectDocblockType($resolver, $frame, $node);
+        $this->injectDocblockType($resolver, $context->frame(), $node);
 
         if ($node->getFirstAncestor(PropertyDeclaration::class)) {
             return $this->resolvePropertyVariable($resolver, $node);
         }
 
         if ($node->name instanceof BracedExpression) {
-            return $resolver->resolveNode($frame, $node->name->expression);
+            return $resolver->resolveNode($context, $node->name->expression);
         }
 
         $parent = $node->parent;
@@ -52,13 +52,13 @@ class VariableResolver implements Resolver
             $parent instanceof ScopedPropertyAccessExpression &&
             $parent->memberName === $node
         ) {
-            $containerType = $resolver->resolveNode($frame, $parent->scopeResolutionQualifier);
+            $containerType = $resolver->resolveNode($context, $parent->scopeResolutionQualifier);
             $access =  $this->resolveStaticPropertyAccess($resolver, $containerType->type(), $node);
             return $access;
         }
 
         $variableName = $node->getText();
-        $variables = $frame->locals()->byName($variableName);
+        $variables = $context->frame()->locals()->byName($variableName);
 
         // special handling for assignments
         if ($assignment = $node->getFirstAncestor(AssignmentExpression::class)) {
@@ -79,7 +79,7 @@ class VariableResolver implements Resolver
 
 
         $context = NodeContextFactory::forVariableAt(
-            $frame,
+            $context->frame(),
             $node->getStartPosition(),
             $node->getEndPosition(),
             $variableName
@@ -92,11 +92,11 @@ class VariableResolver implements Resolver
             fn (Type $type) => TypeCombinator::intersection(TypeFactory::unionEmpty(), $type),
         ))->withType($type);
 
-        $varDocType = $frame->varDocBuffer()->yank($variableName);
+        $varDocType = $context->frame()->varDocBuffer()->yank($variableName);
 
         if (null !== $varDocType) {
             $context = $context->withType($varDocType);
-            $this->applyVarDoc($context, $frame, $varDocType);
+            $this->applyVarDoc($context, $context->frame(), $varDocType);
         }
 
         return $context;

@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -32,7 +31,7 @@ class ObjectCreationExpressionResolver implements Resolver
         }
 
 
-        $classContext = $resolver->resolveNode($frame, $node->classTypeDesignator);
+        $classContext = $resolver->resolveNode($context, $node->classTypeDesignator);
         $classType = $classContext->type();
 
         if ($classType instanceof ClassStringType) {
@@ -43,14 +42,14 @@ class ObjectCreationExpressionResolver implements Resolver
         }
 
         if ($classType instanceof ClassType) {
-            return $classContext->withType($this->resolveClassType($resolver, $frame, $node, $classType));
+            return $classContext->withType($this->resolveClassType($resolver, $context, $node, $classType));
         }
 
 
         return $classContext;
     }
 
-    private function resolveClassType(NodeContextResolver $resolver, Frame $frame, ObjectCreationExpression $node, ClassType $classType): Type
+    private function resolveClassType(NodeContextResolver $resolver, NodeContext $context, ObjectCreationExpression $node, ClassType $classType): Type
     {
         try {
             $reflection = $resolver->reflector()->reflectClass($classType->name());
@@ -66,7 +65,7 @@ class ObjectCreationExpressionResolver implements Resolver
             return $classType;
         }
 
-        $arguments = FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
+        $arguments = FunctionArguments::fromList($resolver, $context, $node->argumentExpressionList);
         $templateMap = $this->resolver->mergeParameters(
             $templateMap,
             $reflection->methods()->get('__construct')->parameters(),

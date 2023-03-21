@@ -14,6 +14,6 @@ class ParenthesizedExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof ParenthesizedExpression);
-        return $resolver->resolveNode($frame, $node->expression);
+        return $resolver->resolveNode($context, $node->expression);
     }
 }

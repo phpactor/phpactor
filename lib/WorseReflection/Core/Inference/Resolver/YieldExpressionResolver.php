@@ -21,7 +21,7 @@ class YieldExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof YieldExpression);
-        $context = NodeContextFactory::forNode($node);
+		$frame = $context->frame();
 
         $arrayElement = $node->arrayElement;
         /** @var Token */
@@ -35,15 +35,15 @@ class YieldExpressionResolver implements Resolver
 
         $key = new MissingType();
         if ($arrayElement->elementKey) {
-            $key = $resolver->resolveNode($frame, $arrayElement->elementKey)->type();
+            $key = $resolver->resolveNode($context, $arrayElement->elementKey)->type();
         }
         $value = new MissingType();
         /** @phpstan-ignore-next-line No trust */
         if ($arrayElement->elementValue) {
-            $value = $resolver->resolveNode($frame, $arrayElement->elementValue)->type();
+            $value = $resolver->resolveNode($context, $arrayElement->elementValue)->type();
 
             if ($yieldFrom) {
-                $frame->setReturnType($value);
+                $context->frame()->setReturnType($value);
                 return $context;
             }
 
@@ -61,11 +61,11 @@ class YieldExpressionResolver implements Resolver
                 $returnType = $returnType->withKey($returnType->keyType()->addType($key));
             }
 
-            $frame->setReturnType($returnType);
+            $context->frame()->setReturnType($returnType);
             return $context;
         }
 
-        $frame->setReturnType(
+        $context->frame()->setReturnType(
             TypeFactory::generator(
                 $resolver->reflector(),
                 $key,

@@ -27,11 +27,11 @@ class ScopedPropertyAccessResolver implements Resolver
 
         $name = null;
         if ($node->scopeResolutionQualifier instanceof Variable) {
-            $context = $resolver->resolveNode(
-                $frame,
+            $scopeResContext = $resolver->resolveNode(
+                $context,
                 $node->scopeResolutionQualifier
             );
-            $type = $context->type();
+            $type = $scopeResContext->type();
             if ($type instanceof ClassType) {
                 $name = $type->name->__toString();
             }
@@ -43,6 +43,6 @@ class ScopedPropertyAccessResolver implements Resolver
 
         $classType = $this->nodeTypeConverter->resolve($node, (string)$name);
 
-        return $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $frame, $classType, $node);
+        return $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $context, $classType, $node);
     }
 }

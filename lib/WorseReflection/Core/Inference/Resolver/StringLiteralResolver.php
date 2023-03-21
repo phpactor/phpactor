@@ -5,9 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Token;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -21,16 +19,8 @@ class StringLiteralResolver implements Resolver
         assert($node instanceof StringLiteral);
         // TODO: [TP] tolerant parser method returns the quotes
         $value = (string) $this->getStringContentsText($node);
-        return NodeContextFactory::create(
-            'string',
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'symbol_type' => Symbol::STRING,
-                'type' => TypeFactory::stringLiteral($value),
-                'container_type' => NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node),
-            ]
-        );
+        return $context->withSymbolType(Symbol::STRING)->withType(TypeFactory::stringLiteral($value))
+            ->withContainerType(NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node));
     }
 
     private function getStringContentsText(StringLiteral $node): string

@@ -21,19 +21,13 @@ class UnaryOpExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof UnaryExpression);
-        $operand = $resolver->resolveNode($frame, $node->operand);
+        $operand = $resolver->resolveNode($context, $node->operand);
 
         // see sister hack in BinaryExpressionResolver
         // https://github.com/Microsoft/tolerant-php-parser/issues/19
         $doubleNegate = $this->shouldDoubleNegate($node);
 
-        $context = NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-            ]
-        )->withTypeAssertions(
+        $context->withTypeAssertions(
             $operand->typeAssertions()
         )->withType($operand->type());
         $operatorKind = NodeUtil::operatorKindForUnaryExpression($node);

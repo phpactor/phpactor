@@ -17,7 +17,7 @@ class PostfixUpdateExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof PostfixUpdateExpression);
-        $variable = $resolver->resolveNode($frame, $node->operand);
+        $variable = $resolver->resolveNode($context, $node->operand);
         $type = $variable->type();
         if ($type instanceof NumericType && $type instanceof Literal) {
             $value = $type->value();

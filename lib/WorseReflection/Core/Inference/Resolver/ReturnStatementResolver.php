@@ -14,15 +14,15 @@ class ReturnStatementResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
-        $context = NodeContextFactory::forNode($node);
         assert($node instanceof ReturnStatement);
 
         if (!$node->expression) {
             return $context;
         }
 
-        $type = $resolver->resolveNode($frame, $node->expression)->type();
+        $type = $resolver->resolveNode($context, $node->expression)->type();
         $context = $context->withType($type);
+        $frame = $context->frame();
 
         if ($frame->returnType()->isVoid()) {
             $frame->setReturnType($type);
