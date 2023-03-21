@@ -8,7 +8,6 @@ use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
@@ -28,12 +27,12 @@ class CallExpressionResolver implements Resolver
         assert($node instanceof CallExpression);
         $resolvableNode = $node->callableExpression;
 
-        $context = $resolver->resolveNode($frame, $resolvableNode);
-        $returnType = $context->type();
-        $containerType = $context->containerType();
+        $resolvableContext = $resolver->resolveNode($context, $resolvableNode);
+        $returnType = $resolvableContext->type();
+        $containerType = $resolvableContext->containerType();
 
         if ($returnType instanceof ConditionalType) {
-            $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $frame, $node);
+            $resolvableContext = $this->processConditionalType($returnType, $containerType, $resolvableContext, $resolver, $node);
         }
 
         if ($resolvableNode instanceof ParenthesizedExpression && $returnType instanceof ReflectedClassType && $returnType->isInvokable()) {
@@ -47,7 +46,7 @@ class CallExpressionResolver implements Resolver
         }
 
         if (!$resolvableNode instanceof Variable) {
-            return $context;
+            return $resolvableContext;
         }
 
         if ($returnType instanceof ReflectedClassType && $returnType->isInvokable()) {
@@ -74,7 +73,6 @@ class CallExpressionResolver implements Resolver
         Type $containerType,
         NodeContext $context,
         NodeContextResolver $resolver,
-        Frame $frame,
         CallExpression $node
     ): NodeContext {
         if ($containerType instanceof ReflectedClassType) {
@@ -85,22 +83,24 @@ class CallExpressionResolver implements Resolver
             $method = $reflection->methods()->get($context->symbol()->name());
             return $context->withType($type->evaluate(
                 $method,
-                FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
+                FunctionArguments::fromList($resolver, $context, $node->argumentExpressionList)
             ));
         }
 
         if ($context->symbol()->symbolType() === Symbol::FUNCTION) {
             $function = $resolver->reflector()->reflectFunction($context->symbol()->name());
+            $args = FunctionArguments::fromList($resolver, $context, $node->argumentExpressionList);
             return (new FunctionCallContext(
                 $context->symbol(),
                 ByteOffsetRange::fromInts(
                     $node->getStartPosition(),
                     $node->getEndPosition()
                 ),
-                $function
+                $function,
+                $args
             ))->withType($type->evaluate(
                 $function,
-                FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
+                $args
             ));
         }
 

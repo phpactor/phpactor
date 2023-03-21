@@ -28,14 +28,14 @@ class FunctionArguments implements IteratorAggregate, Countable
         }, iterator_to_array($this->getIterator())));
     }
 
-    public static function fromList(NodeContextResolver $resolver, Frame $frame, ?ArgumentExpressionList $list): self
+    public static function fromList(NodeContextResolver $resolver, NodeContext $parentContext, ?ArgumentExpressionList $list): self
     {
         if ($list === null) {
             return new self([]);
         }
 
-        return new self(array_map(function (ArgumentExpression $node) use ($resolver, $frame): NodeContext {
-            return $resolver->resolveNode($frame, $node);
+        return new self(array_map(function (ArgumentExpression $node) use ($resolver, $parentContext): NodeContext {
+            return $resolver->resolveNode($parentContext, $node);
         }, array_values(array_filter(
             $list->children,
             fn ($nodeOrToken) => $nodeOrToken instanceof ArgumentExpression
