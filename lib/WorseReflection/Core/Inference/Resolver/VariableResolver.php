@@ -8,6 +8,8 @@ use Microsoft\PhpParser\Node\Expression\BracedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope as PhpactorReflectionScope;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
@@ -19,6 +21,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -29,6 +32,8 @@ class VariableResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof Variable);
+
+        $this->injectDocblockType($resolver, $frame, $node);
 
         if ($node->getFirstAncestor(PropertyDeclaration::class)) {
             return $this->resolvePropertyVariable($resolver, $node);
@@ -147,5 +152,54 @@ class VariableResolver implements Resolver
             return;
         }
         $frame->locals()->set(PhpactorVariable::fromSymbolContext($context));
+    }
+
+    private function injectDocblockType(NodeContextResolver $resolver, Frame $frame, Variable $node): Frame
+    {
+        $scope = new PhpactorReflectionScope($resolver->reflector(), $node);
+        $docblockType = $this->injectVariablesFromComment($resolver, $scope, $frame, $node);
+
+        if (null === $docblockType) {
+            return $frame;
+        }
+
+        if (!$node instanceof Variable) {
+            return $frame;
+        }
+
+        $token = $node->name;
+        if (false === $token instanceof Token) {
+            return $frame;
+        }
+
+        $name = (string)$token->getText($node->getFileContents());
+        $frame->varDocBuffer()->set($name, $docblockType);
+
+        return $frame;
+    }
+
+    private function injectVariablesFromComment(NodeContextResolver $resolver, PhpactorReflectionScope $scope, Frame $frame, Node $node): ?Type
+    {
+        $comment = $node->getLeadingCommentAndWhitespaceText();
+        $docblock = $resolver->docblockFactory()->create($comment, $scope);
+
+        if (false === $docblock->isDefined()) {
+            return null;
+        }
+
+        $vars = $docblock->vars();
+        $resolvedTypes = [];
+
+        foreach ($docblock->vars() as $var) {
+            $type = $var->type();
+
+            if (empty($var->name())) {
+                return $type;
+            }
+
+            $frame->varDocBuffer()->set('$' . $var->name(), $type);
+        }
+
+        return null;
     }
 }

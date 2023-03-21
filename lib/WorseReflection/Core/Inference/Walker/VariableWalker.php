@@ -14,6 +14,9 @@ use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope as PhpactorReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
 
+/**
+ * @deprecated replaced by VariableResolver
+ */
 class VariableWalker implements Walker
 {
     public function __construct(private DocBlockFactory $docblockFactory)
