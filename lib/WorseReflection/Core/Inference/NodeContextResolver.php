@@ -39,8 +39,7 @@ class NodeContextResolver
         try {
             return $this->doResolveNodeWithCache($frame, $node);
         } catch (CouldNotResolveNode $couldNotResolveNode) {
-            return NodeContextFactory::forNode($node)
-                ->withIssue($couldNotResolveNode->getMessage());
+            throw $couldNotResolveNode;
         }
     }
 
@@ -91,7 +90,8 @@ class NodeContextResolver
         $this->logger->debug(sprintf('Resolving: %s', get_class($node)));
 
         if (isset($this->resolverMap[get_class($node)])) {
-            return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
+            $resolver = $this->resolverMap[get_class($node)];
+            return $resolver->resolve($this, $frame, $node);
         }
 
         throw new CouldNotResolveNode(sprintf(

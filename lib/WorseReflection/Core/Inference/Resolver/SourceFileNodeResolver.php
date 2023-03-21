@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -12,6 +13,13 @@ class SourceFileNodeResolver implements Resolver
 {
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
-        return NodeContext::none();
+        assert($node instanceof SourceFileNode);
+        $context = NodeContext::none();
+
+        foreach ($node->statementList as $statement) {
+            $context->addChild($resolver->resolveNode($frame, $statement));
+        }
+
+        return $context;
     }
 }
