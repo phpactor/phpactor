@@ -2,12 +2,15 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use PHPUnit\Framework\TestCase;
+use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\TypeUtil;
 
 class TestAssertVisitor implements NodeContextVisitor
 {
@@ -24,7 +27,6 @@ class TestAssertVisitor implements NodeContextVisitor
 
     public function visit(NodeContext $context): NodeContext
     {
-        dd('fuck');
         if (!$context instanceof FunctionCallContext) {
             return $context;
         }
@@ -68,22 +70,26 @@ class TestAssertVisitor implements NodeContextVisitor
 
     private function assertType(FunctionCallContext $context): void
     {
-        $list = $node->argumentExpressionList->getElements();
-        $args = [];
-        $exprs = [];
-        foreach ($list as $expression) {
-            if (!$expression instanceof ArgumentExpression) {
-                continue;
-            }
-
-            $args[] = $resolver->resolveNode($frame, $expression);
-            $exprs[] = $expression;
-        }
-
         // get string to compare against
-        $expectedType = $args[0]->type();
-        $actualType = $args[1]->type();
+        $expectedType = $context->arguments()->at(0)->type();
+        $actualType = $context->arguments()->at(1)->type();
         $this->assertionCount++;
-        $this->assertTypeIs($node, $actualType, $expectedType, $args[2]??null);
+        $this->assertTypeIs($context, $actualType, $expectedType, $context->arguments()->at(2) ??null);
+    }
+
+    private function assertTypeIs(NodeContext $functionCallContext, Type $actualType, Type $expectedType, ?NodeContext $message = null): void
+    {
+        $message = isset($message) ? TypeUtil::valueOrNull($message->type()) : null;
+        if ($actualType->__toString() === TypeUtil::valueOrNull($expectedType)) {
+            $this->testCase->addToAssertionCount(1);
+            return;
+        }
+        $this->testCase->fail(sprintf(
+            "%s: \n\n  %s\n\nis:\n\n  %s\n\non offset %s",
+            $message ?: 'Failed asserting that:',
+            $actualType->__toString(),
+            trim($expectedType->__toString(), '"'),
+            $functionCallContext->range()->start()->toInt(),
+        ));
     }
 }
