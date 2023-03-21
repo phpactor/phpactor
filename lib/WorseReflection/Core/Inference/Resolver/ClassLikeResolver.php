@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ClassLikeResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
     {
         assert(
             $node instanceof ClassDeclaration ||

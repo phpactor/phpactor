@@ -3,8 +3,8 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -14,27 +14,25 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class ArrayCreationExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
     {
         assert($node instanceof ArrayCreationExpression);
 
         $array  = [];
 
+        $context = $parentContext->addChildFromNode($node);
+
         if (null === $node->arrayElements) {
-            return NodeContextFactory::create(
-                $node->getText(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                [
-                    'type' => TypeFactory::arrayLiteral([]),
-                ]
-            );
+            return $context->withType(TypeFactory::arrayLiteral([]));
         }
 
+        /**
+         * @var ArrayElement $element
+         */
         foreach ($node->arrayElements->getElements() as $element) {
-            $value = $resolver->resolveNode($frame, $element->elementValue)->type();
+            $value = $resolver->resolveNode($context, $element->elementValue)->type();
             if ($element->elementKey) {
-                $key = $resolver->resolveNode($frame, $element->elementKey)->type();
+                $key = $resolver->resolveNode($context, $element->elementKey)->type();
                 $keyValue = TypeUtil::valueOrNull($key);
                 if (null === $keyValue) {
                     continue;
@@ -46,13 +44,6 @@ class ArrayCreationExpressionResolver implements Resolver
             $array[] = $value;
         }
 
-        return NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'type' => TypeFactory::arrayLiteral($array),
-            ]
-        );
+        return $context->withType(TypeFactory::arrayLiteral($array));
     }
 }

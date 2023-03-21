@@ -23,17 +23,17 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CallExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
     {
         assert($node instanceof CallExpression);
         $resolvableNode = $node->callableExpression;
 
-        $context = $resolver->resolveNode($frame, $resolvableNode);
+        $context = $resolver->resolveNode($parentContext->addChildFromNode($node), $resolvableNode);
         $returnType = $context->type();
         $containerType = $context->containerType();
 
         if ($returnType instanceof ConditionalType) {
-            $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $frame, $node);
+            $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $node);
         }
 
         if ($resolvableNode instanceof ParenthesizedExpression && $returnType instanceof ReflectedClassType && $returnType->isInvokable()) {

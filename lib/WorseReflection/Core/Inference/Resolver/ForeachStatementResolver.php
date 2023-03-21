@@ -28,7 +28,7 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class ForeachStatementResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
     {
         assert($node instanceof ForeachStatement);
         $context = NodeContextFactory::forNode($node);

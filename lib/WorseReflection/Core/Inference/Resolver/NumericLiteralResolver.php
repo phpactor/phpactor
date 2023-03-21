@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class NumericLiteralResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
     {
         assert($node instanceof NumericLiteral);
 

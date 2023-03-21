@@ -15,9 +15,10 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ArrowFunctionCreationExpressionResolver implements Resolver
 {
-    public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
+    public function resolve(NodeContextResolver $resolver, NodeContext $parentContext, Node $node): NodeContext
     {
         assert($node instanceof ArrowFunctionCreationExpression);
+        $context = $parentContext->addChildFromNode($node);
         $returnType = NodeUtil::typeFromQualfiedNameLike(
             $resolver->reflector(),
             $node,
@@ -31,21 +32,14 @@ class ArrowFunctionCreationExpressionResolver implements Resolver
                 if (!$parameter instanceof Parameter) {
                     continue;
                 }
-                $args[] = $resolver->resolveNode($frame, $parameter)->type();
+                $args[] = $resolver->resolveNode($context, $parameter)->type();
             }
         }
 
         if (!$returnType->isDefined()) {
-            $returnType = $resolver->resolveNode($frame, $node->resultExpression)->type()->generalize();
+            $returnType = $resolver->resolveNode($context, $node->resultExpression)->type()->generalize();
         }
 
-        return NodeContextFactory::create(
-            $node->getText(),
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'type' => new ClosureType($resolver->reflector(), $args, $returnType),
-            ]
-        );
+        return $context->withType(new ClosureType($resolver->reflector(), $args, $returnType));
     }
 }
