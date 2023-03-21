@@ -13,14 +13,23 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use RuntimeException;
 
 class IntegrationTestCase extends TestCase
 {
     private ArrayLogger $logger;
 
+    private TestAssertVisitor $testVisitor;
+
+    protected function testVisitor(): TestAssertVisitor
+    {
+        return $this->testVisitor ?? throw new RuntimeException('Test visitor not set, did you call setUp?');
+    }
+
     public function setUp(): void
     {
         $this->logger = new ArrayLogger();
+        $this->testVisitor = new TestAssertVisitor($this);
     }
 
     public function createBuilder(string $source): ReflectorBuilder
@@ -29,7 +38,7 @@ class IntegrationTestCase extends TestCase
             ->addSource($source)
             ->addMemberProvider(new DocblockMemberProvider())
             ->addFrameWalker(new TestAssertWalker($this))
-            ->addNodeContextVisitor(new TestAssertVisitor($this))
+            ->addNodeContextVisitor($this->testVisitor)
             ->withLogger($this->logger());
     }
 
