@@ -2,6 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use Generator;
+use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -16,6 +19,13 @@ class NodeContext
      */
     private array $issues = [];
 
+    private ?Frame $frame = null;
+
+    /**
+     * @var NodeContext[]
+     */
+    private array $children = [];
+
     protected function __construct(
         protected Symbol $symbol,
         protected Type $type,
@@ -23,6 +33,26 @@ class NodeContext
         private ?ReflectionScope $scope = null
     ) {
         $this->typeAssertions = new TypeAssertions([]);
+    }
+
+    public function __toString(): string
+    {
+        $shortName = substr($this::class, strrpos($this::class, '\\') + 1);
+        return sprintf(
+            "%d:%d %s: [%s] %s\n    %s",
+            $this->symbol()->position()->start()->toInt(),
+            $this->symbol()->position()->end()->toInt(),
+            $shortName,
+            $this->symbol()->symbolType(),
+            $this->type()->isDefined() ? $this->type()->__toString() : '',
+            implode(
+                "\n    ",
+                array_map(
+                    fn (NodeContext $ctx) => $ctx->__toString(),
+                    $this->children
+                )
+            ),
+        );
     }
 
     public static function for(Symbol $symbol): NodeContext
@@ -147,5 +177,52 @@ class NodeContext
         }
 
         return $this;
+    }
+
+    public function frame(): ?Frame
+    {
+        return $this->frame;
+    }
+
+    public function withFrame(Frame $frame): self
+    {
+        $this->frame = $frame;
+        return $this;
+    }
+
+    public function addChild(NodeContext $context): self
+    {
+        $this->children[] = $context;
+
+        return $this;
+    }
+
+    public function range(): ByteOffsetRange
+    {
+        return $this->symbol()->position();
+    }
+
+    public function descendantContextAt(Offset $offset): self
+    {
+        $lastDescendant = $this;
+        foreach ($this->allDescendantContexts() as $descendant) {
+            if ($descendant->range()->start()->toInt() > $offset->toInt()) {
+                return $lastDescendant;
+            }
+            $lastDescendant = $descendant;
+        }
+        return $lastDescendant;
+    }
+
+
+    /**
+     * @return Generator<int, NodeContext>
+     */
+    public function allDescendantContexts(): Generator
+    {
+        foreach ($this->children as $child) {
+            yield $child;
+            yield from $child->allDescendantContexts();
+        }
     }
 }
