@@ -6,6 +6,7 @@ use Countable;
 use IteratorAggregate;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use PhpParser\NodeVisitor\NodeConnectingVisitor;
 use Traversable;
 
 /**
@@ -14,9 +15,9 @@ use Traversable;
 class FunctionArguments implements IteratorAggregate, Countable
 {
     /**
-     * @param ArgumentExpression[] $arguments
+     * @param NodeContext[] $arguments
      */
-    public function __construct(private NodeContextResolver $resolver, private Frame $frame, private array $arguments)
+    private function __construct(private array $arguments)
     {
     }
 
@@ -30,12 +31,15 @@ class FunctionArguments implements IteratorAggregate, Countable
     public static function fromList(NodeContextResolver $resolver, Frame $frame, ?ArgumentExpressionList $list): self
     {
         if ($list === null) {
-            return new self($resolver, $frame, []);
+            return new self([]);
         }
-        return new self($resolver, $frame, array_values(array_filter(
+
+        return new self(array_map(function (ArgumentExpression $node) use ($resolver, $frame): NodeContext {
+            return $resolver->resolveNode($frame, $node);
+        }, array_values(array_filter(
             $list->children,
             fn ($nodeOrToken) => $nodeOrToken instanceof ArgumentExpression
-        )));
+        ))));
     }
 
     public function at(int $index): NodeContext
@@ -44,13 +48,13 @@ class FunctionArguments implements IteratorAggregate, Countable
             return NodeContext::none();
         }
 
-        return $this->resolver->resolveNode($this->frame, $this->arguments[$index]);
+        return $this->arguments[$index];
     }
 
     public function getIterator(): Traversable
     {
         foreach ($this->arguments as $argument) {
-            yield $this->resolver->resolveNode($this->frame, $argument);
+            yield $argument;
         }
     }
 
@@ -69,6 +73,6 @@ class FunctionArguments implements IteratorAggregate, Countable
             $newArgs[] = $argument;
         }
 
-        return new self($this->resolver, $this->frame, $newArgs);
+        return new self($newArgs);
     }
 }

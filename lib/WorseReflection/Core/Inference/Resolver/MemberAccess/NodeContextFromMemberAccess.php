@@ -143,6 +143,7 @@ class NodeContextFromMemberAccess
         $member = null;
 
         $arguments = $this->resolveArguments($resolver, $frame, $node->parent);
+        foreach ($arguments as $_) {}
         // this could be a union or a nullable
         foreach ($classType->expandTypes()->classLike() as $subType) {
             // upcast to ClassType to reflected type
