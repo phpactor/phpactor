@@ -41,6 +41,7 @@ class NodeContextResolver
         try {
             return $this->doResolveNodeWithCache($frame, $node);
         } catch (CouldNotResolveNode $couldNotResolveNode) {
+            $this->logger->warning(sprintf('No resolver for: %s', get_class($node)));
             return NodeContext::none();
         }
     }
@@ -89,11 +90,13 @@ class NodeContextResolver
 
     private function doResolveNode(Frame $frame, Node $node): NodeContext
     {
-        $this->logger->debug(sprintf('Resolving: %s', get_class($node)));
-
         if (isset($this->resolverMap[get_class($node)])) {
             $resolver = $this->resolverMap[get_class($node)];
+            $this->logger->debug(sprintf('Resolving: %s with %s', get_class($node), $resolver::class));
             $context = $resolver->resolve($this, $frame, $node);
+            if (null === $context->frame()) {
+                $context = $context->withFrame($frame);
+            }
             foreach ($this->visitors->visitorsFor(get_class($node)) as $visitor) {
                 $context = $visitor->visit($context);
             }

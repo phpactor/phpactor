@@ -6,6 +6,7 @@ use Generator;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Parser;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
+use Exception;
 
 class SelfTest extends IntegrationTestCase
 {
@@ -29,9 +30,16 @@ class SelfTest extends IntegrationTestCase
             return true;
         });
         $reflector = $this->createBuilder($source)->enableCache()->build();
-        $reflected = $reflector->reflectOffset($source, mb_strlen($source));
+        $error = null;
+        try {
+            $reflected = $reflector->reflectOffset($source, mb_strlen($source));
+        } catch (Exception $error) {
+        }
 
         dump($this->logger()->messages());
+        if ($error) {
+            throw $error;
+        }
         dump($reflected->nodeContext()->__toString());
         self::assertEquals($expectedAssertionCount, $this->testVisitor()->assertionCount(), 'Wrong assertion count, maybe some nodes were not reached?');
 
