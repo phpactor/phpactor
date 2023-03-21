@@ -16,10 +16,14 @@ class FunctionDeclarationResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof FunctionDeclaration);
+
+        $resolver->resolveNode($frame, $node->compoundStatementOrSemicolon);
+
         return NodeContextFactory::create(
-            (string)$node->name->getText((string)$node->getFileContents()),
-            $node->name->getStartPosition(),
-            $node->name->getEndPosition(),
+            (string)$node->name?->getText((string)$node->getFileContents()),
+            // TODO: Q: Why is this the position of the function name? A: Goto definition, this should be a rich NodeContext instance.
+            $node->name?->getStartPosition() ?? 0,
+            $node->name?->getEndPosition() ?? 0,
             [
                 'symbol_type' => Symbol::FUNCTION,
             ]

@@ -135,7 +135,7 @@ final class DefaultResolverFactory
             InterfaceDeclaration::class => new ClassLikeResolver(),
             TraitDeclaration::class => new ClassLikeResolver(),
             EnumDeclaration::class => new ClassLikeResolver(),
-            FunctionDeclaration::class => new FunctionDeclarationResolver(),
+            FunctionDeclaration::class => new FunctionLikeResolver(new FunctionDeclarationResolver()),
             ObjectCreationExpression::class => new ObjectCreationExpressionResolver($this->genericResolver),
             SubscriptExpression::class => new SubscriptExpressionResolver(),
             StringLiteral::class => new StringLiteralResolver(),
