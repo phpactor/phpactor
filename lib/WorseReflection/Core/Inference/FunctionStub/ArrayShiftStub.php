@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\Core\Type\IterableType;
 class ArrayShiftStub implements FunctionStub
 {
     public function resolve(
-        Frame $frame,
         NodeContext $context,
         FunctionArguments $args
     ): NodeContext {

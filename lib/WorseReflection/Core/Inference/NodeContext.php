@@ -181,6 +181,10 @@ class NodeContext
         return $this;
     }
 
+	/**
+	 * Return the frame associated with this NodeContext.
+	 * Note that the frame is a shared object.
+	 */
     public function frame(): Frame
     {
         return $this->frame;

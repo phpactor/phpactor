@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\Core\Type\ClosureType;
 class ArrayMapStub implements FunctionStub
 {
     public function resolve(
-        Frame $frame,
         NodeContext $context,
         FunctionArguments $args
     ): NodeContext {

@@ -19,7 +19,6 @@ class IsSomethingStub implements FunctionStub
     }
 
     public function resolve(
-        Frame $frame,
         NodeContext $context,
         FunctionArguments $args
     ): NodeContext {

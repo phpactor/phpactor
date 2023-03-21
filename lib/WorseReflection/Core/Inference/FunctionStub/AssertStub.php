@@ -9,9 +9,9 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 
 class AssertStub implements FunctionStub
 {
-    public function resolve(Frame $frame, NodeContext $context, FunctionArguments $args): NodeContext
+    public function resolve(NodeContext $context, FunctionArguments $args): NodeContext
     {
-        $frame->applyTypeAssertions(
+        $context->frame()->applyTypeAssertions(
             $args->at(0)->typeAssertions(),
             $context->symbol()->position()->end()->toInt()
         );

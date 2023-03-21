@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\TypeUtil;
 class ArrayMergeStub implements FunctionStub
 {
     public function resolve(
-        Frame $frame,
         NodeContext $context,
         FunctionArguments $args
     ): NodeContext {
