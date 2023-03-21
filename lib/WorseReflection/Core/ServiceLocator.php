@@ -129,6 +129,7 @@ class ServiceLocator
             // this avoids issues with stale cache data while also
             // providing memoised caching for this resolver instance.
             new StaticCache(),
+            NodeContextVisitors::fromVisitors(...$this->nodeContextVisitors),
             (new DefaultResolverFactory(
                 $this->reflector,
                 $this->nameResolver,
@@ -138,7 +139,6 @@ class ServiceLocator
                     $this->memberContextResolvers
                 )
             ))->createResolvers(),
-            NodeContextVisitors::fromVisitors(...$this->nodeContextVisitors)
         );
     }
 

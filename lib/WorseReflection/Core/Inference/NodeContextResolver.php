@@ -23,8 +23,8 @@ class NodeContextResolver
         private DocBlockFactory $docblockFactory,
         private LoggerInterface $logger,
         private Cache $cache,
+        private NodeContextVisitors $visitors,
         private array $resolverMap = [],
-        private NodeContextVisitors $visitors
     ) {
     }
 
