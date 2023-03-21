@@ -38,8 +38,6 @@ class ForeachStatementResolver implements Resolver
 
         $this->addAssignedVarsInCompoundStatement($node, $resolver, $frame);
 
-        $resolver->resolveNode($frame, $node->statements);
-
         return $context;
     }
 
