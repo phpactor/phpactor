@@ -24,6 +24,8 @@ class MethodDeclarationResolver implements Resolver
         $classNode = NodeUtil::nodeContainerClassLikeDeclaration($node);
         $classSymbolContext = $resolver->resolveNode($frame, $classNode);
 
+        $resolver->resolveNode($frame, $node->compoundStatementOrSemicolon);
+
         return new MemberDeclarationContext(
             Symbol::fromTypeNameAndPosition(
                 Symbol::METHOD,
