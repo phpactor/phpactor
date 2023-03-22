@@ -17,7 +17,6 @@ class TernaryExpressionResolver implements Resolver
         assert($node instanceof TernaryExpression);
 
         $condition = $resolver->resolveNode($context, $node->condition);
-        $context = NodeContextFactory::create('trinary', $node->getStartPosition(), $node->getEndPosition());
         $left = NodeContext::none();
         $right = NodeContext::none();
 
