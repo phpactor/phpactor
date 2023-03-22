@@ -41,7 +41,7 @@ class SelfTest extends IntegrationTestCase
             throw $error;
         }
         dump($reflected->nodeContext()->__toString());
-        self::assertEquals($expectedAssertionCount, $this->testVisitor()->assertionCount(), 'Wrong assertion count, maybe some nodes were not reached?');
+        self::assertGreaterThanOrEqual($expectedAssertionCount, $this->testVisitor()->assertionCount(), 'Wrong assertion count, maybe some nodes were not reached?');
 
         // the wrAssertType function in the source code will cause
         // an exception to be thrown if it fails

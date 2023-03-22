@@ -251,4 +251,9 @@ class NodeContext
         }
         return $this->parent;
     }
+
+    public function children()
+    {
+        return $this->children;
+    }
 }
