@@ -22,7 +22,7 @@ class UseNameCompletor extends NameSearcherCompletor implements TolerantCompleto
         }
 
         $search = $node->getText();
-        $search = NameUtil::toFullyQualfiied($search);
+        $search = NameUtil::toFullyQualified($search);
         yield from $this->completeName($search, $source->uri(), $node);
 
         return true;

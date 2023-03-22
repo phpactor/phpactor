@@ -22,6 +22,9 @@ abstract class NameSearcherCompletor
         $this->prioritizer = $prioritizer ?: new DefaultResultPrioritizer();
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
     {
         $wasQualified = NameUtil::isQualified($name);
@@ -112,7 +115,7 @@ abstract class NameSearcherCompletor
      * @param array<string,bool> $visitedSegments
      * @return Generator<Suggestion>
      */
-    private function suggestChildSegment(&$visitedSegments, string $search, NameSearchResult $result, TextDocumentUri $sourceUri, string $segment): Generator
+    private function suggestChildSegment(&$visitedSegments, string $search, NameSearchResult $result, ?TextDocumentUri $sourceUri, string $segment): Generator
     {
         if (isset($visitedSegments[$segment])) {
             return;

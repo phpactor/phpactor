@@ -22,7 +22,7 @@ class AttributeCompletor extends NameSearcherCompletor implements TolerantComple
 
         $name = $node->__toString();
         if ($node instanceof QualifiedName && NameUtil::isQualified($name)) {
-            $name = NameUtil::toFullyQualfiied((string)$node->getResolvedName());
+            $name = NameUtil::toFullyQualified((string)$node->getResolvedName());
         }
 
         yield from $this->completeName($name, $source->uri(), $node);

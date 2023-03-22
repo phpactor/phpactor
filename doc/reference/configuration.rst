@@ -858,7 +858,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
+**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1247,7 +1247,7 @@ If applicable diagnostics should be "outsourced" to a different process
 """""""""""""""""""""""""""""""
 
 
-Register to recieve file events
+Register to receive file events
 
 
 **Default**: ``true``
@@ -1313,6 +1313,19 @@ Wait this amount of time after a shutdown request before self-destructing
 
 
 **Default**: ``2500``
+
+
+.. _param_language_server.diagnostic_outsource_timeout:
+
+
+``language_server.diagnostic_outsource_timeout``
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Kill the diagnostics process if it outlives this timeout
+
+
+**Default**: ``5``
 
 
 .. _LanguageServerCompletionExtension:
@@ -1465,6 +1478,9 @@ IndexerExtension
 """"""""""""""""""""""""""""
 
 
+Type: array
+
+
 List of allowed watchers. The first watcher that supports the current system will be used
 
 
@@ -1476,6 +1492,9 @@ List of allowed watchers. The first watcher that supports the current system wil
 
 ``indexer.index_path``
 """"""""""""""""""""""
+
+
+Type: string
 
 
 Path where the index should be saved
@@ -1491,6 +1510,9 @@ Path where the index should be saved
 """"""""""""""""""""""""""""
 
 
+Type: array
+
+
 Glob patterns to include while indexing
 
 
@@ -1502,6 +1524,9 @@ Glob patterns to include while indexing
 
 ``indexer.exclude_patterns``
 """"""""""""""""""""""""""""
+
+
+Type: array
 
 
 Glob patterns to exclude while indexing
@@ -1517,6 +1542,9 @@ Glob patterns to exclude while indexing
 """"""""""""""""""""""
 
 
+Type: array
+
+
 Paths to external folders to index. They will be indexed only once, if you want to take any changes into account you will have to reindex your project manually.
 
 
@@ -1528,6 +1556,9 @@ Paths to external folders to index. They will be indexed only once, if you want 
 
 ``indexer.poll_time``
 """""""""""""""""""""
+
+
+Type: integer
 
 
 For polling indexers only: the time, in milliseconds, between polls (e.g. filesystem scans)
@@ -1543,6 +1574,9 @@ For polling indexers only: the time, in milliseconds, between polls (e.g. filesy
 """""""""""""""""""""""
 
 
+Type: integer
+
+
 For real-time indexers only: the time, in milliseconds, to buffer the results
 
 
@@ -1554,6 +1588,9 @@ For real-time indexers only: the time, in milliseconds, to buffer the results
 
 ``indexer.follow_symlinks``
 """""""""""""""""""""""""""
+
+
+Type: boolean
 
 
 To allow indexer to follow symlinks
@@ -1569,6 +1606,9 @@ To allow indexer to follow symlinks
 """"""""""""""""""""""""
 
 
+Type: string
+
+
 The root path to use for scanning the index
 
 
@@ -1582,6 +1622,9 @@ The root path to use for scanning the index
 """""""""""""""""""""""""""""""""
 
 
+Type: boolean
+
+
 Recurse over class implementations to resolve all references
 
 
@@ -1593,6 +1636,9 @@ Recurse over class implementations to resolve all references
 
 ``indexer.implementation_finder.deep``
 """"""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
 
 
 Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)

@@ -49,6 +49,9 @@ class DocblockCompletor implements TolerantCompletor
     ) {
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     public function complete(Node $node, TextDocument $source, ByteOffset $byteOffset): Generator
     {
         // we re-parse the document because the above node is for the truncated
@@ -103,11 +106,17 @@ class DocblockCompletor implements TolerantCompletor
         return [$matches[1], $matches[2], $matches[3] ?? null];
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function completeType(Node $node, string $tag, string $search): Generator
     {
         yield from $this->typeSuggestionProvider->provide($node, $search);
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function varCompletion(Node $node, ByteOffset $offset, string $tag, string $var): Generator
     {
         if (!in_array($tag, self::TAGS_WITH_VAR)) {

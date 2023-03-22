@@ -681,11 +681,6 @@ parameters:
 			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseExtractMethod.php
 
 		-
-			message: "#^Property Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateMethod\\:\\:\\$methodSuffixIndex is never read, only written\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/WorseReflection/Refactor/WorseGenerateMethod.php
-
-		-
 			message: "#^Constant Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\AddMissingProperties\\:\\:LENGTH_OF_THIS_PREFIX is unused\\.$#"
 			count: 1
 			path: lib/CodeTransform/Adapter/WorseReflection/Transformer/AddMissingProperties.php
@@ -851,11 +846,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseGenerateAccessorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateMethodTest\\:\\:provideExtractMethod\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseGenerateMethodTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethodTest\\:\\:overrideMethod\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
@@ -891,11 +881,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Unit/Domain/Utils/TextUtilsTest.php
 
 		-
-			message: "#^Generator expects key type int, mixed given\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletor\\:\\:filterNonQualifyingClasses\\(\\) is unused\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
@@ -916,21 +901,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/DebugTolerantCompletor.php
 
 		-
-			message: "#^Generator expects value type Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed given\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/AttributeCompletor.php
-
-		-
-			message: "#^Generator expects value type Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed given\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/ExpressionNameCompletor.php
-
-		-
-			message: "#^Generator expects value type Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed given\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/UseNameCompletor.php
-
-		-
 			message: "#^Cannot call method __toString\\(\\) on mixed\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
@@ -946,22 +916,7 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
 
 		-
-			message: "#^Generator expects value type Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed given\\.$#"
-			count: 2
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DocblockCompletor.php
-
-		-
-			message: "#^Generator expects value type Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed given\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:complete\\(\\) should return bool but returns mixed\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
-
-		-
-			message: "#^Parameter \\#1 \\$suggestion of method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:isAnAnnotation\\(\\) expects Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed given\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
 
@@ -1003,26 +958,6 @@ parameters:
 		-
 			message: "#^Parameter \\#2 \\$options of static method Phpactor\\\\Completion\\\\Core\\\\Suggestion\\:\\:createWithOptions\\(\\) expects array\\{short_description\\?\\: Closure\\|string\\|null, documentation\\?\\: Closure\\|string\\|null, type\\?\\: string\\|null, class_import\\?\\: string\\|null, name_import\\?\\: string\\|null, label\\?\\: string\\|null, range\\?\\: Phpactor\\\\Completion\\\\Core\\\\Range\\|null, snippet\\?\\: string\\|null, \\.\\.\\.\\}, array\\<string, mixed\\> given\\.$#"
 			count: 2
-			path: lib/Completion/Core/Completor/NameSearcherCompletion.php
-
-		-
-			message: "#^Parameter \\#4 \\$sourceUri of method Phpactor\\\\Completion\\\\Core\\\\Completor\\\\NameSearcherCompletion\\:\\:suggestChildSegment\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/NameSearcherCompletion.php
-
-		-
-			message: "#^Parameter \\#5 \\$options of method Phpactor\\\\Completion\\\\Core\\\\Completor\\\\NameSearcherCompletion\\:\\:createSuggestion\\(\\) expects array\\<string, string\\>, array\\<string, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Completion/Core/Completor/NameSearcherCompletion.php
-
-		-
-			message: "#^Parameter \\#2 \\$options of static method Phpactor\\\\Completion\\\\Core\\\\Suggestion\\:\\:createWithOptions\\(\\) expects array\\{short_description\\?\\: Closure\\|string\\|null, documentation\\?\\: Closure\\|string\\|null, type\\?\\: string\\|null, class_import\\?\\: string\\|null, name_import\\?\\: string\\|null, label\\?\\: string\\|null, range\\?\\: Phpactor\\\\Completion\\\\Core\\\\Range\\|null, snippet\\?\\: string\\|null, \\.\\.\\.\\}, array\\<string, mixed\\> given\\.$#"
-			count: 2
-			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
-
-		-
-			message: "#^Parameter \\#4 \\$sourceUri of method Phpactor\\\\Completion\\\\Core\\\\Completor\\\\NameSearcherCompletor\\:\\:suggestChildSegment\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
 			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
 
 		-
@@ -7446,31 +7381,6 @@ parameters:
 			path: lib/WorseReflection/Core/DocBlock/PlainDocblock.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:children\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:parent\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame but returns Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:reduce\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:reduce\\(\\) has parameter \\$initial with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\Frame\\:\\:root\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Frame.php
-
-		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/FrameResolver.php
@@ -7669,16 +7579,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\NodeText\\:\\:__construct\\(\\) has parameter \\$nodeText with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/NodeText.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Position\\:\\:fromFullStartStartAndEnd\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Position.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Position\\:\\:fromStartAndEnd\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Position.php
 
 		-
 			message: "#^Parameter \\#2 \\$callback of function array_filter expects callable\\(T\\)\\: mixed, Closure\\(object\\)\\: bool given\\.$#"
