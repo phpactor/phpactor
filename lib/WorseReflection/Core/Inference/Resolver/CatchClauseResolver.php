@@ -36,6 +36,8 @@ class CatchClauseResolver implements Resolver
 
         $context->frame()->locals()->set(Variable::fromSymbolContext($context));
 
+        $resolver->resolveNode($context, $node->compoundStatement);
+
         return $context;
     }
 }

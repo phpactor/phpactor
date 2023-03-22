@@ -41,6 +41,7 @@ use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\Statement\TryStatement;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
@@ -89,6 +90,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\SourceFileNodeResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\StringLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SubscriptExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\TernaryExpressionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\TryStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\UnaryOpExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\UseVariableNameResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\QualifiedNameResolver;
@@ -145,6 +147,7 @@ final class DefaultResolverFactory
             ArgumentExpression::class => new ArgumentExpressionResolver(),
             TernaryExpression::class => new TernaryExpressionResolver(),
             MethodDeclaration::class => new FunctionLikeResolver(new MethodDeclarationResolver()),
+            TryStatement::class => new TryStatementResolver(),
             CloneExpression::class => new CloneExpressionResolver(),
             AssignmentExpression::class => new AssignmentExpressionResolver(),
             CastExpression::class => new CastExpressionResolver(),
