@@ -76,7 +76,7 @@ class AssignmentExpressionResolver implements Resolver
     private function walkParserVariable(NodeContext $context, Variable $leftOperand, NodeContext $rightContext): void
     {
         $name = NodeUtil::nameFromTokenOrNode($leftOperand, $leftOperand->name);
-        $context = NodeContextFactory::create(
+        $varContext = NodeContextFactory::create(
             $name,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
@@ -86,7 +86,7 @@ class AssignmentExpressionResolver implements Resolver
             ]
         );
 
-        $context->frame()->locals()->set(WorseVariable::fromSymbolContext($context)->asAssignment());
+        $context->frame()->locals()->set(WorseVariable::fromSymbolContext($varContext)->asAssignment());
     }
 
     private function walkMemberAccessExpression(
