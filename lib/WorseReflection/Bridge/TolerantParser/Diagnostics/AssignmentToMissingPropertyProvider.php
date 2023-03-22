@@ -14,6 +14,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
@@ -23,7 +24,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 {
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    public function provide(NodeContext $nodeContext): iterable
     {
         if (!$node instanceof AssignmentExpression) {
             return;

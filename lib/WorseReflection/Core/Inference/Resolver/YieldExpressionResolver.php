@@ -6,9 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\YieldExpression;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -21,7 +19,7 @@ class YieldExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof YieldExpression);
-		$frame = $context->frame();
+        $frame = $context->frame();
 
         $arrayElement = $node->arrayElement;
         /** @var Token */

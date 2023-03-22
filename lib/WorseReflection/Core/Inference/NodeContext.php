@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Generator;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -14,6 +13,8 @@ use RuntimeException;
 
 class NodeContext
 {
+    public ?NodeContext $parent = null;
+
     private TypeAssertions $typeAssertions;
 
     /**
@@ -27,8 +28,6 @@ class NodeContext
      * @var NodeContext[]
      */
     private array $children = [];
-
-    public ?NodeContext $parent = null;
 
     protected function __construct(
         protected Symbol $symbol,
@@ -184,10 +183,10 @@ class NodeContext
         return $this;
     }
 
-	/**
-	 * Return the frame associated with this NodeContext.
-	 * Note that the frame is a shared object.
-	 */
+    /**
+     * Return the frame associated with this NodeContext.
+     * Note that the frame is a shared object.
+     */
     public function frame(): Frame
     {
         return $this->frame;

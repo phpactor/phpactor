@@ -41,6 +41,5 @@ class ClassLikeResolver implements Resolver
         }
 
         return $context;
-
     }
 }

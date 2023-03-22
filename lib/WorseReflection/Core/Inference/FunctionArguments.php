@@ -6,7 +6,6 @@ use Countable;
 use IteratorAggregate;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use PhpParser\NodeVisitor\NodeConnectingVisitor;
 use Traversable;
 
 /**

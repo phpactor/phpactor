@@ -28,5 +28,4 @@ class NumericLiteralResolver implements Resolver
                 NodeUtil::nodeContainerClassLikeType($resolver->reflector(), $node)
             );
     }
-
 }

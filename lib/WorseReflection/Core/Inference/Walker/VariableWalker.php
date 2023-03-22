@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
-use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Microsoft\PhpParser\Node;

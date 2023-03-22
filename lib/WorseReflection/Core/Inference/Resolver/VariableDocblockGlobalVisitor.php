@@ -1,6 +1,7 @@
 <?php
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
+
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Token;

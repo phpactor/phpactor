@@ -21,11 +21,6 @@ class IntegrationTestCase extends TestCase
 
     private TestAssertVisitor $testVisitor;
 
-    protected function testVisitor(): TestAssertVisitor
-    {
-        return $this->testVisitor ?? throw new RuntimeException('Test visitor not set, did you call setUp?');
-    }
-
     public function setUp(): void
     {
         $this->logger = new ArrayLogger();
@@ -57,6 +52,11 @@ class IntegrationTestCase extends TestCase
             ))
             ->addMemberProvider(new DocblockMemberProvider())
             ->withLogger($this->logger())->build();
+    }
+
+    protected function testVisitor(): TestAssertVisitor
+    {
+        return $this->testVisitor ?? throw new RuntimeException('Test visitor not set, did you call setUp?');
     }
 
     protected function logger(): ArrayLogger

@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\FunctionStub;
 
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;

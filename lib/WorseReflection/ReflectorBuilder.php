@@ -20,7 +20,6 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflectorFactory;
-use Phpactor\WorseReflection\Core\Inference\Visitor\TestAssertVisitor;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Psr\Log\LoggerInterface;
 
@@ -210,6 +209,13 @@ final class ReflectorBuilder
         return $this;
     }
 
+    public function addNodeContextVisitor(NodeContextVisitor $visitor): self
+    {
+        $this->visitors[] = $visitor;
+
+        return $this;
+    }
+
     private function buildLocator(): SourceCodeLocator
     {
         $locators = $this->locators;
@@ -251,12 +257,5 @@ final class ReflectorBuilder
         }
 
         return new NullCache();
-    }
-
-    public function addNodeContextVisitor(NodeContextVisitor $visitor): self
-    {
-        $this->visitors[] = $visitor;
-
-        return $this;
     }
 }
