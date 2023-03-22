@@ -34,6 +34,7 @@ class SelfTest extends IntegrationTestCase
         try {
             $reflected = $reflector->reflectOffset($source, mb_strlen($source));
         } catch (Exception $error) {
+            throw $error;
         }
 
         dump($this->logger()->messages());
