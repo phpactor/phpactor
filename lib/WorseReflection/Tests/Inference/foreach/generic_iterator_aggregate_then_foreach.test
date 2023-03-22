@@ -7,7 +7,7 @@ namespace Foo;
  */
 final class TypeAssertions implements \IteratorAggregate {}
 
-function (TypeAssertions $assertions): void
+function foo(TypeAssertions $assertions): void
 {
     foreach ([
         [ $assertions, 'bar', ],
