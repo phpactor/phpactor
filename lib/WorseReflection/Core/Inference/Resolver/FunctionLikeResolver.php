@@ -91,7 +91,7 @@ class FunctionLikeResolver implements Resolver
 
             $nodeContext = $resolver->resolveNode($context, $parameterNode);
 
-            $context = NodeContextFactory::create(
+            $varContext = NodeContextFactory::create(
                 (string)$parameterName,
                 $parameterNode->getStartPosition(),
                 $parameterNode->getEndPosition(),
@@ -101,7 +101,7 @@ class FunctionLikeResolver implements Resolver
                 ]
             );
 
-            $context->frame()->locals()->set(Variable::fromSymbolContext($context));
+            $context->frame()->locals()->set(Variable::fromSymbolContext($varContext));
         }
     }
 
