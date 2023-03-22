@@ -5,6 +5,5 @@ $a;
 
 [$b, $c] = $a;
 
-wrFrame();
 wrAssertType('One', $b);
 wrAssertType('Two', $c);
