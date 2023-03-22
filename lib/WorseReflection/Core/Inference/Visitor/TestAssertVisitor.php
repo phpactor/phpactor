@@ -75,7 +75,6 @@ class TestAssertVisitor implements NodeContextVisitor
         // get string to compare against
         $expectedType = $context->arguments()->at(0)->type();
         $actualType = $context->arguments()->at(1)->type();
-        dump($expectedType);
         $this->assertionCount++;
         $this->assertTypeIs($context, $actualType, $expectedType, $context->arguments()->at(2) ??null);
     }
