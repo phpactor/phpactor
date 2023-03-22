@@ -39,6 +39,7 @@ use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\TryStatement;
@@ -78,6 +79,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\IfStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MethodDeclarationResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\NamespaceDefinitionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\NumericLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
@@ -138,6 +140,7 @@ final class DefaultResolverFactory
             TraitDeclaration::class => new ClassLikeResolver(),
             EnumDeclaration::class => new ClassLikeResolver(),
             FunctionDeclaration::class => new FunctionLikeResolver(new FunctionDeclarationResolver()),
+            NamespaceDefinition::class => new NamespaceDefinitionResolver(),
             ObjectCreationExpression::class => new ObjectCreationExpressionResolver($this->genericResolver),
             SubscriptExpression::class => new SubscriptExpressionResolver(),
             StringLiteral::class => new StringLiteralResolver(),
