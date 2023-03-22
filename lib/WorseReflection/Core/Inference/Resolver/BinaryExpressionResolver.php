@@ -35,7 +35,9 @@ class BinaryExpressionResolver implements Resolver
 
         $operator = $node->operator->kind;
 
+        dump($node->leftOperand->getText());
         $left = $resolver->resolveNode($context, $node->leftOperand);
+        dump($left->type()->__toString());readline();
         $right = $resolver->resolveNode($context, $node->rightOperand);
 
         // merge type assertions from left AND right
