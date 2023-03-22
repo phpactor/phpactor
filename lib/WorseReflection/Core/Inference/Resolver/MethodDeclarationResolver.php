@@ -27,7 +27,7 @@ class MethodDeclarationResolver implements Resolver
 
         $classSymbolContext = $context->parent();
 
-        if (!$classSymbolContext->symbol()->symbolType() === Symbol::CLASS_) {
+        if ($classSymbolContext->symbol()->symbolType() !== Symbol::CLASS_) {
             return $context;
         }
 
