@@ -81,14 +81,11 @@ class NodeContextFromMemberAccess
             $memberTypeName = Symbol::CONSTANT;
         }
 
-        $context = NodeContextFactory::create(
-            (string)$memberName,
-            $node->getStartPosition(),
-            $node->getEndPosition(),
-            [
-                'symbol_type' => $memberTypeName,
-            ]
-        );
+        $context = $context
+            ->withSymbolName(
+                (string)$memberName,
+            )
+            ->withSymbolType($memberTypeName);
 
         if (Symbol::CONSTANT === $memberTypeName) {
             if ($memberName === 'class') {
