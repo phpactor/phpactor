@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
@@ -86,7 +87,7 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
         return $this->serviceLocator()
                     ->nodeContextResolver()
                     ->resolveNode(
-                        new Frame(),
+                        NodeContext::none(),
                         $this->node->assignment
                     )->type();
     }
