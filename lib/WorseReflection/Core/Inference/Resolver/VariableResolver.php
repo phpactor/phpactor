@@ -32,8 +32,6 @@ class VariableResolver implements Resolver
     {
         assert($node instanceof Variable);
 
-        $this->injectDocblockType($resolver, $context->frame(), $node);
-
         if ($node->getFirstAncestor(PropertyDeclaration::class)) {
             return $this->resolvePropertyVariable($resolver, $node);
         }
@@ -76,8 +74,7 @@ class VariableResolver implements Resolver
             $type = $frameVariable->type();
         }
 
-
-        $context = NodeContextFactory::forVariableAt(
+        $context = $context->replace(NodeContextFactory::forVariableAt(
             $context->frame(),
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -89,7 +86,7 @@ class VariableResolver implements Resolver
                 return TypeCombinator::subtract(TypeFactory::unionEmpty(), $type);
             },
             fn (Type $type) => TypeCombinator::intersection(TypeFactory::unionEmpty(), $type),
-        ))->withType($type);
+        )))->withType($type);
 
         $varDocType = $context->frame()->varDocBuffer()->yank($variableName);
 
@@ -151,55 +148,5 @@ class VariableResolver implements Resolver
             return;
         }
         $frame->locals()->set(PhpactorVariable::fromSymbolContext($context));
-    }
-
-    private function injectDocblockType(NodeContextResolver $resolver, Frame $frame, Variable $node): Frame
-    {
-        $scope = new PhpactorReflectionScope($resolver->reflector(), $node);
-        dd($varDocType);
-        $docblockType = $this->injectVariablesFromComment($resolver, $scope, $frame, $node);
-
-        if (null === $docblockType) {
-            return $frame;
-        }
-
-        if (!$node instanceof Variable) {
-            return $frame;
-        }
-
-        $token = $node->name;
-        if (false === $token instanceof Token) {
-            return $frame;
-        }
-
-        $name = (string)$token->getText($node->getFileContents());
-        $frame->varDocBuffer()->set($name, $docblockType);
-
-        return $frame;
-    }
-
-    private function injectVariablesFromComment(NodeContextResolver $resolver, PhpactorReflectionScope $scope, Frame $frame, Node $node): ?Type
-    {
-        $comment = $node->getLeadingCommentAndWhitespaceText();
-        $docblock = $resolver->docblockFactory()->create($comment, $scope);
-
-        if (false === $docblock->isDefined()) {
-            return null;
-        }
-
-        $vars = $docblock->vars();
-        $resolvedTypes = [];
-
-        foreach ($docblock->vars() as $var) {
-            $type = $var->type();
-
-            if (empty($var->name())) {
-                return $type;
-            }
-
-            $frame->varDocBuffer()->set('$' . $var->name(), $type);
-        }
-
-        return null;
     }
 }

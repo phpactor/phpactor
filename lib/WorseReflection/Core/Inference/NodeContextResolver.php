@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
+use Phpactor\WorseReflection\Core\Inference\Resolver\VariableDocblockGlobalVisitor;
 use Phpactor\WorseReflection\Core\NodeContextVisitors;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
@@ -57,11 +58,6 @@ class NodeContextResolver
     }
 
     /**
-     * Cache node look ups. Note that resolvers do not know about their parents
-     * and will use the node resolver to fetch a parents context. This only
-     * work if there is a cache. The cache should only have a lifetime of the
-     * current operation.
-     *
      * @param Node|Token|MissingToken|array<MissingToken> $node
      */
     private function doResolve(NodeContext $parentContext, $node): NodeContext
@@ -88,9 +84,11 @@ class NodeContextResolver
 
         $resolver = $this->resolverMap[get_class($node)];
         $this->logger->debug(sprintf('Resolving: %s with %s', get_class($node), $resolver::class));
+        $context = NodeContextFactory::forNode($node)->withFrame($parentContext->frame());
+        $context = (new VariableDocblockGlobalVisitor())->resolve($this, $context, $node);
         $context = $resolver->resolve(
             $this,
-            NodeContextFactory::forNode($node)->withFrame($parentContext->frame()),
+            $context,
             $node
         );
         foreach ($this->visitors->visitorsFor(get_class($node)) as $visitor) {
