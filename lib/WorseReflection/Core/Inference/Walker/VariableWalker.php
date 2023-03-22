@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Walker;
 
+use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Microsoft\PhpParser\Node;
@@ -37,6 +38,7 @@ class VariableWalker implements Walker
         if (null === $docblockType) {
             return $frame;
         }
+
 
         if (!$node instanceof Variable) {
             return $frame;

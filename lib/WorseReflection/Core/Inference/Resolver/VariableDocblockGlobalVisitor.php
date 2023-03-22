@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -17,9 +18,12 @@ class VariableDocblockGlobalVisitor implements Resolver
     {
         $scope = new ReflectionScope($resolver->reflector(), $node);
         $docblockType = $this->injectVariablesFromComment($resolver, $scope, $context, $node);
-
         if (null === $docblockType) {
             return $context;
+        }
+
+        if ($node instanceof AssignmentExpression) {
+            $node = $node->leftOperand;
         }
 
         if (!$node instanceof Variable) {
