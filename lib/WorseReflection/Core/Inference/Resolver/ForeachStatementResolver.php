@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Node\ForeachKey;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\ForeachValue;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -32,16 +31,16 @@ class ForeachStatementResolver implements Resolver
     {
         assert($node instanceof ForeachStatement);
         $context = NodeContextFactory::forNode($node);
-        $nodeContext = $resolver->resolveNode($context, $node->forEachCollectionName);
-        $this->processKey($resolver, $node, $context, $nodeContext->type());
-        $this->processValue($resolver, $node, $context, $nodeContext);
+        $collectionContext = $resolver->resolveNode($context, $node->forEachCollectionName);
+        $this->processKey($resolver, $node, $context, $collectionContext->type());
+        $this->processValue($resolver, $node, $context, $collectionContext);
 
         $this->addAssignedVarsInCompoundStatement($node, $resolver, $context);
 
         return $context;
     }
 
-    private function processValue(NodeContextResolver $resolver, ForeachStatement $node, NodeContext $context, NodeContext $nodeContext): void
+    private function processValue(NodeContextResolver $resolver, ForeachStatement $node, NodeContext $context, NodeContext $collectionContext): void
     {
         $itemName = $node->foreachValue;
 
@@ -51,12 +50,12 @@ class ForeachStatementResolver implements Resolver
 
         $expression = $itemName->expression;
         if ($expression instanceof Variable) {
-            $this->valueFromVariable($expression, $node, $nodeContext, $context);
+            $this->valueFromVariable($expression, $node, $collectionContext, $context);
             return;
         }
 
         if ($expression instanceof ArrayCreationExpression) {
-            $this->valueFromArrayCreation($resolver, $expression, $node, $nodeContext, $context);
+            $this->valueFromArrayCreation($resolver, $expression, $node, $collectionContext, $context);
         }
     }
 
@@ -79,7 +78,7 @@ class ForeachStatementResolver implements Resolver
             return;
         }
 
-        $context = NodeContextFactory::create(
+        $varContext = NodeContextFactory::create(
             $itemName,
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -88,13 +87,13 @@ class ForeachStatementResolver implements Resolver
             ]
         );
         if ($type instanceof IterableType) {
-            $context = $context->withType($this->resolveKeyType($type));
+            $varContext = $varContext->withType($this->resolveKeyType($type));
         }
 
-        $context->frame()->locals()->set(WorseVariable::fromSymbolContext($context));
+        $context->frame()->locals()->set(WorseVariable::fromSymbolContext($varContext));
     }
 
-    private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $nodeContext, NodeContext $context): void
+    private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $collectionContext, NodeContext $context): void
     {
         $itemName = $expression->getText();
 
@@ -102,9 +101,9 @@ class ForeachStatementResolver implements Resolver
             return;
         }
 
-        $type = $nodeContext->type();
+        $type = $collectionContext->type();
 
-        $context = NodeContextFactory::create(
+        $valueContext = NodeContextFactory::create(
             $itemName,
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -114,20 +113,20 @@ class ForeachStatementResolver implements Resolver
         );
 
         if ($type instanceof ReflectedClassType) {
-            $context = $context->withType($type->iterableValueType());
+            $valueContext = $valueContext->withType($type->iterableValueType());
         }
         if ($type instanceof IterableType) {
-            $context = $context->withType($this->resolveValueType($type));
+            $valueContext = $valueContext->withType($this->resolveValueType($type));
         }
 
-        $context->frame()->locals()->set(WorseVariable::fromSymbolContext($context));
+        $context->frame()->locals()->set(WorseVariable::fromSymbolContext($valueContext));
     }
 
     private function valueFromArrayCreation(
         NodeContextResolver $resolver,
         ArrayCreationExpression $expression,
         ForeachStatement $node,
-        NodeContext $nodeContext,
+        NodeContext $collectionContext,
         NodeContext $context
     ): void {
         $elements = $expression->arrayElements;
@@ -135,7 +134,7 @@ class ForeachStatementResolver implements Resolver
             return;
         }
 
-        $arrayType = $nodeContext->type();
+        $arrayType = $collectionContext->type();
 
         if (!$arrayType instanceof IterableType) {
             return;
@@ -148,10 +147,10 @@ class ForeachStatementResolver implements Resolver
                 continue;
             }
 
-            $context = $resolver->resolveNode($context, $item->elementValue);
-            $context = $context->withType($this->resolveArrayCreationType($arrayType, $index));
+            $elContext = $resolver->resolveNode($context, $item->elementValue);
+            $elContext = $elContext->withType($this->resolveArrayCreationType($arrayType, $index));
 
-            $context->frame()->locals()->set(WorseVariable::fromSymbolContext($context));
+            $context->frame()->locals()->set(WorseVariable::fromSymbolContext($elContext));
             $index++;
         }
     }
