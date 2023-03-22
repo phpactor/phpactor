@@ -30,7 +30,6 @@ class ForeachStatementResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, NodeContext $context, Node $node): NodeContext
     {
         assert($node instanceof ForeachStatement);
-        $context = NodeContextFactory::forNode($node);
         $collectionContext = $resolver->resolveNode($context, $node->forEachCollectionName);
         $this->processKey($resolver, $node, $context, $collectionContext->type());
         $this->processValue($resolver, $node, $context, $collectionContext);
