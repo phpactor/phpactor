@@ -292,7 +292,7 @@ class BinaryExpressionResolver implements Resolver
         }
 
         $name = NodeUtil::nameFromTokenOrNode($leftOperand, $leftOperand->name);
-        $context = NodeContextFactory::create(
+        $varContext = NodeContextFactory::create(
             $name,
             $leftOperand->getStartPosition(),
             $leftOperand->getEndPosition(),
@@ -302,6 +302,6 @@ class BinaryExpressionResolver implements Resolver
             ]
         );
 
-        $context->frame()->locals()->set(PhpactorVariable::fromSymbolContext($context));
+        $context->frame()->locals()->set(PhpactorVariable::fromSymbolContext($varContext));
     }
 }
