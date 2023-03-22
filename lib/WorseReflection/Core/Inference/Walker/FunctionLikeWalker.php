@@ -84,6 +84,7 @@ class FunctionLikeWalker implements Walker
 
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
+        dd('asd');
             $classType = $resolver->resolveNode($frame, $classNode)->type();
             $this->addClassContext($node, $classType, $frame);
         }
@@ -166,7 +167,7 @@ class FunctionLikeWalker implements Walker
 
     private function addClassContext(Node $node, Type $classType, Frame $frame): void
     {
-        $context = NodeContextFactory::create(
+        $thisContext = NodeContextFactory::create(
             'this',
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -177,7 +178,7 @@ class FunctionLikeWalker implements Walker
         );
 
         // add this and self
-        $frame->locals()->set(Variable::fromSymbolContext($context));
+        $frame->locals()->set(Variable::fromSymbolContext($thisContext));
 
         if (!$classType instanceof ReflectedClassType) {
             return;

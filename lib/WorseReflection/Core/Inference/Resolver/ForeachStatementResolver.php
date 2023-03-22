@@ -34,6 +34,7 @@ class ForeachStatementResolver implements Resolver
         $this->processKey($resolver, $node, $context, $collectionContext->type());
         $this->processValue($resolver, $node, $context, $collectionContext);
 
+        // this also traverses the statements
         $this->addAssignedVarsInCompoundStatement($node, $resolver, $context);
 
         return $context;

@@ -10,7 +10,6 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
-use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -36,12 +35,12 @@ class CallExpressionResolver implements Resolver
         }
 
         if ($resolvableNode instanceof ParenthesizedExpression && $returnType instanceof ReflectedClassType && $returnType->isInvokable()) {
-            return NodeContextFactory::forNode($node)
+            return $context
                 ->withType($returnType->invokeType());
         }
 
         if ($returnType instanceof InvokeableType) {
-            return NodeContextFactory::forNode($node)
+            return $context
                 ->withType($returnType->returnType());
         }
 
@@ -50,22 +49,19 @@ class CallExpressionResolver implements Resolver
         }
 
         if ($returnType instanceof ReflectedClassType && $returnType->isInvokable()) {
-            return NodeContextFactory::forNode($node)
+            return $context
                 ->withType($returnType->invokeType());
         }
 
         if (!$returnType instanceof InvokeableType) {
-            return NodeContext::none();
+            return $context;
         }
 
-        return NodeContextFactory::create(
-            NodeUtil::nameFromTokenOrNode($resolvableNode, $resolvableNode->name),
-            $resolvableNode->getStartPosition(),
-            $resolvableNode->getEndPosition(),
-            [
-                'type' => $returnType->returnType(),
-            ]
-        );
+        return $context
+            ->withSymbolName(
+                NodeUtil::nameFromTokenOrNode($resolvableNode, $resolvableNode->name),
+            )
+            ->withType($returnType->returnType());
     }
 
     private function processConditionalType(

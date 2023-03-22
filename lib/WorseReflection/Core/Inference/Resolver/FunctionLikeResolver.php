@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\UseVariableName;
 use Microsoft\PhpParser\TokenKind;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
@@ -56,7 +57,7 @@ class FunctionLikeResolver implements Resolver
     /**
      * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression|ArrowFunctionCreationExpression $node
      */
-    private function walkFunctionLike(NodeContextResolver $resolver, NodeContext $context, FunctionLike $node): void
+    private function walkFunctionLike(NodeContextResolver $resolver, NodeContext $parentContext, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
         $classNode = $node->getFirstAncestor(
@@ -66,7 +67,7 @@ class FunctionLikeResolver implements Resolver
         );
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
-            $this->addAnonymousImports($context, $node);
+            $this->addAnonymousImports($parentContext, $node);
 
             // if this is a static anonymous function, set classNode to NULL
             // so that we don't add the class context
@@ -77,8 +78,7 @@ class FunctionLikeResolver implements Resolver
 
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
-            $classType = $resolver->resolveNode($context, $classNode)->type();
-            $this->addClassContext($node, $classType, $context);
+            $this->addClassContext($node, $parentContext->parent()->type(), $parentContext);
         }
 
         if (null === $node->parameters) {
@@ -89,7 +89,7 @@ class FunctionLikeResolver implements Resolver
         foreach ($node->parameters->getElements() as $parameterNode) {
             $parameterName = $parameterNode->variableName->getText($node->getFileContents());
 
-            $nodeContext = $resolver->resolveNode($context, $parameterNode);
+            $nodeContext = $resolver->resolveNode($parentContext, $parameterNode);
 
             $varContext = NodeContextFactory::create(
                 (string)$parameterName,
@@ -101,7 +101,7 @@ class FunctionLikeResolver implements Resolver
                 ]
             );
 
-            $context->frame()->locals()->set(Variable::fromSymbolContext($varContext));
+            $parentContext->frame()->locals()->set(Variable::fromSymbolContext($varContext));
         }
     }
 
@@ -127,11 +127,12 @@ class FunctionLikeResolver implements Resolver
             return;
         }
 
+        /** @var UseVariableName $element */
         foreach ($useClause->useVariableNameList->getElements() as $element) {
             $varName = $element->variableName->getText($node->getFileContents());
 
             $variableContext = NodeContextFactory::create(
-                $varName,
+                (string)$varName,
                 $element->getStartPosition(),
                 $element->getEndPosition(),
                 [
@@ -159,7 +160,7 @@ class FunctionLikeResolver implements Resolver
 
     private function addClassContext(Node $node, Type $classType, NodeContext $context): void
     {
-        $context = NodeContextFactory::create(
+        $thisContext = NodeContextFactory::create(
             'this',
             $node->getStartPosition(),
             $node->getEndPosition(),
@@ -170,7 +171,7 @@ class FunctionLikeResolver implements Resolver
         );
 
         // add this and self
-        $context->frame()->locals()->set(Variable::fromSymbolContext($context));
+        $context->frame()->locals()->set(Variable::fromSymbolContext($thisContext));
 
         if (!$classType instanceof ReflectedClassType) {
             return;

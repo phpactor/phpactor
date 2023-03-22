@@ -49,7 +49,7 @@ class NodeContext
             $this->symbol()->position()->end()->toInt(),
             $shortName,
             $this->symbol()->symbolType(),
-            $this->type()->isDefined() ? $this->type()->__toString() : '',
+            $this->type()->__toString(),
             implode(
                 "\n    ",
                 array_map(

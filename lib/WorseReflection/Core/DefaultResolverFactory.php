@@ -144,7 +144,7 @@ final class DefaultResolverFactory
             ArrayCreationExpression::class => new ArrayCreationExpressionResolver(),
             ArgumentExpression::class => new ArgumentExpressionResolver(),
             TernaryExpression::class => new TernaryExpressionResolver(),
-            MethodDeclaration::class => new MethodDeclarationResolver(),
+            MethodDeclaration::class => new FunctionLikeResolver(new MethodDeclarationResolver()),
             CloneExpression::class => new CloneExpressionResolver(),
             AssignmentExpression::class => new AssignmentExpressionResolver(),
             CastExpression::class => new CastExpressionResolver(),

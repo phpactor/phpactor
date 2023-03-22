@@ -24,13 +24,7 @@ class ClassLikeResolver implements Resolver
             $node instanceof InterfaceDeclaration
         );
 
-        if ($node instanceof ClassDeclaration) {
-            foreach ($node->classMembers->classMemberDeclarations as $classMember) {
-                $resolver->resolveNode($context, $classMember);
-            }
-        }
-
-        return $context
+        $context = $context
             ->withSymbolName((string)$node->name->getText((string)$node->getFileContents()))
             ->withSymbolType(Symbol::CLASS_)
             ->withType(
@@ -39,5 +33,14 @@ class ClassLikeResolver implements Resolver
                     $resolver->reflector(),
                 )
             );
+
+        if ($node instanceof ClassDeclaration) {
+            foreach ($node->classMembers->classMemberDeclarations as $classMember) {
+                $resolver->resolveNode($context, $classMember);
+            }
+        }
+
+        return $context;
+
     }
 }
