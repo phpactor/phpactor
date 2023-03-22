@@ -84,7 +84,6 @@ class FunctionLikeWalker implements Walker
 
         // works for both closure and class method (we currently ignore binding)
         if ($classNode) {
-        dd('asd');
             $classType = $resolver->resolveNode($frame, $classNode)->type();
             $this->addClassContext($node, $classType, $frame);
         }
