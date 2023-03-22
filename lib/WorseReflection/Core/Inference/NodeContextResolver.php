@@ -85,6 +85,7 @@ class NodeContextResolver
         $resolver = $this->resolverMap[get_class($node)];
         $this->logger->debug(sprintf('Resolving: %s with %s', get_class($node), $resolver::class));
         $context = NodeContextFactory::forNode($node)->withFrame($parentContext->frame());
+        $context->parent = $parentContext;
         $context = (new VariableDocblockGlobalVisitor())->resolve($this, $context, $node);
         $context = $resolver->resolve(
             $this,

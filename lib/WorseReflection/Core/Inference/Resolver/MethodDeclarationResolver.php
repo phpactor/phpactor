@@ -20,10 +20,16 @@ class MethodDeclarationResolver implements Resolver
         assert($node instanceof MethodDeclaration);
 
         $classNode = NodeUtil::nodeContainerClassLikeDeclaration($node);
+
         if (null === $classNode) {
             return $context;
         }
-        $classSymbolContext = $resolver->resolveNode($context, $classNode);
+
+        $classSymbolContext = $context->parent();
+
+        if (!$classSymbolContext->symbol()->symbolType() === Symbol::CLASS_) {
+            return $context;
+        }
 
         $resolver->resolveNode($context, $node->compoundStatementOrSemicolon);
 

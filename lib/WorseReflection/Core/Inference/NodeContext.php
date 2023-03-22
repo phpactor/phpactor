@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
+use RuntimeException;
 
 class NodeContext
 {
@@ -26,6 +27,8 @@ class NodeContext
      * @var NodeContext[]
      */
     private array $children = [];
+
+    public ?NodeContext $parent = null;
 
     protected function __construct(
         protected Symbol $symbol,
@@ -239,5 +242,13 @@ class NodeContext
     public function replace(NodeContext $nodeContext): NodeContext
     {
         return $nodeContext->withFrame($this->frame());
+    }
+
+    public function parent(): NodeContext
+    {
+        if (null === $this->parent) {
+            throw new RuntimeException('Node has no parent');
+        }
+        return $this->parent;
     }
 }
