@@ -18,6 +18,6 @@ class CompoundStatementResolver implements Resolver
             $resolver->resolveNode($context, $statement);
         }
 
-        return NodeContextFactory::forNode($node);
+        return $context;
     }
 }

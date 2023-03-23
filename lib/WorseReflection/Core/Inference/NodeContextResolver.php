@@ -87,12 +87,14 @@ class NodeContextResolver
         $this->logger->debug(sprintf('Resolving: %s with %s', get_class($node), $resolver::class));
         $context = NodeContextFactory::forNode($node)->withFrame($parentContext->frame());
         $context->parent = $parentContext;
+
         $context = (new VariableDocblockGlobalVisitor())->resolve($this, $context, $node);
         $context = $resolver->resolve(
             $this,
             $context,
             $node
         );
+        $parentContext->addChild($context);
         foreach ($this->visitors->visitorsFor(get_class($node)) as $visitor) {
             $context = $visitor->visit($context);
         }

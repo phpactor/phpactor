@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\ListIntrinsicExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
+use Phpactor\WorseReflection\Core\Inference\Context\AssignmentContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -39,6 +40,7 @@ class AssignmentExpressionResolver implements Resolver
     {
         assert($node instanceof AssignmentExpression);
 
+        $context = $context->replace(AssignmentContext::fromContext($context));
         $rightContext = $resolver->resolveNode($context, $node->rightOperand);
 
         if ($this->hasMissingTokens($node)) {
