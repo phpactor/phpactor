@@ -24,7 +24,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 {
-    public function provide(NodeContext $nodeContext): iterable
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable;
     {
         if (!$node instanceof AssignmentExpression) {
             return;

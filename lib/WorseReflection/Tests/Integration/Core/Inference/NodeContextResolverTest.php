@@ -10,10 +10,10 @@ use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
+use Phpactor\WorseReflection\Core\NodeContextVisitors;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\LocalAssignments;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -1152,10 +1152,16 @@ class NodeContextResolverTest extends IntegrationTestCase
         PropertyAssignments $properties,
         string $source
     ): NodeContext {
-        $frame = new Frame($locals, $properties);
+        $ctx = NodeContext::none();
+        foreach ($locals as $local) {
+            $ctx->frame()->locals()->set($local);
+        }
+        foreach ($properties as $property) {
+            $ctx->frame()->properties()->set($property);
+        }
 
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $node = $this->parseSource($source)->getDescendantNodeAtPosition($offset);
+        $node = $this->parseSource($source);
 
         $reflector = $this->createReflector($source);
         $nameResolver = new NodeToTypeConverter($reflector, $this->logger());
@@ -1164,6 +1170,7 @@ class NodeContextResolverTest extends IntegrationTestCase
             new DocblockParserFactory($reflector),
             $this->logger(),
             new StaticCache(),
+            NodeContextVisitors::fromVisitors(),
             (new DefaultResolverFactory(
                 $reflector,
                 $nameResolver,
@@ -1175,7 +1182,9 @@ class NodeContextResolverTest extends IntegrationTestCase
             ))->createResolvers(),
         );
 
-        return $resolver->resolveNode($frame, $node);
+        $resolved = $resolver->resolveNode($ctx, $node);
+        dump($resolved->__toString());
+        return $resolved;
     }
 
     private function assertExpectedInformation(array $expectedInformation, NodeContext $information): void

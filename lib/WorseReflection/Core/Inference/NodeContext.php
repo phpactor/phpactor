@@ -43,11 +43,12 @@ class NodeContext
     {
         $shortName = substr($this::class, strrpos($this::class, '\\') + 1);
         return sprintf(
-            "%d:%d %s: [%s] %s\n    %s",
+            "%d:%d %s: [%s]<%s> %s\n    %s",
             $this->symbol()->position()->start()->toInt(),
             $this->symbol()->position()->end()->toInt(),
             $shortName,
             $this->symbol()->symbolType(),
+            $this->symbol()->name(),
             $this->type()->__toString(),
             implode(
                 "\n    ",
