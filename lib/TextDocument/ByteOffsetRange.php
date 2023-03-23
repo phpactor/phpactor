@@ -30,4 +30,14 @@ class ByteOffsetRange
     {
         return $this->end;
     }
+
+    public function containsOffset(ByteOffset $byteOffset): bool
+    {
+        return $byteOffset->toInt() >= $this->start()->toInt() && $byteOffset->toInt() <= $this->end()->toInt();
+    }
+
+    public function __toString(): string
+    {
+        return sprintf('%s-%s', $this->start()->toInt(), $this->end()->toInt());
+    }
 }

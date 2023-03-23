@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Generator;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Type;
@@ -195,16 +196,29 @@ class NodeContext
         return $this->symbol()->position();
     }
 
-    public function descendantContextAt(Offset $offset): self
+    public function descendantContextAt(Offset $offset): ?NodeContext
+    {
+        $context = $this->descendantContextAtOrNull($offset);
+        if (null === $context) {
+            throw new RuntimeException(sprintf(
+                'Could not find descendant context at offset %d (range %s)',
+                $offset->toInt(),
+                $this->range()->__toString()
+            ));
+        }
+        return $context;
+    }
+
+    public function descendantContextAtOrNull(Offset $offset): ?NodeContext
     {
         $lastDescendant = $this;
-        foreach ($this->allDescendantContexts() as $descendant) {
-            if ($descendant->range()->start()->toInt() > $offset->toInt()) {
-                return $lastDescendant;
+        foreach ($this->children() as $child) {
+            if (!$child->range()->containsOffset(ByteOffset::fromInt($offset->toInt()))) {
+                continue;
             }
-            $lastDescendant = $descendant;
+            return $child->descendantContextAt($offset);
         }
-        return $lastDescendant;
+        return $this;
     }
 
 
@@ -236,7 +250,10 @@ class NodeContext
         return $this->parent;
     }
 
-    public function children()
+    /**
+     * @return NodeContext[]
+     */
+    public function children(): array
     {
         return $this->children;
     }
