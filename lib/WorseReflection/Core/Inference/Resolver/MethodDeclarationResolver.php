@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\Parameter;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -31,7 +32,9 @@ class MethodDeclarationResolver implements Resolver
             return $context;
         }
 
+        /** @phpstan-ignore-next-line TP lies */
         foreach ($node->parameters?->getElements() ?? [] as $parameter) {
+            /** @var Parameter $parameter */
             $resolver->resolveNode($context, $parameter);
         }
         $resolver->resolveNode($context, $node->compoundStatementOrSemicolon);

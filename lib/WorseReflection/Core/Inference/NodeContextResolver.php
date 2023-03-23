@@ -42,7 +42,7 @@ class NodeContextResolver
         try {
             return $this->doResolve($parentContext, $node);
         } catch (CouldNotResolveNode $couldNotResolveNode) {
-            $this->logger->warning(sprintf('No resolver for: %s', get_class($node)));
+            $this->logger->warning(sprintf('Could not resolve node: %s', $couldNotResolveNode->getMessage()));
             return NodeContext::none();
         }
     }

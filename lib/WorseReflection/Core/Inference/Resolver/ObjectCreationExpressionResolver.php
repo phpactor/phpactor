@@ -27,9 +27,8 @@ class ObjectCreationExpressionResolver implements Resolver
     {
         assert($node instanceof ObjectCreationExpression);
         if (false === $node->classTypeDesignator instanceof Node) {
-            throw new CouldNotResolveNode(sprintf('Could not create object from "%s"', get_class($node)));
+            throw new CouldNotResolveNode(sprintf('Could not create object from "%s"', get_class($node->classTypeDesignator)));
         }
-
 
         $classContext = $resolver->resolveNode($context, $node->classTypeDesignator);
         $classType = $classContext->type();
