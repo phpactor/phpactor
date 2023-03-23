@@ -41,23 +41,7 @@ class NodeContext
 
     public function __toString(): string
     {
-        $shortName = substr($this::class, strrpos($this::class, '\\') + 1);
-        return sprintf(
-            "%d:%d %s: [%s]<%s> %s\n    %s",
-            $this->symbol()->position()->start()->toInt(),
-            $this->symbol()->position()->end()->toInt(),
-            $shortName,
-            $this->symbol()->symbolType(),
-            $this->symbol()->name(),
-            $this->type()->__toString(),
-            implode(
-                "\n    ",
-                array_map(
-                    fn (NodeContext $ctx) => $ctx->__toString(),
-                    $this->children
-                )
-            ),
-        );
+        return $this->debugString();
     }
 
     public static function for(Symbol $symbol): NodeContext
@@ -255,5 +239,29 @@ class NodeContext
     public function children()
     {
         return $this->children;
+    }
+
+    protected function debugString(int $depth = 0): string
+    {
+        $shortName = substr($this::class, strrpos($this::class, '\\') + 1);
+        $indent = str_repeat(' ', $depth);
+        return sprintf(
+            "%s%d:%d %s: [%s]<%s> %s\n%s%s",
+            $indent,
+            $this->symbol()->position()->start()->toInt(),
+            $this->symbol()->position()->end()->toInt(),
+            $shortName,
+            $this->symbol()->symbolType(),
+            $this->symbol()->name(),
+            $this->type()->__toString(),
+            $indent,
+            implode(
+                "\n",
+                array_map(
+                    fn (NodeContext $ctx) => $ctx->debugString($depth + 1),
+                    $this->children
+                )
+            ),
+        );
     }
 }

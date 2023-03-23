@@ -26,6 +26,7 @@ use Microsoft\PhpParser\Node\Expression\UnaryOpExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\YieldExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\NumericLiteral;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -40,6 +41,7 @@ use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
+use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\TryStatement;
@@ -80,6 +82,8 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResol
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MethodDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\NamespaceDefinitionResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\NamespaceUseClauseResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\NamespaceUseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\NumericLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ObjectCreationExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ParameterResolver;
@@ -141,6 +145,8 @@ final class DefaultResolverFactory
             EnumDeclaration::class => new ClassLikeResolver(),
             FunctionDeclaration::class => new FunctionLikeResolver(new FunctionDeclarationResolver()),
             NamespaceDefinition::class => new NamespaceDefinitionResolver(),
+            NamespaceUseDeclaration::class => new NamespaceUseDeclarationResolver(),
+            NamespaceUseClause::class => new NamespaceUseClauseResolver(),
             ObjectCreationExpression::class => new ObjectCreationExpressionResolver($this->genericResolver),
             SubscriptExpression::class => new SubscriptExpressionResolver(),
             StringLiteral::class => new StringLiteralResolver(),

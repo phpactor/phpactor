@@ -1185,6 +1185,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         );
 
         $resolved = $resolver->resolveNode($ctx, $node)->descendantContextAt(Offset::fromInt($offset));
+        dump($this->logger()->messages());
         dump($ctx->__toString(), $offset);
         return $resolved;
     }
