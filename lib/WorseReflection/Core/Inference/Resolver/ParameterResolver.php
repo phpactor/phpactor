@@ -32,6 +32,8 @@ class ParameterResolver implements Resolver
             FunctionDeclaration::class
         );
 
+        $resolver->resolveNode($context, $node->typeDeclarationList);
+
         if ($method instanceof MethodDeclaration) {
             return $this->resolveParameterFromMethodReflection($context, $resolver->reflector(), $method, $node);
         }

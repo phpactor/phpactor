@@ -239,6 +239,7 @@ class NodeContext
      */
     public function replace(NodeContext $nodeContext): NodeContext
     {
+        $nodeContext->children = $this->children;
         return $nodeContext->withFrame($this->frame());
     }
 

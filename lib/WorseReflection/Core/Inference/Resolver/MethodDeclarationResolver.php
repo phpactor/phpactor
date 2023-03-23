@@ -31,6 +31,9 @@ class MethodDeclarationResolver implements Resolver
             return $context;
         }
 
+        foreach ($node->parameters?->getElements() ?? [] as $parameter) {
+            $resolver->resolveNode($context, $parameter);
+        }
         $resolver->resolveNode($context, $node->compoundStatementOrSemicolon);
 
         return $context->replace(new MemberDeclarationContext(
@@ -38,8 +41,8 @@ class MethodDeclarationResolver implements Resolver
                 Symbol::METHOD,
                 (string)$node->name?->getText($node->getFileContents()),
                 ByteOffsetRange::fromInts(
-                    $node->name?->getStartPosition() ?? $node->getStartPosition(),
-                    $node->name?->getEndPosition() ?? $node->getEndPosition()
+                    $node->getStartPosition(),
+                    $node->getEndPosition()
                 )
             ),
             TypeFactory::unknown(),

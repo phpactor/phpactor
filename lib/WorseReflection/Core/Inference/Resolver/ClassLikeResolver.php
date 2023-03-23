@@ -35,8 +35,18 @@ class ClassLikeResolver implements Resolver
             );
 
         if ($node instanceof ClassDeclaration) {
-            foreach ($node->classMembers->classMemberDeclarations as $classMember) {
-                $resolver->resolveNode($context, $classMember);
+            foreach ($node->classMembers->classMemberDeclarations as $member) {
+                $resolver->resolveNode($context, $member);
+            }
+        }
+        if ($node instanceof InterfaceDeclaration) {
+            foreach ($node->interfaceMembers->interfaceMemberDeclarations as $member) {
+                $resolver->resolveNode($context, $member);
+            }
+        }
+        if ($node instanceof TraitDeclaration) {
+            foreach ($node->traitMembers->traitMemberDeclarations as $member) {
+                $resolver->resolveNode($context, $member);
             }
         }
 
