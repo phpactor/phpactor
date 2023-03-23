@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use Generator;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\DefaultResolverFactory;
@@ -11,6 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\NodeContextVisitors;
+use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\Type;
@@ -106,7 +108,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         $this->assertEquals(TypeFactory::unknown(), $value->type());
     }
 
-    public function provideGeneral()
+    public function provideGeneral(): Generator
     {
         yield 'It should return none value for whitespace' => [
             '  <>  ', [],
@@ -854,7 +856,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         ];
     }
 
-    public function provideValues()
+    public function provideValues(): Generator
     {
         yield 'It returns type for self' => [
             <<<'EOT'
@@ -1034,7 +1036,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         ];
     }
 
-    public function provideNotResolvableClass()
+    public function provideNotResolvableClass(): Generator
     {
         yield 'Calling property method for non-existing class' => [
             <<<'EOT'
@@ -1182,8 +1184,8 @@ class NodeContextResolverTest extends IntegrationTestCase
             ))->createResolvers(),
         );
 
-        $resolved = $resolver->resolveNode($ctx, $node);
-        dump($resolved->__toString());
+        $resolved = $resolver->resolveNode($ctx, $node)->descendantContextAt(Offset::fromInt($offset));
+        dump($ctx->__toString(), $offset);
         return $resolved;
     }
 
