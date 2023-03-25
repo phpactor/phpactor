@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Indexer\Util;
+namespace Phpactor\Cast;
 
 use RuntimeException;
 
