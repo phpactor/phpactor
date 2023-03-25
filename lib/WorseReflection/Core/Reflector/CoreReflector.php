@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
