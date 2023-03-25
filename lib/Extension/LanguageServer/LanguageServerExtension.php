@@ -118,7 +118,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => true,
             self::PARAM_DIAGNOSTIC_ON_OPEN => true,
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
-            self::PARAM_DIAGNOSTIC_OUTSOURCE => false,
+            self::PARAM_DIAGNOSTIC_OUTSOURCE => true,
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
@@ -492,7 +492,7 @@ class LanguageServerExtension implements Extension
         $container->register(AggregateDiagnosticsProvider::class, function (Container $container) {
             $providers = $this->collectDiagnosticProviders(
                 $container,
-                outsourced: $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)->bool() ? false : null,
+                outsourced: $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)->bool() ? true : null,
             );
 
             return new AggregateDiagnosticsProvider(
