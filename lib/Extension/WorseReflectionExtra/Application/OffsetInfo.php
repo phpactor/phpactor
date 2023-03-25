@@ -4,7 +4,7 @@ namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\TypeUtil;
@@ -27,7 +27,7 @@ final class OffsetInfo
             SourceCode::fromString(
                 $this->filesystemHelper->contentsFromFileOrStdin($sourcePath)
             ),
-            Offset::fromInt($offset)
+            ByteOffset::fromInt($offset)
         );
 
         $nodeContext = $result->nodeContext();

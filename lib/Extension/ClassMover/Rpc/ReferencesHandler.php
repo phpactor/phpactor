@@ -15,7 +15,7 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
@@ -77,7 +77,7 @@ class ReferencesHandler extends AbstractHandler
                 $arguments[self::PARAMETER_PATH],
                 $arguments[self::PARAMETER_SOURCE]
             ),
-            Offset::fromInt($arguments[self::PARAMETER_OFFSET])
+            ByteOffset::fromInt($arguments[self::PARAMETER_OFFSET])
         );
         $nodeContext = $offset->nodeContext();
 

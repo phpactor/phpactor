@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
-use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Phpactor\TestUtils\ExtractOffset;

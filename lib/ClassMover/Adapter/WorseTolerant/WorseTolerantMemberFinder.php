@@ -27,7 +27,7 @@ use Phpactor\ClassMover\Domain\Reference\Position;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
@@ -311,7 +311,7 @@ class WorseTolerantMemberFinder implements MemberFinder
 
         $offset = $this->reflector->reflectOffset(
             WorseSourceCode::fromString($memberNode->getFileContents()),
-            Offset::fromInt($memberNode->scopeResolutionQualifier->getEndPosition())
+            ByteOffset::fromInt($memberNode->scopeResolutionQualifier->getEndPosition())
         );
 
         return $this->attachClassInfoToReference($reference, $query, $offset);
@@ -336,7 +336,7 @@ class WorseTolerantMemberFinder implements MemberFinder
 
         $offset = $this->reflector->reflectOffset(
             WorseSourceCode::fromString($memberNode->getFileContents()),
-            Offset::fromInt($memberNode->dereferencableExpression->getEndPosition())
+            ByteOffset::fromInt($memberNode->dereferencableExpression->getEndPosition())
         );
 
         return $this->attachClassInfoToReference($reference, $query, $offset);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Indexer\Util;
+namespace Phpactor\Cast;
 
 use RuntimeException;
 
@@ -37,6 +37,12 @@ class Cast
      */
     public static function toInt($value): int
     {
+        if (!is_numeric($value)) {
+            throw new RuntimeException(sprintf(
+                'Cannot cast "%s" to int',
+                gettype($value)
+            ));
+        }
         return (int) $value;
     }
 

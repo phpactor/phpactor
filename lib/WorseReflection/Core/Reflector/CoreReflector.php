@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Generator;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -14,7 +15,6 @@ use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
@@ -174,7 +174,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
      * and type of a variable and the frame information.
      *
      * @param SourceCode|string $sourceCode
-     * @param Offset|int $offset
+     * @param ByteOffset|int $offset
      */
     public function reflectOffset($sourceCode, $offset): ReflectionOffset
     {
