@@ -492,7 +492,7 @@ class LanguageServerExtension implements Extension
         $container->register(AggregateDiagnosticsProvider::class, function (Container $container) {
             $providers = $this->collectDiagnosticProviders(
                 $container,
-                outsourced: $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)->bool() ? true : null,
+                outsourced: $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)->bool() ? false : null,
             );
 
             return new AggregateDiagnosticsProvider(
