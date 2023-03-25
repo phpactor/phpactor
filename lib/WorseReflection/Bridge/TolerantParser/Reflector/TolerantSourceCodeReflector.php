@@ -20,7 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection as TolerantReflectionClassCollection;
 use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset as TolerantReflectionOffset;
 use Phpactor\WorseReflection\Core\Inference\NodeReflector;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -49,10 +49,10 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     public function reflectOffset(
         SourceCode|TextDocument|string $sourceCode,
-        Offset|ByteOffset|int $offset
+        ByteOffset|ByteOffset|int $offset
     ): ReflectionOffset {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
-        $offset = Offset::fromUnknown($offset);
+        $offset = ByteOffset::fromUnknown($offset);
 
         $rootNode = $this->parseSourceCode($sourceCode);
         $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
@@ -89,7 +89,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     public function reflectMethodCall(
         SourceCode|TextDocument|string $sourceCode,
-        Offset|ByteOffset|int $offset
+        ByteOffset|ByteOffset|int $offset
     ): ReflectionMethodCall {
         // see https://github.com/phpactor/phpactor/issues/1445
         $this->serviceLocator->cache()->purge();
@@ -131,10 +131,10 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     public function reflectNode(
         SourceCode|TextDocument|string $sourceCode,
-        Offset|ByteOffset|int $offset
+        ByteOffset|ByteOffset|int $offset
     ): ReflectionNode {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
-        $offset = Offset::fromUnknown($offset);
+        $offset = ByteOffset::fromUnknown($offset);
 
         $rootNode = $this->parseSourceCode($sourceCode);
         $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());

@@ -24,6 +24,19 @@ class ByteOffset
         return new self($offset);
     }
 
+    public static function fromUnknown(ByteOffset|ByteOffset|int $value): self
+    {
+        if ($value instanceof ByteOffset) {
+            return self::fromInt($value->toInt());
+        }
+
+        if ($value instanceof ByteOffset) {
+            return $value;
+        }
+
+        return self::fromInt($value);
+    }
+
     /**
      * @param int|ByteOffset $offset
      */
