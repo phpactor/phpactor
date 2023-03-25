@@ -11,4 +11,3 @@ class AnalyserBench extends BaseBenchCase
         $this->getReflector()->reflectOffset(TextDocumentBuilder::fromUri(__DIR__ . '/../../../../vendor/phpactor/tolerant-php-parser/src/Parser.php')->build(), 183744);
     }
 }
-
