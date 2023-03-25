@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
 use Generator;
-use Phpactor\TextDocument\ByteOffset;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
@@ -49,7 +48,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     public function reflectOffset(
         SourceCode|TextDocument|string $sourceCode,
-        ByteOffset|ByteOffset|int $offset
+        ByteOffset|int $offset
     ): ReflectionOffset {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
         $offset = ByteOffset::fromUnknown($offset);
@@ -89,7 +88,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     public function reflectMethodCall(
         SourceCode|TextDocument|string $sourceCode,
-        ByteOffset|ByteOffset|int $offset
+        ByteOffset|int $offset
     ): ReflectionMethodCall {
         // see https://github.com/phpactor/phpactor/issues/1445
         $this->serviceLocator->cache()->purge();
@@ -131,7 +130,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     public function reflectNode(
         SourceCode|TextDocument|string $sourceCode,
-        ByteOffset|ByteOffset|int $offset
+        ByteOffset|int $offset
     ): ReflectionNode {
         $sourceCode = SourceCode::fromUnknown($sourceCode);
         $offset = ByteOffset::fromUnknown($offset);

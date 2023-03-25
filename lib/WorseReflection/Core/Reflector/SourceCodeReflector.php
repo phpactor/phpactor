@@ -10,7 +10,6 @@ use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\Walker;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
@@ -45,12 +44,12 @@ interface SourceCodeReflector
      */
     public function reflectOffset(
         SourceCode|TextDocument|string $sourceCode,
-        ByteOffset|ByteOffset|int $offset
+        ByteOffset|int $offset
     ): ReflectionOffset;
 
     public function reflectMethodCall(
         SourceCode|TextDocument|string $sourceCode,
-        ByteOffset|ByteOffset|int $offset
+        ByteOffset|int $offset
     ): ReflectionMethodCall;
 
     public function navigate(SourceCode|TextDocument|string $sourceCode): ReflectionNavigation;
@@ -62,7 +61,7 @@ interface SourceCodeReflector
 
     public function reflectNode(
         SourceCode|TextDocument|string $sourceCode,
-        ByteOffset|ByteOffset|int $offset
+        ByteOffset|int $offset
     ): ReflectionNode;
 
     public function reflectConstantsIn(
