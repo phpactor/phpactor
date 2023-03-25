@@ -67,9 +67,7 @@ class CandidateFinder
         }
         assert($unresolvedName instanceof NameWithByteOffset);
 
-        $candidates = $this->findCandidates($unresolvedName);
-
-        foreach ($candidates as $candidate) {
+        foreach ($this->findCandidates($unresolvedName) as $candidate) {
             assert($candidate instanceof HasFullyQualifiedName);
 
             // skip constants for now
@@ -100,21 +98,17 @@ class CandidateFinder
     }
 
     /**
-     * @return array<int,Record>
+     * @return Generator<Record>
      */
-    private function findCandidates(NameWithByteOffset $unresolvedName): array
+    private function findCandidates(NameWithByteOffset $unresolvedName): Generator
     {
-        $candidates = [];
-        foreach ($this->client->search(Criteria::and(
+        yield from $this->client->search(Criteria::and(
             Criteria::or(
                 Criteria::isConstant(),
                 Criteria::isClass(),
                 Criteria::isFunction()
             ),
             Criteria::exactShortName($unresolvedName->name()->head()->__toString())
-        )) as $candidate) {
-            $candidates[] = $candidate;
-        }
-        return $candidates;
+        ));
     }
 }

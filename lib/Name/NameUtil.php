@@ -66,7 +66,7 @@ final class NameUtil
         return implode('\\', array_map(fn (string $s) => self::normalize($s), $segments));
     }
 
-    public static function toFullyQualfiied(string $name): string
+    public static function toFullyQualified(string $name): string
     {
         if (substr($name, 0, 1) == '\\') {
             return $name;

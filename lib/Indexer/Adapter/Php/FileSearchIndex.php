@@ -35,7 +35,6 @@ class FileSearchIndex implements SearchIndex
     {
     }
 
-
     public function search(Criteria $criteria): Generator
     {
         $this->open();
