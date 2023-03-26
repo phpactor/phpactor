@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
 use Generator;
 use Microsoft\PhpParser\Node\SourceFileNode;
-use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
@@ -38,10 +37,9 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
      * @param array<string,bool> $visited
      */
     public function reflectClassesIn(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         array $visited = []
     ): ReflectionClassLikeCollection {
-        $sourceCode = TextDocumentBuilder::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
         return TolerantReflectionClassCollection::fromNode($this->serviceLocator, $sourceCode, $node, $visited);
     }

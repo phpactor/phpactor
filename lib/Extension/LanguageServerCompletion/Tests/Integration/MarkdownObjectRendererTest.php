@@ -13,6 +13,7 @@ use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -65,6 +66,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      * @dataProvider provideDeclaredConstant
      * @dataProvider provideType
      * @dataProvider provideMemberDocblock
+     * @param Closure(Reflector): HoverInformation $objectFactory
      */
     public function testRender(string $manifest, Closure $objectFactory, string $expected, bool $capture = false): void
     {
@@ -95,7 +97,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'empty' => [
             '',
             function (Reflector $reflector) {
-                return new HoverInformation('', '', $reflector->reflectClassesIn('<?php class Foobar {}')->first());
+                return new HoverInformation('', '', $this->reflectClassesIn($reflector, '<?php class Foobar {}')->first());
             },
             'hover_information1.md',
         ];
@@ -103,7 +105,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'title no docs' => [
             '',
             function (Reflector $reflector) {
-                return new HoverInformation('This is my title', '', $reflector->reflectClassesIn('<?php class Foobar {}')->first());
+                return new HoverInformation('This is my title', '', $this->reflectClassesIn($reflector, '<?php class Foobar {}')->first());
             },
             'hover_information2.md',
         ];
@@ -111,7 +113,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'title with docs' => [
             '',
             function (Reflector $reflector) {
-                return new HoverInformation('This is my title', 'There are my docs', $reflector->reflectClassesIn('<?php class Foobar {}')->first());
+                return new HoverInformation('This is my title', 'There are my docs', $this->reflectClassesIn($reflector, '<?php class Foobar {}')->first());
             },
             'hover_information3.md',
         ];
@@ -119,7 +121,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'docs with HTML tags' => [
             '',
             function (Reflector $reflector) {
-                return new HoverInformation('This is my title', '<p>There are my docs</p>', $reflector->reflectClassesIn('<?php class Foobar {}')->first());
+                return new HoverInformation('This is my title', '<p>There are my docs</p>', $this->reflectClassesIn($reflector, '<?php class Foobar {}')->first());
             },
             'hover_information3.md',
         ];
@@ -133,7 +135,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'simple class' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn('<?php class Foobar {}')->first();
+                return $this->reflectClassesIn($reflector, '<?php class Foobar {}')->first();
             },
             'class_reflection1.md'
         ];
@@ -141,7 +143,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'complex class' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -172,7 +175,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'class with constants and properties' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -192,7 +196,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'final class' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn('<?php final class Foobar {}')->first();
+                return $this->reflectClassesIn($reflector, '<?php final class Foobar {}')->first();
             },
             'class_reflection4.md',
         ];
@@ -200,7 +204,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'class that extends itself' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn('<?php class Foobar extends Foobar {}')->first();
+                return $this->reflectClassesIn($reflector, '<?php class Foobar extends Foobar {}')->first();
             },
             'class_reflection5.md',
         ];
@@ -208,7 +212,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'deprecated class' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn('<?php /** @deprecated This is deprecated */class Foobar {}')->first();
+                return $this->reflectClassesIn($reflector, '<?php /** @deprecated This is deprecated */class Foobar {}')->first();
             },
             'class_reflection6.md',
         ];
@@ -222,7 +226,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'complex interface' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -256,7 +261,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'simple trait' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -279,7 +285,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'simple' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -299,7 +306,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'complex method' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -322,7 +330,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'private method' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -339,7 +348,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'static and abstract method' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -356,7 +366,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'virtual method' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -375,7 +386,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'overridden method' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -401,7 +413,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'overridden method from interface' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -427,7 +440,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'deprecated method' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -455,7 +469,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'simple property' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -472,7 +487,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'complex property' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -492,7 +508,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'typed property' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -509,7 +526,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'virtual property' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -528,7 +546,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'mixed property' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -558,7 +577,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'enum' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -575,7 +595,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'backed enum' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -602,7 +623,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'enum case' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -619,7 +641,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'backed enum case' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -642,7 +665,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'simple constant' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -659,7 +683,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'complex constant' => [
             '',
             function (Reflector $reflector) {
-                return $reflector->reflectClassesIn(
+                return $this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -824,7 +849,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'single member with no doc' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -841,7 +867,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'single member with doc' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -860,7 +887,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'member with concrete parent doc' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -887,7 +915,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'member with multiple concrete parent doc' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
                         class Doobar
@@ -921,7 +950,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'member with interface parent' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -946,7 +976,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'member with multiple interface parent' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -979,7 +1010,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'do not repeat interfaces' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -1017,7 +1049,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'formatted member docblock' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -1040,7 +1073,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'formatted member docblock bare tag' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -1060,7 +1094,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'formatted member docblock 2' => [
             '',
             function (Reflector $reflector) {
-                return new MemberDocblock($reflector->reflectClassesIn(
+                return new MemberDocblock($this->reflectClassesIn(
+                    $reflector,
                     <<<'EOT'
                         <?php
 
@@ -1106,5 +1141,10 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'variable1.md',
         ];
+    }
+
+    private function reflectClassesIn(Reflector $reflector, string $textDocument): ReflectionClassLikeCollection
+    {
+        return $reflector->reflectClassesIn(TextDocumentBuilder::fromUnknown($textDocument));
     }
 }

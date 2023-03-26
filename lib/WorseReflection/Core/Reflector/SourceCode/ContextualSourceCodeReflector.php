@@ -25,7 +25,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
     ) {
     }
 
-    public function reflectClassesIn(TextDocument|string $sourceCode, array $visited = []): ReflectionClassLikeCollection
+    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         $this->locator->pushSourceCode(TextDocumentBuilder::fromUnknown($sourceCode));
 

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Benchmarks;
 
 use Generator;
 use GlobIterator;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -32,7 +33,7 @@ class DiagnosticsBench
     public function benchDiagnostics(array $params): void
     {
         $diagnostics = $this->reflector->diagnostics(
-            (string)file_get_contents($params['path'])
+            TextDocumentBuilder::fromUri($params['path'])->build()
         );
     }
 
