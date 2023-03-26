@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
 use Generator;
 use Microsoft\PhpParser\Node\SourceFileNode;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
@@ -38,7 +37,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
      * @param array<string,bool> $visited
      */
     public function reflectClassesIn(
-        TextDocument|TextDocument|string $sourceCode,
+        TextDocument|string $sourceCode,
         array $visited = []
     ): ReflectionClassLikeCollection {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
@@ -47,7 +46,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     }
 
     public function reflectOffset(
-        TextDocument|TextDocument|string $sourceCode,
+        TextDocument|string $sourceCode,
         ByteOffset|int $offset
     ): ReflectionOffset {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
@@ -65,7 +64,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     /**
      * @return Diagnostics<Diagnostic>
      */
-    public function diagnostics(TextDocument|TextDocument|string $sourceCode): Diagnostics
+    public function diagnostics(TextDocument|string $sourceCode): Diagnostics
     {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
         return $this->serviceLocator->cache()->getOrSet(
@@ -87,7 +86,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     }
 
     public function reflectMethodCall(
-        TextDocument|TextDocument|string $sourceCode,
+        TextDocument|string $sourceCode,
         ByteOffset|int $offset
     ): ReflectionMethodCall {
         // see https://github.com/phpactor/phpactor/issues/1445
@@ -109,27 +108,27 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         return $reflection;
     }
 
-    public function reflectFunctionsIn(TextDocument|TextDocument|string $sourceCode): TolerantReflectionFunctionCollection
+    public function reflectFunctionsIn(TextDocument|string $sourceCode): TolerantReflectionFunctionCollection
     {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
         return TolerantReflectionFunctionCollection::fromNode($this->serviceLocator, $sourceCode, $node);
     }
 
-    public function reflectConstantsIn(TextDocument|TextDocument|string $sourceCode): ReflectionDeclaredConstantCollection
+    public function reflectConstantsIn(TextDocument|string $sourceCode): ReflectionDeclaredConstantCollection
     {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
         return ReflectionDeclaredConstantCollection::fromNode($this->serviceLocator, $sourceCode, $node);
     }
 
-    public function navigate(TextDocument|TextDocument|string $sourceCode): ReflectionNavigation
+    public function navigate(TextDocument|string $sourceCode): ReflectionNavigation
     {
         return new ReflectionNavigation($this->serviceLocator, $this->parseSourceCode(TextDocument::fromUnknown($sourceCode)));
     }
 
     public function reflectNode(
-        TextDocument|TextDocument|string $sourceCode,
+        TextDocument|string $sourceCode,
         ByteOffset|int $offset
     ): ReflectionNode {
         $sourceCode = TextDocument::fromUnknown($sourceCode);

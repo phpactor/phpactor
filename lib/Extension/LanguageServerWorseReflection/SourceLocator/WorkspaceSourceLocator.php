@@ -24,6 +24,6 @@ class WorkspaceSourceLocator implements SourceCodeLocator
             ));
         }
 
-        return TextDocument::fromUnknown($document);
+        return $document;
     }
 }

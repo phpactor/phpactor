@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Generator;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Diagnostics;
