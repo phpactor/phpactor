@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Virtual;
 
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -43,7 +44,7 @@ final class VirtualReflectionFunction implements ReflectionFunction
             new DummyReflectionScope(),
             TypeFactory::undefined(),
             TypeFactory::undefined(),
-            TextDocument::empty(),
+            TextDocumentBuilder::empty(),
             $name,
             ReflectionParameterCollection::empty(),
         );

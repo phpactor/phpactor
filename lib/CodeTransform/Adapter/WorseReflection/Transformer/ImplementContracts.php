@@ -7,6 +7,7 @@ use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\TextDocument\TextDocument as WorseSourceCode;
@@ -29,7 +30,7 @@ class ImplementContracts implements Transformer
     public function diagnostics(SourceCode $source): Diagnostics
     {
         $diagnostics = [];
-        $classes = $this->reflector->reflectClassesIn(WorseSourceCode::fromString((string) $source));
+        $classes = $this->reflector->reflectClassesIn($source);
         foreach ($classes->concrete() as $class) {
             assert($class instanceof ReflectionClass);
             $missingMethods = $this->missingClassMethods($class);

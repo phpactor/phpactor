@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection;
 
 use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamProvider;
@@ -36,12 +37,12 @@ class WorseTestCase extends AdapterTestCase
             }
 
             $locator = new TemporarySourceLocator(ReflectorBuilder::create()->build(), true);
-            $locator->pushSourceCode(TextDocument::fromPath($file));
+            $locator->pushSourceCode(TextDocumentBuilder::fromUri($file));
             $builder->addLocator($locator);
         }
 
         if ($source !== null) {
-            $builder->addSource(TextDocument::fromPathAndString('/foo', $source));
+            $builder->addSource(TextDocumentBuilder::fromUriAndString('/foo', $source));
         }
 
         return $builder->build();

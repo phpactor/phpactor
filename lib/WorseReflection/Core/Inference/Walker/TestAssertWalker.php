@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -170,7 +171,7 @@ class TestAssertWalker implements Walker
                 'Expected int literal'
             );
         }
-        $offset = $resolver->reflector()->reflectOffset($node->getFileContents(), $type->value());
+        $offset = $resolver->reflector()->reflectOffset(TextDocumentBuilder::create($node->getFileContents())->build(), $type->value());
         $this->assertTypeIs($node, $offset->nodeContext()->type(), $expectedType);
     }
 

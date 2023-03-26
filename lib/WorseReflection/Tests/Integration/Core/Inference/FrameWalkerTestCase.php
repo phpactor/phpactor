@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use Phpactor\TextDocument\Tests\Unit\TextDocumentBuilderTest;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
@@ -19,7 +21,7 @@ abstract class FrameWalkerTestCase extends IntegrationTestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
         $path = $this->workspace()->path('test.php');
-        $source = TextDocument::fromPathAndString($path, $source);
+        $source = TextDocumentBuilder::create($source)->uri($path)->build();
         $reflector = $this->createReflectorWithWalker($source, $this->walker());
         $reflectionOffset = $reflector->reflectOffset($source, $offset);
         $assertion($reflectionOffset->frame(), $offset);

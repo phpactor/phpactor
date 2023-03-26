@@ -109,4 +109,9 @@ final class TextDocumentBuilder
 
         return self::create($sourceCode)->build();
     }
+
+    public static function empty(): TextDocument
+    {
+        return self::create('')->build();
+    }
 }

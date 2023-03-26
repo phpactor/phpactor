@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\SourceCodeLocator;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\TextDocument\TextDocument;
@@ -19,7 +20,7 @@ class StubSourceLocatorTest extends IntegrationTestCase
     {
         $this->workspace()->reset();
 
-        $locator = new StringSourceLocator(TextDocument::fromString(''));
+        $locator = new StringSourceLocator(TextDocumentBuilder::create('')->build());
         $reflector = ReflectorBuilder::create()->addLocator($locator)->build();
         $this->workspace()->mkdir('stubs')->mkdir('cache');
 

@@ -11,6 +11,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -73,10 +74,9 @@ class ReferencesHandler extends AbstractHandler
     public function handle(array $arguments)
     {
         $offset = $this->reflector->reflectOffset(
-            TextDocument::fromPathAndString(
-                $arguments[self::PARAMETER_PATH],
+            TextDocumentBuilder::create(
                 $arguments[self::PARAMETER_SOURCE]
-            ),
+            )->uri($arguments[self::PARAMETER_PATH])->build(),
             ByteOffset::fromInt($arguments[self::PARAMETER_OFFSET])
         );
         $nodeContext = $offset->nodeContext();

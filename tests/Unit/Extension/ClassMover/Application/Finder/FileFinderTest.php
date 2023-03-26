@@ -67,7 +67,7 @@ class FileFinderTest extends TestCase
     public function testReturnsClassAndTraitFilePathsIfMemberIsPrivate(): void
     {
         $class = $this->reflectClass(
-            TextDocument::fromPathAndString('barfoo', 'trait Barbar {} class Foobar { use Barbar; private function foobar(){} }'),
+            TextDocumentBuilder::create('trait Barbar {} class Foobar { use Barbar; private function foobar(){} }', 'barfoo.php'),
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
@@ -77,7 +77,7 @@ class FileFinderTest extends TestCase
     public function testParentsTraitsAndInterfacesIfMemberIsProtected(): void
     {
         $class = $this->reflectClass(
-            TextDocument::fromPathAndString('barfoo', 'interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }'),
+            TextDocumentBuilder::create('interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }')->uri('barfoo', ,
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
@@ -98,7 +98,7 @@ class FileFinderTest extends TestCase
 
     private function reflectClass($source, string $name)
     {
-        $builder = ReflectorBuilder::create()->addSource(TextDocument::fromPathAndString('foobar', '<?php ' . $source));
+        $builder = ReflectorBuilder::create()->addSource(TextDocumentBuilder::create('<?php ' . $source)->uri('foo.php')->build());
         return $builder->build()->reflectClassLike($name);
     }
 }

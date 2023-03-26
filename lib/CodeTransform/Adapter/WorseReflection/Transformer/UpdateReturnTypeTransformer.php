@@ -49,7 +49,7 @@ class UpdateReturnTypeTransformer implements Transformer
 
     public function diagnostics(SourceCode $code): Diagnostics
     {
-        $wrDiagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingReturnTypeDiagnostic::class);
+        $wrDiagnostics = $this->reflector->diagnostics($code)->byClass(MissingReturnTypeDiagnostic::class);
         $diagnostics = [];
 
         /** @var MissingReturnTypeDiagnostic $diagnostic */
@@ -74,7 +74,7 @@ class UpdateReturnTypeTransformer implements Transformer
      */
     private function methodsThatNeedFixing(SourceCode $code): array
     {
-        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingReturnTypeDiagnostic::class);
+        $diagnostics = $this->reflector->diagnostics($code)->byClass(MissingReturnTypeDiagnostic::class);
         $methods = [];
         /** @var MissingReturnTypeDiagnostic $diagnostic */
         foreach ($diagnostics as $diagnostic) {

@@ -4,6 +4,7 @@ namespace Phpactor\Extension\WorseReflectionExtra\Rpc;
 
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\ByteOffset;
@@ -35,7 +36,7 @@ class OffsetInfoHandler implements Handler
     public function handle(array $arguments)
     {
         $offset = $this->reflector->reflectOffset(
-            TextDocument::fromString($arguments['source']),
+            TextDocumentBuilder::create($arguments['source'])->build(),
             ByteOffset::fromInt($arguments['offset'])
         );
 

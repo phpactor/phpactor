@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\ByteOffset;
@@ -24,9 +25,9 @@ final class OffsetInfo
     public function infoForOffset(string $sourcePath, int $offset, bool $showFrame = false): array
     {
         $result = $this->reflector->reflectOffset(
-            TextDocument::fromString(
+            TextDocumentBuilder::create(
                 $this->filesystemHelper->contentsFromFileOrStdin($sourcePath)
-            ),
+            )->build(),
             ByteOffset::fromInt($offset)
         );
 

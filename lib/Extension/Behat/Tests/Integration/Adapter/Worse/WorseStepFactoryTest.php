@@ -9,6 +9,7 @@ use Phpactor\Extension\Behat\Behat\Context;
 use Phpactor\Extension\Behat\Behat\Step;
 use Phpactor\Extension\Behat\Behat\StepParser;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseStepFactoryTest extends TestCase
@@ -16,7 +17,7 @@ class WorseStepFactoryTest extends TestCase
     public function testGeneratesSteps(): void
     {
         $path = __DIR__ . '/TestContext.php';
-        $reflector = ReflectorBuilder::create()->addSource(TextDocument::fromPath($path))->build();
+        $reflector = ReflectorBuilder::create()->addSource(TextDocumentBuilder::fromUri($path))->build();
         $stepGenerator = new WorseStepFactory($reflector, new WorseContextClassResolver($reflector));
         $parser = new StepParser();
         $context = new Context('default', TestContext::class);

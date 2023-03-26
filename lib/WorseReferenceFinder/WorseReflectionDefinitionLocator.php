@@ -33,23 +33,17 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
     }
 
 
-    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
+    public function locateDefinition(TextDocument $textDocument, ByteOffset $byteOffset): TypeLocations
     {
-        if (false === $document->language()->isPhp()) {
+        if (false === $textDocument->language()->isPhp()) {
             throw new CouldNotLocateDefinition('I only work with PHP files');
         }
 
         $this->cache->purge();
 
-        if ($uri = $document->uri()) {
-            $sourceCode = TextDocument::fromPathAndString($uri->__toString(), $document->__toString());
-        } else {
-            $sourceCode = TextDocument::fromString($document->__toString());
-        }
-
         try {
             $offset = $this->reflector->reflectOffset(
-                $sourceCode,
+                $textDocument,
                 $byteOffset->toInt()
             );
         } catch (NotFound $notFound) {
@@ -57,7 +51,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
         $typeLocations = [];
-        $typeLocations = $this->gotoDefinition($document, $offset);
+        $typeLocations = $this->gotoDefinition($textDocument, $offset);
 
         if ($typeLocations->count() === 0) {
             throw new CouldNotLocateDefinition('No definition(s) found');

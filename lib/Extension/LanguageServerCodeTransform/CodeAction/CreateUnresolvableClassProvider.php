@@ -8,6 +8,7 @@ use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
@@ -34,7 +35,7 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument, $range) {
-            $diagnostics = $this->reflector->diagnostics($textDocument->text)->byClass(
+            $diagnostics = $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($textDocument))->byClass(
                 UnresolvableNameDiagnostic::class
             )->containingRange(
                 RangeConverter::toPhpactorRange($range, $textDocument->text)

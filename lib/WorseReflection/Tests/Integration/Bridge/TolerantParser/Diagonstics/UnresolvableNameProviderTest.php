@@ -483,7 +483,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
     public function testSourceCanBeFoundButNoClassIsContainedInIt(): void
     {
         $reflector = ReflectorBuilder::create()->addDiagnosticProvider($this->provider())->addLocator(
-            new StringSourceLocator(TextDocument::fromString(''))
+            new StringSourceLocator(TextDocumentBuilder::create('')->build())
         )->build();
 
         $found = $reflector->diagnostics(
@@ -495,7 +495,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
     public function testSourceCanBeFoundButNoFunctionIsContainedInIt(): void
     {
         $reflector = ReflectorBuilder::create()->addDiagnosticProvider($this->provider())->addLocator(
-            new StringSourceLocator(TextDocument::fromString(''))
+            new StringSourceLocator(TextDocumentBuilder::create('')->build())
         )->build();
 
         $found = $reflector->diagnostics(

@@ -26,20 +26,14 @@ class WorseReflectionTypeLocator implements TypeLocator
     }
 
 
-    public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
+    public function locateTypes(TextDocument $textDocument, ByteOffset $byteOffset): TypeLocations
     {
-        if (false === $document->language()->isPhp()) {
+        if (false === $textDocument->language()->isPhp()) {
             throw new UnsupportedDocument('I only work with PHP files');
         }
 
-        if ($uri = $document->uri()) {
-            $sourceCode = TextDocument::fromPathAndString($uri->__toString(), $document->__toString());
-        } else {
-            $sourceCode = TextDocument::fromString($document->__toString());
-        }
-
         $type = $this->reflector->reflectOffset(
-            $sourceCode,
+            $textDocument,
             $byteOffset->toInt()
         )->nodeContext()->type();
 
@@ -68,10 +62,10 @@ class WorseReflectionTypeLocator implements TypeLocator
             throw new CouldNotLocateType($e->getMessage(), 0, $e);
         }
 
-        $path = $class->sourceCode()->path();
+        $textDocument = $class->sourceCode();
 
         return new Location(
-            TextDocumentUri::fromString($path),
+            $textDocument->uri(),
             ByteOffset::fromInt($class->position()->start()->toInt())
         );
     }

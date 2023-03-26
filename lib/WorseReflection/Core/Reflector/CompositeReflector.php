@@ -57,27 +57,29 @@ class CompositeReflector implements Reflector
         return $this->classReflector->reflectClassLike($className, $visited);
     }
 
-    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
+
+    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         return $this->sourceCodeReflector->reflectClassesIn($sourceCode, $visited);
     }
 
-    public function reflectOffset($sourceCode, $offset): ReflectionOffset
+
+    public function reflectOffset(TextDocument $sourceCode, $offset): ReflectionOffset
     {
         return $this->sourceCodeReflector->reflectOffset($sourceCode, $offset);
     }
 
-    public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall
+    public function reflectMethodCall(TextDocument $sourceCode, $offset): ReflectionMethodCall
     {
         return $this->sourceCodeReflector->reflectMethodCall($sourceCode, $offset);
     }
 
-    public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
+    public function reflectFunctionsIn(TextDocument $sourceCode): ReflectionFunctionCollection
     {
         return $this->sourceCodeReflector->reflectFunctionsIn($sourceCode);
     }
 
-    public function navigate($sourceCode): ReflectionNavigation
+    public function navigate(TextDocument $sourceCode): ReflectionNavigation
     {
         return $this->sourceCodeReflector->navigate($sourceCode);
     }
@@ -97,17 +99,17 @@ class CompositeReflector implements Reflector
         return $this->functionReflector->sourceCodeForFunction($name);
     }
 
-    public function diagnostics($sourceCode): Diagnostics
+    public function diagnostics(TextDocument $sourceCode): Diagnostics
     {
         return $this->sourceCodeReflector->diagnostics($sourceCode);
     }
 
-    public function reflectNode($sourceCode, $offset): ReflectionNode
+    public function reflectNode(TextDocument $sourceCode, $offset): ReflectionNode
     {
         return $this->sourceCodeReflector->reflectNode($sourceCode, $offset);
     }
 
-    public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection
+    public function reflectConstantsIn(TextDocument $sourceCode): ReflectionDeclaredConstantCollection
     {
         return $this->sourceCodeReflector->reflectConstantsIn($sourceCode);
     }

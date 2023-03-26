@@ -15,6 +15,7 @@ use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
@@ -76,10 +77,11 @@ class ContextMenuHandlerTest extends HandlerTestCase
                 ]
             ]
         ]);
-        $source = TextDocument::fromPathAndString(
-            '/hello.php',
+        $source = TextDocumentBuilder::create(
             '<?php $hello = "world"; echo $hello;'
-        );
+        )->uri(
+            '/hello.php'
+        )->build(),
         $offset = ByteOffset::fromInt(4);
 
         $this->offsetFinder->find($source, $offset)
@@ -113,10 +115,11 @@ class ContextMenuHandlerTest extends HandlerTestCase
             ]
         ]);
 
-        $source = TextDocument::fromPathAndString(
-            '/hello.php',
+        $source = TextDocumentBuilder::create(
             '<?php $hello = "world"; echo $hello;'
-        );
+        )->uri(
+            '/hello.php',
+        )->build();
         $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
 
         $this->offsetFinder->find($source, $offset)
@@ -151,10 +154,11 @@ class ContextMenuHandlerTest extends HandlerTestCase
             ]
         ]);
 
-        $source = TextDocument::fromPathAndString(
-            '/hello.php',
+        $source = TextDocumentBuilder::create(
             '<?php $hello = "world"; echo $hello;'
-        );
+        )->uri(
+            '/hello.php'
+        )->build();
         $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
 
         $this->offsetFinder->find($source, $offset)
@@ -178,7 +182,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
-        $source = TextDocument::fromPathAndString('/hello.php', self::SOURCE);
+        $source = TextDocumentBuilder::create(self::SOURCE)->uri('/hello.php')->build(), 
         $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
 
         $this->offsetFinder->find($source, $offset)

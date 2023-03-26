@@ -8,6 +8,7 @@ use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -15,7 +16,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\TextDocument\TextDocument as WorseSourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
@@ -136,7 +137,7 @@ class CompleteConstructor implements Transformer
      */
     private function candidateClasses(SourceCode $source): Generator
     {
-        $classes = $this->reflector->reflectClassesIn(WorseSourceCode::fromString((string) $source))->classes();
+        $classes = $this->reflector->reflectClassesIn($source)->classes();
         foreach ($classes as $class) {
             if ($class instanceof ReflectionInterface) {
                 continue;

@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\SourceCodeLocator;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
@@ -40,7 +41,7 @@ class ChainSourceLocatorTest extends TestCase
      */
     public function testDelegateToFirst(): void
     {
-        $expectedSource = TextDocument::fromString('hello');
+        $expectedSource = TextDocumentBuilder::create('hello')->build();
         $class = ClassName::fromString('Foobar');
         $this->locator1->locate($class)->willReturn($expectedSource);
         $this->locator2->locate($class)->shouldNotBeCalled();
@@ -58,7 +59,7 @@ class ChainSourceLocatorTest extends TestCase
      */
     public function testDelegateToSecond(): void
     {
-        $expectedSource = TextDocument::fromString('hello');
+        $expectedSource = TextDocumentBuilder::create('hello')->build();
         $class = ClassName::fromString('Foobar');
         $this->locator1->locate($class)->willThrow(new SourceNotFound('Foo'));
         $this->locator2->locate($class)->willReturn($expectedSource);
@@ -78,7 +79,7 @@ class ChainSourceLocatorTest extends TestCase
     {
         $this->expectException(\Phpactor\WorseReflection\Core\Exception\SourceNotFound::class);
         $this->expectExceptionMessage('Could not find source with "Foobar"');
-        $expectedSource = TextDocument::fromString('hello');
+        $expectedSource = TextDocumentBuilder::create('hello')->build();
         $class = ClassName::fromString('Foobar');
         $this->locator1->locate($class)->willThrow(new SourceNotFound('Foo'));
         $this->locator2->locate($class)->willThrow(new SourceNotFound('Foo'));
