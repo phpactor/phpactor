@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
 use Generator;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
@@ -131,7 +132,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         TextDocument $sourceCode,
         ByteOffset|int $offset
     ): ReflectionNode {
-        $sourceCode = TextDocument::fromUnknown($sourceCode);
+        $sourceCode = TextDocumentBuilder::fromUnknown($sourceCode);
         $offset = ByteOffset::fromUnknown($offset);
 
         $rootNode = $this->parseSourceCode($sourceCode);

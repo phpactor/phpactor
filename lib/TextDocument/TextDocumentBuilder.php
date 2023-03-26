@@ -2,6 +2,7 @@
 
 namespace Phpactor\TextDocument;
 
+use Phpactor\LanguageServerProtocol\TextDocument;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use RuntimeException;
 use Symfony\Component\Filesystem\Path;
@@ -96,5 +97,17 @@ final class TextDocumentBuilder
             $this->text,
             $this->uri
         );
+    }
+
+    /**
+     * @deprecated this method encourages the creation of documents without the URI.
+     */
+    public static function fromUnknown(TextDocument|string $sourceCode): TextDocument
+    {
+        if ($sourceCode instanceof TextDocument) {
+            return $sourceCode;
+        }
+
+        return self::create($sourceCode)->build();
     }
 }
