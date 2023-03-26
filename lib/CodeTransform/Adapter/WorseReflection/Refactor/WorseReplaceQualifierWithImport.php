@@ -31,7 +31,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
     public function getTextEdits(SourceCode $sourceCode, int $offset): TextDocumentEdits
     {
         $nodeContext = $this->reflector
-            ->reflectOffset($sourceCode->__toString(), $offset)
+            ->reflectOffset($sourceCode, $offset)
             ->nodeContext();
         $type = $nodeContext->type();
 

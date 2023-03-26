@@ -5,10 +5,10 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\TextDocument\TextDocument as WorseSourceCode;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Exception;
 use Generator;
+use Phpactor\TextDocument\TextDocumentBuilder;
 
 class WorseExtractMethodTest extends WorseTestCase
 {
@@ -19,7 +19,7 @@ class WorseExtractMethodTest extends WorseTestCase
     {
         [$source, $expected, $offsetStart, $offsetEnd] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
 
-        $worseSourceCode = WorseSourceCode::fromPathAndString('file:///source', $source);
+        $worseSourceCode = TextDocumentBuilder::fromPathAndString('file:///source', $source);
         $reflector = $this->reflectorForWorkspace($worseSourceCode);
 
         $factory = new WorseBuilderFactory($reflector);

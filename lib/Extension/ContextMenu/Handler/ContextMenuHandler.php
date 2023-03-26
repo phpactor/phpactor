@@ -122,7 +122,7 @@ class ContextMenuHandler implements Handler
             ]
         );
     }
-$currentPath
+
     private function offsetFromSourceAndOffset(string $source, int $offset, string $currentPath)
     {
         $sourceCode = TextDocumentBuilder::create($source)->uri($currentPath);

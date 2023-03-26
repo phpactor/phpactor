@@ -77,11 +77,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
                 ]
             ]
         ]);
-        $source = TextDocumentBuilder::create(
-            '<?php $hello = "world"; echo $hello;'
-        )->uri(
-            '/hello.php'
-        )->build(),
+        $source = TextDocumentBuilder::create('<?php $hello = "world"; echo $hello;')->uri('/hello.php')->build();
         $offset = ByteOffset::fromInt(4);
 
         $this->offsetFinder->find($source, $offset)
@@ -128,7 +124,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $action = $this->handle(ContextMenuHandler::NAME, [
             'source' => (string) $source,
             'offset' => $offset->toInt(),
-            'current_path' => $source->path(),
+            'current_path' => $source->uri()->path(),
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
@@ -182,7 +178,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
-        $source = TextDocumentBuilder::create(self::SOURCE)->uri('/hello.php')->build(), 
+        $source = TextDocumentBuilder::create(self::SOURCE)->uri('/hello.php')->build();
         $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
 
         $this->offsetFinder->find($source, $offset)

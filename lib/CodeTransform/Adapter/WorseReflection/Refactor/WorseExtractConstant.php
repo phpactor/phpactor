@@ -36,7 +36,7 @@ class WorseExtractConstant implements ExtractConstant
     public function extractConstant(SourceCode $sourceCode, int $offset, string $constantName): TextDocumentEdits
     {
         $symbolInformation = $this->reflector
-            ->reflectOffset($sourceCode->__toString(), $offset)
+            ->reflectOffset($sourceCode, $offset)
             ->nodeContext();
 
         $textEdits = $this->addConstant($sourceCode, $symbolInformation, $constantName);

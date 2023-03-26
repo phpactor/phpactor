@@ -37,12 +37,12 @@ class WorseTestCase extends AdapterTestCase
             }
 
             $locator = new TemporarySourceLocator(ReflectorBuilder::create()->build(), true);
-            $locator->pushSourceCode(TextDocumentBuilder::fromUri($file));
+            $locator->pushSourceCode(TextDocumentBuilder::fromUri($file)->build());
             $builder->addLocator($locator);
         }
 
         if ($source !== null) {
-            $builder->addSource(TextDocumentBuilder::fromUriAndString('/foo', $source));
+            $builder->addSource(TextDocumentBuilder::create($source)->uri('/foo')->build());
         }
 
         return $builder->build();

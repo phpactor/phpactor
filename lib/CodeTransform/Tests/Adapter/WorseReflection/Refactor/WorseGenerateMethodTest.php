@@ -9,6 +9,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocument as WorseSourceCode;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
+use Phpactor\TextDocument\TextDocumentBuilder;
 
 class WorseGenerateMethodTest extends WorseTestCase
 {
@@ -81,7 +82,7 @@ class WorseGenerateMethodTest extends WorseTestCase
 
     private function generateMethod(string $source, int $start, ?string $name): string
     {
-        $worseSourceCode = WorseSourceCode::fromPathAndString('file:///source', $source);
+        $worseSourceCode = TextDocumentBuilder::fromPathAndString('file:///source', $source);
         $reflector = $this->reflectorForWorkspace($worseSourceCode);
 
         $generateMethod = new WorseGenerateMethod(

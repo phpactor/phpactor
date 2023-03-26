@@ -114,4 +114,9 @@ final class TextDocumentBuilder
     {
         return self::create('')->build();
     }
+
+    public static function fromPathAndString(string $path, string $string): TextDocument
+    {
+        return self::create($string)->uri($path)->build();
+    }
 }

@@ -7,13 +7,13 @@ use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\TextDocument\TextDocument as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
@@ -33,7 +33,7 @@ class WorseGenerateMethod implements GenerateMethod
     public function generateMethod(SourceCode $sourceCode, int $offset, ?string $methodName = null): TextDocumentEdits
     {
         $contextType = $this->contextType($sourceCode, $offset);
-        $worseSourceCode = WorseSourceCode::fromPathAndString((string) $sourceCode->path(), (string) $sourceCode);
+        $worseSourceCode = TextDocumentBuilder::fromPathAndString((string) $sourceCode->path(), (string) $sourceCode);
         $methodCall = $this->reflector->reflectMethodCall($worseSourceCode, $offset);
 
         $this->validate($methodCall);
@@ -51,7 +51,7 @@ class WorseGenerateMethod implements GenerateMethod
     {
         $containerSourceCode = SourceCode::fromStringAndPath(
             (string) $methodCall->class()->sourceCode(),
-            $methodCall->class()->sourceCode()->path()
+            $methodCall->class()->sourceCode()->uri()->path()
         );
 
         if ($sourceCode->path() != $containerSourceCode->path()) {
@@ -63,7 +63,7 @@ class WorseGenerateMethod implements GenerateMethod
 
     private function contextType(SourceCode $sourceCode, int $offset): ?Type
     {
-        $worseSourceCode = WorseSourceCode::fromPathAndString((string) $sourceCode->path(), (string) $sourceCode);
+        $worseSourceCode = TextDocumentBuilder::fromPathAndString((string) $sourceCode->path(), (string) $sourceCode);
         $reflectionOffset = $this->reflector->reflectOffset($worseSourceCode, $offset);
 
         /**

@@ -34,7 +34,7 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
      */
     public function generate(SourceCode $sourceCode, array $propertyNames, int $offset): TextEdits
     {
-        $class = $this->class((string) $sourceCode, $offset);
+        $class = $this->class($sourceCode, $offset);
         $allProperties = $class->properties();
 
         $properties = array_map(fn (string $name) => $allProperties->get($name), $propertyNames);
@@ -87,7 +87,7 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
         $containingClass = $this->reflector->reflectClassLike($className);
         $worseSourceCode = $containingClass->sourceCode();
 
-        if ($worseSourceCode->path() != $sourceCode->path()) {
+        if ($worseSourceCode->uri()->path() != $sourceCode->uri()->path()) {
             return $sourceCode;
         }
 
@@ -97,7 +97,7 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
         );
     }
 
-    private function class(string $source, int $offset): ReflectionClass
+    private function class(SourceCode $source, int $offset): ReflectionClass
     {
         $classes = $this->reflector->reflectClassesIn($source)->classes();
 

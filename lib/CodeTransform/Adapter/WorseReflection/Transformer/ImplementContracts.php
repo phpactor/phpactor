@@ -10,7 +10,6 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\TextDocument\TextDocument as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -57,7 +56,7 @@ class ImplementContracts implements Transformer
 
     public function transform(SourceCode $source): TextEdits
     {
-        $classes = $this->reflector->reflectClassesIn(WorseSourceCode::fromString((string) $source));
+        $classes = $this->reflector->reflectClassesIn($source);
         $edits = [];
         $sourceCodeBuilder = SourceCodeBuilder::create();
 

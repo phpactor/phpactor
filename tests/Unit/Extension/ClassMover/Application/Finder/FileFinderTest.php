@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ClassMover\Application\Finder\FileFinder;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -67,7 +68,7 @@ class FileFinderTest extends TestCase
     public function testReturnsClassAndTraitFilePathsIfMemberIsPrivate(): void
     {
         $class = $this->reflectClass(
-            TextDocumentBuilder::create('trait Barbar {} class Foobar { use Barbar; private function foobar(){} }', 'barfoo.php'),
+            TextDocumentBuilder::create('trait Barbar {} class Foobar { use Barbar; private function foobar(){} }')->uri('file:///barfoo.php'),
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
@@ -77,7 +78,7 @@ class FileFinderTest extends TestCase
     public function testParentsTraitsAndInterfacesIfMemberIsProtected(): void
     {
         $class = $this->reflectClass(
-            TextDocumentBuilder::create('interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }')->uri('barfoo', ,
+            TextDocumentBuilder::create('interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }')->uri('file:///barfoo')->build(),
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
