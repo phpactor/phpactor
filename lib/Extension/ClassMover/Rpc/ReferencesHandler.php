@@ -14,7 +14,7 @@ use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
@@ -73,7 +73,7 @@ class ReferencesHandler extends AbstractHandler
     public function handle(array $arguments)
     {
         $offset = $this->reflector->reflectOffset(
-            SourceCode::fromPathAndString(
+            TextDocument::fromPathAndString(
                 $arguments[self::PARAMETER_PATH],
                 $arguments[self::PARAMETER_SOURCE]
             ),

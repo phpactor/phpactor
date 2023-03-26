@@ -5,14 +5,14 @@ namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use ReflectionFunction;
 use InvalidArgumentException;
 
 class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
 {
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         if (function_exists((string) $name)) {
             return $this->sourceFromFunctionName($name);
@@ -24,7 +24,7 @@ class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
         ));
     }
 
-    private function sourceFromFunctionName(Name $name): SourceCode
+    private function sourceFromFunctionName(Name $name): TextDocument
     {
         $functionName = (string) $name;
         $function = new ReflectionFunction($functionName);
@@ -40,6 +40,6 @@ class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
             throw new InvalidArgumentException(sprintf('Function "%s" has no file', $functionName));
         }
 
-        return SourceCode::fromPath($fileName);
+        return TextDocument::fromPath($fileName);
     }
 }

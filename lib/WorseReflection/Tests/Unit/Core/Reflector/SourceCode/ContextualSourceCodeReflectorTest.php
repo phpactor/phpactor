@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Reflector\SourceCode;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Core\Reflector\SourceCode\ContextualSourceCodeReflector;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -32,7 +32,7 @@ class ContextualSourceCodeReflectorTest extends TestCase
             $this->locator
         );
 
-        $this->code = SourceCode::fromString(self::TEST_SOURCE_CODE);
+        $this->code = TextDocument::fromString(self::TEST_SOURCE_CODE);
     }
 
     public function testReflectsClassesIn(): void

@@ -12,7 +12,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -88,12 +88,12 @@ class CompositeReflector implements Reflector
         return $this->functionReflector->reflectFunction($name);
     }
 
-    public function sourceCodeForClassLike($className): SourceCode
+    public function sourceCodeForClassLike($className): TextDocument
     {
         return $this->classReflector->sourceCodeForClassLike($className);
     }
 
-    public function sourceCodeForFunction($name): SourceCode
+    public function sourceCodeForFunction($name): TextDocument
     {
         return $this->functionReflector->sourceCodeForFunction($name);
     }
@@ -118,7 +118,7 @@ class CompositeReflector implements Reflector
         return $this->constantReflector->reflectConstant($name);
     }
 
-    public function sourceCodeForConstant($name): SourceCode
+    public function sourceCodeForConstant($name): TextDocument
     {
         return $this->constantReflector->sourceCodeForConstant($name);
     }

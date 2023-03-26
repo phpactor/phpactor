@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -26,7 +26,7 @@ class ChainSourceLocator implements SourceCodeLocator
         $this->logger = $logger ?: new NullLogger();
     }
 
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         $exception = new SourceNotFound(
             'No source locators registered with chain loader '.

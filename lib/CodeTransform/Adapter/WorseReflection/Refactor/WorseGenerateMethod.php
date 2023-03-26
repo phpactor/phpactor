@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
+use Phpactor\TextDocument\TextDocument as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;

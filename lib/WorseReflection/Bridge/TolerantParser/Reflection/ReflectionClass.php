@@ -27,7 +27,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionCl
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
@@ -56,7 +56,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     public function __construct(
         private ServiceLocator $serviceLocator,
-        private SourceCode $sourceCode,
+        private TextDocument $sourceCode,
         private ClassDeclaration $node,
         private array $visited = []
     ) {
@@ -293,7 +293,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $this->interfaces()->has((string) $className);
     }
 
-    public function sourceCode(): SourceCode
+    public function sourceCode(): TextDocument
     {
         return $this->sourceCode;
     }

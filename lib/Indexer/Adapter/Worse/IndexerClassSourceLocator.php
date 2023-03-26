@@ -6,7 +6,7 @@ use Phpactor\Indexer\Model\IndexAccess;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class IndexerClassSourceLocator implements SourceCodeLocator
@@ -16,7 +16,7 @@ class IndexerClassSourceLocator implements SourceCodeLocator
     }
 
 
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         if (empty($name->__toString())) {
             throw new SourceNotFound('Name is empty');
@@ -33,6 +33,6 @@ class IndexerClassSourceLocator implements SourceCodeLocator
             ));
         }
 
-        return SourceCode::fromPath($filePath);
+        return TextDocument::fromPath($filePath);
     }
 }

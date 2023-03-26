@@ -9,7 +9,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
+use Phpactor\TextDocument\TextDocument as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;

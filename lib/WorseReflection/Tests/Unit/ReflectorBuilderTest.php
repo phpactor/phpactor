@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Reflector;
@@ -66,7 +66,7 @@ class ReflectorBuilderTest extends TestCase
             ->build();
 
         $locator1->locate(Argument::any())->shouldNotBeCalled();
-        $locator2->locate(Argument::any())->willReturn(SourceCode::fromString(file_get_contents(__FILE__)));
+        $locator2->locate(Argument::any())->willReturn(TextDocument::fromString(file_get_contents(__FILE__)));
         $locator3->locate(Argument::any())->shouldNotBeCalled();
 
         $this->assertInstanceOf(Reflector::class, $reflector);
@@ -88,7 +88,7 @@ class ReflectorBuilderTest extends TestCase
     {
         $reflector = ReflectorBuilder::create()
             ->addLocator(new StringSourceLocator(
-                SourceCode::fromString('<?php interface BackedEnum {}')
+                TextDocument::fromString('<?php interface BackedEnum {}')
             ), 100)
             ->build();
 

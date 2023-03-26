@@ -21,7 +21,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
@@ -42,9 +42,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         $this->cache->purge();
 
         if ($uri = $document->uri()) {
-            $sourceCode = SourceCode::fromPathAndString($uri->__toString(), $document->__toString());
+            $sourceCode = TextDocument::fromPathAndString($uri->__toString(), $document->__toString());
         } else {
-            $sourceCode = SourceCode::fromString($document->__toString());
+            $sourceCode = TextDocument::fromString($document->__toString());
         }
 
         try {

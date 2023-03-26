@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use InvalidArgumentException;
 
 class SourceCodeTest extends TestCase
@@ -17,7 +17,7 @@ class SourceCodeTest extends TestCase
      */
     public function testFromPath(): void
     {
-        $code = SourceCode::fromPath(__FILE__);
+        $code = TextDocument::fromPath(__FILE__);
         $this->assertEquals(file_get_contents(__FILE__), (string) $code);
     }
 
@@ -28,22 +28,22 @@ class SourceCodeTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('File "Improbable_Path_62.xyz" does not exist');
-        SourceCode::fromPath('Improbable_Path_62.xyz');
+        TextDocument::fromPath('Improbable_Path_62.xyz');
     }
 
     public function testFromUnknownReturnsSourceCodeIfGivenSourceCode(): void
     {
-        $givenSource = SourceCode::fromString(self::SOURCE_CODE);
-        $sourceCode = SourceCode::fromUnknown($givenSource);
+        $givenSource = TextDocument::fromString(self::SOURCE_CODE);
+        $sourceCode = TextDocument::fromUnknown($givenSource);
 
         $this->assertSame($givenSource, $sourceCode);
     }
 
     public function testFromUnknownString(): void
     {
-        $sourceCode = SourceCode::fromUnknown(self::SOURCE_CODE);
+        $sourceCode = TextDocument::fromUnknown(self::SOURCE_CODE);
 
-        $this->assertEquals(SourceCode::fromString(self::SOURCE_CODE), $sourceCode);
+        $this->assertEquals(TextDocument::fromString(self::SOURCE_CODE), $sourceCode);
     }
 
     public function testFromTextDocument(): void
@@ -54,7 +54,7 @@ class SourceCodeTest extends TestCase
             self::EXAMPLE_PATH
         )->build();
 
-        $sourceCode = SourceCode::fromUnknown($document);
+        $sourceCode = TextDocument::fromUnknown($document);
         $this->assertEquals($sourceCode->__toString(), self::SOURCE_CODE);
         $this->assertEquals($sourceCode->path(), self::EXAMPLE_PATH);
     }
@@ -65,7 +65,7 @@ class SourceCodeTest extends TestCase
             self::SOURCE_CODE
         )->build();
 
-        $sourceCode = SourceCode::fromUnknown($document);
+        $sourceCode = TextDocument::fromUnknown($document);
         $this->assertEquals($sourceCode->__toString(), self::SOURCE_CODE);
     }
 }

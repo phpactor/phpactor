@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 /**
@@ -39,10 +39,10 @@ final class InternalLocator implements SourceCodeLocator
         ]);
     }
 
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         if (isset($this->map[$name->__toString()])) {
-            return SourceCode::fromPath($this->map[$name->__toString()]);
+            return TextDocument::fromPath($this->map[$name->__toString()]);
         }
         throw new SourceNotFound(sprintf(
             'Could not find internal stub for "%s"',

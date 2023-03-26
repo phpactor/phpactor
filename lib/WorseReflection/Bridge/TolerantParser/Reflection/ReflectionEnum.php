@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum as CoreReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
@@ -24,7 +24,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
 {
     public function __construct(
         private ServiceLocator $serviceLocator,
-        private SourceCode $sourceCode,
+        private TextDocument $sourceCode,
         private EnumDeclaration $node
     ) {
     }
@@ -79,7 +79,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         return ClassName::fromString((string) $this->node()->getNamespacedName());
     }
 
-    public function sourceCode(): SourceCode
+    public function sourceCode(): TextDocument
     {
         return $this->sourceCode;
     }

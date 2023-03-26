@@ -6,7 +6,7 @@ use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
+use Phpactor\TextDocument\TextDocument as WorseSourceCode;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 

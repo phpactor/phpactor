@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
@@ -20,12 +20,12 @@ final class StubSourceLocator implements SourceCodeLocator
     ) {
     }
 
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         $map = $this->map();
 
         if (isset($map[(string) $name])) {
-            return SourceCode::fromPath($map[(string) $name]);
+            return TextDocument::fromPath($map[(string) $name]);
         }
 
         throw new SourceNotFound(sprintf(
@@ -91,7 +91,7 @@ final class StubSourceLocator implements SourceCodeLocator
     private function buildClassMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectClassesIn(
-            SourceCode::fromPath($file)
+            TextDocument::fromPath($file)
         );
 
         foreach ($functions as $function) {
@@ -108,7 +108,7 @@ final class StubSourceLocator implements SourceCodeLocator
     private function buildFunctionMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectFunctionsIn(
-            SourceCode::fromPath($file)
+            TextDocument::fromPath($file)
         );
 
         foreach ($functions as $function) {
@@ -125,7 +125,7 @@ final class StubSourceLocator implements SourceCodeLocator
     private function buildConstantMap(SplFileInfo $file, array $map): array
     {
         $constants = $this->reflector->reflectConstantsIn(
-            SourceCode::fromPath($file)
+            TextDocument::fromPath($file)
         );
 
         foreach ($constants as $constant) {

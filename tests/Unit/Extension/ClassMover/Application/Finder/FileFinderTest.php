@@ -8,7 +8,7 @@ use Phpactor\Extension\ClassMover\Application\Finder\FileFinder;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -67,7 +67,7 @@ class FileFinderTest extends TestCase
     public function testReturnsClassAndTraitFilePathsIfMemberIsPrivate(): void
     {
         $class = $this->reflectClass(
-            SourceCode::fromPathAndString('barfoo', 'trait Barbar {} class Foobar { use Barbar; private function foobar(){} }'),
+            TextDocument::fromPathAndString('barfoo', 'trait Barbar {} class Foobar { use Barbar; private function foobar(){} }'),
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
@@ -77,7 +77,7 @@ class FileFinderTest extends TestCase
     public function testParentsTraitsAndInterfacesIfMemberIsProtected(): void
     {
         $class = $this->reflectClass(
-            SourceCode::fromPathAndString('barfoo', 'interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }'),
+            TextDocument::fromPathAndString('barfoo', 'interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }'),
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
@@ -98,7 +98,7 @@ class FileFinderTest extends TestCase
 
     private function reflectClass($source, string $name)
     {
-        $builder = ReflectorBuilder::create()->addSource(SourceCode::fromPathAndString('foobar', '<?php ' . $source));
+        $builder = ReflectorBuilder::create()->addSource(TextDocument::fromPathAndString('foobar', '<?php ' . $source));
         return $builder->build()->reflectClassLike($name);
     }
 }

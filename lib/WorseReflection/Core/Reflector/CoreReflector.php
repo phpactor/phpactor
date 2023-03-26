@@ -20,7 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -236,12 +236,12 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         return $function;
     }
 
-    public function sourceCodeForFunction($name): SourceCode
+    public function sourceCodeForFunction($name): TextDocument
     {
         return $this->sourceLocator->locate(Name::fromUnknown($name));
     }
 
-    public function sourceCodeForClassLike($name): SourceCode
+    public function sourceCodeForClassLike($name): TextDocument
     {
         return $this->sourceLocator->locate(Name::fromUnknown($name));
     }
@@ -291,7 +291,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         return $constants->get((string) $name);
     }
 
-    public function sourceCodeForConstant($name): SourceCode
+    public function sourceCodeForConstant($name): TextDocument
     {
         $name = Name::fromUnknown($name);
 

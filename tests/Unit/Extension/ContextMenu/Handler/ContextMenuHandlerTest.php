@@ -16,7 +16,7 @@ use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Tests\Unit\Extension\Rpc\HandlerTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -42,7 +42,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function setUp(): void
     {
-        $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->build();
+        $this->reflector = ReflectorBuilder::create()->addSource(TextDocument::fromPath(__FILE__))->build();
         $this->offsetFinder = $this->prophesize(InterestingOffsetFinder::class);
         $this->classFileNormalizer = $this->prophesize(ClassFileNormalizer::class);
         $this->container = $this->prophesize(Container::class);
@@ -76,7 +76,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
                 ]
             ]
         ]);
-        $source = SourceCode::fromPathAndString(
+        $source = TextDocument::fromPathAndString(
             '/hello.php',
             '<?php $hello = "world"; echo $hello;'
         );
@@ -113,7 +113,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
             ]
         ]);
 
-        $source = SourceCode::fromPathAndString(
+        $source = TextDocument::fromPathAndString(
             '/hello.php',
             '<?php $hello = "world"; echo $hello;'
         );
@@ -151,7 +151,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
             ]
         ]);
 
-        $source = SourceCode::fromPathAndString(
+        $source = TextDocument::fromPathAndString(
             '/hello.php',
             '<?php $hello = "world"; echo $hello;'
         );
@@ -178,7 +178,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
         $this->classFileNormalizer->classToFile('string')->willReturn(__FILE__);
 
-        $source = SourceCode::fromPathAndString('/hello.php', self::SOURCE);
+        $source = TextDocument::fromPathAndString('/hello.php', self::SOURCE);
         $offset = ByteOffset::fromInt(self::ORIGINAL_OFFSET);
 
         $this->offsetFinder->find($source, $offset)

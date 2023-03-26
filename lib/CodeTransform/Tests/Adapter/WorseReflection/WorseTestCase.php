@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockRe
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
@@ -36,12 +36,12 @@ class WorseTestCase extends AdapterTestCase
             }
 
             $locator = new TemporarySourceLocator(ReflectorBuilder::create()->build(), true);
-            $locator->pushSourceCode(SourceCode::fromPath($file));
+            $locator->pushSourceCode(TextDocument::fromPath($file));
             $builder->addLocator($locator);
         }
 
         if ($source !== null) {
-            $builder->addSource(SourceCode::fromPathAndString('/foo', $source));
+            $builder->addSource(TextDocument::fromPathAndString('/foo', $source));
         }
 
         return $builder->build();

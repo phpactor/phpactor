@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
@@ -24,7 +24,7 @@ final class OffsetInfo
     public function infoForOffset(string $sourcePath, int $offset, bool $showFrame = false): array
     {
         $result = $this->reflector->reflectOffset(
-            SourceCode::fromString(
+            TextDocument::fromString(
                 $this->filesystemHelper->contentsFromFileOrStdin($sourcePath)
             ),
             ByteOffset::fromInt($offset)

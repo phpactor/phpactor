@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\InternalLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NullSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflectorFactory;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
@@ -103,9 +103,9 @@ final class ReflectorBuilder
     /**
      * Add some source code
      */
-    public function addSource(SourceCode|TextDocument|string $code): ReflectorBuilder
+    public function addSource(TextDocument|TextDocument|string $code): ReflectorBuilder
     {
-        $source = SourceCode::fromUnknown($code);
+        $source = TextDocument::fromUnknown($code);
 
         $this->addLocator(new StringSourceLocator($source));
 

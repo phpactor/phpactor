@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 
 interface SourceCodeReflector
 {
@@ -27,7 +27,7 @@ interface SourceCodeReflector
      * @param array<string,bool> $visited
      */
     public function reflectClassesIn(
-        SourceCode|TextDocument|string $sourceCode,
+        TextDocument|TextDocument|string $sourceCode,
         array $visited = []
     ): ReflectionClassLikeCollection;
 
@@ -36,36 +36,36 @@ interface SourceCodeReflector
      *
      * @return ReflectionFunctionCollection<ReflectionFunction>
      */
-    public function reflectFunctionsIn(SourceCode|TextDocument|string $sourceCode): ReflectionFunctionCollection;
+    public function reflectFunctionsIn(TextDocument|TextDocument|string $sourceCode): ReflectionFunctionCollection;
 
     /**
      * Return the information for the given offset in the given file, including the value
      * and type of a variable and the frame information.
      */
     public function reflectOffset(
-        SourceCode|TextDocument|string $sourceCode,
+        TextDocument|TextDocument|string $sourceCode,
         ByteOffset|int $offset
     ): ReflectionOffset;
 
     public function reflectMethodCall(
-        SourceCode|TextDocument|string $sourceCode,
+        TextDocument|TextDocument|string $sourceCode,
         ByteOffset|int $offset
     ): ReflectionMethodCall;
 
-    public function navigate(SourceCode|TextDocument|string $sourceCode): ReflectionNavigation;
+    public function navigate(TextDocument|TextDocument|string $sourceCode): ReflectionNavigation;
 
     /**
      * @return Diagnostics<Diagnostic>
      */
-    public function diagnostics(SourceCode|TextDocument|string $sourceCode): Diagnostics;
+    public function diagnostics(TextDocument|TextDocument|string $sourceCode): Diagnostics;
 
     public function reflectNode(
-        SourceCode|TextDocument|string $sourceCode,
+        TextDocument|TextDocument|string $sourceCode,
         ByteOffset|int $offset
     ): ReflectionNode;
 
     public function reflectConstantsIn(
-        SourceCode|TextDocument|string $sourceCode
+        TextDocument|TextDocument|string $sourceCode
     ): ReflectionDeclaredConstantCollection;
 
     /**

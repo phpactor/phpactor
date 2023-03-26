@@ -11,7 +11,7 @@ use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
@@ -25,7 +25,7 @@ final class VirtualReflectionFunction implements ReflectionFunction
         private ReflectionScope $scope,
         private Type $inferredType,
         private Type $type,
-        private SourceCode $source,
+        private TextDocument $source,
         private Name $name,
         private ReflectionParameterCollection $parameters,
     ) {
@@ -43,7 +43,7 @@ final class VirtualReflectionFunction implements ReflectionFunction
             new DummyReflectionScope(),
             TypeFactory::undefined(),
             TypeFactory::undefined(),
-            SourceCode::empty(),
+            TextDocument::empty(),
             $name,
             ReflectionParameterCollection::empty(),
         );
@@ -90,7 +90,7 @@ final class VirtualReflectionFunction implements ReflectionFunction
         return $this->type;
     }
 
-    public function sourceCode(): SourceCode
+    public function sourceCode(): TextDocument
     {
         return $this->source;
     }

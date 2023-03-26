@@ -13,7 +13,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
@@ -33,9 +33,9 @@ class WorseReflectionTypeLocator implements TypeLocator
         }
 
         if ($uri = $document->uri()) {
-            $sourceCode = SourceCode::fromPathAndString($uri->__toString(), $document->__toString());
+            $sourceCode = TextDocument::fromPathAndString($uri->__toString(), $document->__toString());
         } else {
-            $sourceCode = SourceCode::fromString($document->__toString());
+            $sourceCode = TextDocument::fromString($document->__toString());
         }
 
         $type = $this->reflector->reflectOffset(

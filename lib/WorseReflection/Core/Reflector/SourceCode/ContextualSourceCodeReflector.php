@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 
 class ContextualSourceCodeReflector implements SourceCodeReflector
@@ -27,7 +27,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
 
     public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $sourceCode = TextDocument::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
 
         $collection = $this->innerReflector->reflectClassesIn($sourceCode, $visited);
@@ -37,7 +37,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
 
     public function reflectOffset($sourceCode, $offset): ReflectionOffset
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $sourceCode = TextDocument::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
 
         $offset = $this->innerReflector->reflectOffset($sourceCode, $offset);
@@ -47,7 +47,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
 
     public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $sourceCode = TextDocument::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
 
         $offset = $this->innerReflector->reflectMethodCall($sourceCode, $offset);
@@ -57,7 +57,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
 
     public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $sourceCode = TextDocument::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
 
         $offset = $this->innerReflector->reflectFunctionsIn($sourceCode);
@@ -72,7 +72,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
 
     public function diagnostics($sourceCode): Diagnostics
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
+        $sourceCode = TextDocument::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
         return $this->innerReflector->diagnostics($sourceCode);
     }
