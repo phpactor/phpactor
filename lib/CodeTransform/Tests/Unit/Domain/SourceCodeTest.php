@@ -17,7 +17,7 @@ class SourceCodeTest extends TestCase
     {
         $source = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
 
-        $this->assertEquals(self::PATH, $source->uri()?->path());
+        $this->assertEquals(self::PATH, $source->uri()->path());
     }
 
     public function testFromUnknownReturnsSourceCodeIfPassedSourceCode(): void
@@ -57,7 +57,7 @@ class SourceCodeTest extends TestCase
         $source1 = SourceCode::fromStringAndPath(self::SOURCE, self::PATH);
         $source2 = $source1->withPath(self::OTHER_PATH);
 
-        $this->assertEquals(self::OTHER_PATH, $source2->uri()?->path());
+        $this->assertEquals(self::OTHER_PATH, $source2->uri()->path());
         $this->assertNotSame($source1, $source2);
     }
 
@@ -71,7 +71,7 @@ class SourceCodeTest extends TestCase
     public function testCanonicalizePath(): void
     {
         $sourceCode = SourceCode::fromStringAndPath('asd', '/path/to/here/../');
-        $this->assertEquals('/path/to', $sourceCode->uri()?->path());
+        $this->assertEquals('/path/to', $sourceCode->uri()->path());
     }
 
     public function testExtractSelection(): void

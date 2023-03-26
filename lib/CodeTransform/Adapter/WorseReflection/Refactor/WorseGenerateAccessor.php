@@ -87,7 +87,7 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
         $containingClass = $this->reflector->reflectClassLike($className);
         $worseSourceCode = $containingClass->sourceCode();
 
-        if ($worseSourceCode->uri()->path() != $sourceCode->uri()->path()) {
+        if ($worseSourceCode->uri()?->path() != $sourceCode->uri()->path()) {
             return $sourceCode;
         }
 

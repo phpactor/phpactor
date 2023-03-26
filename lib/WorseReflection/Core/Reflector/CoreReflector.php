@@ -163,7 +163,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     /**
      * Reflect all classes (or class-likes) in the given source code.
      */
-    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
+    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         return $this->sourceReflector->reflectClassesIn($sourceCode, $visited);
     }
@@ -171,31 +171,28 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     /**
      * Return the information for the given offset in the given file, including the value
      * and type of a variable and the frame information.
-     *
-     * @param SourceCode|string $sourceCode
-     * @param ByteOffset|int $offset
      */
-    public function reflectOffset($sourceCode, $offset): ReflectionOffset
+    public function reflectOffset(TextDocument $sourceCode, ByteOffset|int $offset): ReflectionOffset
     {
         return $this->sourceReflector->reflectOffset($sourceCode, $offset);
     }
 
-    public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall
+    public function reflectMethodCall(TextDocument $sourceCode, ByteOffset|int $offset): ReflectionMethodCall
     {
         return $this->sourceReflector->reflectMethodCall($sourceCode, $offset);
     }
 
-    public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
+    public function reflectFunctionsIn(TextDocument $sourceCode): ReflectionFunctionCollection
     {
         return $this->sourceReflector->reflectFunctionsIn($sourceCode);
     }
 
-    public function reflectConstantsIn($source): ReflectionDeclaredConstantCollection
+    public function reflectConstantsIn(TextDocument $source): ReflectionDeclaredConstantCollection
     {
         return $this->sourceReflector->reflectConstantsIn($source);
     }
 
-    public function navigate($sourceCode): ReflectionNavigation
+    public function navigate(TextDocument $sourceCode): ReflectionNavigation
     {
         return $this->sourceReflector->navigate($sourceCode);
     }

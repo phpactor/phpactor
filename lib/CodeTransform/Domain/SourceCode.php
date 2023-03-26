@@ -102,10 +102,6 @@ final class SourceCode implements TextDocument
 
     public function uriOrThrow(): TextDocumentUri
     {
-        if (null === $this->uri) {
-            throw new RuntimeException('Document has no URI');
-        }
-
         return $this->uri;
     }
 }

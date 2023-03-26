@@ -32,7 +32,7 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 class TemporarySourceLocator implements SourceCodeLocator
 {
     /**
-     * @var SourceCode[]
+     * @var TextDocument[]
      */
     private array $sources = [];
 

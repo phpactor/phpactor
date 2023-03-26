@@ -63,7 +63,7 @@ class WorseReflectionTypeLocator implements TypeLocator
         $textDocument = $class->sourceCode();
 
         return new Location(
-            $textDocument->uri(),
+            $textDocument->uriOrThrow(),
             ByteOffset::fromInt($class->position()->start()->toInt())
         );
     }

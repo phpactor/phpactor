@@ -88,7 +88,7 @@ class MemonizedReflector implements ClassReflector, FunctionReflector, ConstantR
 
     public function sourceCodeForFunction($name): TextDocument
     {
-        return $this->getOrSet(self::FUNC_PREFIX.'source_code'.$name, function () use ($name) {
+        return $this->getOrSet(self::FUNC_PREFIX.'source_code'.$name, function () use ($name): TextDocument {
             return $this->functionReflector->sourceCodeForFunction($name);
         });
     }
@@ -111,7 +111,9 @@ class MemonizedReflector implements ClassReflector, FunctionReflector, ConstantR
     }
 
     /**
-     * @return mixed
+     * @template T
+     * @param Closure(): T $closure
+     * @return T
      */
     private function getOrSet(string $key, Closure $closure)
     {

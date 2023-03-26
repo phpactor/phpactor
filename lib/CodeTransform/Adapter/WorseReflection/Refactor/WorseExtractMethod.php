@@ -155,7 +155,7 @@ class WorseExtractMethod implements ExtractMethod
         }
 
         return new TextDocumentEdits(
-            TextDocumentUri::fromString($source->uri()?->path()),
+            TextDocumentUri::fromString($source->uri()->path()),
             $this->updater->textEditsFor($prototype, Code::fromString((string) $source))
                 ->add(TextEdit::create($offsetStart, $offsetEnd - $offsetStart, $replacement))
         );

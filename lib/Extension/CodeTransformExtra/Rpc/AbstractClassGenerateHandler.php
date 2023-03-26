@@ -90,7 +90,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
             );
         }
 
-        return ReplaceFileSourceResponse::fromPathAndSource($code->uri()?->path(), (string) $code);
+        return ReplaceFileSourceResponse::fromPathAndSource($code->uri()->path(), (string) $code);
     }
 
     abstract protected function generate(array $arguments): SourceCode;
