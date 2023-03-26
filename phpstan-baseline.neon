@@ -3126,16 +3126,6 @@ parameters:
 			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
 
 		-
-			message: "#^Parameter \\#1 \\$sourceCode of method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCodeReflector\\:\\:reflectOffset\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocument\\|string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
-
-		-
-			message: "#^Parameter \\#2 \\$offset of method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCodeReflector\\:\\:reflectOffset\\(\\) expects int\\|Phpactor\\\\TextDocument\\\\ByteOffset\\|Phpactor\\\\WorseReflection\\\\Core\\\\Offset, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CompletionExtra/Rpc/HoverHandler.php
-
-		-
 			message: "#^Parameter \\#1 \\$registry of class Phpactor\\\\Extension\\\\CompletionRpc\\\\Handler\\\\CompleteHandler constructor expects Phpactor\\\\Completion\\\\Core\\\\TypedCompletorRegistry, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/CompletionRpc/CompletionRpcExtension.php
@@ -6611,11 +6601,6 @@ parameters:
 			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
 
 		-
-			message: "#^Parameter \\#1 \\$filename of function Safe\\\\file_get_contents expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Worse/WorseRecordReferenceEnhancer.php
-
-		-
 			message: "#^Parameter \\#1 \\.\\.\\.\\$paths of static method Symfony\\\\Component\\\\Filesystem\\\\Path\\:\\:join\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/Command/IndexBuildCommand.php
@@ -6859,11 +6844,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\ReferenceFinder\\\\Util\\\\ContainerTypeResolverTest\\:\\:testResolve\\(\\) has parameter \\$manifest with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/Unit/Adapter/ReferenceFinder/Util/ContainerTypeResolverTest.php
-
-		-
-			message: "#^Cannot cast mixed to int\\.$#"
-			count: 1
-			path: lib/Indexer/Util/Cast.php
 
 		-
 			message: "#^Cannot call method getPathName\\(\\) on mixed\\.$#"
@@ -7174,11 +7154,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$type of class Phpactor\\\\ReferenceFinder\\\\TypeLocation constructor expects Phpactor\\\\WorseReflection\\\\Core\\\\Type, Phpactor\\\\WorseReflection\\\\Core\\\\Type\\\\ClassType\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorseReflectionDefinitionLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorseReflectionTypeLocator.php
 
 		-
 			message: "#^Cannot cast mixed to string\\.$#"
@@ -7621,82 +7596,12 @@ parameters:
 			path: lib/WorseReflection/Core/Reflection/ReflectionSourceCode.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:reflectClass\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClass but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:reflectClassLike\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:reflectEnum\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionEnum but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:reflectFunction\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionFunction but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:reflectInterface\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionInterface but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:reflectTrait\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionTrait but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:sourceCodeForClassLike\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:sourceCodeForFunction\\(\\) should return Phpactor\\\\WorseReflection\\\\Core\\\\SourceCode but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
-
-		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:\\$innerReflector is never read, only written\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/ClassReflector/MemonizedReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:diagnostics\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:navigate\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectClassesIn\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectConstantsIn\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectFunctionsIn\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectMethodCall\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectMethodCall\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
 
@@ -7706,52 +7611,12 @@ parameters:
 			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectNode\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectOffset\\(\\) has parameter \\$offset with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectOffset\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:diagnostics\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:navigate\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectClassesIn\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectConstantsIn\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectFunctionsIn\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectMethodCall\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectMethodCall\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
 
@@ -7766,37 +7631,7 @@ parameters:
 			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:diagnostics\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:navigate\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:reflectClassesIn\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:reflectConstantsIn\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:reflectFunctionsIn\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:reflectMethodCall\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:reflectMethodCall\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
 
@@ -7806,17 +7641,7 @@ parameters:
 			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:reflectNode\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:reflectOffset\\(\\) has parameter \\$offset with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\SourceCode\\\\ContextualSourceCodeReflector\\:\\:reflectOffset\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/SourceCode/ContextualSourceCodeReflector.php
 
