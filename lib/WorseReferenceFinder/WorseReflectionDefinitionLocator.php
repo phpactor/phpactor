@@ -254,7 +254,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
 
-        $path = $member->declaringClass()->sourceCode()->path();
+        $path = $member->declaringClass()->sourceCode()->uri()->path();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(

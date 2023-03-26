@@ -177,7 +177,7 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
 
         $this->assertEquals(
             $this->workspace->path('Foobar.php'),
-            (string) $location->first()->location()->uri()->path()
+            $location->first()->location()->uri()->path()
         );
     }
 
@@ -254,7 +254,10 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             EOT
             , '<?php Foobar::FOO<>BAR;');
 
-        $this->assertEquals($this->workspace->path('Foobar.php'), (string) $location->first()->location()->uri()->path());
+        $this->assertEquals(
+            $this->workspace->path('Foobar.php'),
+            (string) $location->first()->location()->uri()->path()
+        );
         $this->assertEquals(21, $location->first()->location()->offset()->toInt());
     }
 

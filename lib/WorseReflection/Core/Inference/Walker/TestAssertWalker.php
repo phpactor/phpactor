@@ -172,7 +172,7 @@ class TestAssertWalker implements Walker
                 'Expected int literal'
             );
         }
-        $offset = $resolver->reflector()->reflectOffset(NodeToTextDocumentConverter::convert($node)->build(), $type->value());
+        $offset = $resolver->reflector()->reflectOffset(NodeToTextDocumentConverter::convert($node), $type->value());
         $this->assertTypeIs($node, $offset->nodeContext()->type(), $expectedType);
     }
 
