@@ -125,7 +125,7 @@ class ContextMenuHandler implements Handler
 
     private function offsetFromSourceAndOffset(string $source, int $offset, string $currentPath)
     {
-        $sourceCode = TextDocumentBuilder::create($source)->uri($currentPath);
+        $sourceCode = TextDocumentBuilder::create($source)->uri($currentPath)->build();
 
         $interestingOffset = $this->offsetFinder->find(
             $sourceCode,

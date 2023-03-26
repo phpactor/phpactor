@@ -36,7 +36,7 @@ class ImportMissingClassesHandler implements Handler
             $arguments[self::PARAM_SOURCE]
         )->language('php')->uri($arguments[self::PARAM_PATH])->build();
 
-        $diagnostics = $this->reflector->diagnostics($arguments[self::PARAM_SOURCE])->byClass(UnresolvableNameDiagnostic::class);
+        $diagnostics = $this->reflector->diagnostics($document)->byClass(UnresolvableNameDiagnostic::class);
 
         $responses = [];
         foreach ($diagnostics as $unresolvedClass) {
