@@ -26,7 +26,7 @@ interface SourceCodeReflector
      * @param array<string,bool> $visited
      */
     public function reflectClassesIn(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         array $visited = []
     ): ReflectionClassLikeCollection;
 
@@ -35,36 +35,36 @@ interface SourceCodeReflector
      *
      * @return ReflectionFunctionCollection<ReflectionFunction>
      */
-    public function reflectFunctionsIn(TextDocument|string $sourceCode): ReflectionFunctionCollection;
+    public function reflectFunctionsIn(TextDocument $sourceCode): ReflectionFunctionCollection;
 
     /**
      * Return the information for the given offset in the given file, including the value
      * and type of a variable and the frame information.
      */
     public function reflectOffset(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         ByteOffset|int $offset
     ): ReflectionOffset;
 
     public function reflectMethodCall(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         ByteOffset|int $offset
     ): ReflectionMethodCall;
 
-    public function navigate(TextDocument|string $sourceCode): ReflectionNavigation;
+    public function navigate(TextDocument $sourceCode): ReflectionNavigation;
 
     /**
      * @return Diagnostics<Diagnostic>
      */
-    public function diagnostics(TextDocument|string $sourceCode): Diagnostics;
+    public function diagnostics(TextDocument $sourceCode): Diagnostics;
 
     public function reflectNode(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         ByteOffset|int $offset
     ): ReflectionNode;
 
     public function reflectConstantsIn(
-        TextDocument|string $sourceCode
+        TextDocument $sourceCode
     ): ReflectionDeclaredConstantCollection;
 
     /**

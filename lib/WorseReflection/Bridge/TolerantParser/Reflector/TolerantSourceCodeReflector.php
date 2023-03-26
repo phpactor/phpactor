@@ -37,7 +37,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
      * @param array<string,bool> $visited
      */
     public function reflectClassesIn(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         array $visited = []
     ): ReflectionClassLikeCollection {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
@@ -46,7 +46,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     }
 
     public function reflectOffset(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         ByteOffset|int $offset
     ): ReflectionOffset {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
@@ -64,7 +64,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     /**
      * @return Diagnostics<Diagnostic>
      */
-    public function diagnostics(TextDocument|string $sourceCode): Diagnostics
+    public function diagnostics(TextDocument $sourceCode): Diagnostics
     {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
         return $this->serviceLocator->cache()->getOrSet(
@@ -86,7 +86,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     }
 
     public function reflectMethodCall(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         ByteOffset|int $offset
     ): ReflectionMethodCall {
         // see https://github.com/phpactor/phpactor/issues/1445
@@ -108,27 +108,27 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         return $reflection;
     }
 
-    public function reflectFunctionsIn(TextDocument|string $sourceCode): TolerantReflectionFunctionCollection
+    public function reflectFunctionsIn(TextDocument $sourceCode): TolerantReflectionFunctionCollection
     {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
         return TolerantReflectionFunctionCollection::fromNode($this->serviceLocator, $sourceCode, $node);
     }
 
-    public function reflectConstantsIn(TextDocument|string $sourceCode): ReflectionDeclaredConstantCollection
+    public function reflectConstantsIn(TextDocument $sourceCode): ReflectionDeclaredConstantCollection
     {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
         return ReflectionDeclaredConstantCollection::fromNode($this->serviceLocator, $sourceCode, $node);
     }
 
-    public function navigate(TextDocument|string $sourceCode): ReflectionNavigation
+    public function navigate(TextDocument $sourceCode): ReflectionNavigation
     {
         return new ReflectionNavigation($this->serviceLocator, $this->parseSourceCode(TextDocument::fromUnknown($sourceCode)));
     }
 
     public function reflectNode(
-        TextDocument|string $sourceCode,
+        TextDocument $sourceCode,
         ByteOffset|int $offset
     ): ReflectionNode {
         $sourceCode = TextDocument::fromUnknown($sourceCode);
