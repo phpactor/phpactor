@@ -6,6 +6,7 @@ use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\FunctionLikeSnip
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\ParametersSnippetFormatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Tests\TestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -79,7 +80,7 @@ final class FunctionLikeSnippetFormatterTest extends TestCase
     {
         return ReflectorBuilder::create()
             ->build()
-            ->reflectFunctionsIn(\sprintf('<?php function %s {}', $functionAsString))
+            ->reflectFunctionsIn(TextDocumentBuilder::fromUnknown(\sprintf('<?php function %s {}', $functionAsString)))
             ->first()
         ;
     }
@@ -88,7 +89,7 @@ final class FunctionLikeSnippetFormatterTest extends TestCase
     {
         return ReflectorBuilder::create()
             ->build()
-            ->reflectClassesIn(\sprintf('<?php class Foo { public function %s {} }', $methodAsString))
+            ->reflectClassesIn(TextDocumentBuilder::fromUnknown(\sprintf('<?php class Foo { public function %s {} }', $methodAsString)))
             ->first()
             ->methods()
             ->first()

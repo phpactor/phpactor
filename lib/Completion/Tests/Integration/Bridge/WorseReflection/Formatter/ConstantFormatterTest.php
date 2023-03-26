@@ -4,6 +4,7 @@ namespace Phpactor\Completion\Tests\Integration\Bridge\WorseReflection\Formatter
 
 use Generator;
 use Phpactor\Completion\Tests\Integration\IntegrationTestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class ConstantFormatterTest extends IntegrationTestCase
@@ -13,9 +14,8 @@ class ConstantFormatterTest extends IntegrationTestCase
      */
     public function testFormatsConstant(string $code, string $expected): void
     {
-        $constant = ReflectorBuilder::create()->build()->reflectClassesIn(
-            $code
-        )->classes()->first()->constants()->first();
+        $code = TextDocumentBuilder::fromUnknown($code);
+        $constant = ReflectorBuilder::create()->build()->reflectClassesIn($code)->classes()->first()->constants()->first();
 
         self::assertTrue($this->formatter()->canFormat($constant));
         self::assertEquals($expected, $this->formatter()->format($constant));

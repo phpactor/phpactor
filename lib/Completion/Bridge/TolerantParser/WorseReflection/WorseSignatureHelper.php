@@ -193,7 +193,7 @@ class WorseSignatureHelper implements SignatureHelper
             throw new CouldNotHelpWithSignature(sprintf('Static calls only supported with qualified names'));
         }
 
-        $offset = $this->reflector->reflectOffset($node->getFileContents(), $scopeResolutionQualifier->getStartPosition());
+        $offset = $this->reflector->reflectOffset(NodeToTextDocumentConverter::convert($node), $scopeResolutionQualifier->getStartPosition());
 
         $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
 
@@ -224,7 +224,7 @@ class WorseSignatureHelper implements SignatureHelper
             ));
         }
 
-        $offset = $this->reflector->reflectOffset($attrNode->getFileContents(), $name->getStartPosition());
+        $offset = $this->reflector->reflectOffset(NodeToTextDocumentConverter::convert($attrNode), $name->getStartPosition());
 
         $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
         $constructor = $reflectionClass->methods()->get('__construct');
