@@ -38,7 +38,7 @@ class IndexedReferenceFinder implements ReferenceFinder
     {
         try {
             $nodeContext = $this->reflector->reflectOffset(
-                $document->__toString(),
+                $document,
                 $byteOffset->toInt()
             )->nodeContext();
         } catch (NotFound) {

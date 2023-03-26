@@ -39,7 +39,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
     {
         $nodeContext = $this->reflector->reflectOffset(
-            $document->__toString(),
+            $document,
             $byteOffset->toInt()
         )->nodeContext();
 

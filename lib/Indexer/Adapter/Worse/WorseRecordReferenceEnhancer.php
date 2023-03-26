@@ -6,12 +6,12 @@ use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Psr\Log\LoggerInterface;
 use Safe\Exceptions\FilesystemException;
-use function Safe\file_get_contents;
 
 class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 {
@@ -31,8 +31,8 @@ class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 
         try {
             // TODO: We should get the latest in-memory source, e.g. from the
-            // LS workspace. Perhaps add an adapter.
-            $contents = file_get_contents($record->filePath());
+            // LS workspace. Perhaps add an adapter. <<-- this
+            $contents = TextDocumentBuilder::fromUri($record->filePath()??'')->build();
         } catch (FilesystemException $error) {
             $this->logger->warning(sprintf(
                 'Record Enhancer: Could not read file "%s": %s',
