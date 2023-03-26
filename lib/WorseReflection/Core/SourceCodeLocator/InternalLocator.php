@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\TextDocument\TextDocument;
@@ -42,7 +43,7 @@ final class InternalLocator implements SourceCodeLocator
     public function locate(Name $name): TextDocument
     {
         if (isset($this->map[$name->__toString()])) {
-            return TextDocument::fromPath($this->map[$name->__toString()]);
+            return TextDocumentBuilder::fromUri($this->map[$name->__toString()])->build();
         }
         throw new SourceNotFound(sprintf(
             'Could not find internal stub for "%s"',

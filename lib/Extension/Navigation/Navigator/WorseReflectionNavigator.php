@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Navigation\Navigator;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\TextDocument\TextDocument;
@@ -16,7 +17,7 @@ class WorseReflectionNavigator implements Navigator
     public function destinationsFor(string $path): array
     {
         $destinations = [];
-        $source = TextDocument::fromPath($path);
+        $source = TextDocumentBuilder::fromUri($path)->build();
         $classes = $this->reflector->reflectClassesIn($source);
 
         foreach ($classes as $class) {

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\Composer;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Composer\Autoload\ClassLoader;
@@ -25,6 +26,6 @@ class ComposerSourceLocator implements SourceCodeLocator
             ));
         }
 
-        return TextDocument::fromPath($path);
+        return TextDocumentBuilder::fromUri($path)->build();
     }
 }

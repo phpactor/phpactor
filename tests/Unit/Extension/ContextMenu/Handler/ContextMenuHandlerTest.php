@@ -43,7 +43,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
 
     public function setUp(): void
     {
-        $this->reflector = ReflectorBuilder::create()->addSource(TextDocument::fromPath(__FILE__))->build();
+        $this->reflector = ReflectorBuilder::create()->addSource(TextDocumentBuilder::fromUri(__FILE__)->build())->build();
         $this->offsetFinder = $this->prophesize(InterestingOffsetFinder::class);
         $this->classFileNormalizer = $this->prophesize(ClassFileNormalizer::class);
         $this->container = $this->prophesize(Container::class);

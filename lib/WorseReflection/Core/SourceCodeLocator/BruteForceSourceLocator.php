@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
@@ -27,7 +28,7 @@ final class BruteForceSourceLocator implements SourceCodeLocator
         $map = $this->map();
 
         if (isset($map[(string) $name])) {
-            return TextDocument::fromPath($map[(string) $name]);
+            return TextDocumentBuilder::fromUri($map[(string) $name])->build();
         }
 
         throw new SourceNotFound(sprintf(
@@ -83,7 +84,7 @@ final class BruteForceSourceLocator implements SourceCodeLocator
     private function buildClassMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectClassesIn(
-            TextDocument::fromPath($file)
+            TextDocumentBuilder::fromUri($file->build())
         );
 
         foreach ($functions as $function) {
@@ -100,7 +101,7 @@ final class BruteForceSourceLocator implements SourceCodeLocator
     private function buildFunctionMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectFunctionsIn(
-            TextDocument::fromPath($file)
+            TextDocumentBuilder::fromUri($file->build())
         );
 
         foreach ($functions as $function) {

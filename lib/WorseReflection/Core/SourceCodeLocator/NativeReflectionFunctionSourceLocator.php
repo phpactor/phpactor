@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\TextDocument\TextDocument;
@@ -40,6 +41,6 @@ class NativeReflectionFunctionSourceLocator implements SourceCodeLocator
             throw new InvalidArgumentException(sprintf('Function "%s" has no file', $functionName));
         }
 
-        return TextDocument::fromPath($fileName);
+        return TextDocumentBuilder::fromUri($fileName)->build();
     }
 }

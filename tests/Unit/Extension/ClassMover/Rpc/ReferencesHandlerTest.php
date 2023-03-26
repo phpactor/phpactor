@@ -42,7 +42,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->classReferences = $this->prophesize(ClassReferences::class);
         $this->classMemberReferences = $this->prophesize(ClassMemberReferences::class);
         $this->logger = new ArrayLogger();
-        $this->reflector = ReflectorBuilder::create()->addSource(TextDocument::fromPath(__FILE__))->withLogger($this->logger)->build();
+        $this->reflector = ReflectorBuilder::create()->addSource(TextDocumentBuilder::fromUri(__FILE__)->build())->withLogger($this->logger)->build();
         $this->filesystemRegistry = $this->prophesize(FilesystemRegistry::class);
     }
 

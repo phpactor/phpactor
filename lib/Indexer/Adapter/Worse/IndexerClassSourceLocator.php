@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Adapter\Worse;
 
 use Phpactor\Indexer\Model\IndexAccess;
 use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\TextDocument\TextDocument;
@@ -33,6 +34,6 @@ class IndexerClassSourceLocator implements SourceCodeLocator
             ));
         }
 
-        return TextDocument::fromPath($filePath);
+        return TextDocumentBuilder::fromUri($filePath)->build();
     }
 }
