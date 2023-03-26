@@ -22,7 +22,7 @@ class IntegrationTestCase extends TestCase
         $this->logger = new ArrayLogger();
     }
 
-    public function createBuilder(string $source): ReflectorBuilder
+    public function createBuilder(TextDocument|string $source): ReflectorBuilder
     {
         return ReflectorBuilder::create()
             ->addSource($source)

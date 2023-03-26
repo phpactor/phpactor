@@ -84,7 +84,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         $this->writeFileContents($arguments, $code);
 
         return ReplaceFileSourceResponse::fromPathAndSource(
-            ($code->uri()->scheme() === 'file' && $code->path()) ? $code->uri()->path() : $arguments[self::PARAM_NEW_PATH],
+            ($code->uri()->scheme() === 'file' && $code->uri()->path()) ? $code->uri()->path() : $arguments[self::PARAM_NEW_PATH],
             (string) $code
         );
     }

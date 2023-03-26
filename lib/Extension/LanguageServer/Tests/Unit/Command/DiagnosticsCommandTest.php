@@ -29,6 +29,7 @@ class DiagnosticsCommandTest extends LanguageServerTestCase
         $process = new Process([
             __DIR__ . '/../../../../../../bin/phpactor',
             'language-server:diagnostics',
+            '--uri=file:///foo',
         ], $this->workspace()->path(), [], $sourceCode);
         $process->mustRun();
 

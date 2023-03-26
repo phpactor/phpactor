@@ -87,7 +87,7 @@ class UpdateDocblockReturnTransformer implements Transformer
     private function methodsThatNeedFixing(SourceCode $code): array
     {
         $missingMethods = [];
-        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClasses(MissingDocblockReturnTypeDiagnostic::class);
+        $diagnostics = $this->reflector->diagnostics($code)->byClasses(MissingDocblockReturnTypeDiagnostic::class);
 
         foreach ($diagnostics as $diagnostic) {
             $missingMethods[] = $diagnostic;

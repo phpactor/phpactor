@@ -93,7 +93,7 @@ class RemoveUnusedImportsTransformer implements Transformer
      */
     private function unusedImports(SourceCode $code): WorseDiagnostics
     {
-        return $this->reflector->diagnostics($code->__toString())->byClass(UnusedImportDiagnostic::class);
+        return $this->reflector->diagnostics($code)->byClass(UnusedImportDiagnostic::class);
     }
 
     private function forGroupClause(QualifiedName $importNode, NamespaceUseClause $list): ?TextEdit

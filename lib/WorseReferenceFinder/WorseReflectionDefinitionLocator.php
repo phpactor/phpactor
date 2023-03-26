@@ -8,7 +8,6 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
@@ -21,7 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
@@ -33,23 +32,17 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
     }
 
 
-    public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
+    public function locateDefinition(TextDocument $textDocument, ByteOffset $byteOffset): TypeLocations
     {
-        if (false === $document->language()->isPhp()) {
+        if (false === $textDocument->language()->isPhp()) {
             throw new CouldNotLocateDefinition('I only work with PHP files');
         }
 
         $this->cache->purge();
 
-        if ($uri = $document->uri()) {
-            $sourceCode = SourceCode::fromPathAndString($uri->__toString(), $document->__toString());
-        } else {
-            $sourceCode = SourceCode::fromString($document->__toString());
-        }
-
         try {
             $offset = $this->reflector->reflectOffset(
-                $sourceCode,
+                $textDocument,
                 $byteOffset->toInt()
             );
         } catch (NotFound $notFound) {
@@ -57,7 +50,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
         $typeLocations = [];
-        $typeLocations = $this->gotoDefinition($document, $offset);
+        $typeLocations = $this->gotoDefinition($textDocument, $offset);
 
         if ($typeLocations->count() === 0) {
             throw new CouldNotLocateDefinition('No definition(s) found');
@@ -104,7 +97,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $class->sourceCode()->path();
+        $path = $class->sourceCode()->uri()?->path();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(
@@ -129,7 +122,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $function->sourceCode()->path();
+        $path = $function->sourceCode()->uri()?->path();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(
@@ -156,7 +149,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $constant->sourceCode()->path();
+        $path = $constant->sourceCode()->uri()?->path();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(
@@ -220,7 +213,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
             $member = $members->get($symbolName);
 
-            $path = $member->declaringClass()->sourceCode()->path();
+            $path = $member->declaringClass()->sourceCode()->uri()?->path();
 
             if (null === $path) {
                 throw new CouldNotLocateDefinition(sprintf(
@@ -261,7 +254,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
 
-        $path = $member->declaringClass()->sourceCode()->path();
+        $path = $member->declaringClass()->sourceCode()->uri()?->path();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(

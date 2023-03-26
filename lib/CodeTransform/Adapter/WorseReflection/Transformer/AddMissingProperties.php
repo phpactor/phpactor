@@ -36,7 +36,7 @@ class AddMissingProperties implements Transformer
     public function transform(SourceCode $code): TextEdits
     {
         $rootNode = $this->parser->parseSourceFile($code->__toString());
-        $wrDiagnostics = $this->reflector->diagnostics($code->__toString());
+        $wrDiagnostics = $this->reflector->diagnostics($code);
         $sourceBuilder = SourceCodeBuilder::create();
 
         /** @var AssignmentToMissingPropertyDiagnostic $diagnostic */
@@ -75,7 +75,7 @@ class AddMissingProperties implements Transformer
 
     public function diagnostics(SourceCode $code): Diagnostics
     {
-        $wrDiagnostics = $this->reflector->diagnostics($code->__toString());
+        $wrDiagnostics = $this->reflector->diagnostics($code);
         $diagnostics = [];
 
         /** @var AssignmentToMissingPropertyDiagnostic $diagnostic */

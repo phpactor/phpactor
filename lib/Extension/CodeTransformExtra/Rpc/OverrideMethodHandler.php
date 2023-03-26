@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
 use Phpactor\MapResolver\Resolver;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
 use InvalidArgumentException;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
@@ -76,7 +77,7 @@ class OverrideMethodHandler extends AbstractHandler
 
     private function class($source, $className = null)
     {
-        $classes = $this->reflector->reflectClassesIn($source);
+        $classes = $this->reflector->reflectClassesIn(TextDocumentBuilder::fromUnknown($source));
 
         if ($classes->count() === 0) {
             throw new InvalidArgumentException(

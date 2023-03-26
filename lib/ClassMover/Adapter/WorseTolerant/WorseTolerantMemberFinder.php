@@ -25,6 +25,8 @@ use Phpactor\ClassMover\Domain\Reference\MemberReference;
 use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\Reference\Position;
 use Phpactor\ClassMover\Domain\SourceCode;
+use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\TextDocument\NodeToTextDocumentConverter;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\TextDocument\ByteOffset;
@@ -32,7 +34,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
@@ -53,7 +54,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         Parser $parser = null,
         LoggerInterface $logger = null
     ) {
-        $this->reflector = $reflector ?: ReflectorBuilder::create()->addSource(WorseSourceCode::fromString(''));
+        $this->reflector = $reflector ?: ReflectorBuilder::create()->addSource(TextDocumentBuilder::empty());
         $this->parser = $parser ?: new Parser();
         $this->logger = $logger ?: new NullLogger();
     }
@@ -310,7 +311,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         );
 
         $offset = $this->reflector->reflectOffset(
-            WorseSourceCode::fromString($memberNode->getFileContents()),
+            NodeToTextDocumentConverter::convert($memberNode),
             ByteOffset::fromInt($memberNode->scopeResolutionQualifier->getEndPosition())
         );
 
@@ -335,7 +336,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         );
 
         $offset = $this->reflector->reflectOffset(
-            WorseSourceCode::fromString($memberNode->getFileContents()),
+            NodeToTextDocumentConverter::convert($memberNode),
             ByteOffset::fromInt($memberNode->dereferencableExpression->getEndPosition())
         );
 

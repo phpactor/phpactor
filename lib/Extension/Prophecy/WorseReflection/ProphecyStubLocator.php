@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\Prophecy\WorseReflection;
 
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\InternalLocator;
 
@@ -19,7 +19,7 @@ class ProphecyStubLocator implements SourceCodeLocator
         ]);
     }
 
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         return $this->locator->locate($name);
     }

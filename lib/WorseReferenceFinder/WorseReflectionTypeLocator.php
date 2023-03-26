@@ -10,10 +10,8 @@ use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
@@ -26,20 +24,14 @@ class WorseReflectionTypeLocator implements TypeLocator
     }
 
 
-    public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
+    public function locateTypes(TextDocument $textDocument, ByteOffset $byteOffset): TypeLocations
     {
-        if (false === $document->language()->isPhp()) {
+        if (false === $textDocument->language()->isPhp()) {
             throw new UnsupportedDocument('I only work with PHP files');
         }
 
-        if ($uri = $document->uri()) {
-            $sourceCode = SourceCode::fromPathAndString($uri->__toString(), $document->__toString());
-        } else {
-            $sourceCode = SourceCode::fromString($document->__toString());
-        }
-
         $type = $this->reflector->reflectOffset(
-            $sourceCode,
+            $textDocument,
             $byteOffset->toInt()
         )->nodeContext()->type();
 
@@ -68,10 +60,10 @@ class WorseReflectionTypeLocator implements TypeLocator
             throw new CouldNotLocateType($e->getMessage(), 0, $e);
         }
 
-        $path = $class->sourceCode()->path();
+        $textDocument = $class->sourceCode();
 
         return new Location(
-            TextDocumentUri::fromString($path),
+            $textDocument->uriOrThrow(),
             ByteOffset::fromInt($class->position()->start()->toInt())
         );
     }

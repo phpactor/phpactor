@@ -9,6 +9,7 @@ use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Cast\Cast;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -45,7 +46,7 @@ class HoverHandler implements Handler
     public function handle(array $arguments): Response
     {
         $offset = $this->reflector->reflectOffset(
-            Cast::toString($arguments[self::PARAM_SOURCE]),
+            TextDocumentBuilder::create(Cast::toString($arguments[self::PARAM_SOURCE]))->build(),
             Cast::toInt($arguments[self::PARAM_OFFSET])
         );
 

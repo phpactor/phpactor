@@ -88,7 +88,7 @@ class WorseGenerateConstructor implements GenerateConstructor
 
         return new WorkspaceEdits(
             new TextDocumentEdits(
-                TextDocumentUri::fromString($reflectionNode->class()->sourceCode()->mustGetUri()),
+                TextDocumentUri::fromString($reflectionNode->class()->sourceCode()->uriOrThrow()),
                 $this->updater->textEditsFor($builder->build(), Code::fromString($reflectionNode->class()->sourceCode()))
             )
         );

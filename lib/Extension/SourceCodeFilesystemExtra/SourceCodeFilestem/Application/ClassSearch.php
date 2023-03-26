@@ -64,7 +64,7 @@ class ClassSearch
         }
 
         return [
-            'file_path' => (string) $reflectionClass->sourceCode()->path(),
+            'file_path' => (string) $reflectionClass->sourceCode()->uri()?->path(),
             'class' => (string) $reflectionClass->name(),
             'class_name' => $reflectionClass->name()->short(),
             'class_namespace' => (string) $reflectionClass->name()->namespace(),

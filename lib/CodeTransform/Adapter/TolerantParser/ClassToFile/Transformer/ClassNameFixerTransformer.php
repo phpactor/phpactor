@@ -162,12 +162,12 @@ class ClassNameFixerTransformer implements Transformer
 
     private function determineClassFqn(SourceCode $code): ClassName
     {
-        if (!$code->path()) {
+        if (!$code->uri()->path()) {
             throw new RuntimeException('Source code has no path associated with it');
         }
 
         $candidates = $this->fileToClass->fileToClassCandidates(
-            FilePath::fromString((string) $code->path())
+            FilePath::fromString((string) $code->uri()->path())
         );
 
         $classFqn = $candidates->best();

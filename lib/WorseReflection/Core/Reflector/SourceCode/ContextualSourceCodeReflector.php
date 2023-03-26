@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflector\SourceCode;
 
 use Generator;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Walker;
@@ -14,7 +15,6 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 
 class ContextualSourceCodeReflector implements SourceCodeReflector
@@ -25,19 +25,17 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
     ) {
     }
 
-    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection
+    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
-        $this->locator->pushSourceCode($sourceCode);
+        $this->locator->pushSourceCode(TextDocumentBuilder::fromUnknown($sourceCode));
 
         $collection = $this->innerReflector->reflectClassesIn($sourceCode, $visited);
 
         return $collection;
     }
 
-    public function reflectOffset($sourceCode, $offset): ReflectionOffset
+    public function reflectOffset(TextDocument $sourceCode, $offset): ReflectionOffset
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
 
         $offset = $this->innerReflector->reflectOffset($sourceCode, $offset);
@@ -45,9 +43,8 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
         return $offset;
     }
 
-    public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall
+    public function reflectMethodCall(TextDocument $sourceCode, $offset): ReflectionMethodCall
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
 
         $offset = $this->innerReflector->reflectMethodCall($sourceCode, $offset);
@@ -55,9 +52,8 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
         return $offset;
     }
 
-    public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection
+    public function reflectFunctionsIn(TextDocument $sourceCode): ReflectionFunctionCollection
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
 
         $offset = $this->innerReflector->reflectFunctionsIn($sourceCode);
@@ -65,24 +61,23 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
         return $offset;
     }
 
-    public function navigate($sourceCode): ReflectionNavigation
+    public function navigate(TextDocument $sourceCode): ReflectionNavigation
     {
         return $this->innerReflector->navigate($sourceCode);
     }
 
-    public function diagnostics($sourceCode): Diagnostics
+    public function diagnostics(TextDocument $sourceCode): Diagnostics
     {
-        $sourceCode = SourceCode::fromUnknown($sourceCode);
         $this->locator->pushSourceCode($sourceCode);
         return $this->innerReflector->diagnostics($sourceCode);
     }
 
-    public function reflectNode($sourceCode, $offset): ReflectionNode
+    public function reflectNode(TextDocument $sourceCode, $offset): ReflectionNode
     {
         return $this->innerReflector->reflectNode($sourceCode, $offset);
     }
 
-    public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection
+    public function reflectConstantsIn(TextDocument $sourceCode): ReflectionDeclaredConstantCollection
     {
         return $this->innerReflector->reflectConstantsIn($sourceCode);
     }

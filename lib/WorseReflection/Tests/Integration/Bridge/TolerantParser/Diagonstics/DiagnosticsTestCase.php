@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diagonstics;
 
 use Generator;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\BruteForceSourceLocator;
@@ -16,7 +17,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
      */
     public function testDiagnostic(string $path): void
     {
-        $source = (string)file_get_contents($path);
+        $source = TextDocumentBuilder::fromUri($path)->build();
         $diagnostics = $this->diagnosticsFromSource($source);
         $method = sprintf('check%s', substr(basename($path), 0, (int)strrpos(basename($path), '.')));
         if (!method_exists($this, $method)) {
@@ -32,6 +33,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
 
     public function diagnosticsFromSource(string $source): Diagnostics
     {
+        $source = TextDocumentBuilder::fromUnknown($source);
         $reflector = $this->createBuilder($source)->enableCache()->addDiagnosticProvider($this->provider())->build();
         $reflector->reflectOffset($source, mb_strlen($source));
         return $reflector->diagnostics($source);
@@ -42,6 +44,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
         $source = $this->workspace()->getContents('test.php');
+        $source = TextDocumentBuilder::fromUnknown($source);
 
         $builder = ReflectorBuilder::create()
             ->withLogger($this->logger());

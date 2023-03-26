@@ -20,6 +20,7 @@ use Phpactor\Completion\Core\SignatureHelper;
 use Phpactor\Completion\Core\SignatureInformation;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Bridge\TolerantParser\TextDocument\NodeToTextDocumentConverter;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
@@ -155,7 +156,10 @@ class WorseSignatureHelper implements SignatureHelper
             ));
         }
 
-        $offset = $this->reflector->reflectOffset($node->getFileContents(), $name->getStartPosition());
+        $offset = $this->reflector->reflectOffset(
+            NodeToTextDocumentConverter::convert($node),
+            $name->getStartPosition()
+        );
 
         $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
         $constructor = $reflectionClass->methods()->get('__construct');
@@ -188,7 +192,7 @@ class WorseSignatureHelper implements SignatureHelper
             throw new CouldNotHelpWithSignature(sprintf('Static calls only supported with qualified names'));
         }
 
-        $offset = $this->reflector->reflectOffset($node->getFileContents(), $scopeResolutionQualifier->getStartPosition());
+        $offset = $this->reflector->reflectOffset(NodeToTextDocumentConverter::convert($node), $scopeResolutionQualifier->getStartPosition());
 
         $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
 
@@ -219,7 +223,7 @@ class WorseSignatureHelper implements SignatureHelper
             ));
         }
 
-        $offset = $this->reflector->reflectOffset($attrNode->getFileContents(), $name->getStartPosition());
+        $offset = $this->reflector->reflectOffset(NodeToTextDocumentConverter::convert($attrNode), $name->getStartPosition());
 
         $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
         $constructor = $reflectionClass->methods()->get('__construct');

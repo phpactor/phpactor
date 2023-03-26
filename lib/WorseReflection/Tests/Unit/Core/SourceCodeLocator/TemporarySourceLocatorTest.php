@@ -3,9 +3,9 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\SourceCodeLocator;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -31,7 +31,7 @@ class TemporarySourceLocatorTest extends TestCase
         $this->expectException(SourceNotFound::class);
         $this->expectExceptionMessage('Class "Foobar" not found');
 
-        $source = SourceCode::fromString('<?php class Boobar {}');
+        $source = TextDocumentBuilder::create('<?php class Boobar {}')->build();
         $this->locator->pushSourceCode($source);
 
         $this->locator->locate(ClassName::fromString('Foobar'));
@@ -41,7 +41,7 @@ class TemporarySourceLocatorTest extends TestCase
     {
         $code = '<?php class Foobar {}';
 
-        $this->locator->pushSourceCode(SourceCode::fromString($code));
+        $this->locator->pushSourceCode(TextDocumentBuilder::create($code)->build());
         $source = $this->locator->locate(ClassName::fromString('Foobar'));
         $this->assertEquals($code, (string) $source);
     }
@@ -49,10 +49,10 @@ class TemporarySourceLocatorTest extends TestCase
     public function testNewFilesOverridePreviousOnes(): void
     {
         $code1 = '<?php class Foobar {}';
-        $this->locator->pushSourceCode(SourceCode::fromPathAndString('foo.php', $code1));
+        $this->locator->pushSourceCode(TextDocumentBuilder::create($code1)->uri('file:///foo.php')->build());
 
         $code2 = '<?php class Boobar {}';
-        $this->locator->pushSourceCode(SourceCode::fromPathAndString('foo.php', $code2));
+        $this->locator->pushSourceCode(TextDocumentBuilder::create($code2)->uri('file:///foo.php')->build());
 
         $source = $this->locator->locate(ClassName::fromString('Boobar'));
         $this->assertEquals($code2, (string) $source);

@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Range;
@@ -42,7 +43,7 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
             $startOffset = PositionConverter::positionToByteOffset($range->start, $textDocument->text)->toInt();
             $endOffset = PositionConverter::positionToByteOffset($range->end, $textDocument->text)->toInt();
 
-            $classes = $this->reflector->reflectClassesIn($textDocument->text);
+            $classes = $this->reflector->reflectClassesIn(TextDocumentConverter::fromLspTextItem($textDocument));
 
             if ($classes->count() === 0) {
                 return [];

@@ -87,7 +87,7 @@ class UpdateDocblockParamsTransformer implements Transformer
     private function methodsThatNeedFixing(SourceCode $code): array
     {
         $missings = [];
-        $diagnostics = $this->reflector->diagnostics($code->__toString())->byClass(MissingDocblockParamDiagnostic::class);
+        $diagnostics = $this->reflector->diagnostics($code)->byClass(MissingDocblockParamDiagnostic::class);
 
         foreach ($diagnostics as $diagnostic) {
             $missings[] = $diagnostic;

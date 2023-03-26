@@ -8,8 +8,8 @@ use Phpactor\Extension\ContextMenu\Model\ContextMenu;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
@@ -124,7 +124,7 @@ class ContextMenuHandler implements Handler
 
     private function offsetFromSourceAndOffset(string $source, int $offset, string $currentPath)
     {
-        $sourceCode = SourceCode::fromPathAndString($currentPath, $source);
+        $sourceCode = TextDocumentBuilder::create($source)->uri($currentPath)->build();
 
         $interestingOffset = $this->offsetFinder->find(
             $sourceCode,

@@ -155,7 +155,7 @@ class WorseExtractMethod implements ExtractMethod
         }
 
         return new TextDocumentEdits(
-            TextDocumentUri::fromString($source->path()),
+            TextDocumentUri::fromString($source->uri()->path()),
             $this->updater->textEditsFor($prototype, Code::fromString((string) $source))
                 ->add(TextEdit::create($offsetStart, $offsetEnd - $offsetStart, $replacement))
         );
@@ -229,7 +229,7 @@ class WorseExtractMethod implements ExtractMethod
         return $classLikeBuilder->method($name)->visibility('private');
     }
 
-    private function reflectMethod(int $offsetEnd, string $source, string $name): ReflectionMethod
+    private function reflectMethod(int $offsetEnd, SourceCode $source, string $name): ReflectionMethod
     {
         $offset = $this->reflector->reflectOffset($source, $offsetEnd);
         $thisVariable = $offset->frame()->locals()->byName('this');
@@ -296,7 +296,7 @@ class WorseExtractMethod implements ExtractMethod
     private function scopeLocalVariables(SourceCode $source, int $offsetStart, int $offsetEnd): Assignments
     {
         return $this->reflector->reflectOffset(
-            (string) $source,
+            $source,
             $offsetEnd
         )->frame()->locals();
     }
@@ -447,7 +447,7 @@ class WorseExtractMethod implements ExtractMethod
     private function addExpressionReturn(string $newMethodBody, SourceCode $source, int $offsetEnd, MethodBuilder $methodBuilder): string
     {
         $newMethodBody = 'return ' . $newMethodBody .';';
-        $offset = $this->reflector->reflectOffset($source->__toString(), $offsetEnd);
+        $offset = $this->reflector->reflectOffset($source, $offsetEnd);
         $expressionType = $offset->nodeContext()->type();
 
         if ($expressionType->isDefined()) {

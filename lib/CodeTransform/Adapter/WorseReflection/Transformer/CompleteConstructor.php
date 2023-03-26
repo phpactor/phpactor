@@ -15,7 +15,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
@@ -136,7 +135,7 @@ class CompleteConstructor implements Transformer
      */
     private function candidateClasses(SourceCode $source): Generator
     {
-        $classes = $this->reflector->reflectClassesIn(WorseSourceCode::fromString((string) $source))->classes();
+        $classes = $this->reflector->reflectClassesIn($source)->classes();
         foreach ($classes as $class) {
             if ($class instanceof ReflectionInterface) {
                 continue;

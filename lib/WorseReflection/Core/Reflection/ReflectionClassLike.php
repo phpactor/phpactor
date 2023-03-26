@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Reflection;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
@@ -30,7 +30,7 @@ interface ReflectionClassLike extends ReflectionNode
      */
     public function ownMembers(): ReflectionMemberCollection;
 
-    public function sourceCode(): SourceCode;
+    public function sourceCode(): TextDocument;
 
     /**
      * @deprecated Use instanceof instead

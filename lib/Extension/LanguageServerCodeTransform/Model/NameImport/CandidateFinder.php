@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport;
 
 use Generator;
 use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\ConstantRecord;
@@ -23,7 +24,7 @@ class CandidateFinder
 
     public function unresolved(TextDocumentItem $item): NameWithByteOffsets
     {
-        $diagnostics = $this->reflector->diagnostics($item->text)->byClass(UnresolvableNameDiagnostic::class);
+        $diagnostics = $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($item))->byClass(UnresolvableNameDiagnostic::class);
 
         return new NameWithByteOffsets(...array_map(function (UnresolvableNameDiagnostic $diagnostic): NameWithByteOffset {
             return new NameWithByteOffset($diagnostic->name(), $diagnostic->range()->start(), $diagnostic->type());

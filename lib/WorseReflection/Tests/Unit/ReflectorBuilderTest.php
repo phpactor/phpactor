@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Reflector;
@@ -66,7 +66,7 @@ class ReflectorBuilderTest extends TestCase
             ->build();
 
         $locator1->locate(Argument::any())->shouldNotBeCalled();
-        $locator2->locate(Argument::any())->willReturn(SourceCode::fromString(file_get_contents(__FILE__)));
+        $locator2->locate(Argument::any())->willReturn(TextDocumentBuilder::create(file_get_contents(__FILE__))->build());
         $locator3->locate(Argument::any())->shouldNotBeCalled();
 
         $this->assertInstanceOf(Reflector::class, $reflector);
@@ -88,13 +88,13 @@ class ReflectorBuilderTest extends TestCase
     {
         $reflector = ReflectorBuilder::create()
             ->addLocator(new StringSourceLocator(
-                SourceCode::fromString('<?php interface BackedEnum {}')
+                TextDocumentBuilder::create('<?php interface BackedEnum {}')->build()
             ), 100)
             ->build();
 
         $class = $reflector->reflectInterface('BackedEnum');
         $this->assertEquals('BackedEnum', $class->name()->__toString());
-        $this->assertStringContainsString('InternalStubs', $class->sourceCode()->path());
+        $this->assertStringContainsString('InternalStubs', $class->sourceCode()->uri()->path());
     }
 
     public function testEnableCache(): void

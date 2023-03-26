@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
@@ -17,6 +18,7 @@ class ReflectionMethodCallTest extends IntegrationTestCase
     public function testReflectMethodCall(string $source, array $frame, Closure $assertion): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
+        $source = TextDocumentBuilder::fromUnknown($source);
         $reflection = $this->createReflector($source)->reflectMethodCall($source, $offset);
         $assertion($reflection);
     }

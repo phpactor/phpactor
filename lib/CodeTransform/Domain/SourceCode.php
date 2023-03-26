@@ -99,4 +99,9 @@ final class SourceCode implements TextDocument
         }
         return new self($textDocument->__toString(), $textDocument->uri());
     }
+
+    public function uriOrThrow(): TextDocumentUri
+    {
+        return $this->uri;
+    }
 }

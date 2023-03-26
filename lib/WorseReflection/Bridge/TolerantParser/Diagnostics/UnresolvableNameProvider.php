@@ -24,7 +24,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 
 class UnresolvableNameProvider implements DiagnosticProvider
 {
@@ -140,7 +140,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
         }
     }
 
-    private function nameContainedInSource(string $declarationPattern, SourceCode $source, string $nameText): bool
+    private function nameContainedInSource(string $declarationPattern, TextDocument $source, string $nameText): bool
     {
         $lastPart = explode('\\', $nameText);
         $last = $lastPart[array_key_last($lastPart)];

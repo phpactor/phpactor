@@ -2,9 +2,9 @@
 
 namespace Phpactor\Extension\Navigation\Navigator;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionNavigator implements Navigator
@@ -16,7 +16,7 @@ class WorseReflectionNavigator implements Navigator
     public function destinationsFor(string $path): array
     {
         $destinations = [];
-        $source = SourceCode::fromPath($path);
+        $source = TextDocumentBuilder::fromUri($path)->build();
         $classes = $this->reflector->reflectClassesIn($source);
 
         foreach ($classes as $class) {
@@ -36,11 +36,11 @@ class WorseReflectionNavigator implements Navigator
     {
         $parentClass = $class->parent();
         if ($parentClass instanceof ReflectionClass) {
-            $destinations['parent'] = $parentClass->sourceCode()->path();
+            $destinations['parent'] = $parentClass->sourceCode()->uri()?->path();
         }
 
         foreach ($class->interfaces() as $interface) {
-            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->path();
+            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->uri()?->path();
         }
 
         return $destinations;
@@ -49,7 +49,7 @@ class WorseReflectionNavigator implements Navigator
     private function forReflectionInterface($destinations, ReflectionInterface $class)
     {
         foreach ($class->parents() as $interface) {
-            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->path();
+            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->uri()?->path();
         }
 
         return $destinations;

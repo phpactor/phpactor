@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
@@ -32,7 +32,7 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 class TemporarySourceLocator implements SourceCodeLocator
 {
     /**
-     * @var SourceCode[]
+     * @var TextDocument[]
      */
     private array $sources = [];
 
@@ -43,7 +43,7 @@ class TemporarySourceLocator implements SourceCodeLocator
     ) {
     }
 
-    public function pushSourceCode(SourceCode $source): void
+    public function pushSourceCode(TextDocument $source): void
     {
         if (count($this->sources) > $this->bufferSize) {
             array_shift($this->sources);
@@ -52,7 +52,7 @@ class TemporarySourceLocator implements SourceCodeLocator
         $this->sources[] = $source;
     }
 
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         foreach ($this->sources as $source) {
             $classes = $this->reflector->reflectClassesIn($source);

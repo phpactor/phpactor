@@ -9,7 +9,6 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -29,7 +28,7 @@ class ImplementContracts implements Transformer
     public function diagnostics(SourceCode $source): Diagnostics
     {
         $diagnostics = [];
-        $classes = $this->reflector->reflectClassesIn(WorseSourceCode::fromString((string) $source));
+        $classes = $this->reflector->reflectClassesIn($source);
         foreach ($classes->concrete() as $class) {
             assert($class instanceof ReflectionClass);
             $missingMethods = $this->missingClassMethods($class);
@@ -56,7 +55,7 @@ class ImplementContracts implements Transformer
 
     public function transform(SourceCode $source): TextEdits
     {
-        $classes = $this->reflector->reflectClassesIn(WorseSourceCode::fromString((string) $source));
+        $classes = $this->reflector->reflectClassesIn($source);
         $edits = [];
         $sourceCodeBuilder = SourceCodeBuilder::create();
 
