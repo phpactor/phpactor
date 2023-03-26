@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection;
 
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
@@ -104,7 +105,7 @@ final class ReflectorBuilder
      */
     public function addSource(TextDocument|string $code): ReflectorBuilder
     {
-        $source = TextDocument::fromUnknown($code);
+        $source = TextDocumentBuilder::fromUnknown($code);
 
         $this->addLocator(new StringSourceLocator($source));
 

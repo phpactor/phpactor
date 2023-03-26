@@ -2,7 +2,6 @@
 
 namespace Phpactor\TextDocument;
 
-use Phpactor\LanguageServerProtocol\TextDocument;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use RuntimeException;
 use Symfony\Component\Filesystem\Path;
