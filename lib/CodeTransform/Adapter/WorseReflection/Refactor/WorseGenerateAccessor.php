@@ -93,7 +93,7 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
 
         return SourceCode::fromStringAndPath(
             $worseSourceCode->__toString(),
-            $worseSourceCode->path()
+            $worseSourceCode->uri()?->path()
         );
     }
 

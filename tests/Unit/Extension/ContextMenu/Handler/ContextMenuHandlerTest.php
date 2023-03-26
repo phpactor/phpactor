@@ -86,7 +86,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $action = $this->handle(ContextMenuHandler::NAME, [
             'source' => (string) $source,
             'offset' => $offset->toInt(),
-            'current_path' => $source->path(),
+            'current_path' => $source->uri()?->path(),
         ]);
 
         $this->assertInstanceOf(EchoResponse::class, $action);
@@ -163,7 +163,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $action = $this->handle(ContextMenuHandler::NAME, [
             'source' => (string) $source,
             'offset' => self::ORIGINAL_OFFSET,
-            'current_path' => $source->path(),
+            'current_path' => $source->uri()?->path(),
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $action);
@@ -219,7 +219,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
             'action' => self::VARIABLE_ACTION,
             'source' => (string) $source,
             'offset' => $offset->toInt(),
-            'current_path' => $source->path(),
+            'current_path' => $source->uri()?->path(),
         ]);
 
         $parameters = $action->parameters();

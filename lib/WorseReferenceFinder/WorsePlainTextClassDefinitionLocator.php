@@ -45,7 +45,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
             ), 0, $notFound);
         }
 
-        $path = $reflectionClass->sourceCode()->path();
+        $path = $reflectionClass->sourceCode()->uri()?->path();
 
         return new TypeLocations([
             new TypeLocation(

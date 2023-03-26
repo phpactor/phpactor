@@ -43,7 +43,7 @@ class TransformCommandTest extends TestCase
         self::assertInstanceOf(ApplyWorkspaceEditResult::class, $response->result);
 
         self::assertNotNull($testTransformer->code);
-        self::assertEquals('/foobar', $testTransformer->code->path());
+        self::assertEquals('/foobar', $testTransformer->code->uri()?->path());
     }
 }
 

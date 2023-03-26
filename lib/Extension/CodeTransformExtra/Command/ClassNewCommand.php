@@ -64,7 +64,7 @@ class ClassNewCommand extends Command
 
         return [
             'src' => $src,
-            'path' => $sourceCode->path(),
+            'path' => $sourceCode->uri()?->path(),
             'exists' => false,
         ];
     }

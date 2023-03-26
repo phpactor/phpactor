@@ -37,11 +37,11 @@ class WorseReflectionNavigator implements Navigator
     {
         $parentClass = $class->parent();
         if ($parentClass instanceof ReflectionClass) {
-            $destinations['parent'] = $parentClass->sourceCode()->path();
+            $destinations['parent'] = $parentClass->sourceCode()->uri()?->path();
         }
 
         foreach ($class->interfaces() as $interface) {
-            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->path();
+            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->uri()?->path();
         }
 
         return $destinations;
@@ -50,7 +50,7 @@ class WorseReflectionNavigator implements Navigator
     private function forReflectionInterface($destinations, ReflectionInterface $class)
     {
         foreach ($class->parents() as $interface) {
-            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->path();
+            $destinations['interface:'.$interface->name()->short()] = $interface->sourceCode()->uri()?->path();
         }
 
         return $destinations;

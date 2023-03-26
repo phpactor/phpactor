@@ -44,7 +44,7 @@ class IndexerFunctionSourceLocatorTest extends TestCase
         $index->write($record);
         $locator = $this->createLocator($index);
         $sourceCode = $locator->locate(Name::fromString('Foobar'));
-        $this->assertEquals(__FILE__, $sourceCode->path());
+        $this->assertEquals(__FILE__, $sourceCode->uri()?->path());
     }
 
     private function createLocator(InMemoryIndex $index): IndexerFunctionSourceLocator

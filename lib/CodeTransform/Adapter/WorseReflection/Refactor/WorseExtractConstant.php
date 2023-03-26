@@ -41,7 +41,7 @@ class WorseExtractConstant implements ExtractConstant
 
         $textEdits = $this->addConstant($sourceCode, $symbolInformation, $constantName);
         $textEdits = $textEdits->merge($this->replaceValues($sourceCode, $offset, $constantName));
-        return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->path()), $textEdits);
+        return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()?->path()), $textEdits);
     }
 
     public function canExtractConstant(SourceCode $source, int $offset): bool
