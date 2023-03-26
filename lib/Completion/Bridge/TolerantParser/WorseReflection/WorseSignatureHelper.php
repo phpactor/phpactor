@@ -20,6 +20,8 @@ use Phpactor\Completion\Core\SignatureHelper;
 use Phpactor\Completion\Core\SignatureInformation;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\TextDocument\NodeToTextDocumentConverter;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
@@ -155,7 +157,10 @@ class WorseSignatureHelper implements SignatureHelper
             ));
         }
 
-        $offset = $this->reflector->reflectOffset($node->getFileContents(), $name->getStartPosition());
+        $offset = $this->reflector->reflectOffset(
+            NodeToTextDocumentConverter::convert($node),
+            $name->getStartPosition()
+        );
 
         $reflectionClass = $this->reflector->reflectClass($offset->nodeContext()->type()->__toString());
         $constructor = $reflectionClass->methods()->get('__construct');

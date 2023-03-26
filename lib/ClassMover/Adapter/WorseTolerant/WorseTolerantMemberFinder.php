@@ -26,6 +26,7 @@ use Phpactor\ClassMover\Domain\Reference\MemberReferences;
 use Phpactor\ClassMover\Domain\Reference\Position;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\TextDocument\NodeToTextDocumentConverter;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\TextDocument\ByteOffset;
@@ -310,7 +311,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         );
 
         $offset = $this->reflector->reflectOffset(
-            TextDocumentBuilder::fromUnknown($memberNode->getFileContents()),
+            NodeToTextDocumentConverter::convert($memberNode),
             ByteOffset::fromInt($memberNode->scopeResolutionQualifier->getEndPosition())
         );
 
@@ -335,7 +336,7 @@ class WorseTolerantMemberFinder implements MemberFinder
         );
 
         $offset = $this->reflector->reflectOffset(
-            TextDocumentBuilder::fromUnknown($memberNode->getFileContents()),
+            NodeToTextDocumentConverter::convert($memberNode),
             ByteOffset::fromInt($memberNode->dereferencableExpression->getEndPosition())
         );
 

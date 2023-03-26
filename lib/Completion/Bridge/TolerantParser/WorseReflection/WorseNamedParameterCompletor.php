@@ -18,6 +18,8 @@ use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\TextDocument\NodeToTextDocumentConverter;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
@@ -142,7 +144,7 @@ class WorseNamedParameterCompletor implements TolerantCompletor
 
         try {
             $classLike = $this->reflector->reflectMethodCall(
-                $creation->getFileContents(),
+                NodeToTextDocumentConverter::convert($creation),
                 $callableExpression->getEndPosition()
             );
             yield from $this->fromMethod($classLike->class(), $classLike->name());
