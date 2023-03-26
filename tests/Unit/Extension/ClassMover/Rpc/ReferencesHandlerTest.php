@@ -10,6 +10,7 @@ use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
@@ -25,7 +26,7 @@ use RuntimeException;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
-    const TEST_PATH = 'test_file.php';
+    const TEST_PATH = 'file:///test_file.php';
 
     private ObjectProphecy $classReferences;
 

@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflector\SourceCode;
 
 use Generator;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Walker;
@@ -24,9 +25,9 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
     ) {
     }
 
-    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
+    public function reflectClassesIn(TextDocument|string $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
-        $this->locator->pushSourceCode($sourceCode);
+        $this->locator->pushSourceCode(TextDocumentBuilder::fromUnknown($sourceCode));
 
         $collection = $this->innerReflector->reflectClassesIn($sourceCode, $visited);
 

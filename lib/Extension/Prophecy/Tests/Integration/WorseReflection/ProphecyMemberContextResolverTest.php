@@ -5,6 +5,7 @@ namespace Phpactor\Extension\Prophecy\Tests\Integration\WorseReflection;
 use Phpactor\Extension\Prophecy\WorseReflection\ProphecyMemberContextResolver;
 use Phpactor\Extension\Prophecy\WorseReflection\ProphecyStubLocator;
 use Phpactor\Extension\Symfony\Tests\IntegrationTestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -156,6 +157,7 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
 
     public function resolve(string $sourceCode): void
     {
+        $sourceCode = TextDocumentBuilder::fromUnknown($sourceCode);
         $reflector = ReflectorBuilder::create()
             ->addFrameWalker(new TestAssertWalker($this))
             ->addLocator(new ProphecyStubLocator())

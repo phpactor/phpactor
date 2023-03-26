@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServerHover\Twig\TwigFunctions;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
@@ -682,10 +683,12 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             '',
             function (Reflector $reflector) {
                 return $reflector->reflectFunctionsIn(
+                    TextDocumentBuilder::fromUnknown(
                     <<<'EOT'
                         <?php
                         function one() {}
                         EOT
+                    )
                 )->first();
             },
             'function1.md',
@@ -695,10 +698,12 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             '',
             function (Reflector $reflector) {
                 return $reflector->reflectFunctionsIn(
+                    TextDocumentBuilder::fromUnknown(
                     <<<'EOT'
                         <?php
                         function one(string $bar, bool $baz): stdClass {}
                         EOT
+                    )
                 )->first();
             },
             'function2.md',
@@ -714,10 +719,12 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             '',
             function (Reflector $reflector) {
                 return $reflector->reflectConstantsIn(
+                    TextDocumentBuilder::fromUnknown(
                     <<<'EOT'
                         <?php
                         define('FOO', 'bar');
                         EOT
+                    )
                 )->first();
             },
             'declared_constant1.md',
@@ -733,10 +740,11 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             '',
             function (Reflector $reflector) {
                 return $reflector->reflectOffset(
+                    TextDocumentBuilder::fromUnknown(
                     <<<'EOT'
                         <?php
                         EOT
-                    ,
+                    ),
                     1
                 );
             },
@@ -757,6 +765,8 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
                     EOT
                 ;
                 [$source, $offset] = ExtractOffset::fromSource($source);
+                $source = 
+                    TextDocumentBuilder::fromUnknown($source);
                 return $reflector->reflectOffset($source, $offset);
             },
             'offset2.md',
@@ -1090,7 +1100,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
         yield 'variable:' => [
             '',
             function (Reflector $reflector) {
-                $offset = $reflector->reflectOffset('<?php $foo = "bar";', 18);
+                $offset = $reflector->reflectOffset(TextDocumentBuilder::fromUnknown('<?php $foo = "bar";'), 18);
                 $variable = $offset->frame()->locals()->byName('foo')->first();
                 return $variable;
             },

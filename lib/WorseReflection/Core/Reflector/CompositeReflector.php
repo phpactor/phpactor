@@ -58,7 +58,7 @@ class CompositeReflector implements Reflector
     }
 
 
-    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
+    public function reflectClassesIn(TextDocument|string $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         return $this->sourceCodeReflector->reflectClassesIn($sourceCode, $visited);
     }

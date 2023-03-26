@@ -26,7 +26,7 @@ interface SourceCodeReflector
      * @param array<string,bool> $visited
      */
     public function reflectClassesIn(
-        TextDocument $sourceCode,
+        TextDocument|string $sourceCode,
         array $visited = []
     ): ReflectionClassLikeCollection;
 

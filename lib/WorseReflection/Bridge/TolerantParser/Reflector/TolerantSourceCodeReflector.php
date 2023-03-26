@@ -38,9 +38,10 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
      * @param array<string,bool> $visited
      */
     public function reflectClassesIn(
-        TextDocument $sourceCode,
+        TextDocument|string $sourceCode,
         array $visited = []
     ): ReflectionClassLikeCollection {
+        $sourceCode = TextDocumentBuilder::fromUnknown($sourceCode);
         $node = $this->parseSourceCode($sourceCode);
         return TolerantReflectionClassCollection::fromNode($this->serviceLocator, $sourceCode, $node, $visited);
     }
@@ -139,7 +140,6 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
 
     private function parseSourceCode(TextDocument $sourceCode): SourceFileNode
     {
-        $rootNode = $this->parser->parseSourceFile((string) $sourceCode, $sourceCode->uri()?->__toString());
-        return $rootNode;
+        return $this->parser->parseSourceFile((string) $sourceCode, $sourceCode->uri()?->__toString());
     }
 }
