@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Closure;
@@ -15,6 +16,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
      */
     public function testReflects(string $source, string $functionName, Closure $assertion): void
     {
+        $source = TextDocumentBuilder::fromUnknown($source);
         $functions = $this->createReflector($source)->reflectFunctionsIn($source);
         $assertion($functions->get($functionName));
     }

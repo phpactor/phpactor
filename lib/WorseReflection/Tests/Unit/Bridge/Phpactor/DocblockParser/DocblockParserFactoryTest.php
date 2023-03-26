@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Bridge\Phpactor\DocblockParser;
 
 use Generator;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -282,6 +283,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                         }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $source = TextDocumentBuilder::fromUnknown($source);
         $class = $reflector->reflectClassesIn(
             $source
         )->first();
@@ -301,6 +303,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                         }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $source = TextDocumentBuilder::fromUnknown($source);
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
         self::assertEquals('Foo::BA*', $docblock->returnType()->__toString());
@@ -318,6 +321,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                         }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $source = TextDocumentBuilder::fromUnknown($source);
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return array{string,Foo::*} */');
         self::assertEquals('array{string,Foo::*}', $docblock->returnType()->__toString());

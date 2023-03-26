@@ -51,10 +51,10 @@ class TemporarySourceLocatorTest extends TestCase
     public function testNewFilesOverridePreviousOnes(): void
     {
         $code1 = '<?php class Foobar {}';
-        $this->locator->pushSourceCode(TextDocumentBuilder::create($code1)->uri('foo.php')->build());
+        $this->locator->pushSourceCode(TextDocumentBuilder::create($code1)->uri('file:///foo.php')->build());
 
         $code2 = '<?php class Boobar {}';
-        $this->locator->pushSourceCode(TextDocumentBuilder::create($code2)->uri('foo.php')->build());
+        $this->locator->pushSourceCode(TextDocumentBuilder::create($code2)->uri('file:///foo.php')->build());
 
         $source = $this->locator->locate(ClassName::fromString('Boobar'));
         $this->assertEquals($code2, (string) $source);

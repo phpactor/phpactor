@@ -22,7 +22,7 @@ class NativeReflectionFunctionSourceLocatorTest extends TestCase
     public function testLocatesAFunction(): void
     {
         $location = $this->locator->locate(Name::fromString(__NAMESPACE__ . '\\test_function'));
-        $this->assertEquals(__FILE__, $location->path());
+        $this->assertEquals(__FILE__, $location->uri()->path());
         $this->assertEquals(file_get_contents(__FILE__), $location->__toString());
     }
 

@@ -84,7 +84,7 @@ final class BruteForceSourceLocator implements SourceCodeLocator
     private function buildClassMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectClassesIn(
-            TextDocumentBuilder::fromUri($file->build())
+            TextDocumentBuilder::fromUri($file)->build()
         );
 
         foreach ($functions as $function) {
@@ -101,7 +101,7 @@ final class BruteForceSourceLocator implements SourceCodeLocator
     private function buildFunctionMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectFunctionsIn(
-            TextDocumentBuilder::fromUri($file->build())
+            TextDocumentBuilder::fromUri($file)->build()
         );
 
         foreach ($functions as $function) {

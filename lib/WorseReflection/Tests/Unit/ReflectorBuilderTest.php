@@ -95,7 +95,7 @@ class ReflectorBuilderTest extends TestCase
 
         $class = $reflector->reflectInterface('BackedEnum');
         $this->assertEquals('BackedEnum', $class->name()->__toString());
-        $this->assertStringContainsString('InternalStubs', $class->sourceCode()->path());
+        $this->assertStringContainsString('InternalStubs', $class->sourceCode()->uri()->path());
     }
 
     public function testEnableCache(): void
