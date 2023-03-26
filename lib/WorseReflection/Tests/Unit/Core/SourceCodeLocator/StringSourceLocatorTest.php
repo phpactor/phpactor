@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
-use Phpactor\TextDocument\TextDocument;
 
 class StringSourceLocatorTest extends TestCase
 {

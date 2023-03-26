@@ -684,10 +684,10 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             function (Reflector $reflector) {
                 return $reflector->reflectFunctionsIn(
                     TextDocumentBuilder::fromUnknown(
-                    <<<'EOT'
-                        <?php
-                        function one() {}
-                        EOT
+                        <<<'EOT'
+                            <?php
+                            function one() {}
+                            EOT
                     )
                 )->first();
             },
@@ -699,10 +699,10 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             function (Reflector $reflector) {
                 return $reflector->reflectFunctionsIn(
                     TextDocumentBuilder::fromUnknown(
-                    <<<'EOT'
-                        <?php
-                        function one(string $bar, bool $baz): stdClass {}
-                        EOT
+                        <<<'EOT'
+                            <?php
+                            function one(string $bar, bool $baz): stdClass {}
+                            EOT
                     )
                 )->first();
             },
@@ -720,10 +720,10 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             function (Reflector $reflector) {
                 return $reflector->reflectConstantsIn(
                     TextDocumentBuilder::fromUnknown(
-                    <<<'EOT'
-                        <?php
-                        define('FOO', 'bar');
-                        EOT
+                        <<<'EOT'
+                            <?php
+                            define('FOO', 'bar');
+                            EOT
                     )
                 )->first();
             },
@@ -741,9 +741,9 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             function (Reflector $reflector) {
                 return $reflector->reflectOffset(
                     TextDocumentBuilder::fromUnknown(
-                    <<<'EOT'
-                        <?php
-                        EOT
+                        <<<'EOT'
+                            <?php
+                            EOT
                     ),
                     1
                 );
@@ -765,7 +765,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
                     EOT
                 ;
                 [$source, $offset] = ExtractOffset::fromSource($source);
-                $source = 
+                $source =
                     TextDocumentBuilder::fromUnknown($source);
                 return $reflector->reflectOffset($source, $offset);
             },

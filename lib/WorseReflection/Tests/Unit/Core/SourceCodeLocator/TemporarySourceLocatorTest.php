@@ -3,11 +3,9 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\SourceCodeLocator;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\TextDocument\Tests\Unit\TextDocumentBuilderTest;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;

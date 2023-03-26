@@ -2,10 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
-use Phpactor\TextDocument\Tests\Unit\TextDocumentBuilderTest;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\Walker;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\TestUtils\ExtractOffset;

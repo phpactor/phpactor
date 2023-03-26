@@ -5,7 +5,6 @@ namespace Phpactor\Extension\Navigation\Navigator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseReflectionNavigator implements Navigator

@@ -12,7 +12,6 @@ use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;

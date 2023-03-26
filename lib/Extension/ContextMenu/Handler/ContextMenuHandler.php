@@ -10,7 +10,6 @@ use Phpactor\Extension\Rpc\Handler;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\TextDocument\TextDocument;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Request;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
