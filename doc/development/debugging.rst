@@ -1,5 +1,52 @@
-Debugging RPC
-=============
+Debugging
+=========
+
+Var Dump Server
+---------------
+
+Phpactor includes the Symfony Var Dumper, this allows you to inspect values
+while a server is running or an RPC request is being executed.
+
+Start the server in the Phpactor project root:
+
+::
+
+   $ ./vendor/bin/var-dump-server
+
+   Symfony Var Dumper Server
+   =========================
+
+    [OK] Server listening on tcp://127.0.0.1:9912
+
+    // Quit the server with CONTROL-C
+
+You can use the `dump` function in the code and the variable will be shown in
+the console output of the server you started: `dump($var)`.
+
+Logging
+-------
+
+Logging is disabled by default, but can provide some useful information
+(such as errors encountered when parsing files etc).
+
+Enable it as follows:
+
+::
+
+   {
+       "logging.enabled": true,
+       "logging.level": "debug",
+       "logging.path": "phpactor.log",
+   }
+
+
+Legacy RPC
+----------
+
+.. note:: 
+
+   You should probably be using the language server so this is not for
+   you.
 
 When executing commands in an editor, it can be tricky to consistently
 reproduce errors, or to isolate and debug them in Phpactor.
@@ -43,43 +90,4 @@ execute it consistently as many times as required:
 
    $ cp ~/.local/share/phpactor/replay.json .
    $ cat replay.json | phpactor rpc --verbose
-
-Logging
--------
-
-Logging is disabled by default, but can provide some useful information
-(such as errors encountered when parsing files etc).
-
-Enable it as follows:
-
-::
-
-   {
-       "logging.enabled": true,
-       "logging.level": "debug",
-       "logging.path": "phpactor.log",
-   }
-
-Var Dump Server
----------------
-
-Phpactor includes the Symfony Var Dumper, this allows you to inspect values
-while the server is running or an RPC request is being executed.
-
-Start the server in the Phpactor project root:
-
-::
-
-   $ ./vendor/bin/var-dump
-   ./vendor/bin/var-dump-server
-
-   Symfony Var Dumper Server
-   =========================
-
-    [OK] Server listening on tcp://127.0.0.1:9912
-
-    // Quit the server with CONTROL-C
-
-You can use the `dump` function in the code and the variable will be shown in
-the console output of the server you started: `dump($var)`.
 
