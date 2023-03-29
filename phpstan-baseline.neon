@@ -831,16 +831,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseInterestingOffsetFinderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractConstantTest\\:\\:provideExtractMethod\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseExtractConstantTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseExtractConstantTest\\:\\:testExtractConstant\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseExtractConstantTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateAccessorTest\\:\\:provideExtractAccessor\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseGenerateAccessorTest.php

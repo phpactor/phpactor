@@ -64,7 +64,17 @@ class WorseExtractConstant implements ExtractConstant
         $classType = $symbolInformation->containerType()->expandTypes()->classLike()->firstOrNull();
 
         if (!$classType) {
-            throw new TransformException(sprintf('Node does not belong to a class'));
+            throw new TransformException('Node does not belong to a class');
+        }
+
+        if ($classType->members()->constants()->has($constantName)) {
+            throw new TransformException(
+                sprintf(
+                    'Constant with name %s already exists on class %s',
+                    $constantName,
+                    $classType->name()->short()
+                )
+            );
         }
 
         $builder->namespace($classType->name()->namespace());
