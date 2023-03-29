@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -12,7 +13,7 @@ class WorseExtractConstantTest extends WorseTestCase
     /**
      * @dataProvider provideExtractMethod
      */
-    public function testExtractConstant(string $test, $name): void
+    public function testExtractConstant(string $test, string $name): void
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
 
@@ -26,39 +27,18 @@ class WorseExtractConstantTest extends WorseTestCase
 
         $this->assertEquals(trim($expected), trim($transformed));
     }
-
-    public function provideExtractMethod()
+    /**
+     * @return Generator<string,array<int,string>>
+     */
+    public function provideExtractMethod(): Generator
     {
-        return [
-            'string' => [
-                'extractConstant1.test',
-                'HELLO_WORLD'
-            ],
-            'numeric' => [
-                'extractConstant2.test',
-                'HELLO_WORLD'
-            ],
-            'array_key' => [
-                'extractConstant3.test',
-                'HELLO_WORLD'
-            ],
-            'namespaced' => [
-                'extractConstant4.test',
-                'HELLO_WORLD'
-            ],
-            'replace all' => [
-                'extractConstant5.test',
-                'HELLO_WORLD'
-            ],
-            'replace all numeric' => [
-                'extractConstant6.test',
-                'HOUR'
-            ],
-            'replace heredoc' => [
-                'extractConstant7.test',
-                'HELLO_WORLD'
-            ],
-        ];
+        yield 'string' => [ 'extractConstant1.test', 'HELLO_WORLD' ];
+        yield 'numeric' => [ 'extractConstant2.test', 'HELLO_WORLD' ];
+        yield 'array_key' => [ 'extractConstant3.test', 'HELLO_WORLD' ];
+        yield 'namespaced' => [ 'extractConstant4.test', 'HELLO_WORLD' ];
+        yield 'replace all' => [ 'extractConstant5.test', 'HELLO_WORLD' ];
+        yield 'replace all numeric' => [ 'extractConstant6.test', 'HOUR' ];
+        yield 'replace heredoc' => [ 'extractConstant7.test', 'HELLO_WORLD' ];
     }
 
     public function testNoClass(): void
@@ -72,6 +52,27 @@ class WorseExtractConstantTest extends WorseTestCase
         ;
 
         $extractConstant = new WorseExtractConstant($this->reflectorForWorkspace($code), $this->updater());
-        $transformed = $extractConstant->extractConstant(SourceCode::fromString($code), 8, 'asd');
+        $extractConstant->extractConstant(SourceCode::fromString($code), 8, 'asd');
+    }
+
+    public function testNoOverwritingOfExistingConstants(): void
+    {
+        $this->expectException(TransformException::class);
+        $this->expectExceptionMessage('Constant with name TEXT already exists on class Test');
+
+        $code = <<<'EOT'
+            <?php
+            class Test {
+                const TEXT = 'Cool constant';
+
+                public function doSomething(): void
+                {
+                    echo 'SomeText';
+                }
+            }
+            EOT;
+
+        $extractConstant = new WorseExtractConstant($this->reflectorForWorkspace($code), $this->updater());
+        $extractConstant->extractConstant(SourceCode::fromString($code), 120, 'TEXT');
     }
 }
