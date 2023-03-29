@@ -7,6 +7,7 @@ use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
+use Phpactor\TestUtils\ExtractOffset;
 
 class WorseExtractConstantTest extends WorseTestCase
 {
@@ -67,12 +68,13 @@ class WorseExtractConstantTest extends WorseTestCase
 
                 public function doSomething(): void
                 {
-                    echo 'SomeText';
+                    echo 'SomeT<>ext';
                 }
             }
             EOT;
 
-        $extractConstant = new WorseExtractConstant($this->reflectorForWorkspace($code), $this->updater());
-        $extractConstant->extractConstant(SourceCode::fromString($code), 120, 'TEXT');
+        [$source, $offset] = ExtractOffset::fromSource($code);
+        $extractConstant = new WorseExtractConstant($this->reflectorForWorkspace($source), $this->updater());
+        $extractConstant->extractConstant(SourceCode::fromString($source), $offset, 'TEXT');
     }
 }
