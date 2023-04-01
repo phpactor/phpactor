@@ -47,7 +47,6 @@ class PsalmProcess
             $pid = yield $process->start();
 
             $stdout = yield buffer($process->getStdout());
-            $stderr = yield buffer($process->getStderr());
 
             $exitCode = yield $process->join();
 

@@ -7,7 +7,7 @@ final class PsalmConfig
     public function __construct(
         private string $phpstanBin,
         private bool $shouldShowInfo,
-        private bool $useCache,
+        private bool $useCache
     ) {
     }
 

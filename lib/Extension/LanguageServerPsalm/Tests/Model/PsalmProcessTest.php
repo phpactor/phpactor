@@ -27,7 +27,7 @@ class PsalmProcessTest extends IntegrationTestCase
     /**
      * @dataProvider provideLint
      */
-    public function testLint(string $source, array $expectedDiagnostics, int $level = 1, bool $shouldShowInfo = true): void
+    public function testLint(string $source, array $expectedDiagnostics, int $level = 1, bool $shouldShowInfo = true, int $errorLevel = null): void
     {
         $psalmBin = __DIR__ . '/../../../../../vendor/bin/psalm';
         $this->workspace()->reset();
@@ -55,7 +55,12 @@ class PsalmProcessTest extends IntegrationTestCase
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),
-            new PsalmConfig($psalmBin, $shouldShowInfo, false),
+            new PsalmConfig(
+                phpstanBin: $psalmBin,
+                shouldShowInfo: $shouldShowInfo,
+                useCache: false,
+                errorLevel: $errorLevel,
+            ),
             new NullLogger()
         );
 
@@ -150,6 +155,24 @@ class PsalmProcessTest extends IntegrationTestCase
             ],
             2,
             false
+        ];
+
+        yield 'override error level' => [
+            '<?php $foobar = $barfoo;',
+            [
+                Diagnostic::fromArray([
+                    'range' => new Range(
+                        new Position(0, 15),
+                        new Position(0, 22)
+                    ),
+                    'message' => 'Cannot find referenced variable $barfoo in global scope',
+                    'severity' => DiagnosticSeverity::ERROR,
+                    'source' => 'psalm'
+                ])
+            ],
+            1,
+            false,
+            2,
         ];
     }
 }
