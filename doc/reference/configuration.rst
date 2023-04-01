@@ -1240,10 +1240,10 @@ If applicable diagnostics should be "outsourced" to a different process
 **Default**: ``true``
 
 
-.. _param_language_server,file_events:
+.. _param_language_server.file_events:
 
 
-``language_server,file_events``
+``language_server.file_events``
 """""""""""""""""""""""""""""""
 
 
