@@ -97,7 +97,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_ON_OPEN = 'language_server.diagnostics_on_open';
     public const PARAM_DIAGNOSTIC_PROVIDERS = 'language_server.diagnostic_providers';
     public const PARAM_DIAGNOSTIC_OUTSOURCE = 'language_server.diagnostic_outsource';
-    public const PARAM_FILE_EVENTS = 'language_server,file_events';
+    public const PARAM_FILE_EVENTS = 'language_server.file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
     public const PARAM_PROFILE = 'language_server.profile';
     public const PARAM_TRACE = 'language_server.trace';

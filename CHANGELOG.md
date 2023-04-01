@@ -20,6 +20,7 @@ Bug fixes:
   - `new class-string<Foo>` now resolves to `new Foo` #2065
   - Fix extract method within trait #2076 @mamazu
   - Do not attempt to index classes whose names are reserved words #2098
+  - Fix typo in LanguageServerExtension::PARAM_FILE_EVENTS resulting in typo in documentation
 
 Improvements:
 
