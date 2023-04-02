@@ -1,0 +1,14 @@
+/** @param array{first_name: string, last_name: string}[] $param */
+---
+Docblock: = 
+ ElementList: = /** 
+  ParamTag: = @param
+   ListBracketsNode: = 
+    ArrayShapeNode: = {
+     ArrayKeyValueList: = 
+      ArrayKeyValueNode: = first_name:
+       ScalarNode: = string,
+      ArrayKeyValueNode: = last_name:
+       ScalarNode: = string}[]
+   VariableNode: = $param
+   TextNode: =  */
