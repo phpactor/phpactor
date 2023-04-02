@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
+use function Amp\Promise\wait;
 
 class AddMissingPropertiesTest extends WorseTestCase
 {
@@ -19,7 +20,7 @@ class AddMissingPropertiesTest extends WorseTestCase
 
         $source = SourceCode::fromString($example);
         $transformer = new AddMissingProperties($this->reflectorForWorkspace($example), $this->updater());
-        $transformed = $transformer->transform(SourceCode::fromString($source));
+        $transformed = wait($transformer->transform(SourceCode::fromString($source)));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
 
@@ -589,7 +590,7 @@ class AddMissingPropertiesTest extends WorseTestCase
     {
         $source = SourceCode::fromString($example);
         $transformer = new AddMissingProperties($this->reflectorForWorkspace($example), $this->updater());
-        $diagnostics = $transformer->diagnostics($source);
+        $diagnostics = wait($transformer->diagnostics($source));
         $this->assertCount($diagnosticsCount, $diagnostics);
     }
 

@@ -32,7 +32,7 @@ class UpdateReturnTypeTransformer implements Transformer
     public function transform(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $methods = $this->methodsThatNeedFixing($code);
+            $methods = yield $this->methodsThatNeedFixing($code);
             $builder = $this->builderFactory->fromSource($code);
 
             $class = null;
@@ -82,23 +82,25 @@ class UpdateReturnTypeTransformer implements Transformer
     }
 
     /**
-     * @return array<int,ReflectionMethod>
+     * @return Promise<array<int,ReflectionMethod>>
      */
-    private function methodsThatNeedFixing(SourceCode $code): array
+    private function methodsThatNeedFixing(SourceCode $code): Promise
     {
-        $diagnostics = $this->reflector->diagnostics($code)->byClass(MissingReturnTypeDiagnostic::class);
-        $methods = [];
-        /** @var MissingReturnTypeDiagnostic $diagnostic */
-        foreach ($diagnostics as $diagnostic) {
-            if (!$diagnostic->returnType()->isDefined()) {
-                continue;
+        return call(function () use ($code) {
+            $diagnostics = (yield $this->reflector->diagnostics($code))->byClass(MissingReturnTypeDiagnostic::class);
+            $methods = [];
+            /** @var MissingReturnTypeDiagnostic $diagnostic */
+            foreach ($diagnostics as $diagnostic) {
+                if (!$diagnostic->returnType()->isDefined()) {
+                    continue;
+                }
+
+                $class = $this->reflector->reflectClassLike($diagnostic->classType());
+                $methods[] = $class->methods()->get($diagnostic->methodName());
             }
 
-            $class = $this->reflector->reflectClassLike($diagnostic->classType());
-            $methods[] = $class->methods()->get($diagnostic->methodName());
-        }
-
-        return $methods;
+            return $methods;
+        });
     }
 
     private function returnType(ReflectionMethod $method): Type

@@ -100,7 +100,7 @@ class UpdateDocblockReturnTransformer implements Transformer
     {
         return call(function () use ($code) {
             $missingMethods = [];
-            $diagnostics = yield $this->reflector->diagnostics($code)->byClasses(MissingDocblockReturnTypeDiagnostic::class);
+            $diagnostics = (yield $this->reflector->diagnostics($code))->byClasses(MissingDocblockReturnTypeDiagnostic::class);
 
             foreach ($diagnostics as $diagnostic) {
                 $missingMethods[] = $diagnostic;
