@@ -36,6 +36,14 @@ class PsalmProcess
                 '--output-format=json',
             ];
 
+            $command = (function (array $command, ?int $errorLevel) {
+                if (null === $errorLevel) {
+                    return $command;
+                }
+                $command[] = sprintf('--error-level=%d', $errorLevel);
+                return $command;
+            })($command, $this->config->errorLevel());
+
             if (!$this->config->useCache()) {
                 $command[] = '--no-cache';
             }
@@ -46,20 +54,19 @@ class PsalmProcess
             $start = microtime(true);
             $pid = yield $process->start();
 
-            $stdout = yield buffer($process->getStdout());
-            $stderr = yield buffer($process->getStderr());
-
             $exitCode = yield $process->join();
 
             if ($exitCode !== 0 && $exitCode !== 2) {
                 $this->logger->error(sprintf(
                     'Psalm exited with code "%s": %s',
                     $exitCode,
-                    $stderr
+                    yield buffer($process->getStderr())
                 ));
 
                 return [];
             }
+
+            $stdout = yield buffer($process->getStdout());
 
             $this->logger->debug(sprintf(
                 'Psalm completed in %s: %s in %s ... checking for %s',
