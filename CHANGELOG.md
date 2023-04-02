@@ -24,6 +24,7 @@ Bug fixes:
 
 Improvements:
 
+  - Psalm: Support for overriding the error level #2174
   - Generating constructor at the top of the file #2113 @mamazu
   - Include (complex) docblock params when generating method
   - Take into account named parameters when "guessing" parameter names #2090

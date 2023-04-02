@@ -8,6 +8,7 @@ final class PsalmConfig
         private string $phpstanBin,
         private bool $shouldShowInfo,
         private bool $useCache,
+        private ?int $errorLevel = null
     ) {
     }
 
@@ -24,5 +25,10 @@ final class PsalmConfig
     public function useCache(): bool
     {
         return $this->useCache;
+    }
+
+    public function errorLevel(): ?int
+    {
+        return $this->errorLevel;
     }
 }
