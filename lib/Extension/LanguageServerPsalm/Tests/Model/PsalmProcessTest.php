@@ -66,7 +66,6 @@ class PsalmProcessTest extends IntegrationTestCase
 
         $diagnostics = wait($linter->analyse($this->workspace()->path('src/test.php')));
         $assertion($diagnostics);
-
     }
 
     /**
@@ -191,7 +190,12 @@ class PsalmProcessTest extends IntegrationTestCase
             1,
         ];
     }
-    private static function assertDiagnostics(array $expectedDiagnostics, $diagnostics) {
+    /**
+     * @param list<Diagnostic> $expectedDiagnostics
+     * @param list<Diagnostic> $diagnostics
+     */
+    private static function assertDiagnostics(array $expectedDiagnostics, $diagnostics): void
+    {
         usort($diagnostics, fn (Diagnostic $a, Diagnostic $b) => strcasecmp($a->message, $b->message));
         usort($expectedDiagnostics, fn (Diagnostic $a, Diagnostic $b) => strcasecmp($a->message, $b->message));
         self::assertEquals($expectedDiagnostics, $diagnostics);
