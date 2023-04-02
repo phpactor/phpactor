@@ -245,8 +245,6 @@ jobs:
                 run: |
                     wget https://github.com/google/vimdoc/releases/download/v0.6.0/vimdoc_0.6.0-1_all.deb
                     sudo dpkg -i vimdoc_0.6.0-1_all.deb
-                    sudo apt-get update
-                    sudo apt-get -y install python3-pip python3-setuptools
                     sudo pip3 install -r requirements.txt
                     composer install --optimize-autoloader --classmap-authoritative
 
