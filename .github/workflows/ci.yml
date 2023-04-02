@@ -47,8 +47,6 @@ jobs:
                     composer validate --strict
                     composer install --optimize-autoloader --classmap-authoritative
                     bin/phpactor --version
-                    sudo apt-get update -y
-                    sudo apt-get install vim -fy
                     git clone https://github.com/junegunn/vader.vim.git
 
             -
