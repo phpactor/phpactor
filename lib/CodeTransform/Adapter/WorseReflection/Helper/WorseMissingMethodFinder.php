@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Helper;
 
+use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod;
 use Phpactor\TextDocument\TextDocument;
@@ -16,10 +17,10 @@ class WorseMissingMethodFinder implements MissingMethodFinder
     }
 
 
-    public function find(TextDocument $sourceCode): Promise<array>
+    public function find(TextDocument $sourceCode): Promise
     {
         return call(function () use ($sourceCode) {
-            $diagnostics = $this->reflector->diagnostics($sourceCode)->byClass(MissingMethodDiagnostic::class);
+            $diagnostics = (yield $this->reflector->diagnostics($sourceCode))->byClass(MissingMethodDiagnostic::class);
             $missing = [];
 
             /** @var MissingMethodDiagnostic $missingMethod */
