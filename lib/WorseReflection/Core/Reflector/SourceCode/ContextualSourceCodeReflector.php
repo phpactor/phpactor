@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector\SourceCode;
 
+use Amp\Promise;
 use Generator;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -66,7 +67,7 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
         return $this->innerReflector->navigate($sourceCode);
     }
 
-    public function diagnostics(TextDocument $sourceCode): Diagnostics
+    public function diagnostics(TextDocument $sourceCode): Promise
     {
         $this->locator->pushSourceCode($sourceCode);
         return $this->innerReflector->diagnostics($sourceCode);

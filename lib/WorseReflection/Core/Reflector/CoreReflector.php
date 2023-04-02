@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector;
 
+use Amp\Promise;
 use Generator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
@@ -242,7 +243,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         return $this->sourceLocator->locate(Name::fromUnknown($name));
     }
 
-    public function diagnostics($sourceCode): Diagnostics
+    public function diagnostics($sourceCode): Promise
     {
         return $this->sourceReflector->diagnostics($sourceCode);
     }

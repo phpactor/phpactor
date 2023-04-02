@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\BruteForceSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
+use function Amp\Promise\wait;
 
 abstract class DiagnosticsTestCase extends IntegrationTestCase
 {
@@ -36,7 +37,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
         $source = TextDocumentBuilder::fromUnknown($source);
         $reflector = $this->createBuilder($source)->enableCache()->addDiagnosticProvider($this->provider())->build();
         $reflector->reflectOffset($source, mb_strlen($source));
-        return $reflector->diagnostics($source);
+        return wait($reflector->diagnostics($source));
     }
 
     public function diagnosticsFromManifest(string $manifest): Diagnostics
@@ -55,7 +56,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
             $this->provider()
         )->build();
 
-        return $reflector->diagnostics($source);
+        return wait($reflector->diagnostics($source));
     }
 
     /**
