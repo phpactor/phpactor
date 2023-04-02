@@ -3,10 +3,11 @@
 
 # You can set these variables from the command line, and also
 # from the environment for the first two.
-SPHINXOPTS    ?= -W
-SPHINXBUILD   ?= sphinx-build
-SOURCEDIR     = doc
-BUILDDIR      = build
+SPHINXOPTS       ?= -W
+SPHINXBUILD      ?= sphinx-build
+SPHINXAUTOBUILD  ?= sphinx-autobuild
+SOURCEDIR         = doc
+BUILDDIR          = build
 
 .PHONY: help sphinx
 
@@ -35,7 +36,7 @@ help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinxwatch:
-	@config/bin/watchdocs.sh
+	@$(SPHINXAUTOBUILD) "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinx:
 	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
