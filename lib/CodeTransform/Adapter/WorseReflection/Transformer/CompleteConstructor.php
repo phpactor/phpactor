@@ -36,7 +36,7 @@ class CompleteConstructor implements Transformer
      */
     public function transform(SourceCode $source): Promise
     {
-        return call(function () use $code) {
+        return call(function () use ($source) {
             if (false === $this->promote) {
                 return $this->transformAssign($source);
             }
@@ -46,38 +46,43 @@ class CompleteConstructor implements Transformer
     }
 
 
-    public function diagnostics(SourceCode $source): Diagnostics
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $source): Promise
     {
-        $diagnostics = [];
-        foreach ($this->candidateClasses($source) as $class) {
-            $constructMethod = $class->methods()->belongingTo($class->name())->get('__construct');
-            assert($constructMethod instanceof ReflectionMethod);
-            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
-                assert($parameter instanceof ReflectionParameter);
-                $frame = $constructMethod->frame();
+        return call(function () use ($source) {
+            $diagnostics = [];
+            foreach ($this->candidateClasses($source) as $class) {
+                $constructMethod = $class->methods()->belongingTo($class->name())->get('__construct');
+                assert($constructMethod instanceof ReflectionMethod);
+                foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+                    assert($parameter instanceof ReflectionParameter);
+                    $frame = $constructMethod->frame();
 
-                $isUsed = $frame->locals()->byName($parameter->name())->count() > 0;
-                $hasProperty = $class->properties()->has($parameter->name());
+                    $isUsed = $frame->locals()->byName($parameter->name())->count() > 0;
+                    $hasProperty = $class->properties()->has($parameter->name());
 
-                if ($isUsed && $hasProperty) {
-                    continue;
+                    if ($isUsed && $hasProperty) {
+                        continue;
+                    }
+
+                    $diagnostics[] = new Diagnostic(
+                        ByteOffsetRange::fromInts(
+                            $parameter->position()->start()->toInt(),
+                            $parameter->position()->end()->toInt() + 5 + strlen($class->name()->__toString())
+                        ),
+                        sprintf(
+                            'Parameter "%s" may not have been assigned',
+                            $parameter->name()
+                        ),
+                        Diagnostic::WARNING
+                    );
                 }
-
-                $diagnostics[] = new Diagnostic(
-                    ByteOffsetRange::fromInts(
-                        $parameter->position()->start()->toInt(),
-                        $parameter->position()->end()->toInt() + 5 + strlen($class->name()->__toString())
-                    ),
-                    sprintf(
-                        'Parameter "%s" may not have been assigned',
-                        $parameter->name()
-                    ),
-                    Diagnostic::WARNING
-                );
             }
-        }
 
-        return new Diagnostics($diagnostics);
+            return new Diagnostics($diagnostics);
+        });
     }
 
     private function transformAssign(SourceCode $source): TextEdits

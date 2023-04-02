@@ -16,7 +16,6 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportDiagnostic;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\Diagnostics as WorseDiagnostics;
 use function Amp\call;
 
 class RemoveUnusedImportsTransformer implements Transformer
@@ -39,7 +38,7 @@ class RemoveUnusedImportsTransformer implements Transformer
             $rootNode = $this->parser->parseSourceFile($code);
             $edits = [];
 
-            foreach ($this->unusedImports($code) as $unusedImport) {
+            foreach ((yield $this->reflector->diagnostics($code))->byClass(UnusedImportDiagnostic::class) as $unusedImport) {
                 $importNode = $rootNode->getDescendantNodeAtPosition($unusedImport->range()->start()->toInt());
 
                 if (!$importNode instanceof QualifiedName) {
@@ -61,6 +60,9 @@ class RemoveUnusedImportsTransformer implements Transformer
 
                 // there is exactly one element
                 $declaration = $importNode->getFirstAncestor(NamespaceUseDeclaration::class);
+                if (null === $declaration) {
+                    continue;
+                }
                 $length = $declaration->getEndPosition() - $declaration->getStartPosition();
 
                 if (substr($code->__toString(), $declaration->getEndPosition(), 1) === "\n") {
@@ -79,28 +81,22 @@ class RemoveUnusedImportsTransformer implements Transformer
     }
 
     /**
-     * @return Diagnostics<Diagnostic>
+        * @return Promise<Diagnostics>
      */
-    public function diagnostics(SourceCode $code): Diagnostics
+    public function diagnostics(SourceCode $code): Promise
     {
-        $diagnostics = [];
-        foreach ($this->unusedImports($code) as $unusedClass) {
-            $diagnostics[] = new Diagnostic(
-                $unusedClass->range(),
-                $unusedClass->message(),
-                Diagnostic::WARNING
-            );
-        }
+        return call(function () use ($code) {
+            $diagnostics = [];
+            foreach ((yield $this->reflector->diagnostics($code))->byClass(UnusedImportDiagnostic::class) as $unusedClass) {
+                $diagnostics[] = new Diagnostic(
+                    $unusedClass->range(),
+                    $unusedClass->message(),
+                    Diagnostic::WARNING
+                );
+            }
 
-        return new Diagnostics($diagnostics);
-    }
-
-    /**
-     * @return WorseDiagnostics<UnusedImportDiagnostic>
-     */
-    private function unusedImports(SourceCode $code): WorseDiagnostics
-    {
-        return $this->reflector->diagnostics($code)->byClass(UnusedImportDiagnostic::class);
+            return new Diagnostics($diagnostics);
+        });
     }
 
     private function forGroupClause(QualifiedName $importNode, NamespaceUseClause $list): ?TextEdit
@@ -112,7 +108,7 @@ class RemoveUnusedImportsTransformer implements Transformer
         $this->fixed[$fixed] = true;
 
         $names = [];
-        foreach ($list->groupClauses->children as $groupClause) {
+        foreach ($list->groupClauses?->children ?: [] as $groupClause) {
             if (!$groupClause instanceof NamespaceUseGroupClause) {
                 continue;
             }

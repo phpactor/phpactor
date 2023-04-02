@@ -27,32 +27,37 @@ class ImplementContracts implements Transformer
     ) {
     }
 
-    public function diagnostics(SourceCode $source): Diagnostics
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $source): Promise
     {
-        $diagnostics = [];
-        $classes = $this->reflector->reflectClassesIn($source);
-        foreach ($classes->concrete() as $class) {
-            assert($class instanceof ReflectionClass);
-            $missingMethods = $this->missingClassMethods($class);
-            if (0 === count($missingMethods)) {
-                continue;
+        return call(function () use ($source) {
+            $diagnostics = [];
+            $classes = $this->reflector->reflectClassesIn($source);
+            foreach ($classes->concrete() as $class) {
+                assert($class instanceof ReflectionClass);
+                $missingMethods = $this->missingClassMethods($class);
+                if (0 === count($missingMethods)) {
+                    continue;
+                }
+                $diagnostics[] = new Diagnostic(
+                    ByteOffsetRange::fromInts(
+                        $class->position()->start()->toInt(),
+                        $class->position()->start()->toInt() + 5 + strlen($class->name()->__toString())
+                    ),
+                    sprintf(
+                        'Missing methods "%s"',
+                        implode('", "', array_map(function (ReflectionMethod $method) {
+                            return $method->name();
+                        }, $missingMethods))
+                    ),
+                    Diagnostic::ERROR
+                );
             }
-            $diagnostics[] = new Diagnostic(
-                ByteOffsetRange::fromInts(
-                    $class->position()->start()->toInt(),
-                    $class->position()->start()->toInt() + 5 + strlen($class->name()->__toString())
-                ),
-                sprintf(
-                    'Missing methods "%s"',
-                    implode('", "', array_map(function (ReflectionMethod $method) {
-                        return $method->name();
-                    }, $missingMethods))
-                ),
-                Diagnostic::ERROR
-            );
-        }
 
-        return new Diagnostics($diagnostics);
+            return new Diagnostics($diagnostics);
+        });
     }
 
     /**

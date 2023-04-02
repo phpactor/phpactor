@@ -33,7 +33,7 @@ class UpdateDocblockReturnTransformer implements Transformer
     public function transform(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $diagnostics = $this->methodsThatNeedFixing($code);
+            $diagnostics = yield $this->methodsThatNeedFixing($code);
             $builder = $this->builderFactory->fromSource($code);
 
             $class = null;
@@ -67,39 +67,46 @@ class UpdateDocblockReturnTransformer implements Transformer
     /**
      * @return Diagnostics<Diagnostic>
      */
-    public function diagnostics(SourceCode $code): Diagnostics
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
     {
-        $diagnostics = [];
+        return call(function () use ($code) {
+            $diagnostics = [];
 
-        $missingDocblocks = $this->methodsThatNeedFixing($code);
+            $missingDocblocks = yield $this->methodsThatNeedFixing($code);
 
-        foreach ($missingDocblocks as $missingDocblock) {
-            $diagnostics[] = new Diagnostic(
-                $missingDocblock->range(),
-                sprintf(
-                    'Missing @return %s',
-                    $missingDocblock->actualReturnType(),
-                ),
-                Diagnostic::WARNING
-            );
-        }
+            foreach ($missingDocblocks as $missingDocblock) {
+                $diagnostics[] = new Diagnostic(
+                    $missingDocblock->range(),
+                    sprintf(
+                        'Missing @return %s',
+                        $missingDocblock->actualReturnType(),
+                    ),
+                    Diagnostic::WARNING
+                );
+            }
 
-        /** @phpstan-ignore-next-line */
-        return Diagnostics::fromArray($diagnostics);
+            /** @phpstan-ignore-next-line */
+            return Diagnostics::fromArray($diagnostics);
+        });
     }
 
     /**
-     * @return MissingDocblockReturnTypeDiagnostic[]
+     * @return Promise<MissingDocblockReturnTypeDiagnostic[]>
      */
-    private function methodsThatNeedFixing(SourceCode $code): array
+    private function methodsThatNeedFixing(SourceCode $code): Promise
     {
-        $missingMethods = [];
-        $diagnostics = $this->reflector->diagnostics($code)->byClasses(MissingDocblockReturnTypeDiagnostic::class);
+        return call(function () use ($code) {
+            $missingMethods = [];
+            $diagnostics = yield $this->reflector->diagnostics($code)->byClasses(MissingDocblockReturnTypeDiagnostic::class);
 
-        foreach ($diagnostics as $diagnostic) {
-            $missingMethods[] = $diagnostic;
-        }
+            foreach ($diagnostics as $diagnostic) {
+                $missingMethods[] = $diagnostic;
+            }
 
-        return $missingMethods;
+            return $missingMethods;
+        });
     }
 }

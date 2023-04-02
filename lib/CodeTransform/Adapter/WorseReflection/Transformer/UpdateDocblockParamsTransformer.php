@@ -33,7 +33,7 @@ class UpdateDocblockParamsTransformer implements Transformer
     public function transform(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $diagnostics = $this->methodsThatNeedFixing($code);
+            $diagnostics = yield $this->methodsThatNeedFixing($code);
             $builder = $this->builderFactory->fromSource($code);
 
             $class = null;
@@ -67,39 +67,46 @@ class UpdateDocblockParamsTransformer implements Transformer
     /**
      * @return Diagnostics<Diagnostic>
      */
-    public function diagnostics(SourceCode $code): Diagnostics
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
     {
-        $diagnostics = [];
+        return call(function () use ($code) {
+            $diagnostics = [];
 
-        $missings = $this->methodsThatNeedFixing($code);
+            $missings = yield $this->methodsThatNeedFixing($code);
 
-        foreach ($missings as $missing) {
-            $diagnostics[] = new Diagnostic(
-                $missing->range(),
-                sprintf(
-                    'Missing @param %s',
-                    $missing->paramName(),
-                ),
-                Diagnostic::WARNING
-            );
-        }
+            foreach ($missings as $missing) {
+                $diagnostics[] = new Diagnostic(
+                    $missing->range(),
+                    sprintf(
+                        'Missing @param %s',
+                        $missing->paramName(),
+                    ),
+                    Diagnostic::WARNING
+                );
+            }
 
-        /** @phpstan-ignore-next-line */
-        return Diagnostics::fromArray($diagnostics);
+            /** @phpstan-ignore-next-line */
+            return Diagnostics::fromArray($diagnostics);
+        });
     }
 
     /**
-     * @return MissingDocblockParamDiagnostic[]
+     * @return Promise<MissingDocblockParamDiagnostic[]>
      */
-    private function methodsThatNeedFixing(SourceCode $code): array
+    private function methodsThatNeedFixing(SourceCode $code): Promise
     {
-        $missings = [];
-        $diagnostics = $this->reflector->diagnostics($code)->byClass(MissingDocblockParamDiagnostic::class);
+        return call(function () use ($code) {
+            $missings = [];
+            $diagnostics = (yield $this->reflector->diagnostics($code))->byClass(MissingDocblockParamDiagnostic::class);
 
-        foreach ($diagnostics as $diagnostic) {
-            $missings[] = $diagnostic;
-        }
+            foreach ($diagnostics as $diagnostic) {
+                $missings[] = $diagnostic;
+            }
 
-        return $missings;
+            return $missings;
+        });
     }
 }

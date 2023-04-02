@@ -54,26 +54,31 @@ class UpdateReturnTypeTransformer implements Transformer
         });
     }
 
-    public function diagnostics(SourceCode $code): Diagnostics
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
     {
-        $wrDiagnostics = $this->reflector->diagnostics($code)->byClass(MissingReturnTypeDiagnostic::class);
-        $diagnostics = [];
+        return call(function () use ($code) {
+            $wrDiagnostics = (yield $this->reflector->diagnostics($code))->byClass(MissingReturnTypeDiagnostic::class);
+            $diagnostics = [];
 
-        /** @var MissingReturnTypeDiagnostic $diagnostic */
-        foreach ($wrDiagnostics as $diagnostic) {
-            if (!$diagnostic->returnType()->isDefined()) {
-                continue;
+            /** @var MissingReturnTypeDiagnostic $diagnostic */
+            foreach ($wrDiagnostics as $diagnostic) {
+                if (!$diagnostic->returnType()->isDefined()) {
+                    continue;
+                }
+
+                $diagnostics[] = new Diagnostic(
+                    $diagnostic->range(),
+                    $diagnostic->message(),
+                    Diagnostic::WARNING,
+                );
             }
 
-            $diagnostics[] = new Diagnostic(
-                $diagnostic->range(),
-                $diagnostic->message(),
-                Diagnostic::WARNING,
-            );
-        }
-
-        /** @phpstan-ignore-next-line */
-        return Diagnostics::fromArray($diagnostics);
+            /** @phpstan-ignore-next-line */
+            return Diagnostics::fromArray($diagnostics);
+        });
     }
 
     /**

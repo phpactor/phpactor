@@ -80,21 +80,26 @@ class AddMissingProperties implements Transformer
         });
     }
 
-    public function diagnostics(SourceCode $code): Diagnostics
+    /**
+     * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
     {
-        $wrDiagnostics = $this->reflector->diagnostics($code);
-        $diagnostics = [];
+        return call(function () use ($code) {
+            $wrDiagnostics = yield $this->reflector->diagnostics($code);
+            $diagnostics = [];
 
-        /** @var AssignmentToMissingPropertyDiagnostic $diagnostic */
-        foreach ($wrDiagnostics->byClass(AssignmentToMissingPropertyDiagnostic::class) as $diagnostic) {
-            $diagnostics[] = new Diagnostic(
-                $diagnostic->range(),
-                $diagnostic->message(),
-                Diagnostic::WARNING
-            );
-        }
+            /** @var AssignmentToMissingPropertyDiagnostic $diagnostic */
+            foreach ($wrDiagnostics->byClass(AssignmentToMissingPropertyDiagnostic::class) as $diagnostic) {
+                $diagnostics[] = new Diagnostic(
+                    $diagnostic->range(),
+                    $diagnostic->message(),
+                    Diagnostic::WARNING
+                );
+            }
 
-        return new Diagnostics($diagnostics);
+            return new Diagnostics($diagnostics);
+        });
     }
 
     /**
