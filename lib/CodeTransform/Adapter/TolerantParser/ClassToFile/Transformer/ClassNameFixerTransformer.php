@@ -36,27 +36,32 @@ class ClassNameFixerTransformer implements Transformer
         $this->parser = $parser ?: new Parser();
     }
 
-    public function transform(SourceCode $code): TextEdits
+    /**
+     * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $code): Promise
     {
-        if ($code->uri()->scheme() !== 'file') {
-            throw new TransformException(sprintf('Source is not a file:// it is "%s"', $code->uri()->scheme()));
-        }
-        $classFqn = $this->determineClassFqn($code);
-        $correctClassName = $classFqn->name();
-        $correctNamespace = $classFqn->namespace();
+        return call(function () {
+            if ($code->uri()->scheme() !== 'file') {
+                throw new TransformException(sprintf('Source is not a file:// it is "%s"', $code->uri()->scheme()));
+            }
+            $classFqn = $this->determineClassFqn($code);
+            $correctClassName = $classFqn->name();
+            $correctNamespace = $classFqn->namespace();
 
-        $rootNode = $this->parser->parseSourceFile((string) $code);
-        $edits = [];
+            $rootNode = $this->parser->parseSourceFile((string) $code);
+            $edits = [];
 
-        if ($textEdit = $this->fixNamespace($rootNode, $correctNamespace)) {
-            $edits[] = $textEdit;
-        }
+            if ($textEdit = $this->fixNamespace($rootNode, $correctNamespace)) {
+                $edits[] = $textEdit;
+            }
 
-        if ($textEdit = $this->fixClassName($rootNode, $correctClassName)) {
-            $edits[] = $textEdit;
-        }
+            if ($textEdit = $this->fixClassName($rootNode, $correctClassName)) {
+                $edits[] = $textEdit;
+            }
 
-        return TextEdits::fromTextEdits($edits);
+            return TextEdits::fromTextEdits($edits);
+        });
     }
 
 

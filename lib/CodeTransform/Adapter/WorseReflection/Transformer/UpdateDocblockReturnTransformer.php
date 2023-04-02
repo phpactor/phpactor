@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -14,6 +15,7 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeDiagnostic;
 use Phpactor\WorseReflection\Reflector;
+use function Amp\call;
 
 class UpdateDocblockReturnTransformer implements Transformer
 {
@@ -25,36 +27,41 @@ class UpdateDocblockReturnTransformer implements Transformer
     ) {
     }
 
-    public function transform(SourceCode $code): TextEdits
+    /**
+        * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $code): Promise
     {
-        $diagnostics = $this->methodsThatNeedFixing($code);
-        $builder = $this->builderFactory->fromSource($code);
+        return call(function () use ($code) {
+            $diagnostics = $this->methodsThatNeedFixing($code);
+            $builder = $this->builderFactory->fromSource($code);
 
-        $class = null;
-        foreach ($diagnostics as $diagnostic) {
-            $class = $this->reflector->reflectClassLike($diagnostic->classType());
-            $method = $class->methods()->get($diagnostic->methodName());
+            $class = null;
+            foreach ($diagnostics as $diagnostic) {
+                $class = $this->reflector->reflectClassLike($diagnostic->classType());
+                $method = $class->methods()->get($diagnostic->methodName());
 
-            $classBuilder = $builder->classLike($method->class()->name()->short());
-            $methodBuilder = $classBuilder->method($method->name());
-            $replacement = $method->frame()->returnType();
-            $localReplacement = $replacement->toLocalType($method->scope())->generalize();
+                $classBuilder = $builder->classLike($method->class()->name()->short());
+                $methodBuilder = $classBuilder->method($method->name());
+                $replacement = $method->frame()->returnType();
+                $localReplacement = $replacement->toLocalType($method->scope())->generalize();
 
-            foreach ($replacement->allTypes()->classLike() as $classType) {
-                $builder->use($classType->toPhpString());
+                foreach ($replacement->allTypes()->classLike() as $classType) {
+                    $builder->use($classType->toPhpString());
+                }
+
+                $methodBuilder->docblock(
+                    $this->docblockUpdater->set(
+                        $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
+                        new ReturnTagPrototype(
+                            $localReplacement
+                        )
+                    )
+                );
             }
 
-            $methodBuilder->docblock(
-                $this->docblockUpdater->set(
-                    $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
-                    new ReturnTagPrototype(
-                        $localReplacement
-                    )
-                )
-            );
-        }
-
-        return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
+            return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
+        });
     }
 
     /**

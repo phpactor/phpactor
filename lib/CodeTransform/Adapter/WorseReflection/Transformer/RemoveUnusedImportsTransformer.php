@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\NamespaceUseGroupClause;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -16,6 +17,7 @@ use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Diagnostics as WorseDiagnostics;
+use function Amp\call;
 
 class RemoveUnusedImportsTransformer implements Transformer
 {
@@ -28,47 +30,52 @@ class RemoveUnusedImportsTransformer implements Transformer
     {
     }
 
-    public function transform(SourceCode $code): TextEdits
+    /**
+        * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $code): Promise
     {
-        $rootNode = $this->parser->parseSourceFile($code);
-        $edits = [];
+        return call(function () use ($code) {
+            $rootNode = $this->parser->parseSourceFile($code);
+            $edits = [];
 
-        foreach ($this->unusedImports($code) as $unusedImport) {
-            $importNode = $rootNode->getDescendantNodeAtPosition($unusedImport->range()->start()->toInt());
+            foreach ($this->unusedImports($code) as $unusedImport) {
+                $importNode = $rootNode->getDescendantNodeAtPosition($unusedImport->range()->start()->toInt());
 
-            if (!$importNode instanceof QualifiedName) {
-                continue;
-            }
-
-            $list = $importNode->getFirstAncestor(NamespaceUseClause::class);
-
-            if (!$list instanceof NamespaceUseClause) {
-                continue;
-            }
-
-            if ($list->groupClauses) {
-                if ($edit = $this->forGroupClause($importNode, $list)) {
-                    $edits[] = $edit;
+                if (!$importNode instanceof QualifiedName) {
+                    continue;
                 }
-                continue;
+
+                $list = $importNode->getFirstAncestor(NamespaceUseClause::class);
+
+                if (!$list instanceof NamespaceUseClause) {
+                    continue;
+                }
+
+                if ($list->groupClauses) {
+                    if ($edit = $this->forGroupClause($importNode, $list)) {
+                        $edits[] = $edit;
+                    }
+                    continue;
+                }
+
+                // there is exactly one element
+                $declaration = $importNode->getFirstAncestor(NamespaceUseDeclaration::class);
+                $length = $declaration->getEndPosition() - $declaration->getStartPosition();
+
+                if (substr($code->__toString(), $declaration->getEndPosition(), 1) === "\n") {
+                    $length++;
+                }
+
+                $edits[] = TextEdit::create(
+                    $declaration->getStartPosition(),
+                    $length,
+                    ''
+                );
             }
 
-            // there is exactly one element
-            $declaration = $importNode->getFirstAncestor(NamespaceUseDeclaration::class);
-            $length = $declaration->getEndPosition() - $declaration->getStartPosition();
-
-            if (substr($code->__toString(), $declaration->getEndPosition(), 1) === "\n") {
-                $length++;
-            }
-
-            $edits[] = TextEdit::create(
-                $declaration->getStartPosition(),
-                $length,
-                ''
-            );
-        }
-
-        return TextEdits::fromTextEdits($edits);
+            return TextEdits::fromTextEdits($edits);
+        });
     }
 
     /**

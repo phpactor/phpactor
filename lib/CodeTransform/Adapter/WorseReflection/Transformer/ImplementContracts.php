@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\Transformer;
@@ -15,6 +16,7 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use function Amp\call;
 
 class ImplementContracts implements Transformer
 {
@@ -53,47 +55,52 @@ class ImplementContracts implements Transformer
         return new Diagnostics($diagnostics);
     }
 
-    public function transform(SourceCode $source): TextEdits
+    /**
+        * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $source): Promise
     {
-        $classes = $this->reflector->reflectClassesIn($source);
-        $edits = [];
-        $sourceCodeBuilder = SourceCodeBuilder::create();
+        return call(function () use ($source) {
+            $classes = $this->reflector->reflectClassesIn($source);
+            $edits = [];
+            $sourceCodeBuilder = SourceCodeBuilder::create();
 
-        /** @var ReflectionClass $class */
-        foreach ($classes->concrete() as $class) {
-            $classBuilder = $sourceCodeBuilder->class($class->name()->short());
-            $missingMethods = $this->missingClassMethods($class);
+            /** @var ReflectionClass $class */
+            foreach ($classes->concrete() as $class) {
+                $classBuilder = $sourceCodeBuilder->class($class->name()->short());
+                $missingMethods = $this->missingClassMethods($class);
 
-            if (empty($missingMethods)) {
-                continue;
-            }
-
-            /** @var ReflectionMethod $missingMethod */
-            foreach ($missingMethods as $missingMethod) {
-                $builder = $this->factory->fromSource($missingMethod->declaringClass()->sourceCode());
-                $methodBuilder = $builder->classLike(
-                    $missingMethod->declaringClass()->name()->short()
-                )->method($missingMethod->name());
-
-                $missingMethodReturnType = $missingMethod->returnType();
-                foreach ($missingMethodReturnType->allTypes()->classLike() as $type) {
-                    $sourceCodeBuilder->use($type->name());
+                if (empty($missingMethods)) {
+                    continue;
                 }
 
-                foreach ($missingMethod->parameters() as $parameter) {
-                    $parameterType = $parameter->type();
-                    foreach ($parameterType->allTypes()->classLike() as $classType) {
-                        if ($classType->name()->namespace() != $class->name()->namespace()) {
-                            $sourceCodeBuilder->use($classType->name());
+                /** @var ReflectionMethod $missingMethod */
+                foreach ($missingMethods as $missingMethod) {
+                    $builder = $this->factory->fromSource($missingMethod->declaringClass()->sourceCode());
+                    $methodBuilder = $builder->classLike(
+                        $missingMethod->declaringClass()->name()->short()
+                    )->method($missingMethod->name());
+
+                    $missingMethodReturnType = $missingMethod->returnType();
+                    foreach ($missingMethodReturnType->allTypes()->classLike() as $type) {
+                        $sourceCodeBuilder->use($type->name());
+                    }
+
+                    foreach ($missingMethod->parameters() as $parameter) {
+                        $parameterType = $parameter->type();
+                        foreach ($parameterType->allTypes()->classLike() as $classType) {
+                            if ($classType->name()->namespace() != $class->name()->namespace()) {
+                                $sourceCodeBuilder->use($classType->name());
+                            }
                         }
                     }
+
+                    $classBuilder->add($methodBuilder);
                 }
-
-                $classBuilder->add($methodBuilder);
             }
-        }
 
-        return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
+            return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
+        });
     }
 
     private function missingClassMethods(ReflectionClass $class): array

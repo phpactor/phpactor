@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
 use Generator;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
@@ -18,6 +19,7 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
+use function Amp\call;
 
 class CompleteConstructor implements Transformer
 {
@@ -29,13 +31,18 @@ class CompleteConstructor implements Transformer
     ) {
     }
 
-    public function transform(SourceCode $source): TextEdits
+    /**
+        * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $source): Promise
     {
-        if (false === $this->promote) {
-            return $this->transformAssign($source);
-        }
+        return call(function () use $code) {
+            if (false === $this->promote) {
+                return $this->transformAssign($source);
+            }
 
-        return $this->transformPromote($source);
+            return $this->transformPromote($source);
+        });
     }
 
 
