@@ -43,7 +43,7 @@ class ClassNameFixerTransformer implements Transformer
      */
     public function transform(SourceCode $code): Promise
     {
-        return call(function () {
+        return call(function () use ($code) {
             if ($code->uri()->scheme() !== 'file') {
                 throw new TransformException(sprintf('Source is not a file:// it is "%s"', $code->uri()->scheme()));
             }
