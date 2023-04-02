@@ -301,11 +301,6 @@ final class Parser
             );
         }
 
-        if ($this->tokens->current->type === Token::T_LIST) {
-            $list = $this->tokens->chomp();
-            return new ListBracketsNode($this->createTypeFromToken($type), $list);
-        }
-
         if ($this->tokens->current->type === Token::T_BRACKET_ANGLE_OPEN) {
             $open = $this->tokens->chomp();
             $typeList = null;
@@ -324,12 +319,13 @@ final class Parser
                 return null;
             }
 
-            return new GenericNode(
+            $type = new GenericNode(
                 $open,
                 $this->createTypeFromToken($type),
                 $typeList,
                 $this->tokens->chomp()
             );
+            return $this->parseDimensions($type);
         }
 
         if ($this->tokens->current->type === Token::T_BRACKET_CURLY_OPEN) {
@@ -344,12 +340,24 @@ final class Parser
                 $close = $this->tokens->chomp();
             }
 
-            return new ArrayShapeNode($open, new ArrayKeyValueList(
+            $type = new ArrayShapeNode($open, new ArrayKeyValueList(
                 $keyValues,
             ), $close);
+
+            return $this->parseDimensions($type);
         }
 
-        return $this->createTypeFromToken($type);
+        return $this->parseDimensions($this->createTypeFromToken($type));
+    }
+
+    private function parseDimensions(TypeNode $type): TypeNode
+    {
+        while ($this->tokens->if(Token::T_LIST)) {
+            $list = $this->tokens->chomp();
+            $type = new ListBracketsNode($type, $list);
+        }
+
+        return $type;
     }
 
     private function createTypeFromToken(Token $type): TypeNode
