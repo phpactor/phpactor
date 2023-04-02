@@ -27,7 +27,7 @@ class PsalmProcessTest extends IntegrationTestCase
     /**
      * @dataProvider provideLint
      */
-    public function testLint(string $source, array $expectedDiagnostics, int $level = 1, bool $shouldShowInfo = true, int $errorLevel = null): void
+    public function testLint(string $source, array $expectedDiagnostics, int $initLevel = 1, bool $shouldShowInfo = true, int $errorLevel = null): void
     {
         $psalmBin = __DIR__ . '/../../../../../vendor/bin/psalm';
         $this->workspace()->reset();
@@ -50,7 +50,7 @@ class PsalmProcessTest extends IntegrationTestCase
         );
         (Process::fromShellCommandline('composer install', $this->workspace()->path()))->mustRun();
 
-        (new Process([$psalmBin, '--init', 'src', $level], $this->workspace()->path()))->mustRun();
+        (new Process([$psalmBin, '--init', 'src', $initLevel], $this->workspace()->path()))->mustRun();
         (new Process([$psalmBin, '--clear-cache'], $this->workspace()->path()))->mustRun();
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
@@ -140,7 +140,7 @@ class PsalmProcessTest extends IntegrationTestCase
             true
         ];
 
-        yield [
+        yield 'should not show info' => [
             '<?php $foobar = $barfoo;',
             [
                 Diagnostic::fromArray([
@@ -158,7 +158,7 @@ class PsalmProcessTest extends IntegrationTestCase
         ];
 
         yield 'override error level' => [
-            '<?php $foobar = $barfoo;',
+            '<?php function foo($bar) { $bar->foo(); } ',
             [
                 Diagnostic::fromArray([
                     'range' => new Range(
@@ -172,7 +172,7 @@ class PsalmProcessTest extends IntegrationTestCase
             ],
             1,
             false,
-            2,
+            1,
         ];
     }
 }
