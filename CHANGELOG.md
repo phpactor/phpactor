@@ -21,6 +21,7 @@ Bug fixes:
   - Fix extract method within trait #2076 @mamazu
   - Do not attempt to index classes whose names are reserved words #2098
   - Fix typo in LanguageServerExtension::PARAM_FILE_EVENTS resulting in typo in documentation
+  - Fix parsing array types in `@param` Tags in doc blocks #2172
 
 Improvements:
 

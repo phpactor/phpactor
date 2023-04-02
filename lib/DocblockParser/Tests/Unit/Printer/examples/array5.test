@@ -1,0 +1,11 @@
+/** @var array<string>[] $variable */
+---
+Docblock: = 
+ ElementList: = /** 
+  VarTag: = @var
+   ListBracketsNode: = 
+    GenericNode: = 
+     ArrayNode: = array<
+     TypeList: = 
+      ScalarNode: = string>[]
+   VariableNode: = $variable */
