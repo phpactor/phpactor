@@ -32,7 +32,6 @@ class PsalmProcessTest extends IntegrationTestCase
     public function testLint(string $source, Closure $assertion, int $initLevel = 1, bool $shouldShowInfo = true, int $errorLevel = null): void
     {
         $psalmBin = __DIR__ . '/../../../../../vendor/bin/psalm';
-        $this->workspace()->reset();
 
         // without a src dir, psalm crashes
         $this->workspace()->mkdir('src');
@@ -50,10 +49,9 @@ class PsalmProcessTest extends IntegrationTestCase
                 }
                 EOT
         );
-        (Process::fromShellCommandline('composer install', $this->workspace()->path()))->mustRun();
+        (Process::fromShellCommandline('composer dump', $this->workspace()->path()))->mustRun();
 
         (new Process([$psalmBin, '--init', 'src', $initLevel], $this->workspace()->path()))->mustRun();
-        (new Process([$psalmBin, '--clear-cache'], $this->workspace()->path()))->mustRun();
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),

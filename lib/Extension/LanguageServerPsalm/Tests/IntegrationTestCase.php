@@ -12,7 +12,7 @@ abstract class IntegrationTestCase extends TestCase
 //        $this->workspace()->reset();
     }
 
-    protected function workspace(): Workspace
+    protected static function workspace(): Workspace
     {
         return Workspace::create(__DIR__ . '/Workspace');
     }
