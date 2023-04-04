@@ -32,7 +32,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
     {
         return call(function () use ($item) {
             $actions = [];
-            foreach ($this->finder->importCandidates($item) as $candidate) {
+            foreach (yield $this->finder->importCandidates($item) as $candidate) {
                 $actions[] = $this->codeActionForFqn($candidate->unresolvedName(), $candidate->candidateFqn(), $item);
                 yield delay(1);
             }
@@ -59,7 +59,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         return call(function () use ($textDocument) {
             $diagnostics = [];
             $hasCandidatesHash = [];
-            foreach ($this->finder->unresolved($textDocument) as $unresolvedName) {
+            foreach (yield $this->finder->unresolved($textDocument) as $unresolvedName) {
                 assert($unresolvedName instanceof NameWithByteOffset);
                 $nameString = (string)$unresolvedName->name();
                 [
