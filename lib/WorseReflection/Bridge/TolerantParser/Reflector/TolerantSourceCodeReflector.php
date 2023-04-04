@@ -26,6 +26,7 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as TolerantReflectionFunctionCollection;
 use function Amp\call;
+use function Amp\delay;
 
 class TolerantSourceCodeReflector implements SourceCodeReflector
 {
@@ -69,7 +70,9 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         return call(function () use ($sourceCode) {
             $rootNode = $this->parseSourceCode($sourceCode);
             $walker = $this->serviceLocator->newDiagnosticsWalker();
-            $this->serviceLocator->frameBuilder()->withWalker($walker)->build($rootNode);
+            foreach ($this->serviceLocator->frameBuilder()->withWalker($walker)->buildGenerator($rootNode) as $tick) {
+                yield delay(0);
+            }
             return $walker->diagnostics();
         });
     }
