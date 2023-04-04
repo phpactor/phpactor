@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
 use Amp\Promise;
+use Amp\Success;
 use Generator;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
@@ -19,7 +20,6 @@ use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
-use function Amp\call;
 
 class CompleteConstructor implements Transformer
 {
@@ -36,13 +36,11 @@ class CompleteConstructor implements Transformer
      */
     public function transform(SourceCode $source): Promise
     {
-        return call(function () use ($source) {
-            if (false === $this->promote) {
-                return $this->transformAssign($source);
-            }
+        if (false === $this->promote) {
+            return new Success($this->transformAssign($source));
+        }
 
-            return $this->transformPromote($source);
-        });
+        return new Success($this->transformPromote($source));
     }
 
 
@@ -51,38 +49,36 @@ class CompleteConstructor implements Transformer
      */
     public function diagnostics(SourceCode $source): Promise
     {
-        return call(function () use ($source) {
-            $diagnostics = [];
-            foreach ($this->candidateClasses($source) as $class) {
-                $constructMethod = $class->methods()->belongingTo($class->name())->get('__construct');
-                assert($constructMethod instanceof ReflectionMethod);
-                foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
-                    assert($parameter instanceof ReflectionParameter);
-                    $frame = $constructMethod->frame();
+        $diagnostics = [];
+        foreach ($this->candidateClasses($source) as $class) {
+            $constructMethod = $class->methods()->belongingTo($class->name())->get('__construct');
+            assert($constructMethod instanceof ReflectionMethod);
+            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+                assert($parameter instanceof ReflectionParameter);
+                $frame = $constructMethod->frame();
 
-                    $isUsed = $frame->locals()->byName($parameter->name())->count() > 0;
-                    $hasProperty = $class->properties()->has($parameter->name());
+                $isUsed = $frame->locals()->byName($parameter->name())->count() > 0;
+                $hasProperty = $class->properties()->has($parameter->name());
 
-                    if ($isUsed && $hasProperty) {
-                        continue;
-                    }
-
-                    $diagnostics[] = new Diagnostic(
-                        ByteOffsetRange::fromInts(
-                            $parameter->position()->start()->toInt(),
-                            $parameter->position()->end()->toInt() + 5 + strlen($class->name()->__toString())
-                        ),
-                        sprintf(
-                            'Parameter "%s" may not have been assigned',
-                            $parameter->name()
-                        ),
-                        Diagnostic::WARNING
-                    );
+                if ($isUsed && $hasProperty) {
+                    continue;
                 }
-            }
 
-            return new Diagnostics($diagnostics);
-        });
+                $diagnostics[] = new Diagnostic(
+                    ByteOffsetRange::fromInts(
+                        $parameter->position()->start()->toInt(),
+                        $parameter->position()->end()->toInt() + 5 + strlen($class->name()->__toString())
+                    ),
+                    sprintf(
+                        'Parameter "%s" may not have been assigned',
+                        $parameter->name()
+                    ),
+                    Diagnostic::WARNING
+                );
+            }
+        }
+
+        return new Success(new Diagnostics($diagnostics));
     }
 
     private function transformAssign(SourceCode $source): TextEdits

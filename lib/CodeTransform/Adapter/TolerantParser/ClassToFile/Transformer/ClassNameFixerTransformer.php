@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer;
 
 use Amp\Promise;
+use Amp\Success;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
@@ -25,7 +26,6 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use RuntimeException;
-use function Amp\call;
 
 class ClassNameFixerTransformer implements Transformer
 {
@@ -43,27 +43,25 @@ class ClassNameFixerTransformer implements Transformer
      */
     public function transform(SourceCode $code): Promise
     {
-        return call(function () use ($code) {
-            if ($code->uri()->scheme() !== 'file') {
-                throw new TransformException(sprintf('Source is not a file:// it is "%s"', $code->uri()->scheme()));
-            }
-            $classFqn = $this->determineClassFqn($code);
-            $correctClassName = $classFqn->name();
-            $correctNamespace = $classFqn->namespace();
+        if ($code->uri()->scheme() !== 'file') {
+            throw new TransformException(sprintf('Source is not a file:// it is "%s"', $code->uri()->scheme()));
+        }
+        $classFqn = $this->determineClassFqn($code);
+        $correctClassName = $classFqn->name();
+        $correctNamespace = $classFqn->namespace();
 
-            $rootNode = $this->parser->parseSourceFile((string) $code);
-            $edits = [];
+        $rootNode = $this->parser->parseSourceFile((string) $code);
+        $edits = [];
 
-            if ($textEdit = $this->fixNamespace($rootNode, $correctNamespace)) {
-                $edits[] = $textEdit;
-            }
+        if ($textEdit = $this->fixNamespace($rootNode, $correctNamespace)) {
+            $edits[] = $textEdit;
+        }
 
-            if ($textEdit = $this->fixClassName($rootNode, $correctClassName)) {
-                $edits[] = $textEdit;
-            }
+        if ($textEdit = $this->fixClassName($rootNode, $correctClassName)) {
+            $edits[] = $textEdit;
+        }
 
-            return TextEdits::fromTextEdits($edits);
-        });
+        return new Success(TextEdits::fromTextEdits($edits));
     }
 
 
@@ -72,47 +70,45 @@ class ClassNameFixerTransformer implements Transformer
      */
     public function diagnostics(SourceCode $code): Promise
     {
-        return call(function () use ($code) {
-            if ($code->uri()->scheme() !== 'file') {
-                return Diagnostics::none();
-            }
-            $rootNode = $this->parser->parseSourceFile((string) $code);
-            try {
-                $classFqn = $this->determineClassFqn($code);
-            } catch (RuntimeException) {
-                return Diagnostics::none();
-            }
-            $correctClassName = $classFqn->name();
-            $correctNamespace = $classFqn->namespace();
+        if ($code->uri()->scheme() !== 'file') {
+            return new Success(Diagnostics::none());
+        }
+        $rootNode = $this->parser->parseSourceFile((string) $code);
+        try {
+            $classFqn = $this->determineClassFqn($code);
+        } catch (RuntimeException) {
+            return new Success(Diagnostics::none());
+        }
+        $correctClassName = $classFqn->name();
+        $correctNamespace = $classFqn->namespace();
 
-            $diagnostics = [];
+        $diagnostics = [];
 
-            if (null !== $this->fixNamespace($rootNode, $correctNamespace)) {
-                $namespaceDefinition = $rootNode->getFirstDescendantNode(NamespaceDefinition::class);
-                $diagnostics[] = new Diagnostic(
-                    ByteOffsetRange::fromInts(
-                        $namespaceDefinition ? $namespaceDefinition->getStartPosition() : 0,
-                        $namespaceDefinition ? $namespaceDefinition->getEndPosition() : 0,
-                    ),
-                    sprintf('Namespace should probably be "%s"', $correctNamespace),
-                    Diagnostic::WARNING
-                );
-            }
-            if (null !== $edits = $this->fixClassName($rootNode, $correctClassName)) {
-                $classLike = $rootNode->getFirstDescendantNode(ClassLike::class);
+        if (null !== $this->fixNamespace($rootNode, $correctNamespace)) {
+            $namespaceDefinition = $rootNode->getFirstDescendantNode(NamespaceDefinition::class);
+            $diagnostics[] = new Diagnostic(
+                ByteOffsetRange::fromInts(
+                    $namespaceDefinition ? $namespaceDefinition->getStartPosition() : 0,
+                    $namespaceDefinition ? $namespaceDefinition->getEndPosition() : 0,
+                ),
+                sprintf('Namespace should probably be "%s"', $correctNamespace),
+                Diagnostic::WARNING
+            );
+        }
+        if (null !== $edits = $this->fixClassName($rootNode, $correctClassName)) {
+            $classLike = $rootNode->getFirstDescendantNode(ClassLike::class);
 
-                $diagnostics[] = new Diagnostic(
-                    ByteOffsetRange::fromInts(
-                        $classLike ? $classLike->getStartPosition() : 0,
-                        $classLike ? $classLike->getEndPosition() : 0
-                    ),
-                    sprintf('Class name should probably be "%s"', $correctClassName),
-                    Diagnostic::WARNING
-                );
-            }
+            $diagnostics[] = new Diagnostic(
+                ByteOffsetRange::fromInts(
+                    $classLike ? $classLike->getStartPosition() : 0,
+                    $classLike ? $classLike->getEndPosition() : 0
+                ),
+                sprintf('Class name should probably be "%s"', $correctClassName),
+                Diagnostic::WARNING
+            );
+        }
 
-            return new Diagnostics($diagnostics);
-        });
+        return new Success(new Diagnostics($diagnostics));
     }
 
 

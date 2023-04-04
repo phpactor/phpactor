@@ -5,7 +5,6 @@ namespace Phpactor\CodeTransform\Domain;
 use Amp\Promise;
 use function Amp\call;
 
-
 /**
  * @extends AbstractCollection<Transformer>
  */

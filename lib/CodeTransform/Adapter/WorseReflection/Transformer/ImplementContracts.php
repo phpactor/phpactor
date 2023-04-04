@@ -3,6 +3,7 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
 use Amp\Promise;
+use Amp\Success;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\Transformer;
@@ -16,7 +17,6 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
-use function Amp\call;
 
 class ImplementContracts implements Transformer
 {
@@ -32,7 +32,7 @@ class ImplementContracts implements Transformer
      */
     public function diagnostics(SourceCode $source): Promise
     {
-        return call(function () use ($source) {
+        return new Success((function () use ($source) {
             $diagnostics = [];
             $classes = $this->reflector->reflectClassesIn($source);
             foreach ($classes->concrete() as $class) {
@@ -57,7 +57,7 @@ class ImplementContracts implements Transformer
             }
 
             return new Diagnostics($diagnostics);
-        });
+        })());
     }
 
     /**
@@ -65,7 +65,7 @@ class ImplementContracts implements Transformer
      */
     public function transform(SourceCode $source): Promise
     {
-        return call(function () use ($source) {
+        return new Success((function () use ($source) {
             $classes = $this->reflector->reflectClassesIn($source);
             $edits = [];
             $sourceCodeBuilder = SourceCodeBuilder::create();
@@ -105,7 +105,7 @@ class ImplementContracts implements Transformer
             }
 
             return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
-        });
+        })());
     }
 
     private function missingClassMethods(ReflectionClass $class): array
