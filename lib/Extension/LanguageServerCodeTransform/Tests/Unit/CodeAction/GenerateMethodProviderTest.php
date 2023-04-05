@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
 use Amp\CancellationTokenSource;
+use Amp\Success;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
@@ -43,7 +44,7 @@ class GenerateMethodProviderTest extends TestCase
      */
     public function testDiagnostics(array $missingMethods, array $expectedDiagnostics): void
     {
-        $this->finder->find(Argument::type(TextDocument::class))->willReturn($missingMethods);
+        $this->finder->find(Argument::type(TextDocument::class))->willReturn(new Success($missingMethods));
         $provider = $this->createProvider();
 
         $cancel = (new CancellationTokenSource())->getToken();
@@ -86,7 +87,7 @@ class GenerateMethodProviderTest extends TestCase
      */
     public function testProvideActions(array $missingMethods, array $expectedActions): void
     {
-        $this->finder->find(Argument::type(TextDocument::class))->willReturn($missingMethods);
+        $this->finder->find(Argument::type(TextDocument::class))->willReturn(new Success($missingMethods));
         $provider = $this->createProvider();
         $cancel = (new CancellationTokenSource())->getToken();
         self::assertEquals(

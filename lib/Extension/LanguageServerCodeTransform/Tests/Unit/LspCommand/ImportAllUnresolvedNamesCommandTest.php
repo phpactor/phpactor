@@ -41,7 +41,7 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
         $server = $builder->build();
         $server->textDocument()->open(self::EXAMPLE_URI, 'foobar');
 
-        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new NameWithByteOffsets());
+        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new Success(new NameWithByteOffsets()));
 
         wait($server->workspace()->executeCommand(ImportAllUnresolvedNamesCommand::NAME, [
             self::EXAMPLE_URI
@@ -56,9 +56,9 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
         $server->textDocument()->open(self::EXAMPLE_URI, 'foobar');
 
         $unresolvedName = $this->createUnresolvedName();
-        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new NameWithByteOffsets(
+        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new Success(new NameWithByteOffsets(
             $unresolvedName
-        ));
+        )));
         $this->candidateFinder->candidatesForUnresolvedName($unresolvedName)->willYield([]);
 
         wait($server->workspace()->executeCommand(ImportAllUnresolvedNamesCommand::NAME, [
@@ -76,10 +76,10 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
         $server->textDocument()->open(self::EXAMPLE_URI, 'foobar');
 
         $unresolvedName = $this->createUnresolvedName();
-        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new NameWithByteOffsets(
+        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new Success(new NameWithByteOffsets(
             $unresolvedName,
             $this->createUnresolvedName()
-        ));
+        )));
         $this->candidateFinder->candidatesForUnresolvedName($unresolvedName)->willYield([]);
 
         wait($server->workspace()->executeCommand(ImportAllUnresolvedNamesCommand::NAME, [
@@ -98,9 +98,9 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
         $server->textDocument()->open(self::EXAMPLE_URI, 'foobar');
 
         $unresolvedName = $this->createUnresolvedName();
-        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new NameWithByteOffsets(
+        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new Success(new NameWithByteOffsets(
             $unresolvedName
-        ));
+        )));
         $this->candidateFinder->candidatesForUnresolvedName($unresolvedName)->willYield([
             new NameCandidate($unresolvedName, self::EXAMPLE_CANDIDATE)
         ]);
@@ -118,9 +118,9 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
         $server->textDocument()->open(self::EXAMPLE_URI, 'foobar');
 
         $unresolvedName = $this->createUnresolvedName();
-        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new NameWithByteOffsets(
+        $this->candidateFinder->unresolved($builder->workspace()->get(self::EXAMPLE_URI))->willReturn(new Success(new NameWithByteOffsets(
             $unresolvedName
-        ));
+        )));
         $this->candidateFinder->candidatesForUnresolvedName($unresolvedName)->willYield([
             new NameCandidate($unresolvedName, self::EXAMPLE_CANDIDATE),
             new NameCandidate($unresolvedName, 'Barfoo')
