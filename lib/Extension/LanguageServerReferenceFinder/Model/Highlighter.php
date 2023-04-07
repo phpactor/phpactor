@@ -56,12 +56,12 @@ class Highlighter
             $highlights = [];
             foreach ($this->generate($source, $offset) as $highlight) {
                 yield delay(1);
-                $offsets[] = $highlight->start;
-                $offsets[] = $highlight->end;
-                $highlights[] = $highlight;
                 if ($cancellation->isRequested()) {
                     return new Highlights();
                 }
+                $offsets[] = $highlight->start;
+                $offsets[] = $highlight->end;
+                $highlights[] = $highlight;
             }
 
             $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
@@ -78,7 +78,6 @@ class Highlighter
                     $highlight->kind
                 );
             }
-
             return new Highlights(...$lspHighlights);
         });
     }
