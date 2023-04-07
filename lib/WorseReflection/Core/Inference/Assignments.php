@@ -27,7 +27,6 @@ abstract class Assignments implements Countable, IteratorAggregate
         foreach ($variables as $variable) {
             $this->variables[$variable->key()] = $variable;
         }
-        $this->sort();
     }
 
 
@@ -47,7 +46,6 @@ abstract class Assignments implements Countable, IteratorAggregate
     {
         $this->version++;
         $this->variables[$variable->key()] = $variable;
-        $this->sort();
     }
 
     public function add(Variable $variable, int $offset): void
@@ -157,7 +155,6 @@ abstract class Assignments implements Countable, IteratorAggregate
         foreach ($variables->variables as $offset => $variable) {
             $this->variables[$offset] = $variable;
         }
-        $this->sort();
     }
 
     public function replace(Variable $existing, Variable $replacement): void
@@ -216,12 +213,5 @@ abstract class Assignments implements Countable, IteratorAggregate
         }
 
         return new static($mostRecent);
-    }
-
-    private function sort(): void
-    {
-        uasort($this->variables, function (Variable $one, Variable $two) {
-            return $one->offset() <=> $two->offset();
-        });
     }
 }
