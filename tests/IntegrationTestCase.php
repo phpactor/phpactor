@@ -86,7 +86,9 @@ abstract class IntegrationTestCase extends TestCase
 
     protected function container(): Container
     {
-        return Phpactor::boot(new ArrayInput([]), new BufferedOutput(), __DIR__ . '/../vendor');
+        return Phpactor::boot(new ArrayInput([
+            '--working-dir' => $this->workspaceDir(),
+        ]), new BufferedOutput(), __DIR__ . '/../vendor');
     }
 
     private function cacheDir(string $name): string
