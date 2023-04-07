@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerWorseReflection\InlayHint;
 
+use Amp\CancellationTokenSource;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\InlayHint;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -12,6 +13,8 @@ use function Amp\delay;
 
 class InlayHintProvider
 {
+    private ?CancellationTokenSource $previousCancellationSource = null;
+
     public function __construct(private SourceCodeReflector $reflector, private InlayHintOptions $options)
     {
     }
@@ -21,10 +24,22 @@ class InlayHintProvider
      */
     public function inlayHints(TextDocument $document, ByteOffsetRange $range): Promise
     {
-        return call(function () use ($document, $range) {
+        // ensure we only process one inlay request at a time
+        if ($this->previousCancellationSource) {
+            $this->previousCancellationSource->cancel();
+            $this->previousCancellationSource = null;
+        }
+        $cancellationSource = new CancellationTokenSource();
+        $cancellation = $cancellationSource->getToken();
+        $this->previousCancellationSource = $cancellationSource;
+
+        return call(function () use ($document, $range, $cancellation) {
             $walker = new InlayHintWalker($range, $this->options);
             foreach ($this->reflector->walk($document, $walker) as $tick) {
                 yield delay(0);
+                if ($cancellation->isRequested()) {
+                    return $walker->hints();
+                }
             }
 
             return $walker->hints();
