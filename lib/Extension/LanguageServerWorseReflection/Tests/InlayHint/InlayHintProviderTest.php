@@ -33,7 +33,7 @@ class InlayHintProviderTest extends IntegrationTestCase
             ByteOffsetRange::fromInts(
                 0,
                 strlen($source)
-            )
+            ),
         ));
         $assertion($hints);
     }
