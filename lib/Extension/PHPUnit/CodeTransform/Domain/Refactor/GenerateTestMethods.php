@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\PHPUnit\CodeTransform\Domain\Refactor;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -40,7 +39,8 @@ class GenerateTestMethods /* implements GenerateMethod */
             return;
         }
 
-        if (!$class->isInstanceOf(ClassName::fromString(TestCase::class))) {
+        dump($class->parent());
+        if (!$class->isInstanceOf(ClassName::fromString('\PHPUnit\Framework\TestCase'))) {
             dump('Not a unit test');
             return;
         }
