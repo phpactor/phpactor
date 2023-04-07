@@ -50,8 +50,11 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
 
         foreach ($attributes as $attributeGroup) {
             foreach ($attributeGroup->attributes->children as $attribute) {
-                /** @var Attribute $attribute */
-                if ($attribute->name->getText() === 'Attribute') {
+                if (!$attribute instanceof Attribute) {
+                    continue;
+                }
+                /** @phpstan-ignore-next-line */
+                if ($attribute->name?->getText() === 'Attribute') {
                     $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
                     return;
                 }
