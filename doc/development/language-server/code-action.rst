@@ -21,8 +21,8 @@ In order to implement a new code action you need the following classes:
 
 .. note::
 
-   You can progrmatically execute commands from the language client (e.g.
-   neovim) but it's not very intutive. Code actions provide hints which can
+   You can programmatically execute commands from the language client (e.g.
+   neovim) but it's not very intuitive. Code actions provide hints which can
    normally be actioned through commands.
 
 Let's have a look at the concept by the example of the generate decorator
@@ -53,6 +53,6 @@ The ``CodeAction`` list can then reference a command by name and provide argumen
 The command is defined in our example in the ``GenerateDecoratorCommand`` which
 will receive the arguments you pass and can effectively execute the action, typically in Phpactor we will delegate to a service - in much the same way you would with an MVC controller.
 
-Int eh case of the generate decorator command there is the
+In the case of the generate decorator command there is the
 ``WorseGenerateDecorator`` service which contains the logic for generating the
 decorator or more generally to apply the code action.

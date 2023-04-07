@@ -211,7 +211,7 @@ Also understands simple generics:
 FunctionLike
 ~~~~~~~~~~~~
 
-Understands annonymous functions:
+Understands anonymous functions:
 
 .. code:: php
 
@@ -258,7 +258,7 @@ type is inferred:
 Variables
 ~~~~~~~~~
 
-Phpactor supports type injection via. docblock:
+Phpactor supports type injection via docblock:
 
 .. code:: php
 

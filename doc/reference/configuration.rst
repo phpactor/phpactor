@@ -64,7 +64,7 @@ Internal use only - name of the command which was executed
 """"""""""""""""""""""""
 
 
-Internal use only: if an warning will be issed when on develop, may be removed in the future
+Internal use only: if an warning will be issued when on develop, may be removed in the future
 
 
 **Default**: ``true``
@@ -1746,6 +1746,9 @@ Enable or disable this extension
 """""""""""""""""""""""""""""
 
 
+Type: string
+
+
 Path to psalm if different from vendor/bin/psalm
 
 
@@ -1757,6 +1760,9 @@ Path to psalm if different from vendor/bin/psalm
 
 ``language_server_psalm.show_info``
 """""""""""""""""""""""""""""""""""
+
+
+Type: boolean
 
 
 If infos from psalm should be displayed
@@ -1772,10 +1778,26 @@ If infos from psalm should be displayed
 """""""""""""""""""""""""""""""""""
 
 
+Type: boolean
+
+
 If the Psalm cache should be used (see the `--no-cache` option)
 
 
 **Default**: ``true``
+
+
+.. _param_language_server_psalm.error_level:
+
+
+``language_server_psalm.error_level``
+"""""""""""""""""""""""""""""""""""""
+
+
+Override level at which Psalm should report errors (lower => more errors)
+
+
+**Default**: ``null``
 
 
 .. _LanguageServerPhpCsFixerExtension:
@@ -1821,7 +1843,7 @@ Path to the php-cs-fixer executable
 """"""""""""""""""""""""""""""""""""
 
 
-Environemnt for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)
+Environment for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)
 
 
 **Default**: ``{"XDEBUG_MODE":"off","PHP_CS_FIXER_IGNORE_ENV":true}``
