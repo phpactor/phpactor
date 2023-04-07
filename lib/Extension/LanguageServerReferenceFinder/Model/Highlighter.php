@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Model;
 
+use Amp\Promise;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ConstElement;
@@ -25,6 +26,8 @@ use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\EfficientLineCols;
+use function Amp\call;
+use function Amp\delay;
 
 class Highlighter
 {
@@ -32,31 +35,40 @@ class Highlighter
     {
     }
 
-    public function highlightsFor(string $source, ByteOffset $offset): Highlights
+    /**
+     * @return Promise<Highlights>
+     */
+    public function highlightsFor(string $source, ByteOffset $offset): Promise
     {
-        $offsets = [];
-        $highlights = [];
-        foreach ($this->generate($source, $offset) as $highlight) {
-            $offsets[] = $highlight->start;
-            $offsets[] = $highlight->end;
-            $highlights[] = $highlight;
-        }
+        return call(function () use ($source, $offset) {
+            dump('start');
+            $offsets = [];
+            $highlights = [];
+            foreach ($this->generate($source, $offset) as $highlight) {
+                yield delay(1);
+                $offsets[] = $highlight->start;
+                $offsets[] = $highlight->end;
+                $highlights[] = $highlight;
+            }
+            dump('highlights');
 
-        $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
-        $lspHighlights = [];
+            $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
+            $lspHighlights = [];
 
-        foreach ($highlights as $highlight) {
-            $startPos = $lineCols->get($highlight->start);
-            $endPos = $lineCols->get($highlight->end);
-            $lspHighlights[] = new DocumentHighlight(
-                new Range(
-                    new Position($startPos->line() - 1, $startPos->col() - 1),
-                    new Position($endPos->line() - 1, $endPos->col() - 1),
-                ),
-                $highlight->kind
-            );
-        }
-        return new Highlights(...$lspHighlights);
+            foreach ($highlights as $highlight) {
+                $startPos = $lineCols->get($highlight->start);
+                $endPos = $lineCols->get($highlight->end);
+                $lspHighlights[] = new DocumentHighlight(
+                    new Range(
+                        new Position($startPos->line() - 1, $startPos->col() - 1),
+                        new Position($endPos->line() - 1, $endPos->col() - 1),
+                    ),
+                    $highlight->kind
+                );
+            }
+            dump('done');
+            return new Highlights(...$lspHighlights);
+        });
     }
 
     /**
