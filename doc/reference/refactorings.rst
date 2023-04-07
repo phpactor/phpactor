@@ -240,7 +240,7 @@ configuration.
 
    .. tab:: VIM Context Menu
 
-       *Class context menu > Transform > Fix namespace or classname*.
+       *Class context menu > Transform > Fix namespace or class name*.
 
    .. tab:: VIM Plugin
 
@@ -411,7 +411,7 @@ Motivation
 ~~~~~~~~~~
 
 When initially authoring a package you will often write a method call
-which doesn’t exist and then add the method to the corresponding class.
+which doesn't exist and then add the method to the corresponding class.
 
 This refactoring will automatically generate the method inferring any
 type information that it can.
@@ -988,7 +988,7 @@ namespace.
 
        .. code-block::
 
-           $ phpactor class:copy path/to/ClassA.php path/to/ClassB.php 
+           $ phpactor class:copy path/to/ClassA.php path/to/ClassB.php
 
        Note that class FQNs are also accepted.
 
@@ -1086,7 +1086,7 @@ Motivation
 ~~~~~~~~~~
 
 It is sometimes unwise to preemptively create interfaces for all your
-classes, as doing so adds maintainance overhead, and the interfaces may
+classes, as doing so adds maintenance overhead, and the interfaces may
 never be needed.
 
 This refactoring allows you to generate an interface from an existing
@@ -1131,7 +1131,7 @@ Change the visibility of a class member
 
    .. tab:: VIM context menu
 
-       *Class member context menu > Change Visiblity*
+       *Class member context menu > Change Visibility*
 
    .. tab:: VIM Plugin
 
@@ -1482,7 +1482,7 @@ Motivation
 This is one of the most common refactorings. Decomposing code into
 discrete methods helps to make code understandable and maintainable.
 
-Extracting a method manually involes:
+Extracting a method manually involves:
 
 1. Creating a new method
 2. Moving the relevant block of code to that method.
@@ -1550,7 +1550,7 @@ After extracting method ``newMethod``:
            if ($foobar) {
                return 'yes';
            }
-           
+
            return $foobar;
        }
    }
@@ -1683,7 +1683,7 @@ Cursor position shown as ``<>``:
    {
        public function say()
        {
-           
+
        }
 
    }
@@ -1701,7 +1701,7 @@ Rename ``Hello`` to ``Goodbye``
    {
        public function say()
        {
-           
+
        }
 
    }
@@ -1793,7 +1793,7 @@ Cursor position shown as ``<>``:
    {
        public function sa<>y()
        {
-           
+
        }
 
    }
@@ -1811,7 +1811,7 @@ Rename ``Hello#say()`` to ``Hello#speak()``
    {
        public function speak()
        {
-           
+
        }
 
    }

@@ -38,7 +38,7 @@ Navigate / list all references to a given class.
            :PhpactorFindReferences
 
    .. tab:: LSP
-       
+
        Supported via. the `textDocument/references` action.
 
 Description
@@ -85,7 +85,7 @@ or constant).
            :PhpactorFindReferences
 
    .. tab:: Language Server
-       
+
        Supported via. the `textDocument/references` action.
 
 .. _description-1:
@@ -120,7 +120,7 @@ brief information about the symbol underneath the cursor.
            :PhpactorHover
 
    .. tab:: LSP
-       
+
        Supported via. the `textDocument/hover` action.
 
 
@@ -142,7 +142,7 @@ Jump to the definition of a class or class member.
            :PhpactorGotoDefinition
 
    .. tab:: LSP
-       
+
        Supported via. the `textDocument/definition` action.
 
 
@@ -175,7 +175,7 @@ Jump to the type of the symbol under the cursor.
            :PhpactorGotoType()
 
    .. tab:: LSP
-       
+
        Supported via. the `textDocument/typeDefinition` action.
 
 .. _description-3:
@@ -208,7 +208,7 @@ Jump to the implementatoin(s) of an interface or class
            :PhpactorGotoImplementations
 
    .. tab:: LSP
-       
+
        Supported via. the `textDocument/implementation` action.
 
 
@@ -220,7 +220,7 @@ Jump to or generate related file
 --------------------------------
 
 Jump to a related file (e.g. parent class, interfaces, unit test,
-integration test, benchmark), and optionally generate it if it doesn’t
+integration test, benchmark), and optionally generate it if it doesn't
 exist (where supported).
 
 Jumping
@@ -243,7 +243,7 @@ You specify the jump patterns in ``.phpactor.json`` with :ref:`param_navigator.d
 ::
 
     {
-        "navigator.destinations": 
+        "navigator.destinations":
         {
           "source": "lib/<kernel>.php",
           "unit_test": "tests/Unit/<kernel>Test.php"
@@ -299,7 +299,7 @@ project (and assign it an identifier ``source``). We also identify a
 pattern to identify ``unit_test`` classes.
 
 When you are in a ``source`` file, the navigate option will offer you
-the possiblity of jumping to the unit test, and vice-versa.
+the possibility of jumping to the unit test, and vice-versa.
 
 Above we additionally (and optionally) tell Phpactor that it can
-autogenerate these classes based on `templates <templates.md>`__.
+auto generate these classes based on `templates <templates.md>`__.

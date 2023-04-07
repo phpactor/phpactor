@@ -8,7 +8,7 @@ RPC Protocol
    This document should largely be correct but is a work-in-progress
 
 Phpactor communicates with the editor over its own RPC protocol which
-effectively allows the editor to intruct Phpactor to do things, and in
+effectively allows the editor to instruct Phpactor to do things, and in
 turn Phpactor can also instruct the editor to do things.
 
 .. figure:: https://user-images.githubusercontent.com/530801/30521464-39743352-9bc0-11e7-92ac-06b3228adf67.png
@@ -253,27 +253,27 @@ Example response:
 
 ::
 
-   {                                                    
-       "actions": [                          
-           {                          
-               "action": "return",             
-               "parameters": {            
-                   "value": [                              
-                       {                      
+   {
+       "actions": [
+           {
+               "action": "return",
+               "parameters": {
+                   "value": [
+                       {
                            "info": "pri __clone(): void",
-                           "name": "__clone",  
-                           "type": "f"    
-                       },                                         
-                       {                         
+                           "name": "__clone",
+                           "type": "f"
+                       },
+                       {
                            "info": "pub getMessage(): string",
                            "name": "getMessage",
-                           "type": "f"    
-                       },                                           
-                       {                              
+                           "type": "f"
+                       },
+                       {
                            "info": "pub getCode()",
                            "name": "getCode",
                            "type": "f"
-                       },                                     
+                       },
                    ]
                }
            }
