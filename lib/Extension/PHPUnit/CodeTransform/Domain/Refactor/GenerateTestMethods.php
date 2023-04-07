@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\PHPUnit\CodeTransform\Domain\Refactor;
 
+use Generator;
+use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -10,17 +12,40 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\WorkspaceEdits;
+use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 
 
-class GenerateTestMethods
+class GenerateTestMethods /* implements GenerateMethod */
 {
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
     ) {
+    }
+
+    /** @return Generator<string> */
+    public function getGeneratableTestMethods(SourceCode $source): Generator
+    {
+        $classes = $this->reflector->reflectClassesIn($source);
+        if (count($classes->classes()) !== 1) {
+            return;
+        }
+
+        $class = $classes->classes()->first();
+        if (!$class instanceof ReflectionClass) {
+            return;
+        }
+
+        if (!$class->isInstanceOf(ClassName::fromString(TestCase::class))) {
+            dump('Not a unit test');
+            return;
+        }
+
+        yield 'setUp';
     }
 
     public function generateMethod(TextDocument $document, ByteOffset $offset): WorkspaceEdits

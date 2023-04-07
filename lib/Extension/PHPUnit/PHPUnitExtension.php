@@ -39,20 +39,17 @@ class PHPUnitExtension implements OptionalExtension
     private function registerServices(ContainerBuilder $container): void
     {
         $container->register(GenerateTestMethodProvider::class, function (Container $container) {
-            return new GenerateTestMethodProvider(
-                $container->get(GenerateTestMethods::class),
-                $container->get(WorkspaceEditConverter::class),
-            );
+            return new GenerateTestMethodProvider();
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
-        $container->register(GenerateTestMethods::class, function (Container $container) {
-            return new GenerateTestMethods(
-                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                $container->get(Updater::class),
-            );
-        });
+        //$container->register(GenerateTestMethods::class, function (Container $container) {
+            //return new GenerateTestMethods(
+                //$container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                //$container->get(Updater::class),
+            //);
+        //});
     }
 
     private function registerWorseReflection(ContainerBuilder $container): void
