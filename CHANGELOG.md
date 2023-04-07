@@ -25,6 +25,8 @@ Bug fixes:
 
 Improvements:
 
+  - ⚠ Removed frame sorting which increases radically in some cases, but may
+    also cause regressions #2179
   - Psalm: Support for overriding the error level #2174
   - Generating constructor at the top of the file #2113 @mamazu
   - Include (complex) docblock params when generating method
