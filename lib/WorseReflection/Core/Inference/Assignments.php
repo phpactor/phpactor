@@ -152,19 +152,19 @@ abstract class Assignments implements Countable, IteratorAggregate
 
     public function merge(Assignments $variables): void
     {
-        foreach ($variables->variables as $offset => $variable) {
-            $this->variables[$offset] = $variable;
+        foreach ($variables->variables as $key => $variable) {
+            $this->variables[$key] = $variable;
         }
     }
 
     public function replace(Variable $existing, Variable $replacement): void
     {
-        foreach ($this->variables as $offset => $variable) {
+        foreach ($this->variables as $key => $variable) {
             if ($variable !== $existing) {
                 continue;
             }
             $this->version++;
-            $this->variables[$offset] = $replacement;
+            $this->variables[$key] = $replacement;
         }
     }
 
