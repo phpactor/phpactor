@@ -53,7 +53,7 @@ class NodeContextFactory
     public static function forVariableAt(Frame $frame, int $start, int $end, string $name): NodeContext
     {
         $varName = ltrim($name, '$');
-        $variables = $frame->locals()->lessThanOrEqualTo($end)->byName($varName);
+        $variables = $frame->locals()->byName($varName)->lessThanOrEqualTo($end);
 
         if (0 === $variables->count()) {
             return NodeContextFactory::create(

@@ -26,6 +26,7 @@ Bug fixes:
 
 Improvements:
 
+  - Optimize analysis for scopes with many many assignments #2188
   - Made some heavy blocking operations non-blocking (e.g. diagnostics, code
     actions).
   - ⚠ Removed frame sorting which increases radically in some cases, but may
