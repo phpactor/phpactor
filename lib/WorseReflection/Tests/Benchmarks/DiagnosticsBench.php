@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProv
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use SplFileInfo;
+use function Amp\Promise\wait;
 
 /**
  * @Iterations(5)
@@ -32,9 +33,9 @@ class DiagnosticsBench
      */
     public function benchDiagnostics(array $params): void
     {
-        $diagnostics = $this->reflector->diagnostics(
+        $diagnostics = wait($this->reflector->diagnostics(
             TextDocumentBuilder::fromUri($params['path'])->build()
-        );
+        ));
     }
 
     /**

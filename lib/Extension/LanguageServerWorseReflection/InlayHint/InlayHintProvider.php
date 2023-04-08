@@ -27,11 +27,10 @@ class InlayHintProvider
         // ensure we only process one inlay request at a time
         if ($this->previousCancellationSource) {
             $this->previousCancellationSource->cancel();
-            $this->previousCancellationSource = null;
         }
         $cancellationSource = new CancellationTokenSource();
-        $cancellation = $cancellationSource->getToken();
         $this->previousCancellationSource = $cancellationSource;
+        $cancellation = $cancellationSource->getToken();
 
         return call(function () use ($document, $range, $cancellation) {
             $walker = new InlayHintWalker($range, $this->options);

@@ -15,6 +15,8 @@ parameters:
         - lib/Extension/LanguageServerCodeTransform/Tests/Stub/*
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
+rules:
+    - Phpactor\Tests\PHPStan\Rule\NoDumpRule
 
 includes:
     - phpstan-baseline.neon

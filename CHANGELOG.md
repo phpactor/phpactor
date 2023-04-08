@@ -25,6 +25,8 @@ Bug fixes:
 
 Improvements:
 
+  - Made some heavy blocking operations non-blocking (e.g. diagnostics, code
+    actions).
   - ⚠ Removed frame sorting which increases radically in some cases, but may
     also cause regressions #2179
   - Psalm: Support for overriding the error level #2174

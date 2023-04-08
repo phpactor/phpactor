@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport;
 
+use Amp\Promise;
 use Generator;
 use Phpactor\CodeTransform\Domain\NameWithByteOffsets;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
@@ -15,6 +16,7 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Reflector;
+use function Amp\call;
 
 class CandidateFinder
 {
@@ -22,39 +24,48 @@ class CandidateFinder
     {
     }
 
-    public function unresolved(TextDocumentItem $item): NameWithByteOffsets
+    /**
+     * @return Promise<NameWithByteOffsets>
+     */
+    public function unresolved(TextDocumentItem $item): Promise
     {
-        $diagnostics = $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($item))->byClass(UnresolvableNameDiagnostic::class);
+        return call(function () use ($item) {
+            $diagnostics = (yield $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($item)))->byClass(UnresolvableNameDiagnostic::class);
 
-        return new NameWithByteOffsets(...array_map(function (UnresolvableNameDiagnostic $diagnostic): NameWithByteOffset {
-            return new NameWithByteOffset($diagnostic->name(), $diagnostic->range()->start(), $diagnostic->type());
-        }, iterator_to_array($diagnostics)));
+            return new NameWithByteOffsets(...array_map(function (UnresolvableNameDiagnostic $diagnostic): NameWithByteOffset {
+                return new NameWithByteOffset($diagnostic->name(), $diagnostic->range()->start(), $diagnostic->type());
+            }, iterator_to_array($diagnostics)));
+        });
     }
 
     /**
-     * @return Generator<NameCandidate>
+     * @return Promise<list<NameCandidate>>
      */
     public function importCandidates(
         TextDocumentItem $item
-    ): Generator {
-        $seen = [];
-        foreach ($this->unresolved($item) as $unresolvedName) {
-            assert($unresolvedName instanceof NameWithByteOffset);
-            $nameString = (string)$unresolvedName->name();
-            if (isset($seen[$nameString])) {
-                continue;
-            }
-            $seen[$nameString] = true;
-            foreach ($this->candidatesForUnresolvedName($unresolvedName) as $candidate) {
-                assert($candidate instanceof NameCandidate);
-                $nameString = (string)$candidate->candidateFqn();
+    ): Promise {
+        return call(function () use ($item) {
+            $candidates = [];
+            $seen = [];
+            foreach (yield $this->unresolved($item) as $unresolvedName) {
+                assert($unresolvedName instanceof NameWithByteOffset);
+                $nameString = (string)$unresolvedName->name();
                 if (isset($seen[$nameString])) {
                     continue;
                 }
                 $seen[$nameString] = true;
-                yield $candidate;
+                foreach ($this->candidatesForUnresolvedName($unresolvedName) as $candidate) {
+                    assert($candidate instanceof NameCandidate);
+                    $nameString = (string)$candidate->candidateFqn();
+                    if (isset($seen[$nameString])) {
+                        continue;
+                    }
+                    $seen[$nameString] = true;
+                    $candidates[] = $candidate;
+                }
             }
-        }
+            return $candidates;
+        });
     }
 
     /**

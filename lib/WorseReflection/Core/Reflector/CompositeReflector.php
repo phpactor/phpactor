@@ -2,9 +2,9 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector;
 
+use Amp\Promise;
 use Generator;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
-use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
@@ -99,7 +99,7 @@ class CompositeReflector implements Reflector
         return $this->functionReflector->sourceCodeForFunction($name);
     }
 
-    public function diagnostics(TextDocument $sourceCode): Diagnostics
+    public function diagnostics(TextDocument $sourceCode): Promise
     {
         return $this->sourceCodeReflector->diagnostics($sourceCode);
     }

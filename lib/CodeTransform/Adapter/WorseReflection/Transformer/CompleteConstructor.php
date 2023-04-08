@@ -2,6 +2,8 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
+use Amp\Success;
 use Generator;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
@@ -29,17 +31,23 @@ class CompleteConstructor implements Transformer
     ) {
     }
 
-    public function transform(SourceCode $source): TextEdits
+    /**
+        * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $source): Promise
     {
         if (false === $this->promote) {
-            return $this->transformAssign($source);
+            return new Success($this->transformAssign($source));
         }
 
-        return $this->transformPromote($source);
+        return new Success($this->transformPromote($source));
     }
 
 
-    public function diagnostics(SourceCode $source): Diagnostics
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $source): Promise
     {
         $diagnostics = [];
         foreach ($this->candidateClasses($source) as $class) {
@@ -70,7 +78,7 @@ class CompleteConstructor implements Transformer
             }
         }
 
-        return new Diagnostics($diagnostics);
+        return new Success(new Diagnostics($diagnostics));
     }
 
     private function transformAssign(SourceCode $source): TextEdits

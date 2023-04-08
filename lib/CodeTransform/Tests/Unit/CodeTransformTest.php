@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit;
 
+use Amp\Success;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Transformer;
@@ -23,9 +24,9 @@ class CodeTransformTest extends TestCase
     {
         $expectedCode = SourceCode::fromString('hello goodbye');
         $trans1 = $this->prophesize(Transformer::class);
-        $trans1->transform(Argument::type(SourceCode::class))->willReturn(TextEdits::one(
+        $trans1->transform(Argument::type(SourceCode::class))->willReturn(new Success(TextEdits::one(
             TextEdit::create(ByteOffset::fromInt(5), 0, ' goodbye')
-        ));
+        )));
 
         $code = $this->create([
             'one' => $trans1->reveal()
@@ -39,7 +40,7 @@ class CodeTransformTest extends TestCase
         $expectedCode = SourceCode::fromStringAndPath('hello goodbye', '/path/to');
 
         $trans1 = $this->prophesize(Transformer::class);
-        $trans1->transform($expectedCode)->willReturn(TextEdits::none());
+        $trans1->transform($expectedCode)->willReturn(new Success(TextEdits::none()));
 
         $code = $this->create([
             'one' => $trans1->reveal()

@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
-use Amp\Success;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
@@ -39,14 +38,14 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return new Success($this->getDiagnostics($textDocument));
+        return $this->getDiagnostics($textDocument);
     }
 
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
-            $diagnostics = $this->getDiagnostics($textDocument);
+            $diagnostics = yield $this->getDiagnostics($textDocument);
 
             return array_map(function (Diagnostic $diagnostic) use ($textDocument) {
                 return CodeAction::fromArray([
@@ -77,44 +76,46 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
     }
 
     /**
-     * @return array<Diagnostic>
+     * @return Promise<array<Diagnostic>>
      */
-    private function getDiagnostics(TextDocumentItem $textDocument): array
+    private function getDiagnostics(TextDocumentItem $textDocument): Promise
     {
-        $methods = $this->missingMethodFinder->find(
-            TextDocumentBuilder::create($textDocument->text)->build()
-        );
-        $diagnostics = [];
-
-        foreach ($methods as $method) {
-            $diagnostics[] = new Diagnostic(
-                range: RangeConverter::toLspRange($method->range(), $textDocument->text),
-                message: sprintf('Method "%s" does not exist', $method->name()),
-                severity: DiagnosticSeverity::WARNING,
-                source: 'phpactor',
+        return call(function () use ($textDocument) {
+            $methods = yield $this->missingMethodFinder->find(
+                TextDocumentBuilder::create($textDocument->text)->build()
             );
-        }
+            $diagnostics = [];
 
-        usort($diagnostics, function (Diagnostic $a, Diagnostic $b) {
-            if ($a->range->start->line > $b->range->start->line) {
-                return 1;
+            foreach ($methods as $method) {
+                $diagnostics[] = new Diagnostic(
+                    range: RangeConverter::toLspRange($method->range(), $textDocument->text),
+                    message: sprintf('Method "%s" does not exist', $method->name()),
+                    severity: DiagnosticSeverity::WARNING,
+                    source: 'phpactor',
+                );
             }
 
-            if ($a->range->start->line < $b->range->start->line) {
-                return -1;
-            }
+            usort($diagnostics, function (Diagnostic $a, Diagnostic $b) {
+                if ($a->range->start->line > $b->range->start->line) {
+                    return 1;
+                }
 
-            if ($a->range->start->character > $b->range->start->character) {
-                return 1;
-            }
+                if ($a->range->start->line < $b->range->start->line) {
+                    return -1;
+                }
 
-            if ($a->range->start->character < $b->range->start->character) {
-                return -1;
-            }
+                if ($a->range->start->character > $b->range->start->character) {
+                    return 1;
+                }
 
-            return 0;
+                if ($a->range->start->character < $b->range->start->character) {
+                    return -1;
+                }
+
+                return 0;
+            });
+
+            return $diagnostics;
         });
-
-        return $diagnostics;
     }
 }

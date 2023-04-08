@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StringSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
+use function Amp\Promise\wait;
 
 class UnresolvableNameProviderTest extends DiagnosticsTestCase
 {
@@ -485,9 +486,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
             new StringSourceLocator(TextDocumentBuilder::create('')->build())
         )->build();
 
-        $found = $reflector->diagnostics(
+        $found = wait($reflector->diagnostics(
             TextDocumentBuilder::create('<?php Foobar::class;')->build()
-        );
+        ));
         self::assertCount(1, $found);
     }
 
@@ -497,9 +498,9 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
             new StringSourceLocator(TextDocumentBuilder::create('')->build())
         )->build();
 
-        $found = $reflector->diagnostics(
+        $found = wait($reflector->diagnostics(
             TextDocumentBuilder::create('<?php barboo();')->build()
-        );
+        ));
         self::assertCount(1, $found);
     }
     protected function provider(): DiagnosticProvider

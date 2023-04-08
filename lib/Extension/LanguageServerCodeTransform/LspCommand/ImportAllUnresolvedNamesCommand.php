@@ -33,7 +33,7 @@ class ImportAllUnresolvedNamesCommand implements Command
     ): Promise {
         return call(function () use ($uri) {
             $item = $this->workspace->get($uri);
-            foreach ($this->candidateFinder->unresolved($item)->onlyUniqueNames() as $unresolvedName) {
+            foreach ((yield $this->candidateFinder->unresolved($item))->onlyUniqueNames() as $unresolvedName) {
                 assert($unresolvedName instanceof NameWithByteOffset);
                 $candidates = $this->candidates($this->candidateFinder->candidatesForUnresolvedName($unresolvedName));
                 $candidate = yield $this->resolveCandidate($unresolvedName, $candidates);

@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
@@ -14,6 +15,7 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamDiagnostic;
 use Phpactor\WorseReflection\Reflector;
+use function Amp\call;
 
 class UpdateDocblockParamsTransformer implements Transformer
 {
@@ -25,74 +27,86 @@ class UpdateDocblockParamsTransformer implements Transformer
     ) {
     }
 
-    public function transform(SourceCode $code): TextEdits
+    /**
+        * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $code): Promise
     {
-        $diagnostics = $this->methodsThatNeedFixing($code);
-        $builder = $this->builderFactory->fromSource($code);
+        return call(function () use ($code) {
+            $diagnostics = yield $this->methodsThatNeedFixing($code);
+            $builder = $this->builderFactory->fromSource($code);
 
-        $class = null;
-        $docblocks = [];
-        foreach ($diagnostics as $diagnostic) {
-            $class = $this->reflector->reflectClassLike($diagnostic->classType());
-            $method = $class->methods()->get($diagnostic->methodName());
+            $class = null;
+            $docblocks = [];
+            foreach ($diagnostics as $diagnostic) {
+                $class = $this->reflector->reflectClassLike($diagnostic->classType());
+                $method = $class->methods()->get($diagnostic->methodName());
 
-            $classBuilder = $builder->classLike($method->class()->name()->short());
-            $methodBuilder = $classBuilder->method($method->name());
+                $classBuilder = $builder->classLike($method->class()->name()->short());
+                $methodBuilder = $classBuilder->method($method->name());
 
-            foreach ($diagnostic->paramType()->allTypes()->classLike() as $classType) {
-                $builder->use($classType->name()->__toString());
+                foreach ($diagnostic->paramType()->allTypes()->classLike() as $classType) {
+                    $builder->use($classType->name()->__toString());
+                }
+
+                $methodBuilder->docblock(
+                    $this->docblockUpdater->set(
+                        $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
+                        new ParamTagPrototype(
+                            $diagnostic->paramName(),
+                            $diagnostic->paramType()->toLocalType($method->scope())
+                        )
+                    )
+                );
             }
 
-            $methodBuilder->docblock(
-                $this->docblockUpdater->set(
-                    $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
-                    new ParamTagPrototype(
-                        $diagnostic->paramName(),
-                        $diagnostic->paramType()->toLocalType($method->scope())
-                    )
-                )
-            );
-        }
-
-        return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
+            return $this->updater->textEditsFor($builder->build(), Code::fromString($code));
+        });
     }
 
     /**
      * @return Diagnostics<Diagnostic>
      */
-    public function diagnostics(SourceCode $code): Diagnostics
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
     {
-        $diagnostics = [];
+        return call(function () use ($code) {
+            $diagnostics = [];
 
-        $missings = $this->methodsThatNeedFixing($code);
+            $missings = yield $this->methodsThatNeedFixing($code);
 
-        foreach ($missings as $missing) {
-            $diagnostics[] = new Diagnostic(
-                $missing->range(),
-                sprintf(
-                    'Missing @param %s',
-                    $missing->paramName(),
-                ),
-                Diagnostic::WARNING
-            );
-        }
+            foreach ($missings as $missing) {
+                $diagnostics[] = new Diagnostic(
+                    $missing->range(),
+                    sprintf(
+                        'Missing @param %s',
+                        $missing->paramName(),
+                    ),
+                    Diagnostic::WARNING
+                );
+            }
 
-        /** @phpstan-ignore-next-line */
-        return Diagnostics::fromArray($diagnostics);
+            /** @phpstan-ignore-next-line */
+            return Diagnostics::fromArray($diagnostics);
+        });
     }
 
     /**
-     * @return MissingDocblockParamDiagnostic[]
+     * @return Promise<MissingDocblockParamDiagnostic[]>
      */
-    private function methodsThatNeedFixing(SourceCode $code): array
+    private function methodsThatNeedFixing(SourceCode $code): Promise
     {
-        $missings = [];
-        $diagnostics = $this->reflector->diagnostics($code)->byClass(MissingDocblockParamDiagnostic::class);
+        return call(function () use ($code) {
+            $missings = [];
+            $diagnostics = (yield $this->reflector->diagnostics($code))->byClass(MissingDocblockParamDiagnostic::class);
 
-        foreach ($diagnostics as $diagnostic) {
-            $missings[] = $diagnostic;
-        }
+            foreach ($diagnostics as $diagnostic) {
+                $missings[] = $diagnostic;
+            }
 
-        return $missings;
+            return $missings;
+        });
     }
 }

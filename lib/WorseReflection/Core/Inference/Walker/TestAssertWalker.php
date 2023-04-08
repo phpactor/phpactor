@@ -38,6 +38,7 @@ class TestAssertWalker implements Walker
         $name = $node->callableExpression->getText();
 
         if ($name === 'wrFrame') {
+            /** @phpstan-ignore-next-line Allow dump() here */
             dump($frame->__toString());
             return $frame;
         }
