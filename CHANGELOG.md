@@ -15,6 +15,7 @@ Features:
 
 Bug fixes:
 
+  - Also use in-memory files when enanching indexed records #2187
   - Prophecy: Do not crash when used in trait #2129
   - Prophecy: fixing chaining of methods via. `getObjectProphecy` #2122
   - `new class-string<Foo>` now resolves to `new Foo` #2065
