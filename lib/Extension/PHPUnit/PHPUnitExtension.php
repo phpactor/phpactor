@@ -7,7 +7,6 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\CodeTransform\CodeTransformExtension;
-use Phpactor\Extension\LanguageServerBridge\Converter\WorkspaceEditConverter;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\PHPUnit\CodeTransform\TestGenerator;
 use Phpactor\Extension\PHPUnit\FrameWalker\AssertInstanceOfWalker;
@@ -39,17 +38,19 @@ class PHPUnitExtension implements OptionalExtension
     private function registerServices(ContainerBuilder $container): void
     {
         $container->register(GenerateTestMethodProvider::class, function (Container $container) {
-            return new GenerateTestMethodProvider();
+            return new GenerateTestMethodProvider(
+                $container->get(GenerateTestMethods::class),
+            );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
-        //$container->register(GenerateTestMethods::class, function (Container $container) {
-            //return new GenerateTestMethods(
-                //$container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                //$container->get(Updater::class),
-            //);
-        //});
+        $container->register(GenerateTestMethods::class, function (Container $container) {
+            return new GenerateTestMethods(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                $container->get(Updater::class),
+            );
+        });
     }
 
     private function registerWorseReflection(ContainerBuilder $container): void

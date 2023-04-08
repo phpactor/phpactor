@@ -1,12 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\PHPUnit\CodeTransform\Domain\Refactor;
+namespace Phpactor\Extension\PHPUnit\CodeTransform;
 
 use Generator;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -16,10 +15,15 @@ use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\WorseReflection\Reflector;
-
+use Webmozart\Assert\Assert;
 
 class GenerateTestMethods /* implements GenerateMethod */
 {
+    private const METHODS_TO_GENERATE = [
+        'setUp',
+        'tearDown',
+    ];
+
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
@@ -39,40 +43,49 @@ class GenerateTestMethods /* implements GenerateMethod */
             return;
         }
 
-        dump($class->parent());
         if (!$class->isInstanceOf(ClassName::fromString('\PHPUnit\Framework\TestCase'))) {
-            dump('Not a unit test');
             return;
         }
 
-        yield 'setUp';
+        foreach (self::METHODS_TO_GENERATE as $methodName) {
+            if (count($class->methods()->byName($methodName)) === 0) {
+                yield $methodName;
+            }
+        }
+
+        return;
     }
 
-    public function generateMethod(TextDocument $document, ByteOffset $offset): WorkspaceEdits
+    public function generateMethod(TextDocument $document, string $methodName): WorkspaceEdits
     {
+        Assert::inArray(
+            $methodName,
+            self::METHODS_TO_GENERATE,
+            sprintf('%s can not generate "%s" with class', __CLASS__, $methodName),
+        );
+
         $class = $this->reflector->reflectClassesIn($document)->classes()->first();
 
         $builder = SourceCodeBuilder::create();
         $builder->namespace($class->name()->namespace());
         $classBuilder = $builder->class($class->name()->short());
 
-        foreach(['setUp', 'tearDown'] as $methodName) {
-            try {
-                if ($class->methods()->has($methodName)) {
-                    continue;
-                }
-            } catch (NotFound) {
-                continue;
+        try {
+            if ($class->methods()->has($methodName)) {
+                return WorkspaceEdits::none();
             }
-
-            $setUpMethod = $classBuilder->method($methodName);
-            $setUpMethod->visibility('public');
+        } catch (NotFound) {
+            return WorkspaceEdits::none();
         }
+
+        $setUpMethod = $classBuilder->method($methodName);
+        $setUpMethod->visibility('public');
+        $setUpMethod->returnType('void');
 
         $sourceCode = SourceCode::fromUnknown((string) $document->__toString());
         return new WorkspaceEdits(
             new TextDocumentEdits(
-                TextDocumentUri::fromString($sourceCode->mustGetUri()),
+                TextDocumentUri::fromString($sourceCode->path()),
                 $this->updater->textEditsFor($builder->build(), Code::fromString($document->__toString()))
             )
         );
