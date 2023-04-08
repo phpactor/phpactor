@@ -22,7 +22,7 @@ abstract class Assignments implements Countable, IteratorAggregate
     /**
      * @param array<string,Variable> $variables
      */
-    final public function __construct(array $variables)
+    final protected function __construct(array $variables)
     {
         $this->variables = $variables;
     }
