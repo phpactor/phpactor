@@ -9,6 +9,7 @@ use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
 use Phpactor\ReferenceFinder\NameSearcher;
+use Phpactor\ReferenceFinder\NameSearcherType;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -65,10 +66,10 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
-        $searcher->search('Foo')->willYield([
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE)->willYield([
             NameSearchResult::create('class', 'Foobar'),
         ]);
-        $searcher->search('\\Foo\\Relative')->willYield([
+        $searcher->search('\\Foo\\Relative', NameSearcherType::ATTRIBUTE)->willYield([
             NameSearchResult::create('class', 'Foo\Relative\One\Blah\Boo'),
             NameSearchResult::create('class', 'Foo\Relative\One\Glorm\Bar'),
             NameSearchResult::create('class', 'Foo\Relative\One\Blah'),
