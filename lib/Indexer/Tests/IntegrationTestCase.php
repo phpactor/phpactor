@@ -3,6 +3,7 @@
 namespace Phpactor\Indexer\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
 use Phpactor\Extension\Rpc\RpcExtension;
@@ -57,7 +58,8 @@ class IntegrationTestCase extends TestCase
         )->setReferenceEnhancer(
             new WorseRecordReferenceEnhancer(
                 $this->createReflector(),
-                $this->createLogger()
+                $this->createLogger(),
+                new FilesystemTextDocumentLocator(),
             )
         );
     }
@@ -85,7 +87,11 @@ class IntegrationTestCase extends TestCase
     {
         return new QueryClient(
             $index,
-            new WorseRecordReferenceEnhancer($this->createReflector(), $this->createLogger())
+            new WorseRecordReferenceEnhancer(
+                $this->createReflector(),
+                $this->createLogger(),
+                new FilesystemTextDocumentLocator(),
+            )
         );
     }
 

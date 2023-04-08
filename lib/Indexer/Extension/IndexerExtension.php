@@ -43,7 +43,10 @@ use Phpactor\Indexer\Extension\Rpc\IndexHandler;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\Indexer\Model\Indexer;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
+use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -238,8 +241,9 @@ class IndexerExtension implements Extension
 
         $container->register(WorseRecordReferenceEnhancer::class, function (Container $container) {
             return new WorseRecordReferenceEnhancer(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $this->logger($container)
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                $this->logger($container),
+                $container->has(TextDocumentLocator::class) ? $container->get(TextDocumentLocator::class) : new FilesystemTextDocumentLocator(),
             );
         });
     }
