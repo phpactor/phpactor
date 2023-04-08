@@ -63,6 +63,9 @@ class IndexedNameSearcher implements NameSearcher
      */
     private function resolveTypeCriteria(?string $type): ?Criteria
     {
+        if ($type === NameSearcherType::ATTRIBUTE) {
+            return Criteria::hasClassAttributeFlag();
+        }
         if ($type === NameSearcherType::CLASS_) {
             return Criteria::isClassConcrete();
         }

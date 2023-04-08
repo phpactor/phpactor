@@ -132,4 +132,9 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     {
         return (bool) ($this->flags & $flag);
     }
+
+    public function flags(): int
+    {
+        return $this->flags;
+    }
 }
