@@ -66,7 +66,12 @@ abstract class Assignments implements Countable, IteratorAggregate
     }
 
     /**
-     * This call is optimized when used on a new frame:
+     * Return all variables matching the given name.
+     *
+     * When this method is used on the original frame it will return directly,
+     * if used after other filters it will filter over all variables which can
+     * be slow.
+     *
      * IMPORTANT: Call this method BEFORE calling greater than / less than etc.
      */
     public function byName(string $name): Assignments
