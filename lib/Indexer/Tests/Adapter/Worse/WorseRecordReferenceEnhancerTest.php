@@ -3,6 +3,7 @@
 namespace Phpactor\Indexer\Tests\Adapter\Worse;
 
 use Generator;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\FileRecord;
@@ -24,7 +25,11 @@ class WorseRecordReferenceEnhancerTest extends IntegrationTestCase
         $this->workspace()->reset();
         $this->workspace()->put('test.php', $source);
         $reflector = ReflectorBuilder::create()->enableContextualSourceLocation()->build();
-        $enhancer = new WorseRecordReferenceEnhancer($reflector, new NullLogger());
+        $enhancer = new WorseRecordReferenceEnhancer(
+            $reflector,
+            new NullLogger(),
+            new FilesystemTextDocumentLocator(),
+        );
         $fileRecord = FileRecord::fromPath($this->workspace()->path('test.php'));
         $reference = new RecordReference(MemberRecord::RECORD_TYPE, 'foobar', (int)$offset);
         $reference = $enhancer->enhance($fileRecord, $reference);

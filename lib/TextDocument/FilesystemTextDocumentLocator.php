@@ -1,14 +1,10 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerBridge\TextDocument;
+namespace Phpactor\TextDocument;
 
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
-use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentLocator;
-use Phpactor\TextDocument\TextDocumentUri;
 
-class FilesystemWorkspaceLocator implements TextDocumentLocator
+class FilesystemTextDocumentLocator implements TextDocumentLocator
 {
     public function get(TextDocumentUri $uri): TextDocument
     {

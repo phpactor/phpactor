@@ -6,16 +6,17 @@ use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
-use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\TextDocument\Exception\TextDocumentNotFound;
+use Phpactor\TextDocument\TextDocumentLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Psr\Log\LoggerInterface;
-use Safe\Exceptions\FilesystemException;
 
 class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 {
-    public function __construct(private SourceCodeReflector $reflector, private LoggerInterface $logger)
+    public function __construct(private SourceCodeReflector $reflector, private LoggerInterface $logger, private TextDocumentLocator $locator)
     {
     }
 
@@ -28,12 +29,14 @@ class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
         if ($reference->contaninerType()) {
             return $reference;
         }
+        $filePath = $record->filePath();
+        if (!$filePath) {
+            return $reference;
+        }
 
         try {
-            // TODO: We should get the latest in-memory source, e.g. from the
-            // LS workspace. Perhaps add an adapter. <<-- this
-            $contents = TextDocumentBuilder::fromUri($record->filePath()??'')->build();
-        } catch (FilesystemException $error) {
+            $contents = $this->locator->get(TextDocumentUri::fromString($filePath));
+        } catch (TextDocumentNotFound $error) {
             $this->logger->warning(sprintf(
                 'Record Enhancer: Could not read file "%s": %s',
                 $record->filePath(),

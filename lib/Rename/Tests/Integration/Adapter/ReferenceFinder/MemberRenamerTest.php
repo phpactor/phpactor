@@ -5,7 +5,7 @@ namespace Phpactor\Rename\Tests\Integration\Adapter\ReferenceFinder;
 use Closure;
 use Generator;
 use Microsoft\PhpParser\Parser;
-use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
 use Phpactor\Rename\Adapter\ReferenceFinder\MemberRenamer;
@@ -40,7 +40,7 @@ class MemberRenamerTest extends RenamerTestCase
         );
         return new MemberRenamer(
             $finder,
-            new FilesystemWorkspaceLocator(),
+            new FilesystemTextDocumentLocator(),
             new Parser(),
             new IndexedImplementationFinder($this->indexAgent->query(), $this->reflector)
         );
