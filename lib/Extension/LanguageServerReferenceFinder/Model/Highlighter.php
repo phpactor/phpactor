@@ -64,7 +64,7 @@ class Highlighter
                     $highlight->kind
                 );
             }
-            
+
             return new Highlights(...$lspHighlights);
         });
     }
