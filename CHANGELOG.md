@@ -15,6 +15,7 @@ Features:
 
 Bug fixes:
 
+  - Also use in-memory files when enanching indexed records #2187
   - Prophecy: Do not crash when used in trait #2129
   - Prophecy: fixing chaining of methods via. `getObjectProphecy` #2122
   - `new class-string<Foo>` now resolves to `new Foo` #2065
@@ -25,6 +26,7 @@ Bug fixes:
 
 Improvements:
 
+  - Optimize analysis for scopes with many many assignments #2188
   - Made some heavy blocking operations non-blocking (e.g. diagnostics, code
     actions).
   - ⚠ Removed frame sorting which increases radically in some cases, but may

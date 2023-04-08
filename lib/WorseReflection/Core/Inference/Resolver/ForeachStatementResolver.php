@@ -212,7 +212,7 @@ class ForeachStatementResolver implements Resolver
                 if (!$local->wasAssigned()) {
                     continue;
                 }
-                if ($previous = $frame->locals()->lessThan($local->offset())->byName($local->name())->lastOrNull()) {
+                if ($previous = $frame->locals()->byName($local->name())->lessThan($local->offset())->lastOrNull()) {
                     $type = $previous->type()->addType($local->type())->reduce();
                     $frame->locals()->set(
                         $previous->withType($type)->withOffset($compoundStatement->closeBrace->getEndPosition())
