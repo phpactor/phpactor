@@ -20,6 +20,11 @@ abstract class Assignments implements Countable, IteratorAggregate
     private array $variables = [];
 
     /**
+     * @var array<string,array<string,Variable>>
+     */
+    private array $variablesByName = [];
+
+    /**
      * @param array<string,Variable> $variables
      */
     final protected function __construct(array $variables)
@@ -44,6 +49,7 @@ abstract class Assignments implements Countable, IteratorAggregate
     {
         $this->version++;
         $this->variables[$variable->key()] = $variable;
+        $this->variablesByName[$variable->name()][$variable->key()] = $variable;
     }
 
     public function add(Variable $variable, int $offset): void
@@ -59,10 +65,16 @@ abstract class Assignments implements Countable, IteratorAggregate
         )->withType($original->type()->addType($variable->type())->clean()));
     }
 
-
     public function byName(string $name): Assignments
     {
         $name = ltrim($name, '$');
+
+        // best case
+        if (isset($this->variablesByName[$name])) {
+            return new static($this->variablesByName[$name]);
+        }
+
+        // worst case
         return new static(array_filter($this->variables, function (Variable $v) use ($name) {
             return $v->name() === $name;
         }));

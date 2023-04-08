@@ -254,8 +254,8 @@ class NodeContextFromMemberAccess
         }
 
         $variable = $frame->properties()
-            ->lessThanOrEqualTo($position)
             ->byName($propertyName)
+            ->lessThanOrEqualTo($position)
             ->lastOrNull();
 
         if (null === $variable) {
