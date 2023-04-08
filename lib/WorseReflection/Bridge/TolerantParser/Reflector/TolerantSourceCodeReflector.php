@@ -10,7 +10,6 @@ use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
@@ -81,7 +80,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     public function walk(TextDocument $sourceCode, Walker $walker): Generator
     {
         $rootNode = $this->parseSourceCode($sourceCode);
-        return FrameResolver::create($this->serviceLocator->nodeContextResolver(), [$walker])->buildGenerator($rootNode);
+        return $this->serviceLocator->frameBuilder()->withWalker($walker)->buildGenerator($rootNode);
     }
 
     public function reflectMethodCall(
