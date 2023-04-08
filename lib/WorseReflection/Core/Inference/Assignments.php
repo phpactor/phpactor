@@ -65,6 +65,10 @@ abstract class Assignments implements Countable, IteratorAggregate
         )->withType($original->type()->addType($variable->type())->clean()));
     }
 
+    /**
+     * This call is optimized when used on a new frame:
+     * IMPORTANT: Call this method BEFORE calling greater than / less than etc.
+     */
     public function byName(string $name): Assignments
     {
         $name = ltrim($name, '$');
