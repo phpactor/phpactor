@@ -175,6 +175,12 @@ abstract class Assignments implements Countable, IteratorAggregate
             }
             $this->version++;
             $this->variables[$key] = $replacement;
+            foreach ($this->variablesByName[$replacement->name()] ?? [] as $key => $byName) {
+                if ($byName !== $existing) {
+                    continue;
+                }
+                $this->variablesByName[$replacement->name()][$key] = $replacement;
+            }
         }
     }
 
