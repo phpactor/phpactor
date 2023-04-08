@@ -15,18 +15,16 @@ abstract class Assignments implements Countable, IteratorAggregate
     private int $version = 1;
 
     /**
-     * @var array<string, Variable>-
+     * @var array<string,Variable>
      */
     private array $variables = [];
 
     /**
-     * @param array<string|int,Variable> $variables
+     * @param array<string,Variable> $variables
      */
     final public function __construct(array $variables)
     {
-        foreach ($variables as $variable) {
-            $this->variables[$variable->key()] = $variable;
-        }
+        $this->variables = $variables;
     }
 
 
