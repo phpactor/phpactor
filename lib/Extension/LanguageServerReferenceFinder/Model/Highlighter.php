@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Model;
 
+use Amp\CancellationTokenSource;
 use Amp\Promise;
 use Generator;
 use Microsoft\PhpParser\Node;
@@ -31,6 +32,8 @@ use function Amp\delay;
 
 class Highlighter
 {
+    private ?CancellationTokenSource $previousCancellationSource = null;
+
     public function __construct(private Parser $parser)
     {
     }
@@ -40,7 +43,15 @@ class Highlighter
      */
     public function highlightsFor(string $source, ByteOffset $offset): Promise
     {
-        return call(function () use ($source, $offset) {
+        // ensure we only process one inlay request at a time
+        if ($this->previousCancellationSource) {
+            $this->previousCancellationSource->cancel();
+        }
+        $cancellationSource = new CancellationTokenSource();
+        $this->previousCancellationSource = $cancellationSource;
+        $cancellation = $cancellationSource->getToken();
+
+        return call(function () use ($source, $offset, $cancellation) {
             $offsets = [];
             $highlights = [];
             foreach ($this->generate($source, $offset) as $highlight) {
@@ -48,6 +59,9 @@ class Highlighter
                 $offsets[] = $highlight->start;
                 $offsets[] = $highlight->end;
                 $highlights[] = $highlight;
+                if ($cancellation->isRequested()) {
+                    return new Highlights();
+                }
             }
 
             $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
