@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Cache;
 
-use Amp\Success;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use function Amp\Promise\wait;
@@ -23,7 +22,7 @@ class TtlCacheTest extends TestCase
         $cache = new TtlCache();
         $calls = 0;
         $setter = function () use (&$calls) {
-            return call(function () use (&$calls) {
+            return call(function () use (&$calls): void {
                 $calls++;
             });
         };
