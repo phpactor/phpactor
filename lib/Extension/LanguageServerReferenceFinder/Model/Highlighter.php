@@ -41,7 +41,6 @@ class Highlighter
     public function highlightsFor(string $source, ByteOffset $offset): Promise
     {
         return call(function () use ($source, $offset) {
-            dump('start');
             $offsets = [];
             $highlights = [];
             foreach ($this->generate($source, $offset) as $highlight) {
@@ -50,7 +49,6 @@ class Highlighter
                 $offsets[] = $highlight->end;
                 $highlights[] = $highlight;
             }
-            dump('highlights');
 
             $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
             $lspHighlights = [];
@@ -66,7 +64,7 @@ class Highlighter
                     $highlight->kind
                 );
             }
-            dump('done');
+            
             return new Highlights(...$lspHighlights);
         });
     }
