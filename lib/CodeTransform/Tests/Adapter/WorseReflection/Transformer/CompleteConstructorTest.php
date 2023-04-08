@@ -7,6 +7,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
+use function Amp\Promise\wait;
 
 class CompleteConstructorTest extends WorseTestCase
 {
@@ -17,7 +18,7 @@ class CompleteConstructorTest extends WorseTestCase
     {
         $source = SourceCode::fromString($example);
         $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', promote: false);
-        $this->assertCount($expectedCount, $transformer->diagnostics($source));
+        $this->assertCount($expectedCount, wait($transformer->diagnostics($source)));
     }
     /**
      * @return Generator<string,array{string,int}>
@@ -53,7 +54,7 @@ class CompleteConstructorTest extends WorseTestCase
     {
         $source = SourceCode::fromString($example);
         $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private');
-        $transformed = $transformer->transform($source);
+        $transformed = wait($transformer->transform($source));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
     /**
@@ -611,7 +612,7 @@ class CompleteConstructorTest extends WorseTestCase
     {
         $source = SourceCode::fromString($example);
         $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', true);
-        $transformed = $transformer->transform($source);
+        $transformed = wait($transformer->transform($source));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
     /**

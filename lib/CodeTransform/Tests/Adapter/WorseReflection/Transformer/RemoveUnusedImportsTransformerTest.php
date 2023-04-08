@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
+use function Amp\Promise\wait;
 
 class RemoveUnusedImportsTransformerTest extends WorseTestCase
 {
@@ -20,7 +21,7 @@ class RemoveUnusedImportsTransformerTest extends WorseTestCase
             $this->reflectorForWorkspace($example),
             new Parser()
         );
-        $transformed = $transformer->transform(SourceCode::fromString($source));
+        $transformed = wait($transformer->transform(SourceCode::fromString($source)));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
 

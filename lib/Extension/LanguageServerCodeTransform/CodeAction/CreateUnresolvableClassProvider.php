@@ -6,6 +6,7 @@ use Amp\CancellationToken;
 use Amp\Promise;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
+use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
@@ -35,7 +36,7 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument, $range) {
-            $diagnostics = $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($textDocument))->byClass(
+            $diagnostics = (yield $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($textDocument)))->byClass(
                 UnresolvableNameDiagnostic::class
             )->containingRange(
                 RangeConverter::toPhpactorRange($range, $textDocument->text)
@@ -49,6 +50,7 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
                 }
 
                 foreach ($this->classToFile->classToFileCandidates(ClassName::fromString($diagnostic->name())) as $candidate) {
+                    assert($candidate instanceof FilePath);
                     foreach ($this->generators as $name => $_) {
                         $title = sprintf('Create %s file for "%s"', $name, $diagnostic->name()->__toString());
                         $actions[] = CodeAction::fromArray([
@@ -61,7 +63,7 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
                                 $title,
                                 CreateClassCommand::NAME,
                                 [
-                                    TextDocumentUri::fromString((string)$candidate)->__toString(),
+                                    TextDocumentUri::fromString($candidate->__toString())->__toString(),
                                     $name
                                 ]
                             )

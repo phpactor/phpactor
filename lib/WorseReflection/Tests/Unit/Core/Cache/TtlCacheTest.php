@@ -4,6 +4,8 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Cache;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
+use function Amp\Promise\wait;
+use function Amp\call;
 
 class TtlCacheTest extends TestCase
 {
@@ -13,6 +15,21 @@ class TtlCacheTest extends TestCase
         self::assertEquals(1234, $cache->getOrSet('foobar', function () {
             return 1234;
         }));
+    }
+
+    public function testCachesResultOfPromise(): void
+    {
+        $cache = new TtlCache();
+        $calls = 0;
+        $setter = function () use (&$calls) {
+            return call(function () use (&$calls): void {
+                $calls++;
+            });
+        };
+        wait($cache->getOrSet('foobar', $setter));
+        wait($cache->getOrSet('foobar', $setter));
+        wait($cache->getOrSet('foobar', $setter));
+        self::assertEquals(1, $calls);
     }
 
     public function testCallbackIsOnlyCalledOnce(): void

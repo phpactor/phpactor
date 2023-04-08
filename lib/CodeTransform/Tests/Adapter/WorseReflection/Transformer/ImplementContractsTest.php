@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
+use function Amp\Promise\wait;
 
 class ImplementContractsTest extends WorseTestCase
 {
@@ -17,7 +18,7 @@ class ImplementContractsTest extends WorseTestCase
         $source = SourceCode::fromString($example);
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = new ImplementContracts($reflector, $this->updater(), $this->builderFactory($reflector));
-        $transformed = $transformer->transform($source);
+        $transformed = wait($transformer->transform($source));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
 
@@ -517,7 +518,7 @@ class ImplementContractsTest extends WorseTestCase
             $this->updater(),
             $this->builderFactory($this->reflectorForWorkspace($example))
         );
-        $this->assertCount($expectedCount, $transformer->diagnostics($source));
+        $this->assertCount($expectedCount, wait($transformer->diagnostics($source)));
     }
 
     /**

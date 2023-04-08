@@ -11,6 +11,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\WorseReflection\Reflector;
+use function Amp\Promise\wait;
 
 class UpdateDocblockReturnTransformerTest extends WorseTestCase
 {
@@ -26,7 +27,7 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
         );
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
-        $transformed = $transformer->transform($source)->apply($source);
+        $transformed = wait($transformer->transform($source))->apply($source);
         self::assertEquals($expected, $transformed);
     }
 
@@ -726,7 +727,7 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
         $source = SourceCode::fromString($example);
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
-        $diagnostics = array_map(fn (Diagnostic $d) => $d->message(), iterator_to_array($transformer->diagnostics($source)));
+        $diagnostics = array_map(fn (Diagnostic $d) => $d->message(), iterator_to_array(wait($transformer->diagnostics($source))));
         self::assertEquals($expected, $diagnostics);
     }
 
