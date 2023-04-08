@@ -66,6 +66,7 @@ class IndexedNameSearcher implements NameSearcher
         if ($type === NameSearcherType::ATTRIBUTE) {
             return Criteria::hasClassAttributeFlag();
         }
+
         if ($type === NameSearcherType::CLASS_) {
             return Criteria::isClassConcrete();
         }

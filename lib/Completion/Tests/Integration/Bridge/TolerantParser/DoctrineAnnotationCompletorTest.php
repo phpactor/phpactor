@@ -154,13 +154,13 @@ class DoctrineAnnotationCompletorTest extends CompletorTestCase
 
         $searcher = $this->prophesize(NameSearcher::class);
         $searcher->search(Argument::any())->willYield([]);
-        $searcher->search('Ann')->willYield([
+        $searcher->search('Ann', null)->willYield([
             NameSearchResult::create('class', 'Annotation')
         ]);
-        $searcher->search('Ent')->willYield([
+        $searcher->search('Ent', null)->willYield([
             NameSearchResult::create('class', 'App\Annotation\Entity')
         ]);
-        $searcher->search('NotAnn')->willYield([
+        $searcher->search('NotAnn', null)->willYield([
             NameSearchResult::create('class', 'NotAnnotation')
         ]);
 
