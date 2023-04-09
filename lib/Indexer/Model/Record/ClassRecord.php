@@ -11,7 +11,6 @@ final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath,
     use HasFileReferencesTrait;
     use HasPathTrait;
     use HasFlagsTrait;
-
     public const RECORD_TYPE = 'class';
     public const TYPE_CLASS = 'class';
     public const TYPE_INTERFACE = 'interface';

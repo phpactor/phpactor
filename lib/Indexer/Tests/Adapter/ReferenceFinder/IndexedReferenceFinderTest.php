@@ -248,6 +248,21 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
         ,
             1
         ];
+
+        yield 'show new object expressions when finding references on __construct 2' => [
+            <<<'EOT'
+                // File: project/foobar.php
+                <?php Foobar::bar();
+
+                // File: project/subject.php
+                <?php class Foobar { public function __c<>onstruct() {} public static function bar() {} }
+
+                // File: project/class1.php
+                <?php new Foobar(); new Barfoo();
+                EOT
+        ,
+            1
+        ];
     }
 
     /**

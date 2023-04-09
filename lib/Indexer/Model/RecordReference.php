@@ -8,7 +8,6 @@ use Phpactor\Indexer\Model\Record\HasFlagsTrait;
 class RecordReference implements HasFlags
 {
     use HasFlagsTrait;
-
     const FLAG_NEW_OBJECT = 1;
 
     public function __construct(
