@@ -55,11 +55,11 @@ class UseNameCompletorTest extends TolerantCompletorTestCase
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
-        $searcher->search('\Fo')->willYield([
+        $searcher->search('\Fo', null)->willYield([
             NameSearchResult::create('class', 'Foobar'),
         ]);
 
-        $searcher->search('\Foobar\Bar')->willYield([
+        $searcher->search('\Foobar\Bar', null)->willYield([
             NameSearchResult::create('class', 'Foobar\Barfoo'),
         ]);
         $reflector = ReflectorBuilder::create()->addSource($source)->build();

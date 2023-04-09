@@ -90,4 +90,19 @@ class IndexedNameSearcherTest extends IndexTestCase
 
         $this->fail('Could not find trait');
     }
+
+    public function testSearcherForAttribute(): void
+    {
+        $this->workspace()->put('project/Bar.php', '<?php #[Attribute] class Bar {}');
+        $this->workspace()->put('project/Baz.php', '<?php class Baz {}');
+        $agent = $this->indexAgent();
+        $agent->indexer()->getJob()->run();
+        $searcher = new IndexedNameSearcher($agent->search());
+
+        foreach ($searcher->search('Ba', NameSearcherType::ATTRIBUTE) as $result) {
+            assert($result instanceof NameSearchResult);
+            self::assertEquals('Bar', $result->name()->head()->__toString());
+            self::assertStringContainsString('Bar.php', $result->uri()->__toString());
+        }
+    }
 }

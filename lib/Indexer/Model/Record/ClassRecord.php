@@ -5,7 +5,7 @@ namespace Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record;
 
-final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQualifiedName
+final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath, HasFullyQualifiedName
 {
     use FullyQualifiedReferenceTrait;
     use HasFileReferencesTrait;
@@ -131,5 +131,10 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     public function hasFlag(int $flag): bool
     {
         return (bool) ($this->flags & $flag);
+    }
+
+    public function flags(): int
+    {
+        return $this->flags;
     }
 }

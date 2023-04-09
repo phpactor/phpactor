@@ -204,37 +204,37 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
-        $searcher->search('FO')->willYield([
+        $searcher->search('FO', null)->willYield([
             NameSearchResult::create('constant', 'FOO')
         ]);
-        $searcher->search('sel')->willYield([
+        $searcher->search('sel', null)->willYield([
             NameSearchResult::create('class', 'self')
         ]);
-        $searcher->search('self::F')->willYield([
+        $searcher->search('self::F', null)->willYield([
             NameSearchResult::create('constant', 'FOOCONST')
         ]);
-        $searcher->search('\Fo')->willYield([
+        $searcher->search('\Fo', null)->willYield([
             NameSearchResult::create('class', 'FOO')
         ]);
-        $searcher->search('Foo')->willYield([
+        $searcher->search('Foo', null)->willYield([
             NameSearchResult::create('class', 'Foobar')
         ]);
-        $searcher->search('Fo')->willYield([
+        $searcher->search('Fo', null)->willYield([
             NameSearchResult::create('class', 'Foobar')
         ]);
-        $searcher->search('ba')->willYield([
+        $searcher->search('ba', null)->willYield([
             NameSearchResult::create('function', 'bar'),
         ]);
-        $searcher->search('b')->willYield([
+        $searcher->search('b', null)->willYield([
             NameSearchResult::create('class', 'Foo\\Bar'),
         ]);
-        $searcher->search('\NS1\Foo\Fo')->willYield([
+        $searcher->search('\NS1\Foo\Fo', null)->willYield([
             NameSearchResult::create('class', 'Foobar')
         ]);
-        $searcher->search('\Foobar\Foo\Fo')->willYield([
+        $searcher->search('\Foobar\Foo\Fo', null)->willYield([
             NameSearchResult::create('class', 'Foobar\Foo\Foobar')
         ]);
-        $searcher->search('\\NS1\\Relative')->willYield([
+        $searcher->search('\\NS1\\Relative', null)->willYield([
             NameSearchResult::create('class', 'NS1\Relative\One\Blah\Boo'),
             NameSearchResult::create('class', 'NS1\Relative\One\Glorm\Bar'),
             NameSearchResult::create('class', 'NS1\Relative\One\Blah'),

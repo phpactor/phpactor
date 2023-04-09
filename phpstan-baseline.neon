@@ -6707,7 +6707,7 @@ parameters:
 
 		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 4
+			count: 5
 			path: lib/Indexer/Tests/Adapter/ReferenceFinder/IndexedNameSearcherTest.php
 
 		-

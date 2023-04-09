@@ -10,6 +10,7 @@ use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Name\NameUtil;
 use Phpactor\ReferenceFinder\NameSearcher;
+use Phpactor\ReferenceFinder\NameSearcherType;
 use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\TextDocumentUri;
 
@@ -24,12 +25,17 @@ abstract class NameSearcherCompletor
 
     /**
      * @return Generator<Suggestion>
+     * @param NameSearcherType::* $type
      */
-    protected function completeName(string $name, ?TextDocumentUri $sourceUri = null, ?Node $node = null): Generator
-    {
+    protected function completeName(
+        string $name,
+        ?TextDocumentUri $sourceUri = null,
+        ?Node $node = null,
+        ?string $type = null,
+    ): Generator {
         $wasQualified = NameUtil::isQualified($name);
         $visitedChildSegments = [];
-        foreach ($this->nameSearcher->search($name) as $result) {
+        foreach ($this->nameSearcher->search($name, $type) as $result) {
             // if the child segment relative to the search is not the last segment
             // then suggest the child segment only
             [$segment, $isLast] = NameUtil::childSegmentAtSearch($result->name(), $name);
