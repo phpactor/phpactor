@@ -7,6 +7,7 @@ use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\RecordFactory;
 use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\Indexer\Model\Record\HasFlags;
 use Phpactor\Indexer\Model\SearchIndex;
 use Safe\Exceptions\FilesystemException;
 use function Safe\file_get_contents;
@@ -61,7 +62,7 @@ class FileSearchIndex implements SearchIndex
             $record->recordType(),
             $record->identifier(),
             $record instanceof ClassRecord ? $record->type() : null,
-            $record instanceof ClassRecord ? $record->flags() : null,
+            $record instanceof HasFlags ? $record->flags() : null,
         ];
         $this->subjects[$this->recordHash($record)] = $info;
         $this->dirty = true;
