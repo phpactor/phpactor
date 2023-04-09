@@ -77,6 +77,11 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
         return 'create-class';
     }
 
+    public function describe(): string
+    {
+        return 'create class in empty file';
+    }
+
     /**
      * @return array<Diagnostic>
      */
@@ -99,10 +104,5 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
                 source: 'phpactor'
             )
         ];
-    }
-
-    public function describe(): string
-    {
-        return 'create class in empty file';
     }
 }

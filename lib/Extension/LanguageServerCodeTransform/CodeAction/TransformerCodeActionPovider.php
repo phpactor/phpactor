@@ -72,6 +72,11 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
         return $this->name;
     }
 
+    public function describe(): string
+    {
+        return sprintf('"%s" transformer', $this->name);
+    }
+
     /**
      * @return Promise<array<Diagnostic>>
      */
@@ -95,10 +100,5 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
     private function kind(): string
     {
         return 'quickfix.'.$this->name;
-    }
-
-    public function describe(): string
-    {
-        return sprintf('"%s" transformer', $this->name);
     }
 }

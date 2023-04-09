@@ -433,7 +433,7 @@ class LanguageServerExtension implements Extension
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(CodeActionHandler::class, function (Container $container) {
-            $services = $this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER);
+            $services = $this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER, CodeActionProvider::class);
             if ($container->parameter(self::PARAM_PROFILE)->bool()) {
                 $services = array_map(
                     fn (CodeActionProvider $provider) => new ProfilingCodeActionProvider(
@@ -524,7 +524,7 @@ class LanguageServerExtension implements Extension
 
         $container->register(CodeActionDiagnosticsProvider::class, function (Container $container) {
             return new CodeActionDiagnosticsProvider(
-                ...$this->taggedServices($container, self::TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER)
+                ...$this->taggedServices($container, self::TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER, CodeActionProvider::class)
             );
         }, [
             self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', outsource: true),
@@ -549,9 +549,11 @@ class LanguageServerExtension implements Extension
     }
 
     /**
-     * @return array<int,mixed>
+     * @template TType
+     * @param null|class-string<TType> $fqn
+     * @return ($fqn is class-string<TType> ? list<TType> : list<mixed>)
      */
-    private function taggedServices(Container $container, string $tag): array
+    private function taggedServices(Container $container, string $tag, ?string $fqn = null): array
     {
         $providers = [];
         foreach (array_keys($container->getServiceIdsForTag($tag)) as $serviceId) {

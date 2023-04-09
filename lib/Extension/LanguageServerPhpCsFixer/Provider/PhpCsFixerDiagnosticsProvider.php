@@ -91,6 +91,11 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
         return 'php-cs-fixer';
     }
 
+    public function describe(): string
+    {
+        return 'php-cs-fixer';
+    }
+
     /**
      * @return Promise<Diagnostic[]|false> False when there are no diagnostics available for file, array othwerwise
      *                                     Array containing diagnostics to show
@@ -301,10 +306,5 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
             return $this->ruleDescriptions[$rule];
         });
-    }
-
-    public function describe(): string
-    {
-        return 'php-cs-fixer';
     }
 }
