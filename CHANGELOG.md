@@ -26,6 +26,7 @@ Bug fixes:
 
 Improvements:
 
+  - Only show completion suggestions for real attributes #2183, #2100 @mamazu @przepompownia
   - Code action and formatting handlers now send progress notifications #2192
   - Invalidate diagnostics cache only when document changes #2191
   - Optimize analysis for scopes with many many assignments #2188
