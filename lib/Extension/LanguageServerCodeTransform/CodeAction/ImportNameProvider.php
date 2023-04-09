@@ -176,4 +176,9 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
             )
         ]);
     }
+
+    public function describe(): string
+    {
+        return 'import unresolvable class names';
+    }
 }

@@ -118,4 +118,9 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
             return $diagnostics;
         });
     }
+
+    public function describe(): string
+    {
+        return 'generate non-existing method';
+    }
 }

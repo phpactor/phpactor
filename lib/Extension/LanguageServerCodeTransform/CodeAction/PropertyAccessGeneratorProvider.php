@@ -92,4 +92,8 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
             ];
         });
     }
+    public function describe(): string
+    {
+        return 'add properties that are assigned to but not present';
+    }
 }

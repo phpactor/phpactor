@@ -78,4 +78,9 @@ class GenerateDecoratorProvider implements CodeActionProvider
             ];
         });
     }
+
+    public function describe(): string
+    {
+        return 'convert an empty class that implements an interface into a decorator';
+    }
 }

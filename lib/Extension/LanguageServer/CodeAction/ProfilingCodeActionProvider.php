@@ -7,6 +7,7 @@ use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
+use Phpactor\Name\NameUtil;
 use Psr\Log\LoggerInterface;
 use Throwable;
 use function Amp\call;
@@ -21,16 +22,17 @@ class ProfilingCodeActionProvider implements CodeActionProvider
     {
         return call(function () use ($textDocument, $range, $cancel) {
             $start = microtime(true);
-            $this->logger->info(sprintf('PROF        >> code-action [%s]', $this->innerProvider::class));
+            $shortName = NameUtil::shortName($this->innerProvider::class);
+            $this->logger->info(sprintf('PROF        >> code-action [%s] %s', $shortName, $this->innerProvider->describe()));
             try {
                 $result = yield $this->innerProvider->provideActionsFor($textDocument, $range, $cancel);
                 $elapsed = microtime(true) - $start;
             } catch (Throwable $e) {
                 $elapsed = microtime(true) - $start;
-                $this->logger->info(sprintf('PROF %-6s << code-action [%s] ERR: [%s] %s', number_format($elapsed, 4), $this->innerProvider::class, $e::class, $e->getMessage()));
+                $this->logger->info(sprintf('PROF %-6s << code-action [%s] ERR: [%s] %s (%s)', number_format($elapsed, 4), $shortName, $this->innerProvider->describe(), $e::class, $e->getMessage()));
                 throw $e;
             }
-            $this->logger->info(sprintf('PROF %-6s << code-action [%s]', number_format($elapsed, 4), $this->innerProvider::class));
+            $this->logger->info(sprintf('PROF %-6s << code-action [%s] %s', number_format($elapsed, 4), $shortName, $this->innerProvider->describe()));
             return $result;
         });
     }
@@ -38,5 +40,10 @@ class ProfilingCodeActionProvider implements CodeActionProvider
     public function kinds(): array
     {
         return $this->innerProvider->kinds();
+    }
+
+    public function describe(): string
+    {
+        return $this->innerProvider->describe();
     }
 }

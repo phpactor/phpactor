@@ -82,4 +82,9 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
             self::KIND
         ];
     }
+
+    public function describe(): string
+    {
+        return 'create class for any class which cannot be found';
+    }
 }

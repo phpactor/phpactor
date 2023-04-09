@@ -37,6 +37,18 @@ final class NameUtil
     }
 
     /**
+     * Return short name (i.e. last segment) of a given PHP FQN
+     */
+    public static function shortName(string $fqn): string
+    {
+        $shortNamePos = strrpos($fqn, '\\');
+        if (false === $shortNamePos) {
+            return $fqn;
+        }
+        return substr($fqn, $shortNamePos + 1);
+    }
+
+    /**
      * Return the child segment name relative to the given search.
      *
      * @return array{?string,bool}

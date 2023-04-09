@@ -302,4 +302,9 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             return $this->ruleDescriptions[$rule];
         });
     }
+
+    public function describe(): string
+    {
+        return 'php-cs-fixer';
+    }
 }

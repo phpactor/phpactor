@@ -51,4 +51,8 @@ class FillObjectProvider implements CodeActionProvider
     {
         return [self::KIND];
     }
+    public function describe(): string
+    {
+        return 'fill new object construct with named parameters';
+    }
 }

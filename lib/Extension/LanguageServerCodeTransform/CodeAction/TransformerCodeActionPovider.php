@@ -96,4 +96,9 @@ class TransformerCodeActionPovider implements DiagnosticsProvider, CodeActionPro
     {
         return 'quickfix.'.$this->name;
     }
+
+    public function describe(): string
+    {
+        return sprintf('"%s" transformer', $this->name);
+    }
 }

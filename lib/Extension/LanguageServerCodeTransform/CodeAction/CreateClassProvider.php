@@ -100,4 +100,9 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
             )
         ];
     }
+
+    public function describe(): string
+    {
+        return 'create class in empty file';
+    }
 }

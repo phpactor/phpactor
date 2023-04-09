@@ -60,4 +60,8 @@ class ExtractMethodProvider implements CodeActionProvider
             ];
         });
     }
+    public function describe(): string
+    {
+        return 'extract method';
+    }
 }
