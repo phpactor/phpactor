@@ -52,7 +52,7 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
         assert($node instanceof QualifiedName);
 
         $name =
-            $node->parent->parent instanceof TraitUseClause ?
+            $node->parent?->parent instanceof TraitUseClause ?
                 TolerantQualifiedNameResolver::getResolvedName($node) :
                 $node->getResolvedName();
 
