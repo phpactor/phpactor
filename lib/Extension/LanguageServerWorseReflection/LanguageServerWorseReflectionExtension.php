@@ -9,6 +9,7 @@ use Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider\WorseDia
 use Phpactor\Extension\LanguageServerWorseReflection\Handler\InlayHintHandler;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintOptions;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintProvider;
+use Phpactor\Extension\LanguageServerWorseReflection\Listener\InvalidateDocumentCacheListener;
 use Phpactor\Extension\LanguageServerWorseReflection\SourceLocator\WorkspaceSourceLocator;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndexListener;
@@ -17,6 +18,7 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -64,6 +66,10 @@ class LanguageServerWorseReflectionExtension implements Extension
                 $container->get(WorkspaceIndex::class),
             );
         }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [] ]);
+
+        $container->register(WorkspaceIndexListener::class, function (Container $container) {
+            return new InvalidateDocumentCacheListener($container->get(CacheForDocument::class));
+        });
 
         $container->register(WorkspaceIndex::class, function (Container $container) {
             return new WorkspaceIndex(
