@@ -25,7 +25,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeReflector;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as TolerantReflectionFunctionCollection;
-use RuntimeException;
 use function Amp\call;
 use function Amp\delay;
 

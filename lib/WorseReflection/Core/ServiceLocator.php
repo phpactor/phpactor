@@ -6,7 +6,6 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
-use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;

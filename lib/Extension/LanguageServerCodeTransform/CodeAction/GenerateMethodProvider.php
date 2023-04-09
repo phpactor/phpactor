@@ -17,7 +17,6 @@ use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
-use Phpactor\TextDocument\TextDocumentBuilder;
 use function Amp\call;
 
 class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
