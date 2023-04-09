@@ -67,7 +67,7 @@ class LanguageServerWorseReflectionExtension implements Extension
             );
         }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [] ]);
 
-        $container->register(WorkspaceIndexListener::class, function (Container $container) {
+        $container->register(InvalidateDocumentCacheListener::class, function (Container $container) {
             return new InvalidateDocumentCacheListener($container->get(CacheForDocument::class));
         });
 

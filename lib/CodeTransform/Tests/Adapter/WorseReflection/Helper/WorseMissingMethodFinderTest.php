@@ -18,7 +18,7 @@ class WorseMissingMethodFinderTest extends WorseTestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
         $reflector = $this->reflectorForWorkspace($source);
-        $document = TextDocumentBuilder::create($source)->build();
+        $document = TextDocumentBuilder::create($source)->uri('file:///test')->build();
 
         $methods = wait((new WorseMissingMethodFinder($reflector))->find($document));
         self::assertCount($expectedCount, $methods);

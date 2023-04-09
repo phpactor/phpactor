@@ -10,7 +10,8 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 
 class InvalidateDocumentCacheListener implements ListenerProviderInterface
 {
-    public function __construct(private CacheForDocument $cache) {
+    public function __construct(private CacheForDocument $cache)
+    {
     }
 
     /**
@@ -19,12 +20,12 @@ class InvalidateDocumentCacheListener implements ListenerProviderInterface
     public function getListenersForEvent($event): iterable
     {
         if ($event instanceof TextDocumentUpdated) {
-            yield function () use ($event) {
+            yield function () use ($event): void {
                 $this->cache->purge(TextDocumentUri::fromString($event->identifier()->uri));
             };
         }
         if ($event instanceof TextDocumentClosed) {
-            yield function () use ($event) {
+            yield function () use ($event): void {
                 $this->cache->purge(TextDocumentUri::fromString($event->identifier()->uri));
             };
         }
