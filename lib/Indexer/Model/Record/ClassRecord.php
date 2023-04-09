@@ -10,6 +10,7 @@ final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath,
     use FullyQualifiedReferenceTrait;
     use HasFileReferencesTrait;
     use HasPathTrait;
+    use HasFlagsTrait;
     public const RECORD_TYPE = 'class';
     public const TYPE_CLASS = 'class';
     public const TYPE_INTERFACE = 'interface';
@@ -31,8 +32,6 @@ final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath,
      * Type of "class": class, interface or trait, etc
      */
     private ?string $type = null;
-
-    private int $flags = 0;
 
     public static function fromName(string $name): self
     {
@@ -112,29 +111,5 @@ final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath,
         $clone = clone $this;
         $clone->type = $type;
         return $clone;
-    }
-
-    public function setFlags(int $flags): self
-    {
-        $this->flags = $flags;
-
-        return $this;
-    }
-
-    public function addFlag(int $flag): self
-    {
-        $this->flags = $this->flags | $flag;
-
-        return $this;
-    }
-
-    public function hasFlag(int $flag): bool
-    {
-        return (bool) ($this->flags & $flag);
-    }
-
-    public function flags(): int
-    {
-        return $this->flags;
     }
 }
