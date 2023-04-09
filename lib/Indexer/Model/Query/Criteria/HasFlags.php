@@ -4,7 +4,7 @@ namespace Phpactor\Indexer\Model\Query\Criteria;
 
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
-use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\Indexer\Model\Record\HasFlags as RecordWithFlags;
 
 class HasFlags extends Criteria
 {
@@ -14,7 +14,7 @@ class HasFlags extends Criteria
 
     public function isSatisfiedBy(Record $record): bool
     {
-        if (!$record instanceof ClassRecord) {
+        if (!$record instanceof RecordWithFlags) {
             return false;
         }
 
