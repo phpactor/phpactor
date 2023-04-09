@@ -77,7 +77,7 @@ abstract class Criteria
         return new IsClassType(ClassRecord::TYPE_ENUM);
     }
 
-    public static function hasClassAttributeFlag(): HasClassFlag
+    public static function isAttribute(): HasClassFlag
     {
         return new HasClassFlag(ClassRecord::FLAG_ATTRIBUTE);
     }
