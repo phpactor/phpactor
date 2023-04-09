@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
+use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
@@ -44,6 +45,8 @@ class ServiceLocator
     private Cache $cache;
 
     private NodeToTypeConverter $nameResolver;
+
+    private CacheForDocument $cacheForDocument;
 
     /**
      * @param Walker[] $frameWalkers
@@ -95,6 +98,7 @@ class ServiceLocator
 
         $this->nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
         $this->cache = $cache;
+        $this->cacheForDocument = new CacheForDocument(fn () => new StaticCache());
     }
 
     public function reflector(): Reflector
@@ -160,6 +164,11 @@ class ServiceLocator
     public function cache(): Cache
     {
         return $this->cache;
+    }
+
+    public function cacheForDocument(): CacheForDocument
+    {
+        return $this->cacheForDocument;
     }
 
     public function newDiagnosticsWalker(): DiagnosticsWalker
