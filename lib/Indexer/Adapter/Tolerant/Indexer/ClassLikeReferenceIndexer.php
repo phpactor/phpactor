@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\Indexer\Model\Index;
@@ -73,7 +74,11 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
         $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
         assert($fileRecord instanceof FileRecord);
         $reference = new RecordReference(ClassRecord::RECORD_TYPE, $targetRecord->identifier(), $node->getStartPosition());
-        $reference->addFlag(RecordReference::FLAG_NEW_OBJECT);
+
+        if ($node->parent instanceof ObjectCreationExpression) {
+            $reference->addFlag(RecordReference::FLAG_NEW_OBJECT);
+        }
+
         $fileRecord->addReference($reference);
         $index->write($fileRecord);
     }
