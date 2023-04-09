@@ -8,6 +8,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
@@ -25,6 +26,7 @@ use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
 use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsEngine;
@@ -431,9 +433,19 @@ class LanguageServerExtension implements Extension
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(CodeActionHandler::class, function (Container $container) {
+            $services = $this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER);
+            if ($container->parameter(self::PARAM_PROFILE)->bool()) {
+                $services = array_map(
+                    fn (CodeActionProvider $provider) => new ProfilingCodeActionProvider(
+                        $provider,
+                        $this->logger($container)
+                    ),
+                    $services
+                );
+            }
             return new CodeActionHandler(
                 /** @phpstan-ignore-next-line */
-                new AggregateCodeActionProvider(...$this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER)),
+                new AggregateCodeActionProvider(...$services),
                 $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class)
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
