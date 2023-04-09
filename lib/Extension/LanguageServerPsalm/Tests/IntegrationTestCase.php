@@ -9,7 +9,7 @@ abstract class IntegrationTestCase extends TestCase
 {
     protected function tearDown(): void
     {
-//        $this->workspace()->reset();
+        //        $this->workspace()->reset();
     }
 
     protected static function workspace(): Workspace

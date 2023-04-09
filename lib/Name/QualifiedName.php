@@ -82,7 +82,7 @@ final class QualifiedName implements Name
     {
         $parts = $this->parts;
         array_unshift($parts, ...$name->toArray());
-        return new self($parts);
+        return new self($parts ?? []);
     }
 
     /**

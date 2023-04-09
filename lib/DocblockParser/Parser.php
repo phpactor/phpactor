@@ -67,6 +67,7 @@ final class Parser
         $this->tokens = $tokens;
 
         while ($tokens->hasCurrent()) {
+            /** @phpstan-ignore-next-line Above ensures it is not null */
             if ($tokens->current->type === Token::T_TAG) {
                 $children[] = $this->parseTag();
                 continue;
@@ -81,6 +82,7 @@ final class Parser
             }
         }
 
+        /** @phpstan-ignore-next-line */
         return new Docblock($children);
     }
 

@@ -75,6 +75,11 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
         return 'generate-method';
     }
 
+    public function describe(): string
+    {
+        return 'generate non-existing method';
+    }
+
     /**
      * @return Promise<array<Diagnostic>>
      */
