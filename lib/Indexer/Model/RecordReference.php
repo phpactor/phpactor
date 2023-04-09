@@ -2,14 +2,23 @@
 
 namespace Phpactor\Indexer\Model;
 
-class RecordReference
+use Phpactor\Indexer\Model\Record\HasFlags;
+use Phpactor\Indexer\Model\Record\HasFlagsTrait;
+
+class RecordReference implements HasFlags
 {
+    use HasFlagsTrait;
+
+    const FLAG_NEW_OBJECT = 1;
+
     public function __construct(
         private string $type,
         private string $identifier,
         private int $offset,
-        private ?string $contaninerType = null
+        private ?string $contaninerType = null,
+        int $flags = 0
     ) {
+        $this->flags = $flags;
     }
 
     public function offset(): int
