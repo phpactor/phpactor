@@ -26,6 +26,7 @@ Bug fixes:
 
 Improvements:
 
+  - Code action and formatting handlers now send progress notifications #2192
   - Invalidate diagnostics cache only when document changes #2191
   - Optimize analysis for scopes with many many assignments #2188
   - Made some heavy blocking operations non-blocking (e.g. diagnostics, code
