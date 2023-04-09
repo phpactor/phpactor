@@ -18,6 +18,8 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnType
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\CacheForDocument;
+use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
@@ -94,6 +96,7 @@ class WorseReflectionExtension implements Extension
             if ($container->parameter(self::PARAM_ENABLE_CACHE)->bool()) {
                 $builder->enableCache();
                 $builder->withCache($container->get(Cache::class));
+                $builder->withCacheForDocument($container->get(CacheForDocument::class));
             }
 
             foreach ($container->getServiceIdsForTag(self::TAG_SOURCE_LOCATOR) as $serviceId => $attrs) {
@@ -136,6 +139,11 @@ class WorseReflectionExtension implements Extension
 
         $container->register(Cache::class, function (Container $container) {
             return new TtlCache($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
+        });
+        $container->register(CacheForDocument::class, function (Container $container) {
+            return new CacheForDocument(
+                fn () => new StaticCache(),
+            );
         });
     }
 

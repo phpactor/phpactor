@@ -7,6 +7,7 @@ use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
@@ -16,7 +17,6 @@ use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
-use Phpactor\TextDocument\TextDocumentBuilder;
 use function Amp\call;
 
 class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
@@ -87,7 +87,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
     {
         return call(function () use ($textDocument) {
             $methods = yield $this->missingMethodFinder->find(
-                TextDocumentBuilder::create($textDocument->text)->build()
+                TextDocumentConverter::fromLspTextItem($textDocument)
             );
             $diagnostics = [];
 

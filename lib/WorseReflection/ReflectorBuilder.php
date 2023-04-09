@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
@@ -65,6 +66,8 @@ final class ReflectorBuilder
      * @var MemberContextResolver[]
      */
     private array $memberContextResolvers = [];
+
+    private CacheForDocument $cacheForDocument;
 
     /**
      * Create a new instance of the builder
@@ -145,6 +148,7 @@ final class ReflectorBuilder
             $this->diagnosticProviders,
             $this->memberContextResolvers,
             $this->buildCache(),
+            $this->cacheForDocument ?? new CacheForDocument(fn () => new NullCache()),
             $this->enableContextualSourceLocation
         ))->reflector();
     }
@@ -182,6 +186,13 @@ final class ReflectorBuilder
     public function withCache(Cache $cache): ReflectorBuilder
     {
         $this->cache = $cache;
+
+        return $this;
+    }
+
+    public function withCacheForDocument(CacheForDocument $cacheForDocument): ReflectorBuilder
+    {
+        $this->cacheForDocument = $cacheForDocument;
 
         return $this;
     }
