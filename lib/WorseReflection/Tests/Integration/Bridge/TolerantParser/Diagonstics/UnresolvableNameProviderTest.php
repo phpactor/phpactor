@@ -487,7 +487,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         )->build();
 
         $found = wait($reflector->diagnostics(
-            TextDocumentBuilder::create('<?php Foobar::class;')->build()
+            TextDocumentBuilder::create('<?php Foobar::class;')->uri('file:///test')->build()
         ));
         self::assertCount(1, $found);
     }
@@ -499,7 +499,7 @@ class UnresolvableNameProviderTest extends DiagnosticsTestCase
         )->build();
 
         $found = wait($reflector->diagnostics(
-            TextDocumentBuilder::create('<?php barboo();')->build()
+            TextDocumentBuilder::create('<?php barboo();')->uri('file:///test')->build()
         ));
         self::assertCount(1, $found);
     }

@@ -34,7 +34,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
 
     public function diagnosticsFromSource(string $source): Diagnostics
     {
-        $source = TextDocumentBuilder::fromUnknown($source);
+        $source = TextDocumentBuilder::create($source)->uri('file:///test')->build();
         $reflector = $this->createBuilder($source)->enableCache()->addDiagnosticProvider($this->provider())->build();
         $reflector->reflectOffset($source, mb_strlen($source));
         return wait($reflector->diagnostics($source));
@@ -45,7 +45,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
         $source = $this->workspace()->getContents('test.php');
-        $source = TextDocumentBuilder::fromUnknown($source);
+        $source = TextDocumentBuilder::create($source)->uri('file:///test.php')->build();
 
         $builder = ReflectorBuilder::create()
             ->withLogger($this->logger());

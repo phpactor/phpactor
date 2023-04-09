@@ -46,8 +46,6 @@ class ServiceLocator
 
     private NodeToTypeConverter $nameResolver;
 
-    private CacheForDocument $cacheForDocument;
-
     /**
      * @param Walker[] $frameWalkers
      * @param ReflectionMemberProvider[] $methodProviders
@@ -63,6 +61,7 @@ class ServiceLocator
         private array $diagnosticProviders,
         private array $memberContextResolvers,
         Cache $cache,
+        private CacheForDocument $cacheForDocument,
         bool $enableContextualLocation = false
     ) {
         $sourceReflector = $reflectorFactory->create($this);
@@ -98,7 +97,6 @@ class ServiceLocator
 
         $this->nameResolver = new NodeToTypeConverter($this->reflector, $this->logger);
         $this->cache = $cache;
-        $this->cacheForDocument = new CacheForDocument(fn () => new StaticCache());
     }
 
     public function reflector(): Reflector
