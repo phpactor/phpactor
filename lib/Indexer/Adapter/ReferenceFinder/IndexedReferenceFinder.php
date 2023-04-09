@@ -101,10 +101,12 @@ class IndexedReferenceFinder implements ReferenceFinder
                 return;
             }
 
+
+
             // note that we check the all implementations: this will multiply
             // the number of NOT and MAYBE matches
             foreach ($this->implementationsOf($containerType) as $containerType) {
-                yield from $this->query->member()->referencesTo(
+                yield from $this->memberReferencesTo(
                     $this->symbolTypeToReferenceType($nodeContext),
                     $nodeContext->symbol()->name(),
                     $containerType
@@ -186,5 +188,14 @@ class IndexedReferenceFinder implements ReferenceFinder
             'Could not convert symbol type "%s" to reference type',
             $symbolType
         ));
+    }
+
+    /**
+     * @param "method"|"constant"|"property" $referenceType
+     * @return Generator<LocationConfidence>
+     */
+    private function memberReferencesTo(string $referenceType, string $memberName, string $containerType): Generator
+    {
+        yield from $this->query->member()->referencesTo($referenceType, $memberName, $containerType);
     }
 }
