@@ -66,6 +66,7 @@ use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Core\Server\ServerStats;
 use Phpactor\LanguageServer\Middleware\ShutdownMiddleware;
 use Phpactor\LanguageServer\Service\DiagnosticsService;
+use Phpactor\LanguageServer\WorkDoneProgress\ProgressNotifier;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\MapResolver\ResolverErrors;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -446,7 +447,8 @@ class LanguageServerExtension implements Extension
             return new CodeActionHandler(
                 /** @phpstan-ignore-next-line */
                 new AggregateCodeActionProvider(...$services),
-                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class)
+                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->get(ProgressNotifier::class),
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
@@ -466,7 +468,8 @@ class LanguageServerExtension implements Extension
 
             return new FormattingHandler(
                 $container->get(self::SERVICE_SESSION_WORKSPACE),
-                $formatter
+                $formatter,
+                $container->get(ProgressNotifier::class),
             );
         }, [
             LanguageServerExtension::TAG_METHOD_HANDLER => [
