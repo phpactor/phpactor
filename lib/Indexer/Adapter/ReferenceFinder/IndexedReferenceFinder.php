@@ -6,7 +6,9 @@ use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\LocationConfidence;
+use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
@@ -196,6 +198,13 @@ class IndexedReferenceFinder implements ReferenceFinder
      */
     private function memberReferencesTo(string $referenceType, string $memberName, string $containerType): Generator
     {
+        if ($memberName === '__construct' && $referenceType === 'method') {
+            $class = $this->query->class()->get($containerType);
+            foreach ($class->references() as $reference) {
+                dump($this->query->file()->get($reference));
+            }
+            return;
+        }
         yield from $this->query->member()->referencesTo($referenceType, $memberName, $containerType);
     }
 }
