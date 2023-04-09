@@ -85,6 +85,11 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         return 'import-name';
     }
 
+    public function describe(): string
+    {
+        return 'import unresolvable class names';
+    }
+
     private function diagnosticsFromUnresolvedName(NameWithByteOffset $unresolvedName, TextDocumentItem $item, ?bool $hasCandidates = null): array
     {
         $range = new Range(

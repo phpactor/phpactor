@@ -8,6 +8,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
@@ -25,6 +26,7 @@ use Phpactor\Extension\LanguageServer\Command\StartCommand;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
 use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsEngine;
@@ -64,6 +66,7 @@ use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Core\Server\ServerStats;
 use Phpactor\LanguageServer\Middleware\ShutdownMiddleware;
 use Phpactor\LanguageServer\Service\DiagnosticsService;
+use Phpactor\LanguageServer\WorkDoneProgress\ProgressNotifier;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\MapResolver\ResolverErrors;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -431,10 +434,21 @@ class LanguageServerExtension implements Extension
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(CodeActionHandler::class, function (Container $container) {
+            $services = $this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER, CodeActionProvider::class);
+            if ($container->parameter(self::PARAM_PROFILE)->bool()) {
+                $services = array_map(
+                    fn (CodeActionProvider $provider) => new ProfilingCodeActionProvider(
+                        $provider,
+                        $this->logger($container)
+                    ),
+                    $services
+                );
+            }
             return new CodeActionHandler(
                 /** @phpstan-ignore-next-line */
-                new AggregateCodeActionProvider(...$this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER)),
-                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class)
+                new AggregateCodeActionProvider(...$services),
+                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->get(ProgressNotifier::class),
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
 
@@ -454,7 +468,8 @@ class LanguageServerExtension implements Extension
 
             return new FormattingHandler(
                 $container->get(self::SERVICE_SESSION_WORKSPACE),
-                $formatter
+                $formatter,
+                $container->get(ProgressNotifier::class),
             );
         }, [
             LanguageServerExtension::TAG_METHOD_HANDLER => [
@@ -512,7 +527,7 @@ class LanguageServerExtension implements Extension
 
         $container->register(CodeActionDiagnosticsProvider::class, function (Container $container) {
             return new CodeActionDiagnosticsProvider(
-                ...$this->taggedServices($container, self::TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER)
+                ...$this->taggedServices($container, self::TAG_CODE_ACTION_DIAGNOSTICS_PROVIDER, CodeActionProvider::class)
             );
         }, [
             self::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', outsource: true),
@@ -537,9 +552,11 @@ class LanguageServerExtension implements Extension
     }
 
     /**
-     * @return array<int,mixed>
+     * @template TType
+     * @param null|class-string<TType> $fqn
+     * @return ($fqn is class-string<TType> ? list<TType> : list<mixed>)
      */
-    private function taggedServices(Container $container, string $tag): array
+    private function taggedServices(Container $container, string $tag, ?string $fqn = null): array
     {
         $providers = [];
         foreach (array_keys($container->getServiceIdsForTag($tag)) as $serviceId) {

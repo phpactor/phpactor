@@ -67,13 +67,15 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
      */
     public function diagnostics(TextDocument $sourceCode): Promise
     {
-        return call(function () use ($sourceCode) {
-            $rootNode = $this->parseSourceCode($sourceCode);
-            $walker = $this->serviceLocator->newDiagnosticsWalker();
-            foreach ($this->serviceLocator->frameBuilder()->withWalker($walker)->buildGenerator($rootNode) as $tick) {
-                yield delay(0);
-            }
-            return $walker->diagnostics();
+        return $this->serviceLocator->cacheForDocument()->getOrSet($sourceCode->uriOrThrow(), 'diagnostics', function () use ($sourceCode) {
+            return call(function () use ($sourceCode) {
+                $rootNode = $this->parseSourceCode($sourceCode);
+                $walker = $this->serviceLocator->newDiagnosticsWalker();
+                foreach ($this->serviceLocator->frameBuilder()->withWalker($walker)->buildGenerator($rootNode) as $tick) {
+                    yield delay(0);
+                }
+                return $walker->diagnostics();
+            });
         });
     }
 

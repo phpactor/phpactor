@@ -59,4 +59,8 @@ class ExtractConstantProvider implements CodeActionProvider
             ];
         });
     }
+    public function describe(): string
+    {
+        return 'extract constant';
+    }
 }

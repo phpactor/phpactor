@@ -60,6 +60,7 @@ class ServiceLocator
         private array $diagnosticProviders,
         private array $memberContextResolvers,
         Cache $cache,
+        private CacheForDocument $cacheForDocument,
         bool $enableContextualLocation = false
     ) {
         $sourceReflector = $reflectorFactory->create($this);
@@ -160,6 +161,11 @@ class ServiceLocator
     public function cache(): Cache
     {
         return $this->cache;
+    }
+
+    public function cacheForDocument(): CacheForDocument
+    {
+        return $this->cacheForDocument;
     }
 
     public function newDiagnosticsWalker(): DiagnosticsWalker
