@@ -7,12 +7,15 @@ use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\Query\Criteria;
+use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -201,7 +204,19 @@ class IndexedReferenceFinder implements ReferenceFinder
         if ($memberName === '__construct' && $referenceType === 'method') {
             $class = $this->query->class()->get($containerType);
             foreach ($class->references() as $reference) {
-                dump($this->query->file()->get($reference));
+                $file = $this->query->file()->get($reference);
+                foreach ($file->references() as $fileReference) {
+                    if (
+                        $fileReference->type() === 'class' && $fileReference->hasFlag(RecordReference::FLAG_NEW_OBJECT)
+                    ) {
+                        yield LocationConfidence::surely(
+                            new Location(
+                                TextDocumentUri::fromString($file->filePath()),
+                                ByteOffset::fromInt($fileReference->offset())
+                            )
+                        );
+                    }
+                }
             }
             return;
         }
