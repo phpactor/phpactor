@@ -84,7 +84,7 @@ class GenerateTestMethodsTest extends WorseTestCase
         $textDocumentEdits = $this->createTestMethodGenerator($source)->generateMethod($sourceCode, 'setUp');
 
         $transformed = SourceCode::fromStringAndPath(
-            (string) $textDocumentEdits->textEdits()->apply($sourceCode),
+            (string) $textDocumentEdits->apply($sourceCode),
             'file:///source'
         );
 

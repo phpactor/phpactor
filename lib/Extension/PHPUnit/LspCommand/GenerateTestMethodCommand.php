@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Phpactor\Extension\PHPUnit\LspCommand;
 
 use Amp\Promise;
-use LanguageServerProtocol\WorkspaceEdit;
+use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\Extension\PHPUnit\CodeTransform\GenerateTestMethods;

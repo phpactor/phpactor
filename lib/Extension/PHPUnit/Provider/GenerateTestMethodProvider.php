@@ -48,6 +48,11 @@ class GenerateTestMethodProvider implements CodeActionProvider
         return new Success($availableCodeActions);
     }
 
+    public function describe(): string
+    {
+        return 'Generate setUp and or tearDown in PhpUnit test cases';
+    }
+
     public function kinds(): array
     {
         return [

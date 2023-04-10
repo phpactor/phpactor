@@ -16,7 +16,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\WorseReflection\Reflector;
 use Webmozart\Assert\Assert;
 
-class GenerateTestMethods /* implements GenerateMethod */
+class GenerateTestMethods
 {
     private const METHODS_TO_GENERATE = [
         'setUp',
@@ -55,7 +55,7 @@ class GenerateTestMethods /* implements GenerateMethod */
         return;
     }
 
-    public function generateMethod(TextDocument $document, string $methodName): TextDocumentEdits
+    public function generateMethod(TextDocument $document, string $methodName): TextEdits
     {
         Assert::inArray(
             $methodName,
@@ -71,19 +71,16 @@ class GenerateTestMethods /* implements GenerateMethod */
 
         try {
             if ($class->methods()->has($methodName)) {
-                return TextDocumentEdits::fromTextDocument($document, TextEdits::none());
+                return TextEdits::none();
             }
         } catch (NotFound) {
-            return TextDocumentEdits::fromTextDocument($document, TextEdits::none());
+            return  TextEdits::none();
         }
 
         $setUpMethod = $classBuilder->method($methodName);
         $setUpMethod->visibility('public');
         $setUpMethod->returnType('void');
 
-        return TextDocumentEdits::fromTextDocument(
-            $document,
-            $this->updater->textEditsFor($builder->build(), Code::fromString($document->__toString()))
-        );
+        return $this->updater->textEditsFor($builder->build(), Code::fromString($document->__toString()));
     }
 }
