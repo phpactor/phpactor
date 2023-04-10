@@ -9,7 +9,7 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
-use Phpactor\TextDocument\WorkspaceEdits;
+use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -56,7 +56,7 @@ class GenerateTestMethods /* implements GenerateMethod */
         return;
     }
 
-    public function generateMethod(TextDocument $document, string $methodName): WorkspaceEdits
+    public function generateMethod(TextDocument $document, string $methodName): TextDocumentEdits
     {
         Assert::inArray(
             $methodName,
@@ -72,22 +72,19 @@ class GenerateTestMethods /* implements GenerateMethod */
 
         try {
             if ($class->methods()->has($methodName)) {
-                return WorkspaceEdits::none();
+                return TextDocumentEdits::fromTextDocument($document, TextEdits::none());
             }
         } catch (NotFound) {
-            return WorkspaceEdits::none();
+            return TextDocumentEdits::fromTextDocument($document, TextEdits::none());
         }
 
         $setUpMethod = $classBuilder->method($methodName);
         $setUpMethod->visibility('public');
         $setUpMethod->returnType('void');
 
-        $sourceCode = SourceCode::fromUnknown((string) $document->__toString());
-        return new WorkspaceEdits(
-            new TextDocumentEdits(
-                TextDocumentUri::fromString($sourceCode->path()),
-                $this->updater->textEditsFor($builder->build(), Code::fromString($document->__toString()))
-            )
+        return TextDocumentEdits::fromTextDocument(
+            $document,
+            $this->updater->textEditsFor($builder->build(), Code::fromString($document->__toString()))
         );
     }
 }

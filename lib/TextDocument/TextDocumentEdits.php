@@ -4,6 +4,8 @@ namespace Phpactor\TextDocument;
 
 use Iterator;
 use IteratorAggregate;
+use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\TextEdits;
 
 /**
  * @implements IteratorAggregate<int, TextEdit>
@@ -12,6 +14,14 @@ class TextDocumentEdits implements IteratorAggregate
 {
     public function __construct(private TextDocumentUri $uri, private TextEdits $textEdits)
     {
+    }
+
+    public static function fromTextDocument(TextDocument $textDocument, TextEdits $edits): self
+    {
+        return new self(
+            TextDocumentUri::fromString($textDocument->uriOrThrow()),
+            $edits
+        );
     }
 
     public function uri(): TextDocumentUri
