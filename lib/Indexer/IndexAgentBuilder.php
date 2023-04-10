@@ -222,7 +222,7 @@ final class IndexAgentBuilder
     private function buildFilesystem(string $root): SimpleFilesystem
     {
         return new SimpleFilesystem(
-            $this->indexRoot,
+            FilePath::fromString($this->indexRoot),
             new SimpleFileListProvider(
                 FilePath::fromString($root),
                 $this->followSymlinks

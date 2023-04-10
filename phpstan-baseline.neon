@@ -1716,27 +1716,7 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassMover.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$className with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$dryRun with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$filePath with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$replace with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
@@ -1751,32 +1731,12 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:line\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceInSource\\(\\) has parameter \\$className with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceInSource\\(\\) has parameter \\$replace with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceReferences\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:serializeReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:serializeReferenceList\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
@@ -6474,11 +6434,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$name of static method Phpactor\\\\Indexer\\\\Model\\\\Record\\\\ClassRecord\\:\\:fromName\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
-
-		-
-			message: "#^Cannot access property \\$parent on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassLikeReferenceIndexer.php
 
 		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
