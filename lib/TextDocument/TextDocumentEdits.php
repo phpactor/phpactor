@@ -4,8 +4,6 @@ namespace Phpactor\TextDocument;
 
 use Iterator;
 use IteratorAggregate;
-use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextEdits;
 
 /**
  * @implements IteratorAggregate<int, TextEdit>

@@ -1,0 +1,19 @@
+// File: source
+<?php
+
+class SomeClass {
+    public function setUp(): void
+    {
+        echo "I should not be overwritten";
+    }
+}
+
+// File: expected
+<?php
+
+class SomeClass {
+    public function setUp(): void
+    {
+        echo "I should not be overwritten";
+    }
+}

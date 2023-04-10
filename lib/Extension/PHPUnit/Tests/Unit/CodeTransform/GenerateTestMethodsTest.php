@@ -84,7 +84,7 @@ class GenerateTestMethodsTest extends WorseTestCase
         $textDocumentEdits = $this->createTestMethodGenerator($source)->generateMethod($sourceCode, 'setUp');
 
         $transformed = SourceCode::fromStringAndPath(
-            (string) $textDocumentEdits->apply($sourceCode),
+            (string) $textDocumentEdits->textEdits()->apply($sourceCode),
             'file:///source'
         );
 
@@ -97,8 +97,8 @@ class GenerateTestMethodsTest extends WorseTestCase
     public function provideGenerateTestMethods(): array
     {
         return [
-            //'generating a method that already exists' => [ 'generateTestMethods1.test'],
-            //'generating a new setUp method' => [ 'generateTestMethods2.test'],
+            'generating a method that already exists' => [ 'generateTestMethods_existing.test'],
+            'generating a new setUp method' => [ 'generateTestMethods_generate.test'],
         ];
     }
 
