@@ -22,6 +22,9 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
     public function provideClassImport(): Generator
     {
         yield 'It does nothing when given an empty source code prototype' => [
@@ -412,8 +415,10 @@ abstract class UpdaterTestCase extends TestCase
                     EOT
             ];
     }
-
-    public function provideFunctionImport()
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
+    public function provideFunctionImport(): Generator
     {
         yield 'It adds use function statements' => [
 
@@ -505,7 +510,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideClasses()
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
+    public function provideClasses(): Generator
     {
         yield 'It does nothing when prototype has only the class' => [
 
@@ -1229,7 +1237,9 @@ abstract class UpdaterTestCase extends TestCase
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
-
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
     public function provideMethods(): Generator
     {
         yield 'It adds a method' => [
@@ -1860,7 +1870,9 @@ abstract class UpdaterTestCase extends TestCase
                     EOT
             ];
     }
-
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
     public function provideMethodParameters(): Generator
     {
         yield 'It adds parameters' => [
