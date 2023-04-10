@@ -32,8 +32,6 @@ final class ReflectorBuilder
      */
     private array $locators = [];
 
-    private bool $contextualSourceLocation = false;
-
     private bool $enableCache = false;
 
     private bool $enableContextualSourceLocation = false;

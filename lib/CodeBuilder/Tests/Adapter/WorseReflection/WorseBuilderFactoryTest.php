@@ -5,7 +5,6 @@ namespace Phpactor\CodeBuilder\Tests\Adapter\WorseReflection;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
-use Phpactor\CodeBuilder\Domain\Prototype\Methods;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode;
