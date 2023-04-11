@@ -3,6 +3,12 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - Specify maximimum size (255 chars) for string literal types #2144
+
+## 2023.04.10
+
 Features:
 
   - Show references to new objects when finding references to `__construct` method #2194

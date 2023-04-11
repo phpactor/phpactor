@@ -11,6 +11,12 @@ class StringLiteralType extends StringType implements Literal, Generalizable, Co
 
     public function __construct(public string $value)
     {
+        $this->value = (function (string $value, int $length) {
+            if (strlen($value) > $length) {
+                return substr($value, 0, -3) . '...';
+            }
+            return $value;
+        })($value, 255);
     }
 
     public function __toString(): string
