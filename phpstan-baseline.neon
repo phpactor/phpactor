@@ -361,91 +361,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideClasses\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Adapter\\\\UpdaterTestCase\\:\\:provideFunctionImport\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/UpdaterTestCase.php
-
-		-
-			message: "#^Cannot call method byReference\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Parameter\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method defaultValue\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Parameter\\|null\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method isStatic\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method methods\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\TraitPrototype\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\|null\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Parameter\\|null\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Property\\|null\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\TraitPrototype\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method parameters\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\|null\\.$#"
-			count: 9
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method properties\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\TraitPrototype\\|null\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method returnType\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\|null\\.$#"
-			count: 2
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method type\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Parameter\\|null\\.$#"
-			count: 5
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method type\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Property\\|null\\.$#"
-			count: 3
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method visibility\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Method\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
-			message: "#^Cannot call method visibility\\(\\) on Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Property\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
-
-		-
 			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Adapter/WorseReflection/WorseBuilderFactoryTest.php
@@ -1716,27 +1631,7 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassMover.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$className with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$dryRun with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$filePath with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:fileReferences\\(\\) has parameter \\$replace with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
@@ -1751,32 +1646,12 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:line\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceInSource\\(\\) has parameter \\$className with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceInSource\\(\\) has parameter \\$replace with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceReferences\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:serializeReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:serializeReferenceList\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
@@ -6476,11 +6351,6 @@ parameters:
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
 
 		-
-			message: "#^Cannot access property \\$parent on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassLikeReferenceIndexer.php
-
-		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 3
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassLikeReferenceIndexer.php
@@ -7581,37 +7451,7 @@ parameters:
 			path: lib/WorseReflection/Core/SourceCodeLocator/BruteForceSourceLocator.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\ChainSourceLocator\\:\\:__construct\\(\\) has parameter \\$sourceLocators with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/ChainSourceLocator.php
-
-		-
-			message: "#^Cannot call method getExtension\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Cannot call method isDir\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:map\\(\\) should return array\\<string, string\\> but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$file of method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildClassMap\\(\\) expects SplFileInfo, mixed given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$file of method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildConstantMap\\(\\) expects SplFileInfo, mixed given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$file of method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:buildFunctionMap\\(\\) expects SplFileInfo, mixed given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
 
@@ -7712,11 +7552,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: mixed given\\.$#"
-			count: 1
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:\\$contextualSourceLocation is never read, only written\\.$#"
 			count: 1
 			path: lib/WorseReflection/ReflectorBuilder.php
 

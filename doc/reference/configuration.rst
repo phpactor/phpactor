@@ -858,7 +858,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
+**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1296,7 +1296,7 @@ Log incoming and outgoing messages (needs log formatter to be set to ``json``)
 """""""""""""""""""""""""""""""""""""""""
 
 
-Amount of time to wait before responding to a shutdown notification
+Amount of time (in milliseconds) to wait before responding to a shutdown notification
 
 
 **Default**: ``200``
@@ -1309,7 +1309,7 @@ Amount of time to wait before responding to a shutdown notification
 """""""""""""""""""""""""""""""""""""""""
 
 
-Wait this amount of time after a shutdown request before self-destructing
+Wait this amount of time (in milliseconds) after a shutdown request before self-destructing
 
 
 **Default**: ``2500``
