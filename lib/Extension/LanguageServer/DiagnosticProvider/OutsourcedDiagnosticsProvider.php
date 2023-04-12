@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServer\DiagnosticProvider;
 use Amp\CancellationToken;
 use Amp\Process\Process;
 use Amp\Process\ProcessException;
+use Amp\Process\StatusError;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -41,9 +42,14 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
             asyncCall(function () use ($process, $start) {
                 while ($process->isRunning()) {
                     yield delay(500);
-                    if (time() >= $start + $this->timeout) {
-                        $this->logger->warning(sprintf('Killing diagnostics process "%s" because it lived longer than %ds', $process->getPid(), $this->timeout));
-                        $process->kill();
+                    // phpstan doesn't expect that $process->isRunning() output can change
+                    // @phpstan-ignore-next-line
+                    if (time() >= $start + $this->timeout && $process->isRunning()) {
+                        try {
+                            $process->kill();
+                            $this->logger->warning(sprintf('Killed diagnostics process "%s" because it lived longer than %ds', $process->getPid(), $this->timeout));
+                        } catch (StatusError $e) {
+                        }
                         break;
                     }
                 }
