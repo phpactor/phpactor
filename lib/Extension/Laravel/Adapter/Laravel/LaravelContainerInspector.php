@@ -10,6 +10,9 @@ class LaravelContainerInspector
     private array $services = [];
 
     private array $views = [];
+
+    private array $routes = [];
+
     public function __construct(private string $executablePath, private string $projectRoot)
     {
     }
@@ -46,5 +49,17 @@ class LaravelContainerInspector
         }
 
         return $this->views;
+    }
+
+    public function routes(): array
+    {
+        if ([] === $this->routes) {
+            $output = shell_exec("php $this->executablePath routes $this->projectRoot");
+            if ($output) {
+                $this->routes = json_decode(trim($output), true);
+            }
+        }
+
+        return $this->routes;
     }
 }
