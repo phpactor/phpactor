@@ -23,6 +23,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Reflector;
 
@@ -222,8 +223,7 @@ class NodeUtil
             }
 
             if ($text === 'self') {
-                $class = self::nodeContainerClassLikeDeclaration($node);
-                return TypeFactory::reflectedClass($reflector, $class->getNamespacedName()->__toString());
+                return new SelfType();
             }
 
             if ($text === 'static') {
