@@ -15,8 +15,8 @@ use Phpactor\MapResolver\Resolver;
 
 class LaravelExtension implements OptionalExtension
 {
-    const DEV_TOOLS_EXECUTABLE = 'laravel.devtools.path';
-    const PARAM_COMPLETOR_ENABLED = 'completion_worse.completor.laravel.enabled';
+    public const DEV_TOOLS_EXECUTABLE = 'laravel.devtools.path';
+    public const PARAM_COMPLETOR_ENABLED = 'completion_worse.completor.laravel.enabled';
 
     public function load(ContainerBuilder $container): void
     {
@@ -28,6 +28,7 @@ class LaravelExtension implements OptionalExtension
 
             return new LaravelContainerInspector($executablePath, $projectRoot);
         });
+
         $container->register(LaravelContainerCompletor::class, function (Container $container) {
             return new LaravelContainerCompletor(
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
@@ -38,6 +39,7 @@ class LaravelExtension implements OptionalExtension
                 'name' => 'laravel',
             ],
         ]);
+
         $container->register(LaravelContainerContextResolver::class, function (Container $container) {
             return new LaravelContainerContextResolver(
                 $container->get(LaravelContainerInspector::class)

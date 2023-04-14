@@ -4,7 +4,6 @@ namespace Phpactor\Extension\Laravel\Completor;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
@@ -22,14 +21,12 @@ use Phpactor\WorseReflection\Reflector;
 
 class LaravelContainerCompletor implements TolerantCompletor
 {
-    const CONTAINER_CLASSES = [
+    public const CONTAINER_CLASSES = [
         'Illuminate\\Contracts\\Foundation\\Application',
         'Illuminate\\Support\\Facades\\App'
     ];
-
-    const CONTAINER_FUNC = ['app'];
-
-    const CONTAINER_METHODS = ['make', 'get'];
+    public const CONTAINER_FUNC = ['app'];
+    public const CONTAINER_METHODS = ['make', 'get'];
 
     public function __construct(private Reflector $reflector, private LaravelContainerInspector $inspector)
     {
@@ -50,28 +47,39 @@ class LaravelContainerCompletor implements TolerantCompletor
             return;
         }
 
-        $content = $node->argumentExpressionList->getFirstChildNode(ArgumentExpression::class);
-
         $memberAccess = $node->callableExpression;
+
+        $isFunction = false;
+        if ($memberAccess instanceof QualifiedName) {
+            $isFunction = in_array(needle: $memberAccess->__toString(), haystack: self::CONTAINER_FUNC);
+        }
 
         if (
             !$memberAccess instanceof ScopedPropertyAccessExpression &&
-            !$memberAccess instanceof MemberAccessExpression
+            !$memberAccess instanceof MemberAccessExpression &&
+            !$isFunction
         ) {
             return;
         }
 
-        $methodName = NodeUtil::nameFromTokenOrNode($node, $memberAccess->memberName);
+        if (!$isFunction) {
+            $methodName = NodeUtil::nameFromTokenOrNode($node, $memberAccess->memberName);
 
-        if (!in_array($methodName, ['get', 'make'])) {
-            return;
+            if (!in_array($methodName, ['get', 'make'])) {
+                return;
+            }
+
+            $position = $memberAccess instanceof MemberAccessExpression ?
+                $memberAccess->dereferencableExpression->getEndPosition() :
+                $memberAccess->scopeResolutionQualifier->getEndPosition();
+        } else {
+            /** @var QualifiedName $memberAccess */
+            $position = $memberAccess->getEndPosition();
         }
 
-        $position = $memberAccess instanceof MemberAccessExpression ?
-            $memberAccess->dereferencableExpression->getEndPosition() :
-            $memberAccess->scopeResolutionQualifier->getEndPosition();
-
-        $containerType = $this->reflector->reflectOffset($source, $position)->symbolContext()->type();
+        if ($reflectorOutcome = $this->reflector->reflectOffset($source, $position)) {
+            $containerType = $reflectorOutcome->nodeContext()->type();
+        }
 
         $isContainerClass = false;
 
@@ -81,8 +89,7 @@ class LaravelContainerCompletor implements TolerantCompletor
                     $isContainerClass = true;
                     break;
                 }
-            }
-            elseif (!$containerType->instanceof(TypeFactory::class($containerClass))->isFalseOrMaybe()) {
+            } elseif (!$containerType->instanceof(TypeFactory::class($containerClass))->isFalseOrMaybe()) {
                 $isContainerClass = true;
                 break;
             }

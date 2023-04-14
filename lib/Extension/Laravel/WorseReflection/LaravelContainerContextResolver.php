@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Reflector;
 
 class LaravelContainerContextResolver implements MemberContextResolver
 {
-    const CONTAINER_CLASSES = [
+    public const CONTAINER_CLASSES = [
         'Illuminate\\Contracts\\Foundation\\Application',
         'Illuminate\\Support\\Facades\\App'
     ];
@@ -25,20 +25,8 @@ class LaravelContainerContextResolver implements MemberContextResolver
     {
     }
 
-    public function resolveMemberContext(Reflector $reflector, ReflectionMember $member, ?FunctionArguments $arguments): ?Type
+    public function resolveMemberContext(Reflector $reflector, ReflectionMember $member, Type $type, ?FunctionArguments $arguments): ?Type
     {
-        if ($member->memberType() !== ReflectionMember::TYPE_METHOD) {
-            return null;
-        }
-
-        if ($member->name() !== 'get') {
-            return null;
-        }
-
-        if (count($arguments) === 0) {
-            return null;
-        }
-
         $isMatch = false;
 
         foreach (self::CONTAINER_CLASSES as $class) {
@@ -52,7 +40,11 @@ class LaravelContainerContextResolver implements MemberContextResolver
             return null;
         }
 
-        $argument = $arguments->at(0)->type();
+        if ($member->name() === 'get' || $member->name() === 'make') {
+            $argument = $arguments->at(0)->type();
+        } else {
+            return null;
+        }
 
         if ($argument instanceof StringLiteralType) {
             $service = $this->inspector->service($argument->value());
