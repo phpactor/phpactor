@@ -33,7 +33,7 @@ class GenerateTestMethodsTest extends WorseTestCase
 
         $methodNames = $this->createTestMethodGenerator($source)->getGeneratableTestMethods($sourceCode);
 
-        $this->assertEquals($expected, iterator_to_array($methodNames));
+        self::assertEquals($expected, iterator_to_array($methodNames));
     }
 
     /**

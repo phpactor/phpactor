@@ -46,7 +46,7 @@ class GenerateTestMethods
         }
 
         foreach (self::METHODS_TO_GENERATE as $methodName) {
-            if (count($class->methods()->byName($methodName)) === 0) {
+            if ($class->ownMembers()->methods()->byName($methodName)->count() === 0) {
                 yield $methodName;
             }
         }
