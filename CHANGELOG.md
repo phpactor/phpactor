@@ -6,6 +6,7 @@ Changelog
 Bug fixes:
 
   - Specify maximimum size (255 chars) for string literal types #2144
+  - Fix docblock parser with `$this` when used as generic argument #2092
 
 ## 2023.04.10
 
