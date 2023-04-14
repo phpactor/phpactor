@@ -22,4 +22,6 @@ interface TextDocument
      * Return language value object for the text document.
      */
     public function language(): TextDocumentLanguage;
+
+    public function uriOrThrow(): TextDocumentUri;
 }

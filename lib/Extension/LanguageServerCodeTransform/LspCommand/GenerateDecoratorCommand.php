@@ -23,7 +23,7 @@ class GenerateDecoratorCommand implements Command
     }
 
     /**
-     * @return Promise<ApplyWorkspaceEditResponse>
+     * @return Promise<ApplyWorkspaceEditResult>
      */
     public function __invoke(string $uri, string $interfaceFQN): Promise
     {

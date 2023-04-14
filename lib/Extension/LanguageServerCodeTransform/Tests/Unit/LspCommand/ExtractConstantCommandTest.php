@@ -9,7 +9,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\MessageType;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
@@ -43,7 +43,7 @@ class ExtractConstantCommandTest extends TestCase
 
         [$tester, $builder] = $this->createTester($extractConstant);
         $tester->workspace()->executeCommand('extract_constant', [self::EXAMPLE_URI, self::EXAMPLE_OFFSET]);
-        $builder->responseWatcher()->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $builder->responseWatcher()->resolveLastResponse(new ApplyWorkspaceEditResult(true));
 
         $applyEdit = $builder->transmitter()->filterByMethod('workspace/applyEdit')->shiftRequest();
 

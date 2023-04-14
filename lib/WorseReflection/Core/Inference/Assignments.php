@@ -15,19 +15,21 @@ abstract class Assignments implements Countable, IteratorAggregate
     private int $version = 1;
 
     /**
-     * @var array<string, Variable>-
+     * @var array<string,Variable>
      */
     private array $variables = [];
 
     /**
-     * @param array<string|int,Variable> $variables
+     * @var array<string,array<string,Variable>>
      */
-    final public function __construct(array $variables)
+    private array $variablesByName = [];
+
+    /**
+     * @param array<string,Variable> $variables
+     */
+    final protected function __construct(array $variables)
     {
-        foreach ($variables as $variable) {
-            $this->variables[$variable->key()] = $variable;
-        }
-        $this->sort();
+        $this->variables = $variables;
     }
 
 
@@ -47,7 +49,7 @@ abstract class Assignments implements Countable, IteratorAggregate
     {
         $this->version++;
         $this->variables[$variable->key()] = $variable;
-        $this->sort();
+        $this->variablesByName[$variable->name()][$variable->key()] = $variable;
     }
 
     public function add(Variable $variable, int $offset): void
@@ -63,10 +65,25 @@ abstract class Assignments implements Countable, IteratorAggregate
         )->withType($original->type()->addType($variable->type())->clean()));
     }
 
-
+    /**
+     * Return all variables matching the given name.
+     *
+     * When this method is used on the original frame it will return directly,
+     * if used after other filters it will filter over all variables which can
+     * be slow.
+     *
+     * IMPORTANT: Call this method BEFORE calling greater than / less than etc.
+     */
     public function byName(string $name): Assignments
     {
         $name = ltrim($name, '$');
+
+        // best case
+        if (isset($this->variablesByName[$name])) {
+            return new static($this->variablesByName[$name]);
+        }
+
+        // worst case
         return new static(array_filter($this->variables, function (Variable $v) use ($name) {
             return $v->name() === $name;
         }));
@@ -152,24 +169,27 @@ abstract class Assignments implements Countable, IteratorAggregate
         return new ArrayIterator(array_values($this->variables));
     }
 
-    public function merge(Assignments $variables): Assignments
+    public function merge(Assignments $variables): void
     {
-        foreach ($variables->variables as $offset => $variable) {
-            $this->variables[$offset] = $variable;
+        foreach ($variables->variables as $key => $variable) {
+            $this->variables[$key] = $variable;
         }
-        $this->sort();
-
-        return $this;
     }
 
     public function replace(Variable $existing, Variable $replacement): void
     {
-        foreach ($this->variables as $offset => $variable) {
+        foreach ($this->variables as $key => $variable) {
             if ($variable !== $existing) {
                 continue;
             }
             $this->version++;
-            $this->variables[$offset] = $replacement;
+            $this->variables[$key] = $replacement;
+            foreach ($this->variablesByName[$replacement->name()] ?? [] as $key => $byName) {
+                if ($byName !== $existing) {
+                    continue;
+                }
+                $this->variablesByName[$replacement->name()][$key] = $replacement;
+            }
         }
     }
 
@@ -177,6 +197,13 @@ abstract class Assignments implements Countable, IteratorAggregate
     {
         return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
             return $v->offset() === $offset;
+        }));
+    }
+
+    public function not(int $offset): Assignments
+    {
+        return new static(array_filter($this->variables, function (Variable $v) use ($offset) {
+            return $v->offset() !== $offset;
         }));
     }
 
@@ -211,12 +238,5 @@ abstract class Assignments implements Countable, IteratorAggregate
         }
 
         return new static($mostRecent);
-    }
-
-    private function sort(): void
-    {
-        uasort($this->variables, function (Variable $one, Variable $two) {
-            return $one->offset() <=> $two->offset();
-        });
     }
 }

@@ -4,9 +4,9 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 final class DefaultValue extends Value
 {
-    private $none = false;
+    private bool $none = false;
 
-    public static function none()
+    public static function none(): self
     {
         $new = new static();
         $new->none = true;
@@ -19,8 +19,8 @@ final class DefaultValue extends Value
         return new static(null);
     }
 
-    public function notNone()
+    public function notNone(): bool
     {
-        return false === $this->none;
+        return !$this->none;
     }
 }

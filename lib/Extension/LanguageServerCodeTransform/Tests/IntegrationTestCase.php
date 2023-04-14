@@ -41,6 +41,7 @@ class IntegrationTestCase extends TestCase
             LanguageServerBridgeExtension::class,
             TestLanguageServerSessionExtension::class,
         ], array_merge([
+            LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ .'/../../',
             WorseReflectionExtension::PARAM_STUB_DIR => __DIR__. '/Empty',
             WorseReflectionExtension::PARAM_STUB_CACHE_DIR => __DIR__ . '/Workspace/wr-cache',

@@ -6,14 +6,19 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ArrayElement;
+use Microsoft\PhpParser\Node\Attribute;
+use Microsoft\PhpParser\Node\AttributeGroup;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
+use Microsoft\PhpParser\Node\ConstElement;
+use Microsoft\PhpParser\Node\DelimitedList\MatchArmConditionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
+use Microsoft\PhpParser\Node\MatchArm;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\Parameter;
@@ -49,8 +54,23 @@ class CompletionContext
         return
             $parent instanceof Expression ||
             $parent instanceof StatementNode ||
+            $parent instanceof ConstElement ||
+            $parent instanceof MatchArmConditionList ||
+            $parent instanceof MatchArm ||
             $parent instanceof ArrayElement // yield;
         ;
+    }
+
+    public static function attribute(?Node $node): bool
+    {
+        if (null === $node) {
+            return false;
+        }
+
+        return
+            $node instanceof AttributeGroup ||
+            $node instanceof Attribute ||
+            $node->parent instanceof Attribute;
     }
 
     public static function useImport(?Node $node): bool
@@ -138,6 +158,10 @@ class CompletionContext
             return false;
         }
 
+        if ($node->parent instanceof ConstElement) {
+            return false;
+        }
+
         $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
         if ($node instanceof Variable) {
@@ -179,13 +203,13 @@ class CompletionContext
             return false;
         }
 
-        $methodDeclaration = $nodeBeforeOffset->getFirstAncestor(MethodDeclaration::class);
+        $memberDeclaration = $nodeBeforeOffset->getFirstAncestor(MethodDeclaration::class, ConstElement::class);
 
-        if (!$methodDeclaration) {
+        if (!$memberDeclaration) {
             return true;
         }
 
-        if ($methodDeclaration->getEndPosition() < $node->getStartPosition()) {
+        if ($memberDeclaration->getEndPosition() < $node->getStartPosition()) {
             return true;
         }
 
@@ -286,6 +310,29 @@ class CompletionContext
         }
 
         return true;
+    }
+
+    public static function promotedPropertyVisibility(Node $node): bool
+    {
+        $methodDeclaration = $node->getFirstAncestor(MethodDeclaration::class);
+        if (!$methodDeclaration instanceof MethodDeclaration) {
+            return false;
+        }
+        if ($methodDeclaration->getName() !== '__construct') {
+            return false;
+        }
+        if ($node instanceof CompoundStatementNode) {
+            return true;
+        }
+        $parameter = $node->getFirstAncestor(Parameter::class);
+        if (!$parameter instanceof Parameter) {
+            return false;
+        }
+        if (NodeUtil::nullOrMissing($parameter->variableName)) {
+            return true;
+        }
+
+        return false;
     }
 
     private static function isClassClause(?Node $node): bool

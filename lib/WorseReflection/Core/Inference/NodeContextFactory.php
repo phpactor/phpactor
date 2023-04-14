@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use RuntimeException;
@@ -36,9 +36,8 @@ class NodeContextFactory
         }
 
         $config = array_merge($defaultConfig, $config);
-        $position = Position::fromStartAndEnd($start, $end);
+        $position = ByteOffsetRange::fromInts($start, $end);
         $symbol = Symbol::fromTypeNameAndPosition(
-            /** @phpstan-ignore-next-line */
             $config['symbol_type'],
             $symbolName,
             $position
@@ -46,9 +45,7 @@ class NodeContextFactory
 
         return self::contextFromParameters(
             $symbol,
-            /** @phpstan-ignore-next-line */
             $config['type'],
-            /** @phpstan-ignore-next-line */
             $config['container_type'],
         );
     }
@@ -56,7 +53,7 @@ class NodeContextFactory
     public static function forVariableAt(Frame $frame, int $start, int $end, string $name): NodeContext
     {
         $varName = ltrim($name, '$');
-        $variables = $frame->locals()->lessThanOrEqualTo($end)->byName($varName);
+        $variables = $frame->locals()->byName($varName)->lessThanOrEqualTo($end);
 
         if (0 === $variables->count()) {
             return NodeContextFactory::create(

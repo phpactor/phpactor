@@ -9,4 +9,5 @@ Docblock: =
    ParenthesizedType: = (
     ConditionalNode: = 
      VariableNode: = $foo)
+   TextNode: = 
  */

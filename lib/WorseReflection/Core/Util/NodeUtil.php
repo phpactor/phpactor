@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Util;
 
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
@@ -328,5 +329,33 @@ class NodeUtil
         }
 
         return null;
+    }
+
+    public static function namespace(Node $node): ?string
+    {
+        $namespace = $node->getNamespaceDefinition();
+
+        if (null === $namespace) {
+            return null;
+        }
+
+        if (!$namespace->name instanceof QualifiedName) {
+            return null;
+        }
+
+        return $namespace->name->__toString();
+    }
+
+    public static function nullOrMissing(mixed $subject): bool
+    {
+        if (null === $subject) {
+            return true;
+        }
+
+        if ($subject instanceof MissingToken) {
+            return true;
+        }
+
+        return false;
     }
 }

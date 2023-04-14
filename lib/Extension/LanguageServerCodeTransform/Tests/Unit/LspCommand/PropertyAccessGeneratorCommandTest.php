@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
 use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -47,7 +47,7 @@ class PropertyAccessGeneratorCommandTest extends TestCase
                 'foo',
             ],
         ]);
-        $builder->responseWatcher()->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $builder->responseWatcher()->resolveLastResponse(new ApplyWorkspaceEditResult(true));
 
         $applyEdit = $builder->transmitter()->filterByMethod('workspace/applyEdit')->shiftRequest();
 
@@ -64,7 +64,8 @@ class PropertyAccessGeneratorCommandTest extends TestCase
     }
 
     /**
-     * @return {LanguageServerTester,LanguageServerTesterBuilder]
+     * @param ObjectProphecy<PropertyAccessGenerator> $generateAccessors
+     * @return array{LanguageServerTester,LanguageServerTesterBuilder}
      */
     private function createTester(ObjectProphecy $generateAccessors): array
     {
@@ -72,7 +73,6 @@ class PropertyAccessGeneratorCommandTest extends TestCase
             ->enableTextDocuments()
             ->enableCommands();
         $builder->addCommand('generate', new PropertyAccessGeneratorCommand(
-            'generate_accessors',
             $builder->clientApi(),
             $builder->workspace(),
             $generateAccessors->reveal(),

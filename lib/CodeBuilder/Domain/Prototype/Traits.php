@@ -7,9 +7,12 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
  */
 class Traits extends Collection
 {
-    public static function fromTraits(array $traits)
+    /**
+     * @param list<TraitPrototype> $traits
+     */
+    public static function fromTraits(array $traits): self
     {
-        return new static(array_reduce($traits, function ($arr, $trait) {
+        return new static(array_reduce($traits, function ($arr, TraitPrototype $trait) {
             $arr[$trait->name()] = $trait;
             return $arr;
         }, []));

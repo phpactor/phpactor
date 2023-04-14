@@ -24,7 +24,7 @@ abstract class ClassLikeUpdater
         $this->methodUpdater = new ClassMethodUpdater($renderer);
     }
 
-    protected function resolvePropertyName(Node $property)
+    protected function resolvePropertyName(Node|Token $property): ?string
     {
         if ($property instanceof Variable) {
             return $property->getName();
@@ -40,6 +40,7 @@ abstract class ClassLikeUpdater
         ));
     }
 
+    /** @return array<Node> */
     abstract protected function memberDeclarations(Node $node): array;
 
     protected function updateProperties(Edits $edits, ClassLikePrototype $classPrototype, Node $classMembers): void

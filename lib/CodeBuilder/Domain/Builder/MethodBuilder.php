@@ -86,7 +86,12 @@ class MethodBuilder extends AbstractBuilder implements NamedBuilder
         return $this;
     }
 
-    public function build()
+    public function getDocblock(): ?Docblock
+    {
+        return $this->docblock;
+    }
+
+    public function build(): Method
     {
         $modifiers = 0;
 

@@ -24,7 +24,7 @@ The TCP server is useful for debugging:
 
 .. code:: bash
 
-   $ phpactor language-server --address=127.0.0.1 -vvv
+   $ phpactor language-server --address=127.0.0.1:8888 -vvv
 
 You should see something like:
 

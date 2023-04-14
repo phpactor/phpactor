@@ -36,6 +36,8 @@ abstract class AbstractParameterCompletor
 
     /**
      * @param WorseVariable[] $variables
+     *
+     * @return Generator<Suggestion>
      */
     protected function populateResponse(Node $callableExpression, ReflectionFunctionLike $functionLikeReflection, array $variables): Generator
     {
@@ -118,7 +120,7 @@ abstract class AbstractParameterCompletor
             return true;
         }
 
-        foreach ($variable->type()->toTypes() as $variableType) {
+        foreach ($variable->type()->expandTypes() as $variableType) {
             if ($parameter->inferredType()->accepts($variableType)->isTrue()) {
                 return true;
             }

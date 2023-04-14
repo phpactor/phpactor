@@ -4,6 +4,7 @@ namespace Phpactor\CodeTransform;
 
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformers;
+use function Amp\Promise\wait;
 
 class CodeTransform
 {
@@ -29,6 +30,6 @@ class CodeTransform
         $code = SourceCode::fromUnknown($code);
         $transformers = $this->transformers->in($transformations);
 
-        return $transformers->applyTo($code);
+        return wait($transformers->applyTo($code));
     }
 }

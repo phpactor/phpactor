@@ -4,14 +4,10 @@ namespace Phpactor\WorseReflection\Core\Type;
 
 interface Literal
 {
-    /**
-     * @return mixed
-     */
-    public function value();
+    public function value(): mixed;
 
     /**
-     * @param mixed $value
      * @return static
      */
-    public function withValue($value);
+    public function withValue(mixed $value);
 }

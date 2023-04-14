@@ -130,6 +130,18 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { private Foobles $foo; } $foo-><>',
             false,
         ];
+        yield 'const value' => [
+            '<?php class Foo { public const X = sel<> }',
+            false,
+        ];
+        yield 'const value 2' => [
+            '<?php class Foo { public const X = [sel<> }',
+            false,
+        ];
+        yield 'attribute' => [
+            '<?php class Foo { public function baz(){} #[Foo\<>]public function bar(){}}',
+            false,
+        ];
     }
 
     /**
@@ -171,6 +183,47 @@ class CompletionContextTest extends TestCase
     }
 
     /**
+     * @dataProvider provideAttribute
+     */
+    public function testAttribute(string $source, bool $expected): void
+    {
+        [$source, $offset] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        self::assertEquals($expected, CompletionContext::attribute($node));
+    }
+
+    /**
+     * @return Generator<string,array{string,bool}>
+     */
+    public function provideAttribute(): Generator
+    {
+        yield 'not attribute' => [
+            '<?php $hello<>',
+            false,
+        ];
+
+        yield 'in not mapped attribute' => [
+            '<?php #[Att<>]',
+            true,
+        ];
+
+        yield 'in not mapped attribute, empty name' => [
+            '<?php #[<>]',
+            true,
+        ];
+
+        yield 'in not mapped attribute, empty name of the second' => [
+            '<?php #[Attribute(), <>]',
+            true,
+        ];
+
+        yield 'in method attribute' => [
+            '<?php class X {#[Att<>] public function x()',
+            true,
+        ];
+    }
+
+    /**
      * @dataProvider provideAnonymousUse
      */
     public function testAnonymousUse(string $source, bool $expected): void
@@ -207,6 +260,44 @@ class CompletionContextTest extends TestCase
         ];
         yield [
             '<?php function ($<>) use ($foo) { ',
+            false,
+        ];
+    }
+
+    /**
+     * @dataProvider providePromotedProperty
+     */
+    public function testPromotedProperty(string $source, bool $expected): void
+    {
+        [$source, $offset] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        self::assertEquals($expected, CompletionContext::promotedPropertyVisibility($node));
+    }
+
+    /**
+     * @return Generator<array<int,mixed>>
+     */
+    public function providePromotedProperty(): Generator
+    {
+        yield [
+            '<?php class A { public function __construct(<>',
+            true,
+        ];
+        yield [
+            '<?php class A { public function __construct($a, <> }',
+            true,
+        ];
+        yield [
+            '<?php class A { public function __construct($a, p<> }',
+            true,
+        ];
+
+        yield [
+            '<?php class A { public function a(<>',
+            false,
+        ];
+        yield [
+            '<?php class A { public function a(<>$a) { ',
             false,
         ];
     }

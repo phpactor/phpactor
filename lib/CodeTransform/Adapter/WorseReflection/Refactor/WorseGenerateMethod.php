@@ -7,13 +7,13 @@ use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
 use Phpactor\CodeTransform\Domain\SourceCode;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
@@ -23,8 +23,6 @@ use Phpactor\CodeBuilder\Domain\BuilderFactory;
 
 class WorseGenerateMethod implements GenerateMethod
 {
-    private int $methodSuffixIndex = 0;
-
     public function __construct(
         private Reflector $reflector,
         private BuilderFactory $factory,
@@ -35,7 +33,7 @@ class WorseGenerateMethod implements GenerateMethod
     public function generateMethod(SourceCode $sourceCode, int $offset, ?string $methodName = null): TextDocumentEdits
     {
         $contextType = $this->contextType($sourceCode, $offset);
-        $worseSourceCode = WorseSourceCode::fromPathAndString((string) $sourceCode->path(), (string) $sourceCode);
+        $worseSourceCode = TextDocumentBuilder::fromPathAndString((string) $sourceCode->uri()->path(), (string) $sourceCode);
         $methodCall = $this->reflector->reflectMethodCall($worseSourceCode, $offset);
 
         $this->validate($methodCall);
@@ -46,17 +44,17 @@ class WorseGenerateMethod implements GenerateMethod
 
         $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
 
-        return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->path()), $textEdits);
+        return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
     }
 
     private function resolveSourceCode(SourceCode $sourceCode, ReflectionMethodCall $methodCall, string $visibility): SourceCode
     {
         $containerSourceCode = SourceCode::fromStringAndPath(
             (string) $methodCall->class()->sourceCode(),
-            $methodCall->class()->sourceCode()->path()
+            $methodCall->class()->sourceCode()->uri()?->path()
         );
 
-        if ($sourceCode->path() != $containerSourceCode->path()) {
+        if ($sourceCode->uri()->path() != $containerSourceCode->uri()->path()) {
             return $containerSourceCode;
         }
 
@@ -65,7 +63,7 @@ class WorseGenerateMethod implements GenerateMethod
 
     private function contextType(SourceCode $sourceCode, int $offset): ?Type
     {
-        $worseSourceCode = WorseSourceCode::fromPathAndString((string) $sourceCode->path(), (string) $sourceCode);
+        $worseSourceCode = TextDocumentBuilder::fromPathAndString((string) $sourceCode->uri()->path(), (string) $sourceCode);
         $reflectionOffset = $this->reflector->reflectOffset($worseSourceCode, $offset);
 
         /**
@@ -99,20 +97,37 @@ class WorseGenerateMethod implements GenerateMethod
             $methodBuilder->static();
         }
 
+        $docblockTypes = [];
+
         /** @var ReflectionArgument $argument */
         foreach ($methodCall->arguments()->named() as $name => $argument) {
             $type = $argument->type();
 
-            $argumentBuilder = $methodBuilder->parameter($name);
+            if ($type->isAugmented()) {
+                $docblockTypes[$name] = $type->toLocalType($reflectionClass->scope());
+            }
+
+            $parameterBuilder = $methodBuilder->parameter($name);
 
             if ($type->isDefined()) {
-                $argumentBuilder->type($type->short(), $type);
+                $parameterBuilder->type($type->short(), $type);
 
-                foreach ($type->classLikeTypes() as $classType) {
+                foreach ($type->allTypes()->classLike() as $classType) {
                     $builder->use($classType->toPhpString());
                 }
             }
         }
+
+        // TODO: this should be handled by the code updater (e.g. $docblock->addParam(new ParamPrototype(...)))
+        $docblock = [];
+        foreach ($docblockTypes as $name => $type) {
+            $docblock[] = sprintf('@param %s $%s', $type->__toString(), $name);
+        }
+
+        if ($docblock) {
+            $methodBuilder->docblock(implode("\n", $docblock));
+        }
+
 
         $inferredType = $methodCall->inferredReturnType();
         if ($inferredType->isDefined()) {

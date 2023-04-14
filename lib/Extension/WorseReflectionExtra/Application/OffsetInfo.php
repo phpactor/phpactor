@@ -2,10 +2,9 @@
 
 namespace Phpactor\Extension\WorseReflectionExtra\Application;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
-use Phpactor\WorseReflection\Core\Offset;
-use Phpactor\WorseReflection\Core\Reflection\Inference\Variable;
+use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\TypeUtil;
@@ -21,24 +20,25 @@ final class OffsetInfo
         $this->filesystemHelper = new FilesystemHelper();
     }
 
-    public function infoForOffset(string $sourcePath, int $offset, $showFrame = false): array
+    /** @return array<string, mixed> */
+    public function infoForOffset(string $sourcePath, int $offset, bool $showFrame = false): array
     {
         $result = $this->reflector->reflectOffset(
-            SourceCode::fromString(
+            TextDocumentBuilder::create(
                 $this->filesystemHelper->contentsFromFileOrStdin($sourcePath)
-            ),
-            Offset::fromInt($offset)
+            )->build(),
+            ByteOffset::fromInt($offset)
         );
 
-        $symbolContext = $result->symbolContext();
+        $nodeContext = $result->nodeContext();
         $return = [
-            'symbol' => $symbolContext->symbol()->name(),
-            'symbol_type' => $symbolContext->symbol()->symbolType(),
-            'start' => $symbolContext->symbol()->position()->start(),
-            'end' => $symbolContext->symbol()->position()->end(),
-            'type' => (string) $symbolContext->type(),
-            'class_type' => (string) $symbolContext->containerType(),
-            'value' => var_export(TypeUtil::valueOrNull($symbolContext->type()), true),
+            'symbol' => $nodeContext->symbol()->name(),
+            'symbol_type' => $nodeContext->symbol()->symbolType(),
+            'start' => $nodeContext->symbol()->position()->start()->toInt(),
+            'end' => $nodeContext->symbol()->position()->end()->toInt(),
+            'type' => (string) $nodeContext->type(),
+            'class_type' => (string) $nodeContext->containerType(),
+            'value' => var_export(TypeUtil::valueOrNull($nodeContext->type()), true),
             'offset' => $offset,
             'type_path' => null,
         ];
@@ -47,13 +47,12 @@ final class OffsetInfo
             $frame = [];
 
             foreach (['locals', 'properties'] as $assignmentType) {
-                /** @var $local Variable */
                 foreach ($result->frame()->$assignmentType() as $local) {
                     $info = sprintf(
                         '%s = (%s) %s',
                         $local->name(),
-                        $local->symbolContext()->type(),
-                        str_replace(PHP_EOL, '', var_export($local->symbolContext()->value(), true))
+                        $local->nodeContext()->type(),
+                        str_replace(PHP_EOL, '', var_export($local->nodeContext()->value(), true))
                     );
 
                     $frame[$assignmentType][$local->offset()->toInt()] = $info;
@@ -62,12 +61,12 @@ final class OffsetInfo
             $return['frame'] = $frame;
         }
 
-        if (false === ($symbolContext->type()->isDefined())) {
+        if (false === ($nodeContext->type()->isDefined())) {
             return $return;
         }
 
-        $return['type_path'] = $symbolContext->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $symbolContext->type(), true) : null;
-        $return['class_type_path'] = $symbolContext->containerType()->isDefined() && $symbolContext->containerType()->isClass() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
+        $return['type_path'] = $nodeContext->type()->isClass() ? $this->classFileNormalizer->classToFile((string) $nodeContext->type(), true) : null;
+        $return['class_type_path'] = $nodeContext->containerType()->isDefined() && $nodeContext->containerType()->isClass() ? $this->classFileNormalizer->classToFile($return['class_type'], true) : null;
 
         return $return;
     }

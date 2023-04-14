@@ -7,6 +7,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMethodFind
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use function Amp\Promise\wait;
 
 class WorseMissingMethodFinderTest extends WorseTestCase
 {
@@ -17,9 +18,9 @@ class WorseMissingMethodFinderTest extends WorseTestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
         $reflector = $this->reflectorForWorkspace($source);
-        $document = TextDocumentBuilder::create($source)->build();
+        $document = TextDocumentBuilder::create($source)->uri('file:///test')->build();
 
-        $methods = (new WorseMissingMethodFinder($reflector))->find($document);
+        $methods = wait((new WorseMissingMethodFinder($reflector))->find($document));
         self::assertCount($expectedCount, $methods);
     }
 

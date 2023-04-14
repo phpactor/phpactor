@@ -2,17 +2,24 @@
 
 namespace Phpactor\Extension\WorseReflection;
 
+use Microsoft\PhpParser\Parser;
+use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\WorseReflection\Command\DumpAstCommand;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\CacheForDocument;
+use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
@@ -46,7 +53,7 @@ class WorseReflectionExtension implements Extension
         $schema->setDefaults([
             self::PARAM_IMPORT_GLOBALS => false,
             self::PARAM_ENABLE_CACHE => true,
-            self::PARAM_CACHE_LIFETIME => 5.0,
+            self::PARAM_CACHE_LIFETIME => 1.0,
             self::PARAM_ENABLE_CONTEXT_LOCATION => true,
             self::PARAM_STUB_CACHE_DIR => '%cache%/worse-reflection',
             self::PARAM_STUB_DIR => '%application_root%/vendor/jetbrains/phpstorm-stubs',
@@ -68,6 +75,7 @@ class WorseReflectionExtension implements Extension
 
     public function load(ContainerBuilder $container): void
     {
+        $this->registerCommands($container);
         $this->registerReflection($container);
         $this->registerSourceLocators($container);
         $this->registerMemberProviders($container);
@@ -79,15 +87,16 @@ class WorseReflectionExtension implements Extension
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
             $builder = ReflectorBuilder::create()
                 ->withSourceReflectorFactory(new TolerantFactory($container->get(self::SERVICE_PARSER)))
-                ->cacheLifetime($container->getParameter(self::PARAM_CACHE_LIFETIME));
+                ->cacheLifetime($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
 
-            if ($container->getParameter(self::PARAM_ENABLE_CONTEXT_LOCATION)) {
+            if ($container->parameter(self::PARAM_ENABLE_CONTEXT_LOCATION)->bool()) {
                 $builder->enableContextualSourceLocation();
             }
 
-            if ($container->getParameter(self::PARAM_ENABLE_CACHE)) {
+            if ($container->parameter(self::PARAM_ENABLE_CACHE)->bool()) {
                 $builder->enableCache();
                 $builder->withCache($container->get(Cache::class));
+                $builder->withCacheForDocument($container->get(CacheForDocument::class));
             }
 
             foreach ($container->getServiceIdsForTag(self::TAG_SOURCE_LOCATOR) as $serviceId => $attrs) {
@@ -129,7 +138,12 @@ class WorseReflectionExtension implements Extension
         });
 
         $container->register(Cache::class, function (Container $container) {
-            return new TtlCache($container->getParameter(self::PARAM_CACHE_LIFETIME));
+            return new TtlCache($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
+        });
+        $container->register(CacheForDocument::class, function (Container $container) {
+            return new CacheForDocument(
+                fn () => new StaticCache(),
+            );
         });
     }
 
@@ -139,8 +153,8 @@ class WorseReflectionExtension implements Extension
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             return new StubSourceLocator(
                 ReflectorBuilder::create()->build(),
-                $resolver->resolve($container->getParameter(self::PARAM_STUB_DIR)),
-                $resolver->resolve($container->getParameter(self::PARAM_STUB_CACHE_DIR))
+                $resolver->resolve($container->parameter(self::PARAM_STUB_DIR)->string()),
+                $resolver->resolve($container->parameter(self::PARAM_STUB_CACHE_DIR)->string())
             );
         }, [ self::TAG_SOURCE_LOCATOR => []]);
 
@@ -165,8 +179,11 @@ class WorseReflectionExtension implements Extension
         $container->register(MissingMethodProvider::class, function (Container $container) {
             return new MissingMethodProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
-        $container->register(MissingDocblockProvider::class, function (Container $container) {
-            return new MissingDocblockProvider();
+        $container->register(MissingDocblockReturnTypeProvider::class, function (Container $container) {
+            return new MissingDocblockReturnTypeProvider();
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+        $container->register(MissingDocblockParamProvider::class, function (Container $container) {
+            return new MissingDocblockParamProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(AssignmentToMissingPropertyProvider::class, function (Container $container) {
             return new AssignmentToMissingPropertyProvider();
@@ -175,10 +192,24 @@ class WorseReflectionExtension implements Extension
             return new MissingReturnTypeProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UnresolvableNameProvider::class, function (Container $container) {
-            return new UnresolvableNameProvider($container->getParameter(self::PARAM_IMPORT_GLOBALS));
+            return new UnresolvableNameProvider($container->parameter(self::PARAM_IMPORT_GLOBALS)->bool());
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UnusedImportProvider::class, function (Container $container) {
             return new UnusedImportProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+        $container->register(DeprecatedUsageDiagnosticProvider::class, function (Container $container) {
+            return new DeprecatedUsageDiagnosticProvider();
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+    }
+
+    private function registerCommands(ContainerBuilder $container): void
+    {
+        $container->register(DumpAstCommand::class, function (Container $container) {
+            return new DumpAstCommand($container->expect(self::SERVICE_PARSER, Parser::class));
+        }, [
+            ConsoleExtension::TAG_COMMAND => [
+                'name' => 'worse:dump-ast',
+            ]
+        ]);
     }
 }

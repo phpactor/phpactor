@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\MessageType;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
@@ -47,7 +47,7 @@ class GenerateMethodCommandTest extends TestCase
 
         [$tester, $builder] = $this->createTester($generateMethod);
         $tester->workspace()->executeCommand('generate', [self::EXAMPLE_URI, self::EXAMPLE_OFFSET]);
-        $builder->responseWatcher()->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $builder->responseWatcher()->resolveLastResponse(new ApplyWorkspaceEditResult(true));
 
         $applyEdit = $builder->transmitter()->filterByMethod('workspace/applyEdit')->shiftRequest();
 
@@ -94,7 +94,7 @@ class GenerateMethodCommandTest extends TestCase
     }
 
     /**
-     * @return {LanguageServerTester,LanguageServerTesterBuilder]
+     * @return array{LanguageServerTester,LanguageServerTesterBuilder}
      */
     private function createTester(ObjectProphecy $generateMethod): array
     {

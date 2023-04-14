@@ -29,7 +29,6 @@ class IndexedNameSearcher implements NameSearcher
         }
 
         $fullyQualified = str_starts_with($name, '\\');
-
         if ($fullyQualified) {
             $criteria = Criteria::fqnBeginsWith(substr($name, 1));
         } else {
@@ -64,6 +63,10 @@ class IndexedNameSearcher implements NameSearcher
      */
     private function resolveTypeCriteria(?string $type): ?Criteria
     {
+        if ($type === NameSearcherType::ATTRIBUTE) {
+            return Criteria::isAttribute();
+        }
+
         if ($type === NameSearcherType::CLASS_) {
             return Criteria::isClassConcrete();
         }

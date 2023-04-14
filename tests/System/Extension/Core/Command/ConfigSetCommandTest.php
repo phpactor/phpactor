@@ -8,7 +8,7 @@ class ConfigSetCommandTest extends SystemTestCase
 {
     public function testStatus(): void
     {
-        $process = $this->phpactor('config:set foo true');
+        $process = $this->phpactorFromStringArgs('config:set foo true');
         $this->assertSuccess($process);
     }
 }

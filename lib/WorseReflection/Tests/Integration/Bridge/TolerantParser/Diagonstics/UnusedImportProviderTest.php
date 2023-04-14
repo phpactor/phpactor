@@ -101,6 +101,11 @@ class UnusedImportProviderTest extends DiagnosticsTestCase
         self::assertCount(0, $diagnostics);
     }
 
+    public function checkCompactNamespacedUse(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
     protected function provider(): DiagnosticProvider
     {
         return new UnusedImportProvider();

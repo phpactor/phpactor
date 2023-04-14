@@ -3,11 +3,13 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diagonstics;
 
 use Generator;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\BruteForceSourceLocator;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
+use function Amp\Promise\wait;
 
 abstract class DiagnosticsTestCase extends IntegrationTestCase
 {
@@ -16,7 +18,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
      */
     public function testDiagnostic(string $path): void
     {
-        $source = (string)file_get_contents($path);
+        $source = TextDocumentBuilder::fromUri($path)->build();
         $diagnostics = $this->diagnosticsFromSource($source);
         $method = sprintf('check%s', substr(basename($path), 0, (int)strrpos(basename($path), '.')));
         if (!method_exists($this, $method)) {
@@ -32,9 +34,10 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
 
     public function diagnosticsFromSource(string $source): Diagnostics
     {
+        $source = TextDocumentBuilder::create($source)->uri('file:///test')->build();
         $reflector = $this->createBuilder($source)->enableCache()->addDiagnosticProvider($this->provider())->build();
         $reflector->reflectOffset($source, mb_strlen($source));
-        return $reflector->diagnostics($source);
+        return wait($reflector->diagnostics($source));
     }
 
     public function diagnosticsFromManifest(string $manifest): Diagnostics
@@ -42,6 +45,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
         $source = $this->workspace()->getContents('test.php');
+        $source = TextDocumentBuilder::create($source)->uri('file:///test.php')->build();
 
         $builder = ReflectorBuilder::create()
             ->withLogger($this->logger());
@@ -52,7 +56,7 @@ abstract class DiagnosticsTestCase extends IntegrationTestCase
             $this->provider()
         )->build();
 
-        return $reflector->diagnostics($source);
+        return wait($reflector->diagnostics($source));
     }
 
     /**

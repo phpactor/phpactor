@@ -7,7 +7,10 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
  */
 class Constants extends Collection
 {
-    public static function fromConstants(array $constants)
+    /**
+    * @param list<Constant> $constants
+    */
+    public static function fromConstants(array $constants): self
     {
         return new static(array_reduce($constants, function ($acc, $constant) {
             $acc[$constant->name()] = $constant;

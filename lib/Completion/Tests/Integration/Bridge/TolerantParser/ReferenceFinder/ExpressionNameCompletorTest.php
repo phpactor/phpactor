@@ -17,13 +17,16 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
     /**
      * @dataProvider provideComplete
      *
-     * @param array<mixed> $expected
+     * @param array{string,array<int,array<string,string>>} $expected
      */
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
+    /**
+     * @return Generator<string,array{string,array<int,array<string,string>>}>
+     */
     public function provideComplete(): Generator
     {
         yield 'new class instance' => [
@@ -96,28 +99,147 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+
+        yield 'class constant inside class constant declaration' => [
+            '<?php class Foobar { private const FOO; private const BAR = self::F<>  }', [
+                [
+                    'type'              => Suggestion::TYPE_CONSTANT,
+                    'name'              => 'FOOCONST',
+                    'short_description' => 'FOOCONST',
+                ]
+            ]
+        ];
+
+        yield 'class name inside class constant declaration' => [
+            '<?php class Foobar { private const FOO; private const BAR = sel<>  }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'self',
+                    'short_description' => 'self',
+                ]
+            ]
+        ];
+
+        yield 'nested class name inside class constant declaration' => [
+            '<?php class Foobar { private const FOO; private const BAR = [ sel<>  }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'self',
+                    'short_description' => 'self',
+                ]
+            ]
+        ];
+
+        yield 'class name inside the first match arm' => [
+            '<?php class Foobar {} match (true) { Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar',
+                ]
+            ],
+        ];
+
+        yield 'class name inside the second match arm' => [
+            '<?php class Foobar {} match (true) { 1, Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar',
+                ]
+            ],
+        ];
+
+        yield 'class name inside match expression' => [
+            '<?php class Foobar {} match (true) { 1 => Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar',
+                ]
+            ],
+        ];
+
+        yield 'within namespace with no import match' => [
+            '<?php namespace NS1{class Foobar {} match (true) { 1 => Foo\Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar',
+                ]
+            ],
+        ];
+
+        yield 'within namespace with with import match' => [
+            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Foo\Fo<> }', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Foobar',
+                    'short_description' => 'Foobar\Foo\Foobar',
+                ]
+            ],
+        ];
+
+        yield 'only show children for qualified names' => [
+            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Relative\<> }', [
+                [
+                    'type'              => Suggestion::TYPE_MODULE,
+                    'name'              => 'One',
+                    'short_description' => 'NS1\Relative\One',
+                ],
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'Two',
+                    'short_description' => 'NS1\Relative\Two',
+                ],
+                [
+                    'type'              => Suggestion::TYPE_MODULE,
+                    'name'              => 'Two',
+                    'short_description' => 'NS1\Relative\Two',
+                ],
+            ],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
-        $searcher->search('FO')->willYield([
+        $searcher->search('FO', null)->willYield([
             NameSearchResult::create('constant', 'FOO')
         ]);
-        $searcher->search('\Fo')->willYield([
+        $searcher->search('sel', null)->willYield([
+            NameSearchResult::create('class', 'self')
+        ]);
+        $searcher->search('self::F', null)->willYield([
+            NameSearchResult::create('constant', 'FOOCONST')
+        ]);
+        $searcher->search('\Fo', null)->willYield([
             NameSearchResult::create('class', 'FOO')
         ]);
-        $searcher->search('Foo')->willYield([
+        $searcher->search('Foo', null)->willYield([
             NameSearchResult::create('class', 'Foobar')
         ]);
-        $searcher->search('Fo')->willYield([
+        $searcher->search('Fo', null)->willYield([
             NameSearchResult::create('class', 'Foobar')
         ]);
-        $searcher->search('ba')->willYield([
+        $searcher->search('ba', null)->willYield([
             NameSearchResult::create('function', 'bar'),
         ]);
-        $searcher->search('b')->willYield([
+        $searcher->search('b', null)->willYield([
             NameSearchResult::create('class', 'Foo\\Bar'),
+        ]);
+        $searcher->search('\NS1\Foo\Fo', null)->willYield([
+            NameSearchResult::create('class', 'Foobar')
+        ]);
+        $searcher->search('\Foobar\Foo\Fo', null)->willYield([
+            NameSearchResult::create('class', 'Foobar\Foo\Foobar')
+        ]);
+        $searcher->search('\\NS1\\Relative', null)->willYield([
+            NameSearchResult::create('class', 'NS1\Relative\One\Blah\Boo'),
+            NameSearchResult::create('class', 'NS1\Relative\One\Glorm\Bar'),
+            NameSearchResult::create('class', 'NS1\Relative\One\Blah'),
+            NameSearchResult::create('class', 'NS1\Relative\Two'),
+            NameSearchResult::create('class', 'NS1\Relative\Two\Glorm\Bar'),
         ]);
 
         $reflector = ReflectorBuilder::create()->addSource($source)->build();

@@ -75,12 +75,12 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
         $reflectionOffset = $this->reflector->reflectOffset($source, $memberStartOffset);
 
-        $symbolContext = $reflectionOffset->symbolContext();
-        $symbolType = $symbolContext->type();
+        $nodeContext = $reflectionOffset->nodeContext();
+        $symbolType = $nodeContext->type();
         $static = $node instanceof ScopedPropertyAccessExpression;
 
-        foreach ($symbolType->classLikeTypes() as $type) {
-            foreach ($this->populateSuggestions($symbolContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
+        foreach ($symbolType->expandTypes()->classLike() as $type) {
+            foreach ($this->populateSuggestions($nodeContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
                 if ($partialMatch && 0 !== mb_strpos($suggestion->name(), $partialMatch)) {
                     continue;
                 }
@@ -92,17 +92,20 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         return true;
     }
 
-    private function populateSuggestions(NodeContext $symbolContext, Type $type, bool $static, bool $completeOnlyName, bool $isInstance): Generator
+    /**
+     * @return Generator<Suggestion>
+     */
+    private function populateSuggestions(NodeContext $nodeContext, Type $type, bool $static, bool $completeOnlyName, bool $isInstance): Generator
     {
         if (false === ($type->isDefined())) {
             return;
         }
 
-        $isParent = $symbolContext->symbol()->name() === 'parent';
-        $publicOnly = !in_array($symbolContext->symbol()->name(), ['this', 'self'], true);
+        $isParent = $nodeContext->symbol()->name() === 'parent';
+        $publicOnly = !in_array($nodeContext->symbol()->name(), ['this', 'self'], true);
 
 
-        $type = $type->classLikeTypes()->firstOrNull();
+        $type = $type->expandTypes()->classLike()->firstOrNull();
 
         if (!$type) {
             return;

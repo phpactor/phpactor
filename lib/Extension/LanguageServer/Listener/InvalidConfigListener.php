@@ -16,7 +16,9 @@ class InvalidConfigListener implements ListenerProviderInterface
     {
     }
 
-
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         if ($event instanceof Initialized) {

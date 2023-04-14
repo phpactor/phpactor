@@ -12,4 +12,5 @@ Docblock: =
      LiteralStringNode: = "foo"?
      ScalarNode: = int:
      ScalarNode: = string)
+   TextNode: = 
  */

@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
 use Amp\CancellationTokenSource;
+use Amp\Success;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
@@ -43,7 +44,7 @@ class GenerateMethodProviderTest extends TestCase
      */
     public function testDiagnostics(array $missingMethods, array $expectedDiagnostics): void
     {
-        $this->finder->find(Argument::type(TextDocument::class))->willReturn($missingMethods);
+        $this->finder->find(Argument::type(TextDocument::class))->willReturn(new Success($missingMethods));
         $provider = $this->createProvider();
 
         $cancel = (new CancellationTokenSource())->getToken();
@@ -71,12 +72,12 @@ class GenerateMethodProviderTest extends TestCase
                 new MissingMethod(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
             ],
             [
-                Diagnostic::fromArray([
-                    'range' => ProtocolFactory::range(0, 0, 0, 5),
-                    'message' => 'Method "foobar" does not exist',
-                    'severity' => DiagnosticSeverity::WARNING,
-                    'source' => 'phpactor',
-                ])
+                new Diagnostic(
+                    range: ProtocolFactory::range(0, 0, 0, 5),
+                    message: 'Method "foobar" does not exist',
+                    severity: DiagnosticSeverity::WARNING,
+                    source: 'phpactor',
+                )
             ]
         ];
     }
@@ -86,7 +87,7 @@ class GenerateMethodProviderTest extends TestCase
      */
     public function testProvideActions(array $missingMethods, array $expectedActions): void
     {
-        $this->finder->find(Argument::type(TextDocument::class))->willReturn($missingMethods);
+        $this->finder->find(Argument::type(TextDocument::class))->willReturn(new Success($missingMethods));
         $provider = $this->createProvider();
         $cancel = (new CancellationTokenSource())->getToken();
         self::assertEquals(
@@ -118,12 +119,12 @@ class GenerateMethodProviderTest extends TestCase
                     'title' =>  'Fix "Method "foobar" does not exist"',
                     'kind' => GenerateMethodProvider::KIND,
                     'diagnostics' => [
-                        Diagnostic::fromArray([
-                            'range' => ProtocolFactory::range(0, 0, 0, 5),
-                            'message' => 'Method "foobar" does not exist',
-                            'severity' => DiagnosticSeverity::WARNING,
-                            'source' => 'phpactor',
-                        ])
+                        new Diagnostic(
+                            range: ProtocolFactory::range(0, 0, 0, 5),
+                            message: 'Method "foobar" does not exist',
+                            severity: DiagnosticSeverity::WARNING,
+                            source: 'phpactor',
+                        )
                     ],
                     'command' => new Command(
                         'Generate method',

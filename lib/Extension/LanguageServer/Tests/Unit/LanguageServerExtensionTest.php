@@ -5,7 +5,10 @@ namespace Phpactor\Extension\LanguageServer\Tests\Unit;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServerProtocol\CodeActionRequest;
+use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesClientCapabilities;
 use Phpactor\LanguageServerProtocol\InitializeParams;
+use Phpactor\LanguageServerProtocol\WorkspaceClientCapabilities;
+use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
 use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
@@ -21,6 +24,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     {
         $serverTester = $this->createTester();
         $result = $serverTester->initialize();
+        self::assertNotNull($result->serverInfo);
         self::assertEquals('phpactor/phpactor', $result->serverInfo['name']);
     }
 
@@ -33,18 +37,40 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     public function testLoadsHandlers(): void
     {
         $serverTester = $this->createTester();
-        $response = $serverTester->requestAndWait('test', []);
+        $response = $serverTester->mustRequestAndWait('test', []);
         $this->assertSuccess($response);
+    }
+
+    public function testLoadsAllDiagnosticProvidersIfOutsourceIfFalse(): void
+    {
+        $container = $this->createContainer([
+            LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
+        ]);
+        $providers = $container->get(AggregateDiagnosticsProvider::class);
+        self::assertContains('dp1', $providers->names());
+        self::assertContains('dp2', $providers->names());
+    }
+
+    public function testLoadsOnlyNonOutsourcedProvidersIfOutsourceIsTrue(): void
+    {
+        $container = $this->createContainer([
+            LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => true,
+        ]);
+        $providers = $container->get(AggregateDiagnosticsProvider::class);
+        self::assertContains('dp1', $providers->names());
+        self::assertNotContains('dp2.outsourced', $providers->names());
     }
 
     public function testReturnsStats(): void
     {
         $serverTester = $this->createTester();
-        $response = $serverTester->requestAndWait('phpactor/stats', []);
+        $response = $serverTester->mustRequestAndWait('phpactor/stats', []);
         $this->assertSuccess($response);
         $message = $serverTester->transmitter()->shift();
         self::assertNotNull($message);
         assert($message instanceof NotificationMessage);
+        self::assertArrayHasKey('message', $message->params ?? []);
+        self::assertIsString($message->params['message']);
         self::assertStringContainsString('requests: 0', $message->params['message']);
     }
 
@@ -58,6 +84,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $message = $serverTester->transmitter()->shift();
         self::assertNotNull($message);
         assert($message instanceof NotificationMessage);
+        self::assertArrayHasKey('message', $message->params ?? []);
         self::assertEquals('service started', $message->params['message']);
     }
 
@@ -80,7 +107,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     public function testRegistersCommands(): void
     {
         $serverTester = $this->createTester();
-        $response = $serverTester->requestAndWait('workspace/executeCommand', [
+        $response = $serverTester->mustRequestAndWait('workspace/executeCommand', [
             'command' => 'echo',
             'arguments' => [
                 'hello',
@@ -94,7 +121,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     {
         $serverTester = $this->createTester();
         $serverTester->textDocument()->open('file://foo', 'bar');
-        $response = $serverTester->requestAndWait(CodeActionRequest::METHOD, [
+        $response = $serverTester->mustRequestAndWait(CodeActionRequest::METHOD, [
             'textDocument' => [
                 'uri' => 'file://foo'
             ],
@@ -107,6 +134,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
             ],
         ]);
         $this->assertSuccess($response);
+        self::assertIsArray($response->result);
         self::assertCount(2, $response->result);
     }
 
@@ -130,7 +158,7 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $container = $this->createContainer([
             LanguageServerExtension::PARAM_ENABLE_WORKPACE => false,
         ]);
-        self::assertNull($container->get(WorkspaceListener::class));
+        $container->get(WorkspaceListener::class);
     }
 
     public function testExceptionWhenEnablingUnknownDiagProvider(): void
@@ -156,9 +184,13 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     public function testEnableFileEvents(): void
     {
         $params = ProtocolFactory::initializeParams($this->workspace()->path('/'));
-        $params->capabilities = new ClientCapabilities([
-            'didChangeWatchedFiles' => ['dynamicRegistration' => true],
-        ]);
+        $params->capabilities = new ClientCapabilities(
+            workspace: new WorkspaceClientCapabilities(
+                didChangeWatchedFiles: new DidChangeWatchedFilesClientCapabilities(
+                    dynamicRegistration: true
+                )
+            ),
+        );
         $serverTester = $this->createTester($params, [
             LanguageServerExtension::PARAM_FILE_EVENTS => true
         ]);

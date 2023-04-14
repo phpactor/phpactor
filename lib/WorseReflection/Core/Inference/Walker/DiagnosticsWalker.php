@@ -41,6 +41,9 @@ class DiagnosticsWalker implements Walker
         return $frame;
     }
 
+    /**
+     * @return Diagnostics<Diagnostic>
+     */
     public function diagnostics(): Diagnostics
     {
         return new Diagnostics($this->diagnostics);

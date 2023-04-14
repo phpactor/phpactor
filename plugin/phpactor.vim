@@ -134,7 +134,7 @@ command! -nargs=? -complete=customlist,s:CompleteWindowTarget PhpactorGotoType c
 ""
 " @usage [target]
 "
-" Same as @command(PhpactorGotoDefinition) but goto the implmentation of the
+" Same as @command(PhpactorGotoDefinition) but goto the implementation of the
 " symbol under the cursor.
 "
 " If there is more than one result the quickfix strategy will be used and [target]

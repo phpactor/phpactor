@@ -2,7 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
+use Phpactor\ClassFileConverter\Domain\FileToClass;
+use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
+use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
@@ -12,6 +15,7 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
+use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -44,12 +48,15 @@ use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\TransformCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\CandidateFinder;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Indexer\Model\SearchClient;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentLocator;
+use Phpactor\WorseReflection\Reflector;
 
 class LanguageServerCodeTransformExtension implements Extension
 {
@@ -80,7 +87,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(ImportNameCommand::class, function (Container $container) {
             return new ImportNameCommand(
                 $container->get(NameImporter::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(ClientApi::class)
             );
         }, [
@@ -92,8 +99,8 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(TransformCommand::class, function (Container $container) {
             return new TransformCommand(
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get('code_transform.transformers')
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->expect('code_transform.transformers', Transformers::class)
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
@@ -104,9 +111,9 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(CreateClassCommand::class, function (Container $container) {
             return new CreateClassCommand(
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(CodeTransformExtension::SERVICE_CLASS_GENERATORS),
-                $container->get(ClassToFileExtension::SERVICE_CONVERTER)
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->expect(CodeTransformExtension::SERVICE_CLASS_GENERATORS, Generators::class),
+                $container->expect(ClassToFileExtension::SERVICE_CONVERTER, FileToClass::class)
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
@@ -117,7 +124,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(GenerateMethodCommand::class, function (Container $container) {
             return new GenerateMethodCommand(
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(GenerateMethod::class),
                 $container->get(TextDocumentLocator::class)
             );
@@ -130,7 +137,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(ExtractMethodCommand::class, function (Container $container) {
             return new ExtractMethodCommand(
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(ExtractMethod::class)
             );
         }, [
@@ -142,7 +149,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(ReplaceQualifierWithImportCommand::class, function (Container $container) {
             return new ReplaceQualifierWithImportCommand(
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(ReplaceQualifierWithImport::class)
             );
         }, [
@@ -154,7 +161,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(ExtractConstantCommand::class, function (Container $container) {
             return new ExtractConstantCommand(
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(ExtractConstant::class)
             );
         }, [
@@ -164,10 +171,9 @@ class LanguageServerCodeTransformExtension implements Extension
         ]);
         $container->register('language_server_code_transform.generate_accessors_command', function (Container $container) {
             return new PropertyAccessGeneratorCommand(
-                'generate_accessors',
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get('code_transform.generate_accessor'),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->expect('code_transform.generate_accessor', PropertyAccessGenerator::class),
                 'Generate accessors'
             );
         }, [
@@ -178,9 +184,8 @@ class LanguageServerCodeTransformExtension implements Extension
 
         $container->register('language_server_code_transform.generate_mutators_command', function (Container $container) {
             return new PropertyAccessGeneratorCommand(
-                'generate_mutators',
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get('code_transform.generate_mutator'),
                 'Generate mutators'
             );
@@ -193,7 +198,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(ImportAllUnresolvedNamesCommand::class, function (Container $container) {
             return new ImportAllUnresolvedNamesCommand(
                 $container->get(CandidateFinder::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(ImportNameCommand::class),
                 $container->get(ClientApi::class)
             );
@@ -206,7 +211,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(ExtractExpressionCommand::class, function (Container $container) {
             return new ExtractExpressionCommand(
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(ExtractExpression::class)
             );
         }, [
@@ -218,7 +223,7 @@ class LanguageServerCodeTransformExtension implements Extension
         $container->register(GenerateDecoratorCommand::class, function (Container $container) {
             return new GenerateDecoratorCommand(
                 $container->get(ClientApi::class),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->get(GenerateDecorator::class)
             );
         }, [
@@ -232,9 +237,8 @@ class LanguageServerCodeTransformExtension implements Extension
     {
         $container->register(CandidateFinder::class, function (Container $container) {
             return new CandidateFinder(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(SearchClient::class),
-                $container->getParameter(CodeTransformExtension::PARAM_IMPORT_GLOBALS)
             );
         });
 
@@ -253,6 +257,26 @@ class LanguageServerCodeTransformExtension implements Extension
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
+        ]);
+
+        $container->register(TransformerCodeActionPovider::class.'promote_constructor_private', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'promote_constructor',
+                'Promote Constructor (private)'
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+
+        $container->register(TransformerCodeActionPovider::class.'promote_constructor_public', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'promote_constructor_public',
+                'Promote Constructor (public)'
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
         $container->register(TransformerCodeActionPovider::class.'complete_constructor_private', function (Container $container) {
@@ -277,17 +301,16 @@ class LanguageServerCodeTransformExtension implements Extension
 
         $container->register(CreateClassProvider::class, function (Container $container) {
             return new CreateClassProvider(
-                $container->get(CodeTransformExtension::SERVICE_CLASS_GENERATORS),
-                $container->get('worse_reflection.tolerant_parser')
+                $container->get(CodeTransformExtension::SERVICE_CLASS_GENERATORS)
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('create-class', outsource: true),
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
         $container->register(CreateUnresolvableClassProvider::class, function (Container $container) {
             return new CreateUnresolvableClassProvider(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(CodeTransformExtension::SERVICE_CLASS_GENERATORS),
                 $container->get(ClassToFileExtension::SERVICE_CONVERTER)
             );
@@ -312,7 +335,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Implement contracts'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('implement-contracts', outsource: true),
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
@@ -323,15 +346,24 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Fix PSR namespace and class name'
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [],
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('transformer', true),
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
-        $container->register(TransformerCodeActionPovider::class.'add_missing_docblocks', function (Container $container) {
+        $container->register(TransformerCodeActionPovider::class.'add_missing_docblocks_return', function (Container $container) {
             return new TransformerCodeActionPovider(
                 $container->get('code_transform.transformers'),
-                'add_missing_docblocks',
-                'Add missing docblocks'
+                'add_missing_docblocks_return',
+                'Add missing @return tags'
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+        $container->register(TransformerCodeActionPovider::class.'add_missing_params', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'add_missing_params',
+                'Add missing @param tags'
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
@@ -339,7 +371,7 @@ class LanguageServerCodeTransformExtension implements Extension
 
         $container->register(TransformerCodeActionPovider::class.'add_missing_return_types', function (Container $container) {
             return new TransformerCodeActionPovider(
-                $container->get('code_transform.transformers'),
+                $container->expect('code_transform.transformers', Transformers::class),
                 'add_missing_return_types',
                 'Add missing return types'
             );
@@ -349,7 +381,7 @@ class LanguageServerCodeTransformExtension implements Extension
 
         $container->register(TransformerCodeActionPovider::class.'remove_unused_imports', function (Container $container) {
             return new TransformerCodeActionPovider(
-                $container->get('code_transform.transformers'),
+                $container->expect('code_transform.transformers', Transformers::class),
                 'remove_unused_imports',
                 'Remove unused imports'
             );
@@ -385,7 +417,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'quickfix.generate_accessors',
                 'generate_accessors',
                 'accessor',
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
@@ -396,7 +428,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'quickfix.generate_mutators',
                 'generate_mutators',
                 'mutator',
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
@@ -429,7 +461,7 @@ class LanguageServerCodeTransformExtension implements Extension
 
         $container->register(GenerateDecoratorProvider::class, function (Container $container) {
             return new GenerateDecoratorProvider(
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []

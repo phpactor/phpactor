@@ -4,13 +4,13 @@ namespace Acme\Foobar\Reflection;
 
 final class ReflectionDefaultValue
 {
-    private $undefined = false;
+    private bool $undefined = false;
 
-    private function __construct(private $value = null)
+    private function __construct(private mixed $value = null)
     {
     }
 
-    public static function fromValue($value): ReflectionDefaultValue
+    public static function fromValue(mixed $value): ReflectionDefaultValue
     {
         return new self($value);
     }
@@ -25,10 +25,10 @@ final class ReflectionDefaultValue
 
     public function isDefined(): bool
     {
-        return false === $this->undefined;
+        return !$this->undefined;
     }
 
-    public function value()
+    public function value(): mixed
     {
         return $this->value;
     }

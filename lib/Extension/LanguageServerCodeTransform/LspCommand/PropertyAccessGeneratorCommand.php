@@ -8,7 +8,7 @@ use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -17,18 +17,16 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 class PropertyAccessGeneratorCommand implements Command
 {
     public function __construct(
-        private string $name,
         private ClientApi $clientApi,
         private Workspace $workspace,
         private PropertyAccessGenerator $generateAccessor,
-        string $editLabel
+        private string $editLabel
     ) {
-        $this->editLabel = $editLabel;
     }
 
     /**
      * @param string[] $propertyNames
-     * @return Promise<ApplyWorkspaceEditResponse|null>
+     * @return Promise<ApplyWorkspaceEditResult|null>
      */
     public function __invoke(string $uri, int $startOffset, array $propertyNames): Promise
     {

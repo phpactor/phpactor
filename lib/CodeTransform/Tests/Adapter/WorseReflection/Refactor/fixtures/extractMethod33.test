@@ -1,0 +1,26 @@
+// File: source
+<?php
+
+trait One {
+    public function hello(?string $foobar) {
+        $union = $foobar;
+        <>$car = $union;<>
+        return $car;
+    }
+}
+// File: expected
+<?php
+
+trait One {
+    public function hello(?string $foobar) {
+        $union = $foobar;
+        $car = $this->newMethod($union);
+        return $car;
+    }
+
+    private function newMethod(?string $union): ?string
+    {
+        $car = $union;
+        return $car;
+    }
+}

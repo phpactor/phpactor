@@ -59,17 +59,17 @@ class Example1
             Offset::fromint($offset)
         );
 
-        $symbolContext = $reflectionOffset->symbolContext();
-        $types = $symbolContext->types();
+        $nodeContext = $reflectionOffset->nodeContext();
+        $types = $nodeContext->types();
 
         $suggestions = new Suggestions();
 
         foreach ($types as $type) {
-            $symbolContext = $this->populateSuggestions($symbolContext, $type, $suggestions);
+            $nodeContext = $this->populateSuggestions($nodeContext, $type, $suggestions);
         }
 
 
-        return new Response($suggestions, Issues::fromStrings($symbolContext->issues()));
+        return new Response($suggestions, Issues::fromStrings($nodeContext->issues()));
     }
 
     private function getOffetToReflect($source, $offset)
@@ -159,23 +159,23 @@ class Example1
         return implode('', $info);
     }
 
-    private function populateSuggestions(SymbolContext $symbolContext, Type $type, Suggestions $suggestions): SymbolContext
+    private function populateSuggestions(SymbolContext $nodeContext, Type $type, Suggestions $suggestions): SymbolContext
     {
         if (false === $type->isDefined()) {
-            return $symbolContext;
+            return $nodeContext;
         }
 
         if ($type->isPrimitive()) {
-            return $symbolContext->withIssue(sprintf('Cannot complete members on scalar value (%s)', (string) $type));
+            return $nodeContext->withIssue(sprintf('Cannot complete members on scalar value (%s)', (string) $type));
         }
 
         try {
             $classReflection = $this->reflector->reflectClassLike((string) $type);
         } catch (NotFound $e) {
-            return $symbolContext->withIssue(sprintf('Could not find class "%s"', (string) $type));
+            return $nodeContext->withIssue(sprintf('Could not find class "%s"', (string) $type));
         }
 
-        $publicOnly = !in_array($symbolContext->symbol()->name(), ['this', 'self'], true);
+        $publicOnly = !in_array($nodeContext->symbol()->name(), ['this', 'self'], true);
         /** @var ReflectionMethod $method */
         foreach ($classReflection->methods() as $method) {
             if ($method->name() === '__construct') {
@@ -208,6 +208,6 @@ class Example1
             }
         }
 
-        return $symbolContext;
+        return $nodeContext;
     }
 }

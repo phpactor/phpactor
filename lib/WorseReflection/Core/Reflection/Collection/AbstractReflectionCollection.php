@@ -95,6 +95,14 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
     }
 
     /**
+     * @return T|null
+     */
+    public function firstOrNull()
+    {
+        return reset($this->items) ?: null;
+    }
+
+    /**
      * @return T
      */
     public function last()

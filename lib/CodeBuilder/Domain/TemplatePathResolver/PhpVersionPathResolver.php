@@ -16,6 +16,11 @@ class PhpVersionPathResolver
     ) {
     }
 
+    /**
+     * @param list<string> $paths
+     *
+     * @return list<string>
+     */
     public function resolve(iterable $paths): iterable
     {
         $resolvedPaths = [];

@@ -46,8 +46,9 @@ Full documentation can be found on [Read the Docs](https://phpactor.readthedocs.
 Community
 ---------
 
-- Follow [@phpactor](https://twitter.com/phpactor) for the latest news.
+- Follow [@phpactor](https://phpc.social/@phpactor) on 🦣 Mastodon for latest news.
 - Join the `#phpactor` channel on the Slack [Symfony Devs](https://symfony.com/slack-invite) channel.
+- ...or follow on Twitter  - [@phpactor](https://twitter.com/phpactor) (not updated as frequently).
 
 Contributing
 ------------

@@ -1,0 +1,21 @@
+<?php
+
+class B {}
+
+class Foo
+{
+    /**
+     * @template T
+     * @param class-string<T> $class
+     * @return T
+     */
+    public function bar(string $foo, string $class)
+    {
+        return $foo;
+    }
+}
+
+
+$f = new Foo();
+$res = $f->bar('Hello', B::class);
+wrAssertType('B', $res);

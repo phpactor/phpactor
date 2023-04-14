@@ -12,12 +12,12 @@ final class ImportedNameReference
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->importedName;
     }
 
-    public static function none()
+    public static function none(): self
     {
         $new = new self();
         $new->exists = false;
@@ -30,17 +30,17 @@ final class ImportedNameReference
         return new self($position, $importedName);
     }
 
-    public function exists()
+    public function exists(): bool
     {
         return $this->exists;
     }
 
-    public function position()
+    public function position(): ?Position
     {
         return $this->position;
     }
 
-    public function importedName()
+    public function importedName(): ?ImportedName
     {
         return $this->importedName;
     }

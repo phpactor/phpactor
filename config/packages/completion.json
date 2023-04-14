@@ -1,8 +1,0 @@
-{
-  "name": "phpactor/completion",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "0.3.0"
-  }
-}

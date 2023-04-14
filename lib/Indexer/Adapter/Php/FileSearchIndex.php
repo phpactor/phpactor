@@ -7,6 +7,7 @@ use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\RecordFactory;
 use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\Indexer\Model\Record\HasFlags;
 use Phpactor\Indexer\Model\SearchIndex;
 use Safe\Exceptions\FilesystemException;
 use function Safe\file_get_contents;
@@ -35,15 +36,15 @@ class FileSearchIndex implements SearchIndex
     {
     }
 
-
     public function search(Criteria $criteria): Generator
     {
         $this->open();
 
-        foreach ($this->subjects as [ $recordType, $identifier, $type ]) {
+        foreach ($this->subjects as [ $recordType, $identifier, $type, $flags ]) {
             $record = RecordFactory::create($recordType, $identifier);
             if ($record instanceof ClassRecord) {
                 $record = $record->withType($type);
+                $record->setFlags((int)$flags);
             }
 
             if (false === $criteria->isSatisfiedBy($record)) {
@@ -57,7 +58,12 @@ class FileSearchIndex implements SearchIndex
     public function write(Record $record): void
     {
         $this->open();
-        $info = [$record->recordType(), $record->identifier(), $record instanceof ClassRecord ? $record->type() : null];
+        $info = [
+            $record->recordType(),
+            $record->identifier(),
+            $record instanceof ClassRecord ? $record->type() : null,
+            $record instanceof HasFlags ? $record->flags() : null,
+        ];
         $this->subjects[$this->recordHash($record)] = $info;
         $this->dirty = true;
 
@@ -111,16 +117,7 @@ class FileSearchIndex implements SearchIndex
         $this->subjects = array_filter(array_map(function (string $line) {
             $parts = explode(self::DELIMITER, $line);
 
-            // for BC with older indexes
-            if (count($parts) === 2) {
-                return [$parts[0], $parts[1], null];
-            }
-
-            if (count($parts) !== 3) {
-                return false;
-            }
-
-            return [$parts[0], $parts[1], $parts[2]];
+            return [$parts[0], $parts[1], $parts[2] ?? null, $parts[3] ?? null];
         }, explode("\n", file_get_contents($this->path))));
 
         $this->initialized = true;

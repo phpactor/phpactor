@@ -3,13 +3,14 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection;
 
 use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
@@ -18,24 +19,29 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseTestCase extends AdapterTestCase
 {
-    public function reflectorForWorkspace($source = null): Reflector
+    public function reflectorForWorkspace(?string $source = null): Reflector
     {
         $builder = ReflectorBuilder::create();
         $builder->addMemberProvider(new DocblockMemberProvider());
         $builder->addDiagnosticProvider(new MissingMethodProvider());
-        $builder->addDiagnosticProvider(new MissingDocblockProvider());
+        $builder->addDiagnosticProvider(new MissingDocblockReturnTypeProvider());
         $builder->addDiagnosticProvider(new AssignmentToMissingPropertyProvider());
         $builder->addDiagnosticProvider(new MissingReturnTypeProvider());
         $builder->addDiagnosticProvider(new UnusedImportProvider());
+        $builder->addDiagnosticProvider(new MissingDocblockParamProvider());
 
         foreach ((array)glob($this->workspace()->path('/*.php')) as $file) {
+            if ($file === false) {
+                continue;
+            }
+
             $locator = new TemporarySourceLocator(ReflectorBuilder::create()->build(), true);
-            $locator->pushSourceCode(SourceCode::fromPathAndString($file, file_get_contents($file)));
+            $locator->pushSourceCode(TextDocumentBuilder::fromUri($file)->build());
             $builder->addLocator($locator);
         }
 
-        if ($source) {
-            $builder->addSource(SourceCode::fromPathAndString('/foo', $source));
+        if ($source !== null) {
+            $builder->addSource(TextDocumentBuilder::create($source)->uri('/foo')->build());
         }
 
         return $builder->build();

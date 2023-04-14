@@ -2,11 +2,15 @@
 
 namespace Phpactor\WorseReflection\Core\Reflector;
 
+use Amp\Promise;
+use Generator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
-use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
@@ -14,57 +18,60 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
-use Phpactor\WorseReflection\Core\SourceCode;
 
 interface SourceCodeReflector
 {
     /**
      * Reflect all classes (or class-likes) in the given source code.
      *
-     * @param SourceCode|string $sourceCode
      * @param array<string,bool> $visited
      */
-    public function reflectClassesIn($sourceCode, array $visited = []): ReflectionClassLikeCollection;
+    public function reflectClassesIn(
+        TextDocument $sourceCode,
+        array $visited = []
+    ): ReflectionClassLikeCollection;
 
     /**
      * Reflect all functions in the given source code.
-     * @param SourceCode|TextDocument|string $sourceCode
+     *
      * @return ReflectionFunctionCollection<ReflectionFunction>
      */
-    public function reflectFunctionsIn($sourceCode): ReflectionFunctionCollection;
+    public function reflectFunctionsIn(TextDocument $sourceCode): ReflectionFunctionCollection;
 
     /**
      * Return the information for the given offset in the given file, including the value
      * and type of a variable and the frame information.
-     * @param SourceCode|TextDocument|string $sourceCode
-     * @param Offset|ByteOffset|int $offset
      */
-    public function reflectOffset($sourceCode, $offset): ReflectionOffset;
+    public function reflectOffset(
+        TextDocument $sourceCode,
+        ByteOffset|int $offset
+    ): ReflectionOffset;
+
+    public function reflectMethodCall(
+        TextDocument $sourceCode,
+        ByteOffset|int $offset
+    ): ReflectionMethodCall;
+
+    public function navigate(TextDocument $sourceCode): ReflectionNavigation;
 
     /**
-     * @param SourceCode|TextDocument|string $sourceCode
-     * @param Offset|ByteOffset|int $offset
+     * @return Promise<Diagnostics<Diagnostic>>
      */
-    public function reflectMethodCall($sourceCode, $offset): ReflectionMethodCall;
+    public function diagnostics(TextDocument $sourceCode): Promise;
+
+    public function reflectNode(
+        TextDocument $sourceCode,
+        ByteOffset|int $offset
+    ): ReflectionNode;
+
+    public function reflectConstantsIn(
+        TextDocument $sourceCode
+    ): ReflectionDeclaredConstantCollection;
 
     /**
-     * @param TextDocument|string $sourceCode
+     * Walk the given source code's AST with the provided walker.
+     * The walker is able to resolve nodes and has access to the frame.
+     * @return Generator<int,null,null,?Frame>
      */
-    public function navigate($sourceCode): ReflectionNavigation;
-
-    /**
-     * @param TextDocument|string $sourceCode
-     */
-    public function diagnostics($sourceCode): Diagnostics;
-
-    /**
-     * @param TextDocument|string $sourceCode
-     * @param Offset|ByteOffset|int $offset
-     */
-    public function reflectNode($sourceCode, $offset): ReflectionNode;
-
-    /**
-     * @param TextDocument|string $sourceCode
-     */
-    public function reflectConstantsIn($sourceCode): ReflectionDeclaredConstantCollection;
+    public function walk(TextDocument $sourceCode, Walker $walker): Generator;
 }

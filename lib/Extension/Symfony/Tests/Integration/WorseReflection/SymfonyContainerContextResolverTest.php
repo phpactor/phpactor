@@ -6,6 +6,7 @@ use Phpactor\Extension\Symfony\Model\InMemorySymfonyContainerInspector;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerService;
 use Phpactor\Extension\Symfony\Tests\IntegrationTestCase;
 use Phpactor\Extension\Symfony\WorseReflection\SymfonyContainerContextResolver;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -53,6 +54,7 @@ class SymfonyContainerContextResolverTest extends IntegrationTestCase
      */
     public function resolve(string $sourceCode, array $services): void
     {
+        $sourceCode = TextDocumentBuilder::fromUnknown($sourceCode);
         $reflector = ReflectorBuilder::create()
             ->addFrameWalker(new TestAssertWalker($this))
             ->addSource(

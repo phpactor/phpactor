@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateDecoratorCommand;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -38,7 +38,7 @@ class GenerateDecoratorCommandTest extends TestCase
             self::EXAMPLE_URI,
             'SomeInterface'
         ]);
-        $builder->responseWatcher()->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $builder->responseWatcher()->resolveLastResponse(new ApplyWorkspaceEditResult(true));
 
         $applyEdit = $builder->transmitter()
                              ->filterByMethod('workspace/applyEdit')
@@ -57,7 +57,7 @@ class GenerateDecoratorCommandTest extends TestCase
     }
 
     /**
-     * @return {LanguageServerTester,LanguageServerTesterBuilder]
+     * @return array{LanguageServerTester,LanguageServerTesterBuilder}
      */
     private function createTester(ObjectProphecy $generateAccessors): array
     {

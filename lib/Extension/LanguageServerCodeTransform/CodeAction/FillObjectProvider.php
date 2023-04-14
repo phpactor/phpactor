@@ -36,11 +36,11 @@ class FillObjectProvider implements CodeActionProvider
 
         return new Success([
             new CodeAction(
-                'Fill object',
-                self::KIND,
-                [],
-                false,
-                new WorkspaceEdit([
+                title: 'Fill object',
+                kind: self::KIND,
+                diagnostics: [],
+                isPreferred: false,
+                edit: new WorkspaceEdit([
                     $textDocument->uri => TextEditConverter::toLspTextEdits($edits, $textDocument->text)
                 ])
             )
@@ -50,5 +50,9 @@ class FillObjectProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [self::KIND];
+    }
+    public function describe(): string
+    {
+        return 'fill new object construct with named parameters';
     }
 }

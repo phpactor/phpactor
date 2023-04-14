@@ -22,17 +22,11 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
     abstract public function name(): ClassName;
     abstract public function docblock(): DocBlock;
 
-    /**
-     * @deprecated Use instanceof instead
-     */
     public function isInterface(): bool
     {
         return $this instanceof ReflectionInterface;
     }
 
-    /**
-     * @deprecated Use instanceof instead
-     */
     public function isTrait(): bool
     {
         return $this instanceof ReflectionTrait;
@@ -43,9 +37,6 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
         return $this instanceof ReflectionEnum;
     }
 
-    /**
-     * @deprecated Use instanceof instead
-     */
     public function isClass(): bool
     {
         return $this instanceof ReflectionClass;
@@ -70,6 +61,8 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
     {
         return TypeFactory::reflectedClass($this->serviceLocator()->reflector(), $this->name());
     }
+
+    abstract public function classLikeType(): string;
 
     protected function resolveTraitMethods(
         TraitImports $traitImports,

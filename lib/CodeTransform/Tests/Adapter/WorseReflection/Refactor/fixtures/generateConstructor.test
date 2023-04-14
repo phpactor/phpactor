@@ -3,7 +3,7 @@
 
 namespace Phpactor;
 
-class Barfoo 
+class Barfoo
 {
 }
 
@@ -13,11 +13,12 @@ new Ba<>rfoo('foobar', 123);
 
 namespace Phpactor;
 
-class Barfoo 
+class Barfoo
 {
     public function __construct(string $string, int $int)
     {
     }
+
 }
 
 new Barfoo('foobar', 123);

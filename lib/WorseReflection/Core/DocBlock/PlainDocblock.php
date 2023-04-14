@@ -20,7 +20,7 @@ class PlainDocblock implements DocBlock
 
     public function __construct(string $raw = '')
     {
-        $this->raw = trim($raw);
+        $this->raw = $raw;
     }
 
     public function methodType(string $methodName): Type
@@ -36,6 +36,11 @@ class PlainDocblock implements DocBlock
     public function vars(): DocBlockVars
     {
         return new DocBlockVars([]);
+    }
+
+    public function params(): DocBlockParams
+    {
+        return new DocBlockParams([]);
     }
 
     public function parameterType(string $paramName): Type

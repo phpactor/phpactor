@@ -41,7 +41,7 @@ class WorseOverrideMethod implements OverrideMethod
     private function getReflectionClass(SourceCode $source, string $className): ReflectionClass
     {
         $builder = TextDocumentBuilder::create($source)->language('php');
-        if ($source->path()) {
+        if ($source->uri()->path()) {
             $builder->uri($source->uri());
         }
 
@@ -87,14 +87,14 @@ class WorseOverrideMethod implements OverrideMethod
     {
         $usedClasses = [];
 
-        foreach ($method->returnType()->classLikeTypes() as $classType) {
+        foreach ($method->returnType()->allTypes()->classLike() as $classType) {
             $usedClasses[] = $classType;
         }
 
         /**
          * @var ReflectionParameter $parameter */
         foreach ($method->parameters() as $parameter) {
-            foreach ($parameter->type()->classLikeTypes() as $classType) {
+            foreach ($parameter->type()->expandTypes()->classLike() as $classType) {
                 $usedClasses[] = $classType;
             }
         }

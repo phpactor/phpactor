@@ -6,9 +6,14 @@ use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension
 use Phpactor\Container\Container;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\Behat\BehatExtension;
+use Phpactor\Extension\Behat\BehatSuggestExtension;
+use Phpactor\Extension\ComposerInspector\ComposerInspectorExtension;
+use Phpactor\Extension\Configuration\ConfigurationExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
+use Phpactor\Extension\LanguageServerConfiguration\LanguageServerConfigurationExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
+use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
 use Phpactor\Extension\LanguageServerBridge\LanguageServerBridgeExtension;
 use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformExtension;
@@ -16,7 +21,9 @@ use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtensio
 use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
+use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanSuggestExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
+use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmSuggestExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\LanguageServerReferenceFinderExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameExtension;
 use Phpactor\Extension\LanguageServerRename\LanguageServerRenameWorseExtension;
@@ -27,8 +34,11 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\Laravel\LaravelExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\PHPUnit\PHPUnitExtension;
 use Phpactor\Extension\Prophecy\ProphecyExtension;
+use Phpactor\Extension\Prophecy\ProphecySuggestExtension;
 use Phpactor\Extension\Symfony\SymfonyExtension;
+use Phpactor\Extension\Symfony\SymfonySuggestExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use RuntimeException;
@@ -136,6 +146,8 @@ class Phpactor
             ReferenceFinderRpcExtension::class,
             ReferenceFinderExtension::class,
             PhpExtension::class,
+            ConfigurationExtension::class,
+            ComposerInspectorExtension::class,
             LanguageServerExtension::class,
             LanguageServerCompletionExtension::class,
             LanguageServerReferenceFinderExtension::class,
@@ -150,17 +162,31 @@ class Phpactor
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
+            LanguageServerConfigurationExtension::class,
             IndexerExtension::class,
             ObjectRendererExtension::class,
 
             LanguageServerPhpstanExtension::class,
+            LanguageServerPhpstanSuggestExtension::class,
             LanguageServerPsalmExtension::class,
-            LanguageServerBlackfireExtension::class,
+            LanguageServerPsalmSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
-            BehatExtension::class,
-            SymfonyExtension::class,
-            LaravelExtension::class,
+
+            LanguageServerPhpCsFixerSuggestExtension::class,
+
+            LanguageServerBlackfireExtension::class,
+
             ProphecyExtension::class,
+            ProphecySuggestExtension::class,
+
+            BehatExtension::class,
+            BehatSuggestExtension::class,
+
+            SymfonyExtension::class,
+            SymfonySuggestExtension::class,
+            PHPUnitExtension::class,
+
+            LaravelExtension::class,
         ];
 
         if (class_exists(DebugExtension::class)) {

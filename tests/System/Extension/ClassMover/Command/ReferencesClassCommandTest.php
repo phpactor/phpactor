@@ -17,7 +17,7 @@ class ReferencesClassCommandTest extends SystemTestCase
      */
     public function testReferences(): void
     {
-        $process = $this->phpactor('references:class "Animals\Badger"');
+        $process = $this->phpactorFromStringArgs('references:class "Animals\Badger"');
         $this->assertSuccess($process);
         $this->assertStringContainsString('class ⟶Badger⟵', $process->getOutput());
     }
@@ -27,7 +27,7 @@ class ReferencesClassCommandTest extends SystemTestCase
      */
     public function testReferencesFormatted(): void
     {
-        $process = $this->phpactor('references:class "Animals\Badger" --format=json');
+        $process = $this->phpactorFromStringArgs('references:class "Animals\Badger" --format=json');
         $this->assertSuccess($process);
         $this->assertStringContainsString('"line":"class Badger', $process->getOutput());
     }
@@ -37,7 +37,7 @@ class ReferencesClassCommandTest extends SystemTestCase
      */
     public function testReferencesReplace(): void
     {
-        $process = $this->phpactor('references:class "Animals\Badger" --replace="Kangaroo"');
+        $process = $this->phpactorFromStringArgs('references:class "Animals\Badger" --replace="Kangaroo"');
         $this->assertSuccess($process);
         $this->assertStringContainsString('class ⟶Kangaroo⟵', $process->getOutput());
         $this->assertStringContainsString('class Kangaroo', file_get_contents(
@@ -50,7 +50,7 @@ class ReferencesClassCommandTest extends SystemTestCase
      */
     public function testReferencesReplaceDryRun(): void
     {
-        $process = $this->phpactor('references:class "Animals\Badger" --dry-run --replace="Kangaroo"');
+        $process = $this->phpactorFromStringArgs('references:class "Animals\Badger" --dry-run --replace="Kangaroo"');
         $this->assertSuccess($process);
         $this->assertStringContainsString('class ⟶Kangaroo⟵', $process->getOutput());
         $this->assertStringNotContainsString('class Kangaroo', file_get_contents(
@@ -63,7 +63,7 @@ class ReferencesClassCommandTest extends SystemTestCase
      */
     public function testReferencesScope(): void
     {
-        $process = $this->phpactor('references:class "Animals\Badger" --filesystem=simple');
+        $process = $this->phpactorFromStringArgs('references:class "Animals\Badger" --filesystem=simple');
         $this->assertSuccess($process);
         $this->assertStringContainsString('class ⟶Badger⟵', $process->getOutput());
     }

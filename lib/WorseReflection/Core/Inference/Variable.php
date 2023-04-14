@@ -24,13 +24,13 @@ final class Variable
         return sprintf('%s#%s %s %s', $this->name, $this->offset, $this->type, $this->classType ? $this->classType->__toString() : '');
     }
 
-    public static function fromSymbolContext(NodeContext $symbolContext): Variable
+    public static function fromSymbolContext(NodeContext $nodeContext): Variable
     {
         return new self(
-            $symbolContext->symbol()->name(),
-            $symbolContext->symbol()->position()->start(),
-            $symbolContext->type(),
-            $symbolContext->symbol()->symbolType() === Symbol::PROPERTY ? $symbolContext->containerType() : null
+            $nodeContext->symbol()->name(),
+            $nodeContext->symbol()->position()->start()->toInt(),
+            $nodeContext->type(),
+            $nodeContext->symbol()->symbolType() === Symbol::PROPERTY ? $nodeContext->containerType() : null
         );
     }
 

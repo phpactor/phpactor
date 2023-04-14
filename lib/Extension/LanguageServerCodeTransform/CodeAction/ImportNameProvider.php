@@ -32,7 +32,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
     {
         return call(function () use ($item) {
             $actions = [];
-            foreach ($this->finder->importCandidates($item) as $candidate) {
+            foreach (yield $this->finder->importCandidates($item) as $candidate) {
                 $actions[] = $this->codeActionForFqn($candidate->unresolvedName(), $candidate->candidateFqn(), $item);
                 yield delay(1);
             }
@@ -59,7 +59,7 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         return call(function () use ($textDocument) {
             $diagnostics = [];
             $hasCandidatesHash = [];
-            foreach ($this->finder->unresolved($textDocument) as $unresolvedName) {
+            foreach (yield $this->finder->unresolved($textDocument) as $unresolvedName) {
                 assert($unresolvedName instanceof NameWithByteOffset);
                 $nameString = (string)$unresolvedName->name();
                 [
@@ -85,6 +85,11 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         return 'import-name';
     }
 
+    public function describe(): string
+    {
+        return 'import unresolvable class names';
+    }
+
     private function diagnosticsFromUnresolvedName(NameWithByteOffset $unresolvedName, TextDocumentItem $item, ?bool $hasCandidates = null): array
     {
         $range = new Range(
@@ -106,15 +111,14 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
             return [
                 false,
                 new Diagnostic(
-                    $range,
-                    sprintf(
+                    range: $range,
+                    message: sprintf(
                         '%s "%s" does not exist',
                         ucfirst($unresolvedName->type()),
                         $unresolvedName->name()->head()->__toString()
                     ),
-                    DiagnosticSeverity::ERROR,
-                    null,
-                    'phpactor'
+                    severity: DiagnosticSeverity::ERROR,
+                    source: 'phpactor'
                 )
             ];
         }
@@ -122,15 +126,14 @@ class ImportNameProvider implements CodeActionProvider, DiagnosticsProvider
         return [
             true,
             new Diagnostic(
-                $range,
-                sprintf(
+                range: $range,
+                message: sprintf(
                     '%s "%s" has not been imported',
                     ucfirst($unresolvedName->type()),
                     $unresolvedName->name()->head()->__toString()
                 ),
-                DiagnosticSeverity::HINT,
-                null,
-                'phpactor'
+                severity: DiagnosticSeverity::HINT,
+                source: 'phpactor'
             )
         ];
     }

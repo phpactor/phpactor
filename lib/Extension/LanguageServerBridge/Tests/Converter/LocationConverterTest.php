@@ -3,7 +3,7 @@
 namespace Phpactor\Extension\LanguageServer\Tests\ridge\Converter;
 
 use Generator;
-use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
@@ -37,7 +37,7 @@ class LocationConverterTest extends IntegrationTestCase
             ))
         ];
 
-        $converter = new LocationConverter(new FilesystemWorkspaceLocator());
+        $converter = new LocationConverter(new FilesystemTextDocumentLocator());
 
         self::assertEquals($expected, $converter->toLspLocations($locations));
     }
@@ -58,7 +58,7 @@ class LocationConverterTest extends IntegrationTestCase
             ))
         ];
 
-        $converter = new LocationConverter(new FilesystemWorkspaceLocator());
+        $converter = new LocationConverter(new FilesystemTextDocumentLocator());
         self::assertEquals($expected, $converter->toLspLocations($locations));
     }
 
@@ -77,7 +77,7 @@ class LocationConverterTest extends IntegrationTestCase
 
         $expected = new LspLocation($uri, $expectedRange);
 
-        $converter = new LocationConverter(new FilesystemWorkspaceLocator());
+        $converter = new LocationConverter(new FilesystemTextDocumentLocator());
         self::assertEquals($expected, $converter->toLspLocation($location));
     }
 

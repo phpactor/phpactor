@@ -10,7 +10,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -28,7 +28,7 @@ class MethodDeclarationResolver implements Resolver
             Symbol::fromTypeNameAndPosition(
                 Symbol::METHOD,
                 (string)$node->name->getText($node->getFileContents()),
-                Position::fromStartAndEnd(
+                ByteOffsetRange::fromInts(
                     $node->name->getStartPosition(),
                     $node->name->getEndPosition()
                 )

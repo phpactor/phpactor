@@ -5,18 +5,20 @@ namespace Phpactor\Extension\ObjectRenderer;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
-use Phpactor\Extension\LanguageServerHover\Twig\TwigFunctions;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\Extension\ObjectRenderer\Extension\ObjectRendererTwigExtension;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\MapResolver\Resolver;
+use RuntimeException;
 use Twig\Environment;
 
 class ObjectRendererExtension implements Extension
 {
     public const PARAM_TEMPLATE_PATHS = 'object_renderer.template_paths.markdown';
     public const SERVICE_MARKDOWN_RENDERER = 'object_renderer.renderer.markdown';
+    public const TAG_TWIG_EXTENSION = 'object_renderer.twig_extension';
 
     public function configure(Resolver $schema): void
     {
@@ -37,12 +39,12 @@ class ObjectRendererExtension implements Extension
     {
         $container->register(self::SERVICE_MARKDOWN_RENDERER, function (Container $container) {
             $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
+
+            /** @var array<string> $templatePaths */
             $templatePaths = $container->getParameter(self::PARAM_TEMPLATE_PATHS);
             $templatePaths[] = __DIR__ . '/../../../templates/help/markdown';
 
-            $resolvedTemplatePaths = array_map(function (string $path) use ($resolver) {
-                return $resolver->resolve($path);
-            }, $templatePaths);
+            $resolvedTemplatePaths = array_map(fn (string $path) => $resolver->resolve($path), $templatePaths);
 
             $phpVersion = $container->get(PhpVersionResolver::class)->resolve();
             $paths = (new PhpVersionPathResolver($phpVersion))->resolve($resolvedTemplatePaths);
@@ -51,8 +53,17 @@ class ObjectRendererExtension implements Extension
                 ->setLogger(LoggingExtension::channelLogger($container, 'LSP-HOVER'))
                 ->enableInterfaceCandidates()
                 ->enableAncestoralCandidates()
-                ->configureTwig(function (Environment $env) {
-                    $env = TwigFunctions::add($env);
+                ->configureTwig(function (Environment $env) use ($container) {
+                    foreach ($container->getServiceIdsForTag(self::TAG_TWIG_EXTENSION) as $serviceId => $_) {
+                        $service = $container->get($serviceId);
+                        if (!$service instanceof ObjectRendererTwigExtension) {
+                            throw new RuntimeException(sprintf(
+                                'Expected service to be a "%s"',
+                                ObjectRendererTwigExtension::class
+                            ));
+                        }
+                        $service->configure($env);
+                    }
                     return $env;
                 })
                     ->renderEmptyOnNotFound();

@@ -11,4 +11,4 @@ To do so you set :ref:`param_language_server_psalm.enabled`:
 
    $ phpactor config:set language_server_psalm.enabled true
 
-- Specify the path to PHPStan if different to ``/vendor/bin/psalm`` via. :ref:`param_language_server_psalm.bin`.
+- Specify the path to Psalm if different to ``/vendor/bin/psalm`` via. :ref:`param_language_server_psalm.bin`.

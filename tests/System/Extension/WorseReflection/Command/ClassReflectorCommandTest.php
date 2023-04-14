@@ -17,7 +17,7 @@ class ClassReflectorCommandTest extends SystemTestCase
      */
     public function testReflectCommand(): void
     {
-        $process = $this->phpactor('class:reflect lib/Badger.php');
+        $process = $this->phpactorFromStringArgs('class:reflect lib/Badger.php');
         $this->assertSuccess($process);
         $output = $process->getOutput();
         $this->assertStringContainsString('Animals\Badger', $output);
@@ -29,7 +29,7 @@ class ClassReflectorCommandTest extends SystemTestCase
      */
     public function testReflectCommandWithClass(): void
     {
-        $process = $this->phpactor('class:reflect "Animals\\Badger"');
+        $process = $this->phpactorFromStringArgs('class:reflect "Animals\\Badger"');
         $this->assertSuccess($process);
         $output = $process->getOutput();
         $this->assertStringContainsString('Animals\Badger', $output);

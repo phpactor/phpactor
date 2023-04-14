@@ -9,6 +9,9 @@ final class MethodBody extends Prototype
         parent::__construct();
     }
 
+    /**
+     * @param array<Line> $lines
+     */
     public static function fromLines(array $lines): MethodBody
     {
         return new self(Lines::fromLines($lines));
@@ -19,7 +22,7 @@ final class MethodBody extends Prototype
         return new self(Lines::empty());
     }
 
-    public static function none()
+    public static function none(): self
     {
         return new self();
     }

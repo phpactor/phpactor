@@ -8,6 +8,7 @@ Contents
    reference
    tips
    integrations
+   development
    other
 
 .. toctree::

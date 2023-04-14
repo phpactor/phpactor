@@ -24,7 +24,8 @@ class WorseTolerantMemberReplacerTest extends WorseTolerantTestCase
         $this->assertStringContainsString($expectedSource, $source->__toString());
     }
 
-    public function provideTestReplace()
+    /** @return array<array<string>> */
+    public function provideTestReplace(): array
     {
         return [
             'It returns unmodified if no references' => [

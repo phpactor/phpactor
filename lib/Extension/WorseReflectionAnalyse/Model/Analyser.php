@@ -6,11 +6,14 @@ use Generator;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use RuntimeException;
 use Symfony\Component\Filesystem\Path;
 use Throwable;
+use function Amp\Promise\wait;
 
 class Analyser
 {
@@ -19,14 +22,14 @@ class Analyser
     }
 
     /**
-     * @return Generator<string,Diagnostics>
+     * @return Generator<string,Diagnostics<Diagnostic>>
      */
     public function analyse(string $path): Generator
     {
         $cwd = (string)getcwd();
         $absPath = Path::makeAbsolute($path, $cwd);
         if (file_exists($absPath) && is_file($absPath)) {
-            yield $path => $this->reflector->diagnostics((string)file_get_contents($absPath));
+            yield $path => wait($this->reflector->diagnostics(TextDocumentBuilder::fromUri($absPath)->build()));
             return;
         }
 
@@ -35,7 +38,7 @@ class Analyser
                 yield Path::makeRelative(
                     $file->path(),
                     $cwd
-                ) => $this->reflector->diagnostics((string)file_get_contents($file->path()));
+                ) => wait($this->reflector->diagnostics(TextDocumentBuilder::fromUri($file->path())->build()));
             } catch (Throwable $error) {
                 throw new RuntimeException(sprintf(
                     'Error while analysing file "%s": %s',

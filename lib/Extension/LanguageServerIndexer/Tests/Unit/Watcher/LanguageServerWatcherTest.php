@@ -6,10 +6,11 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\AmpFsWatch\ModifiedFile;
 use Phpactor\Extension\LanguageServerIndexer\Watcher\LanguageServerWatcher;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
-use Phpactor\LanguageServerProtocol\DidChangeConfigurationClientCapabilities;
+use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesClientCapabilities;
 use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesParams;
 use Phpactor\LanguageServerProtocol\FileChangeType;
 use Phpactor\LanguageServerProtocol\FileEvent;
+use Phpactor\LanguageServerProtocol\WorkspaceClientCapabilities;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use function Amp\Promise\wait;
 
@@ -17,11 +18,11 @@ class LanguageServerWatcherTest extends TestCase
 {
     public function testSupported(): void
     {
-        $capabiltiies = ClientCapabilities::fromArray([
-            'workspace' => [
-                'didChangeWatchedFiles' => new DidChangeConfigurationClientCapabilities(true),
-            ]
-        ]);
+        $capabiltiies = new ClientCapabilities(
+            workspace:new WorkspaceClientCapabilities(
+                didChangeWatchedFiles: new DidChangeWatchedFilesClientCapabilities(dynamicRegistration: true),
+            )
+        );
         $watcher = new LanguageServerWatcher($capabiltiies);
 
         self::assertTrue(wait($watcher->isSupported()));

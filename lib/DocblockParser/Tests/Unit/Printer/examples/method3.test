@@ -11,5 +11,5 @@ Docblock: =
     ParameterTag: = 
      ScalarNode: = mixed
      VariableNode: = $value)
-   TextNode: = Assert that value is alphanumeric for all values.
+   TextNode: =  Assert that value is alphanumeric for all values.
  */

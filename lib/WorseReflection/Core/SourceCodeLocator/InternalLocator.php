@@ -2,9 +2,10 @@
 
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 /**
@@ -30,13 +31,19 @@ final class InternalLocator implements SourceCodeLocator
             'UnitEnum' => __DIR__ . '/InternalStubs/Enum.php',
             'BackedEnumCase' => __DIR__ . '/InternalStubs/Enum.php',
             'BackedEnum' => __DIR__ . '/InternalStubs/Enum.php',
+            'Generator' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'ArrayAccess' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'ArrayObject' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'Serializable' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'WeakReference' => __DIR__ . '/InternalStubs/GenericTypes.php',
+            'WeakMap' => __DIR__ . '/InternalStubs/GenericTypes.php',
         ]);
     }
 
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         if (isset($this->map[$name->__toString()])) {
-            return SourceCode::fromPath($this->map[$name->__toString()]);
+            return TextDocumentBuilder::fromUri($this->map[$name->__toString()])->build();
         }
         throw new SourceNotFound(sprintf(
             'Could not find internal stub for "%s"',

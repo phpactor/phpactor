@@ -1,8 +1,0 @@
-{
-  "name": "phpactor/class-to-file-extension",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "0.2.1"
-  }
-}

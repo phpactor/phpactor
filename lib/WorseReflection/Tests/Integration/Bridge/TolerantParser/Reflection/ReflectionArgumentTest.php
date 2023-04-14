@@ -107,10 +107,22 @@ class ReflectionArgumentTest extends IntegrationTestCase
                 , [
                 ],
                 function (ReflectionArgumentCollection $arguments): void {
-                    self::assertEquals(17, $arguments->first()->position()->start());
-                    self::assertEquals(25, $arguments->first()->position()->end());
+                    self::assertEquals(17, $arguments->first()->position()->start()->toInt());
+                    self::assertEquals(25, $arguments->first()->position()->end()->toInt());
                 },
             ],
+        ];
+        yield 'It infers named parameters' => [
+            <<<'EOT'
+                <?php
+
+                $foo->b<>ar(foo: $integer);
+                EOT
+            , [
+            ],
+            function (ReflectionArgumentCollection $arguments): void {
+                self::assertEquals('foo', $arguments->first()->guessName());
+            },
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Bridge\Phpactor\DocblockParser;
 
 use Generator;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -14,6 +15,8 @@ use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\FloatType;
+use Phpactor\WorseReflection\Core\Type\IntLiteralType;
+use Phpactor\WorseReflection\Core\Type\IntMaxType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -241,6 +244,32 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             '/** @return class-string<T> */',
             TypeFactory::classString('T'),
         ];
+
+        yield 'int range max' => [
+            '/** @return int<12, max> */',
+            TypeFactory::intRange(
+                new IntLiteralType(12),
+                new IntMaxType(PHP_INT_MAX)
+            )
+        ];
+
+        yield 'int range' => [
+            '/** @return int<12, 23> */',
+            TypeFactory::intRange(
+                new IntLiteralType(12),
+                new IntLiteralType(23),
+            )
+        ];
+
+        yield 'int positive' => [
+            '/** @return positive-int */',
+            TypeFactory::intPositive()
+        ];
+
+        yield 'int negative' => [
+            '/** @return negative-int */',
+            TypeFactory::intNegative()
+        ];
     }
 
     public function testClassConstant(): void
@@ -254,6 +283,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                         }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $source = TextDocumentBuilder::fromUnknown($source);
         $class = $reflector->reflectClassesIn(
             $source
         )->first();
@@ -273,6 +303,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                         }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $source = TextDocumentBuilder::fromUnknown($source);
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
         self::assertEquals('Foo::BA*', $docblock->returnType()->__toString());
@@ -290,6 +321,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
                         }
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
+        $source = TextDocumentBuilder::fromUnknown($source);
         $class = $reflector->reflectClassesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return array{string,Foo::*} */');
         self::assertEquals('array{string,Foo::*}', $docblock->returnType()->__toString());

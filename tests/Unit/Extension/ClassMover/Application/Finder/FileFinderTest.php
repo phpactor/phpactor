@@ -7,8 +7,8 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ClassMover\Application\Finder\FileFinder;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -67,7 +67,7 @@ class FileFinderTest extends TestCase
     public function testReturnsClassAndTraitFilePathsIfMemberIsPrivate(): void
     {
         $class = $this->reflectClass(
-            SourceCode::fromPathAndString('barfoo', 'trait Barbar {} class Foobar { use Barbar; private function foobar(){} }'),
+            TextDocumentBuilder::create('<?php trait Barbar {} class Foobar { use Barbar; private function foobar(){} }')->uri('file:///barfoo.php')->build(),
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
@@ -77,7 +77,7 @@ class FileFinderTest extends TestCase
     public function testParentsTraitsAndInterfacesIfMemberIsProtected(): void
     {
         $class = $this->reflectClass(
-            SourceCode::fromPathAndString('barfoo', 'interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }'),
+            TextDocumentBuilder::create('<?php interface Inter1 {} class ParentClass {} trait Barbar {} class Foobar extends ParentClass implements Inter1 { use Barbar; protected function foobar(){} }')->uri('file:///barfoo')->build(),
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
@@ -98,7 +98,10 @@ class FileFinderTest extends TestCase
 
     private function reflectClass($source, string $name)
     {
-        $builder = ReflectorBuilder::create()->addSource(SourceCode::fromPathAndString('foobar', '<?php ' . $source));
+        if (is_string($source)) {
+            $source = '<?php ' . $source;
+        }
+        $builder = ReflectorBuilder::create()->addSource(TextDocumentBuilder::fromUnknown($source));
         return $builder->build()->reflectClassLike($name);
     }
 }

@@ -38,8 +38,8 @@ class WorseStepFactory implements StepFactory
                         $context,
                         $method->name(),
                         $step,
-                        $class->sourceCode()->path(),
-                        $method->position()->start()
+                        $class->sourceCode()->uri()?->path(),
+                        $method->position()->start()->toInt()
                     );
                 }
             }

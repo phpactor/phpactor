@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Diagonstics;
 
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
 
@@ -14,6 +14,6 @@ class MissingDocblockProviderTest extends DiagnosticsTestCase
     }
     protected function provider(): DiagnosticProvider
     {
-        return new MissingDocblockProvider();
+        return new MissingDocblockReturnTypeProvider();
     }
 }

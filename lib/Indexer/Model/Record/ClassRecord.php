@@ -5,16 +5,18 @@ namespace Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record;
 
-final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQualifiedName
+final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath, HasFullyQualifiedName
 {
     use FullyQualifiedReferenceTrait;
     use HasFileReferencesTrait;
     use HasPathTrait;
+    use HasFlagsTrait;
     public const RECORD_TYPE = 'class';
     public const TYPE_CLASS = 'class';
     public const TYPE_INTERFACE = 'interface';
     public const TYPE_TRAIT = 'trait';
     public const TYPE_ENUM = 'enum';
+    public const FLAG_ATTRIBUTE = 1;
 
     /**
      * @var array<string>
@@ -27,7 +29,7 @@ final class ClassRecord implements Record, HasFileReferences, HasPath, HasFullyQ
     private array $implements = [];
 
     /**
-     * Type of "class": class, interface or trait
+     * Type of "class": class, interface or trait, etc
      */
     private ?string $type = null;
 

@@ -7,7 +7,10 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
  */
 class Parameters extends Collection
 {
-    public static function fromParameters(array $parameters)
+    /**
+     * @param array<Parameter> $parameters
+     */
+    public static function fromParameters(array $parameters): self
     {
         return new self($parameters);
     }

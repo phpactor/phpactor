@@ -1,4 +1,5 @@
 {% set renderedType = render_type(prototype.type) %}
+{% if prototype.visibility is not null %}{{ prototype.visibility }} {% endif %}
 {% if renderedType %}{{ renderedType }} {% endif %}
 {% if prototype.byReference %}&{% endif %}{% if prototype.isVariadic %}...{% endif %}{% if true %}${{ prototype.name }}{% endif %}
 {% if prototype.defaultValue.notNone %} = {{ prototype.defaultValue.export|raw }}{% endif %}

@@ -2,19 +2,21 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
+use Amp\Success;
 use Generator;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode as WorseSourceCode;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
@@ -24,11 +26,62 @@ class CompleteConstructor implements Transformer
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
-        private string $visibility
+        private string $visibility,
+        private bool $promote = false
     ) {
     }
 
-    public function transform(SourceCode $source): TextEdits
+    /**
+        * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $source): Promise
+    {
+        if (false === $this->promote) {
+            return new Success($this->transformAssign($source));
+        }
+
+        return new Success($this->transformPromote($source));
+    }
+
+
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $source): Promise
+    {
+        $diagnostics = [];
+        foreach ($this->candidateClasses($source) as $class) {
+            $constructMethod = $class->methods()->belongingTo($class->name())->get('__construct');
+            assert($constructMethod instanceof ReflectionMethod);
+            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+                assert($parameter instanceof ReflectionParameter);
+                $frame = $constructMethod->frame();
+
+                $isUsed = $frame->locals()->byName($parameter->name())->count() > 0;
+                $hasProperty = $class->properties()->has($parameter->name());
+
+                if ($isUsed && $hasProperty) {
+                    continue;
+                }
+
+                $diagnostics[] = new Diagnostic(
+                    ByteOffsetRange::fromInts(
+                        $parameter->position()->start()->toInt(),
+                        $parameter->position()->end()->toInt() + 5 + strlen($class->name()->__toString())
+                    ),
+                    sprintf(
+                        'Parameter "%s" may not have been assigned',
+                        $parameter->name()
+                    ),
+                    Diagnostic::WARNING
+                );
+            }
+        }
+
+        return new Success(new Diagnostics($diagnostics));
+    }
+
+    private function transformAssign(SourceCode $source): TextEdits
     {
         $edits = [];
         $sourceCodeBuilder = SourceCodeBuilder::create();
@@ -71,39 +124,18 @@ class CompleteConstructor implements Transformer
         return $this->updater->textEditsFor($sourceCodeBuilder->build(), Code::fromString((string) $source));
     }
 
-
-    public function diagnostics(SourceCode $source): Diagnostics
+    private function transformPromote(SourceCode $source): TextEdits
     {
-        $diagnostics = [];
+        $edits = [];
+
         foreach ($this->candidateClasses($source) as $class) {
-            $constructMethod = $class->methods()->belongingTo($class->name())->get('__construct');
-            assert($constructMethod instanceof ReflectionMethod);
+            $constructMethod = $class->methods()->get('__construct');
             foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
-                assert($parameter instanceof ReflectionParameter);
-                $frame = $constructMethod->frame();
-
-                $isUsed = $frame->locals()->byName($parameter->name())->count() > 0;
-                $hasProperty = $class->properties()->has($parameter->name());
-
-                if ($isUsed && $hasProperty) {
-                    continue;
-                }
-
-                $diagnostics[] = new Diagnostic(
-                    ByteOffsetRange::fromInts(
-                        $parameter->position()->start(),
-                        $parameter->position()->end() + 5 + strlen($class->name()->__toString())
-                    ),
-                    sprintf(
-                        'Parameter "%s" may not have been assigned',
-                        $parameter->name()
-                    ),
-                    Diagnostic::WARNING
-                );
+                $edits[] = TextEdit::create($parameter->position()->start()->toInt(), 0, sprintf('%s ', $this->visibility));
             }
         }
 
-        return new Diagnostics($diagnostics);
+        return TextEdits::fromTextEdits($edits);
     }
 
     /**
@@ -111,7 +143,7 @@ class CompleteConstructor implements Transformer
      */
     private function candidateClasses(SourceCode $source): Generator
     {
-        $classes = $this->reflector->reflectClassesIn(WorseSourceCode::fromString((string) $source))->classes();
+        $classes = $this->reflector->reflectClassesIn($source)->classes();
         foreach ($classes as $class) {
             if ($class instanceof ReflectionInterface) {
                 continue;

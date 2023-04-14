@@ -7,7 +7,10 @@ namespace Phpactor\CodeBuilder\Domain\Prototype;
  */
 class ExtendsInterfaces extends Collection
 {
-    public static function fromTypes(array $types)
+    /**
+     * @param list<Type> $types
+     */
+    public static function fromTypes(array $types): self
     {
         return new self($types);
     }

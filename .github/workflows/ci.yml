@@ -47,14 +47,14 @@ jobs:
                     composer validate --strict
                     composer install --optimize-autoloader --classmap-authoritative
                     bin/phpactor --version
-                    sudo add-apt-repository --yes ppa:jonathonf/vim
-                    sudo apt-get update -y
-                    sudo apt-get install vim -fy
                     git clone https://github.com/junegunn/vader.vim.git
 
             -
+                name: "VIM tests fail with a TTL of 1.0 for some reason"
+                run: "./bin/phpactor config:set worse_reflection.cache_lifetime 5.0"
+            -
                 name: "Run VIM Tests"
-                run: "config/travis/vim-plugin-test.sh"
+                run: ".github/vim-plugin-test.sh"
     phpunit:
         name: "PHPUnit (${{ matrix.php-version }})"
 
@@ -245,8 +245,6 @@ jobs:
                 run: |
                     wget https://github.com/google/vimdoc/releases/download/v0.6.0/vimdoc_0.6.0-1_all.deb
                     sudo dpkg -i vimdoc_0.6.0-1_all.deb
-                    sudo apt-get update
-                    sudo apt-get -y install python3-pip python3-setuptools
                     sudo pip3 install -r requirements.txt
                     composer install --optimize-autoloader --classmap-authoritative
 

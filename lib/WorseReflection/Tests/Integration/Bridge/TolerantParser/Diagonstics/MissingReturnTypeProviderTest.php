@@ -17,6 +17,11 @@ class MissingReturnTypeProviderTest extends DiagnosticsTestCase
         );
     }
 
+    public function checkMissingReturnTypeConstructDestruct(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
     public function checkMissingReturnTypeWithMissingType(Diagnostics $diagnostics): void
     {
         self::assertCount(1, $diagnostics);

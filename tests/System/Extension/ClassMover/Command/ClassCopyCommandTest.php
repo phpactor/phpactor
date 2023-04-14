@@ -19,7 +19,7 @@ class ClassCopyCommandTest extends SystemTestCase
      */
     public function testSmokeSuccess($command, array $fileMap = [], array $contentExpectations = []): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
         $this->assertSuccess($process);
 
         foreach ($fileMap as $filePath => $shouldExist) {
@@ -103,7 +103,7 @@ class ClassCopyCommandTest extends SystemTestCase
      */
     public function testSmokeFailure($command, $expectedMessage = null): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
         $this->assertFailure($process, $expectedMessage);
     }
 

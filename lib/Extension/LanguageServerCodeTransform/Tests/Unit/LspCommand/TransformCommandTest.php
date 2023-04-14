@@ -2,13 +2,15 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
+use Amp\Promise;
+use Amp\Success;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\TransformCommand;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\TextDocument\TextEdits;
@@ -37,13 +39,13 @@ class TransformCommandTest extends TestCase
             'file:///foobar',
             self::EXAMPLE_TRANSFORM_NAME
         ]);
-        $watcher->resolveLastResponse(new ApplyWorkspaceEditResponse(true));
+        $watcher->resolveLastResponse(new ApplyWorkspaceEditResult(true));
         $response = wait($promise);
         self::assertInstanceOf(ResponseMessage::class, $response);
-        self::assertInstanceOf(ApplyWorkspaceEditResponse::class, $response->result);
+        self::assertInstanceOf(ApplyWorkspaceEditResult::class, $response->result);
 
         self::assertNotNull($testTransformer->code);
-        self::assertEquals('/foobar', $testTransformer->code->path());
+        self::assertEquals('/foobar', $testTransformer->code->uri()->path());
     }
 }
 
@@ -51,15 +53,18 @@ class TestTransformer implements Transformer
 {
     public SourceCode $code;
 
-    public function transform(SourceCode $code): TextEdits
+    public function transform(SourceCode $code): Promise
     {
         $this->code = $code;
-        return TextEdits::none();
+        return new Success(TextEdits::none());
     }
 
 
-    public function diagnostics(SourceCode $code): Diagnostics
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
     {
-        return Diagnostics::none();
+        return new Success(Diagnostics::none());
     }
 }

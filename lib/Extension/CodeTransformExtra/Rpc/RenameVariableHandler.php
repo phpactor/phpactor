@@ -76,7 +76,7 @@ class RenameVariableHandler extends AbstractHandler
         );
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(
-            $sourceCode->path(),
+            $sourceCode->uri()->path(),
             $arguments[self::PARAM_SOURCE],
             (string) $sourceCode
         );

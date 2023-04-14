@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\NamespaceUseGroupClause;
 use Microsoft\PhpParser\Node\QualifiedName;
@@ -15,6 +16,7 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportDiagnostic;
 use Phpactor\WorseReflection\Reflector;
+use function Amp\call;
 
 class RemoveUnusedImportsTransformer implements Transformer
 {
@@ -27,66 +29,74 @@ class RemoveUnusedImportsTransformer implements Transformer
     {
     }
 
-    public function transform(SourceCode $code): TextEdits
+    /**
+        * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $code): Promise
     {
-        $rootNode = $this->parser->parseSourceFile($code);
-        $edits = [];
+        return call(function () use ($code) {
+            $rootNode = $this->parser->parseSourceFile($code);
+            $edits = [];
 
-        foreach ($this->unusedImports($code) as $unusedImport) {
-            $importNode = $rootNode->getDescendantNodeAtPosition($unusedImport->range()->start()->toInt());
+            foreach ((yield $this->reflector->diagnostics($code))->byClass(UnusedImportDiagnostic::class) as $unusedImport) {
+                $importNode = $rootNode->getDescendantNodeAtPosition($unusedImport->range()->start()->toInt());
 
-            if (!$importNode instanceof QualifiedName) {
-                continue;
-            }
-
-            $list = $importNode->getFirstAncestor(NamespaceUseClause::class);
-
-            if (!$list instanceof NamespaceUseClause) {
-                continue;
-            }
-
-            if ($list->groupClauses) {
-                if ($edit = $this->forGroupClause($importNode, $list)) {
-                    $edits[] = $edit;
+                if (!$importNode instanceof QualifiedName) {
+                    continue;
                 }
-                continue;
+
+                $list = $importNode->getFirstAncestor(NamespaceUseClause::class);
+
+                if (!$list instanceof NamespaceUseClause) {
+                    continue;
+                }
+
+                if ($list->groupClauses) {
+                    if ($edit = $this->forGroupClause($importNode, $list)) {
+                        $edits[] = $edit;
+                    }
+                    continue;
+                }
+
+                // there is exactly one element
+                $declaration = $importNode->getFirstAncestor(NamespaceUseDeclaration::class);
+                if (null === $declaration) {
+                    continue;
+                }
+                $length = $declaration->getEndPosition() - $declaration->getStartPosition();
+
+                if (substr($code->__toString(), $declaration->getEndPosition(), 1) === "\n") {
+                    $length++;
+                }
+
+                $edits[] = TextEdit::create(
+                    $declaration->getStartPosition(),
+                    $length,
+                    ''
+                );
             }
 
-            // there is exactly one element
-            $declaration = $importNode->getFirstAncestor(NamespaceUseDeclaration::class);
-            $length = $declaration->getEndPosition() - $declaration->getStartPosition();
+            return TextEdits::fromTextEdits($edits);
+        });
+    }
 
-            if (substr($code->__toString(), $declaration->getEndPosition(), 1) === "\n") {
-                $length++;
+    /**
+        * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
+    {
+        return call(function () use ($code) {
+            $diagnostics = [];
+            foreach ((yield $this->reflector->diagnostics($code))->byClass(UnusedImportDiagnostic::class) as $unusedClass) {
+                $diagnostics[] = new Diagnostic(
+                    $unusedClass->range(),
+                    $unusedClass->message(),
+                    Diagnostic::WARNING
+                );
             }
 
-            $edits[] = TextEdit::create(
-                $declaration->getStartPosition(),
-                $length,
-                ''
-            );
-        }
-
-        return TextEdits::fromTextEdits($edits);
-    }
-
-    public function diagnostics(SourceCode $code): Diagnostics
-    {
-        $diagnostics = [];
-        foreach ($this->unusedImports($code) as $unusedClass) {
-            $diagnostics[] = new Diagnostic(
-                $unusedClass->range(),
-                $unusedClass->message(),
-                Diagnostic::WARNING
-            );
-        }
-
-        return new Diagnostics($diagnostics);
-    }
-
-    private function unusedImports(SourceCode $code): \Phpactor\WorseReflection\Core\Diagnostics
-    {
-        return $this->reflector->diagnostics($code->__toString())->byClass(UnusedImportDiagnostic::class);
+            return new Diagnostics($diagnostics);
+        });
     }
 
     private function forGroupClause(QualifiedName $importNode, NamespaceUseClause $list): ?TextEdit
@@ -98,7 +108,7 @@ class RemoveUnusedImportsTransformer implements Transformer
         $this->fixed[$fixed] = true;
 
         $names = [];
-        foreach ($list->groupClauses->children as $groupClause) {
+        foreach ($list->groupClauses?->children ?: [] as $groupClause) {
             if (!$groupClause instanceof NamespaceUseGroupClause) {
                 continue;
             }

@@ -1,14 +1,14 @@
 ""
 " @section Completion
 "
-" You will need to explcitly configure Phpactor to provide completion
+" You will need to explicitly configure Phpactor to provide completion
 " capabilities.
 "
 " @subsection Omni-Completion
 "
 " Use VIMs native omni-completion (|compl-omni|)
 "
-" Enbale omni-completion for PHP files: >
+" Enable omni-completion for PHP files: >
 "
 "   autocmd FileType php setlocal omnifunc=phpactor#Complete
 "

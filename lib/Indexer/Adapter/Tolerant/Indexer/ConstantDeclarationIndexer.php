@@ -29,12 +29,10 @@ class ConstantDeclarationIndexer implements TolerantIndexer
             return false;
         }
 
-        /** @phpstan-ignore-next-line */
         if (!$node->callableExpression instanceof QualifiedName) {
             return false;
         }
 
-        /** @phpstan-ignore-next-line */
         if ('define' === NodeUtil::shortName($node->callableExpression)) {
             return true;
         }

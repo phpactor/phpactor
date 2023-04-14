@@ -67,15 +67,15 @@ class HoverHandler implements Handler, CanRegisterCapabilities
             $offsetReflection = $this->reflector->reflectOffset($document, $offset);
             $info = $this->infoFromReflecionOffset($offsetReflection);
             $string = new MarkupContent('markdown', $info);
-            $nodeContext = $offsetReflection->symbolContext();
+            $nodeContext = $offsetReflection->nodeContext();
 
             return new Hover($string, new Range(
                 PositionConverter::byteOffsetToPosition(
-                    ByteOffset::fromInt($nodeContext->symbol()->position()->start()),
+                    ByteOffset::fromInt($nodeContext->symbol()->position()->start()->toInt()),
                     $document->__toString()
                 ),
                 PositionConverter::byteOffsetToPosition(
-                    ByteOffset::fromInt($nodeContext->symbol()->position()->end()),
+                    ByteOffset::fromInt($nodeContext->symbol()->position()->end()->toInt()),
                     $document->__toString()
                 )
             ));
@@ -89,7 +89,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
 
     private function infoFromReflecionOffset(ReflectionOffset $offset): string
     {
-        $nodeContext = $offset->symbolContext();
+        $nodeContext = $offset->nodeContext();
 
         if ($info = $this->infoFromSymbolContext($nodeContext)) {
             return $info;
@@ -125,7 +125,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         $container = $nodeContext->containerType();
         $infos = [];
 
-        foreach ($container->classLikeTypes() as $namedType) {
+        foreach ($container->expandTypes()->classLike() as $namedType) {
             try {
                 $class = $this->reflector->reflectClassLike((string) $namedType);
                 $member = null;
@@ -177,7 +177,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
             return $notFound->getMessage();
         }
 
-        return $this->renderer->render(new HoverInformation($name, $function->docblock()->formatted(), $function));
+        return $this->renderer->render(new HoverInformation($name, $this->renderer->render($function->docblock()), $function));
     }
 
     private function renderClass(Type $type): string
@@ -185,7 +185,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         try {
             $class = $this->reflector->reflectClassLike((string) $type);
             return $this->renderer->render(new HoverInformation(
-                $type->short(),
+                $type->__toString(),
                 $class->docblock()->formatted(),
                 $class
             ));

@@ -29,8 +29,10 @@ class CompleteTest extends SystemTestCase
             $this->assertArraySubset($expectedSuggestion, $suggestions[$index]);
         }
     }
-
-    public function provideComplete()
+    /**
+     * @return array<string,array<int,mixed>>
+     */
+    public function provideComplete(): array
     {
         return [
             'Public property' => [
@@ -296,8 +298,10 @@ class CompleteTest extends SystemTestCase
             ]
         ];
     }
-
-    private function complete(string $source)
+    /**
+     * @return array{suggestions:array<array<string, mixed>>,issues:array}
+     */
+    private function complete(string $source): array
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
         $complete = $this->container()->get('application.complete');

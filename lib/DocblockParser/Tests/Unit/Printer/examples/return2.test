@@ -7,4 +7,5 @@ Docblock: =
  * 
   ReturnTag: = @return
    ThisNode: = $this
+   TextNode: = 
  */

@@ -18,7 +18,7 @@ class LanguageServerExtraExtension implements Extension
             return new OnDevelopWarningService(
                 $container->get(ClientApi::class),
                 $container->get('application.status'),
-                $container->getParameter(CoreExtension::PARAM_WARN_ON_DEVELOP)
+                $container->parameter(CoreExtension::PARAM_WARN_ON_DEVELOP)->bool()
             );
         }, [
             LanguageServerExtension::TAG_SERVICE_PROVIDER => []

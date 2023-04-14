@@ -6,37 +6,17 @@ interface Filesystem
 {
     public function fileList(): FileList;
 
-    /**
-     * @param FilePath|string $srcLocation
-     * @param FilePath|string $destLocation
-     */
-    public function move($srcLocation, $destLocation): void;
+    public function move(FilePath|string $srcLocation, FilePath|string $destLocation): void;
 
-    /**
-     * @param FilePath|string $location
-     */
-    public function remove($location): void;
+    public function remove(FilePath|string $location): void;
 
-    /**
-     * @param FilePath|string $srcLocation
-     * @param FilePath|string $destLocation
-     */
-    public function copy($srcLocation, $destLocation): CopyReport;
+    public function copy(FilePath|string $srcLocation, FilePath|string $destLocation): CopyReport;
 
     public function createPath(string $path): FilePath;
 
-    /**
-     * @param FilePath|string $path
-     */
-    public function writeContents($path, string $contents): void;
+    public function writeContents(FilePath|string $path, string $contents): void;
 
-    /**
-     * @param FilePath|string $path
-     */
-    public function getContents($path): string;
+    public function getContents(FilePath|string $path): string;
 
-    /**
-     * @param FilePath|string $path
-     */
-    public function exists($path): bool;
+    public function exists(FilePath|string $path): bool;
 }

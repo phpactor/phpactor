@@ -67,6 +67,7 @@ final class Parser
         $this->tokens = $tokens;
 
         while ($tokens->hasCurrent()) {
+            /** @phpstan-ignore-next-line Above ensures it is not null */
             if ($tokens->current->type === Token::T_TAG) {
                 $children[] = $this->parseTag();
                 continue;
@@ -81,6 +82,7 @@ final class Parser
             }
         }
 
+        /** @phpstan-ignore-next-line */
         return new Docblock($children);
     }
 
@@ -98,6 +100,7 @@ final class Parser
             '@mixin' => $this->parseMixin(),
             '@return' => $this->parseReturn(),
             '@template' => $this->parseTemplate(),
+            '@template-covariant' => $this->parseTemplate(),
             '@extends', '@template-extends' => $this->parseExtends(),
             '@implements', '@template-implements' => $this->parseImplements(),
             default => new UnknownTag($this->tokens->chomp()),
@@ -213,8 +216,9 @@ final class Parser
                 }
 
                 $elements[] = $delimiter;
-                $elements[] = $this->parseType();
+                $type = $this->parseType();
                 if (null !== $type) {
+                    $elements[] = $type;
                     continue;
                 }
             }
@@ -299,15 +303,13 @@ final class Parser
             );
         }
 
-        if ($this->tokens->current->type === Token::T_LIST) {
-            $list = $this->tokens->chomp();
-            return new ListBracketsNode($this->createTypeFromToken($type), $list);
-        }
-
         if ($this->tokens->current->type === Token::T_BRACKET_ANGLE_OPEN) {
             $open = $this->tokens->chomp();
             $typeList = null;
             if ($this->tokens->if(Token::T_LABEL)) {
+                $typeList = $this->parseTypeList();
+            }
+            if ($this->tokens->if(Token::T_INTEGER)) {
                 $typeList = $this->parseTypeList();
             }
 
@@ -319,13 +321,13 @@ final class Parser
                 return null;
             }
 
-            /** @phpstan-ignore-next-line */
-            return new GenericNode(
+            $type = new GenericNode(
                 $open,
                 $this->createTypeFromToken($type),
                 $typeList,
                 $this->tokens->chomp()
             );
+            return $this->parseDimensions($type);
         }
 
         if ($this->tokens->current->type === Token::T_BRACKET_CURLY_OPEN) {
@@ -340,12 +342,24 @@ final class Parser
                 $close = $this->tokens->chomp();
             }
 
-            return new ArrayShapeNode($open, new ArrayKeyValueList(
+            $type = new ArrayShapeNode($open, new ArrayKeyValueList(
                 $keyValues,
             ), $close);
+
+            return $this->parseDimensions($type);
         }
 
-        return $this->createTypeFromToken($type);
+        return $this->parseDimensions($this->createTypeFromToken($type));
+    }
+
+    private function parseDimensions(TypeNode $type): TypeNode
+    {
+        while ($this->tokens->if(Token::T_LIST)) {
+            $list = $this->tokens->chomp();
+            $type = new ListBracketsNode($type, $list);
+        }
+
+        return $type;
     }
 
     private function createTypeFromToken(Token $type): TypeNode
@@ -354,10 +368,10 @@ final class Parser
             return new NullNode($type);
         }
         if (strtolower($type->value) === 'array') {
-            return new ArrayNode();
+            return new ArrayNode($type);
         }
         if (strtolower($type->value) === 'list') {
-            return new ListNode();
+            return new ListNode($type);
         }
         if (in_array($type->value, self::SCALAR_TYPES)) {
             return new ScalarNode($type);
@@ -407,6 +421,8 @@ final class Parser
         $types = [];
         while (true) {
             if ($this->tokens->if(Token::T_LABEL)) {
+                $types[] = $this->parseTypes();
+            } elseif ($this->tokens->if(Token::T_INTEGER)) {
                 $types[] = $this->parseTypes();
             }
             if ($this->tokens->if(Token::T_COMMA)) {
@@ -496,6 +512,11 @@ final class Parser
         return new ReturnTag($tag, $type, $this->parseText());
     }
 
+    /**
+     * Parse text until the next tag
+     *
+     * This method assumes that any prose after a tag belongs to the tag.
+     */
     private function parseText(): ?TextNode
     {
         if (null === $this->tokens->current) {
@@ -504,21 +525,11 @@ final class Parser
 
         $text = [];
 
-        if (
-            $this->tokens->current->type === Token::T_WHITESPACE &&
-            $this->tokens->next()->type === Token::T_LABEL
-        ) {
-            $this->tokens->chomp();
-        }
-
         while ($this->tokens->current) {
             if ($this->tokens->current->type === Token::T_PHPDOC_CLOSE) {
                 break;
             }
-            if ($this->tokens->current->type === Token::T_ASTERISK) {
-                break;
-            }
-            if (str_contains($this->tokens->current->value, "\n")) {
+            if ($this->tokens->current->type === Token::T_TAG) {
                 break;
             }
             $text[] = $this->tokens->chomp();

@@ -9,7 +9,7 @@ use Phpactor\CodeTransform\Domain\ClassName;
 use Phpactor\CodeTransform\Domain\GenerateNew;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
-use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResponse;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\CreateFile;
 use Phpactor\LanguageServerProtocol\CreateFileOptions;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
@@ -34,7 +34,7 @@ class CreateClassCommand implements Command
     }
 
     /**
-     * @return Promise<ApplyWorkspaceEditResponse>
+     * @return Promise<ApplyWorkspaceEditResult>
      */
     public function __invoke(string $uri, string $transform): Promise
     {

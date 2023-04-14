@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
+use Generator;
 use Microsoft\PhpParser\FunctionLike;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
@@ -53,6 +54,22 @@ final class FrameResolver
 
     public function build(Node $node): Frame
     {
+        $generator = $this->walkNode($this->resolveScopeNode($node), $node);
+        foreach ($generator as $_) {
+        }
+
+        $frame = $generator->getReturn();
+        if (!$frame) {
+            throw new RuntimeException(
+                'Walker did not return a Frame, this should never happen'
+            );
+        }
+
+        return $frame;
+    }
+
+    public function buildGenerator(Node $node): Generator
+    {
         return $this->walkNode($this->resolveScopeNode($node), $node);
     }
 
@@ -73,47 +90,6 @@ final class FrameResolver
     public function reflector(): Reflector
     {
         return $this->nodeContextResolver->reflector();
-    }
-
-    public function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): ?Frame
-    {
-        if ($frame === null) {
-            $frame = new Frame($node->getNodeKindName());
-        }
-
-        foreach ($this->globalWalkers as $walker) {
-            $frame = $walker->enter($this, $frame, $node);
-        }
-
-        $nodeClass = get_class($node);
-
-        if (isset($this->nodeWalkers[$nodeClass])) {
-            foreach ($this->nodeWalkers[$nodeClass] as $walker) {
-                $frame = $walker->enter($this, $frame, $node);
-            }
-        }
-
-        foreach ($node->getChildNodes() as $childNode) {
-            if ($found = $this->walkNode($childNode, $targetNode, $frame)) {
-                return $found;
-            }
-        }
-
-        foreach ($this->globalWalkers as $walker) {
-            $frame = $walker->exit($this, $frame, $node);
-        }
-
-        // if we found what we were looking for then return it
-        if ($node === $targetNode) {
-            return $frame;
-        }
-
-        // we start with the source node and we finish with the source node.
-        if ($node instanceof SourceFileNode) {
-            return $frame;
-        }
-
-        return null;
     }
 
     public function withWalker(Walker $walker): self
@@ -143,6 +119,59 @@ final class FrameResolver
     public function resolver(): NodeContextResolver
     {
         return $this->nodeContextResolver;
+    }
+
+    /**
+     * @return Generator<int,null,null,?Frame>
+     */
+    private function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): Generator
+    {
+        if ($frame === null) {
+            $frame = new Frame();
+        }
+
+        foreach ($this->globalWalkers as $walker) {
+            $frame = $walker->enter($this, $frame, $node);
+        }
+
+        $nodeClass = get_class($node);
+
+        if (isset($this->nodeWalkers[$nodeClass])) {
+            foreach ($this->nodeWalkers[$nodeClass] as $walker) {
+                $frame = $walker->enter($this, $frame, $node);
+            }
+        }
+
+        foreach ($node->getChildNodes() as $childNode) {
+            $generator = $this->walkNode($childNode, $targetNode, $frame);
+            yield from $generator;
+            if ($found = $generator->getReturn()) {
+                return $found;
+            }
+            yield;
+        }
+
+        if (isset($this->nodeWalkers[$nodeClass])) {
+            foreach ($this->nodeWalkers[$nodeClass] as $walker) {
+                $frame = $walker->exit($this, $frame, $node);
+            }
+        }
+
+        foreach ($this->globalWalkers as $walker) {
+            $frame = $walker->exit($this, $frame, $node);
+        }
+
+        // if we found what we were looking for then return it
+        if ($node === $targetNode) {
+            return $frame;
+        }
+
+        // we start with the source node and we finish with the source node.
+        if ($node instanceof SourceFileNode) {
+            return $frame;
+        }
+
+        return null;
     }
 
     private function resolveScopeNode(Node $node): Node

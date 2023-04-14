@@ -1,3 +1,4 @@
 docutils==0.18.1
 sphinx==5.0.0
 sphinx-tabs==3.4.1
+sphinx-autobuild==2021.3.14

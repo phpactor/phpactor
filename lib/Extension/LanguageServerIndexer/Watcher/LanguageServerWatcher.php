@@ -48,7 +48,7 @@ class LanguageServerWatcher implements Watcher, WatcherProcess, ListenerProvider
         }
 
         return new Success(
-            (bool)($this->clientCapabilities->workspace['didChangeWatchedFiles'] ?? false)
+            (bool)($this->clientCapabilities?->workspace?->didChangeWatchedFiles ?? false)
         );
     }
 

@@ -46,7 +46,7 @@ class LimitingCompletorTest extends TestCase
             ByteOffset::fromInt(self::EXAMPLE_OFFSET)
         );
 
-        $this->assertCount(0, $suggestions);
+        $this->assertCount(0, iterator_to_array($suggestions, false));
         $this->assertTrue($suggestions->getReturn());
     }
 
@@ -66,7 +66,7 @@ class LimitingCompletorTest extends TestCase
             ByteOffset::fromInt(self::EXAMPLE_OFFSET)
         );
 
-        $this->assertCount(3, $suggestions);
+        $this->assertCount(3, iterator_to_array($suggestions, false));
         $this->assertTrue($suggestions->getReturn());
     }
 
@@ -86,7 +86,7 @@ class LimitingCompletorTest extends TestCase
             ByteOffset::fromInt(self::EXAMPLE_OFFSET)
         );
 
-        $this->assertCount(2, $suggestions);
+        $this->assertCount(2, iterator_to_array($suggestions, false));
         $this->assertFalse($suggestions->getReturn());
     }
 
@@ -106,7 +106,7 @@ class LimitingCompletorTest extends TestCase
             ByteOffset::fromInt(self::EXAMPLE_OFFSET)
         );
 
-        $this->assertCount(3, $suggestions);
+        $this->assertCount(3, iterator_to_array($suggestions, false));
         $this->assertFalse($suggestions->getReturn());
     }
 

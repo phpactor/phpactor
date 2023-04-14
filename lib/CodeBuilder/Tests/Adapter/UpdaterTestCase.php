@@ -2,7 +2,9 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
+use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -20,9 +22,12 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideClassImport()
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
+    public function provideClassImport(): Generator
     {
-        yield 'It does nothing when given an empty source code protoytpe' => [
+        yield 'It does nothing when given an empty source code prototype' => [
 
                 <<<'EOT'
                     class Aardvark
@@ -410,8 +415,10 @@ abstract class UpdaterTestCase extends TestCase
                     EOT
             ];
     }
-
-    public function provideFunctionImport()
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
+    public function provideFunctionImport(): Generator
     {
         yield 'It adds use function statements' => [
 
@@ -503,7 +510,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideClasses()
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
+    public function provideClasses(): Generator
     {
         yield 'It does nothing when prototype has only the class' => [
 
@@ -717,7 +727,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideTraits()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideTraits(): Generator
     {
         yield 'It does nothing when prototype has only the trait' => [
 
@@ -833,7 +846,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideProperties()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideProperties(): Generator
     {
         yield 'It adds a property' => [
                 <<<'EOT'
@@ -1052,7 +1068,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideTraitProperties()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideTraitProperties(): Generator
     {
         yield 'trait: It adds a property' => [
                 <<<'EOT'
@@ -1218,8 +1237,10 @@ abstract class UpdaterTestCase extends TestCase
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
-
-    public function provideMethods()
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
+    public function provideMethods(): Generator
     {
         yield 'It adds a method' => [
                 <<<'EOT'
@@ -1267,6 +1288,56 @@ abstract class UpdaterTestCase extends TestCase
                     }
                     EOT
             ];
+
+        yield 'It generates a constructor' => [
+            <<<'EOT'
+                EOT,
+            SourceCodeBuilder::create()
+            ->class('Foo')
+                ->method('__construct')
+                    ->parameter('config')
+                        ->type('int')
+                    ->end()
+                ->end()
+            ->end()
+            ->build(),
+            <<<'EOT'
+
+                class Foo
+                {
+                    public function __construct(int $config)
+                    {
+                    }
+                }
+                EOT
+        ];
+
+        yield 'It generates a constructor with promoted properties' => [
+            <<<'EOT'
+                class Foo
+                {
+                }
+                EOT,
+            SourceCodeBuilder::create()
+                ->class('Foo')
+                    ->method('__construct')
+                        ->parameter('config')
+                            ->type('int')
+                            ->visibility(Visibility::private())
+                        ->end()
+                    ->end()
+                ->end()
+                ->build(),
+            <<<'EOT'
+                class Foo
+                {
+                    public function __construct(private int $config)
+                    {
+                    }
+
+                }
+                EOT
+        ];
 
         yield 'It adds parameterized method' => [
                 <<<'EOT'
@@ -1608,7 +1679,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideConstants()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideConstants(): Generator
     {
         yield 'It adds a constant' => [
                 <<<'EOT'
@@ -1747,7 +1821,10 @@ abstract class UpdaterTestCase extends TestCase
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideInterfaces()
+    /**
+     * @return Generator<string, array{string, SourceCode, string}>
+     */
+    public function provideInterfaces(): Generator
     {
         yield 'It adds an interface' => [
 
@@ -1793,8 +1870,10 @@ abstract class UpdaterTestCase extends TestCase
                     EOT
             ];
     }
-
-    public function provideMethodParameters()
+    /**
+     * @return Generator<string,array{string,SourceCode,string}>
+     */
+    public function provideMethodParameters(): Generator
     {
         yield 'It adds parameters' => [
                 <<<'EOT'

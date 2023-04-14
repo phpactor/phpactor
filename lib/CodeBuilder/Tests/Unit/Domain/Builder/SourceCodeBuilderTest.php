@@ -26,7 +26,7 @@ class SourceCodeBuilderTest extends TestCase
         $this->assertTrue($builder->isModified(), 'method has been modified since last snapshot');
     }
 
-    public function provideModificationTracking()
+    public function provideModificationTracking(): Generator
     {
         yield 'new builder is modified by default' => [
             function (SourceCodeBuilder $builder): void {
@@ -254,42 +254,42 @@ class SourceCodeBuilderTest extends TestCase
         $assertion($method);
     }
 
-    public function provideMethodBuilder()
+    /** @return Generator<string, array{0: MethodBuilder, 1: Closure}> */
+    public function provideMethodBuilder(): Generator
     {
-        return [
-            'Method return type' => [
-                $this->builder()->class('Dog')->method('one')
+        yield 'Method return type' => [
+            $this->builder()->class('Dog')->method('one')
                 ->returnType('?string')
                 ->visibility('private')
                 ->parameter('one')
                 ->type('One')
                 ->defaultValue(1)
                 ->end(),
-                function (Method $method): void {
-                    $this->assertEquals('?string', $method->returnType()->__toString());
-                }
-        ],
-            'Method mofifiers 1' => [
-                $this->builder()->class('Dog')->method('one')->static()->abstract(),
-                function ($method): void {
-                    $this->assertTrue($method->isStatic());
-                    $this->assertTrue($method->isAbstract());
-                }
-        ],
-            'Method mofifiers 2' => [
-                $this->builder()->class('Dog')->method('one')->abstract(),
-                function ($method): void {
-                    $this->assertFalse($method->isStatic());
-                    $this->assertTrue($method->isAbstract());
-                }
-        ],
-            'Method lines' => [
-                $this->builder()->class('Dog')->method('one')->body()->line('one')->line('two')->end(),
-                function ($method): void {
-                    $this->assertCount(2, $method->body()->lines());
-                    $this->assertEquals('one', (string) $method->body()->lines()->first());
-                }
-        ],
+            function (Method $method): void {
+                $this->assertEquals('?string', $method->returnType()->__toString());
+            }
+        ];
+
+        yield 'One method modifier' => [
+            $this->builder()->class('Dog')->method('one')->static()->abstract(),
+            function ($method): void {
+                $this->assertTrue($method->isStatic());
+                $this->assertTrue($method->isAbstract());
+            }
+        ];
+        yield 'Two method modifiers' => [
+            $this->builder()->class('Dog')->method('one')->abstract(),
+            function ($method): void {
+                $this->assertFalse($method->isStatic());
+                $this->assertTrue($method->isAbstract());
+            }
+        ];
+        yield 'Method lines' => [
+            $this->builder()->class('Dog')->method('one')->body()->line('one')->line('two')->end(),
+            function ($method): void {
+                $this->assertCount(2, $method->body()->lines());
+                $this->assertEquals('one', (string) $method->body()->lines()->first());
+            }
         ];
     }
 
@@ -305,11 +305,5 @@ class SourceCodeBuilderTest extends TestCase
     private function builder(): SourceCodeBuilder
     {
         return SourceCodeBuilder::create();
-    }
-
-    private function assertInstanceOfAndPopNode($className, Generator $nodes): void
-    {
-        $this->assertInstanceOf($className, $nodes->current());
-        $nodes->next();
     }
 }

@@ -1,8 +1,0 @@
-{
-  "name": "phpactor/completion-worse-extension",
-  "prototype": "default",
-  "args": {},
-  "vars": {
-    "version": "0.1.2"
-  }
-}

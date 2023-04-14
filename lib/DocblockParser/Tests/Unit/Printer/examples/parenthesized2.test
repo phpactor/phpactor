@@ -8,10 +8,11 @@ Docblock: =
  * 
   ParamTag: = @param
    GenericNode: = 
-    ArrayNode: = <
+    ArrayNode: = array<
     TypeList: = 
      ScalarNode: = int>
    VariableNode: = $arrayOfInt
+   TextNode: = 
  * 
   ParamTag: = @param
    UnionNode: = 
@@ -27,4 +28,5 @@ Docblock: =
          ScalarNode: = string|
          ScalarNode: = int)
    VariableNode: = $callableOrNull
+   TextNode: = 
  */

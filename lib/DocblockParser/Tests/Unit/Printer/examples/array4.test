@@ -1,0 +1,11 @@
+/** @param string[][][] $variable */
+---
+Docblock: = 
+ ElementList: = /** 
+  ParamTag: = @param
+   ListBracketsNode: = 
+    ListBracketsNode: = 
+     ListBracketsNode: = 
+      ScalarNode: = string[][][]
+   VariableNode: = $variable
+   TextNode: =  */

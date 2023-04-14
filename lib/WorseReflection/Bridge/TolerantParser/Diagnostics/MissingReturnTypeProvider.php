@@ -62,6 +62,10 @@ class MissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
+        if ($method->name() === '__destruct') {
+            return;
+        }
+
         if ($method->type()->isDefined()) {
             return;
         }

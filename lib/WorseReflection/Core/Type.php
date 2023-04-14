@@ -6,7 +6,6 @@ use Closure;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
-use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
@@ -38,18 +37,30 @@ abstract class Type
     abstract public function accepts(Type $type): Trinary;
 
     /**
-     * @return Types<Type&ClassLikeType>
+     * Return a collection of first-class types.
+     *
+     * If this type is an aggregate this method will
+     * return a collection types of that aggregate or intersection type.
+     *
+     * @return Types<Type>
      */
-    public function classLikeTypes(): Types
+    public function expandTypes(): Types
     {
-        // @phpstan-ignore-next-line no support for conditional types https://github.com/phpstan/phpstan/issues/3853
-        return $this->toTypes()->filter(fn (Type $type) => $type instanceof ClassLikeType);
+        /** @phpstan-ignore-next-line */
+        return new Types([$this]);
     }
 
     /**
+     * Return ALL types referenced in this type.
+     *
+     * For example:
+     *
+     * - `MyGeneric<One,string,int>`: Will Return `MyGeneric`, `One`, `string` and `int`.
+     * - `MyClass`: Will return `MyClass`.
+     * - `Closure(Foobar,int): float`: Will return `Closure` (as a "class" type), `Foobar`, `int` and `float` `
      * @return Types<Type>
      */
-    public function toTypes(): Types
+    public function allTypes(): Types
     {
         /** @phpstan-ignore-next-line */
         return new Types([$this]);
@@ -226,5 +237,16 @@ abstract class Type
     public function consumes(Type $type2): Trinary
     {
         return Trinary::maybe();
+    }
+
+    /**
+     * If the type has been augmented with more information
+     * than a standard PHP type (e.g. typed arrays, generics, closures, etc).
+     *
+     * For example augmented types should have a php doc.
+     */
+    public function isAugmented(): bool
+    {
+        return $this->isDefined() && !$this->isPrimitive() && $this->__toString() !== $this->toPhpString();
     }
 }

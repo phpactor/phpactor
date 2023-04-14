@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
@@ -48,24 +49,28 @@ abstract class GeneratorTestCase extends TestCase
         $this->assertEquals(rtrim(Code::fromString($expectedCode), PHP_EOL), rtrim($code, PHP_EOL));
     }
 
-    public function provideRender()
+    /**
+     * @return Generator<string, array{Prototype, string}>
+     */
+    public function provideRender(): Generator
     {
-        return [
-            'Renders an empty PHP file' => [
-                new SourceCode(),
-                '<?php',
-            ],
-            'Renders a PHP file with a namespace' => [
-                new SourceCode(
-                    NamespaceName::fromString('Acme')
-                ),
-                <<<'EOT'
-                    <?php
+        yield 'Renders an empty PHP file' => [
+            new SourceCode(),
+            '<?php',
+        ];
 
-                    namespace Acme;
-                    EOT
-            ],
-            'Renders source code with classes' => [
+        yield 'Renders a PHP file with a namespace' => [
+            new SourceCode(
+                NamespaceName::fromString('Acme')
+            ),
+            <<<'EOT'
+                <?php
+
+                namespace Acme;
+                EOT
+        ];
+
+        yield 'Renders source code with classes' => [
                 new SourceCode(
                     NamespaceName::root(),
                     UseStatements::empty(),
@@ -82,8 +87,9 @@ abstract class GeneratorTestCase extends TestCase
                     {
                     }
                     EOT
-            ],
-            'Renders source code with interfacess' => [
+            ];
+
+        yield 'Renders source code with interfaces' => [
                 new SourceCode(
                     NamespaceName::root(),
                     UseStatements::empty(),
@@ -101,8 +107,9 @@ abstract class GeneratorTestCase extends TestCase
                     {
                     }
                     EOT
-            ],
-            'Renders source code with traits' => [
+        ];
+
+        yield 'Renders source code with traits' => [
                 new SourceCode(
                     NamespaceName::root(),
                     UseStatements::empty(),
@@ -121,31 +128,31 @@ abstract class GeneratorTestCase extends TestCase
                     {
                     }
                     EOT
-        ],
-            'Renders source code with use statements' => [
-                new SourceCode(
-                    NamespaceName::root(),
-                    UseStatements::fromUseStatements([
-                        UseStatement::fromType('Acme\Post\Board'),
-                        UseStatement::fromType('Acme\Post\Zebra')
-                    ])
-                ),
-                <<<'EOT'
-                    <?php
+        ];
+        yield 'Renders source code with use statements' => [
+                        new SourceCode(
+                            NamespaceName::root(),
+                            UseStatements::fromUseStatements([
+                                UseStatement::fromType('Acme\Post\Board'),
+                                UseStatement::fromType('Acme\Post\Zebra')
+                            ])
+                        ),
+                        <<<'EOT'
+                            <?php
 
-                    use Acme\Post\Board;
-                    use Acme\Post\Zebra;
-                    EOT
-            ],
-            'Renders a class' => [
+                            use Acme\Post\Board;
+                            use Acme\Post\Zebra;
+                            EOT
+                    ];
+        yield 'Renders a class' => [
                 new ClassPrototype('Dog'),
                 <<<'EOT'
                     class Dog
                     {
                     }
                     EOT
-            ],
-            'Renders a class with properties' => [
+            ];
+        yield 'Renders a class with properties' => [
                 new ClassPrototype(
                     'Dog',
                     Properties::fromProperties([
@@ -158,20 +165,20 @@ abstract class GeneratorTestCase extends TestCase
                         public $planes;
                     }
                     EOT
-            ],
-            'Renders a property' => [
+            ];
+        yield 'Renders a property' => [
                 new Property('planes'),
                 <<<'EOT'
                     public $planes;
                     EOT
-            ],
-            'Renders private properties with default value' => [
+            ];
+        yield 'Renders private properties with default value' => [
                 new Property('trains', Visibility::private(), DefaultValue::null()),
                 <<<'EOT'
                     private $trains = null;
                     EOT
-            ],
-            'Renders a class with constants' => [
+            ];
+        yield 'Renders a class with constants' => [
                 new ClassPrototype(
                     'Dog',
                     Properties::empty(),
@@ -185,8 +192,8 @@ abstract class GeneratorTestCase extends TestCase
                         const AAA = 'aaa';
                     }
                     EOT
-            ],
-            'Renders a class with methods' => [
+            ];
+        yield 'Renders a class with methods' => [
                 new ClassPrototype(
                     'Dog',
                     Properties::empty(),
@@ -203,8 +210,8 @@ abstract class GeneratorTestCase extends TestCase
                         }
                     }
                     EOT
-            ],
-            'Renders a class method with a body' => [
+            ];
+        yield 'Renders a class method with a body' => [
                 new ClassPrototype(
                     'Dog',
                     Properties::empty(),
@@ -232,8 +239,8 @@ abstract class GeneratorTestCase extends TestCase
                         }
                     }
                     EOT
-            ],
-            'Renders a method parameters' => [
+            ];
+        yield 'Renders a method parameters' => [
                 new Method('hello', Visibility::private(), Parameters::fromParameters([
                     new Parameter('one'),
                     new Parameter('two', Type::fromString('string')),
@@ -242,24 +249,24 @@ abstract class GeneratorTestCase extends TestCase
                 <<<'EOT'
                     private function hello($one, string $two, $three = 42)
                     EOT
-            ],
-            'Renders a method nullable parameter' => [
+            ];
+        yield 'Renders a method nullable parameter' => [
                 new Method('hello', Visibility::private(), Parameters::fromParameters([
                     new Parameter('two', Type::fromString('?string')),
                 ])),
                 <<<'EOT'
                     private function hello(?string $two)
                     EOT
-            ],
-            'Renders a method parameter passed as a reference' => [
+            ];
+        yield 'Renders a method parameter passed as a reference' => [
                 new Method('hello', Visibility::private(), Parameters::fromParameters([
                     new Parameter('three', Type::none(), DefaultValue::none(), true),
                 ])),
                 <<<'EOT'
                     private function hello(&$three)
                     EOT
-            ],
-            'Renders static method' => [
+            ];
+        yield 'Renders static method' => [
                 new Method(
                     'hello',
                     Visibility::private(),
@@ -271,8 +278,8 @@ abstract class GeneratorTestCase extends TestCase
                 <<<'EOT'
                     private static function hello()
                     EOT
-            ],
-            'Renders abstract method' => [
+            ];
+        yield 'Renders abstract method' => [
                 new Method(
                     'hello',
                     Visibility::private(),
@@ -284,8 +291,8 @@ abstract class GeneratorTestCase extends TestCase
                 <<<'EOT'
                     abstract private function hello()
                     EOT
-            ],
-            'Renders method with a docblock' => [
+            ];
+        yield 'Renders method with a docblock' => [
                 new Method(
                     'hello',
                     Visibility::private(),
@@ -299,8 +306,8 @@ abstract class GeneratorTestCase extends TestCase
                      */
                     private function hello()
                     EOT
-            ],
-            'Renders method with a with special chars' => [
+            ];
+        yield 'Renders method with a with special chars' => [
                 new Method(
                     'hello',
                     Visibility::private(),
@@ -314,8 +321,8 @@ abstract class GeneratorTestCase extends TestCase
                      */
                     private function hello()
                     EOT
-            ],
-            'Renders method return type' => [
+            ];
+        yield 'Renders method return type' => [
                 new Method(
                     'hello',
                     Visibility::private(),
@@ -325,8 +332,8 @@ abstract class GeneratorTestCase extends TestCase
                 <<<'EOT'
                     private function hello(): Hello
                     EOT
-            ],
-            'Renders method nullable return type' => [
+            ];
+        yield 'Renders method nullable return type' => [
                 new Method(
                     'hello',
                     Visibility::private(),
@@ -336,8 +343,8 @@ abstract class GeneratorTestCase extends TestCase
                 <<<'EOT'
                     private function hello(): ?Hello
                     EOT
-            ],
-            'Renders a class with a parent' => [
+            ];
+        yield 'Renders a class with a parent' => [
                 new ClassPrototype(
                     'Kitten',
                     Properties::empty(),
@@ -350,8 +357,8 @@ abstract class GeneratorTestCase extends TestCase
                     {
                     }
                     EOT
-            ],
-            'Renders a class with interfaces' => [
+            ];
+        yield 'Renders a class with interfaces' => [
                 new ClassPrototype(
                     'Kitten',
                     Properties::empty(),
@@ -368,8 +375,8 @@ abstract class GeneratorTestCase extends TestCase
                     {
                     }
                     EOT
-            ],
-            'Renders a property with a comment' => [
+            ];
+        yield 'Renders a property with a comment' => [
                 new Property(
                     'planes',
                     Visibility::public(),
@@ -382,16 +389,16 @@ abstract class GeneratorTestCase extends TestCase
                      */
                     public $planes;
                     EOT
-            ],
-            'Renders an interface' => [
+            ];
+        yield 'Renders an interface' => [
                 new InterfacePrototype('Dog'),
                 <<<'EOT'
                     interface Dog
                     {
                     }
                     EOT
-            ],
-            'Renders an interface with methods' => [
+            ];
+        yield 'Renders an interface with methods' => [
                 new InterfacePrototype('Dog', Methods::fromMethods([
                     new Method('hello'),
                 ])),
@@ -401,45 +408,47 @@ abstract class GeneratorTestCase extends TestCase
                         public function hello();
                     }
                     EOT
-            ],
-            'Renders a trait' => [
-                new TraitPrototype(
-                    'Butterfly'
-                ),
-                <<<'EOT'
-                    trait Butterfly
-                    {
-                    }
-                    EOT
-            ],
-            'Renders a trait with properties' => [
-                new TraitPrototype(
-                    'Butterfly',
-                    Properties::fromProperties([ new Property('colour') ])
-                ),
-                <<<'EOT'
-                    trait Butterfly
-                    {
-                        public $colour;
-                    }
-                    EOT
-            ],
-            'Renders a trait with constants' => [
-                new TraitPrototype(
-                    'Butterfly',
-                    Properties::empty(),
-                    Constants::fromConstants([
-                        new Constant('WAS_CATERPILLAR', Value::fromValue(true)),
-                    ])
-                ),
-                <<<'EOT'
-                    trait Butterfly
-                    {
-                        const WAS_CATERPILLAR = true;
-                    }
-                    EOT
-            ],
-            'Renders a trait with methods' => [
+            ];
+        yield 'Renders a trait' => [
+            new TraitPrototype(
+                'Butterfly'
+            ),
+            <<<'EOT'
+                trait Butterfly
+                {
+                }
+                EOT
+        ];
+
+        yield 'Renders a trait with properties' => [
+            new TraitPrototype(
+                'Butterfly',
+                Properties::fromProperties([ new Property('colour') ])
+            ),
+            <<<'EOT'
+                trait Butterfly
+                {
+                    public $colour;
+                }
+                EOT
+        ];
+
+        yield 'Renders a trait with constants' => [
+            new TraitPrototype(
+                'Butterfly',
+                Properties::empty(),
+                Constants::fromConstants([
+                    new Constant('WAS_CATERPILLAR', Value::fromValue(true)),
+                ])
+            ),
+            <<<'EOT'
+                trait Butterfly
+                {
+                    const WAS_CATERPILLAR = true;
+                }
+                EOT
+        ];
+        yield 'Renders a trait with methods' => [
                 new TraitPrototype(
                     'Butterfly',
                     Properties::empty(),
@@ -456,36 +465,36 @@ abstract class GeneratorTestCase extends TestCase
                         }
                     }
                     EOT
-            ],
-            'Renders a trait method with a body' => [
-                new TraitPrototype(
-                    'Butterfly',
-                    Properties::empty(),
-                    Constants::empty(),
-                    Methods::fromMethods([
-                        new Method(
-                            'hello',
-                            null,
-                            Parameters::empty(),
-                            ReturnType::none(),
-                            Docblock::none(),
-                            0,
-                            MethodBody::fromLines([
-                                Line::fromString('$this->foobar = $barfoo;'),
-                            ])
-                        ),
-                    ])
-                ),
-                <<<'EOT'
-                    trait Butterfly
+        ];
+
+        yield 'Renders a trait method with a body' => [
+            new TraitPrototype(
+                'Butterfly',
+                Properties::empty(),
+                Constants::empty(),
+                Methods::fromMethods([
+                    new Method(
+                        'hello',
+                        null,
+                        Parameters::empty(),
+                        ReturnType::none(),
+                        Docblock::none(),
+                        0,
+                        MethodBody::fromLines([
+                            Line::fromString('$this->foobar = $barfoo;'),
+                        ])
+                    ),
+                ])
+            ),
+            <<<'EOT'
+                trait Butterfly
+                {
+                    public function hello()
                     {
-                        public function hello()
-                        {
-                            $this->foobar = $barfoo;
-                        }
+                        $this->foobar = $barfoo;
                     }
-                    EOT
-            ],
+                }
+                EOT
         ];
     }
 

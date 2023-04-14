@@ -47,7 +47,6 @@ class ClassUpdater extends ClassLikeUpdater
             }
 
             if ($memberNode instanceof ClassConstDeclaration) {
-                /** @var ConstDeclaration $memberNode */
                 foreach ($memberNode->constElements->getElements() as $variable) {
                     $existingConstantNames[] = $variable->getName();
                 }
@@ -74,9 +73,6 @@ class ClassUpdater extends ClassLikeUpdater
         }
     }
 
-    /**
-     * @return Node[]
-     */
     protected function memberDeclarations(Node $node): array
     {
         return $node->classMemberDeclarations;

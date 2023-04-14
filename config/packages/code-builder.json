@@ -1,9 +1,0 @@
-{
-  "name": "phpactor/code-builder",
-  "vars": {
-    "version": "0.3.0",
-    "phpstan_level": 1
-  },
-  "prototype": "default",
-  "args": {}
-}

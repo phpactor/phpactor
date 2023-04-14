@@ -87,7 +87,7 @@ class IncludeWalker implements Walker
     {
         $return = $sourceNode->getFirstDescendantNode(ReturnStatement::class);
         assert($return instanceof ReturnStatement);
-        $returnValueContext = $resolver->resolveNode($frame->new('required'), $return->expression);
+        $returnValueContext = $resolver->resolveNode($frame->new(), $return->expression);
 
         if (!$parentNode->leftOperand instanceof Variable) {
             return $frame;

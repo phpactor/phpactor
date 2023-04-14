@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionObjectCreationExpression as PhpactorReflectionObjectCreationExpression;
@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope as TolerantReflectionScope;
 
-class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCreationExpression
+class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCreationExpression, ClassInvocation
 {
     public function __construct(
         private ServiceLocator $locator,
@@ -28,10 +28,9 @@ class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCrea
         return new TolerantReflectionScope($this->locator->reflector(), $this->node);
     }
 
-    public function position(): Position
+    public function position(): ByteOffsetRange
     {
-        return Position::fromFullStartStartAndEnd(
-            $this->node->getFullStartPosition(),
+        return ByteOffsetRange::fromInts(
             $this->node->getStartPosition(),
             $this->node->getEndPosition()
         );
@@ -39,7 +38,7 @@ class ReflectionObjectCreationExpression implements PhpactorReflectionObjectCrea
 
     public function class(): ReflectionClassLike
     {
-        $type = $this->locator->symbolContextResolver()->resolveNode($this->frame, $this->node->classTypeDesignator)->type();
+        $type = $this->locator->nodeContextResolver()->resolveNode($this->frame, $this->node->classTypeDesignator)->type();
 
         if (!$type instanceof ReflectedClassType) {
             throw new CouldNotResolveNode(sprintf('Expceted "%s" but got "%s"', ReflectedClassType::class, get_class($type)));

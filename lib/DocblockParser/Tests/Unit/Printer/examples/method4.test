@@ -12,4 +12,5 @@ Docblock: =
      ScalarNode: = string
      VariableNode: = $value
      NullValue: = )
+   TextNode: = 
  */

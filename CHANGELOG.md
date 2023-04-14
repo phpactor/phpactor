@@ -3,6 +3,95 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - Specify maximimum size (255 chars) for string literal types #2144
+
+## 2023.04.10
+
+Features:
+
+  - Show references to new objects when finding references to `__construct` method #2194
+  - Support for inlay hints #2138
+  - Deprecation diagnostics #2120
+  - Auto configuration - automatically suggest and apply configuration #2114
+  - Transform to "promote" unassigned consturctor properties #2106
+  - Hierarchical namespace segment completion #2070
+  - Completion for promoted property visiblity #2087
+  - Option `language_server.diagnostic_outsource` to outsource diagnostics in separate process #2105
+
+Bug fixes:
+
+  - Also use in-memory files when enanching indexed records #2187
+  - Prophecy: Do not crash when used in trait #2129
+  - Prophecy: fixing chaining of methods via. `getObjectProphecy` #2122
+  - `new class-string<Foo>` now resolves to `new Foo` #2065
+  - Fix extract method within trait #2076 @mamazu
+  - Do not attempt to index classes whose names are reserved words #2098
+  - Fix typo in LanguageServerExtension::PARAM_FILE_EVENTS resulting in typo in documentation
+  - Fix parsing array types in `@param` Tags in doc blocks #2172
+
+Improvements:
+
+  - Only show completion suggestions for real attributes #2183, #2100 @mamazu @przepompownia
+  - Code action and formatting handlers now send progress notifications #2192
+  - Invalidate diagnostics cache only when document changes #2191
+  - Optimize analysis for scopes with many many assignments #2188
+  - Made some heavy blocking operations non-blocking (e.g. diagnostics, code
+    actions).
+  - ⚠ Removed frame sorting which increases radically in some cases, but may
+    also cause regressions #2179
+  - Psalm: Support for overriding the error level #2174
+  - Generating constructor at the top of the file #2113 @mamazu
+  - Include (complex) docblock params when generating method
+  - Take into account named parameters when "guessing" parameter names #2090
+  - Show full FQN for classes in hover #2081
+  - Upgrade to 3.17 of the language server protocol #2082
+  - Facilitate changing visiblity on promoted properties @mamazu
+  - Allow generation of constructor for Attributes.
+
+## 2023.01.21
+
+Bug fixes:
+
+  - Allow class completion within constant declaration in class #1985 @przepompownia
+  - Do not suggest return type on `__destruct` #1992
+  - Do not report Prophecy methods as "not found" #2006
+  - Do not add NULL to type list (fixes search bug) #2009
+  - Create a real package for the tolerant-parser fork and use it #2033
+  - Also highlight use statements when hovering on class #2039 @mamazu
+  - Fix priotity of "internal" stub locator - facilitating enum completion #2040
+  - Require posix extension #2042 @dacianb
+  - Fix evaluation of replacement assignments #1705
+  - Fix crash on missing token in Indexer #2049 @vlada-dudr
+  - Fix missing compact use name false positive #2052
+  - Fix `class-template<T>` when not in 1st arg position #2054
+
+Features:
+
+  - `@param` docblock generation
+  - Reintroduce the PHPUnit extension
+  - Support integer range type e.g. `int<0, max>` #2024
+
+Improvements:
+
+  - Support the Psalm cache #2046 @gbprod
+  - Support completion inside match expression #2051 @przepompownia
+  - Fixed typos in documentation #2050 @d-danilov
+  - Psalm Extension: allow `info` diagnostics to be hidden #2032 @gbprod
+  - Better docblock parsing and formatting #2004
+  - More liberal support for vendor tags #2011 @ging-dev
+  - Fix nested template type arguments #2016
+  - Fix importing of nested types #2009
+  - Reverts #1974 - which made the situation worse rather than better.
+  - Change default WR cache TTL from 5 seconds to 1 second to avoid race with
+    diagnostics timeout.
+  - Add return tags to existing docblocks #1995
+  - Naive support for attribute completion #2001 @przepompownia
+  - Support union type from class-string variadic generic
+
+## 2022.12.12
+
 Breaking changes:
 
   - Minimum version of PHP changed to 8.0. **Phpactor will no longer run on PHP 7.4**.

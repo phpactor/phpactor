@@ -1,0 +1,37 @@
+<?php
+
+namespace Bar;
+
+/**
+ * @template T
+ * @extends IteratorAggregate<T>
+ */
+interface Collection
+{
+    /**
+     * @return T
+     */
+    public function get();
+}
+
+/**
+ * @template T
+ */
+class Test
+{
+    /**
+     * @param T $foo
+     */
+    public function __construct($foo)
+    {
+    }
+    /**
+     * @return Collection<T>
+     */
+    public function foobar(): Collection
+    {
+    }
+}
+
+$foo = new Test(new \stdClass());
+wrAssertType('stdClass', $foo->foobar()->get());

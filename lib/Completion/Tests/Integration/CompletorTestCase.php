@@ -37,7 +37,7 @@ abstract class CompletorTestCase extends IntegrationTestCase
             TextDocumentBuilder::create($source)->language('php')->uri('file:///tmp/test')->build(),
             ByteOffset::fromInt((int)$offset)
         );
-        $suggestions = iterator_to_array($suggestionGenerator);
+        $suggestions = iterator_to_array($suggestionGenerator, false);
         usort($suggestions, function (Suggestion $suggestion1, Suggestion $suggestion2) {
             return $suggestion1->name() <=> $suggestion2->name();
         });
@@ -45,7 +45,6 @@ abstract class CompletorTestCase extends IntegrationTestCase
         $this->assertCount(count($expected), $suggestions);
         foreach ($expected as $index => $expectedSuggestion) {
             $actual = $suggestions[$index]->toArray();
-            /** @phpstan-ignore-next-line */
             $this->assertArraySubset($expectedSuggestion, $actual);
             if (array_key_exists('snippet', $expectedSuggestion) === false) {
                 self::assertEmpty($actual['snippet'], 'got unexpected snippet "' . $actual['snippet'] . '"');

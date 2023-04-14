@@ -6,6 +6,8 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -89,7 +91,14 @@ class CallExpressionResolver implements Resolver
 
         if ($context->symbol()->symbolType() === Symbol::FUNCTION) {
             $function = $resolver->reflector()->reflectFunction($context->symbol()->name());
-            return $context->withType($type->evaluate(
+            return (new FunctionCallContext(
+                $context->symbol(),
+                ByteOffsetRange::fromInts(
+                    $node->getStartPosition(),
+                    $node->getEndPosition()
+                ),
+                $function
+            ))->withType($type->evaluate(
                 $function,
                 FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
             ));

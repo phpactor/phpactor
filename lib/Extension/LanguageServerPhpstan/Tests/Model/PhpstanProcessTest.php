@@ -43,15 +43,15 @@ class PhpstanProcessTest extends IntegrationTestCase
         yield [
             '<?php $foobar = $barfoo;',
             [
-                Diagnostic::fromArray([
-                    'range' => new Range(
+                new Diagnostic(
+                    range: new Range(
                         new Position(0, 1),
                         new Position(0, 100)
                     ),
-                    'message' => 'Variable $barfoo might not be defined.',
-                    'severity' => DiagnosticSeverity::ERROR,
-                    'source' => 'phpstan'
-                ])
+                    message: 'Variable $barfoo might not be defined.',
+                    severity: DiagnosticSeverity::ERROR,
+                    source: 'phpstan'
+                )
             ]
         ];
     }

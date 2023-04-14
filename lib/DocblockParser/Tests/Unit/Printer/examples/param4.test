@@ -7,4 +7,5 @@ Docblock: =
  * 
   ParamTag: = @param
    ScalarNode: = bool
+   TextNode: = 
  */

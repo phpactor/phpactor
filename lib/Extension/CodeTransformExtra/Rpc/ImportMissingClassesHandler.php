@@ -11,6 +11,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameDiagnostic;
 use Phpactor\WorseReflection\Reflector;
+use function Amp\Promise\wait;
 
 class ImportMissingClassesHandler implements Handler
 {
@@ -36,7 +37,7 @@ class ImportMissingClassesHandler implements Handler
             $arguments[self::PARAM_SOURCE]
         )->language('php')->uri($arguments[self::PARAM_PATH])->build();
 
-        $diagnostics = $this->reflector->diagnostics($arguments[self::PARAM_SOURCE])->byClass(UnresolvableNameDiagnostic::class);
+        $diagnostics = wait($this->reflector->diagnostics($document))->byClass(UnresolvableNameDiagnostic::class);
 
         $responses = [];
         foreach ($diagnostics as $unresolvedClass) {

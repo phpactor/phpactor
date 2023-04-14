@@ -12,4 +12,5 @@ Docblock: =
      ListBracketsNode: = 
       ClassNode: = Barfoo[]>
    VariableNode: = $foobar
+   TextNode: = 
  */
