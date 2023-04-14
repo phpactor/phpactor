@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - Fix different virtual member types with the same name replacing eachother #2108
   - Specify maximimum size (255 chars) for string literal types #2144
 
 ## 2023.04.10

@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * @method int foo()
+ * @property string $foo
+ */
+class A {}
+
+$a = new A();
+wrAssertType('int', $a->foo());
