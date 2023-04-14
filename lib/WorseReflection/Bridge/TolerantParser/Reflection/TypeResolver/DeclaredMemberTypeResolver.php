@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ClassName;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
@@ -57,6 +58,16 @@ class DeclaredMemberTypeResolver
             return TypeFactory::undefined();
         }
 
-        return NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $tolerantType, $className);
+        $type =  NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $tolerantType, $className);
+
+        $type = $type->map(function (Type $type) use ($className) {
+            if ($className && $type instanceof SelfType) {
+                return new SelfType(TypeFactory::reflectedClass($this->reflector, $className));
+
+            }
+            return $type;
+        });
+
+        return $type;
     }
 }
