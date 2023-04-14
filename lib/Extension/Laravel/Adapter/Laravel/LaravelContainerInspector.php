@@ -8,6 +8,8 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 class LaravelContainerInspector
 {
     private array $services = [];
+
+    private array $views = [];
     public function __construct(private string $executablePath, private string $projectRoot)
     {
     }
@@ -22,7 +24,6 @@ class LaravelContainerInspector
         return null;
     }
 
-
     public function services(): array
     {
         if ([] === $this->services) {
@@ -33,5 +34,17 @@ class LaravelContainerInspector
         }
 
         return $this->services;
+    }
+
+    public function views(): array
+    {
+        if ([] === $this->views) {
+            $output = shell_exec("php $this->executablePath views $this->projectRoot");
+            if ($output) {
+                $this->views = json_decode(trim($output), true);
+            }
+        }
+
+        return $this->views;
     }
 }

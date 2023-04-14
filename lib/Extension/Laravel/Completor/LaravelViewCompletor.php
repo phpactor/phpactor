@@ -19,14 +19,16 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
-class LaravelContainerCompletor implements TolerantCompletor
+class LaravelViewCompletor implements TolerantCompletor
 {
     public const CONTAINER_CLASSES = [
-        'Illuminate\\Contracts\\Foundation\\Application',
-        'Illuminate\\Support\\Facades\\App'
+        'Illuminate\\View\\Factory',
+        'Illuminate\\Contracts\\View\\View',
+        'Illuminate\\Contracts\\View\\Factory',
+        'Illuminate\\Support\\Facades\\View',
     ];
-    public const CONTAINER_FUNC = ['app'];
-    public const CONTAINER_METHODS = ['make', 'get'];
+    public const CONTAINER_FUNC = ['view'];
+    public const CONTAINER_METHODS = ['make'];
 
     public function __construct(private Reflector $reflector, private LaravelContainerInspector $inspector)
     {
@@ -81,41 +83,37 @@ class LaravelContainerCompletor implements TolerantCompletor
             $containerType = $reflectorOutcome->nodeContext()->type();
         }
 
-        $isContainerClass = false;
+        $isViewClass = false;
 
         foreach (self::CONTAINER_CLASSES as $containerClass) {
             if ($containerType instanceof UnionType) {
-                if (!$containerType->accepts(TypeFactory::class($containerClass))->isFalseOrMaybe()) {
-                    $isContainerClass = true;
+                foreach ($containerType->allTypes() as $type) {
+                    dump($containerClass . '--' . $type->__toString());
+                    if ($containerClass === $type->__toString()) {
+                        $isViewClass = true;
+                        break;
+                    }
+                }
+                // Exit asap.
+                if ($isViewClass) {
                     break;
                 }
-            } elseif (!$containerType->instanceof(TypeFactory::class($containerClass))->isFalseOrMaybe()) {
-                $isContainerClass = true;
+            } elseif (!$containerType->instanceof(TypeFactory::class($containerClass))->isFalse()) {
+                $isViewClass = true;
                 break;
             }
         }
 
-        if (!$isContainerClass) {
+        if (!$isViewClass) {
             return;
         }
 
-        foreach ($this->inspector->services() as $short => $service) {
-            $label = $service;
-            $suggestion = $inQuote ? $short : sprintf('\'%s\'', $service);
-            $import = null;
-
-            if (!$inQuote) {
-                $suggestion = '\\' . $service . '::class';
-                $label = $service . '::class';
-                $import = $service;
-            }
-
-            yield Suggestion::createWithOptions($suggestion, [
-                'label' => $short,
-                'short_description' => $service,
-                'documentation' => sprintf('**Laravel Service**: %s', $service),
+        foreach ($this->inspector->views() as $view) {
+            yield Suggestion::createWithOptions($view, [
+                'label' => $view,
+                'short_description' => $view,
+                'documentation' => sprintf('**Laravel view**: %s', $view),
                 'type' => Suggestion::TYPE_VALUE,
-                'name_import' => $inQuote ? '' : $import,
                 'priority' => 555,
             ]);
         }
