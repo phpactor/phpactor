@@ -22,7 +22,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
         if (!$node instanceof Variable) {
             return [];
         }
-        if ($node->parent->parent instanceof PropertyDeclaration) {
+        if ($node->parent?->parent instanceof PropertyDeclaration) {
             return [];
         }
         foreach ($frame->locals()->byName($node->getName()) as $variable) {
