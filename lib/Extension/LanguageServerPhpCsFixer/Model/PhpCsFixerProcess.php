@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer\Model;
 
 use Amp\Process\Process;
 use Amp\Promise;
+use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Exception\PhpCsFixerError;
 use Psr\Log\LoggerInterface;
 use function Amp\ByteStream\buffer;
@@ -93,7 +94,7 @@ class PhpCsFixerProcess
     public function run(string ...$args): Promise
     {
         return call(function () use ($args) {
-            $process = new Process([$this->binPath, ...$args], null, $this->env);
+            $process = ProcessBuilder::create([$this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
             yield $process->start();
 
             $process->join()

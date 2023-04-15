@@ -26,6 +26,7 @@ class ProcessBuilderTest extends TestCase
         $pid = wait($process->start());
         $exitCode = wait($process->join());
         self::assertEquals(0, $exitCode);
+        /** @var string $out @phpstan-ignore-next-line */
         $out = wait(buffer($process->getStdout()));
         self::assertStringContainsString('myenvvar', $out);
         self::assertStringNotContainsString(self::PARENT_PROCESS_ENV_VAR, $out);
@@ -39,6 +40,7 @@ class ProcessBuilderTest extends TestCase
         $pid = wait($process->start());
         $exitCode = wait($process->join());
         self::assertEquals(0, $exitCode);
+        /** @var string $out @phpstan-ignore-next-line */
         $out = wait(buffer($process->getStdout()));
         self::assertStringContainsString('myenvvar', $out);
         self::assertStringContainsString(self::PARENT_PROCESS_ENV_VAR, $out);
