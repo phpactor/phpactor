@@ -214,6 +214,13 @@ abstract class Assignments implements Countable, IteratorAggregate
         }));
     }
 
+    public function definitionsOnly(): Assignments
+    {
+        return new static(array_filter($this->variables, function (Variable $v) {
+            return $v->wasDefinition();
+        }));
+    }
+
     public function lastOrNull(): ?Variable
     {
         $last = end($this->variables);
@@ -238,5 +245,13 @@ abstract class Assignments implements Countable, IteratorAggregate
         }
 
         return new static($mostRecent);
+    }
+
+    /**
+     * @return Variable[]
+     */
+    public function toArray(): array
+    {
+        return $this->variables;
     }
 }

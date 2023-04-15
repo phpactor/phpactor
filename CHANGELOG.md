@@ -3,6 +3,11 @@ Changelog
 
 ## master
 
+Features:
+
+  - Diagnostic for undefined variables #2209
+  - Code action to suggest fixes for undefined variables (in case of typos) #2209
+
 Bug fixes:
 
   - Fix resolution of `self` type (esp. in relation to traits) #2116
