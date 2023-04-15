@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -19,6 +20,9 @@ class UndefinedVariableProvider implements DiagnosticProvider
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof Variable) {
+            return [];
+        }
+        if ($node->parent->parent instanceof PropertyDeclaration) {
             return [];
         }
         foreach ($frame->locals()->byName($node->getName()) as $variable) {

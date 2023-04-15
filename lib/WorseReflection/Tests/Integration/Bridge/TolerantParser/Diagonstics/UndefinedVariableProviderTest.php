@@ -58,6 +58,11 @@ class UndefinedVariableProviderTest extends DiagnosticsTestCase
         self::assertEquals('Undefined variable "$foo", did you mean one of "$foz", "$foa", "$fob"', $diagnostics->at(0)->message());
     }
 
+    public function checkUndefinedVariableButProprety(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
     protected function provider(): DiagnosticProvider
     {
         return new UndefinedVariableProvider();
