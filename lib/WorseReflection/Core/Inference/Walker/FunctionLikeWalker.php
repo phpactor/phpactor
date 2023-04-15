@@ -160,7 +160,7 @@ class FunctionLikeWalker implements Walker
             $variableContext = $variableContext
                 ->withType($variable->type());
 
-            $frame->locals()->set(Variable::fromSymbolContext($variableContext));
+            $frame->locals()->set(Variable::fromSymbolContext($variableContext)->asAssignment());
         }
     }
 
