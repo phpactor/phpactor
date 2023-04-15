@@ -13,6 +13,9 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class UndefinedVariableProvider implements DiagnosticProvider
 {
+    public function __construct(private int $suggestionLevensteinDistance = 4) {
+    }
+
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof Variable) {
@@ -24,12 +27,15 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         }
 
+        $name = $node->getName();
         yield new UndefinedVariableDiagnostic(
             NodeUtil::byteOffsetRangeForNode($node),
-            $node->getName(),
-            array_map(function (PhpactorVariable $var) {
+            $name,
+            array_filter(array_map(function (PhpactorVariable $var) {
                 return $var->name();
-            }, $frame->locals()->assignmentsOnly()->mostRecent()->toArray())
+            }, $frame->locals()->assignmentsOnly()->mostRecent()->toArray()), function (string $candidate) use ($name) {
+                return levenshtein($name, $candidate) < $this->suggestionLevensteinDistance;
+            })
         );
     }
 

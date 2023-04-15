@@ -66,9 +66,12 @@ class FixUndefinedVariableCodeAction implements CodeActionProvider
 
     public function kinds(): array
     {
+        return [
+        ];
     }
 
     public function describe(): string
     {
+        return 'fix undefined variables';
     }
 }
