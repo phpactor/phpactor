@@ -27,6 +27,12 @@ class UndefinedVariableDiagnostic implements Diagnostic
 
     public function message(): string
     {
+        if(count($this->suggestions) === 0) {
+            return sprintf(
+                'Undefined variable "$%s"',
+                $this->varName
+            );
+        }
         return sprintf(
             'Undefined variable "$%s", did you mean one of "$%s"',
             $this->varName,

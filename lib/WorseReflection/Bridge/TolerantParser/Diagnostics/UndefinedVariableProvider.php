@@ -29,7 +29,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
             $node->getName(),
             array_map(function (PhpactorVariable $var) {
                 return $var->name();
-            }, $frame->locals()->mostRecent()->toArray())
+            }, $frame->locals()->assignmentsOnly()->mostRecent()->toArray())
         );
     }
 
