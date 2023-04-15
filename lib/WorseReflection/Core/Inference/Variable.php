@@ -81,6 +81,9 @@ final class Variable
         return $this->offset;
     }
 
+    /**
+     * If this variable was the assignment or definition.
+     */
     public function wasAssigned(): bool
     {
         return $this->wasAssigned;

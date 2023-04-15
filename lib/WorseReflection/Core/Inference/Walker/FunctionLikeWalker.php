@@ -108,7 +108,7 @@ class FunctionLikeWalker implements Walker
                 ]
             );
 
-            $frame->locals()->set(Variable::fromSymbolContext($context));
+            $frame->locals()->set(Variable::fromSymbolContext($context)->asAssignment());
         }
     }
 
@@ -177,7 +177,7 @@ class FunctionLikeWalker implements Walker
         );
 
         // add this and self
-        $frame->locals()->set(Variable::fromSymbolContext($context));
+        $frame->locals()->set(Variable::fromSymbolContext($context)->asAssignment());
 
         if (!$classType instanceof ReflectedClassType) {
             return;
