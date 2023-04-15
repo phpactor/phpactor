@@ -22,7 +22,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
             return [];
         }
         foreach ($frame->locals()->byName($node->getName()) as $variable) {
-            if ($variable->wasAssigned()) {
+            if ($variable->wasDefinition()) {
                 return [];
             }
         }
@@ -33,7 +33,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
             $name,
             array_filter(array_map(function (PhpactorVariable $var) {
                 return $var->name();
-            }, $frame->locals()->assignmentsOnly()->mostRecent()->toArray()), function (string $candidate) use ($name) {
+            }, $frame->locals()->definitionsOnly()->mostRecent()->toArray()), function (string $candidate) use ($name) {
                 return levenshtein($name, $candidate) < $this->suggestionLevensteinDistance;
             })
         );

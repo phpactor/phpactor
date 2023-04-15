@@ -14,7 +14,8 @@ final class Variable
         private int $offset,
         private Type $type,
         private ?Type $classType = null,
-        private bool $wasAssigned = false
+        private bool $wasAssigned = false,
+        private bool $wasDefined = false
     ) {
         $this->name = ltrim($name, '$');
     }
@@ -58,7 +59,12 @@ final class Variable
 
     public function asAssignment(): self
     {
-        return new self($this->name, $this->offset, $this->type, $this->classType, true);
+        return new self($this->name, $this->offset, $this->type, $this->classType, true, true);
+    }
+
+    public function asDefinition(): self
+    {
+        return new self($this->name, $this->offset, $this->type, $this->classType, false, true);
     }
 
     public function type(): Type
@@ -81,12 +87,14 @@ final class Variable
         return $this->offset;
     }
 
-    /**
-     * If this variable was the assignment or definition.
-     */
     public function wasAssigned(): bool
     {
         return $this->wasAssigned;
+    }
+
+    public function wasDefinition(): bool
+    {
+        return $this->wasDefined;
     }
 
     public function key(): string

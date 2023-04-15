@@ -844,6 +844,22 @@ Location of the core PHP stubs - these will be scanned and cached on the first r
 **Default**: ``"%application_root%\/vendor\/jetbrains\/phpstorm-stubs"``
 
 
+.. _param_worse_reflection.diagnostics.undefined_variable.suggestion_levenstien_disatance:
+
+
+``worse_reflection.diagnostics.undefined_variable.suggestion_levenstien_disatance``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Levenstein distance to use when suggesting typos for variable names
+
+
+**Default**: ``4``
+
+
 .. _FilePathResolverExtension:
 
 
@@ -858,7 +874,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
