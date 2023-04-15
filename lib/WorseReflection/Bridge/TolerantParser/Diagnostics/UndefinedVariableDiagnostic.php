@@ -33,10 +33,18 @@ class UndefinedVariableDiagnostic implements Diagnostic
                 $this->varName
             );
         }
+        $suggestString = implode('", "$', $this->suggestions);
+        if(count($this->suggestions) === 1) {
+            return sprintf(
+                'Undefined variable "$%s", did you mean "$%s"',
+                $this->varName,
+                $suggestString
+            );
+        }
         return sprintf(
             'Undefined variable "$%s", did you mean one of "$%s"',
             $this->varName,
-            implode('", "$', $this->suggestions)
+            $suggestString
         );
     }
     /**
