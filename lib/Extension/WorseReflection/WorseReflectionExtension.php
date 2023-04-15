@@ -48,7 +48,7 @@ class WorseReflectionExtension implements Extension
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
     const TAG_MEMBER_TYPE_RESOLVER = 'worse_reflection.member_type_resolver';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
-    const PARAM_UNDEFINED_VAR_LEVENSTEIN = 'worse_reflection.diagnostics.undefined_variable.suggestion_levenstien_disatance';
+    const PARAM_UNDEFINED_VAR_LEVENSHTEIN = 'worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance';
 
     public function configure(Resolver $schema): void
     {
@@ -59,12 +59,12 @@ class WorseReflectionExtension implements Extension
             self::PARAM_ENABLE_CONTEXT_LOCATION => true,
             self::PARAM_STUB_CACHE_DIR => '%cache%/worse-reflection',
             self::PARAM_STUB_DIR => '%application_root%/vendor/jetbrains/phpstorm-stubs',
-            self::PARAM_UNDEFINED_VAR_LEVENSTEIN => 4,
+            self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 4,
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLE_CACHE => 'If reflection caching should be enabled',
             self::PARAM_CACHE_LIFETIME => 'If caching is enabled, limit the amount of time a cache entry can stay alive',
-            self::PARAM_UNDEFINED_VAR_LEVENSTEIN => 'Levenstein distance to use when suggesting typos for variable names',
+            self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 'Levenshtein distance to use when suggesting corrections for variable names',
             self::PARAM_ENABLE_CONTEXT_LOCATION => <<<'EOT'
                 If source code is passed to a ``Reflector`` then temporarily make it available as a
                 source location. Note this should NOT be enabled if the source code can be
@@ -76,7 +76,7 @@ class WorseReflectionExtension implements Extension
             self::PARAM_IMPORT_GLOBALS => 'Show hints for non-imported global classes and functions',
         ]);
         $schema->setTypes([
-            self::PARAM_UNDEFINED_VAR_LEVENSTEIN => 'integer',
+            self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 'integer',
         ]);
     }
 
@@ -208,7 +208,7 @@ class WorseReflectionExtension implements Extension
             return new DeprecatedUsageDiagnosticProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UndefinedVariableProvider::class, function (Container $container) {
-            return new UndefinedVariableProvider($container->parameter(self::PARAM_UNDEFINED_VAR_LEVENSTEIN)->int());
+            return new UndefinedVariableProvider($container->parameter(self::PARAM_UNDEFINED_VAR_LEVENSHTEIN)->int());
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 

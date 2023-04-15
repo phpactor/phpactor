@@ -844,17 +844,17 @@ Location of the core PHP stubs - these will be scanned and cached on the first r
 **Default**: ``"%application_root%\/vendor\/jetbrains\/phpstorm-stubs"``
 
 
-.. _param_worse_reflection.diagnostics.undefined_variable.suggestion_levenstien_disatance:
+.. _param_worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance:
 
 
-``worse_reflection.diagnostics.undefined_variable.suggestion_levenstien_disatance``
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+``worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 Type: integer
 
 
-Levenstein distance to use when suggesting typos for variable names
+Levenshtein distance to use when suggesting corrections for variable names
 
 
 **Default**: ``4``
