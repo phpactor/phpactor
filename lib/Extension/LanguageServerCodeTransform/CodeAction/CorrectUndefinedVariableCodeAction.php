@@ -19,8 +19,10 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UndefinedVariable
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use function Amp\call;
 
-class FixUndefinedVariableCodeAction implements CodeActionProvider
+class CorrectUndefinedVariableCodeAction implements CodeActionProvider
 {
+    public const KIND = 'quickfix.correct_variable_name';
+
     public function __construct(private SourceCodeReflector $reflector)
     {
     }
@@ -40,7 +42,7 @@ class FixUndefinedVariableCodeAction implements CodeActionProvider
                         return $actions;
                     }
                     $actions[] =  new CodeAction(
-                        title: sprintf('Fix variable "$%s" to "$%s"', $diagnostic->undefinedVariableName(), $suggestion),
+                        title: sprintf('Correct undefined variable "$%s" to "$%s"', $diagnostic->undefinedVariableName(), $suggestion),
                         kind: CodeActionKind::QUICK_FIX,
                         diagnostics: null,
                         isPreferred: null,
@@ -69,11 +71,12 @@ class FixUndefinedVariableCodeAction implements CodeActionProvider
     public function kinds(): array
     {
         return [
+            self::KIND
         ];
     }
 
     public function describe(): string
     {
-        return 'fix undefined variables';
+        return 'correct undefined variable name';
     }
 }

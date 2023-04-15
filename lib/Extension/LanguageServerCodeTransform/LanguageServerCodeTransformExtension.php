@@ -28,7 +28,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantPro
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FixUndefinedVariableCodeAction;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CorrectUndefinedVariableCodeAction;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
@@ -319,8 +319,8 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
-        $container->register(FixUndefinedVariableCodeAction::class, function (Container $container) {
-            return new FixUndefinedVariableCodeAction(
+        $container->register(CorrectUndefinedVariableCodeAction::class, function (Container $container) {
+            return new CorrectUndefinedVariableCodeAction(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
             );
         }, [
