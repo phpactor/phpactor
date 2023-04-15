@@ -33,11 +33,7 @@ class TolerantClassReplacer implements ClassReplacer
         $replacedImports = [];
 
         foreach ($classRefList as $classRef) {
-            assert($classRef instanceof ClassReference);
-
-            // Check if the class name is fully qualified and replace it with a fully qualified version of the new name
-            $firstClassNameCharacter = $source->__toString()[$classRef->position()->start()];
-            if ($firstClassNameCharacter === '\\') {
+            if ($classRef->name()->wasFullyQualified()) {
                 $edits[] = TextEdit::create(
                     $classRef->position()->start(),
                     $classRef->position()->length(),

@@ -67,6 +67,11 @@ final class FullyQualifiedName implements Name
         return $this->qualifiedName->isDescendantOf($name);
     }
 
+    public function wasFullyQualified(): bool
+    {
+        return $this->qualifiedName->wasFullyQualified();
+    }
+
     public function toArray(): array
     {
         return $this->qualifiedName->toArray();
