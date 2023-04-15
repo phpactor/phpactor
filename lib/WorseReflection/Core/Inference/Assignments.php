@@ -239,4 +239,12 @@ abstract class Assignments implements Countable, IteratorAggregate
 
         return new static($mostRecent);
     }
+
+    /**
+     * @return Variable[]
+     */
+    public function toArray(): array
+    {
+        return $this->variables;
+    }
 }
