@@ -19,6 +19,6 @@ class FixUndefinedVariableCodeActionTest extends TestCase
         $range = ProtocolFactory::range(0, 0, 10, 10);
         $cancel = (new CancellationTokenSource())->getToken();
         $actions = wait((new FixUndefinedVariableCodeAction($reflector))->provideActionsFor($textDocument, $range, $cancel));
-        dump($actions);
+        self::assertCount(1, $actions);
     }
 }

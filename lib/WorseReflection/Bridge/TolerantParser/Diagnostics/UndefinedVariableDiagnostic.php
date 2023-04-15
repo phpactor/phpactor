@@ -39,5 +39,17 @@ class UndefinedVariableDiagnostic implements Diagnostic
             implode('", "$', $this->suggestions)
         );
     }
+    /**
+     * @return list<string>
+     */
+    public function suggestions(): array
+    {
+        return $this->suggestions;
+    }
+
+    public function undefinedVariableName(): string
+    {
+        return $this->varName;
+    }
 
 }
