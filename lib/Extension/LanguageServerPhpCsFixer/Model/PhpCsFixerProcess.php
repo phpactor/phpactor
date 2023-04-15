@@ -93,7 +93,7 @@ class PhpCsFixerProcess
     public function run(string ...$args): Promise
     {
         return call(function () use ($args) {
-            $process = new Process([$this->binPath, ...$args], null, $this->env);
+            $process = new Process([$this->binPath, ...$args], null, $this->env + ['PATH' => getenv('PATH')]);
             yield $process->start();
 
             $process->join()
