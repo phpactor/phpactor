@@ -143,9 +143,9 @@ class VariableResolver implements Resolver
     {
         foreach ($frame->locals()->byName($context->symbol()->name())->equalTo($context->symbol()->position()->start()->toInt()) as $existing) {
             assert($existing instanceof PhpactorVariable);
-            $frame->locals()->replace($existing, $existing->withType($context->type()));
+            $frame->locals()->replace($existing, $existing->withType($context->type())->asDefinition());
             return;
         }
-        $frame->locals()->set(PhpactorVariable::fromSymbolContext($context));
+        $frame->locals()->set(PhpactorVariable::fromSymbolContext($context)->asDefinition());
     }
 }

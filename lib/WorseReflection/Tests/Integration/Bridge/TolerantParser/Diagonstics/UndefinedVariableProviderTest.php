@@ -41,8 +41,9 @@ class UndefinedVariableProviderTest extends DiagnosticsTestCase
     {
         self::assertCount(0, $diagnostics);
     }
-
-
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
     public function checkVariableUndefinedWithNoSuggestions(Diagnostics $diagnostics): void
     {
         self::assertCount(1, $diagnostics);
@@ -57,8 +58,17 @@ class UndefinedVariableProviderTest extends DiagnosticsTestCase
         self::assertCount(1, $diagnostics);
         self::assertEquals('Undefined variable "$foo", did you mean one of "$foz", "$foa", "$fob"', $diagnostics->at(0)->message());
     }
-
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
     public function checkUndefinedVariableButProprety(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
+    public function checkVariableFromVarDoc(Diagnostics $diagnostics): void
     {
         self::assertCount(0, $diagnostics);
     }
