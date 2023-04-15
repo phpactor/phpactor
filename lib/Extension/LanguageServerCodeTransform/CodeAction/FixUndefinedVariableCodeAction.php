@@ -15,7 +15,6 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\TextEdit;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
-use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UndefinedVariableDiagnostic;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use function Amp\call;
@@ -28,7 +27,7 @@ class FixUndefinedVariableCodeAction implements CodeActionProvider
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
-        return call(function () use ($textDocument, $range, $cancel) {
+        return call(function () use ($textDocument, $cancel) {
             $actions = [];
             foreach ((yield $this->reflector->diagnostics(
                 TextDocumentConverter::fromLspTextItem($textDocument)
@@ -37,6 +36,9 @@ class FixUndefinedVariableCodeAction implements CodeActionProvider
             ) as $diagnostic) {
                 assert($diagnostic instanceof UndefinedVariableDiagnostic);
                 foreach ($diagnostic->suggestions() as $suggestion) {
+                    if ($cancel->isRequested()) {
+                        return $actions;
+                    }
                     $actions[] =  new CodeAction(
                         title: sprintf('Fix variable "$%s" to "$%s"', $diagnostic->undefinedVariableName(), $suggestion),
                         kind: CodeActionKind::QUICK_FIX,
@@ -59,8 +61,8 @@ class FixUndefinedVariableCodeAction implements CodeActionProvider
                         command: null,
                     );
                 }
-                return $actions;
             }
+            return $actions;
         });
     }
 

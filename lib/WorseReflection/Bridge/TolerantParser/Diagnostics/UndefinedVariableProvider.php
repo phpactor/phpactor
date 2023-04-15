@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -13,7 +12,8 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class UndefinedVariableProvider implements DiagnosticProvider
 {
-    public function __construct(private int $suggestionLevensteinDistance = 4) {
+    public function __construct(private int $suggestionLevensteinDistance = 4)
+    {
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
