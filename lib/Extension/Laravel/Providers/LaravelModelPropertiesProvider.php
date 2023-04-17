@@ -41,6 +41,9 @@ class LaravelModelPropertiesProvider implements ReflectionMemberProvider
             $modelData = $modelsData[$class->name()->__toString()];
 
             foreach ($modelData['attributes'] as $attributeData) {
+                if (!$attributeData['type']) {
+                    continue;
+                }
                 $properties[] = new VirtualReflectionProperty(
                     $class->position(),
                     $class,

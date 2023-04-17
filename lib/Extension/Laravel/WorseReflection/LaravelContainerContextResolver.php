@@ -18,6 +18,7 @@ class LaravelContainerContextResolver implements MemberContextResolver
 {
     public const CONTAINER_CLASSES = [
         'Illuminate\\Contracts\\Foundation\\Application',
+        'Illuminate\Foundation\Application',
         'Illuminate\\Support\\Facades\\App'
     ];
 
@@ -42,6 +43,9 @@ class LaravelContainerContextResolver implements MemberContextResolver
 
         if ($member->name() === 'get' || $member->name() === 'make') {
             $argument = $arguments->at(0)->type();
+        } elseif ($member->name() === 'MAIN_REQUEST') {
+            // @todo: Here we are in app('something')-><CUR> but we cannot get the 'something' part here.
+            return null;
         } else {
             return null;
         }
