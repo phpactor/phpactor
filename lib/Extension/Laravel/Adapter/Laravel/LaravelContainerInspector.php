@@ -4,16 +4,24 @@ namespace Phpactor\Extension\Laravel\Adapter\Laravel;
 
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Symfony\Component\Process\Process;
 
+/**
+ * This calls external tooling that is capable of extracting the required information from a Laravel codebase.
+ *
+ * At some point we should listen for certain file changes to invalidate the in-memory cache.
+ *
+ * @todo: This should be cached for analysis as well.
+ */
 class LaravelContainerInspector
 {
-    private array $services = [];
+    private ?array $services = null;
 
-    private array $views = [];
+    private ?array $views = null;
 
-    private array $routes = [];
+    private ?array $routes = null;
 
-    private array $models = [];
+    private ?array $models = null;
 
     public function __construct(private string $executablePath, private string $projectRoot)
     {
@@ -31,11 +39,8 @@ class LaravelContainerInspector
 
     public function services(): array
     {
-        if ([] === $this->services) {
-            $output = shell_exec("php $this->executablePath container $this->projectRoot");
-            if ($output) {
-                $this->services = json_decode(trim($output), true);
-            }
+        if ($this->services === null) {
+            $this->services = $this->getGetterOutput('container');
         }
 
         return $this->services;
@@ -43,11 +48,8 @@ class LaravelContainerInspector
 
     public function views(): array
     {
-        if ([] === $this->views) {
-            $output = shell_exec("php $this->executablePath views $this->projectRoot");
-            if ($output) {
-                $this->views = json_decode(trim($output), true);
-            }
+        if ($this->views === null) {
+            $this->views = $this->getGetterOutput('views');
         }
 
         return $this->views;
@@ -55,11 +57,8 @@ class LaravelContainerInspector
 
     public function routes(): array
     {
-        if ([] === $this->routes) {
-            $output = shell_exec("php $this->executablePath routes $this->projectRoot");
-            if ($output) {
-                $this->routes = json_decode(trim($output), true);
-            }
+        if ($this->routes === null) {
+            $this->routes = $this->getGetterOutput('routes');
         }
 
         return $this->routes;
@@ -67,13 +66,22 @@ class LaravelContainerInspector
 
     public function models(): array
     {
-        if ([] === $this->models) {
-            $output = shell_exec("php $this->executablePath models $this->projectRoot");
-            if ($output) {
-                $this->models = json_decode(trim($output), true);
-            }
+        if ($this->models === null) {
+            $this->models = $this->getGetterOutput('models');
         }
 
         return $this->models;
+    }
+
+    private function getGetterOutput(string $getter): array
+    {
+        $process = new Process([$this->executablePath, $getter, $this->projectRoot]);
+        $process->run();
+
+        if ($process->isSuccessful()) {
+            return json_decode(trim($process->getOutput()), true);
+        }
+
+        return [];
     }
 }
