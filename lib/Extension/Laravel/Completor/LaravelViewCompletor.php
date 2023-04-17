@@ -88,7 +88,6 @@ class LaravelViewCompletor implements TolerantCompletor
         foreach (self::CONTAINER_CLASSES as $containerClass) {
             if ($containerType instanceof UnionType) {
                 foreach ($containerType->allTypes() as $type) {
-                    dump($containerClass . '--' . $type->__toString());
                     if ($containerClass === $type->__toString()) {
                         $isViewClass = true;
                         break;
