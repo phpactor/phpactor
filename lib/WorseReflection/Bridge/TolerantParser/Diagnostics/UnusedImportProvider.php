@@ -114,6 +114,11 @@ class UnusedImportProvider implements DiagnosticProvider
         return [];
     }
 
+    public function examples(): iterable
+    {
+        return [];
+    }
+
     private function extractDocblockNames(Docblock $docblock, NodeContextResolver $resolver, Node $node): void
     {
         $prefix = sprintf('%s:', $this->getNamespaceName($node));

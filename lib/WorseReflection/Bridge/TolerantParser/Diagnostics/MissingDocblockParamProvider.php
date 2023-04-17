@@ -106,6 +106,11 @@ class MissingDocblockParamProvider implements DiagnosticProvider
         return [];
     }
 
+    public function examples(): iterable
+    {
+        return [];
+    }
+
     private function upcastType(Type $type, NodeContextResolver $resolver): Type
     {
         if (!$type instanceof ReflectedClassType) {

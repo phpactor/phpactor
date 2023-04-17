@@ -41,6 +41,11 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         return [];
     }
 
+    public function examples(): iterable
+    {
+        return [];
+    }
+
     /**
      * @param MemberAccessContext<ReflectionMember> $resolved
      * @return Generator<DeprecatedUsageDiagnostic>

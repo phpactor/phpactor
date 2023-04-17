@@ -108,6 +108,11 @@ class UnresolvableNameProvider implements DiagnosticProvider
         return [];
     }
 
+    public function examples(): iterable
+    {
+        return [];
+    }
+
     /**
      * @return iterable<UnresolvableNameDiagnostic>
      */

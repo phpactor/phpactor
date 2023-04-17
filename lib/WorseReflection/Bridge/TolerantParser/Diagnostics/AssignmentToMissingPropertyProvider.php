@@ -23,6 +23,47 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 {
+    public function examples(): iterable
+    {
+        yield new DiagnosticExample(
+            title: 'reports assignment to non-existing property',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar {
+                    public function baz(){ 
+                        $this->bar = 'foo';
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals(
+                    'Property "bar" has not been defined',
+                    $diagnostics->at(0)->message()
+                );
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'does not report assignment for existing property',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar {
+                    private string $bar;
+                    public function baz(){ 
+                        $this->bar = 'foo';
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+    }
+
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof AssignmentExpression) {
