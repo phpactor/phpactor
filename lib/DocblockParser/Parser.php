@@ -306,6 +306,9 @@ final class Parser
         if ($this->tokens->current->type === Token::T_BRACKET_ANGLE_OPEN) {
             $open = $this->tokens->chomp();
             $typeList = null;
+            if ($this->tokens->if(Token::T_VARIABLE)) {
+                $typeList = $this->parseTypeList();
+            }
             if ($this->tokens->if(Token::T_LABEL)) {
                 $typeList = $this->parseTypeList();
             }
@@ -423,6 +426,8 @@ final class Parser
             if ($this->tokens->if(Token::T_LABEL)) {
                 $types[] = $this->parseTypes();
             } elseif ($this->tokens->if(Token::T_INTEGER)) {
+                $types[] = $this->parseTypes();
+            } elseif ($this->tokens->if(Token::T_VARIABLE)) {
                 $types[] = $this->parseTypes();
             }
             if ($this->tokens->if(Token::T_COMMA)) {

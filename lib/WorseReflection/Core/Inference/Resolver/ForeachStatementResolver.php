@@ -91,7 +91,7 @@ class ForeachStatementResolver implements Resolver
             $context = $context->withType($this->resolveKeyType($type));
         }
 
-        $frame->locals()->set(WorseVariable::fromSymbolContext($context));
+        $frame->locals()->set(WorseVariable::fromSymbolContext($context)->asDefinition());
     }
 
     private function valueFromVariable(Variable $expression, ForeachStatement $node, NodeContext $nodeContext, Frame $frame): void
@@ -120,7 +120,7 @@ class ForeachStatementResolver implements Resolver
             $context = $context->withType($this->resolveValueType($type));
         }
 
-        $frame->locals()->set(WorseVariable::fromSymbolContext($context));
+        $frame->locals()->set(WorseVariable::fromSymbolContext($context)->asDefinition());
     }
 
     private function valueFromArrayCreation(
@@ -215,7 +215,7 @@ class ForeachStatementResolver implements Resolver
                 if ($previous = $frame->locals()->byName($local->name())->lessThan($local->offset())->lastOrNull()) {
                     $type = $previous->type()->addType($local->type())->reduce();
                     $frame->locals()->set(
-                        $previous->withType($type)->withOffset($compoundStatement->closeBrace->getEndPosition())
+                        $previous->withType($type)->withOffset($compoundStatement->closeBrace->getEndPosition())->asDefinition()
                     );
                 }
             }

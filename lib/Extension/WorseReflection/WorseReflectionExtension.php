@@ -15,6 +15,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockPa
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UndefinedVariableProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
 use Phpactor\WorseReflection\Core\Cache;
@@ -47,6 +48,7 @@ class WorseReflectionExtension implements Extension
     const TAG_DIAGNOSTIC_PROVIDER = 'worse_reflection.diagnostics_provider';
     const TAG_MEMBER_TYPE_RESOLVER = 'worse_reflection.member_type_resolver';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
+    const PARAM_UNDEFINED_VAR_LEVENSHTEIN = 'worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance';
 
     public function configure(Resolver $schema): void
     {
@@ -57,10 +59,12 @@ class WorseReflectionExtension implements Extension
             self::PARAM_ENABLE_CONTEXT_LOCATION => true,
             self::PARAM_STUB_CACHE_DIR => '%cache%/worse-reflection',
             self::PARAM_STUB_DIR => '%application_root%/vendor/jetbrains/phpstorm-stubs',
+            self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 4,
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLE_CACHE => 'If reflection caching should be enabled',
             self::PARAM_CACHE_LIFETIME => 'If caching is enabled, limit the amount of time a cache entry can stay alive',
+            self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 'Levenshtein distance to use when suggesting corrections for variable names',
             self::PARAM_ENABLE_CONTEXT_LOCATION => <<<'EOT'
                 If source code is passed to a ``Reflector`` then temporarily make it available as a
                 source location. Note this should NOT be enabled if the source code can be
@@ -70,6 +74,9 @@ class WorseReflectionExtension implements Extension
             self::PARAM_STUB_DIR => 'Location of the core PHP stubs - these will be scanned and cached on the first request',
             self::PARAM_STUB_CACHE_DIR => 'Cache directory for stubs',
             self::PARAM_IMPORT_GLOBALS => 'Show hints for non-imported global classes and functions',
+        ]);
+        $schema->setTypes([
+            self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 'integer',
         ]);
     }
 
@@ -199,6 +206,9 @@ class WorseReflectionExtension implements Extension
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(DeprecatedUsageDiagnosticProvider::class, function (Container $container) {
             return new DeprecatedUsageDiagnosticProvider();
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+        $container->register(UndefinedVariableProvider::class, function (Container $container) {
+            return new UndefinedVariableProvider($container->parameter(self::PARAM_UNDEFINED_VAR_LEVENSHTEIN)->int());
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
     }
 

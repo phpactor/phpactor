@@ -3,9 +3,17 @@ Changelog
 
 ## master
 
+Features:
+
+  - Diagnostic for undefined variables #2209
+  - Code action to suggest fixes for undefined variables (in case of typos) #2209
+
 Bug fixes:
 
+  - Fix resolution of `self` type (esp. in relation to traits) #2116
+  - Fix different virtual member types with the same name replacing eachother #2108
   - Specify maximimum size (255 chars) for string literal types #2144
+  - Fix docblock parser with `$this` when used as generic argument #2092
 
 ## 2023.04.10
 

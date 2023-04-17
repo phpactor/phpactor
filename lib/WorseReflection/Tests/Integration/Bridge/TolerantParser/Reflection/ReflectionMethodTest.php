@@ -141,7 +141,7 @@ class ReflectionMethodTest extends IntegrationTestCase
                 $this->assertEquals(TypeFactory::array(), $methods->get('method4')->returnType());
                 $this->assertEquals(ClassName::fromString('Test\Barfoo'), $methods->get('method5')->returnType()->name);
                 $this->assertEquals(ClassName::fromString('Acme\Post'), $methods->get('method6')->returnType()->name);
-                $this->assertEquals(ClassName::fromString('Test\Foobar'), $methods->get('method7')->returnType()->name);
+                $this->assertEquals('self(Test\Foobar)', $methods->get('method7')->returnType()->__toString());
                 $this->assertEquals(TypeFactory::iterable(), $methods->get('method8')->returnType());
                 $this->assertEquals(TypeFactory::callable(), $methods->get('method9')->returnType());
                 $this->assertEquals(TypeFactory::resource(), $methods->get('method10')->returnType());

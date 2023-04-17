@@ -1,0 +1,7 @@
+<?php
+
+$zebra = 'one';
+$foa = 'two';
+
+if ($foo) {
+}

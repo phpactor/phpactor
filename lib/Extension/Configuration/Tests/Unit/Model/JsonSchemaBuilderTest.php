@@ -16,7 +16,6 @@ class JsonSchemaBuilderTest extends TestCase
         $extensions[] = get_class($this->createExtension1());
 
         $schema = (new JsonSchemaBuilder('test', $extensions))->dump();
-        file_put_contents('foo', $schema);
         self::assertEquals(<<<'EOT'
             {
                 "$schema": "https:\/\/json-schema.org\/draft-07\/schema",

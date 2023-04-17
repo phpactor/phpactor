@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @template T
+ */
+class DocblockBuilder
+{
+    /**
+     * @param T $parent
+     */
+    public function __contsruct($parent): void
+    {
+    }
+
+    /**
+     * @return T
+     */
+    public function parent() {}
+}
+
+class Parent {
+    /**
+     * @return DocblockBuilder<$this>
+     */
+    public function builder() {
+    }
+}
+
+wrAssertType('Parent', (new Parent())->builder()->parent());

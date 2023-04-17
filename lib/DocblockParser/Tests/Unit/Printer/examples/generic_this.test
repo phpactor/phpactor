@@ -1,0 +1,15 @@
+/**
+ * @param Foobar<$this> $foobar
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ParamTag: = @param
+   GenericNode: = 
+    ClassNode: = Foobar<
+    TypeList: = 
+     ThisNode: = $this>
+   VariableNode: = $foobar
+   TextNode: = 
+ */
