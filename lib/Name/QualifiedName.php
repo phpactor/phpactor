@@ -8,12 +8,8 @@ final class QualifiedName implements Name
 {
     const NAMESPACE_SEPARATOR = '\\';
 
-    /** @var array<string> $parts */
     private array $parts;
 
-    private bool $fullyQualified = false;
-
-    /** @param array<string> $parts */
     private function __construct(array $parts)
     {
         if (empty($parts)) {
@@ -30,24 +26,14 @@ final class QualifiedName implements Name
         return implode(self::NAMESPACE_SEPARATOR, $this->parts);
     }
 
-    /** @param array<string> $parts */
     public static function fromArray(array $parts): QualifiedName
     {
-        $self = new self(array_filter($parts));
-        if ($parts[0] === '') {
-            $self->fullyQualified = true;
-        }
-        return $self;
+        return new self($parts);
     }
 
     public static function fromString(string $string): self
     {
-        return self::fromArray(explode(self::NAMESPACE_SEPARATOR, $string));
-    }
-
-    public function wasFullyQualified(): bool
-    {
-        return $this->fullyQualified;
+        return new self(array_filter(explode(self::NAMESPACE_SEPARATOR, $string)));
     }
 
     public function toFullyQualifiedName(): FullyQualifiedName
@@ -57,7 +43,6 @@ final class QualifiedName implements Name
 
     public function head(): QualifiedName
     {
-        /** @var non-empty-array<string> $parts */
         $parts = $this->parts;
         return new self([array_pop($parts)]);
     }
