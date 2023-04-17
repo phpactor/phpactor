@@ -9,7 +9,6 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\WorseReflection\Reflector;
@@ -68,17 +67,11 @@ class GenerateTestMethods
         $builder->namespace($class->name()->namespace());
         $classBuilder = $builder->class($class->name()->short());
 
-        try {
-            if ($class->methods()->has($methodName)) {
-                return TextEdits::none();
-            }
-        } catch (NotFound) {
-            return  TextEdits::none();
+        if ($class->methods()->has($methodName)) {
+            return TextEdits::none();
         }
 
-        $setUpMethod = $classBuilder->method($methodName);
-        $setUpMethod->visibility('public');
-        $setUpMethod->returnType('void');
+        $classBuilder ->method($methodName) ->visibility('public') ->returnType('void') ;
 
         return $this->updater->textEditsFor($builder->build(), Code::fromString($document->__toString()));
     }

@@ -44,12 +44,12 @@ class PHPUnitExtension implements OptionalExtension
         $container->register(
             GenerateTestMethodCommand::class,
             function (Container $container) {
-            return new GenerateTestMethodCommand(
-                $container->get(ClientApi::class),
-                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
-                $container->get(GenerateTestMethods::class)
-            );
-        },
+                return new GenerateTestMethodCommand(
+                    $container->get(ClientApi::class),
+                    $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                    $container->get(GenerateTestMethods::class)
+                );
+            },
             [
                 LanguageServerExtension::TAG_COMMAND => [
                     'name' => GenerateTestMethodCommand::NAME

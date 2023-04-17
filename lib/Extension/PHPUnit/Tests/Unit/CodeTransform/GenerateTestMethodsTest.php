@@ -13,13 +13,19 @@ class GenerateTestMethodsTest extends WorseTestCase
     public function setUp(): void
     {
         // Adding a phpunit stub
-        $this->workspace()->put('TestCase.php', <<<PHP
+        $this->workspace()->put(
+            'TestCase.php',
+            <<<PHP
                 <?php
 
                 namespace PHPUnit\Framework;
 
-                class TestCase {}
-            PHP);
+                class TestCase {
+                    public function setUp(): void { }
+                    public function tearDown(): void { }
+                }
+                PHP
+        );
     }
 
     /**
