@@ -13,6 +13,10 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class MissingReturnTypeProvider implements DiagnosticProvider
 {
+    public function examples(): iterable
+    {
+        return [];
+    }
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof MethodDeclaration) {

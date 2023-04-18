@@ -73,4 +73,9 @@ class MissingMethodProvider implements DiagnosticProvider
     {
         return [];
     }
+
+    public function examples(): iterable
+    {
+        return [];
+    }
 }

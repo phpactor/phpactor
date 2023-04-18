@@ -13,6 +13,10 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class UndefinedVariableProvider implements DiagnosticProvider
 {
+    public function examples(): iterable
+    {
+        return [];
+    }
     public function __construct(private int $suggestionLevensteinDistance = 4)
     {
     }
