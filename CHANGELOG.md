@@ -7,9 +7,11 @@ Features:
 
   - Diagnostic for undefined variables #2209
   - Code action to suggest fixes for undefined variables (in case of typos) #2209
+  - PHPUnit: code action for adding `setUp` / `tearDown` #2180 @mamazu
 
 Bug fixes:
 
+  - Do not make fully qualified name usage relative in class-mover #2208 @mamazu
   - Fix resolution of `self` type (esp. in relation to traits) #2116
   - Fix different virtual member types with the same name replacing eachother #2108
   - Specify maximimum size (255 chars) for string literal types #2144
