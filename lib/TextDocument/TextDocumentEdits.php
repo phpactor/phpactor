@@ -14,6 +14,14 @@ class TextDocumentEdits implements IteratorAggregate
     {
     }
 
+    public static function fromTextDocument(TextDocument $textDocument, TextEdits $edits): self
+    {
+        return new self(
+            TextDocumentUri::fromString($textDocument->uriOrThrow()),
+            $edits
+        );
+    }
+
     public function uri(): TextDocumentUri
     {
         return $this->uri;

@@ -158,7 +158,7 @@ class WorseGenerateMethod implements GenerateMethod
     {
         if (false === $methodCall->class()->isClass() && false === $methodCall->class()->isInterface()) {
             throw new TransformException(sprintf(
-                'Can only generate methods on classes or intefaces (trying on %s)',
+                'Can only generate methods on classes or interfaces (trying on %s)',
                 get_class($methodCall->class()->name())
             ));
         }
