@@ -219,6 +219,20 @@ class TolerantClassReplacerTest extends TestCase
                     }
                     EOT
             ],
+            'FQN stays fully qualified' => [
+                'Example12.php',
+                'FQN\Class',
+                'OtherFQN\ClassTwo',
+                <<<EOT
+                    <?php
+                    class Generic
+                    {
+                        public function __construct(\OtherFQN\ClassTwo \$test)
+                        {
+                        }
+                    }
+                    EOT,
+            ]
         ];
     }
 }

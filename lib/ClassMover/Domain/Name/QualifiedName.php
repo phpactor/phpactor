@@ -6,16 +6,26 @@ use InvalidArgumentException;
 
 class QualifiedName
 {
+    private bool $fullyQualified = false;
+
     /**
      * @param non-empty-array<string> $parts
      */
     protected function __construct(protected array $parts)
     {
+        if (count($this->parts) > 1) {
+            $this->fullyQualified = $this->parts[0] === '';
+        }
     }
 
     public function __toString(): string
     {
         return implode('\\', $this->parts);
+    }
+
+    public function wasFullyQualified(): bool
+    {
+        return $this->fullyQualified;
     }
 
     public static function root(): QualifiedName
