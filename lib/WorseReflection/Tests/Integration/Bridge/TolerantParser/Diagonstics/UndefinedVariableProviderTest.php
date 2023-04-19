@@ -72,12 +72,19 @@ class UndefinedVariableProviderTest extends DiagnosticsTestCase
     {
         self::assertCount(0, $diagnostics);
     }
-
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
     public function checkVariableIsThisInEnum(Diagnostics $diagnostics): void
     {
+        if (version_compare(PHP_VERSION, '8.1', '<')) {
+            $this->markTestSkipped('Requires PHP >= 8.1');
+        }
         self::assertCount(0, $diagnostics);
     }
-
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
     public function checkVariableIsInCatch(Diagnostics $diagnostics): void
     {
         self::assertCount(0, $diagnostics);
