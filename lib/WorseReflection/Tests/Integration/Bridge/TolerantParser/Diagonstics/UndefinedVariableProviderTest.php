@@ -73,6 +73,11 @@ class UndefinedVariableProviderTest extends DiagnosticsTestCase
         self::assertCount(0, $diagnostics);
     }
 
+    public function checkVariableIsThisInEnum(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
     protected function provider(): DiagnosticProvider
     {
         return new UndefinedVariableProvider();
