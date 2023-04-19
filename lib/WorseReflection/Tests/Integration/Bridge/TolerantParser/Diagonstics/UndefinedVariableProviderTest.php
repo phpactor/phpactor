@@ -78,6 +78,11 @@ class UndefinedVariableProviderTest extends DiagnosticsTestCase
         self::assertCount(0, $diagnostics);
     }
 
+    public function checkVariableIsInCatch(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
     protected function provider(): DiagnosticProvider
     {
         return new UndefinedVariableProvider();
