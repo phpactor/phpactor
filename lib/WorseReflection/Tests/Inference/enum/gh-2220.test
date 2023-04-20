@@ -1,15 +1,15 @@
 <?php
 
-interface test
+interface Foo
 {
     public function foo(): string;
 }
 
-enum Test: string implements test
+enum Test: string implements Foo
 {
-    public function foo()
+    public function foo(): string
     {
-        $this->cases(); <--- Undefined error
+        $this->cases();
     }
 }
 
