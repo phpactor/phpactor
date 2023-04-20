@@ -18,6 +18,8 @@ class LanguageServerCompletionExtension implements Extension
 {
     private const PARAM_TRIM_LEADING_DOLLAR = 'language_server_completion.trim_leading_dollar';
 
+    public const TAG_DOCUMENT_MODIFIER = 'language_server_completion.document_modifier';
+
 
     public function configure(Resolver $schema): void
     {
@@ -38,12 +40,24 @@ class LanguageServerCompletionExtension implements Extension
     private function registerHandlers(ContainerBuilder $container): void
     {
         $container->register('language_server_completion.handler.completion', function (Container $container) {
+            $documentModifiers = [];
+
+            foreach (array_keys($container->getServiceIdsForTag(self::TAG_DOCUMENT_MODIFIER)) as $serviceId) {
+                $documentModifier = $container->get($serviceId);
+                if (null === $documentModifier) {
+                    continue;
+                }
+                $documentModifiers[] = $documentModifier;
+            }
+
             return new CompletionHandler(
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(CompletionExtension::SERVICE_REGISTRY),
                 $container->get(SuggestionNameFormatter::class),
                 $container->get(NameImporter::class),
-                $this->clientCapabilities($container)->textDocument->completion->completionItem['snippetSupport'] ?? false
+                $this->clientCapabilities($container)->textDocument->completion->completionItem['snippetSupport'] ?? false,
+                false,
+                $documentModifiers
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [
             'methods' => [

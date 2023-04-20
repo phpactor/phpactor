@@ -7,10 +7,12 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\Laravel\Adapter\Laravel\LaravelContainerInspector;
 use Phpactor\Extension\Laravel\Completor\LaravelContainerCompletor;
 use Phpactor\Extension\Laravel\Completor\LaravelRouteCompletor;
 use Phpactor\Extension\Laravel\Completor\LaravelViewCompletor;
+use Phpactor\Extension\Laravel\DocumentManager\LaravelBladeInjector;
 use Phpactor\Extension\Laravel\Providers\LaravelModelPropertiesProvider;
 use Phpactor\Extension\Laravel\WorseReflection\LaravelContainerContextResolver;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
@@ -73,8 +75,16 @@ class LaravelExtension implements OptionalExtension
                 $container->get(LaravelContainerInspector::class)
             );
         }, [
-            WorseReflectionExtension::TAG_MEMBER_TYPE_RESOLVER => [
-            ],
+            WorseReflectionExtension::TAG_MEMBER_TYPE_RESOLVER => [],
+        ]);
+
+        $container->register(LaravelBladeInjector::class, function (Container $container) {
+            return new LaravelBladeInjector(
+                $container->get(LaravelContainerInspector::class),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+            );
+        }, [
+            LanguageServerCompletionExtension::TAG_DOCUMENT_MODIFIER => []
         ]);
 
         /* This is for the future. */

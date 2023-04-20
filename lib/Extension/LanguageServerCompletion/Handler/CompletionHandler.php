@@ -10,6 +10,8 @@ use Closure;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporterResult;
+use Phpactor\Extension\LanguageServerCompletion\Util\DocumentModifier;
+use Phpactor\Extension\LanguageServerCompletion\Util\TextDocumentModifierResponse;
 use Phpactor\LanguageServerProtocol\CompletionItem;
 use Phpactor\LanguageServerProtocol\CompletionList;
 use Phpactor\LanguageServerProtocol\CompletionOptions;
@@ -40,13 +42,17 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
      */
     private array $resolve = [];
 
+    /**
+     * @param DocumentModifier[] $documentModifiers
+     */
     public function __construct(
         private Workspace $workspace,
         private TypedCompletorRegistry $registry,
         private SuggestionNameFormatter $suggestionNameFormatter,
         private NameImporter $nameImporter,
         private bool $supportSnippets,
-        private bool $provideTextEdit = false
+        private bool $provideTextEdit = false,
+        private array $documentModifiers = []
     ) {
     }
 
@@ -67,12 +73,37 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
             $this->resolve = [];
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
+            $modifiedDocumentText = $textDocument->text;
+            $totalByteOffsetDifference = 0;
+
+            // Allow documentModifiers to process the document. This will barely be usable for other extensions but
+            // the Laravel blade one.
+            /** @var TextDocumentModifierResponse[] $modifierResponses */
+            $modifierResponses = [];
+            foreach ($this->documentModifiers as $modifier) {
+                if ($response = $modifier->process($modifiedDocumentText, $textDocument)) {
+                    $modifierResponses[] = $response;
+                    // Update the modifiedDocumentText with the new body as it may have changed.
+                    $modifiedDocumentText = $response->body;
+                    // Update the totalByteOffsetDifference with the additional text as it may have changed.
+                    $totalByteOffsetDifference += $response->additionalOffset;
+                }
+            }
+
             $languageId = $textDocument->languageId ?: 'php';
-            $byteOffset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
+
+            // We can only allow one language override.
+            if ($modifierResponses !== []) {
+                $languageId = $modifierResponses[0]->language;
+            }
+
+            $byteOffset = PositionConverter::positionToByteOffset($params->position, $textDocument->text)
+                ->add($totalByteOffsetDifference);
+
             $suggestions = $this->registry->completorForType(
                 $languageId
             )->complete(
-                TextDocumentBuilder::create($textDocument->text)->language($languageId)->uri($textDocument->uri)->build(),
+                TextDocumentBuilder::create($modifiedDocumentText)->language($languageId)->uri($textDocument->uri)->build(),
                 $byteOffset
             );
 

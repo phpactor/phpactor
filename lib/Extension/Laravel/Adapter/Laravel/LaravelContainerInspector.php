@@ -23,6 +23,8 @@ class LaravelContainerInspector
 
     private ?array $models = null;
 
+    private ?array $snippets = null;
+
     public function __construct(private string $executablePath, private string $projectRoot)
     {
     }
@@ -71,6 +73,15 @@ class LaravelContainerInspector
         }
 
         return $this->models;
+    }
+
+    public function snippets(): array
+    {
+        if ($this->snippets === null) {
+            $this->snippets = $this->getGetterOutput('snippets');
+        }
+
+        return $this->snippets;
     }
 
     private function getGetterOutput(string $getter): array

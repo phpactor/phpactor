@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerHover\Handler;
 
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\Extension\LanguageServerCompletion\Util\DocumentModifier;
 use Phpactor\LanguageServerProtocol\Hover;
 use Phpactor\LanguageServerProtocol\MarkupContent;
 use Phpactor\LanguageServerProtocol\Position;
@@ -28,10 +29,14 @@ use Phpactor\WorseReflection\Reflector;
 
 class HoverHandler implements Handler, CanRegisterCapabilities
 {
+    /**
+     * @param DocumentModifier[] $documentModifiers
+     */
     public function __construct(
         private Workspace $workspace,
         private Reflector $reflector,
-        private ObjectRenderer $renderer
+        private ObjectRenderer $renderer,
+        private array $documentModifiers = []
     ) {
     }
 
@@ -51,8 +56,27 @@ class HoverHandler implements Handler, CanRegisterCapabilities
     ): Promise {
         return \Amp\call(function () use ($textDocument, $position) {
             $document = $this->workspace->get($textDocument->uri);
-            $offset = PositionConverter::positionToByteOffset($position, $document->text);
-            $document = TextDocumentBuilder::create($document->text)
+
+            $modifiedDocumentText = $document->text;
+            $totalByteOffsetDifference = 0;
+
+            // Allow documentModifiers to process the document. This will barely be usable for other extensions but
+            // the Laravel blade one.
+            /** @var TextDocumentModifierResponse[] $modifierResponses */
+            $modifierResponses = [];
+            foreach ($this->documentModifiers as $modifier) {
+                if ($response = $modifier->process($modifiedDocumentText, $document)) {
+                    $modifierResponses[] = $response;
+                    // Update the modifiedDocumentText with the new body as it may have changed.
+                    $modifiedDocumentText = $response->body;
+                    // Update the totalByteOffsetDifference with the additional text as it may have changed.
+                    $totalByteOffsetDifference += $response->additionalOffset;
+                }
+            }
+
+            $offset = PositionConverter::positionToByteOffset($position, $document->text)
+                ->add($totalByteOffsetDifference);
+            $document = TextDocumentBuilder::create($modifiedDocumentText)
                 ->uri($document->uri)
                 ->language('php')
                 ->build();
