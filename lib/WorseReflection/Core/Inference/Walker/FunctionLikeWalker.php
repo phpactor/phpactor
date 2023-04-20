@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -69,7 +70,8 @@ class FunctionLikeWalker implements Walker
         $classNode = $node->getFirstAncestor(
             ClassDeclaration::class,
             InterfaceDeclaration::class,
-            TraitDeclaration::class
+            TraitDeclaration::class,
+            EnumDeclaration::class
         );
 
         if ($node instanceof AnonymousFunctionCreationExpression) {

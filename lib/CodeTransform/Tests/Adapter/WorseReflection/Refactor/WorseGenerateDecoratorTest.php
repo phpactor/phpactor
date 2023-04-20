@@ -9,7 +9,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 class WorseGenerateDecoratorTest extends WorseTestCase
 {
     /**
-     * @dataProvider provideDector
+     * @dataProvider provideGenerateDecorator
      */
     public function testGenerateDecorator(string $test): void
     {
@@ -30,7 +30,7 @@ class WorseGenerateDecoratorTest extends WorseTestCase
     /**
      * @return array<string,array{string}>
      */
-    public function provideDector(): array
+    public function provideGenerateDecorator(): array
     {
         return [
             'decorating untyped method' => [ 'generateDecorator1.test'],
