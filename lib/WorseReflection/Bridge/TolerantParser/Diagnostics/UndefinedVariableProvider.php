@@ -25,13 +25,19 @@ class UndefinedVariableProvider implements DiagnosticProvider
         if ($node->parent?->parent instanceof PropertyDeclaration) {
             return [];
         }
-        foreach ($frame->locals()->byName($node->getName()) as $variable) {
-            if ($variable->wasDefinition()) {
-                return [];
-            }
-        }
 
         $name = $node->getName();
+
+        if ($name) {
+            foreach ($frame->locals()->byName($name) as $variable) {
+                if ($variable->wasDefinition()) {
+                    return [];
+                }
+            }
+        } else {
+            $name = 'UNDEFINED';
+        }
+
         yield new UndefinedVariableDiagnostic(
             NodeUtil::byteOffsetRangeForNode($node),
             $name,
