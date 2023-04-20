@@ -1,0 +1,16 @@
+<?php
+
+interface test
+{
+    public function foo(): string;
+}
+
+enum Test: string implements test
+{
+    public function foo()
+    {
+        $this->cases(); <--- Undefined error
+    }
+}
+
+wrAssertType('string', Test::from('bar')->foo());
