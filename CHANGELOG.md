@@ -11,6 +11,7 @@ Features:
 
 Bug fixes:
 
+  - Support parsing interface clause on enums #2220
   - Do not make fully qualified name usage relative in class-mover #2208 @mamazu
   - Fix resolution of `self` type (esp. in relation to traits) #2116
   - Fix different virtual member types with the same name replacing eachother #2108
