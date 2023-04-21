@@ -160,6 +160,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         if ($classReflection instanceof ReflectionClass) {
             /** @var ReflectionProperty $property */
             foreach ($members->properties() as $property) {
+                dump($property->type());
                 if ($publicOnly && false === $property->visibility()->isPublic()) {
                     continue;
                 }
