@@ -7,8 +7,7 @@ interface Foo
 
 enum Test: string implements Foo
 {
-    private $foo;
-    public function foo()
+    public function foo(): string
     {
         $this->cases();
     }
