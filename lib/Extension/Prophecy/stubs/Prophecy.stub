@@ -24,6 +24,42 @@ class ObjectProphecy
     public function reveal()
     {
     }
+
+    /**
+     * Forces double to extend specific class.
+     *
+     * @template U
+     * @param class-string<U> $class
+     *
+     * @return self|T|U
+     */
+    public function willExtend(string $class)
+    {
+    }
+
+    /**
+     * Forces double to implement specific interface.
+     *
+     * @template U
+     *
+     * @param class-string<U> $interface
+     *
+     * @return self|T|U
+     */
+    public function willImplement(string $interface)
+    {
+    }
+
+   /**
+     * Sets constructor arguments.
+     *
+     * @param array<mixed> $arguments
+     *
+     * @return self
+     */
+    public function willBeConstructedWith(array $arguments = null)
+    {
+    }
 }
 
 /**
