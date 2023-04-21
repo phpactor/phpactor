@@ -19,7 +19,7 @@ class DedupeCompletor implements Completor
         $seen = [];
         $suggestions = $this->innerCompletor->complete($source, $byteOffset);
         foreach ($suggestions as $suggestion) {
-            $key = $suggestion->name();
+            $key = $suggestion->name().$suggestion->type();
 
             if ($this->matchNameImport) {
                 $key .= $suggestion->nameImport();
