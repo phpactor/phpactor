@@ -11,6 +11,7 @@ use Phpactor\LanguageServerProtocol\WorkspaceClientCapabilities;
 use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
+use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
 use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
@@ -41,6 +42,8 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         ));
         $result = $serverTester->initialize();
         $result = wait($serverTester->request('phpactor/status', []));
+        assert($result instanceof ResponseMessage);
+        assert(is_string($result->result));
         self::assertStringContainsString('test & path', $result->result);
     }
 
