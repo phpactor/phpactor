@@ -7,7 +7,10 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
+use PHPUnit\Framework\Assert;
+use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
+use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Context\ClassLikeContext;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
@@ -43,7 +46,30 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
 
     public function examples(): iterable
     {
-        return [];
+        yield new DiagnosticExample(
+            title: 'reports a deprecated class',
+            source: <<<'PHP'
+                <?php
+
+                /** @deprecated */
+                class Deprecated {
+                    public static foo(): void {}
+                }
+
+                class NotDeprecated {
+                    public static foo(): void {}
+                }
+
+                $fo = new Deprecated();
+                Deprecated::foo();
+                new NotDeprecated();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(2, $diagnostics);
+                Assert::assertEquals('Call to deprecated class "Deprecated"', $diagnostics->at(0)->message());
+            }
+        );
     }
 
     /**

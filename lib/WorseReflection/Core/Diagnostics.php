@@ -7,13 +7,14 @@ use Countable;
 use IteratorAggregate;
 use Phpactor\TextDocument\ByteOffsetRange;
 use RuntimeException;
+use Stringable;
 use Traversable;
 
 /**
  * @template-covariant T of Diagnostic
  * @implements IteratorAggregate<T>
  */
-final class Diagnostics implements IteratorAggregate, Countable
+final class Diagnostics implements IteratorAggregate, Countable, Stringable
 {
     /**
      * @param T[] $diagnostics
@@ -100,5 +101,12 @@ final class Diagnostics implements IteratorAggregate, Countable
             $d->range()->start()->toInt() <= $byteOffsetRange->start()->toInt() &&
             $d->range()->end()->toInt() >= $byteOffsetRange->end()->toInt()
         ));
+    }
+
+    public function __toString(): string
+    {
+        return implode("\n", array_map(function(Diagnostic $diagnostic) {
+            return sprintf('[%s] %s', $diagnostic->severity()->toString(), $diagnostic->message());
+        }, $this->diagnostics));
     }
 }
