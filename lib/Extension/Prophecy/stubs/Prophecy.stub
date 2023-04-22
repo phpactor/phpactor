@@ -31,7 +31,7 @@ class ObjectProphecy
      * @template U
      * @param class-string<U> $class
      *
-     * @return self|T|U
+     * @return ObjectProphecy<T|U>
      */
     public function willExtend(string $class)
     {
@@ -44,7 +44,7 @@ class ObjectProphecy
      *
      * @param class-string<U> $interface
      *
-     * @return self|T|U
+     * @return ObjectProphecy<T|U>
      */
     public function willImplement(string $interface)
     {

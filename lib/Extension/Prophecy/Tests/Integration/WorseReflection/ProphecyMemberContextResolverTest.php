@@ -155,6 +155,58 @@ class ProphecyMemberContextResolverTest extends IntegrationTestCase
         );
     }
 
+    public function testProphesizeExtends(): void
+    {
+        $this->resolve(<<<'EOT'
+            <?php
+            class SomeClass {
+                public function someFunction(): void {}
+            }
+            class ExtensionClass {
+                public function otherFunction(): void {}
+            }
+
+            class TestCase {
+                /** @var \Prophecy\Prophecy\ObjectProphecy<SomeClass> */
+                private $prophet;
+
+                public function doTest(): void
+                {
+                    wrAssertType(
+                        'Prophecy\Prophecy\ObjectProphecy<SomeClass|ExtensionClass>',
+                        $this->prophet->willExtend(ExtensionClass::class)
+                    );
+                }
+            }
+            EOT);
+    }
+
+    public function testProphesizeImplements(): void
+    {
+        $this->resolve(<<<'EOT'
+            <?php
+            class SomeClass {
+                public function someFunction(): void {}
+            }
+            interface Extension {
+                public function otherFunction(): void {}
+            }
+
+            class TestCase {
+                /** @var \Prophecy\Prophecy\ObjectProphecy<SomeClass> */
+                private $prophet;
+
+                public function doTest(): void
+                {
+                    wrAssertType(
+                        'Prophecy\Prophecy\ObjectProphecy<SomeClass|Extension>',
+                        $this->prophet->willImplement(Extension::class)
+                    );
+                }
+            }
+            EOT);
+    }
+
     public function resolve(string $sourceCode): void
     {
         $sourceCode = TextDocumentBuilder::fromUnknown($sourceCode);

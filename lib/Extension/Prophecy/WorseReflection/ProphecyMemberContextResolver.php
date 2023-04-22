@@ -6,14 +6,18 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Reflector;
 
@@ -82,16 +86,38 @@ class ProphecyMemberContextResolver implements MemberContextResolver
     private function fromGeneric(Reflector $reflector, GenericClassType $type): Type
     {
         $innerType = $type->arguments()[0];
-        if (!$innerType instanceof ClassType) {
+        if (!$innerType instanceof ClassType && !$innerType instanceof UnionType) {
             return TypeFactory::undefined();
         }
 
-        try {
-            $innerReflection = $reflector->reflectClassLike($innerType->name());
-        } catch (NotFound) {
-            return TypeFactory::unknown();
+        $typesToReflect = $innerType instanceof UnionType ? $innerType->types : [$innerType];
+
+        foreach($typesToReflect as $typeToReflect) {
+            // If we have a union like ObjectProphecy<SomeClass|int> we don't support that here
+            if (!$typeToReflect instanceof ClassLikeType) {
+                return TypeFactory::unknown();
+            }
+
+            try {
+                $innerReflection = $reflector->reflectClassLike($typeToReflect->name());
+            } catch (NotFound) {
+                return TypeFactory::unknown();
+            }
+            $type = $type->mergeMembers($this->getMemberCollectionFromReflection($innerReflection, $reflector, $typeToReflect));
         }
-        return $type->mergeMembers($innerReflection->members()->map(function (ReflectionMember $member) use ($reflector, $innerType) {
+
+        return $type;
+    }
+
+    /**
+     * @return ReflectionMemberCollection<ReflectionMember>
+     */
+    private function getMemberCollectionFromReflection(
+        ReflectionClassLike $innerReflection,
+        Reflector $reflector,
+        Type $innerType
+    ): ReflectionMemberCollection {
+        return $innerReflection->members()->map(function (ReflectionMember $member) use ($reflector, $innerType) {
             if (!$member instanceof ReflectionMethod) {
                 return $member;
             }
@@ -100,6 +126,6 @@ class ProphecyMemberContextResolver implements MemberContextResolver
                     $innerType
                 ])
             );
-        }));
+        });
     }
 }
