@@ -167,7 +167,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals('Call to deprecated method "deprecated": This is deprecated', $diagnostics->at(0)->message());
             }
-                );
+        );
 
         yield new DiagnosticExample(
             title: 'reports a deprecated on trait',

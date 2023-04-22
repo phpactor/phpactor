@@ -23,6 +23,13 @@ final class Diagnostics implements IteratorAggregate, Countable, Stringable
     {
     }
 
+    public function __toString(): string
+    {
+        return implode("\n", array_map(function (Diagnostic $diagnostic) {
+            return sprintf('[%s] %s', $diagnostic->severity()->toString(), $diagnostic->message());
+        }, $this->diagnostics));
+    }
+
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->diagnostics);
@@ -101,12 +108,5 @@ final class Diagnostics implements IteratorAggregate, Countable, Stringable
             $d->range()->start()->toInt() <= $byteOffsetRange->start()->toInt() &&
             $d->range()->end()->toInt() >= $byteOffsetRange->end()->toInt()
         ));
-    }
-
-    public function __toString(): string
-    {
-        return implode("\n", array_map(function(Diagnostic $diagnostic) {
-            return sprintf('[%s] %s', $diagnostic->severity()->toString(), $diagnostic->message());
-        }, $this->diagnostics));
     }
 }
