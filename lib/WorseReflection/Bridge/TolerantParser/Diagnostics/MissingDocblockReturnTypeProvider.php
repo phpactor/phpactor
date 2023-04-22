@@ -15,6 +15,10 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
+/**
+ * Report when a method has a return type should be
+ * augmented by a phpdoc.
+ */
 class MissingDocblockReturnTypeProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
@@ -124,7 +128,7 @@ class MissingDocblockReturnTypeProvider implements DiagnosticProvider
     public function examples(): iterable
     {
         yield new DiagnosticExample(
-            title: 'report diagnostic on on variadic',
+            title: 'method without return type',
             source: <<<'PHP'
                 <?php
 
@@ -140,5 +144,10 @@ class MissingDocblockReturnTypeProvider implements DiagnosticProvider
                 Assert::assertCount(1, $diagnostics);
             }
         );
+    }
+
+    public function name(): string
+    {
+        return 'missing_phpdoc_return';
     }
 }

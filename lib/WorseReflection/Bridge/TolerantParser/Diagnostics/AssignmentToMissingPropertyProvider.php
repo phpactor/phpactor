@@ -24,12 +24,15 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
+/**
+ * Report when assigning to a missing property definition.
+ */
 class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 {
     public function examples(): iterable
     {
         yield new DiagnosticExample(
-            title: 'reports assignment to non-existing property',
+            title: 'to non-existing property',
             source: <<<'PHP'
                 <?php
 
@@ -148,6 +151,11 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
+    }
+
+    public function name(): string
+    {
+        return 'assignment_to_missing_property';
     }
 
     private function resolvePropertyType(

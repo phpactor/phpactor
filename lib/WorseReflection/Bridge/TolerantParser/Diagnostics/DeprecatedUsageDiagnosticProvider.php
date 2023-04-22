@@ -18,6 +18,9 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 
+/**
+ * Report when a deprecated symbol (class, method, constant, function etc) is used.
+ */
 class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
 {
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
@@ -47,7 +50,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
     public function examples(): iterable
     {
         yield new DiagnosticExample(
-            title: 'reports a deprecated class',
+            title: 'deprecated class',
             source: <<<'PHP'
                 <?php
 
@@ -71,7 +74,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'reports a deprecated constant',
+            title: 'deprecated constant',
             source: <<<'PHP'
                 <?php
 
@@ -96,7 +99,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         );
 
         yield new DiagnosticExample(
-            title: 'reports a deprecated enum',
+            title: 'deprecated enum',
             source: <<<'PHP'
                 <?php
 
@@ -122,7 +125,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         );
 
         yield new DiagnosticExample(
-            title: 'reports a deprecated function',
+            title: 'deprecated function',
             source: <<<'PHP'
                 <?php
 
@@ -142,7 +145,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'reports a deprecated method',
+            title: 'deprecated method',
             source: <<<'PHP'
                 <?php
 
@@ -167,7 +170,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         );
 
         yield new DiagnosticExample(
-            title: 'reports a deprecated on trait',
+            title: 'deprecated on trait',
             source: <<<'PHP'
                 <?php
 
@@ -194,7 +197,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'reports a deprecated on property',
+            title: 'deprecated on property',
             source: <<<'PHP'
                 <?php
 
@@ -217,6 +220,11 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
                 Assert::assertEquals('Call to deprecated property "deprecated": This is deprecated', $diagnostics->at(0)->message());
             }
         );
+    }
+
+    public function name(): string
+    {
+        return 'deprecated usage';
     }
 
     /**
