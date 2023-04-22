@@ -4,9 +4,12 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use PHPUnit\Framework\Assert;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -108,7 +111,103 @@ class MissingDocblockParamProvider implements DiagnosticProvider
 
     public function examples(): iterable
     {
-        return [];
+        yield new DiagnosticExample(
+            title: 'reports a missing docblock param on closure',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function foo(Closure $foobar) {
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'reports a missing docblock param on generator',
+            source: <<<'PHP'
+                <?php
+
+                /**
+                 * @template TKey
+                 * @template TValue of string
+                 */
+                class Generator {
+                }
+
+                class Foobar
+                {
+                    public function foo(Generator $foobar) {
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'reports a missing docblock on array',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function foo(array $foobar) {
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'does not report diagnostic on method with @param',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @param string[] $foobar  
+                     */
+                    public function foo(array $foobar): array {
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'report diagnostic on on variadic',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function foo(string ...$foobars) {
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     private function upcastType(Type $type, NodeContextResolver $resolver): Type
