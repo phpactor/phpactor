@@ -2,8 +2,16 @@
 
 namespace Phpactor\Extension\Laravel\Adapter\Laravel;
 
+use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\IntType;
+use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\StringType;
+use Phpactor\WorseReflection\Reflector;
 use Symfony\Component\Process\Process;
 
 /**
@@ -84,6 +92,56 @@ class LaravelContainerInspector
         return $this->snippets;
     }
 
+    public function getRelationType(
+        string $name,
+        string $type,
+        string $related,
+        Reflector $reflector
+    ): GenericClassType|ReflectedClassType {
+        // @todo: This is currently a dumb approach.
+        $isMany = str_contains($type, 'Many');
+
+        if ($isMany) {
+            return new GenericClassType(
+                $reflector,
+                ClassName::fromString('\\Illuminate\\Database\\Eloquent\\Collection'),
+                [
+                    new IntType(),
+                    new ReflectedClassType($reflector, ClassName::fromString($related)),
+                ]
+            );
+        }
+
+        return new ReflectedClassType($reflector, ClassName::fromString($related));
+    }
+
+    public function getTypeFromString(string $phpType, Reflector $reflector, ?string $cast = null): Type
+    {
+
+        $type = null;
+        if ($cast) {
+            $type = match ($cast) {
+                'datetime' => new ReflectedClassType($reflector, ClassName::fromString('\\Carbon\\Carbon')),
+                default => new ReflectedClassType($reflector, ClassName::fromString($cast)),
+            };
+        }
+
+        if ($type) {
+            return $type;
+        }
+
+        return match ($phpType) {
+            'string' => new StringType(),
+            'int' => new IntType(),
+            'bool' => new BooleanType(),
+            'DateTime' => new ReflectedClassType($reflector, ClassName::fromString('\\Carbon\\Carbon')),
+            default => new StringType(),
+        };
+    }
+
+    /**
+     * @return mixed|array
+     */
     private function getGetterOutput(string $getter): array
     {
         $process = new Process([$this->executablePath, $getter, $this->projectRoot]);

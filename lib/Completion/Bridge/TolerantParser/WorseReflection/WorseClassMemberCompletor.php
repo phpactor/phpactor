@@ -21,6 +21,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -104,8 +105,13 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $isParent = $nodeContext->symbol()->name() === 'parent';
         $publicOnly = !in_array($nodeContext->symbol()->name(), ['this', 'self'], true);
 
-
-        $type = $type->expandTypes()->classLike()->firstOrNull();
+        $reflectionGeneric = null;
+        if ($type instanceof GenericClassType) {
+            $reflectionGeneric = $type->reflectionOrNull();
+            $reflectionGeneric->withGenericMap($type->arguments());
+        } else {
+            $type = $type->expandTypes()->classLike()->firstOrNull();
+        }
 
         if (!$type) {
             return;
@@ -115,7 +121,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        $members = $type->members();
+        $members = $reflectionGeneric ? $reflectionGeneric->members() : $type->members();
 
         if (!$isParent && $static) {
             yield Suggestion::createWithOptions('class', [

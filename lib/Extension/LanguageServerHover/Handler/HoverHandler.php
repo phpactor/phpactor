@@ -23,8 +23,11 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ClassLikeType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class HoverHandler implements Handler, CanRegisterCapabilities
@@ -148,48 +151,68 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         $name = $nodeContext->symbol()->name();
         $container = $nodeContext->containerType();
         $infos = [];
+        $genericAguments = [];
+
+        if ($container instanceof GenericClassType) {
+            $class = $this->reflector->reflectClass($container->name()->__toString());
+            $class->withGenericMap($container->arguments());
+
+            try {
+                $infos[] = $this->getInfo($class, $name, $nodeContext, $class->type());
+            } catch (NotFound) {
+            }
+        }
 
         foreach ($container->expandTypes()->classLike() as $namedType) {
             try {
                 $class = $this->reflector->reflectClassLike((string) $namedType);
-                $member = null;
-                $sep = '#';
-
-                // note that all class-likes (classes, traits and interfaces) have
-                // methods but not all have constants or properties, so we play safe
-                // with members() which is first-come-first-serve, rather than risk
-                // a fatal error because of a non-existing method.
-                $symbolType = $nodeContext->symbol()->symbolType();
-                switch ($symbolType) {
-                    case Symbol::METHOD:
-                        $member = $class->methods()->get($name);
-                        $sep = '#';
-                        break;
-                    case Symbol::CONSTANT:
-                        $sep = '::';
-                        $member = $class->members()->get($name);
-                        break;
-                    case Symbol::PROPERTY:
-                        $sep = '$';
-                        $member = $class->members()->get($name);
-                        break;
-                    default:
-                        return sprintf('Unknown symbol type "%s"', $symbolType);
-                }
-
-                $infos[] = $this->renderer->render(new HoverInformation(
-                    $namedType->short() .' '.$sep.' '.(string)$member->name(),
-                    $this->renderer->render(
-                        new MemberDocblock($member)
-                    ),
-                    $member
-                ));
+                $infos[] = $this->getInfo($class, $name, $nodeContext, $namedType);
             } catch (NotFound) {
                 continue;
             }
         }
 
         return implode("\n", $infos);
+    }
+
+    private function getInfo(
+        ReflectionClassLike $class,
+        string $name,
+        NodeContext $nodeContext,
+        ClassLikeType|Type $namedType
+    ): string {
+        $member = null;
+        $sep = '#';
+
+        // note that all class-likes (classes, traits and interfaces) have
+        // methods but not all have constants or properties, so we play safe
+        // with members() which is first-come-first-serve, rather than risk
+        // a fatal error because of a non-existing method.
+        $symbolType = $nodeContext->symbol()->symbolType();
+        switch ($symbolType) {
+            case Symbol::METHOD:
+                $member = $class->methods()->get($name);
+                $sep = '#';
+                break;
+            case Symbol::CONSTANT:
+                $sep = '::';
+                $member = $class->members()->get($name);
+                break;
+            case Symbol::PROPERTY:
+                $sep = '$';
+                $member = $class->members()->get($name);
+                break;
+            default:
+                return sprintf('Unknown symbol type "%s"', $symbolType);
+        }
+
+        return $this->renderer->render(new HoverInformation(
+            $namedType->short() . ' ' . $sep . ' ' . (string)$member->name(),
+            $this->renderer->render(
+                new MemberDocblock($member)
+            ),
+            $member
+        ));
     }
 
     private function renderFunction(NodeContext $nodeContext): string

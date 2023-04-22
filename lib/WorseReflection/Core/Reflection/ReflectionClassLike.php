@@ -14,6 +14,11 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 interface ReflectionClassLike extends ReflectionNode
 {
+    /**
+     * @param array<int,mixed> $types
+     */
+    public function withGenericMap(array $types): void;
+
     public function position(): ByteOffsetRange;
 
     public function name(): ClassName;
