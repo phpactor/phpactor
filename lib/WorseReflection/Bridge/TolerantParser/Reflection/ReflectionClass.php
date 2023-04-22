@@ -45,9 +45,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     private ?ReflectionTraitCollection $traits = null;
 
-    private ?ClassLikeReflectionMemberCollection $ownMembers = null;
-
     private ?ClassName $name = null;
+
+    /**
+     * @param ClassLikeReflectionMemberCollection[]
+     */
+    private array $ownMembers = [];
 
     /**
      * @param ClassLikeReflectionMemberCollection[]
@@ -126,15 +129,16 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function ownMembers(): ReflectionMemberCollection
     {
-        if ($this->ownMembers) {
-            return $this->ownMembers;
+        $templateMap = base64_encode($this->templateMap()->__toString());
+        if (isset($this->ownMembers[$templateMap])) {
+            return $this->ownMembers[$templateMap];
         }
-        $this->ownMembers = ClassLikeReflectionMemberCollection::fromClassMemberDeclarations(
+        $this->ownMembers[$templateMap] = ClassLikeReflectionMemberCollection::fromClassMemberDeclarations(
             $this->serviceLocator,
             $this->node,
             $this
         );
-        return $this->ownMembers;
+        return $this->ownMembers[$templateMap];
     }
 
     public function constants(): ReflectionConstantCollection

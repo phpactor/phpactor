@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\InvokeableType;
+use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -31,6 +32,11 @@ class CallExpressionResolver implements Resolver
         $context = $resolver->resolveNode($frame, $resolvableNode);
         $returnType = $context->type();
         $containerType = $context->containerType();
+
+        /** @todo: Check if this is even valid. Because it does seem to work perfectly! */
+        if ($returnType instanceof MissingType && !($containerType instanceof MissingType)) {
+            return NodeContextFactory::forNode($node)->withType($containerType);
+        }
 
         if ($returnType instanceof ConditionalType) {
             $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $frame, $node);

@@ -17,7 +17,6 @@ class LaravelQueryBuilderContextProvider implements MemberContextResolver
 
     public function resolveMemberContext(Reflector $reflector, ReflectionMember $member, Type $type, ?FunctionArguments $arguments): ?Type
     {
-        // Probably will not need this for now until we get to relation buildres ->with, ->has
         return $type;
     }
 }
