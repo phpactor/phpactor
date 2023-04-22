@@ -22,7 +22,7 @@ class LanguageServerTestCase extends TestCase
 {
     protected function workspace(): Workspace
     {
-        return Workspace::create(__DIR__ . '/../../Workspace');
+        return Workspace::create(__DIR__ . '/../Workspace');
     }
     /**
      * @param array<string,mixed> $params

@@ -11,6 +11,7 @@ use Phpactor\LanguageServerProtocol\WorkspaceClientCapabilities;
 use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
+use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
 use Phpactor\LanguageServer\Listener\WorkspaceListener;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
@@ -26,6 +27,24 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         $result = $serverTester->initialize();
         self::assertNotNull($result->serverInfo);
         self::assertEquals('phpactor/phpactor', $result->serverInfo['name']);
+    }
+
+    /**
+     * @covers PhpactorDispatcherFactory::resolveRootUri
+     */
+    public function testInitializeInDirWithSpecialChars(): void
+    {
+        $this->workspace()->reset();
+        $this->workspace()->put('test & path/foobar/src/Foo.php', '<?php echo "hello world";');
+        $serverTester = $this->createTester(new InitializeParams(
+            capabilities: new ClientCapabilities(),
+            rootUri: sprintf('file:///%s/%s', $this->workspace()->path(), urlencode('test & path')),
+        ));
+        $result = $serverTester->initialize();
+        $result = wait($serverTester->request('phpactor/status', []));
+        assert($result instanceof ResponseMessage);
+        assert(is_string($result->result));
+        self::assertStringContainsString('test & path', $result->result);
     }
 
     public function testLoadsTextDocuments(): void

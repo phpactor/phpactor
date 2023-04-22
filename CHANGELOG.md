@@ -11,6 +11,9 @@ Features:
 
 Bug fixes:
 
+  - URL decode root URI - fixes issues with special chars in path #2228
+  - Do not deduplicate suggestions of different types (e.g. prop/method with same name) #2214
+  - Fix list assignment #2226
   - Support parsing interface clause on enums #2220
   - Do not make fully qualified name usage relative in class-mover #2208 @mamazu
   - Fix resolution of `self` type (esp. in relation to traits) #2116
