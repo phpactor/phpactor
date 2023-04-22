@@ -70,6 +70,156 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
                 Assert::assertEquals('Call to deprecated class "Deprecated"', $diagnostics->at(0)->message());
             }
         );
+        yield new DiagnosticExample(
+            title: 'reports a deprecated constant',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    /** @deprecated This is deprecated */
+                    const FOO = 'BAR';
+
+                    const BAR = 'BAR';
+
+                    public function foo(Closure $foobar) {
+                        $fo = self::FOO;
+                        $ba = self::BAR;
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Call to deprecated constant "FOO": This is deprecated', $diagnostics->at(0)->message());
+            }
+        );
+
+        yield new DiagnosticExample(
+            title: 'reports a deprecated enum',
+            source: <<<'PHP'
+                <?php
+
+                /** @deprecated */
+                enum Deprecated {
+                    case FOO;
+                }
+
+                enum NotDeprecated {
+                    case BAR;
+                }
+
+                $fo = Deprecated::FOO();
+                Deprecated::foo();
+                new NotDeprecated();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                if (version_compare(PHP_VERSION, '8.1', '<')) {
+                    return;
+                }
+
+                Assert::assertCount(2, $diagnostics);
+                Assert::assertEquals('Call to deprecated enum "Deprecated"', $diagnostics->at(0)->message());
+            }
+        );
+
+        yield new DiagnosticExample(
+            title: 'reports a deprecated function',
+            source: <<<'PHP'
+                <?php
+
+                /** @deprecated */
+                function bar(): void {}
+
+                function notDeprecated(): void {}
+
+                bar();
+
+                notDeprecated();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Call to deprecated function "bar"', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'reports a deprecated method',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function foo(Closure $foobar) {
+                        $this->deprecated();
+                        $this->notDeprecated();
+                    }
+
+                    /** @deprecated This is deprecated */
+                    public function deprecated(): void {}
+
+                    public function notDeprecated(): void {}
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Call to deprecated method "deprecated": This is deprecated', $diagnostics->at(0)->message());
+            }
+                );
+
+        yield new DiagnosticExample(
+            title: 'reports a deprecated on trait',
+            source: <<<'PHP'
+                <?php
+
+                trait FoobarTrait {
+                    /** @deprecated This is deprecated */
+                    public function deprecated(): void {}
+                }
+
+                class Foobar
+                {
+                    use FoobarTrait;
+                    public function foo(Closure $foobar) {
+                        $this->deprecated();
+                        $this->notDeprecated();
+                    }
+
+                    public function notDeprecated(): void {}
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Call to deprecated method "deprecated": This is deprecated', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'reports a deprecated on property',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    /** @deprecated This is deprecated */
+                    public string $deprecated;
+
+                    public string $notDeprecated;
+
+                    public function foo(Closure $foobar) {
+                        $fo = $this->deprecated;
+                        $ba = $this->notDeprecated;
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Call to deprecated property "deprecated": This is deprecated', $diagnostics->at(0)->message());
+            }
+        );
     }
 
     /**
