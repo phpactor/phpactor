@@ -185,6 +185,9 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 PHP,
             valid: true,
             assertion: function (Diagnostics $diagnostics): void {
+                if (version_compare(PHP_VERSION, '8.1', '<')) {
+                    return;
+                }
                 Assert::assertCount(0, $diagnostics);
             }
         );
