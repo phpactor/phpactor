@@ -92,7 +92,7 @@ class LaravelContainerInspector
         return $this->snippets;
     }
 
-    public function getRelationBuilderClassType(ReflectionClassLike $parentClass, array $relationData, Reflector $reflector): Type
+    public function getRelationBuilderClassType(ReflectionClassLike $parentClass, array $relationData, Reflector $reflector): ?GenericClassType
     {
         if ($relationData['type'] === 'Illuminate\Database\Eloquent\Relations\HasMany') {
             $class = $reflector->reflectClass('LaravelHasManyVirtualBuilder');
@@ -108,7 +108,7 @@ class LaravelContainerInspector
             return new GenericClassType($reflector, $class->name(), [$relationClass]);
         }
 
-        return new MissingType();
+        return null;
     }
 
     public function getRelationType(

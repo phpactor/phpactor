@@ -123,26 +123,27 @@ class LaravelModelPropertiesProvider implements ReflectionMemberProvider
                 new Deprecation(false),
             );
 
-            $relationBuilder = $this->laravelContainer->getRelationBuilderClassType($class, $relationData, $locator->reflector());
-
-            // Also replace the method.
-            $methods[] = $method = new VirtualReflectionMethod(
-                $class->position(),
-                $class,
-                $class,
-                $relationData['property'],
-                new Frame(),
-                $class->docblock(),
-                $class->scope(),
-                Visibility::public(),
-                $relationBuilder,
-                $relationBuilder,
-                ReflectionParameterCollection::empty(),
-                NodeText::fromString(''),
-                false,
-                true,
-                new Deprecation(false),
-            );
+            if ($relationBuilder = $this->laravelContainer->getRelationBuilderClassType($class, $relationData, $locator->reflector())) {
+                $reflected = $relationBuilder->reflectionOrNull();
+                // Also replace the method.
+                $methods[] = $method = new VirtualReflectionMethod(
+                    $reflected->position(),
+                    $reflected,
+                    $reflected,
+                    $relationData['property'],
+                    new Frame(),
+                    $reflected->docblock(),
+                    $reflected->scope(),
+                    Visibility::public(),
+                    $relationBuilder,
+                    $relationBuilder,
+                    ReflectionParameterCollection::empty(),
+                    NodeText::fromString(''),
+                    false,
+                    true,
+                    new Deprecation(false),
+                );
+            }
         }
 
         $this->cache[$className] = ChainReflectionMemberCollection::fromCollections([

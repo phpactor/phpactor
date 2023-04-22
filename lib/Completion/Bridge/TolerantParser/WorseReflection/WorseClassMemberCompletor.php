@@ -108,7 +108,9 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $reflectionGeneric = null;
         if ($type instanceof GenericClassType) {
             $reflectionGeneric = $type->reflectionOrNull();
-            $reflectionGeneric->withGenericMap($type->arguments());
+            if ($reflectionGeneric) {
+                $reflectionGeneric->withGenericMap($type->arguments());
+            }
         } else {
             $type = $type->expandTypes()->classLike()->firstOrNull();
         }

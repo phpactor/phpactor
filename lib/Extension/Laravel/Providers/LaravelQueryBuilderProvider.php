@@ -33,17 +33,16 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
     /**
      * @return ReflectionMemberCollection<ReflectionMember>
      */
-    public function provideMembers(ServiceLocator $locator, ReflectionClassLike $class): ReflectionMemberCollection
+    public function provideMembers(ServiceLocator $locator, ReflectionClassLike $builderClass): ReflectionMemberCollection
     {
         $list = [];
-        if (in_array($class->name()->__toString(), $this->virtualBuilders)) {
-            $type = $class->templateMap()->get('TModelClass');
-            $builderClass = $class;
+        if (in_array($builderClass->name()->__toString(), $this->virtualBuilders)) {
+            $type = $builderClass->templateMap()->get('TModelClass');
             if ($type instanceof MissingType) {
                 return ChainReflectionMemberCollection::fromCollections([]);
             }
 
-            $builderType = match ($class->name()->__toString()) {
+            $builderType = match ($builderClass->name()->__toString()) {
                 'LaravelHasManyVirtualBuilder' => 'HasMany',
                 'LaravelBelongsToManyVirtualBuilder' => ' BelongsToMany',
             };
@@ -70,7 +69,6 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
         if ($modelData = $this->laravelContainer->models()[$type->name()->__toString()] ?? false) {
             $class = $locator->reflector()->reflectClass($type->name());
 
-            // Reconstruct the class.
             $relationBuilder = new GenericClassType($locator->reflector(), $builderClass->name(), [$class->type()]);
 
             foreach ($modelData['attributes'] as $attributeData) {
@@ -108,7 +106,7 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
                             default: DefaultValue::undefined(),
                             byReference: false,
                             scope: $method->scope(),
-                            position: $class->position(),
+                            position: $method->position(),
                             index: 0,
                         )
                     );
