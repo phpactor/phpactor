@@ -26,16 +26,14 @@ class UndefinedVariableProvider implements DiagnosticProvider
             return [];
         }
 
-        $name = $node->getName();
+        if (!$name = $node->getName()) {
+            return [];
+        }
 
-        if ($name) {
-            foreach ($frame->locals()->byName($name) as $variable) {
-                if ($variable->wasDefinition()) {
-                    return [];
-                }
+        foreach ($frame->locals()->byName($name) as $variable) {
+            if ($variable->wasDefinition()) {
+                return [];
             }
-        } else {
-            $name = 'UNDEFINED';
         }
 
         yield new UndefinedVariableDiagnostic(
