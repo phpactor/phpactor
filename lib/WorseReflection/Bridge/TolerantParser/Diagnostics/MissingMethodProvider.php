@@ -7,9 +7,12 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Token;
+use PHPUnit\Framework\Assert;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -76,6 +79,88 @@ class MissingMethodProvider implements DiagnosticProvider
 
     public function examples(): iterable
     {
-        return [];
+        yield new DiagnosticExample(
+            title: 'inlined type',
+            source: <<<'PHP'
+                <?php
+
+                class Type {
+                }
+
+                class ReflectedClassType extends Type {
+                    public function isInvokable(): bool {
+                        return true;
+                    }
+                }
+
+                function (Type $type) {
+                    if ($type instanceof ReflectedClassType && $type->isInvokable()) {
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'does not report call on type inferred previously in expressio',
+            source: <<<'PHP'
+                <?php
+
+                class Type {
+                }
+
+                class ReflectedClassType extends Type {
+                    public function isInvokable(): bool {
+                        return true;
+                    }
+                }
+
+                function (Type $type) {
+                    if ($type instanceof ReflectedClassType && $type->isInvokable()) {
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'reports for missing method on instance ',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                }
+
+                $f = new Foobar();
+                $f->bar();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Method "bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'report missing method for static invocation',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                }
+
+                Foobar::bar();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Method "bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
+            }
+        );
     }
 }
