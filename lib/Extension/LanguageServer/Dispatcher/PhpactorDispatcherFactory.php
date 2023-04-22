@@ -128,6 +128,7 @@ class PhpactorDispatcherFactory implements DispatcherFactory
             );
         }
 
-        return $params->rootUri;
+        // root URI is url encoded, decode it!
+        return urldecode($params->rootUri);
     }
 }
