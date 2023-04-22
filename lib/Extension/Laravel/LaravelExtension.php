@@ -30,6 +30,8 @@ class LaravelExtension implements OptionalExtension
 
     public function load(ContainerBuilder $container): void
     {
+        // @todo: Auto add the "Stubs" to the config.
+
         $container->register(LaravelContainerInspector::class, function (Container $container) {
             $executablePath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)
                                         ->resolve($container->getParameter(self::DEV_TOOLS_EXECUTABLE));

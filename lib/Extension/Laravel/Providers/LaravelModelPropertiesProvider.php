@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\Laravel\Providers;
 
 use Phpactor\Extension\Laravel\Adapter\Laravel\LaravelContainerInspector;
-use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -16,17 +15,12 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
-use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\StaticType;
 use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionMethod;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionParameter;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionProperty;
 use Phpactor\WorseReflection\Core\Visibility;
-use Phpactor\WorseReflection\Reflector;
 
 class LaravelModelPropertiesProvider implements ReflectionMemberProvider
 {
@@ -129,7 +123,7 @@ class LaravelModelPropertiesProvider implements ReflectionMemberProvider
                 new Deprecation(false),
             );
 
-            $relationBuilder = $this->getRelationBuilderClassType($class, $relationData, $locator->reflector());
+            $relationBuilder = $this->laravelContainer->getRelationBuilderClassType($class, $relationData, $locator->reflector());
 
             // Also replace the method.
             $methods[] = $method = new VirtualReflectionMethod(
@@ -157,24 +151,5 @@ class LaravelModelPropertiesProvider implements ReflectionMemberProvider
         ]);
 
         return $this->cache[$className];
-    }
-
-    private function getRelationBuilderClassType(ReflectionClassLike $parentClass, array $relationData, Reflector $reflector): Type
-    {
-        if ($relationData['type'] === 'Illuminate\Database\Eloquent\Relations\HasMany') {
-            $class = $reflector->reflectClass('LaravelHasManyVirtualBuilder');
-            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($relationData['related']));
-
-            return new GenericClassType($reflector, $class->name(), [$relationClass]);
-        }
-
-        if ($relationData['type'] === 'Illuminate\Database\Eloquent\Relations\BelongsToMany') {
-            $class = $reflector->reflectClass('LaravelBelongsToManyVirtualBuilder');
-            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($relationData['related']));
-
-            return new GenericClassType($reflector, $class->name(), [$relationClass]);
-        }
-
-        return new MissingType();
     }
 }

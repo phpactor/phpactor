@@ -71,9 +71,7 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
             $class = $locator->reflector()->reflectClass($type->name());
 
             // Reconstruct the class.
-            $builder = new GenericClassType($locator->reflector(), $builderClass->name(), [$class->type()]);
-            $builder = $builder->asReflectedClasssType($locator->reflector());
-            $builderReflected = $builder->reflectionOrNull();
+            $relationBuilder = new GenericClassType($locator->reflector(), $builderClass->name(), [$class->type()]);
 
             foreach ($modelData['attributes'] as $attributeData) {
                 if (!$attributeData['type']) {
@@ -82,16 +80,16 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
 
                 foreach ($attributeData['magicMethods'] ?? [] as $name => $magicMethod) {
                     $methods[] = $method = new VirtualReflectionMethod(
-                        $builderReflected->position(),
-                        $builderReflected,
-                        $builderReflected,
+                        $builderClass->position(),
+                        $builderClass,
+                        $builderClass,
                         $name,
                         new Frame(),
                         new PlainDocblock('Magic method to filter the query by: ' . $name),
                         $builderClass->scope(),
                         Visibility::public(),
-                        $builder,
-                        $builder,
+                        $relationBuilder,
+                        $relationBuilder,
                         ReflectionParameterCollection::empty(),
                         NodeText::fromString(''),
                         false,
