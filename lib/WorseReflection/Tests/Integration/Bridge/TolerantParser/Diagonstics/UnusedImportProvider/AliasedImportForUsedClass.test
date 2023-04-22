@@ -1,6 +1,0 @@
-<?php
-
-use Foobar as Barfoo;
-
-new Barfoo();
-

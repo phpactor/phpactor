@@ -1,9 +1,0 @@
-<?php
-
-class Foobar
-{
-    public function foo(string ...$foobars) {
-    }
-}
-
-

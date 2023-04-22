@@ -4,8 +4,11 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use PHPUnit\Framework\Assert;
+use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -116,5 +119,26 @@ class MissingDocblockReturnTypeProvider implements DiagnosticProvider
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
+    }
+
+    public function examples(): iterable
+    {
+        yield new DiagnosticExample(
+            title: 'report diagnostic on on variadic',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function foo() {
+                        return 'foobar';
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+            }
+        );
     }
 }

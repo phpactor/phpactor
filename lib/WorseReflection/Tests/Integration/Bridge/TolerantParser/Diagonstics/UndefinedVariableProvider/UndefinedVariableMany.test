@@ -1,8 +1,0 @@
-<?php
-
-$foz = 'one';
-$foa = 'two';
-$fob = 'three';
-
-if ($foo) {
-}
