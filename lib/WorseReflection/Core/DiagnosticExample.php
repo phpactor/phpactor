@@ -13,7 +13,8 @@ class DiagnosticExample
         public string $title,
         public string $source,
         public bool $valid,
-        public Closure $assertion
+        public Closure $assertion,
+        public ?string $minPhpVersion = null
     ) {
     }
 

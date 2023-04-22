@@ -21,12 +21,16 @@ class DiagnosticsTest extends TestCase
     {
         $reflector = ReflectorBuilder::create()->addSource($example->source)->addDiagnosticProvider($provider)->build();
         $diagnostics = wait($reflector->diagnostics(TextDocumentBuilder::fromPathAndString('file:///test', $example->source)));
+        if ($example->minPhpVersion && version_compare(PHP_VERSION, $example->minPhpVersion, '<')) {
+            $this->addToAssertionCount(1);
+            return;
+        }
+
         if ($example->valid) {
             self::assertCount(0, $diagnostics);
             return;
         }
         ($example->assertion)($diagnostics);
-        $this->addToAssertionCount(1);
     }
 
     /**
