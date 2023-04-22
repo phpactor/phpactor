@@ -26,6 +26,7 @@ class DiagnosticsTest extends TestCase
             return;
         }
         ($example->assertion)($diagnostics);
+        $this->addToAssertionCount(1);
     }
 
     /**
