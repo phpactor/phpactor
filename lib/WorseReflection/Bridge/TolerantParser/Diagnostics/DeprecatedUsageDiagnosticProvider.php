@@ -114,11 +114,8 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
                 new NotDeprecated();
                 PHP,
             valid: false,
+            minPhpVersion: '8.1',
             assertion: function (Diagnostics $diagnostics): void {
-                if (version_compare(PHP_VERSION, '8.1', '<')) {
-                    return;
-                }
-
                 Assert::assertCount(2, $diagnostics);
                 Assert::assertEquals('Call to deprecated enum "Deprecated"', $diagnostics->at(0)->message());
             }
