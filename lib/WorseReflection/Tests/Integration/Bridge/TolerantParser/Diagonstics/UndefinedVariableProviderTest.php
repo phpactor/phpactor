@@ -90,7 +90,18 @@ class UndefinedVariableProviderTest extends DiagnosticsTestCase
         self::assertCount(0, $diagnostics);
     }
 
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
     public function checkVariableListAssignment(Diagnostics $diagnostics): void
+    {
+        self::assertCount(0, $diagnostics);
+    }
+
+    /**
+     * @param Diagnostics<Diagnostic> $diagnostics
+     */
+    public function checkVariableIsIncomplete(Diagnostics $diagnostics): void
     {
         self::assertCount(0, $diagnostics);
     }
