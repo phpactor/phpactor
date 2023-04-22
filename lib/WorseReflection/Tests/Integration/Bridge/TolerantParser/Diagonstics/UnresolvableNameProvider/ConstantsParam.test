@@ -1,9 +1,0 @@
-<?php
-
-class RpcCommand
-{
-    public function __construct(
-        $inputStream = STDIN
-    ) {
-    }
-}

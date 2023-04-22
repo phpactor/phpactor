@@ -1,8 +1,0 @@
-<?php
-
-class Foobar {
-    private string $bar;
-    public function baz(){ 
-        $this->bar = 'foo';
-    }
-}

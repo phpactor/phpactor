@@ -1,7 +1,0 @@
-<?php
-
-/** @var string $zebra */
-$zebra = 'one';
-
-if ($zebra) {
-}

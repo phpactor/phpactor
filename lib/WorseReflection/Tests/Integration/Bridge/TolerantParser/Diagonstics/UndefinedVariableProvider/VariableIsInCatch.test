@@ -1,8 +1,0 @@
-<?php
-
-try {
-    foo();
-} catch (Error $e) {
-    throw $e;
-}
-
