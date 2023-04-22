@@ -28,6 +28,22 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
         self::assertEquals('phpactor/phpactor', $result->serverInfo['name']);
     }
 
+    /**
+     * @covers PhpactorDispatcherFactory::resolveRootUri
+     */
+    public function testInitializeInDirWithSpecialChars(): void
+    {
+        $this->workspace()->reset();
+        $this->workspace()->put('test & path/foobar/src/Foo.php', '<?php echo "hello world";');
+        $serverTester = $this->createTester(new InitializeParams(
+            capabilities: new ClientCapabilities(),
+            rootUri: sprintf('file:///%s/%s', $this->workspace()->path(), urlencode('test & path')),
+        ));
+        $result = $serverTester->initialize();
+        $result = wait($serverTester->request('phpactor/status', []));
+        self::assertStringContainsString('test & path', $result->result);
+    }
+
     public function testLoadsTextDocuments(): void
     {
         $serverTester = $this->createTester();
