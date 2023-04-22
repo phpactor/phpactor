@@ -1,8 +1,0 @@
-<?php
-
-enum Foo: string {
-    public function foo(): void
-    {
-        $this;
-    }
-}
