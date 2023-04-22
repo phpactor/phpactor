@@ -20,8 +20,6 @@ use Symfony\Component\Process\Process;
  * This calls external tooling that is capable of extracting the required information from a Laravel codebase.
  *
  * At some point we should listen for certain file changes to invalidate the in-memory cache.
- *
- * @todo: This should be cached for analysis as well.
  */
 class LaravelContainerInspector
 {
