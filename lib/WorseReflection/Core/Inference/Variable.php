@@ -49,12 +49,12 @@ final class Variable
 
     public function withType(Type $type): self
     {
-        return new self($this->name, $this->offset, $type, $this->classType, $this->wasAssigned);
+        return new self($this->name, $this->offset, $type, $this->classType, $this->wasAssigned, $this->wasDefined);
     }
 
     public function withOffset(int $offset): self
     {
-        return new self($this->name, $offset, $this->type, $this->classType, $this->wasAssigned);
+        return new self($this->name, $offset, $this->type, $this->classType, $this->wasAssigned, $this->wasDefined);
     }
 
     public function asAssignment(): self
