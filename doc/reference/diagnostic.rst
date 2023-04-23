@@ -31,9 +31,9 @@ Report if trying to call a class method which does not exist.
             $f = new Foobar();
             $f->bar();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Method "bar" does not exist on class "Foobar"
+        - ``ERROR``: ``Method "bar" does not exist on class "Foobar"``
         
     .. tab:: missing method for static invocation
         
@@ -47,9 +47,9 @@ Report if trying to call a class method which does not exist.
             
             Foobar::bar();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Method "bar" does not exist on class "Foobar"
+        - ``ERROR``: ``Method "bar" does not exist on class "Foobar"``
         
 ``missing_phpdoc_return``
 -------------------------
@@ -71,9 +71,9 @@ Report when a method has a return type should beaugmented by a phpdoc.
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Method "foo" is missing docblock return type: string
+        - ``WARN``: ``Method "foo" is missing docblock return type: string``
         
 ``missing_phpdoc_param``
 ------------------------
@@ -94,9 +94,9 @@ Report when a method has a parameter with a type that should beaugmented by a ph
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Method "foo" is missing @param $foobar
+        - ``WARN``: ``Method "foo" is missing @param $foobar``
         
     .. tab:: generator
         
@@ -117,9 +117,9 @@ Report when a method has a parameter with a type that should beaugmented by a ph
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Method "foo" is missing @param $foobar
+        - ``WARN``: ``Method "foo" is missing @param $foobar``
         
     .. tab:: array
         
@@ -133,9 +133,9 @@ Report when a method has a parameter with a type that should beaugmented by a ph
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Method "foo" is missing @param $foobar
+        - ``WARN``: ``Method "foo" is missing @param $foobar``
         
 ``assignment_to_missing_property``
 ----------------------------------
@@ -156,9 +156,9 @@ Report when assigning to a missing property definition.
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Property "bar" has not been defined
+        - ``WARN``: ``Property "bar" has not been defined``
         
 ``missing_return_type``
 -----------------------
@@ -180,9 +180,9 @@ Report if a method is missing a return type.
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Missing return type `string`
+        - ``WARN``: ``Missing return type `string```
         
     .. tab:: unable to infer return type
         
@@ -200,9 +200,9 @@ Report if a method is missing a return type.
             function foo() {
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Method "foo" is missing return type and the type could not be determined
+        - ``WARN``: ``Method "foo" is missing return type and the type could not be determined``
         
 ``unresolvable_name``
 ---------------------
@@ -223,9 +223,9 @@ Report if a name (class, function, constant etc) can not be resolved.
             
             foo(Foobar::class);
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Class "Foobar" not found
+        - ``ERROR``: ``Class "Foobar" not found``
         
     .. tab:: parameter
         
@@ -241,9 +241,9 @@ Report if a name (class, function, constant etc) can not be resolved.
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Class "Foo" not found
+        - ``ERROR``: ``Class "Foo" not found``
         
     .. tab:: unresolvable function
         
@@ -253,9 +253,9 @@ Report if a name (class, function, constant etc) can not be resolved.
             
             foobar();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Function "foobar" not found
+        - ``ERROR``: ``Function "foobar" not found``
         
     .. tab:: instanceof class
         
@@ -268,9 +268,9 @@ Report if a name (class, function, constant etc) can not be resolved.
             if ($f instanceof Foobar) {
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Class "Foobar" not found
+        - ``ERROR``: ``Class "Foobar" not found``
         
     .. tab:: unresolvable class
         
@@ -280,9 +280,9 @@ Report if a name (class, function, constant etc) can not be resolved.
             
             Foobar::class;
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Class "Foobar" not found
+        - ``ERROR``: ``Class "Foobar" not found``
         
     .. tab:: unresolvable namespaced function
         
@@ -294,9 +294,9 @@ Report if a name (class, function, constant etc) can not be resolved.
             
             foobar();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Function "foobar" not found
+        - ``ERROR``: ``Function "foobar" not found``
         
 ``unused_import``
 -----------------
@@ -317,9 +317,9 @@ Report if a use statement is not required.
             new Barfoo();
             
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Name "Bazgar" is imported but not used
+        - ``WARN``: ``Name "Bazgar" is imported but not used``
         
     .. tab:: imported in one namespace but used in another
         
@@ -335,9 +335,9 @@ Report if a use statement is not required.
                 new Foo();
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Name "Foo" is imported but not used
+        - ``WARN``: ``Name "Foo" is imported but not used``
         
     .. tab:: compact use unused
         
@@ -349,9 +349,9 @@ Report if a use statement is not required.
             
             new Foobar();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Name "Barfoo" is imported but not used
+        - ``WARN``: ``Name "Barfoo" is imported but not used``
         
     .. tab:: namespaced unused imports
         
@@ -366,9 +366,9 @@ Report if a use statement is not required.
             
             new Boo();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Name "Foobar" is imported but not used
+        - ``WARN``: ``Name "Foobar" is imported but not used``
         
     .. tab:: unused imort
         
@@ -378,9 +378,9 @@ Report if a use statement is not required.
             
             use Foobar;
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Name "Foobar" is imported but not used
+        - ``WARN``: ``Name "Foobar" is imported but not used``
         
 ``deprecated usage``
 --------------------
@@ -408,10 +408,10 @@ Report when a deprecated symbol (class, method, constant, function etc) is used.
             Deprecated::foo();
             new NotDeprecated();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Call to deprecated class "Deprecated"
-        - `WARN`: Call to deprecated class "Deprecated"
+        - ``WARN``: ``Call to deprecated class "Deprecated"``
+        - ``WARN``: ``Call to deprecated class "Deprecated"``
         
     .. tab:: deprecated constant
         
@@ -432,9 +432,9 @@ Report when a deprecated symbol (class, method, constant, function etc) is used.
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Call to deprecated constant "FOO": This is deprecated
+        - ``WARN``: ``Call to deprecated constant "FOO": This is deprecated``
         
     .. tab:: deprecated enum
         
@@ -455,10 +455,10 @@ Report when a deprecated symbol (class, method, constant, function etc) is used.
             Deprecated::foo();
             new NotDeprecated();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Call to deprecated enum "Deprecated"
-        - `WARN`: Call to deprecated enum "Deprecated"
+        - ``WARN``: ``Call to deprecated enum "Deprecated"``
+        - ``WARN``: ``Call to deprecated enum "Deprecated"``
         
     .. tab:: deprecated function
         
@@ -475,9 +475,9 @@ Report when a deprecated symbol (class, method, constant, function etc) is used.
             
             notDeprecated();
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Call to deprecated function "bar"
+        - ``WARN``: ``Call to deprecated function "bar"``
         
     .. tab:: deprecated method
         
@@ -498,9 +498,9 @@ Report when a deprecated symbol (class, method, constant, function etc) is used.
                 public function notDeprecated(): void {}
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Call to deprecated method "deprecated": This is deprecated
+        - ``WARN``: ``Call to deprecated method "deprecated": This is deprecated``
         
     .. tab:: deprecated on trait
         
@@ -524,9 +524,9 @@ Report when a deprecated symbol (class, method, constant, function etc) is used.
                 public function notDeprecated(): void {}
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Call to deprecated method "deprecated": This is deprecated
+        - ``WARN``: ``Call to deprecated method "deprecated": This is deprecated``
         
     .. tab:: deprecated on property
         
@@ -547,9 +547,9 @@ Report when a deprecated symbol (class, method, constant, function etc) is used.
                 }
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `WARN`: Call to deprecated property "deprecated": This is deprecated
+        - ``WARN``: ``Call to deprecated property "deprecated": This is deprecated``
         
 ``undefined_variable``
 ----------------------
@@ -570,9 +570,9 @@ Report if a variable is undefined and suggest variables with similar names.
             if ($foo) {
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Undefined variable "$foo", did you mean "$foa"
+        - ``ERROR``: ``Undefined variable "$foo", did you mean "$foa"``
         
     .. tab:: many undefined variables
         
@@ -587,9 +587,9 @@ Report if a variable is undefined and suggest variables with similar names.
             if ($foo) {
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Undefined variable "$foo", did you mean one of "$foz", "$foa", "$fob"
+        - ``ERROR``: ``Undefined variable "$foo", did you mean one of "$foz", "$foa", "$fob"``
         
     .. tab:: undefined and no suggestions
         
@@ -600,7 +600,7 @@ Report if a variable is undefined and suggest variables with similar names.
             if ($foa) {
             }
         
-        Will show diagnostic(s):
+        Diagnostic(s):
         
-        - `ERROR`: Undefined variable "$foa"
+        - ``ERROR``: ``Undefined variable "$foa"``
         

@@ -90,10 +90,10 @@ class DiagnosticDocumentor implements Documentor
         if (!$diagnostics->count()) {
             return $ex;
         }
-        $ex[] = 'Will show diagnostic(s):';
+        $ex[] = 'Diagnostic(s):';
         $ex[] = '';
         foreach ($diagnostics as $diagnostic) {
-            $ex[] = sprintf('- `%s`: %s', $diagnostic->severity()->toString(), $diagnostic->message());
+            $ex[] = sprintf('- ``%s``: ``%s``', $diagnostic->severity()->toString(), $diagnostic->message());
         }
         $ex[] = '';
         return $ex;
