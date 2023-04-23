@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullType;
@@ -552,6 +553,15 @@ class LaravelContainerInspector
                 ],
                 'returns' => $collectionType,
             ],
+            'each' => [
+                'description' => 'Iterate',
+                'arguments' => [
+                    'closure' => [
+                        'type' => new ClosureType($reflector, [$targetType]),
+                    ],
+                ],
+                'returns' => new BooleanType(),
+            ],
         ];
 
         $simpleCollectionMethods = [
@@ -566,6 +576,33 @@ class LaravelContainerInspector
             ];
         }
 
+        $intMethods = [
+            'count',
+            'max',
+            'min',
+        ];
+
+        foreach ($intMethods as $intMethod) {
+            $methodListToGenerate[$intMethod] = [
+                'description' => $intMethod,
+                'arguments' => [],
+                'returns' => new IntType(),
+            ];
+        }
+
+        $boolMethods = [
+            'exists',
+            'doesntExist',
+        ];
+
+        foreach ($boolMethods as $boolMethod) {
+            $methodListToGenerate[$boolMethod] = [
+                'description' => $boolMethod,
+                'arguments' => [],
+                'returns' => new BooleanType(),
+            ];
+        }
+
         $whereMethods = [
             'where',
             'whereHas',
@@ -574,6 +611,11 @@ class LaravelContainerInspector
             'whereNull',
             'whereIn',
             'orWhereIn',
+            'inRandomOrder',
+            'orderBy',
+            'limit',
+            'withCount',
+            'with'
         ];
 
         foreach ($whereMethods as $whereMethod) {
