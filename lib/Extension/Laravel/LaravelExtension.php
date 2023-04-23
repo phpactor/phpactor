@@ -16,7 +16,6 @@ use Phpactor\Extension\Laravel\DocumentManager\LaravelBladeInjector;
 use Phpactor\Extension\Laravel\Providers\LaravelModelPropertiesProvider;
 use Phpactor\Extension\Laravel\Providers\LaravelQueryBuilderProvider;
 use Phpactor\Extension\Laravel\WorseReflection\LaravelContainerContextResolver;
-use Phpactor\Extension\Laravel\WorseReflection\LaravelQueryBuilderContextProvider;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
@@ -89,16 +88,6 @@ class LaravelExtension implements OptionalExtension
             );
         }, [
             LanguageServerCompletionExtension::TAG_DOCUMENT_MODIFIER => []
-        ]);
-
-        /* This is for the future. */
-        $container->register(LaravelQueryBuilderContextProvider::class, function (Container $container) {
-            return new LaravelQueryBuilderContextProvider(
-                $container->get(LaravelContainerInspector::class)
-            );
-        }, [
-            WorseReflectionExtension::TAG_MEMBER_TYPE_RESOLVER => [
-            ],
         ]);
 
         // Providers
