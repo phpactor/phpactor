@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
@@ -17,6 +18,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\InvokeableType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -35,7 +37,16 @@ class CallExpressionResolver implements Resolver
 
         /** @todo: Check if this is even valid. Because it does seem to work perfectly! */
         if ($returnType instanceof MissingType && !($containerType instanceof MissingType)) {
-            return NodeContextFactory::forNode($node)->withType($containerType);
+            if ($containerType instanceof GenericClassType) {
+                $reflected = $containerType->reflectionOrNull();
+                $reflected->withGenericMap($containerType->arguments());
+
+                try {
+                    $reflectedReturn = $reflected->methods()->get($context->symbol()->name())->returnType();
+                    return NodeContextFactory::forNode($node)->withType($reflectedReturn)->withContainerType($containerType);
+                } catch (ItemNotFound) {
+                }
+            }
         }
 
         if ($returnType instanceof ConditionalType) {
