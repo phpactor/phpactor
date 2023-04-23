@@ -22,6 +22,9 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 
+/**
+ * Report if a use statement is not required.
+ */
 class UnusedImportProvider implements DiagnosticProvider
 {
     /**
@@ -423,6 +426,11 @@ class UnusedImportProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+    }
+
+    public function name(): string
+    {
+        return 'unused_import';
     }
 
     private function extractDocblockNames(Docblock $docblock, NodeContextResolver $resolver, Node $node): void

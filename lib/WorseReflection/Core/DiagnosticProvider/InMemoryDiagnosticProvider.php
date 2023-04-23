@@ -36,4 +36,9 @@ class InMemoryDiagnosticProvider implements DiagnosticProvider
     {
         return [];
     }
+
+    public function name(): string
+    {
+        return 'in_memory';
+    }
 }

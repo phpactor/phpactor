@@ -30,6 +30,7 @@ vimdoc: build/bin/vimdoc
 configreference:
 	./bin/phpactor development:generate-documentation extension > doc/reference/configuration.rst
 	./bin/phpactor development:generate-documentation rpc > doc/reference/rpc_command.rst
+	./bin/phpactor development:generate-documentation diagnostic > doc/reference/diagnostic.rst
 
 # Put it first so that "make" without argument is like "make help".
 help:
