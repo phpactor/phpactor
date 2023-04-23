@@ -221,6 +221,24 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertEquals('Undefined variable "$foa"', $diagnostics->at(0)->message());
             }
         );
+        yield new DiagnosticExample(
+            title: 'after for loop',
+            source: <<<'PHP'
+                <?php
+
+                $plainArray = [];
+                $list = [];
+                foreach ($plainArray as $index => $data) {
+                    $list[$index] = $data;
+                }
+
+                return $list;
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
