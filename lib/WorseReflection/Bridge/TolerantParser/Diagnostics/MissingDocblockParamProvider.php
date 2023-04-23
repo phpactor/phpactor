@@ -22,6 +22,10 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
+/**
+ * Report when a method has a parameter with a type that should be
+ * augmented by a phpdoc.
+ */
 class MissingDocblockParamProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
@@ -112,7 +116,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
     public function examples(): iterable
     {
         yield new DiagnosticExample(
-            title: 'reports a missing docblock param on closure',
+            title: 'closure',
             source: <<<'PHP'
                 <?php
 
@@ -130,7 +134,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'reports a missing docblock param on generator',
+            title: 'generator',
             source: <<<'PHP'
                 <?php
 
@@ -155,7 +159,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'reports a missing docblock on array',
+            title: 'array',
             source: <<<'PHP'
                 <?php
 
@@ -193,7 +197,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'report diagnostic on on variadic',
+            title: 'variadic',
             source: <<<'PHP'
                 <?php
 
@@ -208,6 +212,11 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+    }
+
+    public function name(): string
+    {
+        return 'missing_phpdoc_param';
     }
 
     private function upcastType(Type $type, NodeContextResolver $resolver): Type

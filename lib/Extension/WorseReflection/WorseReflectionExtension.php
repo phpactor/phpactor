@@ -4,10 +4,12 @@ namespace Phpactor\Extension\WorseReflection;
 
 use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\WorseReflection\Command\DumpAstCommand;
+use Phpactor\Extension\WorseReflection\Documentor\DiagnosticDocumentor;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
@@ -210,6 +212,15 @@ class WorseReflectionExtension implements Extension
         $container->register(UndefinedVariableProvider::class, function (Container $container) {
             return new UndefinedVariableProvider($container->parameter(self::PARAM_UNDEFINED_VAR_LEVENSHTEIN)->int());
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+
+        $container->register(DiagnosticDocumentor::class, function (Container $container) {
+            return new DiagnosticDocumentor(
+                $container,
+                $container->getServiceIdsForTag(self::TAG_DIAGNOSTIC_PROVIDER)
+            );
+        }, [
+            DebugExtension::TAG_DOCUMENTOR => [ 'name' => 'diagnostic' ],
+        ]);
     }
 
     private function registerCommands(ContainerBuilder $container): void

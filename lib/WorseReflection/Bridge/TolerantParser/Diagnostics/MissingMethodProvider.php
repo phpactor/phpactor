@@ -19,6 +19,9 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
+/**
+ * Report if trying to call a class method which does not exist.
+ */
 class MissingMethodProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
@@ -128,7 +131,7 @@ class MissingMethodProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'reports for missing method on instance ',
+            title: 'missing method on instance ',
             source: <<<'PHP'
                 <?php
 
@@ -146,7 +149,7 @@ class MissingMethodProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'report missing method for static invocation',
+            title: 'missing method for static invocation',
             source: <<<'PHP'
                 <?php
 
@@ -162,5 +165,10 @@ class MissingMethodProvider implements DiagnosticProvider
                 Assert::assertEquals('Method "bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
             }
         );
+    }
+
+    public function name(): string
+    {
+        return 'missing_method';
     }
 }

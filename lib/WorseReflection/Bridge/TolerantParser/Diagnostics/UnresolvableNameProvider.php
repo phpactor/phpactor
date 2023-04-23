@@ -29,6 +29,9 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
 use Phpactor\TextDocument\TextDocument;
 
+/**
+ * Report if a name (class, function, constant etc) can not be resolved.
+ */
 class UnresolvableNameProvider implements DiagnosticProvider
 {
     public function __construct(private bool $importGlobals)
@@ -265,7 +268,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'unresolbable namespaced function',
+            title: 'unresolvable namespaced function',
             source: <<<'PHP'
                 <?php
 
@@ -279,6 +282,11 @@ class UnresolvableNameProvider implements DiagnosticProvider
                 Assert::assertEquals('Function "foobar" not found', $diagnostics->at(0)->message());
             }
         );
+    }
+
+    public function name(): string
+    {
+        return 'unresolvable_name';
     }
 
     /**

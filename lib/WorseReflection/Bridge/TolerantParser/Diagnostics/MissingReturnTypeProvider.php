@@ -14,12 +14,15 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
+/**
+ * Report if a method is missing a return type.
+ */
 class MissingReturnTypeProvider implements DiagnosticProvider
 {
     public function examples(): iterable
     {
         yield new DiagnosticExample(
-            title: 'reports missing return type',
+            title: 'missing return type',
             source: <<<'PHP'
                 <?php
 
@@ -60,7 +63,7 @@ class MissingReturnTypeProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'missing return type with missing type',
+            title: 'unable to infer return type',
             source: <<<'PHP'
                 <?php
 
@@ -162,5 +165,10 @@ class MissingReturnTypeProvider implements DiagnosticProvider
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
+    }
+
+    public function name(): string
+    {
+        return 'missing_return_type';
     }
 }

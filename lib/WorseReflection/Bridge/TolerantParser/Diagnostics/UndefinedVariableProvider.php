@@ -14,6 +14,9 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
+/**
+ * Report if a variable is undefined and suggest variables with similar names.
+ */
 class UndefinedVariableProvider implements DiagnosticProvider
 {
     public function __construct(private int $suggestionLevensteinDistance = 4)
@@ -253,5 +256,10 @@ class UndefinedVariableProvider implements DiagnosticProvider
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
+    }
+
+    public function name(): string
+    {
+        return 'undefined_variable';
     }
 }
