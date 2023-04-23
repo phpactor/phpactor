@@ -121,8 +121,16 @@ class LaravelContainerInspector
         $relationBuilder = $this->getRelationBuilderClassType('Builder', $targetClass->name()->__toString(), $reflector);
         $reflectedRelationBuilder = $relationBuilder->reflectionOrNull();
 
+
+        if (str_starts_with($className, 'Laravel') && str_ends_with($className, 'VirtualBuilder')) {
+            $type = $parentClass->templateMap()->get('TModelClass');
+            $builderForWheres = new GenericClassType($reflector, $parentClass->name(), [$type]);
+        } else {
+            $builderForWheres = $relationBuilder;
+        }
+
         // Base virtual/Builder methods.
-        foreach ($this->getMethodsToGenerate($targetClass->type(), $reflector) as $methodName => $methodData) {
+        foreach ($this->getMethodsToGenerate($targetClass->type(), $builderForWheres, $reflector) as $methodName => $methodData) {
             $methods[] = $method = new VirtualReflectionMethod(
                 $parentClass->position(),
                 $parentClass,
@@ -371,7 +379,7 @@ class LaravelContainerInspector
     /**
      * @return array<string,array<string,mixed>>
      */
-    private function getMethodsToGenerate(Type $targetType, Reflector $reflector): array
+    private function getMethodsToGenerate(Type $targetType, GenericClassType $builder, Reflector $reflector): array
     {
         $collectionType = new GenericClassType(
             $reflector,
@@ -545,6 +553,36 @@ class LaravelContainerInspector
                 'returns' => $collectionType,
             ],
         ];
+
+        $simpleCollectionMethods = [
+            'pluck',
+        ];
+
+        foreach ($simpleCollectionMethods as $simpleCollectionMethod) {
+            $methodListToGenerate[$simpleCollectionMethod] = [
+                'description' => $simpleCollectionMethod,
+                'arguments' => [],
+                'returns' => $reflector->reflectClass('\Illuminate\Support\Collection')->type(),
+            ];
+        }
+
+        $whereMethods = [
+            'where',
+            'whereHas',
+            'whereNull',
+            'whereNotNull',
+            'whereNull',
+            'whereIn',
+            'orWhereIn',
+        ];
+
+        foreach ($whereMethods as $whereMethod) {
+            $methodListToGenerate[$whereMethod] = [
+                'description' => $whereMethod,
+                'arguments' => [],
+                'returns' => $builder,
+            ];
+        }
 
         return $methodListToGenerate;
     }

@@ -33,10 +33,6 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
             }
 
             if ($modelData = $this->laravelContainer->models()[$type->name()->__toString()] ?? false) {
-                $class = $locator->reflector()->reflectClass($type->name());
-
-                $relationBuilder = new GenericClassType($locator->reflector(), $builderClass->name(), [$class->type()]);
-
                 return $this->laravelContainer->getMethodsAndPropertiesForClass(
                     $builderClass,
                     $locator->reflector()->reflectClass($type->name()),
