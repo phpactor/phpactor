@@ -32,7 +32,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class LaravelQueryBuilderProvider implements ReflectionMemberProvider
 {
-    private array $virtualBuilders = ['LaravelHasManyVirtualBuilder', 'LaravelBelongsToManyVirtualBuilder'];
+    private array $virtualBuilders = [
+        'LaravelQueryVirtualBuilder',
+        'LaravelHasManyVirtualBuilder',
+        'LaravelBelongsToManyVirtualBuilder'
+    ];
 
     public function __construct(private LaravelContainerInspector $laravelContainer)
     {
@@ -53,6 +57,7 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
             $builderType = match ($builderClass->name()->__toString()) {
                 'LaravelHasManyVirtualBuilder' => 'HasMany',
                 'LaravelBelongsToManyVirtualBuilder' => 'BelongsToMany',
+                default => 'Builder'
             };
 
             return ChainReflectionMemberCollection::fromCollections([
@@ -121,6 +126,26 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
                 }
             }
 
+            foreach ($modelData['scopes'] as $scope) {
+                $methods[] = $method = new VirtualReflectionMethod(
+                    $builderClass->position(),
+                    $builderClass,
+                    $builderClass,
+                    $scope,
+                    new Frame(),
+                    new PlainDocblock('Scope:' . $scope),
+                    $builderClass->scope(),
+                    Visibility::public(),
+                    $relationBuilder,
+                    $relationBuilder,
+                    ReflectionParameterCollection::empty(),
+                    NodeText::fromString(''),
+                    false,
+                    true,
+                    new Deprecation(false),
+                );
+            }
+
             foreach ($modelData['attributes'] as $attributeData) {
                 if (!$attributeData['type']) {
                     continue;
@@ -175,7 +200,6 @@ class LaravelQueryBuilderProvider implements ReflectionMemberProvider
             ClassName::fromString('Illuminate\Database\Eloquent\Collection'),
             [$targetType]
         );
-
 
         // To check if needed.
         // - getModel

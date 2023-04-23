@@ -66,7 +66,7 @@ class LaravelModelPropertiesProvider implements ReflectionMemberProvider
                 $class->docblock(),
                 $class->scope(),
                 Visibility::public(),
-                $locType = $this->laravelContainer->getTypeFromString($attributeData['type'], $locator->reflector(), $attributeData['cast']),
+                $locType = $this->laravelContainer->getTypeFromString($attributeData['type'], $locator->reflector()),
                 $locType,
                 new Deprecation(false),
             );
@@ -90,7 +90,7 @@ class LaravelModelPropertiesProvider implements ReflectionMemberProvider
                     new Deprecation(false),
                 );
 
-                $type = $this->laravelContainer->getTypeFromString($attributeData['type'], $locator->reflector(), $attributeData['cast']);
+                $type = $this->laravelContainer->getTypeFromString($magicMethod['type'], $locator->reflector());
 
                 $method->parameters()->add(
                     new VirtualReflectionParameter(
@@ -108,6 +108,30 @@ class LaravelModelPropertiesProvider implements ReflectionMemberProvider
             }
         }
 
+        foreach ($modelData['scopes'] as $scope) {
+            if ($relationBuilder = $this->laravelContainer->getRelationBuilderClassType('Builder', $className, $locator->reflector())) {
+                $reflected = $relationBuilder->reflectionOrNull();
+                // Also replace the method.
+                $methods[] = $method = new VirtualReflectionMethod(
+                    $reflected->position(),
+                    $reflected,
+                    $reflected,
+                    $scope,
+                    new Frame(),
+                    $reflected->docblock(),
+                    $reflected->scope(),
+                    Visibility::public(),
+                    $relationBuilder,
+                    $relationBuilder,
+                    ReflectionParameterCollection::empty(),
+                    NodeText::fromString(''),
+                    false,
+                    true,
+                    new Deprecation(false),
+                );
+            }
+        }
+
         foreach ($modelData['relations'] as $relationData) {
             $properties[] = new VirtualReflectionProperty(
                 $class->position(),
@@ -118,12 +142,12 @@ class LaravelModelPropertiesProvider implements ReflectionMemberProvider
                 $class->docblock(),
                 $class->scope(),
                 Visibility::public(),
-                $relType = $this->laravelContainer->getRelationType($relationData['property'], $relationData['type'], $relationData['related'], $locator->reflector()),
+                $relType = $this->laravelContainer->getRelationType($relationData['property'], $relationData['isMany'], $relationData['related'], $locator->reflector()),
                 $relType,
                 new Deprecation(false),
             );
 
-            if ($relationBuilder = $this->laravelContainer->getRelationBuilderClassType($class, $relationData, $locator->reflector())) {
+            if ($relationBuilder = $this->laravelContainer->getRelationBuilderClassType($relationData['type'], $relationData['related'], $locator->reflector())) {
                 $reflected = $relationBuilder->reflectionOrNull();
                 // Also replace the method.
                 $methods[] = $method = new VirtualReflectionMethod(

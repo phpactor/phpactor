@@ -92,18 +92,25 @@ class LaravelContainerInspector
         return $this->snippets;
     }
 
-    public function getRelationBuilderClassType(ReflectionClassLike $parentClass, array $relationData, Reflector $reflector): ?GenericClassType
+    public function getRelationBuilderClassType(string $type, string $targetType, Reflector $reflector): ?GenericClassType
     {
-        if ($relationData['type'] === 'Illuminate\Database\Eloquent\Relations\HasMany') {
+        if ($type === 'Illuminate\Database\Eloquent\Relations\HasMany') {
             $class = $reflector->reflectClass('LaravelHasManyVirtualBuilder');
-            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($relationData['related']));
+            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($targetType));
 
             return new GenericClassType($reflector, $class->name(), [$relationClass]);
         }
 
-        if ($relationData['type'] === 'Illuminate\Database\Eloquent\Relations\BelongsToMany') {
+        if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsToMany') {
             $class = $reflector->reflectClass('LaravelBelongsToManyVirtualBuilder');
-            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($relationData['related']));
+            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($targetType));
+
+            return new GenericClassType($reflector, $class->name(), [$relationClass]);
+        }
+
+        if ($type === 'Builder') {
+            $class = $reflector->reflectClass('LaravelQueryVirtualBuilder');
+            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($targetType));
 
             return new GenericClassType($reflector, $class->name(), [$relationClass]);
         }
@@ -113,13 +120,10 @@ class LaravelContainerInspector
 
     public function getRelationType(
         string $name,
-        string $type,
+        bool $isMany,
         string $related,
         Reflector $reflector
     ): GenericClassType|ReflectedClassType {
-        // @todo: This is currently a dumb approach.
-        $isMany = str_contains($type, 'Many');
-
         if ($isMany) {
             return new GenericClassType(
                 $reflector,
@@ -134,15 +138,12 @@ class LaravelContainerInspector
         return new ReflectedClassType($reflector, ClassName::fromString($related));
     }
 
-    public function getTypeFromString(string $phpType, Reflector $reflector, ?string $cast = null): Type
+    public function getTypeFromString(string $phpType, Reflector $reflector): Type
     {
-
         $type = null;
-        if ($cast) {
-            $type = match ($cast) {
-                'datetime' => new ReflectedClassType($reflector, ClassName::fromString('\\Carbon\\Carbon')),
-                default => new ReflectedClassType($reflector, ClassName::fromString($cast)),
-            };
+
+        if (str_contains($phpType, '\\')) {
+            $type = new ReflectedClassType($reflector, ClassName::fromString($phpType));
         }
 
         if ($type) {
