@@ -285,22 +285,25 @@ class LaravelContainerInspector
 
     public function getRelationBuilderClassType(string $type, string $targetType, Reflector $reflector): ?GenericClassType
     {
+        $class = null;
+
         if ($type === 'Illuminate\Database\Eloquent\Relations\HasMany') {
             $class = $reflector->reflectClass('LaravelHasManyVirtualBuilder');
-            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($targetType));
+        }
 
-            return new GenericClassType($reflector, $class->name(), [$relationClass]);
+        if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsTo') {
+            $class = $reflector->reflectClass('LaravelBelongsToVirtualBuilder');
         }
 
         if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsToMany') {
             $class = $reflector->reflectClass('LaravelBelongsToManyVirtualBuilder');
-            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($targetType));
-
-            return new GenericClassType($reflector, $class->name(), [$relationClass]);
         }
 
         if ($type === 'Builder') {
             $class = $reflector->reflectClass('LaravelQueryVirtualBuilder');
+        }
+
+        if ($class) {
             $relationClass = new ReflectedClassType($reflector, ClassName::fromString($targetType));
 
             return new GenericClassType($reflector, $class->name(), [$relationClass]);
@@ -392,6 +395,16 @@ class LaravelContainerInspector
                     ],
                 ],
                 'returns' => $targetType,
+            ],
+            'update' => [
+                'description' => 'Updates the models in the result',
+                'arguments' => [
+                    'attributes' => [
+                        'type' => new ArrayType(new StringType(), new MixedType()),
+                        'required' => true,
+                    ],
+                ],
+                'returns' => new BooleanType(),
             ],
             'find' => [
                 'description' => 'Find a model',
