@@ -241,7 +241,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
-                    
+
         yield new DiagnosticExample(
             title: 'static',
             source: <<<'PHP'

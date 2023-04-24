@@ -125,7 +125,7 @@ final class DefaultResolverFactory
             UseVariableName::class => new UseVariableNameResolver(),
             Variable::class => new VariableResolver(),
             MemberAccessExpression::class => new MemberAccessExpressionResolver($this->nodeContextFromMemberAccess),
-            ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeTypeConverter, $this->nodeContextFromMemberAccess),
+            ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeContextFromMemberAccess),
             CallExpression::class => new CallExpressionResolver(),
             ParenthesizedExpression::class => new ParenthesizedExpressionResolver(),
             BinaryExpression::class => new BinaryExpressionResolver(),
