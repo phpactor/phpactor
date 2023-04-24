@@ -604,3 +604,17 @@ Report if a variable is undefined and suggest variables with similar names.
         
         - ``ERROR``: ``Undefined variable "$foa"``
         
+    .. tab:: after for loop
+        
+        .. code-block:: php
+        
+            <?php
+            
+            $plainArray = [];
+            $list = [];
+            foreach ($plainArray as $index => $data) {
+                $list[$index] = $data;
+            }
+            
+            return $list;
+        
