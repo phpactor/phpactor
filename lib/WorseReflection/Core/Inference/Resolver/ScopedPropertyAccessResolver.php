@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\WorseReflection\Core\Inference\Frame;
-use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -18,7 +17,6 @@ use Phpactor\WorseReflection\Core\Type\ClassType;
 class ScopedPropertyAccessResolver implements Resolver
 {
     public function __construct(
-        private NodeToTypeConverter $nodeTypeConverter,
         private NodeContextFromMemberAccess $nodeContextFromMemberAccess
     ) {
     }
@@ -45,7 +43,7 @@ class ScopedPropertyAccessResolver implements Resolver
 
         $classType = $resolver->resolveNode($frame, $node->scopeResolutionQualifier)->type();
 
-        if ($classType instanceof ClassStringType) {
+        if ($classType instanceof ClassStringType && $classType->className()) {
             $classType = TypeFactory::reflectedClass($resolver->reflector(), $classType->className());
         }
 
