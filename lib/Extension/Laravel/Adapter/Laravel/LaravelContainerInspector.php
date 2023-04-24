@@ -37,9 +37,14 @@ use Symfony\Component\Process\Process;
  * This calls external tooling that is capable of extracting the required information from a Laravel codebase.
  *
  * At some point we should listen for certain file changes to invalidate the in-memory cache.
+ *
+ * @todo: Add the stub on launch.
+ * @todo: SourceNotFound exception with stubs when not there.
  */
 class LaravelContainerInspector
 {
+    public array $relationTypeCache = [];
+
     private ?array $services = null;
 
     private ?array $views = null;
@@ -49,6 +54,8 @@ class LaravelContainerInspector
     private ?array $models = null;
 
     private ?array $snippets = null;
+
+    private array $methodAndPropertiesCache = [];
 
     public function __construct(private string $executablePath, private string $projectRoot)
     {
@@ -116,6 +123,12 @@ class LaravelContainerInspector
         Reflector $reflector
     ): ChainReflectionMemberCollection {
         $className = $parentClass->name()->__toString();
+        $targetClassName = $targetClass->name()->__toString();
+
+        if (isset($this->methodAndPropertiesCache[$className . '-' . $targetClassName])) {
+            return $this->methodAndPropertiesCache[$className . '-' . $targetClassName];
+        }
+
         $properties = [];
         $methods = [];
 
@@ -258,7 +271,7 @@ class LaravelContainerInspector
                 new PlainDocblock(''),
                 $parentClass->scope(),
                 Visibility::public(),
-                $relType = $this->getRelationType($relationData['property'], $relationData['isMany'], $relationData['related'], $reflector),
+                $relType = $this->getRelationType($relationData['isMany'], $relationData['related'], $reflector),
                 $relType,
                 new Deprecation(false),
             );
@@ -286,10 +299,12 @@ class LaravelContainerInspector
             }
         }
 
-        return ChainReflectionMemberCollection::fromCollections([
+        $this->methodAndPropertiesCache[$className . '-' . $targetClassName] = ChainReflectionMemberCollection::fromCollections([
             ReflectionPropertyCollection::fromReflectionProperties($properties),
             ReflectionMethodCollection::fromReflectionMethods($methods)
         ]);
+
+        return $this->methodAndPropertiesCache[$className . '-' . $targetClassName];
     }
 
     public function getRelationBuilderClassType(string $type, string $targetType, Reflector $reflector): ?GenericClassType
@@ -313,68 +328,55 @@ class LaravelContainerInspector
         }
 
         if ($class) {
-            $relationClass = new ReflectedClassType($reflector, ClassName::fromString($targetType));
+            $relationClass = $reflector->reflectClass(ClassName::fromString($targetType));
 
-            return new GenericClassType($reflector, $class->name(), [$relationClass]);
+            return new GenericClassType($reflector, $class->name(), [$relationClass->type()]);
         }
 
         return null;
     }
 
     public function getRelationType(
-        string $name,
         bool $isMany,
         string $related,
         Reflector $reflector
     ): GenericClassType|ReflectedClassType {
-        if ($isMany) {
-            return new GenericClassType(
-                $reflector,
-                ClassName::fromString('\\Illuminate\\Database\\Eloquent\\Collection'),
-                [
-                    new IntType(),
-                    new ReflectedClassType($reflector, ClassName::fromString($related)),
-                ]
-            );
+        $cacheKey = ($isMany ? '1' : '0') . '|' . $related;
+
+        if (!isset($this->relationTypeCache[$cacheKey])) {
+            if ($isMany) {
+                $this->relationTypeCache[$cacheKey] = new GenericClassType(
+                    $reflector,
+                    ClassName::fromString('\\Illuminate\\Database\\Eloquent\\Collection'),
+                    [
+                        new IntType(),
+                        new ReflectedClassType($reflector, ClassName::fromString($related)),
+                    ]
+                );
+            } else {
+                $this->relationTypeCache[$cacheKey] = new ReflectedClassType(
+                    $reflector,
+                    ClassName::fromString($related)
+                );
+            }
         }
 
-        return new ReflectedClassType($reflector, ClassName::fromString($related));
+        return $this->relationTypeCache[$cacheKey];
     }
 
     public function getTypeFromString(string $phpType, Reflector $reflector): Type
     {
-        $type = null;
-
         if (str_contains($phpType, '\\')) {
-            $type = new ReflectedClassType($reflector, ClassName::fromString($phpType));
-        }
-
-        if ($type) {
-            return $type;
+            return $reflector->reflectClassLike(ClassName::fromString($phpType))->type();
         }
 
         return match ($phpType) {
             'string' => new StringType(),
             'int' => new IntType(),
             'bool' => new BooleanType(),
-            'DateTime' => new ReflectedClassType($reflector, ClassName::fromString('\\Carbon\\Carbon')),
+            'DateTime' => $reflector->reflectClass(ClassName::fromString('\\Carbon\\Carbon'))->type(),
             default => new StringType(),
         };
-    }
-
-    /**
-     * @return mixed|array
-     */
-    private function getGetterOutput(string $getter): array
-    {
-        $process = new Process([$this->executablePath, $getter, $this->projectRoot]);
-        $process->run();
-
-        if ($process->isSuccessful()) {
-            return json_decode(trim($process->getOutput()), true);
-        }
-
-        return [];
     }
 
     /**
@@ -627,5 +629,20 @@ class LaravelContainerInspector
         }
 
         return $methodListToGenerate;
+    }
+
+    /**
+     * @return mixed|array
+     */
+    private function getGetterOutput(string $getter): array
+    {
+        $process = new Process([$this->executablePath, $getter, $this->projectRoot]);
+        $process->run();
+
+        if ($process->isSuccessful()) {
+            return json_decode(trim($process->getOutput()), true);
+        }
+
+        return [];
     }
 }
