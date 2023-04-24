@@ -380,6 +380,36 @@ class LaravelContainerInspector
     }
 
     /**
+     * @todo: Ideally this also runs after a migration, but I am not sure if we can detect that.
+     * The laravel-dev-tools package could take care of that.
+     */
+    public function modelChanged(ReflectionClassLike $class): void
+    {
+        $this->models = null;
+
+        foreach ($this->relationTypeCache as $key => $val) {
+            if (str_contains($key, $class->name()->__toString())) {
+                unset($this->relationTypeCache[$key]);
+            }
+        }
+        foreach ($this->methodAndPropertiesCache as $key => $val) {
+            if (str_contains($key, $class->name()->__toString())) {
+                unset($this->methodAndPropertiesCache[$key]);
+            }
+        }
+    }
+
+    public function livewireComponentChanged(ReflectionClassLike $class): void
+    {
+        $this->snippets = null;
+    }
+
+    public function bladeComponentChanged(ReflectionClassLike $class): void
+    {
+        $this->snippets = null;
+    }
+
+    /**
      * @return array<string,array<string,mixed>>
      */
     private function getMethodsToGenerate(Type $targetType, GenericClassType $builder, Reflector $reflector): array

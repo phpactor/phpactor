@@ -8,11 +8,13 @@ use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Laravel\Adapter\Laravel\LaravelContainerInspector;
 use Phpactor\Extension\Laravel\Completor\LaravelContainerCompletor;
 use Phpactor\Extension\Laravel\Completor\LaravelRouteCompletor;
 use Phpactor\Extension\Laravel\Completor\LaravelViewCompletor;
 use Phpactor\Extension\Laravel\DocumentManager\LaravelBladeInjector;
+use Phpactor\Extension\Laravel\Handler\RefreshOnLaravelFileUpdateHandler;
 use Phpactor\Extension\Laravel\Providers\LaravelModelPropertiesProvider;
 use Phpactor\Extension\Laravel\Providers\LaravelQueryBuilderProvider;
 use Phpactor\Extension\Laravel\WorseReflection\LaravelContainerContextResolver;
@@ -29,7 +31,13 @@ class LaravelExtension implements OptionalExtension
 
     public function load(ContainerBuilder $container): void
     {
-        // @todo: Auto add the "Stubs" to the config.
+        $container->register(RefreshOnLaravelFileUpdateHandler::class, function (Container $container) {
+            return new RefreshOnLaravelFileUpdateHandler(
+                $container->get(LaravelContainerInspector::class),
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+            );
+        }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
 
         $container->register(LaravelContainerInspector::class, function (Container $container) {
             $executablePath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)
