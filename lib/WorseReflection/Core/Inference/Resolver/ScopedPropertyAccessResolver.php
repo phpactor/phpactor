@@ -11,6 +11,8 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
+use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 
 class ScopedPropertyAccessResolver implements Resolver
@@ -41,7 +43,11 @@ class ScopedPropertyAccessResolver implements Resolver
             $name = $node->scopeResolutionQualifier->getText();
         }
 
-        $classType = $this->nodeTypeConverter->resolve($node, (string)$name);
+        $classType = $resolver->resolveNode($frame, $node->scopeResolutionQualifier)->type();
+
+        if ($classType instanceof ClassStringType) {
+            $classType = TypeFactory::reflectedClass($resolver->reflector(), $classType->className());
+        }
 
         return $this->nodeContextFromMemberAccess->infoFromMemberAccess($resolver, $frame, $classType, $node);
     }
