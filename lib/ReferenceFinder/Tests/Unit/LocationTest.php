@@ -3,18 +3,18 @@
 namespace Phpactor\ReferenceFinder\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentUri;
 
-class DefinitionLocationTest extends TestCase
+class LocationTest extends TestCase
 {
     const EXAMPLE_URI = '/path/to.php';
     const EXAMPLE_OFFSET = 1234;
 
     public function testValues(): void
     {
-        $location = new DefinitionLocation(
+        $location = new Location(
             TextDocumentUri::fromString(self::EXAMPLE_URI),
             ByteOffset::fromInt(self::EXAMPLE_OFFSET)
         );
