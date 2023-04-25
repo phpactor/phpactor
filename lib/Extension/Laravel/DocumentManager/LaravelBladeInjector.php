@@ -12,70 +12,110 @@ use Phpactor\Extension\LanguageServerCompletion\Util\DocumentModifier;
 use Phpactor\Extension\LanguageServerCompletion\Util\TextDocumentModifierResponse;
 use Phpactor\Extension\Laravel\Adapter\Laravel\LaravelContainerInspector;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod as PhpactorReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class LaravelBladeInjector implements DocumentModifier
 {
-    public function __construct(private LaravelContainerInspector $containerInspector, private Reflector $reflector)
-    {
+    public function __construct(
+        private LaravelContainerInspector $containerInspector,
+        private Reflector $reflector,
+        private Workspace $workspace
+    ) {
     }
 
     public function process(string $text, TextDocumentItem $document): ?TextDocumentModifierResponse
     {
-        if ($document->languageId === 'blade') {
-            $this->containerInspector->snippets();
+        if ($document->languageId === 'blade' || str_ends_with($document->uri, '.blade.php')) {
+            $this->containerInspector->viewsData();
 
             $fileToSearch = str_replace('file://', '', $document->uri);
 
-            $docblock = '';
-            // This is only for livewire.
-            foreach ($this->containerInspector->snippets() as $key => $entry) {
-                if ($entry['livewire'] ?? false) {
-                    foreach ($entry['views'] as $key => $file) {
-                        if ($file === $fileToSearch) {
-                            $additionalArguments = [];
-                            // Easier approach to use a mixin to set the type?
-                            if ($class = $entry['class'] ?? false) {
-                                $docblock .= "\$this = new \\{$class}();";
-                                $additionalArguments = $this->getAdditionalArgumentsForClass($class);
-                            }
-                            foreach ($additionalArguments as $name => $type) {
-                                $var = '$' . $name;
-                                $docblock .= "/** @var {$type->toPhpString()} $var */ $var; ";
-                            }
-                            foreach ($entry['arguments'] as $name => $data) {
-                                if ($data['type'] ?? false) {
-                                    $type = $data['type'];
-                                    if (str_contains($type, '\\')) {
-                                        $type = '\\' . $type;
-                                    }
-                                    $var = '$' . $name;
-                                    $docblock .= "/** @var $type $var */ $var; ";
-                                }
-                            }
 
-                            continue;
+            $docblock = '';
+            $viewsData = $this->containerInspector->viewsData();
+
+            // Try to get the direct file.
+            $viewKey = $viewsData['mapping'][$fileToSearch] ?? false;
+
+            $component = null;
+
+            if (!$viewKey) {
+                // Try to load it from the regular views.
+                foreach ($viewsData['blade'] as $bladeView) {
+                    if ($bladeView['file'] === $fileToSearch) {
+                        $component = $bladeView;
+                        break;
+                    }
+                }
+            } else {
+                $component = $viewsData['livewire'][$viewKey] ?? $viewsData['blade'][$viewKey] ?? false;
+            }
+
+            if ($component) {
+                // Add the arguments from the component.
+                foreach ($component['arguments'] as $name => $data) {
+                    if ($data['type'] ?? false) {
+                        $type = $data['type'];
+                        if (str_contains($type, '\\')) {
+                            $type = '\\' . $type;
+                        }
+                        $var = '$' . $name;
+                        $docblock .= "/** @var $type $var */ $var; ";
+                    }
+                }
+
+                // If there is a class include it.
+                if ($class = $component['class'] ?? false) {
+                    $docblock .= "\$this = new \\{$class}();";
+                    $additionalArguments = $this->getAdditionalArgumentsForClass($class);
+                    foreach ($additionalArguments as $name => $type) {
+                        $var = '$' . $name;
+                        $docblock .= "/** @var {$type->__toString()} $var */ $var; ";
+                    }
+                } elseif ($classUsedFrom = $component['used_in'][0] ?? null) {
+                    $fileName = $classUsedFrom['file'];
+                    $offset = $classUsedFrom['pos'];
+                    // Find the method name.
+                    $doc = TextDocumentBuilder::fromUri($fileName, 'php');
+                    $classes = $this->reflector->reflectClassesIn($doc->build());
+
+                    if ($class = $classes->firstOrNull()) {
+                        foreach ($class->ownMembers()->methods() as $method) {
+                            if (
+                                $method->position()->start()->toInt() < $offset &&
+                                $method->position()->end()->toInt() > $offset
+                            ) {
+                                // @todo: Change this to use the same class instance so it does not have to refetch it.
+                                $args = $this->getAdditionalArgumentsForClass($class->name()->__toString(), $method->name());
+                                foreach ($args as $name => $type) {
+                                    $var = '$' . $name;
+                                    $docblock .= "/** @var {$type->__toString()} $var */ $var; ";
+                                }
+                                break;
+                            }
                         }
                     }
                 }
+
+                $prefix = '<?php  ' . $docblock . ' ';
+
+                $lines = explode(PHP_EOL, $text);
+                $lines[0] = $prefix . $lines[0];
+                $text = implode(PHP_EOL, $lines);
+
+                return new TextDocumentModifierResponse($text, mb_strlen($prefix), 'php');
             }
-
-            $prefix = '<?php  ' . $docblock . ' ';
-
-            $lines = explode(PHP_EOL, $text);
-            $lines[0] = $prefix . $lines[0];
-            $text = implode(PHP_EOL, $lines);
-
-            return new TextDocumentModifierResponse($text, mb_strlen($prefix), 'php');
         }
-
         return null;
     }
 
-    private function getAdditionalArgumentsForClass(string $class): array
+    private function getAdditionalArgumentsForClass(string $class, string $functionName = 'render'): array
     {
         $members = $this->reflector->reflectClass($class)->ownMembers();
 
@@ -84,7 +124,7 @@ class LaravelBladeInjector implements DocumentModifier
         $list = [];
 
         foreach ($members as $member) {
-            if ($member->name() === 'render') {
+            if ($member->name() === $functionName) {
                 if ($member instanceof PhpactorReflectionMethod) {
                     $parsedClass = $parser->parseSourceFile($member->class()->sourceCode()->__toString());
                     $method = $parsedClass->getDescendantNodeAtPosition($member->position()->start()->toInt());

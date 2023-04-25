@@ -105,7 +105,8 @@ class LaravelExtension implements OptionalExtension
         $container->register(LaravelBladeInjector::class, function (Container $container) {
             return new LaravelBladeInjector(
                 $container->get(LaravelContainerInspector::class),
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR)
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE)
             );
         }, [
             LanguageServerCompletionExtension::TAG_DOCUMENT_MODIFIER => []

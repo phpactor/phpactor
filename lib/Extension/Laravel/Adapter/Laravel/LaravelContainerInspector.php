@@ -55,7 +55,7 @@ class LaravelContainerInspector
 
     private ?array $models = null;
 
-    private ?array $snippets = null;
+    private ?array $viewsData = null;
 
     private array $methodAndPropertiesCache = [];
 
@@ -118,13 +118,13 @@ class LaravelContainerInspector
         return $this->models;
     }
 
-    public function snippets(): array
+    public function viewsData(): array
     {
-        if ($this->snippets === null) {
-            $this->snippets = $this->getGetterOutput('snippets');
+        if ($this->viewsData === null) {
+            $this->viewsData = $this->getGetterOutput('snippets');
         }
 
-        return $this->snippets;
+        return $this->viewsData;
     }
 
     public function getMethodsAndPropertiesForClass(
@@ -412,12 +412,12 @@ class LaravelContainerInspector
 
     public function livewireComponentChanged(ReflectionClassLike $class): void
     {
-        $this->snippets = null;
+        $this->viewsData = null;
     }
 
     public function bladeComponentChanged(ReflectionClassLike $class): void
     {
-        $this->snippets = null;
+        $this->viewsData = null;
     }
 
     /**
@@ -582,6 +582,16 @@ class LaravelContainerInspector
                 ],
                 'returns' => $collectionType,
             ],
+            'paginate' => [
+                'description' => 'Get the results',
+                'arguments' => [
+                    'columns' => [
+                        'type' => new ArrayType(valueType: new StringType()),
+                        'default' => new ArrayType(),
+                    ],
+                ],
+                'returns' => $collectionType,
+            ],
             'findMany' => [
                 'description' => 'Find many model',
                 'arguments' => [
@@ -657,6 +667,7 @@ class LaravelContainerInspector
             'inRandomOrder',
             'orderBy',
             'limit',
+            'whereHas',
             'withCount',
             'with'
         ];
