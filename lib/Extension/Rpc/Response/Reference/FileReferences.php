@@ -13,12 +13,12 @@ class FileReferences
         }
     }
 
-    public static function fromPathAndReferences($filePath, array $references)
+    public static function fromPathAndReferences($filePath, array $references): self
     {
         return new self($filePath, $references);
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'file' => $this->filePath,

@@ -20,7 +20,7 @@ final class LocationSelector
 {
     public function selectFileOpenResponse(Locations $locations, string $targetToOpen): Response
     {
-        if (1 !== count($locations)) {
+        if (count($locations) !== 1) {
             $references = $this->locationsToReferences($locations);
 
             return new FileReferencesResponse($references);
