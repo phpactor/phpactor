@@ -10,6 +10,7 @@ use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Laravel\Adapter\Laravel\LaravelContainerInspector;
+use Phpactor\Extension\Laravel\Completor\LaravelConfigCompletor;
 use Phpactor\Extension\Laravel\Completor\LaravelContainerCompletor;
 use Phpactor\Extension\Laravel\Completor\LaravelRouteCompletor;
 use Phpactor\Extension\Laravel\Completor\LaravelViewCompletor;
@@ -27,6 +28,7 @@ class LaravelExtension implements OptionalExtension
     public const PARAM_CONTAINER_COMPLETOR_ENABLED = 'completion_worse.completor.laravel.container.enabled';
     public const PARAM_VIEW_COMPLETOR_ENABLED = 'completion_worse.completor.laravel.view.enabled';
     public const PARAM_ROUTES_COMPLETOR_ENABLED = 'completion_worse.completor.laravel.routes.enabled';
+    public const PARAM_CONFIG_COMPLETOR_ENABLED = 'completion_worse.completor.laravel.config.enabled';
     public const LARAVEL_MODEL_PROVIDER = 'laravel.model_provider';
 
     public function load(ContainerBuilder $container): void
@@ -56,6 +58,17 @@ class LaravelExtension implements OptionalExtension
         }, [
             CompletionWorseExtension::TAG_TOLERANT_COMPLETOR => [
                 'name' => 'laravel.container',
+            ],
+        ]);
+
+        $container->register(LaravelConfigCompletor::class, function (Container $container) {
+            return new LaravelConfigCompletor(
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(LaravelContainerInspector::class)
+            );
+        }, [
+            CompletionWorseExtension::TAG_TOLERANT_COMPLETOR => [
+                'name' => 'laravel.config',
             ],
         ]);
 
@@ -120,13 +133,14 @@ class LaravelExtension implements OptionalExtension
             self::PARAM_CONTAINER_COMPLETOR_ENABLED => true,
             self::PARAM_VIEW_COMPLETOR_ENABLED => true,
             self::PARAM_ROUTES_COMPLETOR_ENABLED => true,
-            self::PARAM_ROUTES_COMPLETOR_ENABLED => true,
+            self::PARAM_CONFIG_COMPLETOR_ENABLED => true,
         ]);
         $schema->setDescriptions([
             self::DEV_TOOLS_EXECUTABLE => 'Path to the Laravel dev tools executable. By default it expects laravel-dev-tools to be in path.',
             self::PARAM_CONTAINER_COMPLETOR_ENABLED => 'Enable/disable the Laravel container completor - depends on Laravel extension being enabled',
             self::PARAM_VIEW_COMPLETOR_ENABLED => 'Enable/disable the Laravel view completor - depends on Laravel extension being enabled',
             self::PARAM_ROUTES_COMPLETOR_ENABLED => 'Enable/disable the Laravel routes completor - depends on Laravel extension being enabled',
+            self::PARAM_CONFIG_COMPLETOR_ENABLED => 'Enable/disable the Laravel config completor - depends on Laravel extension being enabled',
         ]);
     }
 

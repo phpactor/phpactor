@@ -49,6 +49,8 @@ class LaravelContainerInspector
 
     private ?array $views = null;
 
+    private ?array $config = null;
+
     private ?array $routes = null;
 
     private ?array $models = null;
@@ -96,6 +98,15 @@ class LaravelContainerInspector
         }
 
         return $this->routes;
+    }
+
+    public function config(): array
+    {
+        if ($this->config === null) {
+            $this->config = $this->getGetterOutput('config');
+        }
+
+        return $this->config;
     }
 
     public function models(): array
