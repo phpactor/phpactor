@@ -8,11 +8,14 @@ use Phpactor\Extension\Rpc\Response\Reference\Reference;
 
 class FileReferencesResponse implements Response
 {
+    /**
+     * @param array<FileReferences> $references
+     */
     public function __construct(private array $references)
     {
     }
 
-    public static function fromArray(array $array)
+    public static function fromArray(array $array): self
     {
         $references = [];
         foreach ($array as $fileAndReferences) {
@@ -41,6 +44,9 @@ class FileReferencesResponse implements Response
         ];
     }
 
+    /**
+     * @return array<FileReferences>
+     */
     public function references(): array
     {
         return $this->references;
