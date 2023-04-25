@@ -22,6 +22,9 @@ use Phpactor\Extension\Laravel\WorseReflection\LaravelContainerContextResolver;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
+/**
+ * @todo: goto definition for views can be done by string literal goto.
+ */
 class LaravelExtension implements OptionalExtension
 {
     public const DEV_TOOLS_EXECUTABLE = 'laravel.devtools.path';
