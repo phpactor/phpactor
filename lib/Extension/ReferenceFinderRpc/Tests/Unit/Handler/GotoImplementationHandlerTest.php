@@ -3,6 +3,7 @@ namespace Phpactor\Extension\ReferenceFinderRpc\Tests\Unit\Handler;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoImplementationHandler;
+use Phpactor\Extension\ReferenceFinderRpc\LocationSelector;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
@@ -68,6 +69,6 @@ class GotoImplementationHandlerTest extends TestCase
             }
         };
 
-        return new HandlerTester(new GotoImplementationHandler($locator));
+        return new HandlerTester(new GotoImplementationHandler($locator, new LocationSelector()));
     }
 }

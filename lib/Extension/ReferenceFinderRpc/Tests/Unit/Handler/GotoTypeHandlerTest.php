@@ -3,6 +3,7 @@ namespace Phpactor\Extension\ReferenceFinderRpc\Tests\Unit\Handler;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoTypeHandler;
+use Phpactor\Extension\ReferenceFinderRpc\LocationSelector;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
 use Phpactor\ReferenceFinder\TypeLocation;
@@ -47,6 +48,6 @@ class GotoTypeHandlerTest extends TestCase
                     ]);
             }
         };
-        return new HandlerTester(new GotoTypeHandler($locator));
+        return new HandlerTester(new GotoTypeHandler($locator, new LocationSelector()));
     }
 }
