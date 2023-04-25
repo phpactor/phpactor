@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use PHPUnit\Framework\Assert;
@@ -221,6 +222,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertEquals('Undefined variable "$foa"', $diagnostics->at(0)->message());
             }
         );
+
         yield new DiagnosticExample(
             title: 'after for loop',
             source: <<<'PHP'
@@ -239,6 +241,26 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+
+        yield new DiagnosticExample(
+            title: 'static',
+            source: <<<'PHP'
+                <?php
+                class Foo
+                {
+                    public static string $foo = 'bar';
+
+                    public function demo(): void
+                    {
+                        $example = static::$foo;
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
@@ -247,6 +269,9 @@ class UndefinedVariableProvider implements DiagnosticProvider
             return [];
         }
         if ($node->parent?->parent instanceof PropertyDeclaration) {
+            return [];
+        }
+        if ($node->parent instanceof ScopedPropertyAccessExpression) {
             return [];
         }
 
