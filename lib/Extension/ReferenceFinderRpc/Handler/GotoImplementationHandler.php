@@ -3,19 +3,13 @@
 namespace Phpactor\Extension\ReferenceFinderRpc\Handler;
 
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
-use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
-use Phpactor\Extension\Rpc\Response\Reference\FileReferences;
-use Phpactor\Extension\Rpc\Response\Reference\Reference;
+use Phpactor\Extension\Rpc\Response;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\Util\LineAtOffset;
-use Phpactor\TextDocument\Util\LineColFromOffset;
-use RuntimeException;
+use Phpactor\Extension\ReferenceFinderRpc\LocationSelector;
 
 class GotoImplementationHandler extends AbstractHandler
 {
@@ -26,8 +20,10 @@ class GotoImplementationHandler extends AbstractHandler
     const PARAM_LANGUAGE = 'language';
     const PARAM_TARGET = 'target';
 
-    public function __construct(private ClassImplementationFinder $finder)
-    {
+    public function __construct(
+        private ClassImplementationFinder $finder,
+        private LocationSelector $locationSelector
+    ) {
     }
 
     public function name(): string
@@ -63,7 +59,7 @@ class GotoImplementationHandler extends AbstractHandler
         ]);
     }
 
-    public function handle(array $arguments)
+    public function handle(array $arguments): Response
     {
         $document = TextDocumentBuilder::create($arguments[self::PARAM_SOURCE])
             ->uri($arguments[self::PARAM_PATH])
@@ -72,49 +68,7 @@ class GotoImplementationHandler extends AbstractHandler
         $offset = ByteOffset::fromInt($arguments[self::PARAM_OFFSET]);
         $locations = $this->finder->findImplementations($document, $offset);
 
-        if (1 !== $locations->count()) {
-            $references = $this->locationsToReferences($locations);
-
-            return new FileReferencesResponse($references);
-        }
-
-        $location = $locations->first();
-        return OpenFileResponse::fromPathAndOffset(
-            $location->uri()->path(),
-            $location->offset()->toInt()
-        )->withTarget($arguments[self::PARAM_TARGET]);
+        return $this->locationSelector->selectFileOpenResponse($locations, $arguments[self::PARAM_TARGET]);
     }
 
-    private function locationsToReferences(Locations $locations): array
-    {
-        $references = [];
-        foreach ($locations as $location) {
-            assert($location instanceof Location);
-            $contents = $this->fileContents($location);
-            $lineCol = (new LineColFromOffset())($contents, $location->offset()->toInt());
-            $line = (new LineAtOffset())->__invoke($contents, $location->offset()->toInt());
-
-            $fileReferences = FileReferences::fromPathAndReferences(
-                $location->uri()->path(),
-                [
-                    Reference::fromStartEndLineNumberLineAndCol($location->offset()->toInt(), $location->offset()->toInt(), $lineCol->line(), $line, $lineCol->col())
-                ]
-            );
-            $references[] = $fileReferences;
-        }
-
-        return $references;
-    }
-
-    private function fileContents(Location $location)
-    {
-        if (!file_exists($location->uri()->path())) {
-            throw new RuntimeException(sprintf(
-                'Could not open file "%s"',
-                $location->uri()->path()
-            ));
-        }
-
-        return file_get_contents($location->uri()->path());
-    }
 }

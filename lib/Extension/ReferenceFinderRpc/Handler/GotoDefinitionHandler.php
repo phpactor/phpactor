@@ -2,11 +2,14 @@
 
 namespace Phpactor\Extension\ReferenceFinderRpc\Handler;
 
+use Phpactor\Extension\ReferenceFinderRpc\LocationSelector;
+use Phpactor\Extension\Rpc\Response;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class GotoDefinitionHandler implements Handler
@@ -18,8 +21,10 @@ class GotoDefinitionHandler implements Handler
     const PARAM_LANGUAGE = 'language';
     const PARAM_TARGET = 'target';
 
-    public function __construct(private DefinitionLocator $locator)
-    {
+    public function __construct(
+        private DefinitionLocator $locator,
+        private LocationSelector $locationSelector
+    ) {
     }
 
     public function name(): string
@@ -55,18 +60,20 @@ class GotoDefinitionHandler implements Handler
         ]);
     }
 
-    public function handle(array $arguments)
+    public function handle(array $arguments): Response
     {
         $document = TextDocumentBuilder::create($arguments[self::PARAM_SOURCE])
             ->uri($arguments[self::PARAM_PATH])
             ->language($arguments[self::PARAM_LANGUAGE])->build();
 
         $offset = ByteOffset::fromInt($arguments[self::PARAM_OFFSET]);
-        $location = $this->locator->locateDefinition($document, $offset)->first()->location();
 
-        return OpenFileResponse::fromPathAndOffset(
-            $location->uri()->path(),
-            $location->offset()->toInt()
-        )->withTarget($arguments[self::PARAM_TARGET]);
+        $locations = [];
+        foreach($this->locator->locateDefinition($document, $offset) as $typeLocation) {
+            $locations[] = $typeLocation->location();
+        }
+        $locationsObject = new Locations($locations);
+
+        return $this->locationSelector->selectFileOpenResponse($locationsObject, $arguments[self::PARAM_TARGET]);
     }
 }

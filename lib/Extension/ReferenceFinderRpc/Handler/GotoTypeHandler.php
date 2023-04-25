@@ -2,11 +2,14 @@
 
 namespace Phpactor\Extension\ReferenceFinderRpc\Handler;
 
+use Phpactor\Extension\ReferenceFinderRpc\LocationSelector;
+use Phpactor\Extension\Rpc\Response;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class GotoTypeHandler implements Handler
@@ -18,8 +21,10 @@ class GotoTypeHandler implements Handler
     const PARAM_LANGUAGE = 'language';
     const PARAM_TARGET = 'target';
 
-    public function __construct(private TypeLocator $locator)
-    {
+    public function __construct(
+        private TypeLocator $locator,
+        private LocationSelector $locationSelector
+    ) {
     }
 
     public function name(): string
@@ -55,18 +60,20 @@ class GotoTypeHandler implements Handler
         ]);
     }
 
-    public function handle(array $arguments)
+    public function handle(array $arguments): Response
     {
         $document = TextDocumentBuilder::create($arguments[self::PARAM_SOURCE])
             ->uri($arguments[self::PARAM_PATH])
             ->language($arguments[self::PARAM_LANGUAGE])->build();
 
         $offset = ByteOffset::fromInt($arguments[self::PARAM_OFFSET]);
-        $location = $this->locator->locateTypes($document, $offset)->first();
 
-        return OpenFileResponse::fromPathAndOffset(
-            $location->location()->uri()->path(),
-            $location->location()->offset()->toInt()
-        )->withTarget($arguments[self::PARAM_TARGET]);
+        $locations = [];
+        foreach($this->locator->locateTypes($document, $offset) as $typeLocation) {
+            $locations[] = $typeLocation->location();
+        }
+        $locationsObject = new Locations($locations);
+
+        return $this->locationSelector->selectFileOpenResponse($locationsObject, $arguments[self::PARAM_TARGET]);
     }
 }

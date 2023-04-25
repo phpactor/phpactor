@@ -13,17 +13,31 @@ class Reference
     ) {
     }
 
-    public static function fromStartEndLineNumberAndCol(int $start, int $end, int $lineNumber, int $col = null)
+    public static function fromStartEndLineNumberAndCol(int $start, int $end, int $lineNumber, int $col = null): self
     {
         return new self($start, $end, $lineNumber, $col);
     }
 
-    public static function fromStartEndLineNumberLineAndCol(int $start, int $end, int $lineNumber, string $line, int $col = null)
-    {
+    public static function fromStartEndLineNumberLineAndCol(
+        int $start,
+        int $end,
+        int $lineNumber,
+        string $line,
+        int $col = null
+    ):self {
         return new self($start, $end, $lineNumber, $col, $line);
     }
 
-    public function toArray()
+    /**
+     * @return array{
+     *  start: int,
+     *  end: int,
+     *  line: string,
+     *  line_no: int,
+     *  col_no: int|null
+     * }
+    */
+    public function toArray(): array
     {
         return [
             'start' => $this->start,
