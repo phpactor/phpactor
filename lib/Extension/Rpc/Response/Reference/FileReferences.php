@@ -18,6 +18,20 @@ class FileReferences
         return new self($filePath, $references);
     }
 
+    /**
+     * @return array{
+     *  file: string,
+     *  references: array<
+     *    array{
+     *      start: int,
+     *      end: int,
+     *      line: string,
+     *      line_no: int,
+     *      col_no: int|null
+     *    }
+     *  >
+     * }
+    */
     public function toArray(): array
     {
         return [
