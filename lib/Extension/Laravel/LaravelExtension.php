@@ -18,7 +18,9 @@ use Phpactor\Extension\Laravel\DocumentManager\LaravelBladeInjector;
 use Phpactor\Extension\Laravel\Handler\RefreshOnLaravelFileUpdateHandler;
 use Phpactor\Extension\Laravel\Providers\LaravelModelPropertiesProvider;
 use Phpactor\Extension\Laravel\Providers\LaravelQueryBuilderProvider;
+use Phpactor\Extension\Laravel\ReferenceFinder\ViewReferenceFinder;
 use Phpactor\Extension\Laravel\WorseReflection\LaravelContainerContextResolver;
+use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 
@@ -114,6 +116,13 @@ class LaravelExtension implements OptionalExtension
         }, [
             LanguageServerCompletionExtension::TAG_DOCUMENT_MODIFIER => []
         ]);
+
+        $container->register(ViewReferenceFinder::class, function (Container $container) {
+            return new ViewReferenceFinder(
+                $container->get(LaravelContainerInspector::class),
+                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+            );
+        }, [ ReferenceFinderExtension::TAG_DEFINITION_LOCATOR => []]);
 
         // Providers
         $container->register(LaravelModelPropertiesProvider::class, function (Container $container) {
