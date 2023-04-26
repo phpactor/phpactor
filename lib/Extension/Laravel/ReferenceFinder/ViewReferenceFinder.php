@@ -21,7 +21,6 @@ class ViewReferenceFinder implements DefinitionLocator
 {
     public function __construct(
         private LaravelContainerInspector $container,
-        private Reflector $reflector,
     ) {
     }
 

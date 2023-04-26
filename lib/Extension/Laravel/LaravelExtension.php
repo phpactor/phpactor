@@ -119,8 +119,7 @@ class LaravelExtension implements OptionalExtension
 
         $container->register(ViewReferenceFinder::class, function (Container $container) {
             return new ViewReferenceFinder(
-                $container->get(LaravelContainerInspector::class),
-                $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                $container->get(LaravelContainerInspector::class)
             );
         }, [ ReferenceFinderExtension::TAG_DEFINITION_LOCATOR => []]);
 
