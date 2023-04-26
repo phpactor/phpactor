@@ -11,7 +11,6 @@ use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
@@ -19,7 +18,6 @@ use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location as PhpactorLocation;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use function Amp\Promise\wait;
 
@@ -31,10 +29,11 @@ class GotoDefinitionHandlerTest extends TestCase
     public function testGoesToDefinition(): void
     {
         $document = TextDocumentBuilder::create(self::EXAMPLE_TEXT)->uri(self::EXAMPLE_URI)->build();
+
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foo'),
-                new DefinitionLocation($document->uri(), ByteOffset::fromInt(2))
+                new PhpactorLocation($document->uriOrThrow(), ByteOffset::fromInt(2))
             )
         ];
         [$tester, $_] = $this->createTester($locations);
@@ -56,17 +55,11 @@ class GotoDefinitionHandlerTest extends TestCase
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                new PhpactorLocation(
-                    TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffset::fromInt(2)
-                )
+                PhpactorLocation::fromPathAndOffset(self::EXAMPLE_URI, 2)
             ),
             new TypeLocation(
                 TypeFactory::class('Barfoo'),
-                new PhpactorLocation(
-                    TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffset::fromInt(2)
-                )
+                PhpactorLocation::fromPathAndOffset(self::EXAMPLE_URI, 2)
             )
         ];
         [$tester, $builder] = $this->createTester($locations);

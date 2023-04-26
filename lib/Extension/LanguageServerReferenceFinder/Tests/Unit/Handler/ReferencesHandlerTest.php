@@ -15,7 +15,6 @@ use Phpactor\LanguageServer\Core\Server\RpcClient\TestRpcClient;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\PotentialLocation;
@@ -68,9 +67,9 @@ class ReferencesHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willYield([
-            PotentialLocation::surely(new Location($document->uri(), ByteOffset::fromInt(2))),
-            PotentialLocation::surely(new Location($document2->uri(), ByteOffset::fromInt(3))),
-            PotentialLocation::surely(new Location($document->uri(), ByteOffset::fromInt(5))),
+            PotentialLocation::surely(new Location($document->uriOrThrow(), ByteOffset::fromInt(2))),
+            PotentialLocation::surely(new Location($document2->uriOrThrow(), ByteOffset::fromInt(3))),
+            PotentialLocation::surely(new Location($document->uriOrThrow(), ByteOffset::fromInt(5))),
         ])->shouldBeCalled();
 
         $tester = $this->createTester();
@@ -122,7 +121,7 @@ class ReferencesHandlerTest extends TestCase
             TypeLocations::forLocation(
                 new TypeLocation(
                     TypeFactory::class('Foo'),
-                    new DefinitionLocation($document->uri(), ByteOffset::fromInt(2))
+                    new Location($document->uri(), ByteOffset::fromInt(2))
                 )
             )
         )->shouldBeCalled();
@@ -157,7 +156,7 @@ class ReferencesHandlerTest extends TestCase
         $this->locator->locateDefinition(
             $document,
             ByteOffset::fromInt(0)
-        )->willReturn(new DefinitionLocation($document->uri(), ByteOffset::fromInt(2)))->willThrow(new CouldNotLocateDefinition('nope'));
+        )->willReturn(new Location($document->uri(), ByteOffset::fromInt(2)))->willThrow(new CouldNotLocateDefinition('nope'));
 
         $tester = $this->createTester();
 
