@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\StringLiteral;
+use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCompletion\Util\DocumentModifier;
 use Phpactor\Extension\LanguageServerCompletion\Util\TextDocumentModifierResponse;
 use Phpactor\Extension\Laravel\Adapter\Laravel\LaravelContainerInspector;
@@ -42,10 +43,69 @@ class LaravelBladeInjector implements DocumentModifier
             $docblock = '';
             $viewsData = $this->containerInspector->viewsData();
 
+            $intOffset = PositionConverter::positionToByteOffset($position, $text)->toInt();
+
             // Try to get the direct file.
             $viewKey = $viewsData['mapping'][$fileToSearch] ?? false;
 
             $component = null;
+
+            $contentToParse = substr($text, 0, $intOffset);
+
+            $diff = 0;
+            /**
+             * Plain php.
+             */
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = str_replace('@php', '<?php', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = str_replace('@endphp', '?>', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            /**
+             * Conditionals.
+             */
+            // /@if {0,1}\((\s*.*)\)/
+            // @todo what to about optional whitespace?
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = preg_replace('/@if {0,1}\((\s*.*)\)/', '<?php if($1): ?>', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            // @todo Elseif
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = str_replace('@else', '<?php else: ?>', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = str_replace('@endif', '<?php endif ?>', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            /**
+             * Loops.
+             */
+            // /@if {0,1}\((\s*.*)\)/
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = preg_replace("/@foreach {0,1}\((\s*.*)\)/", '<?php foreach($1): ?>', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = str_replace('@endforeach', '<?php endforeach; ?>', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            /**
+             * Strings.
+             */
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = str_replace('{{', '<?=', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            $strlenBefore = mb_strlen($contentToParse);
+            $contentToParse = str_replace('}}', ';?>', $contentToParse);
+            $diff += mb_strlen($contentToParse) - $strlenBefore;
+
+            $text = $contentToParse . substr($text, $intOffset);
 
             if (!$viewKey) {
                 // Try to load it from the regular views.
@@ -109,9 +169,12 @@ class LaravelBladeInjector implements DocumentModifier
 
                 $lines = explode(PHP_EOL, $text);
                 $lines[0] = $prefix . $lines[0];
+                $lines[$position->line] = '<?php ' . $lines[$position->line];
                 $text = implode(PHP_EOL, $lines);
 
-                return new TextDocumentModifierResponse($text, mb_strlen($prefix), 'php');
+                $inc = mb_strlen($prefix) + $diff + 6;
+
+                return new TextDocumentModifierResponse($text, $inc, 'php');
             }
         }
         return null;
