@@ -68,7 +68,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
             /** @var TextDocumentModifierResponse[] $modifierResponses */
             $modifierResponses = [];
             foreach ($this->documentModifiers as $modifier) {
-                if ($response = $modifier->process($modifiedDocumentText, $document)) {
+                if ($response = $modifier->process($modifiedDocumentText, $document, $position)) {
                     $modifierResponses[] = $response;
                     // Update the modifiedDocumentText with the new body as it may have changed.
                     $modifiedDocumentText = $response->body;

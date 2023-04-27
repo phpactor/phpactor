@@ -11,13 +11,13 @@ use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\Extension\LanguageServerCompletion\Util\DocumentModifier;
 use Phpactor\Extension\LanguageServerCompletion\Util\TextDocumentModifierResponse;
 use Phpactor\Extension\Laravel\Adapter\Laravel\LaravelContainerInspector;
+use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod as PhpactorReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Reflector;
 
 class LaravelBladeInjector implements DocumentModifier
@@ -29,13 +29,15 @@ class LaravelBladeInjector implements DocumentModifier
     ) {
     }
 
-    public function process(string $text, TextDocumentItem $document): ?TextDocumentModifierResponse
-    {
+    public function process(
+        string $text,
+        TextDocumentItem $document,
+        Position $position
+    ): ?TextDocumentModifierResponse {
         if ($document->languageId === 'blade' || str_ends_with($document->uri, '.blade.php')) {
             $this->containerInspector->viewsData();
 
             $fileToSearch = str_replace('file://', '', $document->uri);
-
 
             $docblock = '';
             $viewsData = $this->containerInspector->viewsData();
@@ -103,7 +105,7 @@ class LaravelBladeInjector implements DocumentModifier
                     }
                 }
 
-                $prefix = '<?php  ' . $docblock . ' ';
+                $prefix = '<?php  ' . $docblock . ' ?>';
 
                 $lines = explode(PHP_EOL, $text);
                 $lines[0] = $prefix . $lines[0];
