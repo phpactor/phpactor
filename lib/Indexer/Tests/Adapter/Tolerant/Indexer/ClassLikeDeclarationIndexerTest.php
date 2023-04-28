@@ -3,10 +3,12 @@
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
 use Generator;
+use Phpactor\Extension\PHPUnit\PHPUnitExtension;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\EnumDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\InterfaceDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\TraitDeclarationIndexer;
+use Phpactor\Indexer\Model\Query\Criteria\ExactShortName;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Tests\Adapter\Tolerant\TolerantIndexerTestCase;
@@ -136,6 +138,40 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
             'Query',
             [],
         ];
+    }
+
+    public function testSearchMultipleResults(): void
+    {
+        $manifest = <<<PHP
+            // File: src/file1.php
+            <?php class Barfoo{}
+            // File: src/file2.php
+            <?php
+
+            class Barfoo{}
+            PHP;
+        $this->workspace()->reset();
+        $this->workspace()->loadManifest($manifest);
+        $agent = $this->runIndexer(
+            [
+                new ClassDeclarationIndexer(),
+            ],
+            'src'
+        );
+
+        $foundRecords = iterator_to_array($agent->search()->search(new ExactShortName('Barfoo')));
+
+        self::assertCount(2, $foundRecords);
+
+        $firstMatch = $foundRecords[0];
+        self::assertEquals('Barfoo', $firstMatch->identifier());
+        self::assertInstanceOf(ClassRecord::class, $firstMatch);
+        self::assertEquals($this->workspace()->path('src/file1.php'), $firstMatch->filePath());
+
+        $secondMatch = $foundRecords[1];
+        self::assertEquals('Barfoo', $secondMatch->identifier());
+        self::assertInstanceOf(ClassRecord::class, $secondMatch);
+        self::assertEquals($this->workspace()->path('src/file2.php'), $secondMatch->filePath());
     }
 
     /**
