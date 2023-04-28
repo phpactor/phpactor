@@ -145,7 +145,7 @@ class LaravelExtension implements OptionalExtension
                 'LaravelQueryVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
             ]);
         }, [ WorseReflectionExtension::TAG_SOURCE_LOCATOR => [
-            'priority' => 290
+            'priority' => 9999
         ]]);
     }
 

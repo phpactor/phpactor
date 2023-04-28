@@ -452,6 +452,16 @@ class LaravelContainerInspector
                 ],
                 'returns' => $targetType,
             ],
+            'make' => [
+                'description' => 'Make a new model',
+                'arguments' => [
+                    'attributes' => [
+                        'type' => new ArrayType(new StringType(), new MixedType()),
+                        'required' => true,
+                    ],
+                ],
+                'returns' => $targetType,
+            ],
             'update' => [
                 'description' => 'Updates the models in the result',
                 'arguments' => [
