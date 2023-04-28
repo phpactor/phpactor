@@ -22,6 +22,7 @@ use Phpactor\Extension\Laravel\ReferenceFinder\ViewReferenceFinder;
 use Phpactor\Extension\Laravel\WorseReflection\LaravelContainerContextResolver;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\Extension\Laravel\WorseReflection\LaravelStubLocator;
 use Phpactor\MapResolver\Resolver;
 
 /**
@@ -135,6 +136,12 @@ class LaravelExtension implements OptionalExtension
                 $container->get(LaravelContainerInspector::class)
             );
         }, [ WorseReflectionExtension::TAG_MEMBER_PROVIDER => []]);
+
+        $container->register(LaravelStubLocator::class, function (Container $container) {
+            return new LaravelStubLocator();
+        }, [ WorseReflectionExtension::TAG_SOURCE_LOCATOR => [
+            'priority' => 290
+        ]]);
     }
 
 

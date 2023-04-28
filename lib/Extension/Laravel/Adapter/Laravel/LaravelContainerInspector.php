@@ -6,6 +6,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
+use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
@@ -322,26 +323,29 @@ class LaravelContainerInspector
     {
         $class = null;
 
-        if ($type === 'Illuminate\Database\Eloquent\Relations\HasMany') {
-            $class = $reflector->reflectClass('LaravelHasManyVirtualBuilder');
-        }
+        try {
+            if ($type === 'Illuminate\Database\Eloquent\Relations\HasMany') {
+                $class = $reflector->reflectClass('LaravelHasManyVirtualBuilder');
+            }
 
-        if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsTo') {
-            $class = $reflector->reflectClass('LaravelBelongsToVirtualBuilder');
-        }
+            if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsTo') {
+                $class = $reflector->reflectClass('LaravelBelongsToVirtualBuilder');
+            }
 
-        if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsToMany') {
-            $class = $reflector->reflectClass('LaravelBelongsToManyVirtualBuilder');
-        }
+            if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsToMany') {
+                $class = $reflector->reflectClass('LaravelBelongsToManyVirtualBuilder');
+            }
 
-        if ($type === 'Builder') {
-            $class = $reflector->reflectClass('LaravelQueryVirtualBuilder');
-        }
+            if ($type === 'Builder') {
+                $class = $reflector->reflectClass('LaravelQueryVirtualBuilder');
+            }
 
-        if ($class) {
-            $relationClass = $reflector->reflectClass(ClassName::fromString($targetType));
+            if ($class) {
+                $relationClass = $reflector->reflectClass(ClassName::fromString($targetType));
 
-            return new GenericClassType($reflector, $class->name(), [$relationClass->type()]);
+                return new GenericClassType($reflector, $class->name(), [$relationClass->type()]);
+            }
+        } catch (SourceNotFound) {
         }
 
         return null;
