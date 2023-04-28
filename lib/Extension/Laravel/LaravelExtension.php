@@ -22,8 +22,8 @@ use Phpactor\Extension\Laravel\ReferenceFinder\ViewReferenceFinder;
 use Phpactor\Extension\Laravel\WorseReflection\LaravelContainerContextResolver;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\Extension\Laravel\WorseReflection\LaravelStubLocator;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\WorseReflection\Core\SourceCodeLocator\InternalLocator;
 
 /**
  * @todo: goto definition for views can be done by string literal goto.
@@ -137,8 +137,13 @@ class LaravelExtension implements OptionalExtension
             );
         }, [ WorseReflectionExtension::TAG_MEMBER_PROVIDER => []]);
 
-        $container->register(LaravelStubLocator::class, function (Container $container) {
-            return new LaravelStubLocator();
+        $container->register('laravel-stub-locator', function (Container $container) {
+            return new InternalLocator([
+                'LaravelHasManyVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
+                'LaravelBelongsToVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
+                'LaravelBelongsToManyVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
+                'LaravelQueryVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
+            ]);
         }, [ WorseReflectionExtension::TAG_SOURCE_LOCATOR => [
             'priority' => 290
         ]]);
