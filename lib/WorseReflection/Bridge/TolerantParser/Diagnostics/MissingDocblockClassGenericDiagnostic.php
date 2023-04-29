@@ -7,6 +7,8 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Psalm\Type;
 
 class MissingDocblockClassGenericDiagnostic implements Diagnostic
 {
@@ -17,7 +19,7 @@ class MissingDocblockClassGenericDiagnostic implements Diagnostic
         private ByteOffsetRange $range,
         private ClassName $className,
         private ClassName $parentClassName,
-        private array $missingParameters
+        private GenericClassType $missingGenericType,
     )
     {
     }
@@ -35,10 +37,10 @@ class MissingDocblockClassGenericDiagnostic implements Diagnostic
     public function message(): string
     {
         return sprintf(
-            'Class "%s" extends generic class "%s" but does not provide a generic argument for parameters "%s"',
-            $this->className->head(),
-            $this->parentClassName->head(),
-            implode('", "', array_keys($this->missingParameters))
+            'Class "%s" extends generic class "%s" but does not provide correct generic annotation "%s"',
+            $this->className->short(),
+            $this->parentClassName->short(),
+            $this->missingGenericType->__toString()
         );
     }
 }
