@@ -5,6 +5,8 @@ namespace Phpactor\Extension\WorseReflection\Tests\Example;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
@@ -39,7 +41,7 @@ class DiagnosticsTest extends TestCase
     public function provideDiagnostics(): Generator
     {
         $container = PhpactorContainer::fromExtensions([
-            WorseReflectionExtension::class
+            WorseReflectionExtension::class,
         ]);
         foreach ($container->getServiceIdsForTag(WorseReflectionExtension::TAG_DIAGNOSTIC_PROVIDER) as $serviceId => $_) {
             /** @var class-string<DiagnosticProvider> $serviceId */

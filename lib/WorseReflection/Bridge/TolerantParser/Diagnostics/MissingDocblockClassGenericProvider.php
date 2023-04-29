@@ -16,8 +16,11 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
@@ -48,7 +51,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
         }
 
         if ($class instanceof ReflectionClass) {
-            yield from $this->fromReflectionClass($range, $class, $class->parent());
+            yield from $this->fromReflectionClass($resolver->reflector(), $range, $class, $class->parent());
         }
     }
 
@@ -192,7 +195,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
         return 'missing_phpdoc_return';
     }
 
-    private function fromReflectionClass(ByteOffsetRange $range, ReflectionClass $class, ?ReflectionClass $parentClass)
+    private function fromReflectionClass(ClassReflector $reflector, ByteOffsetRange $range, ReflectionClass $class, ?ReflectionClass $parentClass)
     {
         if (!$parentClass) {
             return;
@@ -204,16 +207,23 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             return;
         }
 
-        $unresolved = $templateMap->toArray();
         $extends = $class->docblock()->extends();
         $extends = array_filter($extends, fn (Type $type) => $type->instanceof($parentClass->type()));
+        $defaultGenericType = new GenericClassType(
+            $reflector,
+            $parentClass->name(),
+            array_map(
+                fn (Type $type) => !$type instanceof MissingType ?: new MixedType(),
+                $templateMap->toArguments(),
+            )
+        );
 
         if (0 === count($extends)) {
             yield new MissingDocblockClassGenericDiagnostic(
                 $range,
                 $class->name(),
                 $parentClass->name(),
-                $unresolved,
+                $defaultGenericType
             );
             return;
         }
@@ -222,23 +232,12 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
         if (!$extendTagType instanceof GenericClassType) {
             return;
         }
-        $offset = 1;
-        foreach ($unresolved as $key => $parameterType) {
-            if ($offset++ > count($extendTagType->arguments())) {
-                continue;
-            }
-            unset($unresolved[$key]);
-        }
-
-        if (count($unresolved) === 0) {
-            return;
-        }
 
         yield new MissingDocblockClassGenericDiagnostic(
             $range,
             $class->name(),
             $parentClass->name(),
-            $unresolved
+            $defaultGenericType
         );
     }
 }
