@@ -16,6 +16,7 @@ class IndexerClassSourceLocator implements SourceCodeLocator
     {
     }
 
+
     public function locate(Name $name): TextDocument
     {
         if (empty($name->__toString())) {
@@ -23,22 +24,16 @@ class IndexerClassSourceLocator implements SourceCodeLocator
         }
 
         $record = $this->index->get(ClassRecord::fromName($name->__toString()));
-        $filePath = $record->filePaths();
+        $filePath = $record->filePath();
 
-        foreach ($filePaths as $filePath) {
-            if (!file_exists($filePath)) {
-                throw new SourceNotFound(sprintf(
-                    'Class "%s" is indexed, but it does not exist at path "%s"!',
-                    $name->full(),
-                    $filePath
-                ));
-            }
-            return TextDocumentBuilder::fromUri($filePath)->build();
+        if (null === $filePath || !file_exists($filePath)) {
+            throw new SourceNotFound(sprintf(
+                'Class "%s" is indexed, but it does not exist at path "%s"!',
+                $name->full(),
+                $filePath
+            ));
         }
 
-        throw new SourceNotFound(sprintf(
-            'Class "%s" is indexed, but it has no paths associated with it',
-            $name->full()
-        ));
+        return TextDocumentBuilder::fromUri($filePath)->build();
     }
 }

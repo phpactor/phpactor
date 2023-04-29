@@ -12,9 +12,6 @@ use Phpactor\CodeBuilder\Domain\Prototype\Method;
 use RuntimeException;
 use Microsoft\PhpParser\Node;
 
-/**
- * @extends AbstractMethodUpdater<ClassMembersNode|TraitMembers>
- */
 class ClassMethodUpdater extends AbstractMethodUpdater
 {
     /**
