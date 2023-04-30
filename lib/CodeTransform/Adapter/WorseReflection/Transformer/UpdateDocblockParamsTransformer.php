@@ -13,7 +13,7 @@ use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
 
@@ -100,7 +100,7 @@ class UpdateDocblockParamsTransformer implements Transformer
     {
         return call(function () use ($code) {
             $missings = [];
-            $diagnostics = (yield $this->reflector->diagnostics($code))->byClass(MissingDocblockParamDiagnostic::class);
+            $diagnostics = (yield $this->reflector->diagnostics($code))->byClass(DocblockMissingParamDiagnostic::class);
 
             foreach ($diagnostics as $diagnostic) {
                 $missings[] = $diagnostic;

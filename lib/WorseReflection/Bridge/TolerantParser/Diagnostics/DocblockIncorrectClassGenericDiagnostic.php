@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
-class IncorrectDocblockClassGenericDiagnostic implements Diagnostic
+class DocblockIncorrectClassGenericDiagnostic implements Diagnostic
 {
     public function __construct(
         private ByteOffsetRange $range,

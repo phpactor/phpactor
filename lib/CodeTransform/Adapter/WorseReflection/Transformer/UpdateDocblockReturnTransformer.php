@@ -13,7 +13,7 @@ use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingReturnTypeDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
 
@@ -100,7 +100,7 @@ class UpdateDocblockReturnTransformer implements Transformer
     {
         return call(function () use ($code) {
             $missingMethods = [];
-            $diagnostics = (yield $this->reflector->diagnostics($code))->byClasses(MissingDocblockReturnTypeDiagnostic::class);
+            $diagnostics = (yield $this->reflector->diagnostics($code))->byClasses(DocblockMissingReturnTypeDiagnostic::class);
 
             foreach ($diagnostics as $diagnostic) {
                 $missingMethods[] = $diagnostic;

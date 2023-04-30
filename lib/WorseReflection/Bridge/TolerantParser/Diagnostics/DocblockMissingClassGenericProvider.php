@@ -25,7 +25,7 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
  * Report when a class or interface depends on an class or interface that
  * requires generic annotations.
  */
-class MissingDocblockClassGenericProvider implements DiagnosticProvider
+class DocblockMissingClassGenericProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
@@ -314,7 +314,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
 
         $extendTagType = $extendTagTypes[0];
         if (!$extendTagType instanceof GenericClassType) {
-            yield new IncorrectDocblockClassGenericDiagnostic(
+            yield new DocblockIncorrectClassGenericDiagnostic(
                 $range,
                 $extendTagType,
                 $defaultGenericType
@@ -326,7 +326,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             return;
         }
 
-        yield new IncorrectDocblockClassGenericDiagnostic(
+        yield new DocblockIncorrectClassGenericDiagnostic(
             $range,
             $extendTagType,
             $defaultGenericType

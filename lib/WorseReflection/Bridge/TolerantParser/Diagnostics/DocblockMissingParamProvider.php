@@ -26,7 +26,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
  * Report when a method has a parameter with a type that should be
  * augmented by a phpdoc.
  */
-class MissingDocblockParamProvider implements DiagnosticProvider
+class DocblockMissingParamProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
@@ -89,7 +89,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                 continue;
             }
 
-            yield new MissingDocblockParamDiagnostic(
+            yield new DocblockMissingParamDiagnostic(
                 ByteOffsetRange::fromInts(
                     $parameter->position()->start()->toInt(),
                     $parameter->position()->end()->toInt()
@@ -128,7 +128,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                 PHP,
             valid: false,
             assertion: function (Diagnostics $diagnostics): void {
-                $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+                $diagnostics = $diagnostics->byClass(DocblockMissingParamDiagnostic::class);
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
             }
@@ -153,7 +153,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                 PHP,
             valid: false,
             assertion: function (Diagnostics $diagnostics): void {
-                $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+                $diagnostics = $diagnostics->byClass(DocblockMissingParamDiagnostic::class);
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
             }
@@ -171,7 +171,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                 PHP,
             valid: false,
             assertion: function (Diagnostics $diagnostics): void {
-                $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+                $diagnostics = $diagnostics->byClass(DocblockMissingParamDiagnostic::class);
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
             }
@@ -192,7 +192,7 @@ class MissingDocblockParamProvider implements DiagnosticProvider
                 PHP,
             valid: true,
             assertion: function (Diagnostics $diagnostics): void {
-                $diagnostics = $diagnostics->byClass(MissingDocblockParamDiagnostic::class);
+                $diagnostics = $diagnostics->byClass(DocblockMissingParamDiagnostic::class);
                 Assert::assertCount(0, $diagnostics);
             }
         );
