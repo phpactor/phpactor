@@ -3,9 +3,9 @@ Getting Started
 
 How you start depends on your editor.
 
-Currently Phpactor has most support when used over it's own :ref:`legacy RPC protocol <>`.
+Currently Phpactor has most support when used over it's own :ref:`legacy RPC protocol <rpc_protocol>`.
 Most of the functionality is implemented with a language server, which :ref:`those editors <lsp_support>`
-support. For this you need to run Phpactor as a :ref:`language_server`.
+support. For this you need to run Phpactor as a Language Server.
 
 In addition you can also do somethings from the CLI only for that a
 :ref:`global installation <installation_global>` is recommended.
