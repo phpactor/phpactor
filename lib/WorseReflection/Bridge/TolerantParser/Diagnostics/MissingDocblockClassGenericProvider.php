@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use PHPUnit\Framework\Assert;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
@@ -32,6 +33,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             return;
         }
 
+        /** @phpstan-ignore-next-line */
         if (!$node->name) {
             return;
         }
@@ -276,7 +278,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
         return 'missing_phpdoc_return';
     }
     /**
-     * @return Generator<MissingDocblockClassGenericDiagnostic>
+     * @return Generator<Diagnostic>
      */
     private function fromReflectionClass(ClassReflector $reflector, ByteOffsetRange $range, ReflectionClass $class, ?ReflectionClass $parentClass): Generator
     {
@@ -305,7 +307,6 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             yield new MissingDocblockClassGenericDiagnostic(
                 $range,
                 $class->name(),
-                $parentClass->name(),
                 $defaultGenericType
             );
             return;

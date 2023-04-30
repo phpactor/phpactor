@@ -14,7 +14,6 @@ class MissingDocblockClassGenericDiagnostic implements Diagnostic
     public function __construct(
         private ByteOffsetRange $range,
         private ClassName $className,
-        private ClassName $parentClassName,
         private GenericClassType $missingGenericType,
     ) {
     }
@@ -27,6 +26,11 @@ class MissingDocblockClassGenericDiagnostic implements Diagnostic
     public function severity(): DiagnosticSeverity
     {
         return DiagnosticSeverity::WARNING();
+    }
+
+    public function className(): ClassName
+    {
+        return $this->className;
     }
 
     public function message(): string
