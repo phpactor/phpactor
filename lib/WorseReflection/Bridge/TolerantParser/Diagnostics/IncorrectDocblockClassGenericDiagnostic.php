@@ -2,24 +2,17 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
-use Phpactor\Name\FullyQualifiedName;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
-use Psalm\Type;
 
-class MissingDocblockClassGenericDiagnostic implements Diagnostic
+class IncorrectDocblockClassGenericDiagnostic implements Diagnostic
 {
-    /**
-     * @param array<string,Type> $missingArguments
-     */
     public function __construct(
         private ByteOffsetRange $range,
-        private ClassName $className,
-        private ClassName $parentClassName,
-        private GenericClassType $missingGenericType,
+        private GenericClassType $givenType,
+        private GenericClassType $correctType,
     )
     {
     }
@@ -37,9 +30,9 @@ class MissingDocblockClassGenericDiagnostic implements Diagnostic
     public function message(): string
     {
         return sprintf(
-            'Missing generic docblock for class "%s": @extends %s',
-            $this->className->short(),
-            $this->missingGenericType->__toString()
+            'Generic tag `@extends %s` should be compatible with `@extends %s`',
+            $this->givenType->__toString(),
+            $this->correctType->__toString()
         );
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
+use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -82,7 +83,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals(
-                    'Class "Foobar" extends generic class "NeedGeneric" but does not provide a generic argument for parameters "T"',
+                    'Missing generic docblock for class "Foobar": @extends NeedGeneric<mixed>',
                     $diagnostics->at(0)->message()
                 );
             }
@@ -111,7 +112,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals(
-                    'Class "Foobar" extends generic class "NeedGeneric" but does not provide a generic argument for parameters "P"',
+                    'Generic tag `@extends NeedGeneric<int>` should be compatible with `@extends NeedGeneric<mixed,mixed>`',
                     $diagnostics->at(0)->message()
                 );
             }
@@ -141,7 +142,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals(
-                    'Class "Foobar" extends generic class "NeedGeneric" but does not provide a generic argument for parameters "P", "Q"',
+                    'Generic tag `@extends NeedGeneric<int>` should be compatible with `@extends NeedGeneric<mixed,mixed,mixed>`',
                     $diagnostics->at(0)->message()
                 );
             }
@@ -194,8 +195,10 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
     {
         return 'missing_phpdoc_return';
     }
-
-    private function fromReflectionClass(ClassReflector $reflector, ByteOffsetRange $range, ReflectionClass $class, ?ReflectionClass $parentClass)
+    /**
+     * @return Generator<MissingDocblockClassGenericDiagnostic>
+     */
+    private function fromReflectionClass(ClassReflector $reflector, ByteOffsetRange $range, ReflectionClass $class, ?ReflectionClass $parentClass): Generator
     {
         if (!$parentClass) {
             return;
@@ -233,10 +236,13 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             return;
         }
 
-        yield new MissingDocblockClassGenericDiagnostic(
+        if ($defaultGenericType->accepts($extendTagType)->isTrue()) {
+            return;
+        }
+
+        yield new IncorrectDocblockClassGenericDiagnostic(
             $range,
-            $class->name(),
-            $parentClass->name(),
+            $extendTagType,
             $defaultGenericType
         );
     }

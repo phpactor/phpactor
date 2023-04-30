@@ -50,11 +50,21 @@ class GenericClassType extends ReflectedClassType implements IterableType, Class
 
     public function accepts(Type $type): Trinary
     {
-        if ($this->is($type)->isTrue()) {
-            return Trinary::true();
+        if (!$type instanceof GenericClassType) {
+            return Trinary::false();
         }
 
-        return Trinary::false();
+        foreach ($this->arguments as $index => $argument) {
+            if (!isset($type->arguments[$index])) {
+                return Trinary::false();
+            }
+            if (!$argument->accepts($type->arguments[$index])->isTrue()) {
+                return Trinary::false();
+            }
+        }
+
+
+        return Trinary::true();
     }
 
     public function replaceArgument(int $offset, Type $type): self
