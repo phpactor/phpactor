@@ -5,8 +5,6 @@ namespace Phpactor\Extension\WorseReflection\Tests\Example;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
-use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\DiagnosticExample;

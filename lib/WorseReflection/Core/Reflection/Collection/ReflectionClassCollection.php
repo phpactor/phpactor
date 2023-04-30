@@ -2,10 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as PhpactorReflectionClass;
-
-/**
- */
 final class ReflectionClassCollection extends AbstractReflectionCollection
 {
     public function concrete(): self

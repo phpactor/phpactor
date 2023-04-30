@@ -14,8 +14,7 @@ class IncorrectDocblockClassGenericDiagnostic implements Diagnostic
         private ByteOffsetRange $range,
         private Type $givenType,
         private GenericClassType $correctType,
-    )
-    {
+    ) {
     }
 
     public function range(): ByteOffsetRange
@@ -32,8 +31,8 @@ class IncorrectDocblockClassGenericDiagnostic implements Diagnostic
     {
         return sprintf(
             'Generic tag `@extends %s` should be compatible with `@extends %s`',
-            $this->givenType->__toString(),
-            $this->correctType->__toString()
+            $this->givenType->short(),
+            $this->correctType->short()
         );
     }
 }

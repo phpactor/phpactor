@@ -3,10 +3,7 @@
 namespace Phpactor\WorseReflection\Core;
 
 use Countable;
-use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 final class TemplateMap implements Countable
 {
