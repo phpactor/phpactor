@@ -118,6 +118,34 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'does not provide any arguments',
+            source: <<<'PHP'
+                <?php
+
+                /**
+                 * @template T of int
+                 */
+                class NeedGeneric
+                {
+                }
+
+                /**
+                 * @extends NeedGeneric
+                 */
+                class Foobar extends NeedGeneric
+                {
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals(
+                    'Generic tag `@extends NeedGeneric` should be compatible with `@extends NeedGeneric<int>`',
+                    $diagnostics->at(0)->message()
+                );
+            }
+        );
+        yield new DiagnosticExample(
             title: 'does not provide multiple arguments',
             source: <<<'PHP'
                 <?php
