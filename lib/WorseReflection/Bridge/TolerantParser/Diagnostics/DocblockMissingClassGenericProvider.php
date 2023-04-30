@@ -275,7 +275,7 @@ class DocblockMissingClassGenericProvider implements DiagnosticProvider
 
     public function name(): string
     {
-        return 'missing_phpdoc_return';
+        return 'missing_class_generic_tag';
     }
     /**
      * @return Generator<Diagnostic>
