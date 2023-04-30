@@ -94,7 +94,7 @@ class UpdateDocblockParamsTransformer implements Transformer
     }
 
     /**
-     * @return Promise<MissingDocblockParamDiagnostic[]>
+     * @return Promise<DocblockMissingParamDiagnostic[]>
      */
     private function methodsThatNeedFixing(SourceCode $code): Promise
     {

@@ -94,7 +94,7 @@ class UpdateDocblockReturnTransformer implements Transformer
     }
 
     /**
-     * @return Promise<MissingDocblockReturnTypeDiagnostic[]>
+     * @return Promise<DocblockMissingReturnTypeDiagnostic[]>
      */
     private function methodsThatNeedFixing(SourceCode $code): Promise
     {

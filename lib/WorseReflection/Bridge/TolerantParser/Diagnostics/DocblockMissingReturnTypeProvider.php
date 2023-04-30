@@ -27,6 +27,10 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
+        if (!$node->name) {
+            return;
+        }
+
         $declaration = NodeUtil::nodeContainerClassLikeDeclaration($node);
 
         if (null === $declaration) {
