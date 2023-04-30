@@ -274,8 +274,9 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
 
     public function name(): string
     {
-        return 'docblock_missing_extends_Tag';
+        return 'docblock_missing_extends_tag';
     }
+
     /**
      * @return Generator<Diagnostic>
      */

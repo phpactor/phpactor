@@ -18,6 +18,11 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
     ) {
     }
 
+    public function missingGenericType(): GenericClassType
+    {
+        return $this->missingGenericType;
+    }
+
     public function range(): ByteOffsetRange
     {
         return $this->range;

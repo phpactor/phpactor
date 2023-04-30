@@ -3,6 +3,7 @@
 namespace Phpactor\CodeBuilder\Domain\Builder;
 
 use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
+use Phpactor\CodeBuilder\Domain\Prototype\Docblock;
 
 abstract class ClassLikeBuilder extends AbstractBuilder implements Builder
 {
@@ -10,6 +11,9 @@ abstract class ClassLikeBuilder extends AbstractBuilder implements Builder
      * @var MethodBuilder[]
      */
     protected array $methods = [];
+
+    private Docblock $docblock;
+
 
     public function __construct(private SourceCodeBuilder $parent, protected string $name)
     {
@@ -47,4 +51,17 @@ abstract class ClassLikeBuilder extends AbstractBuilder implements Builder
     {
         return $this->parent;
     }
+
+    public function docblock(string $docblock): ClassLikeBuilder
+    {
+        $this->docblock = Docblock::fromString($docblock);
+
+        return $this;
+    }
+
+    public function getDocblock(): ?Docblock
+    {
+        return $this->docblock;
+    }
+
 }
