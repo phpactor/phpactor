@@ -4,10 +4,12 @@ namespace Phpactor\CodeTransform\Adapter\DocblockParser;
 
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ExtendsTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\TagPrototype;
 use Phpactor\DocblockParser\Ast\Docblock;
+use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
@@ -54,6 +56,15 @@ class ParserDocblockUpdater implements DocBlockUpdater
             );
         }
 
+        if ($prototype instanceof ExtendsTagPrototype) {
+            return $this->updateTag(
+                $docblock,
+                $prototype,
+                sprintf('@extends %s', $prototype->type->__toString()),
+                0
+            );
+        }
+
         throw new RuntimeException(sprintf(
             'Do not know how to update tag "%s"',
             get_class($prototype)
@@ -63,11 +74,11 @@ class ParserDocblockUpdater implements DocBlockUpdater
     /**
      * @return array<int,TextEdit>
      */
-    private function updateTag(Docblock $docblock, TagPrototype $prototype, string $tagText): array
+    private function updateTag(Docblock $docblock, TagPrototype $prototype, string $tagText, int $indent = 1): array
     {
         // create
         if (strlen(trim($docblock->toString())) === 0) {
-            $indent = $this->textFormat->indent('', 1);
+            $indent = $this->textFormat->indent('', $indent);
             return [
                 TextEdit::create(
                     $docblock->start(),

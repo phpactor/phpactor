@@ -33,7 +33,7 @@ class UpdateDocblockExtendsTransformer implements Transformer
     public function transform(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $diagnostics = yield $this->diagnostics($code);
+            $diagnostics = yield $this->wrDiagnostics($code);
             $builder = $this->builderFactory->fromSource($code);
 
             $class = null;
@@ -70,7 +70,7 @@ class UpdateDocblockExtendsTransformer implements Transformer
         return call(function () use ($code) {
             $diagnostics = [];
 
-            $missings = yield $this->diagnostics($code);
+            $missings = yield $this->wrDiagnostics($code);
 
             foreach ($missings as $missing) {
                 $diagnostics[] = new Diagnostic(
@@ -88,7 +88,7 @@ class UpdateDocblockExtendsTransformer implements Transformer
     /**
      * @return Promise<DocblockMissingClassGenericDiagnostic[]>
      */
-    private function diagnostics(SourceCode $code): Promise
+    private function wrDiagnostics(SourceCode $code): Promise
     {
         return call(function () use ($code) {
             return (yield $this->reflector->diagnostics($code))->byClass(DocblockMissingClassGenericDiagnostic::class);

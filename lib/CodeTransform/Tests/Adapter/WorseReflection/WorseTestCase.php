@@ -6,6 +6,7 @@ use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingExtendsTagProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
@@ -29,6 +30,7 @@ class WorseTestCase extends AdapterTestCase
         $builder->addDiagnosticProvider(new MissingReturnTypeProvider());
         $builder->addDiagnosticProvider(new UnusedImportProvider());
         $builder->addDiagnosticProvider(new DocblockMissingParamProvider());
+        $builder->addDiagnosticProvider(new DocblockMissingExtendsTagProvider());
 
         foreach ((array)glob($this->workspace()->path('/*.php')) as $file) {
             if ($file === false) {
