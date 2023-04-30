@@ -83,7 +83,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals(
-                    'Missing generic docblock for class "Foobar": @extends NeedGeneric<mixed>',
+                    'Missing generic tag `@extends NeedGeneric<mixed>`',
                     $diagnostics->at(0)->message()
                 );
             }
@@ -168,7 +168,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals(
-                    'Generic tag `@extends <missing>` should be compatible with `@extends NeedGeneric<int>`',
+                    'Missing generic tag `@extends NeedGeneric<int>`',
                     $diagnostics->at(0)->message()
                 );
             }
@@ -196,7 +196,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals(
-                    'Generic tag `@extends <missing>` should be compatible with `@extends NeedGeneric<int>`',
+                    'Missing generic tag `@extends NeedGeneric<int>`',
                     $diagnostics->at(0)->message()
                 );
             }
@@ -294,8 +294,8 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             return;
         }
 
-        $extends = $class->docblock()->extends();
-        $extends = array_filter($extends, fn (Type $type) => $type->instanceof($parentClass->type()));
+        $extendTagTypes = $class->docblock()->extends();
+        $extendTagTypes = array_filter($extendTagTypes, fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue());
         $defaultGenericType = new GenericClassType(
             $reflector,
             $parentClass->name(),
@@ -305,7 +305,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             )
         );
 
-        if (0 === count($extends)) {
+        if (0 === count($extendTagTypes)) {
             yield new MissingDocblockClassGenericDiagnostic(
                 $range,
                 $class->name(),
@@ -315,7 +315,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             return;
         }
 
-        $extendTagType = $extends[0];
+        $extendTagType = $extendTagTypes[0];
         if (!$extendTagType instanceof GenericClassType) {
             yield new IncorrectDocblockClassGenericDiagnostic(
                 $range,

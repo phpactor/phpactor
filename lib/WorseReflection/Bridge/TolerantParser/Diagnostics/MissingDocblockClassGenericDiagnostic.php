@@ -37,8 +37,7 @@ class MissingDocblockClassGenericDiagnostic implements Diagnostic
     public function message(): string
     {
         return sprintf(
-            'Missing generic docblock for class "%s": @extends %s',
-            $this->className->short(),
+            'Missing generic tag `@extends %s`',
             $this->missingGenericType->__toString()
         );
     }
