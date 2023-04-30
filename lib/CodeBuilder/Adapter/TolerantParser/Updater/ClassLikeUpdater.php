@@ -8,12 +8,17 @@ use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Token;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;
 use Phpactor\CodeBuilder\Domain\Prototype\ClassLikePrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use InvalidArgumentException;
+use Phpactor\TextDocument\TextEdit;
 
 abstract class ClassLikeUpdater
 {
@@ -102,5 +107,20 @@ abstract class ClassLikeUpdater
         }
 
         return $insert;
+    }
+
+    /**
+     * @param ClassDeclaration|TraitDeclaration|EnumDeclaration|InterfaceDeclaration $classLikeDeclaration 
+     */
+    protected  function updateDocblock(Edits $edits, ClassLikePrototype $classPrototype, $classLikeDeclaration): void
+    {
+        if (!$classPrototype->docblock()->notNone()) {
+            return;
+        }
+        $edits->add(TextEdit::create(
+            $classLikeDeclaration->getFullStartPosition(),
+            strlen($classLikeDeclaration->getLeadingCommentAndWhitespaceText()),
+            $classPrototype->docblock()->__toString()
+        ));
     }
 }

@@ -12,11 +12,12 @@ abstract class ClassLikeBuilder extends AbstractBuilder implements Builder
      */
     protected array $methods = [];
 
-    private Docblock $docblock;
+    protected Docblock $docblock;
 
 
     public function __construct(private SourceCodeBuilder $parent, protected string $name)
     {
+        $this->docblock = Docblock::none();
     }
 
     public static function childNames(): array
