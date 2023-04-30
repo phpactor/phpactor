@@ -244,7 +244,7 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
             $reflector,
             $parentClass->name(),
             array_map(
-                fn (Type $type) => !$type instanceof MissingType ?: new MixedType(),
+                fn (Type $type) => $type instanceof MissingType ? new MixedType() : $type,
                 $templateMap->toArguments(),
             )
         );
@@ -261,6 +261,11 @@ class MissingDocblockClassGenericProvider implements DiagnosticProvider
 
         $extendTagType = $extends[0];
         if (!$extendTagType instanceof GenericClassType) {
+            yield new IncorrectDocblockClassGenericDiagnostic(
+                $range,
+                $extendTagType,
+                $defaultGenericType
+            );
             return;
         }
 
