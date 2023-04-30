@@ -65,9 +65,20 @@ class ReflectedClassType extends ClassType
             return Trinary::true();
         }
 
+        if ($type instanceof UnionType) {
+            foreach ($type->types as $uType) {
+                if (!$this->accepts($uType)->isTrue()) {
+                    return Trinary::false();
+                }
+            }
+            return Trinary::true();
+        }
+
         if (!$type instanceof ClassType) {
             return Trinary::false();
         }
+
+
 
         $reflectedThis = $this->reflectionOrNull();
 

@@ -25,4 +25,21 @@ class GenericClassTypeTest extends TestCase
             TypeFactory::int(),
         ]), $type->allTypes());
     }
+
+    public function testAcceptsUnion(): void
+    {
+        $reflector = ReflectorBuilder::create()->addSource('<?php class A{} class B extends A{} class C extends A{}')->build();
+        $type1 = new GenericClassType($reflector, ClassName::fromString('Foo'), [
+            TypeFactory::reflectedClass($reflector, ClassName::fromString('A'))
+        ]);
+
+        $type2 = new GenericClassType($reflector, ClassName::fromString('Foo'), [
+            TypeFactory::union(
+                TypeFactory::reflectedClass($reflector, ClassName::fromString('B')),
+                TypeFactory::reflectedClass($reflector, ClassName::fromString('C'))
+            )
+        ]);
+
+        self::assertTrue($type1->accepts($type2)->isTrue());
+    }
 }
