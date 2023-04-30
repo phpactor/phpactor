@@ -9,7 +9,6 @@ use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\TagPrototype;
 use Phpactor\DocblockParser\Ast\Docblock;
-use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
@@ -60,7 +59,7 @@ class ParserDocblockUpdater implements DocBlockUpdater
             return $this->updateTag(
                 $docblock,
                 $prototype,
-                sprintf('@extends %s', $prototype->type->__toString()),
+                sprintf('@extends %s', $prototype->type->short()),
                 0
             );
         }

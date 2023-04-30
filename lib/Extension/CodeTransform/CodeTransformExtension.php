@@ -40,6 +40,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockExtendsTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockParamsTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockReturnTransformer;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateReturnTypeTransformer;
@@ -517,6 +518,14 @@ class CodeTransformExtension implements Extension
                 $container->get(DocBlockUpdater::class)
             );
         }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_params' ]]);
+        $container->register(UpdateDocblockExtendsTransformer::class, function (Container $container) {
+            return new UpdateDocblockExtendsTransformer(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                $container->get(Updater::class),
+                $container->get(BuilderFactory::class),
+                $container->get(DocBlockUpdater::class)
+            );
+        }, [ 'code_transform.transformer' => [ 'name' => 'add_missing_extends' ]]);
 
         $container->register(UpdateReturnTypeTransformer::class, function (Container $container) {
             return new UpdateReturnTypeTransformer(

@@ -110,9 +110,9 @@ abstract class ClassLikeUpdater
     }
 
     /**
-     * @param ClassDeclaration|TraitDeclaration|EnumDeclaration|InterfaceDeclaration $classLikeDeclaration 
+     * @param ClassDeclaration|TraitDeclaration|EnumDeclaration|InterfaceDeclaration $classLikeDeclaration
      */
-    protected  function updateDocblock(Edits $edits, ClassLikePrototype $classPrototype, $classLikeDeclaration): void
+    protected function updateDocblock(Edits $edits, ClassLikePrototype $classPrototype, $classLikeDeclaration): void
     {
         if (!$classPrototype->docblock()->notNone()) {
             return;

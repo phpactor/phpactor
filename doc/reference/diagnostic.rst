@@ -637,7 +637,7 @@ Report if a variable is undefined and suggest variables with similar names.
 
 =======
         
-``docblock_missing_extends_Tag``
+``docblock_missing_extends_tag``
 --------------------------------
 
 Report when a class extends a generic class but does not provide an @extends tag.
