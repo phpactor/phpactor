@@ -304,7 +304,7 @@ class DocblockMissingClassGenericProvider implements DiagnosticProvider
         );
 
         if (0 === count($extendTagTypes)) {
-            yield new MissingDocblockClassGenericDiagnostic(
+            yield new DocblockMissingClassGenericDiagnostic(
                 $range,
                 $class->name(),
                 $defaultGenericType

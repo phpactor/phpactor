@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
-class MissingDocblockClassGenericDiagnostic implements Diagnostic
+class DocblockMissingClassGenericDiagnostic implements Diagnostic
 {
 
     public function __construct(
