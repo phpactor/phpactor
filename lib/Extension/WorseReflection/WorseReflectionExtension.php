@@ -13,7 +13,7 @@ use Phpactor\Extension\WorseReflection\Documentor\DiagnosticDocumentor;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingClassGenericProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingExtendsTagProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
@@ -213,8 +213,8 @@ class WorseReflectionExtension implements Extension
         $container->register(UndefinedVariableProvider::class, function (Container $container) {
             return new UndefinedVariableProvider($container->parameter(self::PARAM_UNDEFINED_VAR_LEVENSHTEIN)->int());
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
-        $container->register(DocblockMissingClassGenericProvider::class, function (Container $container) {
-            return new DocblockMissingClassGenericProvider();
+        $container->register(DocblockMissingExtendsTagProvider::class, function (Container $container) {
+            return new DocblockMissingExtendsTagProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
 
         $container->register(DiagnosticDocumentor::class, function (Container $container) {

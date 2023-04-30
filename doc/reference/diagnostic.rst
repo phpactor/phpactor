@@ -50,11 +50,19 @@ Report if trying to call a class method which does not exist.
         Diagnostic(s):
 
         - ``ERROR``: ``Method "bar" does not exist on class "Foobar"``
+<<<<<<< HEAD
 
 ``missing_phpdoc_return``
 -------------------------
 
 Report when a method has a return type should be augmented by a phpdoc.
+=======
+        
+``docblock_missing_return``
+---------------------------
+
+Report when a method has a return type should beaugmented by a docblock tag
+>>>>>>> 263f32f35 (Update doc)
 
 .. tabs::
 
@@ -74,11 +82,19 @@ Report when a method has a return type should be augmented by a phpdoc.
         Diagnostic(s):
 
         - ``WARN``: ``Method "foo" is missing docblock return type: string``
+<<<<<<< HEAD
 
 ``missing_phpdoc_param``
 ------------------------
 
 Report when a method has a parameter with a type that should be augmented by a phpdoc.
+=======
+        
+``docblock_missing_param``
+--------------------------
+
+Report when a method has a parameter with a type that should beaugmented by a docblock tag.
+>>>>>>> 263f32f35 (Update doc)
 
 .. tabs::
 
@@ -617,4 +633,159 @@ Report if a variable is undefined and suggest variables with similar names.
             }
 
             return $list;
+<<<<<<< HEAD
 
+=======
+        
+``docblock_missing_extends_Tag``
+--------------------------------
+
+Report when a class extends a generic class but does not provide an @extends tag.
+
+.. tabs::
+
+    .. tab:: extends class requiring generic annotation
+        
+        .. code-block:: php
+        
+            <?php
+            
+            /**
+             * @template T
+             */
+            class NeedGeneric
+            {
+            }
+            
+            class Foobar extends NeedGeneric
+            {
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Missing generic tag `@extends NeedGeneric<mixed>```
+        
+    .. tab:: does not provide enough arguments
+        
+        .. code-block:: php
+        
+            <?php
+            
+            /**
+             * @template T
+             * @template P
+             */
+            class NeedGeneric
+            {
+            }
+            
+            /**
+             * @extends NeedGeneric<int>
+             */
+            class Foobar extends NeedGeneric
+            {
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Generic tag `@extends NeedGeneric<int>` should be compatible with `@extends NeedGeneric<mixed,mixed>```
+        
+    .. tab:: does not provide any arguments
+        
+        .. code-block:: php
+        
+            <?php
+            
+            /**
+             * @template T of int
+             */
+            class NeedGeneric
+            {
+            }
+            
+            /**
+             * @extends NeedGeneric
+             */
+            class Foobar extends NeedGeneric
+            {
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Generic tag `@extends NeedGeneric` should be compatible with `@extends NeedGeneric<int>```
+        
+    .. tab:: provides empty arguments
+        
+        .. code-block:: php
+        
+            <?php
+            
+            /**
+             * @template T of int
+             */
+            class NeedGeneric
+            {
+            }
+            
+            /**
+             * @extends NeedGeneric<>
+             */
+            class Foobar extends NeedGeneric
+            {
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Missing generic tag `@extends NeedGeneric<int>```
+        
+    .. tab:: wrong class
+        
+        .. code-block:: php
+        
+            <?php
+            
+            /**
+             * @template T of int
+             */
+            class NeedGeneric
+            {
+            }
+            
+            /**
+             * @extends NeedGeneic<int>
+             */
+            class Foobar extends NeedGeneric
+            {
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Missing generic tag `@extends NeedGeneric<int>```
+        
+    .. tab:: does not provide multiple arguments
+        
+        .. code-block:: php
+        
+            <?php
+            
+            /**
+             * @template T
+             * @template P
+             * @template Q
+             */
+            class NeedGeneric
+            {
+            }
+            
+            /**
+             * @extends NeedGeneric<int>
+             */
+            class Foobar extends NeedGeneric
+            {
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Generic tag `@extends NeedGeneric<int>` should be compatible with `@extends NeedGeneric<mixed,mixed,mixed>```
+        
+>>>>>>> 263f32f35 (Update doc)

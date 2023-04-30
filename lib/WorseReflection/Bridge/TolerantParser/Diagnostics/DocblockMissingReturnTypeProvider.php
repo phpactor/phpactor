@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
  * Report when a method has a return type should be
- * augmented by a phpdoc.
+ * augmented by a docblock tag
  */
 class DocblockMissingReturnTypeProvider implements DiagnosticProvider
 {
@@ -152,6 +152,6 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
 
     public function name(): string
     {
-        return 'missing_phpdoc_return';
+        return 'docblock_missing_return';
     }
 }

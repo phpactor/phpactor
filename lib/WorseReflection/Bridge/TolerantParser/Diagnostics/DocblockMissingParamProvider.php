@@ -24,7 +24,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
  * Report when a method has a parameter with a type that should be
- * augmented by a phpdoc.
+ * augmented by a docblock tag.
  */
 class DocblockMissingParamProvider implements DiagnosticProvider
 {
@@ -220,7 +220,7 @@ class DocblockMissingParamProvider implements DiagnosticProvider
 
     public function name(): string
     {
-        return 'missing_phpdoc_param';
+        return 'docblock_missing_param';
     }
 
     private function upcastType(Type $type, NodeContextResolver $resolver): Type

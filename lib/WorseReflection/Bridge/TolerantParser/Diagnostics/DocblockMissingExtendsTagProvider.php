@@ -22,10 +22,9 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 
 /**
- * Report when a class or interface depends on an class or interface that
- * requires generic annotations.
+ * Report when a class extends a generic class but does not provide an @extends tag.
  */
-class DocblockMissingClassGenericProvider implements DiagnosticProvider
+class DocblockMissingExtendsTagProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
@@ -275,7 +274,7 @@ class DocblockMissingClassGenericProvider implements DiagnosticProvider
 
     public function name(): string
     {
-        return 'missing_class_generic_tag';
+        return 'docblock_missing_extends_Tag';
     }
     /**
      * @return Generator<Diagnostic>
