@@ -3,7 +3,6 @@
 namespace Phpactor\Extension\WorseReflection;
 
 use Microsoft\PhpParser\Parser;
-use Phpactor\DocblockParser\Parser as PhpactorParser;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
