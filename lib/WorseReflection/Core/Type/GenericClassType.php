@@ -69,7 +69,7 @@ class GenericClassType extends ReflectedClassType implements IterableType, Class
         $typeArguments = $type->arguments;
 
         // horrible hack for "special" types which have > 1 "constructors"
-        if ($type->name()->__toString() === 'Generator' || in_array($type->name()->__toString(), IterableTypeResolver::iterableClasses())) {
+        if (in_array($type->name()->__toString(), IterableTypeResolver::iterableClasses())) {
             array_unshift($typeArguments, TypeFactory::arrayKey());
         }
 
