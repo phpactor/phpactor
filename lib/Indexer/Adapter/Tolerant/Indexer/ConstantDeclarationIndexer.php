@@ -81,20 +81,25 @@ class ConstantDeclarationIndexer implements TolerantIndexer
             return;
         }
 
+        // In this case we only care about the name of the constant which is the first argument
         foreach ($node->argumentExpressionList->getChildNodes() as $expression) {
             if (!$expression instanceof ArgumentExpression) {
                 return;
             }
-            $string = $expression->expression;
-            if (!$string instanceof StringLiteral) {
-                return;
-            }
 
-            $record = $index->get(ConstantRecord::fromName($string->getStringContentsText()));
-            assert($record instanceof ConstantRecord);
-            $record->setStart(ByteOffset::fromInt($node->getStartPosition()));
-            $record->setFilePath($document->uri()->path());
-            $index->write($record);
+            $firstArgument = $expression;
+            break;
         }
+
+        $string = $expression->expression;
+        if (!$string instanceof StringLiteral) {
+            return;
+        }
+
+        $record = $index->get(ConstantRecord::fromName($string->getStringContentsText()));
+        assert($record instanceof ConstantRecord);
+        $record->setStart(ByteOffset::fromInt($node->getStartPosition()));
+        $record->setFilePath($document->uri()->path());
+        $index->write($record);
     }
 }
