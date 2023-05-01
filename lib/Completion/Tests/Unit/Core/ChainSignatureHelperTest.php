@@ -30,7 +30,7 @@ class ChainSignatureHelperTest extends TestCase
     private ByteOffset $offset;
 
     /**
-     * @var ObjectProphecy<SignatureHelper>
+     * @var ObjectProphecy<SignatureHelp>
      */
     private ObjectProphecy $help;
 
