@@ -14,7 +14,7 @@ class ExtendsTagPrototype implements TagPrototype
 
     public function matches(TagNode $tag): bool
     {
-        return $tag instanceof ExtendsTag && $tag->toString() === $this->type->__toString();
+        return $tag instanceof ExtendsTag;
     }
 
     public function endOffsetFor(TagNode $tag): int

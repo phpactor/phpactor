@@ -293,7 +293,7 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
         }
 
         $extendTagTypes = $class->docblock()->extends();
-        $extendTagTypes = array_filter($extendTagTypes, fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue());
+        $extendTagTypes = array_filter($extendTagTypes, fn (Type $extendTagType) => $parentClass->type()->upcastToGeneric()->accepts($extendTagType)->isTrue());
         $defaultGenericType = new GenericClassType(
             $reflector,
             $parentClass->name(),

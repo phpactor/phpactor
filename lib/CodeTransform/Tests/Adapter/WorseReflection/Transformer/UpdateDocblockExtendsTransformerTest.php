@@ -24,6 +24,10 @@ class UpdateDocblockExtendsTransformerTest extends WorseTestCase
             'Example1.php',
             '<?php /** @template T */class Generic{ }'
         );
+        $this->workspace()->put(
+            'Example2.php',
+            '<?php /** @template T of object */class NeedsObject{ }'
+        );
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
         $transformed = wait($transformer->transform($source))->apply($source);
@@ -72,6 +76,92 @@ class UpdateDocblockExtendsTransformerTest extends WorseTestCase
                  * @extends Generic<mixed>
                  */
                 class Foobar extends Generic {
+                }
+                EOT
+        ];
+        yield 'ignores valid extends' => [
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @extends Generic<mixed>
+                 */
+                class Foobar extends Generic {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @extends Generic<mixed>
+                 */
+                class Foobar extends Generic {
+                }
+                EOT
+        ];
+        yield 'adds extends' => [
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @author Daniel
+                 * @extends ThisIsWrong<mixed>
+                 */
+                class Foobar extends Generic {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @author Daniel
+                 * @extends Generic<mixed>
+                 */
+                class Foobar extends Generic {
+                }
+                EOT
+        ];
+        yield 'ignores compatible object' => [
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @extends NeedsObject<Foobar>
+                 */
+                class Foobar extends NeedsObject {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @extends NeedsObject<Foobar>
+                 */
+                class Foobar extends NeedsObject {
+                }
+                EOT
+        ];
+        yield 'fixes incompatible object' => [
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @extends NeedsObject<string>
+                 */
+                class Foobar extends NeedsObject {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @extends NeedsObject<string>
+                 */
+                class Foobar extends NeedsObject {
                 }
                 EOT
         ];

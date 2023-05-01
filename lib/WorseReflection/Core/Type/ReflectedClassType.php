@@ -78,8 +78,6 @@ class ReflectedClassType extends ClassType
             return Trinary::false();
         }
 
-
-
         $reflectedThis = $this->reflectionOrNull();
 
         if (null === $reflectedThis) {

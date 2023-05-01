@@ -14,11 +14,19 @@ use Phpactor\WorseReflection\Core\Types;
 class GenericClassType extends ReflectedClassType implements IterableType, ClassLikeType
 {
     /**
+     * @var Type[]
+     */
+    protected array $arguments;
+
+    /**
      * @param Type[] $arguments
      */
-    public function __construct(ClassReflector $reflector, ClassName $name, public array $arguments)
+    public function __construct(ClassReflector $reflector, ClassName $name, array $arguments)
     {
         parent::__construct($reflector, $name);
+        $this->reflector = $reflector;
+        $this->name = $name;
+        $this->arguments = array_values($arguments);
     }
 
     public function __toString(): string
