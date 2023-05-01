@@ -14,6 +14,15 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class IterableTypeResolver
 {
+    public static function iterableClasses(): array
+    {
+        return [
+            'IteratorAggregate',
+            'Iterator',
+            'Traversable',
+            'iterable',
+        ];
+    }
     /**
      * @param Type[] $arguments
      */
@@ -35,12 +44,7 @@ class IterableTypeResolver
             }
         }
 
-        $iterableClasses = [
-            'IteratorAggregate',
-            'Iterator',
-            'Traversable',
-            'iterable',
-        ];
+        $iterableClasses = self::iterableClasses();
 
         if (in_array($type->name()->__toString(), $iterableClasses)) {
             return self::valueTypeFromArgs($arguments);

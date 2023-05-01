@@ -70,7 +70,7 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
     public function examples(): iterable
     {
         yield new DiagnosticExample(
-            title: 'extends class requiring generic annotation',
+            title: 'implements class requiring generic annotation',
             source: <<<'PHP'
                 <?php
 
@@ -171,13 +171,9 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
                 {
                 }
                 PHP,
-            valid: false,
+            valid: true,
             assertion: function (Diagnostics $diagnostics): void {
-                Assert::assertCount(1, $diagnostics);
-                Assert::assertEquals(
-                    'Missing generic tag `@implements NeedGeneric2<mixed>`',
-                    $diagnostics->at(0)->message()
-                );
+                Assert::assertCount(0, $diagnostics);
             }
         );
     }
