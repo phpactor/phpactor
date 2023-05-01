@@ -51,7 +51,8 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
         }
 
         if ($class instanceof ReflectionClass) {
-            foreach ($node->classInterfaceClause?->interfaceNameList->getChildNodes() ?? [] as $implementedInterface) {
+            /** @phpstan-ignore-next-line TP Lies */
+            foreach ($node->classInterfaceClause?->interfaceNameList?->getChildNodes() ?? [] as $implementedInterface) {
                 $implementedInterface = $resolver->reflector()->reflectClassLike($implementedInterface->getText());
                 if (!$implementedInterface instanceof ReflectionInterface) {
                     continue;
