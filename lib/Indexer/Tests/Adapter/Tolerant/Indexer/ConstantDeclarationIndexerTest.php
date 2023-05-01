@@ -17,6 +17,8 @@ class ConstantDeclarationIndexerTest extends TolerantIndexerTestCase
 
     /**
      * @dataProvider provideDeclaration
+     *
+     * @param Closure(IndexAgent):void $assertion
      */
     public function testDeclaration(string $manifest, Closure $assertion): void
     {
@@ -34,7 +36,7 @@ class ConstantDeclarationIndexerTest extends TolerantIndexerTestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<array{string, Closure(IndexAgent):void}>
      */
     public function provideDeclaration(): Generator
     {
