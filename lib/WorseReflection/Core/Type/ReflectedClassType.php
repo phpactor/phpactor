@@ -114,7 +114,7 @@ class ReflectedClassType extends ClassType
     {
         try {
             return $this->reflector->reflectClassLike($this->name());
-        } catch (NotFound) {
+        } catch (NotFound $e) {
         }
         return null;
     }

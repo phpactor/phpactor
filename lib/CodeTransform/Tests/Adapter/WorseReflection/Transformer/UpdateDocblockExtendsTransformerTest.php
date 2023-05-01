@@ -159,7 +159,7 @@ class UpdateDocblockExtendsTransformerTest extends WorseTestCase
                 <?php
 
                 /**
-                 * @extends NeedsObject<string>
+                 * @extends NeedsObject<object>
                  */
                 class Foobar extends NeedsObject {
                 }

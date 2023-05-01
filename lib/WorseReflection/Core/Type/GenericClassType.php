@@ -59,6 +59,10 @@ class GenericClassType extends ReflectedClassType implements IterableType, Class
     public function accepts(Type $type): Trinary
     {
         if (!$type instanceof GenericClassType) {
+            return parent::accepts($type);
+        }
+
+        if (!parent::accepts($type)->isTrue()) {
             return Trinary::false();
         }
 
@@ -70,7 +74,6 @@ class GenericClassType extends ReflectedClassType implements IterableType, Class
                 return Trinary::false();
             }
         }
-
 
         return Trinary::true();
     }

@@ -28,7 +28,7 @@ class GenericClassTypeTest extends TestCase
 
     public function testAcceptsUnion(): void
     {
-        $reflector = ReflectorBuilder::create()->addSource('<?php class A{} class B extends A{} class C extends A{}')->build();
+        $reflector = ReflectorBuilder::create()->addSource('<?php class Foo{} class A{} class B extends A{} class C extends A{}')->build();
         $type1 = new GenericClassType($reflector, ClassName::fromString('Foo'), [
             TypeFactory::reflectedClass($reflector, ClassName::fromString('A'))
         ]);
