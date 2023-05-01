@@ -144,7 +144,7 @@ class UpdateDocblockExtendsTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
-        yield 'fixes incompatible object' => [
+        yield 'does not fix incompatible object' => [
             <<<'EOT'
                 <?php
 
@@ -159,7 +159,7 @@ class UpdateDocblockExtendsTransformerTest extends WorseTestCase
                 <?php
 
                 /**
-                 * @extends NeedsObject<object>
+                 * @extends NeedsObject<string>
                  */
                 class Foobar extends NeedsObject {
                 }
