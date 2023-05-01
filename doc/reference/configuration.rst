@@ -874,7 +874,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
