@@ -22,14 +22,14 @@ class ChainDefinitionLocationProviderTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ObjectProphecy|DefinitionLocator
+     * @var ObjectProphecy<DefinitionLocator>
      */
-    private $locator1;
+    private ObjectProphecy $locator1;
 
     /**
-     * @var ObjectProphecy|DefinitionLocator
+     * @var ObjectProphecy<DefinitionLocator>
      */
-    private $locator2;
+    private ObjectProphecy $locator2;
 
     private TextDocument $document;
 

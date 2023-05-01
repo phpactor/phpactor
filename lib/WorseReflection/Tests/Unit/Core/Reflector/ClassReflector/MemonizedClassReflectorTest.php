@@ -18,9 +18,9 @@ class MemonizedClassReflectorTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ClassReflector|ObjectProphecy
+     * @var ObjectProphecy<ClassReflector>
      */
-    private $innerClassReflector;
+    private ObjectProphecy $innerClassReflector;
 
     /**
      * @var MemonizedClassReflector
@@ -28,9 +28,9 @@ class MemonizedClassReflectorTest extends TestCase
     private MemonizedReflector $reflector;
 
     /**
-     * @var ObjectProphecy|FunctionReflector
+     * @var ObjectProphecy<FunctionReflector>
      */
-    private $innerFunctionReflector;
+    private ObjectProphecy $innerFunctionReflector;
 
     private ClassName $className;
 

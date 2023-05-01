@@ -15,9 +15,9 @@ use Phpactor\Extension\Core\Rpc\StatusHandler;
 class StatusHandlerTest extends HandlerTestCase
 {
     /**
-     * @var Status|ObjectProphecy
+     * @var ObjectProphecy<Status>
      */
-    private $status;
+    private ObjectProphecy $status;
 
     private ObjectProphecy $paths;
 

@@ -41,6 +41,9 @@ class TokenExpandingFilterTest extends TestCase
         $this->assertEquals('/start/baz/fab/end', $path);
     }
 
+    /**
+     * @param Expander[] $expanders
+     */
     private function create(array $expanders = []): TokenExpandingFilter
     {
         return new TokenExpandingFilter(new Expanders($expanders));

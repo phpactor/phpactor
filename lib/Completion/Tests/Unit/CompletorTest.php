@@ -17,9 +17,9 @@ class CompletorTest extends TestCase
     const EXAMPLE_OFFSET = 1234;
 
     /**
-     * @var ObjectProphecy|Completor
+     * @var ObjectProphecy<Completor>
      */
-    private $completor1;
+    private ObjectProphecy $completor1;
 
     protected function setUp(): void
     {
