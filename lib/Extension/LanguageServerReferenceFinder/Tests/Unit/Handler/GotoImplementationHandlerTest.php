@@ -22,9 +22,9 @@ class GotoImplementationHandlerTest extends TestCase
     const EXAMPLE_TEXT = 'hello';
 
     /**
-     * @var ObjectProphecy|ClassImplementationFinder
+     * @var ObjectProphecy<ClassImplementationFinder>
      */
-    private $finder;
+    private ObjectProphecy $finder;
 
     protected function setUp(): void
     {

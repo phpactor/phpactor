@@ -18,17 +18,17 @@ class HomogeneousReflectionMemberCollectionTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ObjectProphecy|ReflectionMember
+     * @var ObjectProphecy<ReflectionMember>
      */
-    private $member1;
+    private ObjectProphecy $member1;
 
     /**
-     * @var ObjectProphecy|ReflectionMember
+     * @var ObjectProphecy<ReflectionMember>
      */
-    private $member2;
+    private ObjectProphecy $member2;
 
     /**
-     * @var ObjectProphecy|ReflectionMember
+     * @var ObjectProphecy<ReflectionMember>
      */
     private ObjectProphecy $member3;
 

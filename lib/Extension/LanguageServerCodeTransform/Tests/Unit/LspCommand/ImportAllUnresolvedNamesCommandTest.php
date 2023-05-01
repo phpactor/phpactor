@@ -25,8 +25,14 @@ class ImportAllUnresolvedNamesCommandTest extends TestCase
     const EXAMPLE_URI = 'file:///foobar';
     const EXAMPLE_CANDIDATE = 'Foobar';
 
+    /**
+     * @var ObjectProphecy<CandidateFinder> $candidateFinder
+     */
     private ObjectProphecy $candidateFinder;
 
+    /**
+     * @var ObjectProphecy<ImportNameCommand> $importName
+     */
     private ObjectProphecy $importName;
 
     public function setUp(): void

@@ -20,14 +20,14 @@ class ChainReferenceFinderTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ObjectProphecy|ClassReferenceFinder
+     * @var ObjectProphecy<ClassReferenceFinder>
      */
-    private $locator1;
+    private ObjectProphecy $locator1;
 
     /**
-     * @var ObjectProphecy|ClassReferenceFinder
+     * @var ObjectProphecy<ClassReferenceFinder>
      */
-    private $locator2;
+    private ObjectProphecy $locator2;
 
     private TextDocument $document;
 
