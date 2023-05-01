@@ -17,3 +17,8 @@ Emacs Interface
 ---------------
 
 Github: `phpactor.el <https://github.com/emacs-php/phpactor.el>`_
+
+Visual Studio Code
+------------------
+
+Github: `vscode-phpactor <https://github.com/phpactor/vscode-phpactor>`_

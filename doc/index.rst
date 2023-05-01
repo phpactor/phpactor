@@ -15,7 +15,7 @@ it's own RPC protocol and as a :ref:`language_server`:
    references, hover.
 -  :ref:`refactoring`: Move classes, complete constructors, implement
    contracts, generate methods, etc.
--  :ref:`language_server`:: Language Server Protocol implementation.
+-  :ref:`language_server`: Language Server Protocol implementation.
 -  :ref:`vim_plugin`: Lightweight VIM plugin.
 
 

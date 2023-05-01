@@ -24,7 +24,7 @@ Basic Types
     ==============   ==================  =========  ========
     Name             Example             PHP        Phpactor
     ==============   ==================  =========  ========
-    Array            ``array``           ``*``      ✔ 
+    Array            ``array``           ``*``      ✔
     Boolean          ``bool``            ``*``      ✔
     Float            ``float``           ``*``      ✔
     Int              ``int``             ``*``      ✔
@@ -33,7 +33,7 @@ Basic Types
     Self             ``self``            ``*``      ✔
     Parent           ``parent``          ``*``      ✔
     Callable         ``callable``        ``*``      ✔
-    Iterable         ``iterable``        ``7.1``    ✔ 
+    Iterable         ``iterable``        ``7.1``    ✔
     Nullable         ``?Foor``           ``7.1``    ✔
     Object           ``object``          ``7.2``    ✔
     Union            ``Foo|Bar``         ``8.0``    ✔
@@ -63,23 +63,24 @@ Docblock Types
 .. table::
     :align: left
 
-    ===============  ==============================  ========  
-    Name             Example                         Phpactor  
-    ===============  ==============================  ========  
-    Array Key        ``array-key``                   ✔          
+    ===============  ==============================  ========
+    Name             Example                         Phpactor
+    ===============  ==============================  ========
+    Array Key        ``array-key``                   ✔
     Array Literal    ``array{string,int}``           ✔
     Array Shape      ``array{foo:string,baz:int}``   ✔
+    List Syntax      ``string[]``                    ✔
     Class String     ``class-string<T>``             ✔
     Closure          ``Closure(string, int): void``  ✔
-    Float Literal    ``1234.12``                     ✔ 
-    Generics         ``Foobar<Barfoo>``              ✔ 
-    Int Literal      ``1234``                        ✔ 
-    Int Range        ``int<0,max>``                  ✔ 
-    Int Positive     ``positive-int``                ✔ 
-    Int Negative     ``negative-int``                ✔ 
-    List             ``list<string>``                ✔ 
-    Parenthesized    ``(Foo&Bar)|object``            ✔ 
-    String Literal   ``"hello"``                     ✔ 
+    Float Literal    ``1234.12``                     ✔
+    Generics         ``Foobar<Barfoo>``              ✔
+    Int Literal      ``1234``                        ✔
+    Int Range        ``int<0,max>``                  ✔
+    Int Positive     ``positive-int``                ✔
+    Int Negative     ``negative-int``                ✔
+    List             ``list<string>``                ✔
+    Parenthesized    ``(Foo&Bar)|object``            ✔
+    String Literal   ``"hello"``                     ✔
     This             ``$this`` (same as ``static``)  ✔
     ===============  ==============================  ========
 
@@ -89,15 +90,15 @@ Integer Types
 .. table::
     :align: left
 
-    ==============  =============  =========  =========== 
+    ==============  =============  =========  ===========
     Example         PHP            Supported  Description
-    ==============  =============  =========  =========== 
-    ``123``         ``*``          ✔          Integer     
-    ``0b0110``      ``*``          ✔          Binary type 
-    ``0x1a``        ``*``          ✔          Hexidecimal 
-    ``0123``        ``*``          ✔          Octal       
-    ``123_123``     ``7.4``        ✔          Decimal       
-    ``0o123``       ``8.1``        ✘          Octal       
+    ==============  =============  =========  ===========
+    ``123``         ``*``          ✔          Integer
+    ``0b0110``      ``*``          ✔          Binary type
+    ``0x1a``        ``*``          ✔          Hexidecimal
+    ``0123``        ``*``          ✔          Octal
+    ``123_123``     ``7.4``        ✔          Decimal
+    ``0o123``       ``8.1``        ✘          Octal
     ==============  =============  =========  ===========
 
 Conditional Types

@@ -1,7 +1,7 @@
 VIM / NeoVim
 ============
 
-.. _lsp_client_vim_coc:
+.. _lsp_client_vim:
 
 Client Guides
 -------------
@@ -56,31 +56,31 @@ Client Guides
         ::
 
            Plug 'neoclide/coc.nvim', {'branch': 'release'}
-           
+
         Once you have both installed there are two ways of integrating `phpactor` into `coc`:
 
         - **Installing the coc phpactor extension**:
-        
+
         Restart VIM and type ``:CocInstall coc-phpactor``.
 
         If Phpactor is already installed you can set ``phpactor.path`` in
         ``:CocConfig`` to point to the Phpactor binary.
-        
+
         At the root level:
-        
+
         ::
-       
+
            {
                "phpactor.enable": true,
                "phpactor.path": "/home/vivo/phpactor/bin/phpactor"
            }
-        
+
         - **Without phpactor extension**:
-        
+
         Restart VIM and type `:CocConfig`, you can set up phpactor as a language server for php files directly to `coc-settings.json`:
-        
+
         ::
-       
+
            "languageserver": {
                "phpactor": {
                    "command": "phpactor",

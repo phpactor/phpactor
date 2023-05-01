@@ -52,7 +52,7 @@ class DiagnosticDocumentor implements Documentor
         $docs = [];
         $docs[] = DocHelper::title('-', sprintf('``%s``', $provider->name()));
         $docs[] = '';
-        $docs[] = trim((string)preg_replace('{(^/\*\*)|(\s+\*\s)|(\s+\*/$)}m', '', trim((string)$reflection->getDocComment())));
+        $docs[] = trim((string)preg_replace('{(^/\*\*)|(\s+\*\s)|(\s+\*/$)}m', ' ', trim((string)$reflection->getDocComment())));
         $docs[] = '';
         $docs[] = '.. tabs::';
         $docs[] = '';
