@@ -15,6 +15,7 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
         private ByteOffsetRange $range,
         private ClassName $className,
         private GenericClassType $missingGenericType,
+        private string $tagName,
     ) {
     }
 
@@ -41,7 +42,8 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
     public function message(): string
     {
         return sprintf(
-            'Missing generic tag `@extends %s`',
+            'Missing generic tag `%s %s`',
+            $this->tagName,
             $this->missingGenericType->short()
         );
     }

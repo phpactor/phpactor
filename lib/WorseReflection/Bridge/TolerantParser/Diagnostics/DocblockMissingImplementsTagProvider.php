@@ -50,7 +50,9 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
         }
 
         if ($class instanceof ReflectionClass) {
-            yield from $this->helper->diagnosticsForExtends($resolver->reflector(), $range, $class, $class->parent());
+            foreach ($class->interfaces() as $implementedInterface) {
+                yield from $this->helper->diagnosticsForImplements($resolver->reflector(), $range, $class, $implementedInterface);
+            }
         }
     }
 
@@ -100,7 +102,7 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
                 }
 
                 /**
-                 * @extends NeedGeneric<int>
+                 * @implements NeedGeneric<int>
                  */
                 class Foobar implements NeedGeneric
                 {
@@ -115,10 +117,46 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
                 );
             }
         );
+        yield new DiagnosticExample(
+            title: '',
+            source: <<<'PHP'
+                <?php
+
+                /**
+                 * @template T
+                 */
+                interface NeedGeneric1
+                {
+                }
+
+                /**
+                 * @template T
+                 */
+                interface NeedGeneric2
+                {
+                }
+
+
+                /**
+                 * @implements NeedGeneric1<int>
+                 */
+                class Foobar implements NeedGeneric1, NeedGeneric2
+                {
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals(
+                    'Missing generic tag `@implements NeedGeneric2<mixed>`',
+                    $diagnostics->at(0)->message()
+                );
+            }
+        );
     }
 
     public function name(): string
     {
-        return 'docblock_missing_extends_tag';
+        return 'docblock_missing_implements_tag';
     }
 }

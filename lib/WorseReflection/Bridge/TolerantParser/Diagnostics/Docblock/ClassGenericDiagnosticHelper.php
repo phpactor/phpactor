@@ -6,14 +6,15 @@ use Generator;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockIncorrectClassGenericDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingClassGenericDiagnostic;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Diagnostic;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\WorseReflection\Reflector;
 
 final class ClassGenericDiagnosticHelper
 {
@@ -27,7 +28,16 @@ final class ClassGenericDiagnosticHelper
         ?ReflectionClassLike $parentClass
     ): Generator {
         if ($class instanceof ReflectionClass) {
-            yield from $this->fromReflectionClass($reflector, $range, $class, $parentClass, $class->docblock()->extends());
+            yield from $this->fromReflectionClass($reflector, $range, $class, $parentClass, $class->docblock()->extends(), '@extends');
+        }
+    }
+    /**
+     * @return Generator<Diagnostic>
+     */
+    public function diagnosticsForImplements(Reflector $reflector, ByteOffsetRange $range, ReflectionClassLike $class, ?ReflectionClassLike $genericClass): Generator
+    {
+        if ($class instanceof ReflectionClass) {
+            yield from $this->fromReflectionClass($reflector, $range, $class, $genericClass, $class->docblock()->implements(), '@implements');
         }
     }
 
@@ -40,7 +50,8 @@ final class ClassGenericDiagnosticHelper
         ByteOffsetRange $range,
         ReflectionClassLike $class,
         ?ReflectionClassLike $parentClass,
-        array $genericTypes
+        array $genericTypes,
+        string $tagName
     ): Generator {
         if (!$parentClass) {
             return;
@@ -66,7 +77,8 @@ final class ClassGenericDiagnosticHelper
             yield new DocblockMissingClassGenericDiagnostic(
                 $range,
                 $class->name(),
-                $defaultGenericType
+                $defaultGenericType,
+                $tagName
             );
             return;
         }
@@ -77,7 +89,8 @@ final class ClassGenericDiagnosticHelper
             yield new DocblockIncorrectClassGenericDiagnostic(
                 $range,
                 $extendTagType,
-                $defaultGenericType
+                $defaultGenericType,
+                $tagName
             );
             return;
         }
@@ -86,7 +99,8 @@ final class ClassGenericDiagnosticHelper
             yield new DocblockIncorrectClassGenericDiagnostic(
                 $range,
                 $extendTagType,
-                $defaultGenericType
+                $defaultGenericType,
+                $tagName
             );
             return;
         }
@@ -98,7 +112,8 @@ final class ClassGenericDiagnosticHelper
         yield new DocblockIncorrectClassGenericDiagnostic(
             $range,
             $extendTagType,
-            $defaultGenericType
+            $defaultGenericType,
+            $tagName
         );
     }
 }
