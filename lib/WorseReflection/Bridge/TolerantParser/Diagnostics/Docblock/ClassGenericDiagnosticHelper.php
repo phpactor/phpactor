@@ -14,22 +14,34 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 
-class ClassGenericDiagnosticHelper
+final class ClassGenericDiagnosticHelper
 {
     /**
      * @return Generator<Diagnostic>
      */
-    public function diagnostics(ReflectionClassLike $class): Generator
+    public function diagnosticsForExtends(
+        ClassReflector $reflector,
+        ByteOffsetRange $range,
+        ReflectionClass $class,
+        ?ReflectionClass $parentClass
+    ): Generator
     {
         if ($class instanceof ReflectionClass) {
-            yield from $this->fromReflectionClass($class);
+            yield from $this->fromReflectionClass($reflector, $range, $class, $parentClass, $class->docblock()->extends());
         }
     }
 
     /**
      * @return Generator<Diagnostic>
+     * @param Type[] $genericTypes
      */
-    private function fromReflectionClass(ClassReflector $reflector, ByteOffsetRange $range, ReflectionClass $class, ?ReflectionClass $parentClass): Generator
+    private function fromReflectionClass(
+        ClassReflector $reflector,
+        ByteOffsetRange $range,
+        ReflectionClassLike $class,
+        ?ReflectionClassLike $parentClass,
+        array $genericTypes
+    ): Generator
     {
         if (!$parentClass) {
             return;
@@ -41,8 +53,7 @@ class ClassGenericDiagnosticHelper
             return;
         }
 
-        $extendTagTypes = $class->docblock()->extends();
-        $extendTagTypes = array_filter($extendTagTypes, fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue());
+        $genericTypes = array_filter($genericTypes, fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue());
         $defaultGenericType = new GenericClassType(
             $reflector,
             $parentClass->name(),
@@ -52,7 +63,7 @@ class ClassGenericDiagnosticHelper
             )
         );
 
-        if (0 === count($extendTagTypes)) {
+        if (0 === count($genericTypes)) {
             yield new DocblockMissingClassGenericDiagnostic(
                 $range,
                 $class->name(),
@@ -62,7 +73,7 @@ class ClassGenericDiagnosticHelper
         }
 
 
-        $extendTagType = $extendTagTypes[0];
+        $extendTagType = $genericTypes[0];
         if ($parentClass->type()->upcastToGeneric()->accepts($extendTagType)->isFalse()) {
             yield new DocblockIncorrectClassGenericDiagnostic(
                 $range,

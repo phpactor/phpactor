@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use PHPUnit\Framework\Assert;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\Docblock\ClassGenericDiagnosticHelper;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
@@ -26,6 +27,10 @@ use Phpactor\WorseReflection\Core\Type\MixedType;
  */
 class DocblockMissingExtendsTagProvider implements DiagnosticProvider
 {
+    public function __construct(private ClassGenericDiagnosticHelper $helper)
+    {
+    }
+
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof ClassDeclaration) {
@@ -49,7 +54,7 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
         }
 
         if ($class instanceof ReflectionClass) {
-            yield from $this->fromReflectionClass($resolver->reflector(), $range, $class, $class->parent());
+            yield from $this->helper->diagnosticsForExtends($resolver->reflector(), $range, $class, $class->parent());
         }
     }
 
@@ -275,71 +280,5 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
     public function name(): string
     {
         return 'docblock_missing_extends_tag';
-    }
-
-    /**
-     * @return Generator<Diagnostic>
-     */
-    private function fromReflectionClass(ClassReflector $reflector, ByteOffsetRange $range, ReflectionClass $class, ?ReflectionClass $parentClass): Generator
-    {
-        if (!$parentClass) {
-            return;
-        }
-
-        $templateMap = $parentClass->templateMap();
-
-        if (!count($templateMap)) {
-            return;
-        }
-
-        $extendTagTypes = $class->docblock()->extends();
-        $extendTagTypes = array_filter($extendTagTypes, fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue());
-        $defaultGenericType = new GenericClassType(
-            $reflector,
-            $parentClass->name(),
-            array_map(
-                fn (Type $type) => $type instanceof MissingType ? new MixedType() : $type,
-                $templateMap->toArguments(),
-            )
-        );
-
-        if (0 === count($extendTagTypes)) {
-            yield new DocblockMissingClassGenericDiagnostic(
-                $range,
-                $class->name(),
-                $defaultGenericType
-            );
-            return;
-        }
-
-
-        $extendTagType = $extendTagTypes[0];
-        if (!$parentClass->type()->upcastToGeneric()->accepts($extendTagType)->isTrue()) {
-            yield new DocblockIncorrectClassGenericDiagnostic(
-                $range,
-                $extendTagType,
-                $defaultGenericType
-            );
-            return;
-        }
-
-        if (!$extendTagType instanceof GenericClassType) {
-            yield new DocblockIncorrectClassGenericDiagnostic(
-                $range,
-                $extendTagType,
-                $defaultGenericType
-            );
-            return;
-        }
-
-        if ($defaultGenericType->accepts($extendTagType)->isTrue()) {
-            return;
-        }
-
-        yield new DocblockIncorrectClassGenericDiagnostic(
-            $range,
-            $extendTagType,
-            $defaultGenericType
-        );
     }
 }
