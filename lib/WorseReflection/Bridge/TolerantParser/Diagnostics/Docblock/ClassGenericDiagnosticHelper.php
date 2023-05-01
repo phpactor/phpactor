@@ -84,7 +84,7 @@ final class ClassGenericDiagnosticHelper
         }
 
 
-        $extendTagType = $genericTypes[0];
+        $extendTagType = $genericTypes[array_key_first($genericTypes)];
         if ($parentClass->type()->upcastToGeneric()->accepts($extendTagType)->isFalse()) {
             yield new DocblockIncorrectClassGenericDiagnostic(
                 $range,
