@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use PHPUnit\Framework\Assert;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\Docblock\ClassGenericDiagnosticHelper;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
@@ -50,7 +51,11 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
         }
 
         if ($class instanceof ReflectionClass) {
-            foreach ($class->interfaces() as $implementedInterface) {
+            foreach ($node->classInterfaceClause?->interfaceNameList->getChildNodes() ?? [] as $implementedInterface) {
+                $implementedInterface = $resolver->reflector()->reflectClassLike($implementedInterface->getText());
+                if (!$implementedInterface instanceof ReflectionInterface) {
+                    continue;
+                }
                 yield from $this->helper->diagnosticsForImplements($resolver->reflector(), $range, $class, $implementedInterface);
             }
         }
