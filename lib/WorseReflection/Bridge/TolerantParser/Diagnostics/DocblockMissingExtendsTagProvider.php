@@ -2,13 +2,11 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
-use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use PHPUnit\Framework\Assert;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\Docblock\ClassGenericDiagnosticHelper;
-use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
@@ -16,19 +14,17 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
-use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\GenericClassType;
-use Phpactor\WorseReflection\Core\Type\MissingType;
-use Phpactor\WorseReflection\Core\Type\MixedType;
 
 /**
  * Report when a class extends a generic class but does not provide an @extends tag.
  */
 class DocblockMissingExtendsTagProvider implements DiagnosticProvider
 {
-    public function __construct(private ClassGenericDiagnosticHelper $helper)
+    private ClassGenericDiagnosticHelper $helper;
+
+    public function __construct(?ClassGenericDiagnosticHelper $helper = null)
     {
+        $this->helper = $helper ?: new ClassGenericDiagnosticHelper();
     }
 
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable

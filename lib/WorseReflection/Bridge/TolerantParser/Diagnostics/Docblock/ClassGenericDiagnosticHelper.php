@@ -7,6 +7,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockIncorrectClassGenericDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingClassGenericDiagnostic;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
@@ -22,10 +23,9 @@ final class ClassGenericDiagnosticHelper
     public function diagnosticsForExtends(
         ClassReflector $reflector,
         ByteOffsetRange $range,
-        ReflectionClass $class,
-        ?ReflectionClass $parentClass
-    ): Generator
-    {
+        ReflectionClassLike $class,
+        ?ReflectionClassLike $parentClass
+    ): Generator {
         if ($class instanceof ReflectionClass) {
             yield from $this->fromReflectionClass($reflector, $range, $class, $parentClass, $class->docblock()->extends());
         }
@@ -41,8 +41,7 @@ final class ClassGenericDiagnosticHelper
         ReflectionClassLike $class,
         ?ReflectionClassLike $parentClass,
         array $genericTypes
-    ): Generator
-    {
+    ): Generator {
         if (!$parentClass) {
             return;
         }
