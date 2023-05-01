@@ -118,7 +118,7 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: '',
+            title: 'provides one but not another',
             source: <<<'PHP'
                 <?php
 
@@ -141,6 +141,27 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
                  * @implements NeedGeneric1<int>
                  */
                 class Foobar implements NeedGeneric1, NeedGeneric2
+                {
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals(
+                    'Missing generic tag `@implements NeedGeneric2<mixed>`',
+                    $diagnostics->at(0)->message()
+                );
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'iterator',
+            source: <<<'PHP'
+                <?php
+
+                /**
+                 * @implements IteratorAggregate<string>
+                 */
+                class Foobar implements IteratorAggregate
                 {
                 }
                 PHP,
