@@ -53,6 +53,28 @@ class UpdateDocblockExtendsTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
+        yield 'updates missing extends' => [
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @author Daniel
+                 */
+                class Foobar extends Generic {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @author Daniel
+                 * @extends Generic<mixed>
+                 */
+                class Foobar extends Generic {
+                }
+                EOT
+        ];
     }
 
     private function createTransformer(Reflector $reflector): UpdateDocblockExtendsTransformer
