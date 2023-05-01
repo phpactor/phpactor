@@ -82,6 +82,7 @@ class ConstantDeclarationIndexer implements TolerantIndexer
         }
 
         // In this case we only care about the name of the constant which is the first argument
+        $firstArgument = null;
         foreach ($node->argumentExpressionList->getChildNodes() as $expression) {
             if (!$expression instanceof ArgumentExpression) {
                 return;
@@ -91,7 +92,7 @@ class ConstantDeclarationIndexer implements TolerantIndexer
             break;
         }
 
-        $string = $expression->expression;
+        $string = $firstArgument?->expression;
         if (!$string instanceof StringLiteral) {
             return;
         }
