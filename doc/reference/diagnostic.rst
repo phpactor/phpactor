@@ -776,7 +776,7 @@ Report when a class extends a generic class but does not provide an @extends tag
 
 .. tabs::
 
-    .. tab:: extends class requiring generic annotation
+    .. tab:: implements class requiring generic annotation
         
         .. code-block:: php
         
@@ -822,7 +822,7 @@ Report when a class extends a generic class but does not provide an @extends tag
         
         - ``WARN``: ``Generic tag `@implements NeedGeneric<int>` should be compatible with `@implements NeedGeneric<mixed,mixed>```
         
-    .. tab:: 
+    .. tab:: provides one but not another
         
         .. code-block:: php
         

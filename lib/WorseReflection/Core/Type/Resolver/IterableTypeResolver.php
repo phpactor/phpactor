@@ -14,6 +14,9 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 class IterableTypeResolver
 {
+    /**
+     * @return list<string>
+     */
     public static function iterableClasses(): array
     {
         return [
