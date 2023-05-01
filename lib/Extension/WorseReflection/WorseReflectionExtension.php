@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\WorseReflection;
 
 use Microsoft\PhpParser\Parser;
+use Phpactor\DocblockParser\Parser as PhpactorParser;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -14,6 +15,7 @@ use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvid
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingExtendsTagProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingImplementsTagProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\Docblock\ClassGenericDiagnosticHelper;
@@ -97,7 +99,7 @@ class WorseReflectionExtension implements Extension
     {
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
             $builder = ReflectorBuilder::create()
-                ->withSourceReflectorFactory(new TolerantFactory($container->get(self::SERVICE_PARSER)))
+                ->withSourceReflectorFactory(new TolerantFactory($container->expect(self::SERVICE_PARSER, Parser::class)))
                 ->cacheLifetime($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
 
             if ($container->parameter(self::PARAM_ENABLE_CONTEXT_LOCATION)->bool()) {
@@ -216,6 +218,9 @@ class WorseReflectionExtension implements Extension
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(DocblockMissingExtendsTagProvider::class, function (Container $container) {
             return new DocblockMissingExtendsTagProvider(new ClassGenericDiagnosticHelper());
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+        $container->register(DocblockMissingImplementsTagProvider::class, function (Container $container) {
+            return new DocblockMissingImplementsTagProvider(new ClassGenericDiagnosticHelper());
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
 
         $container->register(DiagnosticDocumentor::class, function (Container $container) {
