@@ -10,6 +10,7 @@ use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ExtendsTagPrototype;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ImplementsTagPrototype;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
@@ -48,12 +49,19 @@ class UpdateDocblockExtendsTransformer implements Transformer
                     $builder->use($classType->name()->__toString());
                 }
 
+
+                $tag = match($diagnostic->isExtends()) {
+                    true => new ExtendsTagPrototype(
+                        $diagnostic->missingGenericType(),
+                    ),
+                    false => new ImplementsTagPrototype(
+                        $diagnostic->missingGenericType(),
+                    ),
+                };
                 $classBuilder->docblock(
                     $this->docblockUpdater->set(
                         $classBuilder->getDocblock() ? $classBuilder->getDocblock()->__toString() : $class->docblock()->raw(),
-                        new ExtendsTagPrototype(
-                            $diagnostic->missingGenericType(),
-                        )
+                        $tag
                     )
                 );
             }

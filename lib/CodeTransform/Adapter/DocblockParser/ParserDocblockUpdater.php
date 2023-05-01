@@ -5,6 +5,7 @@ namespace Phpactor\CodeTransform\Adapter\DocblockParser;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ExtendsTagPrototype;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ImplementsTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\ReturnTagPrototype;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater\TagPrototype;
@@ -60,6 +61,15 @@ class ParserDocblockUpdater implements DocBlockUpdater
                 $docblock,
                 $prototype,
                 sprintf('@extends %s', $prototype->type->short()),
+                0
+            );
+        }
+
+        if ($prototype instanceof ImplementsTagPrototype) {
+            return $this->updateTag(
+                $docblock,
+                $prototype,
+                sprintf('@implements %s', $prototype->type->short()),
                 0
             );
         }

@@ -47,4 +47,9 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
             $this->missingGenericType->short()
         );
     }
+
+    public function isExtends(): bool
+    {
+        return $this->tagName === '@extends';
+    }
 }
