@@ -18,7 +18,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingCl
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
 
-class UpdateDocblockExtendsTransformer implements Transformer
+class UpdateDocblockGenericTransformer implements Transformer
 {
     public function __construct(
         private Reflector $reflector,

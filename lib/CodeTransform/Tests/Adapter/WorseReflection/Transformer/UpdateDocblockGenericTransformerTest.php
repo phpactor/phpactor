@@ -5,14 +5,14 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 use Generator;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockExtendsTransformer;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateDocblockGenericTransformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\Promise\wait;
 
-class UpdateDocblockExtendsTransformerTest extends WorseTestCase
+class UpdateDocblockGenericTransformerTest extends WorseTestCase
 {
     /**
      * @dataProvider provideTransform
@@ -167,9 +167,9 @@ class UpdateDocblockExtendsTransformerTest extends WorseTestCase
         ];
     }
 
-    private function createTransformer(Reflector $reflector): UpdateDocblockExtendsTransformer
+    private function createTransformer(Reflector $reflector): UpdateDocblockGenericTransformer
     {
-        return new UpdateDocblockExtendsTransformer(
+        return new UpdateDocblockGenericTransformer(
             $reflector,
             $this->updater(),
             $this->builderFactory($reflector),
