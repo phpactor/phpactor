@@ -13,8 +13,11 @@ use Phpactor\Extension\WorseReflection\Documentor\DiagnosticDocumentor;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingExtendsTagProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingImplementsTagProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingReturnTypeProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\Docblock\ClassGenericDiagnosticHelper;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UndefinedVariableProvider;
@@ -95,7 +98,7 @@ class WorseReflectionExtension implements Extension
     {
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
             $builder = ReflectorBuilder::create()
-                ->withSourceReflectorFactory(new TolerantFactory($container->get(self::SERVICE_PARSER)))
+                ->withSourceReflectorFactory(new TolerantFactory($container->expect(self::SERVICE_PARSER, Parser::class)))
                 ->cacheLifetime($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
 
             if ($container->parameter(self::PARAM_ENABLE_CONTEXT_LOCATION)->bool()) {
@@ -188,11 +191,11 @@ class WorseReflectionExtension implements Extension
         $container->register(MissingMethodProvider::class, function (Container $container) {
             return new MissingMethodProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
-        $container->register(MissingDocblockReturnTypeProvider::class, function (Container $container) {
-            return new MissingDocblockReturnTypeProvider();
+        $container->register(DocblockMissingReturnTypeProvider::class, function (Container $container) {
+            return new DocblockMissingReturnTypeProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
-        $container->register(MissingDocblockParamProvider::class, function (Container $container) {
-            return new MissingDocblockParamProvider();
+        $container->register(DocblockMissingParamProvider::class, function (Container $container) {
+            return new DocblockMissingParamProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(AssignmentToMissingPropertyProvider::class, function (Container $container) {
             return new AssignmentToMissingPropertyProvider();
@@ -211,6 +214,12 @@ class WorseReflectionExtension implements Extension
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(UndefinedVariableProvider::class, function (Container $container) {
             return new UndefinedVariableProvider($container->parameter(self::PARAM_UNDEFINED_VAR_LEVENSHTEIN)->int());
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+        $container->register(DocblockMissingExtendsTagProvider::class, function (Container $container) {
+            return new DocblockMissingExtendsTagProvider(new ClassGenericDiagnosticHelper());
+        }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
+        $container->register(DocblockMissingImplementsTagProvider::class, function (Container $container) {
+            return new DocblockMissingImplementsTagProvider(new ClassGenericDiagnosticHelper());
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
 
         $container->register(DiagnosticDocumentor::class, function (Container $container) {

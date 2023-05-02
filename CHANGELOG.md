@@ -5,6 +5,7 @@ Changelog
 
 Features:
 
+  - Diagnostics and code action for fixing missing `@implements` and `@extends` #2112
   - Diagnostic for undefined variables #2209
   - Code action to suggest fixes for undefined variables (in case of typos) #2209
   - PHPUnit: code action for adding `setUp` / `tearDown` #2180 @mamazu

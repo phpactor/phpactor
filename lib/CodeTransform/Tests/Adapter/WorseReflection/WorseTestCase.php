@@ -6,8 +6,9 @@ use Phpactor\CodeTransform\Tests\Adapter\AdapterTestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockParamProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingDocblockReturnTypeProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingExtendsTagProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
@@ -24,11 +25,12 @@ class WorseTestCase extends AdapterTestCase
         $builder = ReflectorBuilder::create();
         $builder->addMemberProvider(new DocblockMemberProvider());
         $builder->addDiagnosticProvider(new MissingMethodProvider());
-        $builder->addDiagnosticProvider(new MissingDocblockReturnTypeProvider());
+        $builder->addDiagnosticProvider(new DocblockMissingReturnTypeProvider());
         $builder->addDiagnosticProvider(new AssignmentToMissingPropertyProvider());
         $builder->addDiagnosticProvider(new MissingReturnTypeProvider());
         $builder->addDiagnosticProvider(new UnusedImportProvider());
-        $builder->addDiagnosticProvider(new MissingDocblockParamProvider());
+        $builder->addDiagnosticProvider(new DocblockMissingParamProvider());
+        $builder->addDiagnosticProvider(new DocblockMissingExtendsTagProvider());
 
         foreach ((array)glob($this->workspace()->path('/*.php')) as $file) {
             if ($file === false) {
