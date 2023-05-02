@@ -23,14 +23,14 @@ class ChainTypeLocatorTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ObjectProphecy|TypeLocator
+     * @var ObjectProphecy<TypeLocator>
      */
-    private $locator1;
+    private ObjectProphecy $locator1;
 
     /**
-     * @var ObjectProphecy|TypeLocator
+     * @var ObjectProphecy<TypeLocator>
      */
-    private $locator2;
+    private ObjectProphecy $locator2;
 
     private TextDocument $document;
 

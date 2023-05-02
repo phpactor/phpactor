@@ -21,6 +21,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LogLevel;
 use RuntimeException;
+use Phpactor\FilePathResolver\Expander;
 
 class FilePathResolverExtension implements Extension
 {
@@ -116,12 +117,14 @@ class FilePathResolverExtension implements Extension
                 new SuffixExpanderDecorator(new XdgDataExpander('data'), $suffix),
             ];
 
-            if (null !== $applicationRoot = $container->getParameter(self::PARAM_APPLICATION_ROOT)) {
-                $expanders[] = new ValueExpander('application_root', $container->getParameter(self::PARAM_APPLICATION_ROOT));
+            /** @var string|null $applicationRoot */
+            $applicationRoot = $container->getParameter(self::PARAM_APPLICATION_ROOT);
+            if (null !== $applicationRoot) {
+                $expanders[] = new ValueExpander('application_root', $applicationRoot);
             }
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_EXPANDER)) as $serviceId) {
-                $expanders[] = $container->get($serviceId);
+                $expanders[] = $container->expect($serviceId, Expander::class);
             }
 
             return new Expanders($expanders);

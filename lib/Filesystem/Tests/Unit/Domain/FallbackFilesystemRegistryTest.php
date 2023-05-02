@@ -20,7 +20,9 @@ class FallbackFilesystemRegistryTest extends TestCase
 
     private FallbackFilesystemRegistry $registry;
 
-    /** @var ObjectProphecy<Filesystem> */
+    /**
+     * @var ObjectProphecy<Filesystem>
+     */
     private ObjectProphecy|Filesystem $filesystem1;
 
     public function setUp(): void

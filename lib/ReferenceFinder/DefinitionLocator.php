@@ -9,8 +9,7 @@ use Phpactor\TextDocument\TextDocument;
 interface DefinitionLocator
 {
     /**
-     * Provide the DefinitionLocation (URI and byte offset) for the text under
-     * the cursor.
+     * Provide the Location (URI and byte offset) for the text under the cursor.
      *
      * If this locator cannot provide a definition it MUST throw a
      * CouldNotLocateDefinition exception.

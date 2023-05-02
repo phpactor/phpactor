@@ -27,5 +27,5 @@ In general it should be possible to enable it on any LSP compatible client.
 First perform a :ref:`installation_global` and then configure a generic
 language server in your client, typically using :ref:`lsp_running_stdio`. See
 :ref:`lsp_client_sublime` for an example.
- 
+
 .. _Language Server Protocol: https://microsoft.github.io/language-server-protocol/specification

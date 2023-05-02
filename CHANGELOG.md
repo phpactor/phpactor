@@ -11,6 +11,7 @@ Features:
 
 Bug fixes:
 
+  - Fix constant declaration indexing with `define` #2249 @mamazu
   - Fix use of class-string<Foo> variable as static scope resolution qualifier #2238
   - URL decode root URI - fixes issues with special chars in path #2228
   - Do not deduplicate suggestions of different types (e.g. prop/method with same name) #2214
