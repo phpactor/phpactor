@@ -13,8 +13,8 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\Util\LineAtOffset;
-use Phpactor\TextDocument\Util\LineColFromOffset;
 use RuntimeException;
 
 class GotoImplementationHandler extends AbstractHandler
@@ -91,7 +91,7 @@ class GotoImplementationHandler extends AbstractHandler
         foreach ($locations as $location) {
             assert($location instanceof Location);
             $contents = $this->fileContents($location);
-            $lineCol = (new LineColFromOffset())($contents, $location->offset()->toInt());
+            $lineCol = LineCol::fromByteOffset($contents, $location->offset());
             $line = (new LineAtOffset())->__invoke($contents, $location->offset()->toInt());
 
             $fileReferences = FileReferences::fromPathAndReferences(

@@ -79,14 +79,6 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         return (bool) $this->parameter->byRefToken;
     }
 
-    /**
-     * @deprecated use functionLike instead
-     */
-    public function method(): ReflectionFunctionLike
-    {
-        return $this->functionLike;
-    }
-
     public function functionLike(): ReflectionFunctionLike
     {
         return $this->functionLike;
