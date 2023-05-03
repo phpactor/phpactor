@@ -22,7 +22,7 @@ class DedupeCompletor implements Completor
             $key = $suggestion->name().$suggestion->type();
 
             if ($this->matchNameImport) {
-                $key .= $suggestion->nameImport();
+                $key .= $suggestion->fqn();
             }
 
             if (isset($seen[$key])) {
