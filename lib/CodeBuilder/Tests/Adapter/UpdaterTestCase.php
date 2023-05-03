@@ -717,6 +717,24 @@ abstract class UpdaterTestCase extends TestCase
                     }
                     EOT
             ];
+        yield 'It adds a documented class' => [
+                <<<'EOT'
+                    class Aardvark
+                    {
+                    }
+                    EOT
+                , SourceCodeBuilder::create()
+                    ->class('Aardvark')
+                        ->docblock("/** Hello */\n")
+                    ->end()
+                    ->build(),
+                <<<'EOT'
+                    /** Hello */
+                    class Aardvark
+                    {
+                    }
+                    EOT
+            ];
     }
 
     /**

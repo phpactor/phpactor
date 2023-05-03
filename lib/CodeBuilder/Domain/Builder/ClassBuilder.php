@@ -95,7 +95,8 @@ class ClassBuilder extends ClassLikeBuilder
             }, $this->methods)),
             $this->extends,
             ImplementsInterfaces::fromTypes($this->interfaces),
-            UpdatePolicy::fromModifiedState($this->isModified())
+            UpdatePolicy::fromModifiedState($this->isModified()),
+            $this->docblock
         );
     }
 }

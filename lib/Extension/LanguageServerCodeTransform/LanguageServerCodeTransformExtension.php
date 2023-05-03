@@ -299,6 +299,15 @@ class LanguageServerCodeTransformExtension implements Extension
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
+        $container->register(TransformerCodeActionPovider::class.'add_missing_class_generic', function (Container $container) {
+            return new TransformerCodeActionPovider(
+                $container->get('code_transform.transformers'),
+                'add_missing_class_generic',
+                'Add missing class generic tag(s)'
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
 
         $container->register(CreateClassProvider::class, function (Container $container) {
             return new CreateClassProvider(

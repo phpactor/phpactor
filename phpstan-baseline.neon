@@ -3882,7 +3882,7 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$transformers of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\CodeAction\\\\TransformerCodeActionPovider constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Transformers, mixed given\\.$#"
-			count: 9
+			count: 10
 			path: lib/Extension/LanguageServerCodeTransform/LanguageServerCodeTransformExtension.php
 
 		-
@@ -4716,11 +4716,6 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoDefinitionHandlerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\ReferenceFinder\\\\DefinitionLocation constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoDefinitionHandlerTest.php
-
-		-
 			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoImplementationHandlerTest.php
@@ -4736,13 +4731,8 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\ReferenceFinder\\\\DefinitionLocation constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 5
+			count: 4
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
 
 		-
@@ -6861,16 +6851,6 @@ parameters:
 			path: lib/Rename/Tests/Adapter/ReferenceFinder/ReferenceRenamerIntegrationTestCase.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\ReferenceFinder\\\\DefinitionLocation constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ReferenceFinder/VariableRenamerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ReferenceFinder/VariableRenamerTest.php
-
-		-
 			message: "#^Parameter \\#2 \\$documentUri of class Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdits constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
 			count: 1
 			path: lib/Rename/Tests/Adapter/ReferenceFinder/VariableRenamerTest.php
@@ -6971,16 +6951,6 @@ parameters:
 			path: lib/WorseReflection/Bridge/PsrLog/ArrayLogger.php
 
 		-
-			message: "#^Cannot call method getText\\(\\) on Microsoft\\\\PhpParser\\\\Token\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Diagnostics/MissingDocblockParamProvider.php
-
-		-
-			message: "#^Cannot call method getText\\(\\) on Microsoft\\\\PhpParser\\\\Token\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Diagnostics/MissingDocblockReturnTypeProvider.php
-
-		-
 			message: "#^Cannot access property \\$parent on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Diagnostics/UnusedImportProvider.php
@@ -7064,11 +7034,6 @@ parameters:
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionMethodCall\\:\\:\\$node is unused\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethodCall.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\ResolvedName will always evaluate to false\\.$#"
-			count: 1
-			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionProperty.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\TraitImport\\\\TraitImport\\:\\:__construct\\(\\) has parameter \\$traitAliases with no value type specified in iterable type array\\.$#"
@@ -7512,11 +7477,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method getChildNodes\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Cannot call method getNamespacedName\\(\\) on Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\ClassDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\InterfaceDeclaration\\|Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\TraitDeclaration\\|null\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Util/NodeUtil.php
 

@@ -5,9 +5,8 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
-use Phpactor\WorseReflection\Core\Type;
 
-class MissingDocblockParamDiagnostic implements Diagnostic
+class DocblockMissingReturnTypeDiagnostic implements Diagnostic
 {
     public function __construct(
         private ByteOffsetRange $range,
@@ -15,8 +14,7 @@ class MissingDocblockParamDiagnostic implements Diagnostic
         private DiagnosticSeverity $severity,
         private string $classType,
         private string $methodName,
-        private string $paramName,
-        private Type $paramType,
+        private string $actualReturnType
     ) {
     }
 
@@ -45,13 +43,8 @@ class MissingDocblockParamDiagnostic implements Diagnostic
         return $this->methodName;
     }
 
-    public function paramName(): string
+    public function actualReturnType(): string
     {
-        return $this->paramName;
-    }
-
-    public function paramType(): Type
-    {
-        return $this->paramType;
+        return $this->actualReturnType;
     }
 }

@@ -9,15 +9,16 @@ use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
-use Phpactor\CodeTransform\Domain\DocBlockUpdater\ParamTagPrototype;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ExtendsTagPrototype;
+use Phpactor\CodeTransform\Domain\DocBlockUpdater\ImplementsTagPrototype;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\TextDocument\TextEdits;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingClassGenericDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
 
-class UpdateDocblockParamsTransformer implements Transformer
+class UpdateDocblockGenericTransformer implements Transformer
 {
     public function __construct(
         private Reflector $reflector,
@@ -33,29 +34,34 @@ class UpdateDocblockParamsTransformer implements Transformer
     public function transform(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $diagnostics = yield $this->methodsThatNeedFixing($code);
+            $diagnostics = yield $this->wrDiagnostics($code);
             $builder = $this->builderFactory->fromSource($code);
 
             $class = null;
             $docblocks = [];
             foreach ($diagnostics as $diagnostic) {
-                $class = $this->reflector->reflectClassLike($diagnostic->classType());
-                $method = $class->methods()->get($diagnostic->methodName());
+                /** @var DocblockMissingClassGenericDiagnostic $diagnostic */
+                $class = $this->reflector->reflectClassLike($diagnostic->className());
 
-                $classBuilder = $builder->classLike($method->class()->name()->short());
-                $methodBuilder = $classBuilder->method($method->name());
+                $classBuilder = $builder->classLike($class->name()->short());
 
-                foreach ($diagnostic->paramType()->allTypes()->classLike() as $classType) {
+                foreach ($diagnostic->missingGenericType()->allTypes()->classLike() as $classType) {
                     $builder->use($classType->name()->__toString());
                 }
 
-                $methodBuilder->docblock(
+
+                $tag = match($diagnostic->isExtends()) {
+                    true => new ExtendsTagPrototype(
+                        $diagnostic->missingGenericType(),
+                    ),
+                    false => new ImplementsTagPrototype(
+                        $diagnostic->missingGenericType(),
+                    ),
+                };
+                $classBuilder->docblock(
                     $this->docblockUpdater->set(
-                        $methodBuilder->getDocblock() ? $methodBuilder->getDocblock()->__toString() : $method->docblock()->raw(),
-                        new ParamTagPrototype(
-                            $diagnostic->paramName(),
-                            $diagnostic->paramType()->toLocalType($method->scope())
-                        )
+                        $classBuilder->getDocblock() ? $classBuilder->getDocblock()->__toString() : $class->docblock()->raw(),
+                        $tag
                     )
                 );
             }
@@ -72,15 +78,12 @@ class UpdateDocblockParamsTransformer implements Transformer
         return call(function () use ($code) {
             $diagnostics = [];
 
-            $missings = yield $this->methodsThatNeedFixing($code);
+            $missings = yield $this->wrDiagnostics($code);
 
             foreach ($missings as $missing) {
                 $diagnostics[] = new Diagnostic(
                     $missing->range(),
-                    sprintf(
-                        'Missing @param %s',
-                        $missing->paramName(),
-                    ),
+                    $missing->message(),
                     Diagnostic::WARNING
                 );
             }
@@ -91,19 +94,12 @@ class UpdateDocblockParamsTransformer implements Transformer
     }
 
     /**
-     * @return Promise<DocblockMissingParamDiagnostic[]>
+     * @return Promise<DocblockMissingClassGenericDiagnostic[]>
      */
-    private function methodsThatNeedFixing(SourceCode $code): Promise
+    private function wrDiagnostics(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $missings = [];
-            $diagnostics = (yield $this->reflector->diagnostics($code))->byClass(DocblockMissingParamDiagnostic::class);
-
-            foreach ($diagnostics as $diagnostic) {
-                $missings[] = $diagnostic;
-            }
-
-            return $missings;
+            return (yield $this->reflector->diagnostics($code))->byClass(DocblockMissingClassGenericDiagnostic::class);
         });
     }
 }

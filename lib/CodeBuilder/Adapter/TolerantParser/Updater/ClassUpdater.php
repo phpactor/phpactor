@@ -21,6 +21,7 @@ class ClassUpdater extends ClassLikeUpdater
             return;
         }
 
+        $this->updateDocblock($edits, $classPrototype, $classNode);
         $this->updateExtends($edits, $classPrototype, $classNode);
         $this->updateImplements($edits, $classPrototype, $classNode);
         $this->updateConstants($edits, $classPrototype, $classNode->classMembers);

@@ -17,13 +17,17 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
  * Report when a method has a return type should be
- * augmented by a phpdoc.
+ * augmented by a docblock tag
  */
-class MissingDocblockReturnTypeProvider implements DiagnosticProvider
+class DocblockMissingReturnTypeProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof MethodDeclaration) {
+            return;
+        }
+
+        if (!$node->name) {
             return;
         }
 
@@ -77,7 +81,7 @@ class MissingDocblockReturnTypeProvider implements DiagnosticProvider
         }
 
         if ($actualReturnType->isClosure()) {
-            yield new MissingDocblockReturnTypeDiagnostic(
+            yield new DocblockMissingReturnTypeDiagnostic(
                 $method->nameRange(),
                 sprintf(
                     'Method "%s" is missing docblock return type: %s',
@@ -106,7 +110,7 @@ class MissingDocblockReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        yield new MissingDocblockReturnTypeDiagnostic(
+        yield new DocblockMissingReturnTypeDiagnostic(
             $method->nameRange(),
             sprintf(
                 'Method "%s" is missing docblock return type: %s',
@@ -148,6 +152,6 @@ class MissingDocblockReturnTypeProvider implements DiagnosticProvider
 
     public function name(): string
     {
-        return 'missing_phpdoc_return';
+        return 'docblock_missing_return';
     }
 }

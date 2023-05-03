@@ -39,7 +39,7 @@ class DiagnosticsTest extends TestCase
     public function provideDiagnostics(): Generator
     {
         $container = PhpactorContainer::fromExtensions([
-            WorseReflectionExtension::class
+            WorseReflectionExtension::class,
         ]);
         foreach ($container->getServiceIdsForTag(WorseReflectionExtension::TAG_DIAGNOSTIC_PROVIDER) as $serviceId => $_) {
             /** @var class-string<DiagnosticProvider> $serviceId */

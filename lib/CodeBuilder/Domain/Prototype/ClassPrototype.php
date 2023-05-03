@@ -15,9 +15,10 @@ final class ClassPrototype extends ClassLikePrototype
         Methods $methods = null,
         ExtendsClass $extendsClass = null,
         ImplementsInterfaces $implementsInterfaces = null,
-        UpdatePolicy $updatePolicy = null
+        UpdatePolicy $updatePolicy = null,
+        Docblock $docblock = null
     ) {
-        parent::__construct($name, $methods, $properties, $constants, $updatePolicy);
+        parent::__construct($name, $methods, $properties, $constants, $updatePolicy, $docblock);
         $this->extendsClass = $extendsClass ?: ExtendsClass::none();
         $this->implementsInterfaces = $implementsInterfaces ?: ImplementsInterfaces::empty();
     }
