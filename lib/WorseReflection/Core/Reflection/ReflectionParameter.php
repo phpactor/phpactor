@@ -12,11 +12,6 @@ interface ReflectionParameter extends ReflectionNode
 
     public function name(): string;
 
-    /**
-     * @deprecated Use funtionLike()
-     */
-    public function method(): ReflectionFunctionLike;
-
     public function functionLike(): ReflectionFunctionLike;
 
     public function type(): Type;

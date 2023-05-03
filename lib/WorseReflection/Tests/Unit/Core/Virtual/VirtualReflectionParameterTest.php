@@ -70,7 +70,6 @@ class VirtualReflectionParameterTest extends TestCase
         $parameter = $this->parameter();
         $this->assertEquals($this->name, $parameter->name());
         $this->assertEquals($this->method->reveal(), $parameter->functionLike());
-        $this->assertEquals($this->method->reveal(), $parameter->method());
         $this->assertEquals($this->type, $parameter->inferredType());
         $this->assertEquals($this->type, $parameter->type());
         $this->assertEquals($this->defaults, $parameter->default());
