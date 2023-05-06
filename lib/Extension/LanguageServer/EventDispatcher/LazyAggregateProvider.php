@@ -10,6 +10,7 @@ use RuntimeException;
 class LazyAggregateProvider implements ListenerProviderInterface
 {
     private ?ListenerProviderAggregate $aggregateProvider = null;
+
     /**
      * @param list<string> $serviceIds
      */
@@ -25,6 +26,7 @@ class LazyAggregateProvider implements ListenerProviderInterface
         if (null === $this->aggregateProvider) {
             $this->aggregateProvider = new ListenerProviderAggregate();
             foreach ($this->serviceIds as $serviceId) {
+                /** @var object|null $listenerProvider */
                 $listenerProvider = $this->container->get($serviceId);
 
                 // if null assume that it was conditionally disabled

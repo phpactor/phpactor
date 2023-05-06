@@ -7,6 +7,9 @@ use IteratorAggregate;
 use Phpactor\FilePathResolver\Exception\UnknownToken;
 use Traversable;
 
+/**
+ * @implements IteratorAggregate<string, Expander>
+ */
 class Expanders implements IteratorAggregate
 {
     /**
@@ -24,6 +27,9 @@ class Expanders implements IteratorAggregate
         }
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function toArray(): array
     {
         $array = [];
@@ -34,7 +40,7 @@ class Expanders implements IteratorAggregate
         return $array;
     }
 
-    public function get(string $tokenName)
+    public function get(string $tokenName): Expander
     {
         if (!isset($this->expanders[$tokenName])) {
             throw new UnknownToken($tokenName, array_keys($this->expanders));

@@ -1056,72 +1056,12 @@ parameters:
 			path: lib/Completion/Tests/Unit/Bridge/WorseReflection/Formatter/FunctionLikeSnippetFormatterTest.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\Completion\\\\Core\\\\SignatureHelp\\:\\:willReturn\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Call to an undefined method Phpactor\\\\Completion\\\\Core\\\\SignatureHelp\\:\\:willThrow\\(\\)\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Call to method debug\\(\\) on an unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Call to method reveal\\(\\) on an unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\.$#"
-			count: 5
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Call to method signatureHelp\\(\\) on an unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\.$#"
-			count: 2
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Cannot call method shouldBeCalled\\(\\) on void\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:create\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:create\\(\\) has parameter \\$helpers with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$help \\(Phpactor\\\\Completion\\\\Core\\\\SignatureHelper\\|Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Core\\\\SignatureHelp\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$help has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$helper1 \\(Phpactor\\\\Completion\\\\Core\\\\SignatureHelper\\|Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Core\\\\SignatureHelper\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$helper1 has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy as its type\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$logger \\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy\\|Psr\\\\Log\\\\LoggerInterface\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Psr\\\\Log\\\\LoggerInterface\\>\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:\\$logger has unknown class Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ObjectProphecy as its type\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
 
@@ -3686,16 +3626,6 @@ parameters:
 			path: lib/Extension/Debug/DebugExtension.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Debug\\\\Model\\\\DocumentorRegistry\\:\\:get\\(\\) should return Phpactor\\\\Extension\\\\Debug\\\\Model\\\\Documentor but returns mixed\\.$#"
-			count: 1
-			path: lib/Extension/Debug/Model/DocumentorRegistry.php
-
-		-
-			message: "#^Parameter \\#1 \\$expanders of class Phpactor\\\\FilePathResolver\\\\Filter\\\\TokenExpandingFilter constructor expects Phpactor\\\\FilePathResolver\\\\Expanders, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/FilePathResolver/FilePathResolverExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$filters of class Phpactor\\\\FilePathResolver\\\\FilteringPathResolver constructor expects array\\<Phpactor\\\\FilePathResolver\\\\Filter\\>, array\\<int\\<0, max\\>, mixed\\> given\\.$#"
 			count: 1
 			path: lib/Extension/FilePathResolver/FilePathResolverExtension.php
@@ -3703,45 +3633,10 @@ parameters:
 		-
 			message: "#^Parameter \\#1 \\$projectRoot of static method Phpactor\\\\Extension\\\\FilePathResolver\\\\FilePathResolverExtension\\:\\:calculateProjectId\\(\\) expects string, mixed given\\.$#"
 			count: 1
-			path: lib/Extension/FilePathResolver/FilePathResolverExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$value of class Phpactor\\\\FilePathResolver\\\\Expander\\\\ValueExpander constructor expects string, mixed given\\.$#"
-			count: 2
-			path: lib/Extension/FilePathResolver/FilePathResolverExtension.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\FilePathResolver\\\\Tests\\\\Unit\\\\FilePathResolverExtensionTest\\:\\:createResolver\\(\\) should return Phpactor\\\\FilePathResolver\\\\PathResolver but returns mixed\\.$#"
-			count: 1
 			path: lib/Extension/FilePathResolver/Tests/Unit/FilePathResolverExtensionTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$projectRoot of static method Phpactor\\\\Extension\\\\FilePathResolver\\\\FilePathResolverExtension\\:\\:calculateProjectId\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/FilePathResolver/Tests/Unit/FilePathResolverExtensionTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$object of function get_class expects object, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/EventDispatcher/LazyAggregateProvider.php
-
-		-
-			message: "#^Cannot call method toArray\\(\\) on mixed\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServer/Handler/DebugHandler.php
 
 		-
 			message: "#^Parameter \\#1 \\$commandMap of class Phpactor\\\\LanguageServer\\\\Core\\\\Command\\\\CommandDispatcher constructor expects array\\<string, Phpactor\\\\LanguageServer\\\\Core\\\\Command\\\\Command\\>, array\\<string, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\LanguageServer\\\\Handler\\\\TextDocument\\\\FormattingHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\LanguageServer\\\\Listener\\\\WorkspaceListener constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
@@ -3757,16 +3652,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$formatter of class Phpactor\\\\LanguageServer\\\\Handler\\\\TextDocument\\\\FormattingHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Formatting\\\\Formatter, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServer\\\\Handler\\\\DebugHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#4 \\$workspace of class Phpactor\\\\LanguageServer\\\\Service\\\\DiagnosticsService constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
@@ -4152,26 +4037,6 @@ parameters:
 
 		-
 			message: "#^Offset 'message' does not exist on array\\<string, mixed\\>\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ImportAllUnresolvedNamesCommandTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$candidateFinder of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ImportAllUnresolvedNamesCommand constructor expects Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Model\\\\NameImport\\\\CandidateFinder, object given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ImportAllUnresolvedNamesCommandTest.php
-
-		-
-			message: "#^Parameter \\#3 \\$importName of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ImportAllUnresolvedNamesCommand constructor expects Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ImportNameCommand, object given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ImportAllUnresolvedNamesCommandTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\ImportAllUnresolvedNamesCommandTest\\:\\:\\$candidateFinder with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ImportAllUnresolvedNamesCommandTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\ImportAllUnresolvedNamesCommandTest\\:\\:\\$importName with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy does not specify its types\\: T$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ImportAllUnresolvedNamesCommandTest.php
 
@@ -6046,11 +5911,6 @@ parameters:
 			path: lib/Extension/WorseReflection/WorseReflectionExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$parser of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflector\\\\TolerantFactory constructor expects Microsoft\\\\PhpParser\\\\Parser\\|null, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflection/WorseReflectionExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$provider of method Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:addDiagnosticProvider\\(\\) expects Phpactor\\\\WorseReflection\\\\Core\\\\DiagnosticProvider, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflection/WorseReflectionExtension.php
@@ -6194,31 +6054,6 @@ parameters:
 			message: "#^Method Phpactor\\\\FilePathResolver\\\\Exception\\\\UnknownToken\\:\\:__construct\\(\\) has parameter \\$knownTokens with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/FilePathResolver/Exception/UnknownToken.php
-
-		-
-			message: "#^Class Phpactor\\\\FilePathResolver\\\\Expanders implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: lib/FilePathResolver/Expanders.php
-
-		-
-			message: "#^Method Phpactor\\\\FilePathResolver\\\\Expanders\\:\\:__construct\\(\\) has parameter \\$expanders with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Expanders.php
-
-		-
-			message: "#^Method Phpactor\\\\FilePathResolver\\\\Expanders\\:\\:get\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Expanders.php
-
-		-
-			message: "#^Method Phpactor\\\\FilePathResolver\\\\Expanders\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Expanders.php
-
-		-
-			message: "#^Method Phpactor\\\\FilePathResolver\\\\Tests\\\\Unit\\\\Filter\\\\TokenExpandingFilterTest\\:\\:create\\(\\) has parameter \\$expanders with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/FilePathResolver/Tests/Unit/Filter/TokenExpandingFilterTest.php
 
 		-
 			message: "#^Cannot call method isDir\\(\\) on mixed\\.$#"
