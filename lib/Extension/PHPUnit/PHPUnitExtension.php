@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\PHPUnit\CodeTransform\TestGenerator;
 use Phpactor\Extension\PHPUnit\FrameWalker\AssertInstanceOfWalker;
 use Phpactor\Extension\PHPUnit\LspCommand\GenerateTestMethodCommand;
+use Phpactor\Extension\PHPUnit\MemberContextResolver\AssertMemberContextResolver;
 use Phpactor\Extension\PHPUnit\Provider\GenerateTestMethodProvider;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -27,6 +28,10 @@ class PHPUnitExtension implements OptionalExtension
         $this->registerServices($container);
         $this->registerWorseReflection($container);
         $this->registerCodeTransform($container);
+
+        $container->register(AssertMemberContextResolver::class, function (Container $container) {
+            return new AssertMemberContextResolver();
+        }, [WorseReflectionExtension::TAG_MEMBER_TYPE_RESOLVER => []]);
     }
 
 

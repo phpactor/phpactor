@@ -21,8 +21,8 @@ class AssertMemberContextResolverTest extends IntegrationTestCase
                 class SomeTest extends PHPUnit\Framework\Assert {
                     public function test(): void {
                         $obj = '';
-                        $this->assertInstanceOf('SomeClass', $obj);
                         wrAssertType('SomeClass', $obj);
+                        $this->assertInstanceOf('SomeClass', $obj);
                     }
                 }
                 EOT
@@ -33,10 +33,10 @@ class AssertMemberContextResolverTest extends IntegrationTestCase
     {
         $sourceCode = TextDocumentBuilder::fromUnknown($sourceCode);
         $reflector = ReflectorBuilder::create()
-                ->addFrameWalker(new TestAssertWalker($this))
-                ->addMemberContextResolver(new AssertMemberContextResolver())
-        ->build();
+            ->addFrameWalker(new TestAssertWalker($this))
+            ->addMemberContextResolver(new AssertMemberContextResolver())
+            ->build();
 
-        $reflector->reflectOffset($sourceCode, mb_strlen((string) $sourceCode));
+        $reflector->reflectOffset($sourceCode, 10);
     }
 }

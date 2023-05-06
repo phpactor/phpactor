@@ -13,8 +13,12 @@ use Phpactor\WorseReflection\Core\Type\StringLiteralType;
 
 class AssertMemberContextResolver implements MemberContextResolver
 {
-    public function resolveMemberContext(Reflector $reflector, ReflectionMember $member, Type $type, ?FunctionArguments $arguments): ?Type
-    {
+    public function resolveMemberContext(
+        Reflector $reflector,
+        ReflectionMember $member,
+        Type $type,
+        ?FunctionArguments $arguments
+    ): ?Type {
         dd('I am here!');
         if ($member->memberType() !== ReflectionMember::TYPE_METHOD) {
             return null;
