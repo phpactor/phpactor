@@ -231,11 +231,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/ClassBuilder.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ConstantBuilder\\:\\:__construct\\(\\) has parameter \\$value with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ConstantBuilder.php
-
-		-
 			message: "#^Parameter \\#2 \\$value of class Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Constant constructor expects Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Value, mixed given\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/ConstantBuilder.php
@@ -249,16 +244,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\TraitBuilder\\:\\:constant\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/TraitBuilder.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype\\:\\:extendsClass\\(\\) should return Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsClass but returns Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ExtendsClass\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ClassPrototype.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ClassPrototype\\:\\:implementsInterfaces\\(\\) should return Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces but returns Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces\\|null\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Prototype/ClassPrototype.php
 
 		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
@@ -4401,74 +4386,9 @@ parameters:
 			path: lib/Extension/LanguageServerPhpstan/Model/DiagnosticsParser.php
 
 		-
-			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerPhpstan\\\\Model\\\\PhpstanProcess\\:\\:\\$phpstanBin is unused\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpstan/Model/PhpstanProcess.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerPhpstan\\\\Tests\\\\Model\\\\DiagnosticsParserTest\\:\\:provideParse\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpstan/Tests/Model/DiagnosticsParserTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerPhpstan\\\\Tests\\\\Model\\\\PhpstanProcessTest\\:\\:testLint\\(\\) has parameter \\$expectedDiagnostics with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpstan/Tests/Model/PhpstanProcessTest.php
-
-		-
 			message: "#^PHPDoc tag @return with type Generator\\<mixed, mixed, mixed, mixed\\> is incompatible with native type void\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerPhpstan/Tests/Provider/PhpstanDiagnosticProviderTest.php
-
-		-
-			message: "#^Cannot access offset 'column_from' on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Cannot access offset 'column_to' on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Cannot access offset 'file_path' on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Cannot access offset 'line_from' on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Cannot access offset 'line_to' on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Cannot access offset 'message' on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerPsalm\\\\Model\\\\DiagnosticsParser\\:\\:decodeJson\\(\\) should return array but returns mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerPsalm\\\\Model\\\\DiagnosticsParser\\:\\:errorLevel\\(\\) has parameter \\$psalmDiagnostic with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Parameter \\#1 \\$psalmDiagnostic of method Phpactor\\\\Extension\\\\LanguageServerPsalm\\\\Model\\\\DiagnosticsParser\\:\\:errorLevel\\(\\) expects array, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Model/DiagnosticsParser.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerPsalm\\\\Tests\\\\Model\\\\DiagnosticsParserTest\\:\\:provideParse\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPsalm/Tests/Model/DiagnosticsParserTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\GotoImplementationHandler\\:\\:gotoImplementation\\(\\) return type with generic interface Amp\\\\Promise does not specify its types\\: TValue$#"

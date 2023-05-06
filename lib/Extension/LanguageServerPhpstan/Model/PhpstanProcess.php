@@ -12,8 +12,6 @@ class PhpstanProcess
 {
     private DiagnosticsParser $parser;
 
-    private string $phpstanBin;
-
     public function __construct(
         private string $cwd,
         private PhpstanConfig $config,

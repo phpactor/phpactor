@@ -15,6 +15,8 @@ use Phpactor\Extension\LanguageServerPhpstan\Tests\IntegrationTestCase;
 class PhpstanProcessTest extends IntegrationTestCase
 {
     /**
+     * @param array<Diagnostic> $expectedDiagnostics
+     *
      * @dataProvider provideLint
      */
     public function testLint(string $source, array $expectedDiagnostics): void
