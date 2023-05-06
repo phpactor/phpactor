@@ -12,18 +12,20 @@ use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
 
 class AssertMemberContextResolverTest extends IntegrationTestCase
 {
-    public function testResolveClassString(): void {
+    public function testResolveClassString(): void
+    {
         $this->resolve(
             <<<'EOT'
-            <?php
+                <?php
 
-            class SomeTest extends PHPUnit\Framework\Assert {
-                public function test(): void {
-                    $this->assertInstanceOf('SomeClass', $obj);
-                    wrAssertType('SomeClass', $obj);
+                class SomeTest extends PHPUnit\Framework\Assert {
+                    public function test(): void {
+                        $obj = '';
+                        $this->assertInstanceOf('SomeClass', $obj);
+                        wrAssertType('SomeClass', $obj);
+                    }
                 }
-            }
-            EOT
+                EOT
         );
     }
 
