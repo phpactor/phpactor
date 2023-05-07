@@ -97,6 +97,6 @@ class FilePathResolverExtensionTest extends TestCase
             LoggingExtension::class
         ], $config);
 
-        return $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
+        return $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
     }
 }

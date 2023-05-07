@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPsalm\Tests\Model;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerPsalm\Model\DiagnosticsParser;
 use RuntimeException;
@@ -16,7 +17,10 @@ class DiagnosticsParserTest extends TestCase
         self::assertCount($count, (new DiagnosticsParser())->parse($psalmJson, '/path/to.php'));
     }
 
-    public function provideParse()
+    /**
+     * @return Generator<array{string,int}>
+     */
+    public function provideParse(): Generator
     {
         yield [
             <<<'EOT'

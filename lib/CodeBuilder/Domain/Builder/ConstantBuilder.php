@@ -13,7 +13,7 @@ class ConstantBuilder extends AbstractBuilder implements NamedBuilder
      */
     protected $value;
 
-    public function __construct(private ClassLikeBuilder $parent, protected string $name, $value)
+    public function __construct(private ClassLikeBuilder $parent, protected string $name, mixed $value)
     {
         $this->value = Value::fromValue($value);
     }
