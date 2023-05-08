@@ -218,7 +218,7 @@ class LanguageServerExtension implements Extension
                 return null;
             }
 
-            return new WorkspaceListener($container->get(self::SERVICE_SESSION_WORKSPACE));
+            return new WorkspaceListener($this->workspace($container));
         }, [
             self::TAG_LISTENER_PROVIDER => [],
         ]);
@@ -257,7 +257,7 @@ class LanguageServerExtension implements Extension
             return new DebugHandler(
                 $container,
                 $container->get(ClientApi::class),
-                $container->get(self::SERVICE_SESSION_WORKSPACE),
+                $this->workspace($container),
                 $container->get(ServerStats::class),
                 $container->get(ServiceManager::class),
                 $container->get(AggregateDiagnosticsProvider::class),
@@ -447,7 +447,7 @@ class LanguageServerExtension implements Extension
             return new CodeActionHandler(
                 /** @phpstan-ignore-next-line */
                 new AggregateCodeActionProvider(...$services),
-                $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $this->workspace($container),
                 $container->get(ProgressNotifier::class),
             );
         }, [ self::TAG_METHOD_HANDLER => []]);
@@ -467,7 +467,7 @@ class LanguageServerExtension implements Extension
             }
 
             return new FormattingHandler(
-                $container->get(self::SERVICE_SESSION_WORKSPACE),
+                $this->workspace($container),
                 $formatter,
                 $container->get(ProgressNotifier::class),
             );
@@ -484,7 +484,7 @@ class LanguageServerExtension implements Extension
                 $container->get(DiagnosticsEngine::class),
                 $container->parameter(self::PARAM_DIAGNOSTIC_ON_UPDATE)->bool(),
                 $container->parameter(self::PARAM_DIAGNOSTIC_ON_SAVE)->bool(),
-                $container->get(self::SERVICE_SESSION_WORKSPACE),
+                $this->workspace($container),
                 true,
                 $container->parameter(self::PARAM_DIAGNOSTIC_ON_OPEN)->bool()
             );
@@ -581,6 +581,11 @@ class LanguageServerExtension implements Extension
     private function logger(Container $container, string $name = self::LOG_CHANNEL): LoggerInterface
     {
         return LoggingExtension::channelLogger($container, $name);
+    }
+
+    private function workspace(Container $container): Workspace
+    {
+        return $container->expect(self::SERVICE_SESSION_WORKSPACE, Workspace::class);
     }
 
     /**
