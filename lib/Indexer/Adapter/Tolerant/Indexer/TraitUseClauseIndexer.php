@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
 use Phpactor\Indexer\Model\Index;
@@ -33,21 +34,22 @@ class TraitUseClauseIndexer implements TolerantIndexer
                 continue;
             }
 
-            $classDeclaration = $node->getFirstAncestor(ClassDeclaration::class);
+            /** @var ClassDeclaration|EnumDeclaration|null $parentDeclaration */
+            $parentDeclaration = $node->getFirstAncestor(ClassDeclaration::class, EnumDeclaration::class);
 
-            if (!$classDeclaration instanceof ClassDeclaration) {
+            if ($parentDeclaration === null) {
                 continue;
             }
 
             $traitRecord = $index->get(ClassRecord::fromName(
-                // This call is a hack from WorseReflection (!) beacuse of a bug in
+                // This call is a hack from WorseReflection (!) because of a bug in
                 // the tolerant PHP parser which does not provide the resolved
                 // use namespace.
                 TolerantQualifiedNameResolver::getResolvedName($qualifiedName)
             ));
 
             assert($traitRecord instanceof ClassRecord);
-            $traitRecord->addImplementation(FullyQualifiedName::fromString($classDeclaration->getNamespacedName()->__toString()));
+            $traitRecord->addImplementation(FullyQualifiedName::fromString($parentDeclaration->getNamespacedName()->__toString()));
             $index->write($traitRecord);
         }
     }
