@@ -14,6 +14,7 @@ use Phpactor\LanguageServer\Core\Service\ServiceManager;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Handler\Handler;
+use Phpactor\FilePathResolver\Expanders;
 
 class DebugHandler implements Handler
 {
@@ -58,15 +59,8 @@ class DebugHandler implements Handler
             '----------',
             '',
         ];
-        $paths = [];
 
-        foreach (
-            $this->container->get(
-                FilePathResolverExtension::SERVICE_EXPANDERS
-            )->toArray() as $tokenName => $value
-        ) {
-            $message[] = sprintf('%s: %s', $tokenName, $value);
-        }
+        $this->dumpExpanders($message);
 
         $message[] = '';
         $message[] = 'Config';
@@ -129,13 +123,8 @@ class DebugHandler implements Handler
             '-----',
             '',
         ];
-        foreach (
-            $this->container->get(
-                FilePathResolverExtension::SERVICE_EXPANDERS
-            )->toArray() as $tokenName => $value
-        ) {
-            $info[] = sprintf('  %s: %s', $tokenName, $value);
-        }
+
+        $this->dumpExpanders($info);
         $info[] = '';
 
         foreach ($this->statusProviders as $provider) {
@@ -148,5 +137,20 @@ class DebugHandler implements Handler
         }
 
         return new Success(implode(PHP_EOL, $info));
+    }
+
+    /**
+     * @param array<string> $output
+     */
+    private function dumpExpanders(array &$output): void
+    {
+        foreach (
+            $this->container->expect(
+                FilePathResolverExtension::SERVICE_EXPANDERS,
+                Expanders::class
+            )->toArray() as $tokenName => $value
+        ) {
+            $output[] = sprintf('  %s: %s', $tokenName, $value);
+        }
     }
 }
