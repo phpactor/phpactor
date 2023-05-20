@@ -47,5 +47,11 @@ class TraitUseClauseIndexerTest extends TolerantIndexerTestCase
             'N\T',
             1
         ];
+
+        yield 'use trait (enum)' => [
+            "// File: src/file1.php\n<?php enum C { use T; }",
+            'T',
+            1
+        ];
     }
 }
