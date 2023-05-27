@@ -1,0 +1,15 @@
+/** @param array<'GET'|'POST'|'DELETE'> $foobar */
+---
+Docblock: = 
+ ElementList: = /** 
+  ParamTag: = @param
+   GenericNode: = 
+    ArrayNode: = array<
+    TypeList: = 
+     UnionNode: = 
+      TypeList: = 
+       LiteralStringNode: = 'GET'|
+       LiteralStringNode: = 'POST'|
+       LiteralStringNode: = 'DELETE'>
+   VariableNode: = $foobar
+   TextNode: =  */

@@ -13,6 +13,7 @@ Features:
 Bug fixes:
 
   - Fix behavior when user cancels type selection on goto type #2270
+  - Fix docblock parsing of `array<'quoted'|'strings'>` #2264
   - Fix constant declaration indexing with `define` #2249 @mamazu
   - Fix use of class-string<Foo> variable as static scope resolution qualifier #2238
   - URL decode root URI - fixes issues with special chars in path #2228
