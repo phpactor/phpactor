@@ -1,0 +1,15 @@
+/** @param array<12|13|14> $foobar */
+---
+Docblock: = 
+ ElementList: = /** 
+  ParamTag: = @param
+   GenericNode: = 
+    ArrayNode: = array<
+    TypeList: = 
+     UnionNode: = 
+      TypeList: = 
+       LiteralIntegerNode: = 12|
+       LiteralIntegerNode: = 13|
+       LiteralIntegerNode: = 14>
+   VariableNode: = $foobar
+   TextNode: =  */
