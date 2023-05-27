@@ -10,6 +10,11 @@ Features:
   - Code action to suggest fixes for undefined variables (in case of typos) #2209
   - PHPUnit: code action for adding `setUp` / `tearDown` #2180 @mamazu
 
+Improvements:
+
+  - Symfony: show and consider non-public services by default (e.g. in tests it's
+    possible to retrieve non-public services) #2263
+
 Bug fixes:
 
   - Fix behavior when user cancels type selection on goto type #2270
