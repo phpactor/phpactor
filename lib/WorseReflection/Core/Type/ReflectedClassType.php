@@ -90,7 +90,7 @@ class ReflectedClassType extends ClassType
             return Trinary::maybe();
         }
 
-        if ($reflectedThis instanceof ReflectionInterface) {
+        if ($reflectedThis instanceof ReflectionInterface || $reflectedThis instanceof ReflectionClass) {
             return Trinary::fromBoolean($reflectedThat->isInstanceOf($reflectedThis->name()));
         }
 
