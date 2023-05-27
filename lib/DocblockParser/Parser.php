@@ -309,6 +309,9 @@ final class Parser
             if ($this->tokens->if(Token::T_VARIABLE)) {
                 $typeList = $this->parseTypeList();
             }
+            if ($this->tokens->if(Token::T_QUOTED_STRING)) {
+                $typeList = $this->parseTypeList();
+            }
             if ($this->tokens->if(Token::T_LABEL)) {
                 $typeList = $this->parseTypeList();
             }
@@ -424,6 +427,8 @@ final class Parser
         $types = [];
         while (true) {
             if ($this->tokens->if(Token::T_LABEL)) {
+                $types[] = $this->parseTypes();
+            } elseif ($this->tokens->if(Token::T_QUOTED_STRING)) {
                 $types[] = $this->parseTypes();
             } elseif ($this->tokens->if(Token::T_INTEGER)) {
                 $types[] = $this->parseTypes();
