@@ -42,10 +42,15 @@
           name = "php-devshell";
 
           buildInputs = [
+            pkgs.python3
             phpWithXdebug
             pkgs.php81.packages.composer
           ];
-          
+          shellHook = ''
+          if [ ! -d ".venv" ]; then
+            python3 -m venv .venv;
+          fi
+          source .venv/bin/activate;'';
         };
       };
     };

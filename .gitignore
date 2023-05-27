@@ -31,4 +31,3 @@
 __pycache__
 /doc/_ext/__pycache__
 .phpunit.result.cache
-flake.lock
