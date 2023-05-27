@@ -17,7 +17,7 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
 
     private ?DOMXPath $cache = null;
 
-    public function __construct(private string $xmlPath)
+    public function __construct(private string $xmlPath, private bool $publicOnly = false)
     {
     }
 
@@ -121,7 +121,7 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
         $id = $serviceEl->getAttribute('id');
         $class = $serviceEl->getAttribute('class');
         $public = $serviceEl->getAttribute('public');
-        if ('true' !== $public) {
+        if (true === $this->publicOnly && 'true' !== $public) {
             return null;
         }
         if (empty($id) || empty($class)) {

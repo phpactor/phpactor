@@ -2022,6 +2022,19 @@ Enable/disable the Symfony completor - depends on Symfony extension being enable
 **Default**: ``true``
 
 
+.. _param_public_services_only:
+
+
+``public_services_only``
+""""""""""""""""""""""""
+
+
+Only consider public services when providing analysis for the service locator
+
+
+**Default**: ``false``
+
+
 .. _PHPUnitExtension:
 
 
