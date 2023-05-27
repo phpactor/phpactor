@@ -17,6 +17,7 @@ Improvements:
 
 Bug fixes:
 
+  - Fix "instanceof" behavior for statically reflected classes #2273
   - Fix behavior when user cancels type selection on goto type #2270
   - Fix docblock parsing of `array<'quoted'|'strings'>` #2264
   - Fix constant declaration indexing with `define` #2249 @mamazu
