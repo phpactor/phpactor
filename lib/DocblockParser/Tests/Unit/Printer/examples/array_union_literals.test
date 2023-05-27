@@ -1,0 +1,2 @@
+/** @param array<'GET'|'POST'|'DELETE'> $foobar */
+---
