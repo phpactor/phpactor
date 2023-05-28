@@ -111,14 +111,11 @@ class CompletionExtension implements Extension
         });
 
         $container->register(LabelFormatter::class, function (Container $container) {
-            switch ($formatter = $container->parameter(self::PARAM_LABEL_FORMATTER)->string()) {
-                case LabelFormatter::HELPFUL:
-                    return new HelpfulLabelFormatter();
-                case LabelFormatter::FQN:
-                    return new PassthruLabelFormatter();
-                default:
-                    throw new InvalidArgumentException('Unknown formatter type: ' . $formatter);
-            }
+            return match ($formatter = $container->parameter(self::PARAM_LABEL_FORMATTER)->string()) {
+                LabelFormatter::HELPFUL => new HelpfulLabelFormatter(),
+                LabelFormatter::FQN => new PassthruLabelFormatter(),
+                default => throw new InvalidArgumentException('Unknown formatter type: ' . $formatter),
+            };
         });
 
         $container->register(self::SERVICE_SHORT_DESC_FORMATTER, function (Container $container) {
