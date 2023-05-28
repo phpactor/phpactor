@@ -1,0 +1,23 @@
+{
+  "compression": "GZ",
+  "directories": [
+    "lib",
+    "templates"
+  ],
+  "files": [
+    "LICENSE"
+  ],
+  "finder": [
+    {
+      "name": "{\\.[php]}",
+      "exclude": [
+        "tests",
+        "test"
+      ],
+      "in": "vendor"
+    }
+  ],
+  "git-tag": "git_tag",
+  "intercept": true,
+  "output": "build/phpactor.phar"
+}
