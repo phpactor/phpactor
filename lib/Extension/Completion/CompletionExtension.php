@@ -76,14 +76,16 @@ class CompletionExtension implements Extension
             $mapped = [];
             foreach ($completors as $type => $completors) {
                 $completors = new ChainCompletor($completors);
-                if ($container->getParameter(self::PARAM_DEDUPE)) {
+                if ($container->parameter(self::PARAM_DEDUPE)->bool()) {
                     $completors = new DedupeCompletor(
                         $completors,
-                        $container->getParameter(self::PARAM_DEDUPE_MATCH_FQN)
+                        $container->parameter(self::PARAM_DEDUPE_MATCH_FQN)->bool()
                     );
                 }
 
-                if ($limit = $container->getParameter(self::PARAM_LIMIT)) {
+                /** @var int|null $limit */
+                $limit = $container->getParameter(self::PARAM_LIMIT);
+                if (is_int($limit)) {
                     $completors = new LimitingCompletor($completors, $limit);
                 }
 
@@ -133,7 +135,6 @@ class CompletionExtension implements Extension
         $container->register(self::SERVICE_SIGNATURE_HELPER, function (Container $container) {
             $helpers = [];
 
-            $helper = null;
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_SIGNATURE_HELPER)) as $serviceId) {
                 $helpers[] = $container->get($serviceId);
             }
