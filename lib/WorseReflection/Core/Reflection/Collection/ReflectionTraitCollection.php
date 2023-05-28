@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
@@ -55,6 +56,27 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
                 $traitName = TolerantQualifiedNameResolver::getResolvedName($traitName);
                 try {
                     $items[(string) $traitName] = $serviceLocator->reflector()->reflectTrait(ClassName::fromString($traitName), $visited);
+                } catch (NotFound) {
+                }
+            }
+        }
+
+        return new self($items);
+    }
+
+    public static function fromEnumDeclaration(ServiceLocator $serviceLocator, EnumDeclaration $enumDeclaration): ReflectionTraitCollection
+    {
+        $items = [];
+        /** @phpstan-ignore-next-line not trusting TP */
+        foreach ($enumDeclaration?->enumMembers?->enumMemberDeclarations ?? [] as $memberDeclaration) {
+            if (false === $memberDeclaration instanceof TraitUseClause) {
+                continue;
+            }
+
+            foreach ($memberDeclaration->traitNameList->getValues() as $traitName) {
+                $traitName = TolerantQualifiedNameResolver::getResolvedName($traitName);
+                try {
+                    $items[(string) $traitName] = $serviceLocator->reflector()->reflectTrait(ClassName::fromString($traitName));
                 } catch (NotFound) {
                 }
             }
