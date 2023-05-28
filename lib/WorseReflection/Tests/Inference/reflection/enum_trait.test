@@ -1,6 +1,8 @@
 <?php
 
-trait Foo {
+namespace Phpactor\WorseReflection\Tests\Inference\reflection;
+
+trait enum_trait {
     public function foo(): string
     {
         return 'bar';
@@ -10,9 +12,9 @@ trait Foo {
 
 enum ScheduleType: int
 {
-    use Foo;
+    use enum_trait;
 
     public function label(): void {
-        wrAssertType('string', $this->foo();
+        wrAssertType('string', $this->foo());
     }
 }

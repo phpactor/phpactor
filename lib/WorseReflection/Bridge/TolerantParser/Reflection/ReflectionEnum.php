@@ -51,6 +51,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         /** @phpstan-ignore-next-line Constants is compatible with this */
         $members = $members->merge($this->ownMembers());
         foreach ($this->traits() as $trait) {
+            /** @phpstan-ignore-next-line Constants is compatible with this */
             $members = $members->merge($trait->members());
         }
         try {
@@ -122,21 +123,13 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         return 'enum';
     }
 
-    /**
-     * @return ReflectionTraitCollection<ReflectionTrait>
-     */
     public function traits(): ReflectionTraitCollection
     {
         if ($this->traits) {
             return $this->traits;
         }
-        $parentTraits = null;
 
         $traits = ReflectionTraitCollection::fromEnumDeclaration($this->serviceLocator, $this->node);
-
-        if ($parentTraits) {
-            $traits =  $parentTraits->merge($traits);
-        }
 
         $this->traits = $traits;
 
