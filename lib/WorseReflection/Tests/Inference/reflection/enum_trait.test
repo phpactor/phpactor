@@ -1,0 +1,18 @@
+<?php
+
+trait Foo {
+    public function foo(): string
+    {
+        return 'bar';
+    }
+}
+
+
+enum ScheduleType: int
+{
+    use Foo;
+
+    public function label(): void {
+        wrAssertType('string', $this->foo();
+    }
+}
