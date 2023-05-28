@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Completion;
 
+use InvalidArgumentException;
 use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\ChainSignatureHelper;
 use Phpactor\Completion\Core\Completor\DedupeCompletor;
@@ -11,6 +12,7 @@ use Phpactor\Completion\Core\Completor\LimitingCompletor;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\Completion\Core\LabelFormatter;
 use Phpactor\Completion\Core\LabelFormatter\HelpfulLabelFormatter;
+use Phpactor\Completion\Core\LabelFormatter\PassthruLabelFormatter;
 use Phpactor\Completion\Core\SuggestionDocumentor;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Extension;
@@ -33,7 +35,7 @@ class CompletionExtension implements Extension
     public const PARAM_DEDUPE = 'completion.dedupe';
     public const PARAM_DEDUPE_MATCH_FQN = 'completion.dedupe_match_fqn';
     public const PARAM_LIMIT = 'completion.limit';
-
+    public const PARAM_LABEL_FORMATTER = 'completion.label_formatter';
 
     public function configure(Resolver $schema): void
     {
@@ -41,11 +43,19 @@ class CompletionExtension implements Extension
             self::PARAM_DEDUPE => true,
             self::PARAM_DEDUPE_MATCH_FQN => true,
             self::PARAM_LIMIT => null,
+            self::PARAM_LABEL_FORMATTER => LabelFormatter::HELPFUL,
         ]);
         $schema->setDescriptions([
             self::PARAM_DEDUPE => 'If results should be de-duplicated',
             self::PARAM_DEDUPE_MATCH_FQN => 'If ``' . self::PARAM_DEDUPE . '``, consider the class FQN in addition to the completion suggestion',
             self::PARAM_LIMIT => 'Sets a limit on the number of completion suggestions for any request',
+            self::PARAM_LABEL_FORMATTER => 'Definition of how to format entries in the completion list',
+        ]);
+        $schema->setEnums([
+            self::PARAM_LABEL_FORMATTER => [
+                LabelFormatter::HELPFUL,
+                LabelFormatter::FQN,
+            ]
         ]);
     }
 
@@ -101,7 +111,14 @@ class CompletionExtension implements Extension
         });
 
         $container->register(LabelFormatter::class, function (Container $container) {
-            return new HelpfulLabelFormatter();
+            switch ($formatter = $container->parameter(self::PARAM_LABEL_FORMATTER)->string()) {
+                case LabelFormatter::HELPFUL:
+                    return new HelpfulLabelFormatter();
+                case LabelFormatter::FQN:
+                    return new PassthruLabelFormatter();
+                default:
+                    throw new InvalidArgumentException('Unknown formatter type: ' . $formatter);
+            }
         });
 
         $container->register(self::SERVICE_SHORT_DESC_FORMATTER, function (Container $container) {

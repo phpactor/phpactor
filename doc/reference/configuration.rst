@@ -680,6 +680,22 @@ Sets a limit on the number of completion suggestions for any request
 **Default**: ``null``
 
 
+.. _param_completion.label_formatter:
+
+
+``completion.label_formatter``
+""""""""""""""""""""""""""""""
+
+
+Definition of how to format entries in the completion list
+
+
+**Default**: ``"helpful"``
+
+
+**Allowed values**: "helpful", "fqn"
+
+
 .. _NavigationExtension:
 
 
@@ -874,7 +890,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
+**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
