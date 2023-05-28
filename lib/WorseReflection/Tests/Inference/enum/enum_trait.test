@@ -1,0 +1,20 @@
+<?php
+
+namespace Phpactor\WorseReflection\Tests\Inference\reflection;
+
+trait enum_trait {
+    public function foo(): string
+    {
+        return 'bar';
+    }
+}
+
+
+enum ScheduleType: int
+{
+    use enum_trait;
+
+    public function label(): void {
+        wrAssertType('string', $this->foo());
+    }
+}
