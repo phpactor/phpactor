@@ -74,6 +74,7 @@ use Composer\XdebugHandler\XdebugHandler;
 use Phpactor\ConfigLoader\ConfigLoaderBuilder;
 use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
+use Symfony\Component\Filesystem\Path;
 use function ini_set;
 use function sprintf;
 
@@ -338,8 +339,8 @@ class Phpactor
         $paths = [ __DIR__ . '/..', __DIR__ .'/../../../..' ];
 
         foreach ($paths as $path) {
-            if (is_dir((string)realpath($path.'/vendor'))) {
-                return (string)realpath($path);
+            if (is_dir($path.'/vendor')) {
+                return Path::canonicalize($path);
             }
         }
 

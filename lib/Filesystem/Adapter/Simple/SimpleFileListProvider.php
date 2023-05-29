@@ -20,14 +20,14 @@ final class SimpleFileListProvider implements FileListProvider
     {
         return FileList::fromIterator(
             $this->createFileIterator(
-                (string) $this->path
+                $this->path->uriAsString()
             )
         );
     }
 
     private function createFileIterator(string $path): Iterator
     {
-        $path = $path ? $this->path->makeAbsoluteFromString($path) : $this->path->path();
+        $path = $path ? $this->path->makeAbsoluteFromString($path)->uriAsString() : $this->path->uriAsString();
         $flags =
             FilesystemIterator::KEY_AS_PATHNAME |
             FilesystemIterator::CURRENT_AS_FILEINFO |

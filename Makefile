@@ -14,18 +14,11 @@ BUILDDIR          = build
 build:
 	mkdir build
 
-build/vimdoc:
-	git clone https://github.com/google/vimdoc build/vimdoc
+composer:
+	composer install --no-scripts --optimize-autoloader --classmap-authoritative
 
-build/vimdoc/build: build/vimdoc
-	cd build/vimdoc; python3 setup.py config
-	cd build/vimdoc; python3 setup.py build
-
-build/bin/vimdoc: build/vimdoc/build
-	cd build/vimdoc; python3 setup.py install --user
-
-vimdoc: build/bin/vimdoc
-	vimdoc .
+vimdoc:
+	docker compose run php vimdoc .
 
 configreference:
 	./bin/phpactor development:generate-documentation extension > doc/reference/configuration.rst
@@ -34,18 +27,18 @@ configreference:
 
 # Put it first so that "make" without argument is like "make help".
 help:
-	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	docker compose run php $(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinxwatch:
-	@$(SPHINXAUTOBUILD) "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	docker compose run php $(SPHINXAUTOBUILD) "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinx:
-	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	docker compose run php $(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinxlatex:
-	@$(SPHINXBUILD) -M latex "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	docker compose run php $(SPHINXBUILD) -M latex "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-docs: configreference sphinx vimdoc
+docs: composer configreference vimdoc sphinx
 
 clean:
 	rm -Rf build

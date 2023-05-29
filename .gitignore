@@ -1,6 +1,7 @@
 /extensions
 /phpactor.schema.json
 /lib/Extension/WorseReflection/stubs
+/.phpbench
 
 # Composer
 /vendor

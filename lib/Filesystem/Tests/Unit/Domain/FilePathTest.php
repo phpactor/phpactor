@@ -4,10 +4,10 @@ namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\TextDocument\Exception\InvalidUriException;
 use RuntimeException;
 use SplFileInfo;
 use stdClass;
-use InvalidArgumentException;
 
 class FilePathTest extends TestCase
 {
@@ -16,8 +16,8 @@ class FilePathTest extends TestCase
      */
     public function testNotAbsolute(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('File path must be absolute, but "foobar" given');
+        $this->expectException(InvalidUriException::class);
+        $this->expectExceptionMessage('must be absolute');
         FilePath::fromString('foobar');
     }
 
@@ -54,6 +54,11 @@ class FilePathTest extends TestCase
             '/foo.php',
         ];
 
+        yield 'PHAR string' => [
+            'phar:///foo.php',
+            '/foo.php',
+        ];
+
         yield 'array' => [
             [ 'one', 'two' ],
             '/one/two'
@@ -61,6 +66,10 @@ class FilePathTest extends TestCase
 
         yield 'SplFileInfo' => [
             new SplFileInfo(__FILE__),
+            __FILE__
+        ];
+        yield 'SplFileInfo with scheme' => [
+            new SplFileInfo('file://' . __FILE__),
             __FILE__
         ];
     }
@@ -84,17 +93,12 @@ class FilePathTest extends TestCase
 
         yield 'unsupported scheme' => [
             'ftp://host/foo.php',
-            'Unsupported scheme "ftp" for path "ftp://host/foo.php"',
-        ];
-
-        yield 'malformed string' => [
-            'bar:///foo.php',
-            'Cannot guess path from "bar:///foo.php"',
+            'are supported', // only X schemes are supported
         ];
 
         yield 'URI without a path' => [
             'http://.?x=1&n',
-            'No path info from URI "http://.?x=1&n"',
+            'are supported', // only X schemes are supported
         ];
     }
 
@@ -171,5 +175,12 @@ class FilePathTest extends TestCase
         $this->assertTrue($path1->isNamed('foobar'));
         $this->assertTrue($path2->isNamed('foobar'));
         $this->assertFalse($path3->isNamed('foobar'));
+    }
+
+    public function testAsSplFileInfo(): void
+    {
+        $path1 = FilePath::fromUnknown(new SplFileInfo('file://' . __FILE__));
+        self::assertEquals(__FILE__, $path1->__toString());
+        self::assertEquals(__FILE__, $path1->asSplFileInfo()->__toString());
     }
 }
