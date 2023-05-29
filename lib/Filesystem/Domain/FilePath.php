@@ -75,7 +75,7 @@ final class FilePath
 
     public function asSplFileInfo(): SplFileInfo
     {
-        return new SplFileInfo($this->uri->path());
+        return new SplFileInfo($this->uri->__toString());
     }
 
     public function makeAbsoluteFromString(string $path): FilePath
@@ -100,11 +100,6 @@ final class FilePath
     public function extension(): string
     {
         return Path::getExtension($this->uri->path());
-    }
-
-    public function concatPath(FilePath $path): FilePath
-    {
-        return self::fromString(Path::join($this->path(), (string) $path));
     }
 
     public function isWithin(FilePath $path): bool

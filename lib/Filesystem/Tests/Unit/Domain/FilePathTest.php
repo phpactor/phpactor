@@ -68,6 +68,10 @@ class FilePathTest extends TestCase
             new SplFileInfo(__FILE__),
             __FILE__
         ];
+        yield 'SplFileInfo with scheme' => [
+            new SplFileInfo('file://' . __FILE__),
+            __FILE__
+        ];
     }
 
     /**
@@ -171,5 +175,12 @@ class FilePathTest extends TestCase
         $this->assertTrue($path1->isNamed('foobar'));
         $this->assertTrue($path2->isNamed('foobar'));
         $this->assertFalse($path3->isNamed('foobar'));
+    }
+
+    public function testAsSplFileInfo(): void
+    {
+       $path1 = FilePath::fromUnknown(new SplFileInfo('file://' . __FILE__));
+       self::assertEquals(__FILE__, $path1->__toString());
+       self::assertEquals('file://' . __FILE__, $path1->asSplFileInfo()->__toString());
     }
 }
