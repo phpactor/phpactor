@@ -9,6 +9,7 @@ class TextDocumentUri
 {
     public const SCHEME_FILE = 'file';
     public const SCHEME_UNTITLED = 'untitled';
+    public const SCHEMES = [self::SCHEME_FILE, self::SCHEME_UNTITLED];
 
     final private function __construct(private string $scheme, private string $path)
     {
@@ -46,9 +47,10 @@ class TextDocumentUri
             ));
         }
 
-        if (!in_array($components['scheme'], [self::SCHEME_FILE, self::SCHEME_UNTITLED])) {
+        if (!in_array($components['scheme'], self::SCHEMES)) {
             throw new InvalidUriException(sprintf(
-                'Only "file://" scheme is supported, got "%s"',
+                'Only "%s" schemes are supported, got "%s"',
+                implode('", "', self::SCHEMES),
                 $components['scheme']
             ));
         }
