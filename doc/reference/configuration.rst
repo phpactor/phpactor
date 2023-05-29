@@ -890,7 +890,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
+**Default**: ``"\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
