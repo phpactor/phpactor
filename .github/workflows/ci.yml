@@ -261,7 +261,12 @@ jobs:
             -
                 name: "Build"
                 run: "docker compose up -d"
-
+            -
+                name: "Debug"
+                run: "docker compose exec php ls -l"
+            -
+                name: "Debug"
+                run: "docker compose exec php ls -l /app"
             -
                 name: "Composer install"
                 run: "docker compose exec php composer install --no-scripts --optimize-autoloader --classmap-authoritative"
