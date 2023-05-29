@@ -9,7 +9,8 @@ class TextDocumentUri
 {
     public const SCHEME_FILE = 'file';
     public const SCHEME_UNTITLED = 'untitled';
-    public const SCHEMES = [self::SCHEME_FILE, self::SCHEME_UNTITLED];
+    public const SCHEME_PHAR = 'phar';
+    public const SCHEMES = [self::SCHEME_FILE, self::SCHEME_UNTITLED, self::SCHEME_PHAR];
 
     final private function __construct(private string $scheme, private string $path)
     {
@@ -17,7 +18,7 @@ class TextDocumentUri
 
     public function __toString(): string
     {
-        if ($this->scheme === self::SCHEME_FILE) {
+        if ($this->scheme === self::SCHEME_FILE || $this->scheme === self::SCHEME_PHAR) {
             return sprintf('%s://%s', $this->scheme, $this->path);
         }
         return sprintf('%s:%s', $this->scheme, $this->path);

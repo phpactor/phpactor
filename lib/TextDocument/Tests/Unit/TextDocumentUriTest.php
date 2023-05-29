@@ -61,7 +61,7 @@ class TextDocumentUriTest extends TestCase
     public function testFromHttpUri(): void
     {
         $this->expectException(InvalidUriException::class);
-        $this->expectExceptionMessage('Only "file", "untitled" schemes are supported, got "http"');
+        $this->expectExceptionMessage('Only "file", "untitled", "phar" schemes are supported, got "http"');
         $uri = TextDocumentUri::fromString('http://foobar/foobar');
     }
 
