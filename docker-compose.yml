@@ -4,7 +4,6 @@ services:
       dockerfile: ./docker/Dockerfile
       context: ./
     command: sleep infinity
-    user: "1000:1000"
     environment:
       XDG_CACHE_HOME: /app/build/.cache
       COLUMNS: 100

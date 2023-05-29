@@ -1,0 +1,276 @@
+*app.txt*
+                                                                         *app*
+
+==============================================================================
+CONTENTS                                                        *app-contents*
+  1. Introduction..................................................|app-intro|
+  2. Configuration................................................|app-config|
+  3. Completion...............................................|app-completion|
+  4. Commands...................................................|app-commands|
+      1. Window targets...................................|app-window-targets|
+  5. Mappings...................................................|app-mappings|
+
+==============================================================================
+INTRODUCTION                                                       *app-intro*
+
+
+Phpactor is a auto-completion, refactoring and code-navigation tool for PHP.
+This is the help file for the VIM client. For more information see the
+official website: https://phpactor.github.io/phpactor/
+
+NOTE: This help is auto-generated from the VimScript using
+https://github.com/google/vimdoc. See
+https://phpactor.github.io/phpactor/developing.html#vim-help
+
+==============================================================================
+CONFIGURATION                                                     *app-config*
+
+                                                            *g:phpactorPhpBin*
+Path to the PHP binary used by Phpactor
+
+                                                            *g:phpactorBranch*
+The Phpactor branch to use when calling |:PhpactorUpdate|
+
+                                               *g:phpactorOmniAutoClassImport*
+Automatically import classes when using VIM native omni-completion
+
+                                              *g:phpactorCompletionIgnoreCase*
+Ignore case when suggestion completion results
+
+                                                  *g:phpactorQuickfixStrategy*
+Function to use when populating a list of code references. The default is to
+use the VIM quick-fix list.
+
+                                                 *g:phpactorInputListStrategy*
+Function to use when presenting a user with a choice of options. The default
+is to use the VIM inputlist.
+
+                                                    *g:phpactorUseOpenWindows*
+When jumping to a file location: if the target file open in a window, switch
+to that window instead of switching buffers.  The default is false.
+
+                                             *g:PhpactorRootDirectoryStrategy*
+Each Phpactor request requires the project's root directory to be known. By
+default it will assume the directory in which you started VIM, but this may
+not suit all workflows.
+
+This setting allows |Funcref| to be specified. This function should return the
+working directory in whichever way is required. No arguments are passed to
+this function.
+
+==============================================================================
+COMPLETION                                                    *app-completion*
+
+
+You will need to explicitly configure Phpactor to provide completion
+capabilities.
+
+OMNI-COMPLETION
+
+Use VIMs native omni-completion (|compl-omni|)
+
+Enable omni-completion for PHP files:
+>
+
+  autocmd FileType php setlocal omnifunc=phpactor#Complete
+
+<
+For case sensitive searching see |g:phpactorCompletionIgnoreCase|
+
+NCM2
+
+Nvim Completion Manager is a completion manager for Neovim.
+
+Install the integration plugin to get started:
+https://github.com/phpactor/ncm2-phpactor
+
+DEOPLETE
+
+Deoplete is another completion plugin.
+
+Install the Deoplete Phpactor integration to get started:
+https://github.com/kristijanhusak/deoplete-phpactor
+
+==============================================================================
+COMMANDS                                                        *app-commands*
+
+:[range][N]PhpactorExtractMethod                      *:PhpactorExtractMethod*
+  Extract a new method from the current selection
+
+:[range][N]PhpactorExtractExpression              *:PhpactorExtractExpression*
+  Extract the selected expression and assign it to a variable before (placing
+  it before the current statement)
+
+:[N]PhpactorExtractConstant                         *:PhpactorExtractConstant*
+  Extract a constant from a literal
+
+:[N]PhpactorImportClass                                 *:PhpactorImportClass*
+  Import the name under the cursor. If multiple options are available, you are
+  able to choose one.
+
+:[N]PhpactorImportMissingClasses               *:PhpactorImportMissingClasses*
+  Attempt to import all non-resolvable classes in the current class (based on
+  offset position)
+
+:[N]PhpactorHover                                             *:PhpactorHover*
+  Show information about the symbol under the cursor.
+
+:[N]PhpactorContextMenu                                 *:PhpactorContextMenu*
+  Show the context menu for the current cursor position.
+
+:[N]PhpactorCopyFile                                       *:PhpactorCopyFile*
+  Copy the current file - updating the namespace and class name according to
+  the new file location and name
+
+:[N]PhpactorCopyClassName                             *:PhpactorCopyClassName*
+  Copy the current class FQN (based on current filename) to the clipboard
+
+:[N]PhpactorMoveFile                                       *:PhpactorMoveFile*
+  Move the current file - updating the namespace and class name according to
+  the new file location and name
+
+:[N]PhpactorClassInflect                               *:PhpactorClassInflect*
+  Inflect a new class from the current class (e.g. generate an interface for
+  the current class)
+
+:[N]PhpactorFindReferences                           *:PhpactorFindReferences*
+  Attempt to find all references to the class name or method under the cursor.
+  The results will be loaded into the quik-fix list
+
+:[N]PhpactorNavigate                                       *:PhpactorNavigate*
+  Navigate - jump to the parent class, interface, or any of the relationships
+  defined in `navigation.destinations`
+  https://phpactor.github.io/phpactor/configuration.html#reference
+
+:[N]PhpactorChangeVisibility                       *:PhpactorChangeVisibility*
+  Rotate the visiblity of the method under the cursor
+
+:[N]PhpactorGenerateAccessors                     *:PhpactorGenerateAccessors*
+  Generate accessors for the current class
+
+:[N]PhpactorGenerateMutators                       *:PhpactorGenerateMutators*
+  Generate mutators for the current class
+
+:[N]PhpactorTransform                                     *:PhpactorTransform*
+  Automatically add any missing properties to a class
+
+:PhpactorUpdate                                              *:PhpactorUpdate*
+  Update Phpactor to the latest version using the branch defined with
+  |g:phpactorBranch|
+
+:PhpactorCacheClear                                      *:PhpactorCacheClear*
+  Clear the entire cache - this will take effect for all projects.
+
+:PhpactorStatus                                              *:PhpactorStatus*
+  Show some information about Phpactor's status
+
+:PhpactorConfig                                              *:PhpactorConfig*
+  Dump Phpactor's configuration
+
+:PhpactorClassExpand                                    *:PhpactorClassExpand*
+  Expand the class name under the cursor to it's fully-qualified-name
+
+:PhpactorClassNew                                          *:PhpactorClassNew*
+  Create a new class. You will be offered a choice of templates.
+
+:PhpactorGotoDefinition [target]                     *:PhpactorGotoDefinition*
+  [target] is `edit` if omitted.
+
+  Goto the definition of the symbol under the cursor. Opens in the [target]
+  window, see |app-window-target| for the list of possible targets. |<mods>|
+  can be provided to the command to change how the window will be opened.
+
+  Examples:
+>
+      " Opens in the current buffer
+      PhpactorGotoDefinition
+
+      " Opens in a vertical split opened on the right side
+      botright PhpactorGotoDefinition vsplit
+      vertical botright PhpactorGotoDefinition split
+
+      " Opens in a new tab
+      PhpactorGotoDefinition tabnew
+<
+
+:PhpactorGotoDefinitionVsplit                  *:PhpactorGotoDefinitionVsplit*
+  deprecated, use |:PhpactorGotoDefinition| instead
+
+  As with |:PhpactorGotoDefinition| but open in a vertical split.
+
+:PhpactorGotoDefinitionHsplit                  *:PhpactorGotoDefinitionHsplit*
+  deprecated, use |:PhpactorGotoDefinition| instead
+
+  As with |:PhpactorGotoDefinition| but open in an horizontal split.
+
+:PhpactorGotoDefinitionTab                        *:PhpactorGotoDefinitionTab*
+  deprecated, use |:PhpactorGotoDefinition| instead
+
+  As with |:PhpactorGotoDefinition| but open in a new tab.
+
+:PhpactorGotoType [target]                                 *:PhpactorGotoType*
+
+  Same as |:PhpactorGotoDefinition| but goto the type of the symbol under the
+  cursor.
+
+:PhpactorGotoImplementations [target]           *:PhpactorGotoImplementations*
+
+  Same as |:PhpactorGotoDefinition| but goto the implementation of the symbol
+  under the cursor.
+
+  If there is more than one result the quickfix strategy will be used and
+  [target] will be ignored, see |g:phpactorQuickfixStrategy|.
+
+==============================================================================
+WINDOW TARGETS                                            *app-window-targets*
+
+
+Phpactor provide a few window targets to use with some commands. See
+|:PhpactorGotoDefinition| for an example of how to use them.
+
+Possible values are:
+  * `e`, `edit`, `ex`
+  * `new`, `vne`, `vnew`
+  * `sp`, `split`, `vs`, `vsplit`
+  * `vie`, `view`, `sv`, `sview`, `splitview`
+  * `tabe`, `tabedit`, `tabnew`
+
+==============================================================================
+MAPPINGS                                                        *app-mappings*
+
+
+Phpactor does not assume any mappings automatically, the following mappings
+are available for you to copy:
+>
+
+  augroup PhpactorMappings
+    au!
+    au FileType php nmap <buffer> <Leader>u :PhpactorImportClass<CR>
+    au FileType php nmap <buffer> <Leader>e :PhpactorClassExpand<CR>
+    au FileType php nmap <buffer> <Leader>ua :PhpactorImportMissingClasses<CR>
+    au FileType php nmap <buffer> <Leader>mm :PhpactorContextMenu<CR>
+    au FileType php nmap <buffer> <Leader>nn :PhpactorNavigate<CR>
+    au FileType php,cucumber nmap <buffer> <Leader>o
+        \ :PhpactorGotoDefinition edit<CR>
+    au FileType php nmap <buffer> <Leader>K :PhpactorHover<CR>
+    au FileType php nmap <buffer> <Leader>tt :PhpactorTransform<CR>
+    au FileType php nmap <buffer> <Leader>cc :PhpactorClassNew<CR>
+    au FileType php nmap <buffer> <Leader>ci :PhpactorClassInflect<CR>
+    au FileType php nmap <buffer> <Leader>fr :PhpactorFindReferences<CR>
+    au FileType php nmap <buffer> <Leader>mf :PhpactorMoveFile<CR>
+    au FileType php nmap <buffer> <Leader>cf :PhpactorCopyFile<CR>
+    au FileType php nmap <buffer> <silent> <Leader>ee
+        \ :PhpactorExtractExpression<CR>
+    au FileType php vmap <buffer> <silent> <Leader>ee
+        \ :<C-u>PhpactorExtractExpression<CR>
+    au FileType php vmap <buffer> <silent> <Leader>em
+        \ :<C-u>PhpactorExtractMethod<CR>
+  augroup END
+<
+
+Note: the cucumber mappings are for the Behat extension:
+
+    https://github.com/phpactor/behat-extension
+
+
+vim:tw=78:ts=8:ft=help:norl:
