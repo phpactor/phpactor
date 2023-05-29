@@ -264,8 +264,8 @@ jobs:
 
             -
                 name: "Composer install"
-                run: "docker compose run -u1000 php composer install --no-scripts --optimize-autoloader --classmap-authoritative"
+                run: "docker compose run php composer install --no-scripts --optimize-autoloader --classmap-authoritative"
             -
                 name: "Make Docs"
-                run: "docker compose run -u1000 php make docs"
+                run: "docker compose run php make docs"
 
