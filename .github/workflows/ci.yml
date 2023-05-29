@@ -269,10 +269,10 @@ jobs:
                 run: "docker compose exec php ls -l /app"
             -
                 name: "Composer install"
-                run: "docker compose exec php composer install --no-scripts --optimize-autoloader --classmap-authoritative"
+                run: "docker compose exec -u1001 php composer install --no-scripts --optimize-autoloader --classmap-authoritative"
             -
                 name: "Make Docs"
-                run: "docker compose exec php make docs"
+                run: "docker compose exec -u1001 php make docs"
             - 
                 name: Stop containers
                 # the containers should be stopped regardless of 
