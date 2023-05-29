@@ -260,23 +260,4 @@ jobs:
                 uses: "actions/checkout@v2"
             -
                 name: "Build"
-                run: "docker compose up -d"
-            -
-                name: "Debug"
-                run: "docker compose exec php ls -l"
-            -
-                name: "Debug"
-                run: "docker compose exec php ls -l /app"
-            -
-                name: "Composer install"
-                run: "docker compose exec php composer install --no-scripts --optimize-autoloader --classmap-authoritative"
-            -
-                name: "Make Docs"
-                run: "docker compose exec php make docs"
-            - 
-                name: Stop containers
-                # the containers should be stopped regardless of 
-                # the test result
-                if: always()
-                run: docker-compose down
-
+                run: "make docs"

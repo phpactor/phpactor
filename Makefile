@@ -15,7 +15,7 @@ build:
 	mkdir build
 
 vimdoc:
-	docker compose run php vimdoc . && mv doc/app.txt doc/phpactor.txt -f
+	docker compose run php vimdoc .
 
 configreference:
 	docker compose run php ./bin/phpactor development:generate-documentation extension > doc/reference/configuration.rst

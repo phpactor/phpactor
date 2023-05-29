@@ -11,4 +11,4 @@ COPY requirements.txt ./
 COPY docker/php.ini /usr/local/etc/php/conf.d/
 RUN pip3 install -r requirements.txt
 RUN git config --global init.defaultBranch master
-WORKDIR /app
+WORKDIR /phpactor
