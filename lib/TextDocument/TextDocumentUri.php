@@ -34,7 +34,7 @@ class TextDocumentUri
         $match = preg_match('{^(?<scheme>[a-z]+://){0,1}(?<path>.+)?}', $uri, $components);
 
         if (!isset($components['scheme']) || $components['scheme'] == '') {
-            $components['scheme'] = 'file';
+            $components['scheme'] = self::SCHEME_FILE;
         } else {
             $components['scheme'] = substr($components['scheme'], 0, -3);
         }
@@ -45,8 +45,6 @@ class TextDocumentUri
                 $uri
             ));
         }
-
-        $components['scheme'] = $components['scheme'] ?? self::SCHEME_FILE;
 
         if (!in_array($components['scheme'], [self::SCHEME_FILE, self::SCHEME_UNTITLED])) {
             throw new InvalidUriException(sprintf(

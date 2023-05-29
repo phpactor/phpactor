@@ -14,12 +14,11 @@ class TextDocumentUriTest extends TestCase
         $this->assertEquals('file://' . __FILE__, (string) $uri);
     }
 
-    // TODO: This doesn't work
-    //public function testCreateUntitled(): void
-    //{
-    //    $uri = TextDocumentUri::fromString('file://' . __FILE__);
-    //    $this->assertEquals('file://' . __FILE__, (string) $uri);
-    //}
+    public function testCreateUntitled(): void
+    {
+        $uri = TextDocumentUri::fromString('untitled://' . __FILE__);
+        $this->assertEquals('untitled:' . __FILE__, (string) $uri);
+    }
 
     public function testNormalizesToFileScheme(): void
     {
