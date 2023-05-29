@@ -14,6 +14,9 @@ BUILDDIR          = build
 build:
 	mkdir build
 
+composer:
+	composer install --no-scripts --optimize-autoloader --classmap-authoritative
+
 vimdoc:
 	docker compose run php vimdoc .
 
@@ -35,7 +38,7 @@ sphinx:
 sphinxlatex:
 	docker compose run php $(SPHINXBUILD) -M latex "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-docs: configreference vimdoc sphinx
+docs: composer configreference vimdoc sphinx
 
 clean:
 	rm -Rf build
