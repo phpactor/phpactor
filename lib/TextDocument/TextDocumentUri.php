@@ -24,13 +24,19 @@ class TextDocumentUri
 
     public static function fromString(string $uri): self
     {
-        $components = parse_url($uri);
-
-        if (false === $components) {
+        if (!$uri) {
             throw new InvalidUriException(sprintf(
                 'Could not parse_url "%s"',
                 $uri
             ));
+        }
+
+        $match = preg_match('{^(?<scheme>[a-z]+://){0,1}(?<path>.+)?}', $uri, $components);
+
+        if (!isset($components['scheme']) || $components['scheme'] == '') {
+            $components['scheme'] = 'file';
+        } else {
+            $components['scheme'] = substr($components['scheme'], 0, -3);
         }
 
         if (!isset($components['path'])) {

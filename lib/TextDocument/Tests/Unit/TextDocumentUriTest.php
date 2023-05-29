@@ -37,14 +37,14 @@ class TextDocumentUriTest extends TestCase
     {
         $this->expectException(InvalidUriException::class);
         $this->expectExceptionMessage('not parse');
-        TextDocumentUri::fromString('no:///this:isnot/ && !');
+        TextDocumentUri::fromString('');
     }
 
     public function testExceptionOnNoPath(): void
     {
         $this->expectException(InvalidUriException::class);
         $this->expectExceptionMessage('has no path');
-        TextDocumentUri::fromString('file://foo');
+        TextDocumentUri::fromString('file://');
     }
 
     public function testFromPath(): void
