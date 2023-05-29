@@ -19,6 +19,11 @@ final class FilePath
         return $this->uri->path();
     }
 
+    public function uriAsString(): string
+    {
+        return $this->uri->__toString();
+    }
+
     public static function fromString(string $string): FilePath
     {
         $textDocumentUri = TextDocumentUri::fromString($string);
