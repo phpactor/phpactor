@@ -179,8 +179,8 @@ class FilePathTest extends TestCase
 
     public function testAsSplFileInfo(): void
     {
-       $path1 = FilePath::fromUnknown(new SplFileInfo('file://' . __FILE__));
-       self::assertEquals(__FILE__, $path1->__toString());
-       self::assertEquals('file://' . __FILE__, $path1->asSplFileInfo()->__toString());
+        $path1 = FilePath::fromUnknown(new SplFileInfo('file://' . __FILE__));
+        self::assertEquals(__FILE__, $path1->__toString());
+        self::assertEquals(__FILE__, $path1->asSplFileInfo()->__toString());
     }
 }

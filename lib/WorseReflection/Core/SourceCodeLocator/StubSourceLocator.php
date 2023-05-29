@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 use SplFileInfo;
 
 final class StubSourceLocator implements SourceCodeLocator
@@ -64,7 +65,12 @@ final class StubSourceLocator implements SourceCodeLocator
         }
 
         if (!file_exists($this->cacheDir)) {
-            mkdir($this->cacheDir, 0777, true);
+            if (!@mkdir($this->cacheDir, 0777, true)) {
+                throw new RuntimeException(sprintf(
+                    'Could not create cache dir "%s"',
+                    $this->cacheDir
+                ));
+            }
         }
 
         file_put_contents($this->serializedMapPath(), serialize($map));
