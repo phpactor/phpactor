@@ -14,7 +14,7 @@ class TextDocumentUriTest extends TestCase
         $this->assertEquals('file://' . __FILE__, (string) $uri);
     }
 
-    public function testCreateUntitledOtherScheme(): void
+    public function testCreateUntitled(): void
     {
         $uri = TextDocumentUri::fromString('untitled:Untitled-1');
         $this->assertEquals('untitled:Untitled-1', (string) $uri);
