@@ -52,7 +52,7 @@ class AutoConfigListener implements ListenerProviderInterface
             }
 
             if ($changes) {
-                $this->clientApi->window()->showMessage()->info(sprintf('%d changes applied to .phpactor.json, restart the language server for them to take affect', $changes));
+                $this->clientApi->window()->showMessage()->info(sprintf('%d changes applied to .phpactor.json, restart the language server for them to take effect', $changes));
             }
         });
     }
