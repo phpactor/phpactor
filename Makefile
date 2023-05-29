@@ -21,10 +21,9 @@ vimdoc:
 	docker compose run php vimdoc .
 
 configreference:
-	docker compose run php ./bin/phpactor development:generate-documentation extension > doc/reference/configuration.rst
-	docker compose run php ./bin/phpactor development:generate-documentation rpc > doc/reference/rpc_command.rst
-	docker compose run php ./bin/phpactor development:generate-documentation diagnostic > doc/reference/diagnostic.rst
-	cat doc/reference/configuration.rst | head -n 465 | tail -n10 
+	./bin/phpactor development:generate-documentation extension > doc/reference/configuration.rst
+	./bin/phpactor development:generate-documentation rpc > doc/reference/rpc_command.rst
+	./bin/phpactor development:generate-documentation diagnostic > doc/reference/diagnostic.rst
 
 # Put it first so that "make" without argument is like "make help".
 help:
