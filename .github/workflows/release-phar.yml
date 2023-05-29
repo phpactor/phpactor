@@ -27,11 +27,7 @@ jobs:
             composer-options: "--no-scripts --no-dev"
 
       - name: Compile phpactor.phar
-        run: bin/build-phar.sh
-        env:
-          GPG_SIGNING: 0
-          # GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
-          # GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        run: .github/build-phar.sh
 
       - name: Check existence of compiled .phar
         run: test -e build/phpactor.phar && exit 0 || exit 10
