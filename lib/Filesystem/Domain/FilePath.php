@@ -2,6 +2,7 @@
 
 namespace Phpactor\Filesystem\Domain;
 
+use Phpactor\TextDocument\TextDocumentUri;
 use RuntimeException;
 use SplFileInfo;
 use InvalidArgumentException;
@@ -9,34 +10,19 @@ use Symfony\Component\Filesystem\Path;
 
 final class FilePath
 {
-    private function __construct(private string $path)
+    private function __construct(private TextDocumentUri $uri)
     {
-        if (false === Path::isAbsolute($path)) {
-            throw new InvalidArgumentException(sprintf(
-                'File path must be absolute, but "%s" given',
-                $path
-            ));
-        }
     }
 
     public function __toString(): string
     {
-        return $this->path;
+        return $this->uri->path();
     }
 
     public static function fromString(string $string): FilePath
     {
-        $url = preg_match('{([a-z]+://)?(.*)}', $string, $matches);
-
-        if (0 === $url) {
-            throw new RuntimeException(sprintf('Cannot guess path from "%s"', $string));
-        }
-
-        if (!in_array($matches[1], ['', 'file://', 'phar://'])) {
-            throw new RuntimeException(sprintf('Unsupported scheme "%s" for path "%s"', $matches[1], $string));
-        }
-
-        return new self((string)$matches[2]);
+        $textDocumentUri = TextDocumentUri::fromString($string);
+        return new self($textDocumentUri);
     }
 
     public static function fromParts(array $parts): FilePath
@@ -46,12 +32,12 @@ final class FilePath
             $path = '/'.$path;
         }
 
-        return new self($path);
+        return self::fromString($path);
     }
 
     public static function fromSplFileInfo(SplFileInfo $fileInfo): FilePath
     {
-        return new self((string) $fileInfo);
+        return self::fromString((string) $fileInfo);
     }
 
     public static function fromUnknown($path): FilePath
@@ -80,12 +66,12 @@ final class FilePath
 
     public function isDirectory(): bool
     {
-        return is_dir($this->path);
+        return is_dir($this->uri->path());
     }
 
     public function asSplFileInfo(): SplFileInfo
     {
-        return new SplFileInfo($this->path());
+        return new SplFileInfo($this->uri->path());
     }
 
     public function makeAbsoluteFromString(string $path): FilePath
@@ -109,7 +95,7 @@ final class FilePath
 
     public function extension(): string
     {
-        return Path::getExtension($this->path);
+        return Path::getExtension($this->uri->path());
     }
 
     public function concatPath(FilePath $path): FilePath
@@ -138,6 +124,6 @@ final class FilePath
 
     public function path(): string
     {
-        return $this->path;
+        return $this->uri->path();
     }
 }
