@@ -54,6 +54,11 @@ class FilePathTest extends TestCase
             '/foo.php',
         ];
 
+        yield 'PHAR string' => [
+            'phar:///foo.php',
+            '/foo.php',
+        ];
+
         yield 'array' => [
             [ 'one', 'two' ],
             '/one/two'
