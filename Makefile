@@ -22,6 +22,7 @@ vimdoc:
 
 configreference:
 	docker compose run php ./bin/phpactor development:generate-documentation extension > doc/reference/configuration.rst
+	docker compose run php ./bin/phpactor development:generate-documentation extension
 	docker compose run php ./bin/phpactor development:generate-documentation rpc > doc/reference/rpc_command.rst
 	docker compose run php ./bin/phpactor development:generate-documentation diagnostic > doc/reference/diagnostic.rst
 
