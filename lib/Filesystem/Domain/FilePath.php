@@ -5,7 +5,6 @@ namespace Phpactor\Filesystem\Domain;
 use Phpactor\TextDocument\TextDocumentUri;
 use RuntimeException;
 use SplFileInfo;
-use InvalidArgumentException;
 use Symfony\Component\Filesystem\Path;
 
 final class FilePath
@@ -105,7 +104,7 @@ final class FilePath
 
     public function concatPath(FilePath $path): FilePath
     {
-        return new self(Path::join($this->path(), (string) $path));
+        return self::fromString(Path::join($this->path(), (string) $path));
     }
 
     public function isWithin(FilePath $path): bool

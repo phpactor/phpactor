@@ -4,6 +4,7 @@ namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\TextDocument\Exception\InvalidUriException;
 use RuntimeException;
 use SplFileInfo;
 use stdClass;
@@ -16,8 +17,8 @@ class FilePathTest extends TestCase
      */
     public function testNotAbsolute(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('File path must be absolute, but "foobar" given');
+        $this->expectException(InvalidUriException::class);
+        $this->expectExceptionMessage('must be absolute');
         FilePath::fromString('foobar');
     }
 
@@ -89,12 +90,12 @@ class FilePathTest extends TestCase
 
         yield 'unsupported scheme' => [
             'ftp://host/foo.php',
-            'Unsupported scheme "ftp://" for path "ftp://host/foo.php"',
+            'are supported', // only X schemes are supported
         ];
 
         yield 'URI without a path' => [
             'http://.?x=1&n',
-            'Unsupported scheme "http://" for path "http://.?x=1&n"',
+            'are supported', // only X schemes are supported
         ];
     }
 

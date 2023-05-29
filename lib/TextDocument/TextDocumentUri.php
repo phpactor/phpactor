@@ -18,10 +18,10 @@ class TextDocumentUri
 
     public function __toString(): string
     {
-        if ($this->scheme === self::SCHEME_FILE || $this->scheme === self::SCHEME_PHAR) {
-            return sprintf('%s://%s', $this->scheme, $this->path);
+        if ($this->scheme === self::SCHEME_UNTITLED) {
+            return sprintf('%s:%s', $this->scheme, $this->path);
         }
-        return sprintf('%s:%s', $this->scheme, $this->path);
+        return sprintf('%s://%s', $this->scheme, $this->path);
     }
 
     public static function fromString(string $uri): self
@@ -31,6 +31,10 @@ class TextDocumentUri
                 'Could not parse_url "%s"',
                 $uri
             ));
+        }
+
+        if (substr($uri, 0, 9) === 'untitled:') {
+            return new self(self::SCHEME_UNTITLED, substr($uri, 9));
         }
 
         $match = preg_match('{^(?<scheme>[a-z]+://){0,1}(?<path>.+)?}', $uri, $components);

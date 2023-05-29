@@ -14,10 +14,10 @@ class TextDocumentUriTest extends TestCase
         $this->assertEquals('file://' . __FILE__, (string) $uri);
     }
 
-    public function testCreateUntitled(): void
+    public function testCreateUntitledOtherScheme(): void
     {
-        $uri = TextDocumentUri::fromString('untitled://' . __FILE__);
-        $this->assertEquals('untitled:' . __FILE__, (string) $uri);
+        $uri = TextDocumentUri::fromString('untitled:Untitled-1');
+        $this->assertEquals('untitled:Untitled-1', (string) $uri);
     }
 
     public function testCreatePhar(): void
