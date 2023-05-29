@@ -8,7 +8,6 @@ use Phpactor\TextDocument\Exception\InvalidUriException;
 use RuntimeException;
 use SplFileInfo;
 use stdClass;
-use InvalidArgumentException;
 
 class FilePathTest extends TestCase
 {
