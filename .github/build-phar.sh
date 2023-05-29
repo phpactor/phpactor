@@ -2,6 +2,7 @@
 
 set -e
 
+composer install --no-dev
 mkdir -p build
 cd build
 
