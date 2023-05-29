@@ -15,27 +15,27 @@ build:
 	mkdir build
 
 vimdoc:
-	vimdoc .
+	docker compose run php vimdoc . && mv doc/app.txt doc/phpactor.txt -f
 
 configreference:
-	./bin/phpactor development:generate-documentation extension > doc/reference/configuration.rst
-	./bin/phpactor development:generate-documentation rpc > doc/reference/rpc_command.rst
-	./bin/phpactor development:generate-documentation diagnostic > doc/reference/diagnostic.rst
+	docker compose run php ./bin/phpactor development:generate-documentation extension > doc/reference/configuration.rst
+	docker compose run php ./bin/phpactor development:generate-documentation rpc > doc/reference/rpc_command.rst
+	docker compose run php ./bin/phpactor development:generate-documentation diagnostic > doc/reference/diagnostic.rst
 
 # Put it first so that "make" without argument is like "make help".
 help:
-	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	docker compose run php $(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinxwatch:
-	@$(SPHINXAUTOBUILD) "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	docker compose run php $(SPHINXAUTOBUILD) "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinx:
-	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	docker compose run php $(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 sphinxlatex:
-	@$(SPHINXBUILD) -M latex "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	docker compose run php $(SPHINXBUILD) -M latex "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-docs: configreference sphinx vimdoc
+docs: configreference vimdoc sphinx
 
 clean:
 	rm -Rf build
