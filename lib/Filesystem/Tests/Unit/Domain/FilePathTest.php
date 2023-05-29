@@ -89,17 +89,12 @@ class FilePathTest extends TestCase
 
         yield 'unsupported scheme' => [
             'ftp://host/foo.php',
-            'Unsupported scheme "ftp" for path "ftp://host/foo.php"',
-        ];
-
-        yield 'malformed string' => [
-            'bar:///foo.php',
-            'Cannot guess path from "bar:///foo.php"',
+            'Unsupported scheme "ftp://" for path "ftp://host/foo.php"',
         ];
 
         yield 'URI without a path' => [
             'http://.?x=1&n',
-            'No path info from URI "http://.?x=1&n"',
+            'Unsupported scheme "http://" for path "http://.?x=1&n"',
         ];
     }
 

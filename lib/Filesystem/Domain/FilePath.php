@@ -26,25 +26,17 @@ final class FilePath
 
     public static function fromString(string $string): FilePath
     {
-        $url = parse_url($string);
+        $url = preg_match('{([a-z]+://)?(.*)}', $string, $matches);
 
-        if (false === $url) {
+        if (0 === $url) {
             throw new RuntimeException(sprintf('Cannot guess path from "%s"', $string));
         }
 
-        $url += ['scheme' => null, 'path' => null];
-
-        ['scheme' => $scheme, 'path' => $path] = $url;
-
-        if (null === $path) {
-            throw new RuntimeException(sprintf('No path info from URI "%s"', $string));
+        if (!in_array($matches[1], ['', 'file://', 'phar://'])) {
+            throw new RuntimeException(sprintf('Unsupported scheme "%s" for path "%s"', $matches[1], $string));
         }
 
-        if (null !== $scheme && 'file' !== $scheme) {
-            throw new RuntimeException(sprintf('Unsupported scheme "%s" for path "%s"', $scheme, $string));
-        }
-
-        return new self((string)$path);
+        return new self((string)$matches[2]);
     }
 
     public static function fromParts(array $parts): FilePath
