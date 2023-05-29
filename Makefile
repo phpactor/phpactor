@@ -14,17 +14,7 @@ BUILDDIR          = build
 build:
 	mkdir build
 
-build/vimdoc:
-	git clone https://github.com/google/vimdoc build/vimdoc
-
-build/vimdoc/build: build/vimdoc
-	cd build/vimdoc; python3 setup.py config
-	cd build/vimdoc; python3 setup.py build
-
-build/bin/vimdoc: build/vimdoc/build
-	cd build/vimdoc; python3 setup.py install --user
-
-vimdoc: build/bin/vimdoc
+vimdoc:
 	vimdoc .
 
 configreference:

@@ -1,0 +1,9 @@
+services:
+  php:
+    build: 
+      dockerfile: ./docker/Dockerfile
+      context: ./
+    command: sleep infinity
+    user: "1000:1000"
+    volumes:
+      - ./:/app:delegated
