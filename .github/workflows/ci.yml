@@ -254,39 +254,18 @@ jobs:
         name: "Lint Docs (${{ matrix.php-version }})"
 
         runs-on: "ubuntu-latest"
-
-        strategy:
-            matrix:
-                php-version:
-                    - '8.0'
-
         steps:
             -
                 name: "Checkout code"
                 uses: "actions/checkout@v2"
             -
-                name: "Install PHP"
-                uses: "shivammathur/setup-php@v2"
-                with:
-                    coverage: "none"
-                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
-                    php-version: "${{ matrix.php-version }}"
-                    tools: composer:v2
+                name: "Build"
+                run: "docker compose up -d"
 
             -
                 name: "Composer install"
-                uses: "ramsey/composer-install@v1"
-                with:
-                    composer-options: "--no-scripts"
-            -
-                name: Install Doc Dependencies
-                run: |
-                    wget https://github.com/google/vimdoc/releases/download/v0.6.0/vimdoc_0.6.0-1_all.deb
-                    sudo dpkg -i vimdoc_0.6.0-1_all.deb
-                    sudo pip3 install -r requirements.txt
-                    composer install --optimize-autoloader --classmap-authoritative
-
+                run: "docker compose run -u1000 php composer install --no-scripts --optimize-autoloader --classmap-authoritative"
             -
                 name: "Make Docs"
-                run: "make docs"
+                run: "docker compose run -u1000 php make docs"
 
