@@ -7,6 +7,7 @@ use Phly\EventDispatcher\EventDispatcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
@@ -543,7 +544,7 @@ class LanguageServerExtension implements Extension
             }
 
             return new OutsourcedDiagnosticsProvider([
-                $this->currentScriptName(),
+                $container->parameter(CoreExtension::PARAM_PHPACTOR_BIN)->string(),
                 'language-server:diagnostics',
             ], $projectPath, $this->logger($container), $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT)->int());
         }, [
@@ -638,12 +639,5 @@ class LanguageServerExtension implements Extension
 
         /** @var DiagnosticsProvider[] $providers */
         return $providers;
-    }
-
-    private function currentScriptName(): string
-    {
-        return $_SERVER['SCRIPT_NAME'] ?? throw new RuntimeException(sprintf(
-            'Cannot determine current script name from $SERVER[\'SCRIPT_NAME\'] (required for outsourced diagnostics'
-        ));
     }
 }

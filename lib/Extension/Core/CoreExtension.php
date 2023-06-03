@@ -37,6 +37,7 @@ class CoreExtension implements Extension
     const PARAM_DUMPER = 'console_dumper_default';
     const PARAM_XDEBUG_DISABLE = 'xdebug_disable';
     const PARAM_COMMAND = 'command';
+    const PARAM_PHPACTOR_BIN = 'phpactor_bin';
     const PARAM_WARN_ON_DEVELOP = 'core.warn_on_develop';
     const PARAM_MIN_MEMORY_LIMIT = 'core.min_memory_limit';
     const PARAM_SCHEMA = '$schema';
@@ -46,6 +47,7 @@ class CoreExtension implements Extension
         $schema->setDefaults([
             self::PARAM_DUMPER => 'indented',
             self::PARAM_XDEBUG_DISABLE => true,
+            self::PARAM_PHPACTOR_BIN => null,
             self::PARAM_COMMAND => null,
             self::PARAM_WARN_ON_DEVELOP => true,
             self::PARAM_MIN_MEMORY_LIMIT => 1610612736,
@@ -54,6 +56,7 @@ class CoreExtension implements Extension
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
             self::PARAM_COMMAND => 'Internal use only - name of the command which was executed',
+            self::PARAM_PHPACTOR_BIN => 'Internal use only - name path to Phpactor binary',
             self::PARAM_DUMPER => 'Name of the "dumper" (renderer) to use for some CLI commands',
             self::PARAM_WARN_ON_DEVELOP => 'Internal use only: if an warning will be issued when on develop, may be removed in the future',
             self::PARAM_MIN_MEMORY_LIMIT => 'Ensure that PHP has a memory_limit of at least this amount in bytes',
