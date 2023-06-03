@@ -543,7 +543,7 @@ class LanguageServerExtension implements Extension
             }
 
             return new OutsourcedDiagnosticsProvider([
-                __DIR__ . '/../../../bin/phpactor',
+                $this->currentScriptName(),
                 'language-server:diagnostics',
             ], $projectPath, $this->logger($container), $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT)->int());
         }, [
@@ -638,5 +638,12 @@ class LanguageServerExtension implements Extension
 
         /** @var DiagnosticsProvider[] $providers */
         return $providers;
+    }
+
+    private function currentScriptName(): string
+    {
+        return $_SERVER['SCRIPT_NAME'] ?? throw new RuntimeException(sprintf(
+            'Cannot determine current script name from $SERVER[\'SCRIPT_NAME\'] (required for outsourced diagnostics'
+        ));
     }
 }
