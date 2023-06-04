@@ -19,6 +19,7 @@ Improvements:
 
 Bug fixes:
 
+  - Fix error handling for responses from language client #2283
   - Do not show named parameters after string literal argument #2259
   - Fix "instanceof" behavior for statically reflected classes #2273
   - Fix behavior when user cancels type selection on goto type #2270
