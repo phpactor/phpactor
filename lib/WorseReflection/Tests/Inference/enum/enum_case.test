@@ -5,7 +5,7 @@ enum Foo {
    const BAR = 'bar';
 }
 
-wrAssertType('Foo::FOO', Foo::FOO);
+wrAssertType('enum(Foo::FOO)', Foo::FOO);
 wrAssertType('<missing>', Foo::FOO->value);
 wrAssertType('string', Foo::FOO->name);
 wrAssertType('"bar"', Foo::BAR);
