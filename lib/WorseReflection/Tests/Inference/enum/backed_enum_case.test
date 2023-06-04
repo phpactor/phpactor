@@ -1,7 +1,9 @@
 <?php
 
-enum Foo: string 
+
+enum Foo: string  {
    case BAR = 'bar';
 }
 
-wrAssertType('bar', Foo::FOO->value);
+wrAssertType('Foo::BAR', Foo::BAR);
+wrAssertType('bar', Foo::BAR->value);
