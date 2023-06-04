@@ -2,7 +2,8 @@
 
 namespace Phpactor;
 
-use Composer\InstalledVersions;
+use PackageVersions\Versions;
+use Phpactor\Cast\Cast;
 use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -24,7 +25,7 @@ class Application extends SymfonyApplication
 
     public function __construct(private string $vendorDir, private string $phpactorBin)
     {
-        parent::__construct('Phpactor', InstalledVersions::getVersion('phpactor/phpactor'));
+        parent::__construct('Phpactor', Cast::toString(Versions::getVersion('phpactor/phpactor')));
     }
 
     public function doRun(InputInterface $input, OutputInterface $output): int
