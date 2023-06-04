@@ -6,7 +6,9 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
@@ -363,5 +365,18 @@ class NodeUtil
     public static function byteOffsetRangeForNode(Variable $node): ByteOffsetRange
     {
         return ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition());
+    }
+
+    public static function argumentOffset(ArgumentExpressionList $argumentExpressionList, ArgumentExpression $argument): ?int
+    {
+        $offset = 0;
+        foreach ($argumentExpressionList->getChildNodes() as $funcArg) {
+            if ($argument === $funcArg) {
+                return $offset;
+            }
+            $offset++;
+        }
+
+        return null;
     }
 }
