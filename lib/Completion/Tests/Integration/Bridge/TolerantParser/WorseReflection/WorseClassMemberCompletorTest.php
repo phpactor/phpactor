@@ -870,6 +870,28 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                     EOT
                 , [
                     [
+                        'type' => Suggestion::TYPE_METHOD,
+                        'name' => 'cases',
+                        'short_description' => 'pub cases(): BackedEnumCase[]',
+                        'snippet' => 'cases()',
+                    ],
+                    [
+                        'type' => Suggestion::TYPE_METHOD,
+                        'name' => 'from',
+                        'short_description' => 'pub from(int|string $value): static(Enum1)',
+                        'snippet' => 'from(${1:\\$value})${0}',
+                    ],
+                    [
+                        'type' => Suggestion::TYPE_PROPERTY,
+                        'name' => 'name',
+                    ],
+                    [
+                        'type' => Suggestion::TYPE_METHOD,
+                        'name' => 'tryFrom',
+                        'short_description' => 'pub tryFrom(int|string $value): static(Enum1)|null',
+                        'snippet' => 'tryFrom(${1:\\$value})${0}',
+                    ],
+                    [
                         'type' => Suggestion::TYPE_PROPERTY,
                         'name' => 'value',
                     ],

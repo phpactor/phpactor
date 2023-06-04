@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
+use BackedEnumCase;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;
@@ -21,6 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\EnumBackedCaseType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -111,7 +113,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        if (!$type instanceof ClassType) {
+        if (!$type instanceof ClassType && !$type instanceof EnumBackedCaseType) {
             return;
         }
 
