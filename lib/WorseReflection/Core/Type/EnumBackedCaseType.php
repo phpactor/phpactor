@@ -23,7 +23,7 @@ class EnumBackedCaseType extends Type implements ClassLikeType
 
     public function __toString(): string
     {
-        return sprintf('%s::%s', $this->enumType, $this->name);
+        return sprintf('enum(%s::%s)', $this->enumType, $this->name);
     }
 
     public function toPhpString(): string

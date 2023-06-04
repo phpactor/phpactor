@@ -97,7 +97,7 @@ class ReflectionEnumTest extends IntegrationTestCase
             function (ReflectionEnum $class): void {
                 $case = $class->cases()->get('FOOBAR');
                 self::assertEquals('FOOBAR', $case->name());
-                self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
+                self::assertEquals('enum(Enum1::FOOBAR)', $case->type()->__toString());
                 self::assertInstanceOf(MissingType::class, $case->value());
                 self::assertInstanceOf(EnumCaseType::class, $case->type());
                 self::assertEquals('FOOBAR', $case->name());
@@ -120,7 +120,7 @@ class ReflectionEnumTest extends IntegrationTestCase
                 $case = $class->cases()->get('FOOBAR');
                 self::assertEquals('FOOBAR', $case->name());
                 self::assertEquals('"FOO"', $case->value()->__toString());
-                self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
+                self::assertEquals('enum(Enum1::FOOBAR)', $case->type()->__toString());
                 self::assertInstanceOf(EnumBackedCaseType::class, $case->type());
                 self::assertTrue($class->isBacked());
                 self::assertEquals('string', $class->backedType());

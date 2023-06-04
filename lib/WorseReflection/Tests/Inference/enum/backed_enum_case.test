@@ -5,5 +5,5 @@ enum Foo: string  {
    case BAR = 'bar';
 }
 
-wrAssertType('Foo::BAR', Foo::BAR);
-wrAssertType('bar', Foo::BAR->value);
+wrAssertType('enum(Foo::BAR)', Foo::BAR);
+wrAssertType('int|string', Foo::BAR->value);
