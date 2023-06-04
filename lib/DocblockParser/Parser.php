@@ -495,7 +495,7 @@ final class Parser
         $token = $this->tokens->chomp(Token::T_TAG);
         assert($token !== null);
 
-        return new SeeTag($token, $this->parseText());
+        return new SeeTag($token, $this->parseText([Token::T_BRACKET_CURLY_CLOSE]));
     }
 
     private function parseMixin(): MixinTag
@@ -536,20 +536,20 @@ final class Parser
      * Parse text until the next tag
      *
      * This method assumes that any prose after a tag belongs to the tag.
+     *
+     * @param array<string> $additionalStopTokens
      */
-    private function parseText(): ?TextNode
+    private function parseText(array $additionalStopTokens = []): ?TextNode
     {
         if (null === $this->tokens->current) {
             return null;
         }
 
         $text = [];
+        $stopTokens = array_merge([Token::T_PHPDOC_CLOSE, Token::T_TAG], $additionalStopTokens);
 
         while ($this->tokens->current) {
-            if ($this->tokens->current->type === Token::T_PHPDOC_CLOSE) {
-                break;
-            }
-            if ($this->tokens->current->type === Token::T_TAG) {
+            if (in_array($this->tokens->current->type, $stopTokens)) {
                 break;
             }
             $text[] = $this->tokens->chomp();

@@ -91,6 +91,16 @@ class NodeTest extends NodeTestCase
             }
         ];
 
+        yield 'see tag inline' => [
+            '/** Refer to {@see Foo::Bar} if you want more information  */',
+            function (Docblock $block): void {
+                self::assertTrue($block->hasTag(SeeTag::class));
+                /** @var SeeTag $tag */
+                $tag = $block->tags(SeeTag::class)->current();
+                self::assertEquals('Foo::Bar', $tag->text());
+            }
+        ];
+
         yield [ '/** This is docblock @deprecated Foo */'];
         yield [ '@mixin Foo\Bar'];
         yield [ '@param string $foo This is a parameter'];
