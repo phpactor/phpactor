@@ -857,6 +857,25 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 ]
             ];
 
+            yield 'enum case' => [
+                <<<'EOT'
+                    <?php
+
+                    enum Enum1: string {
+                        case FOOBAR = 'bar';
+                    }
+
+                    Enum1::FOOBAR-><>
+
+                    EOT
+                , [
+                    [
+                        'type' => Suggestion::TYPE_PROPERTY,
+                        'name' => 'value',
+                    ],
+                ]
+            ];
+
             /** See https://github.com/phpactor/phpactor/issues/1612
             yield 'backed enum' => [
                 <<<'EOT'
