@@ -107,7 +107,8 @@ class LanguageServerExtension implements Extension
     public const LOG_CHANNEL = 'LSP';
     public const PARAM_SHUTDOWN_GRACE_PERIOD = 'language_server.shutdown_grace_period';
     public const PARAM_SELF_DESTRUCT_TIMEOUT = 'language_server.self_destruct_timeout';
-    const PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT = 'language_server.diagnostic_outsource_timeout';
+    public const PARAM_PHPACTOR_BIN = 'language_server.phpactor_bin';
+    public const PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT = 'language_server.diagnostic_outsource_timeout';
 
     public function configure(Resolver $schema): void
     {
@@ -127,6 +128,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_PROFILE => false,
             self::PARAM_TRACE => false,
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 200,
+            self::PARAM_PHPACTOR_BIN => __DIR__ . '/../../../bin/phpactor',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 2500,
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 5,
         ]);
@@ -149,6 +151,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_FILE_EVENTS => 'Register to receive file events',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time (in milliseconds) to wait before responding to a shutdown notification',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time (in milliseconds) after a shutdown request before self-destructing',
+            self::PARAM_PHPACTOR_BIN => 'Internal use only - name path to Phpactor binary',
         ]);
     }
 
@@ -543,7 +546,7 @@ class LanguageServerExtension implements Extension
             }
 
             return new OutsourcedDiagnosticsProvider([
-                __DIR__ . '/../../../bin/phpactor',
+                $container->parameter(self::PARAM_PHPACTOR_BIN)->string(),
                 'language-server:diagnostics',
             ], $projectPath, $this->logger($container), $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT)->int());
         }, [

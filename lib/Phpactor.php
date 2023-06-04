@@ -80,7 +80,7 @@ use function sprintf;
 
 class Phpactor
 {
-    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir): Container
+    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir, string $phpactorBin = null): Container
     {
         $config = [];
 
@@ -103,6 +103,9 @@ class Phpactor
 
         $config = $loader->load();
         $config[CoreExtension::PARAM_COMMAND] = $input->getFirstArgument();
+        if ($phpactorBin) {
+            $config[LanguageServerExtension::PARAM_PHPACTOR_BIN] = $phpactorBin;
+        }
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = array_merge([ IndexerExtension::PARAM_STUB_PATHS => [] ], $config);
         $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/vendor/jetbrains/phpstorm-stubs';
