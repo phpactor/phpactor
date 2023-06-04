@@ -15,6 +15,7 @@ use Phpactor\DocblockParser\Ast\ParameterList;
 use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
+use Phpactor\DocblockParser\Ast\Tag\SeeTag;
 use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
 use Phpactor\DocblockParser\Ast\TextNode;
 use Phpactor\DocblockParser\Ast\TypeList;
@@ -95,6 +96,7 @@ final class Parser
             '@var' => $this->parseVar(),
             '@throws' => $this->parseThrows(),
             '@deprecated' => $this->parseDeprecated(),
+            '@see' => $this->parseSee(),
             '@method' => $this->parseMethod(),
             '@property', '@property-read' => $this->parseProperty(),
             '@mixin' => $this->parseMixin(),
@@ -482,10 +484,18 @@ final class Parser
 
     private function parseDeprecated(): DeprecatedTag
     {
-        return new DeprecatedTag(
-            $this->tokens->chomp(Token::T_TAG),
-            $this->parseText()
-        );
+        $token = $this->tokens->chomp(Token::T_TAG);
+        assert($token !== null);
+
+        return new DeprecatedTag($token, $this->parseText());
+    }
+
+    private function parseSee(): SeeTag
+    {
+        $token = $this->tokens->chomp(Token::T_TAG);
+        assert($token !== null);
+
+        return new SeeTag($token, $this->parseText());
     }
 
     private function parseMixin(): MixinTag

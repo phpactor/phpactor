@@ -5,11 +5,16 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\WorseReflection\Core\Deprecation;
 
 class DeprecatedUsageDiagnostic implements Diagnostic
 {
-    public function __construct(private ByteOffsetRange $range, private string $memberName, private string $message, private string $memberType)
-    {
+    public function __construct(
+        private ByteOffsetRange $range,
+        private string $memberName,
+        private Deprecation $deprecation,
+        private string $memberType
+    ) {
     }
 
     public function range(): ByteOffsetRange
@@ -24,10 +29,16 @@ class DeprecatedUsageDiagnostic implements Diagnostic
 
     public function message(): string
     {
-        if (!$this->message) {
-            return sprintf('Call to deprecated %s "%s"', $this->memberType, $this->memberName);
+        $message = sprintf('Call to deprecated %s "%s"', $this->memberType, $this->memberName);
+
+        if ($this->deprecation->message()) {
+            $message .= sprintf(': %s', $this->deprecation->message());
         }
 
-        return sprintf('Call to deprecated %s "%s": %s', $this->memberType, $this->memberName, $this->message);
+        if($this->deprecation->replacementSuggestion()) {
+            $message .= ' (see: '.$this->deprecation->replacementSuggestion().')';
+        }
+
+        return $message;
     }
 }

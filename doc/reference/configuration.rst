@@ -890,7 +890,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/phpactor"``
+**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1344,7 +1344,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
-**Default**: ``"\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:
