@@ -1334,6 +1334,19 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 **Default**: ``200``
 
 
+.. _param_language_server.phpactor_bin:
+
+
+``language_server.phpactor_bin``
+""""""""""""""""""""""""""""""""
+
+
+Internal use only - name path to Phpactor binary
+
+
+**Default**: ``"\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+
+
 .. _param_language_server.self_destruct_timeout:
 
 

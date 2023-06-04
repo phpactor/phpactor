@@ -2,7 +2,6 @@
 
 namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
-use BackedEnumCase;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\Variable;

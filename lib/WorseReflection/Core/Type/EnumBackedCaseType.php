@@ -2,18 +2,12 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionProperty;
-use Phpactor\WorseReflection\Core\Visibility;
 
 class EnumBackedCaseType extends Type implements ClassLikeType
 {
@@ -49,6 +43,7 @@ class EnumBackedCaseType extends Type implements ClassLikeType
         } catch (NotFound) {
             return $members;
         }
+        /** @phpstan-ignore-next-line */
         return $members->merge($case->members()->properties());
     }
 }
