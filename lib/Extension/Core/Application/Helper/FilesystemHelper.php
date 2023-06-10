@@ -30,6 +30,9 @@ final class FilesystemHelper
         return $contents;
     }
 
+    /**
+     * @return Generator<string, string>
+     */
     public static function globSourceDestination(string $src, string $dest): Generator
     {
         foreach (Glob::glob($src) as $globSrc) {

@@ -26,6 +26,9 @@ class ClassMover
     ) {
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getRelatedFiles(string $src): array
     {
         try {
@@ -54,9 +57,9 @@ class ClassMover
         $this->moveFile($logger, $filesystemName, $srcPath, $destPath, $moveRelatedFiles);
     }
 
-    public function moveClass(ClassMoverLogger $logger, string $filesystemName, string $srcName, string $destName, bool $moveRelatedFiles)
+    public function moveClass(ClassMoverLogger $logger, string $filesystemName, string $srcName, string $destName, bool $moveRelatedFiles): void
     {
-        return $this->moveFile(
+        $this->moveFile(
             $logger,
             $filesystemName,
             $this->classFileNormalizer->classToFile($srcName),
@@ -82,11 +85,11 @@ class ClassMover
     private function doMoveFile(ClassMoverLogger $logger, string $filesystemName, string $srcPath, string $destPath): void
     {
         $filesystem = $this->filesystemRegistry->get($filesystemName);
-        $destPath = Phpactor::normalizePath($destPath);
         if (str_ends_with($destPath, '/')) {
-            $destPath = $destPath . basename($srcPath);
+            $destPath .= basename($srcPath);
         }
 
+        $destPath = Phpactor::normalizePath($destPath);
         $srcPath = $filesystem->createPath($srcPath);
         $destPath = $filesystem->createPath($destPath);
 
@@ -152,7 +155,10 @@ class ClassMover
         }
     }
 
-    private function expandRelatedPaths($src, $dest, bool $moveRelatedFiles): array
+    /**
+     * @return array<string, string>
+     */
+    private function expandRelatedPaths(string $src, string $dest, bool $moveRelatedFiles): array
     {
         $paths = [
             $src => $dest
