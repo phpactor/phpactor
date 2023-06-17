@@ -1715,6 +1715,7 @@ Recurse over class implementations to resolve all class implementations (not jus
 **Default**: ``true``
 
 
+<<<<<<< HEAD
 .. _param_indexer.supported_extensions:
 
 
@@ -1731,6 +1732,8 @@ File extensions (e.g. `php`) for files that should be indexed
 **Default**: ``["php"]``
 
 
+=======
+>>>>>>> parent of 4464a475b (Update dockerbuild)
 .. _ObjectRendererExtension:
 
 

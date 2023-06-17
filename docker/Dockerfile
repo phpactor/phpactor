@@ -1,5 +1,5 @@
 FROM php:8.1-cli
-RUN apt-get update && apt-get install -y python3.11-venv python3-pip wget git inotify-tools libzip-dev
+RUN apt-get update && apt-get install -y python3-pip wget git inotify-tools libzip-dev
 RUN echo "$(curl -sS https://composer.github.io/installer.sig) -" > composer-setup.php.sig \
         && curl -sS https://getcomposer.org/installer | tee composer-setup.php | sha384sum -c composer-setup.php.sig \
         && php composer-setup.php && rm composer-setup.php* \
@@ -9,6 +9,6 @@ RUN wget https://github.com/google/vimdoc/releases/download/v0.7.1/vimdoc_0.7.1-
     dpkg -i vimdoc_0.7.1-1_all.deb
 COPY requirements.txt ./
 COPY docker/php.ini /usr/local/etc/php/conf.d/
-RUN python3 -m venv .venv && . .venv/bin/activate && pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt
 RUN git config --global init.defaultBranch master
 WORKDIR /phpactor
