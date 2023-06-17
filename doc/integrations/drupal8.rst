@@ -1,6 +1,17 @@
 Drupal 8
 ========
 
+Inc Files
+^^^^^^^^^
+
+By default Phpactor will not index `.inc` files.
+
+Run the following on your project to enable the indexing of `.inc` files.
+
+```
+phpactor config:set indexer.supported_extensions '["php", "inc"]'
+```
+
 Bootstrapping
 ~~~~~~~~~~~~~
 
@@ -115,3 +126,5 @@ Change your local ``.phpactor.yml`` to use 2 spaces for indentation:
    Code will still be generated using the PSR-2 standard. It would be
    necessary to override twig templates in ``.phpactor/templates`` to
    rectify this (or just use a CS fixer).
+
+

@@ -13,6 +13,7 @@ Features:
 
 Improvements:
 
+  - Support indexing PHP files that don't have a `.php` extension #2296
   - Allow language server auto-configuration to be disabled #2159
     (`language_server_configuration.auto_config`)
   - Symfony: show and consider non-public services by default (e.g. in tests it's
