@@ -1,4 +1,4 @@
-.. _ref_configuration:
+.. _configuration:
 
 Configuration
 =============
