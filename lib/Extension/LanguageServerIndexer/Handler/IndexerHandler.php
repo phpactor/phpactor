@@ -111,7 +111,7 @@ class IndexerHandler implements Handler, ServiceProvider
             );
             $this->progressNotifier->end($token, $message);
 
-            (function (?int $timeout) use ($cancel) {
+            (function (?int $timeout) use ($cancel): void {
                 if ($timeout === null) {
                     return;
                 }
