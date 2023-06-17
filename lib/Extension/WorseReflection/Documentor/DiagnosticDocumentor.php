@@ -28,6 +28,8 @@ class DiagnosticDocumentor implements Documentor
     public function document(string $commandName = ''): string
     {
         $docs = [
+            '.. _diagnostics:',
+            '',
             'Diagnostics',
             '===========',
             "\n",
