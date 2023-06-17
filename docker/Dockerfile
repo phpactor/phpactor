@@ -9,6 +9,6 @@ RUN wget https://github.com/google/vimdoc/releases/download/v0.7.1/vimdoc_0.7.1-
     dpkg -i vimdoc_0.7.1-1_all.deb
 COPY requirements.txt ./
 COPY docker/php.ini /usr/local/etc/php/conf.d/
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt --break-system-packages
 RUN git config --global init.defaultBranch master
 WORKDIR /phpactor
