@@ -19,7 +19,7 @@ class ExtensionDocumentor implements Documentor
     public function document(string $commandName=''): string
     {
         $docs = [
-            '.. _configuration:',
+            '.. _ref_configuration:',
             '',
             'Configuration',
             '=============',
