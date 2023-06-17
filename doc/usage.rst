@@ -8,5 +8,4 @@ Usage
    usage/configuration
    usage/language-server
    usage/vim-plugin
-   usage/other-clients
    usage/standalone

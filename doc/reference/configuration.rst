@@ -1,3 +1,5 @@
+.. _ref_configuration:
+
 Configuration
 =============
 
