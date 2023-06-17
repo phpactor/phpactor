@@ -23,6 +23,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use function Amp\asyncCall;
+use function Amp\delay;
 
 class IndexerHandler implements Handler, ServiceProvider
 {
@@ -35,6 +36,7 @@ class IndexerHandler implements Handler, ServiceProvider
         private LoggerInterface $logger,
         private EventDispatcherInterface $eventDispatcher,
         private ProgressNotifier $progressNotifier,
+        private ?int $reindexTimeout = null,
     ) {
     }
 
@@ -108,6 +110,21 @@ class IndexerHandler implements Handler, ServiceProvider
                 $this->watcher->describe()
             );
             $this->progressNotifier->end($token, $message);
+
+            (function (?int $timeout) use ($cancel): void {
+                if ($timeout === null) {
+                    return;
+                }
+                asyncCall(function () use ($cancel, $timeout) {
+                    while (true) {
+                        if ($cancel->isRequested()) {
+                            break;
+                        }
+                        yield delay($timeout);
+                        yield $this->reindex(true);
+                    }
+                });
+            })($this->reindexTimeout);
 
             return yield from $this->watch($process, $cancel);
         });
