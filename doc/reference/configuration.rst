@@ -890,7 +890,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1344,7 +1344,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
-**Default**: ``"\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:
@@ -1715,7 +1715,6 @@ Recurse over class implementations to resolve all class implementations (not jus
 **Default**: ``true``
 
 
-<<<<<<< HEAD
 .. _param_indexer.supported_extensions:
 
 
@@ -1732,8 +1731,6 @@ File extensions (e.g. `php`) for files that should be indexed
 **Default**: ``["php"]``
 
 
-=======
->>>>>>> parent of 4464a475b (Update dockerbuild)
 .. _ObjectRendererExtension:
 
 
