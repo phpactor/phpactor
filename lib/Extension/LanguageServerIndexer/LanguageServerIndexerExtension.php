@@ -28,6 +28,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 class LanguageServerIndexerExtension implements Extension
 {
     public const WORKSPACE_SYMBOL_SEARCH_LIMIT = 'language_server_indexer.workspace_symbol_search_limit';
+    public const PARAM_REINDEX_TIMEOUT = 'language_server_indexer.reindex_timeout';
+
 
 
     public function load(ContainerBuilder $container): void
@@ -66,6 +68,10 @@ class LanguageServerIndexerExtension implements Extension
     {
         $schema->setDefaults([
             self::WORKSPACE_SYMBOL_SEARCH_LIMIT => 250,
+            self::PARAM_REINDEX_TIMEOUT => 300,
+        ]);
+        $schema->setDescriptions([
+            self::PARAM_REINDEX_TIMEOUT => 'Unconditionally reindex modified files every N seconds',
         ]);
     }
 
@@ -79,6 +85,9 @@ class LanguageServerIndexerExtension implements Extension
                 LoggingExtension::channelLogger($container, 'lspindexer'),
                 $container->get(EventDispatcherInterface::class),
                 $container->get(ProgressNotifier::class),
+                (fn (mixed $timeout) => is_int($timeout) ? $timeout * 1000 : null)(
+                    $container->parameter(self::PARAM_REINDEX_TIMEOUT)->value()
+                )
             );
         }, [
             LanguageServerExtension::TAG_METHOD_HANDLER => [],

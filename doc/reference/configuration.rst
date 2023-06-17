@@ -1489,6 +1489,19 @@ LanguageServerIndexerExtension
 **Default**: ``250``
 
 
+.. _param_language_server_indexer.reindex_timeout:
+
+
+``language_server_indexer.reindex_timeout``
+"""""""""""""""""""""""""""""""""""""""""""
+
+
+Unconditionally reindex modified files every N seconds
+
+
+**Default**: ``300``
+
+
 .. _LanguageServerCodeTransformExtension:
 
 

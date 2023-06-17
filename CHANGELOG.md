@@ -10,6 +10,9 @@ Features:
   - Code action to suggest fixes for undefined variables (in case of typos) #2209
   - PHPUnit: code action for adding `setUp` / `tearDown` #2180 @mamazu
   - Making the completion label formatter configurable #2277 @mamazu
+  - Auto-reindex: unconditionally reindex modified files every N seconds
+    (default 5 minutes) - work around for missed file modification
+    notifications.
 
 Improvements:
 
