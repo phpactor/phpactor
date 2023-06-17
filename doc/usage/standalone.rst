@@ -58,9 +58,9 @@ Nix/OS
 
 Phpactor is avialable in NixOS.
 
-```
-nix-shell -p phpactor
-```
+.. code-block:: bash
+
+   $ nix-shell -p phpactor
 
 
 Health Check
