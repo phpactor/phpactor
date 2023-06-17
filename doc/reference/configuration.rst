@@ -1715,6 +1715,22 @@ Recurse over class implementations to resolve all class implementations (not jus
 **Default**: ``true``
 
 
+.. _param_indexer.supported_extensions:
+
+
+``indexer.supported_extensions``
+""""""""""""""""""""""""""""""""
+
+
+Type: array
+
+
+File extensions to be considered as containing PHP files
+
+
+**Default**: ``["php"]``
+
+
 .. _ObjectRendererExtension:
 
 
