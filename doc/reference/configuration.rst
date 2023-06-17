@@ -1725,7 +1725,7 @@ Recurse over class implementations to resolve all class implementations (not jus
 Type: array
 
 
-File extensions to be considered as containing PHP files
+File extensions (e.g. `php`) for files that should be indexed
 
 
 **Default**: ``["php"]``

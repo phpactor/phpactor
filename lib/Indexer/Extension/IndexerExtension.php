@@ -105,7 +105,7 @@ class IndexerExtension implements Extension
             self::PARAM_PROJECT_ROOT => 'The root path to use for scanning the index',
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'Recurse over class implementations to resolve all references',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
-            self::PARAM_SUPPORTED_EXTENSIONS => 'File extensions to be considered as containing PHP files',
+            self::PARAM_SUPPORTED_EXTENSIONS => 'File extensions (e.g. `php`) for files that should be indexed',
         ]);
         $schema->setTypes([
             self::PARAM_ENABLED_WATCHERS => 'array',
