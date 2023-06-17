@@ -1509,6 +1509,29 @@ Show an error if a diagnostic name cannot be resolved - can produce false positi
 **Default**: ``true``
 
 
+.. _LanguageServerConfigurationExtension:
+
+
+LanguageServerConfigurationExtension
+------------------------------------
+
+
+.. _param_language_server_configuration.auto_config:
+
+
+``language_server_configuration.auto_config``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Prompt to enable extensions which apply to your project on language server start
+
+
+**Default**: ``true``
+
+
 .. _IndexerExtension:
 
 
