@@ -37,6 +37,7 @@ use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
+use Microsoft\PhpParser\Node\Statement\GlobalDeclaration;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
@@ -72,6 +73,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ExpressionStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\GlobalDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\IfStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
@@ -123,6 +125,7 @@ final class DefaultResolverFactory
             EnumCaseDeclaration::class => new EnumCaseDeclarationResolver(),
             Parameter::class => new ParameterResolver(),
             UseVariableName::class => new UseVariableNameResolver(),
+            GlobalDeclaration::class => new GlobalDeclarationResolver(),
             Variable::class => new VariableResolver(),
             MemberAccessExpression::class => new MemberAccessExpressionResolver($this->nodeContextFromMemberAccess),
             ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeContextFromMemberAccess),

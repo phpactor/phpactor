@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\SuperGlobals;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -277,6 +278,44 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'super globals',
+            source: <<<'PHP'
+                <?php
+                $GLOBALS['foo'];
+                $_SERVER['foo'];
+                $_GET['foo'];
+                $_POST['foo'];
+                $_FILES['foo'];
+                $_COOKIE['foo'];
+                $_SESSION['foo'];
+                $_REQUEST['foo'];
+                $_ENV['foo'];
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'local globals',
+            source: <<<'PHP'
+                <?php
+                function foo(): void
+                {
+                    global $foo, $bar;
+
+                    echo $foo;
+                    echo $bar;
+                }
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
@@ -292,6 +331,12 @@ class UndefinedVariableProvider implements DiagnosticProvider
         }
 
         if (!$name = $node->getName()) {
+            return [];
+        }
+
+        $global = SuperGlobals::list()[$name] ?? null;
+
+        if ($global) {
             return [];
         }
 

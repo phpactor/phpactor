@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\Expression\YieldExpression;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
+use Microsoft\PhpParser\Node\Statement\GlobalDeclaration;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -28,6 +29,7 @@ class PassThroughWalker implements Walker
             YieldExpression::class,
             ReturnStatement::class,
             IfStatementNode::class,
+            GlobalDeclaration::class,
             ForeachStatement::class,
             CatchClause::class,
             BinaryExpression::class,

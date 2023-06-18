@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2023.06.18
+
+Bug fixes:
+
+  - Do not report globals or super globals as undefined #2302
+
 ## 2023.06.17
 
 Features:
