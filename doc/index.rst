@@ -6,7 +6,7 @@
 Phpactor
 ========
 
-Phpactor is a PHP language server :ref:`language_server` providing:
+Phpactor is a PHP :ref:`language_server` providing:
 
 -  :ref:`completion`: Provides broad and accurate context aware code
    completion.
@@ -18,4 +18,5 @@ Phpactor is a PHP language server :ref:`language_server` providing:
 -  :ref:`extensions`: Integrates with popular tools and frameworks such as Symfony, PHPStan, etc.
 -  :ref:`vim_plugin`: Lightweight VIM plugin.
 
-Proceed to the :doc:`usage/getting-started` guide to find out how to be getting started.
+Proceed to the :doc:`usage/getting-started` guide to find out how to be getting
+started with Neovim, VS Code, and other editors.
