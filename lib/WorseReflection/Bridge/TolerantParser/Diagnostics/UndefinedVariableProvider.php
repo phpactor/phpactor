@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\SuperGlobals;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -312,6 +313,12 @@ class UndefinedVariableProvider implements DiagnosticProvider
         }
 
         if (!$name = $node->getName()) {
+            return [];
+        }
+
+        $global = SuperGlobals::list()[$name] ?? null;
+
+        if ($global) {
             return [];
         }
 
