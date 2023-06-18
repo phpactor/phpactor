@@ -1,15 +1,19 @@
-Drupal 8
-========
+Drupal 8+
+=========
 
-Inc Files
-^^^^^^^^^
+Inc and module files
+^^^^^^^^^^^^^^^^^^^^
 
-By default Phpactor will not index `.inc` files.
+By default Phpactor will not index `.inc` nor `.module` files.
 
-Run the following on your project to enable the indexing of `.inc` files.
+Run the following on your project to enable the indexing of `.inc` and `.module` files.
 
 ```
-phpactor config:set indexer.supported_extensions '["php", "inc"]'
+phpactor config:set indexer.supported_extensions '["php", "inc", "module"]'
+```
+
+```
+phpactor config:set indexer.include_patterns '["/**/*.php", "/**/*.inc", "/**/*.module"]'
 ```
 
 Bootstrapping
