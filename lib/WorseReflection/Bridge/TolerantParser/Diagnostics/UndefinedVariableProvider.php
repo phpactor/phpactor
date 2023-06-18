@@ -304,7 +304,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 <?php
                 function foo(): void
                 {
-                    globals $foo, $bar;
+                    global $foo, $bar;
 
                     echo $foo;
                     echo $bar;
