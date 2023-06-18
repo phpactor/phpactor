@@ -23,7 +23,7 @@ class IndexInfo
     {
         return new self(
             $fileInfo->getRealPath(),
-            dirname($fileInfo->getPath()),
+            basename($fileInfo->getPathname()),
             null,
             $fileInfo->getCTime(),
             (function (SplFileInfo $info) {

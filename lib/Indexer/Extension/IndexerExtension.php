@@ -35,7 +35,6 @@ use Phpactor\Indexer\Extension\Command\IndexSearchCommand;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Indexer\Model\IndexAccess;
-use Phpactor\Indexer\Model\IndexLister;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Extension\Command\IndexQueryCommand;
