@@ -298,6 +298,24 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'local globals',
+            source: <<<'PHP'
+                <?php
+                function foo(): void
+                {
+                    globals $foo, $bar;
+
+                    echo $foo;
+                    echo $bar;
+                }
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
