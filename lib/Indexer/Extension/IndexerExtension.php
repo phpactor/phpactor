@@ -23,6 +23,7 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\Indexer\Adapter\Php\PhpIndexerLister;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedNameSearcher;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
@@ -34,6 +35,7 @@ use Phpactor\Indexer\Extension\Command\IndexSearchCommand;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Indexer\Model\IndexAccess;
+use Phpactor\Indexer\Model\IndexLister;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Extension\Command\IndexQueryCommand;
@@ -175,7 +177,7 @@ class IndexerExtension implements Extension
             )->resolve($container->parameter(self::PARAM_INDEX_PATH)->string());
 
             $indexPath = dirname($indexPath);
-            return new IndexCleanCommand($indexPath, new Filesystem());
+            return new IndexCleanCommand(new PhpIndexerLister($indexPath), new Filesystem());
         }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:clean']]);
 
         $container->register(IndexQueryCommand::class, function (Container $container) {

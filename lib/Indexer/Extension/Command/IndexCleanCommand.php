@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Extension\Command;
 use Exception;
 use Phpactor\Indexer\Model\IndexInfo;
 use Phpactor\Indexer\Model\IndexInfos;
+use Phpactor\Indexer\Model\IndexLister;
 use Phpactor\Indexer\Util\Filesystem as PhpactorFilesystem;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -25,7 +26,7 @@ class IndexCleanCommand extends Command
     public const ARG_INDEX_NAME = 'name';
     public const OPT_CLEAN_ALL = 'all';
 
-    public function __construct(private string $indexDirectory, private Filesystem $filesystem)
+    public function __construct(private IndexLister $indexLister, private Filesystem $filesystem)
     {
         parent::__construct();
     }
@@ -164,21 +165,9 @@ class IndexCleanCommand extends Command
 
     private function getIndicies(OutputInterface $output): IndexInfos
     {
-        $finder = (new Finder())
-           ->directories()
-           ->in([$this->indexDirectory])
-           ->sortByName()
-           ->depth('==0')
-        ;
-        $fileInfos = iterator_to_array($finder);
-        $progress = new ProgressBar($output, count($fileInfos));
-
         $indexes = [];
-        foreach ($fileInfos as $fileInfo) {
-            $info = IndexInfo::fromSplFileInfo($fileInfo);
-
-            // warmup the size
-            $info->size();
+        $progress = new ProgressBar($output);
+        foreach ($this->indexLister->list() as $info) {
             $indexes[] = $info;
             $progress->advance();
         }

@@ -3,8 +3,8 @@
 namespace Phpactor\Indexer\Model;
 
 use Phpactor\Indexer\Util\Filesystem;
+use SplFileInfo;
 use Symfony\Component\Filesystem\Path;
-use Symfony\Component\Finder\SplFileInfo;
 
 class IndexInfo
 {
@@ -23,7 +23,7 @@ class IndexInfo
     {
         return new self(
             $fileInfo->getRealPath(),
-            $fileInfo->getRelativePathname(),
+            dirname($fileInfo->getPath()),
             null,
             $fileInfo->getCTime(),
             (function (SplFileInfo $info) {
