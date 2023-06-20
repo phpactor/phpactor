@@ -307,7 +307,7 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'inheritance',
+            title: 'extend with typed templated argument',
             source: <<<'PHP'
                 <?php
 
@@ -324,9 +324,31 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
                 class ScheduleFactory extends Factory {}
 
                 PHP,
-            valid: false,
+            valid: true,
             assertion: function (Diagnostics $diagnostics): void {
-                dump($diagnostics->__toString());
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'extend with unconstrained argument',
+            source: <<<'PHP'
+                <?php
+
+                abstract class Model {}
+                class Schedule extends Model {}
+
+                /** @template TModel */
+                class Factory {}
+
+                /**
+                 * @template TModel
+                 * @extends Factory<TModel>
+                 */
+                class ScheduleFactory extends Factory {}
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(0, $diagnostics);
             }
         );
