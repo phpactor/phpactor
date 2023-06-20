@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -64,6 +65,7 @@ final class ClassGenericDiagnosticHelper
         }
 
         $genericTypes = array_filter($genericTypes, fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue());
+
         $defaultGenericType = new GenericClassType(
             $reflector,
             $parentClass->name(),
@@ -85,6 +87,23 @@ final class ClassGenericDiagnosticHelper
 
 
         $extendTagType = $genericTypes[array_key_first($genericTypes)];
+
+        // if generic uses a templateed type, then replace the templated type
+        // with the type restriction if it exists (e.g. replace T with Foo if
+        // @template T of Foo)
+        if ($extendTagType instanceof GenericClassType) {
+            $classTemplateMap = $class->templateMap();
+            $extendTagType = $extendTagType->withArguments(array_map(function (Type $type) use ($classTemplateMap) {
+                if (!$type instanceof ClassType) {
+                    return $type;
+                }
+                if (!$classTemplateMap->has($type->__toString())) {
+                    return $type;
+                }
+                return $classTemplateMap->get($type->__toString());
+            }, $extendTagType->arguments()));
+        }
+
         if ($parentClass->type()->upcastToGeneric()->accepts($extendTagType)->isFalse()) {
             yield new DocblockIncorrectClassGenericDiagnostic(
                 $range,
