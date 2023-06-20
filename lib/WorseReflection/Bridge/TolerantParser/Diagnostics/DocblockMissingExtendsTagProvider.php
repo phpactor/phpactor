@@ -324,8 +324,9 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
                 class ScheduleFactory extends Factory {}
 
                 PHP,
-            valid: true,
+            valid: false,
             assertion: function (Diagnostics $diagnostics): void {
+                dump($diagnostics->__toString());
                 Assert::assertCount(0, $diagnostics);
             }
         );
