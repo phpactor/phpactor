@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## master
+
+Bug fixes:
+
+  - Fix generic extends with templated argument #2295
+
 ## 2023.06.17-1
 
 Bug fixes:
