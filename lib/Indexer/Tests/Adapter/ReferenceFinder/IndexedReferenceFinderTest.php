@@ -166,7 +166,7 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
                 // File: project/subject.php
                 <?php class SubBar extends Bar { public function __c<>onstruct() {} }
                 // File: project/subject.php
-                <?php class Other extends Bar { public function __c<>onstruct() {} }
+                <?php class Other extends Bar { public function __construct() {} }
 
                 // File: project/class1.php
                 <?php new Bar(); new SubBar(); new Other();
