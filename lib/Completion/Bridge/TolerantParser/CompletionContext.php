@@ -28,6 +28,7 @@ use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitUseClause;
@@ -48,6 +49,10 @@ class CompletionContext
         }
 
         if (self::classMembersBody($node)) {
+            return false;
+        }
+        $previous = NodeUtil::previousSibling($node->parent);
+        if ($previous instanceof InlineHtml) {
             return false;
         }
 
