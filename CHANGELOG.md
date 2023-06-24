@@ -6,6 +6,7 @@ Changelog
 Bug fixes:
 
   - Fix generic extends with templated argument #2295
+  - Do not report statically declared variables as undefined #2311
 
 ## 2023.06.17-1
 
