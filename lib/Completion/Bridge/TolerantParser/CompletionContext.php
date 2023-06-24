@@ -52,6 +52,7 @@ class CompletionContext
             return false;
         }
         $previous = NodeUtil::previousSibling($node->parent);
+
         if ($previous instanceof InlineHtml) {
             return false;
         }
