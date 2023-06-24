@@ -322,6 +322,9 @@ class NodeUtil
             return null;
         }
         $parent = $node->parent;
+        if (null === $parent) {
+            return null;
+        }
         $previous = null;
         foreach ($parent->getChildNodes() as $childNode) {
             if (null === $previous) {
