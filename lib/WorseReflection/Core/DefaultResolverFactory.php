@@ -42,6 +42,7 @@ use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\StaticVariableDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
@@ -87,6 +88,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ReservedWordResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ReturnStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SourceFileNodeResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\StaticDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\StringLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SubscriptExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\TernaryExpressionResolver;
@@ -126,6 +128,7 @@ final class DefaultResolverFactory
             Parameter::class => new ParameterResolver(),
             UseVariableName::class => new UseVariableNameResolver(),
             GlobalDeclaration::class => new GlobalDeclarationResolver(),
+            StaticVariableDeclaration::class => new StaticDeclarationResolver(),
             Variable::class => new VariableResolver(),
             MemberAccessExpression::class => new MemberAccessExpressionResolver($this->nodeContextFromMemberAccess),
             ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeContextFromMemberAccess),

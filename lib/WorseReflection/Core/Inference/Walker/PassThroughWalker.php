@@ -12,6 +12,7 @@ use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\GlobalDeclaration;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
+use Microsoft\PhpParser\Node\StaticVariableDeclaration;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
@@ -30,6 +31,7 @@ class PassThroughWalker implements Walker
             ReturnStatement::class,
             IfStatementNode::class,
             GlobalDeclaration::class,
+            StaticVariableDeclaration::class,
             ForeachStatement::class,
             CatchClause::class,
             BinaryExpression::class,
