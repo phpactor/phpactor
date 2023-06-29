@@ -90,7 +90,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             Symbol::VARIABLE,
             Symbol::CASE,
         ])) {
-            $containerType = $this->containerTypeResolver->resolveDeclaringContainerType(
+            $containerType = $this->containerTypeResolver->resolveDeclaringClass(
                 $this->symbolTypeToMemberType($nodeContext),
                 $nodeContext->symbol()->name(),
                 $nodeContext->containerType()
