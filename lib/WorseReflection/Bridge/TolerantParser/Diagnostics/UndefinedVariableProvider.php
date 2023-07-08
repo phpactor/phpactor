@@ -3,6 +3,9 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
@@ -10,8 +13,10 @@ use PHPUnit\Framework\Assert;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\SuperGlobals;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -261,6 +266,74 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'pass by reference',
+            source: <<<'PHP'
+                <?php
+                function preg_match(string $pattern, string $string, array &$matches): bool {}
+                preg_match('foobar', 'barfoo', $matches);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'super globals',
+            source: <<<'PHP'
+                <?php
+                $GLOBALS['foo'];
+                $_SERVER['foo'];
+                $_GET['foo'];
+                $_POST['foo'];
+                $_FILES['foo'];
+                $_COOKIE['foo'];
+                $_SESSION['foo'];
+                $_REQUEST['foo'];
+                $_ENV['foo'];
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'local globals',
+            source: <<<'PHP'
+                <?php
+                function foo(): void
+                {
+                    global $foo, $bar;
+
+                    echo $foo;
+                    echo $bar;
+                }
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'local static',
+            source: <<<'PHP'
+                <?php
+                function foo(): void
+                {
+                    static $foo, $bar;
+
+                    echo $foo;
+                    echo $bar;
+                }
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
@@ -279,10 +352,51 @@ class UndefinedVariableProvider implements DiagnosticProvider
             return [];
         }
 
+        $global = SuperGlobals::list()[$name] ?? null;
+
+        if ($global) {
+            return [];
+        }
+
         foreach ($frame->locals()->byName($name) as $variable) {
             if ($variable->wasDefinition()) {
                 return [];
             }
+        }
+        $isByReference = function () use ($resolver, $frame, $node) {
+            if (!$node->parent instanceof ArgumentExpression) {
+                return false;
+            }
+            $argument = $node->parent;
+            if (!$argument->parent instanceof ArgumentExpressionList) {
+                return false;
+            }
+
+            $argumentExpressionList = $argument->parent;
+            if (!$argumentExpressionList->parent instanceof CallExpression) {
+                return false;
+            }
+
+            $offset = NodeUtil::argumentOffset($argumentExpressionList, $argument);
+            if (!$offset) {
+                return false;
+            }
+
+            $call = $argumentExpressionList->parent;
+            $callContext = $resolver->resolveNode($frame, $call);
+            if (!$callContext instanceof FunctionCallContext) {
+                return false;
+            }
+            $parameter = $callContext->function()->parameters()->at($offset);
+            if (!$parameter) {
+                return false;
+            }
+
+            return $parameter->byReference();
+        };
+
+        if ($isByReference()) {
+            return false;
         }
 
         yield new UndefinedVariableDiagnostic(

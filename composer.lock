@@ -2373,16 +2373,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "5.1.2",
+            "version": "5.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "051a20e003492cde92be01e54303aeb2fa9ee5f2"
+                "reference": "1fee1300ed76f35e3980cbd6b78a97c279af1c06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/051a20e003492cde92be01e54303aeb2fa9ee5f2",
-                "reference": "051a20e003492cde92be01e54303aeb2fa9ee5f2",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/1fee1300ed76f35e3980cbd6b78a97c279af1c06",
+                "reference": "1fee1300ed76f35e3980cbd6b78a97c279af1c06",
                 "shasum": ""
             },
             "require": {
@@ -2433,9 +2433,9 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/5.1.2"
+                "source": "https://github.com/phpactor/language-server/tree/5.1.3"
             },
-            "time": "2023-04-10T09:31:10+00:00"
+            "time": "2023-06-04T09:44:27+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",

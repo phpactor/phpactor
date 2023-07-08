@@ -38,7 +38,8 @@ if (version_compare(PHP_VERSION, $minVersion) < 0) {
 
 require_once $autoloadFile;
 
-$application = new Application(realpath(dirname($autoloadFile)));
+$phpactorBin = $argv[0];
+$application = new Application(realpath(dirname($autoloadFile)), $phpactorBin);
 $output = new ConsoleOutput();
 
 try {

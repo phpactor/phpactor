@@ -16,7 +16,7 @@ class EnumCaseType extends ReflectedClassType implements ClassLikeType
 
     public function __toString(): string
     {
-        return sprintf('%s::%s', $this->enumType, $this->caseName);
+        return sprintf('enum(%s::%s)', $this->enumType, $this->caseName);
     }
 
     public function toPhpString(): string

@@ -39,7 +39,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
     }
 
     /**
-     * @return Promise<Location>
+     * @return Promise<Location|null>
      */
     public function type(
         TextDocumentIdentifier $textDocument,
@@ -71,9 +71,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
             $item = yield $this->client->window()->showMessageRequest()->info('Goto type', ...$actions);
 
             if (!$item instanceof MessageActionItem) {
-                throw new CouldNotLocateType(
-                    'Client did not return an action item'
-                );
+                return null;
             }
 
             return $this->locationConverter->toLspLocation(

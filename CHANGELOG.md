@@ -3,15 +3,48 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - Fix generic extends with templated argument #2295
+  - Do not report statically declared variables as undefined #2311
+
+## 2023.06.17-1
+
+Bug fixes:
+
+  - Do not report globals or super globals as undefined #2302
+
+## 2023.06.17
+
 Features:
 
   - Diagnostics and code action for fixing missing `@implements` and `@extends` #2112
   - Diagnostic for undefined variables #2209
   - Code action to suggest fixes for undefined variables (in case of typos) #2209
   - PHPUnit: code action for adding `setUp` / `tearDown` #2180 @mamazu
+  - Making the completion label formatter configurable #2277 @mamazu
+  - Auto-reindex: unconditionally reindex modified files every N seconds
+    (default 5 minutes) - work around for missed file modification
+    notifications.
+
+Improvements:
+
+  - Revised getting started documentation #2282
+  - Support indexing PHP files that don't have a `.php` extension #2296
+  - Allow language server auto-configuration to be disabled #2159
+    (`language_server_configuration.auto_config`)
+  - Symfony: show and consider non-public services by default (e.g. in tests it's
+    possible to retrieve non-public services) #2263
+  - Support traits in enums #2256
 
 Bug fixes:
 
+  - Fix enum case completion #2284
+  - Fix error handling for responses from language client #2283
+  - Do not show named parameters after string literal argument #2259
+  - Fix "instanceof" behavior for statically reflected classes #2273
+  - Fix behavior when user cancels type selection on goto type #2270
+  - Fix docblock parsing of `array<'quoted'|'strings'>` #2264
   - Fix constant declaration indexing with `define` #2249 @mamazu
   - Fix use of class-string<Foo> variable as static scope resolution qualifier #2238
   - URL decode root URI - fixes issues with special chars in path #2228
@@ -21,7 +54,7 @@ Bug fixes:
   - Do not make fully qualified name usage relative in class-mover #2208 @mamazu
   - Fix resolution of `self` type (esp. in relation to traits) #2116
   - Fix different virtual member types with the same name replacing eachother #2108
-  - Specify maximimum size (255 chars) for string literal types #2144
+  - Specify maximum size (255 chars) for string literal types #2144
   - Fix docblock parser with `$this` when used as generic argument #2092
 
 ## 2023.04.10

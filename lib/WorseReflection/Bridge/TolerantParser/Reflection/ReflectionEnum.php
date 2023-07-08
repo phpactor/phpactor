@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum as CoreReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -22,6 +23,8 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEnum
 {
+    private ?ReflectionTraitCollection $traits = null;
+
     public function __construct(
         private ServiceLocator $serviceLocator,
         private TextDocument $sourceCode,
@@ -47,6 +50,10 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         $members = ClassLikeReflectionMemberCollection::empty();
         /** @phpstan-ignore-next-line Constants is compatible with this */
         $members = $members->merge($this->ownMembers());
+        foreach ($this->traits() as $trait) {
+            /** @phpstan-ignore-next-line Constants is compatible with this */
+            $members = $members->merge($trait->members());
+        }
         try {
             $enumType = $this->isBacked() ? 'BackedEnum' : 'UnitEnum';
             $enumMethods = $this->serviceLocator()->reflector()->reflectInterface($enumType)->members();
@@ -114,6 +121,19 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     public function classLikeType(): string
     {
         return 'enum';
+    }
+
+    public function traits(): ReflectionTraitCollection
+    {
+        if ($this->traits) {
+            return $this->traits;
+        }
+
+        $traits = ReflectionTraitCollection::fromEnumDeclaration($this->serviceLocator, $this->node);
+
+        $this->traits = $traits;
+
+        return $traits;
     }
 
     /**

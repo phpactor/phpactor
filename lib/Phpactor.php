@@ -75,12 +75,13 @@ use Composer\XdebugHandler\XdebugHandler;
 use Phpactor\ConfigLoader\ConfigLoaderBuilder;
 use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
+use Symfony\Component\Filesystem\Path;
 use function ini_set;
 use function sprintf;
 
 class Phpactor
 {
-    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir): Container
+    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir, string $phpactorBin = null): Container
     {
         $config = [];
 
@@ -103,6 +104,9 @@ class Phpactor
 
         $config = $loader->load();
         $config[CoreExtension::PARAM_COMMAND] = $input->getFirstArgument();
+        if ($phpactorBin) {
+            $config[LanguageServerExtension::PARAM_PHPACTOR_BIN] = $phpactorBin;
+        }
         $config[FilePathResolverExtension::PARAM_APPLICATION_ROOT] = self::resolveApplicationRoot();
         $config = array_merge([ IndexerExtension::PARAM_STUB_PATHS => [] ], $config);
         $config[IndexerExtension::PARAM_STUB_PATHS][] = self::resolveApplicationRoot() . '/vendor/jetbrains/phpstorm-stubs';
@@ -273,22 +277,16 @@ class Phpactor
      * If the path is relative we need to use the current working path
      * because otherwise it will be the script path, which is wrong in the
      * context of a PHAR.
-     *
-     * @deprecated Use webmozart Path instead.
      */
     public static function normalizePath(string $path): string
     {
-        if (substr($path, 0, 1) == DIRECTORY_SEPARATOR) {
-            return $path;
-        }
-
-        return getcwd().DIRECTORY_SEPARATOR.$path;
+        return Path::makeAbsolute($path, (string) getcwd());
     }
 
     public static function relativizePath(string $path): string
     {
         if (str_starts_with($path, (string)getcwd())) {
-            return substr($path, strlen(getcwd()) + 1);
+            return substr($path, strlen((string) getcwd()) + 1);
         }
 
         return $path;
@@ -342,8 +340,8 @@ class Phpactor
         $paths = [ __DIR__ . '/..', __DIR__ .'/../../../..' ];
 
         foreach ($paths as $path) {
-            if (is_dir((string)realpath($path.'/vendor'))) {
-                return (string)realpath($path);
+            if (is_dir($path.'/vendor')) {
+                return Path::canonicalize($path);
             }
         }
 

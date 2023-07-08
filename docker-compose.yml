@@ -1,0 +1,11 @@
+services:
+  php:
+    build: 
+      dockerfile: ./docker/Dockerfile
+      context: ./
+    command: sleep infinity
+    environment:
+      XDG_CACHE_HOME: /phpactor/build/.cache
+      COLUMNS: 100
+    volumes:
+      - ./:/phpactor:delegated

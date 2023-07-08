@@ -1,6 +1,7 @@
 /extensions
 /phpactor.schema.json
 /lib/Extension/WorseReflection/stubs
+/.phpbench
 
 # Composer
 /vendor
@@ -31,4 +32,3 @@
 __pycache__
 /doc/_ext/__pycache__
 .phpunit.result.cache
-flake.lock

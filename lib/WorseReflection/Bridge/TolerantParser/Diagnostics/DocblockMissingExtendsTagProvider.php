@@ -271,6 +271,87 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+
+        yield new DiagnosticExample(
+            title: 'considers the namespace',
+            source: <<<'PHP'
+                <?php
+
+                namespace Phpactor;
+
+                abstract class Model
+                {
+                }
+
+                /**
+                 * @template Model of \Phpactor\Model
+                 */
+                class Factory
+                {
+                }
+
+                /**
+                 * @extends Factory<Schedule>
+                 */
+                class ScheduleFactory extends Factory
+                {
+                }
+
+                class Schedule extends Model
+                {
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'extend with typed templated argument',
+            source: <<<'PHP'
+                <?php
+
+                abstract class Model {}
+                class Schedule extends Model {}
+
+                /** @template TModel of Model */
+                class Factory {}
+
+                /**
+                 * @template TModel of Schedule
+                 * @extends Factory<TModel>
+                 */
+                class ScheduleFactory extends Factory {}
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'extend with unconstrained argument',
+            source: <<<'PHP'
+                <?php
+
+                abstract class Model {}
+                class Schedule extends Model {}
+
+                /** @template TModel */
+                class Factory {}
+
+                /**
+                 * @template TModel
+                 * @extends Factory<TModel>
+                 */
+                class ScheduleFactory extends Factory {}
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function name(): string

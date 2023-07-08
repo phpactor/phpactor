@@ -1,3 +1,5 @@
+.. _configuration:
+
 Configuration
 =============
 
@@ -680,6 +682,22 @@ Sets a limit on the number of completion suggestions for any request
 **Default**: ``null``
 
 
+.. _param_completion.label_formatter:
+
+
+``completion.label_formatter``
+""""""""""""""""""""""""""""""
+
+
+Definition of how to format entries in the completion list
+
+
+**Default**: ``"helpful"``
+
+
+**Allowed values**: "helpful", "fqn"
+
+
 .. _NavigationExtension:
 
 
@@ -1318,6 +1336,19 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 **Default**: ``200``
 
 
+.. _param_language_server.phpactor_bin:
+
+
+``language_server.phpactor_bin``
+""""""""""""""""""""""""""""""""
+
+
+Internal use only - name path to Phpactor binary
+
+
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+
+
 .. _param_language_server.self_destruct_timeout:
 
 
@@ -1460,6 +1491,19 @@ LanguageServerIndexerExtension
 **Default**: ``250``
 
 
+.. _param_language_server_indexer.reindex_timeout:
+
+
+``language_server_indexer.reindex_timeout``
+"""""""""""""""""""""""""""""""""""""""""""
+
+
+Unconditionally reindex modified files every N seconds
+
+
+**Default**: ``300``
+
+
 .. _LanguageServerCodeTransformExtension:
 
 
@@ -1475,6 +1519,29 @@ LanguageServerCodeTransformExtension
 
 
 Show an error if a diagnostic name cannot be resolved - can produce false positives
+
+
+**Default**: ``true``
+
+
+.. _LanguageServerConfigurationExtension:
+
+
+LanguageServerConfigurationExtension
+------------------------------------
+
+
+.. _param_language_server_configuration.auto_config:
+
+
+``language_server_configuration.auto_config``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Prompt to enable extensions which apply to your project on language server start
 
 
 **Default**: ``true``
@@ -1661,6 +1728,22 @@ Recurse over class implementations to resolve all class implementations (not jus
 
 
 **Default**: ``true``
+
+
+.. _param_indexer.supported_extensions:
+
+
+``indexer.supported_extensions``
+""""""""""""""""""""""""""""""""
+
+
+Type: array
+
+
+File extensions (e.g. `php`) for files that should be indexed
+
+
+**Default**: ``["php"]``
 
 
 .. _ObjectRendererExtension:
@@ -2020,6 +2103,19 @@ Enable/disable the Symfony completor - depends on Symfony extension being enable
 
 
 **Default**: ``true``
+
+
+.. _param_public_services_only:
+
+
+``public_services_only``
+""""""""""""""""""""""""
+
+
+Only consider public services when providing analysis for the service locator
+
+
+**Default**: ``false``
 
 
 .. _PHPUnitExtension:

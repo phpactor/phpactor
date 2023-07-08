@@ -23,6 +23,7 @@ use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\Indexer\Adapter\Php\PhpIndexerLister;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedNameSearcher;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
@@ -64,6 +65,7 @@ class IndexerExtension implements Extension
     public const PARAM_REFERENCES_DEEP_REFERENCES = 'indexer.reference_finder.deep';
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
+    public const PARAM_SUPPORTED_EXTENSIONS = 'indexer.supported_extensions';
     const TAG_WATCHER = 'indexer.watcher';
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
@@ -90,6 +92,7 @@ class IndexerExtension implements Extension
             self::PARAM_PROJECT_ROOT => '%project_root%',
             self::PARAM_REFERENCES_DEEP_REFERENCES => true,
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => true,
+            self::PARAM_SUPPORTED_EXTENSIONS => ['php'],
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLED_WATCHERS => 'List of allowed watchers. The first watcher that supports the current system will be used',
@@ -103,6 +106,7 @@ class IndexerExtension implements Extension
             self::PARAM_PROJECT_ROOT => 'The root path to use for scanning the index',
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'Recurse over class implementations to resolve all references',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
+            self::PARAM_SUPPORTED_EXTENSIONS => 'File extensions (e.g. `php`) for files that should be indexed',
         ]);
         $schema->setTypes([
             self::PARAM_ENABLED_WATCHERS => 'array',
@@ -116,6 +120,7 @@ class IndexerExtension implements Extension
             self::PARAM_PROJECT_ROOT => 'string',
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'boolean',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'boolean',
+            self::PARAM_SUPPORTED_EXTENSIONS => 'array',
         ]);
     }
 
@@ -171,7 +176,7 @@ class IndexerExtension implements Extension
             )->resolve($container->parameter(self::PARAM_INDEX_PATH)->string());
 
             $indexPath = dirname($indexPath);
-            return new IndexCleanCommand($indexPath, new Filesystem());
+            return new IndexCleanCommand(new PhpIndexerLister($indexPath), new Filesystem());
         }, [ ConsoleExtension::TAG_COMMAND => ['name' => 'index:clean']]);
 
         $container->register(IndexQueryCommand::class, function (Container $container) {
@@ -207,13 +212,18 @@ class IndexerExtension implements Extension
         });
 
         $container->register(IndexAgentBuilder::class, function (Container $container) {
-            $resolver = $container->get(
-                FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER
+            $resolver = $container->expect(
+                FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER,
+                PathResolver::class
             );
             $indexPath = $resolver->resolve($container->parameter(self::PARAM_INDEX_PATH)->string());
             return IndexAgentBuilder::create($indexPath, $this->projectRoot($container))
+                /** @phpstan-ignore-next-line */
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
+                /** @phpstan-ignore-next-line */
                 ->setIncludePatterns($container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS))
+                /** @phpstan-ignore-next-line */
+                ->setSupportedExtensions($container->parameter(self::PARAM_SUPPORTED_EXTENSIONS)->value())
                 ->setFollowSymlinks(
                     (bool) $container->getParameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS),
                 )
