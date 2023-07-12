@@ -23,7 +23,7 @@ Then make it executable and symlink it somewhere in your PATH_:
 
 .. code:: bash
 
-   $ chown a+x phpactor.phar
+   $ chmod a+x phpactor.phar
    $ mv phpactor.phar ~/.local/bin/phpactor
 
 .. _installation_global:
