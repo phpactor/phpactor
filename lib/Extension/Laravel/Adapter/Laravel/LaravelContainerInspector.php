@@ -327,15 +327,12 @@ class LaravelContainerInspector
             if ($type === 'Illuminate\Database\Eloquent\Relations\HasMany') {
                 $class = $reflector->reflectClass('LaravelHasManyVirtualBuilder');
             }
-
             if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsTo') {
                 $class = $reflector->reflectClass('LaravelBelongsToVirtualBuilder');
             }
-
             if ($type === 'Illuminate\Database\Eloquent\Relations\BelongsToMany') {
                 $class = $reflector->reflectClass('LaravelBelongsToManyVirtualBuilder');
             }
-
             if ($type === 'Builder') {
                 $class = $reflector->reflectClass('LaravelQueryVirtualBuilder');
             }

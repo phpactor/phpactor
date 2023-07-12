@@ -37,6 +37,7 @@ abstract class LaravelBelongsToManyVirtualBuilder extends BelongsToMany
  * @template TModelClass
  *
  * @method TModelClass create()
+ * @method TModelClass first()
  */
 abstract class LaravelQueryVirtualBuilder extends Builder
 {
