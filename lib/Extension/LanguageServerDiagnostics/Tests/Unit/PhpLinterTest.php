@@ -25,4 +25,3 @@ class PhpLinterTest extends TestCase
         self::assertCount(1, $diagnostics);
     }
 }
-
