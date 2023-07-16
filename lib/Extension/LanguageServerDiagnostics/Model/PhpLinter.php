@@ -32,7 +32,9 @@ final class PhpLinter
             $pid = yield $process->start();
             yield $process->getStdin()->write($textDocument->__toString());
             yield $process->getStdin()->end();
-            $err = yield buffer($process->getStderr());
+            $exitCode = yield $process->join();
+
+            $err = yield buffer($process->getStdout());
 
             if (!$err) {
                 return [];
