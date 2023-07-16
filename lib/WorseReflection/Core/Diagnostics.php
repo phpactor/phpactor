@@ -26,7 +26,7 @@ final class Diagnostics implements IteratorAggregate, Countable, Stringable
     public function __toString(): string
     {
         return implode("\n", array_map(function (Diagnostic $diagnostic) {
-            return sprintf('[%s] %s', $diagnostic->severity()->toString(), $diagnostic->message());
+            return sprintf('[%s] %s (%s))', $diagnostic->severity()->toString(), $diagnostic->message(), $diagnostic->range()->__toString());
         }, $this->diagnostics));
     }
 
