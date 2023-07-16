@@ -338,11 +338,10 @@ class UndefinedVariableProvider implements DiagnosticProvider
             title: 'variable captured by closure',
             source: <<<'PHP'
                 <?php
-                $classFqns = 'string';
-                function (string $classFqn): string use (&$classFqns) {
-                    $classFqns .= 'boo';
+                $classFqns = ['string'];
+                function (string $classFqn) use (&$classFqns): string {
+                    $classFqns[] = 'boo';
                 }
-
                 PHP,
             valid: true,
             assertion: function (Diagnostics $diagnostics): void {
