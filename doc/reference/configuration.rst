@@ -1474,6 +1474,19 @@ Show inlay hints for parameters
 **Default**: ``true``
 
 
+.. _param_language_server_worse_reflection.diagnostics.enable:
+
+
+``language_server_worse_reflection.diagnostics.enable``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable diagnostics
+
+
+**Default**: ``true``
+
+
 .. _LanguageServerIndexerExtension:
 
 
