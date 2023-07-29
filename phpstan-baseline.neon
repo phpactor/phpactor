@@ -1277,7 +1277,7 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$type of method Phpactor\\\\DocblockParser\\\\Parser\\:\\:createTypeFromToken\\(\\) expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 3
+			count: 2
 			path: lib/DocblockParser/Parser.php
 
 		-
@@ -1516,42 +1516,12 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassMover.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) has parameter \\$dest with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) has parameter \\$src with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:getRelatedFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:replaceThoseReferences\\(\\) has parameter \\$files with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMover.php
 
 		-
 			message: "#^Parameter \\#2 \\$code of class RuntimeException constructor expects int, null given\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Result of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveFile\\(\\) \\(void\\) is used\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMover.php
 
@@ -2396,21 +2366,6 @@ parameters:
 			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
 
 		-
-			message: "#^Parameter \\#1 \\$filename of function is_file expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
-
-		-
-			message: "#^Parameter \\#1 \\$src of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:doGenerateFromExisting\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
-
-		-
-			message: "#^Parameter \\#2 \\$dest of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:doGenerateFromExisting\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\CodeTransform\\\\Domain\\\\Generator\\:\\:generateNew\\(\\)\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Application/ClassNew.php
@@ -2787,16 +2742,6 @@ parameters:
 
 		-
 			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/Completion/CompletionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$limit of class Phpactor\\\\Completion\\\\Core\\\\Completor\\\\LimitingCompletor constructor expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Completion/CompletionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$matchNameImport of class Phpactor\\\\Completion\\\\Core\\\\Completor\\\\DedupeCompletor constructor expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Completion/CompletionExtension.php
 
@@ -4076,31 +4021,6 @@ parameters:
 			path: lib/Extension/LanguageServerCompletion/Handler/SignatureHelpHandler.php
 
 		-
-			message: "#^Parameter \\#1 \\$trimLeadingDollar of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Util\\\\SuggestionNameFormatter constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\CompletionHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\SignatureHelpHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$helper of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\SignatureHelpHandler constructor expects Phpactor\\\\Completion\\\\Core\\\\SignatureHelper, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$registry of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\CompletionHandler constructor expects Phpactor\\\\Completion\\\\Core\\\\TypedCompletorRegistry, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:cases\\(\\)\\.$#"
 			count: 2
 			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
@@ -4989,11 +4909,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$className of static method Phpactor\\\\WorseReflection\\\\Core\\\\TypeFactory\\:\\:reflectedClass\\(\\) expects Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/PHPUnit/FrameWalker/AssertInstanceOfWalker.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(string\\|false\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: string\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/Php/Model/ComposerPhpVersionResolver.php
 
 		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
@@ -6177,22 +6092,12 @@ parameters:
 
 		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			count: 3
+			count: 2
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: string given\\.$#"
 			count: 2
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$excludePatterns of method Phpactor\\\\Indexer\\\\IndexAgentBuilder\\:\\:setExcludePatterns\\(\\) expects array\\<string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$includePatterns of method Phpactor\\\\Indexer\\\\IndexAgentBuilder\\:\\:setIncludePatterns\\(\\) expects array\\<string\\>, mixed given\\.$#"
-			count: 1
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
@@ -6482,11 +6387,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$minimumMemoryLimit of static method Phpactor\\\\Phpactor\\:\\:updateMinMemory\\(\\) expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Phpactor.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function strlen expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/Phpactor.php
 
