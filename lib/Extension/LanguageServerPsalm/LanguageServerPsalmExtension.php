@@ -69,7 +69,7 @@ class LanguageServerPsalmExtension implements OptionalExtension
             self::PARAM_PSALM_SHOW_INFO => true,
             self::PARAM_PSALM_USE_CACHE => true,
             self::PARAM_PSALM_ERROR_LEVEL => null,
-            self::PARAM_TIMEOUT => 10,
+            self::PARAM_TIMEOUT => 15,
         ]);
         $schema->setTypes([
             self::PARAM_PSALM_BIN => 'string',
