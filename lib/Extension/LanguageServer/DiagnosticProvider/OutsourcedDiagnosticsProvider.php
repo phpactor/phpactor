@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServer\DiagnosticProvider;
 use Amp\CancellationToken;
 use Amp\Process\Process;
 use Amp\Process\ProcessException;
-use Amp\Process\StatusError;
 use Amp\Promise;
 use Phpactor\Amp\Process\ProcessUtil;
 use Phpactor\LanguageServerProtocol\Diagnostic;
@@ -14,9 +13,7 @@ use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use function Amp\ByteStream\buffer;
-use function Amp\asyncCall;
 use function Amp\call;
-use function Amp\delay;
 
 class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
 {

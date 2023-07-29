@@ -16,7 +16,7 @@ class FileRecord implements HasPath, Record
     /**
      * @var array<array{string,string,int}>
      */
-    private $references = [];
+    private array $references = [];
 
     public function __construct(string $filePath)
     {
