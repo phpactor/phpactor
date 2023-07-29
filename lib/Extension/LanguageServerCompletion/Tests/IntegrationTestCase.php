@@ -38,6 +38,7 @@ class IntegrationTestCase extends TestCase
 
     protected function createTester(): LanguageServerTester
     {
+        $this->workspace()->reset();
         $container = PhpactorContainer::fromExtensions([
             LoggingExtension::class,
             CompletionExtension::class,
