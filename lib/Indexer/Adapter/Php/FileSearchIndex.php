@@ -26,7 +26,7 @@ class FileSearchIndex implements SearchIndex
     /**
      * @var array<array{string,string,string|null}>
      */
-    private $subjects = [];
+    private array $subjects = [];
 
     private int $counter = 0;
 

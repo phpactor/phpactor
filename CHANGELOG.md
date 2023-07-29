@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Improvements:
+
+  - Improve Diagnostics: Run linters in parallel #2327
+
 Bug fixes:
 
   - Fix generic extends with templated argument #2295

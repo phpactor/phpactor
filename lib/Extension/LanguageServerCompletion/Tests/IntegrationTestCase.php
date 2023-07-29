@@ -38,6 +38,7 @@ class IntegrationTestCase extends TestCase
 
     protected function createTester(): LanguageServerTester
     {
+        $this->workspace()->reset();
         $container = PhpactorContainer::fromExtensions([
             LoggingExtension::class,
             CompletionExtension::class,
@@ -65,6 +66,7 @@ class IntegrationTestCase extends TestCase
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ .'/../../../../',
             ObjectRendererExtension::PARAM_TEMPLATE_PATHS => [],
             IndexerExtension::PARAM_ENABLED_WATCHERS => [],
+            LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
         ]);
 
         $builder = $container->get(LanguageServerBuilder::class);

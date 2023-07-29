@@ -268,7 +268,8 @@ final class Parser
 
         $type = $this->tokens->chomp();
 
-        if (null === $this->tokens->current) {
+        /** @phpstan-ignore-next-line It can be null*/
+        if (null === $this->tokens->current && $type) {
             return $this->createTypeFromToken($type);
         }
 

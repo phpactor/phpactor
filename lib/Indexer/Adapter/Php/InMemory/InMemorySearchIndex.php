@@ -14,7 +14,7 @@ class InMemorySearchIndex implements SearchIndex
     /**
      * @var array<string,array{string,string}>
      */
-    private $buffer = [];
+    private array $buffer = [];
 
     /**
      * @return Generator<Record>

@@ -5,6 +5,7 @@ namespace Phpactor\Extension\Completion;
 use InvalidArgumentException;
 use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\ChainSignatureHelper;
+use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Completor\DedupeCompletor;
 use Phpactor\Completion\Core\Completor\DocumentingCompletor;
 use Phpactor\Completion\Core\Completor\LabelFormattingCompletor;
@@ -84,6 +85,7 @@ class CompletionExtension implements Extension
             }
 
             $mapped = [];
+            /** @var Completor[] $completors */
             foreach ($completors as $type => $completors) {
                 $completors = new ChainCompletor($completors);
                 if ($container->parameter(self::PARAM_DEDUPE)->bool()) {

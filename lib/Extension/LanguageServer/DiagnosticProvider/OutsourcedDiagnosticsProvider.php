@@ -5,17 +5,15 @@ namespace Phpactor\Extension\LanguageServer\DiagnosticProvider;
 use Amp\CancellationToken;
 use Amp\Process\Process;
 use Amp\Process\ProcessException;
-use Amp\Process\StatusError;
 use Amp\Promise;
+use Phpactor\Amp\Process\ProcessUtil;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use function Amp\ByteStream\buffer;
-use function Amp\asyncCall;
 use function Amp\call;
-use function Amp\delay;
 
 class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
 {
@@ -36,24 +34,9 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
             $process = new Process(array_merge($this->command, [
                 '--uri=' . $textDocument->uri
             ]), $this->cwd);
-            $start = time();
             $pid = yield $process->start();
 
-            asyncCall(function () use ($process, $start) {
-                while ($process->isRunning()) {
-                    yield delay(500);
-                    // phpstan doesn't expect that $process->isRunning() output can change
-                    // @phpstan-ignore-next-line
-                    if (time() >= $start + $this->timeout && $process->isRunning()) {
-                        try {
-                            $process->kill();
-                            $this->logger->warning(sprintf('Killed diagnostics process "%s" because it lived longer than %ds', $process->getPid(), $this->timeout));
-                        } catch (StatusError $e) {
-                        }
-                        break;
-                    }
-                }
-            });
+            ProcessUtil::killAfter($this->logger, $process, $this->timeout);
 
             $stdin = $process->getStdin();
 
