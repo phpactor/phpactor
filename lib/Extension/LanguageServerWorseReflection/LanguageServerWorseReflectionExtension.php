@@ -29,6 +29,7 @@ class LanguageServerWorseReflectionExtension implements Extension
     public const PARAM_INLAY_HINTS_ENABLE = 'language_server_worse_reflection.inlay_hints.enable';
     public const PARAM_INLAY_HINTS_TYPES = 'language_server_worse_reflection.inlay_hints.types';
     public const PARAM_INLAY_HINTS_PARAMS = 'language_server_worse_reflection.inlay_hints.params';
+    public const PARAM_DIAGNOSTICS_ENABLE = 'language_server_worse_reflection.diagnostics.enable';
 
     public function load(ContainerBuilder $container): void
     {
@@ -42,12 +43,14 @@ class LanguageServerWorseReflectionExtension implements Extension
             self::PARAM_INLAY_HINTS_ENABLE => false,
             self::PARAM_INLAY_HINTS_TYPES => false,
             self::PARAM_INLAY_HINTS_PARAMS => true,
+            self::PARAM_DIAGNOSTICS_ENABLE => true,
         ]);
         $schema->setDescriptions([
             self::PARAM_UPDATE_INTERVAL => 'Minimum interval to update the workspace index as documents are updated (in milliseconds)',
             self::PARAM_INLAY_HINTS_ENABLE => 'Enable inlay hints (experimental)',
             self::PARAM_INLAY_HINTS_TYPES => 'Show inlay type hints for variables',
             self::PARAM_INLAY_HINTS_PARAMS => 'Show inlay hints for parameters',
+            self::PARAM_DIAGNOSTICS_ENABLE => 'Enable diagnostics',
         ]);
     }
 
@@ -79,6 +82,9 @@ class LanguageServerWorseReflectionExtension implements Extension
         });
 
         $container->register(WorseDiagnosticProvider::class, function (Container $container) {
+            if (false === $container->parameter(self::PARAM_DIAGNOSTICS_ENABLE)->bool()) {
+                return null;
+            }
             return new WorseDiagnosticProvider(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
             );

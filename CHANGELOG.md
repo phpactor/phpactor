@@ -8,6 +8,7 @@ Bug fixes:
   - Fix generic extends with templated argument #2295
   - Do not report statically declared variables as undefined #2311
   - Do not trigger function completion for incomplete opening PHP tag
+  - Fix PHP linter #2318
 
 ## 2023.06.17-1
 
