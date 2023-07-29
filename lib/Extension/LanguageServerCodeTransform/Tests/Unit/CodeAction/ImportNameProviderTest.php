@@ -58,8 +58,9 @@ class ImportNameProviderTest extends IntegrationTestCase
         self::assertNotNull($result);
         $tester->assertSuccess($result);
 
-        $diagnostics = $tester->transmitter()->filterByMethod('textDocument/publishDiagnostics')->shiftNotification();
-        self::assertNotNull($diagnostics);
+
+        $transmitter = $tester->transmitter()->filterByMethod('textDocument/publishDiagnostics');
+        $diagnostics = $transmitter->shiftNotification();
         $diagnostics = $diagnostics->params['diagnostics'] ?? [];
         $assertion($result->result, $diagnostics);
     }
