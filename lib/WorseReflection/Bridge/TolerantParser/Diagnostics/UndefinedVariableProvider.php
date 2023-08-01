@@ -334,6 +334,20 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'variable captured by closure',
+            source: <<<'PHP'
+                <?php
+                $classFqns = ['string'];
+                function (string $classFqn) use (&$classFqns): string {
+                    $classFqns[] = 'boo';
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable

@@ -2,7 +2,9 @@
 
 namespace Phpactor\TextDocument;
 
-class ByteOffsetRange
+use Stringable;
+
+class ByteOffsetRange implements Stringable
 {
     public function __construct(private ByteOffset $start, private ByteOffset $end)
     {
@@ -29,5 +31,10 @@ class ByteOffsetRange
     public function end(): ByteOffset
     {
         return $this->end;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf('%s-%s', $this->start->toInt(), $this->end->toInt());
     }
 }

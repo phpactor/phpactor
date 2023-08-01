@@ -27,6 +27,9 @@ class DiagnosticsTest extends TestCase
         }
 
         if ($example->valid) {
+            if (count($diagnostics) > 1) {
+                self::fail(sprintf("Expected code to be valid but recieved diagnostics: \n%s", $diagnostics->__toString()));
+            }
             self::assertCount(0, $diagnostics);
             return;
         }
