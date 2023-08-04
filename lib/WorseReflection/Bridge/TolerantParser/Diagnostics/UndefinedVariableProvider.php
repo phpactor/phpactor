@@ -395,7 +395,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
 
             $offset = NodeUtil::argumentOffset($argumentExpressionList, $argument);
-            if (!$offset) {
+            if ($offset === null) {
                 return false;
             }
 
