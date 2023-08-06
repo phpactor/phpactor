@@ -1,4 +1,4 @@
-.. _configuration:
+.. _ref_configuration:
 
 Configuration
 =============
@@ -1474,6 +1474,19 @@ Show inlay hints for parameters
 **Default**: ``true``
 
 
+.. _param_language_server_worse_reflection.diagnostics.enable:
+
+
+``language_server_worse_reflection.diagnostics.enable``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable diagnostics
+
+
+**Default**: ``true``
+
+
 .. _LanguageServerIndexerExtension:
 
 
@@ -1897,6 +1910,22 @@ Override level at which Psalm should report errors (lower => more errors)
 
 
 **Default**: ``null``
+
+
+.. _param_language_server_psalm.timeout:
+
+
+``language_server_psalm.timeout``
+"""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Kill the psalm process after this number of seconds
+
+
+**Default**: ``15``
 
 
 .. _LanguageServerPhpCsFixerExtension:

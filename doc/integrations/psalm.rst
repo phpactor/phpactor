@@ -5,6 +5,10 @@ Psalm
 
 Phpactor can integrate with Psalm to provide diagnostics in your IDE.
 
+.. note::
+
+   Currently this extension will only analyse saved files.
+
 To do so you set :ref:`param_language_server_psalm.enabled`:
 
 .. code-block:: bash

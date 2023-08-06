@@ -3,12 +3,18 @@ Changelog
 
 ## master
 
+Improvements:
+
+  - Improve Diagnostics: Run linters in parallel #2327
+  - Index documents on save #2326
+
 Bug fixes:
 
   - Fix generic extends with templated argument #2295
   - Do not report statically declared variables as undefined #2311
   - Do not trigger function completion for incomplete opening PHP tag
   - Fix PHP linter #2318
+  - Do not report undeclared variables that are passed by reference as undefined #2329 @mecha
 
 ## 2023.06.17-1
 

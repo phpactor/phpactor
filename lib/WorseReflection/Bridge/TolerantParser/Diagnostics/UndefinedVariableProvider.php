@@ -14,10 +14,12 @@ use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\SuperGlobals;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
@@ -334,6 +336,43 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'dynamic pass by ref',
+            source: <<<'PHP'
+                <?php
+                function foo(?int &$v1, ?string &$v2): void
+                {
+                    $v1 = 123;
+                    $v2 = '456';
+                }
+
+                foo($var1, $var2);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'dynamic pass by ref (method)',
+            source: <<<'PHP'
+                <?php
+                class Foo {
+                    public function foo(?int &$v1, ?string &$v2): void
+                    {
+                        $v1 = 123;
+                        $v2 = '456';
+                    }
+                }
+
+                $foo = new Foo();
+                $foo->foo($var1, $var2);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
@@ -378,16 +417,25 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
 
             $offset = NodeUtil::argumentOffset($argumentExpressionList, $argument);
-            if (!$offset) {
+            if ($offset === null) {
                 return false;
             }
 
             $call = $argumentExpressionList->parent;
             $callContext = $resolver->resolveNode($frame, $call);
-            if (!$callContext instanceof FunctionCallContext) {
-                return false;
+            $parameter = null;
+
+            if ($callContext instanceof FunctionCallContext) {
+                $parameter = $callContext->function()->parameters()->at($offset);
             }
-            $parameter = $callContext->function()->parameters()->at($offset);
+
+            if (!$parameter && $callContext instanceof MemberAccessContext) {
+                $member = $callContext->accessedMember();
+                if ($member->memberType() === ReflectionMember::TYPE_METHOD) {
+                    $parameter = $member->class()->methods()->get($member->name())->parameters()->at($offset);
+                }
+            }
+
             if (!$parameter) {
                 return false;
             }
