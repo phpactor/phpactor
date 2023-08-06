@@ -615,6 +615,7 @@ class CompleteConstructorTest extends WorseTestCase
         $transformed = wait($transformer->transform($source));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
+
     /**
      * @return Generator<string,array{string,string}>
      */
@@ -670,4 +671,57 @@ class CompleteConstructorTest extends WorseTestCase
 
         ];
     }
+
+    /**
+     * @dataProvider provideCompleteConstructorWithParentClass
+     */
+    public function testCompleteConstructorWithParentClass(string $example, string $expected): void
+    {
+        $source = SourceCode::fromString($example);
+        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', true);
+        $transformed = wait($transformer->transform($source));
+        $this->assertEquals((string) $expected, (string) $transformed->apply($source));
+    }
+
+    /**
+    * @return Generator<array{string, string}>
+    */
+    public function provideCompleteConstructorWithParentClass(): Generator
+    {
+        yield 'Do not promote constructor arguments if a parent class already has the same argument' => [
+            <<<'EOT'
+                <?php
+                class A
+                {
+                    public function __construct(public string $someString) {}
+                }
+
+
+                class SomeClassTest extends A
+                {
+                    public function __construct(public int $test, string $someString)
+                    {
+                        parent::__construct($someString);
+                    }
+                }
+                EOT,
+            <<<'EOT'
+                <?php
+                class A
+                {
+                    public function __construct(public string $someString) {}
+                }
+
+
+                class SomeClassTest extends A
+                {
+                    public function __construct(public int $test, string $someString)
+                    {
+                        parent::__construct($someString);
+                    }
+                }
+                EOT,
+        ];
+    }
+
 }
