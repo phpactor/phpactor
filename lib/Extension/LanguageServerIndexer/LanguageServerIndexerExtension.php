@@ -6,6 +6,7 @@ use Phpactor\AmpFsWatch\Watcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServerIndexer\Listener\IndexOnSaveListener;
 use Phpactor\Extension\LanguageServerIndexer\Handler\IndexerHandler;
 use Phpactor\Extension\LanguageServerIndexer\Handler\WorkspaceSymbolHandler;
 use Phpactor\Extension\LanguageServerIndexer\Listener\IndexerListener;
@@ -29,8 +30,6 @@ class LanguageServerIndexerExtension implements Extension
 {
     public const WORKSPACE_SYMBOL_SEARCH_LIMIT = 'language_server_indexer.workspace_symbol_search_limit';
     public const PARAM_REINDEX_TIMEOUT = 'language_server_indexer.reindex_timeout';
-
-
 
     public function load(ContainerBuilder $container): void
     {
@@ -96,6 +95,14 @@ class LanguageServerIndexerExtension implements Extension
 
         $container->register(IndexerListener::class, function (Container $container) {
             return new IndexerListener($container->get(ServiceManager::class));
+        }, [
+            LanguageServerExtension::TAG_LISTENER_PROVIDER => [],
+        ]);
+        $container->register(IndexOnSaveListener::class, function (Container $container) {
+            return new IndexOnSaveListener(
+                $container->get(Indexer::class),
+                $container->get(TextDocumentLocator::class)
+            );
         }, [
             LanguageServerExtension::TAG_LISTENER_PROVIDER => [],
         ]);

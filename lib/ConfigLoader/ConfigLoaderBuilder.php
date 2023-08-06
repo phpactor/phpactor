@@ -42,7 +42,7 @@ class ConfigLoaderBuilder
         return $this;
     }
 
-    public function addXdgCandidate(string $appName, string $name, string $loader)
+    public function addXdgCandidate(string $appName, string $name, string $loader): self
     {
         $this->candidates[] = new XdgPathCandidate($appName, $name, $loader, new Xdg());
         return $this;
