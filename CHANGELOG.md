@@ -6,6 +6,7 @@ Changelog
 Improvements:
 
   - Improve Diagnostics: Run linters in parallel #2327
+  - Index documents on save #2326
 
 Bug fixes:
 
