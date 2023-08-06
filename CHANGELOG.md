@@ -1,13 +1,16 @@
 Changelog
 =========
 
+## master
+
+  - Do not promote parameters that are used in parent constructor #2119
+
 ## 2023.08.06
 
 Improvements:
 
   - Improve Diagnostics: Run linters in parallel #2327
   - Index documents on save #2326
-  - Do not promote parameters that are used in parent constructor #2119
 
 Bug fixes:
 
