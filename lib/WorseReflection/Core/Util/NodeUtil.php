@@ -316,9 +316,15 @@ class NodeUtil
         return $best ?? $node;
     }
 
-    public static function previousSibling(Node $node): ?Node
+    public static function previousSibling(?Node $node): ?Node
     {
+        if (null === $node) {
+            return null;
+        }
         $parent = $node->parent;
+        if (null === $parent) {
+            return null;
+        }
         $previous = null;
         foreach ($parent->getChildNodes() as $childNode) {
             if (null === $previous) {
