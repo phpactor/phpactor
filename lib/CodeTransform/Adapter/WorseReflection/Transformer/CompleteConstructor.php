@@ -148,7 +148,7 @@ class CompleteConstructor implements Transformer
     */
     private function getParentClassParamaterNames(ReflectionClass $class): array
     {
-        $ancestor = $class->ancestors()->firstOrNull();
+        $ancestor = $class->parent();
         if ($ancestor === null) {
             return [];
         }
