@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## master
+
+Bug fixes:
+
+  - Limit number of threads Psalm uses to 1 by default #
+
 ## 2023.08.06
 
 Improvements:
