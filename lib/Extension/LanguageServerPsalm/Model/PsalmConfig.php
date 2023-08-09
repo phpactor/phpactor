@@ -8,8 +8,14 @@ final class PsalmConfig
         private string $phpstanBin,
         private bool $shouldShowInfo,
         private bool $useCache,
-        private ?int $errorLevel = null
+        private ?int $errorLevel = null,
+        private ?int $threads = null
     ) {
+    }
+
+    public function threads(): ?int
+    {
+        return $this->threads;
     }
 
     public function psalmBin(): string

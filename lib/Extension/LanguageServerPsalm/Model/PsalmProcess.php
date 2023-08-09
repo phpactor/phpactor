@@ -47,6 +47,14 @@ class PsalmProcess
                 return $command;
             })($command, $this->config->errorLevel());
 
+            $command = (function (array $command, ?int $threads) {
+                if (null === $threads) {
+                    return $command;
+                }
+                $command[] = sprintf('--threads=%d', $threads);
+                return $command;
+            })($command, $this->config->threads());
+
             if (!$this->config->useCache()) {
                 $command[] = '--no-cache';
             }
