@@ -6,6 +6,7 @@ Changelog
 Bug fixes:
 
   - Limit number of threads Psalm uses to 1 by default #
+  - Update file watching lib to handle "process already exited" errors
 
 ## 2023.08.06
 
