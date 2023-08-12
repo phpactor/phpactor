@@ -15,7 +15,7 @@
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/console": "^5.0",
         "dantleech/invoke": "^2.0",
-        "phpactor/amp-fswatch": "^0.2.0",
+        "phpactor/amp-fswatch": "^0.3.0",
         "thecodingmachine/safe": "^1.0",
         "phpactor/phly-event-dispatcher": "^2.0.0",
         "phpactor/language-server": "^6.0.2",
