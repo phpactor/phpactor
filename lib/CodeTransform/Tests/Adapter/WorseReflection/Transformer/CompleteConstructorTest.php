@@ -722,6 +722,30 @@ class CompleteConstructorTest extends WorseTestCase
                 }
                 EOT,
         ];
+
+        yield 'No promotion if there is a parent class constructor somewhere in the hierarchy' => [
+            <<<'EOT'
+                class B {
+                    public function __construct(private string $a) {}
+                }
+                class A extends B {}
+
+                class Foo extends A {
+                    public function __construct(string $a) {parent::__construct($a);}
+                }
+                EOT,
+            <<<'EOT'
+                class B {
+                    public function __construct(private string $a) {}
+                }
+                class A extends B {}
+
+                class Foo extends A {
+                    public function __construct(string $a) {parent::__construct($a);}
+                }
+                EOT,
+            ];
+
     }
 
 }
