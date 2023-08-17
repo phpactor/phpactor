@@ -3,7 +3,14 @@ Changelog
 
 ## master
 
+Improvements:
+
   - Do not promote parameters that are used in parent constructor #2119
+
+Bug fixes:
+
+  - Limit number of threads Psalm uses to 1 by default #
+  - Update file watching lib to handle "process already exited" errors
 
 ## 2023.08.06
 
