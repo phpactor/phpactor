@@ -242,7 +242,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         return $this->sourceLocator->locate(Name::fromUnknown($name));
     }
 
-    public function diagnostics($sourceCode): Promise
+    public function diagnostics(TextDocument $sourceCode): Promise
     {
         return $this->sourceReflector->diagnostics($sourceCode);
     }
