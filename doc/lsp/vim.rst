@@ -22,7 +22,7 @@ Client Guides
 
             Plug 'neovim/nvim-lspconfig'
 
-        Then enable it in your ``.vimrc.`` (note that `on_attach` is a
+        Then enable it in your ``.vimrc``. (note that `on_attach` is a
         `callback
         <https://github.com/neovim/nvim-lspconfig#suggested-configuration>`_
         which can be used for key bindings):
