@@ -6,6 +6,7 @@ use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
+use Composer\XdebugHandler\XdebugHandler;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
 
@@ -48,7 +49,7 @@ class Status
             $diagnostics['bad'][] = 'Git not detected. Some operations which would have been better scoped to your project repository will now include vendor paths.';
         }
 
-        if (extension_loaded('xdebug')) {
+        if (XdebugHandler::isXdebugActive()) {
             $diagnostics['bad'][] = 'XDebug is enabled. XDebug has a negative effect on performance.';
         } else {
             $diagnostics['good'][] = 'XDebug is disabled. XDebug has a negative effect on performance.';
