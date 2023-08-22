@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 
@@ -91,6 +92,11 @@ abstract class Type
     public function isArray(): bool
     {
         return $this instanceof ArrayType;
+    }
+
+    public function isIterable(): bool
+    {
+        return $this instanceof PseudoIterableType;
     }
 
     public function isNullable(): bool
