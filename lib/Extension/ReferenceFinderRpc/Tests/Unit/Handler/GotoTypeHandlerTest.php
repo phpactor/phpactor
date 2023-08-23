@@ -43,7 +43,10 @@ class GotoTypeHandlerTest extends TestCase
                     new TypeLocations([
                         new TypeLocation(
                             new MixedType(),
-                            new LocationRange($document->uri(), ByteOffsetRange::fromByteOffsets($byteOffset, $byteOffset)),
+                            new LocationRange(
+                                $document->uriOrThrow(),
+                                ByteOffsetRange::fromByteOffsets($byteOffset, $byteOffset)
+                            ),
                         )
                     ]);
             }

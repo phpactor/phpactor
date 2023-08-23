@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\IndexQuery;
 use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 
 class MemberQuery implements IndexQuery
@@ -55,7 +55,7 @@ class MemberQuery implements IndexQuery
                     $memberReference = $this->enhancer->enhance($fileRecord, $memberReference);
                 }
 
-                $location = Location::fromPathAndOffset($fileRecord->filePath(), $memberReference->offset());
+                $location = LocationRange::fromPathAndOffsets($fileRecord->filePath(), $memberReference->offset(), $memberReference->offset());
 
                 if (null === $memberReference->contaninerType()) {
                     yield LocationConfidence::maybe($location);

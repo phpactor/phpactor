@@ -11,9 +11,8 @@ use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\Util\LineAtOffset;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
@@ -44,7 +43,7 @@ class StepDefinitionLocator implements DefinitionLocator
         return new TypeLocations(array_map(function (Step $step) {
             return new TypeLocation(
                 TypeFactory::class($step->context()->class()),
-                new Location(TextDocumentUri::fromString($step->path()), ByteOffset::fromInt($step->byteOffset()))
+                LocationRange::fromPathAndOffsets($step->path(), $step->byteOffset(), $step->byteOffset())
             );
         }, $steps));
     }

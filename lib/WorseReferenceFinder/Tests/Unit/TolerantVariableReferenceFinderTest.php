@@ -204,7 +204,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
                 $referenceLocations[] = PotentialLocation::surely(
                     new LocationRange(
                         $textDocumentUri,
-                        ByteOffsetRange::fromInts($offset, $offset)
+                        ByteOffsetRange::fromInts($offset, $offset + mb_strlen($result))
                     )
                 );
                 continue;

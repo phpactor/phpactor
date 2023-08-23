@@ -12,6 +12,7 @@ use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -227,8 +228,9 @@ class IndexedReferenceFinder implements ReferenceFinder
                     continue;
                 }
                 yield LocationConfidence::surely(
-                    Location::fromPathAndOffset(
+                    LocationRange::fromPathAndOffsets(
                         $file->filePath() ?? '',
+                        $fileReference->offset(),
                         $fileReference->offset()
                     )
                 );

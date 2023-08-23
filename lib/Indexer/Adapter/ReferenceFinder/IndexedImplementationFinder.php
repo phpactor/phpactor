@@ -12,6 +12,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\LocationRanges;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -85,17 +86,17 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     }
 
     /**
-     * @return Locations<Location>
+     * @return LocationRanges<LocationRange>
      * @param ReflectionMember::TYPE_* $symbolType
      */
-    private function memberImplementations(NodeContext $nodeContext, string $symbolType, bool $includeDefinition): Locations
+    private function memberImplementations(NodeContext $nodeContext, string $symbolType, bool $includeDefinition): LocationRanges
     {
         $container = $nodeContext->containerType();
         $methodName = $nodeContext->symbol()->name();
         $containerType = $this->containerTypeResolver->resolveDeclaringContainerType($symbolType, $methodName, $container);
 
         if (!$containerType) {
-            return new Locations([]);
+            return new LocationRanges([]);
         }
 
         $implementations = $this->resolveImplementations(
@@ -141,13 +142,10 @@ class IndexedImplementationFinder implements ClassImplementationFinder
                 continue;
             }
 
-            $locations[] = Location::fromPathAndOffset(
-                $path,
-                $member->position()->start()->toInt()
-            );
+            $locations[] = new LocationRange(TextDocumentUri::fromString($path), $member->position());
         }
 
-        return new Locations($locations);
+        return new LocationRanges($locations);
     }
 
     /**

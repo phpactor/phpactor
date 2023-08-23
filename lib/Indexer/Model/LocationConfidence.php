@@ -19,19 +19,19 @@ class LocationConfidence
         return $this->confidence;
     }
 
-    public static function maybe(Location $location): self
+    public static function maybe(LocationRange $range): self
     {
-        return new self($location, self::CONFIDENCE_MAYBE);
+        return new self($range, self::CONFIDENCE_MAYBE);
     }
 
-    public static function not(Location $location): self
+    public static function not(LocationRange $range): self
     {
-        return new self($location, self::CONFIDENCE_NOT);
+        return new self($range, self::CONFIDENCE_NOT);
     }
 
-    public static function surely(Location $location): self
+    public static function surely(LocationRange $range): self
     {
-        return new self($location, self::CONFIDENCE_SURELY);
+        return new self($range, self::CONFIDENCE_SURELY);
     }
 
     public function isSurely(): bool

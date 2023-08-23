@@ -10,6 +10,7 @@ use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 
 class ClassQuery implements IndexQuery
 {
@@ -50,7 +51,7 @@ class ClassQuery implements IndexQuery
 
             foreach ($fileRecord->references()->to($record) as $classReference) {
                 yield LocationConfidence::surely(
-                    Location::fromPathAndOffset($fileRecord->filePath(), $classReference->offset())
+                    LocationRange::fromPathAndOffsets($fileRecord->filePath(), $classReference->offset(), $classReference->offset())
                 );
             }
         }

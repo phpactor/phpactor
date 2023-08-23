@@ -16,8 +16,8 @@ use Phpactor\ReferenceFinder\TestTypeLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\PHPUnit\TestCase;
-use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location as PhpactorLocation;
+use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -33,12 +33,13 @@ class TypeDefinitionHandlerTest extends TestCase
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                new PhpactorLocation(
+                new LocationRange(
                     TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffset::fromInt(2)
+                    ByteOffsetRange::fromInts(2, 5)
                 )
             )
         ];
+
         [$tester, $_] = $this->createTester($locations);
         $response = $tester->requestAndWait(TypeDefinitionRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
@@ -50,6 +51,7 @@ class TypeDefinitionHandlerTest extends TestCase
         $this->assertInstanceOf(Location::class, $location);
         $this->assertEquals(self::EXAMPLE_URI, $location->uri);
         $this->assertEquals(2, $location->range->start->character);
+        $this->assertEquals(5, $location->range->end->character);
     }
 
     public function testGoesToMultipleTypes(): void
@@ -57,16 +59,16 @@ class TypeDefinitionHandlerTest extends TestCase
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                new PhpactorLocation(
+                new LocationRange(
                     TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffset::fromInt(2)
+                    ByteOffsetRange::fromInts(2, 2)
                 )
             ),
             new TypeLocation(
                 TypeFactory::class('Barfoo'),
-                new PhpactorLocation(
+                new LocationRange(
                     TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffset::fromInt(2)
+                    ByteOffsetRange::fromInts(2, 2)
                 )
             )
         ];
