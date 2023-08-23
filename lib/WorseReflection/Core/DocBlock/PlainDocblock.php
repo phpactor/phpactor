@@ -12,10 +12,18 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\TypeResolver;
-use function preg_replace;
+use function Safe\preg_replace;
 
 class PlainDocblock implements DocBlock
 {
+    const LEADING = 3;
+    const TEXT = 2;
+    const EXTRA_ASTERIX = 1;
+    const START = 0;
+    const WHITESPACE = 4;
+    const WS_OR_TERMINATE = 5;
+
+
     private string $raw;
 
     public function __construct(string $raw = '')
@@ -55,21 +63,63 @@ class PlainDocblock implements DocBlock
 
     public function formatted(): string
     {
-        $lines = [];
-        foreach (explode("\n", $this->raw) as $line) {
-            if (str_contains($line, '@')) {
-                continue;
+        $mode = self::START;
+        $buffer = '';
+        $text = '';
+        foreach (str_split(trim($this->raw)) as $char) {
+            $buffer .= $char;
+
+            switch ($mode) {
+            case self::START:
+                if ($buffer === '/*') {
+                    $mode = self::EXTRA_ASTERIX;
+                    $buffer = '';
+                }
+                break;
+            case self::EXTRA_ASTERIX:
+                if ($buffer === '*') {
+                    $buffer = '';
+                }
+                $mode = self::TEXT;
+                break;
+            case self::TEXT:
+                if ($char === "\n") {
+                    $text .= "\n";
+                    $mode = self::LEADING;
+                    break;
+                }
+                if ($char === '*') {
+                    $mode = self::WS_OR_TERMINATE;
+                    break;
+                }
+                $text .= $char;
+                break;
+            case self::LEADING:
+                if ($char === '*') {
+                    $mode = self::WS_OR_TERMINATE;
+                }
+                break;
+            case self::WHITESPACE:
+                if ($char !== ' ') {
+                    $mode = self::TEXT;
+                    $text .= $char;
+                }
+                break;
+            case self::WS_OR_TERMINATE:
+                if ($char === '/') {
+                    return trim($text);
+                }
+
+                if ($char !== ' ') {
+                    $text = trim($text, ' ') . $char;
+                    $mode = self::TEXT;
+                    break;
+                }
+                break;
             }
-            if (str_contains($line, '/*')) {
-                continue;
-            }
-            if (str_contains($line, '*/')) {
-                continue;
-            }
-            $line = trim(preg_replace('{\s+\*}', '', $line, 1));
-            $lines[] = $line;
         }
-        return trim(implode("\n", $lines));
+
+        return $text;
     }
 
     public function returnType(): Type

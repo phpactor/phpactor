@@ -33,6 +33,13 @@ class PlainDocblockTest extends TestCase
         )->formatted());
     }
 
+    public function testSingle(): void
+    {
+        self::assertEquals("hello world", $this->createDocblock(
+            '/** hello world */'
+        )->formatted());
+    }
+
     private function createDocblock(string $string): DocBlock
     {
         return new PlainDocblock($string);
