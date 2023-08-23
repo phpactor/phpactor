@@ -22,6 +22,7 @@ use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCo
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseDeclaredClassCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseSignatureHelper;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DocblockCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseSubscriptCompletor;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ClassFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ConstantFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\EnumCaseFormatter;
@@ -342,6 +343,14 @@ class CompletionWorseExtension implements Extension
                             $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                         ),
                         $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
+                    );
+                },
+            ],
+            'subscript' => [
+                'Completion for subscript (array access from array shapes)',
+                function (Container $container) {
+                    return new WorseSubscriptCompletor(
+                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                     );
                 },
             ],
