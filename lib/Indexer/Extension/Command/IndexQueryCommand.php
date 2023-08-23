@@ -97,10 +97,11 @@ class IndexQueryCommand extends Command
         $output->writeln('<info>Referenced by</>:');
         foreach ($this->query->member()->referencesTo($member->type(), $member->memberName()) as $index => $location) {
             $output->writeln(sprintf(
-                '%-3d %s:%s',
+                '%-3d %s:%s-%s',
                 $index + 1 . '.',
-                $location->location()->uri()->path(),
-                $location->location()->offset()->toInt(),
+                $location->range()->uri()->path(),
+                $location->range()->range()->start()->toInt(),
+                $location->range()->range()->end()->toInt(),
             ));
         }
     }

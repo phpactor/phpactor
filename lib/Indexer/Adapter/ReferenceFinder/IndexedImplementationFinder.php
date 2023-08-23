@@ -9,8 +9,9 @@ use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\Locations;
+use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\LocationRanges;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -34,10 +35,13 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     }
 
     /**
-     * @return Locations<Location>
+     * @return LocationRanges<LocationRange>
      */
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
-    {
+    public function findImplementations(
+        TextDocument $document,
+        ByteOffset $byteOffset,
+        bool $includeDefinition = false
+    ): LocationRanges {
         $nodeContext = $this->reflector->reflectOffset(
             $document,
             $byteOffset->toInt()
@@ -71,13 +75,13 @@ class IndexedImplementationFinder implements ClassImplementationFinder
                 continue;
             }
 
-            $locations[] = new Location(
+            $locations[] = new LocationRange(
                 TextDocumentUri::fromString($record->filePath()),
-                $record->start()
+                ByteOffsetRange::fromByteOffsets($record->start(), $record->end()),
             );
         }
 
-        return new Locations($locations);
+        return new LocationRanges($locations);
     }
 
     /**

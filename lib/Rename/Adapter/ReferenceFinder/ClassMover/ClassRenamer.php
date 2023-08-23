@@ -82,16 +82,16 @@ final class ClassRenamer implements Renamer
 
         $seen = [];
         foreach ($this->referenceFinder->findReferences($textDocument, $offset) as $reference) {
-            if (isset($seen[$reference->location()->uri()->__toString()])) {
+            if (isset($seen[$reference->range()->uri()->__toString()])) {
                 continue;
             }
-            $seen[$reference->location()->uri()->__toString()] = true;
+            $seen[$reference->range()->uri()->__toString()] = true;
 
             if (!$reference->isSurely()) {
                 continue;
             }
 
-            $referenceDocument = $this->locator->get($reference->location()->uri());
+            $referenceDocument = $this->locator->get($reference->range()->uri());
 
             $edits = $this->classMover->replaceReferences(
                 $this->classMover->findReferences($referenceDocument->__toString(), $originalName->__toString()),
@@ -100,7 +100,7 @@ final class ClassRenamer implements Renamer
 
             foreach ($edits as $edit) {
                 yield new LocatedTextEdit(
-                    $reference->location()->uri(),
+                    $reference->range()->uri(),
                     $edit,
                 );
             }

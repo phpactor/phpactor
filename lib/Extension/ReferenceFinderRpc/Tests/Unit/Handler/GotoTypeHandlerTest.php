@@ -9,7 +9,8 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 
@@ -42,7 +43,7 @@ class GotoTypeHandlerTest extends TestCase
                     new TypeLocations([
                         new TypeLocation(
                             new MixedType(),
-                            new Location($document->uri(), $byteOffset),
+                            new LocationRange($document->uri(), ByteOffsetRange::fromByteOffsets($byteOffset, $byteOffset)),
                         )
                     ]);
             }

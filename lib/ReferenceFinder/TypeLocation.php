@@ -2,12 +2,12 @@
 
 namespace Phpactor\ReferenceFinder;
 
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\WorseReflection\Core\Type;
 
 class TypeLocation
 {
-    public function __construct(private Type $type, private Location $location)
+    public function __construct(private Type $type, private LocationRange $range)
     {
     }
 
@@ -16,8 +16,8 @@ class TypeLocation
         return $this->type;
     }
 
-    public function location(): Location
+    public function range(): LocationRange
     {
-        return $this->location;
+        return $this->range;
     }
 }

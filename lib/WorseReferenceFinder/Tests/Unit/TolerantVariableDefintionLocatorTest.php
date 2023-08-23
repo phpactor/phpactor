@@ -18,8 +18,7 @@ class TolerantVariableDefintionLocatorTest extends DefinitionLocatorTestCase
             EOT
             , '<?php $foo = new Foobar(); $f<>oo->foobar;');
 
-        $this->assertEquals($this->workspace->path('somefile.php'), $location->first()->location()->uri()->path());
-        $this->assertEquals(6, $location->first()->location()->offset()->toInt());
+        $this->assertTypeLocation($location->first(), 'somefile.php', 6, 10);
     }
 
     public function testVariableIsMethodArgument(): void
@@ -29,8 +28,8 @@ class TolerantVariableDefintionLocatorTest extends DefinitionLocatorTestCase
             <?php class Foobar { public $foobar; }
             EOT
             , '<?php class Foo { public function bar(string $bar) { $b<>ar->baz(); } }');
-        $this->assertEquals($this->workspace->path('somefile.php'), $location->first()->location()->uri()->path());
-        $this->assertEquals(45, $location->first()->location()->offset()->toInt());
+
+        $this->assertTypeLocation($location->first(), 'somefile.php', 45, 50);
     }
 
     public function testGotoFirstIfVariableNotDefined(): void
@@ -40,8 +39,8 @@ class TolerantVariableDefintionLocatorTest extends DefinitionLocatorTestCase
             <?php class Foobar { public $foobar; }
             EOT
             , '<?php $foo = new Foobar(); $b<>ar->foobar;');
-        $this->assertEquals($this->workspace->path('somefile.php'), $location->first()->location()->uri()->path());
-        $this->assertEquals(27, $location->first()->location()->offset()->toInt());
+
+        $this->assertTypeLocation($location->first(), 'somefile.php', 27, 31);
     }
 
     protected function locator(): DefinitionLocator

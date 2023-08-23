@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 use Amp\Delayed;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\LanguageServerProtocol\Location as LspLocation;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\ReferenceContext;
@@ -20,7 +21,7 @@ use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\Locations;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferencesHandler implements Handler, CanRegisterCapabilities
@@ -63,8 +64,11 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             $locations = [];
             if ($context->includeDeclaration) {
                 try {
-                    $potentialLocation = $this->definitionLocator->locateDefinition($phpactorDocument, $offset)->first()->location();
-                    $locations[] = new Location($potentialLocation->uri(), $potentialLocation->offset());
+                    $potentialLocation = $this->definitionLocator->locateDefinition($phpactorDocument, $offset)->first()->range();
+                    $locations[] = new LocationRange(
+                        $potentialLocation->uri(),
+                        $potentialLocation->range()
+                    );
                 } catch (CouldNotLocateDefinition) {
                 }
             }
@@ -74,7 +78,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             $risky = 0;
             foreach ($this->finder->findReferences($phpactorDocument, $offset) as $potentialLocation) {
                 if ($potentialLocation->isSurely()) {
-                    $locations[] = $potentialLocation->location();
+                    $locations[] = $potentialLocation->range();
                 }
 
                 if ($potentialLocation->isMaybe()) {
@@ -98,7 +102,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                         $this->timeoutSeconds,
                         LanguageServerReferenceFinderExtension::PARAM_REFERENCE_TIMEOUT
                     ));
-                    return $this->toLocations($locations);
+                    return $this->toLocations($locations, $textDocument->text);
                 }
 
                 if ($count % 10) {
@@ -113,7 +117,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                 $risky ? sprintf(' %s unresolvable references excluded', $risky) : ''
             ));
 
-            return $this->toLocations($locations);
+            return $this->toLocations($locations, $textDocument->text);
         });
     }
 
@@ -123,13 +127,14 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
     }
 
     /**
-     * @param Location[] $locations
-     * @return LspLocation[]
+     * @param LocationRange[] $locations
+     * @return Range[]
      */
-    private function toLocations(array $locations): array
+    private function toLocations(array $locations, string $text): array
     {
-        return $this->locationConverter->toLspLocations(
-            (new Locations($locations))->sorted()
+        return array_map(
+            static fn (LocationRange $range) => RangeConverter::toLspRange($range->range(), $text),
+            $locations
         );
     }
 }

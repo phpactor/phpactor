@@ -21,7 +21,7 @@ use Microsoft\PhpParser\Token;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use function assert;
 use Exception;
@@ -32,7 +32,9 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
     {
     }
 
-
+    /**
+     * @return Generator<PotentialLocation>
+     */
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         $sourceNode = $this->sourceNode($document->__toString());
@@ -136,7 +138,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
     {
         if ($scopeNode instanceof CatchClause && $scopeNode->variableName instanceof Token && $name == substr((string)$scopeNode->variableName->getText($scopeNode->getFileContents()), 1)) {
             yield PotentialLocation::surely(
-                Location::fromPathAndOffset($uri, $scopeNode->variableName->start)
+                LocationRange::fromPathAndOffsets($uri, $scopeNode->variableName->start, $scopeNode->variableName->getEndPosition())
             );
         }
 
@@ -148,7 +150,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
 
             if ($node instanceof Variable && $name == (string)$node->getName()) {
                 yield PotentialLocation::surely(
-                    Location::fromPathAndOffset($uri, $node->getStartPosition())
+                    LocationRange::fromPathAndOffsets($uri, $node->getStartPosition(), $node->getEndPosition())
                 );
                 continue;
             }
@@ -159,30 +161,20 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
                     continue;
                 }
                 yield PotentialLocation::surely(
-                    Location::fromPathAndOffset($uri, $variableName->start)
+                    LocationRange::fromPathAndOffsets($uri, $variableName->start, $variableName->start + $variableName->length)
                 );
                 continue;
             }
 
             if ($node instanceof UseVariableName && $name == $node->getName()) {
                 yield PotentialLocation::surely(
-                    Location::fromPathAndOffset($uri, $node->getStartPosition())
+                    LocationRange::fromPathAndOffsets($uri, $node->getStartPosition(), $node->getEndPosition())
                 );
                 continue;
             }
 
             yield from $this->find($node, $name, $uri);
         }
-    }
-
-    private function isPotentialReferenceNode(Node $node): bool
-    {
-        return
-            $node instanceof UseVariableName
-            || $node instanceof Variable
-            || $node instanceof Parameter
-            || $node instanceof CatchClause
-        ;
     }
 
     private function variableName(Node $variable): ?string

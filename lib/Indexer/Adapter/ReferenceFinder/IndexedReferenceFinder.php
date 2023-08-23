@@ -49,16 +49,16 @@ class IndexedReferenceFinder implements ReferenceFinder
 
         foreach ($this->resolveReferences($nodeContext) as $locationConfidence) {
             if ($locationConfidence->isSurely()) {
-                yield PotentialLocation::surely($locationConfidence->location());
+                yield PotentialLocation::surely($locationConfidence->range());
                 continue;
             }
 
             if ($locationConfidence->isMaybe()) {
-                yield PotentialLocation::maybe($locationConfidence->location());
+                yield PotentialLocation::maybe($locationConfidence->range());
                 continue;
             }
 
-            yield PotentialLocation::not($locationConfidence->location());
+            yield PotentialLocation::not($locationConfidence->range());
         }
     }
 

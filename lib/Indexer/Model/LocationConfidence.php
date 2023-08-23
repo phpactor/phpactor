@@ -2,7 +2,7 @@
 
 namespace Phpactor\Indexer\Model;
 
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 
 class LocationConfidence
 {
@@ -10,7 +10,7 @@ class LocationConfidence
     public const CONFIDENCE_NOT = 'not';
     public const CONFIDENCE_MAYBE = 'maybe';
 
-    public function __construct(private Location $location, private string $confidence)
+    public function __construct(private LocationRange $range, private string $confidence)
     {
     }
 
@@ -49,8 +49,8 @@ class LocationConfidence
         return $this->confidence === self::CONFIDENCE_NOT;
     }
 
-    public function location(): Location
+    public function range(): LocationRange
     {
-        return $this->location;
+        return $this->range;
     }
 }

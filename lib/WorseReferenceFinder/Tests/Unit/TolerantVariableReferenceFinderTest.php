@@ -7,7 +7,8 @@ use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
@@ -179,9 +180,9 @@ class TolerantVariableReferenceFinderTest extends TestCase
     }
 
     /** @return mixed[] */
-    private static function offsetsFromSource(string $source, ?string $uri): array
+    private static function offsetsFromSource(string $source, string $uri): array
     {
-        $textDocumentUri = $uri !== null ? TextDocumentUri::fromString($uri) : null;
+        $textDocumentUri = TextDocumentUri::fromString($uri);
         $results = preg_split('/(<>|<sr>)/u', $source, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
         $referenceLocations = [];
@@ -201,7 +202,10 @@ class TolerantVariableReferenceFinderTest extends TestCase
 
             if ($result == '<sr>') {
                 $referenceLocations[] = PotentialLocation::surely(
-                    new Location($textDocumentUri, ByteOffset::fromInt($offset))
+                    new LocationRange(
+                        $textDocumentUri,
+                        ByteOffsetRange::fromInts($offset, $offset)
+                    )
                 );
                 continue;
             }

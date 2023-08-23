@@ -7,7 +7,7 @@ use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
@@ -106,9 +106,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ));
         }
 
-        return new TypeLocations([new TypeLocation($className, new Location(
+        return new TypeLocations([new TypeLocation($className, new LocationRange(
             TextDocumentUri::fromString($path),
-            ByteOffset::fromInt($class->position()->start()->toInt())
+            $class->position()
         ))]);
     }
 
@@ -132,9 +132,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
         return new TypeLocations([
-            new TypeLocation(TypeFactory::unknown(), new Location(
+            new TypeLocation(TypeFactory::unknown(), new LocationRange(
                 TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($function->position()->start()->toInt())
+                $function->position()
             ))
         ]);
     }
@@ -159,9 +159,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
         return new TypeLocations([
-            new TypeLocation(TypeFactory::unknown(), new Location(
+            new TypeLocation(TypeFactory::unknown(), new LocationRange(
                 TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($constant->position()->start()->toInt())
+                $constant->position()
             ))
         ]);
     }
@@ -222,10 +222,10 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                 ));
             }
 
-            $locations[] = new TypeLocation($namedType, new Location(
-                TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($member->position()->start()->toInt())
-            ));
+            $locations[] = new TypeLocation(
+                $namedType,
+                new LocationRange(TextDocumentUri::fromString($path), $member->position())
+            );
         }
 
         return new TypeLocations($locations);
@@ -263,9 +263,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ));
         }
 
-        return new TypeLocations([new TypeLocation($nodeContext->classType(), new Location(
+        return new TypeLocations([new TypeLocation($nodeContext->classType(), new LocationRange(
             TextDocumentUri::fromString($path),
-            $member->position()->start()
+            $member->position()
         ))]);
     }
 }

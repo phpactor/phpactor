@@ -48,14 +48,15 @@ class FileRenamer implements PhpactorFileRenamer
             $edits = TextEdits::none();
             $seen = [];
             foreach ($references as $reference) {
-                if (isset($seen[$reference->location()->uri()->path()])) {
+                $uri =$reference->range()->uri();
+                if (isset($seen[$uri->path()])) {
                     continue;
                 }
 
-                $seen[$reference->location()->uri()->path()] = true;
+                $seen[$uri->path()] = true;
 
                 try {
-                    $document = $this->locator->get($reference->location()->uri());
+                    $document = $this->locator->get($uri);
                 } catch (TextDocumentNotFound) {
                     continue;
                 }
@@ -64,7 +65,7 @@ class FileRenamer implements PhpactorFileRenamer
                     $this->mover->findReferences($document->__toString(), $fromClass),
                     $toClass
                 ) as $edit) {
-                    $locatedEdits[] = new LocatedTextEdit($reference->location()->uri(), $edit);
+                    $locatedEdits[] = new LocatedTextEdit($uri, $edit);
                 }
             }
 

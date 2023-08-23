@@ -8,7 +8,7 @@ use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateType;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -50,7 +50,7 @@ class WorseReflectionTypeLocator implements TypeLocator
         return new TypeLocations($typeLocations);
     }
 
-    private function gotoType(Type $type): Location
+    private function gotoType(Type $type): LocationRange
     {
         $className = $this->resolveClassName($type);
 
@@ -62,10 +62,7 @@ class WorseReflectionTypeLocator implements TypeLocator
 
         $textDocument = $class->sourceCode();
 
-        return new Location(
-            $textDocument->uriOrThrow(),
-            ByteOffset::fromInt($class->position()->start()->toInt())
-        );
+        return new LocationRange($textDocument->uriOrThrow(), $class->position());
     }
 
     private function resolveClassName(Type $type): ClassName

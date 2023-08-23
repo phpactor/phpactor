@@ -8,8 +8,8 @@ use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\Locations;
+use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\LocationRanges;
 use Phpactor\TextDocument\TextDocument;
 
 class GotoImplementationHandlerTest extends TestCase
@@ -21,7 +21,7 @@ class GotoImplementationHandlerTest extends TestCase
     public function testGotoSingleImplementation(): void
     {
         $location = $this->create([
-            Location::fromPathAndOffset(self::EXAMPLE_PATH, 10)
+            LocationRange::fromPathAndOffsets(self::EXAMPLE_PATH, 10, 10)
         ])->handle('goto_implementation', [
             'source' => self::EXAMPLE_SOURCE,
             'offset' => self::EXAMPLE_OFFSET,
@@ -37,8 +37,8 @@ class GotoImplementationHandlerTest extends TestCase
     public function testSelectFromMultiple(): void
     {
         $response = $this->create([
-            Location::fromPathAndOffset(__FILE__, 20),
-            Location::fromPathAndOffset(__FILE__, 40)
+            LocationRange::fromPathAndOffsets(__FILE__, 20, 20),
+            LocationRange::fromPathAndOffsets(__FILE__, 40, 40)
         ])->handle('goto_implementation', [
             'source' => self::EXAMPLE_SOURCE,
             'offset' => self::EXAMPLE_OFFSET,
@@ -50,21 +50,21 @@ class GotoImplementationHandlerTest extends TestCase
     }
 
     /**
-     * @param Location[] $locations
+     * @param LocationRange[] $locations
      */
     public function create(array $locations): HandlerTester
     {
         $locator = new class($locations) implements ClassImplementationFinder {
             /**
-             * @param Location[] $locations
+             * @param LocationRange[] $locations
              */
             public function __construct(private array $locations)
             {
             }
 
-            public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
+            public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): LocationRanges
             {
-                return new Locations($this->locations);
+                return new LocationRanges($this->locations);
             }
         };
 

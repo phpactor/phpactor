@@ -2,7 +2,7 @@
 
 namespace Phpactor\ReferenceFinder;
 
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 
 final class PotentialLocation
 {
@@ -10,21 +10,21 @@ final class PotentialLocation
     private const CONFIDENCE_NOT = 'not';
     private const CONFIDENCE_MAYBE = 'maybe';
 
-    public function __construct(private Location $location, private string $confidence)
+    public function __construct(private LocationRange $location, private string $confidence)
     {
     }
 
-    public static function maybe(Location $location): self
+    public static function maybe(LocationRange $location): self
     {
         return new self($location, self::CONFIDENCE_MAYBE);
     }
 
-    public static function not(Location $location): self
+    public static function not(LocationRange $location): self
     {
         return new self($location, self::CONFIDENCE_NOT);
     }
 
-    public static function surely(Location $location): self
+    public static function surely(LocationRange $location): self
     {
         return new self($location, self::CONFIDENCE_SURELY);
     }
@@ -44,7 +44,7 @@ final class PotentialLocation
         return $this->confidence === self::CONFIDENCE_NOT;
     }
 
-    public function location(): Location
+    public function range(): LocationRange
     {
         return $this->location;
     }

@@ -8,7 +8,7 @@ class Location
     {
     }
 
-    public static function fromPathAndOffset(string $string, int $int): Location
+    public static function fromPathAndOffset(string $string, int $int): self
     {
         return new self(
             TextDocumentUri::fromString($string),

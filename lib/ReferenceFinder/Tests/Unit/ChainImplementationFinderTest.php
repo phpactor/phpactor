@@ -7,11 +7,10 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\ChainImplementationFinder;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\Locations;
+use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\LocationRanges;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentUri;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
@@ -50,17 +49,17 @@ class ChainImplementationFinderTest extends TestCase
         ]);
 
         $location1 = $this->createLocation();
-        $this->locator1->findImplementations($this->document, $this->offset, false)->willReturn(new Locations([$location1]));
+        $this->locator1->findImplementations($this->document, $this->offset, false)->willReturn(new LocationRanges([$location1]));
 
         $location2 = $this->createLocation();
-        $this->locator2->findImplementations($this->document, $this->offset, false)->willReturn(new Locations([$location2]));
+        $this->locator2->findImplementations($this->document, $this->offset, false)->willReturn(new LocationRanges([$location2]));
 
-        $locations = $locator->findImplementations($this->document, $this->offset);
-        $this->assertEquals(new Locations([$location1, $location2], $locations), $locations);
+        $locationRanges = $locator->findImplementations($this->document, $this->offset);
+        $this->assertEquals(new LocationRanges([$location1, $location2]), $locationRanges);
     }
 
-    private function createLocation(): Location
+    private function createLocation(): LocationRange
     {
-        return new Location(TextDocumentUri::fromString('/path/to.php'), ByteOffset::fromInt(1234));
+        return LocationRange::fromPathAndOffsets('/path/to.php', 1234, 1234);
     }
 }

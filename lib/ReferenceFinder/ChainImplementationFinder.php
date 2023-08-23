@@ -3,8 +3,8 @@
 namespace Phpactor\ReferenceFinder;
 
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\LocationRanges;
 
 final class ChainImplementationFinder implements ClassImplementationFinder
 {
@@ -23,7 +23,7 @@ final class ChainImplementationFinder implements ClassImplementationFinder
         }
     }
 
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
+    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): LocationRanges
     {
         $messages = [];
         $locations = [];
@@ -40,7 +40,7 @@ final class ChainImplementationFinder implements ClassImplementationFinder
             );
         }
 
-        return new Locations($locations);
+        return new LocationRanges($locations);
     }
 
     private function add(ClassImplementationFinder $finder): void

@@ -23,6 +23,7 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -67,9 +68,9 @@ class ReferencesHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willYield([
-            PotentialLocation::surely(new Location($document->uriOrThrow(), ByteOffset::fromInt(2))),
-            PotentialLocation::surely(new Location($document2->uriOrThrow(), ByteOffset::fromInt(3))),
-            PotentialLocation::surely(new Location($document->uriOrThrow(), ByteOffset::fromInt(5))),
+            PotentialLocation::surely(ByteOffsetRange::fromInts(2, 2)),
+            PotentialLocation::surely(ByteOffsetRange::fromInts(3, 3)),
+            PotentialLocation::surely(ByteOffsetRange::fromInts(5, 5)),
         ])->shouldBeCalled();
 
         $tester = $this->createTester();

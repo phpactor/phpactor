@@ -8,7 +8,7 @@ use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\ReferenceFinder\TestReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use function iterator_to_array;
@@ -20,9 +20,9 @@ class DefinitionAndReferenceFinderTest extends TestCase
         $finder = new DefinitionAndReferenceFinder(
             TestDefinitionLocator::fromSingleLocation(
                 TypeFactory::unknown(),
-                Location::fromPathAndOffset('/path', 1)
+                LocationRange::fromPathAndOffsets('/path', 1, 1)
             ),
-            new TestReferenceFinder(PotentialLocation::surely(Location::fromPathAndOffset('/path', 2)))
+            new TestReferenceFinder(PotentialLocation::surely(LocationRange::fromPathAndOffsets('/path', 2, 2)))
         );
         $document = TextDocumentBuilder::create('asd')->build();
         self::assertCount(2, iterator_to_array($finder->findReferences($document, ByteOffset::fromInt(1))));
@@ -32,7 +32,7 @@ class DefinitionAndReferenceFinderTest extends TestCase
     {
         $finder = new DefinitionAndReferenceFinder(
             new TestDefinitionLocator(null),
-            new TestReferenceFinder(PotentialLocation::surely(Location::fromPathAndOffset('/path', 2)))
+            new TestReferenceFinder(PotentialLocation::surely(LocationRange::fromPathAndOffsets('/path', 2, 2)))
         );
         $document = TextDocumentBuilder::create('asd')->build();
         self::assertCount(1, iterator_to_array($finder->findReferences($document, ByteOffset::fromInt(1))));

@@ -30,7 +30,7 @@ class WorseReferenceFinderExtensionTest extends TestCase
         $location = $locator->locateDefinition(
             TextDocumentBuilder::create(WorseReferenceFinderExtension::class)->build(),
             ByteOffset::fromInt(3)
-        )->first()->location();
+        )->first()->range();
 
         $this->assertEquals(realpath(__DIR__ . '/../../WorseReferenceFinderExtension.php'), $location->uri()->path());
     }
@@ -51,7 +51,7 @@ class WorseReferenceFinderExtensionTest extends TestCase
             ByteOffset::fromInt(10)
         );
 
-        $this->assertEquals('/foo', $location->first()->location()->uri()->path());
+        $this->assertEquals('/foo', $location->first()->range()->uri()->path());
     }
 
     public function testLocateVariable(): void

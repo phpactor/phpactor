@@ -13,7 +13,7 @@ use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\Util\WordAtOffset;
@@ -50,10 +50,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
         return new TypeLocations([
             new TypeLocation(
                 $reflectionClass->type(),
-                new Location(
-                    TextDocumentUri::fromString($path),
-                    ByteOffset::fromInt($reflectionClass->position()->start()->toInt())
-                )
+                new LocationRange(TextDocumentUri::fromString($path), $reflectionClass->position())
             )
         ]);
     }
