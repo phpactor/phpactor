@@ -5,7 +5,12 @@ Changelog
 
 Improvements:
 
-  - Do not promote parameters that are used in parent constructor #2119
+  - Do not promote parameters that are used in parent constructor #2119 @mamazu
+  - Improve detection of Xdebug @bart-jaskulsi #2347
+  - Improve plain docblock parsing #2345
+  - Generate `@param` tag for iterables #2343 @mamazu
+
+## 2023.08.06-1
 
 Bug fixes:
 
