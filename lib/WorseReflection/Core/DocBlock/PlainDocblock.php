@@ -15,12 +15,12 @@ use Phpactor\WorseReflection\Core\TypeResolver;
 
 class PlainDocblock implements DocBlock
 {
-    const LEADING = 3;
-    const TEXT = 2;
-    const EXTRA_ASTERIX = 1;
-    const START = 0;
-    const WHITESPACE = 4;
-    const WS_OR_TERMINATE = 5;
+    private const LEADING = 3;
+    private const TEXT = 2;
+    private const EXTRA_ASTERIX = 1;
+    private const START = 0;
+    private const WHITESPACE = 4;
+    private const WS_OR_TERMINATE = 5;
 
     private string $raw;
 
