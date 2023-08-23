@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Features:
+
+  - Subscript array-shape completion #2339
+
 Improvements:
 
   - Do not promote parameters that are used in parent constructor #2119 @mamazu
