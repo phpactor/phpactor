@@ -11,7 +11,6 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class WorseSubscriptCompletor implements TolerantCompletor
 {

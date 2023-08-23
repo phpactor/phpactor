@@ -60,6 +60,7 @@ use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\Container;
 use Phpactor\ReferenceFinder\NameSearcher;
+use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use RuntimeException;
 
 class CompletionWorseExtension implements Extension
@@ -350,7 +351,7 @@ class CompletionWorseExtension implements Extension
                 'Completion for subscript (array access from array shapes)',
                 function (Container $container) {
                     return new WorseSubscriptCompletor(
-                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
+                        $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, SourceCodeReflector::class),
                     );
                 },
             ],
