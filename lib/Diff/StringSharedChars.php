@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCsFixer\Util;
+namespace Phpactor\Diff;
 
 /**
  * An utility class to get details of shared begining and ending of a string

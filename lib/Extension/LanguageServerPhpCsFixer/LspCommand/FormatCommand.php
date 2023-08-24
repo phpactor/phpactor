@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand;
 
 use Amp\Promise;
+use Phpactor\Diff\DiffToTextEditsConverter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Util\DiffToTextEditsConverter;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
