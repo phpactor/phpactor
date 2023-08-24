@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCsFixer\Util;
+namespace Phpactor\Diff;
 
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\Position;
