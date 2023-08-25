@@ -40,8 +40,8 @@ class RangesForDiffTest extends TestCase
 
     /**
      * @return iterable<string,array{
-     *   0: string,
-     *   1: array<Range>
+     *   'diff': string,
+     *   'ranges': Range[]
      * }>
      */
     public function diffProvider(): iterable
