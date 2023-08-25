@@ -176,8 +176,8 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
     }
 
     /**
-       * @return Promise<Diagnostic>
-       */
+     * @return Promise<Diagnostic>
+     */
     private function createRuleDiagnostics(object $rule, Range $range): Promise
     {
         return \Amp\call(function () use ($rule, $range) {
@@ -186,6 +186,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
               'range' => $range,
               'severity' => DiagnosticSeverity::WARNING,
               'source' => $this->name(),
+              'code' => $rule->source
             ]);
         });
     }
