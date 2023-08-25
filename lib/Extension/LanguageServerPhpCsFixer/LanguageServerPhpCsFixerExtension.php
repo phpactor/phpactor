@@ -29,12 +29,12 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $container->register(
             PhpCsFixerProcess::class,
             function (Container $container) {
-                $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PHP_CS_FIXER_BIN));
+                $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_PHP_CS_FIXER_BIN)->string());
 
                 return new PhpCsFixerProcess(
                     $path,
                     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
-                    $container->getParameter(self::PARAM_ENV),
+                    $container->parameter(self::PARAM_ENV)->value(),
                 );
             }
         );
@@ -49,7 +49,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             return new PhpCsFixerDiagnosticsProvider(
                 $container->get(PhpCsFixerProcess::class),
                 new RangesForDiff(),
-                $container->getParameter(self::PARAM_SHOW_DIAGNOSTICS),
+                $container->parameter(self::PARAM_SHOW_DIAGNOSTICS)->bool(),
                 LoggingExtension::channelLogger($container, 'php-cs-fixer'),
             );
         }, [
