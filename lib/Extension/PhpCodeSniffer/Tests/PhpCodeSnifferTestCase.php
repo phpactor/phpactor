@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer\Tests;
+namespace Phpactor\Extension\PhpCodeSniffer\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Model\PhpCodeSnifferProcess;
+use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
 use Psr\Log\NullLogger;
 
 class PhpCodeSnifferTestCase extends TestCase

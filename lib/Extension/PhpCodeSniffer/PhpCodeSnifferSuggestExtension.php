@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer;
+namespace Phpactor\Extension\PhpCodeSniffer;
 
 use Phpactor\ComposerInspector\ComposerInspector;
 use Phpactor\Configurator\Adapter\Phpactor\PhpactorConfigChange;
@@ -13,16 +13,16 @@ use Phpactor\Extension\Configuration\ChangeSuggestor\PhpactorComposerSuggestor;
 use Phpactor\Extension\Configuration\ConfigurationExtension;
 use Phpactor\MapResolver\Resolver;
 
-class LanguageServerPhpCodeSnifferSuggestExtension implements Extension
+class PhpCodeSnifferSuggestExtension implements Extension
 {
     public function load(ContainerBuilder $container): void
     {
-        $container->register('language_server_php_code_sniffer.suggest', function (Container $container) {
+        $container->register('php_code_sniffer.suggest', function (Container $container) {
             return new PhpactorComposerSuggestor(
                 $container->expect(ConfigurationExtension::SERVICE_PHPACTOR_CONFIG_LOCAL, JsonConfig::class),
                 $container->get(ComposerInspector::class),
                 function (JsonConfig $config, ComposerInspector $inspector) {
-                    if ($config->has(LanguageServerPhpCodeSnifferExtension::PARAM_ENABLED)) {
+                    if ($config->has(PhpCodeSnifferExtension::PARAM_ENABLED)) {
                         return Changes::none();
                     }
 
@@ -33,7 +33,7 @@ class LanguageServerPhpCodeSnifferSuggestExtension implements Extension
                     return Changes::from([
                         new PhpactorConfigChange('PHP_CodeSniffer detected, enable the PHP_CodeSniffer extension?', function (bool $enable) {
                             return [
-                                LanguageServerPhpCodeSnifferExtension::PARAM_ENABLED => $enable,
+                                PhpCodeSnifferExtension::PARAM_ENABLED => $enable,
                             ];
                         })
                     ]);

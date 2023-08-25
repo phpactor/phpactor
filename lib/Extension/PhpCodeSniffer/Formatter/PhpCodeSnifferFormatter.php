@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer\Formatter;
+namespace Phpactor\Extension\PhpCodeSniffer\Formatter;
 
 use Amp\Promise;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Model\PhpCodeSnifferProcess;
+use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
 use Phpactor\Diff\DiffToTextEditsConverter;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Formatting\Formatter;

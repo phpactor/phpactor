@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer\Tests\Provider;
+namespace Phpactor\Extension\PhpCodeSniffer\Tests\Provider;
 
 use Amp\NullCancellationToken;
 use Phpactor\Diff\RangesForDiff;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Provider\PhpCodeSnifferDiagnosticsProvider;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Tests\PhpCodeSnifferTestCase;
+use Phpactor\Extension\PhpCodeSniffer\Provider\PhpCodeSnifferDiagnosticsProvider;
+use Phpactor\Extension\PhpCodeSniffer\Tests\PhpCodeSnifferTestCase;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\Position;

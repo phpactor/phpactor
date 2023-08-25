@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer\Model;
+namespace Phpactor\Extension\PhpCodeSniffer\Model;
 
 use Amp\Process\Process;
 use Amp\Promise;
