@@ -78,7 +78,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
 
             $locations[] = new LocationRange(
                 TextDocumentUri::fromString($record->filePath()),
-                ByteOffsetRange::fromByteOffsets($record->start(), $record->end()),
+                ByteOffsetRange::fromByteOffsets($record->start(), $record->start()),
             );
         }
 

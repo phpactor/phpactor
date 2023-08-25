@@ -3,12 +3,12 @@
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
 use Amp\Promise;
-use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\LanguageServerProtocol\Location;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\DefinitionParams;
 use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
+use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -23,6 +23,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
     public function __construct(
         private Workspace $workspace,
         private DefinitionLocator $definitionLocator,
+        private LocationConverter $locationConverter,
         private ClientApi $clientApi
     ) {
     }
@@ -39,7 +40,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
      */
     public function definition(DefinitionParams $params): Promise
     {
-        return \Amp\call(function () use ($params): Range {
+        return \Amp\call(function () use ($params) {
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
             $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
@@ -58,7 +59,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
             }
 
             if ($typeLocations->count() === 1) {
-                return RangeConverter::toLspRange($typeLocations->first()->range(), $textDocument->text);
+                return $this->locationConverter->toLspLocationWithRange($typeLocations->first()->range());
             }
 
             $actions = [];
@@ -74,7 +75,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
                 );
             }
 
-            return RangeConverter::toLspRange($typeLocations->byTypeName($item->title)->range(), $textDocument->text);
+            return $this->locationConverter->toLspLocationWithRange($typeLocations->byTypeName($item->title)->range());
         });
     }
 

@@ -20,6 +20,7 @@ class StepDefinitionLocatorTest extends TestCase
     use ProphecyTrait;
     const EXAMPLE_PATH = '/path/to.php';
     const EXAMPLE_OFFSET = 6666;
+    const EXAMPLE_OFFSET_END = 7797;
 
     private StepDefinitionLocator $locator;
 
@@ -48,7 +49,8 @@ class StepDefinitionLocatorTest extends TestCase
                 'myMethod',
                 $step,
                 self::EXAMPLE_PATH,
-                self::EXAMPLE_OFFSET
+                self::EXAMPLE_OFFSET,
+                self::EXAMPLE_OFFSET_END
             );
         });
 
@@ -69,8 +71,11 @@ class StepDefinitionLocatorTest extends TestCase
         $offset = ByteOffset::fromInt((int)$offset);
 
         $location = $this->locator->locateDefinition($document, $offset);
-        $this->assertEquals(self::EXAMPLE_PATH, $location->first()->location()->uri()->path());
-        $this->assertEquals(self::EXAMPLE_OFFSET, $location->first()->location()->offset()->toInt());
+
+        $sourceLocation = $location->first()->range();
+        $this->assertEquals(self::EXAMPLE_PATH, $sourceLocation->uri()->path());
+        $this->assertEquals(self::EXAMPLE_OFFSET, $sourceLocation->range()->start()->toInt());
+        $this->assertEquals(self::EXAMPLE_OFFSET_END, $sourceLocation->range()->end()->toInt());
     }
 
     /**

@@ -13,7 +13,8 @@ class Step
         private string $method,
         private string $pattern,
         private string $path,
-        private int $startByteOffset
+        private int $startByteOffset,
+        private int $endByteOffset
     ) {
     }
 
@@ -59,8 +60,13 @@ class Step
         return $this->path;
     }
 
-    public function byteOffset(): int
+    public function start(): int
     {
         return $this->startByteOffset;
+    }
+
+    public function end(): int
+    {
+        return $this->endByteOffset;
     }
 }

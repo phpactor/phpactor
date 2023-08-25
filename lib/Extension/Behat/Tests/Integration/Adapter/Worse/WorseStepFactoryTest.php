@@ -23,8 +23,8 @@ class WorseStepFactoryTest extends TestCase
         $steps = iterator_to_array($stepGenerator->generate($parser, [ $context ]));
 
         $this->assertEquals([
-            new Step($context, 'givenThatThis', 'that I visit Berlin', $path, 150),
-            new Step($context, 'shouldRun', 'I should run to Weisensee', $path, 260),
+            new Step($context, 'givenThatThis', 'that I visit Berlin', $path, 150, 199),
+            new Step($context, 'shouldRun', 'I should run to Weisensee', $path, 260, 305),
         ], $steps);
     }
 }

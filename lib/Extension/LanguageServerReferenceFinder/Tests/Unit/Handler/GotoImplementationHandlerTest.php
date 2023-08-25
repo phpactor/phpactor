@@ -11,7 +11,10 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\LocationRanges;
 use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -42,8 +45,8 @@ class GotoImplementationHandlerTest extends TestCase
         $this->finder->findImplementations(
             $document,
             ByteOffset::fromInt(0)
-        )->willReturn(new Locations([
-            new Location($document->uri(), ByteOffset::fromInt(2))
+        )->willReturn(new LocationRanges([
+            new LocationRange($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 2))
         ]));
 
         $builder = LanguageServerTesterBuilder::create();

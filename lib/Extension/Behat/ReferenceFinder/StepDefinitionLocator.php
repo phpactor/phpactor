@@ -43,7 +43,7 @@ class StepDefinitionLocator implements DefinitionLocator
         return new TypeLocations(array_map(function (Step $step) {
             return new TypeLocation(
                 TypeFactory::class($step->context()->class()),
-                LocationRange::fromPathAndOffsets($step->path(), $step->byteOffset(), $step->byteOffset())
+                LocationRange::fromPathAndOffsets($step->path(), $step->start(), $step->end())
             );
         }, $steps));
     }

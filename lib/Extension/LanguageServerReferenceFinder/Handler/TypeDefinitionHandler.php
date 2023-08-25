@@ -60,7 +60,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
             }
 
             if ($typeLocations->count() === 1) {
-                return $this->locationConverter->toLspLocation($typeLocations->first()->location());
+                return $this->locationConverter->toLspLocationWithRange($typeLocations->first()->range());
             }
 
             $actions = [];
@@ -74,9 +74,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
                 return null;
             }
 
-            return $this->locationConverter->toLspLocation(
-                $typeLocations->byTypeName($item->title)->location()
-            );
+            return $this->locationConverter->toLspLocationWithRange($typeLocations->byTypeName($item->title)->range());
         });
     }
 

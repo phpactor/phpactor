@@ -70,4 +70,20 @@ final class LocationRanges implements IteratorAggregate, Countable
 
         return $this;
     }
+
+    public function sorted(): self
+    {
+        $sortedLocations = $this->locationRanges;
+
+        usort($sortedLocations, function (LocationRange $first, LocationRange $second) {
+            $order = strcmp((string) $first->uri(), (string) $second->uri());
+            if (0 !== $order) {
+                return $order;
+            }
+
+            return $first->range()->start()->toInt() - $second->range()->start()->toInt();
+        });
+
+        return new self($sortedLocations);
+    }
 }

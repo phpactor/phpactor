@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 use Amp\Delayed;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
-use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\LanguageServerProtocol\Location as LspLocation;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\ReferenceContext;
@@ -21,7 +20,9 @@ use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRanges;
 use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferencesHandler implements Handler, CanRegisterCapabilities
@@ -102,7 +103,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                         $this->timeoutSeconds,
                         LanguageServerReferenceFinderExtension::PARAM_REFERENCE_TIMEOUT
                     ));
-                    return $this->toLocations($locations, $textDocument->text);
+                    return $this->toLocations($locations);
                 }
 
                 if ($count % 10) {
@@ -117,7 +118,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                 $risky ? sprintf(' %s unresolvable references excluded', $risky) : ''
             ));
 
-            return $this->toLocations($locations, $textDocument->text);
+            return $this->toLocations($locations);
         });
     }
 
@@ -127,14 +128,11 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
     }
 
     /**
-     * @param LocationRange[] $locations
-     * @return Range[]
+     * @param array<LocationRange> $ranges
+     * @return LspLocation[]
      */
-    private function toLocations(array $locations, string $text): array
+    private function toLocations(array $ranges): array
     {
-        return array_map(
-            static fn (LocationRange $range) => RangeConverter::toLspRange($range->range(), $text),
-            $locations
-        );
+        return $this->locationConverter->toLspLocationsWithRange((new LocationRanges($ranges))->sorted());
     }
 }

@@ -25,6 +25,7 @@ use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -68,9 +69,9 @@ class ReferencesHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willYield([
-            PotentialLocation::surely(ByteOffsetRange::fromInts(2, 2)),
-            PotentialLocation::surely(ByteOffsetRange::fromInts(3, 3)),
-            PotentialLocation::surely(ByteOffsetRange::fromInts(5, 5)),
+            PotentialLocation::surely(LocationRange::fromPathAndOffsets($document->uriOrThrow(), 2, 2)),
+            PotentialLocation::surely(LocationRange::fromPathAndOffsets($document2->uriOrThrow(), 3, 3)),
+            PotentialLocation::surely(LocationRange::fromPathAndOffsets($document->uriOrThrow(), 5, 5)),
         ])->shouldBeCalled();
 
         $tester = $this->createTester();
@@ -112,7 +113,7 @@ class ReferencesHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willYield([
-            PotentialLocation::surely(new Location($document->uri(), ByteOffset::fromInt(2)))
+            PotentialLocation::surely(new LocationRange($document->uri(), ByteOffsetRange::fromInts(2, 5)))
         ])->shouldBeCalled();
 
         $this->locator->locateDefinition(
@@ -122,7 +123,7 @@ class ReferencesHandlerTest extends TestCase
             TypeLocations::forLocation(
                 new TypeLocation(
                     TypeFactory::class('Foo'),
-                    new Location($document->uri(), ByteOffset::fromInt(2))
+                    new LocationRange($document->uri(), ByteOffsetRange::fromInts(2, 5))
                 )
             )
         )->shouldBeCalled();
@@ -151,7 +152,7 @@ class ReferencesHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willYield([
-            PotentialLocation::surely(new Location($document->uri(), ByteOffset::fromInt(2)))
+            PotentialLocation::surely(new LocationRange($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 2)))
         ])->shouldBeCalled();
 
         $this->locator->locateDefinition(

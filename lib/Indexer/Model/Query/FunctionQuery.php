@@ -35,7 +35,7 @@ class FunctionQuery implements IndexQuery
 
             foreach ($fileRecord->references()->to($record) as $functionReference) {
                 yield LocationConfidence::surely(
-                    LocationRange::fromPathAndOffset($fileRecord->filePath(), $functionReference->offset(), $functionReference->offset())
+                    LocationRange::fromPathAndOffsets($fileRecord->filePath(), $functionReference->offset(), $functionReference->offset())
                 );
             }
         }

@@ -32,6 +32,7 @@ class LanguageServerReferenceFinderExtension implements Extension
             return new GotoDefinitionHandler(
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR),
+                $container->get(LocationConverter::class),
                 $container->get(ClientApi::class),
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
