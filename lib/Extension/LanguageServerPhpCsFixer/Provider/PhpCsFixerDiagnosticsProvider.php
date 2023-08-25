@@ -110,7 +110,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
                 'json'
             ]);
 
-            $output = json_decode($outputJson, false, JSON_THROW_ON_ERROR);
+            $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
 
             if (empty($output->files)) {
                 return false;
