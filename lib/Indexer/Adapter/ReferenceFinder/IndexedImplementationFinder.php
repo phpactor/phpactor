@@ -12,7 +12,6 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\LocationRanges;
-use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;

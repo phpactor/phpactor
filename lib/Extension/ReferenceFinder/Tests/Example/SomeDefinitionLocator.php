@@ -21,7 +21,7 @@ class SomeDefinitionLocator implements DefinitionLocator
         return new TypeLocations([
             new TypeLocation(
                 TypeFactory::mixed(),
-                LocationRange::fromPathAndOffsets( self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
+                LocationRange::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
             )
         ]);
     }

@@ -19,10 +19,8 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\ReferenceFinder;
-use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\LocationRanges;
 use Phpactor\TextDocument\LocationRange;
-use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferencesHandler implements Handler, CanRegisterCapabilities

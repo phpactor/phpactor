@@ -12,10 +12,8 @@ use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\LocationRanges;
-use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
 

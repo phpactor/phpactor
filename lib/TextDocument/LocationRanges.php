@@ -64,13 +64,6 @@ final class LocationRanges implements IteratorAggregate, Countable
         return reset($this->locationRanges);
     }
 
-    private function add(LocationRange $location): self
-    {
-        $this->locationRanges[] = $location;
-
-        return $this;
-    }
-
     public function sorted(): self
     {
         $sortedLocations = $this->locationRanges;
@@ -85,5 +78,12 @@ final class LocationRanges implements IteratorAggregate, Countable
         });
 
         return new self($sortedLocations);
+    }
+
+    private function add(LocationRange $location): self
+    {
+        $this->locationRanges[] = $location;
+
+        return $this;
     }
 }

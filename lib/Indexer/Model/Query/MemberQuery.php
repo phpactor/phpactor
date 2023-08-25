@@ -10,6 +10,7 @@ use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\TextDocument\TextDocumentUri;
 
 class MemberQuery implements IndexQuery
 {
@@ -55,7 +56,10 @@ class MemberQuery implements IndexQuery
                     $memberReference = $this->enhancer->enhance($fileRecord, $memberReference);
                 }
 
-                $location = LocationRange::fromPathAndOffsets($fileRecord->filePath(), $memberReference->offset(), $memberReference->offset());
+                $location = new LocationRange(
+                    TextDocumentUri::fromString($fileRecord->filePath()),
+                    $memberReference->offset(),
+                );
 
                 if (null === $memberReference->contaninerType()) {
                     yield LocationConfidence::maybe($location);

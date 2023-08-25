@@ -20,7 +20,8 @@ abstract class DefinitionLocatorTestCase extends IntegrationTestCase
             'Start position does not match.'
         );
         $this->assertEquals(
-            $end, $typeLocation->range()->range()->end()->toInt(),
+            $end,
+            $typeLocation->range()->range()->end()->toInt(),
             'End position does not match.'
         );
     }

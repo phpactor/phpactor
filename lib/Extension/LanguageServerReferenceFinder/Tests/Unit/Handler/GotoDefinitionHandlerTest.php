@@ -15,7 +15,6 @@ use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\PHPUnit\TestCase;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;

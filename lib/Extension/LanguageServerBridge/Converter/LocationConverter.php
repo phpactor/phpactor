@@ -48,6 +48,9 @@ class LocationConverter
         return new LspLocation($location->uri()->__toString(), new Range($position, $position));
     }
 
+    /**
+     * @return array<LspLocation>
+     */
     public function toLspLocationsWithRange(LocationRanges $ranges): array
     {
         $lspRanges = [];
