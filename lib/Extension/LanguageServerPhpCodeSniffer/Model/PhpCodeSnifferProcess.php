@@ -5,10 +5,10 @@ namespace Phpactor\Extension\LanguageServerPhpCodeSniffer\Model;
 use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\Amp\Process\ProcessBuilder;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Exception\PhpCodeSnifferError;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use function Amp\ByteStream\buffer;
 use function Amp\call;
 use Throwable;
@@ -101,11 +101,14 @@ class PhpCodeSnifferProcess
                 && $exitCode !== self::EXIT_FOUND_NON_FIXABLE_ERRORS
                 && $exitCode !== self::EXIT_FILES_NEEDS_FIXING
             ) {
-                throw new PhpCodeSnifferError(
-                    $exitCode,
-                    $process->getCommand(),
-                    yield buffer($process->getStderr()),
-                    $stdout
+                throw new RuntimeException(
+                    sprintf(
+                        "phpcs exited with code '%s'; cmd: %s; stderr: '%s'; stdout: '%s'",
+                        $exitCode,
+                        $process->getCommand(),
+                        yield buffer($process->getStderr()),
+                        $stdout
+                    )
                 );
             }
 
