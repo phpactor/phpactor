@@ -12,6 +12,8 @@ use Phpactor\Extension\Configuration\ConfigurationExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
 use Phpactor\Extension\LanguageServerConfiguration\LanguageServerConfigurationExtension;
+use Phpactor\Extension\LanguageServerPhpCodeSniffer\LanguageServerPhpCodeSnifferExtension;
+use Phpactor\Extension\LanguageServerPhpCodeSniffer\LanguageServerPhpCodeSnifferSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
@@ -175,6 +177,8 @@ class Phpactor
             LanguageServerPsalmSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             LanguageServerPhpCsFixerSuggestExtension::class,
+            LanguageServerPhpCodeSnifferExtension::class,
+            LanguageServerPhpCodeSnifferSuggestExtension::class,
 
             LanguageServerBlackfireExtension::class,
 
