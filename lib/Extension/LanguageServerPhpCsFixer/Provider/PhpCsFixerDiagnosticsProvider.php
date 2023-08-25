@@ -5,22 +5,18 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer\Provider;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
-use Phpactor\Diff\StringSharedChars;
+use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
-use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Psr\Log\LoggerInterface;
-use SebastianBergmann\Diff\Diff;
-use SebastianBergmann\Diff\Line;
 use SebastianBergmann\Diff\Parser;
-use LogicException;
 use RuntimeException;
 
 class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionProvider
@@ -30,6 +26,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
     public function __construct(
         private PhpCsFixerProcess $phpCsFixer,
+        private RangesForDiff $rangeForDiff,
         private bool $showDiagnostics,
         private LoggerInterface $logger,
     ) {
@@ -135,7 +132,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
                     continue;
                 }
 
-                $ranges = $this->createRangesForDiff($fileDiff[0]);
+                $ranges = $this->rangeForDiff->createRangesForDiff($fileDiff[0]);
 
                 foreach ($ranges as $range) {
                     $diagnostics[] = yield $this->createRuleDiagnostics($rule, $range);
@@ -144,114 +141,6 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
             return $diagnostics;
         });
-    }
-
-    /**
-     * Creates Ranges from Diff:
-     *
-     * - For replacements and removals, Range is a removed code
-     * - For additions, Range is 1 char width range on the first line of addition
-     *
-     * @return Range[]
-     */
-    private function createRangesForDiff(Diff $fileDiff): array
-    {
-        $ranges = [];
-
-        foreach ($fileDiff->getChunks() as $chunk) {
-            // diff is 1-indexed + in a line loop we update this number beforehand
-            $lineNo = $chunk->getStart() - 2;
-
-            /** @var Line[] */
-            $changedLines = [];
-            /** @var Line[]|null */
-            $replacedLines = null;
-            /** @var int|null */
-            $startLineNo = null;
-
-            foreach ($chunk->getLines() as $index => $line) {
-                // increment orig file line number (added lines are not part of orig file)
-                if (in_array($line->getType(), [Line::UNCHANGED, Line::REMOVED])) {
-                    $lineNo++;
-                }
-
-                $lastChangedLine = end($changedLines);
-
-                // consume same as previous line
-                if ($lastChangedLine && $line->getType() === $lastChangedLine->getType()) {
-                    $changedLines[] = $line;
-                    continue;
-                }
-
-                // consume lines if previous were removed and now we getting a replacement ones
-                if ($lastChangedLine && $lastChangedLine->getType() === Line::REMOVED && $line->getType() === Line::ADDED) {
-                    $replacedLines = $changedLines;
-                    $changedLines = [$line];
-
-                    continue;
-                }
-
-                if ($lastChangedLine) {
-                    if (empty($changedLines) || !$startLineNo) {
-                        throw new LogicException("Missing logic data that's expected to be set");
-                    }
-
-                    $startPos = new Position($startLineNo, 0);
-                    $lineLength = strlen($lastChangedLine->getContent());
-                    $endPos = $lineLength
-                        ? new Position($lineNo - 1, $lineLength)
-                        : new Position($lineNo, 0);
-
-                    if ($replacedLines) {
-                        $firstLineA = $replacedLines[0]->getContent();
-                        $firstLineB = $changedLines[0]->getContent();
-                        $lastLineA = end($replacedLines)->getContent();
-                        $lastLineB = end($changedLines)->getContent();
-
-                        $startChars = StringSharedChars::startLength($firstLineA, $firstLineB);
-                        $endChars = StringSharedChars::endPos($lastLineA, $lastLineB);
-
-                        $startPos = new Position($startLineNo, $startChars);
-                        $endPos = new Position($lineNo - 1, $endChars);
-                    }
-
-                    $ranges[] = new Range($startPos, $endPos);
-
-                    $startLineNo = null;
-                    $changedLines = [];
-                }
-
-                if ($line->getType() === Line::UNCHANGED) {
-                    continue;
-                }
-
-                if ($line->getType() === Line::REMOVED) {
-                    $startLineNo = $lineNo;
-                    $changedLines[] = $line;
-
-                    continue;
-                }
-
-                $prevLine = $chunk->getLines()[$index - 1];
-
-                if ($prevLine->getContent() === "\ No newline at end of file") {
-                    $contextLines = [];
-
-                    continue;
-                }
-
-                if ($line->getType() === Line::ADDED
-                    && $prevLine->getType() === Line::UNCHANGED
-                ) {
-                    $ranges[] = new Range(new Position($lineNo, 0), new Position($lineNo, 1));
-                    $contextLines = [];
-
-                    continue;
-                }
-            }
-        }
-
-        return $ranges;
     }
 
     /**

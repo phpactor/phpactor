@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
+use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand\FormatCommand;
@@ -47,6 +48,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $container->register(PhpCsFixerDiagnosticsProvider::class, function (Container $container) {
             return new PhpCsFixerDiagnosticsProvider(
                 $container->get(PhpCsFixerProcess::class),
+                new RangesForDiff(),
                 $container->getParameter(self::PARAM_SHOW_DIAGNOSTICS),
                 LoggingExtension::channelLogger($container, 'php-cs-fixer'),
             );
