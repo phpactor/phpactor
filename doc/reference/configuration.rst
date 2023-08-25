@@ -1990,6 +1990,68 @@ Whether PHP CS Fixer diagnostics are shown
 **Default**: ``true``
 
 
+.. _LanguageServerPhpCodeSnifferExtension:
+
+
+LanguageServerPhpCodeSnifferExtension
+-------------------------------------
+
+
+.. _param_language_server_php_code_sniffer.enabled:
+
+
+``language_server_php_code_sniffer.enabled``
+""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_php_code_sniffer.bin:
+
+
+``language_server_php_code_sniffer.bin``
+""""""""""""""""""""""""""""""""""""""""
+
+
+Path to the phpcs executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpcs"``
+
+
+.. _param_language_server_php_code_sniffer.env:
+
+
+``language_server_php_code_sniffer.env``
+""""""""""""""""""""""""""""""""""""""""
+
+
+Environment for PHP_CodeSniffer (e.g. to set XDEBUG_MODE)
+
+
+**Default**: ``{"XDEBUG_MODE":"off"}``
+
+
+.. _param_language_server_php_code_sniffer.show_diagnostics:
+
+
+``language_server_php_code_sniffer.show_diagnostics``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Whether PHP_CodeSniffer diagnostics are shown
+
+
+**Default**: ``true``
+
+
 .. _LanguageServerBlackfireExtension:
 
 
