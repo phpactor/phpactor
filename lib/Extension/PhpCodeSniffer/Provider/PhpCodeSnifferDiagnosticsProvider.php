@@ -143,7 +143,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
                         new Position(--$rule->line, $rule->column),
                         new Position(--$rule->line, ++$rule->column)
                     );
-                    $diagnostics[] = yield $this->createRuleDiagnostics($rule, $range);
+                    $diagnostics[] = $this->createRuleDiagnostics($rule, $range);
                     continue;
                 }
 
@@ -167,7 +167,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
                 $ranges = $this->rangeForDiff->createRangesForDiff($fileDiff[0]);
 
                 foreach ($ranges as $range) {
-                    $diagnostics[] = yield $this->createRuleDiagnostics($rule, $range);
+                    $diagnostics[] = $this->createRuleDiagnostics($rule, $range);
                 }
             }
 
@@ -175,20 +175,15 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
         });
     }
 
-    /**
-     * @return Promise<Diagnostic>
-     */
-    private function createRuleDiagnostics(object $rule, Range $range): Promise
+    private function createRuleDiagnostics(object $rule, Range $range): Diagnostic
     {
-        return \Amp\call(function () use ($rule, $range) {
-            return Diagnostic::fromArray([
-              'message' => $rule->message,
-              'range' => $range,
-              'severity' => DiagnosticSeverity::WARNING,
-              'source' => $this->name(),
-              'code' => $rule->source
-            ]);
-        });
+        return Diagnostic::fromArray([
+          'message' => $rule->message,
+          'range' => $range,
+          'severity' => DiagnosticSeverity::WARNING,
+          'source' => $this->name(),
+          'code' => $rule->source
+        ]);
     }
 
     /**
