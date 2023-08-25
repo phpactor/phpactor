@@ -1,28 +1,28 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer;
+namespace Phpactor\Extension\PhpCodeSniffer;
 
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Formatter\PhpCodeSnifferFormatter;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\LspCommand\FormatCommand;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Model\PhpCodeSnifferProcess;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Provider\PhpCodeSnifferDiagnosticsProvider;
+use Phpactor\Extension\PhpCodeSniffer\Formatter\PhpCodeSnifferFormatter;
+use Phpactor\Extension\PhpCodeSniffer\LspCommand\FormatCommand;
+use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
+use Phpactor\Extension\PhpCodeSniffer\Provider\PhpCodeSnifferDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
 
-class LanguageServerPhpCodeSnifferExtension implements OptionalExtension
+class PhpCodeSnifferExtension implements OptionalExtension
 {
-    public const PARAM_PHP_CODE_SNIFFER_BIN = 'language_server_php_code_sniffer.bin';
-    public const PARAM_ENV = 'language_server_php_code_sniffer.env';
-    public const PARAM_SHOW_DIAGNOSTICS = 'language_server_php_code_sniffer.show_diagnostics';
-    public const PARAM_ENABLED = 'language_server_php_code_sniffer.enabled';
+    public const PARAM_PHP_CODE_SNIFFER_BIN = 'php_code_sniffer.bin';
+    public const PARAM_ENV = 'php_code_sniffer.env';
+    public const PARAM_SHOW_DIAGNOSTICS = 'php_code_sniffer.show_diagnostics';
+    public const PARAM_ENABLED = 'php_code_sniffer.enabled';
 
     public function load(ContainerBuilder $container): void
     {
@@ -92,6 +92,6 @@ class LanguageServerPhpCodeSnifferExtension implements OptionalExtension
 
     public function name(): string
     {
-        return 'language_server_php_code_sniffer';
+        return 'php_code_sniffer';
     }
 }

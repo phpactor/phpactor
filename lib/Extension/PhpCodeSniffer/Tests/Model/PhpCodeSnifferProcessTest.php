@@ -1,8 +1,8 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer\Tests\Model;
+namespace Phpactor\Extension\PhpCodeSniffer\Tests\Model;
 
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Tests\PhpCodeSnifferTestCase;
+use Phpactor\Extension\PhpCodeSniffer\Tests\PhpCodeSnifferTestCase;
 use function Amp\ByteStream\buffer;
 use function Amp\Promise\wait;
 use function Amp\call;

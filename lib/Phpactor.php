@@ -12,8 +12,6 @@ use Phpactor\Extension\Configuration\ConfigurationExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
 use Phpactor\Extension\LanguageServerConfiguration\LanguageServerConfigurationExtension;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\LanguageServerPhpCodeSnifferExtension;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\LanguageServerPhpCodeSnifferSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
@@ -35,6 +33,8 @@ use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflecti
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferExtension;
+use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferSuggestExtension;
 use Phpactor\Extension\PHPUnit\PHPUnitExtension;
 use Phpactor\Extension\Prophecy\ProphecyExtension;
 use Phpactor\Extension\Prophecy\ProphecySuggestExtension;
@@ -177,8 +177,8 @@ class Phpactor
             LanguageServerPsalmSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             LanguageServerPhpCsFixerSuggestExtension::class,
-            LanguageServerPhpCodeSnifferExtension::class,
-            LanguageServerPhpCodeSnifferSuggestExtension::class,
+            PhpCodeSnifferExtension::class,
+            PhpCodeSnifferSuggestExtension::class,
 
             LanguageServerBlackfireExtension::class,
 

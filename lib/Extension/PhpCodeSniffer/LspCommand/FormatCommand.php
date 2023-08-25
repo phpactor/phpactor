@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer\LspCommand;
+namespace Phpactor\Extension\PhpCodeSniffer\LspCommand;
 
 use Amp\Promise;
 use Phpactor\Diff\DiffToTextEditsConverter;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Model\PhpCodeSnifferProcess;
+use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;

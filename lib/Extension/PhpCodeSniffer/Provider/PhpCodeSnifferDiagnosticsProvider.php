@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCodeSniffer\Provider;
+namespace Phpactor\Extension\PhpCodeSniffer\Provider;
 
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\Diff\RangesForDiff;
-use Phpactor\Extension\LanguageServerPhpCodeSniffer\Model\PhpCodeSnifferProcess;
+use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
