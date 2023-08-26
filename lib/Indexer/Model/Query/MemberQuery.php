@@ -56,9 +56,10 @@ class MemberQuery implements IndexQuery
                     $memberReference = $this->enhancer->enhance($fileRecord, $memberReference);
                 }
 
-                $location = new LocationRange(
-                    TextDocumentUri::fromString($fileRecord->filePath()),
+                $location = LocationRange::fromPathAndOffsets(
+                    $fileRecord->filePath() ?? '',
                     $memberReference->offset(),
+                    $memberReference->offset()
                 );
 
                 if (null === $memberReference->contaninerType()) {
