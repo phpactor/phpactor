@@ -52,8 +52,8 @@ class GotoDefinitionHandlerTest extends TestCase
     public function testPresentChoiceIfAmbiguous(): void
     {
         $locations = [
-            new TypeLocation(TypeFactory::class('Foobar'),PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 2)),
-            new TypeLocation(TypeFactory::class('Barfoo'),PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 2)),
+            new TypeLocation(TypeFactory::class('Foobar'), PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 2)),
+            new TypeLocation(TypeFactory::class('Barfoo'), PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 2)),
         ];
         [$tester, $builder] = $this->createTester($locations);
         $watcher = $builder->responseWatcher();

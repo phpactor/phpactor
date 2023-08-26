@@ -9,7 +9,6 @@ use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
@@ -33,7 +32,15 @@ class TolerantVariableReferenceFinderTest extends TestCase
         $finder = new TolerantVariableReferenceFinder(new Parser(), $includeDefinition);
         $actualReferences = iterator_to_array($finder->findReferences($document, ByteOffset::fromInt($selectionOffset)), false);
 
-        $this->assertEquals($expectedReferences, $actualReferences);
+        $this->assertEquals(count($expectedReferences), count($actualReferences));
+        foreach($expectedReferences as $index => $reference) {
+            // We need to manually compare objects here because the end location should not be checked. There should be a second marker
+            $this->assertEquals($reference->location()->uri(), $actualReferences[$index]->location()->uri());
+            $this->assertEquals($reference->isSurely(), $actualReferences[$index]->isSurely());
+            $this->assertEquals($reference->isMaybe(), $actualReferences[$index]->isMaybe());
+            $this->assertEquals($reference->isNot(), $actualReferences[$index]->isNot());
+            $this->assertEquals($reference->location()->range()->start(), $actualReferences[$index]->location()->range()->start());
+        }
     }
 
     /**
@@ -180,14 +187,14 @@ class TolerantVariableReferenceFinderTest extends TestCase
         ];
     }
 
-    /** @return mixed[] */
+    /** @return array{string, int, array<PotentialLocation>} */
     private static function offsetsFromSource(string $source, string $uri): array
     {
         $textDocumentUri = TextDocumentUri::fromString($uri);
         $results = preg_split('/(<>|<sr>)/u', $source, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 
         $referenceLocations = [];
-        $selectionOffset = null;
+        $selectionOffset = -1;
 
         if (!is_array($results)) {
             throw new Exception('No selection.');

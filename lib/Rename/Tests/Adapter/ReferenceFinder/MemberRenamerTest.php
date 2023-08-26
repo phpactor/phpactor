@@ -122,7 +122,8 @@ class MemberRenamerTest extends TestCase
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
             new Parser(),
             new PredefiniedImplementationFinder(new Locations(array_map(function (ByteOffset $reference) use ($textDocument) {
-                return new Location($textDocument->uri(),
+                return new Location(
+                    $textDocument->uri(),
                     ByteOffsetRange::fromByteOffsets($reference, $reference)
                 );
             }, $implementations))),

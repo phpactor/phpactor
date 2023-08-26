@@ -157,7 +157,8 @@ class ReferencesHandlerTest extends TestCase
         $this->locator->locateDefinition(
             $document,
             ByteOffset::fromInt(0)
-        )->willReturn(new Location($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 10))
+        )->willReturn(
+            new Location($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 10))
         )->willThrow(new CouldNotLocateDefinition('nope'));
 
         $tester = $this->createTester();

@@ -22,7 +22,6 @@ use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use function assert;
 use Exception;

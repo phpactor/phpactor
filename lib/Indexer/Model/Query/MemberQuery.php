@@ -10,7 +10,6 @@ use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\TextDocument\Location;
 use Phpactor\Indexer\Model\Record\MemberRecord;
-use Phpactor\TextDocument\TextDocumentUri;
 
 class MemberQuery implements IndexQuery
 {

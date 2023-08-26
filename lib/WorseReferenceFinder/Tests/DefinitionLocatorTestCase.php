@@ -16,8 +16,8 @@ abstract class DefinitionLocatorTestCase extends IntegrationTestCase
         $location = $typeLocation->location();
 
         $this->assertEquals($this->workspace->path($path), $location->uri()->path());
-        $this->assertEquals( $start, $location->range()->start()->toInt(), 'Start position does not match.');
-        $this->assertEquals( $end, $location->range()->end()->toInt(), 'End position does not match.');
+        $this->assertEquals($start, $location->range()->start()->toInt(), 'Start position does not match.');
+        $this->assertEquals($end, $location->range()->end()->toInt(), 'End position does not match.');
     }
 
 

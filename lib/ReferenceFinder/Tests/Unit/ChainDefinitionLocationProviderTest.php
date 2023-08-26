@@ -10,7 +10,6 @@ use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
