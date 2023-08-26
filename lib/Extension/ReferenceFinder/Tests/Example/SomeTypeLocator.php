@@ -6,23 +6,20 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 
 class SomeTypeLocator implements TypeLocator
 {
-    const EXAMPLE_OFFSET = 1;
-    const EXAMPLE_PATH = '/foobar';
-
+    private const EXAMPLE_PATH = '/foobar';
+    private const EXAMPLE_OFFSET = 1;
 
     public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
-        return new TypeLocations([new TypeLocation(new MixedType(), new LocationRange(
-            TextDocumentUri::fromString(self::EXAMPLE_PATH),
-            ByteOffsetRange::fromInts(self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET),
-        ))]);
+        return new TypeLocations([new TypeLocation(
+            new MixedType(),
+            Location::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET),
+        )]);
     }
 }

@@ -14,9 +14,9 @@ use Phpactor\TextDocument\TextDocument;
 
 class GotoImplementationHandlerTest extends TestCase
 {
-    const EXAMPLE_SOURCE = 'some source file';
-    const EXAMPLE_OFFSET = 1234;
-    const EXAMPLE_PATH = '/some/path.php';
+    private const EXAMPLE_SOURCE = 'some source file';
+    private const EXAMPLE_OFFSET = 1234;
+    private const EXAMPLE_PATH = '/some/path.php';
 
     public function testGotoSingleImplementation(): void
     {

@@ -10,6 +10,8 @@ use RuntimeException;
 
 class LocationsTest extends TestCase
 {
+    use LocationAssertions;
+
     public function testContainsLocations(): void
     {
         $locations = new Locations([
@@ -25,14 +27,15 @@ class LocationsTest extends TestCase
             Location::fromPathAndOffsets('/path/to.php', 12, 12),
             Location::fromPathAndOffsets('/path/to.php', 13, 13)
         ]);
+
         $this->assertEquals(2, $locations->count());
     }
 
     public function testExceptionIfFirstNotAvailable(): void
     {
         $this->expectException(RuntimeException::class);
-        $locations = new Locations([
-        ]);
+
+        $locations = new Locations([]);
         $locations->first();
     }
 
@@ -46,8 +49,8 @@ class LocationsTest extends TestCase
         ]));
 
         self::assertEquals(new Locations([
-            Location::fromPathAndOffsets('/path/to.php', 12, 89),
-            Location::fromPathAndOffsets('/path/to.php', 13, 18)
+            Location::fromPathAndOffsets('/path/to.php', 12, 19),
+            Location::fromPathAndOffsets('/path/to.php', 13, 40)
         ]), $locations);
     }
 
@@ -65,7 +68,12 @@ class LocationsTest extends TestCase
         $sortedLocations = $locations->sorted();
 
         $this->assertNotSame($locations, $sortedLocations);
-        $this->assertEquals($sortedLocationsArray, iterator_to_array($sortedLocations));
+        $this->assertSame(count($unsortedLocationsArray), count($sortedLocations));
+
+        foreach(iterator_to_array($sortedLocations) as $index => $sortedLocation) {
+            $expectedLocation = $sortedLocationsArray[$index];
+            self::assertLocation($sortedLocation, $expectedLocation->uri()->path(), $expectedLocation->range()->start()->toInt(), $expectedLocation->range()->end()->toInt());
+        }
     }
 
     /**
@@ -73,14 +81,20 @@ class LocationsTest extends TestCase
      */
     public function provideUnsortedLocations(): Generator
     {
-        yield '2 files and 3 references' => [[
-            Location::fromPathAndOffsets('/path/to.php', 15, 20),
-            Location::fromPathAndOffsets('/path/to.php', 12, 42),
-            Location::fromPathAndOffsets('/path/from.php', 13, 43),
+        yield 'Same file is sorted by start position' => [[
+            Location::fromPathAndOffsets('/path/to.php', 30, 50),
+            Location::fromPathAndOffsets('/path/to.php', 12, 24),
         ], [
-            Location::fromPathAndOffsets('/path/from.php', 13, 22),
-            Location::fromPathAndOffsets('/path/to.php', 12, 45),
-            Location::fromPathAndOffsets('/path/to.php', 15, 44),
+            Location::fromPathAndOffsets('/path/to.php', 12, 24),
+            Location::fromPathAndOffsets('/path/to.php', 30, 50),
+        ]];
+
+        yield 'Sort by file name first' => [[
+            Location::fromPathAndOffsets('/path/to.php', 12, 42),
+            Location::fromPathAndOffsets('/path/from.php', 15, 43),
+        ], [
+            Location::fromPathAndOffsets('/path/from.php', 15, 43),
+            Location::fromPathAndOffsets('/path/to.php', 12, 42),
         ]];
     }
 }

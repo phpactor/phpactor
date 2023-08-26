@@ -6,7 +6,7 @@ use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
@@ -21,7 +21,7 @@ class SomeDefinitionLocator implements DefinitionLocator
         return new TypeLocations([
             new TypeLocation(
                 TypeFactory::mixed(),
-                LocationRange::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
+                Location::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
             )
         ]);
     }
