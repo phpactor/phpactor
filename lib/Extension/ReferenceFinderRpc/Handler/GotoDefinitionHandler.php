@@ -62,7 +62,7 @@ class GotoDefinitionHandler implements Handler
             ->language($arguments[self::PARAM_LANGUAGE])->build();
 
         $offset = ByteOffset::fromInt($arguments[self::PARAM_OFFSET]);
-        $location = $this->locator->locateDefinition($document, $offset)->first()->range();
+        $location = $this->locator->locateDefinition($document, $offset)->first()->location();
 
         return OpenFileResponse::fromPathAndOffset(
             $location->uri()->path(),

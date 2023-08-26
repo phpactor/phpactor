@@ -6,7 +6,7 @@ use Phpactor\Extension\ReferenceFinderRpc\Handler\GotoDefinitionHandler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
 use Phpactor\ReferenceFinder\TestDefinitionLocator;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
 class GotoDefinitionHandlerTest extends TestCase
@@ -31,7 +31,7 @@ class GotoDefinitionHandlerTest extends TestCase
 
     public function create(): HandlerTester
     {
-        $locationRange = LocationRange::fromPathAndOffsets(self::EXAMPLE_PATH, 1, 1);
+        $locationRange = Location::fromPathAndOffsets(self::EXAMPLE_PATH, 1, 1);
 
         return new HandlerTester(
             new GotoDefinitionHandler(

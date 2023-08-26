@@ -13,8 +13,8 @@ class LocationsTest extends TestCase
     public function testContainsLocations(): void
     {
         $locations = new Locations([
-            Location::fromPathAndOffset('/path/to.php', 12),
-            Location::fromPathAndOffset('/path/to.php', 13)
+            Location::fromPathAndOffsets('/path/to.php', 12, 124),
+            Location::fromPathAndOffsets('/path/to.php', 13, 14)
         ]);
         $this->assertCount(2, $locations);
     }
@@ -22,8 +22,8 @@ class LocationsTest extends TestCase
     public function testIsCountable(): void
     {
         $locations = new Locations([
-            Location::fromPathAndOffset('/path/to.php', 12),
-            Location::fromPathAndOffset('/path/to.php', 13)
+            Location::fromPathAndOffsets('/path/to.php', 12, 12),
+            Location::fromPathAndOffsets('/path/to.php', 13, 13)
         ]);
         $this->assertEquals(2, $locations->count());
     }
@@ -39,15 +39,15 @@ class LocationsTest extends TestCase
     public function testAppendLocations(): void
     {
         $locations = new Locations([
-            Location::fromPathAndOffset('/path/to.php', 12),
+            Location::fromPathAndOffsets('/path/to.php', 12, 19),
         ]);
         $locations = $locations->append(new Locations([
-            Location::fromPathAndOffset('/path/to.php', 13),
+            Location::fromPathAndOffsets('/path/to.php', 13, 40),
         ]));
 
         self::assertEquals(new Locations([
-            Location::fromPathAndOffset('/path/to.php', 12),
-            Location::fromPathAndOffset('/path/to.php', 13)
+            Location::fromPathAndOffsets('/path/to.php', 12, 89),
+            Location::fromPathAndOffsets('/path/to.php', 13, 18)
         ]), $locations);
     }
 
@@ -74,13 +74,13 @@ class LocationsTest extends TestCase
     public function provideUnsortedLocations(): Generator
     {
         yield '2 files and 3 references' => [[
-            Location::fromPathAndOffset('/path/to.php', 15),
-            Location::fromPathAndOffset('/path/to.php', 12),
-            Location::fromPathAndOffset('/path/from.php', 13),
+            Location::fromPathAndOffsets('/path/to.php', 15, 20),
+            Location::fromPathAndOffsets('/path/to.php', 12, 42),
+            Location::fromPathAndOffsets('/path/from.php', 13, 43),
         ], [
-            Location::fromPathAndOffset('/path/from.php', 13),
-            Location::fromPathAndOffset('/path/to.php', 12),
-            Location::fromPathAndOffset('/path/to.php', 15),
+            Location::fromPathAndOffsets('/path/from.php', 13, 22),
+            Location::fromPathAndOffsets('/path/to.php', 12, 45),
+            Location::fromPathAndOffsets('/path/to.php', 15, 44),
         ]];
     }
 }

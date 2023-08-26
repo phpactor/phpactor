@@ -43,7 +43,7 @@ class ReferenceFinderExtensionTest extends TestCase
         $this->assertInstanceOf(ChainDefinitionLocationProvider::class, $locator);
 
         $location = $locator->locateDefinition(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1));
-        $location = $location->first()->range();
+        $location = $location->first()->location();
         $this->assertEquals(SomeDefinitionLocator::EXAMPLE_OFFSET, $location->range()->start()->toInt());
         $this->assertEquals(SomeDefinitionLocator::EXAMPLE_PATH, $location->uri()->path());
     }
@@ -72,7 +72,7 @@ class ReferenceFinderExtensionTest extends TestCase
 
         $location = $locator->locateTypes(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1))->first();
 
-        $sourceRange = $location->range();
+        $sourceRange = $location->location();
         $this->assertEquals(SomeTypeLocator::EXAMPLE_PATH, $sourceRange->uri()->path());
         $this->assertEquals(SomeTypeLocator::EXAMPLE_OFFSET, $sourceRange->range()->start()->toInt());
         $this->assertEquals(SomeTypeLocator::EXAMPLE_OFFSET, $sourceRange->range()->end()->toInt());

@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -202,7 +203,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
 
             if ($result == '<sr>') {
                 $referenceLocations[] = PotentialLocation::surely(
-                    new LocationRange(
+                    new Location(
                         $textDocumentUri,
                         ByteOffsetRange::fromInts($offset, $offset + mb_strlen($result))
                     )

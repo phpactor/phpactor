@@ -15,7 +15,7 @@ use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\Rename\Model\ReferenceFinder\PredefinedReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
@@ -126,7 +126,7 @@ class VariableRenamerTest extends TestCase
             array_map(
                 function (ByteOffset $reference) use ($textDocument) {
                     return PotentialLocation::surely(
-                        new LocationRange(
+                        new Location(
                             $textDocument->uriOrThrow(),
                             ByteOffsetRange::fromByteOffsets($reference, $reference)
                         )
@@ -134,7 +134,7 @@ class VariableRenamerTest extends TestCase
                 },
                 $references
             ),
-            new LocationRange($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffsets($definition, $definition)),
+            new Location($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffsets($definition, $definition)),
             [ $textDocument ]
         );
 
@@ -211,7 +211,7 @@ class VariableRenamerTest extends TestCase
      * @param PotentialLocation[] $references
      * @param TextDocument[] $textDocuments
      */
-    private function createRenamer(array $references, ?LocationRange $defintionLocation, array $textDocuments): VariableRenamer
+    private function createRenamer(array $references, ?Location $defintionLocation, array $textDocuments): VariableRenamer
     {
         $variableRenamer = new VariableRenamer(
             new DefinitionAndReferenceFinder(

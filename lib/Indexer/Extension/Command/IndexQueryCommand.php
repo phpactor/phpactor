@@ -99,9 +99,9 @@ class IndexQueryCommand extends Command
             $output->writeln(sprintf(
                 '%-3d %s:%s-%s',
                 $index + 1 . '.',
-                $location->range()->uri()->path(),
-                $location->range()->range()->start()->toInt(),
-                $location->range()->range()->end()->toInt(),
+                $location->location()->uri()->path(),
+                $location->location()->range()->start()->toInt(),
+                $location->location()->range()->end()->toInt(),
             ));
         }
     }

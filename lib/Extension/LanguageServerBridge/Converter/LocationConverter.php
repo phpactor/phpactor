@@ -2,11 +2,12 @@
 
 namespace Phpactor\Extension\LanguageServerBridge\Converter;
 
-use Phpactor\Extension\LanguageServerBridge\Converter\Exception\CouldNotLoadFileContents;
 use Phpactor\LanguageServerProtocol\Location as LspLocation;
+use Phpactor\LanguageServerProtocol\Range;
+use Phpactor\Extension\LanguageServerBridge\Converter\Exception\CouldNotLoadFileContents;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
-use Phpactor\TextDocument\LocationRange;
-use Phpactor\TextDocument\LocationRanges;
+use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentLocator;
 
 class LocationConverter
@@ -15,15 +16,12 @@ class LocationConverter
     {
     }
 
-    /**
-     * @return array<LspLocation>
-     */
-    public function toLspLocationsWithRange(LocationRanges $ranges): array
+    public function toLspLocations(Locations $locations): array
     {
-        $lspRanges = [];
-        foreach ($ranges as $location) {
+        $lspLocations = [];
+        foreach ($locations as $location) {
             try {
-                $lspRanges[] = $this->toLspLocationWithRange($location);
+                $lspLocations[] = $this->toLspLocation($location);
             } catch (TextDocumentNotFound) {
                 continue;
             } catch (CouldNotLoadFileContents) {
@@ -31,14 +29,16 @@ class LocationConverter
             }
         }
 
-        return $lspRanges;
+        return $lspLocations;
     }
 
-    public function toLspLocationWithRange(LocationRange $range): LspLocation
+    public function toLspLocation(Location $location): LspLocation
     {
-        $textDocument = $this->locator->get($range->uri());
-        $lspRange = RangeConverter::toLspRange($range->range(), $textDocument->__toString());
+        $textDocument = $this->locator->get($location->uri());
 
-        return new LspLocation($range->uri()->__toString(), $lspRange);
+        return new LspLocation(
+            $location->uri()->__toString(),
+            RangeConverter::toLspRange($location->range(), (string) $textDocument)
+        );
     }
 }

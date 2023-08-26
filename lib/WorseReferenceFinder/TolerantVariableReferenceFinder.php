@@ -21,6 +21,7 @@ use Microsoft\PhpParser\Token;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use function assert;
@@ -138,7 +139,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
     {
         if ($scopeNode instanceof CatchClause && $scopeNode->variableName instanceof Token && $name == substr((string)$scopeNode->variableName->getText($scopeNode->getFileContents()), 1)) {
             yield PotentialLocation::surely(
-                LocationRange::fromPathAndOffsets($uri, $scopeNode->variableName->start, $scopeNode->variableName->getEndPosition())
+                Location::fromPathAndOffsets($uri, $scopeNode->variableName->start, $scopeNode->variableName->getEndPosition())
             );
         }
 
@@ -150,7 +151,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
 
             if ($node instanceof Variable && $name == (string)$node->getName()) {
                 yield PotentialLocation::surely(
-                    LocationRange::fromPathAndOffsets($uri, $node->getStartPosition(), $node->getEndPosition())
+                    Location::fromPathAndOffsets($uri, $node->getStartPosition(), $node->getEndPosition())
                 );
                 continue;
             }
@@ -161,14 +162,14 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
                     continue;
                 }
                 yield PotentialLocation::surely(
-                    LocationRange::fromPathAndOffsets($uri, $variableName->start, $variableName->start + $variableName->length)
+                    Location::fromPathAndOffsets($uri, $variableName->start, $variableName->start + $variableName->length)
                 );
                 continue;
             }
 
             if ($node instanceof UseVariableName && $name == $node->getName()) {
                 yield PotentialLocation::surely(
-                    LocationRange::fromPathAndOffsets($uri, $node->getStartPosition(), $node->getEndPosition())
+                    Location::fromPathAndOffsets($uri, $node->getStartPosition(), $node->getEndPosition())
                 );
                 continue;
             }

@@ -9,8 +9,7 @@ use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FileRecord;
-use Phpactor\TextDocument\LocationRange;
-use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\TextDocument\Location;
 
 class ClassQuery implements IndexQuery
 {
@@ -51,7 +50,11 @@ class ClassQuery implements IndexQuery
 
             foreach ($fileRecord->references()->to($record) as $classReference) {
                 yield LocationConfidence::surely(
-                    new LocationRange(TextDocumentUri::fromString($fileRecord->filePath()), $classReference->offset())
+                    Location::fromPathAndOffsets(
+                        $fileRecord->filePath() ?? '',
+                        $classReference->offset(),
+                        $classReference->offset(),
+                    )
                 );
             }
         }

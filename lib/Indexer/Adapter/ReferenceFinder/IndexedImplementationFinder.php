@@ -10,8 +10,8 @@ use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\LocationRange;
-use Phpactor\TextDocument\LocationRanges;
+use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -34,14 +34,11 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         $this->containerTypeResolver = new ContainerTypeResolver($reflector);
     }
 
-    /**
-     * @return LocationRanges<LocationRange>
-     */
     public function findImplementations(
         TextDocument $document,
         ByteOffset $byteOffset,
         bool $includeDefinition = false
-    ): LocationRanges {
+    ): Locations {
         $nodeContext = $this->reflector->reflectOffset(
             $document,
             $byteOffset->toInt()
@@ -75,27 +72,27 @@ class IndexedImplementationFinder implements ClassImplementationFinder
                 continue;
             }
 
-            $locations[] = new LocationRange(
+            $locations[] = new Location(
                 TextDocumentUri::fromString($record->filePath()),
                 ByteOffsetRange::fromByteOffsets($record->start(), $record->start()),
             );
         }
 
-        return new LocationRanges($locations);
+        return new Locations($locations);
     }
 
     /**
-     * @return LocationRanges<LocationRange>
+     * @return Locations<Location>
      * @param ReflectionMember::TYPE_* $symbolType
      */
-    private function memberImplementations(NodeContext $nodeContext, string $symbolType, bool $includeDefinition): LocationRanges
+    private function memberImplementations(NodeContext $nodeContext, string $symbolType, bool $includeDefinition): Locations
     {
         $container = $nodeContext->containerType();
         $methodName = $nodeContext->symbol()->name();
         $containerType = $this->containerTypeResolver->resolveDeclaringContainerType($symbolType, $methodName, $container);
 
         if (!$containerType) {
-            return new LocationRanges([]);
+            return new Locations([]);
         }
 
         $implementations = $this->resolveImplementations(
@@ -141,10 +138,10 @@ class IndexedImplementationFinder implements ClassImplementationFinder
                 continue;
             }
 
-            $locations[] = new LocationRange(TextDocumentUri::fromString($path), $member->position());
+            $locations[] = new Location(TextDocumentUri::fromString($path), $member->position());
         }
 
-        return new LocationRanges($locations);
+        return new Locations($locations);
     }
 
     /**

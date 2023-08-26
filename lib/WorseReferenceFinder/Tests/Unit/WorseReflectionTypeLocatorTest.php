@@ -40,7 +40,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
         );
         self::assertEquals('One', $typeLocations->first()->type()->__toString());
 
-        $locationRange = $typeLocations->first()->range();
+        $locationRange = $typeLocations->first()->location();
         self::assertEquals($this->workspace->path('One.php'), $locationRange->uri()->path());
         self::assertEquals(9, $locationRange->range()->start()->toInt());
         self::assertEquals(21, $locationRange->range()->end()->toInt());
@@ -74,7 +74,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 EOT
         );
 
-        $locationRange = $typeLocations->first()->range();
+        $locationRange = $typeLocations->first()->location();
         self::assertEquals($this->workspace->path('One.php'), $locationRange->uri()->path());
         self::assertEquals(9, $locationRange->range()->start()->toInt());
         self::assertEquals(21, $locationRange->range()->end()->toInt());
@@ -99,7 +99,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 EOT
         );
 
-        $locationRange = $typeLocations->first()->range();
+        $locationRange = $typeLocations->first()->location();
         self::assertEquals($this->workspace->path('One.php'), $locationRange->uri()->path());
         self::assertEquals(9, $locationRange->range()->start()->toInt());
         self::assertEquals(21, $locationRange->range()->end()->toInt());
@@ -133,7 +133,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 EOT
         );
 
-        $locationRange = $typeLocations->first()->range();
+        $locationRange = $typeLocations->first()->location();
         self::assertEquals($this->workspace->path('One.php'), $locationRange->uri()->path());
         self::assertEquals(9, $locationRange->range()->start()->toInt());
         self::assertEquals(25, $locationRange->range()->end()->toInt());
@@ -166,8 +166,8 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 }
                 EOT
         );
-        self::assertEquals($this->workspace->path('Two.php'), $typeLocations->atIndex(0)->range()->uri()->path());
-        self::assertEquals($this->workspace->path('One.php'), $typeLocations->atIndex(1)->range()->uri()->path());
+        self::assertEquals($this->workspace->path('Two.php'), $typeLocations->atIndex(0)->location()->uri()->path());
+        self::assertEquals($this->workspace->path('One.php'), $typeLocations->atIndex(1)->location()->uri()->path());
     }
 
     public function testLocatesFirstUnionWithNullAndScalar(): void
@@ -197,7 +197,7 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 }
                 EOT
         );
-        self::assertEquals($this->workspace->path('Two.php'), $typeLocations->first()->range()->uri()->path());
+        self::assertEquals($this->workspace->path('Two.php'), $typeLocations->first()->location()->uri()->path());
     }
 
     protected function locate(string $manifset, string $source): TypeLocations

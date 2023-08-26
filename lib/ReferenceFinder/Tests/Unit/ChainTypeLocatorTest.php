@@ -11,6 +11,7 @@ use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -60,7 +61,7 @@ class ChainTypeLocatorTest extends TestCase
         $this->locator2->locateTypes($this->document, $this->offset)->willReturn($this->createLocations($location2));
 
         $location = $locator->locateTypes($this->document, $this->offset);
-        $this->assertSame($location->first()->range(), $location1);
+        $this->assertSame($location->first()->location(), $location1);
     }
 
     public function testExceptionWhenTypeNotFound(): void
@@ -89,15 +90,15 @@ class ChainTypeLocatorTest extends TestCase
         $locator->locateTypes($this->document, $this->offset);
     }
 
-    private function createLocation(): LocationRange
+    private function createLocation(): Location
     {
-        return new LocationRange(
+        return new Location(
             TextDocumentUri::fromString('/path/to.php'),
-            ByteOffsetRange::fromByteOffsets(ByteOffset::fromInt(1234), ByteOffset::fromInt(1234))
+            ByteOffsetRange::fromByteOffsets(ByteOffset::fromInt(1234), ByteOffset::fromInt(1534))
         );
     }
 
-    private function createLocations(LocationRange $location1): TypeLocations
+    private function createLocations(Location $location1): TypeLocations
     {
         return new TypeLocations([
             new TypeLocation(new MixedType(), $location1)

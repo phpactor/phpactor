@@ -13,7 +13,6 @@ use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextEdit as PhpactorTextEdit;
@@ -53,7 +52,7 @@ abstract class AbstractReferenceRenamer implements Renamer
                 continue;
             }
 
-            yield $this->renameEdit($reference->range(), $range, $originalName, $newName);
+            yield $this->renameEdit($reference->location(), $range, $originalName, $newName);
         }
     }
 
@@ -75,7 +74,7 @@ abstract class AbstractReferenceRenamer implements Renamer
         return ByteOffsetRange::fromInts($tokenOrNode->start, $tokenOrNode->getEndPosition());
     }
 
-    protected function renameEdit(LocationRange $location, ?ByteOffsetRange $range, string $originalName, string $newName): LocatedTextEdit
+    protected function renameEdit(Location $location, ?ByteOffsetRange $range, string $originalName, string $newName): LocatedTextEdit
     {
         $referenceDocument = $this->locator->get($location->uri());
 

@@ -72,7 +72,7 @@ class StepDefinitionLocatorTest extends TestCase
 
         $location = $this->locator->locateDefinition($document, $offset);
 
-        $sourceLocation = $location->first()->range();
+        $sourceLocation = $location->first()->location();
         $this->assertEquals(self::EXAMPLE_PATH, $sourceLocation->uri()->path());
         $this->assertEquals(self::EXAMPLE_OFFSET, $sourceLocation->range()->start()->toInt());
         $this->assertEquals(self::EXAMPLE_OFFSET_END, $sourceLocation->range()->end()->toInt());

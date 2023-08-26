@@ -59,7 +59,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
             }
 
             if ($typeLocations->count() === 1) {
-                return $this->locationConverter->toLspLocationWithRange($typeLocations->first()->range());
+                return $this->locationConverter->toLspLocation($typeLocations->first()->location());
             }
 
             $actions = [];
@@ -75,7 +75,9 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
                 );
             }
 
-            return $this->locationConverter->toLspLocationWithRange($typeLocations->byTypeName($item->title)->range());
+            return $this->locationConverter->toLspLocation(
+                $typeLocations->byTypeName($item->title)->location()
+            );
         });
     }
 

@@ -16,10 +16,8 @@ use Phpactor\ReferenceFinder\TestTypeLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\PHPUnit\TestCase;
-use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location as PhpactorLocation;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use function Amp\Promise\wait;
 
@@ -33,10 +31,7 @@ class TypeDefinitionHandlerTest extends TestCase
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                new LocationRange(
-                    TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffsetRange::fromInts(2, 5)
-                )
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 5)
             )
         ];
 
@@ -59,17 +54,11 @@ class TypeDefinitionHandlerTest extends TestCase
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                new LocationRange(
-                    TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffsetRange::fromInts(2, 2)
-                )
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 2),
             ),
             new TypeLocation(
                 TypeFactory::class('Barfoo'),
-                new LocationRange(
-                    TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffsetRange::fromInts(2, 2)
-                )
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 2),
             )
         ];
         [$tester, $watcher] = $this->createTester($locations);

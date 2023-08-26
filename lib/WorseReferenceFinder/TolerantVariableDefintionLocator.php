@@ -27,7 +27,7 @@ class TolerantVariableDefintionLocator implements DefinitionLocator
                 // we don't have the type info of the variable here, but
                 // there'll only be one so we don't need it.
                 TypeFactory::undefined(),
-                $reference->range()
+                $reference->location()
             ));
         }
 

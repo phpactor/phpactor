@@ -48,7 +48,7 @@ class GotoImplementationHandler implements Handler, CanRegisterCapabilities
                 $offset
             );
 
-            return $this->locationConverter->toLspLocationsWithRange($locations);
+            return $this->locationConverter->toLspLocations($locations);
         });
     }
 

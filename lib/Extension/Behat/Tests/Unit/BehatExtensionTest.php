@@ -39,6 +39,6 @@ class BehatExtensionTest extends TestCase
             ByteOffset::fromInt(69)
         );
 
-        $this->assertStringContainsString('ExampleContext.php', $location->first()->range()->uri()->path());
+        $this->assertStringContainsString('ExampleContext.php', $location->first()->location()->uri()->path());
     }
 }

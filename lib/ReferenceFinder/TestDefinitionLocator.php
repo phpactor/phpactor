@@ -4,7 +4,7 @@ namespace Phpactor\ReferenceFinder;
 
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Type;
 
@@ -14,12 +14,12 @@ class TestDefinitionLocator implements DefinitionLocator
     {
     }
 
-    public static function fromSingleLocation(Type $type, ?LocationRange $range): self
+    public static function fromSingleLocation(Type $type, ?Location $location): self
     {
-        if (null === $range) {
+        if (null === $location) {
             return new self(null);
         }
-        return new self(new TypeLocations([ new TypeLocation($type, $range)]));
+        return new self(new TypeLocations([ new TypeLocation($type, $location)]));
     }
 
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations

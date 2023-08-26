@@ -9,6 +9,7 @@ use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\LocationRange;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
@@ -90,7 +91,7 @@ class ChainDefinitionLocationProviderTest extends TestCase
     private function createLocation(): TypeLocations
     {
         return new TypeLocations([
-            new TypeLocation(TypeFactory::unknown(), LocationRange::fromPathAndOffsets('/path/to.php', 1234, 1234))
+            new TypeLocation(TypeFactory::unknown(), Location::fromPathAndOffsets('/path/to.php', 1234, 1234))
         ]);
     }
 }

@@ -65,6 +65,6 @@ class ChainReferenceFinderTest extends TestCase
 
     private function createLocation(): Location
     {
-        return new Location(TextDocumentUri::fromString('/path/to.php'), ByteOffset::fromInt(1234));
+        return Location::fromPathAndOffsets('/path/to.php', 1234, 4578);
     }
 }

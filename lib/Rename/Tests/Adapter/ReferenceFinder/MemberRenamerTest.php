@@ -14,8 +14,8 @@ use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\Rename\Model\ReferenceFinder\PredefinedReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\TextDocument\LocationRange;
-use Phpactor\TextDocument\LocationRanges;
+use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\TextDocument\TextEdit;
@@ -49,7 +49,7 @@ class MemberRenamerTest extends TestCase
             new PredefinedReferenceFinder(...[]),
             InMemoryDocumentLocator::fromTextDocuments([]),
             new Parser(),
-            new PredefiniedImplementationFinder(new LocationRanges([])),
+            new PredefiniedImplementationFinder(new Locations([])),
         );
 
         $actualRange = $variableRenamer->getRenameRange($document, $selection);
@@ -114,14 +114,17 @@ class MemberRenamerTest extends TestCase
 
         $renamer = new MemberRenamer(
             new PredefinedReferenceFinder(...array_map(function (ByteOffset $reference) use ($textDocument) {
-                return PotentialLocation::surely(
-                    new LocationRange($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffsets($reference, $reference))
-                );
+                return PotentialLocation::surely(new Location(
+                    $textDocument->uri(),
+                    ByteOffsetRange::fromByteOffsets($reference, $reference)
+                ));
             }, $references)),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
             new Parser(),
-            new PredefiniedImplementationFinder(new LocationRanges(array_map(function (ByteOffset $reference) use ($textDocument) {
-                return new LocationRange($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffsets($reference, $reference));
+            new PredefiniedImplementationFinder(new Locations(array_map(function (ByteOffset $reference) use ($textDocument) {
+                return new Location($textDocument->uri(),
+                    ByteOffsetRange::fromByteOffsets($reference, $reference)
+                );
             }, $implementations))),
         );
 
@@ -141,7 +144,7 @@ class MemberRenamerTest extends TestCase
             [
                 new LocatedTextEdits(
                     TextEdits::fromTextEdits($resultEdits),
-                    $textDocument->uriOrThrow()
+                    $textDocument->uri()
                 )
             ],
             LocatedTextEditsMap::fromLocatedEdits($actualResults)->toLocatedTextEdits()

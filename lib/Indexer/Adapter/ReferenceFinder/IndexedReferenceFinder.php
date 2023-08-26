@@ -11,7 +11,7 @@ use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
@@ -49,16 +49,16 @@ class IndexedReferenceFinder implements ReferenceFinder
 
         foreach ($this->resolveReferences($nodeContext) as $locationConfidence) {
             if ($locationConfidence->isSurely()) {
-                yield PotentialLocation::surely($locationConfidence->range());
+                yield PotentialLocation::surely($locationConfidence->location());
                 continue;
             }
 
             if ($locationConfidence->isMaybe()) {
-                yield PotentialLocation::maybe($locationConfidence->range());
+                yield PotentialLocation::maybe($locationConfidence->location());
                 continue;
             }
 
-            yield PotentialLocation::not($locationConfidence->range());
+            yield PotentialLocation::not($locationConfidence->location());
         }
     }
 
@@ -227,7 +227,7 @@ class IndexedReferenceFinder implements ReferenceFinder
                     continue;
                 }
                 yield LocationConfidence::surely(
-                    LocationRange::fromPathAndOffsets(
+                    Location::fromPathAndOffsets(
                         $file->filePath() ?? '',
                         $fileReference->offset(),
                         $fileReference->offset()

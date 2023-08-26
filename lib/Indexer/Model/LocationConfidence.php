@@ -2,7 +2,7 @@
 
 namespace Phpactor\Indexer\Model;
 
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
 
 class LocationConfidence
 {
@@ -10,7 +10,7 @@ class LocationConfidence
     public const CONFIDENCE_NOT = 'not';
     public const CONFIDENCE_MAYBE = 'maybe';
 
-    public function __construct(private LocationRange $range, private string $confidence)
+    public function __construct(private Location $location, private string $confidence)
     {
     }
 
@@ -19,19 +19,19 @@ class LocationConfidence
         return $this->confidence;
     }
 
-    public static function maybe(LocationRange $range): self
+    public static function maybe(Location $location): self
     {
-        return new self($range, self::CONFIDENCE_MAYBE);
+        return new self($location, self::CONFIDENCE_MAYBE);
     }
 
-    public static function not(LocationRange $range): self
+    public static function not(Location $location): self
     {
-        return new self($range, self::CONFIDENCE_NOT);
+        return new self($location, self::CONFIDENCE_NOT);
     }
 
-    public static function surely(LocationRange $range): self
+    public static function surely(Location $location): self
     {
-        return new self($range, self::CONFIDENCE_SURELY);
+        return new self($location, self::CONFIDENCE_SURELY);
     }
 
     public function isSurely(): bool
@@ -49,8 +49,8 @@ class LocationConfidence
         return $this->confidence === self::CONFIDENCE_NOT;
     }
 
-    public function range(): LocationRange
+    public function location(): Location
     {
-        return $this->range;
+        return $this->location;
     }
 }

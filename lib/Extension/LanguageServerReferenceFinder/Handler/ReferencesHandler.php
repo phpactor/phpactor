@@ -19,8 +19,8 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\ReferenceFinder;
-use Phpactor\TextDocument\LocationRanges;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferencesHandler implements Handler, CanRegisterCapabilities
@@ -63,8 +63,8 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             $locations = [];
             if ($context->includeDeclaration) {
                 try {
-                    $potentialLocation = $this->definitionLocator->locateDefinition($phpactorDocument, $offset)->first()->range();
-                    $locations[] = new LocationRange(
+                    $potentialLocation = $this->definitionLocator->locateDefinition($phpactorDocument, $offset)->first()->location();
+                    $locations[] = new Location(
                         $potentialLocation->uri(),
                         $potentialLocation->range()
                     );
@@ -77,7 +77,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             $risky = 0;
             foreach ($this->finder->findReferences($phpactorDocument, $offset) as $potentialLocation) {
                 if ($potentialLocation->isSurely()) {
-                    $locations[] = $potentialLocation->range();
+                    $locations[] = $potentialLocation->location();
                 }
 
                 if ($potentialLocation->isMaybe()) {
@@ -126,11 +126,11 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
     }
 
     /**
-     * @param array<LocationRange> $ranges
+     * @param array<Location> $ranges
      * @return LspLocation[]
      */
     private function toLocations(array $ranges): array
     {
-        return $this->locationConverter->toLspLocationsWithRange((new LocationRanges($ranges))->sorted());
+        return $this->locationConverter->toLspLocations((new Locations($ranges))->sorted());
     }
 }

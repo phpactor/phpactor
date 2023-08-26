@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\IndexQuery;
 use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
-use Phpactor\TextDocument\LocationRange;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentUri;
 
 class FunctionQuery implements IndexQuery
@@ -35,8 +35,9 @@ class FunctionQuery implements IndexQuery
 
             foreach ($fileRecord->references()->to($record) as $functionReference) {
                 yield LocationConfidence::surely(
-                    new LocationRange(
+                    Location::fromPathAndOffsets(
                         TextDocumentUri::fromString($fileRecord->filePath()),
+                        $functionReference->offset(),
                         $functionReference->offset()
                     )
                 );

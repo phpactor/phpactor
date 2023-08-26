@@ -9,8 +9,6 @@ use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\Extension\LanguageServerBridge\Tests\IntegrationTestCase;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\LocationRange;
-use Phpactor\TextDocument\LocationRanges;
 use Phpactor\TextDocument\Locations;
 use Phpactor\LanguageServerProtocol\Location as LspLocation;
 
@@ -29,8 +27,8 @@ class LocationConverterTest extends IntegrationTestCase
     {
         $this->workspace()->put('test.php', '012345678');
 
-        $locations = new LocationRanges([
-            LocationRange::fromPathAndOffsets($this->workspace()->path('test.php'), 2, 10)
+        $locations = new Locations([
+            Location::fromPathAndOffsets($this->workspace()->path('test.php'), 2, 10)
         ]);
 
         $expected = [
@@ -40,16 +38,16 @@ class LocationConverterTest extends IntegrationTestCase
             ))
         ];
 
-        self::assertEquals($expected, $this->converter->toLspLocationsWithRange($locations));
+        self::assertEquals($expected, $this->converter->toLspLocations($locations));
     }
 
     public function testIgnoresNonExistingFiles(): void
     {
         $this->workspace()->put('test.php', '12345678');
 
-        $locations = new LocationRanges([
-            LocationRange::fromPathAndOffsets($this->workspace()->path('test.php'), 2, 4),
-            LocationRange::fromPathAndOffsets($this->workspace()->path('test-no.php'), 2, 4)
+        $locations = new Locations([
+            Location::fromPathAndOffsets($this->workspace()->path('test.php'), 2, 4),
+            Location::fromPathAndOffsets($this->workspace()->path('test-no.php'), 2, 4)
         ]);
 
         $expected = [
@@ -59,7 +57,7 @@ class LocationConverterTest extends IntegrationTestCase
             ))
         ];
 
-        self::assertEquals($expected, $this->converter->toLspLocationsWithRange($locations));
+        self::assertEquals($expected, $this->converter->toLspLocations($locations));
     }
 
     /**
@@ -71,13 +69,13 @@ class LocationConverterTest extends IntegrationTestCase
     {
         $this->workspace()->put('test.php', $text);
 
-        $location = LocationRange::fromPathAndOffsets($this->workspace()->path('test.php'), $start, $end);
+        $location = Location::fromPathAndOffsets($this->workspace()->path('test.php'), $start, $end);
 
         $uri = 'file://' . $this->workspace()->path('test.php');
 
         self::assertEquals(
             expected: new LspLocation($uri, $expectedRange),
-            actual: $this->converter->toLspLocationWithRange($location)
+            actual: $this->converter->toLspLocation($location)
         );
     }
 

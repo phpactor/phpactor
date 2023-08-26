@@ -10,8 +10,8 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\LocationRange;
-use Phpactor\TextDocument\LocationRanges;
+use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\Util\LineAtOffset;
@@ -86,11 +86,11 @@ class GotoImplementationHandler extends AbstractHandler
     /**
     * @return array<FileReferences>
     */
-    private function locationsToReferences(LocationRanges $locations): array
+    private function locationsToReferences(Locations $locations): array
     {
         $references = [];
         foreach ($locations as $location) {
-            assert($location instanceof LocationRange);
+            assert($location instanceof Location);
             $contents = $this->fileContents($location);
 
             // Opening at the start of the reference
@@ -115,7 +115,7 @@ class GotoImplementationHandler extends AbstractHandler
         return $references;
     }
 
-    private function fileContents(LocationRange $location): string
+    private function fileContents(Location $location): string
     {
         $contents = file_get_contents($location->uri()->path());
         if ($contents === false) {
