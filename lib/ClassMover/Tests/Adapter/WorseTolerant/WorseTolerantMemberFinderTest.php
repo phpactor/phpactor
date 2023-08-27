@@ -589,7 +589,7 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
                     EOT
                 ,
                 ClassMemberQuery::create()->onlyMethods()->withClass('Foobar')->withMember('foobar'),
-                function ($members): void {
+                function (array $members): void {
                     $first = reset($members);
                     $this->assertEquals(15, $first->position()->start());
                     $this->assertEquals(21, $first->position()->end());
@@ -606,7 +606,7 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
                     EOT
                 ,
                 ClassMemberQuery::create()->onlyMethods()->withClass('Foobar')->withMember('foobar'),
-                function ($members): void {
+                function (array $members): void {
                     $first = reset($members);
                     $this->assertEquals(89, $first->position()->start());
                     $this->assertEquals(95, $first->position()->end());
@@ -620,7 +620,7 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
                     EOT
                 ,
                 ClassMemberQuery::create()->onlyMethods()->withClass('Foobar')->withMember('foobar'),
-                function ($members): void {
+                function (array $members): void {
                     $first = reset($members);
                     $this->assertEquals(38, $first->position()->start());
                     $this->assertEquals(44, $first->position()->end());

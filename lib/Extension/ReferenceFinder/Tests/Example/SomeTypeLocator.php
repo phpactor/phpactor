@@ -14,12 +14,13 @@ class SomeTypeLocator implements TypeLocator
 {
     public const EXAMPLE_PATH = '/foobar';
     public const EXAMPLE_OFFSET = 1;
+    public const EXAMPLE_OFFSET_END = 10;
 
     public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         return new TypeLocations([new TypeLocation(
             new MixedType(),
-            Location::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET),
+            Location::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END),
         )]);
     }
 }

@@ -15,10 +15,13 @@ use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Tests\Unit\LocationAssertions;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferenceFinderExtensionTest extends TestCase
 {
+    use LocationAssertions;
+
     public function testEmptyChainDefinitionLocator(): void
     {
         $container = PhpactorContainer::fromExtensions([
@@ -28,6 +31,17 @@ class ReferenceFinderExtensionTest extends TestCase
 
         $locator = $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR);
         $this->assertInstanceOf(ChainDefinitionLocationProvider::class, $locator);
+    }
+
+    public function testEmptyChainTypeLocator(): void
+    {
+        $container = PhpactorContainer::fromExtensions([
+            ReferenceFinderExtension::class,
+            LoggingExtension::class,
+        ]);
+
+        $locator = $container->get(ReferenceFinderExtension::SERVICE_TYPE_LOCATOR);
+        $this->assertInstanceOf(ChainTypeLocator::class, $locator);
     }
 
     public function testChainDefinitionLocatorLocatorWithRegisteredLocators(): void
@@ -43,20 +57,13 @@ class ReferenceFinderExtensionTest extends TestCase
         $this->assertInstanceOf(ChainDefinitionLocationProvider::class, $locator);
 
         $location = $locator->locateDefinition(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1));
-        $location = $location->first()->location();
-        $this->assertEquals(SomeDefinitionLocator::EXAMPLE_OFFSET, $location->range()->start()->toInt());
-        $this->assertEquals(SomeDefinitionLocator::EXAMPLE_PATH, $location->uri()->path());
-    }
 
-    public function testEmptyChainTypeLocator(): void
-    {
-        $container = PhpactorContainer::fromExtensions([
-            ReferenceFinderExtension::class,
-            LoggingExtension::class,
-        ]);
-
-        $locator = $container->get(ReferenceFinderExtension::SERVICE_TYPE_LOCATOR);
-        $this->assertInstanceOf(ChainTypeLocator::class, $locator);
+        $this->assertLocation(
+            $location->first()->location(),
+            SomeDefinitionLocator::EXAMPLE_PATH,
+            SomeDefinitionLocator::EXAMPLE_OFFSET,
+            SomeDefinitionLocator::EXAMPLE_OFFSET_END
+        );
     }
 
     public function testChainLocatorLocatorWithRegisteredLocators(): void
@@ -70,12 +77,14 @@ class ReferenceFinderExtensionTest extends TestCase
         $locator = $container->get(ReferenceFinderExtension::SERVICE_TYPE_LOCATOR);
         $this->assertInstanceOf(ChainTypeLocator::class, $locator);
 
-        $location = $locator->locateTypes(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1))->first();
+        $location = $locator->locateTypes(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1));
 
-        $sourceRange = $location->location();
-        $this->assertEquals(SomeTypeLocator::EXAMPLE_PATH, $sourceRange->uri()->path());
-        $this->assertEquals(SomeTypeLocator::EXAMPLE_OFFSET, $sourceRange->range()->start()->toInt());
-        $this->assertEquals(SomeTypeLocator::EXAMPLE_OFFSET, $sourceRange->range()->end()->toInt());
+        $this->assertLocation(
+            $location->first()->location(),
+            SomeTypeLocator::EXAMPLE_PATH,
+            SomeTypeLocator::EXAMPLE_OFFSET,
+            SomeTypeLocator::EXAMPLE_OFFSET_END
+        );
     }
 
     public function testReturnsImplementationFinder(): void

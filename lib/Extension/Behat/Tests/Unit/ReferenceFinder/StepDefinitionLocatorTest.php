@@ -75,7 +75,6 @@ class StepDefinitionLocatorTest extends TestCase
         $location = $this->locator->locateDefinition($document, $offset);
 
         $sourceLocation = $location->first()->location();
-
         self::assertLocation($sourceLocation, self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END);
     }
 
