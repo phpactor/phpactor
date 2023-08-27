@@ -12,6 +12,8 @@ trait FullyQualifiedReferenceTrait
 
     private int $start;
 
+    private int $end;
+
     public function __construct(string $fqn)
     {
         $this->fqn = $fqn;
@@ -35,6 +37,12 @@ trait FullyQualifiedReferenceTrait
         return $this;
     }
 
+    public function setEnd(ByteOffset $end): self
+    {
+        $this->end = $end->toInt();
+        return $this;
+    }
+
     public function fqn(): FullyQualifiedName
     {
         return FullyQualifiedName::fromString($this->fqn);
@@ -43,6 +51,11 @@ trait FullyQualifiedReferenceTrait
     public function start(): ByteOffset
     {
         return ByteOffset::fromInt($this->start);
+    }
+
+    public function end(): ByteOffset
+    {
+        return ByteOffset::fromInt($this->end);
     }
 
     public function identifier(): string

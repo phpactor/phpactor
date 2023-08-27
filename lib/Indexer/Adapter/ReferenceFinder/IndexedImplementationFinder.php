@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
@@ -68,13 +69,13 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         foreach ($implementations as $implementation) {
             $record = $this->query->class()->get($implementation);
 
-            if (null === $record) {
+            if (!$record instanceof ClassRecord) {
                 continue;
             }
 
             $locations[] = new Location(
                 TextDocumentUri::fromString($record->filePath()),
-                ByteOffsetRange::fromByteOffsets($record->start(), $record->start()),
+                ByteOffsetRange::fromByteOffsets($record->start(), $record->end()),
             );
         }
 
