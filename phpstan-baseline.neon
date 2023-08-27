@@ -606,11 +606,6 @@ parameters:
 			path: lib/CodeTransform/Domain/DocBlockUpdater/ParamTagPrototype.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Domain/SourceCode.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Domain\\\\Transformers\\:\\:in\\(\\) has parameter \\$transformerNames with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/Domain/Transformers.php
@@ -1074,11 +1069,6 @@ parameters:
 			message: "#^Method Phpactor\\\\ConfigLoader\\\\Adapter\\\\Deserializer\\\\YamlDeserializer\\:\\:deserialize\\(\\) should return array but returns mixed\\.$#"
 			count: 1
 			path: lib/ConfigLoader/Adapter/Deserializer/YamlDeserializer.php
-
-		-
-			message: "#^Method Phpactor\\\\ConfigLoader\\\\ConfigLoaderBuilder\\:\\:addXdgCandidate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ConfigLoader/ConfigLoaderBuilder.php
 
 		-
 			message: "#^Cannot call method loader\\(\\) on mixed\\.$#"
@@ -4216,11 +4206,6 @@ parameters:
 			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 3
-			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
-
-		-
 			message: "#^Parameter \\#2 \\$path of method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Model\\\\WorkspaceSymbolProvider\\:\\:toLspPosition\\(\\) expects string, string\\|null given\\.$#"
 			count: 6
 			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
@@ -4426,18 +4411,8 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoImplementationHandlerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
 			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
 			count: 3
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 4
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
 
 		-
@@ -4936,22 +4911,12 @@ parameters:
 			path: lib/Extension/ReferenceFinderRpc/Handler/GotoDefinitionHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoImplementationHandler\\:\\:fileContents\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Handler/GotoImplementationHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoImplementationHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ReferenceFinderRpc/Handler/GotoImplementationHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoImplementationHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Handler/GotoImplementationHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoImplementationHandler\\:\\:locationsToReferences\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ReferenceFinderRpc/Handler/GotoImplementationHandler.php
 
@@ -4979,11 +4944,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$locator of class Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoTypeHandler constructor expects Phpactor\\\\ReferenceFinder\\\\TypeLocator, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/ReferenceFinderRpc/ReferenceFinderRpcExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoTypeHandlerTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Command\\\\RpcCommand\\:\\:__construct\\(\\) has parameter \\$inputStream with no type specified\\.$#"
@@ -5156,11 +5116,6 @@ parameters:
 			path: lib/Extension/Rpc/Response/ErrorResponse.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\FileReferencesResponse\\:\\:__construct\\(\\) has parameter \\$references with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/FileReferencesResponse.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\FileReferencesResponse\\:\\:fromArray\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/FileReferencesResponse.php
@@ -5329,11 +5284,6 @@ parameters:
 			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Reference\\\\FileReferences\\:\\:\\$references type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/Reference/FileReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Reference\\\\Reference\\:\\:fromStartEndLineNumberAndCol\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/Reference/Reference.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Reference\\\\Reference\\:\\:fromStartEndLineNumberLineAndCol\\(\\) has no return type specified\\.$#"
@@ -5971,16 +5921,6 @@ parameters:
 			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedImplementationFinder.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedNameSearcher.php
-
-		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 2
 			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
@@ -6151,11 +6091,6 @@ parameters:
 			path: lib/Indexer/Model/Indexer.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of static method Phpactor\\\\TextDocument\\\\Location\\:\\:fromPathAndOffset\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Query/ClassQuery.php
-
-		-
 			message: "#^Parameter \\#1 \\$haystack of function strpos expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Model/Query/Criteria/FileAbsolutePathBeginsWith.php
@@ -6169,16 +6104,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$record of method Phpactor\\\\Indexer\\\\Model\\\\RecordReferences\\:\\:to\\(\\) expects Phpactor\\\\Indexer\\\\Model\\\\Record, Phpactor\\\\Indexer\\\\Model\\\\Record\\\\FunctionRecord\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Model/Query/FunctionQuery.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of static method Phpactor\\\\TextDocument\\\\Location\\:\\:fromPathAndOffset\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Query/FunctionQuery.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of static method Phpactor\\\\TextDocument\\\\Location\\:\\:fromPathAndOffset\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Query/MemberQuery.php
 
 		-
 			message: "#^Property Phpactor\\\\Indexer\\\\Model\\\\QueryClient\\:\\:\\$enhancer is never read, only written\\.$#"
@@ -6411,11 +6336,6 @@ parameters:
 			path: lib/ReferenceFinder/ChainTypeLocator.php
 
 		-
-			message: "#^Class Phpactor\\\\TextDocument\\\\Locations constructor invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/Tests/Unit/ChainImplementationFinderTest.php
-
-		-
 			message: "#^Property Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\ChainReferenceFinderTest\\:\\:\\$locator1 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\ReferenceFinder\\\\ClassReferenceFinder\\>\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\ReferenceFinder\\\\ReferenceFinder\\>\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
@@ -6491,11 +6411,6 @@ parameters:
 			path: lib/Rename/Tests/Adapter/ReferenceFinder/MemberRenamerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ReferenceFinder/ReferenceRenamerIntegrationTestCase.php
-
-		-
 			message: "#^Parameter \\#2 \\$documentUri of class Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdits constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
 			count: 1
 			path: lib/Rename/Tests/Adapter/ReferenceFinder/VariableRenamerTest.php
@@ -6509,26 +6424,6 @@ parameters:
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 1
 			path: lib/TextDocument/TextDocumentLocator/InMemoryDocumentLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, mixed given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/TolerantVariableReferenceFinderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$text of static method Phpactor\\\\TextDocument\\\\TextDocumentBuilder\\:\\:create\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/TolerantVariableReferenceFinderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/TolerantVariableReferenceFinderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:isPotentialReferenceNode\\(\\) is unused\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
 
 		-
 			message: "#^Parameter \\#1 \\$variableName of method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:nameExistsInUseClause\\(\\) expects string, string\\|null given\\.$#"
@@ -6547,11 +6442,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:resolveImportTable\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
 
@@ -6744,11 +6634,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\DocBlock\\\\DocBlockInspector\\:\\:typesForMethod\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/DocBlock/DocBlockInspector.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of function trim expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/PlainDocblock.php
 
 		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
@@ -7011,11 +6896,6 @@ parameters:
 			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:diagnostics\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectNode\\(\\) has parameter \\$offset with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
@@ -7117,11 +6997,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Cannot call method getChildNodes\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Util/NodeUtil.php
 
