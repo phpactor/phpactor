@@ -4306,16 +4306,6 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Handler/GotoImplementationHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler\\:\\:references\\(\\) return type with generic interface Amp\\\\Promise does not specify its types\\: TValue$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Handler/ReferencesHandler.php
-
-		-
-			message: "#^Property Phpactor\\\\LanguageServerProtocol\\\\TextDocumentItem\\:\\:\\$languageId \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Handler/ReferencesHandler.php
-
-		-
 			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Adapter\\\\Indexer\\\\WorkspaceUpdateReferenceFinder constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php

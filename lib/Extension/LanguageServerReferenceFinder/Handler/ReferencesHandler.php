@@ -43,6 +43,9 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
         ];
     }
 
+    /**
+     * @return Promise<array<LspLocation>>
+     */
     public function references(
         TextDocumentIdentifier $textDocument,
         Position $position,
@@ -55,7 +58,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             )->uri(
                 $textDocument->uri
             )->language(
-                $textDocument->languageId ?? 'php'
+                $textDocument->languageId
             )->build();
 
             $offset = PositionConverter::positionToByteOffset($position, $textDocument->text);
@@ -64,10 +67,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             if ($context->includeDeclaration) {
                 try {
                     $potentialLocation = $this->definitionLocator->locateDefinition($phpactorDocument, $offset)->first()->location();
-                    $locations[] = new Location(
-                        $potentialLocation->uri(),
-                        $potentialLocation->range()
-                    );
+                    $locations[] = new Location($potentialLocation->uri(), $potentialLocation->range());
                 } catch (CouldNotLocateDefinition) {
                 }
             }
