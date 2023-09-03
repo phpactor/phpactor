@@ -6,6 +6,7 @@ Changelog
 Features:
 
   - Subscript array-shape completion #2339
+  - PHPCS extension #2353 @bart-jaskulski
 
 Improvements:
 
