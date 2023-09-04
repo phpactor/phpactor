@@ -34,7 +34,6 @@ class TolerantVariableReferenceFinderTest extends TestCase
 
         $this->assertEquals(count($expectedReferences), count($actualReferences));
         foreach($expectedReferences as $index => $reference) {
-            // We need to manually compare objects here because the end location should not be checked. There should be a second marker
             $this->assertEquals($reference->location()->uri(), $actualReferences[$index]->location()->uri());
             $this->assertEquals($reference->isSurely(), $actualReferences[$index]->isSurely());
             $this->assertEquals($reference->isMaybe(), $actualReferences[$index]->isMaybe());
