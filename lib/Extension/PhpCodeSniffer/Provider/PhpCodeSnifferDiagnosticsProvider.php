@@ -20,6 +20,32 @@ use Psr\Log\LoggerInterface;
 use SebastianBergmann\Diff\Parser;
 use ArrayIterator;
 
+/**
+ * @phpstan-type PhpcsResult object{
+ *     files: array<string, PhpcsFileResult>,
+ *     totals: object{
+ *         errors: int<0, max>,
+ *         warnings: int<0, max>,
+ *         fixable: int<0, max>
+ *     }
+ * }
+ *
+ * @phpstan-type PhpcsFileResult object{
+ *     errors: int<0, max>,
+ *     warnings: int<0, max>,
+ *     messages: PhpcsRule[]
+ * }
+ *
+ * @phpstan-type PhpcsRule object{
+ *     message: string,
+ *     source: string,
+ *     severity: int,
+ *     fixable: bool,
+ *     type: string,
+ *     line: int,
+ *     column: int
+ * }
+ */
 class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActionProvider
 {
 
@@ -105,6 +131,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
         return \Amp\call(function () use ($textDocument) {
             $outputJson = yield $this->phpCodeSniffer->diagnose($textDocument, [ '-m' ]);
 
+            /** @var PhpcsResult $output */
             $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
 
             return $output->totals->fixable > 0;
@@ -120,6 +147,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
         return \Amp\call(function () use ($textDocument) {
             $outputJson = yield $this->phpCodeSniffer->diagnose($textDocument);
 
+            /** @var PhpcsResult $output */
             $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
 
             if (empty($output->files)) {
@@ -175,6 +203,9 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
         });
     }
 
+    /**
+     * @param PhpcsRule $rule
+     */
     private function createRuleDiagnostics(object $rule, Range $range): Diagnostic
     {
         return Diagnostic::fromArray([

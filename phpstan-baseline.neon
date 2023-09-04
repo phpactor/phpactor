@@ -4281,9 +4281,8 @@ parameters:
 
 		-
 			message: "#^Cannot access property \\$files on mixed\\.$#"
-			paths:
-				- lib/Extension/LanguageServerPhpCsFixer/Provider/PhpCsFixerDiagnosticsProvider.php
-				- lib/Extension/PhpCodeSniffer/Provider/PhpCodeSnifferDiagnosticsProvider.php
+			count: 1
+			path: lib/Extension/LanguageServerPhpCsFixer/Provider/PhpCsFixerDiagnosticsProvider.php
 
 		-
 			message: "#^Parameter \\#3 \\$subject of function preg_replace expects array\\|string, array\\<int, string\\>\\|string\\|null given\\.$#"
@@ -4294,16 +4293,6 @@ parameters:
 			message: "#^Cannot access offset 'files' on mixed\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerPhpCsFixer/Tests/Model/PhpCsFixerProcessTest.php
-
-		-
-			message: "#^Access to an undefined property object\\:\\:\\$(message|source)\\.$#"
-			count: 2
-			path: lib/Extension/PhpCodeSniffer/Provider/PhpCodeSnifferDiagnosticsProvider.php
-
-		-
-			message: "#^Cannot access property \\$totals on mixed\\.$#"
-			count: 1
-			path: lib/Extension/PhpCodeSniffer/Provider/PhpCodeSnifferDiagnosticsProvider.php
 
 		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
