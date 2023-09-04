@@ -63,6 +63,7 @@ class PhpCodeSnifferProcess
             $textDocument,
             [
               '--report=diff',
+              '--no-cache',
               empty($sniffs) ? '' : sprintf('--sniffs=%s', implode(',', $sniffs))
             ]
         );
