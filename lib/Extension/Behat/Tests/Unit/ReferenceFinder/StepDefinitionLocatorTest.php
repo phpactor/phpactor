@@ -12,7 +12,6 @@ use Phpactor\Extension\Behat\ReferenceFinder\StepDefinitionLocator;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\Tests\Unit\LocationAssertions;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -20,7 +19,6 @@ use Prophecy\Prophecy\ObjectProphecy;
 class StepDefinitionLocatorTest extends TestCase
 {
     use ProphecyTrait;
-    use LocationAssertions;
     private const EXAMPLE_PATH = '/path/to.php';
     private const EXAMPLE_OFFSET = 6666;
     private const EXAMPLE_OFFSET_END = 7797;
@@ -74,7 +72,10 @@ class StepDefinitionLocatorTest extends TestCase
         $location = $this->locator->locateDefinition($document, $offset);
 
         $sourceLocation = $location->first()->location();
-        self::assertLocation($sourceLocation, self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END);
+        self::assertEquals(
+            $sourceLocation,
+            Location::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
+        );
     }
 
     /**

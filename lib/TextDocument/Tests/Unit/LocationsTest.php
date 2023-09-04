@@ -10,8 +10,6 @@ use RuntimeException;
 
 class LocationsTest extends TestCase
 {
-    use LocationAssertions;
-
     public function testContainsLocations(): void
     {
         $locations = new Locations([
@@ -72,7 +70,8 @@ class LocationsTest extends TestCase
 
         foreach(iterator_to_array($sortedLocations) as $index => $sortedLocation) {
             $expectedLocation = $sortedLocationsArray[$index];
-            self::assertLocation($sortedLocation, $expectedLocation->uri()->path(), $expectedLocation->range()->start()->toInt(), $expectedLocation->range()->end()->toInt());
+
+            self::assertEquals($sortedLocation, new Location($expectedLocation->uri(), $expectedLocation->range()));
         }
     }
 

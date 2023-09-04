@@ -15,13 +15,11 @@ use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Tests\Unit\LocationAssertions;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 class ReferenceFinderExtensionTest extends TestCase
 {
-    use LocationAssertions;
-
     public function testEmptyChainDefinitionLocator(): void
     {
         $container = PhpactorContainer::fromExtensions([
@@ -58,11 +56,13 @@ class ReferenceFinderExtensionTest extends TestCase
 
         $location = $locator->locateDefinition(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1));
 
-        $this->assertLocation(
+        $this->assertEquals(
             $location->first()->location(),
-            SomeDefinitionLocator::EXAMPLE_PATH,
-            SomeDefinitionLocator::EXAMPLE_OFFSET,
-            SomeDefinitionLocator::EXAMPLE_OFFSET_END
+            Location::fromPathAndOffsets(
+                SomeDefinitionLocator::EXAMPLE_PATH,
+                SomeDefinitionLocator::EXAMPLE_OFFSET,
+                SomeDefinitionLocator::EXAMPLE_OFFSET_END
+            )
         );
     }
 
@@ -79,11 +79,13 @@ class ReferenceFinderExtensionTest extends TestCase
 
         $location = $locator->locateTypes(TextDocumentBuilder::create('asd')->build(), ByteOffset::fromInt(1));
 
-        $this->assertLocation(
+        $this->assertEquals(
             $location->first()->location(),
-            SomeTypeLocator::EXAMPLE_PATH,
-            SomeTypeLocator::EXAMPLE_OFFSET,
-            SomeTypeLocator::EXAMPLE_OFFSET_END
+            Location::fromPathAndOffsets(
+                SomeTypeLocator::EXAMPLE_PATH,
+                SomeTypeLocator::EXAMPLE_OFFSET,
+                SomeTypeLocator::EXAMPLE_OFFSET_END
+            )
         );
     }
 

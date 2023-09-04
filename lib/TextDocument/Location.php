@@ -18,6 +18,9 @@ class Location
         );
     }
 
+    /**
+    * @deprecated Use fromPathAndOffsets instead
+    */
     public static function fromPathAndOffset(string $path, int $offset): self
     {
         return new self(

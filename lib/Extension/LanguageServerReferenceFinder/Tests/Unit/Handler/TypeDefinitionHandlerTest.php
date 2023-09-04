@@ -25,13 +25,15 @@ class TypeDefinitionHandlerTest extends TestCase
 {
     const EXAMPLE_URI = 'file:///test';
     const EXAMPLE_TEXT = 'hello';
+    private const EXAMPLE_OFFSET = 2;
+    private const EXAMPLE_OFFSET_END = 5;
 
     public function testGoesToSingleType(): void
     {
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 5)
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
             )
         ];
 
@@ -45,8 +47,8 @@ class TypeDefinitionHandlerTest extends TestCase
 
         $this->assertInstanceOf(Location::class, $location);
         $this->assertEquals(self::EXAMPLE_URI, $location->uri);
-        $this->assertEquals(2, $location->range->start->character);
-        $this->assertEquals(5, $location->range->end->character);
+        $this->assertEquals(self::EXAMPLE_OFFSET, $location->range->start->character);
+        $this->assertEquals(self::EXAMPLE_OFFSET_END, $location->range->end->character);
     }
 
     public function testGoesToMultipleTypes(): void
@@ -54,11 +56,11 @@ class TypeDefinitionHandlerTest extends TestCase
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 2),
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END),
             ),
             new TypeLocation(
                 TypeFactory::class('Barfoo'),
-                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, 2, 2),
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END),
             )
         ];
         [$tester, $watcher] = $this->createTester($locations);
@@ -73,7 +75,8 @@ class TypeDefinitionHandlerTest extends TestCase
 
         $this->assertInstanceOf(Location::class, $location);
         $this->assertEquals(self::EXAMPLE_URI, $location->uri);
-        $this->assertEquals(2, $location->range->start->character);
+        $this->assertEquals(self::EXAMPLE_OFFSET, $location->range->start->character);
+        $this->assertEquals(self::EXAMPLE_OFFSET_END, $location->range->end->character);
     }
 
     /**

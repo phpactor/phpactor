@@ -114,18 +114,14 @@ class MemberRenamerTest extends TestCase
 
         $renamer = new MemberRenamer(
             new PredefinedReferenceFinder(...array_map(function (ByteOffset $reference) use ($textDocument) {
-                return PotentialLocation::surely(new Location(
-                    $textDocument->uri(),
-                    ByteOffsetRange::fromByteOffsets($reference, $reference)
-                ));
+                return PotentialLocation::surely(
+                    new Location($textDocument->uri(), ByteOffsetRange::fromByteOffset($reference))
+                );
             }, $references)),
             InMemoryDocumentLocator::fromTextDocuments([$textDocument]),
             new Parser(),
             new PredefiniedImplementationFinder(new Locations(array_map(function (ByteOffset $reference) use ($textDocument) {
-                return new Location(
-                    $textDocument->uri(),
-                    ByteOffsetRange::fromByteOffsets($reference, $reference)
-                );
+                return new Location($textDocument->uri(), ByteOffsetRange::fromByteOffset($reference));
             }, $implementations))),
         );
 

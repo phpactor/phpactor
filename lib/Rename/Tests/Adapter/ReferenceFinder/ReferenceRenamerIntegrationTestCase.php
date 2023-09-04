@@ -19,10 +19,9 @@ abstract class ReferenceRenamerIntegrationTestCase extends TestCase
     public function offsetsToReferenceFinder(TextDocument $textDocument, array $references): ReferenceFinder
     {
         return new PredefinedReferenceFinder(...array_map(function (ByteOffset $reference) use ($textDocument) {
-            return PotentialLocation::surely(new Location(
-                $textDocument->uriOrThrow(),
-                ByteOffsetRange::fromByteOffsets($reference, $reference)
-            ));
+            return PotentialLocation::surely(
+                new Location($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffset($reference))
+            );
         }, $references));
     }
 }

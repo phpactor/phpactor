@@ -16,6 +16,11 @@ class ByteOffsetRange
         );
     }
 
+    public static function fromByteOffset(ByteOffset $start): self
+    {
+        return new self($start, $start);
+    }
+
     public static function fromByteOffsets(ByteOffset $start, ByteOffset $end): self
     {
         return new self($start, $end);

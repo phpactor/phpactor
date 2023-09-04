@@ -7,20 +7,16 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Tests\Unit\LocationAssertions;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
 abstract class DefinitionLocatorTestCase extends IntegrationTestCase
 {
-    use LocationAssertions;
-
     protected function assertTypeLocation(TypeLocation $typeLocation, string $path, int $start, int $end): void
     {
-        self::assertLocation(
+        self::assertEquals(
             $typeLocation->location(),
-            $this->workspace->path($path),
-            $start,
-            $end
+            Location::fromPathAndOffsets($this->workspace->path($path), $start, $end)
         );
     }
 

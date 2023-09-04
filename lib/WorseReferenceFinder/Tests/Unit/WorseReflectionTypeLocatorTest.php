@@ -5,14 +5,13 @@ namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Tests\Unit\LocationAssertions;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReferenceFinder\Tests\IntegrationTestCase;
 use Phpactor\WorseReferenceFinder\WorseReflectionTypeLocator;
 
 class WorseReflectionTypeLocatorTest extends IntegrationTestCase
 {
-    use LocationAssertions;
     public function testLocatesType(): void
     {
         $typeLocations = $this->locate(
@@ -42,7 +41,10 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
         );
 
         self::assertEquals('One', $typeLocations->first()->type()->__toString());
-        self::assertLocation($typeLocations->first()->location(), $this->workspace->path('One.php'), 9, 21);
+        self::assertEquals(
+            $typeLocations->first()->location(),
+            Location::fromPathAndOffsets($this->workspace->path('One.php'), 9, 21)
+        );
     }
 
     public function testLocatesArrayType(): void
@@ -74,7 +76,10 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
         );
 
         $location = $typeLocations->first()->location();
-        self::assertLocation($location, $this->workspace->path('One.php'), 9, 21);
+        self::assertEquals(
+            $location,
+            Location::fromPathAndOffsets($this->workspace->path('One.php'), 9, 21)
+        );
     }
 
     public function testLocatesFromArray(): void
@@ -97,7 +102,10 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
         );
 
         $location = $typeLocations->first()->location();
-        self::assertLocation($location, $this->workspace->path('One.php'), 9, 21);
+        self::assertEquals(
+            $location,
+            Location::fromPathAndOffsets($this->workspace->path('One.php'), 9, 21)
+        );
     }
 
     public function testLocatesInterface(): void
@@ -128,7 +136,10 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
                 EOT
         );
 
-        self::assertLocation($typeLocations->first()->location(), $this->workspace->path('One.php'), 9, 25);
+        self::assertEquals(
+            $typeLocations->first()->location(),
+            Location::fromPathAndOffsets($this->workspace->path('One.php'), 9, 25)
+        );
     }
 
     public function testLocatesUnion(): void

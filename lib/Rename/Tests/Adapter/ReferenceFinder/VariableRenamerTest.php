@@ -126,10 +126,7 @@ class VariableRenamerTest extends TestCase
             array_map(
                 function (ByteOffset $reference) use ($textDocument) {
                     return PotentialLocation::surely(
-                        new Location(
-                            $textDocument->uriOrThrow(),
-                            ByteOffsetRange::fromByteOffsets($reference, $reference)
-                        )
+                        new Location($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffset($reference))
                     );
                 },
                 $references
