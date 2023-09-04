@@ -73,7 +73,12 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
 
         $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
         assert($fileRecord instanceof FileRecord);
-        $reference = new RecordReference(ClassRecord::RECORD_TYPE, $targetRecord->identifier(), $node->getStartPosition());
+        $reference = new RecordReference(
+            ClassRecord::RECORD_TYPE,
+            $targetRecord->identifier(),
+            $node->getStartPosition(),
+            $node->getEndPosition()
+        );
 
         if ($node->parent instanceof ObjectCreationExpression) {
             $reference->addFlag(RecordReference::FLAG_NEW_OBJECT);

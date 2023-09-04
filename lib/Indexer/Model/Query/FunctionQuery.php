@@ -37,8 +37,8 @@ class FunctionQuery implements IndexQuery
                 yield LocationConfidence::surely(
                     Location::fromPathAndOffsets(
                         TextDocumentUri::fromString($fileRecord->filePath()),
-                        $functionReference->offset(),
-                        $functionReference->offset()
+                        $functionReference->start(),
+                        $functionReference->end()
                     )
                 );
             }

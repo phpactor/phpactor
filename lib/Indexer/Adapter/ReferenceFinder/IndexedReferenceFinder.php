@@ -7,6 +7,8 @@ use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\RecordReference;
+use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
@@ -209,11 +211,14 @@ class IndexedReferenceFinder implements ReferenceFinder
      */
     private function newObjectReferences(string $containerType): Generator
     {
+        /** @var ?ClassRecord $class */
         $class = $this->query->class()->get($containerType);
         if (!$class) {
             return;
         }
+
         foreach ($class->references() as $reference) {
+            /** @var ?FileRecord $file */
             $file = $this->query->file()->get($reference);
             if (null === $file) {
                 continue;
@@ -229,8 +234,8 @@ class IndexedReferenceFinder implements ReferenceFinder
                 yield LocationConfidence::surely(
                     Location::fromPathAndOffsets(
                         $file->filePath() ?? '',
-                        $fileReference->offset(),
-                        $fileReference->offset()
+                        $fileReference->start(),
+                        $fileReference->end()
                     )
                 );
             }

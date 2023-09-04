@@ -11,6 +11,7 @@ use Phpactor\Extension\Behat\Behat\StepParser;
 use Phpactor\Extension\Behat\ReferenceFinder\StepDefinitionLocator;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Tests\Unit\LocationAssertions;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -50,9 +51,7 @@ class StepDefinitionLocatorTest extends TestCase
                 new Context('foo', 'bar'),
                 'myMethod',
                 $step,
-                self::EXAMPLE_PATH,
-                self::EXAMPLE_OFFSET,
-                self::EXAMPLE_OFFSET_END
+                Location::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
             );
         });
 

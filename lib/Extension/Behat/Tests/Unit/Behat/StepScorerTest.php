@@ -7,6 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Behat\Context;
 use Phpactor\Extension\Behat\Behat\Step;
 use Phpactor\Extension\Behat\Behat\StepScorer;
+use Phpactor\TextDocument\Location;
 
 class StepScorerTest extends TestCase
 {
@@ -78,6 +79,6 @@ class StepScorerTest extends TestCase
     private function createStep(string $string): Step
     {
         $context = new Context('foo', 'bar');
-        return new Step($context, 'foo', $string, 'path/to.php', 1, 5);
+        return new Step($context, 'foo', $string, Location::fromPathAndOffsets('/path/to.php', 1, 5));
     }
 }

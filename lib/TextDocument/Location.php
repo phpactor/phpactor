@@ -18,6 +18,14 @@ class Location
         );
     }
 
+    public static function fromPathAndOffset(string $path, int $offset): self
+    {
+        return new self(
+            TextDocumentUri::fromString($path),
+            ByteOffsetRange::fromInts($offset, $offset),
+        );
+    }
+
     public function uri(): TextDocumentUri
     {
         return $this->uri;

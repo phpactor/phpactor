@@ -57,8 +57,8 @@ class MemberQuery implements IndexQuery
 
                 $location = Location::fromPathAndOffsets(
                     $fileRecord->filePath() ?? '',
-                    $memberReference->offset(),
-                    $memberReference->offset()
+                    $memberReference->start(),
+                    $memberReference->end()
                 );
 
                 if (null === $memberReference->contaninerType()) {

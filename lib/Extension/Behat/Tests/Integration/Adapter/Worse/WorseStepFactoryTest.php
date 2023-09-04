@@ -8,6 +8,7 @@ use Phpactor\Extension\Behat\Adapter\Worse\WorseStepFactory;
 use Phpactor\Extension\Behat\Behat\Context;
 use Phpactor\Extension\Behat\Behat\Step;
 use Phpactor\Extension\Behat\Behat\StepParser;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -23,8 +24,8 @@ class WorseStepFactoryTest extends TestCase
         $steps = iterator_to_array($stepGenerator->generate($parser, [ $context ]));
 
         $this->assertEquals([
-            new Step($context, 'givenThatThis', 'that I visit Berlin', $path, 150, 199),
-            new Step($context, 'shouldRun', 'I should run to Weisensee', $path, 260, 305),
+            new Step($context, 'givenThatThis', 'that I visit Berlin', Location::fromPathAndOffsets($path, 150, 199)),
+            new Step($context, 'shouldRun', 'I should run to Weisensee', Location::fromPathAndOffsets($path, 260, 305)),
         ], $steps);
     }
 }

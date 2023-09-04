@@ -14,7 +14,7 @@ class FileRecord implements HasPath, Record
     public const RECORD_TYPE = 'file';
 
     /**
-     * @var array<array{string,string,int}>
+     * @var array<array{string,string,int,int,?string,int}>
      */
     private array $references = [];
 
@@ -58,7 +58,8 @@ class FileRecord implements HasPath, Record
         $this->references[] = [
             $reference->type(),
             $reference->identifier(),
-            $reference->offset(),
+            $reference->start(),
+            $reference->end(),
             $reference->contaninerType(),
             $reference->flags()
         ];

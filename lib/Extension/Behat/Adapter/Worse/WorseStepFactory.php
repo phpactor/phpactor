@@ -8,6 +8,7 @@ use Phpactor\Extension\Behat\Behat\ContextClassResolver;
 use Phpactor\Extension\Behat\Behat\Step;
 use Phpactor\Extension\Behat\Behat\StepFactory;
 use Phpactor\Extension\Behat\Behat\StepParser;
+use Phpactor\TextDocument\Location;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 
@@ -38,9 +39,7 @@ class WorseStepFactory implements StepFactory
                         $context,
                         $method->name(),
                         $step,
-                        $class->sourceCode()->uri()?->path(),
-                        $method->position()->start()->toInt(),
-                        $method->position()->end()->toInt()
+                        new Location($class->sourceCode()->uriOrThrow(), $method->position())
                     );
                 }
             }
