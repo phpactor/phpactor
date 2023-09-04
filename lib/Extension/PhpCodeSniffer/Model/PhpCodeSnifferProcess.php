@@ -88,7 +88,15 @@ class PhpCodeSnifferProcess
     {
         return call(function () use ($textDocument, $options) {
             /** @var Process */
-            $process = yield $this->run(...[...$options, '-q', sprintf('--stdin-path=%s', TextDocumentUri::fromString($textDocument->uri)->path()), '-']);
+            $process = yield $this->run(
+                ...[
+                ...$options,
+                '-q',
+                '--no-colors',
+                sprintf('--stdin-path=%s', TextDocumentUri::fromString($textDocument->uri)->path()),
+                '-'
+                ]
+            );
 
             $stdin = $process->getStdin();
             $stdin->write($textDocument->text);
