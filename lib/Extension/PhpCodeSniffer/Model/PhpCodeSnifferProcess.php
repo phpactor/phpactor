@@ -8,9 +8,12 @@ use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LoggerInterface;
+use Throwable;
 use function Amp\ByteStream\buffer;
 use function Amp\call;
-use Throwable;
+use function Safe\rename;
+use function Safe\tempnam;
+use function Safe\file_put_contents;
 
 class PhpCodeSnifferProcess
 {
@@ -53,20 +56,34 @@ class PhpCodeSnifferProcess
     }
 
     /**
+     * Producing diffs for phpcs fixes requires a temporary
+     * file. Otherwise any changes in current buffer which are not saved
+     * are included in resulted diff and interpreted as diagnostics with
+     * misleading ranges.
+     *
+     * It is because phpcs simply calls system's `diff` with the file
+     * passed by `--stdin-path` option.
+     *
      * @param  string[] $sniffs Phpcs sniffs to include.
      *
      * @return Promise<string>
      */
     public function produceFixesDiff(TextDocumentItem $textDocument, array $sniffs = []): Promise
     {
-        return $this->runDiagnosticts(
-            $textDocument,
-            [
-              '--report=diff',
-              '--no-cache',
-              empty($sniffs) ? '' : sprintf('--sniffs=%s', implode(',', $sniffs))
-            ]
-        );
+        return \Amp\call(function () use ($textDocument, $sniffs) {
+            $tmpFilePath = $this->createTempFile($textDocument->text);
+            $diagnostics = yield $this->runDiagnosticts(
+                $tmpFilePath,
+                $textDocument->text,
+                [
+                  '--report=diff',
+                  '--no-cache',
+                  empty($sniffs) ? '' : sprintf('--sniffs=%s', implode(',', $sniffs))
+                ]
+            );
+            unlink($tmpFilePath);
+            return $diagnostics;
+        });
     }
 
     /**
@@ -76,7 +93,11 @@ class PhpCodeSnifferProcess
      */
     public function diagnose(TextDocumentItem $textDocument, array $options = []): Promise
     {
-        return $this->runDiagnosticts($textDocument, [ '--report=json', ...$options ]);
+        return $this->runDiagnosticts(
+            TextDocumentUri::fromString($textDocument->uri)->path(),
+            $textDocument->text,
+            [ '--report=json', ...$options ]
+        );
     }
 
     /**
@@ -84,22 +105,22 @@ class PhpCodeSnifferProcess
      *
      * @return Promise<string>
      */
-    private function runDiagnosticts(TextDocumentItem $textDocument, array $options = []): Promise
+    private function runDiagnosticts(string $url, string $text, array $options = []): Promise
     {
-        return call(function () use ($textDocument, $options) {
+        return call(function () use ($url, $text, $options) {
             /** @var Process */
             $process = yield $this->run(
                 ...[
                 ...$options,
                 '-q',
                 '--no-colors',
-                sprintf('--stdin-path=%s', TextDocumentUri::fromString($textDocument->uri)->path()),
+                sprintf('--stdin-path=%s', $url),
                 '-'
                 ]
             );
 
             $stdin = $process->getStdin();
-            $stdin->write($textDocument->text);
+            $stdin->write($text);
             $stdin->end();
 
             $stdout = yield buffer($process->getStdout());
@@ -123,5 +144,15 @@ class PhpCodeSnifferProcess
 
             return $stdout;
         });
+    }
+
+    private function createTempFile(string $text): string
+    {
+        $tmpName = tempnam(sys_get_temp_dir(), 'phpcsls');
+        $name = sprintf('%s.php', $tmpName);
+        rename($tmpName, $name);
+        file_put_contents($name, $text);
+
+        return $name;
     }
 }
