@@ -208,13 +208,13 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
      */
     private function createRuleDiagnostics(object $rule, Range $range): Diagnostic
     {
-        return Diagnostic::fromArray([
-          'message' => $rule->message,
-          'range' => $range,
-          'severity' => DiagnosticSeverity::WARNING,
-          'source' => $this->name(),
-          'code' => $rule->source
-        ]);
+        return new Diagnostic(
+            message: $rule->message,
+            range: $range,
+            severity: DiagnosticSeverity::WARNING,
+            source: $this->name(),
+            code: $rule->source
+        );
     }
 
     /**
