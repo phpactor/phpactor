@@ -146,6 +146,10 @@ class PhpCodeSnifferProcess
         });
     }
 
+    /**
+     * @return string Filename MUST include PHP extension, otherwise
+     * phpcs will not process it.
+     */
     private function createTempFile(string $text): string
     {
         $tmpName = tempnam(sys_get_temp_dir(), 'phpcsls');
