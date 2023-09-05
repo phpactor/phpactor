@@ -167,9 +167,10 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
             foreach ($rules as $rule) {
                 // We treat non-fixable rules as 1 char range.
                 if ($rule->fixable === false) {
+                    $lineNo = $rule->line - 1;
                     $range = new Range(
-                        new Position(--$rule->line, $rule->column),
-                        new Position(--$rule->line, ++$rule->column)
+                        new Position($lineNo, $rule->column),
+                        new Position($lineNo, $rule->column + 1)
                     );
                     $diagnostics[] = $this->createRuleDiagnostics($rule, $range);
                     continue;
@@ -225,6 +226,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
      */
     private function getSniffGroup(string $source): ?string
     {
+        $matches = [];
         preg_match("/(.*)\.\w+/", $source, $matches);
         if (! isset($matches[1])) {
             return null;

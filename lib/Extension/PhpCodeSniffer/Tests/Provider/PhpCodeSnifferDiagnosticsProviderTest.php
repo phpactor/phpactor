@@ -140,7 +140,7 @@ class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
                     \$lao = "tzu";
                     EOF,
                 // expected diagnostics
-                1,
+                2,
             ],
             'PEAR: correct file' => [
                 <<<EOF
