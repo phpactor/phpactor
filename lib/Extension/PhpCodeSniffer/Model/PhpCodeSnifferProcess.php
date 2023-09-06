@@ -147,8 +147,8 @@ class PhpCodeSnifferProcess
     }
 
     /**
-     * @return string Filename MUST include PHP extension, otherwise
-     * phpcs will not process it.
+     * Filename MUST include PHP extension, otherwise phpcs will not
+     * process it.
      */
     private function createTempFile(string $text): string
     {
