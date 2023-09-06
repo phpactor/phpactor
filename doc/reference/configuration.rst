@@ -408,6 +408,21 @@ Completion for local variables.
 **Default**: ``true``
 
 
+.. _param_completion_worse.completor.subscript.enabled:
+
+
+``completion_worse.completor.subscript.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the ``subscript`` completor.
+
+Completion for subscript (array access from array shapes).
+
+
+**Default**: ``true``
+
+
 .. _param_completion_worse.completor.declared_function.enabled:
 
 
@@ -892,7 +907,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
+**Default**: ``"\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1346,7 +1361,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+**Default**: ``"\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:
@@ -1910,6 +1925,22 @@ Override level at which Psalm should report errors (lower => more errors)
 
 
 **Default**: ``null``
+
+
+.. _param_language_server_psalm.threads:
+
+
+``language_server_psalm.threads``
+"""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Set the number of threads Psalm should use. Warning: NULL will use as many as possible and may crash your computer
+
+
+**Default**: ``1``
 
 
 .. _param_language_server_psalm.timeout:
