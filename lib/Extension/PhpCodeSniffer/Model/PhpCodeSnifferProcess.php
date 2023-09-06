@@ -8,6 +8,7 @@ use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LoggerInterface;
+use Safe\Exceptions\FilesystemException;
 use Throwable;
 use function Amp\ByteStream\buffer;
 use function Amp\call;
@@ -71,7 +72,14 @@ class PhpCodeSnifferProcess
     public function produceFixesDiff(TextDocumentItem $textDocument, array $sniffs = []): Promise
     {
         return \Amp\call(function () use ($textDocument, $sniffs) {
-            $tmpFilePath = $this->createTempFile($textDocument->text);
+            try {
+                $tmpFilePath = $this->createTempFile($textDocument->text);
+            } catch (FilesystemException) {
+                $this->logger->error(
+                    'Failed to create temporary file for phpcs diagnostics. Without this results would be unreliable.'
+                );
+                return '[]';
+            }
             $diagnostics = yield $this->runDiagnosticts(
                 $tmpFilePath,
                 $textDocument->text,
