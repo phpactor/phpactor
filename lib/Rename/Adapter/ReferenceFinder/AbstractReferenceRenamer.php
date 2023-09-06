@@ -78,7 +78,6 @@ abstract class AbstractReferenceRenamer implements Renamer
     {
         $referenceDocument = $this->locator->get($location->uri());
 
-        // We could probably use the complete range here instead of only using the location
         $range = $this->getRenameRange($referenceDocument, $location->range()->start());
 
         if (null === $range) {
