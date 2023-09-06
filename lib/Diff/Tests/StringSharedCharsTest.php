@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCsFixer\Tests\Util;
+namespace Phpactor\Diff\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Util\StringSharedChars;
+use Phpactor\Diff\StringSharedChars;
 
 class StringSharedCharsTest extends TestCase
 {

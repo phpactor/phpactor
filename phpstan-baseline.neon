@@ -4252,8 +4252,9 @@ parameters:
 
 		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
+			paths:
+				- lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
+				- lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
 
 		-
 			message: "#^Parameter \\#2 \\$showDiagnostics of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\Provider\\\\PhpCsFixerDiagnosticsProvider constructor expects bool, mixed given\\.$#"
@@ -4261,19 +4262,22 @@ parameters:
 			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
 
 		-
-			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\Model\\\\PhpCsFixerProcess constructor expects array\\<string, string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
+			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\(LanguageServerPhpCsFixer|PhpCodeSniffer)\\\\Model\\\\(PhpCsFixer|PhpCodeSniffer)Process constructor expects array\\<string, string\\>, mixed given\\.$#"
+			paths:
+				- lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
+				- lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
 
 		-
-			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\LspCommand\\\\FormatCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
+			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\(LanguageServerPhpCsFixer|PhpCodeSniffer)\\\\LspCommand\\\\FormatCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
+			paths:
+				- lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
+				- lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
 
 		-
 			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/Model/PhpCsFixerProcess.php
+			paths:
+				- lib/Extension/LanguageServerPhpCsFixer/Model/PhpCsFixerProcess.php
+				- lib/Extension/PhpCodeSniffer/Model/PhpCodeSnifferProcess.php
 
 		-
 			message: "#^Cannot access property \\$files on mixed\\.$#"

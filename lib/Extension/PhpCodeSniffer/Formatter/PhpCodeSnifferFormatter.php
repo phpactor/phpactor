@@ -1,30 +1,28 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCsFixer\Formatter;
+namespace Phpactor\Extension\PhpCodeSniffer\Formatter;
 
 use Amp\Promise;
+use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
 use Phpactor\Diff\DiffToTextEditsConverter;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Formatting\Formatter;
 use function Amp\call;
 
-class PhpCsFixerFormatter implements Formatter
+class PhpCodeSnifferFormatter implements Formatter
 {
     public function __construct(
-        private PhpCsFixerProcess $phpCsFixer
+        private PhpCodeSnifferProcess $phpCodeSniffer
     ) {
     }
 
     public function format(TextDocumentItem $textDocument): Promise
     {
         return call(function () use ($textDocument) {
-            $diff = yield $this->phpCsFixer->fix($textDocument->text, ['--diff', '--dry-run']);
+            $diff = yield $this->phpCodeSniffer->produceFixesDiff($textDocument);
 
             $diffToTextEdits = new DiffToTextEditsConverter();
-            $textEdits = $diffToTextEdits->toTextEdits($diff);
-
-            return $textEdits;
+            return $diffToTextEdits->toTextEdits($diff);
         });
     }
 }

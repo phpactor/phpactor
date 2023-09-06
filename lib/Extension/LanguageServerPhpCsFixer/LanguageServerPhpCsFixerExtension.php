@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
+use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand\FormatCommand;
@@ -28,12 +29,12 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $container->register(
             PhpCsFixerProcess::class,
             function (Container $container) {
-                $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PHP_CS_FIXER_BIN));
+                $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_PHP_CS_FIXER_BIN)->string());
 
                 return new PhpCsFixerProcess(
                     $path,
                     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
-                    $container->getParameter(self::PARAM_ENV),
+                    $container->parameter(self::PARAM_ENV)->value(),
                 );
             }
         );
@@ -47,7 +48,8 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $container->register(PhpCsFixerDiagnosticsProvider::class, function (Container $container) {
             return new PhpCsFixerDiagnosticsProvider(
                 $container->get(PhpCsFixerProcess::class),
-                $container->getParameter(self::PARAM_SHOW_DIAGNOSTICS),
+                new RangesForDiff(),
+                $container->parameter(self::PARAM_SHOW_DIAGNOSTICS)->bool(),
                 LoggingExtension::channelLogger($container, 'php-cs-fixer'),
             );
         }, [
