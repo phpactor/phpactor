@@ -22,12 +22,14 @@ class DiagnosticsParserTest extends TestCase
      */
     public function provideParse(): Generator
     {
-        yield [
+        yield 'parsing infos' => [
             <<<'EOT'
                 [{"severity":"info","line_from":49,"line_to":49,"type":"TooManyArguments","message":"Too many arguments for Phpactor\\Extension\\LanguageServerPsalm\\Model\\PsalmConfig::__construct - expecting 1 but saw 2","file_name":"lib\/LanguageServerPhpstanExtension.php","file_path":"\/path\/to.php","snippet":"                new PsalmConfig($binPath, $container->getParameter(self::PARAM_LEVEL)),","selected_text":"new PsalmConfig($binPath, $container->getParameter(self::PARAM_LEVEL))","from":2040,"to":2110,"snippet_from":2024,"snippet_to":2111,"column_from":17,"column_to":87,"error_level":4,"shortcode":26,"link":"https:\/\/psalm.dev\/026","taint_trace":null}]
                 EOT
             , 1
         ];
+
+        yield 'returning empty diagnostics for empty input' => ['', 0];
     }
 
     public function testExceptionOnNonJsonString(): void

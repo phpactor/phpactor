@@ -67,6 +67,9 @@ class DiagnosticsParser
      */
     private function decodeJson(string $jsonString): array
     {
+        if ($jsonString === '') {
+            return [];
+        }
 
         try {
             /** @var array<PsalmDiagnostic> $decoded */
