@@ -13,7 +13,7 @@ Phpactor can use PHP_CodeSniffer to:
 - format your code via the LSP ``textDocument/formatting`` action,
 - provide diagnostics for potential fixes,
 
-To do so you set :ref:`_param_php_code_sniffer.enabled`:
+To do so you set :ref:`param_php_code_sniffer.enabled`:
 
 .. code-block:: bash
 
