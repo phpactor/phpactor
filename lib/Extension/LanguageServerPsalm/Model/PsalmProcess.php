@@ -7,6 +7,7 @@ use Amp\Process\ProcessException;
 use Amp\Promise;
 use Phpactor\Amp\Process\ProcessUtil;
 use Phpactor\LanguageServerProtocol\Diagnostic;
+use RuntimeException;
 use function Amp\ByteStream\buffer;
 use Psr\Log\LoggerInterface;
 
@@ -74,13 +75,11 @@ class PsalmProcess
             }
 
             if ($exitCode !== 0 && $exitCode !== 2) {
-                $this->logger->error(sprintf(
+                throw new RuntimeException(
                     'Psalm exited with code "%s": %s',
                     $exitCode,
                     yield buffer($process->getStderr())
-                ));
-
-                return [];
+                );
             }
 
             $stdout = yield buffer($process->getStdout());
