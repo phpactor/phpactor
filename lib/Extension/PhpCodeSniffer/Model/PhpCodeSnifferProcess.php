@@ -8,6 +8,7 @@ use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Safe\Exceptions\FilesystemException;
 use Throwable;
 use function Amp\ByteStream\buffer;
@@ -138,7 +139,7 @@ class PhpCodeSnifferProcess
                 && $exitCode !== self::EXIT_FOUND_NON_FIXABLE_ERRORS
                 && $exitCode !== self::EXIT_FILES_NEEDS_FIXING
             ) {
-                $this->logger->error(
+                throw new RuntimeException(
                     sprintf(
                         "phpcs exited with code '%s'; cmd: %s; stderr: '%s'; stdout: '%s'",
                         $exitCode,
