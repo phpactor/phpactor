@@ -148,7 +148,6 @@ class PhpCodeSnifferProcess
                         $stdout
                     )
                 );
-                return '[]';
             }
 
             return $stdout;
