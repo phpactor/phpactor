@@ -373,6 +373,20 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'multiple @var declarations',
+            source: <<<'PHP'
+                <?php
+                /** @var string $a */
+                /** @var string $b */
+                /** @var string $c */
+                echo $a . $b;
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
