@@ -14,7 +14,7 @@ class FileRecord implements HasPath, Record
     public const RECORD_TYPE = 'file';
 
     /**
-     * @var array<array{string,string,int,int,?string,int}>
+     * @var array<array{string,string,int, ?string,int, int}>
      */
     private array $references = [];
 
