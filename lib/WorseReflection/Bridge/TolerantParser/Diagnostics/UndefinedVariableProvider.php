@@ -281,6 +281,19 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'pass by reference introduces var',
+            source: <<<'PHP'
+                <?php
+                function preg_match(string $pattern, string $string, array &$matches): bool {}
+                preg_match('foobar', 'barfoo', $matches);
+                echo $matches[1];
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'super globals',
             source: <<<'PHP'
                 <?php
