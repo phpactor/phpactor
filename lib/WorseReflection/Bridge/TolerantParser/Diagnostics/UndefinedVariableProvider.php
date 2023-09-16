@@ -374,13 +374,26 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'multiple @var declarations',
+            title: 'multiple @var declarations followed by binary expression in statement',
             source: <<<'PHP'
                 <?php
                 /** @var string $a */
                 /** @var string $b */
                 /** @var string $c */
                 echo $a . $b;
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'multiple @var declarations',
+            source: <<<'PHP'
+                <?php
+                /** @var string $a */
+                /** @var string $b */
+                /** @var string $c */
                 echo $a;
                 echo $b;
                 echo $c;
