@@ -381,6 +381,9 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 /** @var string $b */
                 /** @var string $c */
                 echo $a . $b;
+                echo $a;
+                echo $b;
+                echo $c;
                 PHP,
             valid: true,
             assertion: function (Diagnostics $diagnostics): void {
