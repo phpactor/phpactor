@@ -450,50 +450,6 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 return [];
             }
         }
-        $isByReference = function () use ($resolver, $frame, $node) {
-            if (!$node->parent instanceof ArgumentExpression) {
-                return false;
-            }
-            $argument = $node->parent;
-            if (!$argument->parent instanceof ArgumentExpressionList) {
-                return false;
-            }
-
-            $argumentExpressionList = $argument->parent;
-            if (!$argumentExpressionList->parent instanceof CallExpression) {
-                return false;
-            }
-
-            $offset = NodeUtil::argumentOffset($argumentExpressionList, $argument);
-            if ($offset === null) {
-                return false;
-            }
-
-            $call = $argumentExpressionList->parent;
-            $callContext = $resolver->resolveNode($frame, $call);
-            $parameter = null;
-
-            if ($callContext instanceof FunctionCallContext) {
-                $parameter = $callContext->function()->parameters()->at($offset);
-            }
-
-            if (!$parameter && $callContext instanceof MemberAccessContext) {
-                $member = $callContext->accessedMember();
-                if ($member->memberType() === ReflectionMember::TYPE_METHOD) {
-                    $parameter = $member->class()->methods()->get($member->name())->parameters()->at($offset);
-                }
-            }
-
-            if (!$parameter) {
-                return false;
-            }
-
-            return $parameter->byReference();
-        };
-
-        if ($isByReference()) {
-            return false;
-        }
 
         yield new UndefinedVariableDiagnostic(
             NodeUtil::byteOffsetRangeForNode($node),

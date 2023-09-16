@@ -141,16 +141,8 @@ class QualifiedNameResolver implements Resolver
 
         $stub = $this->registry->get($name->short());
 
-        if ($stub) {
-            $arguments = FunctionArguments::fromList(
-                $resolver,
-                $frame,
-                $parent->argumentExpressionList
-            );
-            return $stub->resolve($frame, $context, $arguments);
-        }
-
         $byReference = $function->parameters()->passedByReference();
+        $arguments = null;
 
         if ($byReference->count()) {
             $arguments = FunctionArguments::fromList(
@@ -168,6 +160,15 @@ class QualifiedNameResolver implements Resolver
                     wasDefined: true /** $wasDefined bool */
                 ));
             }
+        }
+
+        if ($stub) {
+            $arguments = $arguments ?: FunctionArguments::fromList(
+                $resolver,
+                $frame,
+                $parent->argumentExpressionList
+            );
+            return $stub->resolve($frame, $context, $arguments);
         }
 
         // the function may have been resolved to a global, so create
