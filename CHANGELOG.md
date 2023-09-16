@@ -5,7 +5,8 @@ Changelog
 
 Bug fixes:
 
-  - Fix undefined-var false positives for undeclared variables that have `@var` #2366
+  - Fix undefined-var false positive for undeclared variables that have `@var` #2366
+  - Fix undefined-var false positive for pass by ref (again) #2361
 
 Features:
 
