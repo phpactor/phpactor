@@ -12,7 +12,7 @@ trait FullyQualifiedReferenceTrait
 
     private int $start;
 
-    private int $end;
+    private ?int $end = null;
 
     public function __construct(string $fqn)
     {
@@ -55,7 +55,7 @@ trait FullyQualifiedReferenceTrait
 
     public function end(): ByteOffset
     {
-        return ByteOffset::fromInt($this->end);
+        return $this->end ? ByteOffset::fromInt($this->end) : $this->start();
     }
 
     public function identifier(): string

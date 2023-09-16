@@ -8,15 +8,18 @@ use Phpactor\Indexer\Model\Record\HasFlagsTrait;
 class RecordReference implements HasFlags
 {
     use HasFlagsTrait;
-    const FLAG_NEW_OBJECT = 1;
+    public const FLAG_NEW_OBJECT = 1;
 
+    /**
+     * Order matters here for B/C, new parameters must be added after old ones.
+     */
     public function __construct(
         private string $type,
         private string $identifier,
         private int $start,
-        private int $end,
         private ?string $contaninerType = null,
-        int $flags = 0
+        int $flags = 0,
+        private ?int $end = null,
     ) {
         $this->flags = $flags;
     }
@@ -28,7 +31,7 @@ class RecordReference implements HasFlags
 
     public function end(): int
     {
-        return $this->end;
+        return $this->end ?? $this->start;
     }
 
     public function identifier(): string
@@ -47,12 +50,26 @@ class RecordReference implements HasFlags
         int $end,
         ?string $containerType
     ): self {
-        return new self($record->recordType(), $record->identifier(), $start, $end, $containerType);
+        return new self(
+            $record->recordType(),
+            $record->identifier(),
+            $start,
+            $containerType,
+            0,
+            $end,
+        );
     }
 
     public function withContainerType(string $type): self
     {
-        return new self($this->type, $this->identifier, $this->start, $this->end, $type);
+        return new self(
+            $this->type,
+            $this->identifier,
+            $this->start,
+            $type,
+            $this->flags,
+            $this->end,
+        );
     }
 
     public function contaninerType(): ?string

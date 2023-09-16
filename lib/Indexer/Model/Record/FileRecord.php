@@ -59,9 +59,9 @@ class FileRecord implements HasPath, Record
             $reference->type(),
             $reference->identifier(),
             $reference->start(),
-            $reference->end(),
             $reference->contaninerType(),
-            $reference->flags()
+            $reference->flags(),
+            $reference->end(),
         ];
 
         return $this;

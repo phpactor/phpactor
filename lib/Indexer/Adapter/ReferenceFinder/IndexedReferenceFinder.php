@@ -105,8 +105,6 @@ class IndexedReferenceFinder implements ReferenceFinder
                 return;
             }
 
-
-
             // note that we check the all implementations: this will multiply
             // the number of NOT and MAYBE matches
             foreach ($this->implementationsOf($containerType) as $containerType) {
