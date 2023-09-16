@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Countable;
 use IteratorAggregate;
-use Phpactor\WorseReflection\Core\Type\MissingType;
 use RuntimeException;
 use ArrayIterator;
 

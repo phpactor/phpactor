@@ -407,6 +407,11 @@ class UndefinedVariableProvider implements DiagnosticProvider
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
+        return [];
+    }
+
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
         if (!$node instanceof Variable) {
             return [];
         }
@@ -486,11 +491,6 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 return levenshtein($name, $candidate) < $this->suggestionLevensteinDistance;
             })
         );
-    }
-
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
-    {
-        return [];
     }
 
     public function name(): string
