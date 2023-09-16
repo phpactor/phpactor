@@ -175,7 +175,7 @@ class NodeContextFromMemberAccess
             }
         }
 
-        if ($member instanceof ReflectionMethod) {
+        if ($member instanceof ReflectionMethod && $arguments) {
             $byReference = $member->parameters()->passedByReference();
 
             if ($byReference->count()) {
