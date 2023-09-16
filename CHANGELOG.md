@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - Fix undefined-var false positives for undeclared variables that have `@var` #2366
+
 Features:
 
   - PHP Code Sniffer (`phpcs`) extension #2353 @bart-jaskulski

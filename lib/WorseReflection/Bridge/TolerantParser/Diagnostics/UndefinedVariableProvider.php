@@ -373,9 +373,44 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'multiple @var declarations followed by binary expression in statement',
+            source: <<<'PHP'
+                <?php
+                /** @var string $a */
+                /** @var string $b */
+                /** @var string $c */
+                echo $a . $b;
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'multiple @var declarations',
+            source: <<<'PHP'
+                <?php
+                /** @var string $a */
+                /** @var string $b */
+                /** @var string $c */
+                echo $a;
+                echo $b;
+                echo $c;
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
+
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof Variable) {
             return [];
@@ -456,11 +491,6 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 return levenshtein($name, $candidate) < $this->suggestionLevensteinDistance;
             })
         );
-    }
-
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
-    {
-        return [];
     }
 
     public function name(): string
