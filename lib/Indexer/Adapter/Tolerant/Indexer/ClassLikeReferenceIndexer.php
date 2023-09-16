@@ -77,7 +77,7 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
             ClassRecord::RECORD_TYPE,
             $targetRecord->identifier(),
             $node->getStartPosition(),
-            $node->getEndPosition()
+            end: $node->getEndPosition()
         );
 
         if ($node->parent instanceof ObjectCreationExpression) {

@@ -15,6 +15,9 @@ class LocationConverter
     {
     }
 
+    /**
+     * @return list<LspLocation>
+     */
     public function toLspLocations(Locations $locations): array
     {
         $lspLocations = [];
