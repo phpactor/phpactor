@@ -3,9 +3,6 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
@@ -13,13 +10,10 @@ use PHPUnit\Framework\Assert;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
-use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
-use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\SuperGlobals;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
@@ -281,6 +275,19 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'pass by reference introduces var',
+            source: <<<'PHP'
+                <?php
+                function preg_match(string $pattern, string $string, array &$matches): bool {}
+                preg_match('foobar', 'barfoo', $matches);
+                echo $matches[1];
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'super globals',
             source: <<<'PHP'
                 <?php
@@ -436,50 +443,6 @@ class UndefinedVariableProvider implements DiagnosticProvider
             if ($variable->wasDefinition()) {
                 return [];
             }
-        }
-        $isByReference = function () use ($resolver, $frame, $node) {
-            if (!$node->parent instanceof ArgumentExpression) {
-                return false;
-            }
-            $argument = $node->parent;
-            if (!$argument->parent instanceof ArgumentExpressionList) {
-                return false;
-            }
-
-            $argumentExpressionList = $argument->parent;
-            if (!$argumentExpressionList->parent instanceof CallExpression) {
-                return false;
-            }
-
-            $offset = NodeUtil::argumentOffset($argumentExpressionList, $argument);
-            if ($offset === null) {
-                return false;
-            }
-
-            $call = $argumentExpressionList->parent;
-            $callContext = $resolver->resolveNode($frame, $call);
-            $parameter = null;
-
-            if ($callContext instanceof FunctionCallContext) {
-                $parameter = $callContext->function()->parameters()->at($offset);
-            }
-
-            if (!$parameter && $callContext instanceof MemberAccessContext) {
-                $member = $callContext->accessedMember();
-                if ($member->memberType() === ReflectionMember::TYPE_METHOD) {
-                    $parameter = $member->class()->methods()->get($member->name())->parameters()->at($offset);
-                }
-            }
-
-            if (!$parameter) {
-                return false;
-            }
-
-            return $parameter->byReference();
-        };
-
-        if ($isByReference()) {
-            return false;
         }
 
         yield new UndefinedVariableDiagnostic(

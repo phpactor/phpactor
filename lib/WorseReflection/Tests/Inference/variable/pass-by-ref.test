@@ -1,0 +1,10 @@
+<?php
+
+function foo(?string &$bar): void
+{
+    $bar ='foo';
+}
+
+foo($bar);
+
+wrAssertType('?string', $bar);
