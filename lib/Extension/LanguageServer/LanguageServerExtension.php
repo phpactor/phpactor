@@ -506,6 +506,7 @@ class LanguageServerExtension implements Extension
             );
             return new DiagnosticsEngine(
                 $container->get(ClientApi::class),
+                $this->logger($container, 'LSPDIAG'),
                 $providers,
                 $container->parameter(self::PARAM_DIAGNOSTIC_SLEEP_TIME)->int()
             );

@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand;
+namespace Phpactor\Extension\PhpCodeSniffer\LspCommand;
 
 use Amp\Promise;
 use Phpactor\Diff\DiffToTextEditsConverter;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
+use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Command\Command;
@@ -16,7 +16,7 @@ use Psr\Log\LoggerInterface;
 class FormatCommand implements Command
 {
     public function __construct(
-        private PhpCsFixerProcess $phpCsFixer,
+        private PhpCodeSnifferProcess $phpCodeSniffer,
         private ClientApi $clientApi,
         private Workspace $workspace,
         private LoggerInterface $logger
@@ -24,27 +24,24 @@ class FormatCommand implements Command
     }
 
     /**
-     * @param  string[]|null  $rules  List of rules to use for formatting
-     *
      * @return Promise<ApplyWorkspaceEditResult>
      */
-    public function __invoke(string $uri, ?array $rules = null): Promise
+    public function __invoke(string $uri): Promise
     {
-        return \Amp\call(function () use ($uri, $rules) {
+        return \Amp\call(function () use ($uri) {
             $path = TextDocumentUri::fromString($uri)->path();
             $textDocument = $this->workspace->get($uri);
 
-            $rulesOpt = $rules ? ['--rules', ...$rules] : [];
-            $diff = yield $this->phpCsFixer->fix($textDocument->text, ['--diff', '--dry-run', ...$rulesOpt]);
+            $diff = yield $this->phpCodeSniffer->produceFixesDiff($textDocument);
 
             $diffToTextEdits = new DiffToTextEditsConverter();
             $textEdits = $diffToTextEdits->toTextEdits($diff);
 
-            $this->logger->debug(sprintf('PHP CS Fixer produced %s text edits', count($textEdits)));
+            $this->logger->debug(sprintf('PHP Code Sniffer produced %s text edits', count($textEdits)));
 
             return $this->clientApi->workspace()->applyEdit(new WorkspaceEdit([
                 $uri => $textEdits
-            ]), 'Fix with PHP CS Fixer');
+            ]), 'Fix with PHP Code_Sniffer');
         });
     }
 }

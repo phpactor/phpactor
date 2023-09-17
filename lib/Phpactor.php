@@ -33,6 +33,8 @@ use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflecti
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferExtension;
+use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferSuggestExtension;
 use Phpactor\Extension\PHPUnit\PHPUnitExtension;
 use Phpactor\Extension\Prophecy\ProphecyExtension;
 use Phpactor\Extension\Prophecy\ProphecySuggestExtension;
@@ -175,6 +177,8 @@ class Phpactor
             LanguageServerPsalmSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             LanguageServerPhpCsFixerSuggestExtension::class,
+            PhpCodeSnifferExtension::class,
+            PhpCodeSnifferSuggestExtension::class,
 
             LanguageServerBlackfireExtension::class,
 

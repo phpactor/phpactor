@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCsFixer\Tests\Provider;
+namespace Phpactor\Extension\PhpCodeSniffer\Tests\Provider;
 
 use Amp\NullCancellationToken;
 use Phpactor\Diff\RangesForDiff;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Tests\PhpCsFixerTestCase;
+use Phpactor\Extension\PhpCodeSniffer\Provider\PhpCodeSnifferDiagnosticsProvider;
+use Phpactor\Extension\PhpCodeSniffer\Tests\PhpCodeSnifferTestCase;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\Position;
@@ -14,14 +14,15 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Psr\Log\NullLogger;
 use function Amp\Promise\wait;
 
-class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
+class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
 {
+
     /**
      * @dataProvider fileProvider
      */
     public function testProvideDiagnosticsVisible(string $fileContent, int $expectedDiagnostics): void
     {
-        $provider = $this->getPhpCsFixerDiagnosticsProvider(true);
+        $provider = $this->getPhpCodeSnifferDiagnosticsProvider(true);
 
         $cancel = new NullCancellationToken();
         $document = ProtocolFactory::textDocumentItem('/tmp/test.php', $fileContent);
@@ -39,7 +40,7 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
      */
     public function testProvideDiagnosticsHidden(string $fileContent): void
     {
-        $provider = $this->getPhpCsFixerDiagnosticsProvider(false);
+        $provider = $this->getPhpCodeSnifferDiagnosticsProvider(false);
 
         $cancel = new NullCancellationToken();
         $document = ProtocolFactory::textDocumentItem('/tmp/test.php', $fileContent);
@@ -54,7 +55,7 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
      */
     public function testProvideActionsForVisibleDiagnostics(string $fileContent, int $expectedDiagnostics): void
     {
-        $provider = $this->getPhpCsFixerDiagnosticsProvider(true);
+        $provider = $this->getPhpCodeSnifferDiagnosticsProvider(true);
 
         $cancel = new NullCancellationToken();
         $document = ProtocolFactory::textDocumentItem('/tmp/test.php', $fileContent);
@@ -84,7 +85,7 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
      */
     public function testProvideActionsForHiddenDiagnostics(string $fileContent, int $expectedDiagnostics): void
     {
-        $provider = $this->getPhpCsFixerDiagnosticsProvider(false);
+        $provider = $this->getPhpCodeSnifferDiagnosticsProvider(false);
 
         $cancel = new NullCancellationToken();
         $document = ProtocolFactory::textDocumentItem('/tmp/test.php', $fileContent);
@@ -109,14 +110,14 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
         }
     }
 
-    public function getPhpCsFixerDiagnosticsProvider(bool $showDiagnostics): PhpCsFixerDiagnosticsProvider
+    public function getPhpCodeSnifferDiagnosticsProvider(bool $showDiagnostics): PhpCodeSnifferDiagnosticsProvider
     {
-        $phpCsFixer = $this->getPhpCsFixer();
+        $phpCodeSniffer = $this->getPhpCodeSniffer();
 
-        return new PhpCsFixerDiagnosticsProvider(
-            $phpCsFixer,
-            new RangesForDiff(),
+        return new PhpCodeSnifferDiagnosticsProvider(
+            $phpCodeSniffer,
             $showDiagnostics,
+            new RangesForDiff(),
             new NullLogger()
         );
     }
@@ -127,23 +128,35 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
     public function fileProvider(): array
     {
         return [
-            [
+            'PEAR: tab indentation' => [
                 <<<EOF
                     <?php
 
                     namespace Test;
                     \$foo = 'bar';
-                        \$test1 = true;
-                        \$test2 = true;
+                     	\$test1 = true; // tab indent
+                      \$test2 = true;
                         \$test3 = true;
                     \$lao = "tzu";
                     EOF,
                 // expected diagnostics
-                4,
+                2,
             ],
-            [
+            'PEAR: correct file' => [
                 <<<EOF
                     <?php
+
+                    /**
+                     * Php version: 8.0
+                     *
+                     * File comment
+                     *
+                     * @category Category
+                     * @package  Package
+                     * @author   Firstname Lastname <3f5eY@example.com>
+                     * @license  https://mit-license.org/ MIT
+                     * @link     Link
+                     **/
 
                     \$foo = 'bar';
 

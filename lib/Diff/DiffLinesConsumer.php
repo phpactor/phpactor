@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServerPhpCsFixer\Util;
+namespace Phpactor\Diff;
 
 use SebastianBergmann\Diff\Chunk;
 use SebastianBergmann\Diff\Line;

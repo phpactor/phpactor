@@ -297,7 +297,6 @@ class BinaryExpressionResolver implements Resolver
 
         if (!in_array($operator, [
             TokenKind::DotEqualsToken,
-            TokenKind::DotToken,
         ])) {
             return;
         }

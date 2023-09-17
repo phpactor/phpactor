@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -139,8 +140,29 @@ class QualifiedNameResolver implements Resolver
 
         $stub = $this->registry->get($name->short());
 
-        if ($stub) {
+        $byReference = $function->parameters()->passedByReference();
+        $arguments = null;
+
+        if ($byReference->count()) {
             $arguments = FunctionArguments::fromList(
+                $resolver,
+                $frame,
+                $parent->argumentExpressionList
+            );
+            foreach ($byReference as $parameter) {
+                $argument = $arguments->at($parameter->index());
+                $frame->locals()->set(new Variable(
+                    name: $argument->symbol()->name(),
+                    offset: $argument->symbol()->position()->start()->toInt(),
+                    type: $parameter->type(),
+                    wasAssigned: false /** $wasAssigned bool */,
+                    wasDefined: true /** $wasDefined bool */
+                ));
+            }
+        }
+
+        if ($stub) {
+            $arguments = $arguments ?: FunctionArguments::fromList(
                 $resolver,
                 $frame,
                 $parent->argumentExpressionList

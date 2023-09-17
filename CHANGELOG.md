@@ -3,12 +3,19 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - Fix undefined-var false positive for undeclared variables that have `@var` #2366
+  - Fix undefined-var false positive for pass by ref (again) #2361
+
 Features:
 
+  - PHP Code Sniffer (`phpcs`) extension #2353 @bart-jaskulski
   - Subscript array-shape completion #2339
 
 Improvements:
 
+  - Support single line comments #2350
   - Do not promote parameters that are used in parent constructor #2119 @mamazu
   - Improve detection of Xdebug @bart-jaskulsi #2347
   - Improve plain docblock parsing #2345

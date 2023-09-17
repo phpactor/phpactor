@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee51c36dacf52343f441defd5441f3ca",
+    "content-hash": "40048cb1f1e6ce517915db0b0de52d81",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1643,16 +1643,16 @@
         },
         {
             "name": "phpactor/language-server",
-            "version": "6.0.2",
+            "version": "6.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server.git",
-                "reference": "78a27025521ef203b230dabc37f16d308ad73820"
+                "reference": "b12211da450104566aa36aa3127abefe0cdf8bbf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server/zipball/78a27025521ef203b230dabc37f16d308ad73820",
-                "reference": "78a27025521ef203b230dabc37f16d308ad73820",
+                "url": "https://api.github.com/repos/phpactor/language-server/zipball/b12211da450104566aa36aa3127abefe0cdf8bbf",
+                "reference": "b12211da450104566aa36aa3127abefe0cdf8bbf",
                 "shasum": ""
             },
             "require": {
@@ -1703,9 +1703,9 @@
             "description": "Generic Language Server Platform",
             "support": {
                 "issues": "https://github.com/phpactor/language-server/issues",
-                "source": "https://github.com/phpactor/language-server/tree/6.0.2"
+                "source": "https://github.com/phpactor/language-server/tree/6.1.0"
             },
-            "time": "2023-07-29T19:46:20+00:00"
+            "time": "2023-09-10T11:29:43+00:00"
         },
         {
             "name": "phpactor/language-server-protocol",
@@ -7254,6 +7254,63 @@
                 }
             ],
             "time": "2023-05-11T13:16:46+00:00"
+        },
+        {
+            "name": "squizlabs/php_codesniffer",
+            "version": "3.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "reference": "ed8e00df0a83aa96acf703f8c2979ff33341f879",
+                "shasum": ""
+            },
+            "require": {
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*",
+                "ext-xmlwriter": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0"
+            },
+            "bin": [
+                "bin/phpcs",
+                "bin/phpcbf"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "https://github.com/squizlabs/PHP_CodeSniffer",
+            "keywords": [
+                "phpcs",
+                "standards",
+                "static analysis"
+            ],
+            "support": {
+                "issues": "https://github.com/squizlabs/PHP_CodeSniffer/issues",
+                "source": "https://github.com/squizlabs/PHP_CodeSniffer",
+                "wiki": "https://github.com/squizlabs/PHP_CodeSniffer/wiki"
+            },
+            "time": "2023-02-22T23:07:41+00:00"
         },
         {
             "name": "symfony/event-dispatcher",

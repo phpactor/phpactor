@@ -18,7 +18,7 @@
         "phpactor/amp-fswatch": "^0.3.0",
         "thecodingmachine/safe": "^1.0",
         "phpactor/phly-event-dispatcher": "^2.0.0",
-        "phpactor/language-server": "^6.0.2",
+        "phpactor/language-server": "^6.1.0",
         "phpactor/language-server-protocol": "^3.17.3",
         "dantleech/object-renderer": "^0.1.1",
         "monolog/monolog": "^1.23",
@@ -47,7 +47,8 @@
         "jangregor/phpstan-prophecy": "^1.0",
         "phpstan/extension-installer": "^1.1",
         "vimeo/psalm": "^4.22",
-        "blackfire/php-sdk": "^1.31"
+        "blackfire/php-sdk": "^1.31",
+        "squizlabs/php_codesniffer": "^3.7"
     },
     "replace": {
         "phpactor/class-mover": "0.2.0",
