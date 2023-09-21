@@ -9,6 +9,7 @@ use Phpactor\DocblockParser\Ast\Tag\MethodTag;
 use Phpactor\DocblockParser\Ast\Tag\ParamTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
+use Phpactor\DocblockParser\Ast\Tag\SeeTag;
 use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\DocblockParser\Ast\Type\GenericNode;
 use Phpactor\DocblockParser\Ast\Type\ListBracketsNode;
@@ -80,6 +81,23 @@ class NodeTest extends NodeTestCase
             '/** @deprecated This is deprecated */',
             function (Docblock $block): void {
                 self::assertTrue($block->hasTag(DeprecatedTag::class));
+            }
+        ];
+
+        yield 'see' => [
+            '/** @see Foo::Bar */',
+            function (Docblock $block): void {
+                self::assertTrue($block->hasTag(SeeTag::class));
+            }
+        ];
+
+        yield 'see tag inline' => [
+            '/** Refer to {@see Foo::Bar} if you want more information  */',
+            function (Docblock $block): void {
+                self::assertTrue($block->hasTag(SeeTag::class));
+                /** @var SeeTag $tag */
+                $tag = $block->tags(SeeTag::class)->current();
+                self::assertEquals('Foo::Bar', $tag->text());
             }
         ];
 

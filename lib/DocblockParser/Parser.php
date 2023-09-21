@@ -15,6 +15,7 @@ use Phpactor\DocblockParser\Ast\ParameterList;
 use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
+use Phpactor\DocblockParser\Ast\Tag\SeeTag;
 use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
 use Phpactor\DocblockParser\Ast\TextNode;
 use Phpactor\DocblockParser\Ast\TypeList;
@@ -95,6 +96,7 @@ final class Parser
             '@var' => $this->parseVar(),
             '@throws' => $this->parseThrows(),
             '@deprecated' => $this->parseDeprecated(),
+            '@see' => $this->parseSee(),
             '@method' => $this->parseMethod(),
             '@property', '@property-read' => $this->parseProperty(),
             '@mixin' => $this->parseMixin(),
@@ -483,10 +485,18 @@ final class Parser
 
     private function parseDeprecated(): DeprecatedTag
     {
-        return new DeprecatedTag(
-            $this->tokens->chomp(Token::T_TAG),
-            $this->parseText()
-        );
+        $token = $this->tokens->chomp(Token::T_TAG);
+        assert($token !== null);
+
+        return new DeprecatedTag($token, $this->parseText());
+    }
+
+    private function parseSee(): SeeTag
+    {
+        $token = $this->tokens->chomp(Token::T_TAG);
+        assert($token !== null);
+
+        return new SeeTag($token, $this->parseText([Token::T_BRACKET_CURLY_CLOSE]));
     }
 
     private function parseMixin(): MixinTag
@@ -527,20 +537,20 @@ final class Parser
      * Parse text until the next tag
      *
      * This method assumes that any prose after a tag belongs to the tag.
+     *
+     * @param array<string> $additionalStopTokens
      */
-    private function parseText(): ?TextNode
+    private function parseText(array $additionalStopTokens = []): ?TextNode
     {
         if (null === $this->tokens->current) {
             return null;
         }
 
         $text = [];
+        $stopTokens = array_merge([Token::T_PHPDOC_CLOSE, Token::T_TAG], $additionalStopTokens);
 
         while ($this->tokens->current) {
-            if ($this->tokens->current->type === Token::T_PHPDOC_CLOSE) {
-                break;
-            }
-            if ($this->tokens->current->type === Token::T_TAG) {
+            if (in_array($this->tokens->current->type, $stopTokens)) {
                 break;
             }
             $text[] = $this->tokens->chomp();

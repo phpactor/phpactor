@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
 use Phpactor\DocblockParser\Ast\ParameterList;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
+use Phpactor\DocblockParser\Ast\Tag\SeeTag;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
 use Phpactor\DocblockParser\Ast\Tag\ImplementsTag;
 use Phpactor\DocblockParser\Ast\Tag\MethodTag;
@@ -229,12 +230,18 @@ class ParsedDocblock implements DocBlock
 
     public function deprecation(): Deprecation
     {
+        $deprecation = new Deprecation(false);
         foreach ($this->node->tags(DeprecatedTag::class) as $deprecatedTag) {
             assert($deprecatedTag instanceof DeprecatedTag);
-            return new Deprecation(true, $deprecatedTag->text());
+            $deprecation = $deprecation->withMessage($deprecatedTag->text());
         }
 
-        return new Deprecation(false);
+        foreach ($this->node->tags(SeeTag::class) as $seeTag) {
+            assert($seeTag instanceof SeeTag);
+            $deprecation = $deprecation->withReplacement($seeTag->text());
+        }
+
+        return $deprecation;
     }
 
     public function templateMap(): TemplateMap

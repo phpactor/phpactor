@@ -220,6 +220,36 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
                 Assert::assertEquals('Call to deprecated property "deprecated": This is deprecated', $diagnostics->at(0)->message());
             }
         );
+
+        yield new DiagnosticExample(
+            title: 'Deprecate with replacement',
+            source: <<<'PHP'
+                <?php
+
+                class SomeClass {
+                    /**
+                    * @deprecated Will be removed
+                    *
+                    * @see SomeClass::new
+                    */
+                    public function old(): void {}
+
+                    public function new(): void {}
+
+                    public function test(): void {
+                        $this->old();
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals(
+                    'Call to deprecated method "old": Will be removed (see: SomeClass::new)',
+                    $diagnostics->at(0)->message()
+                );
+            }
+        );
     }
 
     public function name(): string
@@ -241,7 +271,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         yield new DeprecatedUsageDiagnostic(
             $resolved->memberNameRange(),
             $member->name(),
-            $member->deprecation()->message(),
+            $member->deprecation(),
             $member->memberType(),
         );
     }
@@ -258,7 +288,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         yield new DeprecatedUsageDiagnostic(
             $resolved->range(),
             $reflectionClass->name(),
-            $reflectionClass->deprecation()->message(),
+            $reflectionClass->deprecation(),
             $reflectionClass->classLikeType(),
         );
     }
@@ -275,7 +305,7 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         yield new DeprecatedUsageDiagnostic(
             $resolved->range(),
             $reflectionFunction->name(),
-            $reflectionFunction->docblock()->deprecation()->message(),
+            $reflectionFunction->docblock()->deprecation(),
             'function',
         );
     }
