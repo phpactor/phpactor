@@ -7,6 +7,8 @@ Bug fixes:
 
   - Fix undefined-var false positive for undeclared variables that have `@var` #2366
   - Fix undefined-var false positive for pass by ref (again) #2361
+  - Do not crash lanugage server if LSP header cannot be parsed (log error
+    instead) #2373
 
 Features:
 

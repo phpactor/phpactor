@@ -36,9 +36,6 @@ final class ReflectorBuilder
 
     private bool $enableContextualSourceLocation = false;
 
-    /**
-     * @var SourceCodeReflectorFactory
-     */
     private ?SourceCodeReflectorFactory $sourceReflectorFactory = null;
 
     /**
