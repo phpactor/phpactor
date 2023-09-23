@@ -6,6 +6,10 @@ use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
 use Phpactor\Indexer\Model\Exception\CannotIndexNode;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
@@ -40,7 +44,7 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
                 continue;
             }
 
-            $interfaceName = $interfaceName->getResolvedName();
+            $interfaceName = (string) $interfaceName->getResolvedName();
             $interfaceRecord = $index->get(ClassRecord::fromName($interfaceName));
             $record->addImplements(
                 FullyQualifiedName::fromString($interfaceName)
@@ -70,8 +74,9 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
 
         $record = $index->get(ClassRecord::fromName($name));
         assert($record instanceof ClassRecord);
-        $record->setStart(ByteOffset::fromInt($node->getStartPosition()));
-        $record->setEnd(ByteOffset::fromInt($node->getEndPosition()));
+        /** @var ClassDeclaration|InterfaceDeclaration|EnumDeclaration|TraitDeclaration $node */
+        $record->setStart(ByteOffset::fromInt($node->name->getStartPosition()));
+        $record->setEnd(ByteOffset::fromInt($node->name->getEndPosition()));
         $record->setFilePath($document->uri()->path());
         $record->setType($type);
 
