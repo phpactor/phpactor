@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Phpactor\Diff\Tests;
 
@@ -125,6 +125,24 @@ class RangesForDiffTest extends TestCase
             new Range(
                 new Position(3, 0),
                 new Position(4, 0)
+            )
+          ]
+        ];
+
+        yield 'change first line' => [
+          'diff' => <<<EOF
+              --- /home/daniel/www/phpactor/phpactor/lib/Test.php
+              +++ /home/daniel/www/phpactor/phpactor/lib/Test.php
+              @@ -1,4 +1,4 @@
+              -<?php
+              +<?php declare(strict_types=1);
+
+              namespace Phpactor;
+              EOF,
+          'ranges' => [
+            new Range(
+                new Position(0, 5),
+                new Position(0, 5)
             )
           ]
         ];
