@@ -178,4 +178,23 @@ final class Tokens implements IteratorAggregate
 
         return $this->tokens[$this->position + $offset];
     }
+
+    public function mustGetCurrent(): Token
+    {
+        if (!$this->current) {
+            throw new RuntimeException(
+                'There is no current token (current is NULL)'
+            );
+        }
+        return $this->current;
+    }
+
+    public function mustChomp(?string $type = null): Token
+    {
+        $chomped = $this->chomp($type);
+        if (null === $chomped) {
+            throw new RuntimeException('Could not chomp, nothing to chomp!');
+        }
+        return $chomped;
+    }
 }

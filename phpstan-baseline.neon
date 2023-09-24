@@ -1076,11 +1076,6 @@ parameters:
 			path: lib/ConfigLoader/Adapter/Deserializer/YamlDeserializer.php
 
 		-
-			message: "#^Method Phpactor\\\\ConfigLoader\\\\ConfigLoaderBuilder\\:\\:addXdgCandidate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ConfigLoader/ConfigLoaderBuilder.php
-
-		-
 			message: "#^Cannot call method loader\\(\\) on mixed\\.$#"
 			count: 1
 			path: lib/ConfigLoader/Core/ConfigLoader.php
@@ -1156,157 +1151,7 @@ parameters:
 			path: lib/DocblockParser/Ast/Docblock.php
 
 		-
-			message: "#^Cannot access property \\$type on Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\.$#"
-			count: 3
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Cannot access property \\$value on Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\.$#"
-			count: 5
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Cannot call method toString\\(\\) on Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$list of class Phpactor\\\\DocblockParser\\\\Ast\\\\ParameterList constructor expects array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ParameterTag\\|Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\>, array\\<int, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ParameterTag\\|Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$list of class Phpactor\\\\DocblockParser\\\\Ast\\\\TypeList constructor expects array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\>, array\\<int, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\|null\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
 			message: "#^Parameter \\#1 \\$list of class Phpactor\\\\DocblockParser\\\\Ast\\\\TypeList constructor expects array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\>, array\\<int\\<0, max\\>, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\|null\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ThisNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 2
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of class Phpactor\\\\DocblockParser\\\\Ast\\\\UnknownTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of class Phpactor\\\\DocblockParser\\\\Ast\\\\VariableNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$null of class Phpactor\\\\DocblockParser\\\\Ast\\\\Value\\\\NullValue constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$nullable of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\NullableNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$open of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\GenericNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$open of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ParenthesizedType constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ExtendsTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ImplementsTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\MixinTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ParamTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\PropertyTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ReturnTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\TemplateTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ThrowsTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\VarTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$token of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\DeprecatedTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tokens of class Phpactor\\\\DocblockParser\\\\Ast\\\\TextNode constructor expects array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\>, array\\<int, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$type of method Phpactor\\\\DocblockParser\\\\Parser\\:\\:createTypeFromToken\\(\\) expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 2
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$variable of class Phpactor\\\\DocblockParser\\\\Ast\\\\ConditionalNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\VariableNode, Phpactor\\\\DocblockParser\\\\Ast\\\\VariableNode\\|null given\\.$#"
-			count: 5
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#2 \\$doubleColon of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ConstantNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#2 \\$listChars of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ListBracketsNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#2 \\$type of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\NullableNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode, Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#3 \\$constant of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ConstantNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#4 \\$close of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\GenericNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
 			count: 1
 			path: lib/DocblockParser/Parser.php
 
@@ -4252,32 +4097,23 @@ parameters:
 
 		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			paths:
-				- lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
-				- lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$showDiagnostics of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\Provider\\\\PhpCsFixerDiagnosticsProvider constructor expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
 
 		-
-			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\(LanguageServerPhpCsFixer|PhpCodeSniffer)\\\\Model\\\\(PhpCsFixer|PhpCodeSniffer)Process constructor expects array\\<string, string\\>, mixed given\\.$#"
-			paths:
-				- lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
-				- lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
+			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\Model\\\\PhpCsFixerProcess constructor expects array\\<string, string\\>, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
 
 		-
-			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\(LanguageServerPhpCsFixer|PhpCodeSniffer)\\\\LspCommand\\\\FormatCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			paths:
-				- lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
-				- lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
+			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\LspCommand\\\\FormatCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
 
 		-
 			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
-			paths:
-				- lib/Extension/LanguageServerPhpCsFixer/Model/PhpCsFixerProcess.php
-				- lib/Extension/PhpCodeSniffer/Model/PhpCodeSnifferProcess.php
+			count: 1
+			path: lib/Extension/LanguageServerPhpCsFixer/Model/PhpCsFixerProcess.php
 
 		-
 			message: "#^Cannot access property \\$files on mixed\\.$#"
@@ -4923,6 +4759,26 @@ parameters:
 			message: "#^Parameter \\#1 \\$version of class Phpactor\\\\Extension\\\\Php\\\\Model\\\\ConstantPhpVersionResolver constructor expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Php/PhpExtension.php
+
+		-
+			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/PhpCodeSniffer/Model/PhpCodeSnifferProcess.php
+
+		-
+			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
+			count: 1
+			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
+
+		-
+			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\PhpCodeSniffer\\\\Model\\\\PhpCodeSnifferProcess constructor expects array\\<string, string\\>, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
+
+		-
+			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\PhpCodeSniffer\\\\LspCommand\\\\FormatCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
 
 		-
 			message: "#^Parameter \\#1 \\$finders of class Phpactor\\\\ReferenceFinder\\\\ChainImplementationFinder constructor expects array\\<Phpactor\\\\ReferenceFinder\\\\ClassImplementationFinder\\>, array\\<int\\<0, max\\>, mixed\\> given\\.$#"
@@ -6750,11 +6606,6 @@ parameters:
 			path: lib/WorseReflection/Core/DocBlock/DocBlockInspector.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function trim expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/PlainDocblock.php
-
-		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/FrameResolver.php
@@ -7015,11 +6866,6 @@ parameters:
 			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:diagnostics\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectNode\\(\\) has parameter \\$offset with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
@@ -7121,11 +6967,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Cannot call method getChildNodes\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Util/NodeUtil.php
 
