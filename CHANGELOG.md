@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - Fix `null` error (and improve type safety) in the docblock parser #2379
   - Fix undefined-var false positive for undeclared variables that have `@var` #2366
   - Fix undefined-var false positive for pass by ref (again) #2361
   - Do not crash lanugage server if LSP header cannot be parsed (log error
