@@ -1076,11 +1076,6 @@ parameters:
 			path: lib/ConfigLoader/Adapter/Deserializer/YamlDeserializer.php
 
 		-
-			message: "#^Method Phpactor\\\\ConfigLoader\\\\ConfigLoaderBuilder\\:\\:addXdgCandidate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ConfigLoader/ConfigLoaderBuilder.php
-
-		-
 			message: "#^Cannot call method loader\\(\\) on mixed\\.$#"
 			count: 1
 			path: lib/ConfigLoader/Core/ConfigLoader.php
@@ -1189,6 +1184,11 @@ parameters:
 			message: "#^Cannot call method toString\\(\\) on Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\|null\\.$#"
 			count: 1
 			path: lib/DocblockParser/Tests/Unit/Ast/NodeTest.php
+
+		-
+			message: "#^Parameter \\#4 \\$path of class Phpactor\\\\Extension\\\\Behat\\\\Behat\\\\Step constructor expects string, string\\|null given\\.$#"
+			count: 1
+			path: lib/Extension/Behat/Adapter/Worse/WorseStepFactory.php
 
 		-
 			message: "#^Cannot access offset 'imports' on mixed\\.$#"
@@ -3474,6 +3474,11 @@ parameters:
 			message: "#^Parameter \\#1 \\$probe of method Blackfire\\\\Client\\:\\:endProbe\\(\\) expects Blackfire\\\\Probe, Blackfire\\\\Probe\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerBlackfire/BlackfireProfiler.php
+
+		-
+			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerBridge\\\\Converter\\\\LocationConverter\\:\\:toLspLocations\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServerBridge/Converter/LocationConverter.php
 
 		-
 			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerBridge\\\\TextDocument\\\\WorkspaceTextDocumentLocator constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
@@ -5841,6 +5846,16 @@ parameters:
 			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
 
 		-
+			message: "#^Parameter \\#1 \\$fqn of static method Phpactor\\\\Indexer\\\\Model\\\\Name\\\\FullyQualifiedName\\:\\:fromString\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
+
+		-
+			message: "#^Parameter \\#1 \\$name of static method Phpactor\\\\Indexer\\\\Model\\\\Record\\\\ClassRecord\\:\\:fromName\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
+			count: 1
+			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
+
+		-
 			message: "#^Parameter \\#1 \\$name of static method Phpactor\\\\Indexer\\\\Model\\\\Record\\\\ClassRecord\\:\\:fromName\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
@@ -6591,11 +6606,6 @@ parameters:
 			path: lib/WorseReflection/Core/DocBlock/DocBlockInspector.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function trim expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/PlainDocblock.php
-
-		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/FrameResolver.php
@@ -6856,11 +6866,6 @@ parameters:
 			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:diagnostics\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectNode\\(\\) has parameter \\$offset with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
@@ -6962,11 +6967,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Cannot call method getChildNodes\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Util/NodeUtil.php
 
