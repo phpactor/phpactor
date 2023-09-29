@@ -37,10 +37,11 @@ abstract class Assignments implements Countable, IteratorAggregate
     {
         return implode("\n", array_map(function (Variable $variable) {
             return sprintf(
-                '%s:%s: %s',
+                '%s:%s: %s%s',
                 $variable->name(),
                 $variable->offset(),
-                $variable->type()->__toString()
+                $variable->type()->__toString(),
+                $variable->wasDefinition() ? ' (definition)' : '',
             );
         }, array_values($this->variables)));
     }

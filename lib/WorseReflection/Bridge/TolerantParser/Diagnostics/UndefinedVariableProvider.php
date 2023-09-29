@@ -3,9 +3,6 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
@@ -13,7 +10,6 @@ use PHPUnit\Framework\Assert;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
-use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\SuperGlobals;
@@ -279,6 +275,19 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'pass by reference introduces var',
+            source: <<<'PHP'
+                <?php
+                function preg_match(string $pattern, string $string, array &$matches): bool {}
+                preg_match('foobar', 'barfoo', $matches);
+                echo $matches[1];
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'super globals',
             source: <<<'PHP'
                 <?php
@@ -334,9 +343,81 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'dynamic pass by ref',
+            source: <<<'PHP'
+                <?php
+                function foo(?int &$v1, ?string &$v2): void
+                {
+                    $v1 = 123;
+                    $v2 = '456';
+                }
+
+                foo($var1, $var2);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'dynamic pass by ref (method)',
+            source: <<<'PHP'
+                <?php
+                class Foo {
+                    public function foo(?int &$v1, ?string &$v2): void
+                    {
+                        $v1 = 123;
+                        $v2 = '456';
+                    }
+                }
+
+                $foo = new Foo();
+                $foo->foo($var1, $var2);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'multiple @var declarations followed by binary expression in statement',
+            source: <<<'PHP'
+                <?php
+                /** @var string $a */
+                /** @var string $b */
+                /** @var string $c */
+                echo $a . $b;
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'multiple @var declarations',
+            source: <<<'PHP'
+                <?php
+                /** @var string $a */
+                /** @var string $b */
+                /** @var string $c */
+                echo $a;
+                echo $b;
+                echo $c;
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
+
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof Variable) {
             return [];
@@ -363,41 +444,6 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 return [];
             }
         }
-        $isByReference = function () use ($resolver, $frame, $node) {
-            if (!$node->parent instanceof ArgumentExpression) {
-                return false;
-            }
-            $argument = $node->parent;
-            if (!$argument->parent instanceof ArgumentExpressionList) {
-                return false;
-            }
-
-            $argumentExpressionList = $argument->parent;
-            if (!$argumentExpressionList->parent instanceof CallExpression) {
-                return false;
-            }
-
-            $offset = NodeUtil::argumentOffset($argumentExpressionList, $argument);
-            if (!$offset) {
-                return false;
-            }
-
-            $call = $argumentExpressionList->parent;
-            $callContext = $resolver->resolveNode($frame, $call);
-            if (!$callContext instanceof FunctionCallContext) {
-                return false;
-            }
-            $parameter = $callContext->function()->parameters()->at($offset);
-            if (!$parameter) {
-                return false;
-            }
-
-            return $parameter->byReference();
-        };
-
-        if ($isByReference()) {
-            return false;
-        }
 
         yield new UndefinedVariableDiagnostic(
             NodeUtil::byteOffsetRangeForNode($node),
@@ -408,11 +454,6 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 return levenshtein($name, $candidate) < $this->suggestionLevensteinDistance;
             })
         );
-    }
-
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
-    {
-        return [];
     }
 
     public function name(): string

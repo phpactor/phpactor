@@ -5,8 +5,47 @@ Changelog
 
 Bug fixes:
 
+  - Fix crash with `php-cs-fixer` when using strict types rule #2348
+  - Fix `null` error (and improve type safety) in the docblock parser #2379
+  - Fix undefined-var false positive for undeclared variables that have `@var` #2366
+  - Fix undefined-var false positive for pass by ref (again) #2361
+  - Do not crash lanugage server if LSP header cannot be parsed (log error
+    instead) #2373
+
+Features:
+
+  - PHP Code Sniffer (`phpcs`) extension #2353 @bart-jaskulski
+  - Subscript array-shape completion #2339
+
+Improvements:
+
+  - Support single line comments #2350
+  - Do not promote parameters that are used in parent constructor #2119 @mamazu
+  - Improve detection of Xdebug @bart-jaskulsi #2347
+  - Improve plain docblock parsing #2345
+  - Generate `@param` tag for iterables #2343 @mamazu
+
+## 2023.08.06-1
+
+Bug fixes:
+
+  - Limit number of threads Psalm uses to 1 by default #
+  - Update file watching lib to handle "process already exited" errors
+
+## 2023.08.06
+
+Improvements:
+
+  - Improve Diagnostics: Run linters in parallel #2327
+  - Index documents on save #2326
+
+Bug fixes:
+
   - Fix generic extends with templated argument #2295
   - Do not report statically declared variables as undefined #2311
+  - Do not trigger function completion for incomplete opening PHP tag
+  - Fix PHP linter #2318
+  - Do not report undeclared variables that are passed by reference as undefined #2329 @mecha
 
 ## 2023.06.17-1
 

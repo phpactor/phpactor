@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion;
 
+use Phpactor\Completion\Core\SignatureHelper;
+use Phpactor\Completion\Core\TypedCompletorRegistry;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -12,6 +14,7 @@ use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerCompletion\Handler\CompletionHandler;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
 
 class LanguageServerCompletionExtension implements Extension
@@ -51,8 +54,8 @@ class LanguageServerCompletionExtension implements Extension
             }
 
             return new CompletionHandler(
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(CompletionExtension::SERVICE_REGISTRY),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->expect(CompletionExtension::SERVICE_REGISTRY, TypedCompletorRegistry::class),
                 $container->get(SuggestionNameFormatter::class),
                 $container->get(NameImporter::class),
                 $this->clientCapabilities($container)->textDocument->completion->completionItem['snippetSupport'] ?? false,
@@ -66,13 +69,13 @@ class LanguageServerCompletionExtension implements Extension
         ]]);
 
         $container->register(SuggestionNameFormatter::class, function (Container $container) {
-            return new SuggestionNameFormatter($container->getParameter(self::PARAM_TRIM_LEADING_DOLLAR));
+            return new SuggestionNameFormatter($container->parameter(self::PARAM_TRIM_LEADING_DOLLAR)->bool());
         });
 
         $container->register('language_server_completion.handler.signature_help', function (Container $container) {
             return new SignatureHelpHandler(
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(CompletionExtension::SERVICE_SIGNATURE_HELPER)
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->expect(CompletionExtension::SERVICE_SIGNATURE_HELPER, SignatureHelper::class)
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
     }

@@ -3,8 +3,8 @@
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Formatter;
 
 use Amp\Promise;
+use Phpactor\Diff\DiffToTextEditsConverter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
-use Phpactor\Extension\LanguageServerPhpCsFixer\Util\DiffToTextEditsConverter;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Formatting\Formatter;
 use function Amp\call;

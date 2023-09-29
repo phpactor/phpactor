@@ -23,7 +23,7 @@ Then make it executable and symlink it somewhere in your PATH_:
 
 .. code:: bash
 
-   $ chown a+x phpactor.phar
+   $ chmod a+x phpactor.phar
    $ mv phpactor.phar ~/.local/bin/phpactor
 
 .. _installation_global:
@@ -36,7 +36,7 @@ You can checkout the project and then create a symlink.
 .. code:: bash
 
    $ cd ~/home/you/somewhere
-   $ git clone git@github.com:phpactor/phpactor
+   $ git clone https://github.com/phpactor/phpactor.git
    $ cd phpactor
    $ composer install
    $ cd /usr/local/bin

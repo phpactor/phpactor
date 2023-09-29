@@ -1,0 +1,24 @@
+/**
+ * @return ?list<?int|?bool|?string|?float>
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ReturnTag: = @return
+   NullableNode: = ?
+    GenericNode: = 
+     ListNode: = list<
+     TypeList: = 
+      UnionNode: = 
+       TypeList: = 
+        NullableNode: = ?
+         ScalarNode: = int|
+        NullableNode: = ?
+         ScalarNode: = bool|
+        NullableNode: = ?
+         ScalarNode: = string|
+        NullableNode: = ?
+         ScalarNode: = float>
+   TextNode: = 
+ */

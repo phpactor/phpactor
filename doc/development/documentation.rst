@@ -54,5 +54,3 @@ Use the following command to both install vimdoc and build the documentation:
 .. code:: sh
 
     make vimdoc
-
-.. _developing_blackfire_profiling:

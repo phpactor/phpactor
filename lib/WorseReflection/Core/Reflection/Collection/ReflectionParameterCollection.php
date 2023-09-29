@@ -103,4 +103,11 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
 
         return null;
     }
+
+    public function passedByReference(): PhpactorReflectionParameterCollection
+    {
+        return new self(array_filter($this->items, function (PhpactorReflectionParameter $parameter) {
+            return $parameter->byReference();
+        }));
+    }
 }

@@ -32,6 +32,7 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
                 );
                 $lspDiagnostic = ProtocolFactory::diagnostic($range, $diagnostic->message());
                 $lspDiagnostic->severity = self::toLspSeverity($diagnostic->severity());
+                $lspDiagnostic->source = 'phpactor';
                 $lspDiagnostics[] = $lspDiagnostic;
 
                 if ($cancel->isRequested()) {

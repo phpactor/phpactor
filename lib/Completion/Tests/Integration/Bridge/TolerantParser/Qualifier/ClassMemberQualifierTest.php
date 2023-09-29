@@ -7,11 +7,12 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassMemberQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
+use Closure;
 
 class ClassMemberQualifierTest extends TolerantQualifierTestCase
 {
     /**
-     * @return Generator<string,array{string,(\Closure(Node|null): void)}>
+     * @return Generator<string,array{string,(Closure(Node|null): void)}>
      */
     public function provideCouldComplete(): Generator
     {

@@ -1,4 +1,4 @@
-.. _configuration:
+.. _ref_configuration:
 
 Configuration
 =============
@@ -403,6 +403,21 @@ Brute force completion for class names (not recommended).
 Enable or disable the ``local_variable`` completor.
 
 Completion for local variables.
+
+
+**Default**: ``true``
+
+
+.. _param_completion_worse.completor.subscript.enabled:
+
+
+``completion_worse.completor.subscript.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the ``subscript`` completor.
+
+Completion for subscript (array access from array shapes).
 
 
 **Default**: ``true``
@@ -892,7 +907,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
+**Default**: ``"\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1346,7 +1361,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
-**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+**Default**: ``"\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:
@@ -1469,6 +1484,19 @@ Show inlay type hints for variables
 
 
 Show inlay hints for parameters
+
+
+**Default**: ``true``
+
+
+.. _param_language_server_worse_reflection.diagnostics.enable:
+
+
+``language_server_worse_reflection.diagnostics.enable``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable diagnostics
 
 
 **Default**: ``true``
@@ -1899,6 +1927,38 @@ Override level at which Psalm should report errors (lower => more errors)
 **Default**: ``null``
 
 
+.. _param_language_server_psalm.threads:
+
+
+``language_server_psalm.threads``
+"""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Set the number of threads Psalm should use. Warning: NULL will use as many as possible and may crash your computer
+
+
+**Default**: ``1``
+
+
+.. _param_language_server_psalm.timeout:
+
+
+``language_server_psalm.timeout``
+"""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Kill the psalm process after this number of seconds
+
+
+**Default**: ``15``
+
+
 .. _LanguageServerPhpCsFixerExtension:
 
 
@@ -1956,6 +2016,68 @@ Environment for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)
 
 
 Whether PHP CS Fixer diagnostics are shown
+
+
+**Default**: ``true``
+
+
+.. _PhpCodeSnifferExtension:
+
+
+PhpCodeSnifferExtension
+-----------------------
+
+
+.. _param_php_code_sniffer.enabled:
+
+
+``php_code_sniffer.enabled``
+""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_php_code_sniffer.bin:
+
+
+``php_code_sniffer.bin``
+""""""""""""""""""""""""
+
+
+Path to the phpcs executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpcs"``
+
+
+.. _param_php_code_sniffer.env:
+
+
+``php_code_sniffer.env``
+""""""""""""""""""""""""
+
+
+Environment for PHP_CodeSniffer (e.g. to set XDEBUG_MODE)
+
+
+**Default**: ``{"XDEBUG_MODE":"off"}``
+
+
+.. _param_php_code_sniffer.show_diagnostics:
+
+
+``php_code_sniffer.show_diagnostics``
+"""""""""""""""""""""""""""""""""""""
+
+
+Whether PHP_CodeSniffer diagnostics are shown
 
 
 **Default**: ``true``

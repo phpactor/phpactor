@@ -3,8 +3,11 @@
 namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
 use Amp\Process\Process;
+use Amp\Process\ProcessException;
 use Amp\Promise;
+use Phpactor\Amp\Process\ProcessUtil;
 use Phpactor\LanguageServerProtocol\Diagnostic;
+use RuntimeException;
 use function Amp\ByteStream\buffer;
 use Psr\Log\LoggerInterface;
 
@@ -16,7 +19,8 @@ class PsalmProcess
         private string $cwd,
         private PsalmConfig $config,
         private LoggerInterface $logger,
-        DiagnosticsParser $parser = null
+        DiagnosticsParser $parser = null,
+        private int $timeoutSeconds = 10,
     ) {
         $this->parser = $parser ?: new DiagnosticsParser();
     }
@@ -44,6 +48,14 @@ class PsalmProcess
                 return $command;
             })($command, $this->config->errorLevel());
 
+            $command = (function (array $command, ?int $threads) {
+                if (null === $threads) {
+                    return $command;
+                }
+                $command[] = sprintf('--threads=%d', $threads);
+                return $command;
+            })($command, $this->config->threads());
+
             if (!$this->config->useCache()) {
                 $command[] = '--no-cache';
             }
@@ -54,16 +66,20 @@ class PsalmProcess
             $start = microtime(true);
             $pid = yield $process->start();
 
-            $exitCode = yield $process->join();
+            ProcessUtil::killAfter($this->logger, $process, $this->timeoutSeconds);
+
+            try {
+                $exitCode = yield $process->join();
+            } catch (ProcessException $e) {
+                return [];
+            }
 
             if ($exitCode !== 0 && $exitCode !== 2) {
-                $this->logger->error(sprintf(
+                throw new RuntimeException(
                     'Psalm exited with code "%s": %s',
                     $exitCode,
                     yield buffer($process->getStderr())
-                ));
-
-                return [];
+                );
             }
 
             $stdout = yield buffer($process->getStdout());

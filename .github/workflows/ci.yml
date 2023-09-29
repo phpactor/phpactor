@@ -219,7 +219,7 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run PHP-CS_Fixer"
-                run: "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run"
+                run: "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --diff"
     phpbench:
         name: "PHPBench smoke (${{ matrix.php-version }})"
 
@@ -245,9 +245,10 @@ jobs:
 
             -
                 name: "Composer install"
-                uses: "ramsey/composer-install@v1"
+                uses: "ramsey/composer-install@v2"
                 with:
                     composer-options: "--no-scripts"
+                    ignore-cache: "yes"
             -
                 name: "Run PHPBench"
                 run: "vendor/bin/phpbench run --progress=plain --iterations=1"

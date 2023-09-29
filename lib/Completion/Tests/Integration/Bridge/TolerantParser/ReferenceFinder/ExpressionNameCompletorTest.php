@@ -199,12 +199,19 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ],
             ],
         ];
+        yield 'php tag' => [
+            '<?ph<>', [
+            ],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
         $searcher->search('FO', null)->willYield([
+            NameSearchResult::create('constant', 'FOO')
+        ]);
+        $searcher->search('ph', null)->willYield([
             NameSearchResult::create('constant', 'FOO')
         ]);
         $searcher->search('sel', null)->willYield([
