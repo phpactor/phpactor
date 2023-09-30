@@ -112,7 +112,8 @@ class LaravelExtension implements OptionalExtension
             return new LaravelBladeInjector(
                 $container->get(LaravelContainerInspector::class),
                 $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE)
+                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
+                $container->get('logging.logger')
             );
         }, [
             LanguageServerCompletionExtension::TAG_DOCUMENT_MODIFIER => []

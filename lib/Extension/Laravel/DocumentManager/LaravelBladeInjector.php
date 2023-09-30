@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\StringLiteral;
+use Monolog\Logger;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCompletion\Util\DocumentModifier;
 use Phpactor\Extension\LanguageServerCompletion\Util\TextDocumentModifierResponse;
@@ -29,7 +30,8 @@ class LaravelBladeInjector implements DocumentModifier
     public function __construct(
         private LaravelContainerInspector $containerInspector,
         private Reflector $reflector,
-        private Workspace $workspace
+        private Workspace $workspace,
+        private Logger $logger
     ) {
     }
 
@@ -98,7 +100,7 @@ class LaravelBladeInjector implements DocumentModifier
 
                 // If there is a class include it.
                 if ($class = $component['class'] ?? false) {
-                    $docblock .= "\$this = new \\{$class}();";
+                    $docblock .= "\$this = new {$class}();";
                     $additionalArguments = $this->getAdditionalArgumentsForClass($class);
                     foreach ($additionalArguments as $name => $type) {
                         $var = '$' . $name;
@@ -130,6 +132,8 @@ class LaravelBladeInjector implements DocumentModifier
                 }
 
                 $prefix = '<?php  ' . $docblock . ' ?>';
+
+                /* $this->logger->log('error', $prefix); */
 
                 $lines = explode(PHP_EOL, $text);
                 $lines[0] = $prefix . $lines[0];

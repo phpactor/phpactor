@@ -19,6 +19,7 @@ abstract class LaravelHasManyVirtualBuilder extends HasMany
  * @template TModelClass
  *
  * @method TModelClass create()
+ * @method TModelClass first()
  */
 abstract class LaravelBelongsToVirtualBuilder extends BelongsTo
 {
