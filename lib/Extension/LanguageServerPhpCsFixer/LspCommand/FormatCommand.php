@@ -35,7 +35,14 @@ class FormatCommand implements Command
             $textDocument = $this->workspace->get($uri);
 
             $rulesOpt = $rules ? ['--rules', ...$rules] : [];
-            $diff = yield $this->phpCsFixer->fix($textDocument->text, ['--diff', '--dry-run', ...$rulesOpt]);
+
+            $configOpt = [];
+            if ($this->phpCsFixer->hasConfigPath()) {
+                $rulesOpt = [];
+                $configOpt = ['--config', $this->phpCsFixer->getConfigPath()];
+            }
+
+            $diff = yield $this->phpCsFixer->fix($textDocument->text, ['--diff', '--dry-run', ...$rulesOpt, ...$configOpt]);
 
             $diffToTextEdits = new DiffToTextEditsConverter();
             $textEdits = $diffToTextEdits->toTextEdits($diff);

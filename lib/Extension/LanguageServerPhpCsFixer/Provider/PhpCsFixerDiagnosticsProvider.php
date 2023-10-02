@@ -7,21 +7,20 @@ use Amp\Promise;
 use Amp\Success;
 use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
+use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
+use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
-use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Psr\Log\LoggerInterface;
 use SebastianBergmann\Diff\Parser;
-use RuntimeException;
 
 class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionProvider
 {
-    /** @var array<string, string> **/
+    /** @var array<string, string> */
     private array $ruleDescriptions = [];
 
     public function __construct(
@@ -29,8 +28,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
         private RangesForDiff $rangeForDiff,
         private bool $showDiagnostics,
         private LoggerInterface $logger,
-    ) {
-    }
+    ) {}
 
     /**
      * @return Promise<Diagnostic[]>
@@ -53,13 +51,13 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
         return \Amp\call(function () use ($textDocument, $cancel) {
             $diagnostics = yield $this->findDiagnostics($textDocument, $cancel);
 
-            if ($diagnostics === false) {
+            if (false === $diagnostics) {
                 return [];
             }
 
             $title = 'Format with PHP CS Fixer';
 
-            $actions = [
+            return [
                 CodeAction::fromArray([
                     'title' => $title,
                     'kind' => 'source.fixAll.phpactor.phpCsFixer',
@@ -68,13 +66,11 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
                         $title,
                         'php_cs_fixer.fix',
                         [
-                            $textDocument->uri
+                            $textDocument->uri,
                         ]
-                    )
-                ])
+                    ),
+                ]),
             ];
-
-            return $actions;
         });
     }
 
@@ -100,11 +96,13 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
     private function findDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return \Amp\call(function () use ($textDocument) {
+            $configOpt = $this->phpCsFixer->hasConfigPath() ? ['--config', $this->phpCsFixer->getConfigPath()] : [];
             $outputJson = yield $this->phpCsFixer->fix($textDocument->text, [
                 '--dry-run',
                 '--verbose',
                 '--format',
-                'json'
+                'json',
+                ...$configOpt,
             ]);
 
             $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
@@ -120,11 +118,11 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             $diffParser = new Parser();
 
             foreach ($rules as $rule) {
-                $fileDiffText = yield $this->phpCsFixer->fix($textDocument->text, ['--dry-run', '--diff', '--rules', $rule]);
+                $fileDiffText = yield $this->phpCsFixer->fix($textDocument->text, ['--dry-run', '--diff', '--using-cache', 'no', '--rules', $rule]);
                 $fileDiff = $diffParser->parse($fileDiffText);
 
                 // one file input is passed and one file expected
-                if (count($fileDiff) !== 1) {
+                if (1 !== count($fileDiff)) {
                     $this->logger->warning(
                         sprintf("Expected php-cs-fixer to provide 1 diff, got %s. Skipping diagnostics for file '%s'", count($fileDiff), $textDocument->uri)
                     );
@@ -154,7 +152,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
                 'range' => $range,
                 'severity' => DiagnosticSeverity::WARNING,
                 'source' => $this->name(),
-                'code' => $rule
+                'code' => $rule,
             ]);
         });
     }
@@ -177,7 +175,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             // preg_replace calls below are matching content generated from above class, not content of individual rules.
 
             // remove a generic line
-            $description = preg_replace("/Description of ([\w\-\_ ]+) rule.*/", '', $description);
+            $description = preg_replace('/Description of ([\\w\\-\\_ ]+) rule.*/', '', $description);
 
             // remove configuration option descriptions, as that's not describing problem that's showing in code
             $description = preg_replace('/Fixer is configurable using following option.*/s', '', $description);
@@ -186,7 +184,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             $description = preg_replace('/Fixing examples:.*/s', '', $description);
 
             if (!is_string($description)) {
-                throw new RuntimeException(sprintf('Description was epxected to be string, got %s', gettype($description)));
+                throw new \RuntimeException(sprintf('Description was epxected to be string, got %s', gettype($description)));
             }
 
             $description = trim($description);

@@ -23,6 +23,7 @@ class PhpCsFixerProcess
         private string $binPath,
         private LoggerInterface $logger,
         private array $env = [],
+        private ?string $configPath = null
     ) {
     }
 
@@ -111,5 +112,15 @@ class PhpCsFixerProcess
 
             return $process;
         });
+    }
+
+    public function hasConfigPath(): bool
+    {
+        return null !== $this->configPath;
+    }
+
+    public function getConfigPath(): ?string
+    {
+        return $this->configPath;
     }
 }
