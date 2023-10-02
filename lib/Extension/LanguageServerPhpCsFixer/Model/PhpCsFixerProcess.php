@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use function Amp\ByteStream\buffer;
 use function Amp\call;
 use Throwable;
+use RuntimeException;
 
 class PhpCsFixerProcess
 {
@@ -119,8 +120,12 @@ class PhpCsFixerProcess
         return null !== $this->configPath;
     }
 
-    public function getConfigPath(): ?string
+    public function getConfigPath(): string
     {
+        if (null === $this->configPath) {
+            throw new RuntimeException('php-cs-fixer config path is not set.');
+        }
+
         return $this->configPath;
     }
 }

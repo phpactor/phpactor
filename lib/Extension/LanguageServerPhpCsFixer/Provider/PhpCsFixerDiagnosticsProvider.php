@@ -17,6 +17,7 @@ use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Psr\Log\LoggerInterface;
 use SebastianBergmann\Diff\Parser;
+use RuntimeException;
 
 class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionProvider
 {
@@ -28,7 +29,8 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
         private RangesForDiff $rangeForDiff,
         private bool $showDiagnostics,
         private LoggerInterface $logger,
-    ) {}
+    ) {
+    }
 
     /**
      * @return Promise<Diagnostic[]>
@@ -184,7 +186,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             $description = preg_replace('/Fixing examples:.*/s', '', $description);
 
             if (!is_string($description)) {
-                throw new \RuntimeException(sprintf('Description was epxected to be string, got %s', gettype($description)));
+                throw new RuntimeException(sprintf('Description was epxected to be string, got %s', gettype($description)));
             }
 
             $description = trim($description);
