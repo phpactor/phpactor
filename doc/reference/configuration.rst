@@ -2021,6 +2021,19 @@ Whether PHP CS Fixer diagnostics are shown
 **Default**: ``true``
 
 
+.. _param_language_server_php_cs_fixer.config:
+
+
+``language_server_php_cs_fixer.config``
+"""""""""""""""""""""""""""""""""""""""
+
+
+Set custom config
+
+
+**Default**: ``null``
+
+
 .. _PhpCodeSnifferExtension:
 
 
