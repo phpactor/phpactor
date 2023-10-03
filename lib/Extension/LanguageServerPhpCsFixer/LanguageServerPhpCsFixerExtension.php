@@ -23,6 +23,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
     public const PARAM_ENV = 'language_server_php_cs_fixer.env';
     public const PARAM_SHOW_DIAGNOSTICS = 'language_server_php_cs_fixer.show_diagnostics';
     public const PARAM_ENABLED = 'language_server_php_cs_fixer.enabled';
+    public const PARAM_WRAPPER = 'language_server_php_cs_fixer.wrapper';
 
     public function load(ContainerBuilder $container): void
     {
@@ -35,6 +36,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                     $path,
                     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
                     $container->parameter(self::PARAM_ENV)->value(),
+                    $container->parameter(self::PARAM_WRAPPER)->value(),
                 );
             }
         );
@@ -80,12 +82,14 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                 'PHP_CS_FIXER_IGNORE_ENV' => true,
             ],
             self::PARAM_SHOW_DIAGNOSTICS => true,
+            self::PARAM_WRAPPER => null,
         ]);
 
         $schema->setDescriptions([
             self::PARAM_PHP_CS_FIXER_BIN => 'Path to the php-cs-fixer executable',
             self::PARAM_ENV => 'Environment for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)',
-            self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP CS Fixer diagnostics are shown'
+            self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP CS Fixer diagnostics are shown',
+            self::PARAM_WRAPPER => 'Run PHP CS Fixer in wrapper as command argument. Ex., "docker exec container_name /bin/sh -c"',
         ]);
     }
 

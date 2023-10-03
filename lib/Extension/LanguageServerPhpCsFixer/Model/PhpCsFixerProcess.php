@@ -23,6 +23,7 @@ class PhpCsFixerProcess
         private string $binPath,
         private LoggerInterface $logger,
         private array $env = [],
+        private ?string $wrapper = null
     ) {
     }
 
@@ -94,7 +95,24 @@ class PhpCsFixerProcess
     public function run(string ...$args): Promise
     {
         return call(function () use ($args) {
-            $process = ProcessBuilder::create([$this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
+            if (null !== $this->wrapper) {
+                $envVars = '';
+                foreach ($this->env as $key => $value) {
+                    $envVars .= sprintf('%s=%s ', $key, $value);
+                }
+
+                $phpCsFixerCommand = sprintf(
+                    '"%s%s %s"',
+                    $envVars,
+                    $this->binPath,
+                    implode(' ', $args)
+                );
+
+                $process = ProcessBuilder::create([...explode(' ', $this->wrapper), $phpCsFixerCommand])->mergeParentEnv()->build();
+            } else {
+                $process = ProcessBuilder::create([$this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
+            }
+
             yield $process->start();
 
             $process->join()
@@ -113,3 +131,4 @@ class PhpCsFixerProcess
         });
     }
 }
+
