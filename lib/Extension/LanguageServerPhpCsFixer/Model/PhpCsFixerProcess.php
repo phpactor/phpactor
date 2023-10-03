@@ -10,7 +10,6 @@ use Psr\Log\LoggerInterface;
 use function Amp\ByteStream\buffer;
 use function Amp\call;
 use Throwable;
-use RuntimeException;
 
 class PhpCsFixerProcess
 {
@@ -36,8 +35,8 @@ class PhpCsFixerProcess
     public function fix(string $content, array $options = []): Promise
     {
         return call(function () use ($content, $options) {
-            if (false === array_search('--rules', $options, true) && $this->hasConfigPath()) {
-                $options = array_merge($options, ['--config', $this->getConfigPath()]);
+            if (false === array_search('--rules', $options, true) && null !== $this->configPath) {
+                $options = array_merge($options, ['--config', $this->configPath]);
             }
 
             /** @var Process */
@@ -117,19 +116,5 @@ class PhpCsFixerProcess
 
             return $process;
         });
-    }
-
-    public function hasConfigPath(): bool
-    {
-        return null !== $this->configPath;
-    }
-
-    public function getConfigPath(): string
-    {
-        if (null === $this->configPath) {
-            throw new RuntimeException('php-cs-fixer config path is not set.');
-        }
-
-        return $this->configPath;
     }
 }
