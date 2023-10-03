@@ -98,13 +98,11 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
     private function findDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return \Amp\call(function () use ($textDocument) {
-            $configOpt = $this->phpCsFixer->hasConfigPath() ? ['--config', $this->phpCsFixer->getConfigPath()] : [];
             $outputJson = yield $this->phpCsFixer->fix($textDocument->text, [
                 '--dry-run',
                 '--verbose',
                 '--format',
                 'json',
-                ...$configOpt,
             ]);
 
             $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);

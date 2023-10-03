@@ -36,6 +36,10 @@ class PhpCsFixerProcess
     public function fix(string $content, array $options = []): Promise
     {
         return call(function () use ($content, $options) {
+            if (false === array_search('--rules', $options, true) && $this->hasConfigPath()) {
+                $options = array_merge($options, ['--config', $this->getConfigPath()]);
+            }
+
             /** @var Process */
             $process = yield $this->run('fix', ...[...$options, '-']);
 
