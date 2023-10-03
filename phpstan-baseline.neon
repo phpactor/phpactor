@@ -4096,11 +4096,6 @@ parameters:
 			path: lib/Extension/LanguageServerIndexer/Watcher/LanguageServerWatcher.php
 
 		-
-			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
-
-		-
 			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\Model\\\\PhpCsFixerProcess constructor expects array\\<string, string\\>, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
