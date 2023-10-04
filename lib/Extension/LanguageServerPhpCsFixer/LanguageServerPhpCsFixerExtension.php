@@ -7,12 +7,12 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand\FormatCommand;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
-use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -59,7 +59,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $container->register(PhpCsFixerFormatter::class, function (Container $container) {
             return new PhpCsFixerFormatter($container->get(PhpCsFixerProcess::class));
         }, [
-            LanguageServerExtension::TAG_FORMATTER => []
+            LanguageServerExtension::TAG_FORMATTER => [],
         ]);
 
         $container->register(PhpCsFixerDiagnosticsProvider::class, function (Container $container) {
@@ -71,7 +71,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('php-cs-fixer'),
-            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
         ]);
 
         $container->register(FormatCommand::class, function (Container $container) {
@@ -83,7 +83,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
-                'name' => 'php_cs_fixer.fix'
+                'name' => 'php_cs_fixer.fix',
             ],
         ]);
     }
