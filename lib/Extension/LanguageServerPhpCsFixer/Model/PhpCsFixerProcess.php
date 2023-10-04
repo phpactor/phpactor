@@ -2,13 +2,14 @@
 
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Model;
 
+use function Amp\ByteStream\buffer;
+use function Amp\call;
+
 use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Exception\PhpCsFixerError;
 use Psr\Log\LoggerInterface;
-use function Amp\ByteStream\buffer;
-use function Amp\call;
 use Throwable;
 
 class PhpCsFixerProcess
@@ -29,7 +30,7 @@ class PhpCsFixerProcess
     }
 
     /**
-     * @param  string[] $options
+     * @param string[] $options
      *
      * @return Promise<string>
      */
@@ -50,9 +51,9 @@ class PhpCsFixerProcess
             $stdout = yield buffer($process->getStdout());
             $exitCode = yield $process->join();
 
-            if ($exitCode !== 0
-                && $exitCode !== self::EXIT_SOME_FILES_INVALID
-                && $exitCode !== self::EXIT_FILES_NEEDS_FIXING
+            if (0 !== $exitCode
+                && self::EXIT_SOME_FILES_INVALID !== $exitCode
+                && self::EXIT_FILES_NEEDS_FIXING !== $exitCode
                 && $exitCode !== (self::EXIT_SOME_FILES_INVALID | self::EXIT_FILES_NEEDS_FIXING)
             ) {
                 throw new PhpCsFixerError(
@@ -81,7 +82,7 @@ class PhpCsFixerProcess
             $stdout = yield buffer($process->getStdout());
             $exitCode = yield $process->join();
 
-            if ($exitCode !== 0) {
+            if (0 !== $exitCode) {
                 throw new PhpCsFixerError(
                     $exitCode,
                     $process->getCommand(),
@@ -107,7 +108,7 @@ class PhpCsFixerProcess
                 }
 
                 $phpCsFixerCommand = sprintf(
-                    '"%s%s %s"',
+                    '%s%s %s',
                     $envVars,
                     $this->binPath,
                     implode(' ', $args)
@@ -130,10 +131,10 @@ class PhpCsFixerProcess
                             $data
                         )
                     );
-                });
+                })
+            ;
 
             return $process;
         });
     }
 }
-
