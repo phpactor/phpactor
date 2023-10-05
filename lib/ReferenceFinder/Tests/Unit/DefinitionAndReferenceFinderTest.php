@@ -20,9 +20,9 @@ class DefinitionAndReferenceFinderTest extends TestCase
         $finder = new DefinitionAndReferenceFinder(
             TestDefinitionLocator::fromSingleLocation(
                 TypeFactory::unknown(),
-                Location::fromPathAndOffset('/path', 1)
+                Location::fromPathAndOffsets('/path', 1, 2)
             ),
-            new TestReferenceFinder(PotentialLocation::surely(Location::fromPathAndOffset('/path', 2)))
+            new TestReferenceFinder(PotentialLocation::surely(Location::fromPathAndOffsets('/path', 2, 4)))
         );
         $document = TextDocumentBuilder::create('asd')->build();
         self::assertCount(2, iterator_to_array($finder->findReferences($document, ByteOffset::fromInt(1))));
@@ -32,7 +32,7 @@ class DefinitionAndReferenceFinderTest extends TestCase
     {
         $finder = new DefinitionAndReferenceFinder(
             new TestDefinitionLocator(null),
-            new TestReferenceFinder(PotentialLocation::surely(Location::fromPathAndOffset('/path', 2)))
+            new TestReferenceFinder(PotentialLocation::surely(Location::fromPathAndOffsets('/path', 2, 4)))
         );
         $document = TextDocumentBuilder::create('asd')->build();
         self::assertCount(1, iterator_to_array($finder->findReferences($document, ByteOffset::fromInt(1))));

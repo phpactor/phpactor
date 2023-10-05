@@ -125,11 +125,13 @@ class VariableRenamerTest extends TestCase
         $renamer = $this->createRenamer(
             array_map(
                 function (ByteOffset $reference) use ($textDocument) {
-                    return PotentialLocation::surely(new Location($textDocument->uriOrThrow(), $reference));
+                    return PotentialLocation::surely(
+                        new Location($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffset($reference))
+                    );
                 },
                 $references
             ),
-            new Location($textDocument->uriOrThrow(), $definition),
+            new Location($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffsets($definition, $definition)),
             [ $textDocument ]
         );
 
@@ -142,10 +144,7 @@ class VariableRenamerTest extends TestCase
 
         $this->assertEquals(
             [
-                new LocatedTextEdits(
-                    TextEdits::fromTextEdits($expectedEdits),
-                    $textDocument->uri()
-                )
+                new LocatedTextEdits(TextEdits::fromTextEdits($expectedEdits), $textDocument->uri())
             ],
             LocatedTextEditsMap::fromLocatedEdits($actualResults)->toLocatedTextEdits()
         );

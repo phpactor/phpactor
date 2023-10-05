@@ -4,13 +4,13 @@ namespace Phpactor\Rename\Adapter\ClassMover;
 
 use Amp\Promise;
 use Phpactor\ClassMover\ClassMover;
+use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Rename\Model\Exception\CouldNotConvertUriToClass;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer as PhpactorFileRenamer;
 use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Rename\Model\UriToNameConverter;
-use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;

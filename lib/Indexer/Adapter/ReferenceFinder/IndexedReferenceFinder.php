@@ -7,6 +7,8 @@ use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\RecordReference;
+use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
@@ -102,8 +104,6 @@ class IndexedReferenceFinder implements ReferenceFinder
                 );
                 return;
             }
-
-
 
             // note that we check the all implementations: this will multiply
             // the number of NOT and MAYBE matches
@@ -209,11 +209,14 @@ class IndexedReferenceFinder implements ReferenceFinder
      */
     private function newObjectReferences(string $containerType): Generator
     {
+        /** @var ?ClassRecord $class */
         $class = $this->query->class()->get($containerType);
         if (!$class) {
             return;
         }
+
         foreach ($class->references() as $reference) {
+            /** @var ?FileRecord $file */
             $file = $this->query->file()->get($reference);
             if (null === $file) {
                 continue;
@@ -227,9 +230,10 @@ class IndexedReferenceFinder implements ReferenceFinder
                     continue;
                 }
                 yield LocationConfidence::surely(
-                    Location::fromPathAndOffset(
+                    Location::fromPathAndOffsets(
                         $file->filePath() ?? '',
-                        $fileReference->offset()
+                        $fileReference->start(),
+                        $fileReference->end()
                     )
                 );
             }

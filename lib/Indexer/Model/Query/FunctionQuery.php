@@ -9,6 +9,7 @@ use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
 use Phpactor\TextDocument\Location;
+use Phpactor\TextDocument\TextDocumentUri;
 
 class FunctionQuery implements IndexQuery
 {
@@ -34,7 +35,11 @@ class FunctionQuery implements IndexQuery
 
             foreach ($fileRecord->references()->to($record) as $functionReference) {
                 yield LocationConfidence::surely(
-                    Location::fromPathAndOffset($fileRecord->filePath(), $functionReference->offset())
+                    Location::fromPathAndOffsets(
+                        TextDocumentUri::fromString($fileRecord->filePath()),
+                        $functionReference->start(),
+                        $functionReference->end()
+                    )
                 );
             }
         }

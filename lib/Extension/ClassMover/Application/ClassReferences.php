@@ -129,11 +129,10 @@ class ClassReferences
     private function serializeReferenceList(string $code, NamespacedClassReferences $referenceList): array
     {
         $references = [];
+
         /** @var ClassReference $reference */
         foreach ($referenceList as $reference) {
-            $ref = $this->serializeReference($code, $reference);
-
-            $references[] = $ref;
+            $references[] = $this->serializeReference($code, $reference);
         }
 
         return $references;
@@ -157,22 +156,22 @@ class ClassReferences
     private function line(string $code, int $offset): array
     {
         $lines = explode(PHP_EOL, $code);
-        $number = 0;
+        $lineNumber = 0;
         $startPosition = 0;
 
-        foreach ($lines as $number => $line) {
-            $number = $number + 1;
+        foreach ($lines as $lineNumber => $line) {
+            $lineNumber = $lineNumber + 1;
             $endPosition = $startPosition + strlen($line) + 1;
 
             if ($offset >= $startPosition && $offset <= $endPosition) {
                 $col = $offset - $startPosition;
-                return [ $number, $col, $line ];
+                return [ $lineNumber, $col, $line ];
             }
 
             $startPosition = $endPosition;
         }
 
-        return [$number, 0, ''];
+        return [$lineNumber, 0, ''];
     }
 
     private function replaceReferencesInCode(

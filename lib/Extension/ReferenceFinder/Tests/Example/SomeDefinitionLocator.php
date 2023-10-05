@@ -8,24 +8,20 @@ use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
 
 class SomeDefinitionLocator implements DefinitionLocator
 {
-    const EXAMPLE_PATH = '/path/to.php';
-    const EXAMPLE_OFFSET = 666;
-
+    public const EXAMPLE_PATH = '/path/to.php';
+    public const EXAMPLE_OFFSET = 666;
+    public const EXAMPLE_OFFSET_END = 777;
 
     public function locateDefinition(TextDocument $document, ByteOffset $byteOffset): TypeLocations
     {
         return new TypeLocations([
             new TypeLocation(
                 TypeFactory::mixed(),
-                new Location(
-                    TextDocumentUri::fromString(self::EXAMPLE_PATH),
-                    ByteOffset::fromInt(self::EXAMPLE_OFFSET)
-                )
+                Location::fromPathAndOffsets(self::EXAMPLE_PATH, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
             )
         ]);
     }

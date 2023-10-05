@@ -5,6 +5,7 @@ namespace Phpactor\Extension\Behat\Behat;
 use Phpactor\Extension\Behat\Behat\Pattern\InvalidPatternException;
 use Phpactor\Extension\Behat\Behat\Pattern\RegexPatternPolicy;
 use Phpactor\Extension\Behat\Behat\Pattern\TurnipPatternPolicy;
+use Phpactor\TextDocument\Location;
 
 class Step
 {
@@ -12,8 +13,7 @@ class Step
         private Context $context,
         private string $method,
         private string $pattern,
-        private string $path,
-        private int $startByteOffset
+        private Location $location,
     ) {
     }
 
@@ -54,13 +54,8 @@ class Step
         return false;
     }
 
-    public function path(): string
+    public function location(): Location
     {
-        return $this->path;
-    }
-
-    public function byteOffset(): int
-    {
-        return $this->startByteOffset;
+        return $this->location;
     }
 }

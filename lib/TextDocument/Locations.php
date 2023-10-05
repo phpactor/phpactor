@@ -71,7 +71,7 @@ final class Locations implements IteratorAggregate, Countable
                 return $order;
             }
 
-            return $first->offset()->toInt() - $second->offset()->toInt();
+            return $first->range()->start()->toInt() - $second->range()->start()->toInt();
         });
 
         return new self($sortedLocations);
