@@ -56,8 +56,8 @@ class RangesForDiff
                 }
 
                 if ($lastChangedLine) {
-                    if (empty($changedLines) || !$startLineNo) {
-                        throw new LogicException("Missing logic data that's expected to be set");
+                    if (empty($changedLines) || $startLineNo === null) {
+                        throw new LogicException('Start line number was not resolved');
                     }
 
                     $startPos = new Position($startLineNo, 0);
