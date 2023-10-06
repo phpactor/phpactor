@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - Fix frame merging of include/require #2391
   - Fix crash with `php-cs-fixer` when using strict types rule #2348
   - Fix `null` error (and improve type safety) in the docblock parser #2379
   - Fix undefined-var false positive for undeclared variables that have `@var` #2366
@@ -25,6 +26,8 @@ Improvements:
   - Improve plain docblock parsing #2345
   - Generate `@param` tag for iterables #2343 @mamazu
   - Correctly implementing LSP ranges #2352 @mamazu
+  - Add mechanism to automatically trigger an index update when breaking changes
+    are made
 
 ## 2023.08.06-1
 
