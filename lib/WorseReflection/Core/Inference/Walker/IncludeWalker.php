@@ -21,7 +21,7 @@ class IncludeWalker implements Walker
 {
     private Parser $parser;
 
-    public function __construct(private LoggerInterface $logger, Parser $parser = null)
+    public function __construct(private LoggerInterface $logger, private FrameResolver $resolver, Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
     }
@@ -64,8 +64,10 @@ class IncludeWalker implements Walker
             return $frame;
         }
 
-        $sourceNode = $this->parser->parseSourceFile((string)file_get_contents($includeUri));
-        $includedFrame = $resolver->build($sourceNode);
+        $sourceCode = (string)file_get_contents($includeUri);
+        $sourceNode = $this->parser->parseSourceFile($sourceCode);
+        $includedFrame = $this->resolver->build($sourceNode);
+        $frame->locals()->merge($includedFrame->locals());
 
         $parentNode = $node->parent;
 
