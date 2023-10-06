@@ -24,6 +24,7 @@ Improvements:
   - Improve detection of Xdebug @bart-jaskulsi #2347
   - Improve plain docblock parsing #2345
   - Generate `@param` tag for iterables #2343 @mamazu
+  - Correctly implementing LSP ranges #2352 @mamazu
 
 ## 2023.08.06-1
 

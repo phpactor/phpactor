@@ -1361,6 +1361,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
+
 **Default**: ``"\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 

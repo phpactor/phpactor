@@ -13,8 +13,11 @@ class PredefiniedImplementationFinder implements ClassImplementationFinder
     {
     }
 
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
-    {
+    public function findImplementations(
+        TextDocument $document,
+        ByteOffset $byteOffset,
+        bool $includeDefinition = false
+    ): Locations {
         return $this->locations;
     }
 }

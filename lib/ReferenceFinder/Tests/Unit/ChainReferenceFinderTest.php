@@ -11,7 +11,6 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentUri;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
@@ -65,6 +64,6 @@ class ChainReferenceFinderTest extends TestCase
 
     private function createLocation(): Location
     {
-        return new Location(TextDocumentUri::fromString('/path/to.php'), ByteOffset::fromInt(1234));
+        return Location::fromPathAndOffsets('/path/to.php', 1234, 4578);
     }
 }

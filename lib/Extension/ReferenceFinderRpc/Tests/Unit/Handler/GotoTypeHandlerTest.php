@@ -9,15 +9,16 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 
 class GotoTypeHandlerTest extends TestCase
 {
-    const EXAMPLE_SOURCE = 'some source file';
-    const EXAMPLE_OFFSET = 1234;
-    const EXAMPLE_PATH = '/some/path.php';
+    private const EXAMPLE_SOURCE = 'some source file';
+    private const EXAMPLE_OFFSET = 1234;
+    private const EXAMPLE_PATH = '/some/path.php';
 
     public function testGotoType(): void
     {
@@ -42,7 +43,10 @@ class GotoTypeHandlerTest extends TestCase
                     new TypeLocations([
                         new TypeLocation(
                             new MixedType(),
-                            new Location($document->uri(), $byteOffset),
+                            new Location(
+                                $document->uriOrThrow(),
+                                ByteOffsetRange::fromByteOffsets($byteOffset, $byteOffset)
+                            ),
                         )
                     ]);
             }

@@ -12,7 +12,7 @@ use Phpactor\TextDocument\ByteOffset;
 
 class HoverHandlerTest extends IntegrationTestCase
 {
-    const PATH = 'file:///hello';
+    private const PATH = 'file:///hello';
 
     /**
      * @dataProvider provideHover

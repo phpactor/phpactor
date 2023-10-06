@@ -108,7 +108,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
         return new TypeLocations([new TypeLocation($className, new Location(
             TextDocumentUri::fromString($path),
-            ByteOffset::fromInt($class->position()->start()->toInt())
+            $class->position()
         ))]);
     }
 
@@ -134,7 +134,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         return new TypeLocations([
             new TypeLocation(TypeFactory::unknown(), new Location(
                 TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($function->position()->start()->toInt())
+                $function->position()
             ))
         ]);
     }
@@ -161,7 +161,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         return new TypeLocations([
             new TypeLocation(TypeFactory::unknown(), new Location(
                 TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($constant->position()->start()->toInt())
+                $constant->position()
             ))
         ]);
     }
@@ -222,10 +222,10 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                 ));
             }
 
-            $locations[] = new TypeLocation($namedType, new Location(
-                TextDocumentUri::fromString($path),
-                ByteOffset::fromInt($member->position()->start()->toInt())
-            ));
+            $locations[] = new TypeLocation(
+                $namedType,
+                new Location(TextDocumentUri::fromString($path), $member->position())
+            );
         }
 
         return new TypeLocations($locations);
@@ -265,7 +265,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
         return new TypeLocations([new TypeLocation($nodeContext->classType(), new Location(
             TextDocumentUri::fromString($path),
-            $member->position()->start()
+            $member->position()
         ))]);
     }
 }

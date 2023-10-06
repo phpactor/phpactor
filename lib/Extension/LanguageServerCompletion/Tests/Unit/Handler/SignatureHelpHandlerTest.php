@@ -16,7 +16,7 @@ use Phpactor\TextDocument\TextDocument;
 
 class SignatureHelpHandlerTest extends TestCase
 {
-    const IDENTIFIER = '/test';
+    private const IDENTIFIER = '/test';
 
     public function testHandleHelpers(): void
     {

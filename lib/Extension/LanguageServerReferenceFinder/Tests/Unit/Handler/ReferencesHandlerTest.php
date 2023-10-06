@@ -23,6 +23,7 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -67,9 +68,9 @@ class ReferencesHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willYield([
-            PotentialLocation::surely(new Location($document->uriOrThrow(), ByteOffset::fromInt(2))),
-            PotentialLocation::surely(new Location($document2->uriOrThrow(), ByteOffset::fromInt(3))),
-            PotentialLocation::surely(new Location($document->uriOrThrow(), ByteOffset::fromInt(5))),
+            PotentialLocation::surely(Location::fromPathAndOffsets($document->uriOrThrow(), 2, 2)),
+            PotentialLocation::surely(Location::fromPathAndOffsets($document2->uriOrThrow(), 3, 3)),
+            PotentialLocation::surely(Location::fromPathAndOffsets($document->uriOrThrow(), 5, 5)),
         ])->shouldBeCalled();
 
         $tester = $this->createTester();
@@ -111,7 +112,7 @@ class ReferencesHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willYield([
-            PotentialLocation::surely(new Location($document->uri(), ByteOffset::fromInt(2)))
+            PotentialLocation::surely(new Location($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 5)))
         ])->shouldBeCalled();
 
         $this->locator->locateDefinition(
@@ -121,7 +122,7 @@ class ReferencesHandlerTest extends TestCase
             TypeLocations::forLocation(
                 new TypeLocation(
                     TypeFactory::class('Foo'),
-                    new Location($document->uri(), ByteOffset::fromInt(2))
+                    new Location($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 5))
                 )
             )
         )->shouldBeCalled();
@@ -150,13 +151,15 @@ class ReferencesHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willYield([
-            PotentialLocation::surely(new Location($document->uri(), ByteOffset::fromInt(2)))
+            PotentialLocation::surely(new Location($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 10)))
         ])->shouldBeCalled();
 
         $this->locator->locateDefinition(
             $document,
             ByteOffset::fromInt(0)
-        )->willReturn(new Location($document->uri(), ByteOffset::fromInt(2)))->willThrow(new CouldNotLocateDefinition('nope'));
+        )->willReturn(
+            new Location($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 10))
+        )->willThrow(new CouldNotLocateDefinition('nope'));
 
         $tester = $this->createTester();
 

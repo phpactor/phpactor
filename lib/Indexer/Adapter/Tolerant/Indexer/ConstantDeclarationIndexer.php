@@ -68,6 +68,7 @@ class ConstantDeclarationIndexer implements TolerantIndexer
             $record = $index->get(ConstantRecord::fromName($constNode->getNamespacedName()->getFullyQualifiedNameText()));
             assert($record instanceof ConstantRecord);
             $record->setStart(ByteOffset::fromInt($node->getStartPosition()));
+            $record->setEnd(ByteOffset::fromInt($node->getEndPosition()));
             $record->setFilePath($document->uri()->path());
             $index->write($record);
         }
@@ -93,6 +94,7 @@ class ConstantDeclarationIndexer implements TolerantIndexer
             $record = $index->get(ConstantRecord::fromName($string->getStringContentsText()));
             assert($record instanceof ConstantRecord);
             $record->setStart(ByteOffset::fromInt($node->getStartPosition()));
+            $record->setEnd(ByteOffset::fromInt($node->getEndPosition()));
             $record->setFilePath($document->uri()->path());
             $index->write($record);
 
