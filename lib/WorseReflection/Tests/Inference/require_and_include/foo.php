@@ -1,6 +1,7 @@
 <?php
 
-class Foobar {
+class Foobar
+{
 }
 
 return (new Foobar());
