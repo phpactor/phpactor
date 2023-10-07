@@ -18,8 +18,10 @@ use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
 use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
 use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
+use Phpactor\Extension\LanguageServer\Middleware\TopMiddleware;
 use Phpactor\Extension\LanguageServer\Middleware\TraceMiddleware;
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
+use Phpactor\Extension\LanguageServer\Service\TopService;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
@@ -332,6 +334,10 @@ class LanguageServerExtension implements Extension
             $providers = [];
             foreach ($container->getServiceIdsForTag(self::TAG_SERVICE_PROVIDER) as $serviceId => $attrs) {
                 $provider = $container->get($serviceId);
+                if (null === $provider) {
+                    continue;
+                }
+
                 if (!$provider instanceof ServiceProvider) {
                     throw new RuntimeException(sprintf(
                         'Tagged service provider "%s" does not implement ServiceProvider interface, is a "%s"',
@@ -494,6 +500,23 @@ class LanguageServerExtension implements Extension
         }, [
             self::TAG_SERVICE_PROVIDER => [],
             self::TAG_LISTENER_PROVIDER => [],
+        ]);
+
+        $container->register(TopService::class, function (Container $container) {
+            if (!$container->parameter(self::PARAM_PROFILE)) {
+                return null;
+            }
+            return new TopService(
+                $this->logger($container),
+                $container->get(TopMiddleware::class),
+            );
+        }, [
+            self::TAG_SERVICE_PROVIDER => [],
+        ]);
+        $container->register(TopMiddleware::class, function (Container $container) {
+            return new TopMiddleware();
+        }, [
+            self::TAG_MIDDLEWARE => [],
         ]);
     }
 
