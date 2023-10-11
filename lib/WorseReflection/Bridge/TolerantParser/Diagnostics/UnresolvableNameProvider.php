@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
@@ -34,6 +35,8 @@ use Phpactor\TextDocument\TextDocument;
  */
 class UnresolvableNameProvider implements DiagnosticProvider
 {
+    private array $functionCache = [];
+
     public function __construct(private bool $importGlobals)
     {
     }
@@ -111,6 +114,9 @@ class UnresolvableNameProvider implements DiagnosticProvider
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
+        if ($node instanceof SourceFileNode) {
+            $this->functionCache = [];
+        }
         return [];
     }
 
@@ -295,6 +301,8 @@ class UnresolvableNameProvider implements DiagnosticProvider
     private function forFunction(FunctionReflector $reflector, string $fqn, QualifiedName $name): iterable
     {
         $fqn = PhpactorFullyQualifiedName::fromString($fqn);
+        if (isset($this->functionCache[$fqn->__toString()])) {
+        }
 
         try {
             // see comment for appendUnresolvedClassName
@@ -313,6 +321,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
                 } catch (NotFound) {
                 }
             }
+            $this->functionCache[$fqn->__toString()] = true;
 
             yield UnresolvableNameDiagnostic::forFunction(
                 ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
@@ -339,6 +348,8 @@ class UnresolvableNameProvider implements DiagnosticProvider
     private function forClass(ClassReflector $reflector, string $fqn, QualifiedName $name): iterable
     {
         $fqn = PhpactorFullyQualifiedName::fromString($fqn);
+        if (isset($this->functionCache[$fqn->__toString()])) {
+        }
 
         try {
             // we could reflect the class here but it's much more expensive
@@ -351,6 +362,7 @@ class UnresolvableNameProvider implements DiagnosticProvider
                 throw new NotFound();
             }
         } catch (NotFound) {
+            $this->functionCache[$fqn->__toString()] = true;
             yield UnresolvableNameDiagnostic::forClass(
                 ByteOffsetRange::fromInts($name->getStartPosition(), $name->getEndPosition()),
                 $fqn,

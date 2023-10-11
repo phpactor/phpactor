@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument as CoreReflectionArgument;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\EnumCaseType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
@@ -51,7 +52,7 @@ class ReflectionArgument implements CoreReflectionArgument
             $stringify = function (Type $type) {
                 $type = $type->stripNullable();
                 if ($type instanceof ClassType) {
-                    return lcfirst($type->name->short());
+                    return lcfirst($type->short());
                 }
                 return lcfirst($type->toPhpString());
             };

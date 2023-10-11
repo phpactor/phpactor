@@ -49,6 +49,8 @@ class WorseGenerateMethodTest extends WorseTestCase
         yield 'union false' => [ 'generateMethod17.test' ];
         yield 'duplicated type guesses' => [ 'generateMethod_duplicateNameGuesses.test' ];
         yield 'docblock for complex type' => [ 'generateMethod_complexTypeDocblock.test' ];
+        yield 'enum' => [ 'generateMethod_enumParams.test' ];
+        yield 'backed_enum' => [ 'generateMethod_backedEnumParams.test' ];
     }
 
     public function testGenerateOnNonClassInterfaceException(): void
