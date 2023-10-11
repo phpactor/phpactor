@@ -14,7 +14,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument as CoreReflectionArgument;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
-use Phpactor\WorseReflection\Core\Type\EnumCaseType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\TypeUtil;
