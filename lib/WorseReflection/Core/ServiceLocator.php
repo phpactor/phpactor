@@ -148,7 +148,16 @@ class ServiceLocator
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),
                 new VariableWalker($this->docblockFactory),
-                new IncludeWalker($this->logger),
+
+                // enable subset of frame walkers to enable include variables
+                // to be merged into current frame
+                new IncludeWalker($this->logger, FrameResolver::create(
+                    $this->nodeContextResolver(),
+                    [
+                        new VariableWalker($this->docblockFactory),
+                        new PassThroughWalker(),
+                    ]
+                )),
             ], $this->frameWalkers),
         );
     }

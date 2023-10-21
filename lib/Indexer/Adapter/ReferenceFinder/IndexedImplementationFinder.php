@@ -6,9 +6,11 @@ use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
@@ -33,11 +35,11 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         $this->containerTypeResolver = new ContainerTypeResolver($reflector);
     }
 
-    /**
-     * @return Locations<Location>
-     */
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
-    {
+    public function findImplementations(
+        TextDocument $document,
+        ByteOffset $byteOffset,
+        bool $includeDefinition = false
+    ): Locations {
         $nodeContext = $this->reflector->reflectOffset(
             $document,
             $byteOffset->toInt()
@@ -67,13 +69,13 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         foreach ($implementations as $implementation) {
             $record = $this->query->class()->get($implementation);
 
-            if (null === $record) {
+            if (!$record instanceof ClassRecord) {
                 continue;
             }
 
             $locations[] = new Location(
                 TextDocumentUri::fromString($record->filePath()),
-                $record->start()
+                ByteOffsetRange::fromByteOffsets($record->start(), $record->end()),
             );
         }
 
@@ -137,10 +139,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
                 continue;
             }
 
-            $locations[] = Location::fromPathAndOffset(
-                $path,
-                $member->position()->start()->toInt()
-            );
+            $locations[] = new Location(TextDocumentUri::fromString($path), $member->position());
         }
 
         return new Locations($locations);

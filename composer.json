@@ -29,8 +29,7 @@
         "jetbrains/phpstorm-stubs": "dev-master",
         "phpactor/tolerant-php-parser": "dev-main",
         "phpactor/map-resolver": "^1.5.0",
-        "webmozart/assert": "^1.11",
-        "webmozart/path-util": "^2.3"
+        "webmozart/assert": "^1.11"
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
@@ -46,7 +45,7 @@
         "phpstan/phpstan-phpunit": "^1.0",
         "jangregor/phpstan-prophecy": "^1.0",
         "phpstan/extension-installer": "^1.1",
-        "vimeo/psalm": "^4.22",
+        "vimeo/psalm": "^5.15",
         "blackfire/php-sdk": "^1.31",
         "squizlabs/php_codesniffer": "^3.7"
     },

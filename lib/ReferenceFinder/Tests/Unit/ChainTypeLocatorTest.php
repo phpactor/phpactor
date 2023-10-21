@@ -10,6 +10,7 @@ use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -90,7 +91,10 @@ class ChainTypeLocatorTest extends TestCase
 
     private function createLocation(): Location
     {
-        return new Location(TextDocumentUri::fromString('/path/to.php'), ByteOffset::fromInt(1234));
+        return new Location(
+            TextDocumentUri::fromString('/path/to.php'),
+            ByteOffsetRange::fromByteOffsets(ByteOffset::fromInt(1234), ByteOffset::fromInt(1534))
+        );
     }
 
     private function createLocations(Location $location1): TypeLocations

@@ -30,7 +30,7 @@ class IndexQueryCommand extends Command
         );
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $class = $this->query->class()->get(Cast::toString($input->getArgument(self::ARG_IDENITIFIER)));
 
@@ -72,7 +72,7 @@ class IndexQueryCommand extends Command
         foreach ($class->references() as $path) {
             $file = $this->query->file()->get($path);
             $output->writeln(sprintf('- %s:%s', $path, implode(', ', array_map(function (RecordReference $reference) {
-                return $reference->offset();
+                return $reference->start().'-'.$reference->end();
             }, $file->references()->to($class)->toArray()))));
         }
     }
@@ -85,7 +85,7 @@ class IndexQueryCommand extends Command
         foreach ($function->references() as $path) {
             $file = $this->query->file()->get($path);
             $output->writeln(sprintf('- %s:%s', $path, implode(', ', array_map(function (RecordReference $reference) {
-                return $reference->offset();
+                return $reference->start().'-'.$reference->end();
             }, $file->references()->to($function)->toArray()))));
         }
     }
@@ -97,10 +97,11 @@ class IndexQueryCommand extends Command
         $output->writeln('<info>Referenced by</>:');
         foreach ($this->query->member()->referencesTo($member->type(), $member->memberName()) as $index => $location) {
             $output->writeln(sprintf(
-                '%-3d %s:%s',
+                '%-3d %s:%s-%s',
                 $index + 1 . '.',
                 $location->location()->uri()->path(),
-                $location->location()->offset()->toInt(),
+                $location->location()->range()->start()->toInt(),
+                $location->location()->range()->end()->toInt(),
             ));
         }
     }

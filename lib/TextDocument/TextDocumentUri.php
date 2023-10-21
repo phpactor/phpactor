@@ -24,9 +24,9 @@ class TextDocumentUri
         return sprintf('%s://%s', $this->scheme, $this->path);
     }
 
-    public static function fromString(string $uri): self
+    public static function fromString(?string $uri): self
     {
-        if (!$uri) {
+        if ($uri === null || $uri === '') {
             throw new InvalidUriException(sprintf(
                 'Could not parse_url "%s"',
                 $uri

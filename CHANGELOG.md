@@ -5,17 +5,15 @@ Changelog
 
 Bug fixes:
 
-  - Fix crash with `php-cs-fixer` when using strict types rule #2348
-  - Fix `null` error (and improve type safety) in the docblock parser #2379
-  - Fix undefined-var false positive for undeclared variables that have `@var` #2366
-  - Fix undefined-var false positive for pass by ref (again) #2361
-  - Do not crash lanugage server if LSP header cannot be parsed (log error
-    instead) #2373
+  - Fix frame merging of include/require #2391
 
-Features:
+Improvements:
 
-  - PHP Code Sniffer (`phpcs`) extension #2353 @bart-jaskulski
-  - Subscript array-shape completion #2339
+  - Correctly implementing LSP ranges #2352 @mamazu
+  - Add mechanism to automatically trigger an index update when breaking changes
+    are made
+
+## 2023.09.24
 
 Improvements:
 
