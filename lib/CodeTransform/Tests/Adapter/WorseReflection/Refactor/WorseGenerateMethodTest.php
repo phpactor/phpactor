@@ -38,6 +38,7 @@ class WorseGenerateMethodTest extends WorseTestCase
         yield 'public accessor in another class' => [ 'generateMethod6.test' ];
         yield 'public accessor on interface' => [ 'generateMethod7.test' ];
         yield 'public accessor on interface with namespace' => [ 'generateMethod8.test' ];
+        yield 'public method on enum' => [ 'generateMethod_enum.test', 'play'];
         yield 'imports classes' => [ 'generateMethod9.test' ];
         yield 'static private method' => [ 'generateMethod10.test' ];
         yield 'static public method' => [ 'generateMethod11.test' ];
@@ -51,7 +52,7 @@ class WorseGenerateMethodTest extends WorseTestCase
         yield 'docblock for complex type' => [ 'generateMethod_complexTypeDocblock.test' ];
     }
 
-    public function testGenerateOnNonClassInterfaceException(): void
+    public function testGenerateOnTraitException(): void
     {
         $this->expectException(TransformException::class);
         $this->expectExceptionMessage('Can only generate methods on classes');

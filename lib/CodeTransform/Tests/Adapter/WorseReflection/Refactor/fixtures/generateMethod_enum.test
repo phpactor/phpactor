@@ -1,0 +1,28 @@
+// File: source
+
+<?php
+
+namespace Foobar;
+
+enum Game
+{
+    case ROCK;
+    case PAPER;
+    case SCISSORS;
+
+    public function testing() {
+    }
+
+    <>
+}
+// File: expected
+enum Game
+{
+    case ROCK;
+    case PAPER;
+    case SCISSORS;
+
+    public function play() {
+    }
+}
+
