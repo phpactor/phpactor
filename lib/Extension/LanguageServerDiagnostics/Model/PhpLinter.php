@@ -56,8 +56,8 @@ final class PhpLinter
             return [
                 new Diagnostic(
                     range: new Range(
-                        new Position($line, $range->start()->col()),
-                        new Position($line, $range->end()->col())
+                        new Position($line, $range->start()->col() - 1),
+                        new Position($line, $range->end()->col() - 1)
                     ),
                     message: $err,
                     severity: DiagnosticSeverity::ERROR
