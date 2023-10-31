@@ -742,16 +742,15 @@ abstract class UpdaterTestCase extends TestCase
     */
     public function testEnums(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
+        if (version_compare(PHP_VERSION, '8.1', '<')) {
+            $this->markTestSkipped('Not supported in less than 8.1');
+        }
+
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
     public function provideEnums(): Generator
     {
-        if (PHP_VERSION_ID <= 80000) {
-            // The support for enums in php 8 and lower is bad so skip the tests
-            return;
-        }
-
         yield 'Rendering an enum' => [
             '',
             SourceCodeBuilder::create()
