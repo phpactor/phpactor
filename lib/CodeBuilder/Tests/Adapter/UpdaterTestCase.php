@@ -756,6 +756,7 @@ abstract class UpdaterTestCase extends TestCase
             ->end()
             ->build(),
             <<<'EOT'
+
                 enum SomeEnum
                 {
                     case ONE;
@@ -779,9 +780,10 @@ abstract class UpdaterTestCase extends TestCase
             <<<'EOT'
                 enum SomeEnum
                 {
-                    case THREE;
                     case ONE;
                     case TWO;
+                    case THREE;
+
                 }
                 EOT,
         ];
