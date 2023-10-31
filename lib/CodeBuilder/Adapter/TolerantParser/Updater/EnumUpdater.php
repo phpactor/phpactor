@@ -33,8 +33,9 @@ class EnumUpdater
 
         $nextMember = null;
         $existingCasesNames = [];
+        $memberDeclarations = $enumMembers->enumMemberDeclarations;
 
-        foreach ($enumMembers as $memberNode) {
+        foreach ($memberDeclarations as $memberNode) {
             if (null === $nextMember) {
                 $nextMember = $memberNode;
             }
@@ -48,14 +49,12 @@ class EnumUpdater
         }
 
         foreach ($classPrototype->cases()->notIn($existingCasesNames) as $case) {
-            assert($case instanceof Constant);
-
             $edits->after(
                 $lastConstant,
                 PHP_EOL . $edits->indent($this->renderer->render($case), 1)
             );
 
-            if ($classPrototype->constants()->isLast($case) && (
+            if ($classPrototype->cases()->isLast($case) && (
                 $nextMember instanceof MethodDeclaration ||
                 $nextMember instanceof EnumCaseDeclaration
             )) {

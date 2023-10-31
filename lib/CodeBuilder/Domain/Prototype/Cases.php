@@ -3,12 +3,12 @@
 namespace Phpactor\CodeBuilder\Domain\Prototype;
 
 /**
- * @extends Collection<Case>
+ * @extends Collection<Case_>
  */
 class Cases extends Collection
 {
     /**
-     * @param Case[] $methods
+     * @param Case_[] $cases
      */
     public static function fromCases(array $cases): self
     {

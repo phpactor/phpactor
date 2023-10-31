@@ -740,7 +740,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @dataProvider provideEnums
     */
-    public function testEnums(string $existingCode, SourceCode $prototype, string $expectedCode)
+    public function testEnums(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
