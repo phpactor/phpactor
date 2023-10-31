@@ -6,7 +6,6 @@ use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\EnumMembers;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
-use Phpactor\CodeBuilder\Domain\Prototype\Constant;
 use Phpactor\CodeBuilder\Domain\Prototype\EnumPrototype;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;

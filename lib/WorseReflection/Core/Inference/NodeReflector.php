@@ -4,11 +4,9 @@ namespace Phpactor\WorseReflection\Core\Inference;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
-use Microsoft\PhpParser\Node\EnumMembers;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
-use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionAttribute;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression as PhpactorReflectionObjectCreationExpression;
@@ -18,7 +16,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionStaticMethodCall;
-use ReflectionMethod;
 
 class NodeReflector
 {

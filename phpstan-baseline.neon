@@ -271,6 +271,11 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Constants.php
 
 		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Enums.php
+
+		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces\\:\\:fromTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/ImplementsInterfaces.php
@@ -1179,11 +1184,6 @@ parameters:
 			message: "#^Cannot call method toString\\(\\) on Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\|null\\.$#"
 			count: 1
 			path: lib/DocblockParser/Tests/Unit/Ast/NodeTest.php
-
-		-
-			message: "#^Parameter \\#4 \\$path of class Phpactor\\\\Extension\\\\Behat\\\\Behat\\\\Step constructor expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/Behat/Adapter/Worse/WorseStepFactory.php
 
 		-
 			message: "#^Cannot access offset 'imports' on mixed\\.$#"
@@ -3469,11 +3469,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$probe of method Blackfire\\\\Client\\:\\:endProbe\\(\\) expects Blackfire\\\\Probe, Blackfire\\\\Probe\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerBlackfire/BlackfireProfiler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerBridge\\\\Converter\\\\LocationConverter\\:\\:toLspLocations\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerBridge/Converter/LocationConverter.php
 
 		-
 			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerBridge\\\\TextDocument\\\\WorkspaceTextDocumentLocator constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
@@ -5773,16 +5768,6 @@ parameters:
 		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 2
-			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
-
-		-
-			message: "#^Parameter \\#1 \\$fqn of static method Phpactor\\\\Indexer\\\\Model\\\\Name\\\\FullyQualifiedName\\:\\:fromString\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of static method Phpactor\\\\Indexer\\\\Model\\\\Record\\\\ClassRecord\\:\\:fromName\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
-			count: 1
 			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
 
 		-

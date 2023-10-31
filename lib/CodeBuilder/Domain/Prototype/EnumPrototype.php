@@ -18,4 +18,3 @@ final class EnumPrototype extends ClassLikePrototype
         return $this->cases;
     }
 }
-
