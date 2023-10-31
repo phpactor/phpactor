@@ -747,6 +747,11 @@ abstract class UpdaterTestCase extends TestCase
 
     public function provideEnums(): Generator
     {
+        if (PHP_VERSION_ID <= 80000) {
+            // The support for enums in php 8 and lower is bad so skip the tests
+            return;
+        }
+
         yield 'Rendering an enum' => [
             '',
             SourceCodeBuilder::create()
@@ -782,6 +787,29 @@ abstract class UpdaterTestCase extends TestCase
                 {
                     case ONE;
                     case TWO;
+                    case THREE;
+
+                }
+                EOT,
+        ];
+        yield 'Adding a case to break a backed enum' => [
+            <<<'EOT'
+                enum SomeEnum: string
+                {
+                    case ONE = '1';
+                    case TWO = '2';
+                }
+                EOT,
+            SourceCodeBuilder::create()
+            ->enum('SomeEnum')
+                ->case('THREE')->end()
+            ->end()
+            ->build(),
+            <<<'EOT'
+                enum SomeEnum: string
+                {
+                    case ONE = '1';
+                    case TWO = '2';
                     case THREE;
 
                 }
