@@ -738,6 +738,56 @@ abstract class UpdaterTestCase extends TestCase
     }
 
     /**
+     * @dataProvider provideEnums
+    */
+    public function testEnums(string $existingCode, SourceCode $prototype, string $expectedCode)
+    {
+        $this->assertUpdate($existingCode, $prototype, $expectedCode);
+    }
+
+    public function provideEnums(): Generator
+    {
+        yield 'Rendering an enum' => [
+            '',
+            SourceCodeBuilder::create()
+            ->enum('SomeEnum')
+                ->case('ONE')->end()
+                ->case('TWO')->end()
+            ->end()
+            ->build(),
+            <<<'EOT'
+                enum SomeEnum
+                {
+                    case ONE;
+                    case TWO;
+                }
+                EOT,
+        ];
+        yield 'Adding a case to an already existing enum' => [
+            <<<'EOT'
+                enum SomeEnum
+                {
+                    case ONE;
+                    case TWO;
+                }
+                EOT,
+            SourceCodeBuilder::create()
+            ->enum('SomeEnum')
+                ->case('THREE')->end()
+            ->end()
+            ->build(),
+            <<<'EOT'
+                enum SomeEnum
+                {
+                    case THREE;
+                    case ONE;
+                    case TWO;
+                }
+                EOT,
+        ];
+    }
+
+    /**
      * @dataProvider provideTraits
      */
     public function testTraits(string $existingCode, SourceCode $prototype, string $expectedCode): void
@@ -1948,7 +1998,7 @@ abstract class UpdaterTestCase extends TestCase
                         }
                     }
                     EOT
-            ];
+        ];
     }
 
     abstract protected function updater(): Updater;

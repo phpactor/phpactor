@@ -1,28 +1,28 @@
 // File: source
-
 <?php
 
-namespace Foobar;
-
 enum Game
 {
     case ROCK;
     case PAPER;
     case SCISSORS;
-
-    public function testing() {
-    }
-
-    <>
 }
+
+Game::pl<>ay();
+
 // File: expected
+<?php
+
 enum Game
 {
     case ROCK;
     case PAPER;
     case SCISSORS;
 
-    public function play() {
+    public static function play()
+    {
     }
 }
+
+Game::play();
 
