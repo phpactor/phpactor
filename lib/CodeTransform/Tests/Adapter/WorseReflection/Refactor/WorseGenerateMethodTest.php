@@ -38,7 +38,9 @@ class WorseGenerateMethodTest extends WorseTestCase
         yield 'public accessor in another class' => [ 'generateMethod6.test' ];
         yield 'public accessor on interface' => [ 'generateMethod7.test' ];
         yield 'public accessor on interface with namespace' => [ 'generateMethod8.test' ];
-        yield 'public method on enum' => [ 'generateMethod_enum.test', 'play'];
+        if (version_compare(PHP_VERSION, '8.1', '>=')) {
+            yield 'public method on enum' => [ 'generateMethod_enum.test', 'play'];
+        }
         yield 'imports classes' => [ 'generateMethod9.test' ];
         yield 'static private method' => [ 'generateMethod10.test' ];
         yield 'static public method' => [ 'generateMethod11.test' ];
