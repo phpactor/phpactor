@@ -12,6 +12,8 @@ Improvements:
   - Correctly implementing LSP ranges #2352 @mamazu
   - Add mechanism to automatically trigger an index update when breaking changes
     are made
+  - Method generation on emums @mamazu
+
 
 ## 2023.09.24
 
