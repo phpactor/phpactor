@@ -14,12 +14,15 @@ class SourceCode extends Prototype
 
     private Traits $traits;
 
+    private Enums $enums;
+
     public function __construct(
         QualifiedName $namespace = null,
         UseStatements $useStatements = null,
         Classes $classes = null,
         Interfaces $interfaces = null,
         Traits $traits = null,
+        Enums $enums = null,
         UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($updatePolicy);
@@ -28,6 +31,7 @@ class SourceCode extends Prototype
         $this->classes = $classes ?: Classes::empty();
         $this->interfaces = $interfaces ?: Interfaces::empty();
         $this->traits = $traits ?: Traits::empty();
+        $this->enums = $enums ?: Enums::empty();
     }
 
     public function namespace(): QualifiedName
@@ -53,5 +57,10 @@ class SourceCode extends Prototype
     public function traits(): Traits
     {
         return $this->traits;
+    }
+
+    public function enums(): Enums
+    {
+        return $this->enums;
     }
 }

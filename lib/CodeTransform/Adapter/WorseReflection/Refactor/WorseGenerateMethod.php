@@ -10,6 +10,9 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
@@ -87,10 +90,7 @@ class WorseGenerateMethod implements GenerateMethod
         $reflectionClass = $methodCall->class();
         $builder = $this->factory->fromSource($reflectionClass->sourceCode());
 
-        $classBuilder = $reflectionClass->isClass() ?
-            $builder->class($reflectionClass->name()->short()) :
-            $builder->interface($reflectionClass->name()->short());
-
+        $classBuilder = $builder->classLike($reflectionClass->name()->short());
         $methodBuilder = $classBuilder->method($methodName);
         $methodBuilder->visibility((string) $visibility);
         if ($static) {
@@ -156,10 +156,11 @@ class WorseGenerateMethod implements GenerateMethod
 
     private function validate(ReflectionMethodCall $methodCall): void
     {
-        if (false === $methodCall->class()->isClass() && false === $methodCall->class()->isInterface()) {
+        $target = $methodCall->class();
+        if (!$target instanceof ReflectionClass && !$target instanceof ReflectionInterface && !$target instanceof ReflectionEnum) {
             throw new TransformException(sprintf(
                 'Can only generate methods on classes or interfaces (trying on %s)',
-                get_class($methodCall->class()->name())
+                get_class($target->name())
             ));
         }
     }

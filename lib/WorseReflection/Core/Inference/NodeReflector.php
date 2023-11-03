@@ -52,6 +52,7 @@ class NodeReflector
         if ($node->parent instanceof CallExpression) {
             return $this->reflectStaticMethodCall($frame, $node);
         }
+
         throw new CouldNotResolveNode(sprintf(
             'Did not know how to reflect node of type "%s"',
             get_class($node)
