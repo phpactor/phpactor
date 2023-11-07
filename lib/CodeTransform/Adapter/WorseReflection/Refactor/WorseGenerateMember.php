@@ -23,6 +23,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use RuntimeException;
 
 class WorseGenerateMember implements GenerateMember
 {
@@ -37,17 +38,24 @@ class WorseGenerateMember implements GenerateMember
     {
         $contextType = $this->contextType($sourceCode, $offset);
         $worseSourceCode = TextDocumentBuilder::fromPathAndString((string) $sourceCode->uri()->path(), (string) $sourceCode);
-        $methodCall = $this->reflector->reflectMethodCall($worseSourceCode, $offset);
+        $memberAccess = $this->reflector->reflectNode($worseSourceCode, $offset);
 
-        $this->validate($methodCall);
-        $visibility = $this->determineVisibility($contextType, $methodCall->class());
+        if ($memberAccess instanceof ReflectionMethodCall) {
+            $this->validate($memberAccess);
+            $visibility = $this->determineVisibility($contextType, $memberAccess->class());
 
-        $prototype = $this->addMethodCallToBuilder($methodCall, $visibility, $methodCall->isStatic(), $methodName);
-        $sourceCode = $this->resolveSourceCode($sourceCode, $methodCall, $visibility);
+            $prototype = $this->addMethodCallToBuilder($memberAccess, $visibility, $memberAccess->isStatic(), $methodName);
+            $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess, $visibility);
 
-        $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
+            $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
 
-        return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
+            return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
+        }
+
+        throw new RuntimeException(sprintf(
+            'Could not generate member for "%s"',
+            $memberAccess::class
+        ));
     }
 
     private function resolveSourceCode(SourceCode $sourceCode, ReflectionMethodCall $methodCall, string $visibility): SourceCode
