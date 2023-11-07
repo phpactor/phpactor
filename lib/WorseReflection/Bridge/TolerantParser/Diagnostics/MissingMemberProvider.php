@@ -67,10 +67,10 @@ class MissingMemberProvider implements DiagnosticProvider
 
         $memberType = (function (ReflectionClassLike $reflection) {
             if ($reflection instanceof ReflectionClass) {
-                return 'method';
+                return ReflectionMember::TYPE_METHOD;
             }
             if ($reflection instanceof ReflectionEnum) {
-                return 'case';
+                return ReflectionMember::TYPE_ENUM;
             }
         })($reflection);
 
@@ -79,7 +79,7 @@ class MissingMemberProvider implements DiagnosticProvider
             return;
         }
         try {
-            $name = $containerType->members()->byMemberType(ReflectionMember::TYPE_METHOD)->get($methodName);
+            $name = $containerType->members()->byMemberType($memberType)->get($methodName);
         } catch (NotFound) {
             yield new MissingMethodDiagnostic(
                 ByteOffsetRange::fromInts(
@@ -200,7 +200,8 @@ class MissingMemberProvider implements DiagnosticProvider
                     case Foo;
                 }
 
-                $f = Foobar::Bar;
+                Foobar::Foo;
+                Foobar::Bar;
                 PHP,
             valid: false,
             assertion: function (Diagnostics $diagnostics): void {
