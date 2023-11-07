@@ -37,7 +37,7 @@ class MissingMemberProvider implements DiagnosticProvider
         }
 
         $memberName = null;
-        $memberType = 'unknown';
+        $memberType = null;
         if ($node instanceof ScopedPropertyAccessExpression) {
             $memberName = $node->memberName;
         } elseif ($node->callableExpression instanceof MemberAccessExpression) {
@@ -65,13 +65,17 @@ class MissingMemberProvider implements DiagnosticProvider
             return;
         }
 
-        $memberType = (function (ReflectionClassLike $reflection) {
+        $memberType = (function (ReflectionClassLike $reflection) use ($node) {
             if ($reflection instanceof ReflectionClass) {
+                if ($node instanceof ScopedPropertyAccessExpression) {
+                    return ReflectionMember::TYPE_CONSTANT;
+                }
                 return ReflectionMember::TYPE_METHOD;
             }
             if ($reflection instanceof ReflectionEnum) {
                 return ReflectionMember::TYPE_ENUM;
             }
+            return 'unknown';
         })($reflection);
 
         $methodName = $memberName->getText($node->getFileContents());
@@ -219,12 +223,13 @@ class MissingMemberProvider implements DiagnosticProvider
                     const FOO = 'bar';
                 }
 
+                Foobar::FOO;
                 Foobar::BAR;
                 PHP,
             valid: false,
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
-                Assert::assertEquals('Constant "Bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
+                Assert::assertEquals('Constant "BAR" does not exist on class "Foobar"', $diagnostics->at(0)->message());
             }
         );
     }
