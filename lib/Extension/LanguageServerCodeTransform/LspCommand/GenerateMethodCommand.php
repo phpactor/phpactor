@@ -40,7 +40,7 @@ class GenerateMethodCommand implements Command
 
         $textEdits = null;
         try {
-            $textEdits = $this->generateMethod->generateMethod($sourceCode, $offset);
+            $textEdits = $this->generateMethod->generateMember($sourceCode, $offset);
         } catch (TransformException $error) {
             $this->clientApi->window()->showMessage()->warning($error->getMessage());
             return new Success(null);

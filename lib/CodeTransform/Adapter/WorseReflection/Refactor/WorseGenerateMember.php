@@ -37,7 +37,7 @@ class WorseGenerateMember implements GenerateMember
     ) {
     }
 
-    public function generateMethod(SourceCode $sourceCode, int $offset, ?string $methodName = null): TextDocumentEdits
+    public function generateMember(SourceCode $sourceCode, int $offset, ?string $methodName = null): TextDocumentEdits
     {
         $contextType = $this->contextType($sourceCode, $offset);
         $worseSourceCode = TextDocumentBuilder::fromPathAndString((string) $sourceCode->uri()->path(), (string) $sourceCode);

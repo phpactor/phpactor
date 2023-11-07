@@ -36,7 +36,7 @@ class GenerateMethodHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $textDocumentEdits = $this->generateMethod->generateMethod(
+        $textDocumentEdits = $this->generateMethod->generateMember(
             SourceCode::fromStringAndPath(
                 $arguments[self::PARAM_SOURCE],
                 $arguments[self::PARAM_PATH]

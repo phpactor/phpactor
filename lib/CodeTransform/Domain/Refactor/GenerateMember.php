@@ -7,5 +7,5 @@ use Phpactor\TextDocument\TextDocumentEdits;
 
 interface GenerateMember
 {
-    public function generateMethod(SourceCode $sourceCode, int $offset): TextDocumentEdits;
+    public function generateMember(SourceCode $sourceCode, int $offset): TextDocumentEdits;
 }
