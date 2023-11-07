@@ -13,7 +13,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 class WorseGenerateMethodTest extends WorseTestCase
 {
     /**
-     * @dataProvider provideExtractMethod
+     * @dataProvider provideGenerateMember
      */
     public function testGenerateMethod(string $test, ?string $name = null): void
     {
@@ -27,7 +27,7 @@ class WorseGenerateMethodTest extends WorseTestCase
     /**
      * @return Generator<string, list<string>>
      */
-    public function provideExtractMethod(): Generator
+    public function provideGenerateMember(): Generator
     {
         yield 'string' => [ 'generateMethod1.test' ];
         yield 'parameter' => [ 'generateMethod2.test' ];
@@ -38,10 +38,6 @@ class WorseGenerateMethodTest extends WorseTestCase
         yield 'public accessor in another class' => [ 'generateMethod6.test' ];
         yield 'public accessor on interface' => [ 'generateMethod7.test' ];
         yield 'public accessor on interface with namespace' => [ 'generateMethod8.test' ];
-        if (version_compare(PHP_VERSION, '8.1', '>=')) {
-            yield 'public method on enum' => [ 'generateMethod_enum.test', 'play'];
-            yield 'case on enum' => [ 'generateMember_enumCase.test', 'Foo'];
-        }
         yield 'imports classes' => [ 'generateMethod9.test' ];
         yield 'static private method' => [ 'generateMethod10.test' ];
         yield 'static public method' => [ 'generateMethod11.test' ];
@@ -56,7 +52,10 @@ class WorseGenerateMethodTest extends WorseTestCase
         if (version_compare(PHP_VERSION, '8.1', '>=')) {
             yield 'enum' => [ 'generateMethod_enumParams.test' ];
             yield 'backed_enum' => [ 'generateMethod_backedEnumParams.test' ];
+            yield 'public method on enum' => [ 'generateMethod_enum.test', 'play'];
+            yield 'case on enum' => [ 'generateMember_enumCase.test', 'Foo'];
         }
+        yield 'private constant on class' => [ 'generateMember_constant.test', 'FOO'];
     }
 
     public function testGenerateOnTraitException(): void

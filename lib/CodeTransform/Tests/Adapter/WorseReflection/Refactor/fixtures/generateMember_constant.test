@@ -1,0 +1,23 @@
+// File: source
+
+<?php
+class GenerateCase
+{
+    const BAR;
+    public function name()
+    {
+        self::FOO<>;
+    }
+}
+// File: expected
+<?php
+class GenerateCase
+{
+    const BAR;
+    private const FOO = 0;
+
+    public function name()
+    {
+        self::FOO;
+    }
+}
