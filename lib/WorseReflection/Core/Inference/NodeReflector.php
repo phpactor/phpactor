@@ -48,7 +48,7 @@ class NodeReflector
         ));
     }
 
-    private function reflectScopedPropertyAccessExpression(Frame $frame, ScopedPropertyAccessExpression $node): ReflectionStaticMemberAccess
+    private function reflectScopedPropertyAccessExpression(Frame $frame, ScopedPropertyAccessExpression $node): ReflectionStaticMemberAccess|ReflectionStaticMethodCall
     {
         if ($node->parent instanceof CallExpression) {
             return $this->reflectStaticMethodCall($frame, $node);
