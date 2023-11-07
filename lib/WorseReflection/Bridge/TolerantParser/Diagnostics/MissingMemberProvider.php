@@ -165,6 +165,23 @@ class MissingMemberProvider implements DiagnosticProvider
                 Assert::assertEquals('Method "bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
             }
         );
+        yield new DiagnosticExample(
+            title: 'missing enum case',
+            source: <<<'PHP'
+                <?php
+
+                enum Foobar
+                {
+                }
+
+                $f = Foobar::Bar;
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Case "bar" does not exist on enum "Foobar"', $diagnostics->at(0)->message());
+            }
+        );
     }
 
     public function name(): string
