@@ -35,6 +35,9 @@ use Phpactor\TextDocument\TextDocument;
  */
 class UnresolvableNameProvider implements DiagnosticProvider
 {
+    /**
+     * @var array<string,bool>
+     */
     private array $functionCache = [];
 
     public function __construct(private bool $importGlobals)
