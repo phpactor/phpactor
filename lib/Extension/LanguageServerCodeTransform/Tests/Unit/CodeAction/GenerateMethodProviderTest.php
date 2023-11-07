@@ -30,7 +30,7 @@ class GenerateMethodProviderTest extends TestCase
     const EXAMPLE_FILE = 'file:///somefile.php';
 
     /**
-     * @var ObjectProphecy<MissingMethodFinder>
+     * @var ObjectProphecy<MissingMemberFinder>
      */
     private ObjectProphecy $finder;
 
@@ -112,7 +112,7 @@ class GenerateMethodProviderTest extends TestCase
 
         yield 'Missing method' => [
             [
-                new MissingMember(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
+                new MissingMember(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5), 'method')
             ],
             [
                 CodeAction::fromArray([
