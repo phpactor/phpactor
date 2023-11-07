@@ -40,6 +40,7 @@ class WorseGenerateMethodTest extends WorseTestCase
         yield 'public accessor on interface with namespace' => [ 'generateMethod8.test' ];
         if (version_compare(PHP_VERSION, '8.1', '>=')) {
             yield 'public method on enum' => [ 'generateMethod_enum.test', 'play'];
+            yield 'case on enum' => [ 'generateMember_enumCase.test', 'play'];
         }
         yield 'imports classes' => [ 'generateMethod9.test' ];
         yield 'static private method' => [ 'generateMethod10.test' ];

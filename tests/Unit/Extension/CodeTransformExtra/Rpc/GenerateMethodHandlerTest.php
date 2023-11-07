@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateMethodHandler;
 use Phpactor\Extension\Rpc\Handler;
@@ -26,7 +26,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
 
     public function setUp(): void
     {
-        $this->generateMethod = $this->prophesize(GenerateMethod::class);
+        $this->generateMethod = $this->prophesize(GenerateMember::class);
     }
 
     public function testProvidesOriginalSourceFromDiskIfPathIsNotTheGivenPath(): void

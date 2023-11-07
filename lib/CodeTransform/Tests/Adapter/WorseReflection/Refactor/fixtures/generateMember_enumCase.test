@@ -1,0 +1,22 @@
+// File: source
+
+<?php
+enum GenerateCase
+{
+    case Bar;
+    public function name()
+    {
+        self::Fooba<>r;
+    }
+}
+// File: expected
+<?php
+enum GenerateCase
+{
+    case Bar;
+    case Foobar;
+    public function name()
+    {
+        self::Foobar;
+    }
+}
