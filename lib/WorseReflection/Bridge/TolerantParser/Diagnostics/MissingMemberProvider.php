@@ -16,6 +16,9 @@ use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
@@ -26,12 +29,18 @@ class MissingMemberProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
-        if ((!$node instanceof CallExpression)) {
+        if (
+            !$node instanceof CallExpression &&
+            !$node instanceof ScopedPropertyAccessExpression
+        ) {
             return;
         }
 
         $memberName = null;
-        if ($node->callableExpression instanceof MemberAccessExpression) {
+        $memberType = 'unknown';
+        if ($node instanceof ScopedPropertyAccessExpression) {
+            $memberName = $node->memberName;
+        } elseif ($node->callableExpression instanceof MemberAccessExpression) {
             $memberName = $node->callableExpression->memberName;
         } elseif ($node->callableExpression instanceof ScopedPropertyAccessExpression) {
             $memberName = $node->callableExpression->memberName;
@@ -51,6 +60,20 @@ class MissingMemberProvider implements DiagnosticProvider
             return;
         }
 
+        $reflection = $containerType->reflectionOrNull();
+        if (null === $reflection) {
+            return;
+        }
+
+        $memberType = (function (ReflectionClassLike $reflection) {
+            if ($reflection instanceof ReflectionClass) {
+                return 'method';
+            }
+            if ($reflection instanceof ReflectionEnum) {
+                return 'case';
+            }
+        })($reflection);
+
         $methodName = $memberName->getText($node->getFileContents());
         if (!is_string($methodName)) {
             return;
@@ -64,8 +87,10 @@ class MissingMemberProvider implements DiagnosticProvider
                     $memberName->getEndPosition()
                 ),
                 sprintf(
-                    'Method "%s" does not exist on class "%s"',
+                    '%s "%s" does not exist on %s "%s"',
+                    ucfirst($memberType),
                     $methodName,
+                    $reflection->classLikeType(),
                     $containerType->__toString()
                 ),
                 DiagnosticSeverity::ERROR(),
@@ -179,7 +204,7 @@ class MissingMemberProvider implements DiagnosticProvider
             valid: false,
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
-                Assert::assertEquals('Case "bar" does not exist on enum "Foobar"', $diagnostics->at(0)->message());
+                Assert::assertEquals('Case "Bar" does not exist on enum "Foobar"', $diagnostics->at(0)->message());
             }
         );
     }
