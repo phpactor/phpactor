@@ -21,6 +21,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use RuntimeException;
 
 /**
  * Report if trying to call a class method which does not exist.
@@ -66,16 +67,19 @@ class MissingMemberProvider implements DiagnosticProvider
         }
 
         $memberType = (function (ReflectionClassLike $reflection) use ($node) {
-            if ($reflection instanceof ReflectionClass) {
+            if ($reflection instanceof ReflectionEnum) {
+                return ReflectionMember::TYPE_CASE;
+            }
+            if ($reflection instanceof ReflectionClassLike) {
                 if ($node instanceof ScopedPropertyAccessExpression) {
                     return ReflectionMember::TYPE_CONSTANT;
                 }
                 return ReflectionMember::TYPE_METHOD;
             }
-            if ($reflection instanceof ReflectionEnum) {
-                return ReflectionMember::TYPE_CASE;
-            }
-            return 'unknown';
+            throw new RuntimeException(sprintf(
+                'Do not know how to determine member type for reflection class %s',
+                $reflection::class
+            ));
         })($reflection);
 
         $methodName = $memberName->getText($node->getFileContents());

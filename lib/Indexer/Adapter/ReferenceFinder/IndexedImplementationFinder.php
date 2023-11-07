@@ -55,7 +55,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
             $symbolType === Symbol::PROPERTY
         ) {
             if ($symbolType === Symbol::CASE) {
-                $symbolType = 'enum';
+                $symbolType = 'case';
             }
             if ($symbolType === Symbol::VARIABLE) {
                 $symbolType = Symbol::PROPERTY;

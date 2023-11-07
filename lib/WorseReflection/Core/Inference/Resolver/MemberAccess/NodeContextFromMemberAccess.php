@@ -160,7 +160,7 @@ class NodeContextFromMemberAccess
 
             $types[] = $subType;
 
-            if ($reflection instanceof ReflectionEnum && $memberTypeName === 'constant') {
+            if ($reflection instanceof ReflectionEnum && $memberTypeName === ReflectionMember::TYPE_CONSTANT) {
                 foreach ($subType->members()->byMemberType(ReflectionMember::TYPE_CASE)->byName($memberName) as $member) {
                     // if multiple classes declare a member, always take the "top" one
                     $memberType = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
