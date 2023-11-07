@@ -66,7 +66,10 @@ class MissingMemberProvider implements DiagnosticProvider
 
         $memberType = (function (ReflectionClassLike $reflection) use ($node) {
             if ($reflection instanceof ReflectionEnum) {
-                return ReflectionMember::TYPE_CASE;
+                if ($node instanceof ScopedPropertyAccessExpression) {
+                    return ReflectionMember::TYPE_CASE;
+                }
+                return ReflectionMember::TYPE_METHOD;
             }
 
             if ($node instanceof ScopedPropertyAccessExpression) {
@@ -210,6 +213,22 @@ class MissingMemberProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals('Case "Bar" does not exist on enum "Foobar"', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'enum static method call',
+            source: <<<'PHP'
+                <?php
+
+                enum Foobar
+                {
+                }
+
+                Foobar::cases();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
             }
         );
         yield new DiagnosticExample(
