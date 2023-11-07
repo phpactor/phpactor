@@ -36,7 +36,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $thisFileContents = file_get_contents(__FILE__);
 
         // @phpstan-ignore-next-line
-        $this->generateMethod->generateMethod(
+        $this->generateMethod->generateMember(
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(
@@ -63,7 +63,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
 
         // @phpstan-ignore-next-line
-        $this->generateMethod->generateMethod(
+        $this->generateMethod->generateMember(
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(

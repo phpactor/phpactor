@@ -41,7 +41,7 @@ class GenerateMethodCommandTest extends TestCase
         );
 
         $generateMethod = $this->prophesize(GenerateMember::class);
-        $generateMethod->generateMethod(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
+        $generateMethod->generateMember(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
             ->shouldBeCalled()
             ->willReturn($textEdits);
 
@@ -69,7 +69,7 @@ class GenerateMethodCommandTest extends TestCase
     public function testFailedCall(Exception $exception): void
     {
         $generateMethod = $this->prophesize(GenerateMember::class);
-        $generateMethod->generateMethod(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
+        $generateMethod->generateMember(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
             ->shouldBeCalled()
             ->willThrow($exception);
 
