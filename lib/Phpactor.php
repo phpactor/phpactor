@@ -119,10 +119,17 @@ class Phpactor
 
         if ($input->hasParameterOption('--config-extra')) {
             $rawJson = $input->getParameterOption('--config-extra');
+            if (!is_string($rawJson)) {
+                throw new RuntimeException(sprintf(
+                    'Expected string for config-extra, got: %s',
+                    gettype($rawJson)
+                ));
+            }
             $extraConfig = json_decode($rawJson, true);
             if (!is_array($extraConfig)) {
                 throw new RuntimeException(sprintf(
-                    'Invalid JSON passed as config-extra: %s', $rawJson
+                    'Invalid JSON passed as config-extra: %s',
+                    $rawJson
                 ));
             }
             $config = array_merge($config, $extraConfig);

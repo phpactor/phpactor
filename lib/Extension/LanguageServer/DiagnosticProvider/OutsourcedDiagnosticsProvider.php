@@ -34,7 +34,7 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
         return call(function () use ($textDocument) {
             $process = new Process(array_merge($this->command, [
                 '--uri=' . $textDocument->uri,
-                sprintf('--config-extra=\'%s\'', sprintf('{"%s": false}', WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION))
+                sprintf('--config-extra=%s', sprintf('{"%s": false}', WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION))
             ]), $this->cwd);
             $pid = yield $process->start();
 
