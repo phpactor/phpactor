@@ -30,7 +30,7 @@
             xdebug
           ]));
           extraConfig = ''
-            xdebug.mode=none
+            xdebug.mode=debug
           '';
         });
       in {
