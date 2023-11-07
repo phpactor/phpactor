@@ -178,7 +178,8 @@ class WorseGenerateMember implements GenerateMember
             $classLikeBuilder->case($caseName);
         }
         if ($classLikeBuilder instanceof ClassBuilder) {
-            $classLikeBuilder->constant($caseName, 0);
+            $constantBuuilder = $classLikeBuilder->constant($caseName, 0);
+            $constantBuuilder->visibility($visibility);
         }
 
 

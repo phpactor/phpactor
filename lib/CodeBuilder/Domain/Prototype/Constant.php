@@ -23,7 +23,7 @@ class Constant extends Prototype
         return $this->value;
     }
 
-    public function visibility(): Visibility
+    public function visibility(): ?Visibility
     {
         return $this->visibility;
     }
