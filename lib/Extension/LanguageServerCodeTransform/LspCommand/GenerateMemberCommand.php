@@ -5,9 +5,10 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
+use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServer\Core\Command\Command;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
@@ -15,14 +16,14 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 
-class GenerateMethodCommand implements Command
+class GenerateMemberCommand implements Command
 {
-    public const NAME  = 'generate_method';
+    public const NAME  = 'generate_member';
 
     public function __construct(
         private ClientApi $clientApi,
         private Workspace $workspace,
-        private GenerateMethod $generateMethod,
+        private GenerateMember $generateMember,
         private TextDocumentLocator $locator
     ) {
     }
@@ -40,7 +41,7 @@ class GenerateMethodCommand implements Command
 
         $textEdits = null;
         try {
-            $textEdits = $this->generateMethod->generateMethod($sourceCode, $offset);
+            $textEdits = $this->generateMember->generateMember($sourceCode, $offset);
         } catch (TransformException $error) {
             $this->clientApi->window()->showMessage()->warning($error->getMessage());
             return new Success(null);

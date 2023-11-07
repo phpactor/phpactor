@@ -8,6 +8,10 @@ Bug fixes:
   - Fix frame merging of include/require #2391
   - Fix enum representation in method generation #2395
 
+Features:
+
+  - Generate enum cases and class constants #2422
+
 ## 2023.09.24
 
 Bug fixes:

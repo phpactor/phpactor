@@ -142,7 +142,7 @@ class IndexedReferenceFinder implements ReferenceFinder
         $symbolType = $nodeContext->symbol()->symbolType();
 
         if ($symbolType === Symbol::CASE) {
-            return ReflectionMember::TYPE_ENUM;
+            return ReflectionMember::TYPE_CASE;
         }
         if ($symbolType === Symbol::METHOD) {
             return ReflectionMember::TYPE_METHOD;

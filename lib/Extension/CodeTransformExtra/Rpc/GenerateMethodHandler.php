@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -16,7 +16,7 @@ class GenerateMethodHandler extends AbstractHandler
     const PARAM_SOURCE = 'source';
     const PARAM_PATH = 'path';
 
-    public function __construct(private GenerateMethod $generateMethod)
+    public function __construct(private GenerateMember $generateMethod)
     {
     }
 
@@ -36,7 +36,7 @@ class GenerateMethodHandler extends AbstractHandler
 
     public function handle(array $arguments)
     {
-        $textDocumentEdits = $this->generateMethod->generateMethod(
+        $textDocumentEdits = $this->generateMethod->generateMember(
             SourceCode::fromStringAndPath(
                 $arguments[self::PARAM_SOURCE],
                 $arguments[self::PARAM_PATH]
