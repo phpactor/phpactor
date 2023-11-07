@@ -3,13 +3,13 @@
 namespace Phpactor\CodeTransform\Domain\Helper;
 
 use Amp\Promise;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod;
+use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMember;
 use Phpactor\TextDocument\TextDocument;
 
-interface MissingMethodFinder
+interface MissingMemberFinder
 {
     /**
-     * @return Promise<MissingMethod[]>
+     * @return Promise<MissingMember[]>
      */
     public function find(TextDocument $sourceCode): Promise;
 }

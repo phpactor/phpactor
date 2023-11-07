@@ -4,11 +4,11 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
+use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMemberCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
@@ -19,11 +19,11 @@ use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use function Amp\call;
 
-class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
+class GenerateMemberProvider implements DiagnosticsProvider, CodeActionProvider
 {
-    public const KIND = 'quickfix.generate_method';
+    public const KIND = 'quickfix.generate_member';
 
-    public function __construct(private MissingMethodFinder $missingMethodFinder)
+    public function __construct(private MissingMemberFinder $missingMethodFinder)
     {
     }
 
@@ -55,8 +55,8 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
                         $diagnostic
                     ],
                     'command' => new Command(
-                        'Generate method',
-                        GenerateMethodCommand::NAME,
+                        'Generate member',
+                        GenerateMemberCommand::NAME,
                         [
                             $textDocument->uri,
                             PositionConverter::positionToByteOffset(
@@ -72,12 +72,12 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
 
     public function name(): string
     {
-        return 'generate-method';
+        return 'generate-member';
     }
 
     public function describe(): string
     {
-        return 'generate non-existing method';
+        return 'generate non-existing member';
     }
 
     /**
@@ -94,7 +94,7 @@ class GenerateMethodProvider implements DiagnosticsProvider, CodeActionProvider
             foreach ($methods as $method) {
                 $diagnostics[] = new Diagnostic(
                     range: RangeConverter::toLspRange($method->range(), $textDocument->text),
-                    message: sprintf('Method "%s" does not exist', $method->name()),
+                    message: sprintf('%s "%s" does not exist', $method->memberType(), $method->name()),
                     severity: DiagnosticSeverity::WARNING,
                     source: 'phpactor',
                 );

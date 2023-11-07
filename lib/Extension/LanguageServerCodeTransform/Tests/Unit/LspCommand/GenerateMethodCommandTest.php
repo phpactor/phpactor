@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMemberCommand;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -102,7 +102,7 @@ class GenerateMethodCommandTest extends TestCase
         $builder = LanguageServerTesterBuilder::createBare()
             ->enableTextDocuments()
             ->enableCommands();
-        $builder->addCommand('generate', new GenerateMethodCommand(
+        $builder->addCommand('generate', new GenerateMemberCommand(
             $builder->clientApi(),
             $builder->workspace(),
             $generateMethod->reveal(),

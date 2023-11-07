@@ -6,10 +6,10 @@ use Amp\CancellationTokenSource;
 use Amp\Success;
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
+use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
+use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMember;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMemberProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMemberCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Command;
 use Phpactor\LanguageServerProtocol\Diagnostic;
@@ -36,7 +36,7 @@ class GenerateMethodProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->finder = $this->prophesize(MissingMethodFinder::class);
+        $this->finder = $this->prophesize(MissingMemberFinder::class);
     }
 
     /**
@@ -69,7 +69,7 @@ class GenerateMethodProviderTest extends TestCase
 
         yield 'Missing method' => [
             [
-                new MissingMethod(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
+                new MissingMember(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
             ],
             [
                 new Diagnostic(
@@ -112,12 +112,12 @@ class GenerateMethodProviderTest extends TestCase
 
         yield 'Missing method' => [
             [
-                new MissingMethod(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
+                new MissingMember(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
             ],
             [
                 CodeAction::fromArray([
                     'title' =>  'Fix "Method "foobar" does not exist"',
-                    'kind' => GenerateMethodProvider::KIND,
+                    'kind' => GenerateMemberProvider::KIND,
                     'diagnostics' => [
                         new Diagnostic(
                             range: ProtocolFactory::range(0, 0, 0, 5),
@@ -128,7 +128,7 @@ class GenerateMethodProviderTest extends TestCase
                     ],
                     'command' => new Command(
                         'Generate method',
-                        GenerateMethodCommand::NAME,
+                        GenerateMemberCommand::NAME,
                         [
                             self::EXAMPLE_FILE,
                             0
@@ -139,8 +139,8 @@ class GenerateMethodProviderTest extends TestCase
         ];
     }
 
-    private function createProvider(): GenerateMethodProvider
+    private function createProvider(): GenerateMemberProvider
     {
-        return new GenerateMethodProvider($this->finder->reveal());
+        return new GenerateMemberProvider($this->finder->reveal());
     }
 }

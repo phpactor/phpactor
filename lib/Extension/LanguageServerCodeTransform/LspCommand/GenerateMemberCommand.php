@@ -15,14 +15,14 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 
-class GenerateMethodCommand implements Command
+class GenerateMemberCommand implements Command
 {
-    public const NAME  = 'generate_method';
+    public const NAME  = 'generate_member';
 
     public function __construct(
         private ClientApi $clientApi,
         private Workspace $workspace,
-        private GenerateMember $generateMethod,
+        private GenerateMember $generateMember,
         private TextDocumentLocator $locator
     ) {
     }
@@ -40,7 +40,7 @@ class GenerateMethodCommand implements Command
 
         $textEdits = null;
         try {
-            $textEdits = $this->generateMethod->generateMember($sourceCode, $offset);
+            $textEdits = $this->generateMember->generateMember($sourceCode, $offset);
         } catch (TransformException $error) {
             $this->clientApi->window()->showMessage()->warning($error->getMessage());
             return new Success(null);

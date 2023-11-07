@@ -3,7 +3,7 @@
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Helper;
 
 use Generator;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMethodFinder;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMemberFinder;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -20,7 +20,7 @@ class WorseMissingMethodFinderTest extends WorseTestCase
         $reflector = $this->reflectorForWorkspace($source);
         $document = TextDocumentBuilder::create($source)->uri('file:///test')->build();
 
-        $methods = wait((new WorseMissingMethodFinder($reflector))->find($document));
+        $methods = wait((new WorseMissingMemberFinder($reflector))->find($document));
         self::assertCount($expectedCount, $methods);
     }
 

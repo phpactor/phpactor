@@ -3,14 +3,14 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Helper;
 
 use Amp\Promise;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod;
+use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
+use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMember;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMemberDiagnostic;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
 
-class WorseMissingMethodFinder implements MissingMethodFinder
+class WorseMissingMemberFinder implements MissingMemberFinder
 {
     public function __construct(private Reflector $reflector)
     {
@@ -20,12 +20,12 @@ class WorseMissingMethodFinder implements MissingMethodFinder
     public function find(TextDocument $sourceCode): Promise
     {
         return call(function () use ($sourceCode) {
-            $diagnostics = (yield $this->reflector->diagnostics($sourceCode))->byClass(MissingMethodDiagnostic::class);
+            $diagnostics = (yield $this->reflector->diagnostics($sourceCode))->byClass(MissingMemberDiagnostic::class);
             $missing = [];
 
             /** @var MissingMethodDiagnostic $missingMethod */
             foreach ($diagnostics as $missingMethod) {
-                $missing[] = new MissingMethod(
+                $missing[] = new MissingMember(
                     $missingMethod->methodName(),
                     $missingMethod->range(),
                 );

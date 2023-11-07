@@ -4,7 +4,7 @@ namespace Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
 
 use Phpactor\TextDocument\ByteOffsetRange;
 
-class MissingMethod
+class MissingMember
 {
     public function __construct(private string $name, public ByteOffsetRange $range)
     {

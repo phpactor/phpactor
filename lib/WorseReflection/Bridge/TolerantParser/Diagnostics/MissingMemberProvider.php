@@ -83,7 +83,7 @@ class MissingMemberProvider implements DiagnosticProvider
         try {
             $name = $containerType->members()->byMemberType($memberType)->get($methodName);
         } catch (NotFound) {
-            yield new MissingMethodDiagnostic(
+            yield new MissingMemberDiagnostic(
                 ByteOffsetRange::fromInts(
                     $memberName->getStartPosition(),
                     $memberName->getEndPosition()

@@ -6,7 +6,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
-class MissingMethodDiagnostic implements Diagnostic
+class MissingMemberDiagnostic implements Diagnostic
 {
     public function __construct(
         private ByteOffsetRange $range,
