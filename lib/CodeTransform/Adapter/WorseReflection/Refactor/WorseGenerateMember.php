@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\CodeBuilder\Domain\Builder\EnumBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
@@ -10,6 +11,7 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionStaticMemberAccess;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -45,7 +47,17 @@ class WorseGenerateMember implements GenerateMember
             $visibility = $this->determineVisibility($contextType, $memberAccess->class());
 
             $prototype = $this->addMethodCallToBuilder($memberAccess, $visibility, $memberAccess->isStatic(), $methodName);
-            $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess, $visibility);
+            $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess->class(), $visibility);
+
+            $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
+
+            return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
+        }
+
+        if ($memberAccess instanceof ReflectionStaticMemberAccess) {
+            $visibility = $this->determineVisibility($contextType, $memberAccess->class());
+            $prototype = $this->addCaseToBuilder($memberAccess, $visibility, $methodName);
+            $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess->class(), $visibility);
 
             $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
 
@@ -58,11 +70,11 @@ class WorseGenerateMember implements GenerateMember
         ));
     }
 
-    private function resolveSourceCode(SourceCode $sourceCode, ReflectionMethodCall $methodCall, string $visibility): SourceCode
+    private function resolveSourceCode(SourceCode $sourceCode, ReflectionClassLike $class, string $visibility): SourceCode
     {
         $containerSourceCode = SourceCode::fromStringAndPath(
-            (string) $methodCall->class()->sourceCode(),
-            $methodCall->class()->sourceCode()->uri()?->path()
+            (string) $class->sourceCode(),
+            $class->sourceCode()->uri()?->path()
         );
 
         if ($sourceCode->uri()->path() != $containerSourceCode->uri()->path()) {
@@ -145,6 +157,26 @@ class WorseGenerateMember implements GenerateMember
             //     $methodBuilder->docblock('@return ' . $inferredType->__toString());
             // }
         }
+
+        return $builder->build();
+    }
+
+    private function addCaseToBuilder(
+        ReflectionStaticMemberAccess $access,
+        Visibility $visibility,
+        ?string $caseName
+    ):  PhpactorSourceCode {
+        $caseName = $caseName ?: $access->name();
+
+        $reflectionClass = $access->class();
+        $builder = $this->factory->fromSource($reflectionClass->sourceCode());
+
+        $enumBuilder = $builder->classLike($reflectionClass->name()->short());
+        if (!$enumBuilder instanceof EnumBuilder) {
+            return $builder->build();
+        }
+
+        $enumBuilder->case($caseName);
 
         return $builder->build();
     }

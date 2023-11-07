@@ -6,7 +6,7 @@ enum GenerateCase
     case Bar;
     public function name()
     {
-        self::Fooba<>r;
+        self::Foo<>;
     }
 }
 // File: expected
@@ -14,9 +14,10 @@ enum GenerateCase
 enum GenerateCase
 {
     case Bar;
-    case Foobar;
+    case Foo;
+
     public function name()
     {
-        self::Foobar;
+        self::Foo;
     }
 }
