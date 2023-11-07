@@ -197,6 +197,7 @@ class MissingMemberProvider implements DiagnosticProvider
 
                 enum Foobar
                 {
+                    case Foo;
                 }
 
                 $f = Foobar::Bar;
@@ -205,6 +206,24 @@ class MissingMemberProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals('Case "Bar" does not exist on enum "Foobar"', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'missing constant on class',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    const FOO = 'bar';
+                }
+
+                Foobar::BAR;
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Constant "Bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
             }
         );
     }
