@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
+namespace Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
 
 use Phpactor\TextDocument\ByteOffsetRange;
 

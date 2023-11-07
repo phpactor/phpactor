@@ -4,7 +4,7 @@ namespace Phpactor\CodeTransform\Adapter\WorseReflection\Helper;
 
 use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMember;
+use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder\MissingMember;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMemberDiagnostic;
 use Phpactor\WorseReflection\Reflector;

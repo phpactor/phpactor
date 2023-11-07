@@ -7,7 +7,7 @@ use Amp\Success;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMember;
+use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder\MissingMember;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMemberProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMemberCommand;
 use Phpactor\LanguageServerProtocol\CodeAction;
