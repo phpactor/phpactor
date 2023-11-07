@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\LspCommand;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServer\Core\Command\Command;
@@ -22,7 +22,7 @@ class GenerateMethodCommand implements Command
     public function __construct(
         private ClientApi $clientApi,
         private Workspace $workspace,
-        private GenerateMethod $generateMethod,
+        private GenerateMember $generateMethod,
         private TextDocumentLocator $locator
     ) {
     }

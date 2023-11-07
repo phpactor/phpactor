@@ -4,7 +4,7 @@ namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
 use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMember;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
@@ -91,7 +91,7 @@ class WorseGenerateMethodTest extends WorseTestCase
         $worseSourceCode = TextDocumentBuilder::fromPathAndString('file:///source', $source);
         $reflector = $this->reflectorForWorkspace($worseSourceCode);
 
-        $generateMethod = new WorseGenerateMethod(
+        $generateMethod = new WorseGenerateMember(
             $reflector,
             new WorseBuilderFactory($reflector),
             $this->updater()

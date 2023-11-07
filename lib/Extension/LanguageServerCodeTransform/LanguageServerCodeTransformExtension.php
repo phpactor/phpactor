@@ -13,7 +13,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Container\Container;
@@ -126,7 +126,7 @@ class LanguageServerCodeTransformExtension implements Extension
             return new GenerateMethodCommand(
                 $container->get(ClientApi::class),
                 $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
-                $container->get(GenerateMethod::class),
+                $container->get(GenerateMember::class),
                 $container->get(TextDocumentLocator::class)
             );
         }, [
