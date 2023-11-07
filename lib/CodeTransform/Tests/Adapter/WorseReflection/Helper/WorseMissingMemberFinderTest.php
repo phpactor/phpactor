@@ -9,7 +9,7 @@ use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use function Amp\Promise\wait;
 
-class WorseMissingMethodFinderTest extends WorseTestCase
+class WorseMissingMemberFinderTest extends WorseTestCase
 {
     /**
      * @dataProvider provideFindMissingMethods
