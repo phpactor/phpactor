@@ -9,6 +9,7 @@ Bug fixes:
   - Fix enum representation in method generation #2395
   - Fix enum cases() not existing false-positive #2423
   - Fix incorrect enum import #2400
+  - Fix undefined var false positive for arra unpacking #2403
 
 Features:
 
