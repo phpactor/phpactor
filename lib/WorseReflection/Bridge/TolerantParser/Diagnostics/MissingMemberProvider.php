@@ -217,7 +217,23 @@ class MissingMemberProvider implements DiagnosticProvider
                 }
             );
             yield new DiagnosticExample(
-                title: 'enum static method call',
+                title: 'enum static method not existing',
+                source: <<<'PHP'
+                    <?php
+
+                    enum Foobar
+                    {
+                    }
+
+                    Foobar::foobar();
+                    PHP,
+                valid: false,
+                assertion: function (Diagnostics $diagnostics): void {
+                    Assert::assertCount(1, $diagnostics);
+                }
+            );
+            yield new DiagnosticExample(
+                title: 'enum cases',
                 source: <<<'PHP'
                     <?php
 
@@ -227,7 +243,7 @@ class MissingMemberProvider implements DiagnosticProvider
 
                     Foobar::cases();
                     PHP,
-                valid: false,
+                valid: true,
                 assertion: function (Diagnostics $diagnostics): void {
                     Assert::assertCount(0, $diagnostics);
                 }

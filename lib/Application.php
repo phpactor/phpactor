@@ -72,6 +72,7 @@ class Application extends SymfonyApplication
     {
         $definition = parent::getDefaultInputDefinition();
         $definition->addOption(new InputOption('working-dir', 'd', InputOption::VALUE_REQUIRED, 'Working directory'));
+        $definition->addOption(new InputOption('config-extra', null, InputOption::VALUE_REQUIRED, 'Additional config to apply (JSON string)'));
 
         return $definition;
     }

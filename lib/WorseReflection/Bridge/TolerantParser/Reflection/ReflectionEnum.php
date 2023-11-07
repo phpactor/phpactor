@@ -56,7 +56,8 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         }
         try {
             $enumType = $this->isBacked() ? 'BackedEnum' : 'UnitEnum';
-            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface($enumType)->members();
+            $interface = $this->serviceLocator()->reflector()->reflectInterface($enumType);
+            $enumMethods = $interface->members();
             /** @phpstan-ignore-next-line It is fine */
             return $members->merge($enumMethods)->map(
                 fn (ReflectionMember $member) => $member->withClass($this)

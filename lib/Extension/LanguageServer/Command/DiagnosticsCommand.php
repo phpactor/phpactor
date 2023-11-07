@@ -15,7 +15,7 @@ use function Amp\Promise\wait;
 class DiagnosticsCommand extends Command
 {
     public const NAME = 'language-server:diagnostics';
-    const PARAM_URI = 'uri';
+    private const PARAM_URI = 'uri';
 
 
     public function __construct(private DiagnosticsProvider $provider)
