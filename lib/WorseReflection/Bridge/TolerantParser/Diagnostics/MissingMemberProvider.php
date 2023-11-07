@@ -22,7 +22,7 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 /**
  * Report if trying to call a class method which does not exist.
  */
-class MissingMethodProvider implements DiagnosticProvider
+class MissingMemberProvider implements DiagnosticProvider
 {
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {

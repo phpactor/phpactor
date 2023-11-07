@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissi
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingExtendsTagProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingReturnTypeProvider;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
@@ -24,7 +24,7 @@ class WorseTestCase extends AdapterTestCase
     {
         $builder = ReflectorBuilder::create();
         $builder->addMemberProvider(new DocblockMemberProvider());
-        $builder->addDiagnosticProvider(new MissingMethodProvider());
+        $builder->addDiagnosticProvider(new MissingMemberProvider());
         $builder->addDiagnosticProvider(new DocblockMissingReturnTypeProvider());
         $builder->addDiagnosticProvider(new AssignmentToMissingPropertyProvider());
         $builder->addDiagnosticProvider(new MissingReturnTypeProvider());

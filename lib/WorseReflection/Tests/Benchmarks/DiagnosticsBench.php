@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Benchmarks;
 use Generator;
 use GlobIterator;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use SplFileInfo;
@@ -22,7 +22,7 @@ class DiagnosticsBench
     public function init(): void
     {
         $this->reflector = ReflectorBuilder::create()
-            ->addDiagnosticProvider(new MissingMethodProvider())
+            ->addDiagnosticProvider(new MissingMemberProvider())
             ->build();
     }
 
