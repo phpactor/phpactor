@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Type;
 
+use Closure;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Trinary;
@@ -19,6 +20,11 @@ class EnumCaseType extends ReflectedClassType implements ClassLikeType
         return sprintf('enum(%s::%s)', $this->enumType, $this->caseName);
     }
 
+    public function short(): string
+    {
+        return $this->enumType->short();
+    }
+
     public function toPhpString(): string
     {
         return $this->enumType;
@@ -27,5 +33,20 @@ class EnumCaseType extends ReflectedClassType implements ClassLikeType
     public function accepts(Type $type): Trinary
     {
         return Trinary::maybe();
+    }
+
+    public function map(Closure $mapper): Type
+    {
+        return new self(
+            $this->reflector,
+            /** @phpstan-ignore-next-line Should always return a ClassType */
+            $mapper($this->enumType),
+            $this->caseName
+        );
+    }
+
+    public function isAugmented(): bool
+    {
+        return false;
     }
 }

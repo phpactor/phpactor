@@ -52,6 +52,10 @@ class WorseGenerateMethodTest extends WorseTestCase
         yield 'union false' => [ 'generateMethod17.test' ];
         yield 'duplicated type guesses' => [ 'generateMethod_duplicateNameGuesses.test' ];
         yield 'docblock for complex type' => [ 'generateMethod_complexTypeDocblock.test' ];
+        if (version_compare(PHP_VERSION, '8.1', '>=')) {
+            yield 'enum' => [ 'generateMethod_enumParams.test' ];
+            yield 'backed_enum' => [ 'generateMethod_backedEnumParams.test' ];
+        }
     }
 
     public function testGenerateOnTraitException(): void
