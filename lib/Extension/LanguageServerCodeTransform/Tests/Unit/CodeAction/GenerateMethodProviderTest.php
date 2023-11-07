@@ -69,7 +69,7 @@ class GenerateMethodProviderTest extends TestCase
 
         yield 'Missing method' => [
             [
-                new MissingMember(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5))
+                new MissingMember(self::EXAMPLE_SOURCE, ByteOffsetRange::fromInts(0, 5), 'method')
             ],
             [
                 new Diagnostic(

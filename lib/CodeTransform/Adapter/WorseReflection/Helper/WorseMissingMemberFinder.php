@@ -23,11 +23,12 @@ class WorseMissingMemberFinder implements MissingMemberFinder
             $diagnostics = (yield $this->reflector->diagnostics($sourceCode))->byClass(MissingMemberDiagnostic::class);
             $missing = [];
 
-            /** @var MissingMethodDiagnostic $missingMethod */
+            /** @var MissingMemberDiagnostic $missingMethod */
             foreach ($diagnostics as $missingMethod) {
                 $missing[] = new MissingMember(
                     $missingMethod->methodName(),
                     $missingMethod->range(),
+                    $missingMethod->memberType(),
                 );
             }
 

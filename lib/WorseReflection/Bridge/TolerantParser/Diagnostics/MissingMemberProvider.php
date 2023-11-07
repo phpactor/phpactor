@@ -97,7 +97,8 @@ class MissingMemberProvider implements DiagnosticProvider
                 ),
                 DiagnosticSeverity::ERROR(),
                 $containerType->name()->__toString(),
-                $methodName
+                $methodName,
+                $memberType,
             );
         }
     }

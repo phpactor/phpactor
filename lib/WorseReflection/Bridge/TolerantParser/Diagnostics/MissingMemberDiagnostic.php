@@ -13,7 +13,8 @@ class MissingMemberDiagnostic implements Diagnostic
         private string $message,
         private DiagnosticSeverity $severity,
         private string $classType,
-        private string $methodName
+        private string $methodName,
+        private string $memberType,
     ) {
     }
 
@@ -40,5 +41,10 @@ class MissingMemberDiagnostic implements Diagnostic
     public function methodName(): string
     {
         return $this->methodName;
+    }
+
+    public function memberType(): string
+    {
+        return $this->memberType;
     }
 }
