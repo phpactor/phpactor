@@ -56,6 +56,7 @@ class WorseGenerateMethodTest extends WorseTestCase
             yield 'case on enum' => [ 'generateMember_enumCase.test', 'Foo'];
         }
         yield 'private constant on class' => [ 'generateMember_constant.test', 'FOO'];
+        yield 'public constant on class' => [ 'generateMember_constantPublic.test', 'FOO'];
     }
 
     public function testGenerateOnTraitException(): void

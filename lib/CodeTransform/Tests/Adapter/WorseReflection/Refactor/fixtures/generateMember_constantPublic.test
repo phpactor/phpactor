@@ -1,0 +1,16 @@
+// File: source
+
+<?php
+class GenerateCase
+{
+    const BAR;
+}
+GenerateCase::FOO<>;
+// File: expected
+<?php
+class GenerateCase
+{
+    const BAR;
+    public const FOO = 0;
+}
+GenerateCase::FOO;
