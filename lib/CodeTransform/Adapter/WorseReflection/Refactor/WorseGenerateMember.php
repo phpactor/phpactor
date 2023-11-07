@@ -2,6 +2,8 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\CodeBuilder\Domain\Builder\ClassBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\EnumBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
@@ -56,7 +58,7 @@ class WorseGenerateMember implements GenerateMember
 
         if ($memberAccess instanceof ReflectionStaticMemberAccess) {
             $visibility = $this->determineVisibility($contextType, $memberAccess->class());
-            $prototype = $this->addCaseToBuilder($memberAccess, $visibility, $methodName);
+            $prototype = $this->addMemberToBuilder($memberAccess, $visibility, $methodName);
             $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess->class(), $visibility);
 
             $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
@@ -161,7 +163,7 @@ class WorseGenerateMember implements GenerateMember
         return $builder->build();
     }
 
-    private function addCaseToBuilder(
+    private function addMemberToBuilder(
         ReflectionStaticMemberAccess $access,
         Visibility $visibility,
         ?string $caseName
@@ -171,12 +173,14 @@ class WorseGenerateMember implements GenerateMember
         $reflectionClass = $access->class();
         $builder = $this->factory->fromSource($reflectionClass->sourceCode());
 
-        $enumBuilder = $builder->classLike($reflectionClass->name()->short());
-        if (!$enumBuilder instanceof EnumBuilder) {
-            return $builder->build();
+        $classLikeBuilder = $builder->classLike($reflectionClass->name()->short());
+        if ($classLikeBuilder instanceof EnumBuilder) {
+            $classLikeBuilder->case($caseName);
+        }
+        if ($classLikeBuilder instanceof ClassBuilder) {
+            $classLikeBuilder->constant($caseName, 0);
         }
 
-        $enumBuilder->case($caseName);
 
         return $builder->build();
     }
