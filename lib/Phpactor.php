@@ -117,6 +117,17 @@ class Phpactor
             $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $projectRoot;
         }
 
+        if ($input->hasParameterOption('--config-extra')) {
+            $rawJson = $input->getParameterOption('--config-extra');
+            $extraConfig = json_decode($rawJson, true);
+            if (!is_array($extraConfig)) {
+                throw new RuntimeException(sprintf(
+                    'Invalid JSON passed as config-extra: %s', $rawJson
+                ));
+            }
+            $config = array_merge($config, $extraConfig);
+        }
+
         if (!isset($config[CoreExtension::PARAM_XDEBUG_DISABLE]) || $config[CoreExtension::PARAM_XDEBUG_DISABLE]) {
             $xdebug = new XdebugHandler('PHPACTOR');
             $xdebug->check();
