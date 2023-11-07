@@ -94,7 +94,7 @@ class GenerateMemberProvider implements DiagnosticsProvider, CodeActionProvider
             foreach ($methods as $method) {
                 $diagnostics[] = new Diagnostic(
                     range: RangeConverter::toLspRange($method->range(), $textDocument->text),
-                    message: sprintf('%s "%s" does not exist', $method->memberType(), $method->name()),
+                    message: sprintf('%s "%s" does not exist', ucfirst($method->memberType()), $method->name()),
                     severity: DiagnosticSeverity::WARNING,
                     source: 'phpactor',
                 );

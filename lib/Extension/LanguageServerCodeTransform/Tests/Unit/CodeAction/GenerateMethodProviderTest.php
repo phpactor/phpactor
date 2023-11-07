@@ -127,7 +127,7 @@ class GenerateMethodProviderTest extends TestCase
                         )
                     ],
                     'command' => new Command(
-                        'Generate method',
+                        'Generate member',
                         GenerateMemberCommand::NAME,
                         [
                             self::EXAMPLE_FILE,
