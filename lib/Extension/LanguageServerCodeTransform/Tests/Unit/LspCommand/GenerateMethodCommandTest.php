@@ -94,6 +94,7 @@ class GenerateMethodCommandTest extends TestCase
     }
 
     /**
+     * @param ObjectProphecy<GenerateMember> $generateMethod
      * @return array{LanguageServerTester,LanguageServerTesterBuilder}
      */
     private function createTester(ObjectProphecy $generateMethod): array

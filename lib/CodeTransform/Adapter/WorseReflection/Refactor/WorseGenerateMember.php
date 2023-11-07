@@ -3,7 +3,6 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Phpactor\CodeBuilder\Domain\Builder\ClassBuilder;
-use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\EnumBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
