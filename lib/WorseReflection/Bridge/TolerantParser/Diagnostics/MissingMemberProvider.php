@@ -31,7 +31,7 @@ class MissingMemberProvider implements DiagnosticProvider
     {
         if (
             !$node instanceof CallExpression &&
-            !$node instanceof ScopedPropertyAccessExpression
+            !($node instanceof ScopedPropertyAccessExpression && !$node->parent instanceof CallExpression)
         ) {
             return;
         }
@@ -230,6 +230,25 @@ class MissingMemberProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals('Constant "BAR" does not exist on class "Foobar"', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'missing property on class is not supported yet',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public int $foo;
+                }
+
+                $f = new Foobar();
+                $f->foo = 12;
+                $f->barfoo = 'string';
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
             }
         );
     }
