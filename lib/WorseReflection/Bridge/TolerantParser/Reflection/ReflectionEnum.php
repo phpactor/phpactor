@@ -120,7 +120,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
 
     public function classLikeType(): string
     {
-        return 'enum';
+        return ReflectionMember::TYPE_CASE;
     }
 
     public function traits(): ReflectionTraitCollection

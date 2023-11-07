@@ -73,7 +73,7 @@ class MissingMemberProvider implements DiagnosticProvider
                 return ReflectionMember::TYPE_METHOD;
             }
             if ($reflection instanceof ReflectionEnum) {
-                return ReflectionMember::TYPE_ENUM;
+                return ReflectionMember::TYPE_CASE;
             }
             return 'unknown';
         })($reflection);

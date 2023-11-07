@@ -14,7 +14,7 @@ interface ReflectionMember
     public const TYPE_METHOD = 'method';
     public const TYPE_PROPERTY = 'property';
     public const TYPE_CONSTANT = 'constant';
-    public const TYPE_ENUM = 'case';
+    public const TYPE_CASE = 'case';
 
     public function position(): ByteOffsetRange;
 
