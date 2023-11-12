@@ -73,13 +73,13 @@ If you want to profile Phpactor for debugging purposes:
     function LspPhpactorDumpConfig()
         local results, _ = vim.lsp.buf_request_sync(0, "phpactor/debug/config", {["return"]=true})
         for _, res in pairs(results or {}) do
-            showWindow("Phpactor LSP Configuration", "json", res["result"])
+            pcall(showWindow, 'Phpactor LSP Configuration', 'json', res['result'])
         end
     end
     function LspPhpactorStatus()
         local results, _ = vim.lsp.buf_request_sync(0, "phpactor/status", {["return"]=true})
         for _, res in pairs(results or {}) do
-            showWindow("Phpactor Status", "markdown", res["result"])
+            pcall(showWindow, 'Phpactor Status', 'markdown', res['result'])
         end
     end
 
