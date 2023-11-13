@@ -4112,11 +4112,16 @@ parameters:
 
 		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			count: 2
+			count: 3
 			path: lib/Extension/LanguageServerPhpstan/LanguageServerPhpstanExtension.php
 
 		-
 			message: "#^Parameter \\#2 \\$level of class Phpactor\\\\Extension\\\\LanguageServerPhpstan\\\\Model\\\\PhpstanConfig constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServerPhpstan/LanguageServerPhpstanExtension.php
+
+		-
+			message: "#^Parameter \\#4 \\$memLimit of class Phpactor\\\\Extension\\\\LanguageServerPhpstan\\\\Model\\\\PhpstanConfig constructor expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerPhpstan/LanguageServerPhpstanExtension.php
 

@@ -20,6 +20,8 @@ class LanguageServerPhpstanExtension implements OptionalExtension
 {
     public const PARAM_PHPSTAN_BIN = 'language_server_phpstan.bin';
     public const PARAM_LEVEL = 'language_server_phpstan.level';
+    public const PARAM_CONFIG = 'language_server_phpstan.config';
+    public const PARAM_MEM_LIMIT = 'language_server_phpstan.mem_limit';
     public const PARAM_ENABLED = 'language_server_phpstan.enabled';
 
     public function load(ContainerBuilder $container): void
@@ -39,10 +41,11 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $container->register(PhpstanProcess::class, function (Container $container) {
             $binPath = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PHPSTAN_BIN));
             $root = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%');
+            $configPath = $container->getParameter(self::PARAM_CONFIG) ? $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_CONFIG)) : null;
 
             return new PhpstanProcess(
                 $root,
-                new PhpstanConfig($binPath, $container->getParameter(self::PARAM_LEVEL)),
+                new PhpstanConfig($binPath, $container->getParameter(self::PARAM_LEVEL), $configPath, $container->getParameter(self::PARAM_MEM_LIMIT)),
                 LoggingExtension::channelLogger($container, 'phpstan'),
             );
         });
@@ -54,10 +57,14 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $schema->setDefaults([
             self::PARAM_PHPSTAN_BIN => '%project_root%/vendor/bin/phpstan',
             self::PARAM_LEVEL => null,
+            self::PARAM_CONFIG => null,
+            self::PARAM_MEM_LIMIT => null,
         ]);
         $schema->setDescriptions([
             self::PARAM_PHPSTAN_BIN => 'Path to the PHPStan executable',
             self::PARAM_LEVEL => 'Override the PHPStan level',
+            self::PARAM_CONFIG => 'Override the PHPStan configuration file',
+            self::PARAM_MEM_LIMIT => 'Override the PHPStan memory limit',
         ]);
     }
 
