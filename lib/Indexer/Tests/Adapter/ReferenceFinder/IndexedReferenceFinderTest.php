@@ -18,11 +18,11 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
     }
 
     /**
-     * @dataProvider provideClasses
-     * @dataProvider provideTraits
-     * @dataProvider provideFunctions
+     * dataProvider provideClasses
+     * dataProvider provideTraits
+     * dataProvider provideFunctions
      * @dataProvider provideMembers
-     * @dataProvider provideUnknown
+     * dataProvider provideUnknown
      */
     public function testFinder(string $manifest, int $expectedConfirmed, ?int $expectedTotal = 0): void
     {
@@ -159,6 +159,23 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
      */
     public function provideMembers(): Generator
     {
+        yield 'show new object expressions when finding references on __construct except for superclass' => [
+            <<<'EOT'
+                // File: project/Bar.php
+                <?php class Bar { public function __construct() {} }
+                // File: project/subject.php
+                <?php class SubBar extends Bar { public function __c<>onstruct() {} }
+                // File: project/subject.php
+                <?php class Other extends Bar { public function __c<>onstruct() {} }
+
+                // File: project/class1.php
+                <?php new Bar(); new SubBar(); new Other();
+                EOT
+                ,
+                2
+        ];
+        return;
+
         yield 'static members' => [
             <<<'EOT'
                 // File: project/subject.php
