@@ -1,13 +1,18 @@
 {
   "compression": "GZ",
   "directories": [
-    "lib",
     "templates"
   ],
   "files": [
     "LICENSE"
   ],
   "finder": [
+    {
+      "exclude": [
+        "Tests"
+      ],
+      "in": "lib"
+    },
     {
       "name": "{\\.[php]}",
       "exclude": [
