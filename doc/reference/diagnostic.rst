@@ -53,6 +53,73 @@ Report if trying to call a class method which does not exist.
         
         - ``ERROR``: ``Method "bar" does not exist on class "Foobar"``
         
+    .. tab:: missing enum case
+        
+        .. code-block:: php
+        
+            <?php
+            
+            enum Foobar
+            {
+                case Foo;
+            }
+            
+            Foobar::Foo;
+            Foobar::Bar;
+        
+        Diagnostic(s):
+        
+        - ``ERROR``: ``Case "Bar" does not exist on enum "Foobar"``
+        
+    .. tab:: enum static method not existing
+        
+        .. code-block:: php
+        
+            <?php
+            
+            enum Foobar
+            {
+            }
+            
+            Foobar::foobar();
+        
+        Diagnostic(s):
+        
+        - ``ERROR``: ``Method "foobar" does not exist on enum "Foobar"``
+        
+    .. tab:: missing constant on class
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                const FOO = 'bar';
+            }
+            
+            Foobar::FOO;
+            Foobar::BAR;
+        
+        Diagnostic(s):
+        
+        - ``ERROR``: ``Constant "BAR" does not exist on class "Foobar"``
+        
+    .. tab:: missing property on class is not supported yet
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public int $foo;
+            }
+            
+            $f = new Foobar();
+            $f->foo = 12;
+            $f->barfoo = 'string';
+        
 ``docblock_missing_return``
 ---------------------------
 

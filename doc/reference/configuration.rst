@@ -907,7 +907,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1361,8 +1361,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
-
-**Default**: ``"\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:
@@ -1844,6 +1843,32 @@ Override the PHPStan level
 **Default**: ``null``
 
 
+.. _param_language_server_phpstan.config:
+
+
+``language_server_phpstan.config``
+""""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan configuration file
+
+
+**Default**: ``null``
+
+
+.. _param_language_server_phpstan.mem_limit:
+
+
+``language_server_phpstan.mem_limit``
+"""""""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan memory limit
+
+
+**Default**: ``null``
+
+
 .. _LanguageServerPsalmExtension:
 
 
@@ -2029,7 +2054,7 @@ Whether PHP CS Fixer diagnostics are shown
 """""""""""""""""""""""""""""""""""""""
 
 
-Set custom config
+Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php
 
 
 **Default**: ``null``

@@ -15,6 +15,10 @@ Features:
 
   - Generate enum cases and class constants #2422
 
+Improvements:
+
+  - PHPStan: Support setting custom config path and memory limit @ungrim97
+
 ## 2023.09.24
 
 Bug fixes:
