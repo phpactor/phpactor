@@ -8,21 +8,30 @@ use Phpactor\Indexer\Model\Record\HasFlagsTrait;
 class RecordReference implements HasFlags
 {
     use HasFlagsTrait;
-    const FLAG_NEW_OBJECT = 1;
+    public const FLAG_NEW_OBJECT = 1;
 
+    /**
+     * Order matters here for B/C, new parameters must be added after old ones.
+     */
     public function __construct(
         private string $type,
         private string $identifier,
-        private int $offset,
+        private int $start,
         private ?string $contaninerType = null,
-        int $flags = 0
+        int $flags = 0,
+        private ?int $end = null,
     ) {
         $this->flags = $flags;
     }
 
-    public function offset(): int
+    public function start(): int
     {
-        return $this->offset;
+        return $this->start;
+    }
+
+    public function end(): int
+    {
+        return $this->end ?? $this->start;
     }
 
     public function identifier(): string
@@ -35,19 +44,32 @@ class RecordReference implements HasFlags
         return $this->type;
     }
 
-    public static function fromRecordAndOffset(Record $record, int $offset): self
-    {
-        return new self($record->recordType(), $record->identifier(), $offset);
-    }
-
-    public static function fromRecordAndOffsetAndContainerType(Record $record, int $offset, ?string $containerType): self
-    {
-        return new self($record->recordType(), $record->identifier(), $offset, $containerType);
+    public static function fromRecordAndOffsetAndContainerType(
+        Record $record,
+        int $start,
+        int $end,
+        ?string $containerType
+    ): self {
+        return new self(
+            $record->recordType(),
+            $record->identifier(),
+            $start,
+            $containerType,
+            0,
+            $end,
+        );
     }
 
     public function withContainerType(string $type): self
     {
-        return new self($this->type, $this->identifier, $this->offset, $type);
+        return new self(
+            $this->type,
+            $this->identifier,
+            $this->start,
+            $type,
+            $this->flags,
+            $this->end,
+        );
     }
 
     public function contaninerType(): ?string

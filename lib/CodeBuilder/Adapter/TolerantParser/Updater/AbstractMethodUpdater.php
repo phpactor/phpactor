@@ -5,6 +5,7 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ParameterDeclarationList;
+use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
@@ -42,7 +43,7 @@ abstract class AbstractMethodUpdater
         $existingMethodNames = [];
         $existingMethods = [];
         foreach ($this->memberDeclarations($classNode) as $memberNode) {
-            if ($memberNode instanceof PropertyDeclaration) {
+            if ($memberNode instanceof PropertyDeclaration || $memberNode instanceof EnumCaseDeclaration) {
                 $lastMember = $memberNode;
                 $newLine = true;
                 if (!$methodHasBeenEncountered) {

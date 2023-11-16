@@ -24,7 +24,7 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportName;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpression;
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMethodFinder;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMemberFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateConstructor;
@@ -34,7 +34,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateDecorat
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseOverrideMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseInterestingOffsetFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMember;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
@@ -48,7 +48,7 @@ use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\DocBlockUpdater;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\InterestingOffsetFinder;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
+use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
 use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
@@ -59,7 +59,7 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\Extension\CodeTransform\Rpc\TransformHandler;
@@ -225,8 +225,8 @@ class CodeTransformExtension implements Extension
             );
         });
 
-        $container->register(GenerateMethod::class, function (Container $container) {
-            return new WorseGenerateMethod(
+        $container->register(GenerateMember::class, function (Container $container) {
+            return new WorseGenerateMember(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(BuilderFactory::class),
                 $container->get(Updater::class)
@@ -358,8 +358,8 @@ class CodeTransformExtension implements Extension
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
             );
         });
-        $container->register(MissingMethodFinder::class, function (Container $container) {
-            return new WorseMissingMethodFinder(
+        $container->register(MissingMemberFinder::class, function (Container $container) {
+            return new WorseMissingMemberFinder(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
             );
         });

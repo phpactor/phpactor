@@ -11,10 +11,10 @@ use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMemberCommand;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -40,8 +40,8 @@ class GenerateMethodCommandTest extends TestCase
             new TextEdits(TextEdit::create(self::EXAMPLE_OFFSET, 1, 'test'))
         );
 
-        $generateMethod = $this->prophesize(GenerateMethod::class);
-        $generateMethod->generateMethod(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
+        $generateMethod = $this->prophesize(GenerateMember::class);
+        $generateMethod->generateMember(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
             ->shouldBeCalled()
             ->willReturn($textEdits);
 
@@ -68,8 +68,8 @@ class GenerateMethodCommandTest extends TestCase
      */
     public function testFailedCall(Exception $exception): void
     {
-        $generateMethod = $this->prophesize(GenerateMethod::class);
-        $generateMethod->generateMethod(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
+        $generateMethod = $this->prophesize(GenerateMember::class);
+        $generateMethod->generateMember(Argument::type(SourceCode::class), self::EXAMPLE_OFFSET)
             ->shouldBeCalled()
             ->willThrow($exception);
 
@@ -94,6 +94,7 @@ class GenerateMethodCommandTest extends TestCase
     }
 
     /**
+     * @param ObjectProphecy<GenerateMember> $generateMethod
      * @return array{LanguageServerTester,LanguageServerTesterBuilder}
      */
     private function createTester(ObjectProphecy $generateMethod): array
@@ -101,7 +102,7 @@ class GenerateMethodCommandTest extends TestCase
         $builder = LanguageServerTesterBuilder::createBare()
             ->enableTextDocuments()
             ->enableCommands();
-        $builder->addCommand('generate', new GenerateMethodCommand(
+        $builder->addCommand('generate', new GenerateMemberCommand(
             $builder->clientApi(),
             $builder->workspace(),
             $generateMethod->reveal(),

@@ -47,7 +47,7 @@
         "phpstan/phpstan-phpunit": "^1.0",
         "jangregor/phpstan-prophecy": "^1.0",
         "phpstan/extension-installer": "^1.1",
-        "vimeo/psalm": "^4.22",
+        "vimeo/psalm": "^5.15",
         "blackfire/php-sdk": "^1.31",
         "squizlabs/php_codesniffer": "^3.7"
     },
@@ -118,7 +118,7 @@
         "integrate": [
             "composer validate --strict",
             "vendor/bin/php-cs-fixer fix",
-            "vendor/bin/phpstan analyse",
+            "vendor/bin/phpstan analyse --memory-limit=-1",
             "vendor/bin/phpunit",
             "vendor/bin/phpbench run --iterations=1 --revs=1",
             "make docs"

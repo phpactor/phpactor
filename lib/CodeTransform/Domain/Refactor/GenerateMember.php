@@ -5,7 +5,7 @@ namespace Phpactor\CodeTransform\Domain\Refactor;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextDocumentEdits;
 
-interface GenerateMethod
+interface GenerateMember
 {
-    public function generateMethod(SourceCode $sourceCode, int $offset): TextDocumentEdits;
+    public function generateMember(SourceCode $sourceCode, int $offset): TextDocumentEdits;
 }

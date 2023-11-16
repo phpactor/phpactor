@@ -1,0 +1,13 @@
+enum {{ prototype.name }}
+{
+{% for case in prototype.cases %}
+{{ generator.render(case, variant)|indent(1)|raw }}
+{% endfor %}
+{% for method in prototype.methods %}
+{% if prototype.properties|length or not loop.first %}
+
+{% endif %}
+{{ generator.render(method, variant)|indent(1)|raw }}
+{{ generator.render(method.body)|indent(1)|raw }}
+{% endfor %}
+}

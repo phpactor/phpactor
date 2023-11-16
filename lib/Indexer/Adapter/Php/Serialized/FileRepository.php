@@ -15,6 +15,11 @@ use Throwable;
 class FileRepository
 {
     /**
+     * Increment this number each time there is a B/C break in the index.
+     */
+    private const VERSION = 1;
+
+    /**
      * Flush to the filesystem after BATCH_SIZE updates
      */
     private const BATCH_SIZE = 10000;
@@ -164,7 +169,7 @@ class FileRepository
 
     private function timestampPath(): string
     {
-        return $this->path . '/timestamp';
+        return sprintf('%s/timestamp.v%d', $this->path, self::VERSION);
     }
 
     private function pathFor(Record $record): string

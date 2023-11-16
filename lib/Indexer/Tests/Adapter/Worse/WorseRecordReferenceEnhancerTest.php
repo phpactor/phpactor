@@ -31,7 +31,7 @@ class WorseRecordReferenceEnhancerTest extends IntegrationTestCase
             new FilesystemTextDocumentLocator(),
         );
         $fileRecord = FileRecord::fromPath($this->workspace()->path('test.php'));
-        $reference = new RecordReference(MemberRecord::RECORD_TYPE, 'foobar', (int)$offset);
+        $reference = new RecordReference(MemberRecord::RECORD_TYPE, 'foobar', (int)$offset, end: (int)$offset);
         $reference = $enhancer->enhance($fileRecord, $reference);
         self::assertEquals($expectedType, $reference->contaninerType());
     }

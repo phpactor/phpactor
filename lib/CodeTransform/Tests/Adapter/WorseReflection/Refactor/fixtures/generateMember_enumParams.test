@@ -1,0 +1,36 @@
+// File: source
+<?php
+
+namespace Foo;
+
+enum Alignment {
+    case Left;
+    case Right;
+}
+class GenerateMethod
+{
+    public function name()
+    {
+        $this->b<>arfoo(Alignment::Left);
+    }
+}
+// File: expected
+<?php
+
+namespace Foo;
+
+enum Alignment {
+    case Left;
+    case Right;
+}
+class GenerateMethod
+{
+    public function name()
+    {
+        $this->barfoo(Alignment::Left);
+    }
+
+    private function barfoo(Alignment $alignment)
+    {
+    }
+}

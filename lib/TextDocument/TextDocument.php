@@ -10,7 +10,7 @@ interface TextDocument
     /**
      * Return the document as a string
      */
-    public function __toString();
+    public function __toString(): string;
 
     /**
      * Return the URI to the document or NULL if the document has not been

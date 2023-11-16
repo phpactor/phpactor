@@ -2,14 +2,20 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Phpactor\CodeBuilder\Domain\Builder\ClassBuilder;
+use Phpactor\CodeBuilder\Domain\Builder\EnumBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Prototype\SourceCode as PhpactorSourceCode;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentEdits;
 use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionStaticMemberAccess;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument;
@@ -20,8 +26,9 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Domain\BuilderFactory;
+use RuntimeException;
 
-class WorseGenerateMethod implements GenerateMethod
+class WorseGenerateMember implements GenerateMember
 {
     public function __construct(
         private Reflector $reflector,
@@ -30,28 +37,45 @@ class WorseGenerateMethod implements GenerateMethod
     ) {
     }
 
-    public function generateMethod(SourceCode $sourceCode, int $offset, ?string $methodName = null): TextDocumentEdits
+    public function generateMember(SourceCode $sourceCode, int $offset, ?string $methodName = null): TextDocumentEdits
     {
         $contextType = $this->contextType($sourceCode, $offset);
         $worseSourceCode = TextDocumentBuilder::fromPathAndString((string) $sourceCode->uri()->path(), (string) $sourceCode);
-        $methodCall = $this->reflector->reflectMethodCall($worseSourceCode, $offset);
+        $memberAccess = $this->reflector->reflectNode($worseSourceCode, $offset);
 
-        $this->validate($methodCall);
-        $visibility = $this->determineVisibility($contextType, $methodCall->class());
+        if ($memberAccess instanceof ReflectionMethodCall) {
+            $this->validate($memberAccess);
+            $visibility = $this->determineVisibility($contextType, $memberAccess->class());
 
-        $prototype = $this->addMethodCallToBuilder($methodCall, $visibility, $methodCall->isStatic(), $methodName);
-        $sourceCode = $this->resolveSourceCode($sourceCode, $methodCall, $visibility);
+            $prototype = $this->addMethodCallToBuilder($memberAccess, $visibility, $memberAccess->isStatic(), $methodName);
+            $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess->class(), $visibility);
 
-        $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
+            $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
 
-        return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
+            return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
+        }
+
+        if ($memberAccess instanceof ReflectionStaticMemberAccess) {
+            $visibility = $this->determineVisibility($contextType, $memberAccess->class());
+            $prototype = $this->addMemberToBuilder($memberAccess, $visibility, $methodName);
+            $sourceCode = $this->resolveSourceCode($sourceCode, $memberAccess->class(), $visibility);
+
+            $textEdits = $this->updater->textEditsFor($prototype, Code::fromString((string) $sourceCode));
+
+            return new TextDocumentEdits(TextDocumentUri::fromString($sourceCode->uri()->path()), $textEdits);
+        }
+
+        throw new RuntimeException(sprintf(
+            'Could not generate member for "%s"',
+            $memberAccess::class
+        ));
     }
 
-    private function resolveSourceCode(SourceCode $sourceCode, ReflectionMethodCall $methodCall, string $visibility): SourceCode
+    private function resolveSourceCode(SourceCode $sourceCode, ReflectionClassLike $class, string $visibility): SourceCode
     {
         $containerSourceCode = SourceCode::fromStringAndPath(
-            (string) $methodCall->class()->sourceCode(),
-            $methodCall->class()->sourceCode()->uri()?->path()
+            (string) $class->sourceCode(),
+            $class->sourceCode()->uri()?->path()
         );
 
         if ($sourceCode->uri()->path() != $containerSourceCode->uri()->path()) {
@@ -87,10 +111,7 @@ class WorseGenerateMethod implements GenerateMethod
         $reflectionClass = $methodCall->class();
         $builder = $this->factory->fromSource($reflectionClass->sourceCode());
 
-        $classBuilder = $reflectionClass->isClass() ?
-            $builder->class($reflectionClass->name()->short()) :
-            $builder->interface($reflectionClass->name()->short());
-
+        $classBuilder = $builder->classLike($reflectionClass->name()->short());
         $methodBuilder = $classBuilder->method($methodName);
         $methodBuilder->visibility((string) $visibility);
         if ($static) {
@@ -141,6 +162,29 @@ class WorseGenerateMethod implements GenerateMethod
         return $builder->build();
     }
 
+    private function addMemberToBuilder(
+        ReflectionStaticMemberAccess $access,
+        Visibility $visibility,
+        ?string $caseName
+    ):  PhpactorSourceCode {
+        $caseName = $caseName ?: $access->name();
+
+        $reflectionClass = $access->class();
+        $builder = $this->factory->fromSource($reflectionClass->sourceCode());
+
+        $classLikeBuilder = $builder->classLike($reflectionClass->name()->short());
+        if ($classLikeBuilder instanceof EnumBuilder) {
+            $classLikeBuilder->case($caseName);
+        }
+        if ($classLikeBuilder instanceof ClassBuilder) {
+            $constantBuuilder = $classLikeBuilder->constant($caseName, 0);
+            $constantBuuilder->visibility($visibility);
+        }
+
+
+        return $builder->build();
+    }
+
     private function determineVisibility(?Type $contextType, ReflectionClassLike $targetClass): Visibility
     {
         if (null === $contextType) {
@@ -156,10 +200,11 @@ class WorseGenerateMethod implements GenerateMethod
 
     private function validate(ReflectionMethodCall $methodCall): void
     {
-        if (false === $methodCall->class()->isClass() && false === $methodCall->class()->isInterface()) {
+        $target = $methodCall->class();
+        if (!$target instanceof ReflectionClass && !$target instanceof ReflectionInterface && !$target instanceof ReflectionEnum) {
             throw new TransformException(sprintf(
                 'Can only generate methods on classes or interfaces (trying on %s)',
-                get_class($methodCall->class()->name())
+                get_class($target->name())
             ));
         }
     }

@@ -11,6 +11,7 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -43,7 +44,7 @@ class GotoImplementationHandlerTest extends TestCase
             $document,
             ByteOffset::fromInt(0)
         )->willReturn(new Locations([
-            new Location($document->uri(), ByteOffset::fromInt(2))
+            new Location($document->uriOrThrow(), ByteOffsetRange::fromInts(2, 2))
         ]));
 
         $builder = LanguageServerTesterBuilder::create();
@@ -63,6 +64,7 @@ class GotoImplementationHandlerTest extends TestCase
 
         $this->assertIsArray($locations);
         $this->assertCount(1, $locations);
+
         $lspLocation = reset($locations);
         $this->assertInstanceOf(LspLocation::class, $lspLocation);
     }

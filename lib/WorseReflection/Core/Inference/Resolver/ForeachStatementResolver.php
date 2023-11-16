@@ -151,7 +151,7 @@ class ForeachStatementResolver implements Resolver
             $context = $resolver->resolveNode($frame, $item->elementValue);
             $context = $context->withType($this->resolveArrayCreationType($arrayType, $index));
 
-            $frame->locals()->set(WorseVariable::fromSymbolContext($context));
+            $frame->locals()->set(WorseVariable::fromSymbolContext($context)->asAssignment());
             $index++;
         }
     }

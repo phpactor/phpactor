@@ -46,11 +46,11 @@ class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
         }
 
         try {
-            $offset = $this->reflector->reflectOffset($contents, $reference->offset());
+            $offset = $this->reflector->reflectOffset($contents, $reference->start());
         } catch (NotFound $notFound) {
             $this->logger->debug(sprintf(
                 'Record Enhancer: Could not reflect offset %s in file "%s": %s',
-                $reference->offset(),
+                $reference->start(),
                 $record->filePath(),
                 $notFound->getMessage()
             ));

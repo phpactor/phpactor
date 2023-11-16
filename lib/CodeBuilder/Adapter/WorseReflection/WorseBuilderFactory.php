@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Reflector;
@@ -53,6 +54,10 @@ class WorseBuilderFactory implements BuilderFactory
             if ($classLike instanceof ReflectionTrait) {
                 $this->build('trait', $builder, $classLike);
                 continue;
+            }
+
+            if ($classLike instanceof ReflectionEnum) {
+                $this->build('enum', $builder, $classLike);
             }
         }
 

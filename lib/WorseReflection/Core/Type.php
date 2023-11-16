@@ -145,9 +145,6 @@ abstract class Type
         return $type->toPhpString();
     }
 
-    /**
-     * @returnc self
-     */
     public function toLocalType(ReflectionScope $scope): self
     {
         // TODO: do not modify type by reference

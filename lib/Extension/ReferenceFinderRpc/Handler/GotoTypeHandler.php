@@ -66,7 +66,7 @@ class GotoTypeHandler implements Handler
 
         return OpenFileResponse::fromPathAndOffset(
             $location->location()->uri()->path(),
-            $location->location()->offset()->toInt()
+            $location->location()->range()->start()->toInt()
         )->withTarget($arguments[self::PARAM_TARGET]);
     }
 }

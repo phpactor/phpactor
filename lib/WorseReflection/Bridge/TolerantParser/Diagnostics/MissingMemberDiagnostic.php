@@ -6,14 +6,15 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 
-class MissingMethodDiagnostic implements Diagnostic
+class MissingMemberDiagnostic implements Diagnostic
 {
     public function __construct(
         private ByteOffsetRange $range,
         private string $message,
         private DiagnosticSeverity $severity,
         private string $classType,
-        private string $methodName
+        private string $methodName,
+        private string $memberType,
     ) {
     }
 
@@ -40,5 +41,10 @@ class MissingMethodDiagnostic implements Diagnostic
     public function methodName(): string
     {
         return $this->methodName;
+    }
+
+    public function memberType(): string
+    {
+        return $this->memberType;
     }
 }

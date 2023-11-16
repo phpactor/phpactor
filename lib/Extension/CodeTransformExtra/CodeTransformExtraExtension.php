@@ -5,7 +5,7 @@ namespace Phpactor\Extension\CodeTransformExtra;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
@@ -131,7 +131,7 @@ class CodeTransformExtraExtension implements Extension
 
         $container->register('code_transform.rpc.handler.generate_method', function (Container $container) {
             return new GenerateMethodHandler(
-                $container->get(GenerateMethod::class)
+                $container->get(GenerateMember::class)
             );
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => GenerateMethodHandler::NAME] ]);
 

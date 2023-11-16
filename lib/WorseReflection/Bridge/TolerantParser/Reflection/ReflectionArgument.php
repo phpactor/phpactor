@@ -51,7 +51,7 @@ class ReflectionArgument implements CoreReflectionArgument
             $stringify = function (Type $type) {
                 $type = $type->stripNullable();
                 if ($type instanceof ClassType) {
-                    return lcfirst($type->name->short());
+                    return lcfirst($type->short());
                 }
                 return lcfirst($type->toPhpString());
             };

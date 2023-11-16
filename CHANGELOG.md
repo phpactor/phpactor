@@ -5,6 +5,24 @@ Changelog
 
 Bug fixes:
 
+  - Fix frame merging of include/require #2391
+  - Fix enum representation in method generation #2395
+  - Fix enum cases() not existing false-positive #2423
+  - Fix incorrect enum import #2400
+  - Fix undefined var false positive for arra unpacking #2403
+
+Features:
+
+  - Generate enum cases and class constants #2422
+
+Improvements:
+
+  - PHPStan: Support setting custom config path and memory limit @ungrim97
+
+## 2023.09.24
+
+Bug fixes:
+
   - Fix crash with `php-cs-fixer` when using strict types rule #2348
   - Fix `null` error (and improve type safety) in the docblock parser #2379
   - Fix undefined-var false positive for undeclared variables that have `@var` #2366
@@ -12,10 +30,13 @@ Bug fixes:
   - Do not crash lanugage server if LSP header cannot be parsed (log error
     instead) #2373
 
-Features:
+Improvements:
 
-  - PHP Code Sniffer (`phpcs`) extension #2353 @bart-jaskulski
-  - Subscript array-shape completion #2339
+  - Correctly implementing LSP ranges #2352 @mamazu
+  - Add mechanism to automatically trigger an index update when breaking changes
+    are made
+  - Method generation on emums @mamazu
+
 
 Improvements:
 
