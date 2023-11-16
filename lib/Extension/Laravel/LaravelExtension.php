@@ -140,10 +140,10 @@ class LaravelExtension implements OptionalExtension
 
         $container->register('laravel-stub-locator', function (Container $container) {
             return new InternalLocator([
-                'LaravelHasManyVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
-                'LaravelBelongsToVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
-                'LaravelBelongsToManyVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
-                'LaravelQueryVirtualBuilder' => __DIR__ . '/stubs/LaravelRelationBuilderStub.php',
+                'LaravelHasManyVirtualBuilder' => __DIR__ . '/Stubs/LaravelRelationBuilderStub.php',
+                'LaravelBelongsToVirtualBuilder' => __DIR__ . '/Stubs/LaravelRelationBuilderStub.php',
+                'LaravelBelongsToManyVirtualBuilder' => __DIR__ . '/Stubs/LaravelRelationBuilderStub.php',
+                'LaravelQueryVirtualBuilder' => __DIR__ . '/Stubs/LaravelRelationBuilderStub.php',
             ]);
         }, [ WorseReflectionExtension::TAG_SOURCE_LOCATOR => [
             'priority' => 9999
