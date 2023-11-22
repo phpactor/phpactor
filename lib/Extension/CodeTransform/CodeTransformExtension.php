@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform;
 
+use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer74;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer80;
@@ -26,6 +27,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\Interfac
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMemberFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillMatchArms;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMutator;
@@ -285,10 +287,16 @@ class CodeTransformExtension implements Extension
         $container->register(WorseFillObject::class, function (Container $container) {
             return new WorseFillObject(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
                 $container->get(Updater::class),
                 $container->parameter(self::PARAM_OBJECT_FILL_NAMED)->bool(),
                 $container->parameter(self::PARAM_OBJECT_FILL_HINT)->bool(),
+            );
+        });
+        $container->register(WorseFillMatchArms::class, function (Container $container) {
+            return new WorseFillMatchArms(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
             );
         });
 

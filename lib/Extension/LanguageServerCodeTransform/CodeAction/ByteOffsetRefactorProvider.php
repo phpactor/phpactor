@@ -18,7 +18,7 @@ use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 class ByteOffsetRefactorProvider implements CodeActionProvider
 {
     public function __construct(
-        private ByteOffsetRefactor $fillObject,
+        private ByteOffsetRefactor $refactor,
         private string $kind,
         private string $title,
         private string $description,
@@ -27,7 +27,7 @@ class ByteOffsetRefactorProvider implements CodeActionProvider
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
-        $edits = $this->fillObject->refactor(
+        $edits = $this->refactor->refactor(
             TextDocumentConverter::fromLspTextItem($textDocument),
             RangeConverter::toPhpactorRange($range, $textDocument->text)->start()
         );

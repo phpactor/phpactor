@@ -22,7 +22,7 @@ class WorseFillMatchArmsTest extends WorseTestCase
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset($path);
 
         $fill = $this->createRefactor($source);
-        $transformed = $fill->fillMatchArms(
+        $transformed = $fill->refactor(
             TextDocumentBuilder::create($source)->build(),
             ByteOffset::fromInt($offset)
         )->apply($source);

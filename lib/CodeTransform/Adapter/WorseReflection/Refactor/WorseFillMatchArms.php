@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\MatchArm;
 use Microsoft\PhpParser\Parser;
+use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
@@ -18,7 +19,7 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
-final class WorseFillMatchArms
+final class WorseFillMatchArms implements ByteOffsetRefactor
 {
     public function __construct(
         private Reflector $reflector,
@@ -26,7 +27,7 @@ final class WorseFillMatchArms
     ) {
     }
 
-    public function fillMatchArms(TextDocument $document, ByteOffset $offset): TextEdits
+    public function refactor(TextDocument $document, ByteOffset $offset): TextEdits
     {
         $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
         $node = $node instanceof MatchExpression ? $node : $node->getFirstAncestor(MatchExpression::class);
