@@ -120,19 +120,19 @@ class TolerantClassReplacerTest extends TestCase
             ],
             'Change namespace of interface' => [
                 'Example5.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example5Interface',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarInterface',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\Example5Interface',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarInterface',
                 <<<'EOT'
                     <?php
-                    namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar;
+                    namespace Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar;
                     EOT
             ],
             'Change namespace of trait' => [
                 'Example6.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\ExampleTrait',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarTrait',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\ExampleTrait',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarTrait',
                 <<<'EOT'
-                    namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar;
+                    namespace Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar;
                     EOT
             ],
             'Change name of class expansion' => [
@@ -154,8 +154,8 @@ class TolerantClassReplacerTest extends TestCase
             ],
             'Class which includes use statement for itself' => [
                 'Example7.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example7',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example8',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\Example7',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\Example8',
                 <<<'EOT'
                     class Example8
                     EOT

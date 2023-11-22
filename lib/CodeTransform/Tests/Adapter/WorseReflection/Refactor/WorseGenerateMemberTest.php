@@ -10,7 +10,7 @@ use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
-class WorseGenerateMethodTest extends WorseTestCase
+class WorseGenerateMemberTest extends WorseTestCase
 {
     /**
      * @dataProvider provideGenerateMember
