@@ -3,12 +3,8 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Microsoft\PhpParser\Node\Expression\MatchExpression;
-use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Parser;
-use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
-use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\EmptyValueRenderer;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
@@ -17,8 +13,6 @@ use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMatchExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionObjectCreationExpression;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\HasEmptyType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -29,9 +23,6 @@ class WorseFillMatchArms implements FillObject
     public function __construct(
         private Reflector $reflector,
         private Parser $parser,
-        private Updater $updater,
-        private bool $namedParameters = true,
-        private bool $hint = true
     ) {
     }
 

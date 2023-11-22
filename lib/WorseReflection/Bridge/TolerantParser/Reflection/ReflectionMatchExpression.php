@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
@@ -11,13 +12,14 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\ServiceLocator;
+use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
-class ReflectionStaticMemberAccess implements ReflectionNode
+class ReflectionMatchExpression implements ReflectionNode
 {
     /**
-     * @param ScopedPropertyAccessExpression|MemberAccessExpression $node
+     * @param MatchExpression $node
      */
     public function __construct(
         private ServiceLocator $services,
@@ -34,46 +36,13 @@ class ReflectionStaticMemberAccess implements ReflectionNode
         );
     }
 
-    public function class(): ReflectionClassLike
+    public function expressionType(): Type
     {
-        $info = $this->services->nodeContextResolver()->resolveNode($this->frame, $this->node);
-        $containerType = $info->containerType();
-
-        if (!$containerType instanceof ReflectedClassType) {
-            throw new CouldNotResolveNode(sprintf(
-                'Class for member "%s" could not be determined',
-                $this->name()
-            ));
-        }
-
-        $reflection = $containerType->reflectionOrNull();
-
-        if (null === $reflection) {
-            throw new CouldNotResolveNode(sprintf(
-                'Class for member "%s" could not be determined',
-                $this->name()
-            ));
-        }
-
-        return $reflection;
+        $expr = $this->services->nodeContextResolver()->resolveNode($this->frame, $this->node->expression);
+        return $expr->type();
     }
-
-    public function name(): string
-    {
-        return NodeUtil::nameFromTokenOrNode($this->node, $this->node->memberName);
-    }
-
     public function scope(): ReflectionScope
     {
         return new ReflectionScope($this->services->reflector(), $this->node);
-    }
-
-    public function nameRange(): ByteOffsetRange
-    {
-        $memberName = $this->node->memberName;
-        return ByteOffsetRange::fromInts(
-            $memberName->getStartPosition(),
-            $memberName->getEndPosition()
-        );
     }
 }

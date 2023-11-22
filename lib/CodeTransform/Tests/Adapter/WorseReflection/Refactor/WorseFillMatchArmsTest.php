@@ -22,7 +22,7 @@ class WorseFillMatchArmsTest extends WorseTestCase
     ): void {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset($path);
 
-        $fill = $this->createFillObject($source, true, false);
+        $fill = $this->createFillObject($source);
         $transformed = $fill->fillObject(
             TextDocumentBuilder::create($source)->build(),
             ByteOffset::fromInt($offset)
@@ -44,14 +44,11 @@ class WorseFillMatchArmsTest extends WorseTestCase
         }
     }
 
-    private function createFillObject(string $source, bool $named = true, bool $hint = false): WorseFillMatchArms
+    private function createFillObject(string $source): WorseFillMatchArms
     {
         $fill = new WorseFillMatchArms(
             $this->reflectorForWorkspace($source),
             new Parser(),
-            $this->updater(),
-            $named,
-            $hint
         );
         return $fill;
     }

@@ -5,9 +5,11 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionAttribute;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMatchExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression as PhpactorReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionStaticMemberAccess;
@@ -36,6 +38,10 @@ class NodeReflector
 
         if ($node instanceof ObjectCreationExpression) {
             return $this->reflectObjectCreationExpression($frame, $node);
+        }
+
+        if ($node instanceof MatchExpression) {
+            return $this->reflectMatchExpression($frame, $node);
         }
 
         if ($node->parent instanceof Attribute) {
@@ -107,6 +113,15 @@ class NodeReflector
     private function reflectCaseOrConstant(Frame $frame, ScopedPropertyAccessExpression $node): ReflectionStaticMemberAccess
     {
         return new ReflectionStaticMemberAccess(
+            $this->services,
+            $frame,
+            $node
+        );
+    }
+
+    private function reflectMatchExpression(Frame $frame, MatchExpression $node): ReflectionNode
+    {
+        return new ReflectionMatchExpression(
             $this->services,
             $frame,
             $node
