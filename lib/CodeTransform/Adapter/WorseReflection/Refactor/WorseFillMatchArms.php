@@ -2,16 +2,20 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Doctrine\DBAL\Types\TextType;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\MatchArm;
 use Microsoft\PhpParser\Parser;
+use Phpactor\CodeBuilder\Domain\Prototype\Line;
 use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\TextDocument\Util\LineAtOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMatchExpression;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
@@ -55,16 +59,18 @@ final class WorseFillMatchArms implements ByteOffsetRefactor
         }
 
         $edits = [];
-        [$prefix, $postfix, $start, $existingCases] = $this->existingCases($node);
+        [$prefix, $whitespace, $postfix, $start, $existingCases] = $this->existingCases($node);
         if ($prefix) {
             $edits[] = TextEdit::create($start, 0, $prefix);
         }
+            $edits[] = TextEdit::create($start, 0, "\n");
         foreach ($enum->cases() as $case) {
             if (in_array($case->name(), $existingCases)) {
                 continue;
             }
-            $edits[] = TextEdit::create($start, 0, sprintf('%s::%s => null,', $enum->name()->short(), $case->name()));
+            $edits[] = TextEdit::create($start, 0, sprintf("%s%s::%s => null,\n", $whitespace, $enum->name()->short(), $case->name()));
         }
+        $edits[] = TextEdit::create($start, 0, $whitespace);
         if ($postfix) {
             $edits[] = TextEdit::create($start, 0, $postfix);
         }
@@ -80,8 +86,9 @@ final class WorseFillMatchArms implements ByteOffsetRefactor
         $start = $node->openBrace->getStartPosition() + 1;
         $prefix = null;
         $postfix = null;
+        $whitespace = '';
         if ($node->openBrace instanceof MissingToken) {
-            $prefix = '{';
+            $prefix = "{\n";
         }
         if ($node->closeBrace instanceof MissingToken) {
             $postfix = '}';
@@ -95,8 +102,13 @@ final class WorseFillMatchArms implements ByteOffsetRefactor
                     continue;
                 }
                 $cases[] = NodeUtil::nameFromTokenOrNode($node, $node->memberName);
+
             }
         }
-        return [$prefix, $postfix, $start, $cases];
+        $line = LineAtOffset::lineAtByteOffset($node->getFileContents(), ByteOffset::fromInt($start));
+        if (preg_match('{^\s+}', $line, $matches)) {
+            $whitespace = $matches[0];
+        }
+        return [$prefix, $whitespace, $postfix, $start, $cases];
     }
 }

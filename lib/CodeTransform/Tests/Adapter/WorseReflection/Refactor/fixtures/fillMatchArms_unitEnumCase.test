@@ -28,5 +28,9 @@ enum Page
 
 
 foreach (Page::cases() as $case) {
-    match ($case) {Page::AboutUs => null,Page::Blog => null,Page::Websites => null,};
+    match ($case) {
+    Page::AboutUs => null,
+    Page::Blog => null,
+    Page::Websites => null,
+    };
 }

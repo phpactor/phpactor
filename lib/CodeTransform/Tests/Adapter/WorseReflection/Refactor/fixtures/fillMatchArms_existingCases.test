@@ -34,5 +34,6 @@ function render(Page $page) {
         Page::Blog => null,
         Page::AboutUs => null,
         Page::Websites => null,
+        
     };
 }
