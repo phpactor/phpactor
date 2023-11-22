@@ -17,6 +17,7 @@ Bug fixes:
 Features:
 
   - Generate enum cases and class constants #2422
+  - Generate enum match arms #2401
 
 Improvements:
 
