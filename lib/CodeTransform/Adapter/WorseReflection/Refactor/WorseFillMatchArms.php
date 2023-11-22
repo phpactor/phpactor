@@ -2,16 +2,13 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
-use Doctrine\DBAL\Types\TextType;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\MatchArm;
 use Microsoft\PhpParser\Parser;
-use Phpactor\CodeBuilder\Domain\Prototype\Line;
 use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
@@ -63,7 +60,7 @@ final class WorseFillMatchArms implements ByteOffsetRefactor
         if ($prefix) {
             $edits[] = TextEdit::create($start, 0, $prefix);
         }
-            $edits[] = TextEdit::create($start, 0, "\n");
+        $edits[] = TextEdit::create($start, 0, "\n");
         foreach ($enum->cases() as $case) {
             if (in_array($case->name(), $existingCases)) {
                 continue;
@@ -79,7 +76,7 @@ final class WorseFillMatchArms implements ByteOffsetRefactor
     }
 
     /**
-     * @return array{?string,?string,int,string[]}
+     * @return array{?string,string,?string,int,string[]}
      */
     private function existingCases(MatchExpression $node): array
     {
