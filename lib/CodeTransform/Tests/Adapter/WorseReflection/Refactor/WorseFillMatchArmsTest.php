@@ -19,6 +19,9 @@ class WorseFillMatchArmsTest extends WorseTestCase
     public function testFill(
         string $path
     ): void {
+        if (!version_compare(PHP_VERSION, '8.1', '>=')) {
+            $this->markTestSkipped('Not supported');
+        }
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset($path);
 
         $fill = $this->createRefactor($source);
