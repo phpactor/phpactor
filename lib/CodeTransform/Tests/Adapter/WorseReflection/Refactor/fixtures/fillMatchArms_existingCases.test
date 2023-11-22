@@ -31,6 +31,8 @@ enum Page
 
 function render(Page $page) {
     return match ($page) {
-        Page::Blog => null,Page::AboutUs => null,Page::Websites => null,
+        Page::Blog => null,
+        Page::AboutUs => null,
+        Page::Websites => null,
     };
 }
