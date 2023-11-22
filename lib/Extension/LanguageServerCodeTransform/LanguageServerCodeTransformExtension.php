@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
 use Phpactor\ClassFileConverter\Domain\FileToClass;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
 use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
@@ -10,7 +11,6 @@ use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
-use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
@@ -27,7 +27,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateUnresolvable
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ByteOffsetRefactorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CorrectUndefinedVariableCodeAction;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
@@ -460,9 +460,12 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
-        $container->register(FillObjectProvider::class, function (Container $container) {
-            return new FillObjectProvider(
-                $container->get(ByteOffsetRefactor::class)
+        $container->register(ByteOffsetRefactorProvider::class.'.fill_object', function (Container $container) {
+            return new ByteOffsetRefactorProvider(
+                $container->get(WorseFillObject::class),
+                'quickfix.fill.object',
+                'Fill object',
+                'fill new object construct with named parameters',
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
