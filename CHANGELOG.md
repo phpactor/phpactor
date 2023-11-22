@@ -12,6 +12,7 @@ Bug fixes:
   - Fix undefined var false positive for arra unpacking #2403
   - Fix autoloading class conflcits with test files #2535 @gerardroche
   - Fix crash on resolveItem() caused by race condition (?) #2434
+  - Fix false positive for undefined var where vardoc not counting as variable definition #2437
 
 Features:
 
