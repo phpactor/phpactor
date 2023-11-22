@@ -6,7 +6,6 @@ use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillMatchArms;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -23,7 +22,7 @@ class WorseFillMatchArmsTest extends WorseTestCase
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset($path);
 
         $fill = $this->createRefactor($source);
-        $transformed = $fill->fillObject(
+        $transformed = $fill->fillMatchArms(
             TextDocumentBuilder::create($source)->build(),
             ByteOffset::fromInt($offset)
         )->apply($source);
