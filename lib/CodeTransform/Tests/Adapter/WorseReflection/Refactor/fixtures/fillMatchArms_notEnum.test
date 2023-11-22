@@ -1,0 +1,16 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+function render(int $page) {
+    return match ($page) <>};
+}
+// File: expected
+<?php
+
+namespace Phpactor;
+
+function render(int $page) {
+    return match ($page) };
+}

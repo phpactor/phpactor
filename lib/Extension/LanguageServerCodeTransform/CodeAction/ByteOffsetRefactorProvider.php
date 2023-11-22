@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
-use Phpactor\CodeTransform\Domain\Refactor\FillObject;
+use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
@@ -15,17 +15,19 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 
-class FillObjectProvider implements CodeActionProvider
+class ByteOffsetRefactorProvider implements CodeActionProvider
 {
-    const KIND = 'quickfix.fill.object';
-
-    public function __construct(private FillObject $fillObject)
-    {
+    public function __construct(
+        private ByteOffsetRefactor $refactor,
+        private string $kind,
+        private string $title,
+        private string $description,
+    ) {
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
-        $edits = $this->fillObject->fillObject(
+        $edits = $this->refactor->refactor(
             TextDocumentConverter::fromLspTextItem($textDocument),
             RangeConverter::toPhpactorRange($range, $textDocument->text)->start()
         );
@@ -36,8 +38,8 @@ class FillObjectProvider implements CodeActionProvider
 
         return new Success([
             new CodeAction(
-                title: 'Fill object',
-                kind: self::KIND,
+                title: $this->title,
+                kind: $this->kind,
                 diagnostics: [],
                 isPreferred: false,
                 edit: new WorkspaceEdit([
@@ -49,10 +51,10 @@ class FillObjectProvider implements CodeActionProvider
 
     public function kinds(): array
     {
-        return [self::KIND];
+        return [$this->kind];
     }
     public function describe(): string
     {
-        return 'fill new object construct with named parameters';
+        return $this->description;
     }
 }
