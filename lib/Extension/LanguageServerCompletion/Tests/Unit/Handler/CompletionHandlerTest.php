@@ -106,6 +106,17 @@ class CompletionHandlerTest extends TestCase
         self::assertEquals('documentation now', $response->result->documentation->value);
     }
 
+    public function testResolveCompletionItemWithNoPreviousCompletion(): void
+    {
+        $tester = $this->create([]);
+        $response = $tester->requestAndWait(
+            'completionItem/resolve',
+            new CompletionItem('hello'),
+        );
+        self::assertNotNull($response);
+        self::assertInstanceOf(CompletionItem::class, $response->result);
+    }
+
     public function testHandleAnIncompleteListOfSuggestions(): void
     {
         $tester = $this->create([
@@ -481,6 +492,7 @@ class CompletionHandlerTest extends TestCase
     {
         return new class($suggestions, $isIncomplete) implements Completor {
             public function __construct(
+                /** @var Suggestion[] */
                 private array $suggestions,
                 private bool $isIncomplete
             ) {

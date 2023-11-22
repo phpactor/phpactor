@@ -11,6 +11,7 @@ Bug fixes:
   - Fix incorrect enum import #2400
   - Fix undefined var false positive for arra unpacking #2403
   - Fix autoloading class conflcits with test files #2535 @gerardroche
+  - Fix crash on resolveItem() caused by race condition (?) #2434
 
 Features:
 
