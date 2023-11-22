@@ -13,7 +13,7 @@ enum Page
 
 function render(Page $page) {
     return match ($page) <>{
-        case Page::Blog => null,
+        Page::Blog => null,
     };
 }
 // File: expected

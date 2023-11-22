@@ -3,6 +3,8 @@
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Microsoft\PhpParser\Node\Expression\MatchExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Microsoft\PhpParser\Node\MatchArm;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Domain\Refactor\FillObject;
@@ -16,6 +18,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\HasEmptyType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
 class WorseFillMatchArms implements FillObject
@@ -54,20 +57,34 @@ class WorseFillMatchArms implements FillObject
         }
 
         $edits = [];
-        $start = $node->openBrace->getStartPosition() + 1;
+        [$start, $existingCases] = $this->existingCases($node);
         foreach ($enum->cases() as $case) {
+            if (in_array($case->name(), $existingCases)) {
+                continue;
+            }
             $edits[] = TextEdit::create($start, 0, sprintf('%s::%s => null,', $enum->name()->short(), $case->name()));
         }
 
         return TextEdits::fromTextEdits($edits);
     }
 
-    private function renderEmptyValue(Type $type): string
+    /**
+     * @return array{int,string[]}
+     */
+    private function existingCases(MatchExpression $node): array
     {
-        if (!$type instanceof HasEmptyType) {
-            return sprintf('/** %s */', $type->__toString());
+        $start = $node->openBrace->getStartPosition() + 1;
+        $cases = [];
+        foreach ($node->arms?->getChildNodes() ?? [] as $arm) {
+            assert($arm instanceof MatchArm);
+            $start = $arm->getEndPosition() + 1;
+            foreach ($arm->conditionList->getChildNodes() as $node) {
+                if (!$node instanceof ScopedPropertyAccessExpression) {
+                    continue;
+                }
+                $cases[] = NodeUtil::nameFromTokenOrNode($node, $node->memberName);
+            }
         }
-
-        return $this->valueRenderer->render($type->emptyType());
+        return [$start, $cases];
     }
 }
