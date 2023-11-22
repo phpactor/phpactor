@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
-use Phpactor\CodeTransform\Domain\Refactor\FillObject;
+use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
@@ -19,13 +19,13 @@ class FillObjectProvider implements CodeActionProvider
 {
     const KIND = 'quickfix.fill.object';
 
-    public function __construct(private FillObject $fillObject)
+    public function __construct(private ByteOffsetRefactor $fillObject)
     {
     }
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
-        $edits = $this->fillObject->fillObject(
+        $edits = $this->fillObject->refactor(
             TextDocumentConverter::fromLspTextItem($textDocument),
             RangeConverter::toPhpactorRange($range, $textDocument->text)->start()
         );

@@ -10,7 +10,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
-use Phpactor\CodeTransform\Domain\Refactor\FillObject;
+use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
@@ -462,7 +462,7 @@ class LanguageServerCodeTransformExtension implements Extension
 
         $container->register(FillObjectProvider::class, function (Container $container) {
             return new FillObjectProvider(
-                $container->get(FillObject::class)
+                $container->get(ByteOffsetRefactor::class)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []

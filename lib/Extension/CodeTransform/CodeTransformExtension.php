@@ -53,7 +53,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ChangeVisiblity;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
-use Phpactor\CodeTransform\Domain\Refactor\FillObject;
+use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
@@ -283,7 +283,7 @@ class CodeTransformExtension implements Extension
                 $container->parameter(self::PARAM_IMPORT_GLOBALS)->bool(),
             );
         });
-        $container->register(FillObject::class, function (Container $container) {
+        $container->register(ByteOffsetRefactor::class, function (Container $container) {
             return new WorseFillObject(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
                 $container->get(WorseReflectionExtension::SERVICE_PARSER),

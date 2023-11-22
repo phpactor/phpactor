@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\MatchArm;
 use Microsoft\PhpParser\Parser;
-use Phpactor\CodeTransform\Domain\Refactor\FillObject;
+use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
