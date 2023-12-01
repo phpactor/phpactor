@@ -17,6 +17,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\TraitMembers;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerSymbolProvider\Model\DocumentSymbolProvider;
@@ -178,6 +179,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
         return $node->getDescendantNodes(function (Node $node) {
             return
                 $node instanceof InterfaceMembers ||
+                $node instanceof TraitMembers ||
                 $node instanceof ClassMembersNode ||
                 $node instanceof MethodDeclaration ||
                 $node instanceof PropertyDeclaration ||
