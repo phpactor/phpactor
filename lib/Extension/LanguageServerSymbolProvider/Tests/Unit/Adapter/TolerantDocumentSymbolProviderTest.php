@@ -10,7 +10,7 @@ class TolerantDocumentSymbolProviderTest extends TestCase
 {
     public function testPropertiesInTraits(): void
     {
-        $provider = new TolerantDocumentSymbolProvider(new Parser);
+        $provider = new TolerantDocumentSymbolProvider(new Parser());
 
         $nodes = $provider->provideFor('<?php trait Foo { public $foo; }');
 
@@ -21,7 +21,7 @@ class TolerantDocumentSymbolProviderTest extends TestCase
 
     public function testMethodsInTraits(): void
     {
-        $provider = new TolerantDocumentSymbolProvider(new Parser);
+        $provider = new TolerantDocumentSymbolProvider(new Parser());
 
         $nodes = $provider->provideFor('<?php trait Foo { public function foo() {} }');
 
