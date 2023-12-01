@@ -36,7 +36,7 @@ class GotoTypeHandlerTest extends TestCase
 
     public function create(): HandlerTester
     {
-        $locator = new class implements TypeLocator {
+        $locator = new class() implements TypeLocator {
             public function locateTypes(TextDocument $document, ByteOffset $byteOffset): TypeLocations
             {
                 return

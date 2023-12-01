@@ -62,7 +62,7 @@ class JsonSchemaBuilderTest extends TestCase
 
     private function createExtension1(): Extension
     {
-        return new class implements Extension {
+        return new class() implements Extension {
             public function configure(Resolver $resolver): void
             {
                 $resolver->setDefaults([
