@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\DefaultValue;
 
@@ -27,4 +28,6 @@ interface ReflectionParameter extends ReflectionNode
     public function isPromoted(): bool;
 
     public function isVariadic(): bool;
+
+    public function docblock(): DocBlock;
 }
