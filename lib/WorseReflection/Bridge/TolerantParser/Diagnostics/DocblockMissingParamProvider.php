@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -62,6 +63,7 @@ class DocblockMissingParamProvider implements DiagnosticProvider
 
         $docblock = $method->docblock();
         $docblockParams = $docblock->params();
+        $docblockVars = new DocBlockVars([]);
         $missingParams = [];
 
         foreach ($method->parameters() as $parameter) {
@@ -71,6 +73,13 @@ class DocblockMissingParamProvider implements DiagnosticProvider
 
             if ($docblockParams->has($parameter->name())) {
                 continue;
+            }
+
+            if ($method->name() === '__construct') {
+                $vars = $parameter->docblock()->vars();
+                if ($vars->count() > 0) {
+                    return;
+                }
             }
 
             if ($parameter->isVariadic()) {
