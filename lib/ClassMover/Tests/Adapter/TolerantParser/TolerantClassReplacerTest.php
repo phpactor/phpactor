@@ -239,10 +239,8 @@ class TolerantClassReplacerTest extends TestCase
                 'Acme\Goodbye',
                 <<<EOT
                     <?php
-
                     namespace Acme;
-
-                    enum Goodbye 
+                    enum Goodbye
                     {
                         case Foo;
                     }

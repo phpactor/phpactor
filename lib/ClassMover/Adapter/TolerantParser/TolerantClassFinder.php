@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\QualifiedName as ParserQualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
@@ -57,6 +58,7 @@ class TolerantClassFinder implements ClassFinder
         foreach ($nodes as $node) {
             if (
                 $node instanceof ClassDeclaration ||
+                $node instanceof EnumDeclaration ||
                 $node instanceof InterfaceDeclaration ||
                 $node instanceof TraitDeclaration
             ) {
