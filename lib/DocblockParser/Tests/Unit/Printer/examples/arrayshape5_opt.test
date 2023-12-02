@@ -6,5 +6,16 @@ Docblock: =
  ElementList: = /**
  * 
   ReturnTag: = @return
-   ArrayShapeNode: = ...
+   GenericNode: = 
+    ClassNode: = Generator<
+    TypeList: = 
+     ArrayShapeNode: = {
+      ArrayKeyValueList: = 
+       ArrayKeyValueNode: = 0:
+        ScalarNode: = string,
+       ArrayKeyValueNode: = ?1:
+        ClassNode: = Event,
+       ArrayKeyValueNode: = 2:
+        ScalarNode: = bool}>
+   TextNode: = 
  */

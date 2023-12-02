@@ -350,7 +350,7 @@ final class Parser
             assert(!is_null($open));
             $keyValues = [];
             $close = null;
-            if ($this->tokens->if(Token::T_LABEL)) {
+            if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER)) {
                 $keyValues = $this->parseArrayKeyValues();
             }
             if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
@@ -373,6 +373,7 @@ final class Parser
             $list = $this->tokens->mustChomp();
             $type = new ListBracketsNode($type, $list);
         }
+
 
         return $type;
     }
@@ -668,7 +669,7 @@ final class Parser
         $key = $colon = $type = null;
 
         if (
-            $this->tokens->if(Token::T_LABEL) &&
+            $this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER) &&
             $this->tokens->peekIs(1, Token::T_COLON)
         ) {
             $key = $this->tokens->chomp();
@@ -676,7 +677,7 @@ final class Parser
         }
 
         if (
-            $this->tokens->if(Token::T_LABEL) &&
+            $this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER) &&
             $this->tokens->peekIs(1, Token::T_NULLABLE) &&
             $this->tokens->peekIs(2, Token::T_COLON)
         ) {
@@ -685,12 +686,16 @@ final class Parser
             $colon = $this->tokens->chomp();
         }
 
+        $optional = null;
+        if ($this->tokens->if(Token::T_NULLABLE)) {
+            $optional = $this->tokens->chomp();
+        }
         $type = null;
-        if ($this->tokens->if(Token::T_LABEL)) {
+        if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER)) {
             $type = $this->parseTypes();
         }
 
-        return new ArrayKeyValueNode($key, $colon, $type);
+        return new ArrayKeyValueNode($optional, $key, $colon, $type, $optional);
     }
 
     private function parseConditionalType(): TypeNode
