@@ -29,7 +29,7 @@ for installation instructions.
 Requirements
 ------------
 
-- PHP 8.0+
+- PHP 8.1+
 - [Composer](https://getcomposer.org/)
 
 Project Recommendations

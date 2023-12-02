@@ -49,12 +49,10 @@ class WorseGenerateMemberTest extends WorseTestCase
         yield 'union false' => [ 'generateMember17.test' ];
         yield 'duplicated type guesses' => [ 'generateMember_duplicateNameGuesses.test' ];
         yield 'docblock for complex type' => [ 'generateMember_complexTypeDocblock.test' ];
-        if (version_compare(PHP_VERSION, '8.1', '>=')) {
-            yield 'enum' => [ 'generateMember_enumParams.test' ];
-            yield 'backed_enum' => [ 'generateMember_backedEnumParams.test' ];
-            yield 'public method on enum' => [ 'generateMember_enum.test', 'play'];
-            yield 'case on enum' => [ 'generateMember_enumCase.test', 'Foo'];
-        }
+        yield 'enum' => [ 'generateMember_enumParams.test' ];
+        yield 'backed_enum' => [ 'generateMember_backedEnumParams.test' ];
+        yield 'public method on enum' => [ 'generateMember_enum.test', 'play'];
+        yield 'case on enum' => [ 'generateMember_enumCase.test', 'Foo'];
         yield 'private constant on class' => [ 'generateMember_constant.test', 'FOO'];
         yield 'public constant on class' => [ 'generateMember_constantPublic.test', 'FOO'];
     }

@@ -216,20 +216,18 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
             }
         ];
 
-        if (version_compare(PHP_VERSION, '8.1', '>=')) {
-            yield 'enum' => [
-                "// File: project/test.php\n<?php enum SomeEnum {}",
-                'SomeEnum',
-                function (ClassRecord $record): void {
-                    self::assertInstanceOf(ClassRecord::class, $record);
-                    self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
-                    self::assertEquals('SomeEnum', $record->fqn());
-                    self::assertEquals(11, $record->start()->toInt());
-                    self::assertEquals(19, $record->end()->toInt());
-                    self::assertEquals(ClassRecord::TYPE_ENUM, $record->type());
-                }
-            ];
-        }
+        yield 'enum' => [
+            "// File: project/test.php\n<?php enum SomeEnum {}",
+            'SomeEnum',
+            function (ClassRecord $record): void {
+                self::assertInstanceOf(ClassRecord::class, $record);
+                self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
+                self::assertEquals('SomeEnum', $record->fqn());
+                self::assertEquals(11, $record->start()->toInt());
+                self::assertEquals(19, $record->end()->toInt());
+                self::assertEquals(ClassRecord::TYPE_ENUM, $record->type());
+            }
+        ];
     }
 
     /**

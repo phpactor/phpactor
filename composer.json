@@ -3,7 +3,7 @@
     "description": "PHP refactoring and intellisense tool for text editors",
     "license": "MIT",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-pcntl": "*",
         "ext-posix": "*",
         "composer/package-versions-deprecated": "^1.0",
@@ -84,7 +84,7 @@
     },
     "config": {
         "platform": {
-            "php": "8.0.0"
+            "php": "8.1.0"
         },
         "allow-plugins": {
             "dantleech/what-changed": true,
