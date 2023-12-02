@@ -459,6 +459,24 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'method8.md'
         ];
+
+        yield 'method variadic ' => [
+            '',
+            function (Reflector $reflector) {
+                return $this->reflectClassesIn(
+                    $reflector,
+                    <<<'EOT'
+                        <?php
+
+                        class OneClass
+                        {
+                            public function foo(Foobar ...$foo) {}
+                        }
+                        EOT
+                )->get('OneClass')->methods()->get('foo');
+            },
+            'method_variadic.md',
+        ];
     }
 
     /**
