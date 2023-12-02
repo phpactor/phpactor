@@ -99,6 +99,17 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         return $this->index;
     }
 
+<<<<<<< HEAD
+=======
+    public function docblock(): DocBlock
+    {
+        return $this->serviceLocator()->docblockFactory()->create(
+            $this->parameter->getLeadingCommentAndWhitespaceText(),
+            $this->scope()
+        );
+    }
+
+>>>>>>> 037585be (Fix)
     protected function node(): Node
     {
         return $this->parameter;
