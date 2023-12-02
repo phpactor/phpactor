@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Parameter;
@@ -99,8 +100,6 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         return $this->index;
     }
 
-<<<<<<< HEAD
-=======
     public function docblock(): DocBlock
     {
         return $this->serviceLocator()->docblockFactory()->create(
@@ -109,7 +108,6 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         );
     }
 
->>>>>>> 037585be (Fix)
     protected function node(): Node
     {
         return $this->parameter;
