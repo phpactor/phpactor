@@ -15,6 +15,7 @@ Bug fixes:
   - Fix crash on resolveItem() caused by race condition (?) #2434
   - Fix false positive for undefined var where vardoc not counting as variable definition #2437
   - Render variadics as variadics in help, not as arrays #2448
+  - Render default value for enum when filling object #2441
 
 Features:
 

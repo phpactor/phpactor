@@ -2,6 +2,8 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Helper;
 
+use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 use Phpactor\WorseReflection\Core\Type\Literal;
@@ -20,8 +22,16 @@ class EmptyValueRenderer
 
 
         if ($type instanceof ReflectedClassType) {
-            if ($type->isInterface()->isFalse()) {
+            $reflection = $type->reflectionOrNull();
+            if ($reflection instanceof ReflectionClass) {
                 return sprintf('new %s()', $type->name()->short());
+            }
+            if ($reflection instanceof ReflectionEnum) {
+                $firstCase = $reflection->cases()->firstOrNull();
+                if ($firstCase) {
+                    return sprintf('%s::%s', $type->name()->short(), $firstCase->name());
+                }
+                return sprintf('/** enum `%s` has no cases */', $type->name()->short());
             }
         }
 
