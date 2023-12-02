@@ -7,6 +7,7 @@ use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\QualifiedName as MicrosoftQualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Parser;
@@ -44,6 +45,10 @@ final class ClassRenamer implements Renamer
         $node = $this->parser->parseSourceFile($textDocument->__toString())->getDescendantNodeAtPosition($offset->toInt());
 
         if ($node instanceof ClassDeclaration) {
+            return TokenUtil::offsetRangeFromToken($node->name, false);
+        }
+
+        if ($node instanceof EnumDeclaration) {
             return TokenUtil::offsetRangeFromToken($node->name, false);
         }
 
