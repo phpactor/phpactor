@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - Fix null variable name crash #2443
   - Fix frame merging of include/require #2391
   - Fix enum representation in method generation #2395
   - Fix enum cases() not existing false-positive #2423
