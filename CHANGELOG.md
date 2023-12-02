@@ -24,6 +24,10 @@ Improvements:
 
   - PHPStan: Support setting custom config path and memory limit @ungrim97
 
+Breaking changes:
+
+  - Drop support for PHP 8.0. Minimum version is now 8.0
+
 ## 2023.09.24
 
 Bug fixes:
