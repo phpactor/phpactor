@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\DocBlock;
 
-use Countable;
 use IteratorAggregate;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -12,7 +11,7 @@ use Traversable;
 /**
  * @implements IteratorAggregate<DocBlockVar>
  */
-class DocBlockVars implements IteratorAggregate, Countable
+class DocBlockVars implements IteratorAggregate
 {
     /**
      * @var DocBlockVar[]
@@ -46,10 +45,5 @@ class DocBlockVars implements IteratorAggregate, Countable
     private function add(DocBlockVar $var): void
     {
         $this->vars[] = $var;
-    }
-
-    public function count(): int
-    {
-        return count($this->vars);
     }
 }
