@@ -7,9 +7,9 @@ namespace Foo;
  * @param int<min, 1> $min
  * @param int<1, 2> $range
  */
-function foo(int $minMax, int $max, $int $min, int $range) {
-    wrAssertType('int<1, max>', $max);
+function foo(int $minMax, int $max, int $min, int $range) {
     wrAssertType('int<min, 1>', $min);
+    wrAssertType('int<1, max>', $max);
     wrAssertType('int<min,max>', $minMax);
     wrAssertType('int<1,2>', $min);
 }
