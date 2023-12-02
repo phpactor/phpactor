@@ -695,7 +695,7 @@ final class Parser
             $type = $this->parseTypes();
         }
 
-        return new ArrayKeyValueNode($optional, $key, $colon, $type, $optional);
+        return new ArrayKeyValueNode($optional, $key, $colon, $type);
     }
 
     private function parseConditionalType(): TypeNode
