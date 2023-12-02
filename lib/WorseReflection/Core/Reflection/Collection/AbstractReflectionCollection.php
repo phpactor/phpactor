@@ -131,7 +131,7 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
      */
     public function byMemberClass(string $fqn): ReflectionCollection
     {
-        return new static(array_filter($this->items, function (object $member) use ($fqn) {
+        return new static(array_filter($this->items, function ($member) use ($fqn) {
             return $member instanceof $fqn;
         }));
     }
