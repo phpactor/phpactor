@@ -12,6 +12,8 @@ Bug fixes:
   - Fix incorrect enum import #2400
   - Fix undefined var false positive for arra unpacking #2403
   - Fix autoloading class conflcits with test files #2535 @gerardroche
+  - Fix enum renaming in legacy renamer #2445
+  - Fix enum renaming on "new" renamer #2445
   - Fix crash on resolveItem() caused by race condition (?) #2434
   - Fix false positive for undefined var where vardoc not counting as variable definition #2437
   - Render variadics as variadics in help, not as arrays #2448
