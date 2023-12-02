@@ -1,0 +1,10 @@
+/**
+ * @return Generator<array{0:string,1:?Event,2?:bool}>
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ReturnTag: = @return
+   ArrayShapeNode: = ...
+ */
