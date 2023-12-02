@@ -13,6 +13,7 @@ Bug fixes:
   - Fix autoloading class conflcits with test files #2535 @gerardroche
   - Fix crash on resolveItem() caused by race condition (?) #2434
   - Fix false positive for undefined var where vardoc not counting as variable definition #2437
+  - Render variadics as variadics in help, not as arrays #2448
 
 Features:
 
