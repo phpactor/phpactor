@@ -232,6 +232,21 @@ class TolerantClassReplacerTest extends TestCase
                         }
                     }
                     EOT,
+            ],
+            'Rename Enum' => [
+                'Enum1.php',
+                'Acme\Hello',
+                'Acme\Goodbye',
+                <<<EOT
+                    <?php
+
+                    namespace Acme;
+
+                    enum Goodbye 
+                    {
+                        case Foo;
+                    }
+                    EOT,
             ]
         ];
     }
