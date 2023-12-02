@@ -33,11 +33,9 @@ class Suggestion
     const PRIORITY_MEDIUM = 127;
     const PRIORITY_LOW = 255;
 
-
     private string|Closure|null $shortDescription;
 
     private string $label;
-
 
     private string|Closure|null $documentation;
 
