@@ -477,6 +477,23 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'method_variadic.md',
         ];
+        yield 'method variadic no type' => [
+            '',
+            function (Reflector $reflector) {
+                return $this->reflectClassesIn(
+                    $reflector,
+                    <<<'EOT'
+                        <?php
+
+                        class OneClass
+                        {
+                            public function foo(...$foo) {}
+                        }
+                        EOT
+                )->get('OneClass')->methods()->get('foo');
+            },
+            'method_variadic_no_type.md',
+        ];
     }
 
     /**
