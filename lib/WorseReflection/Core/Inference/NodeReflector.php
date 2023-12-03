@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionAttribute;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionCallExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMatchExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression as PhpactorReflectionObjectCreationExpression;
@@ -19,6 +20,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionStaticMethodCall;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class NodeReflector
 {
@@ -38,6 +40,9 @@ class NodeReflector
 
         if ($node instanceof ObjectCreationExpression) {
             return $this->reflectObjectCreationExpression($frame, $node);
+        }
+        if ($node instanceof CallExpression) {
+            return $this->reflectCallExpression($frame, $node);
         }
 
         if ($node instanceof MatchExpression) {
@@ -126,5 +131,21 @@ class NodeReflector
             $frame,
             $node
         );
+    }
+
+    private function reflectCallExpression(Frame $frame, CallExpression $node): ReflectionNode
+    {
+        if ($node->callableExpression instanceof MemberAccessExpression) {
+            return new ReflectionMethodCall(
+                $this->services,
+                $frame,
+                $node->callableExpression
+            );
+        }
+
+        throw new CouldNotResolveNode(sprintf(
+            'Did not know how to reflect node of type "%s"',
+            get_class($node)
+        ));
     }
 }
