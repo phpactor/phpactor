@@ -199,6 +199,15 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
                 ],
             ],
         ];
+        yield 'bare call' => [
+            '<?php class Foobar {public function bar(Baz $b) {}} $f = new Foobar; $f->bar(<>', [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'EmptyString',
+                    'short_description' => 'EmptyString',
+                ],
+            ],
+        ];
         yield 'php tag' => [
             '<?ph<>', [
             ],
@@ -217,7 +226,7 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         $searcher->search('sel', null)->willYield([
             NameSearchResult::create('class', 'self')
         ]);
-        $searcher->search('self::F', null)->willYield([
+        $searcher->search('F', null)->willYield([
             NameSearchResult::create('constant', 'FOOCONST')
         ]);
         $searcher->search('\Fo', null)->willYield([
@@ -234,6 +243,9 @@ class ExpressionNameCompletorTest extends TolerantCompletorTestCase
         ]);
         $searcher->search('b', null)->willYield([
             NameSearchResult::create('class', 'Foo\\Bar'),
+        ]);
+        $searcher->search('', null)->willYield([
+            NameSearchResult::create('class', 'EmptyString'),
         ]);
         $searcher->search('\NS1\Foo\Fo', null)->willYield([
             NameSearchResult::create('class', 'Foobar')
