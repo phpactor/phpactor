@@ -32,17 +32,15 @@ class ContextSensitiveCompletor implements TolerantCompletor
         $callExpression = $node;
         if ($node instanceof QualifiedName) {
             $callExpression = null;
-            if ($node->parent instanceof ArgumentExpression) {
-                $argumentExpr = $node->parent;
-                $list = $argumentExpr->parent;
-                if (null === $list) {
+            $argumentExpression = $node->getFirstAncestor(ArgumentExpression::class);
+            if ($argumentExpression instanceof ArgumentExpression) {
+                $list = $argumentExpression->getFirstAncestor(ArgumentExpressionList::class);
+                if (!$list instanceof ArgumentExpressionList) {
                     yield from $generator;
                     return;
                 }
-                if ($list instanceof ArgumentExpressionList) {
-                    $argumentNb = NodeUtil::argumentOffset($list, $argumentExpr) ?? 0;
-                    $callExpression = $list->parent;
-                }
+                $argumentNb = NodeUtil::argumentOffset($list, $argumentExpression) ?? 0;
+                $callExpression = $list->parent;
             }
         }
         if ($node instanceof ArgumentExpressionList) {
@@ -67,6 +65,7 @@ class ContextSensitiveCompletor implements TolerantCompletor
             yield from $generator;
             return;
         }
+
         $type = $parameter->type();
         if ($parameter->isVariadic()) {
             if ($type instanceof ArrayType) {

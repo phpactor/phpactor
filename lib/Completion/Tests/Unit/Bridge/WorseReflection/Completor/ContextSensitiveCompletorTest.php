@@ -56,6 +56,24 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar(Obj $obj){}}
 
                 $f = new Foo();
+                $f->bar(<>)
+                EOT,
+            [
+                'Bar\Obj',
+            ],
+        ];
+        yield [
+            [
+                'Bar\Foo',
+                'Bar\Obj',
+            ],
+            <<<'EOT'
+                <?php
+                namespace Bar;
+                class Obj {}
+                class Foo { public function bar(Obj $obj){}}
+
+                $f = new Foo();
                 $f->bar(<>
                 EOT,
             [
