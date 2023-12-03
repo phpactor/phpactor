@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
+use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
@@ -36,8 +37,7 @@ class ContextSensitiveCompletor implements TolerantCompletor
             if ($argumentExpression instanceof ArgumentExpression) {
                 $list = $argumentExpression->getFirstAncestor(ArgumentExpressionList::class);
                 if (!$list instanceof ArgumentExpressionList) {
-                    yield from $generator;
-                    return;
+                    return $this->yieldFrom($generator);
                 }
                 $argumentNb = NodeUtil::argumentOffset($list, $argumentExpression) ?? 0;
                 $callExpression = $list->parent;
@@ -49,21 +49,18 @@ class ContextSensitiveCompletor implements TolerantCompletor
         }
 
         if (!$callExpression instanceof CallExpression) {
-            yield from $generator;
-            return;
+            return $this->yieldFrom($generator);
         }
 
         $callExpression = $this->reflector->reflectNode($source, $callExpression->openParen->getStartPosition());
         if (!$callExpression instanceof ReflectionMethodCall) {
-            yield from $generator;
-            return;
+            return $this->yieldFrom($generator);
         }
         $functionLike = $callExpression->method();
         $parameters = $functionLike->parameters();
         $parameter = $parameters->at($argumentNb);
         if (null === $parameter) {
-            yield from $generator;
-            return;
+            return $this->yieldFrom($generator);
         }
 
         $type = $parameter->type();
@@ -73,8 +70,7 @@ class ContextSensitiveCompletor implements TolerantCompletor
             }
         }
         if (!$type instanceof ClassLikeType) {
-            yield from $generator;
-            return;
+            return $this->yieldFrom($generator);
         }
 
         foreach ($generator as $suggestion) {
@@ -95,5 +91,16 @@ class ContextSensitiveCompletor implements TolerantCompletor
             }
             yield $suggestion;
         }
+
+        return $generator->getReturn();
+    }
+
+    /**
+     * @param Generator<Suggestion> $generator
+     */
+    private function yieldFrom(Generator $generator): Generator
+    {
+        yield from $generator;
+        return $generator->getReturn();
     }
 }

@@ -198,7 +198,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         Suggestion $suggestion,
         CompletionParams $params
     ): NameImporterResult {
-        $suggestionNameImport = $suggestion->fqn();
+        $suggestionNameImport = $suggestion->classImport();
 
         if (!$suggestionNameImport) {
             return NameImporterResult::createEmptyResult();

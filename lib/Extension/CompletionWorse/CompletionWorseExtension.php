@@ -287,8 +287,8 @@ class CompletionWorseExtension implements Extension
             'imported_names' => [
                 'Completion for names imported into the current namespace',
                 function (Container $container) {
-                    return new ImportedNameCompletor(
-                    );
+                    return $this->contextCompletor($container, new ImportedNameCompletor(
+                    ));
                 },
             ],
             'worse_parameter' => [
@@ -422,7 +422,7 @@ class CompletionWorseExtension implements Extension
                 },
             ],
             'type' => [
-                'Completion for types',
+                'Completion for scalar types',
                 function (Container $container) {
                     return $this->limitCompletor($container, new TypeCompletor(
                         $container->get(TypeSuggestionProvider::class)

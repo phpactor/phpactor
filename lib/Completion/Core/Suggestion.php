@@ -52,7 +52,8 @@ class Suggestion
         $documentation = null,
         private ?Range $range = null,
         private ?string $snippet = null,
-        private ?int $priority = null
+        private ?int $priority = null,
+        private ?string $fqn = null,
     ) {
         $this->shortDescription = $shortDescription;
         $this->label = $label ?: $name;
@@ -71,6 +72,7 @@ class Suggestion
      *   type?:string|null,
      *   class_import?:string|null,
      *   name_import?:string|null,
+     *   fqn?:string|null,
      *   label?:string|null,
      *   range?:Range|null,
      *   snippet?:string|null,
@@ -85,6 +87,7 @@ class Suggestion
             'type' => null,
             'class_import' => null,
             'name_import' => null,
+            'fqn' => null,
             'label' => null,
             'range' => null,
             'snippet' => null,
@@ -111,6 +114,7 @@ class Suggestion
             $options['range'],
             $options['snippet'],
             $options['priority'],
+            $options['fqn'],
         );
     }
 
@@ -171,7 +175,7 @@ class Suggestion
     }
 
     /**
-     * @deprecated Use nameImport instead
+     * Return the FQN if the name should be imported.
      */
     public function classImport(): ?string
     {
@@ -183,7 +187,7 @@ class Suggestion
      */
     public function fqn(): ?string
     {
-        return $this->nameImport;
+        return $this->fqn ?? $this->nameImport;
     }
 
     public function label(): string
