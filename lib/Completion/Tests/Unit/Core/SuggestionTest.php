@@ -49,6 +49,7 @@ class SuggestionTest extends TestCase
             'class_import' => 'Namespace\\Foobar',
             'documentation' => 'foo',
             'label' => 'hallo',
+            'fqn' => null,
             'range' => Range::fromStartAndEnd(1, 2),
             'snippet' => null,
         ]);

@@ -132,6 +132,7 @@ class Suggestion
             'documentation' => $this->documentation(),
             'class_import' => $this->type() === self::TYPE_CLASS && $this->nameImport ? $this->nameImport : null,
             'name_import' => $this->nameImport,
+            'fqn' => $this->fqn,
             'range' => $this->range ? $this->range->toArray() : null,
 
             // removed

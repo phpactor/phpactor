@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Node\Expression\MatchExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionAttribute;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionCallExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMatchExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionObjectCreationExpression as PhpactorReflectionObjectCreationExpression;
@@ -20,7 +19,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionObjectCreationExpression;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionStaticMethodCall;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class NodeReflector
 {

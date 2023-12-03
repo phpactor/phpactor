@@ -17,6 +17,8 @@ class ContextSensitiveCompletorTest extends TestCase
 {
     /**
      * @dataProvider provideComplete
+     * @param string[] $suggestions
+     * @param string[] $expected
      */
     public function testComplete(array $suggestions, string $source, array $expected): void
     {
@@ -41,10 +43,12 @@ class ContextSensitiveCompletorTest extends TestCase
             $suggestions
         ));
     }
-
+    /**
+     * @return Generator<string,array{array<int,string>,string,array<int,string>}>
+     */
     public static function provideComplete(): Generator
     {
-        yield [
+        yield 'method call' => [
             [
                 'Bar\Foo',
                 'Bar\Obj',
@@ -62,7 +66,7 @@ class ContextSensitiveCompletorTest extends TestCase
                 'Bar\Obj',
             ],
         ];
-        yield [
+        yield 'namespaced open method call' => [
             [
                 'Bar\Foo',
                 'Bar\Obj',
@@ -80,7 +84,7 @@ class ContextSensitiveCompletorTest extends TestCase
                 'Bar\Obj',
             ],
         ];
-        yield [
+        yield 'no namespace' => [
             [
                 'Foo',
                 'Obj',

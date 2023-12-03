@@ -65,9 +65,11 @@ abstract class NameSearcherCompletor
 
         if ($node !== null && $wasQualified) {
             $name = NameUtil::relativeToSearch(ltrim($search, '\\'), $result->name()->__toString());
+            /** @phpstan-ignore-next-line */
             return Suggestion::createWithOptions($name, $options);
         }
 
+        /** @phpstan-ignore-next-line */
         return Suggestion::createWithOptions($result->name()->head(), $options);
     }
 
