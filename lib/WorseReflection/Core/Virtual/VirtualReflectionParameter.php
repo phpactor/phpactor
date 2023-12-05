@@ -4,6 +4,8 @@ namespace Phpactor\WorseReflection\Core\Virtual;
 
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
@@ -82,5 +84,10 @@ class VirtualReflectionParameter implements ReflectionParameter
     public function index(): int
     {
         return $this->index;
+    }
+
+    public function docblock(): DocBlock
+    {
+        return new PlainDocblock('');
     }
 }

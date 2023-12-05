@@ -56,9 +56,6 @@ class IndexedNameSearcherTest extends IndexTestCase
 
     public function testSearcherForEnum(): void
     {
-        if (version_compare(PHP_VERSION, '8.1', '<')) {
-            $this->markTestSkipped('Not supported in less than 8.1');
-        }
         $this->workspace()->put('project/Foobar.php', '<?php enum Foobar {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();

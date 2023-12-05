@@ -95,6 +95,15 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             '<?php interface Interface2 { }',
         ];
 
+        yield 'enum' => [
+            '/foo/Enum1.php',
+            '<?php <r>enum Mar<>ker { }',
+            'Pony',
+            'file:///foo/Pony.php',
+            1,
+            '<?php enum Pony { }',
+        ];
+
         yield 'interface: updates implements' => [
             '/foo/Interface1.php',
             '<?php <r>interface Inter<>face1 { } class Class1 implements Interface1 { }',

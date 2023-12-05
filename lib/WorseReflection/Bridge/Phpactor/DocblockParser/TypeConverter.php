@@ -217,9 +217,21 @@ class TypeConverter
         if ($type->type instanceof ScalarNode && $type->type->name->value === 'int') {
             $parameters = array_values(iterator_to_array($type->parameters()->types()));
             if (count($parameters) === 2) {
+                $start = $this->convert($parameters[0]);
+                $end = $this->convert($parameters[1]);
+                if ($start instanceof ClassType) {
+                    if ($start->name()->short() === 'min') {
+                        $start = null;
+                    }
+                }
+                if ($end instanceof ClassType) {
+                    if ($end->name()->short() === 'max') {
+                        $end = null;
+                    }
+                }
                 return new IntRangeType(
-                    $this->convert($parameters[0]),
-                    $this->convert($parameters[1]),
+                    $start,
+                    $end,
                 );
             }
         }

@@ -28,7 +28,7 @@ class ClassNameTest extends TestCase
     public function testFromUnknownInvalid(): void
     {
         $this->expectExceptionMessage('Do not know how to create class');
-        ClassName::fromUnknown(new stdClass);
+        ClassName::fromUnknown(new stdClass());
     }
 
     public function testFromUnknownClassName(): void

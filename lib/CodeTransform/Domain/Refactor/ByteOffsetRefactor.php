@@ -6,7 +6,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdits;
 
-interface FillObject
+interface ByteOffsetRefactor
 {
-    public function fillObject(TextDocument $document, ByteOffset $offset): TextEdits;
+    public function refactor(TextDocument $document, ByteOffset $offset): TextEdits;
 }

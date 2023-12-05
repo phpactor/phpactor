@@ -165,10 +165,19 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
      */
     public function resolveItem(RequestMessage $request): Promise
     {
+        /** @phpstan-ignore-next-line */
         return call(function () use ($request) {
+            /** @phpstan-ignore-next-line */
             $item = CompletionItem::fromArray($request->params);
-            $item = $this->resolve[$item->data]($item);
-            return $item;
+
+            if (!(is_string($item->data) || is_int($item->data)) || !array_key_exists($item->data, $this->resolve)) {
+                return $item;
+            }
+            /** @phpstan-ignore-next-line - shouldn't happen but playing safe */
+            if (null === $this->resolve[$item->data]) {
+                return $item;
+            }
+            return $this->resolve[$item->data]($item);
         });
     }
 

@@ -1,23 +1,39 @@
 Changelog
 =========
 
-## master
+## 2023-12-03
 
 Bug fixes:
 
+  - Support LSP document symbols in traits #2446 @lizhening
+  - Fix null variable name crash #2443
   - Fix frame merging of include/require #2391
   - Fix enum representation in method generation #2395
   - Fix enum cases() not existing false-positive #2423
   - Fix incorrect enum import #2400
   - Fix undefined var false positive for arra unpacking #2403
+  - Fix autoloading class conflcits with test files #2535 @gerardroche
+  - Fix enum renaming in legacy renamer #2445
+  - Fix enum renaming on "new" renamer #2445
+  - Fix crash on resolveItem() caused by race condition (?) #2434
+  - Fix false positive for undefined var where vardoc not counting as variable definition #2437
+  - Render variadics as variadics in help, not as arrays #2448
+  - Fix representation of int-range min/max #2444
+  - Render default value for enum when filling object #2441
 
 Features:
 
   - Generate enum cases and class constants #2422
+  - Generate enum match arms #2401
 
 Improvements:
 
   - PHPStan: Support setting custom config path and memory limit @ungrim97
+  - Exclude tests from archive #2433
+
+Breaking changes:
+
+  - Drop support for PHP 8.0. Minimum version is now 8.1
 
 ## 2023.09.24
 

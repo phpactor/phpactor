@@ -1,0 +1,36 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+enum Page
+{
+    case AboutUs;
+    case Blog;
+    case Websites;
+}
+
+
+foreach (Page::cases() as $case) {
+    match ($case) <>{};
+}
+// File: expected
+<?php
+
+namespace Phpactor;
+
+enum Page
+{
+    case AboutUs;
+    case Blog;
+    case Websites;
+}
+
+
+foreach (Page::cases() as $case) {
+    match ($case) {
+    Page::AboutUs => null,
+    Page::Blog => null,
+    Page::Websites => null,
+    };
+}

@@ -196,59 +196,57 @@ class MissingMemberProvider implements DiagnosticProvider
                 Assert::assertEquals('Method "bar" does not exist on class "Foobar"', $diagnostics->at(0)->message());
             }
         );
-        if (version_compare(PHP_VERSION, '8.1', '>=')) {
-            yield new DiagnosticExample(
-                title: 'missing enum case',
-                source: <<<'PHP'
-                    <?php
+        yield new DiagnosticExample(
+            title: 'missing enum case',
+            source: <<<'PHP'
+                <?php
 
-                    enum Foobar
-                    {
-                        case Foo;
-                    }
-
-                    Foobar::Foo;
-                    Foobar::Bar;
-                    PHP,
-                valid: false,
-                assertion: function (Diagnostics $diagnostics): void {
-                    Assert::assertCount(1, $diagnostics);
-                    Assert::assertEquals('Case "Bar" does not exist on enum "Foobar"', $diagnostics->at(0)->message());
+                enum Foobar
+                {
+                    case Foo;
                 }
-            );
-            yield new DiagnosticExample(
-                title: 'enum static method not existing',
-                source: <<<'PHP'
-                    <?php
 
-                    enum Foobar
-                    {
-                    }
+                Foobar::Foo;
+                Foobar::Bar;
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Case "Bar" does not exist on enum "Foobar"', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'enum static method not existing',
+            source: <<<'PHP'
+                <?php
 
-                    Foobar::foobar();
-                    PHP,
-                valid: false,
-                assertion: function (Diagnostics $diagnostics): void {
-                    Assert::assertCount(1, $diagnostics);
+                enum Foobar
+                {
                 }
-            );
-            yield new DiagnosticExample(
-                title: 'enum cases',
-                source: <<<'PHP'
-                    <?php
 
-                    enum Foobar
-                    {
-                    }
+                Foobar::foobar();
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'enum cases',
+            source: <<<'PHP'
+                <?php
 
-                    Foobar::cases();
-                    PHP,
-                valid: true,
-                assertion: function (Diagnostics $diagnostics): void {
-                    Assert::assertCount(0, $diagnostics);
+                enum Foobar
+                {
                 }
-            );
-        }
+
+                Foobar::cases();
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
         yield new DiagnosticExample(
             title: 'missing constant on class',
             source: <<<'PHP'

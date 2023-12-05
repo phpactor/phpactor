@@ -167,6 +167,10 @@ class NodeContextFromMemberAccess
                     break;
                 }
             }
+            if ($reflection instanceof ReflectionEnum && $memberName === 'cases') {
+                $memberType = TypeFactory::array(TypeFactory::reflectedClass($resolver->reflector(), $reflection->name()));
+                break;
+            }
 
             foreach ($subType->members()->byMemberType($memberTypeName)->byName($memberName) as $member) {
                 // if multiple classes declare a member, always take the "top" one

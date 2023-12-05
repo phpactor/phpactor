@@ -20,7 +20,7 @@ class TypeFactoryTest extends TestCase
 
     public function testFalse(): void
     {
-        self::assertEquals(new FalseType, TypeFactory::fromString('false'));
+        self::assertEquals(new FalseType(), TypeFactory::fromString('false'));
     }
 
     /**
