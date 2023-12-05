@@ -680,7 +680,8 @@ class LaravelContainerInspector
             'limit',
             'whereHas',
             'withCount',
-            'with'
+            'with',
+            'latest'
         ];
 
         foreach ($whereMethods as $whereMethod) {
