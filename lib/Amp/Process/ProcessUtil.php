@@ -21,7 +21,12 @@ class ProcessUtil
                 if (time() >= $start + $timeout && $process->isRunning()) {
                     try {
                         $process->kill();
-                        $logger->warning(sprintf('Killed process "%s" because it lived longer than %ds', $process->getPid(), $timeout));
+                        $logger->warning(sprintf(
+                            'Killed process "%s" (%s) because it lived longer than %ds',
+                            $process->getPid(),
+                            $process->getCommand(),
+                            $timeout
+                        ));
                     } catch (StatusError $e) {
                     }
                     break;
