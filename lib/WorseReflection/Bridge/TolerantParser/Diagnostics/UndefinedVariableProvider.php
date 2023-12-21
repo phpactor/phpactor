@@ -179,15 +179,15 @@ class UndefinedVariableProvider implements DiagnosticProvider
         yield new DiagnosticExample(
             title: 'this in anonymous class',
             source: <<<'PHP'
-                <?php
-                new class
-                {
-                    public function foo(): void
+                    <?php
+                    new class
                     {
-                        $this
-                    }
-                };
-            PHP,
+                        public function foo(): void
+                        {
+                            $this
+                        }
+                    };
+                PHP,
             valid: false,
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(0, $diagnostics);

@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
@@ -71,7 +72,8 @@ class FunctionLikeWalker implements Walker
             ClassDeclaration::class,
             InterfaceDeclaration::class,
             TraitDeclaration::class,
-            EnumDeclaration::class
+            EnumDeclaration::class,
+            ObjectCreationExpression::class, // For Inline classes
         );
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
