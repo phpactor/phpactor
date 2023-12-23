@@ -325,6 +325,22 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'SAPI global variables',
+            source: <<<'PHP'
+                    <?php
+                    if ($argc === 2) {
+                        echo "Hello ".$argv[1].PHP_EOL;
+                    } else {
+                        echo "Usage ".__FILE__. " <name>";
+                    }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+
+        yield new DiagnosticExample(
             title: 'local globals',
             source: <<<'PHP'
                 <?php
