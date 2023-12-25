@@ -211,6 +211,39 @@ class CompleteConstructorTest extends WorseTestCase
 
         ];
 
+        yield 'it does not add parameters of inherited classes' => [
+            <<<'EOT'
+                    <?php
+                    class ParentClass
+                    {
+                        public function __construct(private string $someParam) {}
+                    }
+
+                    class Foobar extends ParentClass
+                    {
+                        public function __construct(string $someParam) {
+
+                            parent::__construct($someParam);
+                        }
+                    }
+                EOT,
+            <<<'EOT'
+                    <?php
+                    class ParentClass
+                    {
+                        public function __construct(private string $someParam) {}
+                    }
+
+                    class Foobar extends ParentClass
+                    {
+                        public function __construct(string $someParam) {
+
+                            parent::__construct($someParam);
+                        }
+                    }
+                EOT,
+        ];
+
         yield  'It adds type docblocks' => [
             <<<'EOT'
                 <?php
