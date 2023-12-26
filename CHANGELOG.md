@@ -9,6 +9,7 @@ Features:
 
 Imporvements:
 
+  - Clear document diagnostic cache on save #2458
   - Skip parent parameters on complete constructor #2471 @mamazu
 
 Bug fixes:
