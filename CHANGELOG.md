@@ -1,6 +1,21 @@
 Changelog
 =========
 
+## master
+
+Features:
+
+  - Completion suggestions filtered by accepting type #2456
+
+Imporvements:
+
+  - Skip parent parameters on complete constructor #2471 @mamazu
+
+Bug fixes:
+
+  - Fix `$this` undefined var false positive in anon. class #2469 @mamazu
+  - Fix `$argv` undefined var false positives #2468 @mamazu
+
 ## 2023-12-03
 
 Bug fixes:
