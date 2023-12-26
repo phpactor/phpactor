@@ -46,6 +46,7 @@ class ImportedNameCompletor implements TolerantCompletor, TolerantQualifiable
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'short_description' => sprintf('%s', $resolvedName->__toString()),
+                    'fqn' => $resolvedName->__toString(),
                 ]
             );
         }

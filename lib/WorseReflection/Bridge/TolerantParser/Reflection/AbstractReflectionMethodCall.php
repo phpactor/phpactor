@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall as CoreReflectionMethodCall;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -89,11 +90,17 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
     }
 
 
+    public function method(): ReflectionMethod
+    {
+        $class = $this->class();
+        return $class->methods()->get($this->name());
+    }
+
     public function inferredReturnType(): Type
     {
         $return = $this->node->getFirstAncestor(ReturnStatement::class);
         if ($return) {
-            $functionLike = $this->functionLike();
+            $functionLike = $this->containingFunctionLike();
             if (null === $functionLike) {
                 return new MissingType();
             }
@@ -125,7 +132,7 @@ abstract class AbstractReflectionMethodCall implements CoreReflectionMethodCall
         return $this->node->parent;
     }
 
-    private function functionLike(): ?ReflectionFunctionLike
+    private function containingFunctionLike(): ?ReflectionFunctionLike
     {
         $method = $this->node->getFirstAncestor(MethodDeclaration::class);
         if ($method instanceof MethodDeclaration) {
