@@ -178,7 +178,7 @@ class Suggestion
     /**
      * Return the FQN if the name should be imported.
      */
-    public function classImport(): ?string
+    public function nameImport(): ?string
     {
         return $this->type() === self::TYPE_CLASS ? $this->nameImport : null;
     }

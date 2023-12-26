@@ -198,7 +198,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
         Suggestion $suggestion,
         CompletionParams $params
     ): NameImporterResult {
-        $suggestionNameImport = $suggestion->classImport();
+        $suggestionNameImport = $suggestion->nameImport();
 
         if (!$suggestionNameImport) {
             return NameImporterResult::createEmptyResult();
@@ -248,7 +248,7 @@ class CompletionHandler implements Handler, CanRegisterCapabilities
     private function formatShortDescription(Suggestion $suggestion): string
     {
         $prefix = '';
-        if ($suggestion->classImport()) {
+        if ($suggestion->nameImport()) {
             $prefix = '↓ ';
         }
 

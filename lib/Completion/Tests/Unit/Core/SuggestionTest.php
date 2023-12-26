@@ -30,7 +30,7 @@ class SuggestionTest extends TestCase
         $this->assertEquals('hello', $suggestion->name());
         $this->assertEquals('hallo', $suggestion->label());
         $this->assertEquals('Foobar', $suggestion->shortDescription());
-        $this->assertEquals('Namespace\\Foobar', $suggestion->classImport());
+        $this->assertEquals('Namespace\\Foobar', $suggestion->nameImport());
         $this->assertEquals('Namespace\\Foobar', $suggestion->fqn());
     }
 
@@ -65,6 +65,7 @@ class SuggestionTest extends TestCase
             'info' => '',
             'snippet' => null,
             'name_import' => 'Namespace\\Foobar',
+            'fqn' => null,
         ], $suggestion->toArray());
     }
 }
