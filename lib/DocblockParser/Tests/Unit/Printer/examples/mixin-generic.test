@@ -9,6 +9,5 @@ Docblock: =
    GenericNode: = 
     ClassNode: = Foobar<
     TypeList: = 
-     ListBracketsNode: = 
-      ClassNode: = Baz>
+     ClassNode: = Baz>
  */
