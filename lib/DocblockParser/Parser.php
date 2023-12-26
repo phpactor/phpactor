@@ -507,7 +507,7 @@ final class Parser
 
         if ($this->tokens->if(Token::T_LABEL)) {
             $type = $this->parseTypes();
-            if (!$type instanceof ClassNode) {
+            if (!$type instanceof ClassNode && !$type instanceof GenericNode) {
                 $type = null;
             }
         }

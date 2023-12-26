@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @template TValue
+ */
+class A
+{
+    public function toBeTrue(): bool
+    {
+    }
+}
+
+/**
+ * @mixin A<string>
+ */
+class B
+{
+}
+
+$b = new B();
+wrAssertType('bool', $b->toBeTrue());

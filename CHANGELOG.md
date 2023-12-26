@@ -7,10 +7,11 @@ Features:
 
   - Completion suggestions filtered by accepting type #2456
 
-Imporvements:
+Improvements:
 
   - Clear document diagnostic cache on save #2458
   - Skip parent parameters on complete constructor #2471 @mamazu
+  - Support generics on `@mixin` #2463
 
 Bug fixes:
 
