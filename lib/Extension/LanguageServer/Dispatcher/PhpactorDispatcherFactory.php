@@ -81,7 +81,7 @@ class PhpactorDispatcherFactory implements DispatcherFactory
 
         $extensions = array_map(function (string $class): Extension {
             /** @var Extension $class */
-            return new $class;
+            return new $class();
         }, $extensionClasses);
         $extensions[] = new LanguageServerSessionExtension($transmitter, $params);
 

@@ -148,21 +148,18 @@ class IndexedReferenceFinder implements ReferenceFinder
     {
         $symbolType = $nodeContext->symbol()->symbolType();
 
-        if ($symbolType === Symbol::CASE) {
-            return ReflectionMember::TYPE_CASE;
-        }
-        if ($symbolType === Symbol::METHOD) {
-            return ReflectionMember::TYPE_METHOD;
-        }
-        if ($symbolType === Symbol::PROPERTY) {
-            return ReflectionMember::TYPE_PROPERTY;
-        }
-        if ($symbolType === Symbol::VARIABLE) {
-            return ReflectionMember::TYPE_PROPERTY;
-        }
-        if ($symbolType === Symbol::CONSTANT) {
-            return ReflectionMember::TYPE_CONSTANT;
-        }
+        return match ($symbolType) {
+            Symbol::CASE => ReflectionMember::TYPE_CASE,
+            Symbol::METHOD => ReflectionMember::TYPE_METHOD,
+            Symbol::PROPERTY => ReflectionMember::TYPE_PROPERTY,
+            Symbol::VARIABLE => ReflectionMember::TYPE_PROPERTY,
+            Symbol::CONSTANT => ReflectionMember::TYPE_CONSTANT,
+
+            default => throw new RuntimeException(sprintf(
+                'Could not convert symbol type "%s" to member type',
+                $symbolType
+            ))
+        };
     }
 
     /**

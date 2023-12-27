@@ -59,7 +59,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -102,9 +102,9 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
                     - '8.1'
                     - '8.2'
+                    - '8.3'
 
         steps:
             -
@@ -135,7 +135,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -166,7 +166,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -197,7 +197,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -228,7 +228,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -

@@ -1,3 +1,7 @@
 {%- for parameter in object -%}
+{% if parameter.isVariadic %}
+{% if typeDefined(parameter.type) and attribute(parameter.type, 'iterableValueType') is defined %}{{- render(parameter.type.iterableValueType) }} {% endif %}...${{- parameter.name -}}{% if not loop.last %}, {% endif %}
+{% else %}
 {% if typeDefined(parameter.inferredType) %}{{- render(parameter.inferredType) }} {% endif %}${{- parameter.name -}}{% if not loop.last %}, {% endif %}
+{% endif %}
 {%- endfor -%}

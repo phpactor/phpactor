@@ -37,7 +37,7 @@ final class ObjectRendererBuilder
     /**
      * @var bool|string|callable
      */
-    private $escaping = false;
+    private mixed $escaping = false;
 
     private bool $enableAncestoralCandidates = false;
 

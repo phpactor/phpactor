@@ -8,7 +8,7 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\EmptyValueRenderer;
-use Phpactor\CodeTransform\Domain\Refactor\FillObject;
+use Phpactor\CodeTransform\Domain\Refactor\ByteOffsetRefactor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextEdit;
@@ -21,7 +21,7 @@ use Phpactor\WorseReflection\Core\Type\HasEmptyType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Reflector;
 
-class WorseFillObject implements FillObject
+class WorseFillObject implements ByteOffsetRefactor
 {
     private EmptyValueRenderer $valueRenderer;
 
@@ -35,7 +35,7 @@ class WorseFillObject implements FillObject
         $this->valueRenderer = new EmptyValueRenderer();
     }
 
-    public function fillObject(TextDocument $document, ByteOffset $offset): TextEdits
+    public function refactor(TextDocument $document, ByteOffset $offset): TextEdits
     {
         $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
         $node = $node->getFirstAncestor(ObjectCreationExpression::class);

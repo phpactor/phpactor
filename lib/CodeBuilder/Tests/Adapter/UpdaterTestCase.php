@@ -742,10 +742,6 @@ abstract class UpdaterTestCase extends TestCase
     */
     public function testEnums(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
-        if (version_compare(PHP_VERSION, '8.1', '<')) {
-            $this->markTestSkipped('Not supported in less than 8.1');
-        }
-
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
