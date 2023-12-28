@@ -90,7 +90,10 @@ class IndexedNameSearcherTest extends IndexTestCase
 
     public function testSearcherForAttribute(): void
     {
-        $this->workspace()->put('project/Bar.php', '<?php #[Attribute] class Bar {}');
+        $this->workspace()->put('project/Bap.php', '<?php use Attribute as PHPAttribute; #[PHPAttribute] class Bap {}');
+        $this->workspace()->put('project/Bar.php', '<?php #[\Attribute] class Bar {}');
+        $this->workspace()->put('project/Baj.php', '<?php #[Attribute] class Baj {}');
+        $this->workspace()->put('project/Foo/Bax.php', '<?php namespace Foo; use Not\Attribute; #[Attribute] class Bax {}');
         $this->workspace()->put('project/Baz.php', '<?php class Baz {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
@@ -98,8 +101,8 @@ class IndexedNameSearcherTest extends IndexTestCase
 
         foreach ($searcher->search('Ba', NameSearcherType::ATTRIBUTE) as $result) {
             assert($result instanceof NameSearchResult);
-            self::assertEquals('Bar', $result->name()->head()->__toString());
-            self::assertStringContainsString('Bar.php', $result->uri()->__toString());
+            self::assertContainsEquals($result->name()->head()->__toString(), ['Bar', 'Baj', 'Bap']);
+            self::assertMatchesRegularExpression('#project/Ba[rjp].php$#', $result->uri()->__toString());
         }
     }
 }
