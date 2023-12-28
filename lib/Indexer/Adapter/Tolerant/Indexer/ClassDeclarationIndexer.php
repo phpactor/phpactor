@@ -54,7 +54,7 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
                     continue;
                 }
                 /** @phpstan-ignore-next-line */
-                if ($attribute->name?->getText() === 'Attribute') {
+                if (ltrim($attribute->name?->getText(), '\\') === 'Attribute') {
                     $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
                     return;
                 }
