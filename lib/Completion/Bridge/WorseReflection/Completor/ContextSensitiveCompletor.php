@@ -8,7 +8,10 @@ use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
+use Phpactor\Completion\Bridge\TolerantParser\Qualifier\AlwaysQualfifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
+use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
+use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
@@ -18,7 +21,7 @@ use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
-class ContextSensitiveCompletor implements TolerantCompletor
+class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiable
 {
     public function __construct(private TolerantCompletor $inner, private Reflector $reflector)
     {
@@ -97,5 +100,14 @@ class ContextSensitiveCompletor implements TolerantCompletor
         }
 
         return $generator->getReturn();
+    }
+
+    public function qualifier(): TolerantQualifier
+    {
+        if ($this->inner instanceof TolerantQualifiable) {
+            return $this->inner->qualifier();
+        }
+
+        return new AlwaysQualfifier();
     }
 }
