@@ -92,6 +92,7 @@ class IndexedNameSearcherTest extends IndexTestCase
     {
         $this->workspace()->put('project/Bar.php', '<?php #[\Attribute] class Bar {}');
         $this->workspace()->put('project/Baj.php', '<?php #[Attribute] class Baj {}');
+        $this->workspace()->put('project/Foo/Bax.php', '<?php namespace Foo; use Not\Attribute; #[Attribute] class Bax {}');
         $this->workspace()->put('project/Baz.php', '<?php class Baz {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
