@@ -73,7 +73,7 @@ class ClassMemberReferences
         return (string) $this->replaceReferencesInCode($source, $referenceList->withClasses(), $replacement);
     }
 
-    /** 
+    /**
      * @return array{references: array<mixed>, risky_references: array<mixed>, replacements: array<mixed>}
      */
     private function referencesInFile(
@@ -125,7 +125,7 @@ class ClassMemberReferences
         return $result;
     }
 
-    /** 
+    /**
      * @return list<array<string, mixed>>
      */
     private function serializeReferenceList(string $code, MemberReferences $referenceList): array
@@ -141,7 +141,7 @@ class ClassMemberReferences
         return $references;
     }
 
-    /** 
+    /**
      * @return array<string, mixed>
      */
     private function serializeReference(string $code, MemberReference $reference): array
