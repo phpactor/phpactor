@@ -9,10 +9,6 @@ class TextUtils
         $indentation = null;
         $lines = explode(PHP_EOL, $string);
 
-        if ($lines === []) {
-            return $string;
-        }
-
         foreach ($lines as $i => $line) {
             if ($line === '') {
                 continue;
