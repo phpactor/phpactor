@@ -73,6 +73,9 @@ class ClassMemberReferences
         return (string) $this->replaceReferencesInCode($source, $referenceList->withClasses(), $replacement);
     }
 
+    /** 
+     * @return array{references: array<mixed>, risky_references: array<mixed>, replacements: array<mixed>}
+     */
     private function referencesInFile(
         Filesystem $filesystem,
         $filePath,
@@ -122,6 +125,9 @@ class ClassMemberReferences
         return $result;
     }
 
+    /** 
+     * @return list<array<string, mixed>>
+     */
     private function serializeReferenceList(string $code, MemberReferences $referenceList): array
     {
         $references = [];
@@ -135,6 +141,9 @@ class ClassMemberReferences
         return $references;
     }
 
+    /** 
+     * @return array<string, mixed>
+     */
     private function serializeReference(string $code, MemberReference $reference): array
     {
         [$lineNumber, $colNumber, $line] = $this->line($code, $reference->position()->start());
@@ -149,6 +158,9 @@ class ClassMemberReferences
         ];
     }
 
+    /**
+     * @return array{int, int, string}
+     */
     private function line(string $code, int $offset):array
     {
         $lines = explode(PHP_EOL, $code);
