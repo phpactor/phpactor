@@ -116,7 +116,7 @@ class WorkspaceIndex
             unset($this->byName[$name]);
         }
 
-        if (!empty($newNames)) {
+        if ($newNames !== []) {
             $this->documentToNameMap[(string)$textDocument->uri()] = $newNames;
         } else {
             unset($this->documentToNameMap[(string)$textDocument->uri()]);

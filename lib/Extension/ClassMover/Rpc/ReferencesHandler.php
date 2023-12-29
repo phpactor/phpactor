@@ -125,7 +125,7 @@ class ReferencesHandler extends AbstractHandler
         }
 
         $references = array_filter($references, function (array $referenceList) {
-            return false === empty($referenceList['references']);
+            return $referenceList['references'] !== [];
         });
 
         return CollectionResponse::fromActions([
