@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\HasPath;
+use function str_starts_with;
 
 class FileAbsolutePathBeginsWith extends Criteria
 {
@@ -18,7 +19,6 @@ class FileAbsolutePathBeginsWith extends Criteria
             return false;
         }
 
-        $begins = strpos($record->filePath(), $this->prefix);
-        return $begins !== false && 0 === $begins;
+        return str_starts_with($record->filePath() ?? '', $this->prefix);
     }
 }
