@@ -461,11 +461,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/PhpVersionPathResolverTest.php
 
 		-
-			message: "#^Method Phpactor\\\\TestUtils\\\\Workspace\\:\\:mkdir\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/PhpVersionPathResolverTest.php
-
-		-
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\SourceBuilderTest\\:\\:\\$builder has no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
@@ -562,7 +557,7 @@ parameters:
 
 		-
 			message: "#^Variable \\$lines in empty\\(\\) always exists and is not falsy\\.$#"
-			count: 2
+			count: 1
 			path: lib/CodeTransform/Domain/Utils/TextUtils.php
 
 		-
@@ -774,11 +769,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\ChainSignatureHelper\\:\\:__construct\\(\\) has parameter \\$helpers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/ChainSignatureHelper.php
-
-		-
-			message: "#^Parameter \\#2 \\$options of static method Phpactor\\\\Completion\\\\Core\\\\Suggestion\\:\\:createWithOptions\\(\\) expects array\\{short_description\\?\\: Closure\\|string\\|null, documentation\\?\\: Closure\\|string\\|null, type\\?\\: string\\|null, class_import\\?\\: string\\|null, name_import\\?\\: string\\|null, label\\?\\: string\\|null, range\\?\\: Phpactor\\\\Completion\\\\Core\\\\Range\\|null, snippet\\?\\: string\\|null, \\.\\.\\.\\}, array\\<string, mixed\\> given\\.$#"
-			count: 2
-			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
 
 		-
 			message: "#^Parameter \\#5 \\$options of method Phpactor\\\\Completion\\\\Core\\\\Completor\\\\NameSearcherCompletor\\:\\:createSuggestion\\(\\) expects array\\<string, string\\>, array\\<string, mixed\\> given\\.$#"
@@ -1256,11 +1246,6 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassCopy.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:createQuery\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:createQuery\\(\\) has parameter \\$memberType with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
@@ -1271,27 +1256,7 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:line\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:referencesInFile\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:referencesInFile\\(\\) has parameter \\$filePath with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReferenceList\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
 
@@ -3561,11 +3526,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/CreateClassProviderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\LanguageServer\\\\Test\\\\LanguageServerTester\\\\TextDocumentTester\\:\\:save\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/CreateClassProviderTest.php
-
-		-
 			message: "#^Offset 'diagnostics' does not exist on array\\<string, mixed\\>\\|null\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/CreateClassProviderTest.php
@@ -5656,6 +5616,11 @@ parameters:
 			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
 
 		-
+			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\InMemory\\\\InMemoryIndex\\:\\:get\\(\\) should return TRecord of Phpactor\\\\Indexer\\\\Model\\\\Record but returns Phpactor\\\\Indexer\\\\Model\\\\Record\\.$#"
+			count: 1
+			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
+
+		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\InMemory\\\\InMemoryIndex\\:\\:lastUpdate\\(\\) should return int but returns int\\|null\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
@@ -5821,11 +5786,6 @@ parameters:
 			path: lib/Indexer/Model/Indexer.php
 
 		-
-			message: "#^Parameter \\#1 \\$haystack of function strpos expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Query/Criteria/FileAbsolutePathBeginsWith.php
-
-		-
 			message: "#^Cannot call method references\\(\\) on Phpactor\\\\Indexer\\\\Model\\\\Record\\\\FunctionRecord\\|null\\.$#"
 			count: 1
 			path: lib/Indexer/Model/Query/FunctionQuery.php
@@ -5909,11 +5869,6 @@ parameters:
 			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/IntegrationTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\TestUtils\\\\Workspace\\:\\:path\\(\\) invoked with 2 parameters, 0\\-1 required\\.$#"
-			count: 2
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\ReferenceFinder\\\\Util\\\\ContainerTypeResolverTest\\:\\:testResolve\\(\\) has parameter \\$manifest with no value type specified in iterable type array\\.$#"

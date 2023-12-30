@@ -33,7 +33,7 @@ class TextDocumentUri
             ));
         }
 
-        if (substr($uri, 0, 9) === 'untitled:') {
+        if (str_starts_with($uri, 'untitled:')) {
             return new self(self::SCHEME_UNTITLED, substr($uri, 9));
         }
 
