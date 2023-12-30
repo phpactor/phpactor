@@ -194,16 +194,12 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
 
     public function virtual(): ReflectionMemberCollection
     {
-        return $this->filter(function (ReflectionMember $member) {
-            return $member->isVirtual();
-        });
+        return $this->filter(fn (ReflectionMember $member) => $member->isVirtual());
     }
 
     public function real(): ReflectionMemberCollection
     {
-        return $this->filter(function (ReflectionMember $member) {
-            return false === $member->isVirtual();
-        });
+        return $this->filter(fn (ReflectionMember $member) => !$member->isVirtual());
     }
 
     public function methods(): ReflectionMethodCollection
