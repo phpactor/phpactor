@@ -44,12 +44,7 @@ class InMemoryIndex implements Index
     {
         $key = $this->recordKey($record);
 
-        if (isset($this->index[$key])) {
-            /** @phpstan-ignore-next-line */
-            return $this->index[$key];
-        }
-
-        return $record;
+        return $this->index[$key] ?? $record;
     }
 
     public function isFresh(SplFileInfo $fileInfo): bool
