@@ -71,7 +71,7 @@ class FileFinderTest extends TestCase
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
-        $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo'], $files), $files);
+        $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo']), $files);
     }
 
     public function testParentsTraitsAndInterfacesIfMemberIsProtected(): void
@@ -81,7 +81,7 @@ class FileFinderTest extends TestCase
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
-        $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo', 'barfoo', 'barfoo'], $files), $files);
+        $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo', 'barfoo', 'barfoo']), $files);
     }
 
     private function filesFor(ReflectionClassLike $class = null, string $memberName = null)

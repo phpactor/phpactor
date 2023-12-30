@@ -25,7 +25,7 @@ class OffsetInfoHandlerTest extends HandlerTestCase
 
     public function testOffsetInfo(): void
     {
-        $action = $this->createHandler('offset_info')->handle([
+        $action = $this->createHandler()->handle([
             'offset' => 19,
             'source' => self::SOURCE
         ]);
