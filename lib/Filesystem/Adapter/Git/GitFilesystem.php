@@ -119,6 +119,6 @@ class GitFilesystem extends SimpleFilesystem
     {
         $out = $this->exec(['ls-files', (string) $file]);
 
-        return false === empty($out);
+        return !empty($out);
     }
 }

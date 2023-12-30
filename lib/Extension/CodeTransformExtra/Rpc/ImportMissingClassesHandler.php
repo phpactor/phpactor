@@ -50,7 +50,7 @@ class ImportMissingClassesHandler implements Handler
             ]));
         }
 
-        if (empty($responses)) {
+        if ($responses === []) {
             return EchoResponse::fromMessage('No unresolved classes found');
         }
 

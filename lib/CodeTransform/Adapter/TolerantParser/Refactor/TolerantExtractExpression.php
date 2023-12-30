@@ -78,7 +78,7 @@ class TolerantExtractExpression implements ExtractExpression
                     }
                 );
 
-                if (empty($expressions)) {
+                if ($expressions === []) {
                     return null;
                 }
 

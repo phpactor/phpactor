@@ -75,7 +75,7 @@ class MemberIndexer implements TolerantIndexer
         $containerType = $this->resolveContainerType($containerType, $node);
         $memberName = $this->resolveScopedPropertyAccessName($node);
 
-        if (empty($memberName)) {
+        if ($memberName === '') {
             return;
         }
 

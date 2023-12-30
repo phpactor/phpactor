@@ -43,7 +43,7 @@ class ClassMemberReferences
         foreach ($filePaths as $filePath) {
             $references = $this->referencesInFile($filesystem, $filePath, $className, $memberName, $memberType, $replace, $dryRun);
 
-            if (empty($references['references']) && empty($references['risky_references'])) {
+            if ($references['references'] === [] && $references['risky_references'] === []) {
                 continue;
             }
 
@@ -73,6 +73,9 @@ class ClassMemberReferences
         return (string) $this->replaceReferencesInCode($source, $referenceList->withClasses(), $replacement);
     }
 
+    /**
+     * @return array{references: array<mixed>, risky_references: array<mixed>, replacements: array<mixed>}
+     */
     private function referencesInFile(
         Filesystem $filesystem,
         $filePath,
@@ -81,7 +84,7 @@ class ClassMemberReferences
         string $memberType = null,
         string $replace = null,
         bool $dryRun = false
-    ) {
+    ): array {
         $code = $filesystem->getContents($filePath);
 
         $query = $this->createQuery($className, $memberName, $memberType);
@@ -122,7 +125,10 @@ class ClassMemberReferences
         return $result;
     }
 
-    private function serializeReferenceList(string $code, MemberReferences $referenceList)
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function serializeReferenceList(string $code, MemberReferences $referenceList): array
     {
         $references = [];
         /** @var MemberReference $reference */
@@ -135,7 +141,10 @@ class ClassMemberReferences
         return $references;
     }
 
-    private function serializeReference(string $code, MemberReference $reference)
+    /**
+     * @return array<string, mixed>
+     */
+    private function serializeReference(string $code, MemberReference $reference): array
     {
         [$lineNumber, $colNumber, $line] = $this->line($code, $reference->position()->start());
         return [
@@ -149,7 +158,10 @@ class ClassMemberReferences
         ];
     }
 
-    private function line(string $code, int $offset)
+    /**
+     * @return array{int, int, string}
+     */
+    private function line(string $code, int $offset):array
     {
         $lines = explode(PHP_EOL, $code);
         $number = 0;
@@ -177,7 +189,7 @@ class ClassMemberReferences
         return $this->memberReplacer->replaceMembers($code, $list, $replace);
     }
 
-    private function createQuery(string $className = null, string $memberName = null, $memberType = null)
+    private function createQuery(string $className = null, string $memberName = null, $memberType = null): ClassMemberQuery
     {
         $query = ClassMemberQuery::create();
 
