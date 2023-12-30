@@ -61,8 +61,14 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
             yield from $generator;
             return $generator->getReturn();
         }
-        $functionLike = $callExpression->method();
-        $parameters = $functionLike->parameters();
+
+        try {
+            $functionLike = $callExpression->method();
+            $parameters = $functionLike->parameters();
+        } catch (NotFound) {
+            yield from $generator;
+            return $generator->getReturn();
+        }
         $parameter = $parameters->at($argumentNb);
         if (null === $parameter) {
             yield from $generator;

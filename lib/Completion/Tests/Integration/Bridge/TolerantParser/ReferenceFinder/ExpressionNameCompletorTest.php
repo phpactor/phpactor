@@ -263,6 +263,16 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
                 self::assertCount(2, $suggestions);
             }
         ];
+        yield 'bare call 2' => [
+            [
+                NameSearchResult::create('class', 'Foobar'),
+                NameSearchResult::create('class', 'Class'),
+            ],
+            '<?php class Foobar {public function bar(Baz $b) {}} $f = new Foobar; $f->bar(F<>',
+            function (Suggestions $suggestions): void {
+                self::assertCount(1, $suggestions);
+            }
+        ];
         yield 'php tag' => [
             [
                 NameSearchResult::create('class', 'Foobar'),

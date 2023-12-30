@@ -118,6 +118,24 @@ class ContextSensitiveCompletorTest extends TestCase
                 'Obj',
             ],
         ];
+        yield 'no type hint' => [
+            [
+                'Foo',
+                'Obj',
+            ],
+            <<<'EOT'
+                <?php
+                class Obj {}
+                class Foo { public function bar($obj){}}
+
+                $f = new Foo();
+                $f->bar(O<>
+                EOT,
+            [
+                'Foo',
+                'Obj',
+            ],
+        ];
         yield '2nd arg' => [
             [
                 'Obj',
@@ -188,6 +206,25 @@ class ContextSensitiveCompletorTest extends TestCase
                 EOT,
             [
                 'Obj',
+            ],
+        ];
+        yield 'unresolvable method' => [
+            [
+                'Obj',
+                'Baz',
+            ],
+            <<<'EOT'
+                <?php
+                class Obj {}
+                class Baz {}
+                class Foo { public function boo(){}}
+
+                $f = new Foo();
+                $f->bar(new O<>
+                EOT,
+            [
+                'Obj',
+                'Baz',
             ],
         ];
     }
