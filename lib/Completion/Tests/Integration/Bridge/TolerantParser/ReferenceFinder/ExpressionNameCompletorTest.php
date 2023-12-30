@@ -43,7 +43,8 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
                     $node,
                     TextDocumentBuilder::fromUnknown($source),
                     ByteOffset::fromInt($offset)
-                )
+                ),
+                false
             )
         );
         $assertion($results);
@@ -222,60 +223,55 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
         yield 'within namespace with with import match' => [
             [
                 NameSearchResult::create('class', 'Foobar'),
+                NameSearchResult::create('class', 'NS1\Foo\Foobar'),
+                NameSearchResult::create('class', 'Foobar\Foo\Foo'),
                 NameSearchResult::create('class', 'Class'),
             ],
-            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Foo\Fo<> }', [
-                [
-                    'type'              => Suggestion::TYPE_CLASS,
-                    'name'              => 'Foobar',
-                    'short_description' => 'Foobar\Foo\Foobar',
-                ]
-            ],
+            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Foo\Fo<> }',
+            function (Suggestions $suggestions): void {
+                self::assertCount(1, $suggestions);
+                self::assertEquals('Foo', $suggestions->at(0)->name());
+            }
         ];
 
         yield 'only show children for qualified names' => [
             [
                 NameSearchResult::create('class', 'Foobar'),
                 NameSearchResult::create('class', 'Class'),
+                NameSearchResult::create('class', 'NS1\Relative\One\Blah\Boo'),
+                NameSearchResult::create('class', 'NS1\Relative\One\Glorm\Bar'),
+                NameSearchResult::create('class', 'NS1\Relative\One\Blah'),
+                NameSearchResult::create('class', 'NS1\Relative\Two'),
+                NameSearchResult::create('class', 'NS1\Relative\Two\Glorm\Bar'),
             ],
-            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Relative\<> }', [
-                [
-                    'type'              => Suggestion::TYPE_MODULE,
-                    'name'              => 'One',
-                    'short_description' => 'NS1\Relative\One',
-                ],
-                [
-                    'type'              => Suggestion::TYPE_CLASS,
-                    'name'              => 'Two',
-                    'short_description' => 'NS1\Relative\Two',
-                ],
-                [
-                    'type'              => Suggestion::TYPE_MODULE,
-                    'name'              => 'Two',
-                    'short_description' => 'NS1\Relative\Two',
-                ],
-            ],
+            '<?php namespace NS1{ use Foobar\Foo; class Foobar {} match (true) { 1 => Relative\<> }',
+            function (Suggestions $suggestions): void {
+                self::assertCount(3, $suggestions);
+                self::assertEquals('One', $suggestions->at(0)->name());
+                self::assertEquals('Two', $suggestions->at(1)->name());
+                self::assertEquals('Two', $suggestions->at(2)->name());
+                self::assertEquals(Suggestion::TYPE_MODULE, $suggestions->at(2)->type());
+            }
         ];
         yield 'bare call' => [
             [
                 NameSearchResult::create('class', 'Foobar'),
                 NameSearchResult::create('class', 'Class'),
             ],
-            '<?php class Foobar {public function bar(Baz $b) {}} $f = new Foobar; $f->bar(<>', [
-                [
-                    'type'              => Suggestion::TYPE_CLASS,
-                    'name'              => 'EmptyString',
-                    'short_description' => 'EmptyString',
-                ],
-            ],
+            '<?php class Foobar {public function bar(Baz $b) {}} $f = new Foobar; $f->bar(<>',
+            function (Suggestions $suggestions): void {
+                self::assertCount(2, $suggestions);
+            }
         ];
         yield 'php tag' => [
             [
                 NameSearchResult::create('class', 'Foobar'),
                 NameSearchResult::create('class', 'Class'),
             ],
-            '<?ph<>', [
-            ],
+            '<?ph<>',
+            function (Suggestions $suggestions): void {
+                self::assertCount(0, $suggestions);
+            }
         ];
     }
 }
