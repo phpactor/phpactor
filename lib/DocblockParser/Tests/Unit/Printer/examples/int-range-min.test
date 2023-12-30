@@ -1,0 +1,14 @@
+/**
+ * @var int<min, max>
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  VarTag: = @var
+   GenericNode: = 
+    ScalarNode: = int<
+    TypeList: = 
+     ClassNode: = min,
+     ClassNode: = max>
+ */

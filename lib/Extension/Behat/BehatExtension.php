@@ -23,8 +23,9 @@ use Phpactor\MapResolver\Resolver;
 
 class BehatExtension implements OptionalExtension
 {
-    const PARAM_CONFIG_PATH = 'behat.config_path';
-    const PARAM_SYMFONY_XML_PATH = 'behat.symfony.di_xml_path';
+    public const PARAM_CONFIG_PATH = 'behat.config_path';
+    public const PARAM_SYMFONY_XML_PATH = 'behat.symfony.di_xml_path';
+    public const PARAM_ENABLED = 'behat.enabled';
 
     public function load(ContainerBuilder $container): void
     {
@@ -48,7 +49,7 @@ class BehatExtension implements OptionalExtension
         });
 
         $container->register('behat.config', function (Container $container) {
-            return new BehatConfig($container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_CONFIG_PATH)));
+            return new BehatConfig($container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_CONFIG_PATH)->string()));
         });
 
         $container->register('behat.completion.feature_step_completor', function (Container $container) {

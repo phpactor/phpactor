@@ -29,7 +29,7 @@ if (!isset($autoloadFile)) {
     exit(255);
 }
 
-$minVersion = '8.0.0';
+$minVersion = '8.1.0';
 
 if (version_compare(PHP_VERSION, $minVersion) < 0) {
     fwrite(STDERR, sprintf('Phpactor requires at least PHP %s', $minVersion) . PHP_EOL);
@@ -38,7 +38,8 @@ if (version_compare(PHP_VERSION, $minVersion) < 0) {
 
 require_once $autoloadFile;
 
-$application = new Application(realpath(dirname($autoloadFile)));
+$phpactorBin = $argv[0];
+$application = new Application(realpath(dirname($autoloadFile)), $phpactorBin);
 $output = new ConsoleOutput();
 
 try {

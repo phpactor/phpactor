@@ -30,6 +30,26 @@ class DedupeCompletorTest extends TestCase
         $this->assertTrue($suggestions->getReturn());
     }
 
+    public function testDedupeWithSuggestionsOfDifferentTypes(): void
+    {
+        $source = TextDocumentBuilder::create('foobar')->build();
+        $offset = ByteOffset::fromInt(10);
+
+        $inner = new ArrayCompletor([
+            Suggestion::createWithOptions('foobar', ['type' => Suggestion::TYPE_ENUM]),
+            Suggestion::create('barfoo'),
+            Suggestion::create('foobar'),
+        ]);
+        $dedupe = new DedupeCompletor($inner);
+        $suggestions = $dedupe->complete($source, $offset);
+        self::assertEquals([
+            Suggestion::createWithOptions('foobar', ['type' => Suggestion::TYPE_ENUM]),
+            Suggestion::create('barfoo'),
+            Suggestion::create('foobar'),
+        ], iterator_to_array($suggestions));
+        $this->assertTrue($suggestions->getReturn());
+    }
+
     public function testDeduplicatesWithFqn(): void
     {
         $source = TextDocumentBuilder::create('foobar')->build();

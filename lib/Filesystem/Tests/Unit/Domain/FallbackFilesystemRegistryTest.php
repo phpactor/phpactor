@@ -7,17 +7,23 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\Filesystem\Domain\FallbackFilesystemRegistry;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class FallbackFilesystemRegistryTest extends TestCase
 {
     use ProphecyTrait;
 
     /**
-     * @var ObjectProphecy|FilesystemRegistry
+     * @var ObjectProphecy<FilesystemRegistry>
      */
-    private $innerRegistry;
+    private ObjectProphecy|FilesystemRegistry $innerRegistry;
 
     private FallbackFilesystemRegistry $registry;
+
+    /**
+     * @var ObjectProphecy<Filesystem>
+     */
+    private ObjectProphecy|Filesystem $filesystem1;
 
     public function setUp(): void
     {

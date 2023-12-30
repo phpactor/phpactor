@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Inference;
 
 use Generator;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class SelfTest extends IntegrationTestCase
@@ -12,7 +13,7 @@ class SelfTest extends IntegrationTestCase
      */
     public function testSelf(string $path): void
     {
-        $source = (string)file_get_contents($path);
+        $source = TextDocumentBuilder::fromUri($path)->build();
         $reflector = $this->createBuilder($source)->enableCache()->build();
         $reflector->reflectOffset($source, mb_strlen($source));
 

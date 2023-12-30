@@ -17,6 +17,8 @@ class ConstantDeclarationIndexerTest extends TolerantIndexerTestCase
 
     /**
      * @dataProvider provideDeclaration
+     *
+     * @param Closure(IndexAgent):void $assertion
      */
     public function testDeclaration(string $manifest, Closure $assertion): void
     {
@@ -34,7 +36,7 @@ class ConstantDeclarationIndexerTest extends TolerantIndexerTestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<array{string, Closure(IndexAgent):void}>
      */
     public function provideDeclaration(): Generator
     {
@@ -82,6 +84,26 @@ class ConstantDeclarationIndexerTest extends TolerantIndexerTestCase
                 ));
             }
         ];
+
+        yield 'a define creates only one constant'  => [
+            "// File: src/file1.php\n<?php define('FOOBAR', 'FOOBAR123');",
+            function (IndexAgent $agent): void {
+                self::assertInstanceOf(
+                    ConstantRecord::class,
+                    $agent->query()->constant()->get('FOOBAR')
+                );
+
+                self::assertCount(1, iterator_to_array(
+                    $agent->search()->search(
+                        Criteria::and(
+                            Criteria::isConstant(),
+                            Criteria::fqnBeginsWith('FOOBAR')
+                        )
+                    )
+                ));
+            }
+        ];
+
         yield 'namespaced define' => [
             "// File: src/file1.php\n<?php namespace Foo; define('Barfoo\FOOBAR', 1)",
             function (IndexAgent $agent): void {

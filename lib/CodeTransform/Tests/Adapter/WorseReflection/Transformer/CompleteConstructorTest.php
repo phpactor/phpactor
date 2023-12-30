@@ -2,10 +2,12 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use Generator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\CompleteConstructor;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
+use function Amp\Promise\wait;
 
 class CompleteConstructorTest extends WorseTestCase
 {
@@ -15,11 +17,13 @@ class CompleteConstructorTest extends WorseTestCase
     public function testDiagnostics(string $example, int $expectedCount): void
     {
         $source = SourceCode::fromString($example);
-        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private');
-        $this->assertCount($expectedCount, $transformer->diagnostics($source));
+        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', promote: false);
+        $this->assertCount($expectedCount, wait($transformer->diagnostics($source)));
     }
-
-    public function provideDiagnostics()
+    /**
+     * @return Generator<string,array{string,int}>
+     */
+    public function provideDiagnostics(): Generator
     {
         yield 'empty' => [
             <<<'EOT'
@@ -50,11 +54,13 @@ class CompleteConstructorTest extends WorseTestCase
     {
         $source = SourceCode::fromString($example);
         $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private');
-        $transformed = $transformer->transform($source);
+        $transformed = wait($transformer->transform($source));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
-
-    public function provideCompleteConstructor()
+    /**
+     * @return Generator<string,array{string,string}>
+     */
+    public function provideCompleteConstructor(): Generator
     {
         yield 'It does nothing on source with no classes' => [
             <<<'EOT'
@@ -203,6 +209,39 @@ class CompleteConstructorTest extends WorseTestCase
                 }
                 EOT
 
+        ];
+
+        yield 'it does not add parameters of inherited classes' => [
+            <<<'EOT'
+                    <?php
+                    class ParentClass
+                    {
+                        public function __construct(private string $someParam) {}
+                    }
+
+                    class Foobar extends ParentClass
+                    {
+                        public function __construct(string $someParam) {
+
+                            parent::__construct($someParam);
+                        }
+                    }
+                EOT,
+            <<<'EOT'
+                    <?php
+                    class ParentClass
+                    {
+                        public function __construct(private string $someParam) {}
+                    }
+
+                    class Foobar extends ParentClass
+                    {
+                        public function __construct(string $someParam) {
+
+                            parent::__construct($someParam);
+                        }
+                    }
+                EOT,
         ];
 
         yield  'It adds type docblocks' => [
@@ -598,4 +637,148 @@ class CompleteConstructorTest extends WorseTestCase
 
         ];
     }
+
+    /**
+     * @dataProvider provideCompleteConstructorPromote
+     */
+    public function testCompleteConstructorPromote(string $example, string $expected): void
+    {
+        $source = SourceCode::fromString($example);
+        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', true);
+        $transformed = wait($transformer->transform($source));
+        $this->assertEquals((string) $expected, (string) $transformed->apply($source));
+    }
+
+    /**
+     * @return Generator<string,array{string,string}>
+     */
+    public function provideCompleteConstructorPromote(): Generator
+    {
+        yield  'It does adds assignations and properties' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct($foo, $bar)
+                    {
+                    }
+                }
+                EOT
+        ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct(private $foo, private $bar)
+                    {
+                    }
+                }
+                EOT
+
+        ];
+
+        yield  'It does adds assignations and properties with types' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct(string $foo, string $bar)
+                    {
+                    }
+                }
+                EOT
+        ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct(private string $foo, private string $bar)
+                    {
+                    }
+                }
+                EOT
+
+        ];
+    }
+
+    /**
+     * @dataProvider provideCompleteConstructorWithParentClass
+     */
+    public function testCompleteConstructorWithParentClass(string $example, string $expected): void
+    {
+        $source = SourceCode::fromString($example);
+        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', true);
+        $transformed = wait($transformer->transform($source));
+        $this->assertEquals((string) $expected, (string) $transformed->apply($source));
+    }
+
+    /**
+    * @return Generator<array{string, string}>
+    */
+    public function provideCompleteConstructorWithParentClass(): Generator
+    {
+        yield 'Do not promote constructor arguments if a parent class already has the same argument' => [
+            <<<'EOT'
+                <?php
+                class A
+                {
+                    public function __construct(public string $someString) {}
+                }
+
+
+                class SomeClassTest extends A
+                {
+                    public function __construct(public int $test, string $someString)
+                    {
+                        parent::__construct($someString);
+                    }
+                }
+                EOT,
+            <<<'EOT'
+                <?php
+                class A
+                {
+                    public function __construct(public string $someString) {}
+                }
+
+
+                class SomeClassTest extends A
+                {
+                    public function __construct(public int $test, string $someString)
+                    {
+                        parent::__construct($someString);
+                    }
+                }
+                EOT,
+        ];
+
+        yield 'No promotion if there is a parent class constructor somewhere in the hierarchy' => [
+            <<<'EOT'
+                class B {
+                    public function __construct(private string $a) {}
+                }
+                class A extends B {}
+
+                class Foo extends A {
+                    public function __construct(string $a) {parent::__construct($a);}
+                }
+                EOT,
+            <<<'EOT'
+                class B {
+                    public function __construct(private string $a) {}
+                }
+                class A extends B {}
+
+                class Foo extends A {
+                    public function __construct(string $a) {parent::__construct($a);}
+                }
+                EOT,
+            ];
+
+    }
+
 }

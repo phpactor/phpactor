@@ -52,8 +52,8 @@ class ClassToFileExtension implements Extension
                 $classToFiles[] = new ComposerClassToFile($classLoader);
             }
 
-            if ($container->getParameter(self::PARAM_BRUTE_FORCE_CONVERSION) && empty($classToFiles)) {
-                $projectDir = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PROJECT_ROOT));
+            if ($container->parameter(self::PARAM_BRUTE_FORCE_CONVERSION)->bool() && $classToFiles === []) {
+                $projectDir = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_PROJECT_ROOT)->string());
                 $classToFiles[] = new SimpleClassToFile($projectDir);
             }
 
@@ -63,10 +63,10 @@ class ClassToFileExtension implements Extension
         $container->register('class_to_file.file_to_class', function (Container $container) {
             $fileToClasses = [];
             foreach ($container->get(ComposerAutoloaderExtension::SERVICE_AUTOLOADERS) as $classLoader) {
-                $fileToClasses[] =  new ComposerFileToClass($classLoader);
+                $fileToClasses[] = new ComposerFileToClass($classLoader);
             }
 
-            if (empty($fileToClasses)) {
+            if ($fileToClasses === []) {
                 $fileToClasses[] = new SimpleFileToClass();
             }
 

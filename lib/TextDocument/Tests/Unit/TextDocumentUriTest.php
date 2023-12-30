@@ -14,6 +14,18 @@ class TextDocumentUriTest extends TestCase
         $this->assertEquals('file://' . __FILE__, (string) $uri);
     }
 
+    public function testCreateUntitled(): void
+    {
+        $uri = TextDocumentUri::fromString('untitled:Untitled-1');
+        $this->assertEquals('untitled:Untitled-1', (string) $uri);
+    }
+
+    public function testCreatePhar(): void
+    {
+        $uri = TextDocumentUri::fromString('phar://' . __FILE__);
+        $this->assertEquals('phar://' . __FILE__, (string) $uri);
+    }
+
     public function testNormalizesToFileScheme(): void
     {
         $uri = TextDocumentUri::fromString(__FILE__);
@@ -30,14 +42,14 @@ class TextDocumentUriTest extends TestCase
     {
         $this->expectException(InvalidUriException::class);
         $this->expectExceptionMessage('not parse');
-        TextDocumentUri::fromString('no:///this:isnot/ && !');
+        TextDocumentUri::fromString('');
     }
 
     public function testExceptionOnNoPath(): void
     {
         $this->expectException(InvalidUriException::class);
         $this->expectExceptionMessage('has no path');
-        TextDocumentUri::fromString('file://foo');
+        TextDocumentUri::fromString('file://');
     }
 
     public function testFromPath(): void
@@ -49,7 +61,7 @@ class TextDocumentUriTest extends TestCase
     public function testFromHttpUri(): void
     {
         $this->expectException(InvalidUriException::class);
-        $this->expectExceptionMessage('Only "file://" scheme is supported, got "http"');
+        $this->expectExceptionMessage('Only "file", "untitled", "phar" schemes are supported, got "http"');
         $uri = TextDocumentUri::fromString('http://foobar/foobar');
     }
 

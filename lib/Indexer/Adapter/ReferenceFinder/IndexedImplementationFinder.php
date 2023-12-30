@@ -6,9 +6,11 @@ use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\ReferenceFinder\ClassImplementationFinder;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
@@ -33,17 +35,17 @@ class IndexedImplementationFinder implements ClassImplementationFinder
         $this->containerTypeResolver = new ContainerTypeResolver($reflector);
     }
 
-    /**
-     * @return Locations<Location>
-     */
-    public function findImplementations(TextDocument $document, ByteOffset $byteOffset, bool $includeDefinition = false): Locations
-    {
-        $symbolContext = $this->reflector->reflectOffset(
-            $document->__toString(),
+    public function findImplementations(
+        TextDocument $document,
+        ByteOffset $byteOffset,
+        bool $includeDefinition = false
+    ): Locations {
+        $nodeContext = $this->reflector->reflectOffset(
+            $document,
             $byteOffset->toInt()
-        )->symbolContext();
+        )->nodeContext();
 
-        $symbolType = $symbolContext->symbol()->symbolType();
+        $symbolType = $nodeContext->symbol()->symbolType();
 
         if (
             $symbolType === Symbol::METHOD ||
@@ -53,27 +55,27 @@ class IndexedImplementationFinder implements ClassImplementationFinder
             $symbolType === Symbol::PROPERTY
         ) {
             if ($symbolType === Symbol::CASE) {
-                $symbolType = 'enum';
+                $symbolType = 'case';
             }
             if ($symbolType === Symbol::VARIABLE) {
                 $symbolType = Symbol::PROPERTY;
             }
-            return $this->memberImplementations($symbolContext, $symbolType, $includeDefinition);
+            return $this->memberImplementations($nodeContext, $symbolType, $includeDefinition);
         }
 
         $locations = [];
-        $implementations = $this->resolveImplementations(FullyQualifiedName::fromString($symbolContext->type()->__toString()));
+        $implementations = $this->resolveImplementations(FullyQualifiedName::fromString($nodeContext->type()->__toString()));
 
         foreach ($implementations as $implementation) {
             $record = $this->query->class()->get($implementation);
 
-            if (null === $record) {
+            if (!$record instanceof ClassRecord) {
                 continue;
             }
 
             $locations[] = new Location(
                 TextDocumentUri::fromString($record->filePath()),
-                $record->start()
+                ByteOffsetRange::fromByteOffsets($record->start(), $record->end()),
             );
         }
 
@@ -84,10 +86,10 @@ class IndexedImplementationFinder implements ClassImplementationFinder
      * @return Locations<Location>
      * @param ReflectionMember::TYPE_* $symbolType
      */
-    private function memberImplementations(NodeContext $symbolContext, string $symbolType, bool $includeDefinition): Locations
+    private function memberImplementations(NodeContext $nodeContext, string $symbolType, bool $includeDefinition): Locations
     {
-        $container = $symbolContext->containerType();
-        $methodName = $symbolContext->symbol()->name();
+        $container = $nodeContext->containerType();
+        $methodName = $nodeContext->symbol()->name();
         $containerType = $this->containerTypeResolver->resolveDeclaringContainerType($symbolType, $methodName, $container);
 
         if (!$containerType) {
@@ -137,10 +139,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
                 continue;
             }
 
-            $locations[] = Location::fromPathAndOffset(
-                $path,
-                $member->position()->start()
-            );
+            $locations[] = new Location(TextDocumentUri::fromString($path), $member->position());
         }
 
         return new Locations($locations);

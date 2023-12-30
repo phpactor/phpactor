@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
-use Phpactor\WorseReflection\Core\Offset;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Phpactor\TestUtils\ExtractOffset;
@@ -14,6 +14,7 @@ class SourceReflectorTest extends IntegrationTestCase
      */
     public function testReflectClassNotCorrectType(string $source, string $class, string $method, string $expectedErrorMessage): void
     {
+        $source = TextDocumentBuilder::fromUnknown($source);
         $this->expectException(ClassNotFound::class);
         $this->expectExceptionMessage($expectedErrorMessage);
 
@@ -57,8 +58,9 @@ class SourceReflectorTest extends IntegrationTestCase
             EOT
         ;
 
+        $source = TextDocumentBuilder::fromUnknown($source);
         $offset = $this->createReflector($source)->reflectOffset($source, 27);
-        $this->assertEquals('"Hello"', (string) $offset->symbolContext()->type());
+        $this->assertEquals('"Hello"', (string) $offset->nodeContext()->type());
     }
 
     /**
@@ -77,7 +79,8 @@ class SourceReflectorTest extends IntegrationTestCase
 
         [$source, $offset] = ExtractOffset::fromSource($source);
 
+        $source = TextDocumentBuilder::fromUnknown($source);
         $offset = $this->createReflector($source)->reflectOffset($source, (int)$offset);
-        $this->assertEquals('1234', (string) $offset->symbolContext()->type());
+        $this->assertEquals('1234', (string) $offset->nodeContext()->type());
     }
 }

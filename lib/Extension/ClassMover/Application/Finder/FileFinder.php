@@ -59,12 +59,10 @@ class FileFinder
 
     private function pathsFromReflectionClass(ReflectionClass $reflection, bool $private)
     {
-        $path = $reflection->sourceCode()->path();
+        $path = $reflection->sourceCode()->uri()?->path();
 
-        if (empty($path)) {
-            throw new RuntimeException(sprintf(
-                'Source has no path associated with it'
-            ));
+        if (!$path) {
+            throw new RuntimeException('Source has no path associated with it');
         }
 
         $filePaths = [ $path ];
@@ -90,7 +88,7 @@ class FileFinder
     {
         $context = $reflection->parent();
         while ($context) {
-            $filePaths[] = $context->sourceCode()->path();
+            $filePaths[] = $context->sourceCode()->uri()?->path();
             $context = $context->parent();
         }
 
@@ -100,7 +98,7 @@ class FileFinder
     private function traitFilePaths(ReflectionClass $reflection, $filePaths)
     {
         foreach ($reflection->traits() as $trait) {
-            $filePaths[] = $trait->sourceCode()->path();
+            $filePaths[] = $trait->sourceCode()->uri()?->path();
         }
         return $filePaths;
     }
@@ -108,7 +106,7 @@ class FileFinder
     private function interfaceFilePaths(ReflectionClass $reflection, $filePaths)
     {
         foreach ($reflection->interfaces() as $interface) {
-            $filePaths[] = $interface->sourceCode()->path();
+            $filePaths[] = $interface->sourceCode()->uri()?->path();
         }
 
         return $filePaths;

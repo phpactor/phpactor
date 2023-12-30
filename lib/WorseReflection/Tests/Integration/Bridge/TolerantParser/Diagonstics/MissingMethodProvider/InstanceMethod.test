@@ -1,8 +1,0 @@
-<?php
-
-class Foobar
-{
-}
-
-$f = new Foobar();
-$f->bar();

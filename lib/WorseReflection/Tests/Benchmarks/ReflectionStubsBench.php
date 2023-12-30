@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Benchmarks;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
 
 /**
@@ -24,7 +25,7 @@ class ReflectionStubsBench extends BaseBenchCase
      */
     public function test_classes_and_methods(): void
     {
-        $classes = $this->reflector->reflectClassesIn(file_get_contents(__DIR__ . '/../../../../vendor/jetbrains/phpstorm-stubs/Reflection/Reflection.php'));
+        $classes = $this->reflector->reflectClassesIn(TextDocumentBuilder::fromUri(__DIR__ . '/../../../../vendor/jetbrains/phpstorm-stubs/Reflection/Reflection.php')->build());
 
         foreach ($classes as $class) {
             foreach ($class->methods() as $method) {

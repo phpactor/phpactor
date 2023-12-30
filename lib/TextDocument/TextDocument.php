@@ -10,7 +10,7 @@ interface TextDocument
     /**
      * Return the document as a string
      */
-    public function __toString();
+    public function __toString(): string;
 
     /**
      * Return the URI to the document or NULL if the document has not been
@@ -22,4 +22,6 @@ interface TextDocument
      * Return language value object for the text document.
      */
     public function language(): TextDocumentLanguage;
+
+    public function uriOrThrow(): TextDocumentUri;
 }

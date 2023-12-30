@@ -1,0 +1,8 @@
+                <?php
+                function foo(): void
+                {
+                    global $foo, $bar;
+
+                    echo $foo;
+                    echo $bar;
+                }

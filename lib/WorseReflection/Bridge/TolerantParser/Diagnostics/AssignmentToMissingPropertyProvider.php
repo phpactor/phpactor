@@ -10,8 +10,11 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
+use PHPUnit\Framework\Assert;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
+use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -21,8 +24,52 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
+/**
+ * Report when assigning to a missing property definition.
+ */
 class AssignmentToMissingPropertyProvider implements DiagnosticProvider
 {
+    public function examples(): iterable
+    {
+        yield new DiagnosticExample(
+            title: 'to non-existing property',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar {
+                    public function baz(){ 
+                        $this->bar = 'foo';
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals(
+                    'Property "bar" has not been defined',
+                    $diagnostics->at(0)->message()
+                );
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'does not report assignment for existing property',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar {
+                    private string $bar;
+                    public function baz(){ 
+                        $this->bar = 'foo';
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+    }
+
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof AssignmentExpression) {
@@ -104,6 +151,11 @@ class AssignmentToMissingPropertyProvider implements DiagnosticProvider
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
+    }
+
+    public function name(): string
+    {
+        return 'assignment_to_missing_property';
     }
 
     private function resolvePropertyType(

@@ -16,10 +16,8 @@ use Phpactor\ReferenceFinder\TestTypeLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TestUtils\PHPUnit\TestCase;
-use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location as PhpactorLocation;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use function Amp\Promise\wait;
 
@@ -27,18 +25,18 @@ class TypeDefinitionHandlerTest extends TestCase
 {
     const EXAMPLE_URI = 'file:///test';
     const EXAMPLE_TEXT = 'hello';
+    private const EXAMPLE_OFFSET = 2;
+    private const EXAMPLE_OFFSET_END = 5;
 
     public function testGoesToSingleType(): void
     {
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                new PhpactorLocation(
-                    TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffset::fromInt(2)
-                )
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END)
             )
         ];
+
         [$tester, $_] = $this->createTester($locations);
         $response = $tester->requestAndWait(TypeDefinitionRequest::METHOD, [
             'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
@@ -49,7 +47,8 @@ class TypeDefinitionHandlerTest extends TestCase
 
         $this->assertInstanceOf(Location::class, $location);
         $this->assertEquals(self::EXAMPLE_URI, $location->uri);
-        $this->assertEquals(2, $location->range->start->character);
+        $this->assertEquals(self::EXAMPLE_OFFSET, $location->range->start->character);
+        $this->assertEquals(self::EXAMPLE_OFFSET_END, $location->range->end->character);
     }
 
     public function testGoesToMultipleTypes(): void
@@ -57,17 +56,11 @@ class TypeDefinitionHandlerTest extends TestCase
         $locations = [
             new TypeLocation(
                 TypeFactory::class('Foobar'),
-                new PhpactorLocation(
-                    TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffset::fromInt(2)
-                )
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END),
             ),
             new TypeLocation(
                 TypeFactory::class('Barfoo'),
-                new PhpactorLocation(
-                    TextDocumentUri::fromString(self::EXAMPLE_URI),
-                    ByteOffset::fromInt(2)
-                )
+                PhpactorLocation::fromPathAndOffsets(self::EXAMPLE_URI, self::EXAMPLE_OFFSET, self::EXAMPLE_OFFSET_END),
             )
         ];
         [$tester, $watcher] = $this->createTester($locations);
@@ -82,7 +75,8 @@ class TypeDefinitionHandlerTest extends TestCase
 
         $this->assertInstanceOf(Location::class, $location);
         $this->assertEquals(self::EXAMPLE_URI, $location->uri);
-        $this->assertEquals(2, $location->range->start->character);
+        $this->assertEquals(self::EXAMPLE_OFFSET, $location->range->start->character);
+        $this->assertEquals(self::EXAMPLE_OFFSET_END, $location->range->end->character);
     }
 
     /**

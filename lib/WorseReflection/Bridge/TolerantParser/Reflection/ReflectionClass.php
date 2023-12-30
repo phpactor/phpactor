@@ -22,12 +22,12 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollec
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection;
 
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass as CoreReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Visibility;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
@@ -56,7 +56,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
      */
     public function __construct(
         private ServiceLocator $serviceLocator,
-        private SourceCode $sourceCode,
+        private TextDocument $sourceCode,
         private ClassDeclaration $node,
         private array $visited = []
     ) {
@@ -247,10 +247,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $traits;
     }
 
-    public function memberListPosition(): Position
+    public function memberListPosition(): ByteOffsetRange
     {
-        return Position::fromFullStartStartAndEnd(
-            $this->node->classMembers->openBrace->fullStart,
+        return ByteOffsetRange::fromInts(
             $this->node->classMembers->openBrace->start,
             $this->node->classMembers->openBrace->start + $this->node->classMembers->openBrace->length
         );
@@ -294,7 +293,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         return $this->interfaces()->has((string) $className);
     }
 
-    public function sourceCode(): SourceCode
+    public function sourceCode(): TextDocument
     {
         return $this->sourceCode;
     }
@@ -359,6 +358,11 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     public function hierarchy(): ReflectionClassLikeCollection
     {
         return ReflectionClassLikeCollection::fromReflections((new ClassHierarchyResolver())->resolve($this));
+    }
+
+    public function classLikeType(): string
+    {
+        return 'class';
     }
 
     protected function node(): Node

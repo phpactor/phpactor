@@ -1,8 +1,9 @@
 <?php
 
-enum Foo: string 
+
+enum Foo: string  {
    case BAR = 'bar';
 }
 
-// need better generic support here
-wrAssertType('<missing>', Foo::FOO->value);
+wrAssertType('enum(Foo::BAR)', Foo::BAR);
+wrAssertType('int|string', Foo::BAR->value);

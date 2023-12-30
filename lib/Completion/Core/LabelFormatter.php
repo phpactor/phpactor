@@ -10,6 +10,9 @@ namespace Phpactor\Completion\Core;
  */
 interface LabelFormatter
 {
+    public const HELPFUL = 'helpful';
+    public const FQN = 'fqn';
+
     /**
      * @param array<string,bool> $seen
      */

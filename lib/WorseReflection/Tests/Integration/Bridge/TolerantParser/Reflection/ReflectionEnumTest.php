@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\EnumBackedCaseType;
 use Phpactor\WorseReflection\Core\Type\EnumCaseType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -79,6 +80,7 @@ class ReflectionEnumTest extends IntegrationTestCase
         function (ReflectionEnum $class): void {
             $this->assertCount(4, $class->members());
             $this->assertInstanceOf(ReflectionEnumCase::class, $class->members()->get('FOOBAR'));
+            $this->assertInstanceOf(ReflectionMethod::class, $class->members()->get('cases'));
         },
         ];
 
@@ -97,7 +99,7 @@ class ReflectionEnumTest extends IntegrationTestCase
             function (ReflectionEnum $class): void {
                 $case = $class->cases()->get('FOOBAR');
                 self::assertEquals('FOOBAR', $case->name());
-                self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
+                self::assertEquals('enum(Enum1::FOOBAR)', $case->type()->__toString());
                 self::assertInstanceOf(MissingType::class, $case->value());
                 self::assertInstanceOf(EnumCaseType::class, $case->type());
                 self::assertEquals('FOOBAR', $case->name());
@@ -120,7 +122,7 @@ class ReflectionEnumTest extends IntegrationTestCase
                 $case = $class->cases()->get('FOOBAR');
                 self::assertEquals('FOOBAR', $case->name());
                 self::assertEquals('"FOO"', $case->value()->__toString());
-                self::assertEquals('Enum1::FOOBAR', $case->type()->__toString());
+                self::assertEquals('enum(Enum1::FOOBAR)', $case->type()->__toString());
                 self::assertInstanceOf(EnumBackedCaseType::class, $case->type());
                 self::assertTrue($class->isBacked());
                 self::assertEquals('string', $class->backedType());

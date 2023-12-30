@@ -2,23 +2,28 @@
 
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
-use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;
-use Microsoft\PhpParser\Node\PropertyDeclaration;
-use Microsoft\PhpParser\Node\MethodDeclaration;
-use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
-use Phpactor\CodeBuilder\Domain\Prototype\Parameter as PhpactorParameter;
-use Phpactor\CodeBuilder\Domain\Renderer;
-use Phpactor\CodeBuilder\Domain\Prototype\Method;
-use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
-use Phpactor\CodeBuilder\Domain\Prototype\Parameters;
-use Phpactor\CodeBuilder\Domain\Prototype\ClassLikePrototype;
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\DelimitedList\ParameterDeclarationList;
+use Microsoft\PhpParser\Node\EnumCaseDeclaration;
+use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Edits;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\Util\NodeHelper;
+use Phpactor\CodeBuilder\Domain\Prototype\ClassLikePrototype;
+use Phpactor\CodeBuilder\Domain\Prototype\Method;
+use Phpactor\CodeBuilder\Domain\Prototype\Parameter as PhpactorParameter;
+use Phpactor\CodeBuilder\Domain\Prototype\Parameters;
 use Phpactor\CodeBuilder\Domain\Prototype\ReturnType;
+use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 
+/**
+ * @template TMembersNodeType of Node
+ */
 abstract class AbstractMethodUpdater
 {
     public function __construct(private Renderer $renderer)
@@ -32,14 +37,18 @@ abstract class AbstractMethodUpdater
         }
 
         $lastMember = $this->memberDeclarationsNode($classNode)->openBrace;
+        $lastNonMethodMember = null;
+        $methodHasBeenEncountered = false;
         $newLine = false;
-        $memberDeclarations = $this->memberDeclarations($classNode);
         $existingMethodNames = [];
         $existingMethods = [];
-        foreach ($memberDeclarations as $memberNode) {
-            if ($memberNode instanceof PropertyDeclaration) {
+        foreach ($this->memberDeclarations($classNode) as $memberNode) {
+            if ($memberNode instanceof PropertyDeclaration || $memberNode instanceof EnumCaseDeclaration) {
                 $lastMember = $memberNode;
                 $newLine = true;
+                if (!$methodHasBeenEncountered) {
+                    $lastNonMethodMember = $memberNode;
+                }
             }
 
             if ($memberNode instanceof MethodDeclaration) {
@@ -47,6 +56,7 @@ abstract class AbstractMethodUpdater
                 $existingMethodNames[] = $memberNode->getName();
                 $existingMethods[$memberNode->getName()] = $memberNode;
                 $newLine = true;
+                $methodHasBeenEncountered = true;
             }
         }
 
@@ -62,7 +72,8 @@ abstract class AbstractMethodUpdater
                 $this->updateDocblock($edits, $methodPrototype, $methodDeclaration);
             }
 
-            if ($methodPrototype->body()->lines()->count()) {
+            $lines = $methodPrototype->body()->lines();
+            if ($lines !== null && $lines->count()) {
                 $bodyNode = $methodDeclaration->compoundStatementOrSemicolon;
                 $this->appendLinesToMethod($edits, $methodPrototype, $bodyNode);
             }
@@ -86,11 +97,32 @@ abstract class AbstractMethodUpdater
             return;
         }
 
+        // Don't add new line if it's only inserting the constructor
+        if (1 === count($methodPrototypes) && $methodPrototypes->has('__construct')) {
+            $newLine = false;
+        }
+
         if ($newLine) {
             $edits->after($lastMember, PHP_EOL);
         }
 
         foreach ($methodPrototypes as $methodPrototype) {
+            // If class has methods add the constructor before it.
+            if ($methodPrototype->name() === '__construct') {
+                if ($lastNonMethodMember === null) {
+                    $edits->after(
+                        $this->memberDeclarationsNode($classNode)->openBrace,
+                        PHP_EOL.$edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1).PHP_EOL
+                    );
+                } else {
+                    $edits->after(
+                        $lastNonMethodMember,
+                        PHP_EOL.PHP_EOL.$edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)
+                    );
+                }
+                continue;
+            }
+
             $edits->after(
                 $lastMember,
                 PHP_EOL . $edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)
@@ -102,11 +134,15 @@ abstract class AbstractMethodUpdater
         }
     }
 
-    abstract protected function memberDeclarations(ClassLike $classNode);
+    /**
+    * @return array<Node>
+    */
+    abstract protected function memberDeclarations(ClassLike $classNode): array;
 
+    /** @return TMembersNodeType */
     abstract protected function memberDeclarationsNode(ClassLike $classNode);
 
-    abstract protected function renderMethod(Renderer $renderer, Method $method);
+    abstract protected function renderMethod(Renderer $renderer, Method $method): string;
 
     private function appendLinesToMethod(Edits $edits, Method $method, Node $bodyNode): void
     {
@@ -116,7 +152,7 @@ abstract class AbstractMethodUpdater
 
         $lastStatement = end($bodyNode->statements) ?: $bodyNode->openBrace;
 
-        foreach ($method->body()->lines() as $line) {
+        foreach ($method->body()->lines() ?? [] as $line) {
             // do not add duplicate lines
             $bodyNodeLines = explode(PHP_EOL, $bodyNode->getText());
 
@@ -141,19 +177,21 @@ abstract class AbstractMethodUpdater
 
         $renderedParameters = [];
 
+        /** @var ParameterDeclarationList|null $existingParameterDeclaration */
+        $existingParameterDeclaration = $methodDeclaration->parameters;
+
         // Copying over existing parameters
-        if ($methodDeclaration->parameters) {
-            $existingParameters = iterator_to_array($methodDeclaration->parameters->getElements());
+        if ($existingParameterDeclaration) {
+            /** @var array<Parameter> $existingParameters */
+            $existingParameters = iterator_to_array($existingParameterDeclaration->getElements());
 
             // This is an array [variableName => 'rendered parameter node as string']
             $renderedParameters = (array)array_combine(
                 array_map(function (Parameter $parameter) {
-                    return substr(
-                        $parameter->variableName ?
+                    $variableName = $parameter->variableName ?
                         $parameter->variableName->getText($parameter->getFileContents()):
-                        false,
-                        1
-                    );
+                        false;
+                    return substr((string) $variableName, 1);
                 }, $existingParameters),
                 array_map(fn (Parameter $parameter) => $parameter->getText(), $existingParameters)
             );
@@ -208,7 +246,7 @@ abstract class AbstractMethodUpdater
         $edits->replace($firstReturnType, ' ' . $returnType);
     }
 
-    private function prototypeSameAsDeclaration(Method $methodPrototype, MethodDeclaration $methodDeclaration)
+    private function prototypeSameAsDeclaration(Method $methodPrototype, MethodDeclaration $methodDeclaration): bool
     {
         $parameters = [];
         if (null !== $methodDeclaration->parameters) {

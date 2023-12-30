@@ -5,7 +5,7 @@ namespace Phpactor\Rename\Tests\Integration\Adapter\ReferenceFinder;
 use Closure;
 use Generator;
 use Microsoft\PhpParser\Parser;
-use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
 use Phpactor\Rename\Adapter\ReferenceFinder\MemberRenamer;
@@ -40,7 +40,7 @@ class MemberRenamerTest extends RenamerTestCase
         );
         return new MemberRenamer(
             $finder,
-            new FilesystemWorkspaceLocator(),
+            new FilesystemTextDocumentLocator(),
             new Parser(),
             new IndexedImplementationFinder($this->indexAgent->query(), $this->reflector)
         );
@@ -72,7 +72,7 @@ class MemberRenamerTest extends RenamerTestCase
         yield 'method reference' => [
             'member_renamer/method_declaration',
             function (Reflector $reflector, Renamer $renamer): Generator {
-                $methodCalls = $reflector->navigate($this->workspace()->getContents('project/ClassTwo.php'))->methodCalls();
+                $methodCalls = $reflector->navigate(TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build())->methodCalls();
                 $first = $methodCalls->first();
                 assert($first instanceof ReflectionMethodCall);
 
@@ -83,7 +83,7 @@ class MemberRenamerTest extends RenamerTestCase
                 );
             },
             function (Reflector $reflector): void {
-                $methodCalls = $reflector->navigate($this->workspace()->getContents('project/ClassTwo.php'))->methodCalls();
+                $methodCalls = $reflector->navigate(TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build())->methodCalls();
                 $first = $methodCalls->first();
                 self::assertEquals('newName', $first->name());
             }
@@ -126,7 +126,9 @@ class MemberRenamerTest extends RenamerTestCase
                 );
             },
             function (Reflector $reflector): void {
-                $propertyAccesses = $reflector->navigate($this->workspace()->getContents('project/ClassTwo.php'))->propertyAccesses();
+                $propertyAccesses = $reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
+                )->propertyAccesses();
                 $first = $propertyAccesses->first();
                 self::assertEquals('newName', $first->name());
             }
@@ -146,12 +148,12 @@ class MemberRenamerTest extends RenamerTestCase
             },
             function (Reflector $reflector): void {
                 $propertyAccesses = $reflector->navigate(
-                    $this->workspace()->getContents('project/ClassTwo.php')
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
                 )->propertyAccesses();
                 $first = $propertyAccesses->first();
                 self::assertEquals('newName', $first->name());
                 $propertyAccesses = $reflector->navigate(
-                    $this->workspace()->getContents('project/test.php')
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build()
                 )->propertyAccesses();
                 $first = $propertyAccesses->first();
                 self::assertEquals('newName', $first->name());
@@ -172,69 +174,63 @@ class MemberRenamerTest extends RenamerTestCase
             },
             function (Reflector $reflector): void {
                 $propertyAccesses = $reflector->navigate(
-                    $this->workspace()->getContents('project/ClassTwo.php')
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
                 )->propertyAccesses();
                 $first = $propertyAccesses->first();
                 self::assertEquals('newName', $first->name());
                 $propertyAccesses = $reflector->navigate(
-                    $this->workspace()->getContents('project/test.php')
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build()
                 )->propertyAccesses();
                 $first = $propertyAccesses->first();
                 self::assertEquals('newName', $first->name());
             }
         ];
 
-        // these tests verify that the code works using the current PHP runtime
-        // so fail if the runtime doesn't support promoted properties
-        if (version_compare(PHP_VERSION, '8.0', '>=')) {
-            yield 'property promoted declaration public' => [
-                'member_renamer/property_promoted_declaration_public',
-                function (Reflector $reflector, Renamer $renamer): Generator {
-                    $reflection = $reflector->reflectClass('Test\ClassOne');
-                    $property = $reflection->properties()->get('foobar');
+        yield 'property promoted declaration public' => [
+            'member_renamer/property_promoted_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('Test\ClassOne');
+                $property = $reflection->properties()->get('foobar');
 
-                    return $renamer->rename(
-                        $reflection->sourceCode(),
-                        $property->nameRange()->start(),
-                        'newName'
-                    );
-                },
-                function (Reflector $reflector): void {
-                    $propertyAccesses = $reflector->navigate(
-                        $this->workspace()->getContents('project/ClassTwo.php')
-                    )->propertyAccesses();
-                    $first = $propertyAccesses->first();
-                    self::assertEquals('newName', $first->name());
-                    $propertyAccesses = $reflector->navigate(
-                        $this->workspace()->getContents('project/test.php')
-                    )->propertyAccesses();
-                    $first = $propertyAccesses->first();
-                    self::assertEquals('newName', $first->name());
-                }
-            ];
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $propertyAccesses = $reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
+                )->propertyAccesses();
+                $first = $propertyAccesses->first();
+                self::assertEquals('newName', $first->name());
+                $propertyAccesses = $reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build()
+                )->propertyAccesses();
+                $first = $propertyAccesses->first();
+                self::assertEquals('newName', $first->name());
+            }
+        ];
 
-            yield 'property declaration public does not rename other members' => [
-                'member_renamer/property_declaration_public_does_not_rename_others',
-                function (Reflector $reflector, Renamer $renamer): Generator {
-                    $reflection = $reflector->reflectClass('ClassOne');
-                    $property = $reflection->properties()->get('foobar');
+        yield 'property declaration public does not rename other members' => [
+            'member_renamer/property_declaration_public_does_not_rename_others',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $property = $reflection->properties()->get('foobar');
 
-                    return $renamer->rename(
-                        $reflection->sourceCode(),
-                        $property->nameRange()->start(),
-                        'newName'
-                    );
-                },
-                function (Reflector $reflector): void {
-                    $reflection = $reflector->reflectClass('ClassOne');
-                    self::assertTrue($reflection->properties()->has('barfoo'));
-                    self::assertTrue($reflection->properties()->has('bazbar'));
-                    self::assertTrue($reflection->properties()->has('newName'));
-                }
-            ];
-        } else {
-            $this->markTestSkipped('< 8.0');
-        }
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->properties()->has('barfoo'));
+                self::assertTrue($reflection->properties()->has('bazbar'));
+                self::assertTrue($reflection->properties()->has('newName'));
+            }
+        ];
     }
 
     /**
@@ -275,7 +271,9 @@ class MemberRenamerTest extends RenamerTestCase
                 $reflection = $reflector->reflectClass('ClassOne');
                 self::assertTrue($reflection->constants()->has('newName'));
 
-                $propertyAccesses = $reflector->navigate($this->workspace()->getContents('project/ClassTwo.php'))->constantAccesses();
+                $propertyAccesses = $reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
+                )->constantAccesses();
                 $first = $propertyAccesses->first();
                 self::assertEquals('newName', $first->name());
             }

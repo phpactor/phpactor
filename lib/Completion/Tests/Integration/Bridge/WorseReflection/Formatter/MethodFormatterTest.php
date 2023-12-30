@@ -3,6 +3,7 @@
 namespace Phpactor\Completion\Tests\Integration\Bridge\WorseReflection\Formatter;
 
 use Phpactor\Completion\Tests\Integration\IntegrationTestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class MethodFormatterTest extends IntegrationTestCase
@@ -12,6 +13,7 @@ class MethodFormatterTest extends IntegrationTestCase
      */
     public function testFormatsConstant(string $code, string $expected): void
     {
+        $code = TextDocumentBuilder::fromUnknown($code);
         $constant = ReflectorBuilder::create()->build()->reflectClassesIn(
             $code
         )->first()->methods()->first();

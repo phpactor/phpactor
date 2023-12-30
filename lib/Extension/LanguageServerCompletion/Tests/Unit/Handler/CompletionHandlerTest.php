@@ -30,8 +30,8 @@ use Phpactor\TextDocument\TextDocument;
 
 class CompletionHandlerTest extends TestCase
 {
-    const EXAMPLE_URI = 'file:///test';
-    const EXAMPLE_TEXT = 'hello';
+    private const EXAMPLE_URI = 'file:///test';
+    private const EXAMPLE_TEXT = 'hello';
 
     public function testHandleNoSuggestions(): void
     {
@@ -104,6 +104,17 @@ class CompletionHandlerTest extends TestCase
         );
         self::assertEquals('↓ import class', $response->result->detail);
         self::assertEquals('documentation now', $response->result->documentation->value);
+    }
+
+    public function testResolveCompletionItemWithNoPreviousCompletion(): void
+    {
+        $tester = $this->create([]);
+        $response = $tester->requestAndWait(
+            'completionItem/resolve',
+            new CompletionItem('hello'),
+        );
+        self::assertNotNull($response);
+        self::assertInstanceOf(CompletionItem::class, $response->result);
     }
 
     public function testHandleAnIncompleteListOfSuggestions(): void
@@ -481,6 +492,7 @@ class CompletionHandlerTest extends TestCase
     {
         return new class($suggestions, $isIncomplete) implements Completor {
             public function __construct(
+                /** @var Suggestion[] */
                 private array $suggestions,
                 private bool $isIncomplete
             ) {

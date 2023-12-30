@@ -4,10 +4,12 @@ namespace Phpactor\WorseReflection\Tests\Benchmarks;
 
 use Generator;
 use GlobIterator;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
+use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMemberProvider;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use SplFileInfo;
+use function Amp\Promise\wait;
 
 /**
  * @Iterations(5)
@@ -20,7 +22,7 @@ class DiagnosticsBench
     public function init(): void
     {
         $this->reflector = ReflectorBuilder::create()
-            ->addDiagnosticProvider(new MissingMethodProvider())
+            ->addDiagnosticProvider(new MissingMemberProvider())
             ->build();
     }
 
@@ -31,9 +33,9 @@ class DiagnosticsBench
      */
     public function benchDiagnostics(array $params): void
     {
-        $diagnostics = $this->reflector->diagnostics(
-            (string)file_get_contents($params['path'])
-        );
+        $diagnostics = wait($this->reflector->diagnostics(
+            TextDocumentBuilder::fromUri($params['path'])->build()
+        ));
     }
 
     /**

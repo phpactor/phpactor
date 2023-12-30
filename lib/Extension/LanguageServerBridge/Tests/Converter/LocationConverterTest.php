@@ -1,9 +1,9 @@
 <?php
 
-namespace Phpactor\Extension\LanguageServer\Tests\ridge\Converter;
+namespace Phpactor\Extension\LanguageServerBridge\Tests\Converter;
 
 use Generator;
-use Phpactor\Extension\LanguageServerBridge\TextDocument\FilesystemWorkspaceLocator;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
@@ -14,9 +14,13 @@ use Phpactor\LanguageServerProtocol\Location as LspLocation;
 
 class LocationConverterTest extends IntegrationTestCase
 {
+    private LocationConverter $converter;
+
     protected function setUp(): void
     {
         $this->workspace()->reset();
+
+        $this->converter = new LocationConverter(new FilesystemTextDocumentLocator());
     }
 
     public function testConvertsPhpactorLocationsToLspLocations(): void
@@ -24,22 +28,17 @@ class LocationConverterTest extends IntegrationTestCase
         $this->workspace()->put('test.php', '012345678');
 
         $locations = new Locations([
-            Location::fromPathAndOffset(
-                $this->workspace()->path('test.php'),
-                2
-            )
+            Location::fromPathAndOffsets($this->workspace()->path('test.php'), 2, 10)
         ]);
 
         $expected = [
             new LspLocation('file://' . $this->workspace()->path('test.php'), new Range(
                 new Position(0, 2),
-                new Position(0, 2),
+                new Position(0, 9),
             ))
         ];
 
-        $converter = new LocationConverter(new FilesystemWorkspaceLocator());
-
-        self::assertEquals($expected, $converter->toLspLocations($locations));
+        self::assertEquals($expected, $this->converter->toLspLocations($locations));
     }
 
     public function testIgnoresNonExistingFiles(): void
@@ -47,19 +46,18 @@ class LocationConverterTest extends IntegrationTestCase
         $this->workspace()->put('test.php', '12345678');
 
         $locations = new Locations([
-            Location::fromPathAndOffset($this->workspace()->path('test.php'), 2),
-            Location::fromPathAndOffset($this->workspace()->path('test-no.php'), 2)
+            Location::fromPathAndOffsets($this->workspace()->path('test.php'), 2, 4),
+            Location::fromPathAndOffsets($this->workspace()->path('test-no.php'), 2, 4)
         ]);
 
         $expected = [
             new LspLocation('file://' . $this->workspace()->path('test.php'), new Range(
                 new Position(0, 2),
-                new Position(0, 2),
+                new Position(0, 4),
             ))
         ];
 
-        $converter = new LocationConverter(new FilesystemWorkspaceLocator());
-        self::assertEquals($expected, $converter->toLspLocations($locations));
+        self::assertEquals($expected, $this->converter->toLspLocations($locations));
     }
 
     /**
@@ -67,77 +65,84 @@ class LocationConverterTest extends IntegrationTestCase
      * @dataProvider provideMultibyte
      * @dataProvider provideOutOfRange
      */
-    public function testLocationToLspLocation(string $text, int $offset, Range $expectedRange): void
+    public function testLocationToLspLocation(string $text, int $start, int $end, Range $expectedRange): void
     {
         $this->workspace()->put('test.php', $text);
 
-        $location = Location::fromPathAndOffset($this->workspace()->path('test.php'), $offset);
+        $location = Location::fromPathAndOffsets($this->workspace()->path('test.php'), $start, $end);
 
         $uri = 'file://' . $this->workspace()->path('test.php');
 
-        $expected = new LspLocation($uri, $expectedRange);
-
-        $converter = new LocationConverter(new FilesystemWorkspaceLocator());
-        self::assertEquals($expected, $converter->toLspLocation($location));
+        self::assertEquals(
+            expected: new LspLocation($uri, $expectedRange),
+            actual: $this->converter->toLspLocation($location)
+        );
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<string, array{string, int, int, Range}>
      */
     public function provideOutOfRange(): Generator
     {
         yield 'out of upper range' => [
             '12345',
             10,
+            15,
             $this->createRange(0, 5, 0, 5)
         ];
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<string, array{string, int, int, Range}>
      */
     public function provideMultibyte(): Generator
     {
         yield '4 byte char 1st char' => [
             '😼😼😼😼😼',
+            2,
             4,
             $this->createRange(0, 4, 0, 4)
         ];
 
         yield '4 byte char 2nd char' => [
             '😼😼😼😼😼',
+            2,
             5,
-            $this->createRange(0, 8, 0, 8)
+            $this->createRange(0, 4, 0, 8)
         ];
 
         yield '4 byte char 4th char' => [
             '😼😼😼😼😼',
+            2,
             16,
-            $this->createRange(0, 16, 0, 16)
+            $this->createRange(0, 4, 0, 16)
         ];
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<string, array{string, int, int, Range}>
      */
     public function provideDiskLocations(): Generator
     {
         yield 'single line' => [
             '12345678',
             2,
-            $this->createRange(0, 2, 0, 2)
+            4,
+            $this->createRange(0, 2, 0, 4)
         ];
 
         yield 'second line' => [
             "12\n345\n678",
             4,
-            $this->createRange(1, 1, 1, 1)
+            5,
+            $this->createRange(1, 1, 1, 2)
         ];
 
         yield 'third line first char' => [
             "12\n345\n678",
             8,
-            $this->createRange(2, 1, 2, 1)
+            10,
+            $this->createRange(2, 1, 2, 3)
         ];
     }
 

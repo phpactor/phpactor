@@ -60,6 +60,7 @@ class ServiceLocator
         private array $diagnosticProviders,
         private array $memberContextResolvers,
         Cache $cache,
+        private CacheForDocument $cacheForDocument,
         bool $enableContextualLocation = false
     ) {
         $sourceReflector = $reflectorFactory->create($this);
@@ -117,12 +118,15 @@ class ServiceLocator
         return $this->docblockFactory;
     }
 
-    public function symbolContextResolver(): NodeContextResolver
+    public function nodeContextResolver(): NodeContextResolver
     {
         return new NodeContextResolver(
             $this->reflector,
             $this->docblockFactory,
             $this->logger,
+            // use a cache which is local to this resolver instance
+            // this avoids issues with stale cache data while also
+            // providing memoised caching for this resolver instance.
             new StaticCache(),
             (new DefaultResolverFactory(
                 $this->reflector,
@@ -139,12 +143,21 @@ class ServiceLocator
     public function frameBuilder(): FrameResolver
     {
         return FrameResolver::create(
-            $this->symbolContextResolver(),
+            $this->nodeContextResolver(),
             array_merge([
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),
                 new VariableWalker($this->docblockFactory),
-                new IncludeWalker($this->logger),
+
+                // enable subset of frame walkers to enable include variables
+                // to be merged into current frame
+                new IncludeWalker($this->logger, FrameResolver::create(
+                    $this->nodeContextResolver(),
+                    [
+                        new VariableWalker($this->docblockFactory),
+                        new PassThroughWalker(),
+                    ]
+                )),
             ], $this->frameWalkers),
         );
     }
@@ -157,6 +170,11 @@ class ServiceLocator
     public function cache(): Cache
     {
         return $this->cache;
+    }
+
+    public function cacheForDocument(): CacheForDocument
+    {
+        return $this->cacheForDocument;
     }
 
     public function newDiagnosticsWalker(): DiagnosticsWalker

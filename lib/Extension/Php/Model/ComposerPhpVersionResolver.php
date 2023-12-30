@@ -37,6 +37,7 @@ class ComposerPhpVersionResolver implements PhpVersionResolver
 
     private function resolveLowestVersion(string $versionString): ?string
     {
+        /** @phpstan-ignore-next-line */
         $versions = array_map(function (string $versionString) {
             return preg_replace('/[^0-9.]/', '', trim($versionString));
         }, (array)preg_split('{\|\|?}', $versionString));

@@ -17,9 +17,9 @@ class CompletorTest extends TestCase
     const EXAMPLE_OFFSET = 1234;
 
     /**
-     * @var ObjectProphecy|CouldComplete
+     * @var ObjectProphecy<Completor>
      */
-    private $completor1;
+    private ObjectProphecy $completor1;
 
     protected function setUp(): void
     {
@@ -31,7 +31,7 @@ class CompletorTest extends TestCase
         $completor = $this->create([]);
         $suggestions = $completor->complete($this->textDocument(self::EXAMPLE_SOURCE), ByteOffset::fromInt(self::EXAMPLE_OFFSET));
 
-        $this->assertCount(0, $suggestions);
+        $this->assertCount(0, iterator_to_array($suggestions, false));
         $this->assertTrue($suggestions->getReturn());
     }
 
@@ -50,7 +50,7 @@ class CompletorTest extends TestCase
 
         $suggestions = $completor->complete($this->textDocument(self::EXAMPLE_SOURCE), ByteOffset::fromInt(self::EXAMPLE_OFFSET));
 
-        $this->assertCount(0, $suggestions);
+        $this->assertCount(0, iterator_to_array($suggestions, false));
         $this->assertTrue($suggestions->getReturn());
     }
 
@@ -132,7 +132,7 @@ class CompletorTest extends TestCase
     }
 
     /**
-     * @param CouldComplete[] $completors
+     * @param Completor[] $completors
      */
     public function create(array $completors): ChainCompletor
     {

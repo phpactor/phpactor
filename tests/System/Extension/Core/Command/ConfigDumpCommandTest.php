@@ -8,7 +8,7 @@ class ConfigDumpCommandTest extends SystemTestCase
 {
     public function testConfigDump(): void
     {
-        $process = $this->phpactor('config:dump');
+        $process = $this->phpactorFromStringArgs('config:dump');
         $this->assertSuccess($process);
         $this->assertStringContainsString('Config files', $process->getOutput());
     }
@@ -18,7 +18,7 @@ class ConfigDumpCommandTest extends SystemTestCase
      */
     public function testConfigDumpOnly(): void
     {
-        $process = $this->phpactor('config:dump --config-only');
+        $process = $this->phpactorFromStringArgs('config:dump --config-only');
         $this->assertSuccess($process);
         $config = json_decode($process->getOutput(), true);
         $this->assertIsArray($config);

@@ -19,7 +19,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface as CoreReflectionInterface;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
@@ -38,7 +38,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
      */
     public function __construct(
         private ServiceLocator $serviceLocator,
-        private SourceCode $sourceCode,
+        private TextDocument $sourceCode,
         private InterfaceDeclaration $node,
         private array $visited = []
     ) {
@@ -131,7 +131,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         return ClassName::fromString((string) $this->node()->getNamespacedName());
     }
 
-    public function sourceCode(): SourceCode
+    public function sourceCode(): TextDocument
     {
         return $this->sourceCode;
     }
@@ -147,6 +147,11 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
     public function hierarchy(): ReflectionClassLikeCollection
     {
         return ReflectionClassLikeCollection::fromReflections((new ClassHierarchyResolver())->resolve($this));
+    }
+
+    public function classLikeType(): string
+    {
+        return 'interface';
     }
 
     /**

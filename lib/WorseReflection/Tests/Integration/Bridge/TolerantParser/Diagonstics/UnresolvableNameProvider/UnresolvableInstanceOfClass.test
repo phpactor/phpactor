@@ -1,6 +1,0 @@
-<?php
-
-namespace Foo;
-
-if ($f instanceof Foobar) {
-}

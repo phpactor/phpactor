@@ -3,7 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 
 interface ReflectionArgument
 {
@@ -13,5 +13,5 @@ interface ReflectionArgument
 
     public function value(): mixed;
 
-    public function position(): Position;
+    public function position(): ByteOffsetRange;
 }

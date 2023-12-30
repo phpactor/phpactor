@@ -5,6 +5,7 @@ namespace Phpactor\Extension\Completion\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\Formatter\Formatter;
+use Phpactor\Completion\Core\LabelFormatter;
 use Phpactor\Completion\Core\SignatureHelp;
 use Phpactor\Completion\Core\SignatureHelper;
 use Phpactor\Completion\Core\Suggestion;
@@ -130,6 +131,7 @@ class CompletionExtensionTest extends TestCase
             CompletionExtension::PARAM_DEDUPE => false,
             CompletionExtension::PARAM_DEDUPE_MATCH_FQN => false,
             CompletionExtension::PARAM_LIMIT => 10,
+            CompletionExtension::PARAM_LABEL_FORMATTER => LabelFormatter::HELPFUL,
         ]);
     }
 }

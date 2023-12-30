@@ -17,6 +17,7 @@ use Phpactor\Container\Extension;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\Filesystem\Domain\Filesystem;
 
 class SourceCodeFilesystemExtension implements Extension
 {
@@ -46,9 +47,13 @@ class SourceCodeFilesystemExtension implements Extension
     {
         $container->register(self::SERVICE_REGISTRY, function (Container $container) {
             $filesystems = [];
-            foreach ($container->getServiceIdsForTag('source_code_filesystem.filesystem') as $serviceId => $attributes) {
+            /** @var array<string, array{name: string}> $fileSystemsByTag */
+            $fileSystemsByTag = $container->getServiceIdsForTag('source_code_filesystem.filesystem');
+            foreach ($fileSystemsByTag as $serviceId => $attributes) {
                 try {
-                    $filesystems[$attributes['name']] = $container->get($serviceId);
+                    /** @var Filesystem $filesystem */
+                    $filesystem =$container->get($serviceId);
+                    $filesystems[$attributes['name']] = $filesystem;
                 } catch (NotSupported $exception) {
                     LoggingExtension::channelLogger($container, 'scf')->warning(sprintf(
                         'Filesystem "%s" not supported: "%s"',
@@ -90,6 +95,6 @@ class SourceCodeFilesystemExtension implements Extension
 
     private function projectRoot(Container $container): string
     {
-        return $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->getParameter(self::PARAM_PROJECT_ROOT));
+        return $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_PROJECT_ROOT)->string());
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\Inference;
 
-use Closure;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
@@ -15,11 +14,6 @@ class Frame
 
     private Problems $problems;
 
-    /**
-     * @var Frame[]
-     */
-    private array $children = [];
-
     private ?Type $returnType = null;
 
     private int $version = 1;
@@ -27,7 +21,6 @@ class Frame
     private VarDocBuffer $varDocBuffer;
 
     public function __construct(
-        private string $name,
         LocalAssignments $locals = null,
         PropertyAssignments $properties = null,
         Problems $problems = null,
@@ -46,10 +39,9 @@ class Frame
         }, [$this->properties, $this->locals], ['properties', 'locals']));
     }
 
-    public function new(string $name): Frame
+    public function new(): Frame
     {
-        $frame = new self($name, null, null, null, $this);
-        $this->children[] = $frame;
+        $frame = new self(null, null, null, $this);
 
         return $frame;
     }
@@ -72,23 +64,12 @@ class Frame
         return $this->problems;
     }
 
-    public function parent(): Frame
+    public function parent(): ?Frame
     {
         return $this->parent;
     }
 
-    public function reduce(Closure $closure, $initial = null)
-    {
-        $initial = $closure($this, $initial);
-
-        foreach ($this->children as $childFrame) {
-            $initial = $childFrame->reduce($closure, $initial);
-        }
-
-        return $initial;
-    }
-
-    public function root()
+    public function root(): Frame
     {
         if (null === $this->parent) {
             return $this;
@@ -97,17 +78,7 @@ class Frame
         return $this->parent->root();
     }
 
-    public function children(): array
-    {
-        return $this->children;
-    }
-
-    public function name(): string
-    {
-        return $this->name;
-    }
-
-    public function withReturnType(Type $type): self
+    public function setReturnType(Type $type): self
     {
         $this->returnType = $type;
         $this->version++;

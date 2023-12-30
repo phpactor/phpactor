@@ -9,4 +9,5 @@ class NameSearcherType
     const INTERFACE = 'interface';
     const TRAIT = 'trait';
     const ENUM = 'enum';
+    const ATTRIBUTE = 'attribute';
 }

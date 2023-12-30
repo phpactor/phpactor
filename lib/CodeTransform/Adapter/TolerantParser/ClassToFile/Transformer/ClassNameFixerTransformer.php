@@ -2,6 +2,8 @@
 
 namespace Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer;
 
+use Amp\Promise;
+use Amp\Success;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
@@ -36,7 +38,10 @@ class ClassNameFixerTransformer implements Transformer
         $this->parser = $parser ?: new Parser();
     }
 
-    public function transform(SourceCode $code): TextEdits
+    /**
+     * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $code): Promise
     {
         if ($code->uri()->scheme() !== 'file') {
             throw new TransformException(sprintf('Source is not a file:// it is "%s"', $code->uri()->scheme()));
@@ -56,20 +61,23 @@ class ClassNameFixerTransformer implements Transformer
             $edits[] = $textEdit;
         }
 
-        return TextEdits::fromTextEdits($edits);
+        return new Success(TextEdits::fromTextEdits($edits));
     }
 
 
-    public function diagnostics(SourceCode $code): Diagnostics
+    /**
+     * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
     {
         if ($code->uri()->scheme() !== 'file') {
-            return Diagnostics::none();
+            return new Success(Diagnostics::none());
         }
         $rootNode = $this->parser->parseSourceFile((string) $code);
         try {
             $classFqn = $this->determineClassFqn($code);
         } catch (RuntimeException) {
-            return Diagnostics::none();
+            return new Success(Diagnostics::none());
         }
         $correctClassName = $classFqn->name();
         $correctNamespace = $classFqn->namespace();
@@ -100,7 +108,7 @@ class ClassNameFixerTransformer implements Transformer
             );
         }
 
-        return new Diagnostics($diagnostics);
+        return new Success(new Diagnostics($diagnostics));
     }
 
 
@@ -162,12 +170,12 @@ class ClassNameFixerTransformer implements Transformer
 
     private function determineClassFqn(SourceCode $code): ClassName
     {
-        if (!$code->path()) {
+        if (!$code->uri()->path()) {
             throw new RuntimeException('Source code has no path associated with it');
         }
 
         $candidates = $this->fileToClass->fileToClassCandidates(
-            FilePath::fromString((string) $code->path())
+            FilePath::fromString((string) $code->uri()->path())
         );
 
         $classFqn = $candidates->best();

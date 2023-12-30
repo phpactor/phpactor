@@ -1,0 +1,16 @@
+// File: source
+<?php
+
+class SomeClass {
+    <>
+}
+
+// File: expected
+<?php
+
+class SomeClass {
+    public function setUp(): void
+    {
+    }
+    
+}

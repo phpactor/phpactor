@@ -3,13 +3,13 @@
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Tests\Provider;
 
 use Amp\NullCancellationToken;
+use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Tests\PhpCsFixerTestCase;
 use Phpactor\LanguageServerProtocol\CodeAction;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
-use Phpactor\LanguageServer\Diagnostics\Diagnostics;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Psr\Log\NullLogger;
 use function Amp\Promise\wait;
@@ -115,6 +115,7 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
 
         return new PhpCsFixerDiagnosticsProvider(
             $phpCsFixer,
+            new RangesForDiff(),
             $showDiagnostics,
             new NullLogger()
         );

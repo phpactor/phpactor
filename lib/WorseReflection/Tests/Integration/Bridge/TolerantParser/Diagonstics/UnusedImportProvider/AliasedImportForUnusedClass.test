@@ -1,7 +1,0 @@
-<?php
-
-use Foobar as Barfoo;
-use Bagggg as Bazgar;
-
-new Barfoo();
-

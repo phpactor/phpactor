@@ -13,8 +13,8 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\Util\LineAtOffset;
-use Phpactor\TextDocument\Util\LineColFromOffset;
 use RuntimeException;
 
 class GotoImplementationHandler extends AbstractHandler
@@ -73,48 +73,58 @@ class GotoImplementationHandler extends AbstractHandler
         $locations = $this->finder->findImplementations($document, $offset);
 
         if (1 !== $locations->count()) {
-            $references = $this->locationsToReferences($locations);
-
-            return new FileReferencesResponse($references);
+            return new FileReferencesResponse($this->locationsToReferences($locations));
         }
 
         $location = $locations->first();
         return OpenFileResponse::fromPathAndOffset(
             $location->uri()->path(),
-            $location->offset()->toInt()
+            $location->range()->start()->toInt()
         )->withTarget($arguments[self::PARAM_TARGET]);
     }
 
+    /**
+    * @return array<FileReferences>
+    */
     private function locationsToReferences(Locations $locations): array
     {
         $references = [];
         foreach ($locations as $location) {
             assert($location instanceof Location);
             $contents = $this->fileContents($location);
-            $lineCol = (new LineColFromOffset())($contents, $location->offset()->toInt());
-            $line = (new LineAtOffset())->__invoke($contents, $location->offset()->toInt());
 
-            $fileReferences = FileReferences::fromPathAndReferences(
+            // Opening at the start of the reference
+            $start = $location->range()->start();
+            $lineCol = LineCol::fromByteOffset($contents, $start);
+            $line = (new LineAtOffset())->__invoke($contents, $start->toInt());
+
+            $references[] = FileReferences::fromPathAndReferences(
                 $location->uri()->path(),
                 [
-                    Reference::fromStartEndLineNumberLineAndCol($location->offset()->toInt(), $location->offset()->toInt(), $lineCol->line(), $line, $lineCol->col())
+                    Reference::fromStartEndLineNumberLineAndCol(
+                        $location->range()->start()->toInt(),
+                        $location->range()->end()->toInt(),
+                        $lineCol->line(),
+                        $line,
+                        $lineCol->col()
+                    )
                 ]
             );
-            $references[] = $fileReferences;
         }
 
         return $references;
     }
 
-    private function fileContents(Location $location)
+    private function fileContents(Location $location): string
     {
-        if (!file_exists($location->uri()->path())) {
+        $contents = file_get_contents($location->uri()->path());
+        if ($contents === false) {
             throw new RuntimeException(sprintf(
                 'Could not open file "%s"',
                 $location->uri()->path()
             ));
         }
 
-        return file_get_contents($location->uri()->path());
+        return $contents;
     }
 }

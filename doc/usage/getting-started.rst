@@ -3,36 +3,22 @@ Getting Started
 
 How you start depends on your editor.
 
-Currently Phpactor has most support when used over it's own RPC protocol, but
-an :ref:`increasing amount <lsp_support>` of support is offered from the
-:ref:`language_server`.
-
-In addition you can also do somethings from the CLI only.
-
-Select one of the following to get started:
-
 .. tabs::
 
     .. tab:: VIM or Neovim
 
-        Use the :doc:`vim-plugin`, optionally supplement with :ref:`CoC <lsp_client_vim_coc>`:
+        Configure the :doc:`Language Server<../lsp/vim>` and optionally the legacy :doc:`vim-plugin` for some additional functionality 
 
-    .. tab:: Sublime Text
+    .. tab:: VS Code
 
-        Use :ref:`client_rpc_sublime` optionally supplement with
-        :ref:`Sublime LSP <lsp_client_sublime>`:
+        Install the `vscode-phpactor`_ extension
 
-    .. tab:: Emacs
+    .. tab:: Other Editor
 
-        Use the :ref:`Emacs RPC client <client_rpc_emacs>`
+        Phpactor is known to work as a language server for Emacs_, Kate_, Sublime_, Helix_ and many others, feel free to contribute setup guides for these editors to this documentation.
 
-    .. tab:: Other Editor 
-
-        You should be able to use the :ref:`language_server`. The procedure should be similar to the ones outlined for :ref:`other clients <language_server_clients>`. When you get one working, make a pull request to add it here ☺
-
-    .. tab:: CLI
-
-        Phpactor exposes a number of commands over the CLI (e.g. moving
-        classes, applying transformations).
-
-        See :ref:`installation_global`
+.. _vscode-phpactor: https://github.com/phpactor/vscode-phpactor
+.. _Emacs: https://github.com/emacs-lsp/lsp-mode
+.. _Helix: https://helix-editor.com/
+.. _Sublime: https://www.sublimetext.com/
+.. _Kate: https://kate-editor.org/en-gb/

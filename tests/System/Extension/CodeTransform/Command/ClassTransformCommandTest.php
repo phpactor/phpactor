@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\CodeTransform\Command;
 
+use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
 class ClassTransformCommandTest extends SystemTestCase
@@ -27,9 +28,9 @@ class ClassTransformCommandTest extends SystemTestCase
      *
      * @dataProvider provideSmokeSuccess
      */
-    public function testSmokeSuccess($command, string $expectedOutput, $error = false): void
+    public function testSmokeSuccess(string $command, string $expectedOutput, bool $error = false): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
 
         if ($error) {
             $this->assertStringContainsString($expectedOutput, $process->getErrorOutput());
@@ -40,7 +41,10 @@ class ClassTransformCommandTest extends SystemTestCase
         $this->assertStringContainsString($expectedOutput, $process->getOutput());
     }
 
-    public function provideSmokeSuccess()
+    /**
+     * @return Generator<string,array{string,string}|array{string,string,bool}>
+     */
+    public function provideSmokeSuccess(): Generator
     {
         yield 'No arguments' => [
             'class:transform lib/Foobar.php',

@@ -22,6 +22,6 @@ class DocumentorRegistry
             );
         }
 
-        return $this->container->get($this->documentors[$string]);
+        return $this->container->expect($this->documentors[$string], Documentor::class);
     }
 }

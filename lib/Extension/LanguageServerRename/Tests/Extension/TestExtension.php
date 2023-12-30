@@ -18,16 +18,15 @@ class TestExtension implements Extension
     {
         $container->register(InMemoryRenamer::class, function (Container $container) {
             return new InMemoryRenamer(
-                $container->getParameter('range'),
-                $container->getParameter('results'),
+                $container->parameter('range')->value(),
+                $container->parameter('results')->value(),
             );
         }, [
             LanguageServerRenameExtension::TAG_RENAMER => []
         ]);
 
         $container->register(FileRenamer::class, function (Container $container) {
-            return new TestFileRenamer(
-            );
+            return new TestFileRenamer();
         }, [
         ]);
     }

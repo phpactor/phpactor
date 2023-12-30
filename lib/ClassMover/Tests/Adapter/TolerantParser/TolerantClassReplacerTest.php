@@ -17,7 +17,7 @@ class TolerantClassReplacerTest extends TestCase
      * @testdox It finds all class references.
      * @dataProvider provideTestFind
      */
-    public function testFind($fileName, $classFqn, $replaceWithFqn, $expectedSource): void
+    public function testFind(string $fileName, string $classFqn, string $replaceWithFqn, string $expectedSource): void
     {
         $parser = new Parser();
         $tolerantRefFinder = new TolerantClassFinder($parser);
@@ -38,7 +38,10 @@ class TolerantClassReplacerTest extends TestCase
         self::assertStringContainsString($stripEmptyLines($expectedSource), $stripEmptyLines($edits->apply($source->__toString())));
     }
 
-    public function provideTestFind()
+    /**
+     * @return array<string, array<string>>
+     */
+    public function provideTestFind(): array
     {
         return [
             'Change references of moved class' => [
@@ -117,19 +120,19 @@ class TolerantClassReplacerTest extends TestCase
             ],
             'Change namespace of interface' => [
                 'Example5.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example5Interface',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarInterface',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\Example5Interface',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarInterface',
                 <<<'EOT'
                     <?php
-                    namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar;
+                    namespace Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar;
                     EOT
             ],
             'Change namespace of trait' => [
                 'Example6.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\ExampleTrait',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarTrait',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\ExampleTrait',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarTrait',
                 <<<'EOT'
-                    namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar;
+                    namespace Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar;
                     EOT
             ],
             'Change name of class expansion' => [
@@ -151,8 +154,8 @@ class TolerantClassReplacerTest extends TestCase
             ],
             'Class which includes use statement for itself' => [
                 'Example7.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example7',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example8',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\Example7',
+                'Acme\ClassMover\Tests\Adapter\TolerantParser\Example8',
                 <<<'EOT'
                     class Example8
                     EOT
@@ -216,6 +219,33 @@ class TolerantClassReplacerTest extends TestCase
                     }
                     EOT
             ],
+            'FQN stays fully qualified' => [
+                'Example12.php',
+                'FQN\Class',
+                'OtherFQN\ClassTwo',
+                <<<EOT
+                    <?php
+                    class Generic
+                    {
+                        public function __construct(\OtherFQN\ClassTwo \$test)
+                        {
+                        }
+                    }
+                    EOT,
+            ],
+            'Rename Enum' => [
+                'Enum1.php',
+                'Acme\Hello',
+                'Acme\Goodbye',
+                <<<EOT
+                    <?php
+                    namespace Acme;
+                    enum Goodbye
+                    {
+                        case Foo;
+                    }
+                    EOT,
+            ]
         ];
     }
 }

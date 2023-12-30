@@ -17,6 +17,11 @@ class InMemoryDiagnosticProvider implements DiagnosticProvider
     public function __construct(private array $diagnostics)
     {
     }
+
+    public function examples(): iterable
+    {
+        return [];
+    }
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof SourceFileNode) {
@@ -30,5 +35,10 @@ class InMemoryDiagnosticProvider implements DiagnosticProvider
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
+    }
+
+    public function name(): string
+    {
+        return 'in_memory';
     }
 }

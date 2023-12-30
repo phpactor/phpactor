@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Transformer;
 
+use Amp\Promise;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Domain\Diagnostic;
 use Phpactor\CodeTransform\Domain\Diagnostics;
@@ -9,6 +10,7 @@ use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyDiagnostic;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\CodeBuilder\Domain\Updater;
 use Phpactor\CodeBuilder\Domain\Builder\ClassLikeBuilder;
@@ -17,6 +19,7 @@ use Phpactor\CodeBuilder\Domain\Builder\TraitBuilder;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
+use function Amp\call;
 
 class AddMissingProperties implements Transformer
 {
@@ -32,61 +35,71 @@ class AddMissingProperties implements Transformer
         $this->parser = $parser ?: new Parser();
     }
 
-    public function transform(SourceCode $code): TextEdits
+    /**
+     * @return Promise<TextEdits>
+     */
+    public function transform(SourceCode $code): Promise
     {
-        $rootNode = $this->parser->parseSourceFile($code->__toString());
-        $wrDiagnostics = $this->reflector->diagnostics($code->__toString());
-        $sourceBuilder = SourceCodeBuilder::create();
+        return call(function () use ($code) {
+            $rootNode = $this->parser->parseSourceFile($code->__toString());
+            $wrDiagnostics = yield $this->reflector->diagnostics($code);
+            $sourceBuilder = SourceCodeBuilder::create();
 
-        /** @var AssignmentToMissingPropertyDiagnostic $diagnostic */
-        foreach ($wrDiagnostics->byClass(AssignmentToMissingPropertyDiagnostic::class) as $diagnostic) {
-            $class = $this->reflector->reflectClassLike($diagnostic->classType());
-            $classBuilder = $this->resolveClassBuilder($sourceBuilder, $class);
-            $type = $diagnostic->propertyType();
+            /** @var AssignmentToMissingPropertyDiagnostic $diagnostic */
+            foreach ($wrDiagnostics->byClass(AssignmentToMissingPropertyDiagnostic::class) as $diagnostic) {
+                $class = $this->reflector->reflectClassLike($diagnostic->classType());
+                $classBuilder = $this->resolveClassBuilder($sourceBuilder, $class);
+                $type = $diagnostic->propertyType();
 
-            $propertyBuilder = $classBuilder
-                ->property($diagnostic->propertyName())
-                ->visibility('private');
+                $propertyBuilder = $classBuilder
+                    ->property($diagnostic->propertyName())
+                    ->visibility('private');
 
-            if ($type->isDefined()) {
-                foreach ($type->allTypes()->classLike() as $importClass) {
-                    $sourceBuilder->use($importClass->name()->__toString());
-                }
-                $type = $type->toLocalType($class->scope());
-                $propertyBuilder->type($type->toPhpString(), $type);
-                $propertyBuilder->docType((string)$type->generalize());
+                if ($type->isDefined()) {
+                    foreach ($type->allTypes()->classLike() as $importClass) {
+                        $sourceBuilder->use($importClass->name()->__toString());
+                    }
+                    $type = $type->toLocalType($class->scope());
+                    $propertyBuilder->type($type->toPhpString(), $type);
+                    $propertyBuilder->docType((string)$type->generalize());
 
-                if ($diagnostic->isSubscriptAssignment()) {
-                    $propertyBuilder->defaultValue([]);
+                    if ($diagnostic->isSubscriptAssignment()) {
+                        $propertyBuilder->defaultValue([]);
+                    }
                 }
             }
-        }
 
-        if (isset($class)) {
-            $sourceBuilder->namespace($class->name()->namespace());
-        }
+            if (isset($class)) {
+                $sourceBuilder->namespace($class->name()->namespace());
+            }
 
-        return $this->updater->textEditsFor(
-            $sourceBuilder->build(),
-            Code::fromString((string) $code)
-        );
+            return $this->updater->textEditsFor(
+                $sourceBuilder->build(),
+                Code::fromString((string) $code)
+            );
+        });
     }
 
-    public function diagnostics(SourceCode $code): Diagnostics
+    /**
+     * @return Promise<Diagnostics>
+     */
+    public function diagnostics(SourceCode $code): Promise
     {
-        $wrDiagnostics = $this->reflector->diagnostics($code->__toString());
-        $diagnostics = [];
+        return call(function () use ($code) {
+            $wrDiagnostics = yield $this->reflector->diagnostics($code);
+            $diagnostics = [];
 
-        /** @var AssignmentToMissingPropertyDiagnostic $diagnostic */
-        foreach ($wrDiagnostics->byClass(AssignmentToMissingPropertyDiagnostic::class) as $diagnostic) {
-            $diagnostics[] = new Diagnostic(
-                $diagnostic->range(),
-                $diagnostic->message(),
-                Diagnostic::WARNING
-            );
-        }
+            /** @var AssignmentToMissingPropertyDiagnostic $diagnostic */
+            foreach ($wrDiagnostics->byClass(AssignmentToMissingPropertyDiagnostic::class) as $diagnostic) {
+                $diagnostics[] = new Diagnostic(
+                    $diagnostic->range(),
+                    $diagnostic->message(),
+                    Diagnostic::WARNING
+                );
+            }
 
-        return new Diagnostics($diagnostics);
+            return new Diagnostics($diagnostics);
+        });
     }
 
     /**
@@ -96,7 +109,7 @@ class AddMissingProperties implements Transformer
     {
         $name = $class->name()->short();
 
-        if ($class->isTrait()) {
+        if ($class instanceof ReflectionTrait) {
             return $sourceBuilder->trait($name);
         }
 

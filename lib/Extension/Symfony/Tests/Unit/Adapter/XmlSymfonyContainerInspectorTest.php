@@ -90,6 +90,32 @@ class XmlSymfonyContainerInspectorTest extends IntegrationTestCase
         );
     }
 
+    public function testRetrieveNonPublicServiceIfConfigured(): void
+    {
+        $this->workspace()->put(
+            'services.xml',
+            <<<'EOT'
+                <?xml version="1.0" encoding="utf-8"?>
+                <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+                    <services>
+                        <service id="App\Component\Foo\Service\RequestHandlerService" class="App\Component\Foo\Service\RequestHandlerService" autowire="true" autoconfigure="true" public="true">
+                        </service>
+                    </services>
+                </container>
+                EOT
+        );
+        self::assertEquals(
+            new SymfonyContainerService(
+                'App\Component\Foo\Service\RequestHandlerService',
+                TypeFactory::class('App\Component\Foo\Service\RequestHandlerService')
+            ),
+            $this->inspect(
+                $this->workspace()->path('services.xml'),
+                publicOnly: false,
+            )->service('App\Component\Foo\Service\RequestHandlerService')
+        );
+    }
+
     public function testDefinitionWithNoAttributes(): void
     {
         $this->workspace()->put(
@@ -191,8 +217,8 @@ class XmlSymfonyContainerInspectorTest extends IntegrationTestCase
         self::assertNull($inspector->service('test'));
     }
 
-    private function inspect(string $xmlPath): XmlSymfonyContainerInspector
+    private function inspect(string $xmlPath, bool $publicOnly = true): XmlSymfonyContainerInspector
     {
-        return new XmlSymfonyContainerInspector($xmlPath);
+        return new XmlSymfonyContainerInspector($xmlPath, $publicOnly);
     }
 }

@@ -12,6 +12,7 @@ use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\Renamer;
 use Phpactor\TestUtils\Workspace;
+use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\BruteForceSourceLocator;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -36,7 +37,8 @@ abstract class RenamerTestCase extends TestCase
             $this->workspace()->path('project')
         )->setReferenceEnhancer(new WorseRecordReferenceEnhancer(
             $this->reflector,
-            new NullLogger()
+            new NullLogger(),
+            new FilesystemTextDocumentLocator(),
         ))->buildAgent();
     }
 

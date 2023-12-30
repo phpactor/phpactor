@@ -33,6 +33,10 @@ abstract class NumericType extends ScalarType
     public function divide(NumericType $right): NumericType
     {
         if ($this instanceof Literal && $right instanceof Literal) {
+            if ($right->value() === 0) {
+                return $this->withValue(0);
+            }
+
             return $this->withValue($this->value() / $right->value());
         }
         return $this;

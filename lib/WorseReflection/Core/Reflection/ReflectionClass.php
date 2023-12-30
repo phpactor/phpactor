@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection;
 
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
@@ -28,7 +28,7 @@ interface ReflectionClass extends ReflectionClassLike
 
     public function traits(): ReflectionTraitCollection;
 
-    public function memberListPosition(): Position;
+    public function memberListPosition(): ByteOffsetRange;
 
-    public function isFinal();
+    public function isFinal(): bool;
 }

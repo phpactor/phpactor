@@ -4,16 +4,15 @@ namespace Phpactor\ReferenceFinder\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\ReferenceFinder\ChainDefinitionLocationProvider;
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
 use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
+use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -23,14 +22,14 @@ class ChainDefinitionLocationProviderTest extends TestCase
     use ProphecyTrait;
 
     /**
-     * @var ObjectProphecy|DefinitionLocator
+     * @var ObjectProphecy<DefinitionLocator>
      */
-    private $locator1;
+    private ObjectProphecy $locator1;
 
     /**
-     * @var ObjectProphecy|DefinitionLocator
+     * @var ObjectProphecy<DefinitionLocator>
      */
-    private $locator2;
+    private ObjectProphecy $locator2;
 
     private TextDocument $document;
 
@@ -90,9 +89,8 @@ class ChainDefinitionLocationProviderTest extends TestCase
 
     private function createLocation(): TypeLocations
     {
-        return new TypeLocations([new TypeLocation(TypeFactory::unknown(), new DefinitionLocation(
-            TextDocumentUri::fromString('/path/to.php'),
-            ByteOffset::fromInt(1234)
-        ))]);
+        return new TypeLocations([
+            new TypeLocation(TypeFactory::unknown(), Location::fromPathAndOffsets('/path/to.php', 1234, 1234))
+        ]);
     }
 }

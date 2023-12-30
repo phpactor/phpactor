@@ -13,6 +13,12 @@ class Complete
     {
     }
 
+    /**
+     * @return array{
+     *    suggestions: array<array<string,mixed>>,
+     *    issues: array
+     * }
+     */
     public function complete(string $source, int $offset, string $type = 'php'): array
     {
         $completor = $this->registry->completorForType($type);

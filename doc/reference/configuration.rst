@@ -1,3 +1,5 @@
+.. _ref_configuration:
+
 Configuration
 =============
 
@@ -64,7 +66,7 @@ Internal use only - name of the command which was executed
 """"""""""""""""""""""""
 
 
-Internal use only: if an warning will be issed when on develop, may be removed in the future
+Internal use only: if an warning will be issued when on develop, may be removed in the future
 
 
 **Default**: ``true``
@@ -406,6 +408,21 @@ Completion for local variables.
 **Default**: ``true``
 
 
+.. _param_completion_worse.completor.subscript.enabled:
+
+
+``completion_worse.completor.subscript.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the ``subscript`` completor.
+
+Completion for subscript (array access from array shapes).
+
+
+**Default**: ``true``
+
+
 .. _param_completion_worse.completor.declared_function.enabled:
 
 
@@ -680,6 +697,22 @@ Sets a limit on the number of completion suggestions for any request
 **Default**: ``null``
 
 
+.. _param_completion.label_formatter:
+
+
+``completion.label_formatter``
+""""""""""""""""""""""""""""""
+
+
+Definition of how to format entries in the completion list
+
+
+**Default**: ``"helpful"``
+
+
+**Allowed values**: "helpful", "fqn"
+
+
 .. _NavigationExtension:
 
 
@@ -842,6 +875,22 @@ Location of the core PHP stubs - these will be scanned and cached on the first r
 
 
 **Default**: ``"%application_root%\/vendor\/jetbrains\/phpstorm-stubs"``
+
+
+.. _param_worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance:
+
+
+``worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Levenshtein distance to use when suggesting corrections for variable names
+
+
+**Default**: ``4``
 
 
 .. _FilePathResolverExtension:
@@ -1227,14 +1276,27 @@ Specify which diagnostic providers should be active (default to all)
 **Default**: ``null``
 
 
-.. _param_language_server,file_events:
+.. _param_language_server.diagnostic_outsource:
 
 
-``language_server,file_events``
+``language_server.diagnostic_outsource``
+""""""""""""""""""""""""""""""""""""""""
+
+
+If applicable diagnostics should be "outsourced" to a different process
+
+
+**Default**: ``true``
+
+
+.. _param_language_server.file_events:
+
+
+``language_server.file_events``
 """""""""""""""""""""""""""""""
 
 
-Register to recieve file events
+Register to receive file events
 
 
 **Default**: ``true``
@@ -1283,10 +1345,23 @@ Log incoming and outgoing messages (needs log formatter to be set to ``json``)
 """""""""""""""""""""""""""""""""""""""""
 
 
-Amount of time to wait before responding to a shutdown notification
+Amount of time (in milliseconds) to wait before responding to a shutdown notification
 
 
 **Default**: ``200``
+
+
+.. _param_language_server.phpactor_bin:
+
+
+``language_server.phpactor_bin``
+""""""""""""""""""""""""""""""""
+
+
+Internal use only - name path to Phpactor binary
+
+
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:
@@ -1296,10 +1371,23 @@ Amount of time to wait before responding to a shutdown notification
 """""""""""""""""""""""""""""""""""""""""
 
 
-Wait this amount of time after a shutdown request before self-destructing
+Wait this amount of time (in milliseconds) after a shutdown request before self-destructing
 
 
 **Default**: ``2500``
+
+
+.. _param_language_server.diagnostic_outsource_timeout:
+
+
+``language_server.diagnostic_outsource_timeout``
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Kill the diagnostics process if it outlives this timeout
+
+
+**Default**: ``5``
 
 
 .. _LanguageServerCompletionExtension:
@@ -1362,6 +1450,58 @@ Minimum interval to update the workspace index as documents are updated (in mill
 **Default**: ``100``
 
 
+.. _param_language_server_worse_reflection.inlay_hints.enable:
+
+
+``language_server_worse_reflection.inlay_hints.enable``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable inlay hints (experimental)
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_worse_reflection.inlay_hints.types:
+
+
+``language_server_worse_reflection.inlay_hints.types``
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Show inlay type hints for variables
+
+
+**Default**: ``false``
+
+
+.. _param_language_server_worse_reflection.inlay_hints.params:
+
+
+``language_server_worse_reflection.inlay_hints.params``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Show inlay hints for parameters
+
+
+**Default**: ``true``
+
+
+.. _param_language_server_worse_reflection.diagnostics.enable:
+
+
+``language_server_worse_reflection.diagnostics.enable``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable diagnostics
+
+
+**Default**: ``true``
+
+
 .. _LanguageServerIndexerExtension:
 
 
@@ -1377,6 +1517,19 @@ LanguageServerIndexerExtension
 
 
 **Default**: ``250``
+
+
+.. _param_language_server_indexer.reindex_timeout:
+
+
+``language_server_indexer.reindex_timeout``
+"""""""""""""""""""""""""""""""""""""""""""
+
+
+Unconditionally reindex modified files every N seconds
+
+
+**Default**: ``300``
 
 
 .. _LanguageServerCodeTransformExtension:
@@ -1399,6 +1552,29 @@ Show an error if a diagnostic name cannot be resolved - can produce false positi
 **Default**: ``true``
 
 
+.. _LanguageServerConfigurationExtension:
+
+
+LanguageServerConfigurationExtension
+------------------------------------
+
+
+.. _param_language_server_configuration.auto_config:
+
+
+``language_server_configuration.auto_config``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Prompt to enable extensions which apply to your project on language server start
+
+
+**Default**: ``true``
+
+
 .. _IndexerExtension:
 
 
@@ -1411,6 +1587,9 @@ IndexerExtension
 
 ``indexer.enabled_watchers``
 """"""""""""""""""""""""""""
+
+
+Type: array
 
 
 List of allowed watchers. The first watcher that supports the current system will be used
@@ -1426,6 +1605,9 @@ List of allowed watchers. The first watcher that supports the current system wil
 """"""""""""""""""""""
 
 
+Type: string
+
+
 Path where the index should be saved
 
 
@@ -1437,6 +1619,9 @@ Path where the index should be saved
 
 ``indexer.include_patterns``
 """"""""""""""""""""""""""""
+
+
+Type: array
 
 
 Glob patterns to include while indexing
@@ -1452,6 +1637,9 @@ Glob patterns to include while indexing
 """"""""""""""""""""""""""""
 
 
+Type: array
+
+
 Glob patterns to exclude while indexing
 
 
@@ -1463,6 +1651,9 @@ Glob patterns to exclude while indexing
 
 ``indexer.stub_paths``
 """"""""""""""""""""""
+
+
+Type: array
 
 
 Paths to external folders to index. They will be indexed only once, if you want to take any changes into account you will have to reindex your project manually.
@@ -1478,6 +1669,9 @@ Paths to external folders to index. They will be indexed only once, if you want 
 """""""""""""""""""""
 
 
+Type: integer
+
+
 For polling indexers only: the time, in milliseconds, between polls (e.g. filesystem scans)
 
 
@@ -1489,6 +1683,9 @@ For polling indexers only: the time, in milliseconds, between polls (e.g. filesy
 
 ``indexer.buffer_time``
 """""""""""""""""""""""
+
+
+Type: integer
 
 
 For real-time indexers only: the time, in milliseconds, to buffer the results
@@ -1504,6 +1701,9 @@ For real-time indexers only: the time, in milliseconds, to buffer the results
 """""""""""""""""""""""""""
 
 
+Type: boolean
+
+
 To allow indexer to follow symlinks
 
 
@@ -1515,6 +1715,9 @@ To allow indexer to follow symlinks
 
 ``indexer.project_root``
 """"""""""""""""""""""""
+
+
+Type: string
 
 
 The root path to use for scanning the index
@@ -1530,6 +1733,9 @@ The root path to use for scanning the index
 """""""""""""""""""""""""""""""""
 
 
+Type: boolean
+
+
 Recurse over class implementations to resolve all references
 
 
@@ -1543,10 +1749,29 @@ Recurse over class implementations to resolve all references
 """"""""""""""""""""""""""""""""""""""
 
 
+Type: boolean
+
+
 Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)
 
 
 **Default**: ``true``
+
+
+.. _param_indexer.supported_extensions:
+
+
+``indexer.supported_extensions``
+""""""""""""""""""""""""""""""""
+
+
+Type: array
+
+
+File extensions (e.g. `php`) for files that should be indexed
+
+
+**Default**: ``["php"]``
 
 
 .. _ObjectRendererExtension:
@@ -1618,6 +1843,32 @@ Override the PHPStan level
 **Default**: ``null``
 
 
+.. _param_language_server_phpstan.config:
+
+
+``language_server_phpstan.config``
+""""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan configuration file
+
+
+**Default**: ``null``
+
+
+.. _param_language_server_phpstan.mem_limit:
+
+
+``language_server_phpstan.mem_limit``
+"""""""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan memory limit
+
+
+**Default**: ``null``
+
+
 .. _LanguageServerPsalmExtension:
 
 
@@ -1648,6 +1899,9 @@ Enable or disable this extension
 """""""""""""""""""""""""""""
 
 
+Type: string
+
+
 Path to psalm if different from vendor/bin/psalm
 
 
@@ -1659,6 +1913,9 @@ Path to psalm if different from vendor/bin/psalm
 
 ``language_server_psalm.show_info``
 """""""""""""""""""""""""""""""""""
+
+
+Type: boolean
 
 
 If infos from psalm should be displayed
@@ -1674,33 +1931,58 @@ If infos from psalm should be displayed
 """""""""""""""""""""""""""""""""""
 
 
+Type: boolean
+
+
 If the Psalm cache should be used (see the `--no-cache` option)
 
 
 **Default**: ``true``
 
 
-.. _LanguageServerBlackfireExtension:
+.. _param_language_server_psalm.error_level:
 
 
-LanguageServerBlackfireExtension
---------------------------------
+``language_server_psalm.error_level``
+"""""""""""""""""""""""""""""""""""""
 
 
-.. _param_blackfire.enabled:
+Override level at which Psalm should report errors (lower => more errors)
 
 
-``blackfire.enabled``
-"""""""""""""""""""""
+**Default**: ``null``
 
 
-Type: boolean
+.. _param_language_server_psalm.threads:
 
 
-Enable or disable this extension
+``language_server_psalm.threads``
+"""""""""""""""""""""""""""""""""
 
 
-**Default**: ``false``
+Type: integer
+
+
+Set the number of threads Psalm should use. Warning: NULL will use as many as possible and may crash your computer
+
+
+**Default**: ``1``
+
+
+.. _param_language_server_psalm.timeout:
+
+
+``language_server_psalm.timeout``
+"""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Kill the psalm process after this number of seconds
+
+
+**Default**: ``15``
 
 
 .. _LanguageServerPhpCsFixerExtension:
@@ -1746,10 +2028,10 @@ Path to the php-cs-fixer executable
 """"""""""""""""""""""""""""""""""""
 
 
-Environemnt for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)
+Environment for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)
 
 
-**Default**: ``{"XDEBUG_MODE":"off"}``
+**Default**: ``{"XDEBUG_MODE":"off","PHP_CS_FIXER_IGNORE_ENV":true}``
 
 
 .. _param_language_server_php_cs_fixer.show_diagnostics:
@@ -1763,6 +2045,127 @@ Whether PHP CS Fixer diagnostics are shown
 
 
 **Default**: ``true``
+
+
+.. _param_language_server_php_cs_fixer.config:
+
+
+``language_server_php_cs_fixer.config``
+"""""""""""""""""""""""""""""""""""""""
+
+
+Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php
+
+
+**Default**: ``null``
+
+
+.. _PhpCodeSnifferExtension:
+
+
+PhpCodeSnifferExtension
+-----------------------
+
+
+.. _param_php_code_sniffer.enabled:
+
+
+``php_code_sniffer.enabled``
+""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_php_code_sniffer.bin:
+
+
+``php_code_sniffer.bin``
+""""""""""""""""""""""""
+
+
+Path to the phpcs executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpcs"``
+
+
+.. _param_php_code_sniffer.env:
+
+
+``php_code_sniffer.env``
+""""""""""""""""""""""""
+
+
+Environment for PHP_CodeSniffer (e.g. to set XDEBUG_MODE)
+
+
+**Default**: ``{"XDEBUG_MODE":"off"}``
+
+
+.. _param_php_code_sniffer.show_diagnostics:
+
+
+``php_code_sniffer.show_diagnostics``
+"""""""""""""""""""""""""""""""""""""
+
+
+Whether PHP_CodeSniffer diagnostics are shown
+
+
+**Default**: ``true``
+
+
+.. _LanguageServerBlackfireExtension:
+
+
+LanguageServerBlackfireExtension
+--------------------------------
+
+
+.. _param_blackfire.enabled:
+
+
+``blackfire.enabled``
+"""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _ProphecyExtension:
+
+
+ProphecyExtension
+-----------------
+
+
+.. _param_prophecy.enabled:
+
+
+``prophecy.enabled``
+""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
 
 
 .. _BehatExtension:
@@ -1863,24 +2266,14 @@ Enable/disable the Symfony completor - depends on Symfony extension being enable
 **Default**: ``true``
 
 
-.. _ProphecyExtension:
+.. _param_public_services_only:
 
 
-ProphecyExtension
------------------
+``public_services_only``
+""""""""""""""""""""""""
 
 
-.. _param_prophecy.enabled:
-
-
-``prophecy.enabled``
-""""""""""""""""""""
-
-
-Type: boolean
-
-
-Enable or disable this extension
+Only consider public services when providing analysis for the service locator
 
 
 **Default**: ``false``

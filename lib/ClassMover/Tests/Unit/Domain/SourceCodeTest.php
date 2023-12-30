@@ -12,14 +12,15 @@ class SourceCodeTest extends TestCase
      * It should add a use statement.
      * @dataProvider provideAddUse
      */
-    public function testAddUse($source, $expected): void
+    public function testAddUse(string $source, string $expected): void
     {
         $source = SourceCode::fromString($source);
         $source = $source->addUseStatement(FullyQualifiedName::fromString('Foobar'));
         $this->assertEquals($expected, $source->__toString());
     }
 
-    public function provideAddUse()
+    /** @return array<array{string, string}> */
+    public function provideAddUse(): array
     {
         return [
             'No namespace' => [
@@ -84,14 +85,15 @@ class SourceCodeTest extends TestCase
     /**
      * @dataProvider provideNamespaceAdd
      */
-    public function testNamespaceAdd($source, $expected): void
+    public function testNamespaceAdd(string $source, string $expected): void
     {
         $source = SourceCode::fromString($source);
         $source = $source->addNamespace(FullyQualifiedName::fromString('NS1'));
         $this->assertEquals($expected, $source->__toString());
     }
 
-    public function provideNamespaceAdd()
+    /** @return array<array{string, string}> */
+    public function provideNamespaceAdd(): array
     {
         return [
             'Add namespace' => [

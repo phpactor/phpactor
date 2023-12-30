@@ -18,10 +18,10 @@ use RuntimeException;
 
 abstract class AbstractClassGenerateHandler extends AbstractHandler
 {
-    const PARAM_CURRENT_PATH = 'current_path';
-    const PARAM_NEW_PATH = 'new_path';
-    const PARAM_VARIANT = 'variant';
-    const PARAM_OVERWRITE_EXISTING = 'overwrite_existing';
+    public const PARAM_CURRENT_PATH = 'current_path';
+    public const PARAM_NEW_PATH = 'new_path';
+    public const PARAM_VARIANT = 'variant';
+    public const PARAM_OVERWRITE_EXISTING = 'overwrite_existing';
 
     public function __construct(protected Generators $generators, protected FileToClass $fileToClass)
     {
@@ -84,7 +84,7 @@ abstract class AbstractClassGenerateHandler extends AbstractHandler
         $this->writeFileContents($arguments, $code);
 
         return ReplaceFileSourceResponse::fromPathAndSource(
-            ($code->uri()->scheme() === 'file' && $code->path()) ? $code->uri()->path() : $arguments[self::PARAM_NEW_PATH],
+            ($code->uri()->scheme() === 'file' && $code->uri()->path()) ? $code->uri()->path() : $arguments[self::PARAM_NEW_PATH],
             (string) $code
         );
     }

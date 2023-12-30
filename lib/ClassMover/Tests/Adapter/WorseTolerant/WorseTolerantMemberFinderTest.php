@@ -19,7 +19,10 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
         $this->assertCount($expectedRiskyCount, $members->withoutClasses());
     }
 
-    public function provideFindMember()
+    /**
+    * @return array<string, array{0: string, 1: ClassMemberQuery, 2: int, 3?:int}>
+    */
+    public function provideFindMember(): array
     {
         return [
             'It returns zero references when there are no methods at all' => [
@@ -572,7 +575,10 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
         $assertion(iterator_to_array($methods));
     }
 
-    public function provideOffset()
+    /**
+     * @return array<array{string, ClassMemberQuery, Closure}>
+     */
+    public function provideOffset(): array
     {
         return [
             'Start and end from static call' => [
@@ -583,7 +589,7 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
                     EOT
                 ,
                 ClassMemberQuery::create()->onlyMethods()->withClass('Foobar')->withMember('foobar'),
-                function ($members): void {
+                function (array $members): void {
                     $first = reset($members);
                     $this->assertEquals(15, $first->position()->start());
                     $this->assertEquals(21, $first->position()->end());
@@ -600,7 +606,7 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
                     EOT
                 ,
                 ClassMemberQuery::create()->onlyMethods()->withClass('Foobar')->withMember('foobar'),
-                function ($members): void {
+                function (array $members): void {
                     $first = reset($members);
                     $this->assertEquals(89, $first->position()->start());
                     $this->assertEquals(95, $first->position()->end());
@@ -614,7 +620,7 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
                     EOT
                 ,
                 ClassMemberQuery::create()->onlyMethods()->withClass('Foobar')->withMember('foobar'),
-                function ($members): void {
+                function (array $members): void {
                     $first = reset($members);
                     $this->assertEquals(38, $first->position()->start());
                     $this->assertEquals(44, $first->position()->end());

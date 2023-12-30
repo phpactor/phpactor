@@ -6,8 +6,7 @@
 Phpactor
 ========
 
-Phpactor is an intelligent :ref:`completion` and :ref:`refactoring` tool for PHP which is available over
-it's own RPC protocol and as a :ref:`language_server`:
+Phpactor is a PHP :ref:`language_server` providing:
 
 -  :ref:`completion`: Provides broad and accurate context aware code
    completion.
@@ -15,10 +14,9 @@ it's own RPC protocol and as a :ref:`language_server`:
    references, hover.
 -  :ref:`refactoring`: Move classes, complete constructors, implement
    contracts, generate methods, etc.
--  :ref:`language_server`:: Language Server Protocol implementation.
+-  :ref:`diagnostics`: Diagnostics related to code actions.
+-  :ref:`extensions`: Integrates with popular tools and frameworks such as Symfony, PHPStan, etc.
 -  :ref:`vim_plugin`: Lightweight VIM plugin.
 
-
-Phpactor can be used in a limited way as a **standalone application**,
-but its full power can only be utilized through its :doc:`other/rpc` protocol or
-through its :doc:`usage/language-server`.
+Proceed to the :doc:`usage/getting-started` guide to find out how to be getting
+started with Neovim, VS Code, and other editors.

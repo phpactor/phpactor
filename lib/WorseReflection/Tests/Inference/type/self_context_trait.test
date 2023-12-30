@@ -1,0 +1,13 @@
+<?php
+
+trait SingletonTrait {
+	public static function getInstance() : self {}
+}
+
+class A {
+	use SingletonTrait;
+
+	public function foo() : void {}
+}
+
+wrAssertType('A', A::getInstance());

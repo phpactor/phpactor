@@ -4,15 +4,10 @@ namespace Phpactor\Extension\Core;
 
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
-use Phpactor\Extension\Core\Command\ConfigInitCommand;
-use Phpactor\Extension\Core\Command\ConfigJsonSchemaCommand;
-use Phpactor\Extension\Core\Command\ConfigSetCommand;
 use Phpactor\Extension\Core\Command\DebugContainerCommand;
-use Phpactor\Extension\Core\Model\JsonSchemaBuilder;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
-use Phpactor\Extension\Core\Model\ConfigManipulator;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
@@ -31,6 +26,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\Extension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\FilePathResolver\Expanders;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 
@@ -59,7 +55,7 @@ class CoreExtension implements Extension
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
             self::PARAM_COMMAND => 'Internal use only - name of the command which was executed',
             self::PARAM_DUMPER => 'Name of the "dumper" (renderer) to use for some CLI commands',
-            self::PARAM_WARN_ON_DEVELOP => 'Internal use only: if an warning will be issed when on develop, may be removed in the future',
+            self::PARAM_WARN_ON_DEVELOP => 'Internal use only: if an warning will be issued when on develop, may be removed in the future',
             self::PARAM_MIN_MEMORY_LIMIT => 'Ensure that PHP has a memory_limit of at least this amount in bytes',
             self::PARAM_SCHEMA => 'Path to JSON schema, which can be used for config autocompletion, use phpactor config:initialize to update',
         ]);
@@ -78,39 +74,11 @@ class CoreExtension implements Extension
         $container->register('command.config_dump', function (Container $container) {
             return new ConfigDumpCommand(
                 $container->getParameters(),
-                $container->get('console.dumper_registry'),
-                $container->get('config_loader.candidates'),
-                $container->get(FilePathResolverExtension::SERVICE_EXPANDERS)
+                $container->expect('console.dumper_registry', DumperRegistry::class),
+                $container->expect('config_loader.candidates', PathCandidates::class),
+                $container->expect(FilePathResolverExtension::SERVICE_EXPANDERS, Expanders::class)
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:dump']]);
-
-        $container->register('command.config_initialize', function (Container $container) {
-            return new ConfigInitCommand(
-                new ConfigManipulator(
-                    realpath(__DIR__ . '/../../..') . '/phpactor.schema.json',
-                    $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT) . '/.phpactor.json'
-                )
-            );
-        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:initialize']]);
-
-        $container->register(ConfigJsonSchemaCommand::class, function (Container $container) {
-            return new ConfigJsonSchemaCommand(
-                $container->get(JsonSchemaBuilder::class)
-            );
-        }, [
-            ConsoleExtension::TAG_COMMAND => [
-                'name' => 'config:json-schema'
-            ]
-        ]);
-
-        $container->register('command.config_set', function (Container $container) {
-            return new ConfigSetCommand(
-                new ConfigManipulator(
-                    realpath(__DIR__ . '/../../..') . '/phpactor.schema.json',
-                    $container->getParameter(FilePathResolverExtension::PARAM_PROJECT_ROOT) . '/.phpactor.json'
-                )
-            );
-        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:set']]);
 
         $container->register('command.debug_container', function (Container $container) {
             return new DebugContainerCommand(

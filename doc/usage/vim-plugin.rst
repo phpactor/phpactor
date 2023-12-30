@@ -5,13 +5,17 @@ VIM RPC Plugin
 
 This is the original VIM plugin, and is bundled with Phpactor by default.
 
+.. note::
+    Using the RPC part of phpactor is deprecated. Most of it's features have been implemented as part of the LSP which should be used instead.
+
+
 Installation
 ------------
 
 **Prerequisites**:
 
 -  `Composer <https://getcomposer.org/download>`__
--  PHP 7.3
+-  PHP 8.0
 -  `VIM 8 <https://github.com/vim/vim>`__ or
    `Neovim <https://github.com/neovim/neovim>`__
 
@@ -62,7 +66,7 @@ Troubleshooting
 
 You need to open a PHP file before using Phpactor.
 
-``Phpactor requires at least PHP 7.3.0``
+``Phpactor requires at least PHP 8.0``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you run an older version of PHP by default, you will need to install
@@ -76,7 +80,7 @@ another version and set ``:phpactorPhpBin`` in your ``.vimrc`` (or equivalent):
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Git and Composer checks are referring to the current “workspace”
-(i.e. where you started Vim from). If you’ve already setup Git and
+(i.e. where you started Vim from). If you've already setup Git and
 Composer for your project, ensure you are starting Vim from the project
 directory to enable detection.
 

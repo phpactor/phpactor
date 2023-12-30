@@ -2,20 +2,16 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection;
 
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\DefaultValue;
 
 interface ReflectionParameter extends ReflectionNode
 {
-    public function position(): Position;
+    public function position(): ByteOffsetRange;
 
     public function name(): string;
-
-    /**
-     * @deprecated Use funtionLike()
-     */
-    public function method(): ReflectionFunctionLike;
 
     public function functionLike(): ReflectionFunctionLike;
 
@@ -32,4 +28,6 @@ interface ReflectionParameter extends ReflectionNode
     public function isPromoted(): bool;
 
     public function isVariadic(): bool;
+
+    public function docblock(): DocBlock;
 }

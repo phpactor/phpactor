@@ -39,9 +39,9 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
 
     public function declaringClass(): ReflectionClassLike
     {
-        /** @var NamespacedNameInterface $classDeclaration */
+        /** @var NamespacedNameInterface|null $classDeclaration */
         $classDeclaration = $this->propertyDeclaration->getFirstAncestor(ClassDeclaration::class, TraitDeclaration::class);
-        $class = $classDeclaration->getNamespacedName();
+        $class = $classDeclaration?->getNamespacedName();
 
         if (null === $class) {
             throw new InvalidArgumentException(sprintf(

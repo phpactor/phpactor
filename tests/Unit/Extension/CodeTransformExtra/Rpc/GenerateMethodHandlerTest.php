@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateMethodHandler;
 use Phpactor\Extension\Rpc\Handler;
@@ -26,7 +26,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
 
     public function setUp(): void
     {
-        $this->generateMethod = $this->prophesize(GenerateMethod::class);
+        $this->generateMethod = $this->prophesize(GenerateMember::class);
     }
 
     public function testProvidesOriginalSourceFromDiskIfPathIsNotTheGivenPath(): void
@@ -36,7 +36,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $thisFileContents = file_get_contents(__FILE__);
 
         // @phpstan-ignore-next-line
-        $this->generateMethod->generateMethod(
+        $this->generateMethod->generateMember(
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(
@@ -63,7 +63,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
 
         // @phpstan-ignore-next-line
-        $this->generateMethod->generateMethod(
+        $this->generateMethod->generateMember(
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(

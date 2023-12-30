@@ -78,14 +78,14 @@ abstract class AbstractReferenceRenamer implements Renamer
     {
         $referenceDocument = $this->locator->get($location->uri());
 
-        $range = $this->getRenameRange($referenceDocument, $location->offset());
+        $range = $this->getRenameRange($referenceDocument, $location->range()->start());
 
         if (null === $range) {
             throw new CouldNotRename(sprintf(
                 'Could not find corresponding reference to member name "%s" in document "%s" at offset %s',
                 $originalName,
                 $referenceDocument->uri()->__toString(),
-                $location->offset()->toInt()
+                $location->range()->start()->toInt()
             ));
         }
 

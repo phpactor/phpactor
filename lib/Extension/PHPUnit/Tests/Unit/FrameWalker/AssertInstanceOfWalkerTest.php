@@ -4,6 +4,7 @@ namespace Phpactor\Extension\PHPUnit\Tests\Unit\FrameWalker;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\PHPUnit\FrameWalker\AssertInstanceOfWalker;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\Walker\TestAssertWalker;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
@@ -83,6 +84,7 @@ class AssertInstanceOfWalkerTest extends TestCase
 
     public function resolve(string $sourceCode): void
     {
+        $sourceCode = TextDocumentBuilder::fromUnknown($sourceCode);
         $reflector = ReflectorBuilder::create()
             ->addFrameWalker(new TestAssertWalker($this))
             ->addFrameWalker(new AssertInstanceOfWalker())

@@ -1,0 +1,20 @@
+// File: src/File1.php
+<?php
+
+namespace Elastica\Query;
+
+class Match extends MatchQuery
+{
+}
+
+interface Match extends MatchQuery
+{
+}
+
+enum Match
+{
+}
+
+trait Match
+{
+}

@@ -10,28 +10,29 @@ use Phpactor\Completion\Tests\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Log\LoggerInterface;
 
 class ChainSignatureHelperTest extends TestCase
 {
     /**
-     * @var ObjectProphecy|LoggerInterface
+     * @var ObjectProphecy<LoggerInterface>
      */
-    private $logger;
+    private ObjectProphecy $logger;
 
     /**
-     * @var SignatureHelper|ObjectProphecy
+     * @var ObjectProphecy<SignatureHelper>
      */
-    private $helper1;
+    private ObjectProphecy $helper1;
 
     private TextDocument $document;
 
     private ByteOffset $offset;
 
     /**
-     * @var SignatureHelper|ObjectProphecy
+     * @var ObjectProphecy<SignatureHelp>
      */
-    private $help;
+    private ObjectProphecy $help;
 
     protected function setUp(): void
     {

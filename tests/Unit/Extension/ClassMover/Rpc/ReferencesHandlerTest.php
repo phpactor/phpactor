@@ -10,8 +10,8 @@ use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\CollectionResponse;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\ClassMover\Application\ClassMemberReferences;
 use Phpactor\WorseReflection\Bridge\PsrLog\ArrayLogger;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
@@ -25,7 +25,7 @@ use RuntimeException;
 
 class ReferencesHandlerTest extends HandlerTestCase
 {
-    const TEST_PATH = 'test_file.php';
+    const TEST_PATH = 'file:///test_file.php';
 
     private ObjectProphecy $classReferences;
 
@@ -42,7 +42,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->classReferences = $this->prophesize(ClassReferences::class);
         $this->classMemberReferences = $this->prophesize(ClassMemberReferences::class);
         $this->logger = new ArrayLogger();
-        $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->withLogger($this->logger)->build();
+        $this->reflector = ReflectorBuilder::create()->addSource(TextDocumentBuilder::fromUri(__FILE__)->build())->withLogger($this->logger)->build();
         $this->filesystemRegistry = $this->prophesize(FilesystemRegistry::class);
     }
 

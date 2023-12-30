@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Virtual;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\DefaultValue;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
@@ -19,25 +19,28 @@ class VirtualReflectionParameterTest extends TestCase
 {
     use ProphecyTrait;
 
-    private $position;
+    private ByteOffsetRange $position;
 
+    /** @var ObjectProphecy<ReflectionClass> */
     private ObjectProphecy $class;
 
     private string $name;
 
-    private ObjectProphecy $frame;
-
+    /** @var ObjectProphecy<ReflectionScope> */
     private ObjectProphecy $scope;
 
     private Type $type;
 
+    /** @var ObjectProphecy<ReflectionMethod> */
     private ObjectProphecy $method;
 
     private DefaultValue $defaults;
 
+    private bool $byReference;
+
     public function setUp(): void
     {
-        $this->position = Position::fromStartAndEnd(0, 0);
+        $this->position = ByteOffsetRange::fromInts(0, 0);
         $this->class = $this->prophesize(ReflectionClass::class);
         $this->name = 'test_name';
         $this->scope = $this->prophesize(ReflectionScope::class);
@@ -67,7 +70,6 @@ class VirtualReflectionParameterTest extends TestCase
         $parameter = $this->parameter();
         $this->assertEquals($this->name, $parameter->name());
         $this->assertEquals($this->method->reveal(), $parameter->functionLike());
-        $this->assertEquals($this->method->reveal(), $parameter->method());
         $this->assertEquals($this->type, $parameter->inferredType());
         $this->assertEquals($this->type, $parameter->type());
         $this->assertEquals($this->defaults, $parameter->default());

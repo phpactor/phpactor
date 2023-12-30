@@ -3,13 +3,12 @@
 namespace Phpactor\WorseReflection\Core\Reflection;
 
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Core\Position;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollection;
 use Phpactor\WorseReflection\Core\Type;
 
 interface ReflectionMethodCall extends ReflectionNode
 {
-    public function position(): Position;
+    public function position(): ByteOffsetRange;
 
     public function class(): ReflectionClassLike;
 

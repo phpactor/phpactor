@@ -43,7 +43,7 @@ class YieldExpressionResolver implements Resolver
             $value = $resolver->resolveNode($frame, $arrayElement->elementValue)->type();
 
             if ($yieldFrom) {
-                $frame->withReturnType($value);
+                $frame->setReturnType($value);
                 return $context;
             }
 
@@ -61,11 +61,11 @@ class YieldExpressionResolver implements Resolver
                 $returnType = $returnType->withKey($returnType->keyType()->addType($key));
             }
 
-            $frame->withReturnType($returnType);
+            $frame->setReturnType($returnType);
             return $context;
         }
 
-        $frame->withReturnType(
+        $frame->setReturnType(
             TypeFactory::generator(
                 $resolver->reflector(),
                 $key,

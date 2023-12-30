@@ -6,16 +6,14 @@ use Phpactor\Name\Exception\InvalidName;
 
 final class QualifiedName implements Name
 {
-    const NAMESPACE_SEPARATOR = '\\';
+    private const NAMESPACE_SEPARATOR = '\\';
 
     private array $parts;
 
     private function __construct(array $parts)
     {
-        if (empty($parts)) {
-            throw new InvalidName(sprintf(
-                'Names must have at least one segment'
-            ));
+        if ($parts === []) {
+            throw new InvalidName('Names must have at least one segment');
         }
 
         $this->parts = $parts;
@@ -31,7 +29,7 @@ final class QualifiedName implements Name
         return new self($parts);
     }
 
-    public static function fromString(string $string): QualifiedName
+    public static function fromString(string $string): self
     {
         return new self(array_filter(explode(self::NAMESPACE_SEPARATOR, $string)));
     }
@@ -82,7 +80,7 @@ final class QualifiedName implements Name
     {
         $parts = $this->parts;
         array_unshift($parts, ...$name->toArray());
-        return new self($parts);
+        return new self($parts ?? []);
     }
 
     /**

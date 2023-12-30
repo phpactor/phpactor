@@ -365,9 +365,9 @@ class TypeFactory
         return new EnumCaseType($reflector, $enumType, $name);
     }
 
-    public static function enumBackedCaseType(ClassType $enumType, string $name, Type $value): EnumBackedCaseType
+    public static function enumBackedCaseType(Reflector $reflector, ClassType $enumType, string $name, Type $value): EnumBackedCaseType
     {
-        return new EnumBackedCaseType($enumType, $name, $value);
+        return new EnumBackedCaseType($reflector, $enumType, $name, $value);
     }
 
     public static function intRange(Type $lower, Type $upper): IntRangeType

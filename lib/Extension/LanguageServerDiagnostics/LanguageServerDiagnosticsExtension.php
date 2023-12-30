@@ -7,6 +7,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerDiagnostics\Model\PhpLinter;
 use Phpactor\Extension\LanguageServerDiagnostics\Provider\PhpLintDiagnosticProvider;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentLocator;
@@ -21,9 +22,7 @@ class LanguageServerDiagnosticsExtension implements Extension
                 $container->get(TextDocumentLocator::class)
             );
         }, [
-            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => [
-                'name' => 'php'
-            ]
+            LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('php')
         ]);
     }
 

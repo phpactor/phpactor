@@ -65,6 +65,15 @@ class ReflectedClassType extends ClassType
             return Trinary::true();
         }
 
+        if ($type instanceof UnionType) {
+            foreach ($type->types as $uType) {
+                if (!$this->accepts($uType)->isTrue()) {
+                    return Trinary::false();
+                }
+            }
+            return Trinary::true();
+        }
+
         if (!$type instanceof ClassType) {
             return Trinary::false();
         }
@@ -81,7 +90,7 @@ class ReflectedClassType extends ClassType
             return Trinary::maybe();
         }
 
-        if ($reflectedThis instanceof ReflectionInterface) {
+        if ($reflectedThis instanceof ReflectionInterface || $reflectedThis instanceof ReflectionClass) {
             return Trinary::fromBoolean($reflectedThat->isInstanceOf($reflectedThis->name()));
         }
 
@@ -105,7 +114,7 @@ class ReflectedClassType extends ClassType
     {
         try {
             return $this->reflector->reflectClassLike($this->name());
-        } catch (NotFound) {
+        } catch (NotFound $e) {
         }
         return null;
     }

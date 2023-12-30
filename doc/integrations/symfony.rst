@@ -17,8 +17,8 @@ The extension must be via. :ref:`param_symfony.enabled`:
 
    $ phpactor config:set symfony.enabled true
 
-Dependeny Injection Features
-----------------------------
+Dependency Injection Features
+-----------------------------
 
 When in development mode Symfony will dump an XML file which describes the
 current container. In Symfony 5.x this file is located in

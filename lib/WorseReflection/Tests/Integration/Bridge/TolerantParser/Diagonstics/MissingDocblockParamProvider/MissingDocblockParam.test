@@ -1,7 +1,0 @@
-<?php
-
-class Foobar
-{
-    public function foo(array $foobar) {
-    }
-}

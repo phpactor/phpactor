@@ -12,6 +12,45 @@ env:
     TZ: "Europe/Paris"
 
 jobs:
+    phar:
+        name: Compile Phar
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Set PHP 8.1
+              uses: shivammathur/setup-php@v2
+              with:
+                php-version: '8.1'
+
+            -
+              name: "Composer install"
+              uses: "ramsey/composer-install@v2"
+              with:
+                  composer-options: "--no-scripts --no-dev"
+
+            - name: Tag with a dummy name
+              run: git tag test
+
+            - name: Compile phpactor.phar
+              run: .github/build-phar.sh
+
+            - name: Check existence of compiled .phar
+              run: test -e build/phpactor.phar && exit 0 || exit 10
+            - name: Execute Phar
+              run: ./build/phpactor.phar
+
+      #- name: "Attach signature to Release"
+      #  uses: actions/upload-release-asset@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    upload_url: ${{ github.event.release.upload_url }}
+      #    asset_path: ./build/phpactor.phar.asc
+      #    asset_name: phpactor.phar.asc
+      #    asset_content_type: application/pgp-signature
+
     vim-tests:
         name: "VIM Tests (${{ matrix.php-version }})"
 
@@ -20,7 +59,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -47,9 +86,6 @@ jobs:
                     composer validate --strict
                     composer install --optimize-autoloader --classmap-authoritative
                     bin/phpactor --version
-                    sudo add-apt-repository --yes ppa:jonathonf/vim
-                    sudo apt-get update -y
-                    sudo apt-get install vim -fy
                     git clone https://github.com/junegunn/vader.vim.git
 
             -
@@ -66,9 +102,9 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
                     - '8.1'
                     - '8.2'
+                    - '8.3'
 
         steps:
             -
@@ -99,7 +135,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -130,7 +166,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -161,7 +197,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -183,7 +219,7 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run PHP-CS_Fixer"
-                run: "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run"
+                run: "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --diff"
     phpbench:
         name: "PHPBench smoke (${{ matrix.php-version }})"
 
@@ -192,7 +228,7 @@ jobs:
         strategy:
             matrix:
                 php-version:
-                    - '8.0'
+                    - '8.1'
 
         steps:
             -
@@ -209,9 +245,10 @@ jobs:
 
             -
                 name: "Composer install"
-                uses: "ramsey/composer-install@v1"
+                uses: "ramsey/composer-install@v2"
                 with:
                     composer-options: "--no-scripts"
+                    ignore-cache: "yes"
             -
                 name: "Run PHPBench"
                 run: "vendor/bin/phpbench run --progress=plain --iterations=1"
@@ -219,41 +256,10 @@ jobs:
         name: "Lint Docs (${{ matrix.php-version }})"
 
         runs-on: "ubuntu-latest"
-
-        strategy:
-            matrix:
-                php-version:
-                    - '8.0'
-
         steps:
             -
                 name: "Checkout code"
                 uses: "actions/checkout@v2"
             -
-                name: "Install PHP"
-                uses: "shivammathur/setup-php@v2"
-                with:
-                    coverage: "none"
-                    extensions: "${{ env.REQUIRED_PHP_EXTENSIONS }}"
-                    php-version: "${{ matrix.php-version }}"
-                    tools: composer:v2
-
-            -
-                name: "Composer install"
-                uses: "ramsey/composer-install@v1"
-                with:
-                    composer-options: "--no-scripts"
-            -
-                name: Install Doc Dependencies
-                run: |
-                    wget https://github.com/google/vimdoc/releases/download/v0.6.0/vimdoc_0.6.0-1_all.deb
-                    sudo dpkg -i vimdoc_0.6.0-1_all.deb
-                    sudo apt-get update
-                    sudo apt-get -y install python3-pip python3-setuptools
-                    sudo pip3 install -r requirements.txt
-                    composer install --optimize-autoloader --classmap-authoritative
-
-            -
                 name: "Make Docs"
                 run: "make docs"
-

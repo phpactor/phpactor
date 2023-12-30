@@ -162,9 +162,11 @@ class IfStatementResolver implements Resolver
     {
         /** @phpstan-ignore-next-line lies */
         foreach ($node->statements as $list) {
+            /** @phpstan-ignore-next-line lies */
             if (null === $list) {
                 continue;
             }
+            /** @phpstan-ignore-next-line lies */
             foreach ($list as $statement) {
                 if (!is_object($statement)) {
                     continue;

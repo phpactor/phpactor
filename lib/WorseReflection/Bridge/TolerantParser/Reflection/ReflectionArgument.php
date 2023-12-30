@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Token;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -51,7 +51,7 @@ class ReflectionArgument implements CoreReflectionArgument
             $stringify = function (Type $type) {
                 $type = $type->stripNullable();
                 if ($type instanceof ClassType) {
-                    return lcfirst($type->name->short());
+                    return lcfirst($type->short());
                 }
                 return lcfirst($type->toPhpString());
             };
@@ -75,10 +75,9 @@ class ReflectionArgument implements CoreReflectionArgument
         return TypeUtil::valueOrNull($this->info()->type());
     }
 
-    public function position(): Position
+    public function position(): ByteOffsetRange
     {
-        return Position::fromFullStartStartAndEnd(
-            $this->node->getFullStartPosition(),
+        return ByteOffsetRange::fromInts(
             $this->node->getStartPosition(),
             $this->node->getEndPosition()
         );
@@ -86,7 +85,7 @@ class ReflectionArgument implements CoreReflectionArgument
 
     private function info(): NodeContext
     {
-        return $this->services->symbolContextResolver()->resolveNode($this->frame, $this->node);
+        return $this->services->nodeContextResolver()->resolveNode($this->frame, $this->node);
     }
 
     private function index(): int

@@ -10,6 +10,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\DocblockParser\DocblockParser;
 use Phpactor\WorseReflection\Reflector;
+use function Amp\Promise\wait;
 
 class UpdateDocblockParamsTransformerTest extends WorseTestCase
 {
@@ -29,7 +30,7 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
         );
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
-        $transformed = $transformer->transform($source)->apply($source);
+        $transformed = wait($transformer->transform($source))->apply($source);
         self::assertEquals($expected, $transformed);
     }
 

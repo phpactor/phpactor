@@ -1,0 +1,28 @@
+// File: source
+<?php
+
+enum Game
+{
+    case ROCK;
+    case PAPER;
+    case SCISSORS;
+}
+
+Game::pl<>ay();
+
+// File: expected
+<?php
+
+enum Game
+{
+    case ROCK;
+    case PAPER;
+    case SCISSORS;
+
+    public static function play()
+    {
+    }
+}
+
+Game::play();
+

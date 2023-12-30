@@ -33,17 +33,11 @@ class Suggestion
     const PRIORITY_MEDIUM = 127;
     const PRIORITY_LOW = 255;
 
-    /**
-     * @var null|string|Closure
-     */
-    private $shortDescription;
+    private string|Closure|null $shortDescription;
 
     private string $label;
 
-    /**
-     * @var null|string|Closure
-     */
-    private $documentation;
+    private string|Closure|null $documentation;
 
     /**
      * @param null|string|Closure $documentation
@@ -58,7 +52,8 @@ class Suggestion
         $documentation = null,
         private ?Range $range = null,
         private ?string $snippet = null,
-        private ?int $priority = null
+        private ?int $priority = null,
+        private ?string $fqn = null,
     ) {
         $this->shortDescription = $shortDescription;
         $this->label = $label ?: $name;
@@ -77,6 +72,7 @@ class Suggestion
      *   type?:string|null,
      *   class_import?:string|null,
      *   name_import?:string|null,
+     *   fqn?:string|null,
      *   label?:string|null,
      *   range?:Range|null,
      *   snippet?:string|null,
@@ -91,6 +87,7 @@ class Suggestion
             'type' => null,
             'class_import' => null,
             'name_import' => null,
+            'fqn' => null,
             'label' => null,
             'range' => null,
             'snippet' => null,
@@ -117,6 +114,7 @@ class Suggestion
             $options['range'],
             $options['snippet'],
             $options['priority'],
+            $options['fqn'],
         );
     }
 
@@ -134,6 +132,7 @@ class Suggestion
             'documentation' => $this->documentation(),
             'class_import' => $this->type() === self::TYPE_CLASS && $this->nameImport ? $this->nameImport : null,
             'name_import' => $this->nameImport,
+            'fqn' => $this->fqn,
             'range' => $this->range ? $this->range->toArray() : null,
 
             // removed
@@ -177,9 +176,9 @@ class Suggestion
     }
 
     /**
-     * @deprecated Use nameImport instead
+     * Return the FQN if the name should be imported.
      */
-    public function classImport(): ?string
+    public function nameImport(): ?string
     {
         return $this->type() === self::TYPE_CLASS ? $this->nameImport : null;
     }
@@ -189,15 +188,7 @@ class Suggestion
      */
     public function fqn(): ?string
     {
-        return $this->nameImport();
-    }
-
-    /**
-     * @deprecated Use fqn()
-     */
-    public function nameImport(): ?string
-    {
-        return $this->nameImport;
+        return $this->fqn ?? $this->nameImport;
     }
 
     public function label(): string

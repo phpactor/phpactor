@@ -62,4 +62,8 @@ class ExtractExpressionProvider implements CodeActionProvider
             ];
         });
     }
+    public function describe(): string
+    {
+        return 'extract expression';
+    }
 }

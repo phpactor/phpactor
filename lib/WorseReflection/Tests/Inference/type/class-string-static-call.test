@@ -1,0 +1,15 @@
+<?php
+
+namespace Demo;
+
+class Foo
+{
+    public static function demo(): string
+    {
+    }
+}
+
+$bar = Foo::class;
+
+wrAssertType('class-string<Demo\Foo>', $bar);
+wrAssertType('string', $bar::demo());

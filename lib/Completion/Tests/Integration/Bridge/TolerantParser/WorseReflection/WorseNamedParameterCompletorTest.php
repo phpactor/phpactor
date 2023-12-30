@@ -47,6 +47,11 @@ class WorseNamedParameterCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+        yield 'no completion after string literal' => [
+            '<?php class A{function bee(string $one){}} $a = new A(); $a->bee(\'foo\'<>',
+            [
+            ]
+        ];
 
         yield 'Ignore when completing a variable' => [
             '<?php class A{function bee(string $one){}} $a = new A(); $a->bee($o<>',

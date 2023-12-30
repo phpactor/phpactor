@@ -37,10 +37,12 @@ use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
+use Microsoft\PhpParser\Node\Statement\GlobalDeclaration;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\StaticVariableDeclaration;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\UseVariableName;
 use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
@@ -72,6 +74,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ConstElementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\EnumCaseDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ExpressionStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ForeachStatementResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\GlobalDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\IfStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccessExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
@@ -85,6 +88,7 @@ use Phpactor\WorseReflection\Core\Inference\Resolver\ReservedWordResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ReturnStatementResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\ScopedPropertyAccessResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SourceFileNodeResolver;
+use Phpactor\WorseReflection\Core\Inference\Resolver\StaticDeclarationResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\StringLiteralResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\SubscriptExpressionResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\TernaryExpressionResolver;
@@ -123,9 +127,11 @@ final class DefaultResolverFactory
             EnumCaseDeclaration::class => new EnumCaseDeclarationResolver(),
             Parameter::class => new ParameterResolver(),
             UseVariableName::class => new UseVariableNameResolver(),
+            GlobalDeclaration::class => new GlobalDeclarationResolver(),
+            StaticVariableDeclaration::class => new StaticDeclarationResolver(),
             Variable::class => new VariableResolver(),
             MemberAccessExpression::class => new MemberAccessExpressionResolver($this->nodeContextFromMemberAccess),
-            ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeTypeConverter, $this->nodeContextFromMemberAccess),
+            ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeContextFromMemberAccess),
             CallExpression::class => new CallExpressionResolver(),
             ParenthesizedExpression::class => new ParenthesizedExpressionResolver(),
             BinaryExpression::class => new BinaryExpressionResolver(),

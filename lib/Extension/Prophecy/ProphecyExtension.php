@@ -13,6 +13,8 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator;
 
 class ProphecyExtension implements OptionalExtension
 {
+    public const PARAM_ENABLED = 'prophecy.enabled';
+
     public function load(ContainerBuilder $container): void
     {
         $container->register(ProphecyMemberContextResolver::class, function (Container $container) {

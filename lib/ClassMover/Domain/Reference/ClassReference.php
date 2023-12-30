@@ -7,21 +7,21 @@ use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
 
 final class ClassReference
 {
-    private $position;
+    private Position $position;
 
-    private $fullName;
+    private FullyQualifiedName $fullName;
 
-    private $name;
+    private QualifiedName $name;
 
-    private $isClassDeclaration;
+    private bool $isClassDeclaration;
 
-    private $importedNameRef;
+    private ImportedNameReference $importedNameRef;
 
     private bool $hasAlias = false;
 
     private bool $isImport = false;
 
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->fullName;
     }

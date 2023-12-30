@@ -9,6 +9,8 @@ class TextDocumentUri
 {
     public const SCHEME_FILE = 'file';
     public const SCHEME_UNTITLED = 'untitled';
+    public const SCHEME_PHAR = 'phar';
+    public const SCHEMES = [self::SCHEME_FILE, self::SCHEME_UNTITLED, self::SCHEME_PHAR];
 
     final private function __construct(private string $scheme, private string $path)
     {
@@ -16,21 +18,31 @@ class TextDocumentUri
 
     public function __toString(): string
     {
-        if ($this->scheme === self::SCHEME_FILE) {
-            return sprintf('%s://%s', $this->scheme, $this->path);
+        if ($this->scheme === self::SCHEME_UNTITLED) {
+            return sprintf('%s:%s', $this->scheme, $this->path);
         }
-        return sprintf('%s:%s', $this->scheme, $this->path);
+        return sprintf('%s://%s', $this->scheme, $this->path);
     }
 
-    public static function fromString(string $uri): self
+    public static function fromString(?string $uri): self
     {
-        $components = parse_url($uri);
-
-        if (false === $components) {
+        if ($uri === null || $uri === '') {
             throw new InvalidUriException(sprintf(
                 'Could not parse_url "%s"',
                 $uri
             ));
+        }
+
+        if (substr($uri, 0, 9) === 'untitled:') {
+            return new self(self::SCHEME_UNTITLED, substr($uri, 9));
+        }
+
+        $match = preg_match('{^(?<scheme>[a-z]+://){0,1}(?<path>.+)?}', $uri, $components);
+
+        if (!isset($components['scheme']) || $components['scheme'] == '') {
+            $components['scheme'] = self::SCHEME_FILE;
+        } else {
+            $components['scheme'] = substr($components['scheme'], 0, -3);
         }
 
         if (!isset($components['path'])) {
@@ -40,11 +52,10 @@ class TextDocumentUri
             ));
         }
 
-        $components['scheme'] = $components['scheme'] ?? self::SCHEME_FILE;
-
-        if (!in_array($components['scheme'], [self::SCHEME_FILE, self::SCHEME_UNTITLED])) {
+        if (!in_array($components['scheme'], self::SCHEMES)) {
             throw new InvalidUriException(sprintf(
-                'Only "file://" scheme is supported, got "%s"',
+                'Only "%s" schemes are supported, got "%s"',
+                implode('", "', self::SCHEMES),
                 $components['scheme']
             ));
         }

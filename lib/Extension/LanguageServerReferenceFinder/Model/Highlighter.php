@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Model;
 
+use Amp\CancellationTokenSource;
+use Amp\Promise;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ConstElement;
@@ -25,38 +27,59 @@ use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\EfficientLineCols;
+use function Amp\call;
+use function Amp\delay;
 
 class Highlighter
 {
+    private ?CancellationTokenSource $previousCancellationSource = null;
+
     public function __construct(private Parser $parser)
     {
     }
 
-    public function highlightsFor(string $source, ByteOffset $offset): Highlights
+    /**
+     * @return Promise<Highlights>
+     */
+    public function highlightsFor(string $source, ByteOffset $offset): Promise
     {
-        $offsets = [];
-        $highlights = [];
-        foreach ($this->generate($source, $offset) as $highlight) {
-            $offsets[] = $highlight->start;
-            $offsets[] = $highlight->end;
-            $highlights[] = $highlight;
+        // ensure we only process one inlay request at a time
+        if ($this->previousCancellationSource) {
+            $this->previousCancellationSource->cancel();
         }
+        $cancellationSource = new CancellationTokenSource();
+        $this->previousCancellationSource = $cancellationSource;
+        $cancellation = $cancellationSource->getToken();
 
-        $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
-        $lspHighlights = [];
+        return call(function () use ($source, $offset, $cancellation) {
+            $offsets = [];
+            $highlights = [];
+            foreach ($this->generate($source, $offset) as $highlight) {
+                yield delay(1);
+                if ($cancellation->isRequested()) {
+                    return new Highlights();
+                }
+                $offsets[] = $highlight->start;
+                $offsets[] = $highlight->end;
+                $highlights[] = $highlight;
+            }
 
-        foreach ($highlights as $highlight) {
-            $startPos = $lineCols->get($highlight->start);
-            $endPos = $lineCols->get($highlight->end);
-            $lspHighlights[] = new DocumentHighlight(
-                new Range(
-                    new Position($startPos->line() - 1, $startPos->col() - 1),
-                    new Position($endPos->line() - 1, $endPos->col() - 1),
-                ),
-                $highlight->kind
-            );
-        }
-        return new Highlights(...$lspHighlights);
+            $lineCols = EfficientLineCols::fromByteOffsetInts($source, $offsets, true);
+            $lspHighlights = [];
+
+            foreach ($highlights as $highlight) {
+                $startPos = $lineCols->get($highlight->start);
+                $endPos = $lineCols->get($highlight->end);
+                $lspHighlights[] = new DocumentHighlight(
+                    new Range(
+                        new Position($startPos->line() - 1, $startPos->col() - 1),
+                        new Position($endPos->line() - 1, $endPos->col() - 1),
+                    ),
+                    $highlight->kind
+                );
+            }
+            return new Highlights(...$lspHighlights);
+        });
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Virtual;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\HomogeneousReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\ServiceLocator;
@@ -23,7 +23,7 @@ class ChainReflectionMemberProvider implements ReflectionMemberProvider
 
     public function provideMembers(ServiceLocator $locator, ReflectionClassLike $class): ReflectionMemberCollection
     {
-        $virtualMethods = HomogeneousReflectionMemberCollection::empty();
+        $virtualMethods = ClassLikeReflectionMemberCollection::empty();
         foreach ($this->providers as $provider) {
             /** @phpstan-ignore-next-line */
             $virtualMethods = $virtualMethods->merge($provider->provideMembers($locator, $class));

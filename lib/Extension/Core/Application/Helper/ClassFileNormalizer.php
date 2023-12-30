@@ -19,7 +19,7 @@ class ClassFileNormalizer
             return (string) $this->classToFile($classOrFile);
         }
 
-        return Phpactor::normalizePath($classOrFile);
+        return $classOrFile;
     }
 
     public function normalizeToClass(string $classOrFile): string

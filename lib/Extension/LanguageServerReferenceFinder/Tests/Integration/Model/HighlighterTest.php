@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlights;
 use Phpactor\LanguageServerProtocol\DocumentHighlightKind;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
+use function Amp\Promise\wait;
 
 class HighlighterTest extends TestCase
 {
@@ -25,10 +26,10 @@ class HighlighterTest extends TestCase
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
         $assertion(
-            (new Highlighter(new Parser()))->highlightsFor(
+            wait((new Highlighter(new Parser()))->highlightsFor(
                 $source,
                 ByteOffset::fromInt((int)$offset)
-            )
+            ))
         );
     }
 

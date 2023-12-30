@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollection as PhpactorReflectionTraitCollection;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
@@ -14,7 +15,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionTraitCollectio
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait as CoreReflectionTrait;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
@@ -30,7 +31,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
      */
     public function __construct(
         private ServiceLocator $serviceLocator,
-        private SourceCode $sourceCode,
+        private TextDocument $sourceCode,
         private TraitDeclaration $node,
         private array $visited = []
     ) {
@@ -59,6 +60,11 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
         return $this->members;
     }
 
+    public function constants(): ReflectionConstantCollection
+    {
+        return $this->members()->constants();
+    }
+
     public function ownMembers(): ReflectionMemberCollection
     {
         if ($this->ownMembers) {
@@ -82,7 +88,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
         return ClassName::fromString((string) $this->node()->getNamespacedName());
     }
 
-    public function sourceCode(): SourceCode
+    public function sourceCode(): TextDocument
     {
         return $this->sourceCode;
     }
@@ -107,6 +113,11 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     public function traits(): ReflectionTraitCollection
     {
         return PhpactorReflectionTraitCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $this->visited);
+    }
+
+    public function classLikeType(): string
+    {
+        return 'trait';
     }
     /**
      * @return TraitDeclaration

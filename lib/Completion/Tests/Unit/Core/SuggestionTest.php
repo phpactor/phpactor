@@ -30,8 +30,8 @@ class SuggestionTest extends TestCase
         $this->assertEquals('hello', $suggestion->name());
         $this->assertEquals('hallo', $suggestion->label());
         $this->assertEquals('Foobar', $suggestion->shortDescription());
-        $this->assertEquals('Namespace\\Foobar', $suggestion->classImport());
         $this->assertEquals('Namespace\\Foobar', $suggestion->nameImport());
+        $this->assertEquals('Namespace\\Foobar', $suggestion->fqn());
     }
 
     public function testDefaults(): void
@@ -49,6 +49,7 @@ class SuggestionTest extends TestCase
             'class_import' => 'Namespace\\Foobar',
             'documentation' => 'foo',
             'label' => 'hallo',
+            'fqn' => null,
             'range' => Range::fromStartAndEnd(1, 2),
             'snippet' => null,
         ]);
@@ -64,6 +65,7 @@ class SuggestionTest extends TestCase
             'info' => '',
             'snippet' => null,
             'name_import' => 'Namespace\\Foobar',
+            'fqn' => null,
         ], $suggestion->toArray());
     }
 }

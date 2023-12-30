@@ -14,7 +14,7 @@ use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Variable;
-use Phpactor\WorseReflection\Core\Position;
+use Phpactor\TextDocument\ByteOffsetRange;
 
 class TestExtension implements Extension
 {
@@ -41,7 +41,7 @@ class TestFrameWalker implements Walker
 
         $frame->locals()->set(
             Variable::fromSymbolContext(
-                NodeContext::for(Symbol::fromTypeNameAndPosition('variable', 'test_variable', Position::fromFullStartStartAndEnd(0, 1, 10)))
+                NodeContext::for(Symbol::fromTypeNameAndPosition('variable', 'test_variable', ByteOffsetRange::fromInts(1, 10)))
             )
         );
         return $frame;

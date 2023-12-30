@@ -44,7 +44,7 @@ class DocblockParserFactory implements DocBlockFactory
 
     public function create(string $docblock, ReflectionScope $scope): DocBlock
     {
-        if (empty(trim($docblock))) {
+        if (trim($docblock) === '') {
             return new PlainDocblock();
         }
 

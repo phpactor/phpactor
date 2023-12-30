@@ -47,5 +47,12 @@ class TraitUseClauseIndexerTest extends TolerantIndexerTestCase
             'N\T',
             1
         ];
+
+        // Adding a test for 8.1 and higher to also index Enums
+        yield 'use trait (enum)' => [
+            "// File: src/file1.php\n<?php enum C { use T; }",
+            'T',
+            1,
+        ];
     }
 }

@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider;
 
 use Amp\CancellationToken;
 use Amp\Promise;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity as LanguageServerProtocolDiagnosticSeverity;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Range;
@@ -24,13 +25,14 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
     {
         return call(function () use ($textDocument, $cancel) {
             $lspDiagnostics = [];
-            foreach ($this->reflector->diagnostics($textDocument->text) as $diagnostic) {
+            foreach (yield $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($textDocument)) as $diagnostic) {
                 $range = new Range(
                     PositionConverter::byteOffsetToPosition($diagnostic->range()->start(), $textDocument->text),
                     PositionConverter::byteOffsetToPosition($diagnostic->range()->end(), $textDocument->text),
                 );
                 $lspDiagnostic = ProtocolFactory::diagnostic($range, $diagnostic->message());
                 $lspDiagnostic->severity = self::toLspSeverity($diagnostic->severity());
+                $lspDiagnostic->source = 'phpactor';
                 $lspDiagnostics[] = $lspDiagnostic;
 
                 if ($cancel->isRequested()) {
@@ -58,6 +60,9 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
 
         if ($diagnosticSeverity->isWarning()) {
             return LanguageServerProtocolDiagnosticSeverity::WARNING;
+        }
+        if ($diagnosticSeverity->isHint()) {
+            return LanguageServerProtocolDiagnosticSeverity::HINT;
         }
 
         return LanguageServerProtocolDiagnosticSeverity::INFORMATION;

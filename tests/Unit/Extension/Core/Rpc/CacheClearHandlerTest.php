@@ -11,9 +11,9 @@ use Prophecy\Prophecy\ObjectProphecy;
 class CacheClearHandlerTest extends HandlerTestCase
 {
     /**
-     * @var CacheClear|ObjectProphecy
+     * @var ObjectProphecy<CacheClear>
      */
-    private $clearCache;
+    private ObjectProphecy $clearCache;
 
     public function setUp(): void
     {

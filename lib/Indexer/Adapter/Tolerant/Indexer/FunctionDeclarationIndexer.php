@@ -23,6 +23,7 @@ class FunctionDeclarationIndexer implements TolerantIndexer
         $record = $index->get(FunctionRecord::fromName($node->getNamespacedName()->getFullyQualifiedNameText()));
         assert($record instanceof FunctionRecord);
         $record->setStart(ByteOffset::fromInt($node->getStartPosition()));
+        $record->setEnd(ByteOffset::fromInt($node->getEndPosition()));
         $record->setFilePath($document->uri()->path());
         $index->write($record);
     }

@@ -36,14 +36,13 @@ class ImportNameProviderTest extends IntegrationTestCase
         ])->get(LanguageServerBuilder::class)->tester(
             ProtocolFactory::initializeParams($this->workspace()->path())
         );
-        $tester->initialize();
 
         assert($tester instanceof LanguageServerTester);
-
         $subject = $this->workspace()->getContents('subject.php');
         [ $source, $offset ] = ExtractOffset::fromSource($subject);
 
         $tester->textDocument()->open('file:///foobar', $source);
+        $tester->initialize();
 
         // give the indexer a chance to index
         wait(delay(10));
@@ -56,11 +55,12 @@ class ImportNameProviderTest extends IntegrationTestCase
             ),
             new CodeActionContext([])
         ));
+        self::assertNotNull($result);
         $tester->assertSuccess($result);
 
-        $diagnostics = $tester->transmitter()->filterByMethod('textDocument/publishDiagnostics')->shiftNotification();
-        self::assertNotNull($diagnostics);
-        $diagnostics = $diagnostics->params['diagnostics'];
+        $transmitter = $tester->transmitter()->filterByMethod('textDocument/publishDiagnostics');
+        $diagnostics = $transmitter->shiftNotification();
+        $diagnostics = $diagnostics->params['diagnostics'] ?? [];
         $assertion($result->result, $diagnostics);
     }
 

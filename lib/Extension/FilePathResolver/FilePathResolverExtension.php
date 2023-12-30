@@ -21,6 +21,7 @@ use Phpactor\MapResolver\Resolver;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LogLevel;
 use RuntimeException;
+use Phpactor\FilePathResolver\Expander;
 
 class FilePathResolverExtension implements Extension
 {
@@ -79,11 +80,11 @@ class FilePathResolverExtension implements Extension
 
             $resolver = new FilteringPathResolver($filters);
 
-            if ($container->getParameter(self::PARAM_ENABLE_CACHE)) {
+            if ($container->parameter(self::PARAM_ENABLE_CACHE)->bool()) {
                 $resolver = new CachingPathResolver($resolver);
             }
 
-            if ($container->getParameter(self::PARAM_ENABLE_LOGGING)) {
+            if ($container->parameter(self::PARAM_ENABLE_LOGGING)->bool()) {
                 $resolver = new LoggingPathResolver(
                     $resolver,
                     LoggingExtension::channelLogger($container, self::LOG_CHANNEL),
@@ -102,26 +103,29 @@ class FilePathResolverExtension implements Extension
         }, [ self::TAG_FILTER => [] ]);
 
         $container->register('file_path_resolver.filter.token_expanding', function (Container $container) {
-            return new TokenExpandingFilter($container->get(self::SERVICE_EXPANDERS));
+            return new TokenExpandingFilter($container->expect(self::SERVICE_EXPANDERS, Expanders::class));
         }, [ self::TAG_FILTER => [] ]);
 
         $container->register(self::SERVICE_EXPANDERS, function (Container $container) {
             $suffix = DIRECTORY_SEPARATOR . $container->getParameter(self::PARAM_APP_NAME);
 
+            $projectRoot = $container->parameter(self::PARAM_PROJECT_ROOT)->string();
             $expanders = [
-                new ValueExpander('project_id', self::calculateProjectId($container->getParameter(self::PARAM_PROJECT_ROOT))),
-                new ValueExpander('project_root', $container->getParameter(self::PARAM_PROJECT_ROOT)),
+                new ValueExpander('project_id', self::calculateProjectId($projectRoot)),
+                new ValueExpander('project_root', $projectRoot),
                 new SuffixExpanderDecorator(new XdgCacheExpander('cache'), $suffix),
                 new SuffixExpanderDecorator(new XdgConfigExpander('config'), $suffix),
                 new SuffixExpanderDecorator(new XdgDataExpander('data'), $suffix),
             ];
 
-            if (null !== $applicationRoot = $container->getParameter(self::PARAM_APPLICATION_ROOT)) {
-                $expanders[] = new ValueExpander('application_root', $container->getParameter(self::PARAM_APPLICATION_ROOT));
+            /** @var string|null $applicationRoot */
+            $applicationRoot = $container->getParameter(self::PARAM_APPLICATION_ROOT);
+            if (null !== $applicationRoot) {
+                $expanders[] = new ValueExpander('application_root', $applicationRoot);
             }
 
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_EXPANDER)) as $serviceId) {
-                $expanders[] = $container->get($serviceId);
+                $expanders[] = $container->expect($serviceId, Expander::class);
             }
 
             return new Expanders($expanders);

@@ -11,15 +11,16 @@ use Phpactor\WorseReflection\Core\Reflector\ClassReflector\MemonizedReflector;
 use Phpactor\WorseReflection\Core\Reflector\ConstantReflector;
 use Phpactor\WorseReflection\Core\Reflector\FunctionReflector;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class MemonizedClassReflectorTest extends TestCase
 {
     use ProphecyTrait;
 
     /**
-     * @var ClassReflector|ObjectProphecy
+     * @var ObjectProphecy<ClassReflector>
      */
-    private $innerClassReflector;
+    private ObjectProphecy $innerClassReflector;
 
     /**
      * @var MemonizedClassReflector
@@ -27,11 +28,16 @@ class MemonizedClassReflectorTest extends TestCase
     private MemonizedReflector $reflector;
 
     /**
-     * @var ObjectProphecy|FunctionReflector
+     * @var ObjectProphecy<FunctionReflector>
      */
-    private $innerFunctionReflector;
+    private ObjectProphecy $innerFunctionReflector;
 
     private ClassName $className;
+
+    /**
+     * @var ObjectProphecy<ConstantReflector>
+     */
+    private ObjectProphecy $innerConstantReflector;
 
     public function setUp(): void
     {

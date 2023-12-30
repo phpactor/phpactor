@@ -10,20 +10,24 @@ abstract class ClassLikePrototype extends Prototype
 
     private Constants $constants;
 
+    private Docblock $docblock;
+
     public function __construct(
         private string $name,
         Methods $methods = null,
         Properties $properties = null,
         Constants $constants = null,
-        UpdatePolicy $updatePolicy = null
+        UpdatePolicy $updatePolicy = null,
+        Docblock $docblock = null
     ) {
         parent::__construct($updatePolicy);
         $this->methods = $methods ?: Methods::empty();
         $this->properties = $properties ?: Properties::empty();
         $this->constants = $constants ?: Constants::empty();
+        $this->docblock = $docblock ?: Docblock::none();
     }
 
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
@@ -41,5 +45,10 @@ abstract class ClassLikePrototype extends Prototype
     public function constants(): Constants
     {
         return $this->constants;
+    }
+
+    public function docblock(): Docblock
+    {
+        return $this->docblock;
     }
 }

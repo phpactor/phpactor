@@ -13,6 +13,15 @@ use Phpactor\ClassMover\Domain\Reference\ClassReference;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\TextDocument\TextDocumentBuilder;
 
+/** @phpstan-type ReferenceArray array{
+ *    start: int,
+ *    end: int,
+ *    line: string,
+ *    line_no: int,
+ *    col_no: int,
+ *    reference: string,
+ * }
+ */
 class ClassReferences
 {
     public function __construct(
@@ -33,8 +42,12 @@ class ClassReferences
         return $this->findOrReplaceReferences($filesystemName, $class);
     }
 
-    public function findOrReplaceReferences(string $filesystemName, string $class, string $replace = null, bool $dryRun = false)
-    {
+    public function findOrReplaceReferences(
+        string $filesystemName,
+        string $class,
+        string $replace = null,
+        bool $dryRun = false
+    ) {
         $classPath = $this->classFileNormalizerasd->normalizeToFile($class);
         $classPath = Phpactor::normalizePath($classPath);
         $className = $this->classFileNormalizerasd->normalizeToClass($class);
@@ -44,7 +57,7 @@ class ClassReferences
         foreach ($filesystem->fileList()->phpFiles() as $filePath) {
             $references = $this->fileReferences($filesystem, $filePath, $className, $replace, $dryRun);
 
-            if (empty($references['references'])) {
+            if ($references['references'] === []) {
                 continue;
             }
 
@@ -57,7 +70,7 @@ class ClassReferences
         ];
     }
 
-    public function replaceInSource(string $source, $className, $replace): string
+    public function replaceInSource(string $source, string $className, $replace): string
     {
         $referenceList = $this->refFinder
             ->findIn(TextDocumentBuilder::create($source)->build())
@@ -67,8 +80,14 @@ class ClassReferences
         return (string) $updatedSource;
     }
 
-    private function fileReferences(Filesystem $filesystem, $filePath, $className, $replace = null, $dryRun = false)
-    {
+    /** @return array{references: list<ReferenceArray>, replacements: list<ReferenceArray>} */
+    private function fileReferences(
+        Filesystem $filesystem,
+        $filePath,
+        string $className,
+        ?string $replace = null,
+        bool $dryRun = false
+    ): array {
         $code = $filesystem->getContents($filePath);
 
         $referenceList = $this->refFinder
@@ -106,20 +125,21 @@ class ClassReferences
         return $result;
     }
 
-    private function serializeReferenceList(string $code, NamespacedClassReferences $referenceList)
+    /** @return list<ReferenceArray> */
+    private function serializeReferenceList(string $code, NamespacedClassReferences $referenceList): array
     {
         $references = [];
+
         /** @var ClassReference $reference */
         foreach ($referenceList as $reference) {
-            $ref = $this->serializeReference($code, $reference);
-
-            $references[] = $ref;
+            $references[] = $this->serializeReference($code, $reference);
         }
 
         return $references;
     }
 
-    private function serializeReference(string $code, ClassReference $reference)
+    /** @return ReferenceArray */
+    private function serializeReference(string $code, ClassReference $reference): array
     {
         [$lineNumber, $colNumber, $line] = $this->line($code, $reference->position()->start());
         return [
@@ -132,29 +152,34 @@ class ClassReferences
         ];
     }
 
-    private function line(string $code, int $offset)
+    /** @return array{int, int, string} */
+    private function line(string $code, int $offset): array
     {
         $lines = explode(PHP_EOL, $code);
-        $number = 0;
+        $lineNumber = 0;
         $startPosition = 0;
 
-        foreach ($lines as $number => $line) {
-            $number = $number + 1;
+        foreach ($lines as $lineNumber => $line) {
+            $lineNumber = $lineNumber + 1;
             $endPosition = $startPosition + strlen($line) + 1;
 
             if ($offset >= $startPosition && $offset <= $endPosition) {
                 $col = $offset - $startPosition;
-                return [ $number, $col, $line ];
+                return [ $lineNumber, $col, $line ];
             }
 
             $startPosition = $endPosition;
         }
 
-        return [$number, 0, ''];
+        return [$lineNumber, 0, ''];
     }
 
-    private function replaceReferencesInCode(string $code, NamespacedClassReferences $list, string $class, string $replace): string
-    {
+    private function replaceReferencesInCode(
+        string $code,
+        NamespacedClassReferences $list,
+        string $class,
+        string $replace
+    ): string {
         $class = FullyQualifiedName::fromString($class);
         $replace = FullyQualifiedName::fromString($replace);
         $code = TextDocumentBuilder::create($code)->build();

@@ -10,7 +10,6 @@ use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\Util\OffsetExtractor;
 use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
-use Phpactor\ReferenceFinder\DefinitionLocation;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\Rename\Model\ReferenceFinder\PredefinedReferenceFinder;
@@ -123,9 +122,18 @@ class VariableRenamerTest extends TestCase
             );
         }
 
-        $renamer = $this->createRenamer(array_map(function (ByteOffset $reference) use ($textDocument) {
-            return PotentialLocation::surely(new Location($textDocument->uri(), $reference));
-        }, $references), new DefinitionLocation($textDocument->uri(), $definition), [ $textDocument ]);
+        $renamer = $this->createRenamer(
+            array_map(
+                function (ByteOffset $reference) use ($textDocument) {
+                    return PotentialLocation::surely(
+                        new Location($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffset($reference))
+                    );
+                },
+                $references
+            ),
+            new Location($textDocument->uriOrThrow(), ByteOffsetRange::fromByteOffsets($definition, $definition)),
+            [ $textDocument ]
+        );
 
         $renamer->getRenameRange($textDocument, $selection);
 
@@ -136,10 +144,7 @@ class VariableRenamerTest extends TestCase
 
         $this->assertEquals(
             [
-                new LocatedTextEdits(
-                    TextEdits::fromTextEdits($expectedEdits),
-                    $textDocument->uri()
-                )
+                new LocatedTextEdits(TextEdits::fromTextEdits($expectedEdits), $textDocument->uri())
             ],
             LocatedTextEditsMap::fromLocatedEdits($actualResults)->toLocatedTextEdits()
         );
@@ -203,7 +208,7 @@ class VariableRenamerTest extends TestCase
      * @param PotentialLocation[] $references
      * @param TextDocument[] $textDocuments
      */
-    private function createRenamer(array $references, ?DefinitionLocation $defintionLocation, array $textDocuments): VariableRenamer
+    private function createRenamer(array $references, ?Location $defintionLocation, array $textDocuments): VariableRenamer
     {
         $variableRenamer = new VariableRenamer(
             new DefinitionAndReferenceFinder(

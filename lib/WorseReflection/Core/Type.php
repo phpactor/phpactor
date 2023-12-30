@@ -9,12 +9,14 @@ use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Generalizable;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\Literal;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 
@@ -92,6 +94,11 @@ abstract class Type
         return $this instanceof ArrayType;
     }
 
+    public function isIterable(): bool
+    {
+        return $this instanceof PseudoIterableType;
+    }
+
     public function isNullable(): bool
     {
         return false;
@@ -127,6 +134,10 @@ abstract class Type
             return '?' . $type->type->short();
         }
 
+        if ($type instanceof GenericClassType) {
+            return sprintf('%s<%s>', $type->name()->short(), implode(',', array_map(fn (Type $arg) => $arg->short(), $type->arguments())));
+        }
+
         if ($type instanceof ClassType) {
             return $type->name()->short();
         }
@@ -134,9 +145,6 @@ abstract class Type
         return $type->toPhpString();
     }
 
-    /**
-     * @returnc self
-     */
     public function toLocalType(ReflectionScope $scope): self
     {
         // TODO: do not modify type by reference

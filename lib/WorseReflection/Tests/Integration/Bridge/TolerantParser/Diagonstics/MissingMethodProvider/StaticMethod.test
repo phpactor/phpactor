@@ -1,9 +1,0 @@
-<?php
-
-class Foobar
-{
-}
-
-Foobar::bar();
-
-wrAssertDiagnostics(1, ['MissingMethod']);

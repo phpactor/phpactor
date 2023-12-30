@@ -18,7 +18,7 @@ class PhpCsFixerProcessTest extends PhpCsFixerTestCase
             $process = yield $phpCsFixer->run('--version');
             $stdout = yield buffer($process->getStdout());
 
-            self::assertStringContainsString('PHP CS Fixer ', $stdout, "Expected php-cs-fixer --version to return it's name followed with version, got '$stdout'");
+            self::assertStringContainsString('PHP CS Fixer ', $stdout, sprintf("Expected php-cs-fixer --version to return it's name followed with version, got: %s", $stdout));
         });
 
         wait($process);

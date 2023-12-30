@@ -46,7 +46,7 @@ class UseStatementUpdater
 
         $usePrototypes = $this->resolveUseStatements($prototype, $startNode);
 
-        if (empty($usePrototypes)) {
+        if ($usePrototypes === []) {
             return;
         }
 
@@ -179,10 +179,8 @@ class UseStatementUpdater
         });
         return $usePrototypes;
     }
-    /**
-     * @param mixed $usePrototype
-     */
-    private function buildEditText($usePrototype): string
+
+    private function buildEditText(UseStatement $usePrototype): string
     {
         $editText = [
             'use '

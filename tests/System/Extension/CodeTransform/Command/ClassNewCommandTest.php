@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\CodeTransform\Command;
 
+use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
 class ClassNewCommandTest extends SystemTestCase
@@ -28,16 +29,19 @@ class ClassNewCommandTest extends SystemTestCase
      *
      * @dataProvider provideNewClass
      */
-    public function testNewClass($command, $expected, $expectedFile): void
+    public function testNewClass(string $command, string $expected, string $expectedFile): void
     {
-        $process = $this->phpactor($command);
+        $process = $this->phpactorFromStringArgs($command);
         $this->assertSuccess($process);
 
         $this->assertStringContainsString($expected, trim($process->getOutput()));
         $this->assertFileExists($this->workspaceDir() . $expectedFile);
     }
 
-    public function provideNewClass()
+    /**
+     * @return Generator<string,array{string,string,string}>
+     */
+    public function provideNewClass(): Generator
     {
         yield 'New class' => [
             'class:new lib/Badger/Teeth.php --no-interaction --force',

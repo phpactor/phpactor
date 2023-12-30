@@ -59,4 +59,9 @@ class ReplaceQualifierWithImportProvider implements CodeActionProvider
             ];
         });
     }
+
+    public function describe(): string
+    {
+        return 'replace qualifier with importer';
+    }
 }

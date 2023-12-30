@@ -2,12 +2,36 @@
 
 namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
+use JsonException;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\Diagnostic;
-use Psalm\Config;
 use RuntimeException;
+
+/**
+ * @phpstan-type PsalmDiagnostic array{
+ *   "severity":string,
+ *   "line_from":int,
+ *   "line_to":int,
+ *   "type":string,
+ *   "message":string,
+ *   "file_name":string,
+ *   "file_path":string,
+ *   "snippet":string,
+ *   "selected_text":string,
+ *   "from":int,
+ *   "to":int,
+ *   "snippet_from":int,
+ *   "snippet_to":int,
+ *   "column_from":int,
+ *   "column_to":int,
+ *   "error_level":int,
+ *   "shortcode":int,
+ *   "link":string,
+ *   "taint_trace":mixed
+ * }
+*/
 
 class DiagnosticsParser
 {
@@ -39,29 +63,33 @@ class DiagnosticsParser
     }
 
     /**
-     * @return array<mixed>
+     * @return array<PsalmDiagnostic>
      */
     private function decodeJson(string $jsonString): array
     {
-        $decoded = json_decode($jsonString, true, JSON_THROW_ON_ERROR);
 
-        if (null === $decoded) {
+        try {
+            /** @var array<PsalmDiagnostic> $decoded */
+            $decoded = json_decode($jsonString, true, flags: JSON_THROW_ON_ERROR);
+            return $decoded;
+        } catch(JsonException $e) {
             throw new RuntimeException(sprintf(
                 'Could not decode Psalm JSON output "%s": %s',
                 $jsonString,
-                json_last_error_msg(),
+                $e->getMessage()
             ));
         }
-
-        return $decoded;
     }
 
+    /**
+     * @param PsalmDiagnostic $psalmDiagnostic
+     */
     private function errorLevel(array $psalmDiagnostic): int
     {
         switch ($psalmDiagnostic['severity']) {
-            case Config::REPORT_ERROR:
+            case 'error':
                 return DiagnosticSeverity::ERROR;
-            case Config::REPORT_INFO:
+            case 'info':
                 return DiagnosticSeverity::WARNING;
         }
 

@@ -3,8 +3,8 @@
 namespace Phpactor\ReferenceFinder;
 
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\TextDocument\Locations;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\TextDocument\Locations;
 
 final class ChainImplementationFinder implements ClassImplementationFinder
 {

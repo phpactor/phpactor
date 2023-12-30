@@ -6,6 +6,7 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Core\Completor;
+use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Core\Util\OffsetHelper;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
@@ -22,6 +23,9 @@ class ChainTolerantCompletor implements Completor
         $this->parser = $parser ?: new Parser();
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         $truncatedSource = $this->truncateSource((string) $source, $byteOffset->toInt());

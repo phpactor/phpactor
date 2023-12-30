@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Model\Query;
 
 use Phpactor\Indexer\Model\Query\Criteria\AndCriteria;
 use Phpactor\Indexer\Model\Query\Criteria\FileAbsolutePathBeginsWith;
+use Phpactor\Indexer\Model\Query\Criteria\HasFlags;
 use Phpactor\Indexer\Model\Query\Criteria\IsClassType;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameContains;
 use Phpactor\Indexer\Model\Query\Criteria\ExactShortName;
@@ -74,6 +75,11 @@ abstract class Criteria
     public static function isClassEnum(): IsClassType
     {
         return new IsClassType(ClassRecord::TYPE_ENUM);
+    }
+
+    public static function isAttribute(): HasFlags
+    {
+        return new HasFlags(ClassRecord::FLAG_ATTRIBUTE);
     }
 
     public static function isMember(): IsMember

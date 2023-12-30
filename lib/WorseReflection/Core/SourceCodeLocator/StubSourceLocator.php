@@ -2,13 +2,15 @@
 
 namespace Phpactor\WorseReflection\Core\SourceCodeLocator;
 
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 use SplFileInfo;
 
 final class StubSourceLocator implements SourceCodeLocator
@@ -20,12 +22,12 @@ final class StubSourceLocator implements SourceCodeLocator
     ) {
     }
 
-    public function locate(Name $name): SourceCode
+    public function locate(Name $name): TextDocument
     {
         $map = $this->map();
 
         if (isset($map[(string) $name])) {
-            return SourceCode::fromPath($map[(string) $name]);
+            return TextDocumentBuilder::fromUri($map[(string) $name])->build();
         }
 
         throw new SourceNotFound(sprintf(
@@ -52,6 +54,7 @@ final class StubSourceLocator implements SourceCodeLocator
     {
         $map = [];
         foreach ($this->fileIterator() as $file) {
+            /** @var SplFileInfo $file */
             if ($file->getExtension() !== 'php' || $file->isDir()) {
                 continue;
             }
@@ -62,7 +65,12 @@ final class StubSourceLocator implements SourceCodeLocator
         }
 
         if (!file_exists($this->cacheDir)) {
-            mkdir($this->cacheDir, 0777, true);
+            if (!@mkdir($this->cacheDir, 0777, true)) {
+                throw new RuntimeException(sprintf(
+                    'Could not create cache dir "%s"',
+                    $this->cacheDir
+                ));
+            }
         }
 
         file_put_contents($this->serializedMapPath(), serialize($map));
@@ -91,7 +99,7 @@ final class StubSourceLocator implements SourceCodeLocator
     private function buildClassMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectClassesIn(
-            SourceCode::fromPath($file)
+            TextDocumentBuilder::fromUri($file)->build()
         );
 
         foreach ($functions as $function) {
@@ -108,7 +116,7 @@ final class StubSourceLocator implements SourceCodeLocator
     private function buildFunctionMap(SplFileInfo $file, array $map): array
     {
         $functions = $this->reflector->reflectFunctionsIn(
-            SourceCode::fromPath($file)
+            TextDocumentBuilder::fromUri($file)->build()
         );
 
         foreach ($functions as $function) {
@@ -125,7 +133,7 @@ final class StubSourceLocator implements SourceCodeLocator
     private function buildConstantMap(SplFileInfo $file, array $map): array
     {
         $constants = $this->reflector->reflectConstantsIn(
-            SourceCode::fromPath($file)
+            TextDocumentBuilder::fromUri($file)->build()
         );
 
         foreach ($constants as $constant) {

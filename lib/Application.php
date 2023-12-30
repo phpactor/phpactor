@@ -2,6 +2,8 @@
 
 namespace Phpactor;
 
+use PackageVersions\Versions;
+use Phpactor\Cast\Cast;
 use Phpactor\Extension\Logger\Formatter\PrettyFormatter;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -12,18 +14,18 @@ use Phpactor\Container\Container;
 use Monolog\Handler\StreamHandler;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputOption;
-use PackageVersions\Versions;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Exception;
+use Throwable;
 
 class Application extends SymfonyApplication
 {
     private Container $container;
 
-    public function __construct(private string $vendorDir)
+    public function __construct(private string $vendorDir, private ?string $phpactorBin = null)
     {
-        parent::__construct('Phpactor', Versions::getVersion('phpactor/phpactor'));
+        parent::__construct('Phpactor', Cast::toString(Versions::getVersion('phpactor/phpactor')));
     }
 
     public function doRun(InputInterface $input, OutputInterface $output): int
@@ -52,7 +54,10 @@ class Application extends SymfonyApplication
                 && $input->hasOption('format')
                 && $input->getOption('format')
             ) {
-                return $this->handleException($output, $input->getOption('format'), $e);
+                /** @var string $format */
+                $format = $input->getOption('format');
+
+                return $this->handleException($output, $format, $e);
             }
 
             if ($output instanceof ConsoleOutputInterface) {
@@ -67,6 +72,7 @@ class Application extends SymfonyApplication
     {
         $definition = parent::getDefaultInputDefinition();
         $definition->addOption(new InputOption('working-dir', 'd', InputOption::VALUE_REQUIRED, 'Working directory'));
+        $definition->addOption(new InputOption('config-extra', null, InputOption::VALUE_REQUIRED, 'Additional config to apply (JSON string)'));
 
         return $definition;
     }
@@ -93,7 +99,7 @@ class Application extends SymfonyApplication
     /**
      * @return array<string, string>
     */
-    private function serializeException(Exception $e): array
+    private function serializeException(Throwable $e): array
     {
         return [
             'class' => get_class($e),
@@ -104,7 +110,7 @@ class Application extends SymfonyApplication
 
     private function initialize(InputInterface $input, OutputInterface $output): void
     {
-        $this->container = Phpactor::boot($input, $output, $this->vendorDir);
+        $this->container = Phpactor::boot($input, $output, $this->vendorDir, $this->phpactorBin);
 
         $this->setCommandLoader($this->container->get(ConsoleExtension::SERVICE_COMMAND_LOADER));
     }

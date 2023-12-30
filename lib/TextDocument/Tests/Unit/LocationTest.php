@@ -9,13 +9,14 @@ class LocationTest extends TestCase
 {
     public function testProvidesAccessToUri(): void
     {
-        $location = Location::fromPathAndOffset('/path/to.php', 123);
+        $location = Location::fromPathAndOffsets('/path/to.php', 123, 234);
         $this->assertEquals('file:///path/to.php', $location->uri()->__toString());
     }
 
     public function testProvidesAccessToByteOffset(): void
     {
-        $location = Location::fromPathAndOffset('/path/to.php', 123);
-        $this->assertEquals(123, $location->offset()->toInt());
+        $location = Location::fromPathAndOffsets('/path/to.php', 123, 455);
+        $this->assertEquals(123, $location->range()->start()->toInt());
+        $this->assertEquals(455, $location->range()->end()->toInt());
     }
 }

@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Name;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 
 interface ConstantReflector
 {
@@ -16,5 +16,5 @@ interface ConstantReflector
     /**
      * @param string|Name $name
      */
-    public function sourceCodeForConstant($name): SourceCode;
+    public function sourceCodeForConstant($name): TextDocument;
 }

@@ -8,7 +8,7 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionDeclaredConstant as PhpactorReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\SourceCode;
+use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
@@ -24,7 +24,7 @@ class ReflectionDeclaredConstantCollection extends AbstractReflectionCollection
         return new self($constants);
     }
 
-    public static function fromNode(ServiceLocator $serviceLocator, SourceCode $sourceCode, SourceFileNode $node): ReflectionDeclaredConstantCollection
+    public static function fromNode(ServiceLocator $serviceLocator, TextDocument $sourceCode, SourceFileNode $node): ReflectionDeclaredConstantCollection
     {
         $items = [];
         foreach ($node->getDescendantNodes() as $descendentNode) {

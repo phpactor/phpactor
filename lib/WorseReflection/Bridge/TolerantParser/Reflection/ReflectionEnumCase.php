@@ -49,7 +49,7 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
     public function type(): Type
     {
         if ($this->class()->isBacked()) {
-            return TypeFactory::enumBackedCaseType($this->class()->type(), $this->name(), $this->value());
+            return TypeFactory::enumBackedCaseType($this->serviceLocator()->reflector(), $this->class()->type(), $this->name(), $this->value());
         }
         return TypeFactory::enumCaseType($this->serviceLocator()->reflector(), $this->class()->type(), $this->name());
     }
@@ -84,16 +84,16 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
         }
 
         return $this->serviceLocator()
-                    ->symbolContextResolver()
+                    ->nodeContextResolver()
                     ->resolveNode(
-                        new Frame('_'),
+                        new Frame(),
                         $this->node->assignment
                     )->type();
     }
 
     public function memberType(): string
     {
-        return ReflectionMember::TYPE_ENUM;
+        return ReflectionMember::TYPE_CASE;
     }
 
     public function withClass(ReflectionClassLike $class): ReflectionMember

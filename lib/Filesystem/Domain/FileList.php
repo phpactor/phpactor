@@ -66,9 +66,17 @@ class FileList implements Iterator
 
     public function phpFiles(): self
     {
-        return new self((function () {
+        return $this->byExtensions(['php']);
+    }
+
+    /**
+     * @param list<string> $extensions
+     */
+    public function byExtensions(array $extensions): self
+    {
+        return new self((function () use ($extensions) {
             foreach ($this as $filePath) {
-                if ($filePath->extension() !== 'php') {
+                if (!in_array($filePath->extension(), $extensions, true)) {
                     continue;
                 }
 

@@ -29,7 +29,7 @@ for installation instructions.
 Requirements
 ------------
 
-- PHP 8.0+
+- PHP 8.1+
 - [Composer](https://getcomposer.org/)
 
 Project Recommendations
@@ -48,7 +48,6 @@ Community
 
 - Follow [@phpactor](https://phpc.social/@phpactor) on 🦣 Mastodon for latest news.
 - Join the `#phpactor` channel on the Slack [Symfony Devs](https://symfony.com/slack-invite) channel.
-- ...or follow on Twitter  - [@phpactor](https://twitter.com/phpactor) (not updated as frequently).
 
 Contributing
 ------------

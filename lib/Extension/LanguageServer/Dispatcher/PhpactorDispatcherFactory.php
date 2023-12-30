@@ -7,6 +7,7 @@ use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerSessionExtension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServer\Core\Dispatcher\Dispatcher\MiddlewareDispatcher;
 use Phpactor\LanguageServer\Core\Server\Exception\ExitSession;
 use Phpactor\Container\Container;
@@ -42,15 +43,23 @@ class PhpactorDispatcherFactory implements DispatcherFactory
             $this->resolveRootUri($params)
         )->path();
 
+        if (isset($parameters[WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION])) {
+            $parameters[WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION] = false;
+        }
+
         $extensionClasses = $container->getParameter(
             PhpactorContainer::PARAM_EXTENSION_CLASSES
         );
 
         // merge in any language-server specific configuration
-        $parameters = array_merge($parameters, $container->getParameter(LanguageServerExtension::PARAM_SESSION_PARAMETERS));
+        /** @var array<mixed> $sessionParameters */
+        $sessionParameters = $container->getParameter(LanguageServerExtension::PARAM_SESSION_PARAMETERS);
+        $parameters = array_merge($parameters, $sessionParameters);
 
         $container = $this->buildContainer(
+            /** @phpstan-ignore-next-line */
             $extensionClasses,
+            /** @phpstan-ignore-next-line */
             array_merge($parameters, $params->initializationOptions ?? []),
             $transmitter,
             $params
@@ -72,7 +81,7 @@ class PhpactorDispatcherFactory implements DispatcherFactory
 
         $extensions = array_map(function (string $class): Extension {
             /** @var Extension $class */
-            return new $class;
+            return new $class();
         }, $extensionClasses);
         $extensions[] = new LanguageServerSessionExtension($transmitter, $params);
 
@@ -119,6 +128,7 @@ class PhpactorDispatcherFactory implements DispatcherFactory
             );
         }
 
-        return $params->rootUri;
+        // root URI is url encoded, decode it!
+        return urldecode($params->rootUri);
     }
 }

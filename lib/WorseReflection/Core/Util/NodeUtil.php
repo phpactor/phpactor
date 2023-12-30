@@ -6,7 +6,9 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
@@ -18,11 +20,13 @@ use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\ResolvedName;
 use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\IntersectionType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
+use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Reflector;
 
@@ -222,8 +226,7 @@ class NodeUtil
             }
 
             if ($text === 'self') {
-                $class = self::nodeContainerClassLikeDeclaration($node);
-                return TypeFactory::reflectedClass($reflector, $class->getNamespacedName()->__toString());
+                return new SelfType();
             }
 
             if ($text === 'static') {
@@ -313,9 +316,15 @@ class NodeUtil
         return $best ?? $node;
     }
 
-    public static function previousSibling(Node $node): ?Node
+    public static function previousSibling(?Node $node): ?Node
     {
+        if (null === $node) {
+            return null;
+        }
         $parent = $node->parent;
+        if (null === $parent) {
+            return null;
+        }
         $previous = null;
         foreach ($parent->getChildNodes() as $childNode) {
             if (null === $previous) {
@@ -357,5 +366,23 @@ class NodeUtil
         }
 
         return false;
+    }
+
+    public static function byteOffsetRangeForNode(Variable $node): ByteOffsetRange
+    {
+        return ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition());
+    }
+
+    public static function argumentOffset(ArgumentExpressionList $argumentExpressionList, ArgumentExpression $argument): ?int
+    {
+        $offset = 0;
+        foreach ($argumentExpressionList->getChildNodes() as $funcArg) {
+            if ($argument === $funcArg) {
+                return $offset;
+            }
+            $offset++;
+        }
+
+        return null;
     }
 }

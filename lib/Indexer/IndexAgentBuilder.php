@@ -65,6 +65,11 @@ final class IndexAgentBuilder
 
     private bool $followSymlinks = false;
 
+    /**
+     * @var list<string>
+     */
+    private array $supportedExtensions = ['php'];
+
     private LoggerInterface $logger;
 
     private function __construct(private string $indexRoot, private string $projectRoot)
@@ -147,6 +152,16 @@ final class IndexAgentBuilder
         return $this;
     }
 
+    /**
+     * @param list<string> $supportedExtensions
+     */
+    public function setSupportedExtensions(array $supportedExtensions): self
+    {
+        $this->supportedExtensions = $supportedExtensions;
+
+        return $this;
+    }
+
     public function setFollowSymlinks(bool $followSymlinks): self
     {
         $this->followSymlinks = $followSymlinks;
@@ -222,7 +237,7 @@ final class IndexAgentBuilder
     private function buildFilesystem(string $root): SimpleFilesystem
     {
         return new SimpleFilesystem(
-            $this->indexRoot,
+            FilePath::fromString($this->indexRoot),
             new SimpleFileListProvider(
                 FilePath::fromString($root),
                 $this->followSymlinks
@@ -244,7 +259,8 @@ final class IndexAgentBuilder
             new FilesystemFileListProvider(
                 $this->buildFilesystem($this->projectRoot),
                 $this->includePatterns,
-                $this->excludePatterns
+                $this->excludePatterns,
+                $this->supportedExtensions,
             )
         ];
 

@@ -43,7 +43,7 @@ class WorseInterestingOffsetFinder implements InterestingOffsetFinder
     {
         $reflectionOffset = $this->reflector->reflectOffset($source, $offset->toInt());
 
-        $symbolType = $reflectionOffset->symbolContext()->symbol()->symbolType();
+        $symbolType = $reflectionOffset->nodeContext()->symbol()->symbolType();
 
         if ($symbolType !== Symbol::UNKNOWN) {
             return $offset;

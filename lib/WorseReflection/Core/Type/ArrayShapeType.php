@@ -62,6 +62,14 @@ class ArrayShapeType extends ArrayType implements Generalizable, ArrayAccessType
         return new MissingType();
     }
 
+    /**
+     * @return array-key[]
+     */
+    public function keys(): array
+    {
+        return array_keys($this->typeMap);
+    }
+
     public function map(Closure $mapper): Type
     {
         return new self(

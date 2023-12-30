@@ -22,7 +22,7 @@ class LanguageServerTestCase extends TestCase
 {
     protected function workspace(): Workspace
     {
-        return Workspace::create(__DIR__ . '/../../Workspace');
+        return Workspace::create(__DIR__ . '/../Workspace');
     }
     /**
      * @param array<string,mixed> $params
@@ -44,7 +44,9 @@ class LanguageServerTestCase extends TestCase
      */
     protected function createTester(?InitializeParams $params = null, array $config = []): LanguageServerTester
     {
-        $builder = $this->createContainer($config)->get(
+        $builder = $this->createContainer(array_merge([
+            LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
+        ], $config))->get(
             LanguageServerBuilder::class
         );
 

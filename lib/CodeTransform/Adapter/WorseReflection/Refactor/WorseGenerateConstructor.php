@@ -70,7 +70,7 @@ class WorseGenerateConstructor implements GenerateConstructor
                 $docblockTypes[$name] = $type->toLocalType($reflectionNode->scope());
             }
             foreach ($type->allTypes()->classLike() as $classType) {
-                $builder->use($classType->__toString());
+                $builder->use($classType->toPhpString());
             }
             $param = $method->parameter($name);
             $param->type($argument->type()->short());
@@ -88,7 +88,7 @@ class WorseGenerateConstructor implements GenerateConstructor
 
         return new WorkspaceEdits(
             new TextDocumentEdits(
-                TextDocumentUri::fromString($reflectionNode->class()->sourceCode()->mustGetUri()),
+                TextDocumentUri::fromString($reflectionNode->class()->sourceCode()->uriOrThrow()),
                 $this->updater->textEditsFor($builder->build(), Code::fromString($reflectionNode->class()->sourceCode()))
             )
         );

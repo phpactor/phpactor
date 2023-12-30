@@ -19,7 +19,7 @@ class RpcCommandTest extends SystemTestCase
             ],
         ]);
 
-        $process = $this->phpactor('rpc', $stdin);
+        $process = $this->phpactorFromStringArgs('rpc', $stdin);
         $this->assertSuccess($process);
 
         $response = json_decode($process->getOutput(), true);
@@ -42,7 +42,7 @@ class RpcCommandTest extends SystemTestCase
             ],
         ]);
 
-        $process = $this->phpactor('rpc --pretty', $stdin);
+        $process = $this->phpactorFromStringArgs('rpc --pretty', $stdin);
         $this->assertSuccess($process);
     }
 
@@ -59,10 +59,10 @@ class RpcCommandTest extends SystemTestCase
             ],
         ]);
 
-        $process = $this->phpactor('rpc', $stdin);
+        $process = $this->phpactorFromStringArgs('rpc', $stdin);
         $this->assertSuccess($process);
 
-        $process = $this->phpactor('rpc --replay');
+        $process = $this->phpactorFromStringArgs('rpc --replay');
         $this->assertSuccess($process);
         $response = json_decode($process->getOutput(), true);
 

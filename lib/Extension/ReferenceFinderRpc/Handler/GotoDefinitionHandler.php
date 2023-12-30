@@ -66,7 +66,7 @@ class GotoDefinitionHandler implements Handler
 
         return OpenFileResponse::fromPathAndOffset(
             $location->uri()->path(),
-            $location->offset()->toInt()
+            $location->range()->start()->toInt()
         )->withTarget($arguments[self::PARAM_TARGET]);
     }
 }

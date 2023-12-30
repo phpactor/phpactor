@@ -14,23 +14,31 @@ final class Variable
         private int $offset,
         private Type $type,
         private ?Type $classType = null,
-        private bool $wasAssigned = false
+        private bool $wasAssigned = false,
+        private bool $wasDefined = false
     ) {
         $this->name = ltrim($name, '$');
     }
 
     public function __toString(): string
     {
-        return sprintf('%s#%s %s %s', $this->name, $this->offset, $this->type, $this->classType ? $this->classType->__toString() : '');
+        return sprintf(
+            '%s#%s %s %s%s',
+            $this->name,
+            $this->offset,
+            $this->type,
+            $this->classType ? $this->classType->__toString() : '',
+            $this->wasDefined ? ' (definition)' : '',
+        );
     }
 
-    public static function fromSymbolContext(NodeContext $symbolContext): Variable
+    public static function fromSymbolContext(NodeContext $nodeContext): Variable
     {
         return new self(
-            $symbolContext->symbol()->name(),
-            $symbolContext->symbol()->position()->start(),
-            $symbolContext->type(),
-            $symbolContext->symbol()->symbolType() === Symbol::PROPERTY ? $symbolContext->containerType() : null
+            $nodeContext->symbol()->name(),
+            $nodeContext->symbol()->position()->start()->toInt(),
+            $nodeContext->type(),
+            $nodeContext->symbol()->symbolType() === Symbol::PROPERTY ? $nodeContext->containerType() : null
         );
     }
 
@@ -48,17 +56,22 @@ final class Variable
 
     public function withType(Type $type): self
     {
-        return new self($this->name, $this->offset, $type, $this->classType, $this->wasAssigned);
+        return new self($this->name, $this->offset, $type, $this->classType, $this->wasAssigned, $this->wasDefined);
     }
 
     public function withOffset(int $offset): self
     {
-        return new self($this->name, $offset, $this->type, $this->classType, $this->wasAssigned);
+        return new self($this->name, $offset, $this->type, $this->classType, $this->wasAssigned, $this->wasDefined);
     }
 
     public function asAssignment(): self
     {
-        return new self($this->name, $this->offset, $this->type, $this->classType, true);
+        return new self($this->name, $this->offset, $this->type, $this->classType, true, true);
+    }
+
+    public function asDefinition(): self
+    {
+        return new self($this->name, $this->offset, $this->type, $this->classType, false, true);
     }
 
     public function type(): Type
@@ -84,6 +97,11 @@ final class Variable
     public function wasAssigned(): bool
     {
         return $this->wasAssigned;
+    }
+
+    public function wasDefinition(): bool
+    {
+        return $this->wasDefined;
     }
 
     public function key(): string

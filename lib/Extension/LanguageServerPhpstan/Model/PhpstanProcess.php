@@ -12,8 +12,6 @@ class PhpstanProcess
 {
     private DiagnosticsParser $parser;
 
-    private string $phpstanBin;
-
     public function __construct(
         private string $cwd,
         private PhpstanConfig $config,
@@ -39,6 +37,12 @@ class PhpstanProcess
 
             if (null !== $this->config->level()) {
                 $args[] = '--level=' . (string)$this->config->level();
+            }
+            if (null !== $this->config->config()) {
+                $args[] = '--configuration=' . (string)$this->config->config();
+            }
+            if (null !== $this->config->memLimit()) {
+                $args[] = '--memory-limit=' . (string)$this->config->memLimit();
             }
             $process = new Process($args, $this->cwd);
 

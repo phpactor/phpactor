@@ -3,9 +3,9 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Reflector\SourceCode;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Core\Reflector\SourceCode\ContextualSourceCodeReflector;
-use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -32,23 +32,23 @@ class ContextualSourceCodeReflectorTest extends TestCase
             $this->locator
         );
 
-        $this->code = SourceCode::fromString(self::TEST_SOURCE_CODE);
+        $this->code = TextDocumentBuilder::create(self::TEST_SOURCE_CODE)->build();
     }
 
     public function testReflectsClassesIn(): void
     {
-        self::assertEquals(2, $this->reflector->reflectClassesIn('<?php class One{} class Two{}')->count());
+        self::assertEquals(2, $this->reflector->reflectClassesIn(TextDocumentBuilder::fromUnknown('<?php class One{} class Two{}'))->count());
     }
 
     public function testReflectOffset(): void
     {
-        $offset = $this->reflector->reflectOffset(self::TEST_SOURCE_CODE, self::TEST_OFFSET);
+        $offset = $this->reflector->reflectOffset(TextDocumentBuilder::fromUnknown(self::TEST_SOURCE_CODE), self::TEST_OFFSET);
         self::assertInstanceOf(ReflectionOffset::class, $offset);
     }
 
     public function testReflectMethodCall(): void
     {
-        $call = $this->reflector->reflectMethodCall('<?php class One { function bar() {} } $f = new One();$f->bar();', 59);
+        $call = $this->reflector->reflectMethodCall(TextDocumentBuilder::fromUnknown('<?php class One { function bar() {} } $f = new One();$f->bar();'), 59);
         self::assertInstanceOf(ReflectionMethodCall::class, $call);
     }
 }
