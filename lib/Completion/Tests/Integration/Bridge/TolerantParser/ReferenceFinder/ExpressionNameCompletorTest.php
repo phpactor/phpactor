@@ -145,7 +145,7 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
             ],
             '<?php class Foobar { private const FOO; private const BAR = self::F<>  }',
             function (Suggestions $suggestions): void {
-                $this->markTestSkipped();
+                self::assertCount(0, $suggestions);
             }
         ];
 

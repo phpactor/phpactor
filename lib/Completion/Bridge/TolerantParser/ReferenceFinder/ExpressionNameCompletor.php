@@ -39,6 +39,10 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
             return true;
         }
 
+        if ($node instanceof ScopedPropertyAccessExpression) {
+            return true;
+        }
+
         $name = $this->resolveName($node);
 
         $suggestions = $this->completeName($name, $source->uri(), $node);
