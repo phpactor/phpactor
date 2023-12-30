@@ -56,7 +56,7 @@ class RangesForDiff
                 }
 
                 if ($lastChangedLine) {
-                    if (empty($changedLines) || $startLineNo === null) {
+                    if ($changedLines === [] || $startLineNo === null) {
                         throw new LogicException('Start line number was not resolved');
                     }
 

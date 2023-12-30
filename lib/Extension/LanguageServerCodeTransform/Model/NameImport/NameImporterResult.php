@@ -20,7 +20,7 @@ class NameImporterResult
 
     public function hasTextEdits(): bool
     {
-        return !empty($this->textEdits);
+        return $this->textEdits !== [];
     }
 
     /**

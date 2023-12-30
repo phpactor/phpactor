@@ -37,7 +37,7 @@ final class Types implements IteratorAggregate
      */
     public function firstOrNull(): ?Type
     {
-        if (empty($this->types)) {
+        if ($this->types === []) {
             return null;
         }
 

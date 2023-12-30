@@ -46,7 +46,7 @@ class UseStatementUpdater
 
         $usePrototypes = $this->resolveUseStatements($prototype, $startNode);
 
-        if (empty($usePrototypes)) {
+        if ($usePrototypes === []) {
             return;
         }
 

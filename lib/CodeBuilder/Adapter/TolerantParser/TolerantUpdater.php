@@ -77,7 +77,7 @@ class TolerantUpdater implements Updater
             return;
         }
 
-        if (empty((string) $prototype->namespace())) {
+        if (((string) $prototype->namespace()) === '') {
             return;
         }
 

@@ -75,7 +75,7 @@ class ImplementContracts implements Transformer
                 $classBuilder = $sourceCodeBuilder->class($class->name()->short());
                 $missingMethods = $this->missingClassMethods($class);
 
-                if (empty($missingMethods)) {
+                if ($missingMethods === []) {
                     continue;
                 }
 

@@ -21,7 +21,7 @@ class PrinterTest extends TestCase
 
         $parts = explode('---', $contents);
 
-        if (empty($parts[0])) {
+        if ($parts[0] === '') {
             $this->markTestIncomplete(sprintf('No example given for "%s"', $path));
         }
 

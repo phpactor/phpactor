@@ -52,7 +52,7 @@ class ClassToFileExtension implements Extension
                 $classToFiles[] = new ComposerClassToFile($classLoader);
             }
 
-            if ($container->parameter(self::PARAM_BRUTE_FORCE_CONVERSION)->bool() && empty($classToFiles)) {
+            if ($container->parameter(self::PARAM_BRUTE_FORCE_CONVERSION)->bool() && $classToFiles === []) {
                 $projectDir = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_PROJECT_ROOT)->string());
                 $classToFiles[] = new SimpleClassToFile($projectDir);
             }
@@ -66,7 +66,7 @@ class ClassToFileExtension implements Extension
                 $fileToClasses[] = new ComposerFileToClass($classLoader);
             }
 
-            if (empty($fileToClasses)) {
+            if ($fileToClasses === []) {
                 $fileToClasses[] = new SimpleFileToClass();
             }
 

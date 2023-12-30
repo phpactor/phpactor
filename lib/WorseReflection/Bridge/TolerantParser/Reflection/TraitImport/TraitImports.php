@@ -50,7 +50,7 @@ final class TraitImports implements Countable, IteratorAggregate
                 return (string) TolerantQualifiedNameResolver::getResolvedName($name);
             }, iterator_to_array($memberDeclaration->traitNameList->getElements())));
 
-            if (empty($traitNames)) {
+            if ($traitNames === []) {
                 continue;
             }
 
