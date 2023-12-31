@@ -247,16 +247,16 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
         yield 'deep members' => [
             <<<'EOT'
                 // File: project/subject.php
-                <?php $foo = new Bar\Foobar(); $foo->meth<>od();
+                <?php namespace Bar; $foo = new Foobar(); $foo->b<>ar();
 
                 // File: project/subject1.php
-                <?php $bar = new Bar\Barfoo(); $bar->method();
+                <?php namespace Bar; $bar = new Barfoo(); $bar->bar();
 
                 // File: project/class1.php
-                <?php namespace Bar; class Barfoo { public function method() {}}
+                <?php namespace Bar; class Barfoo { public function bar() {}}
 
                 // File: project/class2.php
-                <?php namespace Bar; class Foobar extends Barfoo { public function method() {}}
+                <?php namespace Bar; class Foobar extends Barfoo { public function bar() {}}
 
                 EOT
         ,
