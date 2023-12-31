@@ -107,11 +107,11 @@ class IndexedReferenceFinder implements ReferenceFinder
 
             // note that we check the all implementations: this will multiply
             // the number of NOT and MAYBE matches
-            foreach ($this->implementationsOf($containerType) as $containerType) {
+            foreach ($this->implementationsOf($containerType) as $implemenations) {
                 yield from $this->memberReferencesTo(
                     $this->symbolTypeToReferenceType($nodeContext),
                     $nodeContext->symbol()->name(),
-                    $containerType
+                    $implemenations
                 );
             }
             return;
@@ -129,7 +129,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             return;
         }
 
-        // Getting the implementations of the class
+        // Getting all implementations of the class
         $implemenations = [];
         foreach ($this->query->class()->implementing($fqn) as $implementation) {
             $implemenations[] = $implementation->__toString();
@@ -137,7 +137,13 @@ class IndexedReferenceFinder implements ReferenceFinder
 
         // From now on we can only get it's subclasses
         foreach($implemenations as $implementation) {
-            yield from $this->query->class()->subClasses($implementation);
+            yield $implementation;
+
+            foreach($this->query->class()->subClasses($implementation) as $subClass) {
+                if ((string) $subClass !== $fqn) {
+                    yield $subClass;
+                }
+            }
         }
     }
 
