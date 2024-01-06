@@ -14,6 +14,7 @@ use Phpactor\Extension\PhpCodeSniffer\Provider\PhpCodeSnifferDiagnosticsProvider
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
 
@@ -31,17 +32,20 @@ class PhpCodeSnifferExtension implements OptionalExtension
         $container->register(
             PhpCodeSnifferProcess::class,
             function (Container $container) {
-                $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_PHP_CODE_SNIFFER_BIN)->string());
-                $cwd = $container->getParameter(self::PARAM_CWD);
+                $resolver = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
+                $path = $resolver->resolve($container->parameter(self::PARAM_PHP_CODE_SNIFFER_BIN)->string());
+                $cwd = $container->parameter(self::PARAM_CWD)->string();
                 if ($cwd !== null) {
-                    $cwd = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($cwd);
+                    $cwd = $resolver->resolve($cwd);
                 }
 
                 return new PhpCodeSnifferProcess(
                     $path,
                     LoggingExtension::channelLogger($container, 'phpcs'),
+                    /** @phpstan-ignore-next-line */
                     $container->parameter(self::PARAM_ENV)->value(),
-                    $container->getParameter(self::PARAM_ARGS),
+                    /** @phpstan-ignore-next-line */
+                    $container->parameter(self::PARAM_ARGS)->value(),
                     $cwd,
                 );
             }
