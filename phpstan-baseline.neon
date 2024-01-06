@@ -4581,11 +4581,6 @@ parameters:
 			path: lib/Extension/PhpCodeSniffer/Model/PhpCodeSnifferProcess.php
 
 		-
-			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
-
-		-
 			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\PhpCodeSniffer\\\\Model\\\\PhpCodeSnifferProcess constructor expects array\\<string, string\\>, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
