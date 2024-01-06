@@ -45,7 +45,7 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
             }
 
             try {
-                $refection = $this->reflector->reflectClass($fqn);
+                $refection = $this->reflector->reflectClassLike($fqn);
             } catch (NotFound $e) {
                 continue;
             }
