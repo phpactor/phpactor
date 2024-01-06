@@ -95,7 +95,7 @@ class IndexedNameSearcherTest extends IndexTestCase
         $this->workspace()->put('project/Baj.php', '<?php #[Attribute] class Baj {}');
         $this->workspace()->put('project/Foo/Bax.php', '<?php namespace Foo; use Not\Attribute; #[Attribute] class Bax {}');
         $this->workspace()->put('project/Baz.php', '<?php class Baz {}');
-        $this->workspace()->put('project/Attribute/Bak.php', '<?php namespace Attribute; #[Attribute] readonly class Bak {}');
+        $this->workspace()->put('project/Attribute/Bak.php', '<?php namespace Attribute; #[\Attribute] readonly class Bak {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
         $searcher = new IndexedNameSearcher($agent->search());
