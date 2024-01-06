@@ -226,6 +226,23 @@ class ContextSensitiveCompletorTest extends TestCase
                 'Obj',
             ],
         ];
+        yield 'static' => [
+            [
+                'Obj',
+                'Baz',
+            ],
+            <<<'EOT'
+                <?php
+                enum Obj {}
+                class Baz {}
+                class Foo { public static function bar(Obj $obj, Baz ...$baz){}}
+
+                Foo::bar(new O<>
+                EOT,
+            [
+                'Obj',
+            ],
+        ];
         yield 'unresolvable method' => [
             [
                 'Obj',
