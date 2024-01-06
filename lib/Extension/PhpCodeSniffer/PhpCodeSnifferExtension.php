@@ -34,8 +34,8 @@ class PhpCodeSnifferExtension implements OptionalExtension
             function (Container $container) {
                 $resolver = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
                 $path = $resolver->resolve($container->parameter(self::PARAM_PHP_CODE_SNIFFER_BIN)->string());
-                $cwd = $container->parameter(self::PARAM_CWD)->string();
-                if ($cwd !== null) {
+                $cwd = $container->parameter(self::PARAM_CWD)->value();
+                if (is_string($cwd)) {
                     $cwd = $resolver->resolve($cwd);
                 }
 
@@ -46,6 +46,7 @@ class PhpCodeSnifferExtension implements OptionalExtension
                     $container->parameter(self::PARAM_ENV)->value(),
                     /** @phpstan-ignore-next-line */
                     $container->parameter(self::PARAM_ARGS)->value(),
+                    /** @phpstan-ignore-next-line */
                     $cwd,
                 );
             }
