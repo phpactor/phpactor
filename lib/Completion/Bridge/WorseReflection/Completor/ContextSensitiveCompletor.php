@@ -56,7 +56,12 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
             return $generator->getReturn();
         }
 
-        $callExpression = $this->reflector->reflectNode($source, $callExpression->openParen->getStartPosition());
+        try {
+            $callExpression = $this->reflector->reflectNode($source, $callExpression->openParen->getStartPosition());
+        } catch (NotFound $e) {
+            yield from $generator;
+            return $generator->getReturn();
+        }
         if (!$callExpression instanceof ReflectionMethodCall) {
             yield from $generator;
             return $generator->getReturn();
