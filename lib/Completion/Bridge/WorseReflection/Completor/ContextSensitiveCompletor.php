@@ -14,7 +14,7 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\AbstractReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassLikeType;
@@ -98,7 +98,7 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
         } catch (NotFound $e) {
             return null;
         }
-        if (!$callExpression instanceof ReflectionMethodCall) {
+        if (!$callExpression instanceof AbstractReflectionMethodCall) {
             return null;
         }
 
