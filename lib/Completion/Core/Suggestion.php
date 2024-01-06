@@ -180,7 +180,7 @@ class Suggestion
      */
     public function nameImport(): ?string
     {
-        return $this->type() === self::TYPE_CLASS ? $this->nameImport : null;
+        return $this->nameImport;
     }
 
     /**
