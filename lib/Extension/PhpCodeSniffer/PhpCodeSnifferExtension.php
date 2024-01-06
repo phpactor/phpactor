@@ -14,6 +14,7 @@ use Phpactor\Extension\PhpCodeSniffer\Provider\PhpCodeSnifferDiagnosticsProvider
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
+use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
 
@@ -23,18 +24,29 @@ class PhpCodeSnifferExtension implements OptionalExtension
     public const PARAM_ENV = 'php_code_sniffer.env';
     public const PARAM_SHOW_DIAGNOSTICS = 'php_code_sniffer.show_diagnostics';
     public const PARAM_ENABLED = 'php_code_sniffer.enabled';
+    public const PARAM_ARGS = 'php_code_sniffer.args';
+    public const PARAM_CWD = 'php_code_sniffer.cwd';
 
     public function load(ContainerBuilder $container): void
     {
         $container->register(
             PhpCodeSnifferProcess::class,
             function (Container $container) {
-                $path = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve($container->parameter(self::PARAM_PHP_CODE_SNIFFER_BIN)->string());
+                $resolver = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
+                $path = $resolver->resolve($container->parameter(self::PARAM_PHP_CODE_SNIFFER_BIN)->string());
+                $cwd = $container->parameter(self::PARAM_CWD)->string();
+                if ($cwd !== null) {
+                    $cwd = $resolver->resolve($cwd);
+                }
 
                 return new PhpCodeSnifferProcess(
                     $path,
                     LoggingExtension::channelLogger($container, 'phpcs'),
+                    /** @phpstan-ignore-next-line */
                     $container->parameter(self::PARAM_ENV)->value(),
+                    /** @phpstan-ignore-next-line */
+                    $container->parameter(self::PARAM_ARGS)->value(),
+                    $cwd,
                 );
             }
         );
@@ -81,12 +93,16 @@ class PhpCodeSnifferExtension implements OptionalExtension
                 'XDEBUG_MODE' => 'off',
             ],
             self::PARAM_SHOW_DIAGNOSTICS => true,
+            self::PARAM_ARGS => [],
+            self::PARAM_CWD => null,
         ]);
 
         $schema->setDescriptions([
             self::PARAM_PHP_CODE_SNIFFER_BIN => 'Path to the phpcs executable',
             self::PARAM_ENV => 'Environment for PHP_CodeSniffer (e.g. to set XDEBUG_MODE)',
-            self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP_CodeSniffer diagnostics are shown'
+            self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP_CodeSniffer diagnostics are shown',
+            self::PARAM_ARGS => 'Additional arguments to pass to the PHPCS process',
+            self::PARAM_CWD => 'Working directory for PHPCS',
         ]);
     }
 
