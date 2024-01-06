@@ -14,7 +14,7 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifiable;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\AbstractReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClassLikeType;
@@ -31,62 +31,8 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
     {
         $generator = $this->inner->complete($node, $source, $offset);
 
-        $argumentNb = 0;
-        $callExpression = $node;
-        if ($node instanceof QualifiedName) {
-            $callExpression = null;
-            $argumentExpression = $node->getFirstAncestor(ArgumentExpression::class);
-            if ($argumentExpression instanceof ArgumentExpression) {
-                $list = $argumentExpression->getFirstAncestor(ArgumentExpressionList::class);
-                if (!$list instanceof ArgumentExpressionList) {
-                    yield from $generator;
-                    return $generator->getReturn();
-                }
-                $argumentNb = NodeUtil::argumentOffset($list, $argumentExpression) ?? 0;
-                $callExpression = $list->parent;
-            }
-        }
-        if ($node instanceof ArgumentExpressionList) {
-            $argumentNb = count(iterator_to_array($node->getValues()));
-            $callExpression = $node->parent;
-        }
-
-        if (!$callExpression instanceof CallExpression) {
-            yield from $generator;
-            return $generator->getReturn();
-        }
-
-        try {
-            $callExpression = $this->reflector->reflectNode($source, $callExpression->openParen->getStartPosition());
-        } catch (NotFound $e) {
-            yield from $generator;
-            return $generator->getReturn();
-        }
-        if (!$callExpression instanceof ReflectionMethodCall) {
-            yield from $generator;
-            return $generator->getReturn();
-        }
-
-        try {
-            $functionLike = $callExpression->method();
-            $parameters = $functionLike->parameters();
-        } catch (NotFound) {
-            yield from $generator;
-            return $generator->getReturn();
-        }
-        $parameter = $parameters->at($argumentNb);
-        if (null === $parameter) {
-            yield from $generator;
-            return $generator->getReturn();
-        }
-
-        $type = $parameter->type();
-        if ($parameter->isVariadic()) {
-            if ($type instanceof ArrayType) {
-                $type = $type->iterableValueType();
-            }
-        }
-        if (!$type instanceof ClassLikeType) {
+        $type = $this->resolveFilterableType($node, $source, $offset);
+        if (null === $type) {
             yield from $generator;
             return $generator->getReturn();
         }
@@ -99,7 +45,7 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
             }
 
             try {
-                $refection = $this->reflector->reflectClass($fqn);
+                $refection = $this->reflector->reflectClassLike($fqn);
             } catch (NotFound $e) {
                 continue;
             }
@@ -120,5 +66,63 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
         }
 
         return new AlwaysQualfifier();
+    }
+
+    private function resolveFilterableType(Node $node, TextDocument $source, ByteOffset $offset): ?ClassLikeType
+    {
+        $argumentNb = 0;
+        $callExpression = $node;
+        if ($node instanceof QualifiedName) {
+            $callExpression = null;
+            $argumentExpression = $node->getFirstAncestor(ArgumentExpression::class);
+            if ($argumentExpression instanceof ArgumentExpression) {
+                $list = $argumentExpression->getFirstAncestor(ArgumentExpressionList::class);
+                if (!$list instanceof ArgumentExpressionList) {
+                    return null;
+                }
+                $argumentNb = NodeUtil::argumentOffset($list, $argumentExpression) ?? 0;
+                $callExpression = $list->parent;
+            }
+        }
+        if ($node instanceof ArgumentExpressionList) {
+            $argumentNb = count(iterator_to_array($node->getValues()));
+            $callExpression = $node->parent;
+        }
+
+        if (!$callExpression instanceof CallExpression) {
+            return null;
+        }
+
+        try {
+            $callExpression = $this->reflector->reflectNode($source, $callExpression->openParen->getStartPosition());
+        } catch (NotFound $e) {
+            return null;
+        }
+        if (!$callExpression instanceof AbstractReflectionMethodCall) {
+            return null;
+        }
+
+        try {
+            $functionLike = $callExpression->method();
+            $parameters = $functionLike->parameters();
+        } catch (NotFound) {
+            return null;
+        }
+        $parameter = $parameters->at($argumentNb);
+        if (null === $parameter) {
+            return null;
+        }
+
+        $type = $parameter->type();
+        if ($parameter->isVariadic()) {
+            if ($type instanceof ArrayType) {
+                $type = $type->iterableValueType();
+            }
+        }
+        if (!$type instanceof ClassLikeType) {
+            return null;
+        }
+
+        return $type;
     }
 }
