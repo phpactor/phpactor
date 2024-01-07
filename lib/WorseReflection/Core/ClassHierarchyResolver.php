@@ -16,7 +16,7 @@ final class ClassHierarchyResolver
     public const INCLUDE_MIXIN =     0x00001000;
 
     /**
-     * @param int-mask-of<self::INCLUDE_*>
+     * @param int-mask-of<self::INCLUDE_*> $mode
      */
     public function __construct(
         private int $mode = self::INCLUDE_TRAIT | self::INCLUDE_INTERFACE | self::INCLUDE_PARENT | self::INCLUDE_MIXIN

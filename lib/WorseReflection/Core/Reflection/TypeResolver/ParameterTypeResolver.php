@@ -9,8 +9,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
-use Phpactor\WorseReflection\Core\Type\ClassLikeType;
-use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\TypeUtil;
 
 class ParameterTypeResolver
@@ -62,8 +60,7 @@ class ParameterTypeResolver
         ReflectionClassLike $topClass,
         ReflectionClassLike $bottomClass,
         Type $type
-    ): Type
-    {
+    ): Type {
         $topTemplateMap = $topClass->docblock()->templateMap();
         if ($topTemplateMap->has($type->__toString())) {
             return $type;
