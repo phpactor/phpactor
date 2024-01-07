@@ -9,6 +9,7 @@ Features:
 
 Improvements:
 
+  - Resolve inherited generic types #2474
   - Allow additional CLI arguments to be passed to php code sniffer #2465
   - Clear document diagnostic cache on save #2458
   - Skip parent parameters on complete constructor #2471 @mamazu
