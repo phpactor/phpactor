@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\Parameter;
@@ -62,7 +63,12 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
 
     public function inferredType(): Type
     {
-        return (new ParameterTypeResolver($this))->resolve();
+        return (new ParameterTypeResolver(
+            $this,
+            new GenericMapResolver(
+                $this->serviceLocator()->reflector()
+            )
+        ))->resolve();
     }
 
     public function default(): DefaultValue
