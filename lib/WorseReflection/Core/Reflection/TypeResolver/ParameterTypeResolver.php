@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionFunctionLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
+use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\TypeUtil;
 
@@ -22,17 +23,17 @@ class ParameterTypeResolver
     {
         $functionLike = $this->parameter->functionLike();
 
-        $type = $this->resolveType($functionLike);
+        $type = $this->resolveType($functionLike, $this->parameter);
 
         return $type;
     }
 
-    public function resolveType(ReflectionFunctionLike $functionLike): Type
+    public function resolveType(ReflectionFunctionLike $functionLike, ReflectionParameter $parameter): Type
     {
         if (!$functionLike instanceof ReflectionMethod) {
-            $docblock = $this->parameter->functionLike()->docblock();
-            $docblockType = $docblock->parameterType($this->parameter->name());
-            return TypeUtil::firstDefined($docblockType, $this->parameter->type());
+            $docblock = $functionLike->docblock();
+            $docblockType = $docblock->parameterType($parameter->name());
+            return TypeUtil::firstDefined($docblockType, $parameter->type());
         }
 
         $hierarchy = (new ClassHierarchyResolver(
@@ -45,7 +46,8 @@ class ParameterTypeResolver
                 continue;
             }
             $docblock = $classLike->methods()->get($functionLike->name())->docblock();
-            $type = $docblock->parameterType($this->parameter->name());
+            $type = $docblock->parameterType($parameter->name());
+
             if (!$type->isDefined()) {
                 continue;
             }
@@ -53,7 +55,7 @@ class ParameterTypeResolver
             return $this->resolveGenericType($functionLike->class(), $classLike, $type);
         }
 
-        return $this->parameter->type();
+        return $parameter->type();
     }
 
     private function resolveGenericType(
@@ -70,8 +72,8 @@ class ParameterTypeResolver
         if (!$map) {
             return $type;
         }
-        if ($map->has($type->__toString())) {
-            $t = $map->get($type->__toString());
+        if ($map->has($type->short())) {
+            $t = $map->get($type->short());
             if (!$t->isDefined()) {
                 return $type;
             }
