@@ -33,6 +33,8 @@ use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflecti
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\Pest\PestExtension;
+use Phpactor\Extension\Pest\PestSuggestExtension;
 use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferExtension;
 use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferSuggestExtension;
 use Phpactor\Extension\PHPUnit\PHPUnitExtension;
@@ -209,6 +211,8 @@ class Phpactor
             SymfonyExtension::class,
             SymfonySuggestExtension::class,
             PHPUnitExtension::class,
+            PestExtension::class,
+            PestSuggestExtension::class,
         ];
 
         if (class_exists(DebugExtension::class)) {
