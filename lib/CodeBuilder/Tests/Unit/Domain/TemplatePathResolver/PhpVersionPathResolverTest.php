@@ -22,7 +22,7 @@ class PhpVersionPathResolverTest extends IntegrationTestCase
         array $expectedPaths
     ): void {
         foreach ($fullTemplatePaths as $fullTemplatePath) {
-            $this->workspace()->mkdir($fullTemplatePath, '');
+            $this->workspace()->mkdir($fullTemplatePath);
         }
 
         $resolver = new PhpVersionPathResolver($phpVersion);

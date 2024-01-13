@@ -49,7 +49,7 @@ final class NamespacedClassReferences implements IteratorAggregate
 
     public function isEmpty(): bool
     {
-        return empty($this->classRefs);
+        return $this->classRefs === [];
     }
 
     public function getIterator(): Traversable

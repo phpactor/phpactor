@@ -5,9 +5,6 @@ namespace Phpactor\Completion\Core;
 class ParameterInformation
 {
     /**
-     * @param string $label
-     *      The label of this signature. Will be shown in
-     *      the UI.
      *  @param ?string $documentation
      *      The human-readable doc-comment of this signature. Will be shown
      *      in the UI but can be omitted.

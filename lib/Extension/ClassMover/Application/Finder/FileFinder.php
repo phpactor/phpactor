@@ -61,10 +61,8 @@ class FileFinder
     {
         $path = $reflection->sourceCode()->uri()?->path();
 
-        if (empty($path)) {
-            throw new RuntimeException(sprintf(
-                'Source has no path associated with it'
-            ));
+        if (!$path) {
+            throw new RuntimeException('Source has no path associated with it');
         }
 
         $filePaths = [ $path ];

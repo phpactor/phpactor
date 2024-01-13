@@ -9,12 +9,15 @@ Features:
 
 Improvements:
 
+  - Resolve inherited generic types #2474
+  - Allow additional CLI arguments to be passed to php code sniffer #2465
   - Clear document diagnostic cache on save #2458
   - Skip parent parameters on complete constructor #2471 @mamazu
   - Support generics on `@mixin` #2463
 
 Bug fixes:
 
+  - Fix support for Attributes on readonly classes #2493
   - Fix `$this` undefined var false positive in anon. class #2469 @mamazu
   - Fix `$argv` undefined var false positives #2468 @mamazu
 

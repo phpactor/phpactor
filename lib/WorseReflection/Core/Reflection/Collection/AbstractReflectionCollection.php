@@ -85,7 +85,7 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
      */
     public function first()
     {
-        if (empty($this->items)) {
+        if ($this->items === []) {
             throw new ItemNotFound(
                 'Collection is empty, cannot get the first item'
             );

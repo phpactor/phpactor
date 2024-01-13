@@ -19,7 +19,7 @@ class IndexerFunctionSourceLocator implements SourceCodeLocator
 
     public function locate(Name $name): TextDocument
     {
-        if (empty($name->__toString())) {
+        if ($name->__toString() === '') {
             throw new SourceNotFound('Name is empty');
         }
 

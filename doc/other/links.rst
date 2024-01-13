@@ -7,9 +7,9 @@ General
 -------
 
 -  `Extending
-   Phpactor <https://dantleech.com/blog/2018/11/25/extensions>`__
+   Phpactor <https://www.dantleech.com/blog/2018/11/25/extensions>`__
 -  `3 years of
-   Phpactor <https://dantleech.com/blog/2018/08/19/phpactor-3-years/>`__
+   Phpactor <https://www.dantleech.com/blog/2018/08/19/phpactor-3-years/>`__
 
 VIM Guides
 ----------

@@ -12,10 +12,8 @@ final class QualifiedName implements Name
 
     private function __construct(array $parts)
     {
-        if (empty($parts)) {
-            throw new InvalidName(sprintf(
-                'Names must have at least one segment'
-            ));
+        if ($parts === []) {
+            throw new InvalidName('Names must have at least one segment');
         }
 
         $this->parts = $parts;

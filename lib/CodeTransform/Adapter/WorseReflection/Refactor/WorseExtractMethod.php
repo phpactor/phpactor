@@ -359,7 +359,7 @@ class WorseExtractMethod implements ExtractMethod
             return false === in_array('$' . $variable->name(), $args);
         });
 
-        if (empty($returnVariables)) {
+        if ($returnVariables === []) {
             return null;
         }
 
