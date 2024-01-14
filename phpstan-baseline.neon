@@ -761,11 +761,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseFunctionCompletor.php
 
 		-
-			message: "#^Generator expects value type Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed given\\.$#"
-			count: 2
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseNamedParameterCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\ChainSignatureHelper\\:\\:__construct\\(\\) has parameter \\$helpers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/ChainSignatureHelper.php
@@ -4581,11 +4576,6 @@ parameters:
 			path: lib/Extension/PhpCodeSniffer/Model/PhpCodeSnifferProcess.php
 
 		-
-			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\PhpCodeSniffer\\\\Model\\\\PhpCodeSnifferProcess constructor expects array\\<string, string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
-
-		-
 			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\PhpCodeSniffer\\\\LspCommand\\\\FormatCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
@@ -6354,11 +6344,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\PropertyAssignments\\:\\:fromArray\\(\\) has parameter \\$assignments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/PropertyAssignments.php
-
-		-
-			message: "#^Parameter \\#2 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\NodeContextResolver\\:\\:resolveNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node\\|Microsoft\\\\PhpParser\\\\Token, Microsoft\\\\PhpParser\\\\Node\\\\Expression\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Resolver/ArgumentExpressionResolver.php
 
 		-
 			message: "#^Cannot access property \\$elementKey on mixed\\.$#"
