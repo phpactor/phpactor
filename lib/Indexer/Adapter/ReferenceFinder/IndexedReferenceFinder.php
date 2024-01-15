@@ -129,17 +129,13 @@ class IndexedReferenceFinder implements ReferenceFinder
             return;
         }
 
-        // Getting all implementations of the class
-        $implemenations = [];
-        foreach ($this->query->class()->implementing($fqn) as $implementation) {
-            $implemenations[] = $implementation->__toString();
-        }
+        foreach($this->query->class()->implementing($fqn) as $implementation) {
+            $implementationStr = $implementation->__toString();
 
-        // From now on we can only get it's subclasses
-        foreach($implemenations as $implementation) {
-            yield $implementation;
+            yield $implementationStr;
 
-            foreach($this->query->class()->subClasses($implementation) as $subClass) {
+            // From now on we can only get it's subclasses
+            foreach($this->query->class()->subClasses($implementationStr) as $subClass) {
                 if ((string) $subClass !== $fqn) {
                     yield $subClass;
                 }
