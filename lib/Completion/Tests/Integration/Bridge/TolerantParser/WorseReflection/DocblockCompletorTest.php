@@ -108,6 +108,13 @@ class DocblockCompletorTest extends TestCase
             ],
         ];
 
+        yield 'throws type match' => [
+            '   *    @throws Aar<> */',
+            [
+                'Aardvark',
+            ],
+        ];
+
         yield 'param variable' => [
             '<?php /*    @param Foobar $a<> */function bar($aardvark, $foo)',
             [
