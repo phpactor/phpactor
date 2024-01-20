@@ -9,6 +9,7 @@ Features:
 
 Improvements:
 
+  - PHPStan show tip if as a dignostic hint if available #2512
   - Docblock completion, suggest `@throws` @przepompownia
   - Suggest named parameters on attributes @mamazu
   - Remove redundant documentation #2500 @einenlum
