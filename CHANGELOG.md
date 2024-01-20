@@ -9,6 +9,9 @@ Features:
 
 Improvements:
 
+  - Docblock completion, suggest `@throws` @przepompownia
+  - Suggest named parameters on attributes @mamazu
+  - Remove redundant documentation #2500 @einenlum
   - Resolve inherited generic types #2474
   - Allow additional CLI arguments to be passed to php code sniffer #2465
   - Clear document diagnostic cache on save #2458
