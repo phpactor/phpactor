@@ -63,6 +63,9 @@ class DiagnosticsParser
         return $decoded;
     }
 
+    /**
+     * @param array{tip?: string} $message
+     */
     private function resolveCodeDescription(array $message): ?CodeDescription
     {
         $tip = $message['tip'] ?? null;

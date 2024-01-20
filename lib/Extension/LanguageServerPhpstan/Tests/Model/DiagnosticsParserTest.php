@@ -103,12 +103,12 @@ class DiagnosticsParserTest extends TestCase
                                 'line' => 2,
                                 'message' => 'foobar',
                                 'tip' => 'Template is not covariant. Learn more: https://phpstan.org/blog/whats-up-with-template-covariant'
-                                
+
                             ]
                         ]
                     ]
                 ],
-            ])
+            ], JSON_THROW_ON_ERROR)
         );
         self::assertCount(2, $diagnostics);
         $diagnostic = $diagnostics[1];
