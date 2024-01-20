@@ -29,6 +29,15 @@ class DiagnosticsParser
                     severity: DiagnosticSeverity::ERROR,
                     source: 'phpstan'
                 );
+                if (($message['tip'] ?? null) !== null) {
+                    $diagnostics[] = new Diagnostic(
+                        message: $message['tip'],
+                        range: new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
+                        severity: DiagnosticSeverity::HINT,
+                        source: 'phpstan'
+                    );
+
+                }
             }
         }
 
