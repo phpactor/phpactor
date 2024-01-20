@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Model;
 
+use Phpactor\LanguageServerProtocol\CodeDescription;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\Range;
@@ -22,19 +23,20 @@ class DiagnosticsParser
             foreach ($fileDiagnostics['messages'] as $message) {
                 $lineNo = (int)$message['line'] - 1;
                 $lineNo = (int)$lineNo > 0 ? $lineNo : 0;
-
+                $text = $message['message'];
                 $diagnostics[] = new Diagnostic(
-                    message: $message['message'],
+                    message: $text,
                     range: new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
                     severity: DiagnosticSeverity::ERROR,
-                    source: 'phpstan'
+                    source: 'phpstan',
                 );
                 if (($message['tip'] ?? null) !== null) {
                     $diagnostics[] = new Diagnostic(
                         message: $message['tip'],
                         range: new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
                         severity: DiagnosticSeverity::HINT,
-                        source: 'phpstan'
+                        source: 'phpstan',
+                        codeDescription: $this->resolveCodeDescription($message),
                     );
 
                 }
@@ -59,5 +61,18 @@ class DiagnosticsParser
         }
 
         return $decoded;
+    }
+
+    private function resolveCodeDescription(array $message): ?CodeDescription
+    {
+        $tip = $message['tip'] ?? null;
+        if (null === $tip) {
+            return null;
+        }
+        if (!preg_match('{(https?\://[^ ]+)$}', $tip, $matches)) {
+            return null;
+        }
+
+        return new CodeDescription($matches[1]);
     }
 }

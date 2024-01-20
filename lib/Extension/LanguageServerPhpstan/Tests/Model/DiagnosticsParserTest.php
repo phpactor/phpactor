@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Model;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerPhpstan\Model\DiagnosticsParser;
+use Phpactor\LanguageServerProtocol\CodeDescription;
 use RuntimeException;
 
 class DiagnosticsParserTest extends TestCase
@@ -90,6 +91,32 @@ class DiagnosticsParserTest extends TestCase
         ];
     }
 
+
+    public function testTipUrl(): void
+    {
+        $diagnostics =  (new DiagnosticsParser())->parse(
+            json_encode([
+                'files' => [
+                    'file1.php' => [
+                        'messages' => [
+                            [
+                                'line' => 2,
+                                'message' => 'foobar',
+                                'tip' => 'Template is not covariant. Learn more: https://phpstan.org/blog/whats-up-with-template-covariant'
+                                
+                            ]
+                        ]
+                    ]
+                ],
+            ])
+        );
+        self::assertCount(2, $diagnostics);
+        $diagnostic = $diagnostics[1];
+        self::assertEquals(
+            new CodeDescription('https://phpstan.org/blog/whats-up-with-template-covariant'),
+            $diagnostic->codeDescription
+        );
+    }
 
     public function testExceptionOnNonJsonString(): void
     {
