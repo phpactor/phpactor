@@ -42,6 +42,11 @@ class CompletionContext
         if (null === $node) {
             return false;
         }
+
+        if ($node instanceof Attribute) {
+            return true;
+        }
+
         $parent = $node->parent;
 
         if (null === $parent) {

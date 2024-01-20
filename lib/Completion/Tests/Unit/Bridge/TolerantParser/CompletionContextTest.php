@@ -83,6 +83,26 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { public function bar() { if (true) { return false; } foreach(<> } }',
             true,
         ];
+        yield 'named parameter in class attribute constructor call' => [
+            '<?php #[\Attribute(flags: <>)] class Foo {}',
+            true,
+        ];
+        yield 'named parameter in method attribute constructor call' => [
+            '<?php class Foo { public function #[\Override, \Attribute(flags: <>)] bar() {} }',
+            true,
+        ];
+        yield 'named parameter in method attribute constructor call with prefix' => [
+            '<?php class Foo { public function #[\Override, \Attribute(flags: \A<>)] bar() {} }',
+            true,
+        ];
+        yield 'unnamed parameter in method attribute constructor call' => [
+            '<?php class Foo { public function #[\Override, \Attribute(<>)] bar() {} }',
+            true,
+        ];
+        yield 'unnamed parameter in method attribute constructor call with prefix' => [
+            '<?php class Foo { public function #[\Override, \Attribute(\A<>)] bar() {} }',
+            true,
+        ];
     }
 
     /**
