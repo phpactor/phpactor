@@ -206,6 +206,28 @@ Report when a method has a parameter with a type that should be augmented by a d
         
         - ``WARN``: ``Method "foo" is missing @param $foobar``
         
+    .. tab:: no false positive for vardoc on promoted property
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public function __construct(
+                    /**
+                     * @var array<'GET'|'POST'>
+                     */
+                    private array $foobar,
+                    private array $barfoo
+                ) {
+                }
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Method "__construct" is missing @param $barfoo``
+        
 ``assignment_to_missing_property``
 ----------------------------------
 
@@ -659,6 +681,19 @@ Report if a variable is undefined and suggest variables with similar names.
         Diagnostic(s):
         
         - ``ERROR``: ``Undefined variable "$foo", did you mean one of "$foz", "$foa", "$fob"``
+        
+    .. tab:: this in anonymous class
+        
+        .. code-block:: php
+        
+                <?php
+                new class
+                {
+                    public function foo(): void
+                    {
+                        $this
+                    }
+                };
         
     .. tab:: undefined and no suggestions
         
