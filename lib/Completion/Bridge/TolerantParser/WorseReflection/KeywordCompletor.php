@@ -50,7 +50,7 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         if (CompletionContext::methodName($node)) {
-            yield from $this->methods(self::MAGIC_METHODS);
+            yield from $this->methods();
             return true;
         }
 
@@ -78,15 +78,14 @@ class KeywordCompletor implements TolerantCompletor
 
     /**
      * @return Generator<Suggestion>
-     * @param array<key-of<self::MAGIC_METHODS>, value-of<self::MAGIC_METHODS>> $methods
      */
-    private function methods(array $methods): Generator
+    private function methods(): Generator
     {
-        foreach ($methods as $name => $snippet) {
+        foreach (self::MAGIC_METHODS as $name => $snippet) {
             yield Suggestion::createWithOptions($name . '(', [
                 'type' => Suggestion::TYPE_METHOD,
                 'priority' => 1,
-            ] + ((null !== $snippet) ? ['snippet' => $name . $snippet] : []));
+            ] + ['snippet' => $name . $snippet]);
         }
     }
 
