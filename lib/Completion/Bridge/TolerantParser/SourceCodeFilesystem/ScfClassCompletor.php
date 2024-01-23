@@ -61,9 +61,10 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
             }
 
             foreach ($candidates as $candidate) {
+                $snippet = ($node->getText() === 'new') ? ['snippet' => $candidate->name() . '($1)$0'] : [];
                 yield Suggestion::createWithOptions(
                     $candidate->name(),
-                    [
+                    $snippet + [
                         'type' => Suggestion::TYPE_CLASS,
                         'short_description' => $candidate->__toString(),
                         'class_import' => $this->getClassNameForImport($candidate, $imports, $currentNamespace),
