@@ -4,6 +4,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\SourceCodeFilesystem;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\ClassFileConverter\Domain\ClassName;
@@ -61,7 +62,9 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
             }
 
             foreach ($candidates as $candidate) {
-                $snippet = ($node->getText() === 'new') ? ['snippet' => $candidate->name() . '($1)$0'] : [];
+                $snippet = ($node instanceof ObjectCreationExpression || $node->parent instanceof ObjectCreationExpression)
+                    ? ['snippet' => $candidate->name() . '($1)$0']
+                    : [];
                 yield Suggestion::createWithOptions(
                     $candidate->name(),
                     $snippet + [
