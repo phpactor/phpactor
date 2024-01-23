@@ -42,7 +42,9 @@ class ImportedNameCompletor implements TolerantCompletor, TolerantQualifiable
 
         /** @var ResolvedName $resolvedName */
         foreach ($namespaceImports as $alias => $resolvedName) {
-            $snippet = ($node->parent instanceof ObjectCreationExpression) ? ['snippet' => $alias . '($1)$0'] : [];
+            $snippet = ($node instanceof ObjectCreationExpression || $node->parent instanceof ObjectCreationExpression)
+                ? ['snippet' => $alias . '($1)$0']
+                : [];
 
             yield Suggestion::createWithOptions(
                 $alias,

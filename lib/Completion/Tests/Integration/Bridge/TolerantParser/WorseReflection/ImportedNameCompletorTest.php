@@ -34,6 +34,25 @@ class ImportedNameCompletorTest extends TolerantCompletorTestCase
             []
         ];
 
+        yield 'import local with no prefix' => [
+            <<<'EOT'
+                <?php
+
+                use Barfoo;
+
+                $class = new <>
+                EOT
+        ,
+        [
+                [
+                    'type' => Suggestion::TYPE_CLASS,
+                    'name' => 'Barfoo',
+                    'short_description' => 'Barfoo',
+                    'snippet' => 'Barfoo($1)$0'
+                ]
+        ]
+        ];
+
         yield 'import local' => [
             <<<'EOT'
                 <?php

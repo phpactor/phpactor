@@ -87,7 +87,7 @@ abstract class NameSearcherCompletor
             'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
         ];
 
-        $options += ($node !== null && $node->parent instanceof ObjectCreationExpression)
+        $options += ($node instanceof ObjectCreationExpression || $node !== null && $node->parent instanceof ObjectCreationExpression)
             ? ['snippet' => $result->name()->head() . '($1)$0']
             : [];
 
