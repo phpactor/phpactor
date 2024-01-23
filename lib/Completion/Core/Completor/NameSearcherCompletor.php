@@ -87,8 +87,8 @@ abstract class NameSearcherCompletor
             'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
         ];
 
-        $options += ($node !== null && $node->parent instanceof ObjectCreationExpression) 
-            ? ['snippet' => $result->name()->head() . '($1)$0'] 
+        $options += ($node !== null && $node->parent instanceof ObjectCreationExpression)
+            ? ['snippet' => $result->name()->head() . '($1)$0']
             : [];
 
         if (!$wasFullyQualified && ($node === null || !($node->getParent() instanceof NamespaceUseClause))) {
