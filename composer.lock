@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cde4dde661f5fe0a177855700b7c5e42",
+    "content-hash": "2905f8c5ad5bed4db3cf5d4cd5f1e81e",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1535,57 +1535,13 @@
         },
         {
             "name": "phpactor/class-to-file",
-            "version": "0.5.2",
+            "version": "0.6-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "290dabd216a5486c3faff32e5f84742e6c038108"
+                "url": "https://github.com/przepompownia/class-to-file",
+                "reference": "ltrim-ns-separator-from-absolute-name"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/290dabd216a5486c3faff32e5f84742e6c038108",
-                "reference": "290dabd216a5486c3faff32e5f84742e6c038108",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.4 || ^8.0",
-                "psr/log": "^1.0 || ^2.0 || ^3.0",
-                "symfony/filesystem": "^4.2 || ^5.0 || ^6.0"
-            },
-            "require-dev": {
-                "ergebnis/composer-normalize": "^2.0",
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpspec/prophecy-phpunit": "^2.0",
-                "phpstan/phpstan": "^1.0",
-                "phpunit/phpunit": "^9.0",
-                "symfony/var-dumper": "^6.0 || ^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Phpactor\\ClassFileConverter\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniel Leech",
-                    "email": "daniel@dantleech.com"
-                }
-            ],
-            "description": "Library to covert class names to file paths and vice-versa",
-            "support": {
-                "source": "https://github.com/phpactor/class-to-file/tree/0.5.2"
-            },
-            "time": "2022-10-08T08:32:21+00:00"
+            "type": "library"
         },
         {
             "name": "phpactor/container",
@@ -7957,6 +7913,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "phpactor/class-to-file": 20,
         "jetbrains/phpstorm-stubs": 20,
         "phpactor/tolerant-php-parser": 20,
         "dms/phpunit-arraysubset-asserts": 20
@@ -7972,5 +7929,5 @@
     "platform-overrides": {
         "php": "8.1.0"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
