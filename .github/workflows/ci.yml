@@ -17,7 +17,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Set PHP 8.1
               uses: shivammathur/setup-php@v2
@@ -64,7 +64,7 @@ jobs:
         steps:
             -
                 name: "Checkout code"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
 
             -
                 name: "Install PHP"
@@ -109,7 +109,7 @@ jobs:
         steps:
             -
                 name: "Checkout code"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
             -
                 name: "Install PHP"
                 uses: "shivammathur/setup-php@v2"
@@ -140,7 +140,7 @@ jobs:
         steps:
             -
                 name: "Checkout code"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
             -
                 name: "Install PHP"
                 uses: "shivammathur/setup-php@v2"
@@ -171,7 +171,7 @@ jobs:
         steps:
             -
                 name: "Checkout code"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
             -
                 name: "Install PHP"
                 uses: "shivammathur/setup-php@v2"
@@ -202,7 +202,7 @@ jobs:
         steps:
             -
                 name: "Checkout code"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
             -
                 name: "Install PHP"
                 uses: "shivammathur/setup-php@v2"
@@ -233,7 +233,7 @@ jobs:
         steps:
             -
                 name: "Checkout code"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
             -
                 name: "Install PHP"
                 uses: "shivammathur/setup-php@v2"
@@ -259,7 +259,7 @@ jobs:
         steps:
             -
                 name: "Checkout code"
-                uses: "actions/checkout@v3"
+                uses: "actions/checkout@v4"
             -
                 name: "Make Docs"
                 run: "make docs"
