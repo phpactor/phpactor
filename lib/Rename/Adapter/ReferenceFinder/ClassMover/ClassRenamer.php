@@ -141,7 +141,7 @@ final class ClassRenamer implements Renamer
     private function createNewName(ResolvedName $originalName, string $newName): string
     {
         if (str_starts_with($newName, '\\')) {
-            return $newName;    
+            return $newName;
         }
 
         $parts = $originalName->getNameParts();
