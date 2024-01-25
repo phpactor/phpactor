@@ -85,7 +85,8 @@ class KeywordCompletor implements TolerantCompletor
             yield Suggestion::createWithOptions($name . '(', [
                 'type' => Suggestion::TYPE_METHOD,
                 'priority' => 1,
-            ] + ['snippet' => $name . $snippet]);
+                'snippet' => $name . $snippet,
+            ]);
         }
     }
 
