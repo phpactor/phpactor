@@ -84,7 +84,10 @@ class KeywordCompletor implements TolerantCompletor
         foreach (self::MAGIC_METHODS as $name => $snippet) {
             yield Suggestion::createWithOptions($name . '(', [
                 'type' => Suggestion::TYPE_METHOD,
-                'priority' => 1,
+                'priority' => match ($name) {
+                    '__construct' => -255,
+                    default => 1,
+                },
                 'snippet' => $name . $snippet,
             ]);
         }
