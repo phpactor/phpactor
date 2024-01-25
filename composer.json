@@ -4,16 +4,8 @@
     "license": "MIT",
     "repositories": [
         {
-            "type": "package",
-            "package": {
-                "name": "phpactor/class-to-file",
-                "version": "0.6-dev",
-                "source": {
-                    "url": "https://github.com/przepompownia/class-to-file",
-                    "type": "git",
-                    "reference": "ltrim-ns-separator-from-absolute-name"
-                }
-            }
+            "type": "git",
+            "url": "https://github.com/przepompownia/class-to-file"
         }
     ],
     "require": {
@@ -24,7 +16,7 @@
         "composer/xdebug-handler": "^3.0",
         "symfony/yaml": "^5.1",
         "phpactor/container": "^2.2.0",
-        "phpactor/class-to-file": "0.6-dev",
+        "phpactor/class-to-file": "dev-ltrim-ns-separator-from-absolute-name as 0.6",
         "twig/twig": "^2.4",
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/console": "^5.0",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2905f8c5ad5bed4db3cf5d4cd5f1e81e",
+    "content-hash": "fe7561eb9024b80a8927e5e8ef115a17",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1535,13 +1535,59 @@
         },
         {
             "name": "phpactor/class-to-file",
-            "version": "0.6-dev",
+            "version": "dev-ltrim-ns-separator-from-absolute-name",
             "source": {
                 "type": "git",
                 "url": "https://github.com/przepompownia/class-to-file",
-                "reference": "ltrim-ns-separator-from-absolute-name"
+                "reference": "9cd3b197a6c3170caf780248a5543e3afcd0a90d"
             },
-            "type": "library"
+            "require": {
+                "php": "^7.4 || ^8.0",
+                "psr/log": "^1.0 || ^2.0 || ^3.0",
+                "symfony/filesystem": "^4.2 || ^5.0 || ^6.0"
+            },
+            "require-dev": {
+                "ergebnis/composer-normalize": "^2.0",
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpstan/phpstan": "^1.0",
+                "phpunit/phpunit": "^9.0",
+                "symfony/var-dumper": "^6.0 || ^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phpactor\\ClassFileConverter\\": "lib/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Phpactor\\ClassFileConverter\\Tests\\": "tests/"
+                }
+            },
+            "scripts": {
+                "integrate": [
+                    "vendor/bin/php-cs-fixer fix --dry-run --allow-risky=yes",
+                    "vendor/bin/phpstan analyse lib -c phpstan.neon",
+                    "vendor/bin/phpunit"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Leech",
+                    "email": "daniel@dantleech.com"
+                }
+            ],
+            "description": "Library to covert class names to file paths and vice-versa",
+            "time": "2024-01-24T23:22:26+00:00"
         },
         {
             "name": "phpactor/container",
@@ -7910,7 +7956,14 @@
             "time": "2023-12-16T09:37:35+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "phpactor/class-to-file",
+            "version": "dev-ltrim-ns-separator-from-absolute-name",
+            "alias": "0.6",
+            "alias_normalized": "0.6.0.0"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "phpactor/class-to-file": 20,
