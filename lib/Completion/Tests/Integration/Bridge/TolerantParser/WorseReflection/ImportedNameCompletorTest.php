@@ -34,6 +34,25 @@ class ImportedNameCompletorTest extends TolerantCompletorTestCase
             []
         ];
 
+        yield 'import local with no prefix' => [
+            <<<'EOT'
+                <?php
+
+                use Barfoo;
+
+                $class = new <>
+                EOT
+        ,
+        [
+                [
+                    'type' => Suggestion::TYPE_CLASS,
+                    'name' => 'Barfoo',
+                    'short_description' => 'Barfoo',
+                    'snippet' => 'Barfoo($1)$0'
+                ]
+        ]
+        ];
+
         yield 'import local' => [
             <<<'EOT'
                 <?php
@@ -48,6 +67,7 @@ class ImportedNameCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'Barfoo',
                     'short_description' => 'Barfoo',
+                    'snippet' => 'Barfoo($1)$0'
                 ]
         ]
         ];
@@ -66,6 +86,7 @@ class ImportedNameCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'BarfooThis',
                     'short_description' => 'Barfoo',
+                    'snippet' => 'BarfooThis($1)$0'
                 ]
             ]
         ];
@@ -85,11 +106,13 @@ class ImportedNameCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'Barbar',
                     'short_description' => 'Barbar',
+                    'snippet' => 'Barbar($1)$0'
                 ],
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'BarfooThis',
                     'short_description' => 'Barfoo',
+                    'snippet' => 'BarfooThis($1)$0'
                 ]
             ]
         ];
@@ -110,11 +133,13 @@ class ImportedNameCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'Barbar',
                     'short_description' => 'Foo\\Bar\\Barbar',
+                    'snippet' => 'Barbar($1)$0'
                 ],
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'Barfoo',
                     'short_description' => 'Foo\\Bar\\Barfoo',
+                    'snippet' => 'Barfoo($1)$0'
                 ]
             ]
         ];

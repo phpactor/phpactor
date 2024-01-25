@@ -4,6 +4,7 @@ namespace Phpactor\Completion\Core\Completor;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Phpactor\Completion\Core\DocumentPrioritizer\DefaultResultPrioritizer;
 use Phpactor\Completion\Core\DocumentPrioritizer\DocumentPrioritizer;
@@ -85,6 +86,10 @@ abstract class NameSearcherCompletor
             'name_import' => null,
             'priority' => $this->prioritizer->priority($result->uri(), $sourceUri)
         ];
+
+        $options += ($node instanceof ObjectCreationExpression || $node !== null && $node->parent instanceof ObjectCreationExpression)
+            ? ['snippet' => $result->name()->head() . '($1)$0']
+            : [];
 
         if (!$wasFullyQualified && ($node === null || !($node->getParent() instanceof NamespaceUseClause))) {
             $options['class_import'] = $this->classImport($result);
