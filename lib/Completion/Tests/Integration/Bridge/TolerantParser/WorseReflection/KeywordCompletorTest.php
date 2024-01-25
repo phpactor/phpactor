@@ -93,10 +93,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     private function expectMagicMethods(): Generator
     {
         $methods = [
+            '__construct' => "(\$1)\n{\$0\n}",
             '__call' => "(string \\\$\${1:name}, array \\\$\${2:arguments}): \${3:mixed}\n{\$0\n}",
             '__callStatic' => "(string \\\$\${1:name}, array \\\$\${2:arguments}): \${3:mixed}\n{\$0\n}",
             '__clone' => "(): void\n{\$0\n}",
-            '__construct' => "(\$1)\n{\$0\n}",
             '__debugInfo' => "(): array\n{\$0\n}",
             '__destruct' => "(): void\n{\$0\n}",
             '__get' => "(string \\\$\${1:name}): \${3:mixed}\n{\$0\n}",
