@@ -722,7 +722,7 @@ parameters:
 
 		-
 			message: "#^Cannot call method name\\(\\) on mixed\\.$#"
-			count: 1
+			count: 2
 			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
 
 		-
