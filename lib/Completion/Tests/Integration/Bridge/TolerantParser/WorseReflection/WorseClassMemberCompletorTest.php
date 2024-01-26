@@ -245,15 +245,15 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 EOT
             , [
                 [
-                    'type' => Suggestion::TYPE_CONSTANT,
-                    'name' => 'class',
-                    'short_description' => 'Foobar',
-                ],
-                [
                     'type' => Suggestion::TYPE_METHOD,
                     'name' => 'foo',
                     'short_description' => 'pub foo(): Foobar',
                     'snippet' => 'foo()',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'class',
+                    'short_description' => 'Foobar',
                 ],
             ]
         ];
@@ -741,14 +741,14 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 EOT
             , [
                 [
-                    'type' => Suggestion::TYPE_CONSTANT,
-                    'name' => 'class',
-                    'short_description' => 'BarBar',
-                ],
-                [
                     'type' => Suggestion::TYPE_METHOD,
                     'name' => 'hello',
                     'snippet' => 'hello()',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'class',
+                    'short_description' => 'BarBar',
                 ],
             ]
         ];
