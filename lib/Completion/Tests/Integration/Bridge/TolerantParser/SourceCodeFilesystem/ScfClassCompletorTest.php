@@ -82,25 +82,21 @@ class ScfClassCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'Alphabet',
                     'short_description' => 'Test\Name\Alphabet',
-                    'snippet' => 'Alphabet($1)$0',
                 ],
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'Backwards',
                     'short_description' => 'Test\Name\Backwards',
-                    'snippet' => 'Backwards($1)$0',
                 ],
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'Clapping',
                     'short_description' => 'Test\Name\Clapping',
-                    'snippet' => 'Clapping($1)$0',
                 ],
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'WithoutNS',
                     'short_description' => 'WithoutNS',
-                    'snippet' => 'WithoutNS($1)$0',
                 ],
             ],
         ];
@@ -112,7 +108,6 @@ class ScfClassCompletorTest extends TolerantCompletorTestCase
                     'type' => Suggestion::TYPE_CLASS,
                     'name' => 'Clapping',
                     'short_description' => 'Test\Name\Clapping',
-                    'snippet' => 'Clapping($1)$0',
                 ],
             ],
         ];

@@ -4,7 +4,6 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\ResolvedName;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
@@ -42,17 +41,13 @@ class ImportedNameCompletor implements TolerantCompletor, TolerantQualifiable
 
         /** @var ResolvedName $resolvedName */
         foreach ($namespaceImports as $alias => $resolvedName) {
-            $snippet = ($node instanceof ObjectCreationExpression || $node->parent instanceof ObjectCreationExpression)
-                ? ['snippet' => $alias . '($1)$0']
-                : [];
-
             yield Suggestion::createWithOptions(
                 $alias,
                 [
                     'type' => Suggestion::TYPE_CLASS,
                     'short_description' => sprintf('%s', $resolvedName->__toString()),
                     'fqn' => $resolvedName->__toString(),
-                ] + $snippet
+                ]
             );
         }
 
