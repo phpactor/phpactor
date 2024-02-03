@@ -6,6 +6,7 @@ use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LineCol;
 use Phpactor\TextDocument\Util\LineAtOffset;
+use RuntimeException;
 
 class PositionConverter
 {
@@ -23,23 +24,13 @@ class PositionConverter
         $lineCol = LineCol::fromByteOffset($text, $offset);
         $lineAtOffset = LineAtOffset::lineAtByteOffset($text, $offset);
 
-        $lineAtOffset = self::normalizeUTF16(mb_substr(
+        $lineAtOffset = mb_substr(
             $lineAtOffset,
             0,
             $lineCol->col() - 1
-        ));
+        );
 
-        return new Position($lineCol->line() - 1, strlen($lineAtOffset) / 2);
-    }
-    
-    private static function normalizeUTF16(string $string): string
-    {
-        $utf16 = \mb_convert_encoding($string, 'UTF-16', 'UTF-8');
-        if ($utf16 === false) {
-            throw new RuntimeException('String cannot be converted to UTF-16');
-        }
-
-        return $utf16;
+        return new Position($lineCol->line() - 1, self::countUtf16CodeUnits($lineAtOffset));
     }
 
     public static function positionToByteOffset(Position $position, string $text): ByteOffset
@@ -48,5 +39,23 @@ class PositionConverter
         $byteOffset = $lineCol->toByteOffset($text);
 
         return ByteOffset::fromInt($byteOffset->toInt() + $position->character);
+    }
+
+    /**
+     * Stolen from: https://github.com/symfony/symfony/issues/45459#issuecomment-1045502304
+     */
+    private static function normalizeUtf16(string $string): string
+    {
+        $utf16 = \mb_convert_encoding($string, 'UTF-16', 'UTF-8');
+        if (!is_string($utf16)) {
+            throw new RuntimeException('String cannot be converted to UTF-16');
+        }
+
+        return $utf16;
+    }
+
+    private static function countUtf16CodeUnits(string $string): int
+    {
+        return (int)(strlen(self::normalizeUtf16($string)) / 2);
     }
 }

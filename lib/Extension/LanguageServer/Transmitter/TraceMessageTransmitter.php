@@ -30,6 +30,6 @@ class TraceMessageTransmitter implements MessageTransmitter
             return $value;
         })($encoded));
 
-        $this->logger->info($message, json_decode($encoded, true));
+        $this->logger->info($message, (array)json_decode($encoded, true));
     }
 }
