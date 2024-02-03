@@ -23,13 +23,23 @@ class PositionConverter
         $lineCol = LineCol::fromByteOffset($text, $offset);
         $lineAtOffset = LineAtOffset::lineAtByteOffset($text, $offset);
 
-        $lineAtOffset = mb_substr(
+        $lineAtOffset = self::normalizeUTF16(mb_substr(
             $lineAtOffset,
             0,
             $lineCol->col() - 1
-        );
+        ));
 
-        return new Position($lineCol->line() - 1, strlen($lineAtOffset));
+        return new Position($lineCol->line() - 1, strlen($lineAtOffset) / 2);
+    }
+    
+    private static function normalizeUTF16(string $string): string
+    {
+        $utf16 = \mb_convert_encoding($string, 'UTF-16', 'UTF-8');
+        if ($utf16 === false) {
+            throw new RuntimeException('String cannot be converted to UTF-16');
+        }
+
+        return $utf16;
     }
 
     public static function positionToByteOffset(Position $position, string $text): ByteOffset
