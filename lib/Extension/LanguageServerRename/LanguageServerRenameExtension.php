@@ -43,7 +43,6 @@ class LanguageServerRenameExtension implements Extension
         $container->register(FileRenameHandler::class, function (Container $container) {
             return new FileRenameHandler(
                 $container->get(FileRenamer::class),
-                $container->get(LocatedTextEditConverter::class),
             );
         }, [
             LanguageServerExtension::TAG_METHOD_HANDLER => []

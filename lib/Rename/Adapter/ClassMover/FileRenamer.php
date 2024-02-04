@@ -4,12 +4,15 @@ namespace Phpactor\Rename\Adapter\ClassMover;
 
 use Amp\Promise;
 use Phpactor\ClassMover\ClassMover;
+use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\Rename\Model\Exception\CouldNotConvertUriToClass;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer as PhpactorFileRenamer;
 use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\RenameResult;
 use Phpactor\Rename\Model\UriToNameConverter;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentLocator;
@@ -23,16 +26,17 @@ class FileRenamer implements PhpactorFileRenamer
         private UriToNameConverter $converter,
         private TextDocumentLocator $locator,
         private QueryClient $client,
-        private ClassMover $mover
+        private ClassMover $mover,
+        private LocatedTextEditConverter $textEditConverter,
     ) {
     }
 
     /**
-     * @return Promise<LocatedTextEditsMap>
+     * @return Promise<WorkspaceEdit>
      */
     public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
     {
-        return call(function () use ($from, $to) {
+        return call(function () use ($from, $to): WorkspaceEdit {
             try {
                 $fromClass = $this->converter->convert($from);
                 $toClass = $this->converter->convert($to);
@@ -43,7 +47,8 @@ class FileRenamer implements PhpactorFileRenamer
             $references = $this->client->class()->referencesTo($fromClass);
 
             // rename class definition
-            $locatedEdits = $this->replaceDefinition($to, $fromClass, $toClass);
+            // $locatedEdits = $this->replaceDefinition($to, $fromClass, $toClass);
+            $locatedEdits = [];
 
             $edits = TextEdits::none();
             $seen = [];
@@ -68,24 +73,27 @@ class FileRenamer implements PhpactorFileRenamer
                 }
             }
 
-            return LocatedTextEditsMap::fromLocatedEdits($locatedEdits);
+            $editsMap = LocatedTextEditsMap::fromLocatedEdits($locatedEdits);
+            $workspaceEdit = $this->textEditConverter->toWorkspaceEdit($editsMap, new RenameResult($from, $to));
+
+            return $workspaceEdit;
         });
     }
 
-    /**
-     * @return LocatedTextEdit[]
-     */
-    private function replaceDefinition(TextDocumentUri $file, string $fromClass, string $toClass): array
-    {
-        $document = $this->locator->get($file);
-        $locatedEdits = [];
-        foreach ($this->mover->replaceReferences(
-            $this->mover->findReferences($document, $fromClass),
-            $toClass
-        ) as $edit) {
-            $locatedEdits[] = new LocatedTextEdit($file, $edit);
-        }
-
-        return $locatedEdits;
-    }
+    // /**
+    //  * @return LocatedTextEdit[]
+    //  */
+    // private function replaceDefinition(TextDocumentUri $file, string $fromClass, string $toClass): array
+    // {
+    //     $document = $this->locator->get($file);
+    //     $locatedEdits = [];
+    //     foreach ($this->mover->replaceReferences(
+    //         $this->mover->findReferences($document, $fromClass),
+    //         $toClass
+    //     ) as $edit) {
+    //         $locatedEdits[] = new LocatedTextEdit($file, $edit);
+    //     }
+    //
+    //     return $locatedEdits;
+    // }
 }

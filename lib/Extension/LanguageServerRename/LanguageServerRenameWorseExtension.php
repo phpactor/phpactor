@@ -8,6 +8,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer\WorkspaceUpdateReferenceFinder;
+use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\Rename\Adapter\ClassMover\FileRenamer as PhpactorFileRenamer;
 use Phpactor\Rename\Adapter\ClassToFile\ClassToFileNameToUriConverter;
 use Phpactor\Rename\Adapter\WorseReflection\WorseNameToUriConverter;
@@ -75,7 +76,7 @@ class LanguageServerRenameWorseExtension implements Extension
         ]);
 
         $container->register(DefinitionAndReferenceFinder::class, function (Container $container) {
-            // wrap the definiton and reference finder to update the index with the current workspace
+            // wrap the definition and reference finder to update the index with the current workspace
             return new WorkspaceUpdateReferenceFinder(
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(Indexer::class),
@@ -91,7 +92,8 @@ class LanguageServerRenameWorseExtension implements Extension
                 new ClassToFileUriToNameConverter($container->get(ClassToFileExtension::SERVICE_CONVERTER)),
                 $container->get(TextDocumentLocator::class),
                 $container->get(QueryClient::class),
-                $container->get(ClassMover::class)
+                $container->get(ClassMover::class),
+                $container->get(LocatedTextEditConverter::class),
             );
             return new LoggingFileRenamer(
                 $renamer,

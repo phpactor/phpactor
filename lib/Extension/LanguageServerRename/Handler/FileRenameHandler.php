@@ -5,8 +5,6 @@ namespace Phpactor\Extension\LanguageServerRename\Handler;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\FileOperationOptions;
 use Phpactor\Rename\Model\FileRenamer;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\LanguageServerProtocol\FileOperationFilter;
 use Phpactor\LanguageServerProtocol\FileOperationPattern;
 use Phpactor\LanguageServerProtocol\FileOperationRegistrationOptions;
@@ -21,7 +19,7 @@ use function Amp\call;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
 {
-    public function __construct(private FileRenamer $renamer, private LocatedTextEditConverter $converter)
+    public function __construct(private FileRenamer $renamer)
     {
     }
 
@@ -39,14 +37,22 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
     public function willRenameFiles(RenameFilesParams $params): Promise
     {
         return call(function () use ($params) {
-            $workspaceEdits = LocatedTextEditsMap::create();
+            $documentChanges = [];
+
             foreach ($params->files as $rename) {
                 assert($rename instanceof FileRename);
 
-                $workspaceEdits = $workspaceEdits->merge(yield $this->renamer->renameFile(TextDocumentUri::fromString($rename->oldUri), TextDocumentUri::fromString($rename->newUri)));
+                $res = yield $this->renamer->renameFile(
+                    TextDocumentUri::fromString($rename->oldUri),
+                    TextDocumentUri::fromString($rename->newUri)
+                );
+
+                foreach ($res->documentChanges as $change) {
+                    $documentChanges[] = $change;
+                }
             }
 
-            return $this->converter->toWorkspaceEdit($workspaceEdits);
+            return new WorkspaceEdit(documentChanges: $documentChanges);
         });
     }
 

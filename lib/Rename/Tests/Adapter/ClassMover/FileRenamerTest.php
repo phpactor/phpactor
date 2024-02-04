@@ -4,7 +4,12 @@ namespace Phpactor\Rename\Tests\Adapter\ClassMover;
 
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassMover\ClassMover;
+use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
+use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\Indexer\Model\Record;
+use Phpactor\LanguageServerProtocol\TextDocumentItem;
+use Phpactor\LanguageServerProtocol\WorkspaceEdit;
+use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\Rename\Adapter\ClassMover\FileRenamer;
 use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
@@ -47,9 +52,9 @@ class FileRenamerTest extends IntegrationTestCase
 
         $edits = wait($renamer->renameFile($document1->uri(), $document2->uri()));
 
-        self::assertInstanceOf(LocatedTextEditsMap::class, $edits);
-        assert($edits instanceof LocatedTextEditsMap);
-        self::assertCount(3, $edits->toLocatedTextEdits(), 'Locates two references');
+        self::assertInstanceOf(WorkspaceEdit::class, $edits);
+        assert($edits instanceof WorkspaceEdit);
+        self::assertCount(3, $edits->documentChanges);
     }
 
     /**
@@ -58,9 +63,19 @@ class FileRenamerTest extends IntegrationTestCase
      */
     private function createRenamer(array $textDocuments, array $records): FileRenamer
     {
+        $builder = LanguageServerTesterBuilder::createBare()
+            ->enableTextDocuments()
+            ->enableFileEvents();
+
         foreach ($textDocuments as $textDocument) {
             assert($textDocument instanceof TextDocument);
             file_put_contents($textDocument->uri()->path(), $textDocument->__toString());
+            $builder->workspace()->open(new TextDocumentItem(
+                $textDocument->uri(),
+                'php',
+                1,
+                $textDocument->__toString(),
+            ));
         }
 
         return new FileRenamer(
@@ -68,6 +83,7 @@ class FileRenamerTest extends IntegrationTestCase
             InMemoryDocumentLocator::fromTextDocuments($textDocuments),
             new QueryClient(new InMemoryIndex($records)),
             new ClassMover(),
+            new LocatedTextEditConverter($builder->workspace(), new WorkspaceTextDocumentLocator($builder->workspace()))
         );
     }
 
