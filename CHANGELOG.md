@@ -21,6 +21,7 @@ Improvements:
 
 Bug fixes:
 
+  - Fix UTF-16 conversion for LSP #2530
   - Fix support for Attributes on readonly classes #2493
   - Fix `$this` undefined var false positive in anon. class #2469 @mamazu
   - Fix `$argv` undefined var false positives #2468 @mamazu
