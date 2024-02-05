@@ -3,6 +3,7 @@
 namespace Phpactor\Rename\Model\FileRenamer;
 
 use Amp\Promise;
+use Generator;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LoggerInterface;
@@ -15,7 +16,7 @@ class LoggingFileRenamer implements FileRenamer
     }
 
 
-    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
+    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Generator
     {
         return call(function () use ($from, $to) {
             $result = $this->innerRenamer->renameFile($from, $to);

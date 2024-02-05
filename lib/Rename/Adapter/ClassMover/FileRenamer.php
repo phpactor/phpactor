@@ -3,8 +3,8 @@
 namespace Phpactor\Rename\Adapter\ClassMover;
 
 use Amp\Promise;
+use Generator;
 use Phpactor\ClassMover\ClassMover;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\Rename\Model\Exception\CouldNotConvertUriToClass;
@@ -27,57 +27,56 @@ class FileRenamer implements PhpactorFileRenamer
         private TextDocumentLocator $locator,
         private QueryClient $client,
         private ClassMover $mover,
-        private LocatedTextEditConverter $textEditConverter,
     ) {
     }
 
     /**
-     * @return Promise<WorkspaceEdit>
+     * @return Promise<LocatedTextEdit>
      */
-    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
+    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Generator
     {
-        return call(function () use ($from, $to): WorkspaceEdit {
+        try {
+            $fromClass = $this->converter->convert($from);
+            $toClass = $this->converter->convert($to);
+        } catch (CouldNotConvertUriToClass $error) {
+            throw new CouldNotRename($error->getMessage(), 0, $error);
+        }
+
+        $references = $this->client->class()->referencesTo($fromClass);
+
+        // rename class definition
+        // $locatedEdits = $this->replaceDefinition($to, $fromClass, $toClass);
+        // $locatedEdits = [];
+
+        $edits = TextEdits::none();
+        $seen = [];
+        foreach ($references as $reference) {
+            if (isset($seen[$reference->location()->uri()->path()])) {
+                continue;
+            }
+
+            $seen[$reference->location()->uri()->path()] = true;
+
             try {
-                $fromClass = $this->converter->convert($from);
-                $toClass = $this->converter->convert($to);
-            } catch (CouldNotConvertUriToClass $error) {
-                throw new CouldNotRename($error->getMessage(), 0, $error);
+                $document = $this->locator->get($reference->location()->uri());
+            } catch (TextDocumentNotFound) {
+                continue;
             }
 
-            $references = $this->client->class()->referencesTo($fromClass);
-
-            // rename class definition
-            // $locatedEdits = $this->replaceDefinition($to, $fromClass, $toClass);
-            $locatedEdits = [];
-
-            $edits = TextEdits::none();
-            $seen = [];
-            foreach ($references as $reference) {
-                if (isset($seen[$reference->location()->uri()->path()])) {
-                    continue;
-                }
-
-                $seen[$reference->location()->uri()->path()] = true;
-
-                try {
-                    $document = $this->locator->get($reference->location()->uri());
-                } catch (TextDocumentNotFound) {
-                    continue;
-                }
-
-                foreach ($this->mover->replaceReferences(
-                    $this->mover->findReferences($document->__toString(), $fromClass),
-                    $toClass
-                ) as $edit) {
-                    $locatedEdits[] = new LocatedTextEdit($reference->location()->uri(), $edit);
-                }
+            foreach ($this->mover->replaceReferences(
+                $this->mover->findReferences($document->__toString(), $fromClass),
+                $toClass
+            ) as $edit) {
+                yield new LocatedTextEdit($reference->location()->uri(), $edit);
             }
+        }
 
-            $editsMap = LocatedTextEditsMap::fromLocatedEdits($locatedEdits);
-            $workspaceEdit = $this->textEditConverter->toWorkspaceEdit($editsMap, new RenameResult($from, $to));
+        // $editsMap = LocatedTextEditsMap::fromLocatedEdits($locatedEdits);
+        // $workspaceEdit = $this->textEditConverter->toWorkspaceEdit($editsMap, new RenameResult($from, $to));
 
-            return $workspaceEdit;
-        });
+        return new RenameResult($from, $to);
+        // return call(function () use ($from, $to): WorkspaceEdit {
+        // });
     }
 
     // /**

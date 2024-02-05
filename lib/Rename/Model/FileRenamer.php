@@ -3,7 +3,7 @@
 namespace Phpactor\Rename\Model;
 
 use Amp\Promise;
-use Phpactor\LanguageServerProtocol\WorkspaceEdit;
+use Generator;
 use Phpactor\TextDocument\TextDocumentUri;
 
 interface FileRenamer
@@ -11,7 +11,7 @@ interface FileRenamer
     /**
      * Promise can throw a CouldNotRename exception
      *
-     * @return Promise<WorkspaceEdit>
+     * @return Promise<LocatedTextEdit>
      */
-    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise;
+    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Generator;
 }

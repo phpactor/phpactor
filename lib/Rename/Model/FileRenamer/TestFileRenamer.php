@@ -5,6 +5,7 @@ namespace Phpactor\Rename\Model\FileRenamer;
 use Amp\Failure;
 use Amp\Promise;
 use Amp\Success;
+use Generator;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer;
@@ -20,7 +21,7 @@ class TestFileRenamer implements FileRenamer
         $this->workspaceEdit = $workspaceEdit ?: new WorkspaceEdit(documentChanges: []);
     }
 
-    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
+    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Generator
     {
         if ($this->throw) {
             return new Failure(new CouldNotRename('There was a problem'));

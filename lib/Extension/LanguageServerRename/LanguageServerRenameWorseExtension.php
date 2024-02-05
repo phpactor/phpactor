@@ -93,7 +93,6 @@ class LanguageServerRenameWorseExtension implements Extension
                 $container->get(TextDocumentLocator::class),
                 $container->get(QueryClient::class),
                 $container->get(ClassMover::class),
-                $container->get(LocatedTextEditConverter::class),
             );
             return new LoggingFileRenamer(
                 $renamer,
