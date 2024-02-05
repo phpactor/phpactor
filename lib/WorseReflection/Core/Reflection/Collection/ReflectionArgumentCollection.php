@@ -1,20 +1,16 @@
 <?php
 
-/**
- * This file is part of the Aldi C&C Project and there for Aldi new Project IP.
- * The license terms agreed between ALDI and Spryker in the Framework Agreement
- * on Software and IT Services under § 10 shall apply.
- */
-
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
-use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionArgument;
-use Phpactor\WorseReflection\Core\Inference\Frame;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument as PhpactorReflectionArgument;
 use Phpactor\WorseReflection\Core\ServiceLocator;
+use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionArgument;
 
 /**
- * @extends \Phpactor\WorseReflection\Core\Reflection\Collection\AbstractReflectionCollection<\Phpactor\WorseReflection\Core\Reflection\ReflectionArgument>
+ * @extends AbstractReflectionCollection<PhpactorReflectionArgument>
  */
 class ReflectionArgumentCollection extends AbstractReflectionCollection
 {
@@ -22,6 +18,9 @@ class ReflectionArgumentCollection extends AbstractReflectionCollection
     {
         $arguments = [];
         foreach ($list->getElements() as $element) {
+            if (!$element instanceof ArgumentExpression) {
+                continue;
+            }
             if ($element->name) {
                 $key = $element->name->getText($element->getFileContents());
                 $arguments[$key] = new ReflectionArgument($locator, $frame, $element);
@@ -44,7 +43,7 @@ class ReflectionArgumentCollection extends AbstractReflectionCollection
     }
 
     /**
-     * @return array<string, \Phpactor\WorseReflection\Core\Reflection\ReflectionArgument>
+     * @return array<string,PhpactorReflectionArgument>
      */
     public function named(): array
     {
