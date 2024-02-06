@@ -17,7 +17,7 @@ The extension must be via. :ref:`param_behat.enabled`:
 Symfony Integration
 -------------------
 
-If you are using Syfmony and dependency injection to manage your contexts you
+If you are using Symfony and dependency injection to manage your contexts you
 can specify the path to the XML debug file in
 :ref:`param_behat.symfony.di_xml_path`:
 

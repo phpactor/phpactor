@@ -6,11 +6,12 @@ use ArrayIterator;
 use Iterator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\FilterPhpVersionDirectoryIterator;
+use Prophecy\PhpUnit\ProphecyTrait;
 use SplFileInfo;
 
 class FilterPhpVersionDirectoryIteratorTest extends TestCase
 {
-    use \Prophecy\PhpUnit\ProphecyTrait;
+    use ProphecyTrait;
 
     /**
      * @dataProvider provideDirectoriesToFilter
@@ -56,7 +57,7 @@ class FilterPhpVersionDirectoryIteratorTest extends TestCase
 
     private function createFakeSplFileInfo(string $filename, bool $isDir = false): SplFileInfo
     {
-        $file = $this->prophesize(SplFileInfo::class);
+        $file = $this->prophesize(\Symfony\Component\Finder\SplFileInfo::class);
         $file->getFilename()->willReturn($filename);
         $file->isDir()->willReturn($isDir);
 

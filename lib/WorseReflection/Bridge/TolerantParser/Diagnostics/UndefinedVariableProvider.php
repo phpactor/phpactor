@@ -177,6 +177,23 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'this in anonymous class',
+            source: <<<'PHP'
+                    <?php
+                    new class
+                    {
+                        public function foo(): void
+                        {
+                            $this
+                        }
+                    };
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'is in enum',
             source: <<<'PHP'
                 <?php
@@ -307,6 +324,22 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'SAPI global variables',
+            source: <<<'PHP'
+                    <?php
+                    if ($argc === 2) {
+                        echo "Hello ".$argv[1].PHP_EOL;
+                    } else {
+                        echo "Usage ".__FILE__. " <name>";
+                    }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+
         yield new DiagnosticExample(
             title: 'local globals',
             source: <<<'PHP'

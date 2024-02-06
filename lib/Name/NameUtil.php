@@ -80,7 +80,7 @@ final class NameUtil
 
     public static function toFullyQualified(string $name): string
     {
-        if (substr($name, 0, 1) == '\\') {
+        if (str_starts_with($name, '\\')) {
             return $name;
         }
         return '\\' . $name;

@@ -29,6 +29,7 @@ class DocblockCompletor implements TolerantCompletor
         '@implements',
         '@template',
         '@template-extends',
+        '@throws',
     ];
     const TAGS_WITH_VAR = [
         '@param',
@@ -41,6 +42,7 @@ class DocblockCompletor implements TolerantCompletor
         '@property',
         '@implements',
         '@extends',
+        '@throws',
     ];
 
     public function __construct(

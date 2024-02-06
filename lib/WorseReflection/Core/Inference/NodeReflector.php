@@ -39,6 +39,9 @@ class NodeReflector
         if ($node instanceof ObjectCreationExpression) {
             return $this->reflectObjectCreationExpression($frame, $node);
         }
+        if ($node instanceof CallExpression) {
+            return $this->reflectCallExpression($frame, $node);
+        }
 
         if ($node instanceof MatchExpression) {
             return $this->reflectMatchExpression($frame, $node);
@@ -126,5 +129,21 @@ class NodeReflector
             $frame,
             $node
         );
+    }
+
+    private function reflectCallExpression(Frame $frame, CallExpression $node): ReflectionNode
+    {
+        if ($node->callableExpression instanceof MemberAccessExpression) {
+            return new ReflectionMethodCall(
+                $this->services,
+                $frame,
+                $node->callableExpression
+            );
+        }
+
+        throw new CouldNotResolveNode(sprintf(
+            'Did not know how to reflect node of type "%s"',
+            get_class($node)
+        ));
     }
 }

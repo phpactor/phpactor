@@ -1,6 +1,31 @@
 Changelog
 =========
 
+## master
+
+Features:
+
+  - Completion suggestions filtered by accepting type #2456
+
+Improvements:
+
+  - PHPStan show tip if as a dignostic hint if available #2512
+  - Docblock completion, suggest `@throws` @przepompownia
+  - Suggest named parameters on attributes @mamazu
+  - Remove redundant documentation #2500 @einenlum
+  - Resolve inherited generic types #2474
+  - Allow additional CLI arguments to be passed to php code sniffer #2465
+  - Clear document diagnostic cache on save #2458
+  - Skip parent parameters on complete constructor #2471 @mamazu
+  - Support generics on `@mixin` #2463
+
+Bug fixes:
+
+  - Fix UTF-16 conversion for LSP #2530
+  - Fix support for Attributes on readonly classes #2493
+  - Fix `$this` undefined var false positive in anon. class #2469 @mamazu
+  - Fix `$argv` undefined var false positives #2468 @mamazu
+
 ## 2023-12-03
 
 Bug fixes:

@@ -537,7 +537,7 @@ Completion for class like contexts.
 
 Enable or disable the ``type`` completor.
 
-Completion for types.
+Completion for scalar types.
 
 
 **Default**: ``true``
@@ -2120,6 +2120,32 @@ Whether PHP_CodeSniffer diagnostics are shown
 
 
 **Default**: ``true``
+
+
+.. _param_php_code_sniffer.args:
+
+
+``php_code_sniffer.args``
+"""""""""""""""""""""""""
+
+
+Additional arguments to pass to the PHPCS process
+
+
+**Default**: ``[]``
+
+
+.. _param_php_code_sniffer.cwd:
+
+
+``php_code_sniffer.cwd``
+""""""""""""""""""""""""
+
+
+Working directory for PHPCS
+
+
+**Default**: ``null``
 
 
 .. _LanguageServerBlackfireExtension:

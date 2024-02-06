@@ -47,7 +47,7 @@ The ``CodeAction`` list can then reference a command by name and provide argumen
                     $interfaceFQN,
                 ]
             )
-        ]),
+        ),
     ];
 
 The command is defined in our example in the ``GenerateDecoratorCommand`` which

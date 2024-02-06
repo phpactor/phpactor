@@ -94,10 +94,7 @@ class IterableTypeResolver
         if (isset($arguments[1])) {
             return $arguments[1];
         }
-        if (isset($arguments[0])) {
-            return $arguments[0];
-        }
 
-        return new MissingType();
+        return $arguments[0] ?? new MissingType();
     }
 }

@@ -210,7 +210,7 @@ class WorseTolerantMemberFinder implements MemberFinder
             $memberName = (string) $node->memberName->getText($node->getFileContents());
 
             // TODO: Some better way to determine if member names are properties
-            if (substr($memberName, 0, 1) == '$' && $query->matchesMemberName($memberName)) {
+            if (str_starts_with($memberName, '$') && $query->matchesMemberName($memberName)) {
                 $memberNodes[] = $node;
             }
         }

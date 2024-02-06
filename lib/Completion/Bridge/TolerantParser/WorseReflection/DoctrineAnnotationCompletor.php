@@ -118,12 +118,12 @@ class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Compl
 
     private function isAnAnnotation(Suggestion $suggestion): bool
     {
-        if (null === $suggestion->classImport()) {
+        if (null === $suggestion->nameImport()) {
             return false;
         }
 
         try {
-            $reflectionClass = $this->reflector->reflectClass($suggestion->classImport());
+            $reflectionClass = $this->reflector->reflectClass($suggestion->nameImport());
             $docblock = $reflectionClass->docblock();
 
             return str_contains($docblock->raw(), '@Annotation');

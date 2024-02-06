@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection;
 use Phpactor\WorseReflection\Core\Trinary;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
 use Phpactor\WorseReflection\Core\Type\BooleanType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
@@ -111,5 +112,21 @@ class TypeUtil
         }
 
         return $valueType ?: new MissingType();
+    }
+
+    public static function contains(string $string, Type $type): bool
+    {
+        if ($type instanceof $string) {
+            return true;
+        }
+        if ($type instanceof AggregateType) {
+            foreach ($type->expandTypes() as $type) {
+                if ($type instanceof $string) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

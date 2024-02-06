@@ -40,7 +40,7 @@ class QualifiedName
 
     public static function fromString(string $string): static
     {
-        if (empty($string)) {
+        if ($string === '') {
             throw new InvalidArgumentException(
                 'Name cannot be empty'
             );

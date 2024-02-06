@@ -57,7 +57,7 @@ class ClassReferences
         foreach ($filesystem->fileList()->phpFiles() as $filePath) {
             $references = $this->fileReferences($filesystem, $filePath, $className, $replace, $dryRun);
 
-            if (empty($references['references'])) {
+            if ($references['references'] === []) {
                 continue;
             }
 
