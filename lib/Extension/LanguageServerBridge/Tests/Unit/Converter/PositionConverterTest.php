@@ -19,4 +19,30 @@ class PositionConverterTest extends TestCase
             )
         );
     }
+
+    public function testUtf16(): void
+    {
+        self::assertEquals(
+            new Position(0, 0),
+            PositionConverter::byteOffsetToPosition(
+                ByteOffset::fromInt(0),
+                'a𐐀b'
+            )
+        );
+
+        self::assertEquals(
+            new Position(0, 1),
+            PositionConverter::byteOffsetToPosition(
+                ByteOffset::fromInt(1),
+                'a𐐀b'
+            )
+        );
+        self::assertEquals(
+            new Position(0, 3),
+            PositionConverter::byteOffsetToPosition(
+                ByteOffset::fromInt(2),
+                'a𐐀b'
+            )
+        );
+    }
 }
