@@ -43,8 +43,7 @@ final class FunctionCallContext extends NodeContext
         ByteOffsetRange $byteOffsetRange,
         ReflectionFunction $function,
         FunctionArguments $arguments,
-    ): self
-    {
+    ): self {
         return new self(
             Symbol::fromTypeNameAndPosition(Symbol::FUNCTION, $name, $byteOffsetRange),
             $byteOffsetRange,
