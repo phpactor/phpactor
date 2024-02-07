@@ -4,12 +4,14 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Amp\Promise;
 use Generator;
+use Microsoft\PhpParser\Node;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
@@ -63,6 +65,8 @@ interface SourceCodeReflector
         TextDocument $sourceCode,
         ByteOffset|int $offset
     ): ReflectionNode;
+
+    public function reflectNodeContext(Node $node): NodeContext;
 
     public function reflectConstantsIn(
         TextDocument $sourceCode
