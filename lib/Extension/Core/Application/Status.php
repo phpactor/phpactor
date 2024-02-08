@@ -10,6 +10,7 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Composer\XdebugHandler\XdebugHandler;
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\Process\Process;
+use Phar;
 
 class Status
 {
@@ -21,7 +22,6 @@ class Status
         private string $workingDirectory,
         private PhpVersionResolver $phpVersionResolver,
         ExecutableFinder $executableFinder = null,
-        private bool $warnOnDevelop = true
     ) {
         $this->executableFinder = $executableFinder ?: new ExecutableFinder();
     }
@@ -65,12 +65,12 @@ class Status
         return $diagnostics;
     }
     /**
-     * @param array<string,string> $diagnostics
-     * @return array<string,string>
+     * @param array<string,mixed> $diagnostics
+     * @return array<string,mixed>
      */
     private function resolveVersion(array $diagnostics): array
     {
-        if (\Phar::running() !== '') {
+        if (Phar::running() !== '') {
             $diagnostics['phpactor_version'] = InstalledVersions::getVersion('phpactor/phpactor');
             return $diagnostics;
         }

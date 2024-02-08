@@ -31,7 +31,6 @@ use Phpactor\Extension\LanguageServerSymbolProvider\LanguageServerSymbolProvider
 use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRangeExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
-use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
 use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferExtension;
 use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferSuggestExtension;
@@ -181,7 +180,6 @@ class Phpactor
             LanguageServerCodeTransformExtension::class,
             LanguageServerSymbolProviderExtension::class,
             LanguageServerSelectionRangeExtension::class,
-            LanguageServerExtraExtension::class,
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,

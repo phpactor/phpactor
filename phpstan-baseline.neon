@@ -3211,11 +3211,6 @@ parameters:
 			path: lib/Extension/Core/CoreExtension.php
 
 		-
-			message: "#^Parameter \\#6 \\$warnOnDevelop of class Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\CacheClearHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Core/Rpc/CacheClearHandler.php
