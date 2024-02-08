@@ -103,7 +103,7 @@ class Status
             ];
         }
 
-        if (!preg_match('{^(.*)REF(.*?)REF}', $process->getOutput(), $matches)) {
+        if (!preg_match('{^"?(.*)REF(.*?)REF}', $process->getOutput(), $matches)) {
             return [
                 'phpactor_version' => $process->getOutput(),
             ];
