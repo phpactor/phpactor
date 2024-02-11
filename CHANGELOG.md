@@ -22,6 +22,7 @@ Improvements:
 
 Bug fixes:
 
+  - Fix detection of import used relatively in an annotation #2539
   - Fix PHAR crashing issue on PHP8.3 #2533
   - Fix UTF-16 conversion for LSP #2530
   - Fix support for Attributes on readonly classes #2493
