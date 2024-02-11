@@ -104,8 +104,16 @@ class UnusedImportProvider implements DiagnosticProvider
                 continue;
             }
 
+            // see if the imported name is used by an annotation
             if ($this->usedByAnnotation($contents, $importedName, $imported)) {
                 continue;
+            }
+
+            // scan all usages and check if imported name is used relatively
+            foreach (array_keys($this->usedPrefixes) as $prefix) {
+                if (0 === strpos($prefix, $importedName . '\\')) {
+                    continue 2;
+                }
             }
 
             yield UnusedImportDiagnostic::for(
@@ -420,6 +428,27 @@ class UnusedImportProvider implements DiagnosticProvider
                 use Foobar;
 
                 new Foobar();
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'parent relative segment',
+            source: <<<'PHP'
+                <?php
+
+                namespace Phpactor;
+
+                use Dummy;
+
+                class Test {
+                    /**
+                     * @var Dummy\Foo
+                     */
+                    private $foo;
+                }
                 PHP,
             valid: true,
             assertion: function (Diagnostics $diagnostics): void {
