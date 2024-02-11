@@ -128,6 +128,31 @@ class ReflectionEnumTest extends IntegrationTestCase
                 self::assertEquals('string', $class->backedType());
             },
         ];
+        yield 'Return backed case with const' => [
+        <<<'EOT'
+                            <?php
+
+                            enum Enum1: string
+                            {
+                                public const BAR = 'BAR';
+                                case FOOBAR = self::BAR;
+                            }
+
+            EOT
+            ,
+            'Enum1',
+            function (ReflectionEnum $class): void {
+                $case = $class->cases()->get('FOOBAR');
+                self::assertEquals('FOOBAR', $case->name());
+                self::assertEquals('"BAR"', $case->value()->__toString());
+                self::assertEquals('enum(Enum1::FOOBAR)', $case->type()->__toString());
+                self::assertInstanceOf(EnumBackedCaseType::class, $case->type());
+                self::assertTrue($class->isBacked());
+                self::assertEquals('string', $class->backedType());
+                $const = $class->constants()->get('BAR');
+                self::assertEquals('BAR', $const->value());
+            },
+        ];
         yield 'Return backed methods' => [
         <<<'EOT'
                             <?php

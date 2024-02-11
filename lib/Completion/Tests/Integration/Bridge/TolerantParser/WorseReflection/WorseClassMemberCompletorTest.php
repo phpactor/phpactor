@@ -843,12 +843,18 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
 
                     enum Enum1 {
                         case FOOBAR;
+                        const FOO = 'FOO';
                     }
 
                     Enum1::F<>
 
                     EOT
                 , [
+                    [
+                        'type' => Suggestion::TYPE_CONSTANT,
+                        'name' => 'FOO',
+                        'short_description' => 'FOO = "FOO"',
+                    ],
                     [
                         'type' => Suggestion::TYPE_ENUM,
                         'name' => 'FOOBAR',
