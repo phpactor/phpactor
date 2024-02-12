@@ -19,10 +19,6 @@ class ReflectionEnumTest extends IntegrationTestCase
      */
     public function testReflectEnum(string $source, string $class, Closure $assertion): void
     {
-        if (!defined('T_ENUM')) {
-            $this->markTestSkipped('PHP 8.1');
-            return;
-        }
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
         $assertion($class);
     }

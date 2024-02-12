@@ -27,9 +27,7 @@ class MemberRenamerTest extends RenamerTestCase
         yield from $this->propertyRenames();
         yield from $this->constantRenames();
         yield from $this->traitRenames();
-        if (defined('T_ENUM')) {
-            yield from $this->enumRenames();
-        }
+        yield from $this->enumRenames();
     }
 
     protected function createRenamer(): Renamer

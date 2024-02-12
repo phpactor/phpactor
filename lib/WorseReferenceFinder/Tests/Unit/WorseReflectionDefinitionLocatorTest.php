@@ -310,9 +310,6 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
 
     public function testLocatesCase(): void
     {
-        if (!defined('T_ENUM')) {
-            $this->markTestSkipped('PHP8.1');
-        }
         $location = $this->locate(<<<'EOT'
             // File: FoobarEnum.php
             <?php enum FoobarEnum { case BAR; }
@@ -324,9 +321,6 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
 
     public function testLocatesEnumConst(): void
     {
-        if (!defined('T_ENUM')) {
-            $this->markTestSkipped('PHP8.1');
-        }
         $location = $this->locate(<<<'EOT'
             // File: FoobarEnum.php
             <?php enum FoobarEnum { case BAR; const FOOBAR = 'FOOBAR'; }
