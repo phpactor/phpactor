@@ -29,9 +29,6 @@ class SelfTest extends IntegrationTestCase
     {
         foreach ((array)glob(__DIR__ . '/*/*.test') as $fname) {
             $dirName = basename(dirname((string)$fname));
-            if ($dirName === 'enum' && !defined('T_ENUM')) {
-                continue;
-            }
             yield $dirName .' ' . basename((string)$fname) => [
                 $fname
             ];

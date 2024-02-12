@@ -979,25 +979,39 @@ class NodeContextResolverTest extends IntegrationTestCase
             ],
         ];
 
-        // 8.1 only
-        if (defined('T_ENUM')) {
-            yield 'Enum case name' => [
-                <<<'EOT'
-                                        <?php
+        yield 'Enum case name' => [
+            <<<'EOT'
+                                    <?php
 
-                                        enum Foobar
-                                        {
-                                            case AA<>A = 'aaa';
-                                        }
-                    EOT
+                                    enum Foobar
+                                    {
+                                        case AA<>A = 'aaa';
+                                    }
+                EOT
             , [], [
                 'type' => '<missing>',
                 'symbol_type' => Symbol::CASE,
                 'symbol_name' => 'AAA',
                 'container_type' => 'Foobar'
             ],
-            ];
-        }
+        ];
+
+        yield 'Enum const' => [
+            <<<'EOT'
+                                    <?php
+
+                                    enum Foobar
+                                    {
+                                        public const AA<>A = 'aaa';
+                                    }
+                EOT
+            , [], [
+                'type' => '<missing>',
+                'symbol_type' => Symbol::CONSTANT,
+                'symbol_name' => 'AAA',
+                'container_type' => 'Foobar'
+            ],
+        ];
 
         yield 'Function name' => [
             <<<'EOT'
