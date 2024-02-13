@@ -18,9 +18,12 @@ Improvements:
   - Clear document diagnostic cache on save #2458
   - Skip parent parameters on complete constructor #2471 @mamazu
   - Support generics on `@mixin` #2463
+  - Remove "on develop warning" service #2533
 
 Bug fixes:
 
+  - Fix detection of import used relatively in an annotation #2539
+  - Fix PHAR crashing issue on PHP8.3 #2533
   - Fix UTF-16 conversion for LSP #2530
   - Fix support for Attributes on readonly classes #2493
   - Fix `$this` undefined var false positive in anon. class #2469 @mamazu
