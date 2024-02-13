@@ -47,8 +47,7 @@ class FileRenamer implements PhpactorFileRenamer
             $references = $this->client->class()->referencesTo($fromClass);
 
             // rename class definition
-            // $locatedEdits = $this->replaceDefinition($to, $fromClass, $toClass);
-            $locatedEdits = [];
+            $locatedEdits = $this->replaceDefinition($from, $fromClass, $toClass);
 
             $edits = TextEdits::none();
             $seen = [];
@@ -80,20 +79,20 @@ class FileRenamer implements PhpactorFileRenamer
         });
     }
 
-    // /**
-    //  * @return LocatedTextEdit[]
-    //  */
-    // private function replaceDefinition(TextDocumentUri $file, string $fromClass, string $toClass): array
-    // {
-    //     $document = $this->locator->get($file);
-    //     $locatedEdits = [];
-    //     foreach ($this->mover->replaceReferences(
-    //         $this->mover->findReferences($document, $fromClass),
-    //         $toClass
-    //     ) as $edit) {
-    //         $locatedEdits[] = new LocatedTextEdit($file, $edit);
-    //     }
-    //
-    //     return $locatedEdits;
-    // }
+    /**
+     * @return LocatedTextEdit[]
+     */
+    private function replaceDefinition(TextDocumentUri $file, string $fromClass, string $toClass): array
+    {
+        $document = $this->locator->get($file);
+        $locatedEdits = [];
+        foreach ($this->mover->replaceReferences(
+            $this->mover->findReferences($document, $fromClass),
+            $toClass
+        ) as $edit) {
+            $locatedEdits[] = new LocatedTextEdit($file, $edit);
+        }
+
+        return $locatedEdits;
+    }
 }
