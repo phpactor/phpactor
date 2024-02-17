@@ -37,19 +37,6 @@ class ClassQuery implements IndexQuery
     }
 
     /**
-     * @return Generator<FullyQualifiedName>
-     */
-    public function subClasses(string $className): Generator
-    {
-        $record = $this->index->get(ClassRecord::fromName($className));
-        assert($record instanceof ClassRecord);
-
-        foreach($record->implements() as $fqn) {
-            yield FullyQualifiedName::fromString($fqn);
-        }
-    }
-
-    /**
      * @return Generator<LocationConfidence>
      */
     public function referencesTo(string $identifier): Generator
