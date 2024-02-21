@@ -16,7 +16,7 @@ class ConfigInitCommand extends Command
 
     protected function configure(): void
     {
-        $this->setDescription('Iniitalize Phpactor configuration file or update the location of the JSON schema');
+        $this->setDescription('Initialize Phpactor configuration file or update the location of the JSON schema');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
