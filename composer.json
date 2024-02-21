@@ -111,7 +111,7 @@
     ],
     "scripts": {
         "post-install-cmd": [
-            "bin/phpactor config:json-schema phpactor.schema.json"
+            "@php bin/phpactor config:json-schema phpactor.schema.json"
         ],
         "integrate": [
             "composer validate --strict",
