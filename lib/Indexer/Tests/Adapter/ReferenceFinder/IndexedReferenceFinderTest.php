@@ -101,6 +101,23 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
         ,
             2
         ];
+
+        yield 'class deep references if implementation implements some additional interface' => [
+            <<<'EOT'
+                // File: project/subject.php
+                <?php interface Watche<>r {}
+                // File: project/AnotherInterface.php
+                <?php interface AnotherInterface {}
+                // File: project/TestWatcher.php
+                <?php class TestWatcher implements Watcher, AnotherInterface {}
+                // File: project/class2.php
+                <?php
+
+                function bar(AnotherInterface $ai);
+                EOT
+        ,
+            1
+        ];
     }
 
     /**
