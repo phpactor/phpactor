@@ -19,7 +19,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
         $this->initProject();
         self::assertFalse($this->workspace()->exists('cache'));
 
-        $process = new Process($command, $this->workspace()->path(), null, $input);
+        $process = new Process([PHP_BINARY, ...$command], $this->workspace()->path(), null, $input);
         $process->mustRun();
 
         self::assertEquals(0, $process->getExitCode());
@@ -61,7 +61,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
     {
         $this->initProject();
 
-        $process = new Process($command, $this->workspace()->path(), null, $input);
+        $process = new Process([PHP_BINARY, ...$command], $this->workspace()->path(), null, $input);
         $process->mustRun();
 
         self::assertEquals(0, $process->getExitCode());
@@ -99,7 +99,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
     {
         $this->initProject();
 
-        $process = new Process($arguments, $this->workspace()->path(), null, null);
+        $process = new Process([PHP_BINARY, ...$arguments], $this->workspace()->path(), null, null);
         $process->mustRun();
 
         self::assertEquals(0, $process->getExitCode());

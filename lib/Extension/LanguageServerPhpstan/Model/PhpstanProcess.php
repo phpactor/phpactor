@@ -28,6 +28,7 @@ class PhpstanProcess
     {
         return \Amp\call(function () use ($filename) {
             $args = [
+                PHP_BINARY,
                 $this->config->phpstanBin(),
                 'analyse',
                 '--no-progress',

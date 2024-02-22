@@ -13,7 +13,8 @@ abstract class SystemTestCase extends IntegrationTestCase
 
         $bin = __DIR__ . '/../../bin/phpactor --no-ansi --verbose ';
         $process = Process::fromShellCommandline(sprintf(
-            '%s %s',
+            '%s %s %s',
+            PHP_BINARY,
             $bin,
             $args
         ), null, [
