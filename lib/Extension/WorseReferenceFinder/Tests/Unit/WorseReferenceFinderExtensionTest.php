@@ -17,6 +17,7 @@ use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\ReferenceFinder\TypeLocator;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Symfony\Component\Filesystem\Path;
 
 class WorseReferenceFinderExtensionTest extends TestCase
 {
@@ -32,7 +33,7 @@ class WorseReferenceFinderExtensionTest extends TestCase
             ByteOffset::fromInt(3)
         )->first()->location();
 
-        $this->assertEquals(realpath(__DIR__ . '/../../WorseReferenceFinderExtension.php'), $location->uri()->path());
+        $this->assertEquals(Path::canonicalize(__DIR__ . '/../../WorseReferenceFinderExtension.php'), $location->uri()->path());
     }
 
     public function testLocateType(): void

@@ -7,6 +7,7 @@ use Phpactor\ClassFileConverter\ClassToFileConverter;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
+use Symfony\Component\Filesystem\Path;
 
 class ClassToFileSourceLocatorTest extends IntegrationTestCase
 {
@@ -25,7 +26,7 @@ class ClassToFileSourceLocatorTest extends IntegrationTestCase
     {
         $source = $this->locator->locate(ClassName::fromString(__CLASS__));
         $this->assertEquals(file_get_contents(__FILE__), (string) $source);
-        $this->assertEquals(__FILE__, $source->uri()->path());
+        $this->assertEquals(Path::canonicalize(__FILE__), $source->uri()->path());
     }
 
     /**

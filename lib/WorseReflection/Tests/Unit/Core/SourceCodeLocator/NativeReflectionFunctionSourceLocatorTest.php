@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
+use Symfony\Component\Filesystem\Path;
 
 class NativeReflectionFunctionSourceLocatorTest extends TestCase
 {
@@ -22,7 +23,7 @@ class NativeReflectionFunctionSourceLocatorTest extends TestCase
     public function testLocatesAFunction(): void
     {
         $location = $this->locator->locate(Name::fromString(__NAMESPACE__ . '\\test_function'));
-        $this->assertEquals(__FILE__, $location->uri()->path());
+        $this->assertEquals(Path::canonicalize(__FILE__), $location->uri()->path());
         $this->assertEquals(file_get_contents(__FILE__), $location->__toString());
     }
 
