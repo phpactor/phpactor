@@ -66,11 +66,11 @@ class EfficientLineColsTest extends TestCase
      */
     public function provideConvertOffsetsToLineColAsOffset(): Generator
     {
-        yield 'cat is 4 bytes' => [
+        yield 'cat' => [
             [5],
             'a😸bc',
             function (EfficientLineCols $lineCols): void {
-                self::assertEquals(6, $lineCols->get(5)->col());
+                self::assertEquals(4, $lineCols->get(5)->col());
             }
         ];
         yield 'utf16' => [

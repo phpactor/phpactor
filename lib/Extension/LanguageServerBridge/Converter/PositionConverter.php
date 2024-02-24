@@ -21,16 +21,9 @@ class PositionConverter
             $offset = ByteOffset::fromInt(strlen($text));
         }
 
-        $lineCol = LineCol::fromByteOffset($text, $offset);
-        $lineAtOffset = LineAtOffset::lineAtByteOffset($text, $offset);
+        $lineCol = LineCol::fromByteOffset($text, $offset, true);
 
-        $lineAtOffset = mb_substr(
-            $lineAtOffset,
-            0,
-            $lineCol->col() - 1
-        );
-
-        return new Position($lineCol->line() - 1, self::countUtf16CodeUnits($lineAtOffset));
+        return new Position($lineCol->line() - 1, $lineCol->col() - 1);
     }
 
     /**

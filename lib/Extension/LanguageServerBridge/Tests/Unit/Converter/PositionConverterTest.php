@@ -78,7 +78,7 @@ class PositionConverterTest extends TestCase
             )
         );
         self::assertEquals(
-            new Position(0, 3),
+            new Position(0, 2),
             PositionConverter::byteOffsetToPosition(
                 ByteOffset::fromInt(2),
                 'a𐐀b'

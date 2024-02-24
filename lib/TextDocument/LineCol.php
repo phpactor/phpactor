@@ -76,7 +76,7 @@ final class LineCol
         return ByteOffset::fromInt(strlen($text));
     }
 
-    public static function fromByteOffset(string $text, ByteOffset $byteOffset): self
+    public static function fromByteOffset(string $text, ByteOffset $byteOffset, bool $lspPosition = false): self
     {
         if ($byteOffset->toInt() > strlen($text)) {
             $byteOffset = ByteOffset::fromInt(strlen($text));
@@ -111,6 +111,13 @@ final class LineCol
                     0,
                     $byteOffset->toInt() - $start
                 );
+                if ($lspPosition) {
+                    $utf16 = \mb_convert_encoding($section, 'UTF-16', 'UTF-8');
+                    return new self(
+                        $lineNb,
+                        strlen($utf16) / 2 + 1,
+                    );
+                }
 
                 return new self($lineNb, mb_strlen($section) + 1);
             }

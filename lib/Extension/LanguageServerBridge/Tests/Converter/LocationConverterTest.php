@@ -101,21 +101,21 @@ class LocationConverterTest extends IntegrationTestCase
             '😼😼😼😼😼',
             2,
             2,
-            $this->createRange(0, 2, 0, 2)
+            $this->createRange(0, 1, 0, 1)
         ];
 
         yield '4 byte char 2nd char' => [
             '😼😼😼😼😼',
             2,
             5,
-            $this->createRange(0, 2, 0, 4)
+            $this->createRange(0, 1, 0, 3)
         ];
 
         yield '4 byte char 4th char' => [
             '😼😼😼😼😼',
             2,
             16,
-            $this->createRange(0, 2, 0, 8)
+            $this->createRange(0, 1, 0, 8)
         ];
     }
 
