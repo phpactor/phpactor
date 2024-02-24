@@ -115,7 +115,7 @@ final class LineCol
                     $utf16 = \mb_convert_encoding($section, 'UTF-16', 'UTF-8');
                     return new self(
                         $lineNb,
-                        strlen($utf16) / 2 + 1,
+                        intval(strlen($utf16) / 2) + 1,
                     );
                 }
 

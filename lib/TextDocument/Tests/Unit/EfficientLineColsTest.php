@@ -76,10 +76,10 @@ class EfficientLineColsTest extends TestCase
         yield 'utf16' => [
             [46],
             <<<'PHP'
-            <?php
+                <?php
 
-            echo '👩👨👦👧' . invalid() . strlen('Lorem ipsum dolor sit amet');
-            PHP,
+                echo '👩👨👦👧' . invalid() . strlen('Lorem ipsum dolor sit amet');
+                PHP,
             function (EfficientLineCols $lineCols): void {
                 self::assertEquals(3, $lineCols->get(46)->line());
                 self::assertEquals(32, $lineCols->get(46)->col());

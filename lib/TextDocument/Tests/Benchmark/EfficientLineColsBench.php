@@ -7,7 +7,7 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\EfficientLineCols;
 use Phpactor\TextDocument\LineCol;
 
-#[BeforeMethods("setUp")]
+#[BeforeMethods('setUp')]
 class EfficientLineColsBench
 {
     private string $contents;

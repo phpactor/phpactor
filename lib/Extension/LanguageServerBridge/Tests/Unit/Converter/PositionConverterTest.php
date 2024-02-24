@@ -2,7 +2,6 @@
 
 namespace Phpactor\Extension\LanguageServerBridge\Tests\Unit\Converter;
 
-use Aerospike\Bytes;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Position;
@@ -17,11 +16,11 @@ class PositionConverterTest extends TestCase
             PositionConverter::positionToByteOffset(
                 new Position(2, 3),
                 <<<'EOT'
-                Hello
-                Carld
-                World
-                Farld
-                EOT
+                    Hello
+                    Carld
+                    World
+                    Farld
+                    EOT
             )
         );
         self::assertEquals(
@@ -29,11 +28,11 @@ class PositionConverterTest extends TestCase
             PositionConverter::positionToByteOffset(
                 new Position(2, 3),
                 <<<'EOT'
-                👩👨👦👧
-                👩👨👦👧
-                👩👨👦👧
-                👩👨👦👧
-                EOT
+                    👩👨👦👧
+                    👩👨👦👧
+                    👩👨👦👧
+                    👩👨👦👧
+                    EOT
             )
         );
 
@@ -42,10 +41,10 @@ class PositionConverterTest extends TestCase
             PositionConverter::positionToByteOffset(
                 new Position(2, 30),
                 <<<'PHP'
-                <?php
+                    <?php
 
-                echo '👩👨👦👧' . invalid() . strlen('Lorem ipsum dolor sit amet');
-                PHP
+                    echo '👩👨👦👧' . invalid() . strlen('Lorem ipsum dolor sit amet');
+                    PHP
             )
         );
     }

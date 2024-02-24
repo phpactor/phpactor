@@ -76,7 +76,7 @@ final class EfficientLineCols
                     $utf16 = \mb_convert_encoding($section, 'UTF-16', 'UTF-8');
                     $positions[$byteOffset] = new LineCol(
                         $lineNb,
-                        strlen($utf16) / 2 + 1,
+                        intval(strlen($utf16) / 2) + 1,
                     );
                 } else {
                     $positions[$byteOffset] = new LineCol(

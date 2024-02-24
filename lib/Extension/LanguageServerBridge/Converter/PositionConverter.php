@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerBridge\Converter;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LineCol;
-use Phpactor\TextDocument\Util\LineAtOffset;
 use RuntimeException;
 
 class PositionConverter
@@ -46,11 +45,6 @@ class PositionConverter
         $utf8 = \mb_convert_encoding($seg, 'UTF-8', 'UTF-16');
 
         return ByteOffset::fromInt($byteOffset->toInt() + strlen($utf8));
-    }
-
-    private static function countUtf16CodeUnits(string $string): int
-    {
-        return (int)(strlen(self::normalizeUtf16($string)) / 2);
     }
 
     /**
