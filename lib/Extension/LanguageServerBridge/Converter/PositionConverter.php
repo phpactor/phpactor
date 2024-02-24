@@ -42,7 +42,6 @@ class PositionConverter
             $rest = substr($rest, 0, $lineEnd);
         }
         $rest = self::normalizeUtf16($rest);
-
         $seg = substr($rest, 0, $position->character * 2);
         $utf8 = \mb_convert_encoding($seg, 'UTF-8', 'UTF-16');
 
