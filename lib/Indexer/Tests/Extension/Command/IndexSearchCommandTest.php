@@ -16,6 +16,7 @@ class IndexSearchCommandTest extends IntegrationTestCase
         $this->initProject();
 
         $process = new Process(array_merge([
+            PHP_BINARY,
             __DIR__ . '/../../bin/console',
             'index:search',
         ], $args), $this->workspace()->path());
