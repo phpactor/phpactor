@@ -33,7 +33,8 @@ abstract class NumericType extends ScalarType
     public function divide(NumericType $right): NumericType
     {
         if ($this instanceof Literal && $right instanceof Literal) {
-            if ($right->value() === 0) {
+            /** @phpstan-ignore-next-line it's a scalar */
+            if (intval($right->value()) === 0) {
                 return $this->withValue(0);
             }
 
