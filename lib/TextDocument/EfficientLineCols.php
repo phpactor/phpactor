@@ -25,13 +25,15 @@ final class EfficientLineCols
      * Initialize the converter with the list of byte offsets to be converted.
      *
      * For converting to LSP positions there is a flag to return the character
-     * offset.Note that, like the line/col number, this is 1 based.
+     * offset. Note that, unlike the line/col number, this is 1 based and is based
+     * on UTF-16 code units.
+     *
      * @param list<int> $byteOffsetInts
      */
     public static function fromByteOffsetInts(
         string $text,
         array $byteOffsetInts,
-        bool $charOffset = false
+        bool $lspPosition = false
     ): self {
         sort($byteOffsetInts);
 
@@ -70,10 +72,18 @@ final class EfficientLineCols
                     $byteOffset - $start
                 );
 
-                $positions[$byteOffset] = new LineCol(
-                    $lineNb,
-                    $charOffset ? strlen($section) + 1 : mb_strlen($section) + 1
-                );
+                if ($lspPosition) {
+                    $utf16 = \mb_convert_encoding($section, 'UTF-16', 'UTF-8');
+                    $positions[$byteOffset] = new LineCol(
+                        $lineNb,
+                        strlen($utf16) / 2 + 1,
+                    );
+                } else {
+                    $positions[$byteOffset] = new LineCol(
+                        $lineNb,
+                        strlen($section) + 1,
+                    );
+                }
                 $byteOffset = array_shift($byteOffsetInts);
                 if (null === $byteOffset) {
                     break;

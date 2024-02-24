@@ -73,5 +73,17 @@ class EfficientLineColsTest extends TestCase
                 self::assertEquals(6, $lineCols->get(5)->col());
             }
         ];
+        yield 'utf16' => [
+            [46],
+            <<<'PHP'
+            <?php
+
+            echo '👩👨👦👧' . invalid() . strlen('Lorem ipsum dolor sit amet');
+            PHP,
+            function (EfficientLineCols $lineCols): void {
+                self::assertEquals(3, $lineCols->get(46)->line());
+                self::assertEquals(30, $lineCols->get(46)->col());
+            }
+        ];
     }
 }
