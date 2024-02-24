@@ -30,7 +30,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
             PotentialLocation::surely(
                 new Location(
                     TextDocumentUri::fromString('file:///not-existing'),
-                    ByteOffsetRange::fromInts(1,1)
+                    ByteOffsetRange::fromInts(1, 1)
                 )
             )
         );

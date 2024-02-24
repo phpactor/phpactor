@@ -63,6 +63,9 @@ class TypeUtil
 
     public static function toNumber(Type $type): NumericType
     {
+        if ($type instanceof NumericType) {
+            return $type;
+        }
         if ($type instanceof Literal && $type instanceof ScalarType) {
             $value = (string)$type->value();
             return TypeFactory::fromNumericString($value);

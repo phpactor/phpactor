@@ -22,6 +22,7 @@ Improvements:
 
 Bug fixes:
 
+  - Fix division by zero edge case
   - Fix crash if referenced file no longer exists on class rename #2518
   - Fix diagnostic process concurrency and do not lint outdated files #2538
   - Fix detection of import used relatively in an annotation #2539

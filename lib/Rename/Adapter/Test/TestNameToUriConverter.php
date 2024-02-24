@@ -8,6 +8,9 @@ use RuntimeException;
 
 final class TestNameToUriConverter implements NameToUriConverter
 {
+    /**
+     * @param array<string,TextDocumentUri> $map
+     */
     public function __construct(private array $map)
     {
     }
