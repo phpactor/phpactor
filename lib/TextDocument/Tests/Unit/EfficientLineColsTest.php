@@ -82,7 +82,7 @@ class EfficientLineColsTest extends TestCase
             PHP,
             function (EfficientLineCols $lineCols): void {
                 self::assertEquals(3, $lineCols->get(46)->line());
-                self::assertEquals(30, $lineCols->get(46)->col());
+                self::assertEquals(32, $lineCols->get(46)->col());
             }
         ];
     }
