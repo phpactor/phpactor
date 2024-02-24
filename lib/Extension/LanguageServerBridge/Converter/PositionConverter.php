@@ -44,12 +44,16 @@ class PositionConverter
 
         // convert line to UTF-16 as Position character is UTF-16 code unit position
         $rest = substr($text, $byteOffset->toInt());
+        $lineEnd = strpos($rest, "\n");
+        if ($lineEnd !== false) {
+            $rest = substr($rest, 0, $lineEnd);
+        }
         $rest = self::normalizeUtf16($rest);
 
-        // string is now at least twice as big
         $seg = substr($rest, 0, $position->character * 2);
+        $utf8 = \mb_convert_encoding($seg, 'UTF-8', 'UTF-16');
 
-        return ByteOffset::fromInt($byteOffset->toInt() + strlen($seg) / 2);
+        return ByteOffset::fromInt($byteOffset->toInt() + strlen($utf8));
     }
 
     private static function countUtf16CodeUnits(string $string): int

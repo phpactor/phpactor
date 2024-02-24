@@ -25,7 +25,7 @@ class PositionConverterTest extends TestCase
             )
         );
         self::assertEquals(
-            ByteOffset::fromInt(37),
+            ByteOffset::fromInt(39),
             PositionConverter::positionToByteOffset(
                 new Position(2, 3),
                 <<<'EOT'
@@ -37,6 +37,17 @@ class PositionConverterTest extends TestCase
             )
         );
 
+        self::assertEquals(
+            ByteOffset::fromInt(45),
+            PositionConverter::positionToByteOffset(
+                new Position(2, 30),
+                <<<'PHP'
+                <?php
+
+                echo '👩👨👦👧' . invalid() . strlen('Lorem ipsum dolor sit amet');
+                PHP
+            )
+        );
     }
     public function testWhenOutOfBoundsAssumeEndOfDocument(): void
     {
