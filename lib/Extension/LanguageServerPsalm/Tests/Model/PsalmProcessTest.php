@@ -51,7 +51,7 @@ class PsalmProcessTest extends IntegrationTestCase
         );
         (Process::fromShellCommandline('composer dump', $this->workspace()->path()))->mustRun();
 
-        (new Process([$psalmBin, '--init', 'src', $initLevel], $this->workspace()->path()))->mustRun();
+        (new Process([PHP_BINARY, $psalmBin, '--init', 'src', $initLevel], $this->workspace()->path()))->mustRun();
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),

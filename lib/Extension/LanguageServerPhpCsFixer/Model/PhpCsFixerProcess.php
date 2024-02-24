@@ -99,7 +99,7 @@ class PhpCsFixerProcess
     public function run(string ...$args): Promise
     {
         return call(function () use ($args) {
-            $process = ProcessBuilder::create([$this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
+            $process = ProcessBuilder::create([PHP_BINARY, $this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
             yield $process->start();
 
             $process->join()
