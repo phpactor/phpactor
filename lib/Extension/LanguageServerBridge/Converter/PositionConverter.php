@@ -33,12 +33,28 @@ class PositionConverter
         return new Position($lineCol->line() - 1, self::countUtf16CodeUnits($lineAtOffset));
     }
 
+    /**
+     * Convert UTF-16 position to byteoffset.
+     */
     public static function positionToByteOffset(Position $position, string $text): ByteOffset
     {
+        // get byte offset position of line start
         $lineCol = new LineCol($position->line + 1, 1);
         $byteOffset = $lineCol->toByteOffset($text);
 
-        return ByteOffset::fromInt($byteOffset->toInt() + $position->character);
+        // convert line to UTF-16 as Position character is UTF-16 code unit position
+        $rest = substr($text, $byteOffset->toInt());
+        $rest = self::normalizeUtf16($rest);
+
+        // string is now at least twice as big
+        $seg = substr($rest, 0, $position->character * 2);
+
+        return ByteOffset::fromInt($byteOffset->toInt() + strlen($seg) / 2);
+    }
+
+    private static function countUtf16CodeUnits(string $string): int
+    {
+        return (int)(strlen(self::normalizeUtf16($string)) / 2);
     }
 
     /**
@@ -52,10 +68,5 @@ class PositionConverter
         }
 
         return $utf16;
-    }
-
-    private static function countUtf16CodeUnits(string $string): int
-    {
-        return (int)(strlen(self::normalizeUtf16($string)) / 2);
     }
 }

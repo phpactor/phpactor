@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerBridge\Tests\Unit\Converter;
 
+use Aerospike\Bytes;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Position;
@@ -9,6 +10,34 @@ use Phpactor\TextDocument\ByteOffset;
 
 class PositionConverterTest extends TestCase
 {
+    public function testPositionToByteOffset(): void
+    {
+        self::assertEquals(
+            ByteOffset::fromInt(15),
+            PositionConverter::positionToByteOffset(
+                new Position(2, 3),
+                <<<'EOT'
+                Hello
+                Carld
+                World
+                Farld
+                EOT
+            )
+        );
+        self::assertEquals(
+            ByteOffset::fromInt(37),
+            PositionConverter::positionToByteOffset(
+                new Position(2, 3),
+                <<<'EOT'
+                👩👨👦👧
+                👩👨👦👧
+                👩👨👦👧
+                👩👨👦👧
+                EOT
+            )
+        );
+
+    }
     public function testWhenOutOfBoundsAssumeEndOfDocument(): void
     {
         self::assertEquals(
