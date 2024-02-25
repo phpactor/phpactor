@@ -4,9 +4,11 @@ namespace Phpactor\WorseReflection\Core\Reflector\SourceCode;
 
 use Amp\Promise;
 use Generator;
+use Microsoft\PhpParser\Node;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection;
@@ -85,5 +87,10 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
     public function walk(TextDocument $sourceCode, Walker $walker): Generator
     {
         return $this->innerReflector->walk($sourceCode, $walker);
+    }
+
+    public function reflectNodeContext(Node $node): NodeContext
+    {
+        return $this->innerReflector->reflectNodeContext($node);
     }
 }

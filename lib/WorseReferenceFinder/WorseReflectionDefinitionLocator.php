@@ -191,9 +191,11 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                 case Symbol::CONSTANT:
                     if ($containingClass instanceof ReflectionEnum) {
                         $members = $containingClass->cases();
-                        break;
+                        if ($members->has($symbolName)) {
+                            break;
+                        }
                     }
-                    assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionInterface);
+                    assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionInterface || $containingClass instanceof ReflectionEnum);
                     $members = $containingClass->constants();
                     break;
                 case Symbol::PROPERTY:

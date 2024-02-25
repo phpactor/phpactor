@@ -27,6 +27,7 @@ class DiagnosticsCommandTest extends LanguageServerTestCase
     private function diagnosticsFor(string $sourceCode): array
     {
         $process = new Process([
+            PHP_BINARY,
             __DIR__ . '/../../../../../../bin/phpactor',
             'language-server:diagnostics',
             '--uri=file:///foo',

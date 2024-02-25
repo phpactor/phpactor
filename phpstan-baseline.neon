@@ -3211,11 +3211,6 @@ parameters:
 			path: lib/Extension/Core/CoreExtension.php
 
 		-
-			message: "#^Parameter \\#6 \\$warnOnDevelop of class Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\CacheClearHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Core/Rpc/CacheClearHandler.php
@@ -3329,16 +3324,6 @@ parameters:
 			message: "#^Parameter \\#7 \\$statusProviders of class Phpactor\\\\Extension\\\\LanguageServer\\\\Handler\\\\DebugHandler constructor expects array\\<Phpactor\\\\Extension\\\\LanguageServer\\\\Status\\\\StatusProvider\\>, array\\<int\\<0, max\\>, mixed\\> given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$status of class Phpactor\\\\Extension\\\\LanguageServer\\\\Service\\\\OnDevelopWarningService constructor expects Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtraExtension.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServer\\\\Service\\\\OnDevelopWarningService\\:\\:serviceAnnouncements\\(\\) should return Amp\\\\Promise\\<void\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Service/OnDevelopWarningService.php
 
 		-
 			message: "#^Parameter \\#1 \\$command of class Symfony\\\\Component\\\\Console\\\\Tester\\\\CommandTester constructor expects Symfony\\\\Component\\\\Console\\\\Command\\\\Command, mixed given\\.$#"

@@ -19,6 +19,7 @@ class StartCommandTest extends LanguageServerTestCase
     {
         $exitCode = $this->tester->execute([
             '--no-loop' => true,
+            '--address' => '127.0.0.1:0',
         ]);
         self::assertEquals(0, $exitCode);
     }

@@ -11,7 +11,7 @@ interface FileRenamer
     /**
      * Promise can throw a CouldNotRename exception
      *
-     * @return Promise<LocatedTextEdit>
+     * @return Generator<LocatedTextEdit>
      */
     public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Generator;
 }

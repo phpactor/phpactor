@@ -100,22 +100,22 @@ class LocationConverterTest extends IntegrationTestCase
         yield '4 byte char 1st char' => [
             '😼😼😼😼😼',
             2,
-            4,
-            $this->createRange(0, 4, 0, 4)
+            2,
+            $this->createRange(0, 1, 0, 1)
         ];
 
         yield '4 byte char 2nd char' => [
             '😼😼😼😼😼',
             2,
             5,
-            $this->createRange(0, 4, 0, 8)
+            $this->createRange(0, 1, 0, 3)
         ];
 
         yield '4 byte char 4th char' => [
             '😼😼😼😼😼',
             2,
             16,
-            $this->createRange(0, 4, 0, 16)
+            $this->createRange(0, 1, 0, 8)
         ];
     }
 

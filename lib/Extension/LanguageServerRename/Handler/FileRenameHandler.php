@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerRename\Handler;
 
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\FileOperationOptions;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
@@ -22,8 +23,11 @@ use function Amp\delay;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
 {
-    public function __construct(private FileRenamer $renamer, private LocatedTextEditConverter $converter)
-    {
+    public function __construct(
+        private FileRenamer $renamer,
+        private LocatedTextEditConverter $converter,
+        private ClientApi $clientApi,
+    ) {
     }
 
 
@@ -42,31 +46,38 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
         return call(function () use ($params) {
             $count = 0;
             $documentChanges = [];
+            try {
+                foreach ($params->files as $rename) {
+                    $locatedEditMap = LocatedTextEditsMap::create();
+                    assert($rename instanceof FileRename);
 
-            foreach ($params->files as $rename) {
-                $locatedEditMap = LocatedTextEditsMap::create();
-                assert($rename instanceof FileRename);
+                    $renameGen = $this->renamer->renameFile(
+                        TextDocumentUri::fromString($rename->oldUri),
+                        TextDocumentUri::fromString($rename->newUri)
+                    );
 
-                $renameGen = $this->renamer->renameFile(
-                    TextDocumentUri::fromString($rename->oldUri),
-                    TextDocumentUri::fromString($rename->newUri)
-                );
-
-                foreach ($renameGen as $locatedTextEdit) {
-                    if ($count++ === 10) {
-                        yield delay(1);
+                    foreach ($renameGen as $locatedTextEdit) {
+                        if ($count++ === 10) {
+                            yield delay(1);
+                        }
+                        $locatedEditMap = $locatedEditMap->withTextEdit($locatedTextEdit);
                     }
-                    $locatedEditMap->withTextEdit($locatedTextEdit);
+
+                    $workspaceEdit = $this->converter->toWorkspaceEdit($locatedEditMap, $renameGen->getReturn());
+
+                    foreach ($workspaceEdit->documentChanges as $change) {
+                        $documentChanges[] = $change;
+                    }
                 }
 
-                $workspaceEdit = $this->converter->toWorkspaceEdit($locatedEditMap, $renameGen->getReturn());
+                return new WorkspaceEdit(documentChanges: $documentChanges);
+            } catch (CouldNotRename $error) {
+                $this->clientApi->window()->showMessage()->error(sprintf(
+                    $error->getMessage() . $error->getPrevious()->getTraceAsString()
+                ));
 
-                foreach ($workspaceEdit->documentChanges as $change) {
-                    $documentChanges[] = $change;
-                }
+                return new WorkspaceEdit(null, []);
             }
-
-            return new WorkspaceEdit(documentChanges: $documentChanges);
         });
     }
 

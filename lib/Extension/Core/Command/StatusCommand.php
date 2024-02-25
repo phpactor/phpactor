@@ -23,16 +23,6 @@ class StatusCommand extends Command
     {
         $diagnostics = $this->status->check();
 
-        if ($diagnostics['phpactor_is_develop']) {
-            $output->writeln('<error>                                           </>');
-            $output->writeln('<error>  You are using the develop                </>');
-            $output->writeln('<error>                                           </>');
-            $output->write("\n");
-            $output->writeln('The develop branch is no longer updated!');
-            $output->writeln('Switch to master or use the latest tagged version');
-            $output->writeln('');
-        }
-
         $output->writeln('<info>Version:</info> ' . $diagnostics['phpactor_version']);
         $output->writeln(sprintf(
             '<info>Filesystems:</info> %s',

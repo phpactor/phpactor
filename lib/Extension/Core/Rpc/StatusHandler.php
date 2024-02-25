@@ -74,13 +74,6 @@ class StatusHandler implements Handler
             '------------',
             $this->buildConfigFileMessage(),
         ];
-        if ($diagnostics['phpactor_is_develop']) {
-            $info[] = '';
-            $info[] = 'WARNING';
-            $info[] = '-------';
-            $info[] = 'You are using the develop branch which is no longer maintained';
-            $info[] = 'Switch to master or use the latest tagged version of Phpactor';
-        }
         return EchoResponse::fromMessage(implode(PHP_EOL, $info));
     }
 

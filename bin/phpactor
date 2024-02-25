@@ -45,6 +45,6 @@ $output = new ConsoleOutput();
 try {
     $application->run(null, $output);
 } catch (Exception $e) {
-    $application->renderException($e, $output);
+    $application->renderThrowable($e, $output);
     exit(255);
 }
