@@ -95,7 +95,7 @@ class FileRenameHandlerTest extends IntegrationTestCase
     private function createHandler(
         LanguageServerTesterBuilder $builder,
         bool $willError = false,
-        ?RenameResult $renameResult,
+        ?RenameResult $renameResult = null,
         array $workspaceEdits = [],
     ): FileRenameHandler {
         return new FileRenameHandler(
