@@ -5,16 +5,10 @@ namespace Phpactor\Rename\Tests\Adapter\ClassMover;
 use Generator;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassMover\ClassMover;
-use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\Indexer\Model\Record;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
-use Phpactor\LanguageServerProtocol\WorkspaceEdit;
-use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\Rename\Adapter\ClassMover\FileRenamer;
 use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Rename\Model\LocatedTextEdit;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Model\QueryClient;
@@ -25,7 +19,6 @@ use Phpactor\Rename\Model\RenameResult;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
-use function Amp\Promise\wait;
 
 class FileRenamerTest extends IntegrationTestCase
 {
@@ -69,19 +62,9 @@ class FileRenamerTest extends IntegrationTestCase
      */
     private function createRenamer(array $textDocuments, array $records): FileRenamer
     {
-        $builder = LanguageServerTesterBuilder::createBare()
-            ->enableTextDocuments()
-            ->enableFileEvents();
-
         foreach ($textDocuments as $textDocument) {
             assert($textDocument instanceof TextDocument);
             file_put_contents($textDocument->uri()->path(), $textDocument->__toString());
-            $builder->workspace()->open(new TextDocumentItem(
-                $textDocument->uri(),
-                'php',
-                1,
-                $textDocument->__toString(),
-            ));
         }
 
         return new FileRenamer(
@@ -89,7 +72,6 @@ class FileRenamerTest extends IntegrationTestCase
             InMemoryDocumentLocator::fromTextDocuments($textDocuments),
             new QueryClient(new InMemoryIndex($records)),
             new ClassMover(),
-            new LocatedTextEditConverter($builder->workspace(), new WorkspaceTextDocumentLocator($builder->workspace()))
         );
     }
 
