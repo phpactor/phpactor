@@ -21,6 +21,12 @@ class ShortNameBeginsWithTest extends TestCase
         self::assertTrue((new ShortNameBeginsWith('Barfoo'))->isSatisfiedBy($record));
     }
 
+    public function testMatchesCaseInsensitive(): void
+    {
+        $record = ClassRecord::fromName('Foobar\\Barfoo');
+        self::assertTrue((new ShortNameBeginsWith('barfoo'))->isSatisfiedBy($record));
+    }
+
     public function testNotMatches(): void
     {
         $record = ClassRecord::fromName('Foobar\\Bazfoo');
