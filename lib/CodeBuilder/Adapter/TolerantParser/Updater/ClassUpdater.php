@@ -62,14 +62,14 @@ class ClassUpdater extends ClassLikeUpdater
 
             $edits->after(
                 $lastConstant,
-                PHP_EOL . $edits->indent($this->renderer->render($constant), 1)
+                "\n" . $edits->indent($this->renderer->render($constant), 1)
             );
 
             if ($classPrototype->constants()->isLast($constant) && (
                 $nextMember instanceof MethodDeclaration ||
                 $nextMember instanceof PropertyDeclaration
             )) {
-                $edits->after($lastConstant, PHP_EOL);
+                $edits->after($lastConstant, "\n");
             }
         }
     }

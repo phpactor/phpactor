@@ -29,19 +29,19 @@ class StatusCommand extends Command
             implode(', ', $diagnostics['filesystems'])
         ));
         $output->writeln('<info>Working directory:</info> ' . $diagnostics['cwd']);
-        $output->write(PHP_EOL);
+        $output->write("\n");
 
         $output->writeln('<comment>Config files (missing is not bad):</>');
-        $output->write(PHP_EOL);
+        $output->write("\n");
         foreach ($diagnostics['config_files'] as $configFile => $exists) {
             $check = $exists ? '<info>✔</>' : '<error>✘</>';
             $output->writeln(sprintf('  %s %s', $check, $configFile));
         }
 
-        $output->write(PHP_EOL);
+        $output->write("\n");
 
         $output->writeln('<comment>Diagnostics:</comment>');
-        $output->write(PHP_EOL);
+        $output->write("\n");
         foreach ($diagnostics['good'] as $good) {
             $output->writeln('  <info>✔</> ' . $good);
         }
@@ -49,7 +49,7 @@ class StatusCommand extends Command
         foreach ($diagnostics['bad'] as $bad) {
             $output->writeln('  <error>✘</> ' . $bad);
         }
-        $output->write(PHP_EOL);
+        $output->write("\n");
 
         return 0;
     }
