@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerRename\Handler;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\FileOperationOptions;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
+use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
