@@ -66,7 +66,7 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
 
                     $workspaceEdit = $this->converter->toWorkspaceEdit($locatedEditMap, $renameGen->getReturn());
 
-                    foreach ($workspaceEdit->documentChanges as $change) {
+                    foreach ($workspaceEdit->documentChanges ?? [] as $change) {
                         $documentChanges[] = $change;
                     }
                 }
