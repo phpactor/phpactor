@@ -73,8 +73,10 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
 
                 return new WorkspaceEdit(documentChanges: $documentChanges);
             } catch (CouldNotRename $error) {
+                $previous = $error->getPrevious();
+
                 $this->clientApi->window()->showMessage()->error(sprintf(
-                    $error->getMessage() . ($error->getPrevious()?->getTraceAsString() ?? '')
+                    $error->getMessage() . ($previous?->getTraceAsString() ?? '')
                 ));
 
                 return new WorkspaceEdit(null, []);
