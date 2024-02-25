@@ -32,7 +32,7 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
-            $process = new Process(array_merge($this->command, [
+            $process = new Process(array_merge([PHP_BINARY], $this->command, [
                 '--uri=' . $textDocument->uri,
                 sprintf('--config-extra=%s', sprintf('{"%s": false}', WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION))
             ]), $this->cwd);

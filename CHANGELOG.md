@@ -22,9 +22,13 @@ Improvements:
 
 Bug fixes:
 
+  - Upgrade `amp/process` to fix #2516 thanks to @gerardroche
+  - Fix division by zero edge case
+  - Fix crash if referenced file no longer exists on class rename #2518
+  - Fix diagnostic process concurrency and do not lint outdated files #2538
   - Fix detection of import used relatively in an annotation #2539
   - Fix PHAR crashing issue on PHP8.3 #2533
-  - Fix UTF-16 conversion for LSP #2530
+  - Fix UTF-16 conversion for LSP #2530 #2557
   - Fix support for Attributes on readonly classes #2493
   - Fix `$this` undefined var false positive in anon. class #2469 @mamazu
   - Fix `$argv` undefined var false positives #2468 @mamazu
