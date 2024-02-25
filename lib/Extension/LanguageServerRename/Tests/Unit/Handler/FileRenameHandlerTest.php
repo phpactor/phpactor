@@ -5,7 +5,8 @@ namespace Phpactor\Extension\LanguageServerRename\Tests\Unit\Handler;
 use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServerRename\Handler\FileRenameHandler;
 use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
+use Phpactor\LanguageServer\Core\Server\RpcClient;
 use Phpactor\Rename\Model\FileRenamer\TestFileRenamer;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
@@ -70,7 +71,7 @@ class FileRenameHandlerTest extends IntegrationTestCase
         self::assertInstanceOf(WorkspaceEdit::class, $edits);
         assert($edits instanceof WorkspaceEdit);
         self::assertIsArray($edits->documentChanges);
-        self::assertCount(1, $edits->documentChanges);
+        self::assertCount(3, $edits->documentChanges);
     }
 
     private function createServer(
@@ -81,27 +82,26 @@ class FileRenameHandlerTest extends IntegrationTestCase
         $builder = LanguageServerTesterBuilder::createBare()
             ->enableTextDocuments()
             ->enableFileEvents();
-
-        foreach ($workspaceEdits as $path => $_) {
-            $builder->workspace()->open(new TextDocumentItem($path, 'php', 1, ''));
-        }
-
-        $c = new LocatedTextEditConverter(
-            $builder->workspace(),
-            new WorkspaceTextDocumentLocator($builder->workspace()),
-        );
-
-        $workspaceEdit = $c->toWorkspaceEdit(
-            new LocatedTextEditsMap($workspaceEdits),
-            $renameResult,
-        );
-
-        $builder->addHandler(new FileRenameHandler(
-            new TestFileRenamer($willFail, $workspaceEdit),
-        ));
-
+        $builder->addHandler($this->createHandler($builder, $willFail, $renameResult, $workspaceEdits));
         $server = $builder->build();
 
+        foreach ($workspaceEdits as $path => $_) {
+            $server->textDocument()->open($path, '');
+        }
+
         return $server;
+    }
+
+    private function createHandler(
+        LanguageServerTesterBuilder $builder,
+        bool $willError = false,
+        ?RenameResult $renameResult,
+        array $workspaceEdits = [],
+    ): FileRenameHandler {
+        return new FileRenameHandler(
+            new TestFileRenamer($willError, $renameResult, new LocatedTextEditsMap($workspaceEdits)),
+            new LocatedTextEditConverter($builder->workspace(), new WorkspaceTextDocumentLocator($builder->workspace())),
+            new ClientApi($this->createMock(RpcClient::class)),
+        );
     }
 }
