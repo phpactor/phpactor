@@ -3016,11 +3016,6 @@ parameters:
 			path: lib/Extension/Core/Application/Status.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:versionInfo\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Core/Application/Status.php
-
-		-
 			message: "#^Cannot call method path\\(\\) on mixed\\.$#"
 			count: 2
 			path: lib/Extension/Core/Command/ConfigDumpCommand.php
@@ -4091,6 +4086,11 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/LanguageServerReferenceFinderExtensionTest.php
 
 		-
+			message: "#^Parameter \\#2 \\$renameResult of method Phpactor\\\\Extension\\\\LanguageServerRename\\\\Util\\\\LocatedTextEditConverter\\:\\:toWorkspaceEdit\\(\\) expects Phpactor\\\\Rename\\\\Model\\\\RenameResult\\|null, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
+
+		-
 			message: "#^Property Phpactor\\\\LanguageServerProtocol\\\\ServerCapabilities\\:\\:\\$workspace \\(array\\{workspaceFolders\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\|null\\) does not accept array\\{workspaceFolders\\?\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
@@ -4187,11 +4187,6 @@ parameters:
 
 		-
 			message: "#^Offset 'fileOperations' does not exist on array\\{workspaceFolders\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Unit/Handler/FileRenameHandlerTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, array\\<Phpactor\\\\LanguageServerProtocol\\\\CreateFile\\|Phpactor\\\\LanguageServerProtocol\\\\DeleteFile\\|Phpactor\\\\LanguageServerProtocol\\\\RenameFile\\|Phpactor\\\\LanguageServerProtocol\\\\TextDocumentEdit\\>\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Unit/Handler/FileRenameHandlerTest.php
 
@@ -6006,11 +6001,6 @@ parameters:
 			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\LocatedTextEditsMap\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
-			count: 1
-			path: lib/Rename/Adapter/ClassMover/FileRenamer.php
-
-		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 2
 			path: lib/Rename/Adapter/ReferenceFinder/AbstractReferenceRenamer.php
@@ -6024,11 +6014,6 @@ parameters:
 			message: "#^Cannot call method getEndPosition\\(\\) on Microsoft\\\\PhpParser\\\\Token\\|null\\.$#"
 			count: 1
 			path: lib/Rename/Adapter/ReferenceFinder/MemberRenamer.php
-
-		-
-			message: "#^Method Phpactor\\\\Rename\\\\Model\\\\FileRenamer\\\\LoggingFileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\LocatedTextEditsMap\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
-			count: 1
-			path: lib/Rename/Model/FileRenamer/LoggingFileRenamer.php
 
 		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
@@ -6489,11 +6474,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$items of class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection constructor expects array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionConstant\\>, array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant&T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
-
-		-
-			message: "#^Parameter \\#3 \\$node of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionArgument constructor expects Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\ArgumentExpression, mixed given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionArgumentCollection.php
 
 		-
 			message: "#^Cannot call method getName\\(\\) on mixed\\.$#"
