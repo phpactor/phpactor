@@ -10,6 +10,7 @@ class ShortNameFuzzilyMatchesTo extends Criteria
 {
     public function __construct(private string $name)
     {
+        $this->regex = '#' . implode('.*', array_map(preg_quote(...), str_split($this->name))) . '#i';
     }
 
     public function isSatisfiedBy(Record $record): bool
@@ -22,8 +23,6 @@ class ShortNameFuzzilyMatchesTo extends Criteria
             return false;
         }
 
-        $regex = '#' . implode('.*', array_map(preg_quote(...), str_split($this->name))) . '#i';
-
-        return preg_match($regex, $record->shortName()) === 1;
+        return preg_match($this->regex, $record->shortName()) === 1;
     }
 }
