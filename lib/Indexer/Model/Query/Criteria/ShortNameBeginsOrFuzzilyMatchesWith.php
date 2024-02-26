@@ -6,13 +6,12 @@ use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\HasShortName;
 
-class ShortNameFuzzilyMatchesTo extends Criteria
+class ShortNameBeginsOrFuzzilyMatchesWith extends Criteria
 {
     private readonly string $regex;
 
     public function __construct(private string $name)
     {
-        $this->regex = '#' . implode('.*', array_map(preg_quote(...), mb_str_split($this->name))) . '#i';
     }
 
     public function isSatisfiedBy(Record $record): bool
@@ -25,6 +24,17 @@ class ShortNameFuzzilyMatchesTo extends Criteria
             return false;
         }
 
-        return preg_match($this->regex, $record->shortName()) === 1;
+        if (str_starts_with(mb_strtolower($record->shortName()), $this->name)) {
+            return true;
+        } 
+
+        return preg_match($this->getRegex(), $record->shortName()) === 1;
+    }
+
+    private function getRegex(): string
+    {
+        $this->regex ??= '#' . implode('.*', array_map(preg_quote(...), mb_str_split($this->name))) . '#i';
+
+        return $this->regex;
     }
 }

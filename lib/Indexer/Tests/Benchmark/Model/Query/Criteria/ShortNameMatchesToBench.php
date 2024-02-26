@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Tests\Benchmark\Model\Query\Criteria;
 use Generator;
 use PhpBench\Benchmark\Metadata\Annotations\ParamProviders;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
+use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsOrFuzzilyMatchesWith;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameFuzzilyMatchesTo;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameFuzzilyMatchesTo2;
@@ -21,6 +22,21 @@ class ShortNameMatchesToBench
     public function benchRegexFuzzyMatching(array $data): void
     {
         $criteria = new ShortNameFuzzilyMatchesTo($data[0]);
+
+        $record = ClassRecord::fromName($data[1]);
+
+        $criteria->isSatisfiedBy($record);
+    }
+
+    /**
+     * @ParamProviders("provideSearch")
+     * @Revs(1000)
+     * @Iterations(5)
+     * @param array{string, string} $data
+     */
+    public function benchShortNameBeginsOrFuzzilyMatchesWith(array $data): void
+    {
+        $criteria = new ShortNameBeginsOrFuzzilyMatchesWith($data[0]);
 
         $record = ClassRecord::fromName($data[1]);
 
@@ -59,7 +75,9 @@ class ShortNameMatchesToBench
 
     public function provideSearch(): Generator
     {
-        yield 'substring' => ['Bag', 'Foobar\\Bagno'];
+        yield 'leading substring' => ['Bag', 'Foobar\\Bagno'];
+        yield 'empty search' => ['', 'Foobar\\Bagno'];
         yield 'subsequence' => ['bgn', 'Foobar\\Bagno'];
+        yield 'multibyte' => ['☠😼', 'Foobar\\😼☠k😼'];
     }
 }
