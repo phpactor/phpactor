@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\Record\HasShortName;
 
 class ShortNameFuzzilyMatchesTo extends Criteria
 {
-    private readonly string $regex;
+    private string $regex;
 
     public function __construct(private string $name)
     {
