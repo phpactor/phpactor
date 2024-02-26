@@ -59,15 +59,15 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
 
         yield 'class keyword' => [
             '<?php cl<>',
-            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
+            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
         yield 'class keyword 2' => [
             '<?php class F {} cl<>',
-            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
+            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
         yield 'class keyword 3' => [
             '<?php class F {function fo() {}} cl<>',
-            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
+            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
     }
 

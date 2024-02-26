@@ -10,10 +10,8 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Completor\NameSearcherCompletor;
 use Phpactor\Name\NameUtil;
 use Phpactor\ReferenceFinder\NameSearcherType;
-use Phpactor\ReferenceFinder\Search\NameSearchResult;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentUri;
 
 class AttributeCompletor extends NameSearcherCompletor implements TolerantCompletor
 {
@@ -31,18 +29,5 @@ class AttributeCompletor extends NameSearcherCompletor implements TolerantComple
         yield from $this->completeName($name, $source->uri(), $node, NameSearcherType::ATTRIBUTE);
 
         return true;
-    }
-
-    /**
-     * @return array<string,mixed>
-     */
-    protected function createSuggestionOptions(
-        NameSearchResult $result,
-        ?TextDocumentUri $sourceUri = null,
-        ?Node $node = null,
-        bool $wasFullyQualified = false,
-    ): array {
-        return ['snippet' => (string) $result->name()->head() . '($1)$0']
-            + parent::createSuggestionOptions($result, $sourceUri, $node, $wasFullyQualified);
     }
 }
