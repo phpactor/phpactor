@@ -8,8 +8,11 @@ use Phpactor\Indexer\Model\Record\HasShortName;
 
 class ShortNameBeginsWith extends Criteria
 {
+    private string $regex;
+
     public function __construct(private string $name)
     {
+        $this->regex = '#' . implode('.*', array_map(preg_quote(...), str_split($this->name))) . '#i';
     }
 
     public function isSatisfiedBy(Record $record): bool
@@ -22,6 +25,10 @@ class ShortNameBeginsWith extends Criteria
             return false;
         }
 
-        return str_starts_with($record->shortName(), $this->name);
+        if (str_starts_with(strtolower($record->shortName()), $this->name)) {
+            return true;
+        }
+
+        return preg_match($this->regex, $record->shortName()) === 1;
     }
 }
