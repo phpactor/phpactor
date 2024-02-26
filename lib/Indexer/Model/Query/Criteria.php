@@ -15,6 +15,7 @@ use Phpactor\Indexer\Model\Query\Criteria\IsFunction;
 use Phpactor\Indexer\Model\Query\Criteria\IsMember;
 use Phpactor\Indexer\Model\Query\Criteria\OrCriteria;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
+use Phpactor\Indexer\Model\Query\Criteria\ShortNameFuzzilyMatchesTo;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 
@@ -30,6 +31,11 @@ abstract class Criteria
     public static function shortNameBeginsWith(string $name): ShortNameBeginsWith
     {
         return new ShortNameBeginsWith($name);
+    }
+
+    public static function shortNameFuzzilyMatchesTo(string $name): ShortNameFuzzilyMatchesTo
+    {
+        return new ShortNameFuzzilyMatchesTo($name);
     }
 
     public static function fqnBeginsWith(string $name): FqnBeginsWith
