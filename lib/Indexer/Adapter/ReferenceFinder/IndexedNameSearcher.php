@@ -32,7 +32,7 @@ class IndexedNameSearcher implements NameSearcher
         if ($fullyQualified) {
             $criteria = Criteria::fqnBeginsWith(substr($name, 1));
         } else {
-            $criteria = Criteria::shortNameBeginsWith($name);
+            $criteria = Criteria::shortNameFuzzilyMatchesTo($name);
         }
 
         $typeCriteria = $this->resolveTypeCriteria($type);
