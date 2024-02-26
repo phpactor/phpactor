@@ -7,6 +7,7 @@ use PhpBench\Benchmark\Metadata\Annotations\ParamProviders;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameFuzzilyMatchesTo;
+use Phpactor\Indexer\Model\Query\Criteria\ShortNameFuzzilyMatchesTo2;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 
 class ShortNameMatchesToBench
@@ -20,6 +21,21 @@ class ShortNameMatchesToBench
     public function benchRegexFuzzyMatching(array $data): void
     {
         $criteria = new ShortNameFuzzilyMatchesTo($data[0]);
+
+        $record = ClassRecord::fromName($data[1]);
+
+        $criteria->isSatisfiedBy($record);
+    }
+
+    /**
+     * @ParamProviders("provideSearch")
+     * @Revs(1000)
+     * @Iterations(5)
+     * @param array{string, string} $data
+     */
+    public function benchStringFuzzyMatching(array $data): void
+    {
+        $criteria = new ShortNameFuzzilyMatchesTo2($data[0]);
 
         $record = ClassRecord::fromName($data[1]);
 
