@@ -12,7 +12,7 @@ class ShortNameFuzzilyMatchesTo extends Criteria
 
     public function __construct(private string $name)
     {
-        $this->regex = '#' . implode('.*', array_map(preg_quote(...), str_split($this->name))) . '#i';
+        $this->regex = '#' . implode('.*', array_map(preg_quote(...), mb_str_split($this->name))) . '#i';
     }
 
     public function isSatisfiedBy(Record $record): bool

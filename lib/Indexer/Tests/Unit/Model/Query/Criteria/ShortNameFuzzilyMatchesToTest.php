@@ -2,34 +2,29 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Model\Query\Criteria;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameFuzzilyMatchesTo;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 
 class ShortNameFuzzilyMatchesToTest extends TestCase
 {
-    public function testNotMatchesEmpty(): void
+    /**
+     * @dataProvider provideSearch
+     */
+    public function testFuzzyRegex(string $name, string $path, bool $expected): void
     {
-        $record = ClassRecord::fromName('Foobar\\Barfoo');
-        self::assertFalse(Criteria::shortNameFuzzilyMatchesTo('')->isSatisfiedBy($record));
+        $record = ClassRecord::fromName($path);
+        self::assertTrue((new ShortNameFuzzilyMatchesTo($name))->isSatisfiedBy($record) === $expected);
     }
 
-    public function testMatchesExact(): void
+    public function provideSearch(): Generator
     {
-        $record = ClassRecord::fromName('Foobar\\Barfoo');
-        self::assertTrue((new ShortNameFuzzilyMatchesTo('Barfoo'))->isSatisfiedBy($record));
-    }
-
-    public function testNotMatches(): void
-    {
-        $record = ClassRecord::fromName('Foobar\\Bazfoo');
-        self::assertFalse((new ShortNameFuzzilyMatchesTo('Barfoo'))->isSatisfiedBy($record));
-    }
-
-    public function testSubsequence(): void
-    {
-        $record = ClassRecord::fromName('Foobar\\Bagno');
-        self::assertTrue((new ShortNameFuzzilyMatchesTo('bgn'))->isSatisfiedBy($record));
+        yield 'empty search' => ['', 'Foobar\\Bagno', false];
+        yield 'no match' => ['Barfoo', 'Foobar\\Bazfoo', false];
+        yield 'matches exact' => ['Barfoo', 'Foobar\\Barfoo', true];
+        yield 'substring' => ['Bag', 'Foobar\\Bagno', true];
+        yield 'subsequence' => ['bgn', 'Foobar\\Bagno', true];
+        yield 'multibyte' => ['☠😼', 'Foobar\\😼☠k😼', true];
     }
 }
