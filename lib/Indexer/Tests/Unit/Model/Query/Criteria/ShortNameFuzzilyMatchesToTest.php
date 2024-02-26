@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Tests\Unit\Model\Query\Criteria;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsOrFuzzilyMatchesWith;
+use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsOrFuzzilyMatchesWith2;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameFuzzilyMatchesTo;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameFuzzilyMatchesTo2;
 use Phpactor\Indexer\Model\Record\ClassRecord;
@@ -36,6 +37,15 @@ class ShortNameFuzzilyMatchesToTest extends TestCase
     {
         $record = ClassRecord::fromName($path);
         self::assertTrue((new ShortNameBeginsOrFuzzilyMatchesWith($name))->isSatisfiedBy($record) === $expected);
+    }
+
+    /**
+     * @dataProvider provideSearch
+     */
+    public function testFuzzyStringOrRegex2(string $name, string $path, bool $expected): void
+    {
+        $record = ClassRecord::fromName($path);
+        self::assertTrue((new ShortNameBeginsOrFuzzilyMatchesWith2($name))->isSatisfiedBy($record) === $expected);
     }
 
     public function provideSearch(): Generator
