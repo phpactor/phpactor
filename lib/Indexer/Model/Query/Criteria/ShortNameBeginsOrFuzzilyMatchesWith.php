@@ -26,7 +26,7 @@ class ShortNameBeginsOrFuzzilyMatchesWith extends Criteria
 
         if (str_starts_with(mb_strtolower($record->shortName()), $this->name)) {
             return true;
-        } 
+        }
 
         return preg_match($this->getRegex(), $record->shortName()) === 1;
     }
