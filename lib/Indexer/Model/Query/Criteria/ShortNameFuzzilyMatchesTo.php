@@ -8,6 +8,8 @@ use Phpactor\Indexer\Model\Record\HasShortName;
 
 class ShortNameFuzzilyMatchesTo extends Criteria
 {
+    private string $regex; 
+
     public function __construct(private string $name)
     {
         $this->regex = '#' . implode('.*', array_map(preg_quote(...), str_split($this->name))) . '#i';
