@@ -38,7 +38,6 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'Foobar',
                     'short_description' => 'Foobar',
-                    'snippet'           => 'Foobar($1)$0',
                 ]
             ]
         ];
@@ -54,7 +53,6 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'Two',
                     'short_description' => 'Foo\Relative\Two',
-                    'snippet'           => 'Two($1)$0',
                 ],
                 [
                     'type'              => Suggestion::TYPE_MODULE,

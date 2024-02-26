@@ -45,7 +45,7 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
         if (CompletionContext::declaration($node, $offset)) {
-            yield from $this->keywords(['class ', 'trait ', 'function ', 'interface ']);
+            yield from $this->keywords(['class ', 'enum ', 'trait ', 'function ', 'interface ']);
             return true;
         }
 
