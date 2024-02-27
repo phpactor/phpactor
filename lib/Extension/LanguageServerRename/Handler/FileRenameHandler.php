@@ -50,7 +50,6 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
             try {
                 foreach ($params->files as $rename) {
                     $locatedEditMap = LocatedTextEditsMap::create();
-                    assert($rename instanceof FileRename);
 
                     $$locatedTextEdits = $this->renamer->renameFile(
                         TextDocumentUri::fromString($rename->oldUri),
