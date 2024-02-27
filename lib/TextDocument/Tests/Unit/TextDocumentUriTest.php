@@ -5,14 +5,28 @@ namespace Phpactor\TextDocument\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Exception\InvalidUriException;
 use Phpactor\TextDocument\TextDocumentUri;
-use Symfony\Component\Filesystem\Path;
 
 class TextDocumentUriTest extends TestCase
 {
     public function testCreate(): void
     {
-        $uri = TextDocumentUri::fromString('file://' . __FILE__);
-        $this->assertEquals('file://' . Path::canonicalize(__FILE__), (string) $uri);
+        $uri = TextDocumentUri::fromString('file:///foo/bar.php');
+        $this->assertEquals('file:///foo/bar.php', (string) $uri);
+
+        $uri = TextDocumentUri::fromString('file:///C:/foo/bar.php');
+        $this->assertEquals('file:///C:/foo/bar.php', (string) $uri);
+    }
+
+    public function testExceptionOnInvalidFormatUnix(): void
+    {
+        $this->expectException(InvalidUriException::class);
+        TextDocumentUri::fromString('file://foo/bar.php');
+    }
+
+    public function testExceptionOnInvalidFormatWindows(): void
+    {
+        $this->expectException(InvalidUriException::class);
+        TextDocumentUri::fromString('file://C:/foo/bar.php');
     }
 
     public function testCreateUntitled(): void
@@ -23,14 +37,16 @@ class TextDocumentUriTest extends TestCase
 
     public function testCreatePhar(): void
     {
-        $uri = TextDocumentUri::fromString('phar://' . __FILE__);
-        $this->assertEquals('phar://' . Path::canonicalize(__FILE__), (string) $uri);
+        $uri = TextDocumentUri::fromString('phar:///foo/bar.php');
+        $this->assertEquals('phar:///foo/bar.php', (string) $uri);
     }
 
     public function testNormalizesToFileScheme(): void
     {
-        $uri = TextDocumentUri::fromString(__FILE__);
-        $this->assertEquals('file://' . Path::canonicalize(__FILE__), (string) $uri);
+        $uri = TextDocumentUri::fromString('/foo/bar.php');
+        $this->assertEquals('file:///foo/bar.php', (string) $uri);
+        $uri = TextDocumentUri::fromString('C:/foo/bar.php');
+        $this->assertEquals('file:///C:/foo/bar.php', (string) $uri);
     }
 
     public function testExceptionOnNonAbsolutePath(): void
@@ -53,12 +69,6 @@ class TextDocumentUriTest extends TestCase
         TextDocumentUri::fromString('file://');
     }
 
-    public function testFromPath(): void
-    {
-        $uri = TextDocumentUri::fromString('/foobar');
-        $this->assertEquals('file:///foobar', $uri->__toString());
-    }
-
     public function testFromHttpUri(): void
     {
         $this->expectException(InvalidUriException::class);
@@ -66,16 +76,19 @@ class TextDocumentUriTest extends TestCase
         $uri = TextDocumentUri::fromString('http://foobar/foobar');
     }
 
-
     public function testReturnsPath(): void
     {
-        $uri = TextDocumentUri::fromString('file://' . __FILE__);
-        $this->assertEquals(Path::canonicalize(__FILE__), $uri->path());
+        $uri = TextDocumentUri::fromString('file:///foo/bar.php');
+        $this->assertEquals('/foo/bar.php', $uri->path());
+        $uri = TextDocumentUri::fromString('file:///C:/foo/bar.php');
+        $this->assertEquals('C:/foo/bar.php', $uri->path());
     }
 
     public function testScheme(): void
     {
-        $uri = TextDocumentUri::fromString('file://' . __FILE__);
+        $uri = TextDocumentUri::fromString('file:///foo/bar.php');
+        $this->assertEquals('file', $uri->scheme());
+        $uri = TextDocumentUri::fromString('file:///C:/foo/bar.php');
         $this->assertEquals('file', $uri->scheme());
     }
 }
