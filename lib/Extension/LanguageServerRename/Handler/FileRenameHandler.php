@@ -51,19 +51,19 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
                 foreach ($params->files as $rename) {
                     $locatedEditMap = LocatedTextEditsMap::create();
 
-                    $$locatedTextEdits = $this->renamer->renameFile(
+                    $renameGen = $this->renamer->renameFile(
                         TextDocumentUri::fromString($rename->oldUri),
                         TextDocumentUri::fromString($rename->newUri)
                     );
 
-                    foreach ($$locatedTextEdits as $locatedTextEdit) {
+                    foreach ($renameGen as $locatedTextEdit) {
                         if ($count++ === 10) {
                             yield delay(1);
                         }
                         $locatedEditMap = $locatedEditMap->withTextEdit($locatedTextEdit);
                     }
 
-                    $workspaceEdit = $this->converter->toWorkspaceEdit($locatedEditMap, $$locatedTextEdits->getReturn());
+                    $workspaceEdit = $this->converter->toWorkspaceEdit($locatedEditMap, $renameGen->getReturn());
 
                     foreach ($workspaceEdit->documentChanges ?? [] as $change) {
                         $documentChanges[] = $change;
