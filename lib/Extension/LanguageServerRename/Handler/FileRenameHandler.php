@@ -12,7 +12,6 @@ use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
 use Phpactor\LanguageServerProtocol\FileOperationFilter;
 use Phpactor\LanguageServerProtocol\FileOperationPattern;
 use Phpactor\LanguageServerProtocol\FileOperationRegistrationOptions;
-use Phpactor\LanguageServerProtocol\FileRename;
 use Phpactor\LanguageServerProtocol\RenameFilesParams;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
