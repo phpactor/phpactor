@@ -106,12 +106,15 @@ class IndexBuildCommand extends Command
         Loop::run(function () use ($output) {
             $process = yield $this->watcher->watch();
 
-            Loop::onSignal(SIGINT, function () use ($output, $process): void {
-                $output->write('Shutting down watchers...');
-                $process->stop();
-                $output->writeln('done');
-                Loop::stop();
-            });
+            // Signals are not supported on Windows
+            if(defined('SIGINT')) {
+                Loop::onSignal(SIGINT, function () use ($output, $process): void {
+                    $output->write('Shutting down watchers...');
+                    $process->stop();
+                    $output->writeln('done');
+                    Loop::stop();
+                });
+            }
 
             $output->writeln(sprintf('<info>Watching for file changes with </>%s<info>...</>', $this->watcher->describe()));
 
