@@ -16,6 +16,7 @@
         "symfony/console": "^5.0",
         "dantleech/invoke": "^2.0",
         "phpactor/amp-fswatch": "^0.3.0",
+        "amphp/process": "^1.1.5",
         "thecodingmachine/safe": "^1.0",
         "phpactor/phly-event-dispatcher": "^2.0.0",
         "phpactor/language-server": "^6.1.1",
@@ -113,14 +114,14 @@
     ],
     "scripts": {
         "post-install-cmd": [
-            "bin/phpactor config:json-schema phpactor.schema.json"
+            "@php bin/phpactor config:json-schema phpactor.schema.json"
         ],
         "integrate": [
-            "composer validate --strict",
-            "vendor/bin/php-cs-fixer fix",
-            "vendor/bin/phpstan analyse --memory-limit=-1",
-            "vendor/bin/phpunit",
-            "vendor/bin/phpbench run --iterations=1 --revs=1",
+            "@composer validate --strict",
+            "@php vendor/bin/php-cs-fixer fix",
+            "@php vendor/bin/phpstan analyse --memory-limit=-1",
+            "@php vendor/bin/phpunit",
+            "@php vendor/bin/phpbench run --iterations=1 --revs=1",
             "make docs"
         ]
     }

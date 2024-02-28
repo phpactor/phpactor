@@ -19,7 +19,7 @@ abstract class IntegrationTestCase extends TestCase
     public function phpactor(array $cmd): Process
     {
         $p = new Process(array_merge(
-            [__DIR__ . '/../bin/phpactor'],
+            [PHP_BINARY, __DIR__ . '/../bin/phpactor'],
             $cmd
         ), $this->workspace()->path());
 

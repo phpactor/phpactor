@@ -16,6 +16,7 @@ class IndexBuildCommandTest extends IntegrationTestCase
         $this->initProject();
 
         $process = new Process([
+            PHP_BINARY,
             __DIR__ . '/../../bin/console',
             'index:build',
         ], $this->workspace()->path());

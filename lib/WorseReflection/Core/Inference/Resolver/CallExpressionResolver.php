@@ -108,16 +108,18 @@ class CallExpressionResolver implements Resolver
 
         if ($context->symbol()->symbolType() === Symbol::FUNCTION) {
             $function = $resolver->reflector()->reflectFunction($context->symbol()->name());
+            $arguments = FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList);
             return (new FunctionCallContext(
                 $context->symbol(),
                 ByteOffsetRange::fromInts(
                     $node->getStartPosition(),
                     $node->getEndPosition()
                 ),
-                $function
+                $function,
+                $arguments,
             ))->withType($type->evaluate(
                 $function,
-                FunctionArguments::fromList($resolver, $frame, $node->argumentExpressionList)
+                $arguments
             ));
         }
 

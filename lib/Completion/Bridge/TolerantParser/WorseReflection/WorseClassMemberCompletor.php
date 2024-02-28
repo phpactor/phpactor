@@ -201,7 +201,8 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         }
 
         if (false === $isInstance && $classReflection instanceof ReflectionClass ||
-            $classReflection instanceof ReflectionInterface
+            $classReflection instanceof ReflectionInterface ||
+            $classReflection instanceof ReflectionEnum
         ) {
             foreach ($members->constants() as $constant) {
                 if ($publicOnly && false === $constant->visibility()->isPublic()) {

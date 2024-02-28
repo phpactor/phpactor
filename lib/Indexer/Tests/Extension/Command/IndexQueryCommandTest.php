@@ -16,6 +16,7 @@ class IndexQueryCommandTest extends IntegrationTestCase
         $this->initProject();
 
         $process = new Process([
+            PHP_BINARY,
             __DIR__ . '/../../bin/console',
             'index:query',
             $query

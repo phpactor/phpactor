@@ -24,6 +24,7 @@ use Phpactor\Rename\Model\Renamer;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLocator;
 use RuntimeException;
@@ -96,7 +97,11 @@ final class ClassRenamer implements Renamer
                 continue;
             }
 
-            $referenceDocument = $this->locator->get($reference->location()->uri());
+            try {
+                $referenceDocument = $this->locator->get($reference->location()->uri());
+            } catch (TextDocumentNotFound) {
+                continue;
+            }
 
             $edits = $this->classMover->replaceReferences(
                 $this->classMover->findReferences($referenceDocument->__toString(), $originalName->__toString()),

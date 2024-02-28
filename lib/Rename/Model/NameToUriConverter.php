@@ -10,5 +10,5 @@ interface NameToUriConverter
     /**
      * @throws CouldNotConvertUriToClass
      */
-    public function convert(string $uri): TextDocumentUri;
+    public function convert(string $className): TextDocumentUri;
 }

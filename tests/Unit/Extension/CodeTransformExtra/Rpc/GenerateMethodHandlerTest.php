@@ -13,6 +13,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\Filesystem\Path;
 use function Safe\file_get_contents;
 
 class GenerateMethodHandlerTest extends HandlerTestCase
@@ -52,7 +53,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
 
         $this->assertInstanceOf(UpdateFileSourceResponse::class, $response);
         assert($response instanceof UpdateFileSourceResponse);
-        $this->assertEquals(__FILE__, $response->path());
+        $this->assertEquals(Path::canonicalize(__FILE__), $response->path());
         $this->assertEquals($thisFileContents, $response->oldSource());
         $this->assertEquals($thisFileContents.'1', $response->newSource());
     }

@@ -7,6 +7,7 @@ use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\TextDocument\Exception\InvalidUriException;
 use RuntimeException;
 use SplFileInfo;
+use Symfony\Component\Filesystem\Path;
 use stdClass;
 
 class FilePathTest extends TestCase
@@ -66,11 +67,11 @@ class FilePathTest extends TestCase
 
         yield 'SplFileInfo' => [
             new SplFileInfo(__FILE__),
-            __FILE__
+            Path::canonicalize(__FILE__)
         ];
         yield 'SplFileInfo with scheme' => [
             new SplFileInfo('file://' . __FILE__),
-            __FILE__
+            Path::canonicalize(__FILE__)
         ];
     }
 
@@ -180,7 +181,7 @@ class FilePathTest extends TestCase
     public function testAsSplFileInfo(): void
     {
         $path1 = FilePath::fromUnknown(new SplFileInfo('file://' . __FILE__));
-        self::assertEquals(__FILE__, $path1->__toString());
-        self::assertEquals(__FILE__, $path1->asSplFileInfo()->__toString());
+        self::assertEquals(Path::canonicalize(__FILE__), $path1->__toString());
+        self::assertEquals(Path::canonicalize(__FILE__), $path1->asSplFileInfo()->__toString());
     }
 }

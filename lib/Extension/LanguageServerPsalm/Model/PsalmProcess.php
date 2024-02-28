@@ -32,6 +32,7 @@ class PsalmProcess
     {
         return \Amp\call(function () use ($filename) {
             $command = [
+                PHP_BINARY,
                 $this->config->psalmBin(),
                 sprintf(
                     '--show-info=%s',

@@ -182,7 +182,6 @@ class Phpactor
             LanguageServerCodeTransformExtension::class,
             LanguageServerSymbolProviderExtension::class,
             LanguageServerSelectionRangeExtension::class,
-            LanguageServerExtraExtension::class,
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
@@ -302,13 +301,13 @@ class Phpactor
      */
     public static function normalizePath(string $path): string
     {
-        return Path::makeAbsolute($path, (string) getcwd());
+        return Path::makeAbsolute($path, (string)getcwd());
     }
 
     public static function relativizePath(string $path): string
     {
-        if (str_starts_with($path, (string)getcwd())) {
-            return substr($path, strlen((string) getcwd()) + 1);
+        if (Path::isBasePath((string)getcwd(), $path)) {
+            return Path::makeRelative($path, (string)getcwd());
         }
 
         return $path;

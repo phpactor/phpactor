@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
@@ -135,6 +136,11 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         $this->traits = $traits;
 
         return $traits;
+    }
+
+    public function constants(): ReflectionConstantCollection
+    {
+        return $this->members()->constants();
     }
 
     /**

@@ -5,7 +5,6 @@ namespace Phpactor\Extension\LanguageServerBridge\Converter;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\LineCol;
-use Phpactor\TextDocument\Util\LineAtOffset;
 use RuntimeException;
 
 class PositionConverter
@@ -21,24 +20,31 @@ class PositionConverter
             $offset = ByteOffset::fromInt(strlen($text));
         }
 
-        $lineCol = LineCol::fromByteOffset($text, $offset);
-        $lineAtOffset = LineAtOffset::lineAtByteOffset($text, $offset);
+        $lineCol = LineCol::fromByteOffset($text, $offset, true);
 
-        $lineAtOffset = mb_substr(
-            $lineAtOffset,
-            0,
-            $lineCol->col() - 1
-        );
-
-        return new Position($lineCol->line() - 1, self::countUtf16CodeUnits($lineAtOffset));
+        return new Position($lineCol->line() - 1, $lineCol->col() - 1);
     }
 
+    /**
+     * Convert UTF-16 position to byteoffset.
+     */
     public static function positionToByteOffset(Position $position, string $text): ByteOffset
     {
+        // get byte offset position of line start
         $lineCol = new LineCol($position->line + 1, 1);
         $byteOffset = $lineCol->toByteOffset($text);
 
-        return ByteOffset::fromInt($byteOffset->toInt() + $position->character);
+        // convert line to UTF-16 as Position character is UTF-16 code unit position
+        $rest = substr($text, $byteOffset->toInt());
+        $lineEnd = strpos($rest, "\n");
+        if ($lineEnd !== false) {
+            $rest = substr($rest, 0, $lineEnd);
+        }
+        $rest = self::normalizeUtf16($rest);
+        $seg = substr($rest, 0, $position->character * 2);
+        $utf8 = \mb_convert_encoding($seg, 'UTF-8', 'UTF-16');
+
+        return ByteOffset::fromInt($byteOffset->toInt() + strlen($utf8));
     }
 
     /**
@@ -52,10 +58,5 @@ class PositionConverter
         }
 
         return $utf16;
-    }
-
-    private static function countUtf16CodeUnits(string $string): int
-    {
-        return (int)(strlen(self::normalizeUtf16($string)) / 2);
     }
 }
