@@ -70,7 +70,7 @@ class IndexBuildCommand extends Command
         $job = $this->indexer->getJob($subPath);
         $output->writeln('done');
         $output->writeln('<info>Building index:</info>');
-        $output->write(PHP_EOL);
+        $output->write("\n");
 
         if ($job->size() === 0) {
             $output->writeln('No files found');
@@ -91,8 +91,8 @@ class IndexBuildCommand extends Command
         }
 
         $progress->finish();
-        $output->write(PHP_EOL);
-        $output->write(PHP_EOL);
+        $output->write("\n");
+        $output->write("\n");
 
         $output->writeln(sprintf(
             '<bg=green;fg=black;option>Done in %s seconds using %sb of memory</>',

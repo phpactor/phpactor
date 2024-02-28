@@ -50,14 +50,14 @@ class EnumUpdater
         foreach ($classPrototype->cases()->notIn($existingCasesNames) as $case) {
             $edits->after(
                 $lastConstant,
-                PHP_EOL . $edits->indent($this->renderer->render($case), 1)
+                "\n" . $edits->indent($this->renderer->render($case), 1)
             );
 
             if ($classPrototype->cases()->isLast($case) && (
                 $nextMember instanceof MethodDeclaration ||
                 $nextMember instanceof EnumCaseDeclaration
             )) {
-                $edits->after($lastConstant, PHP_EOL);
+                $edits->after($lastConstant, "\n");
             }
         }
     }
