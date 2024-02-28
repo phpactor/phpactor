@@ -8,6 +8,7 @@ use Phpactor\ReferenceFinder\Exception\UnsupportedDocument;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -39,7 +40,7 @@ class ViewReferenceFinder implements DefinitionLocator
         return new TypeLocations([
             new TypeLocation(
                 new StringType(),
-                new Location(TextDocumentUri::fromString($view), ByteOffset::fromInt(0))
+                new Location(TextDocumentUri::fromString($view), ByteOffsetRange::fromInts(0, 0))
             )
         ]);
     }

@@ -324,6 +324,9 @@ class LaravelContainerInspector
         $class = null;
 
         try {
+            if ($type === 'Illuminate\Database\Eloquent\Builder') {
+                $class = $reflector->reflectClass('LaravelBuilder');
+            }
             if ($type === 'Illuminate\Database\Eloquent\Relations\HasMany') {
                 $class = $reflector->reflectClass('LaravelHasManyVirtualBuilder');
             }
@@ -676,12 +679,17 @@ class LaravelContainerInspector
             'whereNull',
             'whereNotNull',
             'whereNull',
+            'whereBetween',
+            'select',
+            'reorder',
             'whereIn',
             'orWhereIn',
             'inRandomOrder',
             'orderBy',
             'limit',
             'whereHas',
+            'whereRaw',
+            'whereDoesntHave',
             'withCount',
             'with',
             'latest'

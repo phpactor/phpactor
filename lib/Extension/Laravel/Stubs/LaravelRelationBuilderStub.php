@@ -11,6 +11,26 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  *
  * @method TModelClass create()
  */
+abstract class LaravelBuilder extends Builder
+{
+    public function whereIn(string $arg, array $in): static {
+        return $this;
+    }
+
+    public function whereNull(string $arg): static {
+        return $this;
+    }
+    
+    public function whereNotNull(string $arg): static {
+        return $this;
+    }
+}
+
+/**
+ * @template TModelClass
+ *
+ * @method TModelClass create()
+ */
 abstract class LaravelHasManyVirtualBuilder extends HasMany
 {
 }
@@ -42,5 +62,16 @@ abstract class LaravelBelongsToManyVirtualBuilder extends BelongsToMany
  */
 abstract class LaravelQueryVirtualBuilder extends Builder
 {
+    public function whereIn(string $arg, array $in): static {
+        return $this;
+    }
+
+    public function whereNull(string $arg): static {
+        return $this;
+    }
+    
+    public function whereNotNull(string $arg): static {
+        return $this;
+    }
 }
 

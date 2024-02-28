@@ -140,6 +140,7 @@ class LaravelExtension implements OptionalExtension
 
         $container->register('laravel-stub-locator', function (Container $container) {
             return new InternalLocator([
+                'LaravelBuilder' => __DIR__ . '/Stubs/LaravelRelationBuilderStub.php',
                 'LaravelHasManyVirtualBuilder' => __DIR__ . '/Stubs/LaravelRelationBuilderStub.php',
                 'LaravelBelongsToVirtualBuilder' => __DIR__ . '/Stubs/LaravelRelationBuilderStub.php',
                 'LaravelBelongsToManyVirtualBuilder' => __DIR__ . '/Stubs/LaravelRelationBuilderStub.php',

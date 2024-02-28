@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Laravel\DocumentManager;
 
+use Exception;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\View\Compilers\BladeCompiler;
 use Microsoft\PhpParser\Node\ArrayElement;
@@ -72,6 +73,7 @@ class LaravelBladeInjector implements DocumentModifier
             $viewKey = $viewsData['mapping'][$fileToSearch] ?? false;
 
             $component = null;
+            file_put_contents('/tmp/phpactor-laravel.log', json_encode($viewsData['blade']), FILE_APPEND);
 
             if (!$viewKey) {
                 // Try to load it from the regular views.
@@ -140,7 +142,7 @@ class LaravelBladeInjector implements DocumentModifier
                 $text = implode(PHP_EOL, $lines);
 
                 $inc = mb_strlen($prefix) + $lengthDiff;
-
+                
                 return new TextDocumentModifierResponse($text, $inc, 'php');
             }
         }
