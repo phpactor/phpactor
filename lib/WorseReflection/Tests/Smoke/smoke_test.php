@@ -48,7 +48,7 @@ $files  = new RegexIterator($files, '{.*' . $opts['pattern'] . '.*}');
 $exceptions = [];
 $count = 0;
 
-echo 'Legend: N = Not found, E = Error' . PHP_EOL . PHP_EOL;
+echo 'Legend: N = Not found, E = Error' . "\n" . "\n";
 
 /** @var SplFileInfo $file */
 foreach ($files as $file) {
@@ -61,7 +61,7 @@ foreach ($files as $file) {
         break;
     }
 
-    echo $count++ . ' ' . Path::makeRelative($file->getPathname(), getcwd()) . PHP_EOL;
+    echo $count++ . ' ' . Path::makeRelative($file->getPathname(), getcwd()) . "\n";
     $message = $file->getPathname();
     try {
         $source = TextDocumentBuilder::create(file_get_contents($file->getPathname()))->uri($file->getPathname())->build();
@@ -77,17 +77,17 @@ foreach ($files as $file) {
                 $time = microtime(true) - $time;
 
                 if ($time > $slowThreshold) {
-                    fwrite($logHandle, sprintf('%s#%s (%ss)', $class->name()->full(), $method->name(), number_format($time, 2)) . PHP_EOL);
+                    fwrite($logHandle, sprintf('%s#%s (%ss)', $class->name()->full(), $method->name(), number_format($time, 2)) . "\n");
                     echo 'S';
                 }
             }
         }
     } catch (NotFound $e) {
-        fwrite($logHandle, sprintf('%s %s %s: ', 'NOT FOUND', Path::makeRelative($file->getPathname(), getcwd()), $e->getMessage()). PHP_EOL);
+        fwrite($logHandle, sprintf('%s %s %s: ', 'NOT FOUND', Path::makeRelative($file->getPathname(), getcwd()), $e->getMessage()). "\n");
         echo 'N';
     } catch (Exception $e) {
         echo 'E';
-        fwrite($logHandle, sprintf('%s %s [%s] %s', 'ERROR', $message, get_class($e), $e->getMessage()).PHP_EOL);
+        fwrite($logHandle, sprintf('%s %s [%s] %s', 'ERROR', $message, get_class($e), $e->getMessage())."\n");
         ;
         $exceptions[] = $e;
     } finally {

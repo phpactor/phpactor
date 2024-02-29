@@ -71,7 +71,7 @@ class ReferencesMemberCommand extends Command
         $count = $this->renderTable($output, $results, 'references', $output->isDecorated());
 
         if ($risky) {
-            $output->write(PHP_EOL);
+            $output->write("\n");
             $output->writeln('<comment># Risky (unknown classes):</>');
             $riskyCount = $this->renderTable($output, $results, 'risky_references', $output->isDecorated());
         } else {
@@ -83,12 +83,12 @@ class ReferencesMemberCommand extends Command
         }
 
         if ($replace) {
-            $output->write(PHP_EOL);
+            $output->write("\n");
             $output->writeln('<comment># Replacements:</>');
             $this->renderTable($output, $results, 'replacements', $output->isDecorated());
         }
 
-        $output->write(PHP_EOL);
+        $output->write("\n");
         $output->writeln(sprintf('%s reference(s), %s risky references', $count, $riskyCount));
 
         return 0;
