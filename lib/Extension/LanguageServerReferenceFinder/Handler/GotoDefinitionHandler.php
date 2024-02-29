@@ -24,7 +24,8 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
         private Workspace $workspace,
         private DefinitionLocator $definitionLocator,
         private LocationConverter $locationConverter,
-        private ClientApi $clientApi
+        private ClientApi $clientApi,
+        private array $documentModifiers
     ) {
     }
 
@@ -43,12 +44,30 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
         return \Amp\call(function () use ($params) {
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
-            $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);
+            $modifiedDocumentText = $textDocument->text;
+            $totalByteOffsetDifference = 0;
+
+            // Allow documentModifiers to process the document. This will barely be usable for other extensions but
+            // the Laravel blade one.
+            /** @var TextDocumentModifierResponse[] $modifierResponses */
+            $modifierResponses = [];
+            foreach ($this->documentModifiers as $modifier) {
+                if ($response = $modifier->process($modifiedDocumentText, $textDocument, $params->position)) {
+                    $modifierResponses[] = $response;
+                    // Update the modifiedDocumentText with the new body as it may have changed.
+                    $modifiedDocumentText = $response->body;
+                    // Update the totalByteOffsetDifference with the additional text as it may have changed.
+                    $totalByteOffsetDifference += $response->additionalOffset;
+                }
+            }
+
+            $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text)
+                ->add($totalByteOffsetDifference);
 
             try {
                 $typeLocations = $this->definitionLocator->locateDefinition(
                     TextDocumentBuilder::create(
-                        $textDocument->text
+                        $modifiedDocumentText
                     )->uri($textDocument->uri)->language(
                         $textDocument->languageId,
                     )->build(),

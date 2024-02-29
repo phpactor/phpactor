@@ -7,6 +7,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
+use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoDefinitionHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoImplementationHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\HighlightHandler;
@@ -29,11 +30,22 @@ class LanguageServerReferenceFinderExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register(GotoDefinitionHandler::class, function (Container $container) {
+            $documentModifiers = [];
+
+            foreach (array_keys($container->getServiceIdsForTag(LanguageServerCompletionExtension::TAG_DOCUMENT_MODIFIER)) as $serviceId) {
+                $documentModifier = $container->get($serviceId);
+                if (null === $documentModifier) {
+                    continue;
+                }
+                $documentModifiers[] = $documentModifier;
+            }
+
             return new GotoDefinitionHandler(
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR),
                 $container->get(LocationConverter::class),
                 $container->get(ClientApi::class),
+                $documentModifiers
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
 
