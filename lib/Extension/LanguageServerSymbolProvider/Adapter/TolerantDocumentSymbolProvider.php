@@ -202,7 +202,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                     PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
                     PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
                 ),
-                children: $this->buildNodes($this->memberNodes($node), $source)
+                children: []
             );
         }
 
