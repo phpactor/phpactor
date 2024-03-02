@@ -37,7 +37,7 @@ class PhpstanDiagnosticProviderTest extends TestCase
      */
     public function testHandleSingle(): void
     {
-        $updated = new TextDocumentUpdated(ProtocolFactory::versionedTextDocumentIdentifier('file://path', 12), 'asd');
+        $updated = new TextDocumentUpdated(ProtocolFactory::versionedTextDocumentIdentifier('file:///path', 12), 'asd');
         $this->tester->textDocument()->open('file:///path', 'asd');
 
         wait(delay(10));
