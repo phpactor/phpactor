@@ -14,7 +14,7 @@
       "in": "lib"
     },
     {
-      "name": "{\\.[php|bash|fish|zsh]}",
+      "name": "{\\.(php|bash|fish|zsh)}",
       "exclude": [
         "tests",
         "test"
