@@ -10,6 +10,7 @@ Clients
    sublime
    vscode
    emacs
+   helix
 
 .. toctree::
    :hidden:
