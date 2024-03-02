@@ -11,6 +11,10 @@ as follows:
 
 	# in <config_dir>/helix/languages.toml
 
+	[language-server.phpactor]
+	command = "phpactor"
+	args = ["language-server"]
+
 	[[language]]
 	name = "php"
 	scope = "source.php"
