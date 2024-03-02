@@ -19,9 +19,12 @@ Improvements:
   - Skip parent parameters on complete constructor #2471 @mamazu
   - Support generics on `@mixin` #2463
   - Remove "on develop warning" service #2533
+  - Disable the processing of includes/requires, it doesn't work very well but
+    it has massive performance impact on certain projects #2580
 
 Bug fixes:
 
+  - Fix diagnostic process concurrency and do not lint outdated files #2538
   - Upgrade `amp/process` to fix #2516 thanks to @gerardroche
   - Fix division by zero edge case
   - Fix crash if referenced file no longer exists on class rename #2518

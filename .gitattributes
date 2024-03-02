@@ -6,7 +6,17 @@
 # archive files. See http://git-scm.com/docs/gitattributes for details.
 .gitattributes          export-ignore
 .gitignore              export-ignore
+/*.neon                 export-ignore
 /.github                export-ignore
 /.php-cs-fixer.dist.php export-ignore
+/Makefile               export-ignore
+/box.json               export-ignore
+/doc/                   export-ignore
+/docker-compose.yml     export-ignore
+/docker/                export-ignore
+/flake.*                export-ignore
+/lib/**/Tests/          export-ignore
+/phpbench.json          export-ignore
 /phpunit.xml.dist       export-ignore
+/test.php               export-ignore
 /tests/                 export-ignore

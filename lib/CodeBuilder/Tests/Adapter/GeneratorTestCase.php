@@ -46,7 +46,7 @@ abstract class GeneratorTestCase extends TestCase
     public function testRender(Prototype $prototype, string $expectedCode): void
     {
         $code = $this->renderer()->render($prototype);
-        $this->assertEquals(rtrim(Code::fromString($expectedCode), PHP_EOL), rtrim($code, PHP_EOL));
+        $this->assertEquals(rtrim(Code::fromString($expectedCode), "\n"), rtrim($code, "\n"));
     }
 
     /**

@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServerBridge\Tests\IntegrationTestCase;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\Locations;
 use Phpactor\LanguageServerProtocol\Location as LspLocation;
+use Phpactor\TextDocument\TextDocumentUri;
 
 class LocationConverterTest extends IntegrationTestCase
 {
@@ -32,7 +33,7 @@ class LocationConverterTest extends IntegrationTestCase
         ]);
 
         $expected = [
-            new LspLocation('file://' . $this->workspace()->path('test.php'), new Range(
+            new LspLocation((string)TextDocumentUri::fromString($this->workspace()->path('test.php')), new Range(
                 new Position(0, 2),
                 new Position(0, 9),
             ))
@@ -51,7 +52,7 @@ class LocationConverterTest extends IntegrationTestCase
         ]);
 
         $expected = [
-            new LspLocation('file://' . $this->workspace()->path('test.php'), new Range(
+            new LspLocation((string)TextDocumentUri::fromString($this->workspace()->path('test.php')), new Range(
                 new Position(0, 2),
                 new Position(0, 4),
             ))
@@ -71,7 +72,7 @@ class LocationConverterTest extends IntegrationTestCase
 
         $location = Location::fromPathAndOffsets($this->workspace()->path('test.php'), $start, $end);
 
-        $uri = 'file://' . $this->workspace()->path('test.php');
+        $uri = (string)TextDocumentUri::fromString($this->workspace()->path('test.php'));
 
         self::assertEquals(
             expected: new LspLocation($uri, $expectedRange),

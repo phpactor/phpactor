@@ -141,10 +141,10 @@ class ClassNameFixerTransformer implements Transformer
             $scriptStart = $rootNode->getFirstDescendantNode(InlineHtml::class);
             $scriptStart = $scriptStart ? $scriptStart->getEndPosition() : 0;
 
-            $statement = PHP_EOL . $statement . PHP_EOL;
+            $statement = "\n" . $statement . "\n";
 
             if (0 === $scriptStart) {
-                $statement = '<?php' . PHP_EOL . $statement;
+                $statement = '<?php' . "\n" . $statement;
             }
 
 
