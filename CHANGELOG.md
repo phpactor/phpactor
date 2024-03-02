@@ -19,6 +19,8 @@ Improvements:
   - Skip parent parameters on complete constructor #2471 @mamazu
   - Support generics on `@mixin` #2463
   - Remove "on develop warning" service #2533
+  - Disable the processing of includes/requires, it doesn't work very well but
+    it has massive performance impact on certain projects #2580
 
 Bug fixes:
 
