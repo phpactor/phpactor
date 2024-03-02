@@ -1,6 +1,9 @@
 {
     "$schema": "vendor/phpbench/phpbench/phpbench.schema.json",
     "runner.file_pattern": "*Bench.php",
+    "runner.php_config": {
+        "memory_limit": -1
+    },
     "runner.annotation_import_use": false,
     "runner.path": [
         "lib/**/Tests/Benchmark",

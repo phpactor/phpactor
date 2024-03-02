@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Bridge\Composer;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Bridge\Composer\ComposerSourceLocator;
 use Phpactor\WorseReflection\Core\Name;
+use Symfony\Component\Filesystem\Path;
 
 class ComposerSourceLocatorTest extends TestCase
 {
@@ -13,6 +14,6 @@ class ComposerSourceLocatorTest extends TestCase
         $autoloader = require(__DIR__ . '/../../../../../../vendor/autoload.php');
         $locator = new ComposerSourceLocator($autoloader);
         $sourceCode = $locator->locate(Name::fromString(ComposerSourceLocatorTest::class));
-        $this->assertEquals(__FILE__, realpath($sourceCode->uri()->path()));
+        $this->assertEquals(Path::canonicalize(__FILE__), $sourceCode->uri()->path());
     }
 }

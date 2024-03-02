@@ -21,12 +21,12 @@ abstract class DefinitionLocatorTestCase extends IntegrationTestCase
     }
 
 
-    protected function locate(string $manifset, string $source): TypeLocations
+    protected function locate(string $manifest, string $source): TypeLocations
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
 
         $documentUri = $this->workspace->path('somefile.php');
-        $this->workspace->loadManifest($manifset);
+        $this->workspace->loadManifest($manifest);
         return $this->locator()->locateDefinition(
             TextDocumentBuilder::create($source)->uri($documentUri)->language('php')->build(),
             ByteOffset::fromInt((int)$offset)

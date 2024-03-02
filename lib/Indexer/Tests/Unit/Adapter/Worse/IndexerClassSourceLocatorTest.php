@@ -9,6 +9,7 @@ use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
+use Symfony\Component\Filesystem\Path;
 
 class IndexerClassSourceLocatorTest extends TestCase
 {
@@ -48,7 +49,7 @@ class IndexerClassSourceLocatorTest extends TestCase
         $index->write($record);
         $locator = $this->createLocator($index);
         $sourceCode = $locator->locate(Name::fromString('Foobar'));
-        $this->assertEquals(__FILE__, $sourceCode->uri()?->path());
+        $this->assertEquals(Path::canonicalize(__FILE__), $sourceCode->uri()?->path());
     }
 
     private function createLocator(InMemoryIndex $index): IndexerClassSourceLocator

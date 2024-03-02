@@ -12,7 +12,7 @@ class JsonDumperTest extends DumperTestCase
     public function testDumpsJson(): void
     {
         $output = $this->dump(['hello' => 'test']);
-        $this->assertEquals('{"hello":"test"}'.PHP_EOL, $output);
+        $this->assertEquals('{"hello":"test"}'."\n", $output);
     }
 
     protected function dumper()

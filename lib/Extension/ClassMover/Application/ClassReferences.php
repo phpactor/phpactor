@@ -155,7 +155,7 @@ class ClassReferences
     /** @return array{int, int, string} */
     private function line(string $code, int $offset): array
     {
-        $lines = explode(PHP_EOL, $code);
+        $lines = explode("\n", $code);
         $lineNumber = 0;
         $startPosition = 0;
 

@@ -32,8 +32,9 @@ final class FilePath
     public static function fromParts(array $parts): FilePath
     {
         $path = Path::join(...$parts);
-        if (!str_starts_with($path, '/')) {
-            $path = '/'.$path;
+        if (!Path::isAbsolute($path)) {
+            // Not sure if this makes sense… Maybe it should just throw?
+            $path = Path::makeAbsolute($path, '/');
         }
 
         return self::fromString($path);
@@ -107,7 +108,7 @@ final class FilePath
 
     public function isWithin(FilePath $path): bool
     {
-        return str_starts_with($this->path(), $path->path().'/');
+        return Path::isBasePath($path->path(), $this->path());
     }
 
     public function isWithinOrSame(FilePath $path): bool

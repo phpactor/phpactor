@@ -23,7 +23,7 @@ ini_set('display_errors', 'stderr');
 
 if (!isset($autoloadFile)) {
     echo sprintf(
-        'Phpactor dependencies not installed. Run `composer install` (https://getcomposer.org) in "%s"' . PHP_EOL,
+        'Phpactor dependencies not installed. Run `composer install` (https://getcomposer.org) in "%s"' . "\n",
         realpath(__DIR__ . '/..')
     );
     exit(255);
@@ -32,7 +32,7 @@ if (!isset($autoloadFile)) {
 $minVersion = '8.1.0';
 
 if (version_compare(PHP_VERSION, $minVersion) < 0) {
-    fwrite(STDERR, sprintf('Phpactor requires at least PHP %s', $minVersion) . PHP_EOL);
+    fwrite(STDERR, sprintf('Phpactor requires at least PHP %s', $minVersion) . "\n");
     exit(255);
 }
 

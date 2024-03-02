@@ -87,7 +87,7 @@ class TolerantUpdater implements Updater
         }
 
         $startTag = $node->getFirstChildNode(InlineHtml::class);
-        $edits->after($startTag, 'namespace ' . (string) $prototype->namespace() . ';' . PHP_EOL.PHP_EOL);
+        $edits->after($startTag, 'namespace ' . (string) $prototype->namespace() . ';' . "\n"."\n");
     }
 
     private function updateClasses(Edits $edits, SourceCode $prototype, SourceFileNode $node): void
@@ -147,14 +147,14 @@ class TolerantUpdater implements Updater
 
         $index = 0;
         foreach ($classes as $classPrototype) {
-            if (substr($lastStatement->getText(), -1) !== PHP_EOL) {
-                $edits->after($lastStatement, PHP_EOL);
+            if (substr($lastStatement->getText(), -1) !== "\n") {
+                $edits->after($lastStatement, "\n");
             }
 
             if ($index > 0 && $index + 1 == count($classes)) {
-                $edits->after($lastStatement, PHP_EOL);
+                $edits->after($lastStatement, "\n");
             }
-            $edits->after($lastStatement, PHP_EOL . $this->renderer->render($classPrototype));
+            $edits->after($lastStatement, "\n" . $this->renderer->render($classPrototype));
             $index++;
         }
     }

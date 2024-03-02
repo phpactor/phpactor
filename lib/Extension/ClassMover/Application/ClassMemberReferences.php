@@ -163,7 +163,7 @@ class ClassMemberReferences
      */
     private function line(string $code, int $offset):array
     {
-        $lines = explode(PHP_EOL, $code);
+        $lines = explode("\n", $code);
         $number = 0;
         $startPosition = 0;
 

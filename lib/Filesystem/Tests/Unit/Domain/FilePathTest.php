@@ -5,8 +5,10 @@ namespace Phpactor\Filesystem\Tests\Unit\Domain;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\TextDocument\Exception\InvalidUriException;
+use Phpactor\TextDocument\TextDocumentUri;
 use RuntimeException;
 use SplFileInfo;
+use Symfony\Component\Filesystem\Path;
 use stdClass;
 
 class FilePathTest extends TestCase
@@ -49,9 +51,14 @@ class FilePathTest extends TestCase
             '/foo.php'
         ];
 
-        yield 'URI string' => [
+        yield 'URI string (Unix style)' => [
             'file:///foo.php',
             '/foo.php',
+        ];
+
+        yield 'URI string (Windows style)' => [
+            'file:///C:/foo.php',
+            'C:/foo.php',
         ];
 
         yield 'PHAR string' => [
@@ -66,11 +73,11 @@ class FilePathTest extends TestCase
 
         yield 'SplFileInfo' => [
             new SplFileInfo(__FILE__),
-            __FILE__
+            Path::canonicalize(__FILE__)
         ];
         yield 'SplFileInfo with scheme' => [
-            new SplFileInfo('file://' . __FILE__),
-            __FILE__
+            new SplFileInfo((string)TextDocumentUri::fromString(__FILE__)),
+            Path::canonicalize(__FILE__)
         ];
     }
 
@@ -179,8 +186,8 @@ class FilePathTest extends TestCase
 
     public function testAsSplFileInfo(): void
     {
-        $path1 = FilePath::fromUnknown(new SplFileInfo('file://' . __FILE__));
-        self::assertEquals(__FILE__, $path1->__toString());
-        self::assertEquals(__FILE__, $path1->asSplFileInfo()->__toString());
+        $path1 = FilePath::fromUnknown(new SplFileInfo((string)TextDocumentUri::fromString(__FILE__)));
+        self::assertEquals(Path::canonicalize(__FILE__), $path1->__toString());
+        self::assertEquals(Path::canonicalize(__FILE__), $path1->asSplFileInfo()->__toString());
     }
 }

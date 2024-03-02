@@ -75,7 +75,7 @@ class Example1
     private function getOffetToReflect($source, $offset)
     {
         /** @var string $source */
-        $source = str_replace(PHP_EOL, ' ', $source);
+        $source = str_replace("\n", ' ', $source);
         $untilCursor = substr($source, 0, $offset);
 
         $pos = strlen($untilCursor) - 1;
@@ -123,7 +123,7 @@ class Example1
             $paramInfo[] = '$' . $parameter->name();
 
             if ($parameter->default()->isDefined()) {
-                $paramInfo[] = '= '. str_replace(PHP_EOL, '', var_export($parameter->default()->value(), true));
+                $paramInfo[] = '= '. str_replace("\n", '', var_export($parameter->default()->value(), true));
             }
             $paramInfos[] = implode(' ', $paramInfo);
         }

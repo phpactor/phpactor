@@ -7,7 +7,7 @@ class TextUtils
     public static function removeIndentation(string $string): string
     {
         $indentation = null;
-        $lines = explode(PHP_EOL, $string);
+        $lines = explode("\n", $string);
 
         foreach ($lines as $i => $line) {
             if ($line === '') {
@@ -36,12 +36,12 @@ class TextUtils
             $line = substr($line, $indentation);
         }
 
-        return trim(implode(PHP_EOL, $lines), PHP_EOL);
+        return trim(implode("\n", $lines), "\n");
     }
 
     public static function stringIndentation(string $string): int
     {
-        $lines = explode(PHP_EOL, $string);
+        $lines = explode("\n", $string);
 
         if (empty($lines)) {
             return 0;

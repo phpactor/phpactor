@@ -43,7 +43,7 @@ class ClassMethodUpdater extends AbstractMethodUpdater
     public function renderMethod(Renderer $renderer, Method $method): string
     {
         return $renderer->render($method) .
-            PHP_EOL .
+            "\n" .
             $renderer->render($method->body());
     }
 

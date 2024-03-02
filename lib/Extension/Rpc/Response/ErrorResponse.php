@@ -65,6 +65,6 @@ class ErrorResponse implements Response
             );
         }
 
-        return implode(PHP_EOL . PHP_EOL, $details);
+        return implode("\n" . "\n", $details);
     }
 }

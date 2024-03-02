@@ -38,7 +38,7 @@ class OffsetHelperTest extends TestCase
         ];
 
         yield 'extra newline' => [
-            'foobar<>' . PHP_EOL,
+            'foobar<>' . "\n",
         ];
 
         yield 'extra windows newline' => [

@@ -74,7 +74,7 @@ class DebugHandler implements Handler
             return new Success($json);
         }
 
-        $this->client->window()->logMessage()->info(implode(PHP_EOL, $message));
+        $this->client->window()->logMessage()->info(implode("\n", $message));
         return new Success(null);
     }
 
@@ -136,7 +136,7 @@ class DebugHandler implements Handler
             }
         }
 
-        return new Success(implode(PHP_EOL, $info));
+        return new Success(implode("\n", $info));
     }
 
     /**

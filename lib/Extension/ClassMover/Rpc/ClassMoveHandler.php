@@ -61,8 +61,8 @@ class ClassMoveHandler extends AbstractHandler
         ) {
             $this->requireInput(ConfirmInput::fromNameAndLabel(
                 self::PARAM_CONFIRMED,
-                'WARNING: This command will move the class and update ALL references in the git tree.' . PHP_EOL .
-                '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . PHP_EOL .
+                'WARNING: This command will move the class and update ALL references in the git tree.' . "\n" .
+                '         It is not guaranteed to succeed. COMMIT YOUR WORK FIRST!' . "\n" .
                 'Are you sure? :'
             ));
         }

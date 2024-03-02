@@ -52,7 +52,7 @@ final class OffsetInfo
                         '%s = (%s) %s',
                         $local->name(),
                         $local->nodeContext()->type(),
-                        str_replace(PHP_EOL, '', var_export($local->nodeContext()->value(), true))
+                        str_replace("\n", '', var_export($local->nodeContext()->value(), true))
                     );
 
                     $frame[$assignmentType][$local->offset()->toInt()] = $info;

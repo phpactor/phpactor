@@ -58,12 +58,12 @@ class ReferencesClassCommand extends Command
         $count = $this->renderTable($output, $results, 'references', $output->isDecorated());
 
         if ($replace) {
-            $output->write(PHP_EOL);
+            $output->write("\n");
             $output->writeln('<comment># Replacements:</>');
             $this->renderTable($output, $results, 'replacements', $output->isDecorated());
         }
 
-        $output->write(PHP_EOL);
+        $output->write("\n");
         $output->writeln(sprintf('%s reference(s)', $count));
 
         return 0;

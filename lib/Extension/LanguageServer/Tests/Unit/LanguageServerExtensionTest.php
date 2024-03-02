@@ -139,10 +139,10 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     public function testRegistersCodeActionProvider(): void
     {
         $serverTester = $this->createTester();
-        $serverTester->textDocument()->open('file://foo', 'bar');
+        $serverTester->textDocument()->open('file:///foo', 'bar');
         $response = $serverTester->mustRequestAndWait(CodeActionRequest::METHOD, [
             'textDocument' => [
-                'uri' => 'file://foo'
+                'uri' => 'file:///foo'
             ],
             'range' => [
                 'start' => [ 'line' => 0, 'character' => 0, ],

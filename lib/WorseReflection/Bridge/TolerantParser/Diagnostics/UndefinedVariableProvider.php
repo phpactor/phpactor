@@ -329,7 +329,7 @@ class UndefinedVariableProvider implements DiagnosticProvider
             source: <<<'PHP'
                     <?php
                     if ($argc === 2) {
-                        echo "Hello ".$argv[1].PHP_EOL;
+                        echo "Hello ".$argv[1]."\n";
                     } else {
                         echo "Usage ".__FILE__. " <name>";
                     }

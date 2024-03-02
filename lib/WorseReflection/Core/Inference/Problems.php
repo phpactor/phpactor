@@ -30,7 +30,7 @@ final class Problems implements IteratorAggregate, Countable
             );
         }
 
-        return implode(PHP_EOL, $lines);
+        return implode("\n", $lines);
     }
 
     public static function create(): Problems

@@ -127,7 +127,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
             return NodeText::fromString('');
         }
         $statements = $statement->statements;
-        return NodeText::fromString(implode(PHP_EOL, array_reduce($statements, function ($acc, $statement) {
+        return NodeText::fromString(implode("\n", array_reduce($statements, function ($acc, $statement) {
             $acc[] = (string) $statement->getText();
             return $acc;
         }, [])));

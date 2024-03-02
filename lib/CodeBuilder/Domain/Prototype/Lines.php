@@ -9,7 +9,7 @@ class Lines extends Collection
 {
     public function __toString(): string
     {
-        return implode(PHP_EOL, $this->items);
+        return implode("\n", $this->items);
     }
 
     /**
