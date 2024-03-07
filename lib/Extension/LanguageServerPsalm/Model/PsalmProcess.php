@@ -76,11 +76,11 @@ class PsalmProcess
             }
 
             if ($exitCode !== 0 && $exitCode !== 2) {
-                throw new RuntimeException(
+                throw new RuntimeException(sprintf(
                     'Psalm exited with code "%s": %s',
                     $exitCode,
                     yield buffer($process->getStderr())
-                );
+                ));
             }
 
             $stdout = yield buffer($process->getStdout());
