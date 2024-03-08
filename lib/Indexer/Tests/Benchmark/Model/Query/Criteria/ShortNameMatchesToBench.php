@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Tests\Benchmark\Model\Query\Criteria;
 use Generator;
 use PhpBench\Benchmark\Metadata\Annotations\ParamProviders;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
+use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsOrCamelMatchesTo;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsOrFuzzilyMatchesWith;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsOrFuzzilyMatchesWith2;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
@@ -83,6 +84,21 @@ class ShortNameMatchesToBench
     public function benchBeginsWith(array $data): void
     {
         $criteria = new ShortNameBeginsWith($data[0]);
+
+        $record = ClassRecord::fromName($data[1]);
+
+        $criteria->isSatisfiedBy($record);
+    }
+
+    /**
+     * @ParamProviders("provideSearch")
+     * @Revs(1000)
+     * @Iterations(5)
+     * @param array{string, string} $data
+     */
+    public function benchShortNameBeginsOrCamelMatchesTo(array $data): void
+    {
+        $criteria = new ShortNameBeginsOrCamelMatchesTo($data[0]);
 
         $record = ClassRecord::fromName($data[1]);
 
