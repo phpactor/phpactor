@@ -31,6 +31,7 @@ class ShortNameBeginsOrCamelMatchesToTest extends TestCase
         yield 'tolower leading' => ['shorT', 'ShortNameBeginsWith', true];
         yield 'camel 1' => ['ShBeg', 'ShortNameBeginsWith', true];
         yield 'camel 2' => ['hBeg', 'ShortNameBeginsWith', false];
+        yield 'camel 3' => ['BegWit', 'ShortNameBeginsWith', true];
         yield 'camel only upper' => ['SBW', 'ShortNameBeginsWith', true];
         yield 'multibyte' => ['😼☠', 'Foobar\\😼☠k😼', true];
     }
