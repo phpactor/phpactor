@@ -22,6 +22,7 @@ Improvements:
   - Disable the processing of includes/requires, it doesn't work very well but
     it has massive performance impact on certain projects #2580
   - Include project PHP and runtime version and LSP status
+  - Add `iterable` "generic" `@param` in docblock #2585
 
 Bug fixes:
 
