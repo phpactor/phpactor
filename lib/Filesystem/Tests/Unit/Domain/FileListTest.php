@@ -140,6 +140,22 @@ class FileListTest extends IntegrationTestCase
         ]));
     }
 
+    public function testIncludesExcludePatterns(): void
+    {
+
+        $list = FileList::fromFilePaths([
+            FilePath::fromString('/vendor/cache/important/bartest.php'),
+            FilePath::fromString('/vendor/cache/important/footest.php'),
+            FilePath::fromString('/vendor/cache/bar.php'),
+            FilePath::fromString('/vendor/cache/foo.php'),
+        ])->includeAndExclude(
+            includePatterns: [ '/src/**/*', '/vendor/cache/important/**/*'],
+            excludePatterns: [ '/vendor/**/*' ],
+        );
+
+        self::assertCount(2, $list);
+    }
+
     public function testContainingString(): void
     {
         $this->workspace()->put('one', 'one two three');

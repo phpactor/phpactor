@@ -86,19 +86,49 @@ class FileList implements Iterator
     }
 
     /**
-     * @param string[] $globPatterns
+     * @param string[] $includePatterns
+     * @param string[] $excludePatterns
      */
-    public function excludePatterns(array $globPatterns): self
+    public function includeAndExclude(array $includePatterns, array $excludePatterns): self
     {
-        return $this->filter(function (SplFileInfo $info) use ($globPatterns) {
-            foreach ($globPatterns as $pattern) {
-                if (Glob::match($info->getPathname(), $pattern)) {
-                    return false;
+        // Building map of include paths that are sub paths of excludes so that we can include them again
+        $includedExcludes = [];
+        foreach($excludePatterns as $excludePattern) {
+            foreach($includePatterns as $includePattern) {
+                if (Glob::match($includePattern, $excludePattern)) {
+                    $includedExcludes[$excludePattern][] = $includePattern;
                 }
+            }
+        }
+
+        $this->includePatterns($includePatterns);
+
+        return $this->filter(function (SplFileInfo $info) use ($excludePatterns, $includedExcludes) {
+            foreach ($excludePatterns as $pattern) {
+                if (!Glob::match($info->getPathname(), $pattern)) {
+                    continue;
+                }
+
+                $includePatterns = $includedExcludes[$pattern] ?? [];
+                foreach($includePatterns as $includePattern) {
+                    if (Glob::match($info->getPathname(), $includePattern)) {
+                        return true;
+                    }
+                }
+                return false;
             }
 
             return true;
         });
+
+    }
+
+    /**
+     * @param string[] $globPatterns
+     */
+    public function excludePatterns(array $globPatterns): self
+    {
+        return $this->includeAndExclude([], $globPatterns);
     }
 
     /**
