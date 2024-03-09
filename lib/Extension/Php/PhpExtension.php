@@ -5,7 +5,6 @@ namespace Phpactor\Extension\Php;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Php\Model\ChainResolver;
 use Phpactor\Extension\Php\Model\ComposerPhpVersionResolver;
 use Phpactor\Extension\Php\Model\ConstantPhpVersionResolver;
@@ -22,7 +21,7 @@ class PhpExtension implements Extension
 
     public function load(ContainerBuilder $container): void
     {
-        $container->register(PhpVersionResolver::class, function (Container $container) {
+        $container->register(ChainResolver::class, function (Container $container) {
             $pathResolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $composerPath = $pathResolver->resolve('%project_root%/composer.json');
 
@@ -32,12 +31,13 @@ class PhpExtension implements Extension
                 new RuntimePhpVersionResolver()
             );
         });
+        $container->register(PhpVersionResolver::class, function (Container $container) {
+            return $container->get(ChainResolver::class);
+        });
 
         $container->register(PhpStatusProvider::class, function (Container $container) {
-            return new PhpStatusProvider($container->get(PhpVersionResolver::class));
-        }, [
-            LanguageServerExtension::TAG_STATUS_PROVIDER => [],
-        ]);
+            return new PhpStatusProvider($container->get(ChainResolver::class));
+        }, []);
     }
 
 
