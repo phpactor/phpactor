@@ -16,6 +16,7 @@ use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
+use Phpactor\DocblockParser\Ast\Tag\TypeAliasTag;
 use Phpactor\DocblockParser\Ast\TextNode;
 use Phpactor\DocblockParser\Ast\TypeList;
 use Phpactor\DocblockParser\Ast\Type\ArrayNode;
@@ -97,6 +98,7 @@ final class Parser
             '@throws' => $this->parseThrows(),
             '@deprecated' => $this->parseDeprecated(),
             '@method' => $this->parseMethod(),
+            '@type' => $this->parseTypeAlias(),
             '@property', '@property-read' => $this->parseProperty(),
             '@mixin' => $this->parseMixin(),
             '@return' => $this->parseReturn(),
@@ -727,5 +729,20 @@ final class Parser
         $right = $this->parseTypes();
 
         return new ConditionalNode($variable, $is, $isType, $question, $left, $colon, $right);
+    }
+
+    private function parseTypeAlias(): TagNode
+    {
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
+        $alias = $type = null;
+
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $alias = $this->parseType();
+        }
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $type = $this->parseTypes();
+        }
+
+        return new TypeAliasTag($tag, $alias, $type);
     }
 }

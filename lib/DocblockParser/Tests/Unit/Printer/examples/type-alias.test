@@ -5,7 +5,12 @@
 Docblock: = 
  ElementList: = /**
  * 
-  MethodTag: = @phpstan-type
+  TypeAliasTag: = @phpstan-type
    ClassNode: = Foobar
-   TextNode: = 
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = 
+     ArrayKeyValueNode: = 
+      ScalarNode: = string,
+     ArrayKeyValueNode: = 
+      ScalarNode: = string}
  */
