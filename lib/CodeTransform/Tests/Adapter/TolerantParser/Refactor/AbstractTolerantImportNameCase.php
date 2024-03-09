@@ -13,7 +13,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
 use Phpactor\CodeTransform\Tests\Adapter\TolerantParser\TolerantTestCase;
 use Phpactor\TextDocument\TextEdits;
 
-abstract class AbstractTolerantImportNameTest extends TolerantTestCase
+abstract class AbstractTolerantImportNameCase extends TolerantTestCase
 {
     /**
      * @dataProvider provideImportClass

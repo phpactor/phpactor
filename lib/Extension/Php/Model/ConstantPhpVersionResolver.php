@@ -16,6 +16,6 @@ class ConstantPhpVersionResolver implements PhpVersionResolver
 
     public function name(): string
     {
-        return 'constant (user configured)';
+        return 'user configured';
     }
 }
