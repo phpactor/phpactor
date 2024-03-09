@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## master
+## 2024-03-09
 
 Features:
 
@@ -10,6 +10,7 @@ Features:
 
 Improvements:
 
+  - Show enums in LSP document symbol provider #2575 @gmli
   - PHPStan show tip if as a dignostic hint if available #2512
   - Docblock completion, suggest `@throws` @przepompownia
   - Suggest named parameters on attributes @mamazu
@@ -25,9 +26,17 @@ Improvements:
   - Include project PHP and runtime version and LSP status
   - Add `iterable` "generic" `@param` in docblock #2585
   - Improved diagnostic engine #2584
+  - Ongoing windows compatiblity effort #2567 #2572 #2570 @MatmaRex
+  - Ignore unnecessary files in gitexport #2570 @zonuexe
+  - Improve ANSI test compatiblity #2521 @gerardroche
+  - More snippet support #2515 #2508 @przepompownia
+  - Add completion for `@throws` #2509 @przepompownia
 
 Bug fixes:
 
+  - Fix completion of constants in enums #2541 @eviljeks
+  - Fix `renderException` call in bin/phpactor #2548 @MatmaRex
+  - Psalm: fix exception handling #2587 @przepompownia
   - Do not generalize generated return types (i.e. false instead of bool) #2588
   - Fix diagnostic process concurrency and do not lint outdated files #2538
   - Upgrade `amp/process` to fix #2516 thanks to @gerardroche
@@ -39,6 +48,12 @@ Bug fixes:
   - Fix support for Attributes on readonly classes #2493
   - Fix `$this` undefined var false positive in anon. class #2469 @mamazu
   - Fix `$argv` undefined var false positives #2468 @mamazu
+
+Documentation:
+
+  - Added Helix LSP instructions #2581 @lens0021 
+  - Fix typos in Behat #2534 @vuon9
+  - Fix broken external links #2500 @einenlum
 
 ## 2023-12-03
 
