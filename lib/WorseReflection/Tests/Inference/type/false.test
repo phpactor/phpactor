@@ -2,8 +2,6 @@
 
 namespace Foo;
 
-wrAssertType('string|false', possiblyFalse());
-
 function possiblyFalse(array $foo): string|false
 {
 }
@@ -16,3 +14,4 @@ function date()
 }
 
 wrAssertType('string|false', date());
+wrAssertType('string|false', possiblyFalse());
