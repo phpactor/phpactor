@@ -33,6 +33,7 @@ class ShortNameBeginsOrCamelMatchesToTest extends TestCase
         yield 'camel 2' => ['hBeg', 'ShortNameBeginsWith', false];
         yield 'camel 3' => ['BegWit', 'ShortNameBeginsWith', true];
         yield 'camel only upper' => ['SBW', 'ShortNameBeginsWith', true];
+        yield 'underscore' => ['fil_g_c', 'file_get_contents', true];
         yield 'multibyte' => ['😼☠', 'Foobar\\😼☠k😼', true];
     }
 }

@@ -35,7 +35,7 @@ class ShortNameBeginsOrCamelMatchesTo extends Criteria
 
         foreach(mb_str_split($search) as $char) {
             $newIndex = mb_strpos($subject, $char, $index + 1);
-            if ($newIndex === false || !ctype_upper($char) && $newIndex !== $index + 1) {
+            if ($newIndex === false || !(ctype_upper($char) || $char === '_') && $newIndex !== $index + 1) {
                 return false;
             }
 
