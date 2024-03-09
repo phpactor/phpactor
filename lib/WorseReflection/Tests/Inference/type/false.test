@@ -1,0 +1,18 @@
+<?php
+
+namespace Foo;
+
+wrAssertType('string|false', possiblyFalse());
+
+function possiblyFalse(array $foo): string|false
+{
+}
+
+/**
+ * @return string|false a formatted date string. If a non-numeric value is used for
+ */
+function date()
+{
+}
+
+wrAssertType('string|false', date());

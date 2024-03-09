@@ -21,9 +21,11 @@ Improvements:
   - Remove "on develop warning" service #2533
   - Disable the processing of includes/requires, it doesn't work very well but
     it has massive performance impact on certain projects #2580
+  - Include project PHP and runtime version and LSP status
 
 Bug fixes:
 
+  - Do not generalize generated return types (i.e. false instead of bool) #2588
   - Fix diagnostic process concurrency and do not lint outdated files #2538
   - Upgrade `amp/process` to fix #2516 thanks to @gerardroche
   - Fix division by zero edge case
