@@ -42,7 +42,7 @@ class PhpstanDiagnosticProviderTest extends TestCase
 
         wait(delay(10));
 
-        self::assertEquals(1, $this->tester->transmitter()->count());
+        self::assertEquals(2, $this->tester->transmitter()->count());
     }
 
     private function createTestLinter(): TestLinter
