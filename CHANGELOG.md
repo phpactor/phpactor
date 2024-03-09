@@ -6,6 +6,7 @@ Changelog
 Features:
 
   - Completion suggestions filtered by accepting type #2456
+  - Basic support for local type aliases #2462
 
 Improvements:
 
