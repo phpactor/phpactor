@@ -121,9 +121,16 @@ class FileListTest extends IntegrationTestCase
             FilePath::fromString('/vendor/foo/bar/src/foo.php'),
         ]);
 
-        self::assertCount(2, $list->excludePatterns([
-            '/vendor/**/tests/*',
-        ]));
+        self::assertEquals(
+            [
+                FilePath::fromString('/vendor/foo/bar/src/bar.php'),
+                FilePath::fromString('/vendor/foo/bar/src/foo.php'),
+            ],
+            iterator_to_array($list->includeAndExclude(
+                includePatterns: ['/**/*'],
+                excludePatterns: [ '/vendor/**/tests/*']
+            ))
+        );
     }
 
     public function testIncldesFilesMatchingPatterns(): void
@@ -135,9 +142,15 @@ class FileListTest extends IntegrationTestCase
             FilePath::fromString('/vendor/foo/bar/src/foo.php'),
         ]);
 
-        self::assertCount(2, $list->excludePatterns([
-            '/vendor/**/tests/*',
-        ]));
+        self::assertEquals(
+            [
+                FilePath::fromString('/vendor/foo/bar/tests/bartest.php'),
+                FilePath::fromString('/vendor/foo/bar/tests/footest.php'),
+            ],
+            iterator_to_array($list->includeAndExclude(
+                includePatterns: [ '/vendor/**/tests/*'],
+            ))
+        );
     }
 
     public function testIncludesExcludePatterns(): void
@@ -153,7 +166,31 @@ class FileListTest extends IntegrationTestCase
             excludePatterns: [ '/vendor/**/*' ],
         );
 
-        self::assertCount(2, $list);
+        self::assertEquals(
+            [
+                FilePath::fromString('/vendor/cache/important/bartest.php'),
+                FilePath::fromString('/vendor/cache/important/footest.php'),
+            ],
+            iterator_to_array($list)
+        );
+    }
+
+    public function testExcludesWithShortFolderName(): void
+    {
+        $list = FileList::fromFilePaths([
+            FilePath::fromString('/src/package/test.php'),
+            FilePath::fromString('/src/a/test.php'),
+        ])->includeAndExclude(
+            includePatterns: [ '/src/**/*'],
+            excludePatterns: [ '/src/a/*' ],
+        );
+
+        self::assertEquals(
+            [
+                FilePath::fromString('/src/package/test.php'),
+            ],
+            iterator_to_array($list)
+        );
     }
 
     public function testContainingString(): void
