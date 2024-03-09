@@ -95,7 +95,7 @@ class DocblockMissingParamProvider implements DiagnosticProvider
             if ($type instanceof ArrayType) {
                 $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
             }
-            if ($type instanceof PseudoIterableType) {
+            if ($type::class === PseudoIterableType::class) {
                 $type = new PseudoIterableType(TypeFactory::int(), TypeFactory::mixed());
             }
 
