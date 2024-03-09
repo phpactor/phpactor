@@ -734,15 +734,20 @@ final class Parser
     private function parseTypeAlias(): TagNode
     {
         $tag = $this->tokens->mustChomp(Token::T_TAG);
-        $alias = $type = null;
+        $alias = $equals = $type = null;
 
         if ($this->tokens->if(Token::T_LABEL)) {
             $alias = $this->parseType();
         }
+
+        if ($this->tokens->if(Token::T_EQUALS)) {
+            $equals = $this->tokens->chomp(Token::T_EQUALS);
+        }
+
         if ($this->tokens->if(Token::T_LABEL)) {
             $type = $this->parseTypes();
         }
 
-        return new TypeAliasTag($tag, $alias, $type);
+        return new TypeAliasTag($tag, $alias, $equals, $type);
     }
 }
