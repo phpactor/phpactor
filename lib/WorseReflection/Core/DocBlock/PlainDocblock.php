@@ -174,4 +174,9 @@ class PlainDocblock implements DocBlock
     {
         return $this;
     }
+
+    public function typeAliases(): DocBlockTypeAliases
+    {
+        return new DocBlockTypeAliases([]);
+    }
 }

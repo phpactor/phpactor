@@ -11,5 +11,14 @@ class Foo
     public function foo(array $foo): void
     {
         wrAssertType('array{string,string}', $foo);
+        wrAssertType('array{string,string}', $this->bar());
+    }
+
+
+    /**
+     * @return FooBar
+     */
+    public function bar(): array
+    {
     }
 }
