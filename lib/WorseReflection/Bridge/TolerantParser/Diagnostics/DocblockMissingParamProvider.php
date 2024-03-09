@@ -20,6 +20,7 @@ use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -94,6 +95,9 @@ class DocblockMissingParamProvider implements DiagnosticProvider
             if ($type instanceof ArrayType) {
                 $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
             }
+            if ($type instanceof PseudoIterableType) {
+                $type = new PseudoIterableType(TypeFactory::int(), TypeFactory::mixed());
+            }
 
             // replace <undefined> with "mixed"
             $type = $type->map(fn (Type $type) => $type instanceof MissingType ? new MixedType() : $type);
@@ -161,6 +165,24 @@ class DocblockMissingParamProvider implements DiagnosticProvider
                 class Foobar
                 {
                     public function foo(Generator $foobar) {
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                $diagnostics = $diagnostics->byClass(DocblockMissingParamDiagnostic::class);
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'iterable',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function foo(iterable $foobar) {
                     }
                 }
                 PHP,
