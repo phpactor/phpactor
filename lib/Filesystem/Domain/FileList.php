@@ -92,6 +92,10 @@ class FileList implements Iterator
     public function includeAndExclude(array $includePatterns = [], array $excludePatterns = []): self
     {
         $inclusionMap = [];
+        if ($includePatterns === []) {
+            $inclusionMap['/**/*'] = true;
+        }
+
         foreach ($includePatterns as $includePattern) {
             $inclusionMap[$includePattern] = true;
         }
