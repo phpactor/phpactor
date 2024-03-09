@@ -5,12 +5,14 @@ namespace Phpactor\Extension\Php;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Php\Model\ChainResolver;
 use Phpactor\Extension\Php\Model\ComposerPhpVersionResolver;
 use Phpactor\Extension\Php\Model\ConstantPhpVersionResolver;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Php\Model\RuntimePhpVersionResolver;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Php\Status\PhpStatusProvider;
 use Phpactor\MapResolver\Resolver;
 
 class PhpExtension implements Extension
@@ -30,6 +32,12 @@ class PhpExtension implements Extension
                 new RuntimePhpVersionResolver()
             );
         });
+
+        $container->register(PhpStatusProvider::class, function (Container $container) {
+            return new PhpStatusProvider($container->get(PhpVersionResolver::class));
+        }, [
+            LanguageServerExtension::TAG_STATUS_PROVIDER => [],
+        ]);
     }
 
 
