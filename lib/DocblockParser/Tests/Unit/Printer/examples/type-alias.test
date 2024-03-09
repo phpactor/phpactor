@@ -1,0 +1,11 @@
+/**
+ * @phpstan-type Foobar array{string,string}
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  MethodTag: = @phpstan-type
+   ClassNode: = Foobar
+   TextNode: = 
+ */

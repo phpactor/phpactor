@@ -8,7 +8,7 @@ class Foo
     /**
      * @param FooBar $foo
      */
-    public function foo(array $foo)
+    public function foo(array $foo): void
     {
         wrAssertType('array{string,string}', $foo);
     }
