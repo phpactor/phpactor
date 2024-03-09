@@ -2,6 +2,7 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
+use Generator;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Tests\IntegrationTestCase;
@@ -197,22 +198,52 @@ class FileListTest extends IntegrationTestCase
         );
     }
 
-    public function testExcludesWithShortFolderName(): void
-    {
-        $list = FileList::fromFilePaths([
-            FilePath::fromString('/src/package/test.php'),
-            FilePath::fromString('/src/a/test.php'),
-        ])->includeAndExclude(
-            includePatterns: [ '/src/**/*'],
-            excludePatterns: [ '/src/a/*' ],
+    /**
+@param array<FilePath> $fileList
+@param array<string> $includePatterns
+@param array<string> $excludePatterns
+@param array<FilePath> $expected
+* @dataProvider provideExcludesWithShortFolderName()
+*/
+    public function testExcludesWithShortFolderName(
+        array $fileList,
+        array $includePatterns,
+        array $excludePatterns,
+        array $expected,
+    ): void {
+        $list = FileList::fromFilePaths($fileList)->includeAndExclude(
+            includePatterns:$includePatterns,
+            excludePatterns: $excludePatterns
         );
 
-        self::assertEquals(
+        self::assertEquals($expected, array_map(fn (FilePath $x) => (string) $x, iterator_to_array($list)));
+    }
+
+    public function provideExcludesWithShortFolderName(): Generator
+    {
+        yield 'ascii file name' => [
             [
                 FilePath::fromString('/src/package/test.php'),
+                FilePath::fromString('/src/a/test.php'),
             ],
-            iterator_to_array($list)
-        );
+            [ '/src/**/*'],
+            [ '/src/a/*' ],
+            [
+                '/src/package/test.php',
+            ],
+        ];
+
+        yield 'unicode file name' => [
+            [
+                FilePath::fromString('/src/package/test.php'),
+                FilePath::fromString('/src/ü/test.php'),
+            ],
+            [ '/src/**/*'],
+            [ '/src/ü/*' ],
+            [
+                '/src/package/test.php',
+            ],
+        ];
     }
 
     public function testContainingString(): void

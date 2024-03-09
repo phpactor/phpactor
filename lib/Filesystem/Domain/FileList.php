@@ -104,7 +104,27 @@ class FileList implements Iterator
         }
 
         // Sort map by keys so that more specific paths are getting matched first
-        krsort($inclusionMap);
+        uksort($inclusionMap, function (string $x, string $y) {
+            $partsX = explode(DIRECTORY_SEPARATOR, $x);
+            $partsY = explode(DIRECTORY_SEPARATOR, $y);
+            // Longer paths should come first
+            $countDiff = -(count($partsX) <=> count($partsY));
+            if ($countDiff !== 0) {
+                return $countDiff;
+            }
+
+            foreach ($partsX as $i => $pathPartX) {
+                if ($pathPartX === '**' || $pathPartX === '*') {
+                    return 1;
+                }
+
+                $compare = strcmp($pathPartX, $partsY[$i]);
+                if($compare !== 0) {
+                    return $compare;
+                }
+            }
+            return 0;
+        });
 
         return $this->filter(function (SplFileInfo $info) use ($inclusionMap): bool {
             foreach($inclusionMap as $glob => $isIncluded) {

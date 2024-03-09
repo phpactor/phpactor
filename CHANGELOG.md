@@ -1,6 +1,9 @@
 Changelog
 =========
 
+Bug fixes:
+  - Fixing include and exclude patterns #2593 @mamazu
+
 ## 2024-03-09
 
 Features:
@@ -51,7 +54,7 @@ Bug fixes:
 
 Documentation:
 
-  - Added Helix LSP instructions #2581 @lens0021 
+  - Added Helix LSP instructions #2581 @lens0021
   - Fix typos in Behat #2534 @vuon9
   - Fix broken external links #2500 @einenlum
 
