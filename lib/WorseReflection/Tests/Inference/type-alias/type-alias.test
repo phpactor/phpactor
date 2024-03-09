@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @phpstan-type FooBar array{string,string}
+ */
+class Foo
+{
+    /**
+     * @param FooBar $foo
+     */
+    public function foo(array $foo)
+    {
+        wrAssertType('array{string,string}', $foo);
+    }
+}
