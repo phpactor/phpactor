@@ -1,0 +1,16 @@
+/**
+ * @psalm-type Foobar = array{string,string}
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  TypeAliasTag: = @psalm-type
+   ClassNode: = Foobar=
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = 
+     ArrayKeyValueNode: = 
+      ScalarNode: = string,
+     ArrayKeyValueNode: = 
+      ScalarNode: = string}
+ */

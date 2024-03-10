@@ -35,6 +35,11 @@ class ComposerPhpVersionResolver implements PhpVersionResolver
         return null;
     }
 
+    public function name(): string
+    {
+        return 'composer';
+    }
+
     private function resolveLowestVersion(string $versionString): ?string
     {
         /** @phpstan-ignore-next-line */

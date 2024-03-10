@@ -11,6 +11,7 @@ use Phpactor\Extension\Php\Model\ConstantPhpVersionResolver;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Php\Model\RuntimePhpVersionResolver;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\Php\Status\PhpStatusProvider;
 use Phpactor\MapResolver\Resolver;
 
 class PhpExtension implements Extension
@@ -20,7 +21,7 @@ class PhpExtension implements Extension
 
     public function load(ContainerBuilder $container): void
     {
-        $container->register(PhpVersionResolver::class, function (Container $container) {
+        $container->register(ChainResolver::class, function (Container $container) {
             $pathResolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $composerPath = $pathResolver->resolve('%project_root%/composer.json');
 
@@ -30,6 +31,13 @@ class PhpExtension implements Extension
                 new RuntimePhpVersionResolver()
             );
         });
+        $container->register(PhpVersionResolver::class, function (Container $container) {
+            return $container->get(ChainResolver::class);
+        });
+
+        $container->register(PhpStatusProvider::class, function (Container $container) {
+            return new PhpStatusProvider($container->get(ChainResolver::class));
+        }, []);
     }
 
 

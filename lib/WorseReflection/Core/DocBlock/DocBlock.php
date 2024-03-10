@@ -11,6 +11,8 @@ use Phpactor\WorseReflection\Core\Type;
 
 interface DocBlock
 {
+    public function typeAliases(): DocBlockTypeAliases;
+
     public function methods(ReflectionClassLike $declaringClass): ReflectionMethodCollection;
 
     public function properties(ReflectionClassLike $declaringClass): ReflectionPropertyCollection;

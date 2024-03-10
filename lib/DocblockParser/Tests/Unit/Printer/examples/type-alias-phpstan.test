@@ -1,0 +1,16 @@
+/**
+ * @phpstan-type Foobar array{string,string}
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  TypeAliasTag: = @phpstan-type
+   ClassNode: = Foobar
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = 
+     ArrayKeyValueNode: = 
+      ScalarNode: = string,
+     ArrayKeyValueNode: = 
+      ScalarNode: = string}
+ */

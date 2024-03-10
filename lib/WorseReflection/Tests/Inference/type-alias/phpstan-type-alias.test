@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @phpstan-type FooBar array{string,string}
+ */
+class Foo
+{
+    /**
+     * @param FooBar $foo
+     */
+    public function foo(array $foo): void
+    {
+        wrAssertType('array{string,string}', $foo);
+        wrAssertType('array{string,string}', $this->bar());
+    }
+
+
+    /**
+     * @return FooBar
+     */
+    public function bar(): array
+    {
+    }
+}

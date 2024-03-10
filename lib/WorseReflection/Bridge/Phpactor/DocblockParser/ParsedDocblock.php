@@ -14,6 +14,7 @@ use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
+use Phpactor\DocblockParser\Ast\Tag\TypeAliasTag;
 use Phpactor\DocblockParser\Ast\Tag\VarTag;
 use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\WorseReflection\Core\DefaultValue;
@@ -21,6 +22,8 @@ use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockParam;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockParams;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAlias;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAliases;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
@@ -66,6 +69,19 @@ class ParsedDocblock implements DocBlock
         }
 
         return new Types($types);
+    }
+
+    public function typeAliases(): DocBlockTypeAliases
+    {
+        $types = [];
+        foreach ($this->node->descendantElements(TypeAliasTag::class) as $tag) {
+            $types[] = new DocBlockTypeAlias(
+                $this->typeConverter->convert($tag->alias)->toPhpString(),
+                $this->typeConverter->convert($tag->type),
+            );
+        }
+
+        return new DocBlockTypeAliases($types);
     }
 
     public function methodType(string $methodName): Type

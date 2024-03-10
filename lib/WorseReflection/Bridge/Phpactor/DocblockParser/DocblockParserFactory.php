@@ -19,6 +19,7 @@ class DocblockParserFactory implements DocBlockFactory
         'param',
         'return',
         'method',
+        'type',
         'deprecated',
         'extends',
         'implements',

@@ -32,4 +32,22 @@ class ChainResolver implements PhpVersionResolver
             count($this->versionResolvers)
         ));
     }
+
+    public function source(): string
+    {
+        foreach ($this->versionResolvers as $versionResolver) {
+            if (!$version = $versionResolver->resolve()) {
+                continue;
+            }
+
+            return $versionResolver->name();
+        }
+
+        return 'unknown';
+    }
+
+    public function name(): string
+    {
+        return 'chain';
+    }
 }

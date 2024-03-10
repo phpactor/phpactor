@@ -50,6 +50,11 @@ class ParameterTypeResolver
             if (!$type->isDefined()) {
                 continue;
             }
+            $aliased = $classLike->docblock()->typeAliases()->forType($type);
+            if ($aliased) {
+                return $aliased;
+            }
+
 
             return $this->resolveGenericType($functionLike->class(), $classLike, $type);
         }

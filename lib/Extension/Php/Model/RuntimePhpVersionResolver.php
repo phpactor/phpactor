@@ -8,4 +8,9 @@ class RuntimePhpVersionResolver implements PhpVersionResolver
     {
         return phpversion();
     }
+
+    public function name(): string
+    {
+        return 'runtime';
+    }
 }

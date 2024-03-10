@@ -13,7 +13,7 @@ use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
 use Phpactor\CodeTransform\Tests\Adapter\TolerantParser\TolerantTestCase;
 use Phpactor\TextDocument\TextEdits;
 
-abstract class AbstractTolerantImportNameTest extends TolerantTestCase
+abstract class AbstractTolerantImportNameCase extends TolerantTestCase
 {
     /**
      * @dataProvider provideImportClass
@@ -204,7 +204,10 @@ abstract class AbstractTolerantImportNameTest extends TolerantTestCase
 
     abstract protected function importName(string $source, int $offset, NameImport $nameImport, bool $importGlobals = true): TextEdits;
 
-    private function importNameFromTestFile(string $type, string $test, string $name, string $alias = null)
+    /**
+     * @return array{string,string}
+     */
+    private function importNameFromTestFile(string $type, string $test, string $name, string $alias = null): array
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
         $edits = TextEdits::none();

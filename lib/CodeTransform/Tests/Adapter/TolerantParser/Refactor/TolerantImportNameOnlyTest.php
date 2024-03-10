@@ -9,7 +9,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdits;
 
-class TolerantImportNameOnlyTest extends AbstractTolerantImportNameTest
+class TolerantImportNameOnlyTest extends AbstractTolerantImportNameCase
 {
     public function provideImportClass(): Generator
     {
