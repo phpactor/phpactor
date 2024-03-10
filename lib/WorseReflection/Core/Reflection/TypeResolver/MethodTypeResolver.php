@@ -34,14 +34,20 @@ class MethodTypeResolver
 
     private function getDocblockTypesFromClassOrMethod(ReflectionMethod $method): Type
     {
-        $classMethodOverride = $method->class()->docblock()->methodType($method->name());
+        $classLike = $method->class();
+        $classMethodOverride = $classLike->docblock()->methodType($method->name());
 
         if (($classMethodOverride->isDefined())) {
             return $classMethodOverride;
         }
+        $returnType = $method->docblock()->returnType();
+        $aliased = $classLike->docblock()->typeAliases()->forType($returnType);
+        if ($aliased) {
+            return $aliased;
+        }
 
         // no static support here
-        return $method->docblock()->returnType();
+        return $returnType;
     }
 
     private function getTypesFromParentClass(ReflectionClassLike $reflectionClassLike): Type

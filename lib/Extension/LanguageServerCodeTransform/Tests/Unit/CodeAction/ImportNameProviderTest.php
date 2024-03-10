@@ -60,6 +60,7 @@ class ImportNameProviderTest extends IntegrationTestCase
 
         $transmitter = $tester->transmitter()->filterByMethod('textDocument/publishDiagnostics');
         $diagnostics = $transmitter->shiftNotification();
+        $diagnostics = $transmitter->shiftNotification();
         $diagnostics = $diagnostics->params['diagnostics'] ?? [];
         $assertion($result->result, $diagnostics);
     }

@@ -40,7 +40,7 @@ class UpdateReturnTypeTransformer implements Transformer
                 $classBuilder = $builder->class($method->class()->name()->short());
                 $methodBuilder = $classBuilder->method($method->name());
                 $replacement = $this->returnType($method);
-                $localReplacement = $replacement->toLocalType($method->scope())->generalize();
+                $localReplacement = $replacement->toLocalType($method->scope());
                 $notNullReplacement = $replacement->stripNullable();
 
                 foreach ($replacement->allTypes()->classLike() as $classType) {
