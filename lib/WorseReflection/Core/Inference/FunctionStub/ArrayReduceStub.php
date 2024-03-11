@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\TypeFactory;
-use Phpactor\WorseReflection\Core\Type\ClosureType;
 
 class ArrayReduceStub implements FunctionStub
 {
@@ -16,15 +15,12 @@ class ArrayReduceStub implements FunctionStub
         NodeContext $context,
         FunctionArguments $args
     ): NodeContext {
-        if (!$args->at(0)->type()->isDefined()) {
-            return $context;
+        $initialType = $args->at(2)->type();
+        if ($initialType->isDefined()) {
+            return $context->withType($initialType->generalize());
         }
 
-        $closureType = $args->at(1);
-        if (!$closureType instanceof ClosureType) {
-            return $context;
-        }
+        return $context->withType(TypeFactory::array());
 
-        return $context->withType(TypeFactory::array($closureType->returnType()));
     }
 }

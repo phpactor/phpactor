@@ -179,11 +179,13 @@ class AssignmentExpressionResolver implements Resolver
                         return;
                     }
 
-                    $frame->locals()->set(
-                        $variable->withType(
-                            $type->set($accessType->value(), $rightContext->type())
-                        )->withOffset($leftOperand->getStartPosition())
-                    );
+                    if ($type instanceof ArrayLiteral) {
+                        $frame->locals()->set(
+                            $variable->withType(
+                                $type->set($accessType->value(), $rightContext->type())
+                            )->withOffset($leftOperand->getStartPosition())
+                        );
+                    }
                     continue;
                 }
 
