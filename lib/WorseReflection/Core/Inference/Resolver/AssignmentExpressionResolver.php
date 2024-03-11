@@ -161,7 +161,7 @@ class AssignmentExpressionResolver implements Resolver
             foreach ($frame->locals()->byName((string)$leftOperand->postfixExpression->getName()) as $variable) {
                 $type = $variable->type();
 
-                if (!$type instanceof ArrayLiteral) {
+                if (!$type instanceof ArrayType) {
                     return;
                 }
 

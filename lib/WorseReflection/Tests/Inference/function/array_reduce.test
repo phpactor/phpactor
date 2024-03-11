@@ -1,0 +1,7 @@
+<?php
+
+    array_reduce(['foobar'], function (array $carry, string $foo): array {
+        $carry[] = $foo;
+        wrAssertType('array<string>', $carry);
+        return $carry;
+    }, []),
