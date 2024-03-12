@@ -54,4 +54,15 @@ class ArrayType extends PseudoIterableType implements IterableType, HasEmptyType
     {
         return (new Types([TypeFactory::array()]))->merge(parent::allTypes());
     }
+
+    public function add(Type $type): self
+    {
+        if (null === $this->valueType) {
+            return new self($this->keyType, $type);
+        }
+        if (!$this->valueType->isDefined()) {
+            return new self($this->keyType, $type);
+        }
+        return new self($this->keyType, $this->valueType->addType($type));
+    }
 }

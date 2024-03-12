@@ -49,6 +49,7 @@ use Phpactor\WorseReflection\Core\Inference\FunctionStubRegistry;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayMapStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayMergeStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayPopStub;
+use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayReduceStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArrayShiftStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\ArraySumStub;
 use Phpactor\WorseReflection\Core\Inference\FunctionStub\AssertStub;
@@ -182,6 +183,7 @@ final class DefaultResolverFactory
             'reset' => new ResetStub(),
             'array_shift' => new ArrayShiftStub(),
             'array_pop' => new ArrayPopStub(),
+            'array_reduce' => new ArrayReduceStub(),
             'array_merge' => new ArrayMergeStub(),
             'assert' => new AssertStub(),
         ]);

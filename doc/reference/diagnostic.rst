@@ -71,6 +71,21 @@ Report if trying to call a class method which does not exist.
         
         - ``ERROR``: ``Case "Bar" does not exist on enum "Foobar"``
         
+    .. tab:: enum contains const and case
+        
+        .. code-block:: php
+        
+            <?php
+            
+            enum Foobar
+            {
+                case Foo;
+                public const Bar = 'Bar';
+            }
+            
+            Foobar::Foo;
+            Foobar::Bar;
+        
     .. tab:: enum static method not existing
         
         .. code-block:: php
@@ -183,6 +198,22 @@ Report when a method has a parameter with a type that should be augmented by a d
             class Foobar
             {
                 public function foo(Generator $foobar) {
+                }
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Method "foo" is missing @param $foobar``
+        
+    .. tab:: iterable
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public function foo(iterable $foobar) {
                 }
             }
         

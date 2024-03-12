@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## master
+
+Improvements:
+
+  - Basic support for `array_reduce` stub #2576
+
+
 ## 2024-03-09
 
 Features:
