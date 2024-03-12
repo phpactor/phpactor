@@ -176,9 +176,9 @@ class FileListTest extends IntegrationTestCase
             iterator_to_array($list)
         );
     }
+
     public function testIncludesExcludePatterns(): void
     {
-
         $list = FileList::fromFilePaths([
             FilePath::fromString('/vendor/cache/important/bartest.php'),
             FilePath::fromString('/vendor/cache/important/footest.php'),
@@ -199,12 +199,13 @@ class FileListTest extends IntegrationTestCase
     }
 
     /**
-@param array<FilePath> $fileList
-@param array<string> $includePatterns
-@param array<string> $excludePatterns
-@param array<FilePath> $expected
-* @dataProvider provideExcludesWithShortFolderName()
-*/
+     * @param array<FilePath> $fileList
+     * @param array<string> $includePatterns
+     * @param array<string> $excludePatterns
+     * @param array<FilePath> $expected
+     *
+     * @dataProvider provideExcludesWithShortFolderName
+     */
     public function testExcludesWithShortFolderName(
         array $fileList,
         array $includePatterns,
