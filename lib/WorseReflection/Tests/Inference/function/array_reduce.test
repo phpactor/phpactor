@@ -1,0 +1,30 @@
+<?php
+
+$reduced = array_reduce(['foobar'], function (int $carry, string $foo): int {
+}, 0);
+
+wrAssertType('int', $reduced);
+
+$reduced = array_reduce(['foobar'], function (int $carry, string $foo): int {
+}, ['string']);
+
+wrAssertType('array<int,string>', $reduced);
+
+
+// we cannot currently analyze the closure to determine the 
+$reduced = array_reduce(['foobar'], function (array $carry, string $foo): int {
+    $carry[] = 'foo';
+    return $carry;
+}, []);
+
+// should be string[] but we can't currently analyze the closure frames return type
+wrAssertType('array', $reduced);
+
+$reduced = array_reduce(['foobar'], function (int $carry, string $foo): int {
+}, '');
+
+wrAssertType('string', $reduced);
+
+$reduced = array_reduce(['foobar'], function (int $carry, string $foo): int {
+});
+wrAssertType('array', $reduced);

@@ -1,7 +1,14 @@
 Changelog
 =========
 
+## master
+
+Improvements:
+
+  - Basic support for `array_reduce` stub #2576
+
 Bug fixes:
+
   - Fixing include and exclude patterns #2593 @mamazu
 
 ## 2024-03-09
