@@ -104,25 +104,26 @@ class FileList implements Iterator
         }
 
         // Sort map by keys so that more specific paths are getting matched first
-        uksort($inclusionMap, function (string $x, string $y) {
-            $partsX = explode(DIRECTORY_SEPARATOR, $x);
-            $partsY = explode(DIRECTORY_SEPARATOR, $y);
-            // Longer paths should come first
-            $countDiff = -(count($partsX) <=> count($partsY));
+        uksort($inclusionMap, function (string $a, string $b) {
+            $partsA = explode(DIRECTORY_SEPARATOR, $a);
+            $partsB = explode(DIRECTORY_SEPARATOR, $b);
+            $countDiff = count($partsA) <=> count($partsB);
             if ($countDiff !== 0) {
-                return $countDiff;
+                // Longer paths should come first
+                return -$countDiff;
             }
 
-            foreach ($partsX as $i => $pathPartX) {
-                if ($pathPartX === '**' || $pathPartX === '*') {
+            foreach ($partsA as $i => $pathPartA) {
+                if ($pathPartA === '**' || $pathPartA === '*') {
                     return 1;
                 }
 
-                $compare = strcmp($pathPartX, $partsY[$i]);
+                $compare = strcmp($pathPartA, $partsB[$i]);
                 if($compare !== 0) {
                     return $compare;
                 }
             }
+            // If none of the path segments were different, then they must be equal
             return 0;
         });
 
