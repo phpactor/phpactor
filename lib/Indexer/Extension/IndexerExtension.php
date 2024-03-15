@@ -224,9 +224,7 @@ class IndexerExtension implements Extension
                 ->setIncludePatterns($container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS))
                 /** @phpstan-ignore-next-line */
                 ->setSupportedExtensions($container->parameter(self::PARAM_SUPPORTED_EXTENSIONS)->value())
-                ->setFollowSymlinks(
-                    (bool) $container->getParameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS),
-                )
+                ->setFollowSymlinks($container->parameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS)->bool())
                 ->setStubPaths($container->getParameter(self::PARAM_STUB_PATHS));
         });
 
