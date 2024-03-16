@@ -25,6 +25,7 @@ class IndexJob
         foreach ($this->fileList as $fileInfo) {
             assert($fileInfo instanceof SplFileInfo);
 
+            // TODO: could refactor this to iterate the PHAR in the file list provider.
             if ($fileInfo->getExtension() === 'phar') {
                 $phar = new Phar($fileInfo->getPathname(), FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME);
                 yield from $this->indexPharFile($phar);
