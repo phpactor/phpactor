@@ -76,7 +76,8 @@ final class RenameEditConverter
                 }
                 $documentEdit->edits = array_values($new);
                 return $documentEdit;
-            }, $documentEdits
+            },
+            $documentEdits
         );
     }
 

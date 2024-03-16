@@ -20,7 +20,6 @@ use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\TextDocument\TextDocumentUri;
 use function Amp\Promise\wait;
 use function Amp\call;
-use function Amp\delay;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
 {
