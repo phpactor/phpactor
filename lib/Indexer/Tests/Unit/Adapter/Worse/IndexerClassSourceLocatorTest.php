@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Adapter\Worse;
 
+use PHPStan\Command\AnalyseApplication;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\TextDocument\ByteOffset;
@@ -44,6 +45,21 @@ class IndexerClassSourceLocatorTest extends TestCase
             ->setStart(ByteOffset::fromInt(0))
             ->setEnd(ByteOffset::fromInt(10))
             ->setFilePath(__FILE__);
+
+        $index = new InMemoryIndex();
+        $index->write($record);
+        $locator = $this->createLocator($index);
+        $sourceCode = $locator->locate(Name::fromString('Foobar'));
+        $this->assertEquals(Path::canonicalize(__FILE__), $sourceCode->uri()?->path());
+    }
+
+    public function testForPhar(): void
+    {
+        $record = ClassRecord::fromName('Foobar')
+            ->setType('class')
+            ->setStart(ByteOffset::fromInt(0))
+            ->setEnd(ByteOffset::fromInt(10))
+            ->setFilePath('phar://' . __FILE__);
 
         $index = new InMemoryIndex();
         $index->write($record);

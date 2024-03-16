@@ -12,6 +12,6 @@ final class TextDocumentNotFound extends RuntimeException
         return new self(sprintf(
             'Text document "%s" not found',
             $uri
-        ));
+        ).(new \Exception())->getTraceAsString());
     }
 }
