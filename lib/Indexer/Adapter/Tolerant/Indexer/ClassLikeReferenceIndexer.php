@@ -31,7 +31,7 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
 
     public function beforeParse(Index $index, TextDocument $document): void
     {
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->__toString()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
 
         foreach ($fileRecord->references() as $outgoingReference) {
@@ -67,11 +67,11 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
 
         $targetRecord = $index->get(ClassRecord::fromName($name));
         assert($targetRecord instanceof ClassRecord);
-        $targetRecord->addReference($document->uri()->__toString());
+        $targetRecord->addReference($document->uriOrThrow()->__toString());
 
         $index->write($targetRecord);
 
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->__toString()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
         $reference = new RecordReference(
             ClassRecord::RECORD_TYPE,
