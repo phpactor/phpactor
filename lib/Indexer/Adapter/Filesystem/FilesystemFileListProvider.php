@@ -20,7 +20,7 @@ class FilesystemFileListProvider implements FileListProvider
         private Filesystem $filesystem,
         private array $includePatterns = [],
         private array $excludePatterns = [],
-        private array $supportedExtensions = ['php'],
+        private array $supportedExtensions = ['php', 'phar'],
     ) {
     }
 

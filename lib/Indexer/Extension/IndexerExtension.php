@@ -66,7 +66,7 @@ class IndexerExtension implements Extension
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
     public const PARAM_SUPPORTED_EXTENSIONS = 'indexer.supported_extensions';
-    const TAG_WATCHER = 'indexer.watcher';
+    public const TAG_WATCHER = 'indexer.watcher';
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
     private const PARAM_PROJECT_ROOT = 'indexer.project_root';

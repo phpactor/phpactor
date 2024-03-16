@@ -21,6 +21,7 @@ class IndexJob
      */
     public function generator(): Generator
     {
+
         foreach ($this->fileList as $fileInfo) {
             assert($fileInfo instanceof SplFileInfo);
 
