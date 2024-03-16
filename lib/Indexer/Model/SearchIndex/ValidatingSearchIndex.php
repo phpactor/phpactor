@@ -3,7 +3,6 @@
 namespace Phpactor\Indexer\Model\SearchIndex;
 
 use Generator;
-use PHPStan\Rules\UnusedFunctionParametersCheck;
 use Phpactor\Indexer\Model\IndexAccess;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;

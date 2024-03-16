@@ -122,13 +122,13 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
         yield 'exact match' => [
             "// File: src/file1.php\n<?php class Barfoo implements Foobar{}",
             'Barfoo',
-            [ClassRecord::fromName('Barfoo')->setFilePath($this->workspace()->path('src/file1.php'))]
+            [ClassRecord::fromName('Barfoo')->setFilePath($this->workspacePath('src/file1.php'))]
         ];
 
         yield 'namespaced match' => [
             "// File: src/file1.php\n<?php namespace Bar; class Barfoo implements Foobar{}",
             'Barfoo',
-            [ClassRecord::fromName('Bar\Barfoo')->setFilePath($this->workspace()->path('src/file1.php'))]
+            [ClassRecord::fromName('Bar\Barfoo')->setFilePath($this->workspacePath('src/file1.php'))]
         ];
 
         yield 'gh-2098: does not index reserved class name' => [
@@ -168,5 +168,10 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
             "// File: src/file1.php\n<?php class {}",
             'Class name is missing',
         ];
+    }
+
+    private function workspacePath(string $path): string
+    {
+        return 'file://'.$this->workspace()->path($path);
     }
 }

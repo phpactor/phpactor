@@ -4,6 +4,7 @@ namespace Phpactor\TextDocument\Exception;
 
 use Phpactor\TextDocument\TextDocumentUri;
 use RuntimeException;
+use Exception;
 
 final class TextDocumentNotFound extends RuntimeException
 {
@@ -12,6 +13,6 @@ final class TextDocumentNotFound extends RuntimeException
         return new self(sprintf(
             'Text document "%s" not found',
             $uri
-        ).(new \Exception())->getTraceAsString());
+        ).(new Exception())->getTraceAsString());
     }
 }

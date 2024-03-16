@@ -18,7 +18,6 @@ use Phpactor\Indexer\Model\Exception\CannotIndexNode;
 use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\IndexBuilder;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
