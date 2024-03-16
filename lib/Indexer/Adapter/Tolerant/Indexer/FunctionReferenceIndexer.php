@@ -51,7 +51,7 @@ class FunctionReferenceIndexer extends AbstractClassLikeIndexer
         $targetRecord->addReference($document->uri()->path());
         $index->write($targetRecord);
 
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
 
         $fileRecord->addReference(
