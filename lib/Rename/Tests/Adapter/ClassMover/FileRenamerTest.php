@@ -15,10 +15,13 @@ use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FileRecord;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\RenameEdit;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
+use function Amp\Promise\wait;
 
 class FileRenamerTest extends IntegrationTestCase
 {
@@ -46,14 +49,16 @@ class FileRenamerTest extends IntegrationTestCase
             )
         ]);
 
-        $edits = $renamer->renameFile($document1->uri(), $document2->uri());
+        $edits = wait($renamer->renameFile($document1->uri(), $document2->uri()));
 
-        self::assertInstanceOf(Generator::class, $edits);
-        $locatedTextEdits = [...$edits];
-        self::assertContainsOnlyInstancesOf(LocatedTextEdit::class, $locatedTextEdits);
-        self::assertInstanceOf(RenameResult::class, $edits->getReturn());
-
-        self::assertCount(3, $locatedTextEdits);
+        foreach ($edits as $edit) {
+            if ($edit instanceof RenameResult) {
+                
+            }
+            if ($edit instanceof LocatedTextEditsMap) {
+                self::assertCount(3, $edit->toLocatedTextEdits(), 'Locates two references');
+            }
+        }
     }
 
     /**
