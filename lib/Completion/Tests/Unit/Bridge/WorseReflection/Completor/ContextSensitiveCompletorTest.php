@@ -262,5 +262,23 @@ class ContextSensitiveCompletorTest extends TestCase
                 'Baz',
             ],
         ];
+        yield 'constructor argument' => [
+            [
+                'Object1',
+                'Object2',
+            ],
+            <<<'EOT'
+                <?php
+                class Object2 {}
+                interface Object3 {}
+                class Object1 implements Object3 {}
+                class Foo { public function __construct(Object3 $foo){}}
+
+                $f = new Foo(new O<>);
+                EOT,
+            [
+                'Object1',
+            ],
+        ];
     }
 }
