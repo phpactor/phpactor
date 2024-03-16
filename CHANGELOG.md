@@ -5,6 +5,7 @@ Changelog
 
 Improvements:
 
+  - Fix contextual completion in constructor agrument position #2504
   - Basic support for `array_reduce` stub #2576
 
 Bug fixes:
