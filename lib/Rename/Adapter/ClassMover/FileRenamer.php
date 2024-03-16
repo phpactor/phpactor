@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Adapter\ClassMover;
 
+use Amp\Promise;
 use Generator;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\Indexer\Model\QueryClient;
@@ -9,11 +10,14 @@ use Phpactor\Rename\Model\Exception\CouldNotConvertUriToClass;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer as PhpactorFileRenamer;
 use Phpactor\Rename\Model\LocatedTextEdit;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\RenameEdit;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\Rename\Model\UriToNameConverter;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
+use function Amp\call;
 
 class FileRenamer implements PhpactorFileRenamer
 {
@@ -25,43 +29,48 @@ class FileRenamer implements PhpactorFileRenamer
     ) {
     }
 
-    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Generator
+    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
     {
-        try {
-            $fromClass = $this->converter->convert($from);
-            $toClass = $this->converter->convert($to);
-        } catch (CouldNotConvertUriToClass $error) {
-            throw new CouldNotRename($error->getMessage(), 0, $error);
-        }
-
-        $references = $this->client->class()->referencesTo($fromClass);
-
-        // rename class definition
-        yield from $this->replaceDefinition($from, $fromClass, $toClass);
-
-        $seen = [];
-        foreach ($references as $reference) {
-            if (isset($seen[$reference->location()->uri()->path()])) {
-                continue;
-            }
-
-            $seen[$reference->location()->uri()->path()] = true;
-
+        return call(function () use ($from, $to) {
             try {
-                $document = $this->locator->get($reference->location()->uri());
-            } catch (TextDocumentNotFound) {
-                continue;
+                $fromClass = $this->converter->convert($from);
+                $toClass = $this->converter->convert($to);
+            } catch (CouldNotConvertUriToClass $error) {
+                throw new CouldNotRename($error->getMessage(), 0, $error);
             }
 
-            foreach ($this->mover->replaceReferences(
-                $this->mover->findReferences($document->__toString(), $fromClass),
-                $toClass
-            ) as $edit) {
-                yield new LocatedTextEdit($reference->location()->uri(), $edit);
-            }
-        }
+            $references = $this->client->class()->referencesTo($fromClass);
 
-        return new RenameResult($from, $to);
+            // rename class definition
+            $locatedEdits = [...$this->replaceDefinition($from, $fromClass, $toClass)];
+
+            $seen = [];
+            foreach ($references as $reference) {
+                if (isset($seen[$reference->location()->uri()->path()])) {
+                    continue;
+                }
+
+                $seen[$reference->location()->uri()->path()] = true;
+
+                try {
+                    $document = $this->locator->get($reference->location()->uri());
+                } catch (TextDocumentNotFound) {
+                    continue;
+                }
+
+                foreach ($this->mover->replaceReferences(
+                    $this->mover->findReferences($document->__toString(), $fromClass),
+                    $toClass
+                ) as $edit) {
+                    $locatedEdits[] = new LocatedTextEdit($reference->location()->uri(), $edit);
+                }
+            }
+
+            return new RenameEdit(
+                LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
+                new RenameResult($from, $to),
+            );
+        });
     }
 
     /**
