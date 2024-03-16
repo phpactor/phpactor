@@ -79,6 +79,7 @@ class IndexerExtension implements Extension
             self::PARAM_INDEX_PATH => '%cache%/index/%project_id%',
             self::PARAM_INCLUDE_PATTERNS => [
                 '/**/*.php',
+                '/**/*.phar',
             ],
             self::PARAM_EXCLUDE_PATTERNS => [
                 '/vendor/**/Tests/**/*',
@@ -92,7 +93,7 @@ class IndexerExtension implements Extension
             self::PARAM_PROJECT_ROOT => '%project_root%',
             self::PARAM_REFERENCES_DEEP_REFERENCES => true,
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => true,
-            self::PARAM_SUPPORTED_EXTENSIONS => ['php'],
+            self::PARAM_SUPPORTED_EXTENSIONS => ['php', 'phar'],
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLED_WATCHERS => 'List of allowed watchers. The first watcher that supports the current system will be used',

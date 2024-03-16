@@ -1614,7 +1614,7 @@ Type: array
 Glob patterns to include while indexing
 
 
-**Default**: ``["\/**\/*.php"]``
+**Default**: ``["\/**\/*.php","\/**\/*.phar"]``
 
 
 .. _param_indexer.exclude_patterns:
@@ -1758,7 +1758,7 @@ Type: array
 File extensions (e.g. `php`) for files that should be indexed
 
 
-**Default**: ``["php"]``
+**Default**: ``["php","phar"]``
 
 
 .. _ObjectRendererExtension:
