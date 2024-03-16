@@ -10,6 +10,7 @@ use Phpactor\Indexer\Adapter\Tolerant\Indexer\TraitDeclarationIndexer;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Tests\Adapter\Tolerant\TolerantIndexerTestCase;
+use Phpactor\TextDocument\TextDocumentUri;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -170,8 +171,8 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
         ];
     }
 
-    private function workspacePath(string $path): string
+    private function workspacePath(string $path): TextDocumentUri
     {
-        return 'file://'.$this->workspace()->path($path);
+        return TextDocumentUri::fromString($this->workspace()->path($path));
     }
 }

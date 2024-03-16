@@ -2,18 +2,15 @@
 
 namespace Phpactor\Indexer\Model\Record;
 
-use RuntimeException;
+use Phpactor\TextDocument\TextDocumentUri;
 
 trait HasPathTrait
 {
     protected ?string $filePath = null;
 
-    public function setFilePath(string $filePath): self
+    public function setFilePath(TextDocumentUri $uri): self
     {
-        if (!strpos($filePath, ':/')) {
-            throw new RuntimeException('Invalid file path: '.$filePath);
-        }
-        $this->filePath = $filePath;
+        $this->filePath = $uri->__toString();
         return $this;
     }
 

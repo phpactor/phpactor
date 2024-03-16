@@ -18,9 +18,9 @@ class FileRecord implements HasPath, Record
      */
     private array $references = [];
 
-    public function __construct(string $filePath)
+    private function __construct(string $filePath)
     {
-        $this->setFilePath($filePath);
+        $this->filePath = $filePath;
     }
 
     public function __wakeup(): void

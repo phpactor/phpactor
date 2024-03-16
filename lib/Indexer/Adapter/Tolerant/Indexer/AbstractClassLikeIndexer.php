@@ -83,7 +83,7 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
         /** @var ClassDeclaration|InterfaceDeclaration|EnumDeclaration|TraitDeclaration $node */
         $record->setStart(ByteOffset::fromInt($node->name->getStartPosition()));
         $record->setEnd(ByteOffset::fromInt($node->name->getEndPosition()));
-        $record->setFilePath($document->uri()->__toString());
+        $record->setFilePath($document->uriOrThrow());
         $record->setType($type);
 
         return $record;
