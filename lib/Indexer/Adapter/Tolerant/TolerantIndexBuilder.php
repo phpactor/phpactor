@@ -63,7 +63,7 @@ final class TolerantIndexBuilder implements IndexBuilder
             $indexer->beforeParse($this->index, $document);
         }
 
-        $node = $this->parser->parseSourceFile($document->__toString(), $document->uri()->path());
+        $node = $this->parser->parseSourceFile($document->__toString(), $document->uri()->__toString());
         $this->indexNode($document, $node);
     }
 
@@ -83,7 +83,7 @@ final class TolerantIndexBuilder implements IndexBuilder
                 $this->logger->warning(sprintf(
                     'Cannot index node of class "%s" in file "%s": %s',
                     get_class($node),
-                    $document->uri()->__toString(),
+                    $document->uri()?->__toString() ?? 'unknown',
                     $cannotIndexNode->getMessage()
                 ));
             }

@@ -17,7 +17,7 @@ class FileRepository
     /**
      * Increment this number each time there is a B/C break in the index.
      */
-    private const VERSION = 1;
+    private const VERSION = 2;
 
     /**
      * Flush to the filesystem after BATCH_SIZE updates

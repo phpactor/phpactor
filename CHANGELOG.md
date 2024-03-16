@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Features:
+
+  - PHAR Indexing #2412 @dantleech
+
 Improvements:
 
   - Fix contextual completion in constructor agrument position #2504
