@@ -36,7 +36,9 @@ class FileRenamerTest extends IntegrationTestCase
         $document4 = $this->createDocument('4.php', '<?php One::class;');
 
         $renamer = $this->createRenamer([$document1, $document2, $document3, $document4], [
-            (new ClassRecord('One'))->setType('class')->addReference($this->path('3.php'))->addReference($this->path('4.php')),
+            (new ClassRecord('One'))->setType('class')->addReference(
+                'file://' . $this->path('3.php')
+            )->addReference('file://' . $this->path('4.php')),
             FileRecord::fromPath('file://' . $this->path('3.php'))->addReference(
                 new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)
             ),
@@ -45,7 +47,7 @@ class FileRenamerTest extends IntegrationTestCase
             )
         ]);
 
-        $edits = wait($renamer->renameFile($document1->uri(), $document2->uri()));
+        $edits = wait($renamer->renameFile($document1->uriOrThrow(), $document2->uriOrThrow()));
 
         self::assertInstanceOf(LocatedTextEditsMap::class, $edits);
         assert($edits instanceof LocatedTextEditsMap);

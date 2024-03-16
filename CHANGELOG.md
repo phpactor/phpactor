@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Features:
+
+  - PHAR Indexing #2412 @dantleech
+
 Improvements:
 
   - Basic support for `array_reduce` stub #2576
