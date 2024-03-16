@@ -17,6 +17,7 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
+use Phpactor\Rename\Model\RenameEdit;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
@@ -99,7 +100,13 @@ class FileRenameHandlerTest extends IntegrationTestCase
         array $workspaceEdits = [],
     ): FileRenameHandler {
         return new FileRenameHandler(
-            new TestFileRenamer($willError, $renameResult, new LocatedTextEditsMap($workspaceEdits)),
+            new TestFileRenamer(
+                $willError,
+                new RenameEdit(
+                    new LocatedTextEditsMap($workspaceEdits),
+                    $renameResult,
+                ),
+            ),
             new RenameEditConverter($builder->workspace(), new WorkspaceTextDocumentLocator($builder->workspace())),
             new ClientApi($this->createMock(RpcClient::class)),
         );

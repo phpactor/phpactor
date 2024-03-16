@@ -2,42 +2,33 @@
 
 namespace Phpactor\Rename\Model\FileRenamer;
 
-use Generator;
+use Amp\Promise;
+use Amp\Success;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer;
-use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Rename\Model\RenameResult;
+use Phpactor\Rename\Model\RenameEdit;
 use Phpactor\TextDocument\TextDocumentUri;
 
 class TestFileRenamer implements FileRenamer
 {
-    private LocatedTextEditsMap $workspaceEdits;
+    private RenameEdit $renameEdit;
 
     public function __construct(
         private bool $throw = false,
-        private ?RenameResult $renameResult = null,
-        ?LocatedTextEditsMap $workspaceEdits = null,
+        ?RenameEdit $renameEdit = null,
     ) {
-        $this->workspaceEdits = $workspaceEdits ?: LocatedTextEditsMap::create();
+        $this->renameEdit = $renameEdit ?: new RenameEdit(
+            LocatedTextEditsMap::create(),
+        );
     }
 
-    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Generator
+    public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
     {
         if ($this->throw) {
-            throw new CouldNotRename('There was a problem');
+            return new Failure(new CouldNotRename('There was a problem'));
         }
 
-        foreach ($this->workspaceEdits->toLocatedTextEdits() as $locatedTextEdits) {
-            foreach ($locatedTextEdits->textEdits() as $textEdit) {
-                yield new LocatedTextEdit($locatedTextEdits->documentUri(), $textEdit);
-            }
-        }
-
-        if (null === $this->renameResult) {
-            return;
-        }
-
-        return $this->renameResult;
+        return new Success($this->renameEdit);
     }
 }
