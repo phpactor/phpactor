@@ -621,11 +621,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/ClassToFile/Transformer/ClassNameFixerTransformerTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\AbstractTolerantImportNameTest\\:\\:importNameFromTestFile\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/AbstractTolerantImportNameTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantChangeVisiblityTest\\:\\:provideChangeVisibility\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/TolerantChangeVisiblityTest.php
@@ -4086,7 +4081,7 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/LanguageServerReferenceFinderExtensionTest.php
 
 		-
-			message: "#^Parameter \\#2 \\$renameResult of method Phpactor\\\\Extension\\\\LanguageServerRename\\\\Util\\\\LocatedTextEditConverter\\:\\:toWorkspaceEdit\\(\\) expects Phpactor\\\\Rename\\\\Model\\\\RenameResult\\|null, mixed given\\.$#"
+			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerRename\\\\Handler\\\\FileRenameHandler\\:\\:willRenameFiles\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\LanguageServerProtocol\\\\WorkspaceEdit\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
 
@@ -4111,7 +4106,7 @@ parameters:
 			path: lib/Extension/LanguageServerRename/LanguageServerRenameExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Util\\\\LocatedTextEditConverter constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Util\\\\RenameEditConverter constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/LanguageServerRenameExtension.php
 
@@ -5586,47 +5581,12 @@ parameters:
 			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
 
 		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 2
-			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
-
-		-
 			message: "#^Parameter \\#1 \\$name of static method Phpactor\\\\Indexer\\\\Model\\\\Record\\\\ClassRecord\\:\\:fromName\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
 
 		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 3
-			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassLikeReferenceIndexer.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 2
-			path: lib/Indexer/Adapter/Tolerant/Indexer/ConstantDeclarationIndexer.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/Indexer/FunctionDeclarationIndexer.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 3
-			path: lib/Indexer/Adapter/Tolerant/Indexer/FunctionReferenceIndexer.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 3
-			path: lib/Indexer/Adapter/Tolerant/Indexer/MemberIndexer.php
-
-		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
 
@@ -6001,6 +5961,11 @@ parameters:
 			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
 
 		-
+			message: "#^Method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\RenameEdit\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
+			count: 1
+			path: lib/Rename/Adapter/ClassMover/FileRenamer.php
+
+		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 2
 			path: lib/Rename/Adapter/ReferenceFinder/AbstractReferenceRenamer.php
@@ -6016,17 +5981,12 @@ parameters:
 			path: lib/Rename/Adapter/ReferenceFinder/MemberRenamer.php
 
 		-
+			message: "#^Method Phpactor\\\\Rename\\\\Model\\\\FileRenamer\\\\LoggingFileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\RenameEdit\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
+			count: 1
+			path: lib/Rename/Model/FileRenamer/LoggingFileRenamer.php
+
+		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$from of method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$to of method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
 			count: 1
 			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
 
