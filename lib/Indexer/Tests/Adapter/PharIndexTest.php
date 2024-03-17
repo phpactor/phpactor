@@ -32,4 +32,13 @@ class PharIndexTest extends IntegrationTestCase
         self::assertCount(1, $hellos);
     }
 
+    public function testIndexInvalidPhar(): void
+    {
+        $this->workspace()->put('repo/index.phar', '<?php class Hello{}');
+
+        $agent = $this->indexAgentBuilder('repo')->buildTestAgent();
+        $agent->indexer()->getJob()->run();
+        $hellos = iterator_to_array($agent->search()->search(Criteria::shortNameContains('Hello')));
+        self::assertCount(0, $hellos);
+    }
 }
