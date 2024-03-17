@@ -9,9 +9,10 @@ use ArrayIterator;
  */
 class RenameEdit extends ArrayIterator
 {
-    public function __construct(
-        LocatedTextEditsMap|RenameResult|null ...$edits,
-    ) {
+    public function __construct(LocatedTextEditsMap|RenameResult|null ...$edits)
+    {
+        assert(array_is_list($edits));
+
         parent::__construct(array_filter($edits));
     }
 }
