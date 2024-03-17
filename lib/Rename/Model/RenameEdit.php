@@ -5,7 +5,7 @@ namespace Phpactor\Rename\Model;
 use ArrayIterator;
 
 /**
- * @extends ArrayIterator<LocatedTextEditsMap|RenameResult>
+ * @extends ArrayIterator<int, LocatedTextEditsMap|RenameResult>
  */
 class RenameEdit extends ArrayIterator
 {

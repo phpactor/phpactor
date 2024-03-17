@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Model\FileRenamer;
 
+use Amp\Failure;
 use Amp\Promise;
 use Amp\Success;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
