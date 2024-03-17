@@ -57,7 +57,7 @@ class FileFinder
         return $this->pathsFromReflectionClass($reflection, $private);
     }
 
-    private function pathsFromReflectionClass(ReflectionClass $reflection, bool $private)
+    private function pathsFromReflectionClass(ReflectionClass $reflection, bool $private): FileList
     {
         $path = $reflection->sourceCode()->uri()?->path();
 
@@ -78,13 +78,17 @@ class FileFinder
         return FileList::fromFilePaths($filePaths);
     }
 
-    private function allPhpFiles(Filesystem $filesystem)
+    private function allPhpFiles(Filesystem $filesystem): FileList
     {
-        $filePaths = $filesystem->fileList()->existing()->phpFiles();
-        return $filePaths;
+        return $filesystem->fileList()->existing()->phpFiles();
     }
 
-    private function parentFilePaths(ReflectionClass $reflection, $filePaths)
+    /**
+     * @param array<string|null> $filePaths
+     *
+     * @return array<string|null>
+     */
+    private function parentFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         $context = $reflection->parent();
         while ($context) {
@@ -95,7 +99,12 @@ class FileFinder
         return $filePaths;
     }
 
-    private function traitFilePaths(ReflectionClass $reflection, $filePaths)
+    /**
+     * @param array<string|null> $filePaths
+     *
+     * @return array<string|null>
+     */
+    private function traitFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         foreach ($reflection->traits() as $trait) {
             $filePaths[] = $trait->sourceCode()->uri()?->path();
@@ -103,7 +112,12 @@ class FileFinder
         return $filePaths;
     }
 
-    private function interfaceFilePaths(ReflectionClass $reflection, $filePaths)
+    /**
+     * @param array<string|null> $filePaths
+     *
+     * @return array<string|null>
+     */
+    private function interfaceFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         foreach ($reflection->interfaces() as $interface) {
             $filePaths[] = $interface->sourceCode()->uri()?->path();
