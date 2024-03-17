@@ -30,7 +30,7 @@ Requirements
 ------------
 
 - PHP 8.1+
-- [Composer](https://getcomposer.org/)
+- [Composer 2](https://getcomposer.org/)
 
 Project Recommendations
 -----------------------
