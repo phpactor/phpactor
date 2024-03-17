@@ -41,8 +41,8 @@ class FileFinder
             // we have public members or a non-class, we need to search the
             // whole tree, but we can discount any files which do not contain
             // the member name string.
-            return $this->allPhpFiles($filesystem)->filter(function (SplFileInfo $file) use ($memberName) {
-                return preg_match('{' . $memberName . '}', file_get_contents($file->getPathname()));
+            return $this->allPhpFiles($filesystem)->filter(function (SplFileInfo $file) use ($memberName): bool {
+                return preg_match('{' . $memberName . '}', file_get_contents($file->getPathname())) === 1;
             });
         }
 
@@ -62,7 +62,9 @@ class FileFinder
         $path = $reflection->sourceCode()->uri()?->path();
 
         if (!$path) {
-            throw new RuntimeException('Source has no path associated with it');
+            throw new RuntimeException(
+                sprintf('Source class "%s" has no path associated with it', $reflection->name()),
+            );
         }
 
         $filePaths = [ $path ];
@@ -84,15 +86,21 @@ class FileFinder
     }
 
     /**
-     * @param array<string|null> $filePaths
+     * @param array<string> $filePaths
      *
-     * @return array<string|null>
+     * @return array<string>
      */
     private function parentFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         $context = $reflection->parent();
         while ($context) {
-            $filePaths[] = $context->sourceCode()->uri()?->path();
+            $path = $context->sourceCode()->uri()?->path();
+            if (!$path) {
+                throw new RuntimeException(
+                    sprintf('Source class "%s" has no path associated with it', $context->name()),
+                );
+            }
+            $filePaths[] = $path;
             $context = $context->parent();
         }
 
@@ -100,27 +108,40 @@ class FileFinder
     }
 
     /**
-     * @param array<string|null> $filePaths
+     * @param array<string> $filePaths
      *
-     * @return array<string|null>
+     * @return array<string>
      */
     private function traitFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         foreach ($reflection->traits() as $trait) {
-            $filePaths[] = $trait->sourceCode()->uri()?->path();
+            $path = $trait->sourceCode()->uri()?->path();
+            if (!$path) {
+                throw new RuntimeException(
+                    sprintf('Source trait "%s" has no path associated with it', $trait->name()),
+                );
+            }
+            $filePaths[] = $path;
         }
         return $filePaths;
     }
 
     /**
-     * @param array<string|null> $filePaths
+     * @param array<string> $filePaths
      *
-     * @return array<string|null>
+     * @return array<string>
      */
     private function interfaceFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         foreach ($reflection->interfaces() as $interface) {
-            $filePaths[] = $interface->sourceCode()->uri()?->path();
+            $path = $interface->sourceCode()->uri()?->path();
+            if (!$path) {
+                throw new RuntimeException(
+                    sprintf('Source interface "%s" has no path associated with it', $interface->name()),
+                );
+            }
+
+            $filePaths[] = $path;
         }
 
         return $filePaths;
