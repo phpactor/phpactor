@@ -2,13 +2,13 @@
 
 namespace Phpactor\Indexer\Model;
 
-use FilesystemIterator;
 use Generator;
 use Phar;
 use PharFileInfo;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use RecursiveIteratorIterator;
 use SplFileInfo;
+use UnexpectedValueException;
 
 class IndexJob
 {
@@ -24,10 +24,17 @@ class IndexJob
 
         foreach ($this->fileList as $fileInfo) {
             assert($fileInfo instanceof SplFileInfo);
+            if ($fileInfo->isLink()) {
+                continue;
+            }
 
             // TODO: could refactor this to iterate the PHAR in the file list provider.
             if ($fileInfo->getExtension() === 'phar') {
-                $phar = new Phar($fileInfo->getPathname(), FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME);
+                try {
+                    $phar = new Phar($fileInfo->getPathname());
+                } catch (UnexpectedValueException $e) {
+                    continue;
+                }
                 yield from $this->indexPharFile($phar);
                 continue;
             }
