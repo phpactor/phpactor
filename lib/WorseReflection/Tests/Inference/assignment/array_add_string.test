@@ -1,0 +1,7 @@
+<?php
+
+function foo(string $foo) {
+    $bars = [];
+    $bars[] = $foo;
+    wrAssertType('string[]', $bars);
+}
