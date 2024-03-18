@@ -18,7 +18,6 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\TextDocument\TextDocumentUri;
-use function Amp\Promise\wait;
 use function Amp\call;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
