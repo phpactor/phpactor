@@ -95,10 +95,8 @@ class FileFinder
         $context = $reflection->parent();
         while ($context) {
             $path = $context->sourceCode()->uri()?->path();
-            if (!$path) {
-                throw new RuntimeException(
-                    sprintf('Source class "%s" has no path associated with it', $context->name()),
-                );
+            if ($path === null) {
+                continue;
             }
             $filePaths[] = $path;
             $context = $context->parent();
@@ -116,10 +114,8 @@ class FileFinder
     {
         foreach ($reflection->traits() as $trait) {
             $path = $trait->sourceCode()->uri()?->path();
-            if (!$path) {
-                throw new RuntimeException(
-                    sprintf('Source trait "%s" has no path associated with it', $trait->name()),
-                );
+            if ($path === null) {
+                continue;
             }
             $filePaths[] = $path;
         }
@@ -135,12 +131,9 @@ class FileFinder
     {
         foreach ($reflection->interfaces() as $interface) {
             $path = $interface->sourceCode()->uri()?->path();
-            if (!$path) {
-                throw new RuntimeException(
-                    sprintf('Source interface "%s" has no path associated with it', $interface->name()),
-                );
+            if ($path === null) {
+                continue;
             }
-
             $filePaths[] = $path;
         }
 
