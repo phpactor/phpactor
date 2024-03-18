@@ -35,7 +35,8 @@ class IndexJob
                 } catch (UnexpectedValueException $e) {
                     continue;
                 }
-                yield from $this->indexPharFile($phar);
+                iterator_to_array($this->indexPharFile($phar));
+                yield $fileInfo->getPathname();
                 continue;
             }
 
