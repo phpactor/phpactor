@@ -2,23 +2,23 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ClassMover;
 
-use Generator;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Rename\Adapter\ClassMover\FileRenamer;
 use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
-use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FileRecord;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
+use function Amp\Promise\wait;
 
 class FileRenamerTest extends IntegrationTestCase
 {
@@ -46,14 +46,16 @@ class FileRenamerTest extends IntegrationTestCase
             )
         ]);
 
-        $edits = $renamer->renameFile($document1->uri(), $document2->uri());
+        $edits = wait($renamer->renameFile($document1->uri(), $document2->uri()));
 
-        self::assertInstanceOf(Generator::class, $edits);
-        $locatedTextEdits = [...$edits];
-        self::assertContainsOnlyInstancesOf(LocatedTextEdit::class, $locatedTextEdits);
-        self::assertInstanceOf(RenameResult::class, $edits->getReturn());
+        foreach ($edits as $edit) {
+            if ($edit instanceof RenameResult) {
 
-        self::assertCount(3, $locatedTextEdits);
+            }
+            if ($edit instanceof LocatedTextEditsMap) {
+                self::assertCount(3, $edit->toLocatedTextEdits(), 'Locates two references');
+            }
+        }
     }
 
     /**

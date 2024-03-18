@@ -8,9 +8,10 @@ use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\RenameEdit;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\Rename\Model\Renamer;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
+use Phpactor\Extension\LanguageServerRename\Util\RenameEditConverter;
 use Phpactor\LanguageServerProtocol\PrepareRenameParams;
 use Phpactor\LanguageServerProtocol\PrepareRenameRequest;
 use Phpactor\LanguageServerProtocol\Range;
@@ -30,7 +31,7 @@ use function Amp\delay;
 class RenameHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private LocatedTextEditConverter $converter,
+        private RenameEditConverter $converter,
         private TextDocumentLocator $documentLocator,
         private Renamer $renamer,
         private ClientApi $clientApi
@@ -119,9 +120,9 @@ class RenameHandler implements Handler, CanRegisterCapabilities
      */
     private function resultToWorkspaceEdit(array $locatedEdits, ?RenameResult $renameResult): WorkspaceEdit
     {
-        return $this->converter->toWorkspaceEdit(
+        return $this->converter->toWorkspaceEdit(new RenameEdit(
             LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
-            $renameResult
-        );
+            $renameResult,
+        ));
     }
 }

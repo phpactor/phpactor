@@ -8,7 +8,7 @@ use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
+use Phpactor\Extension\LanguageServerRename\Util\RenameEditConverter;
 use Phpactor\LanguageServerProtocol\FileOperationFilter;
 use Phpactor\LanguageServerProtocol\FileOperationPattern;
 use Phpactor\LanguageServerProtocol\FileOperationRegistrationOptions;
@@ -18,14 +18,14 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\TextDocument\TextDocumentUri;
+use function Amp\Promise\wait;
 use function Amp\call;
-use function Amp\delay;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
         private FileRenamer $renamer,
-        private LocatedTextEditConverter $converter,
+        private RenameEditConverter $converter,
         private ClientApi $clientApi,
     ) {
     }
@@ -50,19 +50,12 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
                 foreach ($params->files as $rename) {
                     $locatedEditMap = LocatedTextEditsMap::create();
 
-                    $locatedTextEdits = $this->renamer->renameFile(
+                    $renameEdit = wait($this->renamer->renameFile(
                         TextDocumentUri::fromString($rename->oldUri),
                         TextDocumentUri::fromString($rename->newUri)
-                    );
+                    ));
 
-                    foreach ($locatedTextEdits as $locatedTextEdit) {
-                        if ($count++ === 10) {
-                            yield delay(1);
-                        }
-                        $locatedEditMap = $locatedEditMap->withTextEdit($locatedTextEdit);
-                    }
-
-                    $workspaceEdit = $this->converter->toWorkspaceEdit($locatedEditMap, $locatedTextEdits->getReturn());
+                    $workspaceEdit = $this->converter->toWorkspaceEdit($renameEdit);
 
                     foreach ($workspaceEdit->documentChanges ?? [] as $change) {
                         $documentChanges[] = $change;
