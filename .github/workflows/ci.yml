@@ -126,7 +126,7 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run PHPUnit"
-                run: "php -dzend.assertions=1 vendor/bin/phpunit"
+                run: "php -dphar.readonly=0 -dzend.assertions=1 vendor/bin/phpunit"
     phpstan:
         name: "PHPStan (${{ matrix.php-version }})"
 

@@ -69,7 +69,7 @@ class ConstantDeclarationIndexer implements TolerantIndexer
             assert($record instanceof ConstantRecord);
             $record->setStart(ByteOffset::fromInt($node->getStartPosition()));
             $record->setEnd(ByteOffset::fromInt($node->getEndPosition()));
-            $record->setFilePath($document->uri()->path());
+            $record->setFilePath($document->uriOrThrow());
             $index->write($record);
         }
     }
@@ -95,7 +95,7 @@ class ConstantDeclarationIndexer implements TolerantIndexer
             assert($record instanceof ConstantRecord);
             $record->setStart(ByteOffset::fromInt($node->getStartPosition()));
             $record->setEnd(ByteOffset::fromInt($node->getEndPosition()));
-            $record->setFilePath($document->uri()->path());
+            $record->setFilePath($document->uriOrThrow());
             $index->write($record);
 
             // Return after the first argument, because we only need the name of the constant.

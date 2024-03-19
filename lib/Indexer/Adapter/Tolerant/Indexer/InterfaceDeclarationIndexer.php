@@ -23,7 +23,7 @@ class InterfaceDeclarationIndexer extends AbstractClassLikeIndexer
         if ($node->name instanceof MissingToken) {
             throw new CannotIndexNode(sprintf(
                 'Class name is missing (maybe a reserved word) in: %s',
-                $document->uri()?->path() ?? '?',
+                $document->uri()?->__toString() ?? '?',
             ));
         }
         $record = $this->getClassLikeRecord(ClassRecord::TYPE_INTERFACE, $node, $index, $document);

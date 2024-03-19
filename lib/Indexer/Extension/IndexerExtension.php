@@ -66,7 +66,7 @@ class IndexerExtension implements Extension
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
     public const PARAM_SUPPORTED_EXTENSIONS = 'indexer.supported_extensions';
-    const TAG_WATCHER = 'indexer.watcher';
+    public const TAG_WATCHER = 'indexer.watcher';
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
     private const PARAM_PROJECT_ROOT = 'indexer.project_root';
@@ -79,6 +79,7 @@ class IndexerExtension implements Extension
             self::PARAM_INDEX_PATH => '%cache%/index/%project_id%',
             self::PARAM_INCLUDE_PATTERNS => [
                 '/**/*.php',
+                '/**/*.phar',
             ],
             self::PARAM_EXCLUDE_PATTERNS => [
                 '/vendor/**/Tests/**/*',
@@ -92,7 +93,7 @@ class IndexerExtension implements Extension
             self::PARAM_PROJECT_ROOT => '%project_root%',
             self::PARAM_REFERENCES_DEEP_REFERENCES => true,
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => true,
-            self::PARAM_SUPPORTED_EXTENSIONS => ['php'],
+            self::PARAM_SUPPORTED_EXTENSIONS => ['php', 'phar'],
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLED_WATCHERS => 'List of allowed watchers. The first watcher that supports the current system will be used',
@@ -224,9 +225,7 @@ class IndexerExtension implements Extension
                 ->setIncludePatterns($container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS))
                 /** @phpstan-ignore-next-line */
                 ->setSupportedExtensions($container->parameter(self::PARAM_SUPPORTED_EXTENSIONS)->value())
-                ->setFollowSymlinks(
-                    (bool) $container->getParameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS),
-                )
+                ->setFollowSymlinks($container->parameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS)->bool())
                 ->setStubPaths($container->getParameter(self::PARAM_STUB_PATHS));
         });
 

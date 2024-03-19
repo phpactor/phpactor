@@ -23,6 +23,7 @@ class ValidatingSearchIndex implements SearchIndex
     public function search(Criteria $criteria): Generator
     {
         foreach ($this->innerIndex->search($criteria) as $result) {
+
             if (!$this->index->has($result)) {
                 $this->innerIndex->remove($result);
 

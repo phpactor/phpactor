@@ -17,6 +17,12 @@ class TextDocumentUriTest extends TestCase
         $this->assertEquals('file:///C:/foo/bar.php', (string) $uri);
     }
 
+    public function testFromPhar(): void
+    {
+        $uri = TextDocumentUri::fromString('phar:///home/daniel/www/phpactor/phpactor/vendor/phpstan/phpstan/phpstan.phar/resources/functionMap.php');
+        $this->assertEquals('phar:///home/daniel/www/phpactor/phpactor/vendor/phpstan/phpstan/phpstan.phar/resources/functionMap.php', (string) $uri);
+    }
+
     public function testExceptionOnInvalidFormatUnix(): void
     {
         $this->expectException(InvalidUriException::class);

@@ -8,7 +8,7 @@ class FilesystemTextDocumentLocator implements TextDocumentLocator
 {
     public function get(TextDocumentUri $uri): TextDocument
     {
-        if (!file_exists($uri->path())) {
+        if (!file_exists($uri->__toString())) {
             throw TextDocumentNotFound::fromUri($uri);
         }
 

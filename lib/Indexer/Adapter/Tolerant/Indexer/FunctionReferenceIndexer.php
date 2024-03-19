@@ -20,7 +20,7 @@ class FunctionReferenceIndexer extends AbstractClassLikeIndexer
 
     public function beforeParse(Index $index, TextDocument $document): void
     {
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
 
         foreach ($fileRecord->references() as $outgoingReference) {
@@ -48,10 +48,10 @@ class FunctionReferenceIndexer extends AbstractClassLikeIndexer
 
         $targetRecord = $index->get(FunctionRecord::fromName($name));
         assert($targetRecord instanceof FunctionRecord);
-        $targetRecord->addReference($document->uri()->path());
+        $targetRecord->addReference($document->uriOrThrow());
         $index->write($targetRecord);
 
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
 
         $fileRecord->addReference(

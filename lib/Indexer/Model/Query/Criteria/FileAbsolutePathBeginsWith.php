@@ -18,7 +18,14 @@ class FileAbsolutePathBeginsWith extends Criteria
         if (!$record instanceof HasPath) {
             return false;
         }
+        $path = $record->filePath();
+        if (!$path) {
+            return false;
+        }
+        if ($pos = strpos($path, ':///')) {
+            $path = substr($path, $pos + 3);
+        }
 
-        return str_starts_with($record->filePath() ?? '', $this->prefix);
+        return str_starts_with($path, $this->prefix);
     }
 }

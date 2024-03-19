@@ -20,7 +20,7 @@ class FilesystemFileListProvider implements FileListProvider
         private Filesystem $filesystem,
         private array $includePatterns = [],
         private array $excludePatterns = [],
-        private array $supportedExtensions = ['php'],
+        private array $supportedExtensions = ['php', 'phar'],
     ) {
     }
 
@@ -30,15 +30,10 @@ class FilesystemFileListProvider implements FileListProvider
             return FileList::fromSingleFilePath($subPath);
         }
 
-        $files = $this->filesystem->fileList()->byExtensions($this->supportedExtensions);
-
-        if ($this->includePatterns) {
-            $files = $files->includePatterns($this->includePatterns);
-        }
-
-        if ($this->excludePatterns) {
-            $files = $files->excludePatterns($this->excludePatterns);
-        }
+        $files = $this->filesystem->fileList()
+            ->byExtensions($this->supportedExtensions)
+            ->includeAndExclude($this->includePatterns, $this->excludePatterns)
+        ;
 
         if ($subPath) {
             $files = $files->within(FilePath::fromString($subPath));

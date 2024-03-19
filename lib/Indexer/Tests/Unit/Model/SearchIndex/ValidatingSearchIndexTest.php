@@ -10,6 +10,7 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\Indexer\Model\SearchIndex\ValidatingSearchIndex;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
+use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\NullLogger;
 
 class ValidatingSearchIndexTest extends IntegrationTestCase
@@ -52,7 +53,7 @@ class ValidatingSearchIndexTest extends IntegrationTestCase
     public function testRemovesFromIndexIfFileDoesNotExist(): void
     {
         $record = ClassRecord::fromName('Foobar')
-            ->setFilePath($this->workspace()->path('nope.php'));
+            ->setFilePath($this->workspacePath('nope.php'));
 
         $this->index->write($record);
         $this->innerSearchIndex->write($record);
@@ -65,7 +66,7 @@ class ValidatingSearchIndexTest extends IntegrationTestCase
     {
         $this->workspace()->put('yep.php', 'foo');
         $record = ClassRecord::fromName('Foobar')
-            ->setFilePath($this->workspace()->path('yep.php'));
+            ->setFilePath($this->workspacePath('yep.php'));
 
         $this->index->write($record);
         $this->innerSearchIndex->write($record);
@@ -77,5 +78,10 @@ class ValidatingSearchIndexTest extends IntegrationTestCase
     private static function assertSearchCount(int $int, Generator $generator): void
     {
         self::assertEquals($int, count(iterator_to_array($generator)));
+    }
+
+    private function workspacePath(string $string): TextDocumentUri
+    {
+        return TextDocumentUri::fromString($this->workspace()->path($string));
     }
 }

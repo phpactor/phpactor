@@ -3,10 +3,18 @@ Changelog
 
 ## master
 
+Features:
+
+  - PHAR Indexing #2412 @dantleech
+
 Improvements:
 
+  - Fix contextual completion in constructor agrument position #2504
   - Basic support for `array_reduce` stub #2576
 
+Bug fixes:
+
+  - Fixing include and exclude patterns #2593 @mamazu
 
 ## 2024-03-09
 
@@ -58,7 +66,7 @@ Bug fixes:
 
 Documentation:
 
-  - Added Helix LSP instructions #2581 @lens0021 
+  - Added Helix LSP instructions #2581 @lens0021
   - Fix typos in Behat #2534 @vuon9
   - Fix broken external links #2500 @einenlum
 

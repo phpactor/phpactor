@@ -7,6 +7,7 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
 use Symfony\Component\Filesystem\Path;
@@ -29,7 +30,7 @@ class IndexerClassSourceLocatorTest extends TestCase
             ->setType('class')
             ->setStart(ByteOffset::fromInt(0))
             ->setEnd(ByteOffset::fromInt(0))
-            ->setFilePath('nope.php');
+            ->setFilePath(TextDocumentUri::fromString('/nope.php'));
 
         $index = new InMemoryIndex();
         $index->write($record);
@@ -43,7 +44,7 @@ class IndexerClassSourceLocatorTest extends TestCase
             ->setType('class')
             ->setStart(ByteOffset::fromInt(0))
             ->setEnd(ByteOffset::fromInt(10))
-            ->setFilePath(__FILE__);
+            ->setFilePath(TextDocumentUri::fromString(__FILE__));
 
         $index = new InMemoryIndex();
         $index->write($record);

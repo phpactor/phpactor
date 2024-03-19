@@ -373,6 +373,9 @@ class NodeUtil
         return ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition());
     }
 
+    /**
+     * @return ?int<0,max>
+     */
     public static function argumentOffset(ArgumentExpressionList $argumentExpressionList, ArgumentExpression $argument): ?int
     {
         $offset = 0;
