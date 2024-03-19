@@ -37,16 +37,18 @@ class FileRenamerTest extends IntegrationTestCase
         $document4 = $this->createDocument('4.php', '<?php One::class;');
 
         $renamer = $this->createRenamer([$document1, $document2, $document3, $document4], [
-            (new ClassRecord('One'))->setType('class')->addReference($this->path('3.php'))->addReference($this->path('4.php')),
-            (new FileRecord($this->path('3.php')))->addReference(
+            (new ClassRecord('One'))->setType('class')->addReference(
+                'file://' . $this->path('3.php')
+            )->addReference('file://' . $this->path('4.php')),
+            FileRecord::fromPath('file://' . $this->path('3.php'))->addReference(
                 new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)
             ),
-            (new FileRecord($this->path('4.php')))->addReference(
+            FileRecord::fromPath('file://' . $this->path('4.php'))->addReference(
                 new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)
             )
         ]);
 
-        $edits = wait($renamer->renameFile($document1->uri(), $document2->uri()));
+        $edits = wait($renamer->renameFile($document1->uriOrThrow(), $document2->uriOrThrow()));
 
         foreach ($edits as $edit) {
             if ($edit instanceof RenameResult) {

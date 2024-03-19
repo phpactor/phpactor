@@ -46,11 +46,11 @@ class FileRenamer implements PhpactorFileRenamer
 
             $seen = [];
             foreach ($references as $reference) {
-                if (isset($seen[$reference->location()->uri()->path()])) {
+                if (isset($seen[$reference->location()->uri()->__toString()])) {
                     continue;
                 }
 
-                $seen[$reference->location()->uri()->path()] = true;
+                $seen[$reference->location()->uri()->__toString()] = true;
 
                 try {
                     $document = $this->locator->get($reference->location()->uri());
