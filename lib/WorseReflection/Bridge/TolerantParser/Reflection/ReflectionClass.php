@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\TokenKind;
@@ -57,8 +58,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     public function __construct(
         private ServiceLocator $serviceLocator,
         private TextDocument $sourceCode,
-        private ClassDeclaration $node,
-        private array $visited = []
+        private ClassDeclaration|ObjectCreationExpression $node,
+        private array $visited = [],
+        private bool $anonymous = false
     ) {
     }
 
@@ -260,7 +262,13 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         if ($this->name) {
             return $this->name;
         }
-        $this->name = ClassName::fromString((string) $this->node->getNamespacedName());
+
+        if ($this->node instanceof ObjectCreationExpression){
+            $this->name = ClassName::fromString('class@anonymous:'.$this->node->getStartPosition());
+        } else {
+            $this->name = ClassName::fromString((string) $this->node->getNamespacedName());
+        }
+
         return $this->name;
     }
 

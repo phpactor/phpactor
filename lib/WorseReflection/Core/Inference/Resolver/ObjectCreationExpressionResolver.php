@@ -10,8 +10,10 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
@@ -27,12 +29,13 @@ class ObjectCreationExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof ObjectCreationExpression);
-        if (false === $node->classTypeDesignator instanceof Node) {
-            throw new CouldNotResolveNode(sprintf('Could not create object from "%s"', get_class($node)));
+
+        $className = $node->classTypeDesignator;
+        if (false === $className instanceof Node) {
+            return $this->resolveAnonymousClass($resolver, $node);
         }
 
-
-        $classContext = $resolver->resolveNode($frame, $node->classTypeDesignator);
+        $classContext = $resolver->resolveNode($frame, $className);
         $classType = $classContext->type();
 
         if ($classType instanceof ClassStringType) {
@@ -73,5 +76,21 @@ class ObjectCreationExpressionResolver implements Resolver
             $arguments
         );
         return new GenericClassType($resolver->reflector(), $classType->name(), $templateMap->toArguments());
+    }
+
+    private function resolveAnonymousClass(NodeContextResolver $resolver, Node $node): NodeContext
+    {
+        return NodeContextFactory::create(
+            'testing',
+            $node->getStartPosition(),
+            $node->getEndPosition(),
+            [
+                'symbol_type' => Symbol::CLASS_,
+                'type' => TypeFactory::fromStringWithReflector(
+                    'class@anonymous:'.$node->getStartPosition(),
+                    $resolver->reflector(),
+                )
+            ]
+        );
     }
 }
