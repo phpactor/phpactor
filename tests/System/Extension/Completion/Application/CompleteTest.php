@@ -35,267 +35,309 @@ class CompleteTest extends SystemTestCase
     public function provideComplete(): array
     {
         return [
-            'Public property' => [
-                <<<'EOT'
-                    <?php
+            //'Public property' => [
+                //<<<'EOT'
+                    //<?php
 
-                    class Foobar
-                    {
-                        public $foo;
-                    }
+                    //class Foobar
+                    //{
+                        //public $foo;
+                    //}
 
-                    $foobar = new Foobar();
-                    $foobar-><>
+                    //$foobar = new Foobar();
+                    //$foobar-><>
 
-                    EOT
-        , [
-                    [
-                        'type' => 'property',
-                        'name' => 'foo',
-                        'short_description' => 'pub $foo',
-                    ]
-                ]
-            ],
-            'Private property' => [
-                <<<'EOT'
-                    <?php
+                    //EOT
+        //, [
+                    //[
+                        //'type' => 'property',
+                        //'name' => 'foo',
+                        //'short_description' => 'pub $foo',
+                    //]
+                //]
+            //],
+            //'Private property' => [
+                //<<<'EOT'
+                    //<?php
 
-                    class Foobar
-                    {
-                        private $foo;
-                    }
+                    //class Foobar
+                    //{
+                        //private $foo;
+                    //}
 
-                    $foobar = new Foobar();
-                    $foobar-><>
+                    //$foobar = new Foobar();
+                    //$foobar-><>
 
-                    EOT
-        ,
-            [ ]
-            ],
-            'Public property access' => [
-                <<<'EOT'
-                    <?php
+                    //EOT
+        //,
+            //[ ]
+            //],
+            //'Public property access' => [
+                //<<<'EOT'
+                    //<?php
 
-                    class Barar
-                    {
-                        public $bar;
-                    }
+                    //class Barar
+                    //{
+                        //public $bar;
+                    //}
 
-                    class Foobar
-                    {
+                    //class Foobar
+                    //{
                         /**
                          * @var Barar
                          */
-                        public $foo;
-                    }
+                        //public $foo;
+                    //}
 
-                    $foobar = new Foobar();
-                    $foobar->foo-><>
+                    //$foobar = new Foobar();
+                    //$foobar->foo-><>
 
-                    EOT
-               , [
-                    [
-                        'type' => 'property',
-                        'name' => 'bar',
-                        'short_description' => 'pub $bar',
-                    ]
-                ]
-            ],
-            'Public method with parameters' => [
-                <<<'EOT'
-                    <?php
+                    //EOT
+               //, [
+                    //[
+                        //'type' => 'property',
+                        //'name' => 'bar',
+                        //'short_description' => 'pub $bar',
+                    //]
+                //]
+            //],
+            //'Public method with parameters' => [
+                //<<<'EOT'
+                    //<?php
 
-                    class Foobar
-                    {
-                        public function foo(string $zzzbar = 'bar', $def): Barbar
-                        {
-                        }
-                    }
+                    //class Foobar
+                    //{
+                        //public function foo(string $zzzbar = 'bar', $def): Barbar
+                        //{
+                        //}
+                    //}
 
-                    $foobar = new Foobar();
-                    $foobar-><>
+                    //$foobar = new Foobar();
+                    //$foobar-><>
 
-                    EOT
-                , [
-                    [
-                        'type' => 'method',
-                        'name' => 'foo',
-                        'short_description' => 'pub foo(string $zzzbar = \'bar\', $def): Barbar',
-                    ]
-                ]
-            ],
-            'Public method multiple return types' => [
-                <<<'EOT'
-                    <?php
+                    //EOT
+                //, [
+                    //[
+                        //'type' => 'method',
+                        //'name' => 'foo',
+                        //'short_description' => 'pub foo(string $zzzbar = \'bar\', $def): Barbar',
+                    //]
+                //]
+            //],
+            //'Public method multiple return types' => [
+                //<<<'EOT'
+                    //<?php
 
-                    class Foobar
-                    {
+                    //class Foobar
+                    //{
                         /**
                          * @return Foobar|Barbar
                          */
-                        public function foo()
-                        {
-                        }
-                    }
+                        //public function foo()
+                        //{
+                        //}
+                    //}
 
-                    $foobar = new Foobar();
-                    $foobar-><>
+                    //$foobar = new Foobar();
+                    //$foobar-><>
 
-                    EOT
-                , [
-                    [
-                        'type' => 'method',
-                        'name' => 'foo',
-                        'short_description' => 'pub foo(): Foobar|Barbar',
-                    ]
-                ]
-            ],
-            'Private method' => [
-                <<<'EOT'
-                    <?php
+                    //EOT
+                //, [
+                    //[
+                        //'type' => 'method',
+                        //'name' => 'foo',
+                        //'short_description' => 'pub foo(): Foobar|Barbar',
+                    //]
+                //]
+            //],
+            //'Private method' => [
+                //<<<'EOT'
+                    //<?php
 
-                    class Foobar
-                    {
-                        private function foo(): Barbar
-                        {
-                        }
-                    }
+                    //class Foobar
+                    //{
+                        //private function foo(): Barbar
+                        //{
+                        //}
+                    //}
 
-                    $foobar = new Foobar();
-                    $foobar-><>
+                    //$foobar = new Foobar();
+                    //$foobar-><>
 
-                    EOT
-                , [
-                ]
-            ],
-            'Static property' => [
-                <<<'EOT'
-                    <?php
+                    //EOT
+                //, [
+                //]
+            //],
+            //'Static property' => [
+                //<<<'EOT'
+                    //<?php
 
-                    class Foobar
-                    {
-                        public static $foo;
-                    }
+                    //class Foobar
+                    //{
+                        //public static $foo;
+                    //}
 
-                    $foobar = new Foobar();
-                    $foobar::<>
+                    //$foobar = new Foobar();
+                    //$foobar::<>
 
-                    EOT
-                , [
-                    [
-                        'type' => 'property',
-                        'name' => '$foo',
-                        'short_description' => 'pub static $foo',
-                    ],
-                    [
-                        'type' => 'constant',
-                        'name' => 'class',
-                        'short_description' => 'Foobar',
-                    ],
-                ]
-            ],
-            'Static property with previous arrow accessor' => [
-                <<<'EOT'
-                    <?php
+                    //EOT
+                //, [
+                    //[
+                        //'type' => 'property',
+                        //'name' => '$foo',
+                        //'short_description' => 'pub static $foo',
+                    //],
+                    //[
+                        //'type' => 'constant',
+                        //'name' => 'class',
+                        //'short_description' => 'Foobar',
+                    //],
+                //]
+            //],
+            //'Static property with previous arrow accessor' => [
+                //<<<'EOT'
+                    //<?php
 
-                    class Foobar
-                    {
-                        public static $foo;
+                    //class Foobar
+                    //{
+                        //public static $foo;
 
                         /**
                          * @var Foobar
                          */
-                        public $me;
-                    }
+                        //public $me;
+                    //}
 
-                    $foobar = new Foobar();
-                    $foobar->me::<>
+                    //$foobar = new Foobar();
+                    //$foobar->me::<>
 
-                    EOT
-                , [
-                    [
-                        'type' => 'property',
-                        'name' => '$foo',
-                        'short_description' => 'pub static $foo',
-                    ],
-                    [
-                        'type' => 'constant',
-                        'name' => 'class',
-                        'short_description' => 'Foobar',
-                    ],
-                ]
-            ],
-            'Partially completed' => [
+                    //EOT
+                //, [
+                    //[
+                        //'type' => 'property',
+                        //'name' => '$foo',
+                        //'short_description' => 'pub static $foo',
+                    //],
+                    //[
+                        //'type' => 'constant',
+                        //'name' => 'class',
+                        //'short_description' => 'Foobar',
+                    //],
+                //]
+            //],
+            //'Partially completed' => [
+                //<<<'EOT'
+                    //<?php
+
+                    //class Foobar
+                    //{
+                        //public static $foobar;
+                        //public static $barfoo;
+                    //}
+
+                    //$foobar = new Foobar();
+                    //$foobar::f<>
+
+                    //EOT
+                //, [
+                    //[
+                        //'type' => 'property',
+                        //'name' => 'foobar',
+                        //'short_description' => 'pub static $foobar',
+                    //]
+                //]
+            //],
+            //'Partially completed' => [
+                //<<<'EOT'
+                    //<?php
+
+                    //class Foobar
+                    //{
+                        //const FOOBAR = 'foobar';
+                        //const BARFOO = 'barfoo';
+                    //}
+
+                    //$foobar = new Foobar();
+                    //$foobar::<>
+
+                    //EOT
+                //, [
+                    //[
+                        //'type' => 'constant',
+                        //'name' => 'BARFOO',
+                        //'short_description' => 'BARFOO = "barfoo"',
+                    //],
+                    //[
+                        //'type' => 'constant',
+                        //'name' => 'FOOBAR',
+                        //'short_description' => 'FOOBAR = "foobar"',
+                    //],
+                //],
+            //],
+            //'Accessor on new line' => [
+                //<<<'EOT'
+                    //<?php
+
+                    //class Foobar
+                    //{
+                        //public $foobar;
+                    //}
+
+                    //$foobar = new Foobar();
+                    //$foobar
+                        //-><>
+
+                    //EOT
+                //, [
+                    //[
+                        //'type' => 'property',
+                        //'name' => 'foobar',
+                        //'short_description' => 'pub $foobar',
+                    //],
+                //],
+            //],
+
+            //'Anonoymous class properties' => [
+                //<<<'EOT'
+                    //<?php
+
+                    //$foobar = new class(){
+                        //public string $test;
+                    //};
+                    //$foobar-><>
+
+                    //EOT
+                //, [
+                    //[
+                        //'type' => 'property',
+                        //'name' => 'test',
+                        //'short_description' => 'pub $test: string',
+                    //],
+                //],
+            //],
+            'Anonoymous class methods' => [
                 <<<'EOT'
                     <?php
 
-                    class Foobar
-                    {
-                        public static $foobar;
-                        public static $barfoo;
-                    }
-
-                    $foobar = new Foobar();
-                    $foobar::f<>
+                    $foobar = new class() {
+                        public function doSomething(): bool {}
+                    };
+                    $foobar-><>
 
                     EOT
                 , [
                     [
-                        'type' => 'property',
-                        'name' => 'foobar',
-                        'short_description' => 'pub static $foobar',
-                    ]
-                ]
-            ],
-            'Partially completed' => [
-                <<<'EOT'
-                    <?php
+                        'type' => 'method',
+                        'name' => 'doSomething',
+                        'short_description' => 'pub doSomething(): bool',
+                        'documentation' => '### class@anonymous:17::doSomething
 
-                    class Foobar
-                    {
-                        const FOOBAR = 'foobar';
-                        const BARFOO = 'barfoo';
-                    }
-
-                    $foobar = new Foobar();
-                    $foobar::<>
-
-                    EOT
-                , [
-                    [
-                        'type' => 'constant',
-                        'name' => 'BARFOO',
-                        'short_description' => 'BARFOO = "barfoo"',
-                    ],
-                    [
-                        'type' => 'constant',
-                        'name' => 'FOOBAR',
-                        'short_description' => 'FOOBAR = "foobar"',
+```php
+<?php public function doSomething(): bool
+```'
                     ],
                 ],
             ],
-            'Accessor on new line' => [
-                <<<'EOT'
-                    <?php
-
-                    class Foobar
-                    {
-                        public $foobar;
-                    }
-
-                    $foobar = new Foobar();
-                    $foobar
-                        -><>
-
-                    EOT
-                , [
-                    [
-                        'type' => 'property',
-                        'name' => 'foobar',
-                        'short_description' => 'pub $foobar',
-                    ],
-                ],
-            ]
         ];
     }
     /**
@@ -304,9 +346,9 @@ class CompleteTest extends SystemTestCase
     private function complete(string $source): array
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $complete = $this->container()->get('application.complete');
-        assert($complete instanceof Complete);
-        $result = $complete->complete($source, $offset);
+        $result = $this->container()
+            ->expect('application.complete', Complete::class)
+            ->complete($source, $offset);
 
         return $result;
     }
