@@ -72,6 +72,8 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         ClassDeclaration|ObjectCreationExpression $class,
         ReflectionClass $reflectionClass
     ): self {
+        assert($class->classMembers !== null, 'ObjectCreationExpression does not contain anonymous class');
+
         return self::fromDeclarations(
             $serviceLocator,
             $reflectionClass,

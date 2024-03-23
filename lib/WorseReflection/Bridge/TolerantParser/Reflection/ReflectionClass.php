@@ -60,12 +60,15 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         private TextDocument $sourceCode,
         private ClassDeclaration|ObjectCreationExpression $node,
         private array $visited = [],
-        private bool $anonymous = false
     ) {
     }
 
     public function isAbstract(): bool
     {
+        if ($this->node instanceof ObjectCreationExpression) {
+            return false;
+        }
+
         $modifier = $this->node->abstractOrFinalModifier;
 
         /** @phpstan-ignore-next-line */
@@ -251,9 +254,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function memberListPosition(): ByteOffsetRange
     {
+        $classMembers = $this->node->classMembers;
+        assert($classMembers !== null, 'ObjectCreationExpression does not contain anonymous class');
+
         return ByteOffsetRange::fromInts(
-            $this->node->classMembers->openBrace->start,
-            $this->node->classMembers->openBrace->start + $this->node->classMembers->openBrace->length
+            $classMembers->openBrace->start,
+            $classMembers->openBrace->start + $classMembers->openBrace->length
         );
     }
 
@@ -344,6 +350,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function isFinal(): bool
     {
+        if ($this->node instanceof ObjectCreationExpression) {
+            return true;
+        }
+
         $modifier = $this->node->abstractOrFinalModifier;
 
         /** @phpstan-ignore-next-line */
