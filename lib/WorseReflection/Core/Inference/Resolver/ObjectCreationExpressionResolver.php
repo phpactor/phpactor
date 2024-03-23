@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Token;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
@@ -30,7 +31,7 @@ class ObjectCreationExpressionResolver implements Resolver
         assert($node instanceof ObjectCreationExpression);
 
         $className = $node->classTypeDesignator;
-        if (false === $className instanceof Node) {
+        if ($className instanceof Token) {
             return $this->resolveAnonymousClass($resolver, $node);
         }
 
@@ -85,10 +86,7 @@ class ObjectCreationExpressionResolver implements Resolver
             $node->getEndPosition(),
             [
                 'symbol_type' => Symbol::CLASS_,
-                'type' => TypeFactory::fromStringWithReflector(
-                    'class@anonymous:'.$node->getStartPosition(),
-                    $resolver->reflector(),
-                )
+                'type' => TypeFactory::reflectedClass($resolver->reflector(), 'class@anonymous:'.$node->getStartPosition())
             ]
         );
     }
