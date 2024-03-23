@@ -4,7 +4,6 @@ namespace Phpactor\WorseReflection\Core\Inference\Resolver;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
-use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
