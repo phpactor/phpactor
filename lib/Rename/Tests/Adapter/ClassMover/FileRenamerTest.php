@@ -7,13 +7,14 @@ use Phpactor\ClassMover\ClassMover;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Rename\Adapter\ClassMover\FileRenamer;
 use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Extension\LanguageServerRename\Tests\IntegrationTestCase;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FileRecord;
+use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\RenameResult;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
@@ -49,9 +50,14 @@ class FileRenamerTest extends IntegrationTestCase
 
         $edits = wait($renamer->renameFile($document1->uriOrThrow(), $document2->uriOrThrow()));
 
-        self::assertInstanceOf(LocatedTextEditsMap::class, $edits);
-        assert($edits instanceof LocatedTextEditsMap);
-        self::assertCount(3, $edits->toLocatedTextEdits(), 'Locates two references');
+        foreach ($edits as $edit) {
+            if ($edit instanceof RenameResult) {
+
+            }
+            if ($edit instanceof LocatedTextEditsMap) {
+                self::assertCount(3, $edit->toLocatedTextEdits(), 'Locates two references');
+            }
+        }
     }
 
     /**

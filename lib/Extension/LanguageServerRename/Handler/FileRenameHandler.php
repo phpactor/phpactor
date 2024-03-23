@@ -4,13 +4,14 @@ namespace Phpactor\Extension\LanguageServerRename\Handler;
 
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\FileOperationOptions;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
+use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Extension\LanguageServerRename\Util\LocatedTextEditConverter;
+use Phpactor\Extension\LanguageServerRename\Util\RenameEditConverter;
 use Phpactor\LanguageServerProtocol\FileOperationFilter;
 use Phpactor\LanguageServerProtocol\FileOperationPattern;
 use Phpactor\LanguageServerProtocol\FileOperationRegistrationOptions;
-use Phpactor\LanguageServerProtocol\FileRename;
 use Phpactor\LanguageServerProtocol\RenameFilesParams;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
 use Phpactor\LanguageServerProtocol\WorkspaceEdit;
@@ -21,8 +22,11 @@ use function Amp\call;
 
 class FileRenameHandler implements Handler, CanRegisterCapabilities
 {
-    public function __construct(private FileRenamer $renamer, private LocatedTextEditConverter $converter)
-    {
+    public function __construct(
+        private FileRenamer $renamer,
+        private RenameEditConverter $converter,
+        private ClientApi $clientApi,
+    ) {
     }
 
 
@@ -39,14 +43,34 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
     public function willRenameFiles(RenameFilesParams $params): Promise
     {
         return call(function () use ($params) {
-            $workspaceEdits = LocatedTextEditsMap::create();
-            foreach ($params->files as $rename) {
-                assert($rename instanceof FileRename);
+            $count = 0;
+            $documentChanges = [];
+            try {
+                foreach ($params->files as $rename) {
+                    $locatedEditMap = LocatedTextEditsMap::create();
 
-                $workspaceEdits = $workspaceEdits->merge(yield $this->renamer->renameFile(TextDocumentUri::fromString($rename->oldUri), TextDocumentUri::fromString($rename->newUri)));
+                    $renameEdit = yield $this->renamer->renameFile(
+                        TextDocumentUri::fromString($rename->oldUri),
+                        TextDocumentUri::fromString($rename->newUri)
+                    );
+
+                    $workspaceEdit = $this->converter->toWorkspaceEdit($renameEdit);
+
+                    foreach ($workspaceEdit->documentChanges ?? [] as $change) {
+                        $documentChanges[] = $change;
+                    }
+                }
+
+                return new WorkspaceEdit(documentChanges: $documentChanges);
+            } catch (CouldNotRename $error) {
+                $previous = $error->getPrevious();
+
+                $this->clientApi->window()->showMessage()->error(sprintf(
+                    $error->getMessage() . ($previous?->getTraceAsString() ?? '')
+                ));
+
+                return new WorkspaceEdit(null, []);
             }
-
-            return $this->converter->toWorkspaceEdit($workspaceEdits);
         });
     }
 
