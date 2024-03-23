@@ -1296,46 +1296,6 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:allPhpFiles\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:interfaceFilePaths\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:interfaceFilePaths\\(\\) has parameter \\$filePaths with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:parentFilePaths\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:parentFilePaths\\(\\) has parameter \\$filePaths with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:pathsFromReflectionClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:traitFilePaths\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:traitFilePaths\\(\\) has parameter \\$filePaths with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
 			message: "#^Parameter \\#2 \\$subject of function preg_match expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
