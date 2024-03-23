@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use Closure;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
+use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
@@ -72,7 +73,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         ClassDeclaration|ObjectCreationExpression $class,
         ReflectionClass $reflectionClass
     ): self {
-        assert($class->classMembers !== null, 'ObjectCreationExpression does not contain anonymous class');
+        assert($class->classMembers instanceof ClassMembersNode, 'ObjectCreationExpression does not contain anonymous class');
 
         return self::fromDeclarations(
             $serviceLocator,

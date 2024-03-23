@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -22,7 +23,7 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
         ServiceLocator $serviceLocator,
         ClassDeclaration|ObjectCreationExpression $class,
     ): self {
-        assert($class->classMembers !== null, 'ObjectCreationExpression does not contain anonymous class');
+        assert($class->classMembers instanceof ClassMembersNode, 'ObjectCreationExpression does not contain anonymous class');
 
         $items = [];
         foreach ($class->classMembers->classMemberDeclarations as $memberDeclaration) {

@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
+use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -255,7 +256,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     public function memberListPosition(): ByteOffsetRange
     {
         $classMembers = $this->node->classMembers;
-        assert($classMembers !== null, 'ObjectCreationExpression does not contain anonymous class');
+        assert($classMembers instanceof ClassMembersNode, 'ObjectCreationExpression does not contain anonymous class');
 
         return ByteOffsetRange::fromInts(
             $classMembers->openBrace->start,
