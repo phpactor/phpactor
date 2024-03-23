@@ -6,6 +6,7 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -106,7 +107,7 @@ final class TraitImports implements Countable, IteratorAggregate
 
     public static function forClassDeclaration(ClassDeclaration|ObjectCreationExpression $classDeclaration): self
     {
-        assert($classDeclaration->classMembers !== null, 'ObjectCreationExpression does not contain anonymous class');
+        assert($classDeclaration->classMembers instanceof ClassMembersNode, 'ObjectCreationExpression does not contain anonymous class');
 
         return new self($classDeclaration->classMembers->classMemberDeclarations);
     }
