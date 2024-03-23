@@ -263,7 +263,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             return $this->name;
         }
 
-        if ($this->node instanceof ObjectCreationExpression){
+        if ($this->node instanceof ObjectCreationExpression) {
             $this->name = ClassName::fromString('class@anonymous:'.$this->node->getStartPosition());
         } else {
             $this->name = ClassName::fromString((string) $this->node->getNamespacedName());
