@@ -61,7 +61,7 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
 
             if ($child instanceof ObjectCreationExpression && !($child->classTypeDesignator instanceof Node)) {
                 // TODO: come up with a good way to generate a class name
-                $items['class@anonymous:'.$child->getStartPosition()] = new ReflectionClass($serviceLocator, $source, $child, $visited, anonymous: true);
+                $items['class@anonymous:'.$child->getStartPosition()] = new ReflectionClass($serviceLocator, $source, $child, $visited);
             }
         }
 
