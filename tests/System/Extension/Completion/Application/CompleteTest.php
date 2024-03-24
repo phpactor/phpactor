@@ -25,6 +25,7 @@ class CompleteTest extends SystemTestCase
             $this->assertEmpty($suggestions);
         }
 
+        self::assertGreaterThanOrEqual(count($expected), count($suggestions), 'There are less suggestions than expected.');
         foreach ($expected as $index => $expectedSuggestion) {
             $this->assertArraySubset($expectedSuggestion, $suggestions[$index]);
         }

@@ -271,7 +271,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         }
 
         if ($this->node instanceof ObjectCreationExpression) {
-            $this->name = ClassName::fromString('class@anonymous:'.$this->node->getStartPosition());
+            $this->name = ClassName::fromString(NodeUtil::nameFromTokenOrNode($this->node, $this->node));
         } else {
             $this->name = ClassName::fromString((string) $this->node->getNamespacedName());
         }

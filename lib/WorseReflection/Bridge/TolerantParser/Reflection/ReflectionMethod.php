@@ -23,6 +23,7 @@ use Phpactor\WorseReflection\Core\Reflection\TypeResolver\MethodTypeResolver;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {
@@ -63,7 +64,8 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     {
         $classDeclaration = $this->node->getFirstAncestor(ClassLike::class, ObjectCreationExpression::class);
         if ($classDeclaration instanceof ObjectCreationExpression) {
-            return $this->class ?? $this->serviceLocator->reflector()->reflectClassLike('class@anonymous:'.$classDeclaration->getStartPosition());
+            return $this->class ?? $this->serviceLocator->reflector()
+                ->reflectClassLike(NodeUtil::nameFromTokenOrNode($classDeclaration, $classDeclaration));
         }
 
         assert($classDeclaration instanceof NamespacedNameInterface);

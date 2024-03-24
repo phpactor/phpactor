@@ -75,7 +75,11 @@ class ContextualSourceCodeReflectorTest extends TestCase
         ];
 
         yield 'two classes' => [
-            '<?php $billow = new class() {}; $formatter = new class() {};', 2
+            <<<'PHP'
+                <?php
+                \$billow = new class() {}; 
+                \$formatter = new class() {};
+                PHP, 2
         ];
     }
 

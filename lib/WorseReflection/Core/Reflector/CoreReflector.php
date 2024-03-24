@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 use Amp\Promise;
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -37,11 +36,6 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
 {
     public function __construct(private SourceCodeReflector $sourceReflector, private SourceCodeLocator $sourceLocator)
     {
-    }
-
-    public static function getAnonymousClassName(ObjectCreationExpression $class): string
-    {
-
     }
 
     /**
