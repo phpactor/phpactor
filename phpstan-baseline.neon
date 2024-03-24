@@ -621,11 +621,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/ClassToFile/Transformer/ClassNameFixerTransformerTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\AbstractTolerantImportNameTest\\:\\:importNameFromTestFile\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/AbstractTolerantImportNameTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantChangeVisiblityTest\\:\\:provideChangeVisibility\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/TolerantChangeVisiblityTest.php
@@ -2976,11 +2971,6 @@ parameters:
 			path: lib/Extension/Core/Application/Status.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status\\:\\:versionInfo\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Core/Application/Status.php
-
-		-
 			message: "#^Cannot call method path\\(\\) on mixed\\.$#"
 			count: 2
 			path: lib/Extension/Core/Command/ConfigDumpCommand.php
@@ -4054,11 +4044,6 @@ parameters:
 			message: "#^Property Phpactor\\\\LanguageServerProtocol\\\\ServerCapabilities\\:\\:\\$workspace \\(array\\{workspaceFolders\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\|null\\) does not accept array\\{workspaceFolders\\?\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
-
-		-
-			message: "#^Cannot call method getTraceAsString\\(\\) on Throwable\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Handler/RenameHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerRename\\\\Handler\\\\RenameHandler\\:\\:prepareRename\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\LanguageServerProtocol\\\\Range\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
@@ -5556,47 +5541,12 @@ parameters:
 			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
 
 		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 2
-			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
-
-		-
 			message: "#^Parameter \\#1 \\$name of static method Phpactor\\\\Indexer\\\\Model\\\\Record\\\\ClassRecord\\:\\:fromName\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
 
 		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 3
-			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassLikeReferenceIndexer.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 2
-			path: lib/Indexer/Adapter/Tolerant/Indexer/ConstantDeclarationIndexer.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/Indexer/FunctionDeclarationIndexer.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 3
-			path: lib/Indexer/Adapter/Tolerant/Indexer/FunctionReferenceIndexer.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 3
-			path: lib/Indexer/Adapter/Tolerant/Indexer/MemberIndexer.php
-
-		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
-
-		-
-			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
 
@@ -5997,16 +5947,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$from of method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$to of method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
 			count: 1
 			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
 
@@ -6454,11 +6394,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$items of class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection constructor expects array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionConstant\\>, array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant&T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
-
-		-
-			message: "#^Parameter \\#3 \\$node of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionArgument constructor expects Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\ArgumentExpression, mixed given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionArgumentCollection.php
 
 		-
 			message: "#^Cannot call method getName\\(\\) on mixed\\.$#"
