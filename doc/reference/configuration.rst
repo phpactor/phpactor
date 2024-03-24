@@ -1,3 +1,5 @@
+.. _ref_configuration:
+
 Configuration
 =============
 
@@ -55,19 +57,6 @@ Internal use only - name of the command which was executed
 
 
 **Default**: ``null``
-
-
-.. _param_core.warn_on_develop:
-
-
-``core.warn_on_develop``
-""""""""""""""""""""""""
-
-
-Internal use only: if an warning will be issued when on develop, may be removed in the future
-
-
-**Default**: ``true``
 
 
 .. _param_core.min_memory_limit:
@@ -406,6 +395,21 @@ Completion for local variables.
 **Default**: ``true``
 
 
+.. _param_completion_worse.completor.subscript.enabled:
+
+
+``completion_worse.completor.subscript.enabled``
+""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the ``subscript`` completor.
+
+Completion for subscript (array access from array shapes).
+
+
+**Default**: ``true``
+
+
 .. _param_completion_worse.completor.declared_function.enabled:
 
 
@@ -520,7 +524,7 @@ Completion for class like contexts.
 
 Enable or disable the ``type`` completor.
 
-Completion for types.
+Completion for scalar types.
 
 
 **Default**: ``true``
@@ -890,7 +894,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1344,7 +1348,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
-**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:
@@ -1472,6 +1476,19 @@ Show inlay hints for parameters
 **Default**: ``true``
 
 
+.. _param_language_server_worse_reflection.diagnostics.enable:
+
+
+``language_server_worse_reflection.diagnostics.enable``
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Enable diagnostics
+
+
+**Default**: ``true``
+
+
 .. _LanguageServerIndexerExtension:
 
 
@@ -1489,6 +1506,19 @@ LanguageServerIndexerExtension
 **Default**: ``250``
 
 
+.. _param_language_server_indexer.reindex_timeout:
+
+
+``language_server_indexer.reindex_timeout``
+"""""""""""""""""""""""""""""""""""""""""""
+
+
+Unconditionally reindex modified files every N seconds
+
+
+**Default**: ``300``
+
+
 .. _LanguageServerCodeTransformExtension:
 
 
@@ -1504,6 +1534,29 @@ LanguageServerCodeTransformExtension
 
 
 Show an error if a diagnostic name cannot be resolved - can produce false positives
+
+
+**Default**: ``true``
+
+
+.. _LanguageServerConfigurationExtension:
+
+
+LanguageServerConfigurationExtension
+------------------------------------
+
+
+.. _param_language_server_configuration.auto_config:
+
+
+``language_server_configuration.auto_config``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Prompt to enable extensions which apply to your project on language server start
 
 
 **Default**: ``true``
@@ -1561,7 +1614,7 @@ Type: array
 Glob patterns to include while indexing
 
 
-**Default**: ``["\/**\/*.php"]``
+**Default**: ``["\/**\/*.php","\/**\/*.phar"]``
 
 
 .. _param_indexer.exclude_patterns:
@@ -1692,6 +1745,22 @@ Recurse over class implementations to resolve all class implementations (not jus
 **Default**: ``true``
 
 
+.. _param_indexer.supported_extensions:
+
+
+``indexer.supported_extensions``
+""""""""""""""""""""""""""""""""
+
+
+Type: array
+
+
+File extensions (e.g. `php`) for files that should be indexed
+
+
+**Default**: ``["php","phar"]``
+
+
 .. _ObjectRendererExtension:
 
 
@@ -1756,6 +1825,32 @@ Path to the PHPStan executable
 
 
 Override the PHPStan level
+
+
+**Default**: ``null``
+
+
+.. _param_language_server_phpstan.config:
+
+
+``language_server_phpstan.config``
+""""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan configuration file
+
+
+**Default**: ``null``
+
+
+.. _param_language_server_phpstan.mem_limit:
+
+
+``language_server_phpstan.mem_limit``
+"""""""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan memory limit
 
 
 **Default**: ``null``
@@ -1845,6 +1940,38 @@ Override level at which Psalm should report errors (lower => more errors)
 **Default**: ``null``
 
 
+.. _param_language_server_psalm.threads:
+
+
+``language_server_psalm.threads``
+"""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Set the number of threads Psalm should use. Warning: NULL will use as many as possible and may crash your computer
+
+
+**Default**: ``1``
+
+
+.. _param_language_server_psalm.timeout:
+
+
+``language_server_psalm.timeout``
+"""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Kill the psalm process after this number of seconds
+
+
+**Default**: ``15``
+
+
 .. _LanguageServerPhpCsFixerExtension:
 
 
@@ -1905,6 +2032,107 @@ Whether PHP CS Fixer diagnostics are shown
 
 
 **Default**: ``true``
+
+
+.. _param_language_server_php_cs_fixer.config:
+
+
+``language_server_php_cs_fixer.config``
+"""""""""""""""""""""""""""""""""""""""
+
+
+Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php
+
+
+**Default**: ``null``
+
+
+.. _PhpCodeSnifferExtension:
+
+
+PhpCodeSnifferExtension
+-----------------------
+
+
+.. _param_php_code_sniffer.enabled:
+
+
+``php_code_sniffer.enabled``
+""""""""""""""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _param_php_code_sniffer.bin:
+
+
+``php_code_sniffer.bin``
+""""""""""""""""""""""""
+
+
+Path to the phpcs executable
+
+
+**Default**: ``"%project_root%\/vendor\/bin\/phpcs"``
+
+
+.. _param_php_code_sniffer.env:
+
+
+``php_code_sniffer.env``
+""""""""""""""""""""""""
+
+
+Environment for PHP_CodeSniffer (e.g. to set XDEBUG_MODE)
+
+
+**Default**: ``{"XDEBUG_MODE":"off"}``
+
+
+.. _param_php_code_sniffer.show_diagnostics:
+
+
+``php_code_sniffer.show_diagnostics``
+"""""""""""""""""""""""""""""""""""""
+
+
+Whether PHP_CodeSniffer diagnostics are shown
+
+
+**Default**: ``true``
+
+
+.. _param_php_code_sniffer.args:
+
+
+``php_code_sniffer.args``
+"""""""""""""""""""""""""
+
+
+Additional arguments to pass to the PHPCS process
+
+
+**Default**: ``[]``
+
+
+.. _param_php_code_sniffer.cwd:
+
+
+``php_code_sniffer.cwd``
+""""""""""""""""""""""""
+
+
+Working directory for PHPCS
+
+
+**Default**: ``null``
 
 
 .. _LanguageServerBlackfireExtension:

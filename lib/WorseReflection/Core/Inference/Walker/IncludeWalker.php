@@ -17,11 +17,15 @@ use Phpactor\WorseReflection\TypeUtil;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Path;
 
+/**
+ * This walker doesn't seem to work properly, and in addition it can cause massive performance
+ * problems on legacy projects that use lots of `includes`.
+ */
 class IncludeWalker implements Walker
 {
     private Parser $parser;
 
-    public function __construct(private LoggerInterface $logger, Parser $parser = null)
+    public function __construct(private LoggerInterface $logger, private FrameResolver $resolver, Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
     }
@@ -64,8 +68,10 @@ class IncludeWalker implements Walker
             return $frame;
         }
 
-        $sourceNode = $this->parser->parseSourceFile((string)file_get_contents($includeUri));
-        $includedFrame = $resolver->build($sourceNode);
+        $sourceCode = (string)file_get_contents($includeUri);
+        $sourceNode = $this->parser->parseSourceFile($sourceCode);
+        $includedFrame = $this->resolver->build($sourceNode);
+        $frame->locals()->merge($includedFrame->locals());
 
         $parentNode = $node->parent;
 

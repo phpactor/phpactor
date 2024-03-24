@@ -13,11 +13,6 @@ class Reference
     ) {
     }
 
-    public static function fromStartEndLineNumberAndCol(int $start, int $end, int $lineNumber, int $col = null)
-    {
-        return new self($start, $end, $lineNumber, $col);
-    }
-
     public static function fromStartEndLineNumberLineAndCol(int $start, int $end, int $lineNumber, string $line, int $col = null)
     {
         return new self($start, $end, $lineNumber, $col, $line);

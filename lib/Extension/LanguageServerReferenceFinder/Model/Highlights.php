@@ -26,10 +26,8 @@ class Highlights implements IteratorAggregate, Countable
 
     public function first(): DocumentHighlight
     {
-        if (empty($this->highlights)) {
-            throw new RuntimeException(
-                'Document highlights are empty'
-            );
+        if ($this->highlights === []) {
+            throw new RuntimeException('Document highlights are empty');
         }
 
         return $this->highlights[0];

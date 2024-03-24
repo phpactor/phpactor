@@ -3,10 +3,7 @@
     "description": "PHP refactoring and intellisense tool for text editors",
     "license": "MIT",
     "require": {
-        "php": "^8.0",
-        "ext-pcntl": "*",
-        "ext-posix": "*",
-        "composer/package-versions-deprecated": "^1.0",
+        "php": "^8.1",
         "composer/xdebug-handler": "^3.0",
         "symfony/yaml": "^5.1",
         "phpactor/container": "^2.2.0",
@@ -15,10 +12,11 @@
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/console": "^5.0",
         "dantleech/invoke": "^2.0",
-        "phpactor/amp-fswatch": "^0.2.0",
+        "phpactor/amp-fswatch": "^0.3.0",
+        "amphp/process": "^1.1.5",
         "thecodingmachine/safe": "^1.0",
         "phpactor/phly-event-dispatcher": "^2.0.0",
-        "phpactor/language-server": "^5.1.0",
+        "phpactor/language-server": "dev-master",
         "phpactor/language-server-protocol": "^3.17.3",
         "dantleech/object-renderer": "^0.1.1",
         "monolog/monolog": "^1.23",
@@ -29,12 +27,11 @@
         "jetbrains/phpstorm-stubs": "dev-master",
         "phpactor/tolerant-php-parser": "dev-main",
         "phpactor/map-resolver": "^1.5.0",
-        "webmozart/assert": "^1.11",
-        "webmozart/path-util": "^2.3"
+        "webmozart/assert": "^1.11"
     },
     "require-dev": {
         "dantleech/what-changed": "~0.4",
-        "friendsofphp/php-cs-fixer": "^3.15",
+        "friendsofphp/php-cs-fixer": "^3.32",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.0",
         "phpspec/prophecy-phpunit": "^2.0",
@@ -46,8 +43,9 @@
         "phpstan/phpstan-phpunit": "^1.0",
         "jangregor/phpstan-prophecy": "^1.0",
         "phpstan/extension-installer": "^1.1",
-        "vimeo/psalm": "^4.22",
-        "blackfire/php-sdk": "^1.31"
+        "vimeo/psalm": "^5.15",
+        "blackfire/php-sdk": "^1.31",
+        "squizlabs/php_codesniffer": "^3.7"
     },
     "replace": {
         "phpactor/class-mover": "0.2.0",
@@ -84,7 +82,7 @@
     },
     "config": {
         "platform": {
-            "php": "8.0.0"
+            "php": "8.1.0"
         },
         "allow-plugins": {
             "dantleech/what-changed": true,
@@ -111,14 +109,14 @@
     ],
     "scripts": {
         "post-install-cmd": [
-            "bin/phpactor config:json-schema phpactor.schema.json"
+            "@php bin/phpactor config:json-schema phpactor.schema.json"
         ],
         "integrate": [
-            "composer validate --strict",
-            "vendor/bin/php-cs-fixer fix",
-            "vendor/bin/phpstan analyse",
-            "vendor/bin/phpunit",
-            "vendor/bin/phpbench run --iterations=1 --revs=1",
+            "@composer validate --strict",
+            "@php vendor/bin/php-cs-fixer fix",
+            "@php vendor/bin/phpstan analyse --memory-limit=-1",
+            "@php vendor/bin/phpunit",
+            "@php vendor/bin/phpbench run --iterations=1 --revs=1",
             "make docs"
         ]
     }

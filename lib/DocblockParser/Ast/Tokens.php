@@ -14,7 +14,7 @@ final class Tokens implements IteratorAggregate
     /**
      * @var ?Token
      */
-    public $current;
+    public ?Token $current;
 
     private int $position = 0;
 
@@ -116,6 +116,17 @@ final class Tokens implements IteratorAggregate
         return false;
     }
 
+    public function ifOneOf(string ...$types): bool
+    {
+        foreach ($types as $type) {
+            if (true === $this->if($type)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * If the current or next non-whitespace node matches,
      * advance internal pointer and return true;
@@ -177,5 +188,24 @@ final class Tokens implements IteratorAggregate
         }
 
         return $this->tokens[$this->position + $offset];
+    }
+
+    public function mustGetCurrent(): Token
+    {
+        if (!$this->current) {
+            throw new RuntimeException(
+                'There is no current token (current is NULL)'
+            );
+        }
+        return $this->current;
+    }
+
+    public function mustChomp(?string $type = null): Token
+    {
+        $chomped = $this->chomp($type);
+        if (null === $chomped) {
+            throw new RuntimeException('Could not chomp, nothing to chomp!');
+        }
+        return $chomped;
     }
 }

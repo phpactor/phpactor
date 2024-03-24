@@ -22,12 +22,12 @@ class FileRepositoryTest extends IntegrationTestCase
         $this->workspace()->put('index/something/else/some.cache', 'bar');
 
         self::assertFileExists($this->workspace()->path('index/something.cache'));
-        self::assertFileExists($this->workspace()->path('index/something/else/some.cache', 'bar'));
+        self::assertFileExists($this->workspace()->path('index/something/else/some.cache'));
 
         $repo->reset();
 
         self::assertFileDoesNotExist($this->workspace()->path('index/something.cache'));
-        self::assertFileDoesNotExist($this->workspace()->path('index/something/else/some.cache', 'bar'));
+        self::assertFileDoesNotExist($this->workspace()->path('index/something/else/some.cache'));
     }
 
     public function testRemovesClassRecord(): void

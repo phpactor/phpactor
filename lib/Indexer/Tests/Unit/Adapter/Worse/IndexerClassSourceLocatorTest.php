@@ -7,8 +7,10 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
+use Symfony\Component\Filesystem\Path;
 
 class IndexerClassSourceLocatorTest extends TestCase
 {
@@ -27,7 +29,8 @@ class IndexerClassSourceLocatorTest extends TestCase
         $record = ClassRecord::fromName('Foobar')
             ->setType('class')
             ->setStart(ByteOffset::fromInt(0))
-            ->setFilePath('nope.php');
+            ->setEnd(ByteOffset::fromInt(0))
+            ->setFilePath(TextDocumentUri::fromString('/nope.php'));
 
         $index = new InMemoryIndex();
         $index->write($record);
@@ -40,13 +43,14 @@ class IndexerClassSourceLocatorTest extends TestCase
         $record = ClassRecord::fromName('Foobar')
             ->setType('class')
             ->setStart(ByteOffset::fromInt(0))
-            ->setFilePath(__FILE__);
+            ->setEnd(ByteOffset::fromInt(10))
+            ->setFilePath(TextDocumentUri::fromString(__FILE__));
 
         $index = new InMemoryIndex();
         $index->write($record);
         $locator = $this->createLocator($index);
         $sourceCode = $locator->locate(Name::fromString('Foobar'));
-        $this->assertEquals(__FILE__, $sourceCode->uri()?->path());
+        $this->assertEquals(Path::canonicalize(__FILE__), $sourceCode->uri()?->path());
     }
 
     private function createLocator(InMemoryIndex $index): IndexerClassSourceLocator

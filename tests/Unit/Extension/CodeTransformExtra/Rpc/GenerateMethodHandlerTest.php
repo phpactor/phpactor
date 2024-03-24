@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CodeTransformExtra\Rpc;
 
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\CodeTransformExtra\Rpc\GenerateMethodHandler;
 use Phpactor\Extension\Rpc\Handler;
@@ -13,6 +13,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Prophecy\Prophecy\ObjectProphecy;
+use Symfony\Component\Filesystem\Path;
 use function Safe\file_get_contents;
 
 class GenerateMethodHandlerTest extends HandlerTestCase
@@ -26,7 +27,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
 
     public function setUp(): void
     {
-        $this->generateMethod = $this->prophesize(GenerateMethod::class);
+        $this->generateMethod = $this->prophesize(GenerateMember::class);
     }
 
     public function testProvidesOriginalSourceFromDiskIfPathIsNotTheGivenPath(): void
@@ -36,7 +37,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $thisFileContents = file_get_contents(__FILE__);
 
         // @phpstan-ignore-next-line
-        $this->generateMethod->generateMethod(
+        $this->generateMethod->generateMember(
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(
@@ -52,7 +53,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
 
         $this->assertInstanceOf(UpdateFileSourceResponse::class, $response);
         assert($response instanceof UpdateFileSourceResponse);
-        $this->assertEquals(__FILE__, $response->path());
+        $this->assertEquals(Path::canonicalize(__FILE__), $response->path());
         $this->assertEquals($thisFileContents, $response->oldSource());
         $this->assertEquals($thisFileContents.'1', $response->newSource());
     }
@@ -63,7 +64,7 @@ class GenerateMethodHandlerTest extends HandlerTestCase
         $source = SourceCode::fromStringAndPath(self::EXAMPLE_SOURCE, self::EXAMPLE_PATH);
 
         // @phpstan-ignore-next-line
-        $this->generateMethod->generateMethod(
+        $this->generateMethod->generateMember(
             $source,
             self::EXAMPLE_OFFSET
         )->willReturn(new TextDocumentEdits(

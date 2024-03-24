@@ -738,6 +738,81 @@ abstract class UpdaterTestCase extends TestCase
     }
 
     /**
+     * @dataProvider provideEnums
+    */
+    public function testEnums(string $existingCode, SourceCode $prototype, string $expectedCode): void
+    {
+        $this->assertUpdate($existingCode, $prototype, $expectedCode);
+    }
+
+    public function provideEnums(): Generator
+    {
+        yield 'Rendering an enum' => [
+            '',
+            SourceCodeBuilder::create()
+            ->enum('SomeEnum')
+                ->case('ONE')->end()
+                ->case('TWO')->end()
+            ->end()
+            ->build(),
+            <<<'EOT'
+
+                enum SomeEnum
+                {
+                    case ONE;
+                    case TWO;
+                }
+                EOT,
+        ];
+        yield 'Adding a case to an already existing enum' => [
+            <<<'EOT'
+                enum SomeEnum
+                {
+                    case ONE;
+                    case TWO;
+                }
+                EOT,
+            SourceCodeBuilder::create()
+            ->enum('SomeEnum')
+                ->case('THREE')->end()
+            ->end()
+            ->build(),
+            <<<'EOT'
+                enum SomeEnum
+                {
+                    case ONE;
+                    case TWO;
+                    case THREE;
+
+                }
+                EOT,
+        ];
+        yield 'Adding a case to break a backed enum' => [
+            <<<'EOT'
+                enum SomeEnum: string
+                {
+                    case ONE = '1';
+                    case TWO = '2';
+                }
+                EOT,
+            SourceCodeBuilder::create()
+            ->enum('SomeEnum')
+                ->case('THREE')->end()
+            ->end()
+            ->build(),
+            <<<'EOT'
+                enum SomeEnum: string
+                {
+                    case ONE = '1';
+                    case TWO = '2';
+                    case THREE;
+
+                }
+                EOT,
+        ];
+    }
+
+    /**
      * @dataProvider provideTraits
      */
     public function testTraits(string $existingCode, SourceCode $prototype, string $expectedCode): void
@@ -1948,15 +2023,15 @@ abstract class UpdaterTestCase extends TestCase
                         }
                     }
                     EOT
-            ];
+        ];
     }
 
     abstract protected function updater(): Updater;
 
     private function assertUpdate(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
-        $existingCode = '<?php'.PHP_EOL.$existingCode;
+        $existingCode = '<?php'."\n".$existingCode;
         $edits = $this->updater()->textEditsFor($prototype, Code::fromString($existingCode));
-        $this->assertEquals('<?php' . PHP_EOL . $expectedCode, $edits->apply($existingCode));
+        $this->assertEquals('<?php' . "\n" . $expectedCode, $edits->apply($existingCode));
     }
 }

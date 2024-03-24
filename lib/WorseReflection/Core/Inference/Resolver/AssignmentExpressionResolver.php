@@ -161,7 +161,7 @@ class AssignmentExpressionResolver implements Resolver
             foreach ($frame->locals()->byName((string)$leftOperand->postfixExpression->getName()) as $variable) {
                 $type = $variable->type();
 
-                if (!$type instanceof ArrayLiteral) {
+                if (!$type instanceof ArrayType) {
                     return;
                 }
 
@@ -179,11 +179,13 @@ class AssignmentExpressionResolver implements Resolver
                         return;
                     }
 
-                    $frame->locals()->set(
-                        $variable->withType(
-                            $type->set($accessType->value(), $rightContext->type())
-                        )->withOffset($leftOperand->getStartPosition())
-                    );
+                    if ($type instanceof ArrayLiteral) {
+                        $frame->locals()->set(
+                            $variable->withType(
+                                $type->set($accessType->value(), $rightContext->type())
+                            )->withOffset($leftOperand->getStartPosition())
+                        );
+                    }
                     continue;
                 }
 

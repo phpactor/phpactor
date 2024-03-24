@@ -17,6 +17,7 @@ use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Tag\SeeTag;
 use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
+use Phpactor\DocblockParser\Ast\Tag\TypeAliasTag;
 use Phpactor\DocblockParser\Ast\TextNode;
 use Phpactor\DocblockParser\Ast\TypeList;
 use Phpactor\DocblockParser\Ast\Type\ArrayNode;
@@ -50,6 +51,7 @@ use Phpactor\DocblockParser\Ast\Tag\ThrowsTag;
 use Phpactor\DocblockParser\Ast\VariableNode;
 use Phpactor\DocblockParser\Ast\Token;
 use Phpactor\DocblockParser\Ast\Tokens;
+use RuntimeException;
 
 final class Parser
 {
@@ -89,7 +91,7 @@ final class Parser
 
     private function parseTag(): TagNode
     {
-        $token = $this->tokens->current;
+        $token = $this->tokens->mustGetCurrent();
         $value = str_replace(['@psalm-', '@phpstan-'], '@', $token->value);
         return match ($value) {
             '@param' => $this->parseParam(),
@@ -98,6 +100,7 @@ final class Parser
             '@deprecated' => $this->parseDeprecated(),
             '@see' => $this->parseSee(),
             '@method' => $this->parseMethod(),
+            '@type' => $this->parseTypeAlias(),
             '@property', '@property-read' => $this->parseProperty(),
             '@mixin' => $this->parseMixin(),
             '@return' => $this->parseReturn(),
@@ -105,14 +108,14 @@ final class Parser
             '@template-covariant' => $this->parseTemplate(),
             '@extends', '@template-extends' => $this->parseExtends(),
             '@implements', '@template-implements' => $this->parseImplements(),
-            default => new UnknownTag($this->tokens->chomp()),
+            default => new UnknownTag($this->tokens->mustChomp()),
         };
     }
 
     private function parseParam(): ParamTag
     {
         $type = $variable = $textNode = null;
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
 
         if ($this->ifType()) {
             $type = $this->parseTypes();
@@ -122,12 +125,12 @@ final class Parser
             $variable = $this->parseVariable();
         }
 
-        return new ParamTag($tag, $type, $variable, $this->parseText());
+        return new ParamTag($tag, $type, $variable, $this->parseText() ?: new TextNode([]));
     }
 
     private function parseVar(): VarTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $type = $variable = null;
         if ($this->ifType()) {
             $type = $this->parseTypes();
@@ -141,7 +144,7 @@ final class Parser
 
     private function parseThrows(): ThrowsTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $type = null;
 
         if ($this->tokens->if(Token::T_LABEL)) {
@@ -153,12 +156,12 @@ final class Parser
 
     private function parseMethod(): MethodTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $type = $name = $parameterList = $open = $close = null;
         $static = null;
 
         if ($this->tokens->ifNextIs(Token::T_LABEL)) {
-            if ($this->tokens->current->value === 'static') {
+            if ($this->tokens->mustGetCurrent()->value === 'static') {
                 $static = $this->tokens->chomp();
             }
         }
@@ -182,7 +185,7 @@ final class Parser
 
     private function parseProperty(): PropertyTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $type = $name = null;
         if ($this->ifType()) {
             $type = $this->parseTypes();
@@ -208,7 +211,7 @@ final class Parser
                 $this->tokens->if(Token::T_BAR) ||
                 $this->tokens->if(Token::T_AMPERSAND)
             ) {
-                $delimiter = $this->tokens->chomp();
+                $delimiter = $this->tokens->mustChomp();
                 if (!$mode) {
                     $mode = $delimiter->type;
                 }
@@ -247,19 +250,23 @@ final class Parser
 
         if ($this->tokens->current->type === Token::T_VARIABLE) {
             if ($this->tokens->current->value === '$this') {
-                $variable = $this->tokens->chomp(Token::T_VARIABLE);
+                $variable = $this->tokens->mustChomp(Token::T_VARIABLE);
                 return new ThisNode($variable);
             }
             return $this->parseConditionalType();
         }
 
         if ($this->tokens->current->type === Token::T_NULLABLE) {
-            $nullable = $this->tokens->chomp();
-            return new NullableNode($nullable, $this->parseTypes());
+            $nullable = $this->tokens->mustChomp();
+            $type = $this->parseType();
+            if ($type === null) {
+                return null;
+            }
+            return new NullableNode($nullable, $type);
         }
 
         if ($this->tokens->current->type === Token::T_PAREN_OPEN) {
-            $open = $this->tokens->chomp();
+            $open = $this->tokens->mustChomp();
             $this->tokens->chompWhitespace();
             $type = $this->parseTypes();
             $this->tokens->chompWhitespace();
@@ -268,9 +275,10 @@ final class Parser
             return new ParenthesizedType($open, $type, $close);
         }
 
-        $type = $this->tokens->chomp();
+        $type = $this->tokens->mustChomp();
 
-        if (null === $this->tokens->current) {
+        /** @phpstan-ignore-next-line It can be null*/
+        if (null === $this->tokens->current && $type) {
             return $this->createTypeFromToken($type);
         }
 
@@ -306,7 +314,7 @@ final class Parser
         }
 
         if ($this->tokens->current->type === Token::T_BRACKET_ANGLE_OPEN) {
-            $open = $this->tokens->chomp();
+            $open = $this->tokens->mustChomp();
             $typeList = null;
             if ($this->tokens->if(Token::T_VARIABLE)) {
                 $typeList = $this->parseTypeList();
@@ -318,6 +326,9 @@ final class Parser
                 $typeList = $this->parseTypeList();
             }
             if ($this->tokens->if(Token::T_INTEGER)) {
+                $typeList = $this->parseTypeList();
+            }
+            if ($this->tokens->if(Token::T_NULLABLE)) {
                 $typeList = $this->parseTypeList();
             }
 
@@ -333,7 +344,7 @@ final class Parser
                 $open,
                 $this->createTypeFromToken($type),
                 $typeList,
-                $this->tokens->chomp()
+                $this->tokens->mustChomp()
             );
             return $this->parseDimensions($type);
         }
@@ -343,7 +354,7 @@ final class Parser
             assert(!is_null($open));
             $keyValues = [];
             $close = null;
-            if ($this->tokens->if(Token::T_LABEL)) {
+            if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER)) {
                 $keyValues = $this->parseArrayKeyValues();
             }
             if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
@@ -363,9 +374,10 @@ final class Parser
     private function parseDimensions(TypeNode $type): TypeNode
     {
         while ($this->tokens->if(Token::T_LIST)) {
-            $list = $this->tokens->chomp();
+            $list = $this->tokens->mustChomp();
             $type = new ListBracketsNode($type, $list);
         }
+
 
         return $type;
     }
@@ -405,8 +417,8 @@ final class Parser
         ) {
             return new ConstantNode(
                 $classNode,
-                $this->tokens->chomp(),
-                $this->tokens->chomp(),
+                $this->tokens->mustChomp(),
+                $this->tokens->mustChomp(),
             );
         }
 
@@ -415,11 +427,11 @@ final class Parser
 
     private function parseVariable(): ?VariableNode
     {
-        if ($this->tokens->current->type !== Token::T_VARIABLE) {
+        if ($this->tokens->mustGetCurrent()->type !== Token::T_VARIABLE) {
             return null;
         }
 
-        $name = $this->tokens->chomp(Token::T_VARIABLE);
+        $name = $this->tokens->mustChomp(Token::T_VARIABLE);
 
         return new VariableNode($name);
     }
@@ -430,6 +442,8 @@ final class Parser
         while (true) {
             if ($this->tokens->if(Token::T_LABEL)) {
                 $types[] = $this->parseTypes();
+            } elseif ($this->tokens->if(Token::T_NULLABLE)) {
+                $types[] = $this->parseTypes();
             } elseif ($this->tokens->if(Token::T_QUOTED_STRING)) {
                 $types[] = $this->parseTypes();
             } elseif ($this->tokens->if(Token::T_INTEGER)) {
@@ -438,7 +452,7 @@ final class Parser
                 $types[] = $this->parseTypes();
             }
             if ($this->tokens->if(Token::T_COMMA)) {
-                $types[] = $this->tokens->chomp();
+                $types[] = $this->tokens->mustChomp();
                 continue;
             }
             break;
@@ -457,7 +471,7 @@ final class Parser
         while (true) {
             $parameters[] = $this->parseParameter();
             if ($this->tokens->if(Token::T_COMMA)) {
-                $parameters[] = $this->tokens->chomp();
+                $parameters[] = $this->tokens->mustChomp();
                 continue;
             }
             break;
@@ -500,12 +514,12 @@ final class Parser
 
     private function parseMixin(): MixinTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $type = null;
 
         if ($this->tokens->if(Token::T_LABEL)) {
             $type = $this->parseTypes();
-            if (!$type instanceof ClassNode) {
+            if (!$type instanceof ClassNode && !$type instanceof GenericNode) {
                 $type = null;
             }
         }
@@ -515,7 +529,7 @@ final class Parser
 
     private function parseReturn(): ReturnTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $type = null;
 
         if ($this->ifType()) {
@@ -523,7 +537,7 @@ final class Parser
         }
 
         if ($this->tokens->if(Token::T_VARIABLE)) {
-            $variable = $this->tokens->chomp(Token::T_VARIABLE);
+            $variable = $this->tokens->mustChomp(Token::T_VARIABLE);
             if ($variable->value === '$this') {
                 $type = new ThisNode($variable);
             }
@@ -552,7 +566,7 @@ final class Parser
             if (in_array($this->tokens->current->type, $stopTokens)) {
                 break;
             }
-            $text[] = $this->tokens->chomp();
+            $text[] = $this->tokens->mustChomp();
         }
 
         if ($text) {
@@ -575,8 +589,8 @@ final class Parser
     private function parseValue(): ?ValueNode
     {
         if ($this->tokens->if(Token::T_LABEL)) {
-            if (strtolower($this->tokens->current->value) === 'null') {
-                return new NullValue($this->tokens->chomp());
+            if (strtolower($this->tokens->mustGetCurrent()->value) === 'null') {
+                return new NullValue($this->tokens->mustChomp());
             }
         }
 
@@ -585,17 +599,17 @@ final class Parser
 
     private function parseTemplate(): TemplateTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $placeholder = null;
         $of = null;
         $type = null;
 
         if ($this->tokens->if(Token::T_LABEL)) {
-            $placeholder = $this->tokens->chomp();
+            $placeholder = $this->tokens->mustChomp();
         }
 
         if ($this->tokens->if(Token::T_LABEL)) {
-            $of = $this->tokens->chomp();
+            $of = $this->tokens->mustChomp();
             if ($of->value === 'of') {
                 /** @phpstan-ignore-next-line */
                 if ($this->tokens->if(Token::T_LABEL)) {
@@ -611,7 +625,7 @@ final class Parser
 
     private function parseExtends(): ExtendsTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $type = null;
 
         if ($this->tokens->if(Token::T_LABEL)) {
@@ -623,7 +637,7 @@ final class Parser
 
     private function parseImplements(): ImplementsTag
     {
-        $tag = $this->tokens->chomp(Token::T_TAG);
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
         $types = [];
 
         if ($this->tokens->if(Token::T_LABEL)) {
@@ -667,7 +681,7 @@ final class Parser
         $key = $colon = $type = null;
 
         if (
-            $this->tokens->if(Token::T_LABEL) &&
+            $this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER) &&
             $this->tokens->peekIs(1, Token::T_COLON)
         ) {
             $key = $this->tokens->chomp();
@@ -675,7 +689,7 @@ final class Parser
         }
 
         if (
-            $this->tokens->if(Token::T_LABEL) &&
+            $this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER) &&
             $this->tokens->peekIs(1, Token::T_NULLABLE) &&
             $this->tokens->peekIs(2, Token::T_COLON)
         ) {
@@ -684,21 +698,28 @@ final class Parser
             $colon = $this->tokens->chomp();
         }
 
+        $optional = null;
+        if ($this->tokens->if(Token::T_NULLABLE)) {
+            $optional = $this->tokens->chomp();
+        }
         $type = null;
-        if ($this->tokens->if(Token::T_LABEL)) {
+        if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER)) {
             $type = $this->parseTypes();
         }
 
-        return new ArrayKeyValueNode($key, $colon, $type);
+        return new ArrayKeyValueNode($optional, $key, $colon, $type);
     }
 
     private function parseConditionalType(): TypeNode
     {
         $variable = $this->parseVariable();
+        if (!$variable) {
+            throw new RuntimeException('Expected a variable, this should not happen');
+        }
         if (!$this->tokens->if(Token::T_LABEL)) {
             return new ConditionalNode($variable);
         }
-        $is = $this->tokens->chomp();
+        $is = $this->tokens->mustChomp();
         if ($is->toString() !== 'is') {
             return new ConditionalNode($variable, $is);
         }
@@ -718,5 +739,25 @@ final class Parser
         $right = $this->parseTypes();
 
         return new ConditionalNode($variable, $is, $isType, $question, $left, $colon, $right);
+    }
+
+    private function parseTypeAlias(): TagNode
+    {
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
+        $alias = $equals = $type = null;
+
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $alias = $this->parseType();
+        }
+
+        if ($this->tokens->if(Token::T_EQUALS)) {
+            $equals = $this->tokens->chomp(Token::T_EQUALS);
+        }
+
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $type = $this->parseTypes();
+        }
+
+        return new TypeAliasTag($tag, $alias, $equals, $type);
     }
 }

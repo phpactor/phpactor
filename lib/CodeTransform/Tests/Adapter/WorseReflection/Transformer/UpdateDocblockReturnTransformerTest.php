@@ -383,6 +383,49 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'add docblock for iterables' => [
+            <<<'EOT'
+                <?php
+
+                class IFoo {
+                    public function bar(): iterable
+                    {
+                        return $this->baz();
+                    }
+
+                    /**
+                    * @return iterable<int>
+                    */
+                    public function baz(): iterable
+                    {
+                        yield 22;
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class IFoo {
+                    /**
+                     * @return iterable<array-key,int>
+                     */
+                    public function bar(): iterable
+                    {
+                        return $this->baz();
+                    }
+
+                    /**
+                    * @return iterable<int>
+                    */
+                    public function baz(): iterable
+                    {
+                        yield 22;
+                    }
+                }
+                EOT
+        ];
+
         yield 'does not add non-array return type when array return is given' => [
             <<<'EOT'
                 <?php

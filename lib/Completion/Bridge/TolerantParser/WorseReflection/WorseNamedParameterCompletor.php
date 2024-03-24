@@ -11,6 +11,7 @@ use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
@@ -41,6 +42,7 @@ class WorseNamedParameterCompletor implements TolerantCompletor
             [
                 MemberAccessExpression::class,
                 ObjectCreationExpression::class,
+                Attribute::class,
                 CallExpression::class,
             ],
             [
@@ -61,6 +63,10 @@ class WorseNamedParameterCompletor implements TolerantCompletor
             return yield from $this->fromObjectCreation($subject);
         }
 
+        if ($subject instanceof Attribute) {
+            return yield from $this->fromAttribute($subject);
+        }
+
         if ($subject instanceof CallExpression) {
             return yield from $this->fromCallExpression($subject);
         }
@@ -68,6 +74,9 @@ class WorseNamedParameterCompletor implements TolerantCompletor
         return true;
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function fromObjectCreation(ObjectCreationExpression $creation): Generator
     {
         $type = $creation->classTypeDesignator;
@@ -87,6 +96,32 @@ class WorseNamedParameterCompletor implements TolerantCompletor
         return true;
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
+    private function fromAttribute(Attribute $attribute): Generator
+    {
+        /** @var QualifiedName|null $type */
+        $type = $attribute->name;
+
+        if (!$type instanceof QualifiedName) {
+            return true;
+        }
+
+        try {
+            $class = $this->reflector->reflectClass((string)$type->getResolvedName());
+        } catch (NotFound) {
+            return true;
+        }
+
+        yield from $this->fromMethod($class, '__construct');
+
+        return true;
+    }
+
+    /**
+     * @return Generator<Suggestion>
+     */
     private function fromMethod(ReflectionClassLike $class, string $method): Generator
     {
         if (!$class->methods()->has($method)) {
@@ -105,6 +140,9 @@ class WorseNamedParameterCompletor implements TolerantCompletor
         }
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function fromFunction(ReflectionFunction $function): Generator
     {
         foreach ($function->parameters() as $parameter) {
@@ -119,6 +157,9 @@ class WorseNamedParameterCompletor implements TolerantCompletor
         }
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function fromCallExpression(CallExpression $creation): Generator
     {
         /** @var Node */

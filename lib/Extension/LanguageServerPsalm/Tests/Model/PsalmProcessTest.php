@@ -51,7 +51,7 @@ class PsalmProcessTest extends IntegrationTestCase
         );
         (Process::fromShellCommandline('composer dump', $this->workspace()->path()))->mustRun();
 
-        (new Process([$psalmBin, '--init', 'src', $initLevel], $this->workspace()->path()))->mustRun();
+        (new Process([PHP_BINARY, $psalmBin, '--init', 'src', $initLevel], $this->workspace()->path()))->mustRun();
         $this->workspace()->put('src/test.php', $source);
         $linter = new PsalmProcess(
             $this->workspace()->path(),
@@ -128,8 +128,8 @@ class PsalmProcessTest extends IntegrationTestCase
                                 new Position(0, 5),
                                 new Position(0, 12)
                             ),
-                            'message' => 'Unable to determine the type that $foobar is being assigned to',
-                            'severity' => DiagnosticSeverity::WARNING,
+                            'message' => '$foobar is never referenced or the value is not used',
+                            'severity' => DiagnosticSeverity::ERROR,
                             'source' => 'psalm'
                         ]),
                         Diagnostic::fromArray([
@@ -139,6 +139,15 @@ class PsalmProcessTest extends IntegrationTestCase
                             ),
                             'message' => 'Cannot find referenced variable $barfoo in global scope',
                             'severity' => DiagnosticSeverity::ERROR,
+                            'source' => 'psalm'
+                        ]),
+                        Diagnostic::fromArray([
+                            'range' => new Range(
+                                new Position(0, 5),
+                                new Position(0, 12)
+                            ),
+                            'message' => 'Unable to determine the type that $foobar is being assigned to',
+                            'severity' => DiagnosticSeverity::WARNING,
                             'source' => 'psalm'
                         ])
                     ],
@@ -154,6 +163,15 @@ class PsalmProcessTest extends IntegrationTestCase
             function (array $diagnostics): void {
                 self::assertDiagnostics(
                     [
+                        Diagnostic::fromArray([
+                            'range' => new Range(
+                                new Position(0, 5),
+                                new Position(0, 12)
+                            ),
+                            'message' => '$foobar is never referenced or the value is not used',
+                            'severity' => DiagnosticSeverity::ERROR,
+                            'source' => 'psalm'
+                        ]),
                         Diagnostic::fromArray([
                             'range' => new Range(
                                 new Position(0, 15),

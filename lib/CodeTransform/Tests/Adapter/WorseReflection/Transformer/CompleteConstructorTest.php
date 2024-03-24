@@ -211,6 +211,39 @@ class CompleteConstructorTest extends WorseTestCase
 
         ];
 
+        yield 'it does not add parameters of inherited classes' => [
+            <<<'EOT'
+                    <?php
+                    class ParentClass
+                    {
+                        public function __construct(private string $someParam) {}
+                    }
+
+                    class Foobar extends ParentClass
+                    {
+                        public function __construct(string $someParam) {
+
+                            parent::__construct($someParam);
+                        }
+                    }
+                EOT,
+            <<<'EOT'
+                    <?php
+                    class ParentClass
+                    {
+                        public function __construct(private string $someParam) {}
+                    }
+
+                    class Foobar extends ParentClass
+                    {
+                        public function __construct(string $someParam) {
+
+                            parent::__construct($someParam);
+                        }
+                    }
+                EOT,
+        ];
+
         yield  'It adds type docblocks' => [
             <<<'EOT'
                 <?php
@@ -615,6 +648,7 @@ class CompleteConstructorTest extends WorseTestCase
         $transformed = wait($transformer->transform($source));
         $this->assertEquals((string) $expected, (string) $transformed->apply($source));
     }
+
     /**
      * @return Generator<string,array{string,string}>
      */
@@ -670,4 +704,81 @@ class CompleteConstructorTest extends WorseTestCase
 
         ];
     }
+
+    /**
+     * @dataProvider provideCompleteConstructorWithParentClass
+     */
+    public function testCompleteConstructorWithParentClass(string $example, string $expected): void
+    {
+        $source = SourceCode::fromString($example);
+        $transformer = new CompleteConstructor($this->reflectorForWorkspace($example), $this->updater(), 'private', true);
+        $transformed = wait($transformer->transform($source));
+        $this->assertEquals((string) $expected, (string) $transformed->apply($source));
+    }
+
+    /**
+    * @return Generator<array{string, string}>
+    */
+    public function provideCompleteConstructorWithParentClass(): Generator
+    {
+        yield 'Do not promote constructor arguments if a parent class already has the same argument' => [
+            <<<'EOT'
+                <?php
+                class A
+                {
+                    public function __construct(public string $someString) {}
+                }
+
+
+                class SomeClassTest extends A
+                {
+                    public function __construct(public int $test, string $someString)
+                    {
+                        parent::__construct($someString);
+                    }
+                }
+                EOT,
+            <<<'EOT'
+                <?php
+                class A
+                {
+                    public function __construct(public string $someString) {}
+                }
+
+
+                class SomeClassTest extends A
+                {
+                    public function __construct(public int $test, string $someString)
+                    {
+                        parent::__construct($someString);
+                    }
+                }
+                EOT,
+        ];
+
+        yield 'No promotion if there is a parent class constructor somewhere in the hierarchy' => [
+            <<<'EOT'
+                class B {
+                    public function __construct(private string $a) {}
+                }
+                class A extends B {}
+
+                class Foo extends A {
+                    public function __construct(string $a) {parent::__construct($a);}
+                }
+                EOT,
+            <<<'EOT'
+                class B {
+                    public function __construct(private string $a) {}
+                }
+                class A extends B {}
+
+                class Foo extends A {
+                    public function __construct(string $a) {parent::__construct($a);}
+                }
+                EOT,
+            ];
+
+    }
+
 }

@@ -48,8 +48,7 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        $docblock = $method->docblock();
-        $docblockType = $docblock->returnType();
+        $docblockType = $method->docblock()->returnType();
         $actualReturnType = $frame->returnType()->generalize();
         $claimedReturnType = $method->inferredType();
         $phpReturnType = $method->type();
@@ -74,11 +73,15 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        if (
-            $claimedReturnType->isDefined() && !$claimedReturnType->isClass() && !$claimedReturnType->isArray() && !$claimedReturnType->isClosure()
+        if ($claimedReturnType->isDefined()
+            && !$claimedReturnType->isClass()
+            && !$claimedReturnType->isArray()
+            && !$claimedReturnType->isClosure()
+            && !$claimedReturnType->isIterable()
         ) {
             return;
         }
+
 
         if ($actualReturnType->isClosure()) {
             yield new DocblockMissingReturnTypeDiagnostic(
@@ -100,7 +103,7 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        if ($claimedReturnType->isArray() && $actualReturnType->isMixed()) {
+        if ($actualReturnType->isMixed() && ($claimedReturnType->isArray() || $claimedReturnType->isIterable())) {
             return;
         }
 

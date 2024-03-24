@@ -27,7 +27,7 @@ class MemberIndexer implements TolerantIndexer
 
     public function beforeParse(Index $index, TextDocument $document): void
     {
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
 
         foreach ($fileRecord->references() as $outgoingReference) {
@@ -75,13 +75,21 @@ class MemberIndexer implements TolerantIndexer
         $containerType = $this->resolveContainerType($containerType, $node);
         $memberName = $this->resolveScopedPropertyAccessName($node);
 
-        if (empty($memberName)) {
+        if ($memberName === '') {
             return;
         }
 
         $memberType = $memberType ?? $this->resolveScopedPropertyAccessMemberType($node);
 
-        $this->writeIndex($index, $memberType, $containerType, $memberName, $document, $this->resolveStart($node->memberName));
+        $this->writeIndex(
+            $index,
+            $memberType,
+            $containerType,
+            $memberName,
+            $document,
+            $this->resolveStart($node->memberName),
+            $this->resolveEnd($node->memberName)
+        );
     }
 
     /**
@@ -148,22 +156,39 @@ class MemberIndexer implements TolerantIndexer
 
         $memberType = $this->resolveMemberAccessType($node);
 
-        $this->writeIndex($index, $memberType, null, (string)$memberName, $document, $this->resolveStart($node->memberName));
+        $this->writeIndex(
+            $index,
+            $memberType,
+            null,
+            (string)$memberName,
+            $document,
+            $this->resolveStart($node->memberName),
+            $this->resolveEnd($node->memberName)
+        );
     }
 
     /**
      * @param MemberRecord::TYPE_* $memberType
      */
-    private function writeIndex(Index $index, string $memberType, ?string $containerFqn, string $memberName, TextDocument $document, int $offsetStart): void
-    {
+    private function writeIndex(
+        Index $index,
+        string $memberType,
+        ?string $containerFqn,
+        string $memberName,
+        TextDocument $document,
+        int $offsetStart,
+        int $offsetEnd
+    ): void {
         $record = $index->get(MemberRecord::fromMemberReference(MemberReference::create($memberType, $containerFqn, $memberName)));
         assert($record instanceof MemberRecord);
-        $record->addReference($document->uri()->path());
+        $record->addReference($document->uriOrThrow()->__toString());
         $index->write($record);
 
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
-        $fileRecord->addReference(RecordReference::fromRecordAndOffsetAndContainerType($record, $offsetStart, $containerFqn));
+        $fileRecord->addReference(
+            RecordReference::fromRecordAndOffsetAndContainerType($record, $offsetStart, $offsetEnd, $containerFqn)
+        );
         $index->write($fileRecord);
     }
 
@@ -177,6 +202,18 @@ class MemberIndexer implements TolerantIndexer
         }
 
         return $nodeOrToken->getStartPosition();
+    }
+
+    /**
+     * @param Token|Node $nodeOrToken
+     */
+    private function resolveEnd($nodeOrToken): int
+    {
+        if ($nodeOrToken instanceof Token) {
+            return $nodeOrToken->start + $nodeOrToken->length;
+        }
+
+        return $nodeOrToken->getEndPosition();
     }
 
     private function resolveContainerType(QualifiedName $containerType, Node $node): ?string

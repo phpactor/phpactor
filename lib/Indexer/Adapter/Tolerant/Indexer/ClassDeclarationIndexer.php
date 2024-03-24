@@ -25,7 +25,7 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
         if ($node->name instanceof MissingToken) {
             throw new CannotIndexNode(sprintf(
                 'Class name is missing (maybe a reserved word) in: %s',
-                $document->uri()?->path() ?? '?',
+                $document->uri()?->__toString() ?? '?',
             ));
         }
         $record = $this->getClassLikeRecord(ClassRecord::TYPE_CLASS, $node, $index, $document);
@@ -54,7 +54,7 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
                     continue;
                 }
                 /** @phpstan-ignore-next-line */
-                if ($attribute->name?->getText() === 'Attribute') {
+                if ((string) $attribute->name?->getResolvedName() === \Attribute::class) {
                     $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
                     return;
                 }

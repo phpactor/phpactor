@@ -1,0 +1,49 @@
+<?php
+
+abstract class Model
+{
+}
+
+/** @template TModel of Model */
+class Factory
+{
+    /**
+     * @return TModel
+     */
+    public function create(): object
+    {
+    }
+}
+
+/**
+ * @template TModel of Schedule
+ * @extends Factory<TModel>
+ */
+class ScheduleFactory extends Factory
+{
+    /**
+     * @param TModel $schedule
+     */
+    public function __construct(Schedule $schedule) 
+    {
+    }
+}
+
+class Schedule extends Model
+{
+}
+
+/** @extends ScheduleFactory<ChildSchedule> */
+class ChildScheduleFactory extends ScheduleFactory
+{
+}
+
+class ChildSchedule extends Schedule
+{
+}
+
+$s = (new ScheduleFactory(new ChildSchedule()))->create();
+wrAssertType('ChildSchedule', $s);
+
+$s = (new ChildScheduleFactory())->create();
+wrAssertType('ChildSchedule', $s);

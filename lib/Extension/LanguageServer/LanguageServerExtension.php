@@ -500,9 +500,14 @@ class LanguageServerExtension implements Extension
     private function registerDiagnostics(ContainerBuilder $container): void
     {
         $container->register(DiagnosticsEngine::class, function (Container $container) {
+            $providers = $this->collectDiagnosticProviders(
+                $container,
+                outsourced: $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)->bool() ? false : null,
+            );
             return new DiagnosticsEngine(
                 $container->get(ClientApi::class),
-                $container->get(AggregateDiagnosticsProvider::class),
+                $this->logger($container, 'LSPDIAG'),
+                $providers,
                 $container->parameter(self::PARAM_DIAGNOSTIC_SLEEP_TIME)->int()
             );
         });

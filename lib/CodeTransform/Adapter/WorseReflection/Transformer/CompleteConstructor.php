@@ -92,14 +92,21 @@ class CompleteConstructor implements Transformer
             $constructMethod = $class->methods()->get('__construct');
             $methodBody = (string) $constructMethod->body();
 
-            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+            // Filtering out parameters from the parent class
+            $nonPromotedParameterNames = $this->getParentClassParamaterNames($class);
+            $parametersToHandle = array_filter(
+                iterator_to_array($constructMethod->parameters()->notPromoted()),
+                fn (ReflectionParameter $parameter) => !in_array($parameter->name(), $nonPromotedParameterNames)
+            );
+
+            foreach ($parametersToHandle as $parameter) {
                 if (preg_match('{this\s*->' . $parameter->name() . '}', $methodBody)) {
                     continue;
                 }
                 $methodBuilder->body()->line('$this->' . $parameter->name() . ' = $' . $parameter->name() .';');
             }
 
-            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+            foreach ($parametersToHandle as $parameter) {
                 if ($parameter->isPromoted()) {
                     continue;
                 }
@@ -108,7 +115,6 @@ class CompleteConstructor implements Transformer
                 if (true === $class->properties()->has($parameter->name())) {
                     continue;
                 }
-
 
                 $propertyBuilder = $classBuilder->property($parameter->name());
                 $propertyBuilder->visibility($this->visibility);
@@ -130,12 +136,39 @@ class CompleteConstructor implements Transformer
 
         foreach ($this->candidateClasses($source) as $class) {
             $constructMethod = $class->methods()->get('__construct');
+            $nonPromotedParameterNames = $this->getParentClassParamaterNames($class);
             foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+                if (in_array($parameter->name(), $nonPromotedParameterNames)) {
+                    continue;
+                }
                 $edits[] = TextEdit::create($parameter->position()->start()->toInt(), 0, sprintf('%s ', $this->visibility));
             }
         }
 
         return TextEdits::fromTextEdits($edits);
+    }
+
+    /**
+    * Get the names of the parent constructor to know which parameters should not be promoted.
+    * @return array<string>
+    */
+    private function getParentClassParamaterNames(ReflectionClass $class): array
+    {
+        $ancestor = $class->parent();
+        if ($ancestor === null) {
+            return [];
+        }
+
+        if (!$ancestor->methods()->has('__construct')) {
+            return [];
+        }
+
+        $parameters = [];
+        foreach($ancestor->methods()->get('__construct')->parameters() as $parameter) {
+            $parameters[] = $parameter->name();
+        }
+
+        return $parameters;
     }
 
     /**

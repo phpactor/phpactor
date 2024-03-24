@@ -61,7 +61,7 @@ final class ProcessBuilder
     }
 
     /**
-     * @param list<string> $args
+     * @param array<array-key,string> $args
      */
     public static function create(array $args): self
     {

@@ -53,7 +53,7 @@ class CreateUnresolvableClassProviderTest extends IntegrationTestCase
         $actions = wait($provider->provideActionsFor(
             ProtocolFactory::textDocumentItem('file:///foo', $source),
             RangeConverter::toLspRange(ByteOffsetRange::fromInts((int)$start, (int)$end), $source),
-            (new CancellationTokenSource)->getToken(),
+            (new CancellationTokenSource())->getToken(),
         ));
         $assertion(...$actions);
     }

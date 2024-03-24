@@ -1,5 +1,20 @@
-Drupal 8
-========
+Drupal 8+
+=========
+
+Inc and module files
+^^^^^^^^^^^^^^^^^^^^
+
+By default Phpactor will not index `.inc` nor `.module` files.
+
+Run the following on your project to enable the indexing of `.inc` and `.module` files.
+
+```
+phpactor config:set indexer.supported_extensions '["php", "inc", "module"]'
+```
+
+```
+phpactor config:set indexer.include_patterns '["/**/*.php", "/**/*.inc", "/**/*.module"]'
+```
 
 Bootstrapping
 ~~~~~~~~~~~~~
@@ -115,3 +130,5 @@ Change your local ``.phpactor.yml`` to use 2 spaces for indentation:
    Code will still be generated using the PSR-2 standard. It would be
    necessary to override twig templates in ``.phpactor/templates`` to
    rectify this (or just use a CS fixer).
+
+

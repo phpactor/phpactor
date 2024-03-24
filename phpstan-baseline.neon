@@ -231,11 +231,6 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/ClassBuilder.php
 
 		-
-			message: "#^Parameter \\#2 \\$value of class Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Constant constructor expects Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\Value, mixed given\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Domain/Builder/ConstantBuilder.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Builder\\\\ParameterBuilder\\:\\:defaultValue\\(\\) has parameter \\$value with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Builder/ParameterBuilder.php
@@ -269,6 +264,11 @@ parameters:
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Constants.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Enums.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces\\:\\:fromTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
@@ -461,11 +461,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/PhpVersionPathResolverTest.php
 
 		-
-			message: "#^Method Phpactor\\\\TestUtils\\\\Workspace\\:\\:mkdir\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/PhpVersionPathResolverTest.php
-
-		-
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\SourceBuilderTest\\:\\:\\$builder has no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
@@ -489,56 +484,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Util\\\\TextFormatTest\\:\\:provideRemoveIndentation\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Util/TextFormatTest.php
-
-		-
-			message: "#^Call to method end\\(\\) on an unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Call to method endLineNumber\\(\\) on an unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Call to method fullStart\\(\\) on an unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Call to method fullText\\(\\) on an unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Call to method innerNode\\(\\) on an unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Call to method start\\(\\) on an unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Call to method startLineNumber\\(\\) on an unknown class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery not found\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Function debug_node\\(\\) has parameter \\$node with no type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
-
-		-
-			message: "#^Instantiated class Phpactor\\\\CodeBuilder\\\\Adapter\\\\TolerantParser\\\\NodeQuery not found\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/autoload.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Util\\\\TextFormat\\:\\:indentRemove\\(\\) should return string but returns string\\|null\\.$#"
@@ -606,18 +551,13 @@ parameters:
 			path: lib/CodeTransform/Domain/DocBlockUpdater/ParamTagPrototype.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/CodeTransform/Domain/SourceCode.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Domain\\\\Transformers\\:\\:in\\(\\) has parameter \\$transformerNames with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeTransform/Domain/Transformers.php
 
 		-
 			message: "#^Variable \\$lines in empty\\(\\) always exists and is not falsy\\.$#"
-			count: 2
+			count: 1
 			path: lib/CodeTransform/Domain/Utils/TextUtils.php
 
 		-
@@ -821,19 +761,9 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseFunctionCompletor.php
 
 		-
-			message: "#^Generator expects value type Phpactor\\\\Completion\\\\Core\\\\Suggestion, mixed given\\.$#"
-			count: 2
-			path: lib/Completion/Bridge/TolerantParser/WorseReflection/WorseNamedParameterCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Core\\\\ChainSignatureHelper\\:\\:__construct\\(\\) has parameter \\$helpers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Core/ChainSignatureHelper.php
-
-		-
-			message: "#^Parameter \\#2 \\$options of static method Phpactor\\\\Completion\\\\Core\\\\Suggestion\\:\\:createWithOptions\\(\\) expects array\\{short_description\\?\\: Closure\\|string\\|null, documentation\\?\\: Closure\\|string\\|null, type\\?\\: string\\|null, class_import\\?\\: string\\|null, name_import\\?\\: string\\|null, label\\?\\: string\\|null, range\\?\\: Phpactor\\\\Completion\\\\Core\\\\Range\\|null, snippet\\?\\: string\\|null, \\.\\.\\.\\}, array\\<string, mixed\\> given\\.$#"
-			count: 2
-			path: lib/Completion/Core/Completor/NameSearcherCompletor.php
 
 		-
 			message: "#^Parameter \\#5 \\$options of method Phpactor\\\\Completion\\\\Core\\\\Completor\\\\NameSearcherCompletor\\:\\:createSuggestion\\(\\) expects array\\<string, string\\>, array\\<string, mixed\\> given\\.$#"
@@ -1076,11 +1006,6 @@ parameters:
 			path: lib/ConfigLoader/Adapter/Deserializer/YamlDeserializer.php
 
 		-
-			message: "#^Method Phpactor\\\\ConfigLoader\\\\ConfigLoaderBuilder\\:\\:addXdgCandidate\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/ConfigLoader/ConfigLoaderBuilder.php
-
-		-
 			message: "#^Cannot call method loader\\(\\) on mixed\\.$#"
 			count: 1
 			path: lib/ConfigLoader/Core/ConfigLoader.php
@@ -1156,157 +1081,7 @@ parameters:
 			path: lib/DocblockParser/Ast/Docblock.php
 
 		-
-			message: "#^Cannot access property \\$type on Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\.$#"
-			count: 3
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Cannot access property \\$value on Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\.$#"
-			count: 5
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Cannot call method toString\\(\\) on Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$list of class Phpactor\\\\DocblockParser\\\\Ast\\\\ParameterList constructor expects array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ParameterTag\\|Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\>, array\\<int, Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ParameterTag\\|Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$list of class Phpactor\\\\DocblockParser\\\\Ast\\\\TypeList constructor expects array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\>, array\\<int, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\|null\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
 			message: "#^Parameter \\#1 \\$list of class Phpactor\\\\DocblockParser\\\\Ast\\\\TypeList constructor expects array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\>, array\\<int\\<0, max\\>, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\|null\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ThisNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 2
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of class Phpactor\\\\DocblockParser\\\\Ast\\\\UnknownTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of class Phpactor\\\\DocblockParser\\\\Ast\\\\VariableNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$null of class Phpactor\\\\DocblockParser\\\\Ast\\\\Value\\\\NullValue constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$nullable of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\NullableNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$open of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\GenericNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$open of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ParenthesizedType constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ExtendsTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ImplementsTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\MixinTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ParamTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\PropertyTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ReturnTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\TemplateTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\ThrowsTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tag of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\VarTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$token of class Phpactor\\\\DocblockParser\\\\Ast\\\\Tag\\\\DeprecatedTag constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$tokens of class Phpactor\\\\DocblockParser\\\\Ast\\\\TextNode constructor expects array\\<Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\>, array\\<int, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\> given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$type of method Phpactor\\\\DocblockParser\\\\Parser\\:\\:createTypeFromToken\\(\\) expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 3
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#1 \\$variable of class Phpactor\\\\DocblockParser\\\\Ast\\\\ConditionalNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\VariableNode, Phpactor\\\\DocblockParser\\\\Ast\\\\VariableNode\\|null given\\.$#"
-			count: 5
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#2 \\$doubleColon of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ConstantNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#2 \\$listChars of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ListBracketsNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#2 \\$type of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\NullableNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode, Phpactor\\\\DocblockParser\\\\Ast\\\\TypeNode\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#3 \\$constant of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\ConstantNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
-			count: 1
-			path: lib/DocblockParser/Parser.php
-
-		-
-			message: "#^Parameter \\#4 \\$close of class Phpactor\\\\DocblockParser\\\\Ast\\\\Type\\\\GenericNode constructor expects Phpactor\\\\DocblockParser\\\\Ast\\\\Token, Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null given\\.$#"
 			count: 1
 			path: lib/DocblockParser/Parser.php
 
@@ -1341,13 +1116,8 @@ parameters:
 			path: lib/DocblockParser/Tests/Unit/Ast/NodeTest.php
 
 		-
-			message: "#^Parameter \\#4 \\$path of class Phpactor\\\\Extension\\\\Behat\\\\Behat\\\\Step constructor expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/Behat/Adapter/Worse/WorseStepFactory.php
-
-		-
 			message: "#^Cannot access offset 'imports' on mixed\\.$#"
-			count: 2
+			count: 1
 			path: lib/Extension/Behat/Behat/BehatConfig.php
 
 		-
@@ -1471,11 +1241,6 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassCopy.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:createQuery\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:createQuery\\(\\) has parameter \\$memberType with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
@@ -1486,57 +1251,12 @@ parameters:
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:line\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:referencesInFile\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:referencesInFile\\(\\) has parameter \\$filePath with no type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReference\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMemberReferences\\:\\:serializeReferenceList\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMemberReferences.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:directoryMap\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) has parameter \\$dest with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) has parameter \\$src with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:expandRelatedPaths\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:getRelatedFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveClass\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMover.php
 
@@ -1547,11 +1267,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$code of class RuntimeException constructor expects int, null given\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/ClassMover.php
-
-		-
-			message: "#^Result of method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassMover\\:\\:moveFile\\(\\) \\(void\\) is used\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassMover.php
 
@@ -1579,46 +1294,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\ClassReferences\\:\\:replaceReferences\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ClassMover/Application/ClassReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:allPhpFiles\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:interfaceFilePaths\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:interfaceFilePaths\\(\\) has parameter \\$filePaths with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:parentFilePaths\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:parentFilePaths\\(\\) has parameter \\$filePaths with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:pathsFromReflectionClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:traitFilePaths\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ClassMover\\\\Application\\\\Finder\\\\FileFinder\\:\\:traitFilePaths\\(\\) has parameter \\$filePaths with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/ClassMover/Application/Finder/FileFinder.php
 
 		-
 			message: "#^Parameter \\#2 \\$subject of function preg_match expects string, string\\|false given\\.$#"
@@ -2246,11 +1921,6 @@ parameters:
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
-			message: "#^Parameter \\#2 \\$parser of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseFillObject constructor expects Microsoft\\\\PhpParser\\\\Parser, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
 			message: "#^Parameter \\#2 \\$parser of class Phpactor\\\\CodeTransform\\\\Adapter\\\\WorseReflection\\\\Transformer\\\\RemoveUnusedImportsTransformer constructor expects Microsoft\\\\PhpParser\\\\Parser, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
@@ -2392,21 +2062,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:generateFromExisting\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
-
-		-
-			message: "#^Parameter \\#1 \\$filename of function is_file expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
-
-		-
-			message: "#^Parameter \\#1 \\$src of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:doGenerateFromExisting\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
-
-		-
-			message: "#^Parameter \\#2 \\$dest of method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassInflect\\:\\:doGenerateFromExisting\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Application/ClassInflect.php
 
@@ -2787,16 +2442,6 @@ parameters:
 
 		-
 			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
-			count: 1
-			path: lib/Extension/Completion/CompletionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$limit of class Phpactor\\\\Completion\\\\Core\\\\Completor\\\\LimitingCompletor constructor expects int, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Completion/CompletionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$matchNameImport of class Phpactor\\\\Completion\\\\Core\\\\Completor\\\\DedupeCompletor constructor expects bool, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Completion/CompletionExtension.php
 
@@ -3526,11 +3171,6 @@ parameters:
 			path: lib/Extension/Core/CoreExtension.php
 
 		-
-			message: "#^Parameter \\#6 \\$warnOnDevelop of class Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Core/CoreExtension.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Rpc\\\\CacheClearHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Core/Rpc/CacheClearHandler.php
@@ -3646,16 +3286,6 @@ parameters:
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
 		-
-			message: "#^Parameter \\#2 \\$status of class Phpactor\\\\Extension\\\\LanguageServer\\\\Service\\\\OnDevelopWarningService constructor expects Phpactor\\\\Extension\\\\Core\\\\Application\\\\Status, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/LanguageServerExtraExtension.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServer\\\\Service\\\\OnDevelopWarningService\\:\\:serviceAnnouncements\\(\\) should return Amp\\\\Promise\\<void\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Service/OnDevelopWarningService.php
-
-		-
 			message: "#^Parameter \\#1 \\$command of class Symfony\\\\Component\\\\Console\\\\Tester\\\\CommandTester constructor expects Symfony\\\\Component\\\\Console\\\\Command\\\\Command, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/Tests/Unit/Command/StartCommandTest.php
@@ -3684,11 +3314,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$probe of method Blackfire\\\\Client\\:\\:endProbe\\(\\) expects Blackfire\\\\Probe, Blackfire\\\\Probe\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerBlackfire/BlackfireProfiler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerBridge\\\\Converter\\\\LocationConverter\\:\\:toLspLocations\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerBridge/Converter/LocationConverter.php
 
 		-
 			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerBridge\\\\TextDocument\\\\WorkspaceTextDocumentLocator constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
@@ -3786,16 +3411,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/LspCommand/GenerateDecoratorCommand.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\GenerateMethodCommand\\:\\:__invoke\\(\\) has invalid return type Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ApplyWorkspaceEditResult\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LspCommand/GenerateMethodCommand.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\GenerateMethodCommand\\:\\:__invoke\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ApplyWorkspaceEditResult\\|null\\> but returns Amp\\\\Promise\\<Phpactor\\\\LanguageServerProtocol\\\\ApplyWorkspaceEditResult\\>\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/LspCommand/GenerateMethodCommand.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\ImportAllUnresolvedNamesCommand\\:\\:candidates\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/LspCommand/ImportAllUnresolvedNamesCommand.php
@@ -3847,11 +3462,6 @@ parameters:
 
 		-
 			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/CreateClassProviderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\LanguageServer\\\\Test\\\\LanguageServerTester\\\\TextDocumentTester\\:\\:save\\(\\) invoked with 2 parameters, 1 required\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/CodeAction/CreateClassProviderTest.php
 
@@ -4001,17 +3611,7 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateDecoratorCommandTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\GenerateMethodCommandTest\\:\\:createTester\\(\\) has parameter \\$generateMethod with generic class Prophecy\\\\Prophecy\\\\ObjectProphecy but does not specify its types\\: T$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateMethodCommandTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\GenerateMethodCommandTest\\:\\:provideExceptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateMethodCommandTest.php
-
-		-
-			message: "#^Parameter \\#3 \\$generateMethod of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\GenerateMethodCommand constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Refactor\\\\GenerateMethod, object given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateMethodCommandTest.php
 
@@ -4051,16 +3651,6 @@ parameters:
 			path: lib/Extension/LanguageServerCompletion/Handler/CompletionHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\CompletionHandler\\:\\:resolveItem\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\LanguageServerProtocol\\\\CompletionItem\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Handler/CompletionHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$array of static method Phpactor\\\\LanguageServerProtocol\\\\CompletionItem\\:\\:fromArray\\(\\) expects array\\<string, mixed\\>, array\\<string, mixed\\>\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Handler/CompletionHandler.php
-
-		-
 			message: "#^Parameter \\#2 \\$replace of function str_replace expects array\\|string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCompletion/Handler/CompletionHandler.php
@@ -4074,31 +3664,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\SignatureHelpHandler\\:\\:signatureHelp\\(\\) return type with generic interface Amp\\\\Promise does not specify its types\\: TValue$#"
 			count: 1
 			path: lib/Extension/LanguageServerCompletion/Handler/SignatureHelpHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$trimLeadingDollar of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Util\\\\SuggestionNameFormatter constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\CompletionHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\SignatureHelpHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$helper of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\SignatureHelpHandler constructor expects Phpactor\\\\Completion\\\\Core\\\\SignatureHelper, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$registry of class Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Handler\\\\CompletionHandler constructor expects Phpactor\\\\Completion\\\\Core\\\\TypedCompletorRegistry, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/LanguageServerCompletionExtension.php
 
 		-
 			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:cases\\(\\)\\.$#"
@@ -4172,11 +3737,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Tests\\\\Unit\\\\Handler\\\\CompletionHandlerTest\\:\\:createNameImporter\\(\\) has parameter \\$importNameTextEdits with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Handler/CompletionHandlerTest.php
-
-		-
-			message: "#^Method class@anonymous/Extension/LanguageServerCompletion/Tests/Unit/Handler/CompletionHandlerTest\\.php\\:482\\:\\:__construct\\(\\) has parameter \\$suggestions with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Handler/CompletionHandlerTest.php
 
@@ -4296,11 +3856,6 @@ parameters:
 			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 3
-			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
-
-		-
 			message: "#^Parameter \\#2 \\$path of method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Model\\\\WorkspaceSymbolProvider\\:\\:toLspPosition\\(\\) expects string, string\\|null given\\.$#"
 			count: 6
 			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
@@ -4329,16 +3884,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Watcher\\\\LanguageServerWatcher\\:\\:getListenersForEvent\\(\\) return type has no value type specified in iterable type iterable\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerIndexer/Watcher/LanguageServerWatcher.php
-
-		-
-			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$showDiagnostics of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\Provider\\\\PhpCsFixerDiagnosticsProvider constructor expects bool, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpCsFixer/LanguageServerPhpCsFixerExtension.php
 
 		-
 			message: "#^Parameter \\#3 \\$env of class Phpactor\\\\Extension\\\\LanguageServerPhpCsFixer\\\\Model\\\\PhpCsFixerProcess constructor expects array\\<string, string\\>, mixed given\\.$#"
@@ -4371,16 +3916,6 @@ parameters:
 			path: lib/Extension/LanguageServerPhpCsFixer/Tests/Model/PhpCsFixerProcessTest.php
 
 		-
-			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServerPhpstan/LanguageServerPhpstanExtension.php
-
-		-
-			message: "#^Parameter \\#2 \\$level of class Phpactor\\\\Extension\\\\LanguageServerPhpstan\\\\Model\\\\PhpstanConfig constructor expects string\\|null, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerPhpstan/LanguageServerPhpstanExtension.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerPhpstan\\\\Model\\\\DiagnosticsParser\\:\\:decodeJson\\(\\) should return array but returns mixed\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerPhpstan/Model/DiagnosticsParser.php
@@ -4399,16 +3934,6 @@ parameters:
 			message: "#^Property Phpactor\\\\LanguageServerProtocol\\\\TextDocumentItem\\:\\:\\$languageId \\(string\\) on left side of \\?\\? is not nullable\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/Handler/GotoImplementationHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler\\:\\:references\\(\\) return type with generic interface Amp\\\\Promise does not specify its types\\: TValue$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Handler/ReferencesHandler.php
-
-		-
-			message: "#^Property Phpactor\\\\LanguageServerProtocol\\\\TextDocumentItem\\:\\:\\$languageId \\(string\\) on left side of \\?\\? is not nullable\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Handler/ReferencesHandler.php
 
 		-
 			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Adapter\\\\Indexer\\\\WorkspaceUpdateReferenceFinder constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
@@ -4506,18 +4031,8 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoImplementationHandlerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
 			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
 			count: 3
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 4
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
 
 		-
@@ -4991,11 +4506,6 @@ parameters:
 			path: lib/Extension/PHPUnit/FrameWalker/AssertInstanceOfWalker.php
 
 		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(string\\|false\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: string\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/Php/Model/ComposerPhpVersionResolver.php
-
-		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
 			count: 1
 			path: lib/Extension/Php/PhpExtension.php
@@ -5004,6 +4514,16 @@ parameters:
 			message: "#^Parameter \\#1 \\$version of class Phpactor\\\\Extension\\\\Php\\\\Model\\\\ConstantPhpVersionResolver constructor expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Php/PhpExtension.php
+
+		-
+			message: "#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/PhpCodeSniffer/Model/PhpCodeSnifferProcess.php
+
+		-
+			message: "#^Parameter \\#3 \\$workspace of class Phpactor\\\\Extension\\\\PhpCodeSniffer\\\\LspCommand\\\\FormatCommand constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
+			count: 1
+			path: lib/Extension/PhpCodeSniffer/PhpCodeSnifferExtension.php
 
 		-
 			message: "#^Parameter \\#1 \\$finders of class Phpactor\\\\ReferenceFinder\\\\ChainImplementationFinder constructor expects array\\<Phpactor\\\\ReferenceFinder\\\\ClassImplementationFinder\\>, array\\<int\\<0, max\\>, mixed\\> given\\.$#"
@@ -5021,22 +4541,12 @@ parameters:
 			path: lib/Extension/ReferenceFinderRpc/Handler/GotoDefinitionHandler.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoImplementationHandler\\:\\:fileContents\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Handler/GotoImplementationHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoImplementationHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/ReferenceFinderRpc/Handler/GotoImplementationHandler.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoImplementationHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Handler/GotoImplementationHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoImplementationHandler\\:\\:locationsToReferences\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/ReferenceFinderRpc/Handler/GotoImplementationHandler.php
 
@@ -5064,11 +4574,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$locator of class Phpactor\\\\Extension\\\\ReferenceFinderRpc\\\\Handler\\\\GotoTypeHandler constructor expects Phpactor\\\\ReferenceFinder\\\\TypeLocator, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/ReferenceFinderRpc/ReferenceFinderRpcExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/ReferenceFinderRpc/Tests/Unit/Handler/GotoTypeHandlerTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Command\\\\RpcCommand\\:\\:__construct\\(\\) has parameter \\$inputStream with no type specified\\.$#"
@@ -5241,11 +4746,6 @@ parameters:
 			path: lib/Extension/Rpc/Response/ErrorResponse.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\FileReferencesResponse\\:\\:__construct\\(\\) has parameter \\$references with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/FileReferencesResponse.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\FileReferencesResponse\\:\\:fromArray\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/FileReferencesResponse.php
@@ -5414,11 +4914,6 @@ parameters:
 			message: "#^Property Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Reference\\\\FileReferences\\:\\:\\$references type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Response/Reference/FileReferences.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Reference\\\\Reference\\:\\:fromStartEndLineNumberAndCol\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Response/Reference/Reference.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Response\\\\Reference\\\\Reference\\:\\:fromStartEndLineNumberLineAndCol\\(\\) has no return type specified\\.$#"
@@ -6051,33 +5546,18 @@ parameters:
 			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
 
 		-
+			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\InMemory\\\\InMemoryIndex\\:\\:get\\(\\) should return TRecord of Phpactor\\\\Indexer\\\\Model\\\\Record but returns Phpactor\\\\Indexer\\\\Model\\\\Record\\.$#"
+			count: 1
+			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
+
+		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\InMemory\\\\InMemoryIndex\\:\\:lastUpdate\\(\\) should return int but returns int\\|null\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedImplementationFinder.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/ReferenceFinder/IndexedNameSearcher.php
-
-		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
 			count: 2
-			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
-
-		-
-			message: "#^Parameter \\#1 \\$fqn of static method Phpactor\\\\Indexer\\\\Model\\\\Name\\\\FullyQualifiedName\\:\\:fromString\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of static method Phpactor\\\\Indexer\\\\Model\\\\Record\\\\ClassRecord\\:\\:fromName\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
-			count: 1
 			path: lib/Indexer/Adapter/Tolerant/Indexer/AbstractClassLikeIndexer.php
 
 		-
@@ -6177,22 +5657,12 @@ parameters:
 
 		-
 			message: "#^Cannot call method resolve\\(\\) on mixed\\.$#"
-			count: 3
+			count: 2
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: string given\\.$#"
 			count: 2
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$excludePatterns of method Phpactor\\\\Indexer\\\\IndexAgentBuilder\\:\\:setExcludePatterns\\(\\) expects array\\<string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$includePatterns of method Phpactor\\\\Indexer\\\\IndexAgentBuilder\\:\\:setIncludePatterns\\(\\) expects array\\<string\\>, mixed given\\.$#"
-			count: 1
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
@@ -6246,16 +5716,6 @@ parameters:
 			path: lib/Indexer/Model/Indexer.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of static method Phpactor\\\\TextDocument\\\\Location\\:\\:fromPathAndOffset\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Query/ClassQuery.php
-
-		-
-			message: "#^Parameter \\#1 \\$haystack of function strpos expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Query/Criteria/FileAbsolutePathBeginsWith.php
-
-		-
 			message: "#^Cannot call method references\\(\\) on Phpactor\\\\Indexer\\\\Model\\\\Record\\\\FunctionRecord\\|null\\.$#"
 			count: 1
 			path: lib/Indexer/Model/Query/FunctionQuery.php
@@ -6264,16 +5724,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$record of method Phpactor\\\\Indexer\\\\Model\\\\RecordReferences\\:\\:to\\(\\) expects Phpactor\\\\Indexer\\\\Model\\\\Record, Phpactor\\\\Indexer\\\\Model\\\\Record\\\\FunctionRecord\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Model/Query/FunctionQuery.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of static method Phpactor\\\\TextDocument\\\\Location\\:\\:fromPathAndOffset\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Query/FunctionQuery.php
-
-		-
-			message: "#^Parameter \\#1 \\$string of static method Phpactor\\\\TextDocument\\\\Location\\:\\:fromPathAndOffset\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Query/MemberQuery.php
 
 		-
 			message: "#^Property Phpactor\\\\Indexer\\\\Model\\\\QueryClient\\:\\:\\$enhancer is never read, only written\\.$#"
@@ -6349,11 +5799,6 @@ parameters:
 			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/IntegrationTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\TestUtils\\\\Workspace\\:\\:path\\(\\) invoked with 2 parameters, 0\\-1 required\\.$#"
-			count: 2
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Unit\\\\Adapter\\\\ReferenceFinder\\\\Util\\\\ContainerTypeResolverTest\\:\\:testResolve\\(\\) has parameter \\$manifest with no value type specified in iterable type array\\.$#"
@@ -6486,11 +5931,6 @@ parameters:
 			path: lib/Phpactor.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function strlen expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/Phpactor.php
-
-		-
 			message: "#^Dead catch \\- Phpactor\\\\ReferenceFinder\\\\Exception\\\\UnsupportedDocument is never thrown in the try block\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/ChainDefinitionLocationProvider.php
@@ -6509,11 +5949,6 @@ parameters:
 			message: "#^Method Phpactor\\\\ReferenceFinder\\\\ChainTypeLocator\\:\\:__construct\\(\\) has parameter \\$locators with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ReferenceFinder/ChainTypeLocator.php
-
-		-
-			message: "#^Class Phpactor\\\\TextDocument\\\\Locations constructor invoked with 2 parameters, 1 required\\.$#"
-			count: 1
-			path: lib/ReferenceFinder/Tests/Unit/ChainImplementationFinderTest.php
 
 		-
 			message: "#^Property Phpactor\\\\ReferenceFinder\\\\Tests\\\\Unit\\\\ChainReferenceFinderTest\\:\\:\\$locator1 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\ReferenceFinder\\\\ClassReferenceFinder\\>\\) does not accept Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\ReferenceFinder\\\\ReferenceFinder\\>\\.$#"
@@ -6591,11 +6026,6 @@ parameters:
 			path: lib/Rename/Tests/Adapter/ReferenceFinder/MemberRenamerTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Rename/Tests/Adapter/ReferenceFinder/ReferenceRenamerIntegrationTestCase.php
-
-		-
 			message: "#^Parameter \\#2 \\$documentUri of class Phpactor\\\\Rename\\\\Model\\\\LocatedTextEdits constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
 			count: 1
 			path: lib/Rename/Tests/Adapter/ReferenceFinder/VariableRenamerTest.php
@@ -6611,31 +6041,6 @@ parameters:
 			path: lib/TextDocument/TextDocumentLocator/InMemoryDocumentLocator.php
 
 		-
-			message: "#^Parameter \\#1 \\$offset of static method Phpactor\\\\TextDocument\\\\ByteOffset\\:\\:fromInt\\(\\) expects int, mixed given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/TolerantVariableReferenceFinderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$text of static method Phpactor\\\\TextDocument\\\\TextDocumentBuilder\\:\\:create\\(\\) expects string, mixed given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/TolerantVariableReferenceFinderTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of class Phpactor\\\\TextDocument\\\\Location constructor expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/Tests/Unit/TolerantVariableReferenceFinderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:isPotentialReferenceNode\\(\\) is unused\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
-
-		-
-			message: "#^Parameter \\#1 \\$variableName of method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:nameExistsInUseClause\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
-
-		-
 			message: "#^Parameter \\#2 \\$name of method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:find\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
@@ -6647,11 +6052,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:resolveImportTable\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of static method Phpactor\\\\TextDocument\\\\TextDocumentUri\\:\\:fromString\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/WorsePlainTextClassDefinitionLocator.php
 
@@ -6846,11 +6246,6 @@ parameters:
 			path: lib/WorseReflection/Core/DocBlock/DocBlockInspector.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function trim expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/PlainDocblock.php
-
-		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/FrameResolver.php
@@ -6894,11 +6289,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\PropertyAssignments\\:\\:fromArray\\(\\) has parameter \\$assignments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/PropertyAssignments.php
-
-		-
-			message: "#^Parameter \\#2 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\NodeContextResolver\\:\\:resolveNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node\\|Microsoft\\\\PhpParser\\\\Token, Microsoft\\\\PhpParser\\\\Node\\\\Expression\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Inference/Resolver/ArgumentExpressionResolver.php
 
 		-
 			message: "#^Cannot access property \\$elementKey on mixed\\.$#"
@@ -7051,11 +6441,6 @@ parameters:
 			path: lib/WorseReflection/Core/NodeText.php
 
 		-
-			message: "#^Parameter \\#2 \\$callback of function array_filter expects callable\\(T\\)\\: mixed, Closure\\(object\\)\\: bool given\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
 			message: "#^Parameter \\#4 \\$node of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionConstant constructor expects Microsoft\\\\PhpParser\\\\Node\\\\ConstElement, mixed given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/ClassLikeReflectionMemberCollection.php
@@ -7109,11 +6494,6 @@ parameters:
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CompositeReflector\\:\\:reflectOffset\\(\\) has parameter \\$offset with no type specified\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflector/CompositeReflector.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:diagnostics\\(\\) has parameter \\$sourceCode with no type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflector/CoreReflector.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\CoreReflector\\:\\:reflectNode\\(\\) has parameter \\$offset with no type specified\\.$#"
@@ -7217,11 +6597,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|null\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Util/NodeUtil.php
-
-		-
-			message: "#^Cannot call method getChildNodes\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Util/NodeUtil.php
 

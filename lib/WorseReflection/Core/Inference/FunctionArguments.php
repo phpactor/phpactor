@@ -38,6 +38,11 @@ class FunctionArguments implements IteratorAggregate, Countable
         )));
     }
 
+    public function has(int $index): bool
+    {
+        return isset($this->arguments[$index]);
+    }
+
     public function at(int $index): NodeContext
     {
         if (!isset($this->arguments[$index])) {

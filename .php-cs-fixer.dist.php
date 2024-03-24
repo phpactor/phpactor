@@ -44,6 +44,10 @@ return (new Config())
         'global_namespace_import' => true,
         'no_trailing_whitespace' => true,
         'no_whitespace_in_blank_line' => true,
+        'new_with_parentheses' => [
+            'anonymous_class' => true,
+            'named_class' => true,
+        ],
     ])
     ->setFinder($finder)
 ;

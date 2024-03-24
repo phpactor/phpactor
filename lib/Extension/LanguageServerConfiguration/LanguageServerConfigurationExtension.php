@@ -13,9 +13,15 @@ use Phpactor\MapResolver\Resolver;
 
 class LanguageServerConfigurationExtension implements Extension
 {
+    public const AUTO_CONFIG = 'language_server_configuration.auto_config';
+
     public function load(ContainerBuilder $container): void
     {
         $container->register(AutoConfigListener::class, function (Container $container) {
+            if (false === $container->parameter(self::AUTO_CONFIG)->bool()) {
+                return null;
+            }
+
             return new AutoConfigListener(
                 $container->get(Configurator::class),
                 $container->get(ClientApi::class),
@@ -27,5 +33,15 @@ class LanguageServerConfigurationExtension implements Extension
 
     public function configure(Resolver $schema): void
     {
+        $schema->setDefaults([
+            self::AUTO_CONFIG => true,
+        ]);
+        $schema->setDescriptions([
+            self::AUTO_CONFIG => 'Prompt to enable extensions which apply to your project on language server start'
+        ]);
+        $schema->setTypes([
+            self::AUTO_CONFIG => 'boolean'
+        ]);
+
     }
 }

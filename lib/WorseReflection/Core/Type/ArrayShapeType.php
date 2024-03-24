@@ -55,11 +55,15 @@ class ArrayShapeType extends ArrayType implements Generalizable, ArrayAccessType
      */
     public function typeAtOffset($offset): Type
     {
-        if (isset($this->typeMap[$offset])) {
-            return $this->typeMap[$offset];
-        }
+        return $this->typeMap[$offset] ?? new MissingType();
+    }
 
-        return new MissingType();
+    /**
+     * @return array-key[]
+     */
+    public function keys(): array
+    {
+        return array_keys($this->typeMap);
     }
 
     public function map(Closure $mapper): Type

@@ -50,7 +50,11 @@ class ClassQuery implements IndexQuery
 
             foreach ($fileRecord->references()->to($record) as $classReference) {
                 yield LocationConfidence::surely(
-                    Location::fromPathAndOffset($fileRecord->filePath(), $classReference->offset())
+                    Location::fromPathAndOffsets(
+                        $fileRecord->filePath() ?? '',
+                        $classReference->start(),
+                        $classReference->end(),
+                    )
                 );
             }
         }

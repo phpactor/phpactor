@@ -10,6 +10,9 @@ use Phpactor\Completion\Core\Suggestion;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Name;
+use function sprintf;
+use function str_starts_with;
+use function var_export;
 
 class WorseConstantCompletor implements TolerantCompletor
 {
@@ -25,7 +28,7 @@ class WorseConstantCompletor implements TolerantCompletor
         foreach ($definedConstants as $name => $value) {
             $name = Name::fromString((string) $name);
 
-            if (0 === mb_strpos($name->short(), $partial)) {
+            if (str_starts_with($name->short(), $partial)) {
                 yield Suggestion::createWithOptions(
                     $name->short(),
                     [

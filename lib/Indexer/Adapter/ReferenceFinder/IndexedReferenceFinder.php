@@ -7,6 +7,8 @@ use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\RecordReference;
+use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
@@ -88,7 +90,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             Symbol::VARIABLE,
             Symbol::CASE,
         ])) {
-            $containerType = $this->containerTypeResolver->resolveDeclaringContainerType(
+            $containerType = $this->containerTypeResolver->resolveDeclaringClass(
                 $this->symbolTypeToMemberType($nodeContext),
                 $nodeContext->symbol()->name(),
                 $nodeContext->containerType()
@@ -103,15 +105,13 @@ class IndexedReferenceFinder implements ReferenceFinder
                 return;
             }
 
-
-
             // note that we check the all implementations: this will multiply
             // the number of NOT and MAYBE matches
-            foreach ($this->implementationsOf($containerType) as $containerType) {
+            foreach ($this->implementationsOf($containerType) as $implemenations) {
                 yield from $this->memberReferencesTo(
                     $this->symbolTypeToReferenceType($nodeContext),
                     $nodeContext->symbol()->name(),
-                    $containerType
+                    $implemenations
                 );
             }
             return;
@@ -129,8 +129,8 @@ class IndexedReferenceFinder implements ReferenceFinder
             return;
         }
 
-        foreach ($this->query->class()->implementing($fqn) as $implementation) {
-            yield from $this->implementationsOf($implementation->__toString());
+        foreach($this->query->class()->implementing($fqn) as $implementation) {
+            yield $implementation->__toString();
         }
     }
 
@@ -141,26 +141,18 @@ class IndexedReferenceFinder implements ReferenceFinder
     {
         $symbolType = $nodeContext->symbol()->symbolType();
 
-        if ($symbolType === Symbol::CASE) {
-            return ReflectionMember::TYPE_ENUM;
-        }
-        if ($symbolType === Symbol::METHOD) {
-            return ReflectionMember::TYPE_METHOD;
-        }
-        if ($symbolType === Symbol::PROPERTY) {
-            return ReflectionMember::TYPE_PROPERTY;
-        }
-        if ($symbolType === Symbol::VARIABLE) {
-            return ReflectionMember::TYPE_PROPERTY;
-        }
-        if ($symbolType === Symbol::CONSTANT) {
-            return ReflectionMember::TYPE_CONSTANT;
-        }
+        return match ($symbolType) {
+            Symbol::CASE => ReflectionMember::TYPE_CASE,
+            Symbol::METHOD => ReflectionMember::TYPE_METHOD,
+            Symbol::PROPERTY => ReflectionMember::TYPE_PROPERTY,
+            Symbol::VARIABLE => ReflectionMember::TYPE_PROPERTY,
+            Symbol::CONSTANT => ReflectionMember::TYPE_CONSTANT,
 
-        throw new RuntimeException(sprintf(
-            'Could not convert symbol type "%s" to member type',
-            $symbolType
-        ));
+            default => throw new RuntimeException(sprintf(
+                'Could not convert symbol type "%s" to member type',
+                $symbolType
+            ))
+        };
     }
 
     /**
@@ -170,26 +162,18 @@ class IndexedReferenceFinder implements ReferenceFinder
     {
         $symbolType = $nodeContext->symbol()->symbolType();
 
-        if ($symbolType === Symbol::CASE) {
-            return MemberRecord::TYPE_CONSTANT;
-        }
-        if ($symbolType === Symbol::METHOD) {
-            return MemberRecord::TYPE_METHOD;
-        }
-        if ($symbolType === Symbol::PROPERTY) {
-            return MemberRecord::TYPE_PROPERTY;
-        }
-        if ($symbolType === Symbol::VARIABLE) {
-            return MemberRecord::TYPE_PROPERTY;
-        }
-        if ($symbolType === Symbol::CONSTANT) {
-            return MemberRecord::TYPE_CONSTANT;
-        }
+        return match ($symbolType) {
+            Symbol::CASE => MemberRecord::TYPE_CONSTANT,
+            Symbol::METHOD => MemberRecord::TYPE_METHOD,
+            Symbol::PROPERTY => MemberRecord::TYPE_PROPERTY,
+            Symbol::VARIABLE => MemberRecord::TYPE_PROPERTY,
+            Symbol::CONSTANT => MemberRecord::TYPE_CONSTANT,
 
-        throw new RuntimeException(sprintf(
-            'Could not convert symbol type "%s" to reference type',
-            $symbolType
-        ));
+            default => throw new RuntimeException(sprintf(
+                'Could not convert symbol type "%s" to reference type',
+                $symbolType
+            ))
+        };
     }
 
     /**
@@ -209,11 +193,14 @@ class IndexedReferenceFinder implements ReferenceFinder
      */
     private function newObjectReferences(string $containerType): Generator
     {
+        /** @var ?ClassRecord $class */
         $class = $this->query->class()->get($containerType);
         if (!$class) {
             return;
         }
+
         foreach ($class->references() as $reference) {
+            /** @var ?FileRecord $file */
             $file = $this->query->file()->get($reference);
             if (null === $file) {
                 continue;
@@ -227,9 +214,10 @@ class IndexedReferenceFinder implements ReferenceFinder
                     continue;
                 }
                 yield LocationConfidence::surely(
-                    Location::fromPathAndOffset(
+                    Location::fromPathAndOffsets(
                         $file->filePath() ?? '',
-                        $fileReference->offset()
+                        $fileReference->start(),
+                        $fileReference->end()
                     )
                 );
             }

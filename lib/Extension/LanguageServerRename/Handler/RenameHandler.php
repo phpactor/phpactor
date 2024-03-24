@@ -77,8 +77,10 @@ class RenameHandler implements Handler, CanRegisterCapabilities
 
                 return $this->resultToWorkspaceEdit($locatedEdits, $rename->getReturn());
             } catch (CouldNotRename $error) {
+                $previous = $error->getPrevious();
+
                 $this->clientApi->window()->showMessage()->error(sprintf(
-                    $error->getMessage() . $error->getPrevious()->getTraceAsString()
+                    $error->getMessage() . ($previous?->getTraceAsString() ?? '')
                 ));
 
                 return new WorkspaceEdit(null, []);

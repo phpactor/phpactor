@@ -26,14 +26,14 @@ class ClassMoveCommandTest extends SystemTestCase
         $this->assertSuccess($process);
 
         foreach ($fileMap as $filePath => $shouldExist) {
-            $exists = file_exists($this->workspaceDir() . '/' . $filePath);
+            $absFilePath = $this->workspaceDir() . '/' . $filePath;
 
             if ($shouldExist) {
-                $this->assertTrue($exists);
+                $this->assertFileExists($absFilePath);
                 continue;
             }
 
-            $this->assertFalse($exists);
+            $this->assertFileDoesNotExist($absFilePath);
         }
     }
 
@@ -44,7 +44,10 @@ class ClassMoveCommandTest extends SystemTestCase
     {
         yield 'Move file 1' => [
             'class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php',
-            [],
+            [
+                'lib/Badger/Carnivorous.php' => false,
+                'lib/Aardvark/Insectarian.php' => true,
+            ],
         ];
         yield 'Move file 2' => [
             'class:move lib/Aardvark/Edentate.php lib/Foobar.php',

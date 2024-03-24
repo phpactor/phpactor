@@ -36,9 +36,6 @@ final class ReflectorBuilder
 
     private bool $enableContextualSourceLocation = false;
 
-    /**
-     * @var SourceCodeReflectorFactory
-     */
     private ?SourceCodeReflectorFactory $sourceReflectorFactory = null;
 
     /**
@@ -224,7 +221,7 @@ final class ReflectorBuilder
             return $locator[1];
         }, $locators);
 
-        if (empty($locators)) {
+        if ($locators === []) {
             return new NullSourceLocator();
         }
 

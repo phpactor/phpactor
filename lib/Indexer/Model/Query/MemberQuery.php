@@ -55,7 +55,11 @@ class MemberQuery implements IndexQuery
                     $memberReference = $this->enhancer->enhance($fileRecord, $memberReference);
                 }
 
-                $location = Location::fromPathAndOffset($fileRecord->filePath(), $memberReference->offset());
+                $location = Location::fromPathAndOffsets(
+                    $fileRecord->filePath() ?? '',
+                    $memberReference->start(),
+                    $memberReference->end()
+                );
 
                 if (null === $memberReference->contaninerType()) {
                     yield LocationConfidence::maybe($location);
@@ -66,7 +70,6 @@ class MemberQuery implements IndexQuery
                     yield LocationConfidence::not($location);
                     continue;
                 }
-
 
                 yield LocationConfidence::surely($location);
             }

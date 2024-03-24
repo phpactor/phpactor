@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockVars;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -19,6 +20,7 @@ use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -62,6 +64,7 @@ class DocblockMissingParamProvider implements DiagnosticProvider
 
         $docblock = $method->docblock();
         $docblockParams = $docblock->params();
+        $docblockVars = new DocBlockVars([]);
         $missingParams = [];
 
         foreach ($method->parameters() as $parameter) {
@@ -71,6 +74,13 @@ class DocblockMissingParamProvider implements DiagnosticProvider
 
             if ($docblockParams->has($parameter->name())) {
                 continue;
+            }
+
+            if ($method->name() === '__construct') {
+                $vars = $parameter->docblock()->vars();
+                if ($vars->count() > 0) {
+                    continue;
+                }
             }
 
             if ($parameter->isVariadic()) {
@@ -84,6 +94,9 @@ class DocblockMissingParamProvider implements DiagnosticProvider
 
             if ($type instanceof ArrayType) {
                 $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
+            }
+            if ($type::class === PseudoIterableType::class) {
+                $type = new PseudoIterableType(TypeFactory::int(), TypeFactory::mixed());
             }
 
             // replace <undefined> with "mixed"
@@ -163,6 +176,24 @@ class DocblockMissingParamProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'iterable',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function foo(iterable $foobar) {
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                $diagnostics = $diagnostics->byClass(DocblockMissingParamDiagnostic::class);
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
             title: 'array',
             source: <<<'PHP'
                 <?php
@@ -197,6 +228,28 @@ class DocblockMissingParamProvider implements DiagnosticProvider
             valid: true,
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'no false positive for vardoc on promoted property',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function __construct(
+                        /**
+                         * @var array<'GET'|'POST'>
+                         */
+                        private array $foobar,
+                        private array $barfoo
+                    ) {
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
             }
         );
         yield new DiagnosticExample(

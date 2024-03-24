@@ -21,58 +21,69 @@ class TextDocumentUri
         if ($this->scheme === self::SCHEME_UNTITLED) {
             return sprintf('%s:%s', $this->scheme, $this->path);
         }
-        return sprintf('%s://%s', $this->scheme, $this->path);
+        return sprintf('%s:///%s', $this->scheme, ltrim($this->path, '/'));
     }
 
-    public static function fromString(string $uri): self
+    /**
+     * Construct a TextDocumentUri from a URI string or a filesystem path.
+     */
+    public static function fromString(?string $uri): self
     {
-        if (!$uri) {
+        if ($uri === null || $uri === '') {
             throw new InvalidUriException(sprintf(
                 'Could not parse_url "%s"',
                 $uri
             ));
         }
 
-        if (substr($uri, 0, 9) === 'untitled:') {
+        if (str_starts_with($uri, 'untitled:')) {
             return new self(self::SCHEME_UNTITLED, substr($uri, 9));
         }
 
-        $match = preg_match('{^(?<scheme>[a-z]+://){0,1}(?<path>.+)?}', $uri, $components);
+        $match = preg_match('{^(?<scheme>[a-z]+://)?(?<path>.+)?}', $uri, $components, PREG_UNMATCHED_AS_NULL);
+        ['scheme' => $scheme, 'path' => $path] = $components;
 
-        if (!isset($components['scheme']) || $components['scheme'] == '') {
-            $components['scheme'] = self::SCHEME_FILE;
-        } else {
-            $components['scheme'] = substr($components['scheme'], 0, -3);
-        }
-
-        if (!isset($components['path'])) {
+        if ($path === null) {
             throw new InvalidUriException(sprintf(
                 'URI "%s" has no path component',
                 $uri
             ));
         }
 
-        if (!in_array($components['scheme'], self::SCHEMES)) {
+        if ($scheme === null) {
+            // Allow this function to accept filesystem paths too (not URIs), convert to file: URIs
+
+            if (!Path::isAbsolute($path)) {
+                throw new InvalidUriException(sprintf(
+                    'Filesystem path must be absolute, got "%s"',
+                    $path
+                ));
+            }
+
+            $path = Path::canonicalize($path);
+            return new self(self::SCHEME_FILE, $path);
+        }
+
+
+        $scheme = substr($scheme, 0, -3);
+
+        if (!in_array($scheme, self::SCHEMES)) {
             throw new InvalidUriException(sprintf(
                 'Only "%s" schemes are supported, got "%s"',
                 implode('", "', self::SCHEMES),
-                $components['scheme']
+                $scheme
             ));
         }
 
-        if ($components['scheme'] === self::SCHEME_FILE && false === Path::isAbsolute($uri)) {
+        if ($scheme === self::SCHEME_FILE && !str_starts_with($path, '/')) {
             throw new InvalidUriException(sprintf(
                 'URI for file:// must be absolute, got "%s"',
                 $uri
             ));
         }
 
-        $components['path'] = Path::canonicalize($components['path']);
-
-        return new self(
-            $components['scheme'],
-            $components['path']
-        );
+        $path = Path::makeAbsolute(substr($path, 1), '/');
+        return new self($scheme, $path);
     }
 
     public function path(): string

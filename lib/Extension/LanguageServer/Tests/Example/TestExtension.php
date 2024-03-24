@@ -30,7 +30,7 @@ class TestExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register('test.handler', function (Container $container) {
-            return new class implements Handler {
+            return new class() implements Handler {
                 public function methods(): array
                 {
                     return ['test' => 'test'];
@@ -69,7 +69,7 @@ class TestExtension implements Extension
         }, [ LanguageServerExtension::TAG_SERVICE_PROVIDER => []]);
 
         $container->register('test.command', function (Container $container) {
-            return new class implements CoreCommand {
+            return new class() implements CoreCommand {
                 public function __invoke(string $text): Promise
                 {
                     return new Success($text);
@@ -82,7 +82,7 @@ class TestExtension implements Extension
         ]);
 
         $container->register('test.code_action_provider', function (Container $container) {
-            return new class implements CodeActionProvider {
+            return new class() implements CodeActionProvider {
                 public function describe(): string
                 {
                     return 'foobar';
@@ -114,7 +114,7 @@ class TestExtension implements Extension
         }, [ LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []]);
 
         $container->register('test.diagnostic_provider', function (Container $container) {
-            return new class implements DiagnosticsProvider {
+            return new class() implements DiagnosticsProvider {
                 /**
                  * @return Promise<array<Diagnostic>>
                  */
@@ -132,7 +132,7 @@ class TestExtension implements Extension
         }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('dp1', false)]);
 
         $container->register('test.diagnostic_provider.outsourced', function (Container $container) {
-            return new class implements DiagnosticsProvider {
+            return new class() implements DiagnosticsProvider {
                 /**
                  * @return Promise<array<Diagnostic>>
                  */

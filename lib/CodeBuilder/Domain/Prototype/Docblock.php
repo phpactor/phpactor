@@ -37,6 +37,6 @@ class Docblock
             return [];
         }
 
-        return explode(PHP_EOL, $this->docblock);
+        return explode("\n", $this->docblock);
     }
 }

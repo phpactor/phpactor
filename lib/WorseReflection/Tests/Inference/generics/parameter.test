@@ -1,0 +1,26 @@
+<?php
+
+/**
+ * @template TEntity of object
+ * @template TTransfer of object
+ */
+interface PluginInterface
+{
+    /**
+     * @param TEntity $entity
+     * @param TTransfer $transfer
+     */
+    public function map(Mapper $mapper, object $entity, TransferInterface $transfer): void;
+}
+
+/**
+ * @implements PluginInterface<Boo,Bar>
+ */
+class Foo implements PluginInterface
+{
+    public function map(Mapper $mapper, object $entity, TransferInterface $transfer): void
+    {
+        wrAssertType('Bar', $transfer);
+        wrAssertType('Boo', $entity);
+    }
+}

@@ -32,7 +32,7 @@ class SourceCode
         if (null !== $phpDeclarationLineNb) {
             return $this->insertAfter(
                 $phpDeclarationLineNb,
-                PHP_EOL . sprintf('namespace %s;', (string) $namespace)
+                "\n" . sprintf('namespace %s;', (string) $namespace)
             );
         }
 
@@ -54,11 +54,11 @@ class SourceCode
         }
 
         if ($namespaceLineNb) {
-            return $this->insertAfter($namespaceLineNb, PHP_EOL.$useStmt);
+            return $this->insertAfter($namespaceLineNb, "\n".$useStmt);
         }
 
         if (null !== $phpDeclarationLineNb) {
-            return $this->insertAfter($phpDeclarationLineNb, PHP_EOL.$useStmt);
+            return $this->insertAfter($phpDeclarationLineNb, "\n".$useStmt);
         }
 
         throw new InvalidArgumentException(
@@ -73,7 +73,7 @@ class SourceCode
 
     private function insertAfter(int $lineNb, string $text): self
     {
-        $lines = explode(PHP_EOL, $this->source);
+        $lines = explode("\n", $this->source);
         $newLines = [];
         foreach ($lines as $index => $line) {
             if ($line === $text) {
@@ -86,13 +86,13 @@ class SourceCode
             }
         }
 
-        return $this->replaceSource(implode(PHP_EOL, $newLines));
+        return $this->replaceSource(implode("\n", $newLines));
     }
 
     /** @return array{int|null, int|null, int|null} */
     private function significantLineNumbers(): array
     {
-        $lines = explode(PHP_EOL, $this->source);
+        $lines = explode("\n", $this->source);
         $phpDeclarationLineNb = $namespaceLineNb = $lastUseLineNb = null;
 
         foreach ($lines as $index => $line) {

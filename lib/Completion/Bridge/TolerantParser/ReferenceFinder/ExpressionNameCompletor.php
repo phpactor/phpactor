@@ -5,6 +5,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder;
 use Generator;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
@@ -38,10 +39,11 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
             return true;
         }
 
-        $name = $node->__toString();
-        if ($node instanceof QualifiedName && NameUtil::isQualified($name)) {
-            $name = NameUtil::toFullyQualified((string)$node->getResolvedName());
+        if ($node instanceof ScopedPropertyAccessExpression) {
+            return true;
         }
+
+        $name = $this->resolveName($node);
 
         $suggestions = $this->completeName($name, $source->uri(), $node);
 
@@ -88,5 +90,18 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
         }
 
         return !($parent instanceof ObjectCreationExpression);
+    }
+
+    private function resolveName(Node $node): string
+    {
+        if ($node instanceof ScopedPropertyAccessExpression) {
+            $token = $node->memberName;
+            return (string)$token->getText($node->getFileContents());
+        }
+        $name = $node instanceof QualifiedName ? $node->__toString() : '';
+        if ($node instanceof QualifiedName && NameUtil::isQualified($name)) {
+            $name = NameUtil::toFullyQualified((string)$node->getResolvedName());
+        }
+        return $name ?: '';
     }
 }

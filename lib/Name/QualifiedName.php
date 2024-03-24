@@ -6,16 +6,14 @@ use Phpactor\Name\Exception\InvalidName;
 
 final class QualifiedName implements Name
 {
-    const NAMESPACE_SEPARATOR = '\\';
+    private const NAMESPACE_SEPARATOR = '\\';
 
     private array $parts;
 
     private function __construct(array $parts)
     {
-        if (empty($parts)) {
-            throw new InvalidName(sprintf(
-                'Names must have at least one segment'
-            ));
+        if ($parts === []) {
+            throw new InvalidName('Names must have at least one segment');
         }
 
         $this->parts = $parts;

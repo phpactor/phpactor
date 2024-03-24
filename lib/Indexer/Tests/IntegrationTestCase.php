@@ -133,7 +133,7 @@ class IntegrationTestCase extends TestCase
 
     private function createLogger(): LoggerInterface
     {
-        return new class extends AbstractLogger {
+        return new class() extends AbstractLogger {
             public function log($level, $message, array $context = []): void
             {
                 fwrite(STDOUT, sprintf("[%s] %s\n", $level, $message));

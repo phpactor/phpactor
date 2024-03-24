@@ -22,7 +22,7 @@ class WorseFillObjectTest extends WorseTestCase
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset($path);
 
         $fill = $this->createFillObject($source, true, false);
-        $transformed = $fill->fillObject(
+        $transformed = $fill->refactor(
             TextDocumentBuilder::create($source)->build(),
             ByteOffset::fromInt($offset)
         )->apply($source);
@@ -40,7 +40,7 @@ class WorseFillObjectTest extends WorseTestCase
         $expected = $this->workspace()->getContents('nonamed');
 
         $fill = $this->createFillObject($source, false, true);
-        $transformed = $fill->fillObject(
+        $transformed = $fill->refactor(
             TextDocumentBuilder::create($source)->build(),
             ByteOffset::fromInt($offset),
         )->apply($source);
@@ -51,7 +51,7 @@ class WorseFillObjectTest extends WorseTestCase
     public function testOffsetNotObject(): void
     {
         $fill = $this->createFillObject('');
-        $edits = $fill->fillObject(
+        $edits = $fill->refactor(
             TextDocumentBuilder::create('<?php echo "hello";')->build(),
             ByteOffset::fromInt(10)
         );

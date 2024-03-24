@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionInterfaceCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -159,18 +160,39 @@ class NodeContextFromMemberAccess
 
             $types[] = $subType;
 
-            if ($reflection instanceof ReflectionEnum && $memberTypeName === 'constant') {
-                foreach ($subType->members()->byMemberType('enum')->byName($memberName) as $member) {
+            if ($reflection instanceof ReflectionEnum && $memberTypeName === ReflectionMember::TYPE_CONSTANT) {
+                foreach ($subType->members()->byMemberType(ReflectionMember::TYPE_CASE)->byName($memberName) as $member) {
                     // if multiple classes declare a member, always take the "top" one
                     $memberType = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
                     break;
                 }
+            }
+            if ($reflection instanceof ReflectionEnum && $memberName === 'cases') {
+                $memberType = TypeFactory::array(TypeFactory::reflectedClass($resolver->reflector(), $reflection->name()));
+                break;
             }
 
             foreach ($subType->members()->byMemberType($memberTypeName)->byName($memberName) as $member) {
                 // if multiple classes declare a member, always take the "top" one
                 $memberType = $this->resolveMemberType($resolver, $frame, $member, $arguments, $node, $subType);
                 break;
+            }
+        }
+
+        if ($member instanceof ReflectionMethod && $arguments) {
+            $byReference = $member->parameters()->passedByReference();
+
+            if ($byReference->count()) {
+                foreach ($byReference as $parameter) {
+                    $argument = $arguments->at($parameter->index());
+                    $frame->locals()->set(new Variable(
+                        name: $argument->symbol()->name(),
+                        offset: $argument->symbol()->position()->start()->toInt(),
+                        type: $parameter->type(),
+                        wasAssigned: false /** $wasAssigned bool */,
+                        wasDefined: true /** $wasDefined bool */
+                    ));
+                }
             }
         }
 

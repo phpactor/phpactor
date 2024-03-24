@@ -13,7 +13,6 @@ use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\DiagnosticsWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\IncludeWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
 use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
@@ -61,7 +60,7 @@ class ServiceLocator
         private array $memberContextResolvers,
         Cache $cache,
         private CacheForDocument $cacheForDocument,
-        bool $enableContextualLocation = false
+        bool $enableContextualLocation = false,
     ) {
         $sourceReflector = $reflectorFactory->create($this);
 
@@ -148,7 +147,6 @@ class ServiceLocator
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),
                 new VariableWalker($this->docblockFactory),
-                new IncludeWalker($this->logger),
             ], $this->frameWalkers),
         );
     }

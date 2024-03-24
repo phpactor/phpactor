@@ -4,13 +4,13 @@ namespace Phpactor\Rename\Adapter\ClassMover;
 
 use Amp\Promise;
 use Phpactor\ClassMover\ClassMover;
+use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Rename\Model\Exception\CouldNotConvertUriToClass;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer as PhpactorFileRenamer;
 use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Rename\Model\UriToNameConverter;
-use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -48,11 +48,11 @@ class FileRenamer implements PhpactorFileRenamer
             $edits = TextEdits::none();
             $seen = [];
             foreach ($references as $reference) {
-                if (isset($seen[$reference->location()->uri()->path()])) {
+                if (isset($seen[$reference->location()->uri()->__toString()])) {
                     continue;
                 }
 
-                $seen[$reference->location()->uri()->path()] = true;
+                $seen[$reference->location()->uri()->__toString()] = true;
 
                 try {
                     $document = $this->locator->get($reference->location()->uri());

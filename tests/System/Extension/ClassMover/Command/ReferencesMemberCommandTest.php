@@ -95,9 +95,9 @@ class ReferencesMemberCommandTest extends SystemTestCase
     }
 
     /**
-     * @testdox Find member name shared by differnt types
+     * @testdox Find member name shared by different types
      */
-    public function testDifferentTypees(): void
+    public function testDifferentTypes(): void
     {
         $process = $this->phpactorFromStringArgs('references:member "Animals\Badger" carnivorous');
         $this->assertSuccess($process);

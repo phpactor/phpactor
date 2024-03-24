@@ -83,9 +83,7 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
      */
     public function virtual(): HomogeneousReflectionMemberCollection
     {
-        return new static(array_filter($this->items, function (ReflectionMember $member) {
-            return true === $member->isVirtual();
-        }));
+        return new static(array_filter($this->items, fn (ReflectionMember $member) => $member->isVirtual()));
     }
 
     /**
@@ -93,9 +91,7 @@ class HomogeneousReflectionMemberCollection extends AbstractReflectionCollection
      */
     public function real(): HomogeneousReflectionMemberCollection
     {
-        return new static(array_filter($this->items, function (ReflectionMember $member) {
-            return false === $member->isVirtual();
-        }));
+        return new static(array_filter($this->items, fn (ReflectionMember $member) => !$member->isVirtual()));
     }
 
     public function methods(): ReflectionMethodCollection

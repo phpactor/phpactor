@@ -45,6 +45,7 @@ final class IndexAgentBuilder
      */
     private array $includePatterns = [
         '/**/*.php',
+        '/**/*.phar',
     ];
 
     /**
@@ -64,6 +65,11 @@ final class IndexAgentBuilder
     private ?array $indexers = null;
 
     private bool $followSymlinks = false;
+
+    /**
+     * @var list<string>
+     */
+    private array $supportedExtensions = ['php', 'phar'];
 
     private LoggerInterface $logger;
 
@@ -143,6 +149,16 @@ final class IndexAgentBuilder
     public function setIncludePatterns(array $includePatterns): self
     {
         $this->includePatterns = $includePatterns;
+
+        return $this;
+    }
+
+    /**
+     * @param list<string> $supportedExtensions
+     */
+    public function setSupportedExtensions(array $supportedExtensions): self
+    {
+        $this->supportedExtensions = $supportedExtensions;
 
         return $this;
     }
@@ -244,7 +260,8 @@ final class IndexAgentBuilder
             new FilesystemFileListProvider(
                 $this->buildFilesystem($this->projectRoot),
                 $this->includePatterns,
-                $this->excludePatterns
+                $this->excludePatterns,
+                $this->supportedExtensions,
             )
         ];
 

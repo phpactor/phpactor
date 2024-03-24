@@ -66,9 +66,17 @@ class FileList implements Iterator
 
     public function phpFiles(): self
     {
-        return new self((function () {
+        return $this->byExtensions(['php']);
+    }
+
+    /**
+     * @param list<string> $extensions
+     */
+    public function byExtensions(array $extensions): self
+    {
+        return new self((function () use ($extensions) {
             foreach ($this as $filePath) {
-                if ($filePath->extension() !== 'php') {
+                if (!in_array($filePath->extension(), $extensions, true)) {
                     continue;
                 }
 
@@ -78,30 +86,51 @@ class FileList implements Iterator
     }
 
     /**
-     * @param string[] $globPatterns
+     * @param string[] $includePatterns
+     * @param string[] $excludePatterns
      */
-    public function excludePatterns(array $globPatterns): self
+    public function includeAndExclude(array $includePatterns = [], array $excludePatterns = []): self
     {
-        return $this->filter(function (SplFileInfo $info) use ($globPatterns) {
-            foreach ($globPatterns as $pattern) {
-                if (Glob::match($info->getPathname(), $pattern)) {
-                    return false;
-                }
+        $inclusionMap = [];
+        if ($includePatterns === []) {
+            $inclusionMap['/**/*'] = true;
+        }
+
+        foreach ($includePatterns as $includePattern) {
+            $inclusionMap[$includePattern] = true;
+        }
+        foreach ($excludePatterns as $excludePattern) {
+            $inclusionMap[$excludePattern] = false;
+        }
+
+        // Sort map by keys so that more specific paths are getting matched first
+        uksort($inclusionMap, function (string $a, string $b) {
+            $partsA = explode(DIRECTORY_SEPARATOR, $a);
+            $partsB = explode(DIRECTORY_SEPARATOR, $b);
+            $countDiff = count($partsA) <=> count($partsB);
+            if ($countDiff !== 0) {
+                // Longer paths should come first
+                return -$countDiff;
             }
 
-            return true;
-        });
-    }
+            foreach ($partsA as $i => $pathPartA) {
+                if ($pathPartA === '**' || $pathPartA === '*') {
+                    return 1;
+                }
 
-    /**
-     * @param string[] $globPatterns
-     */
-    public function includePatterns(array $globPatterns): self
-    {
-        return $this->filter(function (SplFileInfo $info) use ($globPatterns) {
-            foreach ($globPatterns as $pattern) {
-                if (Glob::match($info->getPathname(), $pattern)) {
-                    return true;
+                $compare = strcmp($pathPartA, $partsB[$i]);
+                if($compare !== 0) {
+                    return $compare;
+                }
+            }
+            // If none of the path segments were different, then they must be equal
+            return 0;
+        });
+
+        return $this->filter(function (SplFileInfo $info) use ($inclusionMap): bool {
+            foreach($inclusionMap as $glob => $isIncluded) {
+                if (Glob::match($info->getPathname(), $glob)) {
+                    return $isIncluded;
                 }
             }
 
@@ -125,6 +154,9 @@ class FileList implements Iterator
         )));
     }
 
+    /**
+     * @param Closure(SplFileInfo): bool $closure
+    */
     public function filter(Closure $closure): self
     {
         return new self(new CallbackFilterIterator($this->iterator, $closure));

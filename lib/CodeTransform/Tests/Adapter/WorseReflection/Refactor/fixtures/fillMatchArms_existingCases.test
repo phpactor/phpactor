@@ -1,0 +1,39 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+enum Page
+{
+    case AboutUs;
+    case Blog;
+    case Websites;
+}
+
+
+function render(Page $page) {
+    return match ($page) <>{
+        Page::Blog => null,
+    };
+}
+// File: expected
+<?php
+
+namespace Phpactor;
+
+enum Page
+{
+    case AboutUs;
+    case Blog;
+    case Websites;
+}
+
+
+function render(Page $page) {
+    return match ($page) {
+        Page::Blog => null,
+        Page::AboutUs => null,
+        Page::Websites => null,
+        
+    };
+}

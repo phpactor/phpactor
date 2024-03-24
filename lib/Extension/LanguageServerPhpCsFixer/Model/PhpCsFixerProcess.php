@@ -23,6 +23,7 @@ class PhpCsFixerProcess
         private string $binPath,
         private LoggerInterface $logger,
         private array $env = [],
+        private ?string $configPath = null
     ) {
     }
 
@@ -34,6 +35,10 @@ class PhpCsFixerProcess
     public function fix(string $content, array $options = []): Promise
     {
         return call(function () use ($content, $options) {
+            if (false === array_search('--rules', $options, true) && null !== $this->configPath) {
+                $options = array_merge($options, ['--config', $this->configPath]);
+            }
+
             /** @var Process */
             $process = yield $this->run('fix', ...[...$options, '-']);
 
@@ -94,7 +99,7 @@ class PhpCsFixerProcess
     public function run(string ...$args): Promise
     {
         return call(function () use ($args) {
-            $process = ProcessBuilder::create([$this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
+            $process = ProcessBuilder::create([PHP_BINARY, $this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
             yield $process->start();
 
             $process->join()

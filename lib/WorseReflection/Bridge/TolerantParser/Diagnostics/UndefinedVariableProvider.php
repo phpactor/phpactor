@@ -3,9 +3,6 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
-use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
-use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
@@ -13,9 +10,9 @@ use PHPUnit\Framework\Assert;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
-use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\SuperGlobals;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -180,6 +177,23 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'this in anonymous class',
+            source: <<<'PHP'
+                    <?php
+                    new class
+                    {
+                        public function foo(): void
+                        {
+                            $this
+                        }
+                    };
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'is in enum',
             source: <<<'PHP'
                 <?php
@@ -277,9 +291,192 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'pass by reference introduces var',
+            source: <<<'PHP'
+                <?php
+                function preg_match(string $pattern, string $string, array &$matches): bool {}
+                preg_match('foobar', 'barfoo', $matches);
+                echo $matches[1];
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'super globals',
+            source: <<<'PHP'
+                <?php
+                $GLOBALS['foo'];
+                $_SERVER['foo'];
+                $_GET['foo'];
+                $_POST['foo'];
+                $_FILES['foo'];
+                $_COOKIE['foo'];
+                $_SESSION['foo'];
+                $_REQUEST['foo'];
+                $_ENV['foo'];
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'SAPI global variables',
+            source: <<<'PHP'
+                    <?php
+                    if ($argc === 2) {
+                        echo "Hello ".$argv[1]."\n";
+                    } else {
+                        echo "Usage ".__FILE__. " <name>";
+                    }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+
+        yield new DiagnosticExample(
+            title: 'local globals',
+            source: <<<'PHP'
+                <?php
+                function foo(): void
+                {
+                    global $foo, $bar;
+
+                    echo $foo;
+                    echo $bar;
+                }
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'local static',
+            source: <<<'PHP'
+                <?php
+                function foo(): void
+                {
+                    static $foo, $bar;
+
+                    echo $foo;
+                    echo $bar;
+                }
+
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'dynamic pass by ref',
+            source: <<<'PHP'
+                <?php
+                function foo(?int &$v1, ?string &$v2): void
+                {
+                    $v1 = 123;
+                    $v2 = '456';
+                }
+
+                foo($var1, $var2);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'dynamic pass by ref (method)',
+            source: <<<'PHP'
+                <?php
+                class Foo {
+                    public function foo(?int &$v1, ?string &$v2): void
+                    {
+                        $v1 = 123;
+                        $v2 = '456';
+                    }
+                }
+
+                $foo = new Foo();
+                $foo->foo($var1, $var2);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'multiple @var declarations followed by binary expression in statement',
+            source: <<<'PHP'
+                <?php
+                /** @var string $a */
+                /** @var string $b */
+                /** @var string $c */
+                echo $a . $b;
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'multiple @var declarations',
+            source: <<<'PHP'
+                <?php
+                /** @var string $a */
+                /** @var string $b */
+                /** @var string $c */
+                echo $a;
+                echo $b;
+                echo $c;
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'list unpacking',
+            source: <<<'PHP'
+                <?php
+                    foreach ([['a', 'b']] as [$a, $b]) {
+                    }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: '@var declaration in global context',
+            source: <<<'PHP'
+                <?php
+                /** @var string $foo */
+
+                if ($foo === true) {
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
+    {
+        return [];
+    }
+
+    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         if (!$node instanceof Variable) {
             return [];
@@ -295,45 +492,16 @@ class UndefinedVariableProvider implements DiagnosticProvider
             return [];
         }
 
+        $global = SuperGlobals::list()[$name] ?? null;
+
+        if ($global) {
+            return [];
+        }
+
         foreach ($frame->locals()->byName($name) as $variable) {
             if ($variable->wasDefinition()) {
                 return [];
             }
-        }
-        $isByReference = function () use ($resolver, $frame, $node) {
-            if (!$node->parent instanceof ArgumentExpression) {
-                return false;
-            }
-            $argument = $node->parent;
-            if (!$argument->parent instanceof ArgumentExpressionList) {
-                return false;
-            }
-
-            $argumentExpressionList = $argument->parent;
-            if (!$argumentExpressionList->parent instanceof CallExpression) {
-                return false;
-            }
-
-            $offset = NodeUtil::argumentOffset($argumentExpressionList, $argument);
-            if (!$offset) {
-                return false;
-            }
-
-            $call = $argumentExpressionList->parent;
-            $callContext = $resolver->resolveNode($frame, $call);
-            if (!$callContext instanceof FunctionCallContext) {
-                return false;
-            }
-            $parameter = $callContext->function()->parameters()->at($offset);
-            if (!$parameter) {
-                return false;
-            }
-
-            return $parameter->byReference();
-        };
-
-        if ($isByReference()) {
-            return false;
         }
 
         yield new UndefinedVariableDiagnostic(
@@ -345,11 +513,6 @@ class UndefinedVariableProvider implements DiagnosticProvider
                 return levenshtein($name, $candidate) < $this->suggestionLevensteinDistance;
             })
         );
-    }
-
-    public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
-    {
-        return [];
     }
 
     public function name(): string

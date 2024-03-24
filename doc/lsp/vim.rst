@@ -13,8 +13,8 @@ Client Guides
 
         Prerequisites:
             - Neovim 0.5.0 or higher.
-            - `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package (this contains common LSP configurations, including one for Phpactor)
-            - `phpactor` is installed and executable in your path
+            - `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package (this contains common LSP configurations)
+            - The ``phpactor`` binary is :ref:`installed<installation>` and executable in your path
 
         For example: include it in your ``.vimrc`` with Plug:
 
@@ -22,7 +22,7 @@ Client Guides
 
             Plug 'neovim/nvim-lspconfig'
 
-        Then enable it in your ``.vimrc.`` (note that `on_attach` is a
+        Then enable it in your ``.vimrc``. (note that `on_attach` is a
         `callback
         <https://github.com/neovim/nvim-lspconfig#suggested-configuration>`_
         which can be used for key bindings):
@@ -39,13 +39,13 @@ Client Guides
             }
             EOF
 
-        the `init_options` map directly to Phpactors configuration.
+        The ``init_options`` key maps directly to Phpactors :ref:`ref_configuration`.
 
         Please refer to the `nvim-lspconfig
         <https://github.com/neovim/nvim-lspconfig>`_ package for keybindings
-        (also see `:help lsp`).
+        (also see ``:help lsp``).
 
-        See :doc:`vim-lsp` for further configuration options.
+        See :doc:`vim-lsp` for useful snippets (e.g. reindex, show config, etc).
 
     .. tab:: CoC
 
@@ -133,28 +133,6 @@ Client Guides
 
         See `coc-phpactor <https://github.com/phpactor/coc-phpactor>`_ for more
         information.
-
-    .. tab:: Autozimu
-
-        Install Phpactor with :ref:`installation_global` then:
-
-        ::
-
-           Plug 'autozimu/LanguageClient-neovim', {
-               \ 'branch': 'next',
-               \ 'do': 'bash install.sh',
-               \ }
-
-        And let it know about Phpactor:
-
-        ::
-
-           let g:LanguageClient_serverCommands = {
-               \ 'php': [ 'phpactor', 'server:start', '--stdio']
-               \}
-
-        See the `github repository <https://github.com/autozimu/LanguageClient-neovim>`_ for
-        more details.
 
 Troubleshooting
 ---------------

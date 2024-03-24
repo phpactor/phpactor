@@ -31,8 +31,9 @@ use Phpactor\Extension\LanguageServerSymbolProvider\LanguageServerSymbolProvider
 use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRangeExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
-use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
+use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferExtension;
+use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferSuggestExtension;
 use Phpactor\Extension\PHPUnit\PHPUnitExtension;
 use Phpactor\Extension\Prophecy\ProphecyExtension;
 use Phpactor\Extension\Prophecy\ProphecySuggestExtension;
@@ -115,6 +116,24 @@ class Phpactor
             $config[FilePathResolverExtension::PARAM_PROJECT_ROOT] = $projectRoot;
         }
 
+        if ($input->hasParameterOption('--config-extra')) {
+            $rawJson = $input->getParameterOption('--config-extra');
+            if (!is_string($rawJson)) {
+                throw new RuntimeException(sprintf(
+                    'Expected string for config-extra, got: %s',
+                    gettype($rawJson)
+                ));
+            }
+            $extraConfig = json_decode($rawJson, true);
+            if (!is_array($extraConfig)) {
+                throw new RuntimeException(sprintf(
+                    'Invalid JSON passed as config-extra: %s',
+                    $rawJson
+                ));
+            }
+            $config = array_merge($config, $extraConfig);
+        }
+
         if (!isset($config[CoreExtension::PARAM_XDEBUG_DISABLE]) || $config[CoreExtension::PARAM_XDEBUG_DISABLE]) {
             $xdebug = new XdebugHandler('PHPACTOR');
             $xdebug->check();
@@ -161,7 +180,6 @@ class Phpactor
             LanguageServerCodeTransformExtension::class,
             LanguageServerSymbolProviderExtension::class,
             LanguageServerSelectionRangeExtension::class,
-            LanguageServerExtraExtension::class,
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
@@ -175,6 +193,8 @@ class Phpactor
             LanguageServerPsalmSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             LanguageServerPhpCsFixerSuggestExtension::class,
+            PhpCodeSnifferExtension::class,
+            PhpCodeSnifferSuggestExtension::class,
 
             LanguageServerBlackfireExtension::class,
 
@@ -206,7 +226,7 @@ class Phpactor
 
             if (!class_exists($extensionClass)) {
                 if ($output instanceof ConsoleOutputInterface) {
-                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). PHP_EOL);
+                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). "\n");
                 }
                 continue;
             }
@@ -273,22 +293,16 @@ class Phpactor
      * If the path is relative we need to use the current working path
      * because otherwise it will be the script path, which is wrong in the
      * context of a PHAR.
-     *
-     * @deprecated Use webmozart Path instead.
      */
     public static function normalizePath(string $path): string
     {
-        if (substr($path, 0, 1) == DIRECTORY_SEPARATOR) {
-            return $path;
-        }
-
-        return getcwd().DIRECTORY_SEPARATOR.$path;
+        return Path::makeAbsolute($path, (string)getcwd());
     }
 
     public static function relativizePath(string $path): string
     {
-        if (str_starts_with($path, (string)getcwd())) {
-            return substr($path, strlen(getcwd()) + 1);
+        if (Path::isBasePath((string)getcwd(), $path)) {
+            return Path::makeRelative($path, (string)getcwd());
         }
 
         return $path;

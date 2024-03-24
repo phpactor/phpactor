@@ -19,6 +19,8 @@ class ExtensionDocumentor implements Documentor
     public function document(string $commandName=''): string
     {
         $docs = [
+            '.. _ref_configuration:',
+            '',
             'Configuration',
             '=============',
             "\n",
@@ -61,7 +63,7 @@ class ExtensionDocumentor implements Documentor
             "\n",
         ];
 
-        $extension = new $extensionClass;
+        $extension = new $extensionClass();
 
         if (!$extension instanceof Extension) {
             throw new RuntimeException(sprintf(

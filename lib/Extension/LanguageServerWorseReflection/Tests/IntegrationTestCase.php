@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerWorseReflection\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
@@ -13,7 +14,6 @@ use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Container\Container;
-use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TestUtils\Workspace;
 
 class IntegrationTestCase extends TestCase

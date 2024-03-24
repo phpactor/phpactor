@@ -9,14 +9,11 @@ use Phpactor\WorseReflection\Core\Types;
 
 class CallableType extends PrimitiveType implements InvokeableType
 {
-    private Type $returnType;
-
     /**
      * @param Type[] $args
      */
-    public function __construct(private array $args = [], ?Type $returnType = null)
+    public function __construct(private array $args = [], private Type $returnType = new MissingType())
     {
-        $this->returnType = $returnType ?? new MissingType();
     }
 
     public function __toString(): string

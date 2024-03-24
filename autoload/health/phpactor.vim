@@ -1,32 +1,32 @@
 function! s:check_info(status) abort
-  call health#report_start('Info')
+  call v:lua.vim.health.start('Info')
 
-  call health#report_info('Phpactor version: '. a:status.phpactor_version)
-  call health#report_info('PHP version: '. a:status.php_version)
-  call health#report_info('Filesystems'. join(a:status.filesystems, ', '))
-  call health#report_info('Working directory'. a:status.cwd)
+  call v:lua.vim.health.info('Phpactor version: '. a:status.phpactor_version)
+  call v:lua.vim.health.info('PHP version: '. a:status.php_version)
+  call v:lua.vim.health.info('Filesystems'. join(a:status.filesystems, ', '))
+  call v:lua.vim.health.info('Working directory'. a:status.cwd)
 endfunction
 
 function! s:check_diagnostics(diagnostics) abort
-  call health#report_start('Diagnostics')
+  call v:lua.vim.health.start('Diagnostics')
 
   for [l:diagnostic, l:isOk] in items(a:diagnostics)
     if l:isOk
-      call health#report_ok(l:diagnostic)
+      call v:lua.vim.health.ok(l:diagnostic)
     else
-      call health#report_warn(l:diagnostic)
+      call v:lua.vim.health.warn(l:diagnostic)
     endif
   endfor
 endfunction
 
 function! s:check_config_files(configFiles) abort
-  call health#report_start('Config files (missing is not bad)')
+  call v:lua.vim.health.start('Config files (missing is not bad)')
 
   for [l:configFile, l:isOk] in items(a:configFiles)
     if l:isOk
-      call health#report_ok(l:configFile)
+      call v:lua.vim.health.ok(l:configFile)
     else
-      call health#report_warn(l:configFile)
+      call v:lua.vim.health.warn(l:configFile)
     endif
   endfor
 endfunction

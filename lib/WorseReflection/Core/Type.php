@@ -16,6 +16,7 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\PrimitiveType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 
@@ -93,6 +94,11 @@ abstract class Type
         return $this instanceof ArrayType;
     }
 
+    public function isIterable(): bool
+    {
+        return $this instanceof PseudoIterableType;
+    }
+
     public function isNullable(): bool
     {
         return false;
@@ -139,9 +145,6 @@ abstract class Type
         return $type->toPhpString();
     }
 
-    /**
-     * @returnc self
-     */
     public function toLocalType(ReflectionScope $scope): self
     {
         // TODO: do not modify type by reference

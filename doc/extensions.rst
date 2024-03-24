@@ -1,3 +1,5 @@
+.. _extensions:
+
 Extensions
 ==========
 
@@ -5,7 +7,6 @@ Extensions
    :maxdepth: 2
    :glob:
 
-   extensions/installing
    extensions/*
 
 
