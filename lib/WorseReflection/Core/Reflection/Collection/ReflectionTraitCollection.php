@@ -23,7 +23,9 @@ class ReflectionTraitCollection extends AbstractReflectionCollection
         ServiceLocator $serviceLocator,
         ClassDeclaration|ObjectCreationExpression $class,
     ): self {
-        assert($class->classMembers instanceof ClassMembersNode, 'ObjectCreationExpression does not contain anonymous class');
+        if (!$class->classMembers instanceof ClassMembersNode) {
+            throw new NotFound('ObjectCreationExpression does not contain anonymous class');
+        }
 
         $items = [];
         foreach ($class->classMembers->classMemberDeclarations as $memberDeclaration) {
