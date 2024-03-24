@@ -17,6 +17,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Phpactor\TextDocument\TextDocument;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
  * @extends AbstractReflectionCollection<ReflectionClassLike>
@@ -60,8 +61,7 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
             }
 
             if ($child instanceof ObjectCreationExpression && !($child->classTypeDesignator instanceof Node)) {
-                // TODO: come up with a good way to generate a class name
-                $items['class@anonymous:'.$child->getStartPosition()] = new ReflectionClass($serviceLocator, $source, $child, $visited);
+                $items[NodeUtil::nameFromTokenOrNode($node, $child)] = new ReflectionClass($serviceLocator, $source, $child, $visited);
             }
         }
 
