@@ -5461,46 +5461,6 @@ parameters:
 			path: lib/Filesystem/Adapter/Simple/SimpleFilesystem.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FallbackFilesystemRegistry.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromParts\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromUnknown\\(\\) has parameter \\$path with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilesystemRegistry.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\AdapterTestCase\\:\\:\\$filesystem has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/AdapterTestCase.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\AdapterTestCase\\:\\:\\$filesystem is unused\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/AdapterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\IntegrationTestCase\\:\\:getProjectAutoloader\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/IntegrationTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\IntegrationTestCase\\:\\:workspacePath\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/IntegrationTestCase.php
-
-		-
 			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:provideUnknown\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
@@ -5509,26 +5469,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:provideUnsupportedInput\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:testFromUnknownWith\\(\\) has parameter \\$path with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:testThrowExceptionOnUnknowableType\\(\\) has parameter \\$input with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\MappedFilesystemRegistryTest\\:\\:createRegistry\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\MappedFilesystemRegistryTest\\:\\:createRegistry\\(\\) has parameter \\$filesystems with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\InMemory\\\\InMemoryIndex\\:\\:get\\(\\) should return TRecord of Phpactor\\\\Indexer\\\\Model\\\\Record but returns Phpactor\\\\Indexer\\\\Model\\\\Record\\.$#"
