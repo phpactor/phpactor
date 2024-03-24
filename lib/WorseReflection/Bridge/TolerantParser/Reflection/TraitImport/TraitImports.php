@@ -15,6 +15,7 @@ use Microsoft\PhpParser\Node\TraitSelectOrAliasClause;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Util\QualifiedNameListUtil;
 use Phpactor\WorseReflection\Core\Visibility;
 use RuntimeException;
@@ -107,7 +108,9 @@ final class TraitImports implements Countable, IteratorAggregate
 
     public static function forClassDeclaration(ClassDeclaration|ObjectCreationExpression $classDeclaration): self
     {
-        assert($classDeclaration->classMembers instanceof ClassMembersNode, 'ObjectCreationExpression does not contain anonymous class');
+        if (!$classDeclaration->classMembers instanceof ClassMembersNode) {
+            throw new NotFound('ObjectCreationExpression does not contain anonymous class');
+        }
 
         return new self($classDeclaration->classMembers->classMemberDeclarations);
     }
