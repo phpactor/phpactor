@@ -5,6 +5,7 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\EnumMembers;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -19,12 +20,9 @@ use Microsoft\PhpParser\Node;
  */
 class ClassMethodUpdater extends AbstractMethodUpdater
 {
-    /**
-    * @return ClassMembersNode|TraitMembers|EnumMembers
-    */
-    public function memberDeclarationsNode(ClassLike $classNode)
+    public function memberDeclarationsNode(ClassLike|ObjectCreationExpression $classNode): ClassMembersNode|TraitMembers|EnumMembers
     {
-        if ($classNode instanceof ClassDeclaration) {
+        if ($classNode instanceof ClassDeclaration || $classNode instanceof ObjectCreationExpression) {
             return $classNode->classMembers;
         }
         if ($classNode instanceof TraitDeclaration) {
@@ -48,9 +46,9 @@ class ClassMethodUpdater extends AbstractMethodUpdater
     }
 
     /** @return array<Node> */
-    protected function memberDeclarations(ClassLike $classNode): array
+    protected function memberDeclarations(ClassLike|ObjectCreationExpression $classNode): array
     {
-        if ($classNode instanceof ClassDeclaration) {
+        if ($classNode instanceof ClassDeclaration || $classNode instanceof ObjectCreationExpression) {
             return $classNode->classMembers->classMemberDeclarations;
         }
         if ($classNode instanceof TraitDeclaration) {

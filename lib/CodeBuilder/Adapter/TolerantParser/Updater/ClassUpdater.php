@@ -4,6 +4,8 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
+use Microsoft\PhpParser\Node\ClassMembersNode;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -15,8 +17,11 @@ use Phpactor\CodeBuilder\Domain\Prototype\ImplementsInterfaces;
 
 class ClassUpdater extends ClassLikeUpdater
 {
-    public function updateClass(Edits $edits, ClassPrototype $classPrototype, ClassDeclaration $classNode): void
-    {
+    public function updateClass(
+        Edits $edits,
+        ClassPrototype $classPrototype,
+        ClassDeclaration|ObjectCreationExpression $classNode,
+    ): void {
         if (false === $classPrototype->applyUpdate()) {
             return;
         }
@@ -24,8 +29,10 @@ class ClassUpdater extends ClassLikeUpdater
         $this->updateDocblock($edits, $classPrototype, $classNode);
         $this->updateExtends($edits, $classPrototype, $classNode);
         $this->updateImplements($edits, $classPrototype, $classNode);
-        $this->updateConstants($edits, $classPrototype, $classNode->classMembers);
-        $this->updateProperties($edits, $classPrototype, $classNode->classMembers);
+        if ($classNode->classMembers instanceof ClassMembersNode) {
+            $this->updateConstants($edits, $classPrototype, $classNode->classMembers);
+            $this->updateProperties($edits, $classPrototype, $classNode->classMembers);
+        }
 
         $this->methodUpdater->updateMethods($edits, $classPrototype, $classNode);
     }
@@ -79,7 +86,11 @@ class ClassUpdater extends ClassLikeUpdater
         return $node->classMemberDeclarations;
     }
 
-    private function updateExtends(Edits $edits, ClassPrototype $classPrototype, ClassDeclaration $classNode): void
+    private function updateExtends(
+        Edits $edits,
+        ClassPrototype $classPrototype,
+        ClassDeclaration|ObjectCreationExpression $classNode,
+    ): void
     {
         if (ExtendsClass::none() == $classPrototype->extendsClass()) {
             return;
@@ -94,7 +105,11 @@ class ClassUpdater extends ClassLikeUpdater
         $edits->replace($classNode->classBaseClause, ' extends ' . (string) $classPrototype->extendsClass());
     }
 
-    private function updateImplements(Edits $edits, ClassPrototype $classPrototype, ClassDeclaration $classNode): void
+    private function updateImplements(
+        Edits $edits,
+        ClassPrototype $classPrototype,
+        ClassDeclaration|ObjectCreationExpression $classNode,
+    ): void
     {
         if (ImplementsInterfaces::empty() == $classPrototype->implementsInterfaces()) {
             return;
