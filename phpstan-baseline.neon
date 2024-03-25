@@ -5461,16 +5461,6 @@ parameters:
 			path: lib/Filesystem/Adapter/Simple/SimpleFilesystem.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:provideUnknown\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:provideUnsupportedInput\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\InMemory\\\\InMemoryIndex\\:\\:get\\(\\) should return TRecord of Phpactor\\\\Indexer\\\\Model\\\\Record but returns Phpactor\\\\Indexer\\\\Model\\\\Record\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
