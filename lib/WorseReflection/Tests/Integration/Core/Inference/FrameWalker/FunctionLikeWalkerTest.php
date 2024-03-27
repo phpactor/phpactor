@@ -34,6 +34,29 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
             $this->assertEquals(false, $frame->locals()->byName('this')->first()->isProperty());
         }];
 
+        yield 'It returns this with correct type' => [
+            <<<'EOT'
+                <?php
+
+                namespace Foobar\Barfoo;
+
+                use Acme\Factory;
+
+                class Foobar
+                {
+                    public function hello()
+                    {
+                        new \ReflectionFunction(function() { <> });
+                    }
+                }
+
+                EOT
+        , function (Frame $frame): void {
+            $this->assertCount(1, $frame->locals()->byName('this'));
+            $this->assertEquals('Foobar\Barfoo\Foobar', $frame->locals()->byName('this')->first()->type()->__toString());
+            $this->assertEquals(false, $frame->locals()->byName('this')->first()->isProperty());
+        }];
+
         yield 'It returns method arguments' => [
             <<<'EOT'
                 <?php
