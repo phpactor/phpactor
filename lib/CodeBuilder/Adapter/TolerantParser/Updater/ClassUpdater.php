@@ -14,6 +14,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Constant;
 use Phpactor\CodeBuilder\Domain\Prototype\ExtendsClass;
 use Phpactor\CodeBuilder\Domain\Prototype\ImplementsInterfaces;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ClassUpdater extends ClassLikeUpdater
 {
@@ -90,14 +91,13 @@ class ClassUpdater extends ClassLikeUpdater
         Edits $edits,
         ClassPrototype $classPrototype,
         ClassDeclaration|ObjectCreationExpression $classNode,
-    ): void
-    {
+    ): void {
         if (ExtendsClass::none() == $classPrototype->extendsClass()) {
             return;
         }
 
         if (null === $classNode->classBaseClause) {
-            $edits->after($classNode->name, ' extends ' . (string) $classPrototype->extendsClass());
+            $edits->after($this->getName($classNode), ' extends ' . (string) $classPrototype->extendsClass());
             return;
         }
 
@@ -116,7 +116,7 @@ class ClassUpdater extends ClassLikeUpdater
         }
 
         if (null === $classNode->classInterfaceClause) {
-            $edits->after($classNode->name, ' implements ' . (string) $classPrototype->implementsInterfaces()->__toString());
+            $edits->after($this->getName($classNode), ' implements ' . (string) $classPrototype->implementsInterfaces()->__toString());
             return;
         }
 
@@ -135,5 +135,13 @@ class ClassUpdater extends ClassLikeUpdater
         $names = join(', ', [ implode(', ', $existingNames), $additionalNames->__toString()]);
 
         $edits->replace($classNode->classInterfaceClause, ' implements ' . $names);
+    }
+
+    private function getName(ObjectCreationExpression|ClassDeclaration $class): string
+    {
+        return match (true) {
+            $class instanceof ClassDeclaration => $class->name,
+            $class instanceof ObjectCreationExpression => (string) NodeUtil::nameFromTokenOrNode($class, $class),
+        };
     }
 }
