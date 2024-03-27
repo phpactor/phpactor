@@ -14,6 +14,7 @@ use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
 use RuntimeException;
 use Microsoft\PhpParser\Node;
+use Webmozart\Assert\Assert;
 
 /**
  * @extends AbstractMethodUpdater<ClassMembersNode|TraitMembers>
@@ -23,7 +24,10 @@ class ClassMethodUpdater extends AbstractMethodUpdater
     public function memberDeclarationsNode(ClassLike|ObjectCreationExpression $classNode): ClassMembersNode|TraitMembers|EnumMembers
     {
         if ($classNode instanceof ClassDeclaration || $classNode instanceof ObjectCreationExpression) {
-            return $classNode->classMembers;
+            $classNode = $classNode->classMembers;
+            Assert::isInstanceOf( $classNode, ClassMembersNode::class);
+
+            return $classNode;
         }
         if ($classNode instanceof TraitDeclaration) {
             return $classNode->traitMembers;
@@ -49,7 +53,7 @@ class ClassMethodUpdater extends AbstractMethodUpdater
     protected function memberDeclarations(ClassLike|ObjectCreationExpression $classNode): array
     {
         if ($classNode instanceof ClassDeclaration || $classNode instanceof ObjectCreationExpression) {
-            return $classNode->classMembers->classMemberDeclarations;
+            return $classNode->classMembers->classMemberDeclarations ?? [];
         }
         if ($classNode instanceof TraitDeclaration) {
             return $classNode->traitMembers->traitMemberDeclarations;

@@ -30,6 +30,6 @@ class InterfaceMethodUpdater extends AbstractMethodUpdater
     /** @return array<Node> */
     protected function memberDeclarations(ClassLike|ObjectCreationExpression $classNode): array
     {
-        return $classNode->interfaceMembers->interfaceMemberDeclarations;
+        return $classNode->interfaceMembers?->interfaceMemberDeclarations ?? [];
     }
 }
