@@ -5,8 +5,10 @@ namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 use Closure;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
+use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
@@ -23,6 +25,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPromotedProperty;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as PhpactorReflectionConstant;
@@ -68,9 +71,13 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
 
     public static function fromClassMemberDeclarations(
         ServiceLocator $serviceLocator,
-        ClassDeclaration $class,
+        ClassDeclaration|ObjectCreationExpression $class,
         ReflectionClass $reflectionClass
     ): self {
+        if (!$class->classMembers instanceof ClassMembersNode) {
+            throw new NotFound('ObjectCreationExpression does not contain anonymous class');
+        }
+
         return self::fromDeclarations(
             $serviceLocator,
             $reflectionClass,

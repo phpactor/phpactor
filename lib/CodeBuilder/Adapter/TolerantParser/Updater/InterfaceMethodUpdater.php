@@ -3,6 +3,7 @@
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\InterfaceMembers;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Domain\Prototype\Method;
@@ -27,8 +28,8 @@ class InterfaceMethodUpdater extends AbstractMethodUpdater
     }
 
     /** @return array<Node> */
-    protected function memberDeclarations(ClassLike $classNode): array
+    protected function memberDeclarations(ClassLike|ObjectCreationExpression $classNode): array
     {
-        return $classNode->interfaceMembers->interfaceMemberDeclarations;
+        return $classNode->interfaceMembers?->interfaceMemberDeclarations ?? [];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
@@ -16,6 +17,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
 use Phpactor\TextDocument\TextDocument;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 /**
  * @extends AbstractReflectionCollection<ReflectionClassLike>
@@ -30,11 +32,11 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
         $items = [];
 
         $nodeCollection = $node->getDescendantNodes(function (Node $node) {
-            return false === $node instanceof ClassLike;
+            return false === $node instanceof ClassLike && false === $node instanceof ObjectCreationExpression;
         });
 
         foreach ($nodeCollection as $child) {
-            if (false === $child instanceof ClassLike) {
+            if (false === $child instanceof ClassLike && !$child instanceof ObjectCreationExpression) {
                 continue;
             }
 
@@ -55,6 +57,11 @@ final class ReflectionClassLikeCollection extends AbstractReflectionCollection
 
             if ($child instanceof ClassDeclaration) {
                 $items[(string) $child->getNamespacedName()] = new ReflectionClass($serviceLocator, $source, $child, $visited);
+                continue;
+            }
+
+            if ($child instanceof ObjectCreationExpression && !($child->classTypeDesignator instanceof Node)) {
+                $items[NodeUtil::nameFromTokenOrNode($node, $child)] = new ReflectionClass($serviceLocator, $source, $child, $visited);
             }
         }
 
