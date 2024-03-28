@@ -34,7 +34,7 @@ class FunctionLikeWalkerTest extends FrameWalkerTestCase
             $this->assertEquals(false, $frame->locals()->byName('this')->first()->isProperty());
         }];
 
-        yield 'It returns this with correct type' => [
+        yield 'It returns this with correct type in an anonymous function' => [
             <<<'EOT'
                 <?php
 
