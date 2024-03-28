@@ -76,6 +76,17 @@ class FunctionLikeWalker implements Walker
             ObjectCreationExpression::class, // For Inline classes
         );
 
+        while ($classNode instanceof ObjectCreationExpression && $classNode->classTypeDesignator instanceof Node) {
+            // If we are here we found a normal ObjectCreationExpression like: new A(); and this is not useful and we continue traversing
+            $classNode = $classNode->getFirstAncestor(
+                ClassDeclaration::class,
+                InterfaceDeclaration::class,
+                TraitDeclaration::class,
+                EnumDeclaration::class,
+                ObjectCreationExpression::class, // For Inline classes
+            );
+        }
+
         if ($node instanceof AnonymousFunctionCreationExpression) {
             $this->addAnonymousImports($frame, $node);
 
@@ -87,7 +98,7 @@ class FunctionLikeWalker implements Walker
         }
 
         // works for both closure and class method (we currently ignore binding)
-        if ($classNode) {
+        if ($classNode !== null) {
             $classType = $resolver->resolveNode($frame, $classNode)->type();
             $this->addClassContext($node, $classType, $frame);
         }
