@@ -48,7 +48,7 @@ final class FilePath
         return self::fromString((string) $fileInfo);
     }
 
-    public static function fromUnknown(FilePath|string $path): FilePath
+    public static function fromFilePathOrString(FilePath|string $path): FilePath
     {
         if ($path instanceof FilePath) {
             return $path;

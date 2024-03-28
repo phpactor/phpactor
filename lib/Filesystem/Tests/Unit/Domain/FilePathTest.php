@@ -30,16 +30,19 @@ class FilePathTest extends TestCase
     }
 
     /**
-     * @dataProvider provideUnknown
+     * @dataProvider provideFilePathOrString
      */
-    public function testFromUnknownWith(FilePath|string $path, string $expectedPath): void
+    public function testFromFilePathOrString(FilePath|string $path, string $expectedPath): void
     {
-        $filePath = FilePath::fromUnknown($path);
+        $filePath = FilePath::fromFilePathOrString($path);
         $this->assertInstanceOf(FilePath::class, $filePath);
         $this->assertEquals($expectedPath, (string) $filePath);
     }
 
-    public function provideUnknown(): Generator
+    /**
+     * @return Generator<string,array{FilePath|string,string}>
+     */
+    public function provideFilePathOrString(): Generator
     {
         yield 'FilePath instance' => [
             FilePath::fromString('/foo.php'),
@@ -77,6 +80,9 @@ class FilePathTest extends TestCase
         FilePath::fromString($input);
     }
 
+    /**
+     * @return Generator<string,array{string,string}>
+     */
     public function provideUnsupportedInput(): Generator
     {
         yield 'unsupported scheme' => [

@@ -26,7 +26,6 @@ class FileList implements Iterator
     {
     }
 
-
     public static function fromIterator(Iterator $iterator): self
     {
         return new self($iterator);
