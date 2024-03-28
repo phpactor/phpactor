@@ -68,15 +68,7 @@ class FunctionLikeWalker implements Walker
     private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
-        $classNode = $node->getFirstAncestor(
-            ClassDeclaration::class,
-            InterfaceDeclaration::class,
-            TraitDeclaration::class,
-            EnumDeclaration::class,
-            ObjectCreationExpression::class, // For Inline classes
-        );
-
-        while ($classNode instanceof ObjectCreationExpression && $classNode->classTypeDesignator instanceof Node) {
+        do {
             // If we are here we found a normal ObjectCreationExpression like: new A(); and this is not useful and we continue traversing
             $classNode = $classNode->getFirstAncestor(
                 ClassDeclaration::class,
@@ -85,7 +77,7 @@ class FunctionLikeWalker implements Walker
                 EnumDeclaration::class,
                 ObjectCreationExpression::class, // For Inline classes
             );
-        }
+        } while ($classNode instanceof ObjectCreationExpression && $classNode->classTypeDesignator instanceof Node);
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
             $this->addAnonymousImports($frame, $node);
