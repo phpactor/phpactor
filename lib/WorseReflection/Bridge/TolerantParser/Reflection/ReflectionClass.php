@@ -300,11 +300,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function isConcrete(): bool
     {
-        if (false === $this->isClass()) {
-            return false;
-        }
-
-        return false === $this->isAbstract();
+        return !$this->isAbstract();
     }
 
     public function docblock(): DocBlock

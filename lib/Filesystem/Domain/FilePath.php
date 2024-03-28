@@ -29,6 +29,9 @@ final class FilePath
         return new self($textDocumentUri);
     }
 
+    /**
+     * @param array<string> $parts
+     */
     public static function fromParts(array $parts): FilePath
     {
         $path = Path::join(...$parts);
@@ -45,7 +48,7 @@ final class FilePath
         return self::fromString((string) $fileInfo);
     }
 
-    public static function fromUnknown($path): FilePath
+    public static function fromFilePathOrString(FilePath|string $path): FilePath
     {
         if ($path instanceof FilePath) {
             return $path;
@@ -54,19 +57,6 @@ final class FilePath
         if (is_string($path)) {
             return self::fromString($path);
         }
-
-        if (is_array($path)) {
-            return self::fromParts($path);
-        }
-
-        if ($path instanceof SplFileInfo) {
-            return self::fromSplFileInfo($path);
-        }
-
-        throw new RuntimeException(sprintf(
-            'Do not know how to create FilePath from "%s"',
-            is_object($path) ? get_class($path) : gettype($path)
-        ));
     }
 
     public function isDirectory(): bool
