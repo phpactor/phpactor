@@ -70,7 +70,7 @@ class FunctionLikeWalker implements Walker
         $namespace = $node->getNamespaceDefinition();
         do {
             // If we are here we found a normal ObjectCreationExpression like: new A(); and this is not useful and we continue traversing
-            $classNode = $classNode->getFirstAncestor(
+            $classNode = ($classNode ?? $node)->getFirstAncestor(
                 ClassDeclaration::class,
                 InterfaceDeclaration::class,
                 TraitDeclaration::class,
