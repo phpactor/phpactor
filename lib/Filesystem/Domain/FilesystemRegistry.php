@@ -8,5 +8,8 @@ interface FilesystemRegistry
 
     public function has(string $name): bool;
 
+    /**
+     * @return array<string>
+     */
     public function names(): array;
 }
