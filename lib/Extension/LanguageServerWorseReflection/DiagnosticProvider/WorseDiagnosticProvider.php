@@ -4,13 +4,16 @@ namespace Phpactor\Extension\LanguageServerWorseReflection\DiagnosticProvider;
 
 use Amp\CancellationToken;
 use Amp\Promise;
+use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity as LanguageServerProtocolDiagnosticSeverity;
-use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
-use Phpactor\LanguageServerProtocol\Range;
+use Phpactor\LanguageServerProtocol\DiagnosticTag;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnostic;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportDiagnostic;
+use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Reflector;
 use function Amp\call;
@@ -26,15 +29,22 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
         return call(function () use ($textDocument, $cancel) {
             $lspDiagnostics = [];
             foreach (yield $this->reflector->diagnostics(TextDocumentConverter::fromLspTextItem($textDocument)) as $diagnostic) {
-                $range = new Range(
-                    PositionConverter::byteOffsetToPosition($diagnostic->range()->start(), $textDocument->text),
-                    PositionConverter::byteOffsetToPosition($diagnostic->range()->end(), $textDocument->text),
-                );
+                /** @var Diagnostic $diagnostic */
+                $range = RangeConverter::toLspRange($diagnostic->range(), $textDocument->text);
+
                 $lspDiagnostic = ProtocolFactory::diagnostic($range, $diagnostic->message());
                 $lspDiagnostic->severity = self::toLspSeverity($diagnostic->severity());
                 $lspDiagnostic->source = 'phpactor';
-                $lspDiagnostics[] = $lspDiagnostic;
 
+                if ($diagnostic instanceof DeprecatedUsageDiagnostic) {
+                    $lspDiagnostic->tags[] = DiagnosticTag::DEPRECATED;
+                }
+
+                if ($diagnostic instanceof UnusedImportDiagnostic) {
+                    $lspDiagnostic->tags[] = DiagnosticTag::UNNECESSARY;
+                }
+
+                $lspDiagnostics[] = $lspDiagnostic;
                 if ($cancel->isRequested()) {
                     return $lspDiagnostics;
                 }
