@@ -7,7 +7,7 @@ use ArrayIterator;
 /**
  * @extends ArrayIterator<int, LocatedTextEditsMap|RenameResult>
  */
-class RenameEdit extends ArrayIterator
+class WorkspaceRenameEdit extends ArrayIterator
 {
     public function __construct(LocatedTextEditsMap|RenameResult|null ...$edits)
     {

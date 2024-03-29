@@ -17,7 +17,7 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
-use Phpactor\Rename\Model\RenameEdit;
+use Phpactor\Rename\Model\WorkspaceRenameEdit;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
@@ -102,7 +102,7 @@ class FileRenameHandlerTest extends IntegrationTestCase
         return new FileRenameHandler(
             new TestFileRenamer(
                 $willError,
-                new RenameEdit(
+                new WorkspaceRenameEdit(
                     new LocatedTextEditsMap($workspaceEdits),
                     $renameResult,
                 ),

@@ -8,7 +8,7 @@ use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Rename\Model\RenameEdit;
+use Phpactor\Rename\Model\WorkspaceRenameEdit;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\Rename\Model\Renamer;
 use Phpactor\Extension\LanguageServerRename\Util\RenameEditConverter;
@@ -120,7 +120,7 @@ class RenameHandler implements Handler, CanRegisterCapabilities
      */
     private function resultToWorkspaceEdit(array $locatedEdits, ?RenameResult $renameResult): WorkspaceEdit
     {
-        return $this->converter->toWorkspaceEdit(new RenameEdit(
+        return $this->converter->toWorkspaceEdit(new WorkspaceRenameEdit(
             LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
             $renameResult,
         ));

@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerRename\Util;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServerProtocol\OptionalVersionedTextDocumentIdentifier;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Rename\Model\RenameEdit;
+use Phpactor\Rename\Model\WorkspaceRenameEdit;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\LanguageServerProtocol\RenameFile;
 use Phpactor\LanguageServerProtocol\TextDocumentEdit;
@@ -19,7 +19,7 @@ final class RenameEditConverter
     {
     }
 
-    public function toWorkspaceEdit(RenameEdit $edits): WorkspaceEdit
+    public function toWorkspaceEdit(WorkspaceRenameEdit $edits): WorkspaceEdit
     {
         $documentEdits = [];
 
