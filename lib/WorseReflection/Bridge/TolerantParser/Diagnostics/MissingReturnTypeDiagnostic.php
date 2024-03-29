@@ -6,6 +6,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
 
 class MissingReturnTypeDiagnostic implements Diagnostic
 {
@@ -54,5 +55,10 @@ class MissingReturnTypeDiagnostic implements Diagnostic
     public function returnType(): Type
     {
         return $this->returnType;
+    }
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation
+    {
+        return null;
     }
 }

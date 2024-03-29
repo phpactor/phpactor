@@ -6,6 +6,7 @@ use Phpactor\Name\Name;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
 
 class UnresolvableNameDiagnostic implements Diagnostic
 {
@@ -55,5 +56,10 @@ class UnresolvableNameDiagnostic implements Diagnostic
     public function name(): Name
     {
         return $this->name;
+    }
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation
+    {
+        return null;
     }
 }

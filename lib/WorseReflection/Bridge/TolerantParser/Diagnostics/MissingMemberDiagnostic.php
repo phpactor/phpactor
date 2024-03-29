@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
 
 class MissingMemberDiagnostic implements Diagnostic
 {
@@ -46,5 +47,10 @@ class MissingMemberDiagnostic implements Diagnostic
     public function memberType(): string
     {
         return $this->memberType;
+    }
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation
+    {
+        return null;
     }
 }

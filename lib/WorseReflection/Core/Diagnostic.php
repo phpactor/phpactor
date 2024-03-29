@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
 use Phpactor\TextDocument\ByteOffsetRange;
 
 interface Diagnostic
@@ -11,4 +12,6 @@ interface Diagnostic
     public function severity(): DiagnosticSeverity;
 
     public function message(): string;
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation;
 }
