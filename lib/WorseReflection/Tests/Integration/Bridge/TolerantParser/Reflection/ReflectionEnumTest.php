@@ -38,7 +38,6 @@ class ReflectionEnumTest extends IntegrationTestCase
         function ($class): void {
             $this->assertEquals('Barfoo', (string) $class->name()->short());
             $this->assertInstanceOf(ReflectionEnum::class, $class);
-            $this->assertTrue($class->isEnum());
         },
             ];
         yield 'It reflect enum methods' => [

@@ -55,7 +55,8 @@ class MappedFilesystemRegistryTest extends TestCase
         $registry->get('barfoo');
     }
 
-    private function createRegistry(array $filesystems)
+    /** @param array<string, Filesystem> $filesystems */
+    private function createRegistry(array $filesystems): MappedFilesystemRegistry
     {
         return new MappedFilesystemRegistry($filesystems);
     }

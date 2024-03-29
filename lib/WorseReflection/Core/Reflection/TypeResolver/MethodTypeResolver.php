@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 
 class MethodTypeResolver
 {
@@ -73,15 +72,11 @@ class MethodTypeResolver
 
     private function getTypesFromInterfaces(ReflectionClassLike $reflectionClassLike): Type
     {
-        if (false === $reflectionClassLike->isClass()) {
+        if (!$reflectionClassLike instanceof ReflectionClass) {
             return TypeFactory::undefined();
         }
 
-        /** @var ReflectionClass $reflectionClass */
-        $reflectionClass = $reflectionClassLike;
-
-        /** @var ReflectionInterface $interface */
-        foreach ($reflectionClass->interfaces() as $interface) {
+        foreach ($reflectionClassLike->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
                 return $interface->methods()->get($this->method->name())->inferredType();
             }
