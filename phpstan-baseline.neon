@@ -4046,11 +4046,6 @@ parameters:
 			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
 
 		-
-			message: "#^Property Phpactor\\\\LanguageServerProtocol\\\\ServerCapabilities\\:\\:\\$workspace \\(array\\{workspaceFolders\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\|null\\) does not accept array\\{workspaceFolders\\?\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Handler/FileRenameHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerRename\\\\Handler\\\\RenameHandler\\:\\:prepareRename\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\LanguageServerProtocol\\\\Range\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Handler/RenameHandler.php
@@ -4142,6 +4137,11 @@ parameters:
 
 		-
 			message: "#^Offset 'fileOperations' does not exist on array\\{workspaceFolders\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\|null\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServerRename/Tests/Unit/Handler/FileRenameHandlerTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, array\\<Phpactor\\\\LanguageServerProtocol\\\\CreateFile\\|Phpactor\\\\LanguageServerProtocol\\\\DeleteFile\\|Phpactor\\\\LanguageServerProtocol\\\\RenameFile\\|Phpactor\\\\LanguageServerProtocol\\\\TextDocumentEdit\\>\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Unit/Handler/FileRenameHandlerTest.php
 
@@ -5461,76 +5461,6 @@ parameters:
 			path: lib/Filesystem/Adapter/Simple/SimpleFilesystem.php
 
 		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FallbackFilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FallbackFilesystemRegistry.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromParts\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilePath\\:\\:fromUnknown\\(\\) has parameter \\$path with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilePath.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Domain\\\\FilesystemRegistry\\:\\:names\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Domain/FilesystemRegistry.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\AdapterTestCase\\:\\:\\$filesystem has no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/AdapterTestCase.php
-
-		-
-			message: "#^Property Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\AdapterTestCase\\:\\:\\$filesystem is unused\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/AdapterTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\IntegrationTestCase\\:\\:getProjectAutoloader\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/IntegrationTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Adapter\\\\IntegrationTestCase\\:\\:workspacePath\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Adapter/IntegrationTestCase.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:provideUnknown\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:provideUnsupportedInput\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:testFromUnknownWith\\(\\) has parameter \\$path with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\FilePathTest\\:\\:testThrowExceptionOnUnknowableType\\(\\) has parameter \\$input with no type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\MappedFilesystemRegistryTest\\:\\:createRegistry\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Filesystem\\\\Tests\\\\Unit\\\\Domain\\\\MappedFilesystemRegistryTest\\:\\:createRegistry\\(\\) has parameter \\$filesystems with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Adapter\\\\Php\\\\InMemory\\\\InMemoryIndex\\:\\:get\\(\\) should return TRecord of Phpactor\\\\Indexer\\\\Model\\\\Record but returns Phpactor\\\\Indexer\\\\Model\\\\Record\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Php/InMemory/InMemoryIndex.php
@@ -5921,7 +5851,7 @@ parameters:
 			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\RenameEdit\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
+			message: "#^Method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\LocatedTextEditsMap\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/Rename/Adapter/ClassMover/FileRenamer.php
 
@@ -5941,12 +5871,22 @@ parameters:
 			path: lib/Rename/Adapter/ReferenceFinder/MemberRenamer.php
 
 		-
-			message: "#^Method Phpactor\\\\Rename\\\\Model\\\\FileRenamer\\\\LoggingFileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\RenameEdit\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
+			message: "#^Method Phpactor\\\\Rename\\\\Model\\\\FileRenamer\\\\LoggingFileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\LocatedTextEditsMap\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/Rename/Model/FileRenamer/LoggingFileRenamer.php
 
 		-
 			message: "#^Cannot call method path\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
+			count: 1
+			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$from of method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
+			count: 1
+			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$to of method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
 			count: 1
 			path: lib/Rename/Tests/Adapter/ClassMover/FileRenamerTest.php
 
@@ -6394,6 +6334,11 @@ parameters:
 			message: "#^Parameter \\#1 \\$items of class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstantCollection constructor expects array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionConstant\\>, array\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant&T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\> given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
+
+		-
+			message: "#^Parameter \\#3 \\$node of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionArgument constructor expects Microsoft\\\\PhpParser\\\\Node\\\\Expression\\\\ArgumentExpression, mixed given\\.$#"
+			count: 1
+			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionArgumentCollection.php
 
 		-
 			message: "#^Cannot call method getName\\(\\) on mixed\\.$#"

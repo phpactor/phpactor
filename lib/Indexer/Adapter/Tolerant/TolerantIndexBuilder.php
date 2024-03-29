@@ -20,6 +20,8 @@ use Phpactor\Indexer\Model\IndexBuilder;
 use Phpactor\TextDocument\TextDocument;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use RuntimeException;
+use Throwable;
 
 final class TolerantIndexBuilder implements IndexBuilder
 {
@@ -86,6 +88,12 @@ final class TolerantIndexBuilder implements IndexBuilder
                     $document->uri()?->__toString() ?? 'unknown',
                     $cannotIndexNode->getMessage()
                 ));
+            } catch (Throwable $cannotIndexNode) {
+                throw new RuntimeException(sprintf(
+                    'Could not index document "%s": %s',
+                    $document->uri() ?? '',
+                    $cannotIndexNode->getMessage()
+                ), 0, $cannotIndexNode);
             }
         }
 

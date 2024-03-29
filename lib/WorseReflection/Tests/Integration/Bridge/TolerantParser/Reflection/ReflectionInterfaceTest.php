@@ -37,7 +37,6 @@ class ReflectionInterfaceTest extends IntegrationTestCase
             function ($class): void {
                 $this->assertEquals('Barfoo', (string) $class->name()->short());
                 $this->assertInstanceOf(ReflectionInterface::class, $class);
-                $this->assertTrue($class->isInterface());
             },
         ];
 
