@@ -8,6 +8,7 @@ use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity as LanguageServerProtocolDiagnosticSeverity;
 use Phpactor\LanguageServerProtocol\DiagnosticTag;
+use Phpactor\WorseReflection\Core\DiagnosticTag as PhpactorDiagnosticTag;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
@@ -35,6 +36,7 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
                 $lspDiagnostic = ProtocolFactory::diagnostic($range, $diagnostic->message());
                 $lspDiagnostic->severity = self::toLspSeverity($diagnostic->severity());
                 $lspDiagnostic->source = 'phpactor';
+                $lspDiagnostic->tags = self::toLspTags($diagnostic->tags());
 
                 if ($diagnostic instanceof DeprecatedUsageDiagnostic) {
                     $lspDiagnostic->tags[] = DiagnosticTag::DEPRECATED;
@@ -76,5 +78,20 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
         }
 
         return LanguageServerProtocolDiagnosticSeverity::INFORMATION;
+    }
+    /**
+    * @param array<PhpactorDiagnosticTag> $tags
+    *
+    * @return array<DiagnosticTag::*>
+    */
+    private static function toLspTags(array $tags): array
+    {
+        return array_map(
+            fn ($tag) => match($tag) {
+                PhpactorDiagnosticTag::DEPRECATED => DiagnosticTag::DEPRECATED,
+                PhpactorDiagnosticTag::UNNECESSARY => DiagnosticTag::UNNECESSARY,
+            },
+            $tags
+        );
     }
 }
