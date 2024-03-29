@@ -11,7 +11,7 @@ use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer as PhpactorFileRenamer;
 use Phpactor\Rename\Model\LocatedTextEdit;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Rename\Model\WorkspaceRenameEdit;
+use Phpactor\Rename\Model\WorkspaceRenameEdits;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\Rename\Model\UriToNameConverter;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
@@ -66,7 +66,7 @@ class FileRenamer implements PhpactorFileRenamer
                 }
             }
 
-            return new WorkspaceRenameEdit(
+            return new WorkspaceRenameEdits(
                 LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
                 new RenameResult($from, $to),
             );
