@@ -6,6 +6,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
 
 class DocblockMissingParamDiagnostic implements Diagnostic
 {
@@ -53,5 +54,10 @@ class DocblockMissingParamDiagnostic implements Diagnostic
     public function paramType(): Type
     {
         return $this->paramType;
+    }
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation
+    {
+        return null;
     }
 }

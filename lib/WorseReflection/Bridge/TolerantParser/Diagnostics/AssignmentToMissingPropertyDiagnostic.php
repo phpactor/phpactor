@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
@@ -50,5 +51,10 @@ class AssignmentToMissingPropertyDiagnostic implements Diagnostic
     public function isSubscriptAssignment(): bool
     {
         return $this->isSubscriptAssignment;
+    }
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation
+    {
+        return null;
     }
 }

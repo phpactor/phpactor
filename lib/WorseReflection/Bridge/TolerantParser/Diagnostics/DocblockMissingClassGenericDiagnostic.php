@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
 
 class DocblockMissingClassGenericDiagnostic implements Diagnostic
 {
@@ -51,5 +52,10 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
     public function isExtends(): bool
     {
         return $this->tagName === '@extends';
+    }
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation
+    {
+        return null;
     }
 }

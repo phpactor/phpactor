@@ -7,6 +7,7 @@ use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
 
 class DocblockIncorrectClassGenericDiagnostic implements Diagnostic
 {
@@ -37,5 +38,10 @@ class DocblockIncorrectClassGenericDiagnostic implements Diagnostic
             $this->tagName,
             $this->correctType->short()
         );
+    }
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation
+    {
+        return null;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
+use Phpactor\LanguageServerProtocol\DiagnosticRelatedInformation;
+use Phpactor\LanguageServerProtocol\Location;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
@@ -40,5 +42,14 @@ class DeprecatedUsageDiagnostic implements Diagnostic
         }
 
         return $message;
+    }
+
+    public function relatedInformation(): ?DiagnosticRelatedInformation
+    {
+        return null;
+        //return new DiagnosticRelatedInformation(
+        //new Location(),
+        //'see also'
+        //);
     }
 }

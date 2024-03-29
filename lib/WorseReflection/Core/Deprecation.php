@@ -7,7 +7,7 @@ class Deprecation
     public function __construct(
         private bool $isDefined,
         private ?string $message = null,
-        private ?string $replacementSuggestion = null,
+        private ?Location $replacementSuggestion = null,
     ) {
     }
 
