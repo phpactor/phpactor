@@ -8,7 +8,7 @@ use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\Rename\Model\Exception\CouldNotRename;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
-use Phpactor\Extension\LanguageServerRename\Util\RenameEditConverter;
+use Phpactor\Extension\LanguageServerRename\Util\WorkspaceRenameEditsConverter;
 use Phpactor\LanguageServerProtocol\FileOperationFilter;
 use Phpactor\LanguageServerProtocol\FileOperationPattern;
 use Phpactor\LanguageServerProtocol\FileOperationRegistrationOptions;
@@ -24,7 +24,7 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
         private FileRenamer $renamer,
-        private RenameEditConverter $converter,
+        private WorkspaceRenameEditsConverter $converter,
         private ClientApi $clientApi,
     ) {
     }

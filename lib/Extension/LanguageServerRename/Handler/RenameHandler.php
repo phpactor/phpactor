@@ -11,7 +11,7 @@ use Phpactor\Rename\Model\LocatedTextEditsMap;
 use Phpactor\Rename\Model\WorkspaceRenameEdits;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\Rename\Model\Renamer;
-use Phpactor\Extension\LanguageServerRename\Util\RenameEditConverter;
+use Phpactor\Extension\LanguageServerRename\Util\WorkspaceRenameEditsConverter;
 use Phpactor\LanguageServerProtocol\PrepareRenameParams;
 use Phpactor\LanguageServerProtocol\PrepareRenameRequest;
 use Phpactor\LanguageServerProtocol\Range;
@@ -31,7 +31,7 @@ use function Amp\delay;
 class RenameHandler implements Handler, CanRegisterCapabilities
 {
     public function __construct(
-        private RenameEditConverter $converter,
+        private WorkspaceRenameEditsConverter $converter,
         private TextDocumentLocator $documentLocator,
         private Renamer $renamer,
         private ClientApi $clientApi

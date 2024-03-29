@@ -13,7 +13,7 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\TextDocument\TextDocumentLocator;
 
-final class RenameEditConverter
+final class WorkspaceRenameEditsConverter
 {
     public function __construct(private Workspace $workspace, private TextDocumentLocator $locator)
     {

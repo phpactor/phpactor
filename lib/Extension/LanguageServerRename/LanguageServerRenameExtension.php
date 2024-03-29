@@ -10,7 +10,7 @@ use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\Renamer\ChainRenamer;
 use Phpactor\Extension\LanguageServerRename\Handler\RenameHandler;
 use Phpactor\Rename\Model\Renamer;
-use Phpactor\Extension\LanguageServerRename\Util\RenameEditConverter;
+use Phpactor\Extension\LanguageServerRename\Util\WorkspaceRenameEditsConverter;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
@@ -31,7 +31,7 @@ class LanguageServerRenameExtension implements Extension
 
         $container->register(RenameHandler::class, function (Container $container) {
             return new RenameHandler(
-                $container->get(RenameEditConverter::class),
+                $container->get(WorkspaceRenameEditsConverter::class),
                 $container->get(TextDocumentLocator::class),
                 $container->get(Renamer::class),
                 $container->get(ClientApi::class)
@@ -43,15 +43,15 @@ class LanguageServerRenameExtension implements Extension
         $container->register(FileRenameHandler::class, function (Container $container) {
             return new FileRenameHandler(
                 $container->get(FileRenamer::class),
-                $container->get(RenameEditConverter::class),
+                $container->get(WorkspaceRenameEditsConverter::class),
                 $container->get(ClientApi::class)
             );
         }, [
             LanguageServerExtension::TAG_METHOD_HANDLER => []
         ]);
 
-        $container->register(RenameEditConverter::class, function (Container $container) {
-            return new RenameEditConverter(
+        $container->register(WorkspaceRenameEditsConverter::class, function (Container $container) {
+            return new WorkspaceRenameEditsConverter(
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(TextDocumentLocator::class),
             );
