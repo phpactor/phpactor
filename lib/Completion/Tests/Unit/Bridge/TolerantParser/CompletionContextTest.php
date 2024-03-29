@@ -116,6 +116,10 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { private Foob<> }',
             true,
         ];
+        yield 'method body' => [
+            '<?php class Foo { private function foo() { <> } }',
+            true,
+        ];
 
         // todo...
         yield 'visibility 4' => [

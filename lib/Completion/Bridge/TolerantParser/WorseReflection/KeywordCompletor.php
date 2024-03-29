@@ -6,6 +6,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\DelimitedList\ParameterDeclarationList;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -55,6 +56,18 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         if (CompletionContext::attribute($node)) {
+            return true;
+        }
+
+        if (
+            $node->parent !== null
+                && CompletionContext::classMembersBody($node->parent->parent)
+                && !CompletionContext::nodeOrParentIs($node->parent->parent, ParameterDeclarationList::class)
+        ) {
+            yield from $this->keywords([
+                'return ',
+                'yield ',
+            ]);
             return true;
         }
 

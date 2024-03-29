@@ -264,6 +264,11 @@ class CompletionContext
 
     public static function methodName(Node $node): bool
     {
+        // TODO better distinguish empty body from empty method parameter list
+        if ($node->__toString() === '{') {
+            return false;
+        }
+
         return $node->parent instanceof MethodDeclaration;
     }
 
