@@ -19,9 +19,9 @@ use Phpactor\ClassMover\Domain\Reference\Position;
 
 class SymfonyConsoleMoveLoggerTest extends TestCase
 {
-    private $output;
+    private BufferedOutput $output;
 
-    private $logger;
+    private SymfonyConsoleMoveLogger $logger;
 
     public function setUp(): void
     {
