@@ -10,7 +10,7 @@ interface FileRenamer
     /**
      * Promise can throw a CouldNotRename exception
      *
-     * @return Promise<RenameEdit>
+     * @return Promise<WorkspaceRenameEdits>
      */
     public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise;
 }
