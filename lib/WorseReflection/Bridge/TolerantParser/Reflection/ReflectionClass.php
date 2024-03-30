@@ -64,9 +64,18 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     ) {
     }
 
+    public function isAnonymous(): bool 
+    {
+        if ($node instanceof ClassDeclaration) {
+            return false;
+        }
+
+        return $node->classTypeDesignator instanceof Token;
+    }
+
     public function isAbstract(): bool
     {
-        if ($this->node instanceof ObjectCreationExpression) {
+        if ($this->isAnonymous()) {
             return false;
         }
 
