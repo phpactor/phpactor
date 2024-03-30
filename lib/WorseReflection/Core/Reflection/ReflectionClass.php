@@ -32,5 +32,5 @@ interface ReflectionClass extends ReflectionClassLike
 
     public function isFinal(): bool;
 
-    public function isAbstract(): bool;
+    public function isAnonymous(): bool;
 }

@@ -144,7 +144,7 @@ abstract class AbstractMethodUpdater
     abstract protected function memberDeclarations(ClassLike|ObjectCreationExpression $classNode): array;
 
     /** @return TMembersNodeType */
-    abstract protected function memberDeclarationsNode(ClassLike $classNode);
+    abstract protected function memberDeclarationsNode(ClassLike|ObjectCreationExpression $classNode);
 
     abstract protected function renderMethod(Renderer $renderer, Method $method): string;
 
