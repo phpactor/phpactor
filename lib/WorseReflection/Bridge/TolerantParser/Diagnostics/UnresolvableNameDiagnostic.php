@@ -56,4 +56,9 @@ class UnresolvableNameDiagnostic implements Diagnostic
     {
         return $this->name;
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
 }

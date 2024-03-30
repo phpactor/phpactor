@@ -55,4 +55,9 @@ class MissingReturnTypeDiagnostic implements Diagnostic
     {
         return $this->returnType;
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
 }
