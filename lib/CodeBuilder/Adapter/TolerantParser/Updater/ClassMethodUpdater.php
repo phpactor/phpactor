@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node\EnumMembers;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\InterfaceMembers;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -21,7 +22,7 @@ use Webmozart\Assert\Assert;
  */
 class ClassMethodUpdater extends AbstractMethodUpdater
 {
-    public function memberDeclarationsNode(ClassLike|ObjectCreationExpression $classNode): ClassMembersNode|TraitMembers|EnumMembers
+    public function memberDeclarationsNode(ClassLike|ObjectCreationExpression $classNode): ClassMembersNode|TraitMembers|EnumMembers|InterfaceMembers
     {
         if ($classNode instanceof ClassDeclaration || $classNode instanceof ObjectCreationExpression) {
             $classNode = $classNode->classMembers;

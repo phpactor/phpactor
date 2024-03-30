@@ -14,7 +14,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\ClassPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Constant;
 use Phpactor\CodeBuilder\Domain\Prototype\ExtendsClass;
 use Phpactor\CodeBuilder\Domain\Prototype\ImplementsInterfaces;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Microsoft\PhpParser\Token;
 
 class ClassUpdater extends ClassLikeUpdater
 {
@@ -97,7 +97,10 @@ class ClassUpdater extends ClassLikeUpdater
         }
 
         if (null === $classNode->classBaseClause) {
-            $edits->after($this->getName($classNode), ' extends ' . (string) $classPrototype->extendsClass());
+            $edits->after(
+                $this->getTokenBeforeImplementsOrExtends($classNode),
+                ' extends ' . (string) $classPrototype->extendsClass(),
+            );
             return;
         }
 
@@ -109,14 +112,16 @@ class ClassUpdater extends ClassLikeUpdater
         Edits $edits,
         ClassPrototype $classPrototype,
         ClassDeclaration|ObjectCreationExpression $classNode,
-    ): void
-    {
+    ): void {
         if (ImplementsInterfaces::empty() == $classPrototype->implementsInterfaces()) {
             return;
         }
 
         if (null === $classNode->classInterfaceClause) {
-            $edits->after($this->getName($classNode), ' implements ' . (string) $classPrototype->implementsInterfaces()->__toString());
+            $edits->after(
+                $this->getTokenBeforeImplementsOrExtends($classNode),
+                ' implements ' . (string) $classPrototype->implementsInterfaces(),
+            );
             return;
         }
 
@@ -137,11 +142,16 @@ class ClassUpdater extends ClassLikeUpdater
         $edits->replace($classNode->classInterfaceClause, ' implements ' . $names);
     }
 
-    private function getName(ObjectCreationExpression|ClassDeclaration $class): string
+    private function getTokenBeforeImplementsOrExtends(ObjectCreationExpression|ClassDeclaration $class): Token
     {
-        return match (true) {
+        /** @var Token $token */
+        $token = match (true) {
+            // class Test extends SomeClass
             $class instanceof ClassDeclaration => $class->name,
-            $class instanceof ObjectCreationExpression => (string) NodeUtil::nameFromTokenOrNode($class, $class),
+            // $a = new class () extends SomeClass
+            $class instanceof ObjectCreationExpression => $class->closeParen,
         };
+
+        return $token;
     }
 }

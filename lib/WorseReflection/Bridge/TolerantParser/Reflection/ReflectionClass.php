@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
@@ -64,13 +65,13 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
     ) {
     }
 
-    public function isAnonymous(): bool 
+    public function isAnonymous(): bool
     {
-        if ($node instanceof ClassDeclaration) {
+        if ($this->node instanceof ClassDeclaration) {
             return false;
         }
 
-        return $node->classTypeDesignator instanceof Token;
+        return $this->node->classTypeDesignator instanceof Token;
     }
 
     public function isAbstract(): bool
@@ -81,7 +82,6 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
         $modifier = $this->node->abstractOrFinalModifier;
 
-        /** @phpstan-ignore-next-line */
         if (!$modifier) {
             return false;
         }

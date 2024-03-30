@@ -14,10 +14,7 @@ use Microsoft\PhpParser\Node;
  */
 class InterfaceMethodUpdater extends AbstractMethodUpdater
 {
-    /**
-     * @return InterfaceMembers
-     */
-    public function memberDeclarationsNode(ClassLike $classNode)
+    public function memberDeclarationsNode(ClassLike|ObjectCreationExpression $classNode): InterfaceMembers
     {
         return $classNode->interfaceMembers;
     }
