@@ -102,10 +102,10 @@ class FileRenameHandlerTest extends IntegrationTestCase
         return new FileRenameHandler(
             new TestFileRenamer(
                 $willError,
-                new WorkspaceRenameEdits(
+                new WorkspaceRenameEdits(array_filter([
                     new LocatedTextEditsMap($workspaceEdits),
                     $renameResult,
-                ),
+                ])),
             ),
             new WorkspaceRenameEditsConverter($builder->workspace(), new WorkspaceTextDocumentLocator($builder->workspace())),
             new ClientApi($this->createMock(RpcClient::class)),

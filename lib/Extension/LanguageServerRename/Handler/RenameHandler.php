@@ -120,9 +120,9 @@ class RenameHandler implements Handler, CanRegisterCapabilities
      */
     private function resultToWorkspaceEdit(array $locatedEdits, ?RenameResult $renameResult): WorkspaceEdit
     {
-        return $this->converter->toWorkspaceEdit(new WorkspaceRenameEdits(
+        return $this->converter->toWorkspaceEdit(new WorkspaceRenameEdits(array_filter([
             LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
             $renameResult,
-        ));
+        ])));
     }
 }

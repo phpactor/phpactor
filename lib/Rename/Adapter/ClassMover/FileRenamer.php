@@ -66,10 +66,10 @@ class FileRenamer implements PhpactorFileRenamer
                 }
             }
 
-            return new WorkspaceRenameEdits(
+            return new WorkspaceRenameEdits(array_filter([
                 LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
                 new RenameResult($from, $to),
-            );
+            ]));
         });
     }
 
