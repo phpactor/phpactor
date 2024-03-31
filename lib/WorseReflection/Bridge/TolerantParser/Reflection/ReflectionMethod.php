@@ -199,7 +199,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         return $this->serviceLocator;
     }
 
-    protected function findDescendantToken(int $tokenBeforeKind = TokenKind::FunctionKeyword): ?Token
+    private function findDescendantToken(int $tokenBeforeKind = TokenKind::FunctionKeyword): ?Token
     {
         $found = false;
 
