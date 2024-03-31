@@ -26,7 +26,7 @@ class ClassMethodUpdater extends AbstractMethodUpdater
     {
         if ($classNode instanceof ClassDeclaration || $classNode instanceof ObjectCreationExpression) {
             $classNode = $classNode->classMembers;
-            Assert::isInstanceOf( $classNode, ClassMembersNode::class);
+            Assert::isInstanceOf($classNode, ClassMembersNode::class);
 
             return $classNode;
         }

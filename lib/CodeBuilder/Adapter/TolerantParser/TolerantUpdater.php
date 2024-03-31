@@ -24,7 +24,6 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\InterfaceUpdater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\TraitUpdater;
 use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use function Amp\Promise\wait;
 use Microsoft\PhpParser\Token;
 
 class TolerantUpdater implements Updater
