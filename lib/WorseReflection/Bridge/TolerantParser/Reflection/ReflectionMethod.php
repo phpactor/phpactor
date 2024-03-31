@@ -4,8 +4,10 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\AttributeGroup;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
+use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -169,6 +171,24 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         return new self($this->serviceLocator, $class, $this->node);
     }
 
+    public function position(): ByteOffsetRange
+    {
+        if (null === $this->node()->getFirstChildNode(AttributeGroup::class)) {
+            return parent::position();
+        }
+
+        $name = $this->findDescendantToken();
+
+        if (null === $name) {
+            return parent::position();
+        }
+
+        return ByteOffsetRange::fromInts(
+            $name->getStartPosition(),
+            $this->node()->getEndPosition()
+        );
+    }
+
     protected function node(): Node
     {
         return $this->node;
@@ -177,5 +197,27 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
     protected function serviceLocator(): ServiceLocator
     {
         return $this->serviceLocator;
+    }
+
+    protected function findDescendantToken(int $tokenBeforeKind = TokenKind::FunctionKeyword): ?Token
+    {
+        $found = false;
+
+        foreach ($this->node()->getDescendantNodesAndTokens() as $nodeOrToken) {
+            if (!$found && (!$nodeOrToken instanceof Token || $nodeOrToken->kind !== $tokenBeforeKind)) {
+                continue;
+            }
+
+            assert($nodeOrToken instanceof Token);
+
+            if ($found and $nodeOrToken->kind === TokenKind::Name) {
+                return $nodeOrToken;
+            }
+
+            $found = true;
+            continue;
+        }
+
+        return null;
     }
 }
