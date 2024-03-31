@@ -158,7 +158,7 @@ class ScfClassCompletorTest extends TolerantCompletorTestCase
         $this->assertComplete($source, $expected);
     }
 
-    public function provideImportClass()
+    public function provideImportClass(): Generator
     {
         yield 'does not import from the root namespace when in the root namespace' => [
             '<?php Without<>',

@@ -19,7 +19,7 @@ class LineColRangeForLineTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<array{string, int, LineColRange}>
      */
     public function provideRangeForLine(): Generator
     {
