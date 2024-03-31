@@ -67,6 +67,24 @@ class MemberRenamerTest extends RenamerTestCase
             }
         ];
 
+        yield 'attributed method declaration' => [
+            'member_renamer/method_declaration',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $method = $reflection->methods()->get('złom');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $method->nameRange()->start(),
+                    'scrap'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->methods()->has('scrap'));
+            }
+        ];
+
         yield 'method reference' => [
             'member_renamer/method_declaration',
             function (Reflector $reflector, Renamer $renamer): Generator {
