@@ -169,8 +169,9 @@ class ImplementContractsTest extends WorseTestCase
 
                     interface Bird
                     {
-                        *
-                         Emit chirping sound.
+                        /**
+                         * Emit chirping sound.
+                         */
                         public function chirp();
                     }
 
@@ -184,8 +185,9 @@ class ImplementContractsTest extends WorseTestCase
 
                     interface Bird
                     {
-                        *
-                         Emit chirping sound.
+                        /**
+                         * Emit chirping sound.
+                         */
                         public function chirp();
                     }
 
