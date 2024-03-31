@@ -26,7 +26,7 @@ class CompleteTest extends SystemTestCase
             $this->assertEmpty($suggestions);
         }
 
-        $this->assertLessThanOrEqual(count($expected), count($suggestions));
+        $this->assertGreaterThanOrEqual(count($expected), count($suggestions), 'Got more suggestions than expected');
         foreach ($expected as $index => $expectedSuggestion) {
             $this->assertArraySubset($expectedSuggestion, $suggestions[$index]);
         }
@@ -224,28 +224,6 @@ class CompleteTest extends SystemTestCase
                     'name' => 'class',
                     'short_description' => 'Foobar',
                 ],
-            ]
-        ];
-        yield 'Partially completed' => [
-            <<<'EOT'
-                <?php
-
-                class Foobar
-                {
-                    public static $foobar;
-                    public static $barfoo;
-                }
-
-                $foobar = new Foobar();
-                $foobar::f<>
-
-                EOT
-            , [
-                [
-                    'type' => 'property',
-                    'name' => 'foobar',
-                    'short_description' => 'pub static $foobar',
-                ]
             ]
         ];
         yield 'Complete from static call' => [

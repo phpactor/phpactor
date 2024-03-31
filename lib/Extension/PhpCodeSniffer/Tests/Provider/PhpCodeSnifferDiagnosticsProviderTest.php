@@ -124,7 +124,7 @@ class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
     }
 
     /**
-     * @return Generator<string,array{string, int}>
+     * @return Generator<string, array{string, int}>
      */
     public function fileProvider(): Generator
     {
@@ -134,13 +134,13 @@ class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
 
                 namespace Test;
                 \$foo = 'bar';
-                    \$test1 = true; // tab indent
+                 	\$test1 = true; // tab indent
                   \$test2 = true;
                     \$test3 = true;
                 \$lao = "tzu";
                 EOF,
             // expected diagnostics
-            1,
+            2,
         ];
         yield 'PEAR: correct file' => [
             <<<EOF
