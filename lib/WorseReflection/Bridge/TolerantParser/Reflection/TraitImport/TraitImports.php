@@ -109,7 +109,7 @@ final class TraitImports implements Countable, IteratorAggregate
     public static function forClassDeclaration(ClassDeclaration|ObjectCreationExpression $classDeclaration): self
     {
         if (!$classDeclaration->classMembers instanceof ClassMembersNode) {
-            throw new NotFound('ObjectCreationExpression does not contain anonymous class');
+            return new self([]);
         }
 
         return new self($classDeclaration->classMembers->classMemberDeclarations);
