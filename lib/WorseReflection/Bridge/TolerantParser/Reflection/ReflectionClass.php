@@ -80,8 +80,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             return false;
         }
 
+        /** @phpstan-ignore-next-line */
         $modifier = $this->node->abstractOrFinalModifier;
 
+        /** @phpstan-ignore-next-line */
         if (!$modifier) {
             return false;
         }
@@ -100,10 +102,9 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $members = ClassLikeReflectionMemberCollection::empty();
         foreach ($this->hierarchy() as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
-            $classLikeMembers = $classLikeMembers->merge($this->serviceLocator->methodProviders()->provideMembers(
-                $this->serviceLocator,
-                $reflectionClassLike
-            ));
+            $classLikeMembers = $classLikeMembers->merge(
+                $this->serviceLocator->methodProviders()->provideMembers($this->serviceLocator, $reflectionClassLike)
+            );
 
             // only inerit public and protected properties from parent classes
             if ($reflectionClassLike !== $this && !$reflectionClassLike instanceof ReflectionTrait) {

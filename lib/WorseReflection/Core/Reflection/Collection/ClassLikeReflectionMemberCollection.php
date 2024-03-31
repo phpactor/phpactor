@@ -25,7 +25,6 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPromotedProperty;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\ClassName;
-use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as PhpactorReflectionConstant;
@@ -75,7 +74,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         ReflectionClass $reflectionClass
     ): self {
         if (!$class->classMembers instanceof ClassMembersNode) {
-            return new self();
+            return new self([]);
         }
 
         return self::fromDeclarations(
