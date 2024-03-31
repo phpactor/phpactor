@@ -215,7 +215,6 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
             }
 
             $found = true;
-            continue;
         }
 
         return null;
