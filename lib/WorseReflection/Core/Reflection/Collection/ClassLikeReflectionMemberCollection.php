@@ -75,7 +75,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
         ReflectionClass $reflectionClass
     ): self {
         if (!$class->classMembers instanceof ClassMembersNode) {
-            throw new NotFound('ObjectCreationExpression does not contain anonymous class');
+            return new self();
         }
 
         return self::fromDeclarations(
