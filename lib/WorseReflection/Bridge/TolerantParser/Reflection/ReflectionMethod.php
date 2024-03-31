@@ -177,7 +177,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
             return parent::position();
         }
 
-        $name = $this->findDescendantToken();
+        $name = $this->findDescendantNamedToken();
 
         if (null === $name) {
             return parent::position();
@@ -199,22 +199,25 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         return $this->serviceLocator;
     }
 
-    private function findDescendantToken(int $tokenBeforeKind = TokenKind::FunctionKeyword): ?Token
+    private function findDescendantNamedToken(int $tokenBeforeKind = TokenKind::FunctionKeyword): ?Token
     {
         $found = false;
 
         foreach ($this->node()->getDescendantNodesAndTokens() as $nodeOrToken) {
-            if (!$found && (!$nodeOrToken instanceof Token || $nodeOrToken->kind !== $tokenBeforeKind)) {
+            if (false === $found) {
+                if (!$nodeOrToken instanceof Token || $nodeOrToken->kind !== $tokenBeforeKind) {
+                    continue;
+                }
+
+                $found = true;
                 continue;
             }
 
-            assert($nodeOrToken instanceof Token);
-
-            if ($found and $nodeOrToken->kind === TokenKind::Name) {
-                return $nodeOrToken;
+            if (!$nodeOrToken instanceof Token || $nodeOrToken->kind !== TokenKind::Name) {
+                return null;
             }
 
-            $found = true;
+            return $nodeOrToken;
         }
 
         return null;
