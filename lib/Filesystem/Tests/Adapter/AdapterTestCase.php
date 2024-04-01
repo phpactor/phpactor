@@ -6,8 +6,6 @@ use Phpactor\Filesystem\Domain\Filesystem;
 
 abstract class AdapterTestCase extends IntegrationTestCase
 {
-    private $filesystem;
-
     public function setUp(): void
     {
         $this->initWorkspace();

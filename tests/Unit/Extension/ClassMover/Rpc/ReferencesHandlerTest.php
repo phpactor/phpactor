@@ -440,7 +440,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         ], $second->parameters());
     }
 
-    private function exampleMemberRiskyResponse()
+    private function exampleMemberRiskyResponse(): array
     {
         return [
             'references' => [
@@ -467,7 +467,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         ];
     }
 
-    private function exampleClassResponse()
+    private function exampleClassResponse(): array
     {
         return [
             'references' => [

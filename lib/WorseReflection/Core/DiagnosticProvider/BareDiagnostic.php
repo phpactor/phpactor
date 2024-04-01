@@ -29,4 +29,9 @@ class BareDiagnostic implements Diagnostic
     {
         return $this->message;
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
 }

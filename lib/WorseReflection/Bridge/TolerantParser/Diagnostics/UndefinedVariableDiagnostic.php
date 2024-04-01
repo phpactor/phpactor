@@ -60,4 +60,8 @@ class UndefinedVariableDiagnostic implements Diagnostic
         return $this->varName;
     }
 
+    public function tags(): array
+    {
+        return [];
+    }
 }

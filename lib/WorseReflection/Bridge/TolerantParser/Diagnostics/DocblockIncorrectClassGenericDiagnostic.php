@@ -38,4 +38,9 @@ class DocblockIncorrectClassGenericDiagnostic implements Diagnostic
             $this->correctType->short()
         );
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
 }

@@ -52,4 +52,9 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
     {
         return $this->tagName === '@extends';
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
 }

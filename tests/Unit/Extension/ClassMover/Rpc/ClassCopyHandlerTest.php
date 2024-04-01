@@ -19,6 +19,9 @@ class ClassCopyHandlerTest extends HandlerTestCase
     const SOURCE_PATH = 'souce_path';
     const DEST_PATH = 'souce_path';
 
+    /**
+     * @var ObjectProphecy<ClassCopy>
+     */
     private ObjectProphecy $classCopy;
 
     public function setUp(): void
@@ -38,7 +41,7 @@ class ClassCopyHandlerTest extends HandlerTestCase
      */
     public function testNoDestPath(): void
     {
-        /** @var $action InputCallbackAction */
+        /** @var InputCallbackAction $action */
         $action = $this->handle('copy_class', [
             'source_path' => self::SOURCE_PATH,
             'dest_path' => null,
