@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Model\Record;
 
+use Attribute;
 use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Model\Record;
 
@@ -16,7 +17,14 @@ final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath,
     public const TYPE_INTERFACE = 'interface';
     public const TYPE_TRAIT = 'trait';
     public const TYPE_ENUM = 'enum';
-    public const FLAG_ATTRIBUTE = 1;
+    public const FLAG_ATTRIBUTE = 63;
+    public const FLAG_ATTRIBUTE_TARGET_CLASS = Attribute::TARGET_CLASS;
+    public const FLAG_ATTRIBUTE_TARGET_FUNCTION = Attribute::TARGET_FUNCTION;
+    public const FLAG_ATTRIBUTE_TARGET_METHOD = Attribute::TARGET_METHOD;
+    public const FLAG_ATTRIBUTE_TARGET_PROPERTY = Attribute::TARGET_PROPERTY;
+    public const FLAG_ATTRIBUTE_TARGET_CLASS_CONSTANT = Attribute::TARGET_CLASS_CONSTANT;
+    public const FLAG_ATTRIBUTE_TARGET_PARAMETER = Attribute::TARGET_PARAMETER;
+    public const FLAG_ATTRIBUTE_IS_REPEATABLE = Attribute::IS_REPEATABLE;
 
     /**
      * @var array<string>

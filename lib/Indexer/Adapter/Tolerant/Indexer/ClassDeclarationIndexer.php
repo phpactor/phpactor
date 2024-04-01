@@ -5,6 +5,9 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\BinaryExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\Indexer\Model\Exception\CannotIndexNode;
 use Phpactor\Indexer\Model\Index;
@@ -41,6 +44,26 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
         $index->write($record);
     }
 
+    /**
+     * @return string[]
+     */
+    private function listAttributeTargetTexts(Node $attribute): array
+    {
+        $targetTexts = [];
+
+        $isNotTarget = fn (Node $node): bool => !$node instanceof ScopedPropertyAccessExpression;
+
+        foreach ($attribute->getDescendantNodes($isNotTarget) as $target) {
+            if ($isNotTarget($target)) {
+                continue;
+            }
+
+            $targetTexts[] = ltrim($target->getText(), '\\');
+        }
+
+        return $targetTexts;
+    }
+
     public function indexAttributes(ClassRecord $record, ClassDeclaration $node): void
     {
         $attributes = $node->attributes ?? [];
@@ -54,10 +77,55 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
                     continue;
                 }
                 /** @phpstan-ignore-next-line */
-                if ((string) $attribute->name?->getResolvedName() === \Attribute::class) {
+                if ((string) $attribute->name?->getResolvedName() !== \Attribute::class) {
+                    continue;
+                }
+
+                $targetTexts = $this->listAttributeTargetTexts($attribute);
+                if ([] === $targetTexts) {
                     $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
                     return;
                 }
+
+                foreach ($targetTexts as $targetText) {
+                    switch ($targetText) {
+                        case 'Attribute::TARGET_CLASS':
+                        case '1':
+                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS);
+                            break;
+                        case 'Attribute::TARGET_FUNCTION':
+                        case '2':
+                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_FUNCTION);
+                            break;
+                        case 'Attribute::TARGET_METHOD':
+                        case '4':
+                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_METHOD);
+                            break;
+                        case 'Attribute::TARGET_PROPERTY':
+                        case '8':
+                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_PROPERTY);
+                            break;
+                        case 'Attribute::TARGET_CLASS_CONSTANT':
+                        case '16':
+                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS_CONSTANT);
+                            break;
+                        case 'Attribute::TARGET_PARAMETER':
+                        case '32':
+                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_PARAMETER);
+                            break;
+                        case 'Attribute::TARGET_ALL':
+                        case '63':
+                        default:
+                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
+                            break;
+                        case 'Attribute::IS_REPEATABLE':
+                        case '64':
+                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_IS_REPEATABLE);
+                            break;
+                    }
+                }
+
+                return;
             }
         }
     }
