@@ -38,5 +38,7 @@ class ShortNameBeginsOrCamelMatchesToTest extends TestCase
         yield 'underscore in subject, negative' => ['fits', 'file_get_contents', false];
         yield 'multibyte' => ['😼☠', 'Foobar\\😼☠k😼', true];
         yield 'lower first' => ['gNT', 'getDescendantNodesAndTokens', true];
+        yield 'only upper in subject' => ['tr', 'TARGET_CLASS', false];
+        yield 'only upper in subject 2' => ['tc', 'TARGET_CLASS', false];
     }
 }
