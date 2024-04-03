@@ -44,26 +44,6 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
         $index->write($record);
     }
 
-    /**
-     * @return string[]
-     */
-    private function listAttributeTargetTexts(Node $attribute): array
-    {
-        $targetTexts = [];
-
-        $isNotTarget = fn (Node $node): bool => !$node instanceof ScopedPropertyAccessExpression;
-
-        foreach ($attribute->getDescendantNodes($isNotTarget) as $target) {
-            if ($isNotTarget($target)) {
-                continue;
-            }
-
-            $targetTexts[] = ltrim($target->getText(), '\\');
-        }
-
-        return $targetTexts;
-    }
-
     public function indexAttributes(ClassRecord $record, ClassDeclaration $node): void
     {
         $attributes = $node->attributes ?? [];
@@ -167,5 +147,25 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
         assert($baseClassRecord instanceof ClassRecord);
         $baseClassRecord->addImplementation($record->fqn());
         $index->write($baseClassRecord);
+    }
+
+    /**
+     * @return string[]
+     */
+    private function listAttributeTargetTexts(Node $attribute): array
+    {
+        $targetTexts = [];
+
+        $isNotTarget = fn (Node $node): bool => !$node instanceof ScopedPropertyAccessExpression;
+
+        foreach ($attribute->getDescendantNodes($isNotTarget) as $target) {
+            if ($isNotTarget($target)) {
+                continue;
+            }
+
+            $targetTexts[] = ltrim($target->getText(), '\\');
+        }
+
+        return $targetTexts;
     }
 }
