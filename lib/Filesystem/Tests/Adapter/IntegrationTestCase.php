@@ -28,7 +28,7 @@ abstract class IntegrationTestCase extends TestCase
         $filesystem = new Filesystem();
         $filesystem->mirror($projectPath, $this->workspacePath());
         chdir($this->workspacePath());
-        exec('composer dumpautoload 2> /dev/null');
+        exec('composer dumpautoload --quiet');
     }
 
     protected function getProjectAutoloader(): string
