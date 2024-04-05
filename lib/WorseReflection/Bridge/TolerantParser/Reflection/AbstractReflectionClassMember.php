@@ -94,6 +94,7 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
         $tokenKind = match ($this->memberType()) {
             ReflectionMember::TYPE_PROPERTY => TokenKind::VariableName,
             ReflectionMember::TYPE_METHOD => TokenKind::FunctionKeyword,
+            ReflectionMember::TYPE_CONSTANT => TokenKind::ConstKeyword,
             default => TokenKind::FunctionKeyword, // todo!
         };
 
@@ -115,25 +116,43 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
     {
         $found = false;
 
-        foreach ($this->node()->getDescendantNodesAndTokens() as $nodeOrToken) {
+        foreach ($this->node()->getDescendantNodesAndTokens() as $token) {
+            if (!$token instanceof Token) {
+                continue;
+            }
+
             if (false === $found) {
-                if (!$nodeOrToken instanceof Token || $nodeOrToken->kind !== $tokenBeforeKind) {
+                if (!$token instanceof Token || $token->kind !== $tokenBeforeKind) {
                     continue;
                 }
 
                 if ($tokenBeforeKind === TokenKind::VariableName) {
-                    return $nodeOrToken;
+                    return $token;
                 }
 
                 $found = true;
                 continue;
             }
 
-            if (!$nodeOrToken instanceof Token || $nodeOrToken->kind !== TokenKind::Name) {
+            if ($tokenBeforeKind !== TokenKind::ConstKeyword && $token->kind === TokenKind::Name) {
+                return $token;
+            }
+
+            if ($tokenBeforeKind !== TokenKind::ConstKeyword) {
                 return null;
             }
 
-            return $nodeOrToken;
+            if ($token->kind !== TokenKind::Name) {
+                continue;
+            }
+
+            $tokenText = $token->getText($this->node()->getRoot()->getText());
+
+            if ($tokenText !== $this->name()) {
+                continue;
+            }
+
+            return $token;
         }
 
         return null;

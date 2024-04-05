@@ -369,6 +369,23 @@ class MemberRenamerTest extends RenamerTestCase
                 self::assertTrue($reflection->constants()->has('newName'));
             }
         ];
+        yield 'attributed constant declaration public' => [
+            'member_renamer/constant_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $constant = $reflection->constants()->get('ZOO');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $constant->nameRange()->start(),
+                    'ZŁOM'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->constants()->has('ZŁOM'));
+            }
+        ];
     }
 
     /**
