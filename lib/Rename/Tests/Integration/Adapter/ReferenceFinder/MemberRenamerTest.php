@@ -13,6 +13,7 @@ use Phpactor\Rename\Model\Renamer;
 use Phpactor\Rename\Tests\RenamerTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPropertyAccess;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Reflector;
 
@@ -173,6 +174,35 @@ class MemberRenamerTest extends RenamerTestCase
                 )->propertyAccesses();
                 $first = $propertyAccesses->first();
                 self::assertEquals('newName', $first->name());
+            }
+        ];
+
+        yield 'attributed property declaration public' => [
+            'member_renamer/property_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $property = $reflection->properties()->get('found');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'results'
+                );
+            },
+            function (Reflector $reflector): void {
+                $propertyAccesses = $reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
+                )->propertyAccesses()->getIterator();
+                $propertyAccesses->next();
+                $property = $propertyAccesses->current();
+                self::assertEquals('results', $property->name());
+
+                $propertyAccesses = $reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build()
+                )->propertyAccesses()->getIterator();
+                $propertyAccesses->next();
+                $property = $propertyAccesses->current();
+                self::assertEquals('results', $property->name());
             }
         ];
 

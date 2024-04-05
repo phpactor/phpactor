@@ -2,6 +2,9 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Microsoft\PhpParser\Node\AttributeGroup;
+use Microsoft\PhpParser\Token;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -82,5 +85,57 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
         return $this->docblock()->deprecation();
     }
 
+    public function position(): ByteOffsetRange
+    {
+        if (null === $this->node()->getFirstChildNode(AttributeGroup::class)) {
+            return parent::position();
+        }
+
+        $tokenKind = match ($this->memberType()) {
+            ReflectionMember::TYPE_PROPERTY => TokenKind::VariableName,
+            ReflectionMember::TYPE_METHOD => TokenKind::FunctionKeyword,
+            default => TokenKind::FunctionKeyword, // todo!
+        };
+
+        $name = $this->findDescendantNamedToken($tokenKind);
+
+        if (null === $name) {
+            return parent::position();
+        }
+
+        return ByteOffsetRange::fromInts(
+            $name->getStartPosition(),
+            $this->node()->getEndPosition()
+        );
+    }
+
     abstract protected function serviceLocator(): ServiceLocator;
+
+    private function findDescendantNamedToken(int $tokenBeforeKind): ?Token
+    {
+        $found = false;
+
+        foreach ($this->node()->getDescendantNodesAndTokens() as $nodeOrToken) {
+            if (false === $found) {
+                if (!$nodeOrToken instanceof Token || $nodeOrToken->kind !== $tokenBeforeKind) {
+                    continue;
+                }
+
+                if ($tokenBeforeKind === TokenKind::VariableName) {
+                    return $nodeOrToken;
+                }
+
+                $found = true;
+                continue;
+            }
+
+            if (!$nodeOrToken instanceof Token || $nodeOrToken->kind !== TokenKind::Name) {
+                return null;
+            }
+
+            return $nodeOrToken;
+        }
+
+        return null;
+    }
 }
