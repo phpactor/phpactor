@@ -190,18 +190,18 @@ class MemberRenamerTest extends RenamerTestCase
                 );
             },
             function (Reflector $reflector): void {
-                $propertyAccesses = $reflector->navigate(
+                $propertyAccesses = [...$reflector->navigate(
                     TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
-                )->propertyAccesses()->getIterator();
-                $propertyAccesses->next();
-                $property = $propertyAccesses->current();
+                )->propertyAccesses()];
+                $property = end($propertyAccesses);
+                self::assertInstanceOf(ReflectionPropertyAccess::class, $property);
                 self::assertEquals('results', $property->name());
 
-                $propertyAccesses = $reflector->navigate(
+                $propertyAccesses = [...$reflector->navigate(
                     TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build()
-                )->propertyAccesses()->getIterator();
-                $propertyAccesses->next();
-                $property = $propertyAccesses->current();
+                )->propertyAccesses()->getIterator()];
+                $property = end($propertyAccesses);
+                self::assertInstanceOf(ReflectionPropertyAccess::class, $property);
                 self::assertEquals('results', $property->name());
             }
         ];
