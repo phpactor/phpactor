@@ -147,7 +147,7 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
                 continue;
             }
 
-            $tokenText = $token->getText($this->node()->getRoot()->getText());
+            $tokenText = $token->getText($this->node()->getFileContents());
 
             if ($tokenText !== $this->name()) {
                 continue;
