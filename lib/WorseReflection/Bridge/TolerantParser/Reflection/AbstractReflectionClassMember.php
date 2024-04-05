@@ -22,6 +22,7 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use InvalidArgumentException;
+use RuntimeException;
 
 abstract class AbstractReflectionClassMember extends AbstractReflectedNode implements ReflectionMember
 {
@@ -95,7 +96,7 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
             ReflectionMember::TYPE_PROPERTY => TokenKind::VariableName,
             ReflectionMember::TYPE_METHOD => TokenKind::FunctionKeyword,
             ReflectionMember::TYPE_CONSTANT => TokenKind::ConstKeyword,
-            default => TokenKind::FunctionKeyword, // todo!
+            ReflectionMember::TYPE_CASE => TokenKind::CaseKeyword,
         };
 
         $name = $this->findDescendantNamedToken($tokenKind);

@@ -410,6 +410,24 @@ class MemberRenamerTest extends RenamerTestCase
                 self::assertTrue($reflection->cases()->has('newName'));
             }
         ];
+
+        yield 'enum attributed case declaration' => [
+            'member_renamer/enum_case_declaration_private',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectEnum('ClassOne');
+                $enum = $reflection->cases()->get('BAZ');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $enum->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectEnum('ClassOne');
+                self::assertTrue($reflection->cases()->has('newName'));
+            }
+        ];
     }
 
     /**
