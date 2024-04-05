@@ -258,6 +258,34 @@ class MemberRenamerTest extends RenamerTestCase
             }
         ];
 
+        yield 'attributed promoted property declaration public' => [
+            'member_renamer/property_promoted_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('Test\ClassOne');
+                $property = $reflection->properties()->get('depOld');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'depNew'
+                );
+            },
+            function (Reflector $reflector): void {
+                $propertyAccesses = [...$reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
+                )->propertyAccesses()];
+                $property = end($propertyAccesses);
+                self::assertInstanceOf(ReflectionPropertyAccess::class, $property);
+                self::assertEquals('depNew', $property->name());
+                $propertyAccesses = [...$reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build()
+                )->propertyAccesses()];
+                $property = end($propertyAccesses);
+                self::assertInstanceOf(ReflectionPropertyAccess::class, $property);
+                self::assertEquals('depNew', $property->name());
+            }
+        ];
+
         yield 'property declaration public does not rename other members' => [
             'member_renamer/property_declaration_public_does_not_rename_others',
             function (Reflector $reflector, Renamer $renamer): Generator {
