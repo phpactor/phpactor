@@ -117,26 +117,25 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
         $found = false;
 
         foreach ($this->node()->getDescendantTokens() as $token) {
-            if (false === $found) {
-                if ($token->kind !== $tokenBeforeKind) {
-                    continue;
+            if ($found) {
+                if ($tokenBeforeKind !== TokenKind::ConstKeyword) {
+                    return $token->kind === TokenKind::Name ? $token : null;
                 }
 
-                if ($tokenBeforeKind === TokenKind::VariableName) {
+                if ($token->kind === TokenKind::Name && $token->getText($this->node()->getFileContents()) === $this->name()) {
                     return $token;
                 }
+            }
 
-                $found = true;
+            if ($token->kind !== $tokenBeforeKind) {
                 continue;
             }
 
-            if ($tokenBeforeKind !== TokenKind::ConstKeyword) {
-                return $token->kind === TokenKind::Name ? $token : null;
-            }
-
-            if ($token->kind === TokenKind::Name && $token->getText($this->node()->getFileContents()) === $this->name()) {
+            if ($tokenBeforeKind === TokenKind::VariableName) {
                 return $token;
             }
+
+            $found = true;
         }
 
         return null;
