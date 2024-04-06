@@ -22,7 +22,6 @@ use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use InvalidArgumentException;
-use RuntimeException;
 
 abstract class AbstractReflectionClassMember extends AbstractReflectedNode implements ReflectionMember
 {
