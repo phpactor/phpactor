@@ -17,6 +17,7 @@ use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\TextDocument\TextDocumentLocator\InMemoryDocumentLocator;
+use Phpactor\TextDocument\TextDocumentUri;
 use function Amp\Promise\wait;
 
 class FileRenamerTest extends IntegrationTestCase
@@ -35,17 +36,19 @@ class FileRenamerTest extends IntegrationTestCase
         $document3 = $this->createDocument('3.php', '<?php One::class;');
         $document4 = $this->createDocument('4.php', '<?php One::class;');
 
-        $renamer = $this->createRenamer([$document1, $document2, $document3, $document4], [
-            (new ClassRecord('One'))->setType('class')->addReference(
-                'file://' . $this->path('3.php')
-            )->addReference('file://' . $this->path('4.php')),
-            FileRecord::fromPath('file://' . $this->path('3.php'))->addReference(
-                new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)
-            ),
-            FileRecord::fromPath('file://' . $this->path('4.php'))->addReference(
-                new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)
-            )
-        ]);
+        $renamer = $this->createRenamer(
+            [$document1, $document2, $document3, $document4],
+            [
+                (new ClassRecord('One'))
+                    ->setType('class')
+                    ->addReference((string)TextDocumentUri::fromString($this->path('3.php')))
+                    ->addReference((string)TextDocumentUri::fromString($this->path('4.php'))),
+                FileRecord::fromPath((string)TextDocumentUri::fromString($this->path('3.php')))
+                    ->addReference(new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)),
+                FileRecord::fromPath((string)TextDocumentUri::fromString($this->path('4.php')))
+                    ->addReference(new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)),
+           ]
+        );
 
         $edits = wait($renamer->renameFile($document1->uriOrThrow(), $document2->uriOrThrow()));
 
