@@ -67,7 +67,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
 
         /**
- * @phpstan-ignore-next-line 
+ * @phpstan-ignore-next-line
 */
         if (null === $class) {
             throw new InvalidArgumentException(
@@ -133,11 +133,14 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         $statements = $statement->statements;
         return NodeText::fromString(
             implode(
-                "\n", array_reduce(
-                    $statements, function ($acc, $statement) {
+                "\n",
+                array_reduce(
+                    $statements,
+                    function ($acc, $statement) {
                         $acc[] = (string) $statement->getText();
                         return $acc;
-                    }, []
+                    },
+                    []
                 )
             )
         );

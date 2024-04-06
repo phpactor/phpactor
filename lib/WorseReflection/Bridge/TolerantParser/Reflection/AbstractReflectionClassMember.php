@@ -130,12 +130,8 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
                 continue;
             }
 
-            if ($tokenBeforeKind !== TokenKind::ConstKeyword && $token->kind === TokenKind::Name) {
-                return $token;
-            }
-
             if ($tokenBeforeKind !== TokenKind::ConstKeyword) {
-                return null;
+                return $token->kind === TokenKind::Name ? $token : null;
             }
 
             if ($token->kind === TokenKind::Name && $token->getText($this->node()->getFileContents()) === $this->name()) {
