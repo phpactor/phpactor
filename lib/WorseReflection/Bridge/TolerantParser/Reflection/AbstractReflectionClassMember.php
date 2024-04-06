@@ -117,7 +117,7 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
         $found = false;
 
         foreach ($this->node()->getDescendantTokens() as $token) {
-            if ($found) {
+            if (true === $found) {
                 if ($tokenBeforeKind !== TokenKind::ConstKeyword) {
                     return $token->kind === TokenKind::Name ? $token : null;
                 }
