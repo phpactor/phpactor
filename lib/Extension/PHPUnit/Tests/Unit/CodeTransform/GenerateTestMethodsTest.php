@@ -98,14 +98,12 @@ class GenerateTestMethodsTest extends WorseTestCase
     }
 
     /**
-     * @return array<string,array{string}>
+     * @return Generator<string,array{string}>
      */
-    public function provideGenerateTestMethods(): array
+    public function provideGenerateTestMethods(): Generator
     {
-        return [
-            'generating a method that already exists' => [ 'generateTestMethods_existing.test'],
-            'generating a new setUp method' => [ 'generateTestMethods_generate.test'],
-        ];
+        yield 'generating a method that already exists' => [ 'generateTestMethods_existing.test'];
+        yield 'generating a new setUp method' => [ 'generateTestMethods_generate.test'];
     }
 
     public function testGeneratingOtherMethods(): void

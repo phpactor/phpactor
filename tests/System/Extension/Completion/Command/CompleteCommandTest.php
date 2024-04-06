@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\Completion\Command;
 
+use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
 class CompleteCommandTest extends SystemTestCase
@@ -15,28 +16,29 @@ class CompleteCommandTest extends SystemTestCase
     /**
      * @dataProvider provideComplete
      */
-    public function testComplete($command, $expected): void
+    public function testComplete(string $command, string $expected): void
     {
         $process = $this->phpactorFromStringArgs($command);
         $this->assertSuccess($process);
         $this->assertStringContainsString($expected, trim($process->getOutput()));
     }
 
-    public function provideComplete()
+    /**
+     * @return Generator<string,array{string,string}>
+     */
+    public function provideComplete(): Generator
     {
-        return [
-            'Complete' => [
-                'complete lib/Badger.php 181',
-                <<<'EOT'
-                    suggestions:
-                    EOT
-            ],
-            'Complete with type' => [
-                'complete lib/Badger.php 181 --type=cucumber',
-                <<<'EOT'
-                    suggestions:
-                    EOT
-            ],
+        yield 'Complete' => [
+            'complete lib/Badger.php 181',
+            <<<'EOT'
+                suggestions:
+                EOT
+        ];
+        yield 'Complete with type' => [
+            'complete lib/Badger.php 181 --type=cucumber',
+            <<<'EOT'
+                suggestions:
+                EOT
         ];
     }
 }

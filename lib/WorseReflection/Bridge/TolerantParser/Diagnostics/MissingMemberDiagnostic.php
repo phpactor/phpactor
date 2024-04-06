@@ -47,4 +47,9 @@ class MissingMemberDiagnostic implements Diagnostic
     {
         return $this->memberType;
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
 }

@@ -21,6 +21,9 @@ class WorseDeclaredClassCompletorTest extends TolerantCompletorTestCase
         $this->assertComplete($source, $expected);
     }
 
+    /**
+     * @return Generator<string,array{string,array<int,array<string,string>>}>
+     */
     public function provideComplete(): Generator
     {
         yield 'array object' => [

@@ -54,4 +54,9 @@ class DocblockMissingParamDiagnostic implements Diagnostic
     {
         return $this->paramType;
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
 }

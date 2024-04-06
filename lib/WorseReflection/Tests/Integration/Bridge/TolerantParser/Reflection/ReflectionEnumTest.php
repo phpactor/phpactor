@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\EnumBackedCaseType;
@@ -23,15 +24,15 @@ class ReflectionEnumTest extends IntegrationTestCase
         $assertion($class);
     }
 
-    public function provideReflectionEnum()
+    public function provideReflectionEnum(): Generator
     {
         yield 'It reflects a enum' => [
                 <<<'EOT'
-                                    <?php
+                    <?php
 
-                                    enum Barfoo
-                                    {
-                                    }
+                    enum Barfoo
+                    {
+                    }
                     EOT
         ,
         'Barfoo',

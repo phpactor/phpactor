@@ -116,6 +116,18 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
         return end($this->items);
     }
 
+    /**
+     * @return T|null
+     */
+    public function lastOrNull()
+    {
+        if (empty($this->items)) {
+            return null;
+        }
+
+        return end($this->items);
+    }
+
     public function has(string $name): bool
     {
         return isset($this->items[$name]);

@@ -6,4 +6,9 @@ class ClassTwo extends Test\ClassOne
     {
         return $this->foobar;
     }
+
+    public function dep(): string
+    {
+        return $this->depOld;
+    }
 }

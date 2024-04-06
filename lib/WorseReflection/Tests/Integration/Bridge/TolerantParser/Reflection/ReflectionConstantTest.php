@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Generator;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
@@ -20,8 +21,10 @@ class ReflectionConstantTest extends IntegrationTestCase
         assert($class instanceof ReflectionClass);
         $assertion($class->constants());
     }
-
-    public function provideReflectionConstant()
+    /**
+     * @return Generator<string,array{string,string,Closure(\Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection): void}>
+     */
+    public function provideReflectionConstant(): Generator
     {
         yield 'Returns declaring class' => [
             <<<'EOT'

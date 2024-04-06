@@ -13,7 +13,7 @@ class ComposerFilesystemTest extends AdapterTestCase
     {
         parent::setUp();
         chdir($this->workspacePath());
-        exec('composer dumpautoload  2> /dev/null');
+        exec('composer dumpautoload --quiet');
     }
 
     public function testClassmap(): void

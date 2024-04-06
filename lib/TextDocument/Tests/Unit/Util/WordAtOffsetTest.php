@@ -21,48 +21,48 @@ class WordAtOffsetTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<string, array{string, string}|array{string, string, string}>
      */
     public function provideWordAtOffset(): Generator
     {
-        yield [
+        yield 'middle word' => [
             'hello thi<>s is',
             'this',
         ];
 
-        yield [
+        yield 'first word' => [
             'h<>ello this is',
             'hello',
         ];
-        yield [
+        yield 'last word' => [
             'hello this i<>s',
             'is',
         ];
-        yield [
+        yield 'last position' => [
             'hello this is<>',
             'is',
         ];
-        yield [
+        yield 'after last word' => [
             'hello this is <>',
             ' ',
         ];
-        yield [
+        yield 'before word' => [
             'hello this <>is',
             ' ',
         ];
-        yield [
+        yield 'with newline' => [
             "hello this is\nsom<>ething",
             'something',
         ];
-        yield [
+        yield 'first offset only' => [
             " <>  hello this is\nsom<>ething",
             ' ',
         ];
-        yield [
+        yield 'trailing semicolons' => [
             'Reque<>st;',
             'Request',
         ];
-        yield [
+        yield 'namespaced' => [
             "Foobar\Reque<>st;",
             'Request',
         ];

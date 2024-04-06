@@ -11,4 +11,9 @@ interface Diagnostic
     public function severity(): DiagnosticSeverity;
 
     public function message(): string;
+
+    /**
+     * @return array<DiagnosticTag>
+     */
+    public function tags(): array;
 }

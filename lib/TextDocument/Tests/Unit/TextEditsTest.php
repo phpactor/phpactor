@@ -25,7 +25,9 @@ class TextEditsTest extends TestCase
         );
     }
 
-
+    /**
+    * @return Generator<string, array{array<TextEdit>, array<TextEdit>, array<TextEdit>}>
+    */
     public function provideMerge(): Generator
     {
         yield 'empty' => [
@@ -97,7 +99,7 @@ class TextEditsTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<string, array{string, TextEdits, string}>
      */
     public function provideApplyTextEdits(): Generator
     {
@@ -147,7 +149,7 @@ class TextEditsTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<string, array{string, TextEdits, string}>
      */
     public function provideApplyTextEditsErrors(): Generator
     {
