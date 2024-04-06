@@ -60,9 +60,8 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         if (
-            $node->parent !== null
-                && CompletionContext::classMembersBody($node->parent->parent)
-                && !CompletionContext::nodeOrParentIs($node->parent->parent, ParameterDeclarationList::class)
+            CompletionContext::classMembersBody($node->parent?->parent)
+                && !CompletionContext::nodeOrParentIs($node->parent?->parent, ParameterDeclarationList::class)
         ) {
             yield from $this->keywords([
                 'return ',
