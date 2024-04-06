@@ -22,7 +22,7 @@ class LineAtOffsetTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<array{string, string}>
      */
     public function provideLineAtOffset(): Generator
     {

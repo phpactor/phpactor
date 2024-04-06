@@ -6,4 +6,10 @@ class ClassOne
     {
         return 'foobar';
     }
+
+    #[\ReturnTypeWillChange]
+    public function złom(): string
+    {
+        return 'f';
+    }
 }

@@ -426,11 +426,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/CollectionTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\Prototype\\\\DefaultValueTest\\:\\:provideExportValues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/DefaultValueTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\Prototype\\\\DefaultValueTest\\:\\:testExportValues\\(\\) has parameter \\$expected with no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/DefaultValueTest.php
@@ -441,11 +436,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/DefaultValueTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\Prototype\\\\TypeTest\\:\\:provideNamespace\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/TypeTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\TemplatePathResolver\\\\FilterPhpVersionDirectoryIteratorTest\\:\\:provideDirectoriesToFilter\\(\\) return type has no value type specified in iterable type iterable\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/FilterPhpVersionDirectoryIteratorTest.php
@@ -454,11 +444,6 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\TemplatePathResolver\\\\FilterPhpVersionDirectoryIteratorTest\\:\\:testThatItKeepsOnlyDirectoriesOfInferiorOrEqualVersion\\(\\) has parameter \\$expectedFilteredDirectories with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/FilterPhpVersionDirectoryIteratorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\TemplatePathResolver\\\\PhpVersionPathResolverTest\\:\\:provideResolvePaths\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/PhpVersionPathResolverTest.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Domain\\\\TemplatePathResolver\\\\PhpVersionPathResolverTest\\:\\:testResolvePaths\\(\\) has parameter \\$expectedPaths with no value type specified in iterable type array\\.$#"
@@ -489,16 +474,6 @@ parameters:
 			message: "#^Property Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\SourceBuilderTest\\:\\:\\$prototype has no type specified\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Util\\\\TextFormatTest\\:\\:provideIndent\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Util/TextFormatTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeBuilder\\\\Tests\\\\Unit\\\\Util\\\\TextFormatTest\\:\\:provideRemoveIndentation\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Util/TextFormatTest.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Util\\\\TextFormat\\:\\:indentRemove\\(\\) should return string but returns string\\|null\\.$#"
@@ -621,11 +596,6 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/ClassToFile/Transformer/ClassNameFixerTransformerTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\ClassToFile\\\\Transformer\\\\ClassNameFixerTransformerTest\\:\\:provideFixClassName\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/TolerantParser/ClassToFile/Transformer/ClassNameFixerTransformerTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$directory of function chdir expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/ClassToFile/Transformer/ClassNameFixerTransformerTest.php
@@ -641,19 +611,9 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/ClassToFile/Transformer/ClassNameFixerTransformerTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantChangeVisiblityTest\\:\\:provideChangeVisibility\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/TolerantChangeVisiblityTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantImportNameOnlyTest\\:\\:importName\\(\\) has parameter \\$source with no type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/TolerantImportNameOnlyTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantRenameVariableTest\\:\\:provideRenameMethod\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/TolerantRenameVariableTest.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\TolerantParser\\\\Refactor\\\\TolerantRenameVariableTest\\:\\:testRenameVariable\\(\\) has parameter \\$name with no type specified\\.$#"
@@ -661,39 +621,9 @@ parameters:
 			path: lib/CodeTransform/Tests/Adapter/TolerantParser/Refactor/TolerantRenameVariableTest.php
 
 		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\GenerateFromExisting\\\\InterfaceFromExistingGeneratorTest\\:\\:provideGenerateInterface\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/GenerateFromExisting/InterfaceFromExistingGeneratorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Helper\\\\WorseInterestingOffsetFinderTest\\:\\:provideFindSomethingInterestingWhen\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Helper/WorseInterestingOffsetFinderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseGenerateAccessorTest\\:\\:provideExtractAccessor\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseGenerateAccessorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethodTest\\:\\:overrideMethod\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethodTest\\:\\:overrideMethod\\(\\) has parameter \\$methodName with no type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethodTest\\:\\:overrideMethod\\(\\) has parameter \\$source with no type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
-
-		-
-			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethodTest\\:\\:provideExtractMethod\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/CodeTransform/Tests/Adapter/WorseReflection/Refactor/WorseOverrideMethodTest.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeTransform\\\\Tests\\\\Adapter\\\\WorseReflection\\\\Refactor\\\\WorseOverrideMethodTest\\:\\:testOverrideMethod\\(\\) has parameter \\$methodName with no type specified\\.$#"
@@ -841,11 +771,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/DoctrineAnnotationCompletorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletorTest\\:\\:provideImportClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletorTest.php
@@ -906,16 +831,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseNamedParameterCompletorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseParameterCompletorTest\\:\\:provideCompleteFunctionParameter\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseParameterCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseParameterCompletorTest\\:\\:provideCompleteStaticClassParameter\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseParameterCompletorTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseParameterCompletorTest\\:\\:testCompleteFunctionParameter\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseParameterCompletorTest.php
@@ -929,11 +844,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseParameterCompletorTest\\:\\:testCompleteStaticClassParameter\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseParameterCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\WorseReflection\\\\Formatter\\\\MethodFormatterTest\\:\\:provideFormatConstant\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/WorseReflection/Formatter/MethodFormatterTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\CompletorTestCase\\:\\:assertComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
@@ -994,11 +904,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\ChainSignatureHelperTest\\:\\:create\\(\\) has parameter \\$helpers with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Core\\\\Util\\\\Snippet\\\\PlaceholderTest\\:\\:providePlaceholders\\(\\) return type has no value type specified in iterable type iterable\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/Util/Snippet/PlaceholderTest.php
 
 		-
 			message: "#^Method Phpactor\\\\ConfigLoader\\\\Adapter\\\\Deserializer\\\\JsonDeserializer\\:\\:deserialize\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -3576,11 +3481,6 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ExtractExpressionCommandTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\ExtractExpressionCommandTest\\:\\:provideExceptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ExtractExpressionCommandTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$changes of class Phpactor\\\\LanguageServerProtocol\\\\WorkspaceEdit constructor expects array\\{\\}\\|null, array\\{file\\:///file\\.php\\: array\\<Phpactor\\\\LanguageServerProtocol\\\\TextEdit\\>\\} given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ExtractExpressionCommandTest.php
@@ -3592,11 +3492,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\ExtractMethodCommandTest\\:\\:createTester\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ExtractMethodCommandTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\ExtractMethodCommandTest\\:\\:provideExceptions\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/ExtractMethodCommandTest.php
 
@@ -3619,11 +3514,6 @@ parameters:
 			message: "#^Parameter \\#3 \\$generateDecorator of class Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\LspCommand\\\\GenerateDecoratorCommand constructor expects Phpactor\\\\CodeTransform\\\\Domain\\\\Refactor\\\\GenerateDecorator, object given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateDecoratorCommandTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCodeTransform\\\\Tests\\\\Unit\\\\LspCommand\\\\GenerateMethodCommandTest\\:\\:provideExceptions\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCodeTransform/Tests/Unit/LspCommand/GenerateMethodCommandTest.php
 
 		-
 			message: "#^Cannot access property \\$params on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\NotificationMessage\\|null\\.$#"
@@ -3794,11 +3684,6 @@ parameters:
 			message: "#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, array\\<Phpactor\\\\LanguageServerProtocol\\\\ParameterInformation\\>\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Util/PhpactorToLspSignatureTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerCompletion\\\\Tests\\\\Unit\\\\Util\\\\SuggestionNameFormatterTest\\:\\:dataProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Util/SuggestionNameFormatterTest.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerDiagnostics\\\\Provider\\\\PhpLintDiagnosticProvider\\:\\:provideDiagnostics\\(\\) should return Amp\\\\Promise\\<array\\<Phpactor\\\\LanguageServerProtocol\\\\Diagnostic\\>\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
@@ -5061,11 +4946,6 @@ parameters:
 			path: lib/Extension/Rpc/Tests/Integration/Command/RpcCommandTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\Diff\\\\TextEditBuilderTest\\:\\:provideDiff\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Rpc/Tests/Unit/Diff/TextEditBuilderTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Rpc\\\\Tests\\\\Unit\\\\Diff\\\\TextEditBuilderTest\\:\\:testDiff\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Rpc/Tests/Unit/Diff/TextEditBuilderTest.php
@@ -5686,11 +5566,6 @@ parameters:
 			path: lib/Indexer/Tests/Benchmark/SearchBench.php
 
 		-
-			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\Extension\\\\Command\\\\IndexSearchCommandTest\\:\\:testQueryIndex\\(\\) has parameter \\$args with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Indexer/Tests/Extension/Command/IndexSearchCommandTest.php
-
-		-
 			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/IntegrationTestCase.php
@@ -5806,17 +5681,7 @@ parameters:
 			path: lib/Name/Tests/Unit/QualifiedNameTest.php
 
 		-
-			message: "#^Method Phpactor\\\\PathFinder\\\\Tests\\\\Unit\\\\PathFinderTest\\:\\:provideTeleport\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/PathFinder/Tests/Unit/PathFinderTest.php
-
-		-
 			message: "#^Method Phpactor\\\\PathFinder\\\\Tests\\\\Unit\\\\PathFinderTest\\:\\:testTeleport\\(\\) has parameter \\$expectedTargets with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/PathFinder/Tests/Unit/PathFinderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\PathFinder\\\\Tests\\\\Unit\\\\PathFinderTest\\:\\:testTeleport\\(\\) has parameter \\$path with no type specified\\.$#"
 			count: 1
 			path: lib/PathFinder/Tests/Unit/PathFinderTest.php
 

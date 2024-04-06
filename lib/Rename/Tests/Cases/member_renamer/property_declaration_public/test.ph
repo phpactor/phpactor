@@ -13,3 +13,7 @@ if (!$two->foobar === 'foobar') {
     echo 'expected "foobar" but didn\'t get it';
     exit(127);
 }
+if (!$two->found === 'foobar') {
+    echo 'expected "foobar" but didn\'t get it';
+    exit(127);
+}

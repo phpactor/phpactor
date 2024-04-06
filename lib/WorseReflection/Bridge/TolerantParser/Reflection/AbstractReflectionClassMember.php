@@ -2,6 +2,9 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
+use Microsoft\PhpParser\Node\AttributeGroup;
+use Microsoft\PhpParser\Token;
+use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
@@ -82,5 +85,59 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
         return $this->docblock()->deprecation();
     }
 
+    public function position(): ByteOffsetRange
+    {
+        if (null === $this->node()->getFirstChildNode(AttributeGroup::class)) {
+            return parent::position();
+        }
+
+        $tokenKind = match ($this->memberType()) {
+            ReflectionMember::TYPE_PROPERTY => TokenKind::VariableName,
+            ReflectionMember::TYPE_METHOD => TokenKind::FunctionKeyword,
+            ReflectionMember::TYPE_CONSTANT => TokenKind::ConstKeyword,
+            ReflectionMember::TYPE_CASE => TokenKind::CaseKeyword,
+        };
+
+        $name = $this->findDescendantNamedToken($tokenKind);
+
+        if (null === $name) {
+            return parent::position();
+        }
+
+        return ByteOffsetRange::fromInts(
+            $name->getStartPosition(),
+            $this->node()->getEndPosition()
+        );
+    }
+
     abstract protected function serviceLocator(): ServiceLocator;
+
+    private function findDescendantNamedToken(int $tokenBeforeKind): ?Token
+    {
+        $found = false;
+
+        foreach ($this->node()->getDescendantTokens() as $token) {
+            if (true === $found) {
+                if ($tokenBeforeKind !== TokenKind::ConstKeyword) {
+                    return $token->kind === TokenKind::Name ? $token : null;
+                }
+
+                if ($token->kind === TokenKind::Name && $token->getText($this->node()->getFileContents()) === $this->name()) {
+                    return $token;
+                }
+            }
+
+            if ($token->kind !== $tokenBeforeKind) {
+                continue;
+            }
+
+            if ($tokenBeforeKind === TokenKind::VariableName) {
+                return $token;
+            }
+
+            $found = true;
+        }
+
+        return null;
+    }
 }

@@ -9,6 +9,7 @@ use Symfony\Component\Process\Process;
 class IndexSearchCommandTest extends IntegrationTestCase
 {
     /**
+     * @param array<string> $args
      * @dataProvider provideQuery
      */
     public function testQueryIndex(array $args = []): void
@@ -25,7 +26,7 @@ class IndexSearchCommandTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<string, array{array<string>}>
      */
     public function provideQuery(): Generator
     {
