@@ -169,11 +169,11 @@ class CompletionContext
             return false;
         }
 
-        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
-
         if ($node instanceof Variable) {
             return false;
         }
+
+        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
         if ($nodeBeforeOffset instanceof ClassMembersNode) {
             return true;
