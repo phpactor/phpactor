@@ -5,7 +5,7 @@ Changelog
 
 Features:
 
-  - PHAR Indexing #2412 @dantleech
+  - PHAR Indexing #2412 #2611 @dantleech
 
 Improvements:
 
