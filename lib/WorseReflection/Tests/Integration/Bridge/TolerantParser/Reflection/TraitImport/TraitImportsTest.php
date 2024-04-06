@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\TraitImport;
 
 use Closure;
+use Generator;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitAlias;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
@@ -21,7 +22,10 @@ class TraitImportsTest extends IntegrationTestCase
         $assertion(TraitImports::forClassDeclaration($classDeclaration));
     }
 
-    public function provideTraitImports()
+    /**
+     * @return Generator<string,array{string,Closure(Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports): void}>
+     */
+    public function provideTraitImports(): Generator
     {
         yield 'simple use' => [
             '<?php trait A {}; class B { use A; }',

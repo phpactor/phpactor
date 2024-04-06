@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -37,48 +38,46 @@ class WorseGenerateAccessorTest extends WorseTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    public function provideExtractAccessor()
+    public function provideExtractAccessor(): Generator
     {
         $propertyName = 'method';
 
-        return [
-            'property' => [
-                'generateAccessor1.test',
-                $propertyName,
-            ],
-            'prefix and ucfirst' => [
-                'generateAccessor2.test',
-                $propertyName,
-                'get',
-                true,
-            ],
-            'return type' => [
-                'generateAccessor3.test',
-                $propertyName,
-            ],
-            'namespaced' => [
-                'generateAccessor4.test',
-                $propertyName,
-            ],
-            'pseudo-type' => [
-                'generateAccessor5.test',
-                $propertyName,
-            ],
-            'multiple-classes' => [
-                'generateAccessor6.test',
-                $propertyName,
-            ],
-            'prefix but ucfirst by default' => [
-                'generateAccessor7.test',
-                $propertyName,
-                'get',
-            ],
-            'prefix but ucfirst to false' => [
-                'generateAccessor8.test',
-                $propertyName,
-                'get',
-                false,
-            ],
+        yield'property' => [
+            'generateAccessor1.test',
+            $propertyName,
+        ];
+        yield'prefix and ucfirst' => [
+            'generateAccessor2.test',
+            $propertyName,
+            'get',
+            true,
+        ];
+        yield 'return type' => [
+            'generateAccessor3.test',
+            $propertyName,
+        ];
+        yield 'namespaced' => [
+            'generateAccessor4.test',
+            $propertyName,
+        ];
+        yield 'pseudo-type' => [
+            'generateAccessor5.test',
+            $propertyName,
+        ];
+        yield 'multiple-classes' => [
+            'generateAccessor6.test',
+            $propertyName,
+        ];
+        yield 'prefix but ucfirst by default' => [
+            'generateAccessor7.test',
+            $propertyName,
+            'get',
+        ];
+        yield 'prefix but ucfirst to false' => [
+            'generateAccessor8.test',
+            $propertyName,
+            'get',
+            false,
         ];
     }
 

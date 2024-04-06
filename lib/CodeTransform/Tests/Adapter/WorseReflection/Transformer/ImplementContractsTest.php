@@ -23,487 +23,485 @@ class ImplementContractsTest extends WorseTestCase
     }
 
     /**
-     * @return array<string,array<int,string>>
+     * @return Generator<string,array<int,string>>
      */
-    public function provideCompleteConstructor(): array
+    public function provideCompleteConstructor(): Generator
     {
-        return [
-            'It does nothing on source with no classes' => [
-                <<<'EOT'
-                    <?php
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-                    EOT
+        yield 'It does nothing on source with no classes' => [
+            <<<'EOT'
+                <?php
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+                EOT
 
-            ],
-            'It does nothing on class with no interfaces or parent classes' => [
-                <<<'EOT'
-                    <?php
+        ];
+        yield 'It does nothing on class with no interfaces or parent classes' => [
+            <<<'EOT'
+                <?php
 
-                    class Foobar
+                class Foobar
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                }
+                EOT
+
+        ];
+        yield 'It implements an interface' => [
+            <<<'EOT'
+                <?php
+
+                interface Rabbit
+                {
+                    public function dig(int $depth = 5);
+                }
+
+                class Foobar implements Rabbit
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                interface Rabbit
+                {
+                    public function dig(int $depth = 5);
+                }
+
+                class Foobar implements Rabbit
+                {
+                    public function dig(int $depth = 5)
                     {
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
 
-                    class Foobar
+        ];
+        yield 'It implements a static methods' => [
+            <<<'EOT'
+                <?php
+
+                interface Rabbit
+                {
+                    public static function dig(int $depth = 5): Dirt;
+                }
+
+                class Foobar implements Rabbit
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                interface Rabbit
+                {
+                    public static function dig(int $depth = 5): Dirt;
+                }
+
+                class Foobar implements Rabbit
+                {
+                    public static function dig(int $depth = 5): Dirt
                     {
                     }
-                    EOT
+                }
+                EOT
 
-            ],
-            'It implements an interface' => [
-                <<<'EOT'
-                    <?php
+        ];
+        yield 'It implements multiple interfaces' => [
+            <<<'EOT'
+                <?php
 
-                    interface Rabbit
-                    {
-                        public function dig(int $depth = 5);
-                    }
+                interface Dog
+                {
+                    public function bark(int $volume = 11): Sound
+                }
 
-                    class Foobar implements Rabbit
-                    {
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                interface Rabbit
+                {
+                    public function dig(int $depth = 5): Dirt
+                }
 
-                    interface Rabbit
-                    {
-                        public function dig(int $depth = 5);
-                    }
+                class Foobar implements Rabbit, Dog
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    class Foobar implements Rabbit
-                    {
-                        public function dig(int $depth = 5)
-                        {
-                        }
-                    }
-                    EOT
+                interface Dog
+                {
+                    public function bark(int $volume = 11): Sound
+                }
 
-            ],
-            'It implements a static methods' => [
-                <<<'EOT'
-                    <?php
+                interface Rabbit
+                {
+                    public function dig(int $depth = 5): Dirt
+                }
 
-                    interface Rabbit
-                    {
-                        public static function dig(int $depth = 5): Dirt;
-                    }
-
-                    class Foobar implements Rabbit
-                    {
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-
-                    interface Rabbit
-                    {
-                        public static function dig(int $depth = 5): Dirt;
-                    }
-
-                    class Foobar implements Rabbit
-                    {
-                        public static function dig(int $depth = 5): Dirt
-                        {
-                        }
-                    }
-                    EOT
-
-            ],
-            'It implements multiple interfaces' => [
-                <<<'EOT'
-                    <?php
-
-                    interface Dog
-                    {
-                        public function bark(int $volume = 11): Sound
-                    }
-
-                    interface Rabbit
-                    {
-                        public function dig(int $depth = 5): Dirt
-                    }
-
-                    class Foobar implements Rabbit, Dog
-                    {
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-
-                    interface Dog
-                    {
-                        public function bark(int $volume = 11): Sound
-                    }
-
-                    interface Rabbit
-                    {
-                        public function dig(int $depth = 5): Dirt
-                    }
-
-                    class Foobar implements Rabbit, Dog
-                    {
-                        public function dig(int $depth = 5): Dirt
-                        {
-                        }
-
-                        public function bark(int $volume = 11): Sound
-                        {
-                        }
-                    }
-                    EOT
-
-            ],
-            'It does adds inherit docblocks' => [
-                <<<'EOT'
-                    <?php
-
-                    interface Bird
-                    {
-                        /**
-                         * Emit chirping sound.
-                         */
-                        public function chirp();
-                    }
-
-                    class Foobar implements Bird
-                    {
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-
-                    interface Bird
-                    {
-                        /**
-                         * Emit chirping sound.
-                         */
-                        public function chirp();
-                    }
-
-                    class Foobar implements Bird
-                    {
-                        public function chirp()
-                        {
-                        }
-                    }
-                    EOT
-
-            ],
-            'It is idempotent' => [
-                <<<'EOT'
-                    <?php
-
-                    interface Bird
-                    {
-                        public function chirp();
-                    }
-
-                    class Foobar implements Bird
-                    {
-                        public function chirp() {}
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-
-                    interface Bird
-                    {
-                        public function chirp();
-                    }
-
-                    class Foobar implements Bird
-                    {
-                        public function chirp() {}
-                    }
-                    EOT
-            ],
-            'It is adds after the last method' => [
-                <<<'EOT'
-                    <?php
-
-                    interface Bird
-                    {
-                        public function chirp();
-                    }
-
-                    class Foobar implements Bird
-                    {
-                        public function hello()
-                        {
-                        }
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-
-                    interface Bird
-                    {
-                        public function chirp();
-                    }
-
-                    class Foobar implements Bird
-                    {
-                        public function hello()
-                        {
-                        }
-
-                        public function chirp()
-                        {
-                        }
-                    }
-                    EOT
-            ],
-            'It uses the short names' => [
-                <<<'EOT'
-                    <?php
-
-                    use Animals\Sound;
-
-                    interface Bird
-                    {
-                        public function chirp(): Sound;
-                    }
-
-                    class Foobar implements Bird
-                    {
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-
-                    use Animals\Sound;
-
-                    interface Bird
-                    {
-                        public function chirp(): Sound;
-                    }
-
-                    class Foobar implements Bird
-                    {
-                        public function chirp(): Sound
-                        {
-                        }
-                    }
-                    EOT
-            ],
-            'It implements abstract functions' => [
-                <<<'EOT'
-                    <?php
-
-                    abstract class Bird
-                    {
-                        abstract public function chirp();
-                    }
-
-                    class Foobar extends Bird
-                    {
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-
-                    abstract class Bird
-                    {
-                        abstract public function chirp();
-                    }
-
-                    class Foobar extends Bird
-                    {
-                        public function chirp()
-                        {
-                        }
-                    }
-                    EOT
-            ],
-            'It implements methods from abstract class which implements an interface' => [
-                <<<'EOT'
-                    <?php
-
-                    interface Animal
-                    {
-                        abstract public function jump();
-                    }
-
-                    abstract class Bird implements Animal
+                class Foobar implements Rabbit, Dog
+                {
+                    public function dig(int $depth = 5): Dirt
                     {
                     }
 
-                    class Foobar extends Bird
+                    public function bark(int $volume = 11): Sound
                     {
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
 
-                    interface Animal
-                    {
-                        abstract public function jump();
-                    }
+        ];
+        yield 'It does adds inherit docblocks' => [
+            <<<'EOT'
+                <?php
 
-                    abstract class Bird implements Animal
-                    {
-                    }
+                interface Bird
+                {
+                    /**
+                     * Emit chirping sound.
+                     */
+                    public function chirp();
+                }
 
-                    class Foobar extends Bird
-                    {
-                        public function jump()
-                        {
-                        }
-                    }
-                    EOT
-            ],
-            'It ignores methods that already exist' => [
-                <<<'EOT'
-                    <?php
+                class Foobar implements Bird
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    interface Rabbit
-                    {
-                        public function dig(int $depth = 5): Dirt;
+                interface Bird
+                {
+                    /**
+                     * Emit chirping sound.
+                     */
+                    public function chirp();
+                }
 
-                        public function foobar();
-                    }
-
-                    class Foobar implements Rabbit
-                    {
-                        public function dig(int $depth = 5): Dirt
-                        {
-                        }
-
-                        public function foobar()
-                        {
-                        }
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
-
-                    interface Rabbit
-                    {
-                        public function dig(int $depth = 5): Dirt;
-
-                        public function foobar();
-                    }
-
-                    class Foobar implements Rabbit
-                    {
-                        public function dig(int $depth = 5): Dirt
-                        {
-                        }
-
-                        public function foobar()
-                        {
-                        }
-                    }
-                    EOT
-            ],
-            'It imports use statements outside of the current namespace' => [
-                <<<'EOT'
-                    <?php
-
-                    interface Rabbit
-                    {
-                        public function dig(Arg\Barg $depth = 5): Barfoo\Dirt;
-                    }
-
-                    class Foobar implements Rabbit
+                class Foobar implements Bird
+                {
+                    public function chirp()
                     {
                     }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                }
+                EOT
 
-                    use Arg\Barg;
-                    use Barfoo\Dirt;
+        ];
+        yield 'It is idempotent' => [
+            <<<'EOT'
+                <?php
 
-                    interface Rabbit
+                interface Bird
+                {
+                    public function chirp();
+                }
+
+                class Foobar implements Bird
+                {
+                    public function chirp() {}
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                interface Bird
+                {
+                    public function chirp();
+                }
+
+                class Foobar implements Bird
+                {
+                    public function chirp() {}
+                }
+                EOT
+        ];
+        yield 'It is adds after the last method' => [
+            <<<'EOT'
+                <?php
+
+                interface Bird
+                {
+                    public function chirp();
+                }
+
+                class Foobar implements Bird
+                {
+                    public function hello()
                     {
-                        public function dig(Arg\Barg $depth = 5): Barfoo\Dirt;
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                interface Bird
+                {
+                    public function chirp();
+                }
+
+                class Foobar implements Bird
+                {
+                    public function hello()
+                    {
                     }
 
-                    class Foobar implements Rabbit
+                    public function chirp()
                     {
-                        public function dig(Barg $depth = 5): Dirt
-                        {
-                        }
                     }
-                    EOT
-            ],
-            'It implements contracts with nullable return type' => [
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+        ];
+        yield 'It uses the short names' => [
+            <<<'EOT'
+                <?php
 
-                    interface Animal
-                    {
-                        abstract public function jump(): ?Arg\Foo;
-                    }
-                    class Foobar implements Animal
-                    {
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                use Animals\Sound;
 
-                    use Arg\Foo;
+                interface Bird
+                {
+                    public function chirp(): Sound;
+                }
 
-                    interface Animal
-                    {
-                        abstract public function jump(): ?Arg\Foo;
-                    }
-                    class Foobar implements Animal
-                    {
-                        public function jump(): ?Foo
-                        {
-                        }
-                    }
-                    EOT
-            ],
-            'It uses "iterable"' => [
-                <<<'EOT'
-                    <?php
+                class Foobar implements Bird
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
 
-                    interface Animal
-                    {
-                        abstract public function jump(): iterable;
-                    }
-                    class Foobar implements Animal
-                    {
-                    }
-                    EOT
-                ,
-                <<<'EOT'
-                    <?php
+                use Animals\Sound;
 
-                    interface Animal
+                interface Bird
+                {
+                    public function chirp(): Sound;
+                }
+
+                class Foobar implements Bird
+                {
+                    public function chirp(): Sound
                     {
-                        abstract public function jump(): iterable;
                     }
-                    class Foobar implements Animal
+                }
+                EOT
+        ];
+        yield 'It implements abstract functions' => [
+            <<<'EOT'
+                <?php
+
+                abstract class Bird
+                {
+                    abstract public function chirp();
+                }
+
+                class Foobar extends Bird
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                abstract class Bird
+                {
+                    abstract public function chirp();
+                }
+
+                class Foobar extends Bird
+                {
+                    public function chirp()
                     {
-                        public function jump(): iterable
-                        {
-                        }
                     }
-                    EOT
-            ],
+                }
+                EOT
+        ];
+        yield 'It implements methods from abstract class which implements an interface' => [
+            <<<'EOT'
+                <?php
+
+                interface Animal
+                {
+                    abstract public function jump();
+                }
+
+                abstract class Bird implements Animal
+                {
+                }
+
+                class Foobar extends Bird
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                interface Animal
+                {
+                    abstract public function jump();
+                }
+
+                abstract class Bird implements Animal
+                {
+                }
+
+                class Foobar extends Bird
+                {
+                    public function jump()
+                    {
+                    }
+                }
+                EOT
+        ];
+        yield 'It ignores methods that already exist' => [
+            <<<'EOT'
+                <?php
+
+                interface Rabbit
+                {
+                    public function dig(int $depth = 5): Dirt;
+
+                    public function foobar();
+                }
+
+                class Foobar implements Rabbit
+                {
+                    public function dig(int $depth = 5): Dirt
+                    {
+                    }
+
+                    public function foobar()
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                interface Rabbit
+                {
+                    public function dig(int $depth = 5): Dirt;
+
+                    public function foobar();
+                }
+
+                class Foobar implements Rabbit
+                {
+                    public function dig(int $depth = 5): Dirt
+                    {
+                    }
+
+                    public function foobar()
+                    {
+                    }
+                }
+                EOT
+        ];
+        yield 'It imports use statements outside of the current namespace' => [
+            <<<'EOT'
+                <?php
+
+                interface Rabbit
+                {
+                    public function dig(Arg\Barg $depth = 5): Barfoo\Dirt;
+                }
+
+                class Foobar implements Rabbit
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Arg\Barg;
+                use Barfoo\Dirt;
+
+                interface Rabbit
+                {
+                    public function dig(Arg\Barg $depth = 5): Barfoo\Dirt;
+                }
+
+                class Foobar implements Rabbit
+                {
+                    public function dig(Barg $depth = 5): Dirt
+                    {
+                    }
+                }
+                EOT
+        ];
+        yield 'It implements contracts with nullable return type' => [
+            <<<'EOT'
+                <?php
+
+                interface Animal
+                {
+                    abstract public function jump(): ?Arg\Foo;
+                }
+                class Foobar implements Animal
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    abstract public function jump(): ?Arg\Foo;
+                }
+                class Foobar implements Animal
+                {
+                    public function jump(): ?Foo
+                    {
+                    }
+                }
+                EOT
+        ];
+        yield 'It uses "iterable"' => [
+            <<<'EOT'
+                <?php
+
+                interface Animal
+                {
+                    abstract public function jump(): iterable;
+                }
+                class Foobar implements Animal
+                {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                interface Animal
+                {
+                    abstract public function jump(): iterable;
+                }
+                class Foobar implements Animal
+                {
+                    public function jump(): iterable
+                    {
+                    }
+                }
+                EOT
         ];
     }
 

@@ -27,7 +27,7 @@ class LexerTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<array{string, array<array{string, string}>}>
      */
     public function provideLex(): Generator
     {

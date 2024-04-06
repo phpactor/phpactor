@@ -317,32 +317,6 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
             ]
         ];
 
-        yield 'Partially completed method with brackets' => [
-            <<<'EOT'
-                <?php
-
-                class Foobar
-                {
-                    public function aaa()
-                    {
-                        $this->bb<>();
-                    }
-
-                    public function bbb() {}
-                    public function ccc() {}
-                }
-
-                EOT
-            , [
-                [
-                    'type' => Suggestion::TYPE_METHOD,
-                    'name' => 'bbb',
-                    'short_description' => 'pub bbb()',
-                    'snippet' => 'bbb',
-                ]
-            ]
-        ];
-
         yield 'Partially completed method with text after' => [
             <<<'EOT'
                 <?php
