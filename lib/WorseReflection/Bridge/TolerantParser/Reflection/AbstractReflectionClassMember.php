@@ -139,17 +139,9 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
                 return null;
             }
 
-            if ($token->kind !== TokenKind::Name) {
-                continue;
+            if ($token->kind === TokenKind::Name && $token->getText($this->node()->getFileContents()) === $this->name()) {
+                return $token;
             }
-
-            $tokenText = $token->getText($this->node()->getFileContents());
-
-            if ($tokenText !== $this->name()) {
-                continue;
-            }
-
-            return $token;
         }
 
         return null;
