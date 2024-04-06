@@ -66,12 +66,16 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
         $class = $classDeclaration->getNamespacedName();
 
 
-        /** @phpstan-ignore-next-line */
+        /**
+ * @phpstan-ignore-next-line 
+*/
         if (null === $class) {
-            throw new InvalidArgumentException(sprintf(
-                'Could not locate class-like ancestor node for method "%s"',
-                $this->name()
-            ));
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Could not locate class-like ancestor node for method "%s"',
+                    $this->name()
+                )
+            );
         }
 
 
@@ -127,10 +131,16 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
             return NodeText::fromString('');
         }
         $statements = $statement->statements;
-        return NodeText::fromString(implode("\n", array_reduce($statements, function ($acc, $statement) {
-            $acc[] = (string) $statement->getText();
-            return $acc;
-        }, [])));
+        return NodeText::fromString(
+            implode(
+                "\n", array_reduce(
+                    $statements, function ($acc, $statement) {
+                        $acc[] = (string) $statement->getText();
+                        return $acc;
+                    }, []
+                )
+            )
+        );
     }
 
     public function class(): ReflectionClassLike
