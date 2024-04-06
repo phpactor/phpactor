@@ -265,6 +265,7 @@ class CompletionContext
 
     public static function methodName(Node $node): bool
     {
+        // If the body (as the current node) is empty, the parent is MethodDeclaration
         if ($node instanceof CompoundStatementNode && $node->openBrace instanceof Token) {
             return false;
         }
