@@ -11,9 +11,11 @@ Improvements:
 
   - Fix contextual completion in constructor agrument position #2504
   - Basic support for `array_reduce` stub #2576
+  - Support variadics in contextual completion #2603
 
 Bug fixes:
 
+  - Only filter new object expression names in contextual completion #2603
   - Fixing include and exclude patterns #2593 @mamazu
 
 ## 2024-03-09

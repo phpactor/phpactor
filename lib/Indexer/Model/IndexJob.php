@@ -3,12 +3,8 @@
 namespace Phpactor\Indexer\Model;
 
 use Generator;
-use Phar;
-use PharFileInfo;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use RecursiveIteratorIterator;
 use SplFileInfo;
-use UnexpectedValueException;
 
 class IndexJob
 {

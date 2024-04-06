@@ -35,6 +35,13 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $generator = $this->inner->complete($node, $source, $offset);
+        if (
+            !$node instanceof CallExpression &&
+            ($node instanceof QualifiedName && !$node->parent instanceof ObjectCreationExpression)
+        ) {
+            yield from $generator;
+            return $generator->getReturn();
+        }
 
         $type = $this->resolveFilterableType($node, $source, $offset);
         if (null === $type) {
@@ -77,6 +84,7 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
     {
         $argumentNb = 0;
         $memberAccessOrObjectCreation = $node;
+        $node = NodeUtil::firstDescendantNodeBeforeOffset($node, $offset->toInt());
         if ($node instanceof QualifiedName) {
             $memberAccessOrObjectCreation = null;
             $argumentExpression = $node->getFirstAncestor(ArgumentExpression::class);
@@ -89,9 +97,10 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
                 $memberAccessOrObjectCreation = $list->parent;
             }
         }
-        if ($node instanceof ArgumentExpressionList) {
-            $argumentNb = count(iterator_to_array($node->getValues()));
-            $memberAccessOrObjectCreation = $node->parent;
+        $argumentList = $node->getFirstAncestor(ArgumentExpressionList::class);
+        if ($argumentList instanceof ArgumentExpressionList) {
+            $argumentNb = max(0, count(iterator_to_array($argumentList->getValues())) - 1);
+            $memberAccessOrObjectCreation = $argumentList->parent;
         }
 
         if (!$memberAccessOrObjectCreation instanceof CallExpression && !$memberAccessOrObjectCreation instanceof ObjectCreationExpression) {
@@ -103,7 +112,6 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
             return null;
         }
         try {
-            ;
             $memberAccessOrObjectCreation = $this->reflector->reflectOffset($source, $offset)->nodeContext();
         } catch (NotFound $e) {
             return null;
@@ -155,7 +163,14 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
     {
         $parameter = $parameters->at($argumentNb);
         if (null === $parameter) {
-            return null;
+            $lastParameter = $parameters->lastOrNull();
+            if (null === $lastParameter) {
+                return null;
+            }
+            if (!$lastParameter->isVariadic()) {
+                return null;
+            }
+            $parameter = $lastParameter;
         }
 
         $type = $parameter->type();

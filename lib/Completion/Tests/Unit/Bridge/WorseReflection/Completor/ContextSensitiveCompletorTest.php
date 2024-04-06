@@ -60,13 +60,13 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar(Obj $obj){}}
 
                 $f = new Foo();
-                $f->bar(<>)
+                $f->bar(new <>)
                 EOT,
             [
                 'Bar\Obj',
             ],
         ];
-        yield 'namespaced open method call' => [
+        yield 'static call returns all' => [
             [
                 'Bar\Foo',
                 'Bar\Obj',
@@ -78,7 +78,26 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar(Obj $obj){}}
 
                 $f = new Foo();
-                $f->bar(<>
+                $f->bar(F<>)
+                EOT,
+            [
+                'Bar\Foo',
+                'Bar\Obj',
+            ],
+        ];
+        yield 'namespaced method call' => [
+            [
+                'Bar\Foo',
+                'Bar\Obj',
+            ],
+            <<<'EOT'
+                <?php
+                namespace Bar;
+                class Obj {}
+                class Foo { public function bar(Obj $obj){}}
+
+                $f = new Foo();
+                $f->bar(new <>)
                 EOT,
             [
                 'Bar\Obj',
@@ -95,7 +114,7 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar(Obj $obj){}}
 
                 $f = new Foo();
-                $f->bar(<>
+                $f->bar(new <>)
                 EOT,
             [
                 'Obj',
@@ -112,7 +131,7 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar(Obj $obj){}}
 
                 $f = new Foo();
-                $f->bar(O<>
+                $f->bar(new O<>
                 EOT,
             [
                 'Obj',
@@ -129,7 +148,7 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar($obj){}}
 
                 $f = new Foo();
-                $f->bar(O<>
+                $f->bar(new O<>
                 EOT,
             [
                 'Foo',
@@ -148,12 +167,13 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar(Obj $obj, Baz $baz){}}
 
                 $f = new Foo();
-                $f->bar(Obj::new(),<>
+                $f->bar(Obj::new(), new <>)
                 EOT,
             [
                 'Baz',
             ],
         ];
+
         yield '2nd arg partial' => [
             [
                 'Obj',
@@ -166,7 +186,7 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar(Obj $obj, Baz $baz){}}
 
                 $f = new Foo();
-                $f->bar(Obj::new(),B<>
+                $f->bar(Obj::new(),new B<>
                 EOT,
             [
                 'Baz',
@@ -184,28 +204,10 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public function bar(Obj $obj, Baz ...$baz){}}
 
                 $f = new Foo();
-                $f->bar(Obj::new(),B<>
+                $f->bar(Obj::new(),new B<>
                 EOT,
             [
                 'Baz',
-            ],
-        ];
-        yield 'new' => [
-            [
-                'Obj',
-                'Baz',
-            ],
-            <<<'EOT'
-                <?php
-                class Obj {}
-                class Baz {}
-                class Foo { public function bar(Obj $obj, Baz ...$baz){}}
-
-                $f = new Foo();
-                $f->bar(new O<>
-                EOT,
-            [
-                'Obj',
             ],
         ];
         yield 'enum' => [
@@ -226,7 +228,7 @@ class ContextSensitiveCompletorTest extends TestCase
                 'Obj',
             ],
         ];
-        yield 'static' => [
+        yield 'on static call' => [
             [
                 'Obj',
                 'Baz',
@@ -238,6 +240,23 @@ class ContextSensitiveCompletorTest extends TestCase
                 class Foo { public static function bar(Obj $obj, Baz ...$baz){}}
 
                 Foo::bar(new O<>
+                EOT,
+            [
+                'Obj',
+            ],
+        ];
+        yield 'on variadic' => [
+            [
+                'Obj',
+                'Baz',
+            ],
+            <<<'EOT'
+                <?php
+                enum Obj {}
+                class Baz {}
+                class Foo { public static function bar(Obj ...$objz){}}
+
+                Foo::bar(new Obj(), new Obj(), new O<>)
                 EOT,
             [
                 'Obj',
