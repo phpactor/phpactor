@@ -32,6 +32,7 @@ use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitUseClause;
+use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -264,8 +265,7 @@ class CompletionContext
 
     public static function methodName(Node $node): bool
     {
-        // TODO better distinguish empty body from empty method parameter list
-        if ($node->__toString() === '{') {
+        if ($node instanceof CompoundStatementNode && $node->openBrace instanceof Token) {
             return false;
         }
 
