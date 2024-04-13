@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerRename\Util;
 
 use Phpactor\Extension\LanguageServerBridge\Converter\TextEditConverter;
 use Phpactor\LanguageServerProtocol\OptionalVersionedTextDocumentIdentifier;
-use Phpactor\Rename\Model\LocatedTextEditsMap;
+use Phpactor\Rename\Model\LocatedTextEdits;
 use Phpactor\Rename\Model\WorkspaceOperations;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\LanguageServerProtocol\RenameFile;
@@ -31,54 +31,39 @@ final class WorkspaceOperationsConverter
                     $edit->newUri(),
                 );
             }
-            if ($edit instanceof LocatedTextEditsMap) {
-                foreach ($this->prepareDocumentEdits($edit) as $textEdit) {
-                    $documentEdits[] = $textEdit;
-                }
+            if ($edit instanceof LocatedTextEdits) {
+                $documentEdits[] = $this->toTextDocumentEdit($edit);
             }
         }
 
         return new WorkspaceEdit(null, $documentEdits);
     }
 
-    /**
-     * @return TextDocumentEdit[]
-     */
-    private function prepareDocumentEdits(LocatedTextEditsMap $map): array
+    public function toTextDocumentEdit(LocatedTextEdits $locatedTextEdits): TextDocumentEdit
     {
-        $documentEdits = [];
-        foreach ($map->toLocatedTextEdits() as $result) {
-            $version = $this->getDocumentVersion((string)$result->documentUri());
-            $documentEdits[] = new TextDocumentEdit(
-                new OptionalVersionedTextDocumentIdentifier(
-                    uri: (string)$result->documentUri(),
-                    version: $version,
-                ),
-                TextEditConverter::toLspTextEdits(
-                    $result->textEdits(),
-                    (string)$this->locator->get($result->documentUri())
-                )
-            );
-        }
-
-        // deduplicate the edits: with renaming we currently have multiple
-        // references to the declaration.
-        return array_map(
-            function (TextDocumentEdit $documentEdit) {
-                $new = [];
-                foreach ($documentEdit->edits as $edit) {
-                    $new[sprintf(
-                        '%s-%s-%s',
-                        $edit->range->start->line,
-                        $edit->range->start->character,
-                        $edit->newText
-                    )] = $edit;
-                }
-                $documentEdit->edits = array_values($new);
-                return $documentEdit;
-            },
-            $documentEdits
+        $version = $this->getDocumentVersion((string)$locatedTextEdits->documentUri());
+        $documentEdit = new TextDocumentEdit(
+            new OptionalVersionedTextDocumentIdentifier(
+                uri: (string)$locatedTextEdits->documentUri(),
+                version: $version,
+            ),
+            TextEditConverter::toLspTextEdits(
+                $locatedTextEdits->textEdits(),
+                (string)$this->locator->get($locatedTextEdits->documentUri())
+            )
         );
+
+        $new = [];
+        foreach ($documentEdit->edits as $edit) {
+            $new[sprintf(
+                '%s-%s-%s',
+                $edit->range->start->line,
+                $edit->range->start->character,
+                $edit->newText
+            )] = $edit;
+        }
+        $documentEdit->edits = array_values($new);
+        return $documentEdit;
     }
 
     private function getDocumentVersion(string $uri): int

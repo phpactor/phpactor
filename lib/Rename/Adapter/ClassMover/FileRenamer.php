@@ -67,7 +67,7 @@ class FileRenamer implements PhpactorFileRenamer
             }
 
             return new WorkspaceOperations([
-                LocatedTextEditsMap::fromLocatedEdits($locatedEdits),
+                LocatedTextEditsMap::fromLocatedEdits($locatedEdits)->toLocatedTextEdits(),
                 new RenameResult($from, $to),
             ]);
         });

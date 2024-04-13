@@ -45,7 +45,6 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
     {
         return call(function () use ($params) {
             try {
-                $documentChanges = [];
                 $workspaceEdits = new WorkspaceOperations([]);
                 foreach ($params->files as $rename) {
                     $workspaceEdits = $workspaceEdits->merge(yield $this->renamer->renameFile(

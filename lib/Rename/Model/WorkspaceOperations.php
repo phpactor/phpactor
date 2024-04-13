@@ -7,12 +7,12 @@ use IteratorAggregate;
 use Traversable;
 
 /**
- * @implements IteratorAggregate<LocatedTextEditsMap|RenameResult>
+ * @implements IteratorAggregate<LocatedTextEdits|RenameResult>
  */
 final class WorkspaceOperations implements IteratorAggregate
 {
     /**
-     * @param list<LocatedTextEditsMap|RenameResult> $edits
+     * @param list<LocatedTextEdits|RenameResult> $edits
      */
     public function __construct(private array $edits)
     {

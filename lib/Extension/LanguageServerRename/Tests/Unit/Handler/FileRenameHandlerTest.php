@@ -103,7 +103,7 @@ class FileRenameHandlerTest extends IntegrationTestCase
             new TestFileRenamer(
                 $willError,
                 new WorkspaceOperations(array_filter([
-                    new LocatedTextEditsMap($workspaceEdits),
+                    ...(new LocatedTextEditsMap($workspaceEdits))->toLocatedTextEdits(),
                     $renameResult,
                 ])),
             ),
