@@ -4,7 +4,7 @@ namespace Phpactor\Extension\LanguageServerRename\Tests\Unit\Handler;
 
 use Phpactor\Extension\LanguageServerBridge\TextDocument\WorkspaceTextDocumentLocator;
 use Phpactor\Extension\LanguageServerRename\Handler\FileRenameHandler;
-use Phpactor\Extension\LanguageServerRename\Util\WorkspaceRenameEditsConverter;
+use Phpactor\Extension\LanguageServerRename\Util\WorkspaceOperationsConverter;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Server\RpcClient;
 use Phpactor\Rename\Model\FileRenamer\TestFileRenamer;
@@ -17,7 +17,7 @@ use Phpactor\LanguageServerProtocol\WorkspaceEdit;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
-use Phpactor\Rename\Model\WorkspaceRenameEdits;
+use Phpactor\Rename\Model\WorkspaceOperations;
 use Phpactor\Rename\Model\RenameResult;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
@@ -102,12 +102,12 @@ class FileRenameHandlerTest extends IntegrationTestCase
         return new FileRenameHandler(
             new TestFileRenamer(
                 $willError,
-                new WorkspaceRenameEdits(array_filter([
+                new WorkspaceOperations(array_filter([
                     new LocatedTextEditsMap($workspaceEdits),
                     $renameResult,
                 ])),
             ),
-            new WorkspaceRenameEditsConverter($builder->workspace(), new WorkspaceTextDocumentLocator($builder->workspace())),
+            new WorkspaceOperationsConverter($builder->workspace(), new WorkspaceTextDocumentLocator($builder->workspace())),
             new ClientApi($this->createMock(RpcClient::class)),
         );
     }
