@@ -19,9 +19,9 @@ class TestFileRenamer implements FileRenamer
         private bool $throw = false,
         ?WorkspaceOperations $renameEdit = null,
     ) {
-        $this->renameEdit = $renameEdit ?: new WorkspaceOperations(array_filter([
-            LocatedTextEditsMap::create(),
-        ]));
+        $this->renameEdit = $renameEdit ?: new WorkspaceOperations(
+            LocatedTextEditsMap::create()->toLocatedTextEdits(),
+        );
     }
 
     public function renameFile(TextDocumentUri $from, TextDocumentUri $to): Promise
