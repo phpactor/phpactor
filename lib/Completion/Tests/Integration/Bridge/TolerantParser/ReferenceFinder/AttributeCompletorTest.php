@@ -33,7 +33,7 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
     {
         yield 'new class instance' => [
             '<?php namespace Foo { #[Foo<>]class Bar{}',
- [
+            [
                 [
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'Foobar',
