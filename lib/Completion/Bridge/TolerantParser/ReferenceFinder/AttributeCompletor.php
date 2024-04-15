@@ -49,8 +49,12 @@ class AttributeCompletor extends NameSearcherCompletor implements TolerantComple
     /**
      * @return NameSearcherType::ATTRIBUTE_TARGET_*|NameSearcherType::ATTRIBUTE
      */
-    private function matchTargetNode(Node $node): string
+    private function matchTargetNode(?Node $node): string
     {
+        if (null === $node) {
+            return NameSearcherType::ATTRIBUTE;
+        }
+
         return match($node::class) {
             ClassDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_CLASS,
             FunctionDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_FUNCTION,
