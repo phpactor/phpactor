@@ -82,6 +82,36 @@ abstract class Criteria
         return new HasFlags(ClassRecord::FLAG_ATTRIBUTE);
     }
 
+    public static function isClassAttribute(): HasFlags
+    {
+        return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS);
+    }
+
+    public static function isPropertyAttribute(): HasFlags
+    {
+        return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_PROPERTY);
+    }
+
+    public static function isMethodAttribute(): HasFlags
+    {
+        return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_METHOD);
+    }
+
+    public static function isParameterAttribute(): HasFlags
+    {
+        return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_PARAMETER);
+    }
+
+    public static function isFunctionAttribute(): HasFlags
+    {
+        return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_FUNCTION);
+    }
+
+    public static function isClassConstantAttribute(): HasFlags
+    {
+        return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS_CONSTANT);
+    }
+
     public static function isMember(): IsMember
     {
         return new IsMember();

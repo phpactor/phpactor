@@ -63,8 +63,33 @@ class IndexedNameSearcher implements NameSearcher
      */
     private function resolveTypeCriteria(?string $type): ?Criteria
     {
+        // todo before merge check if this condition occurs anywhere and possibly remove it
         if ($type === NameSearcherType::ATTRIBUTE) {
             return Criteria::isAttribute();
+        }
+
+        if ($type === NameSearcherType::ATTRIBUTE_TARGET_CLASS) {
+            return Criteria::isClassAttribute();
+        }
+
+        if ($type === NameSearcherType::ATTRIBUTE_TARGET_CLASS_CONSTANT) {
+            return Criteria::isClassConstantAttribute();
+        }
+
+        if ($type === NameSearcherType::ATTRIBUTE_TARGET_PROPERTY) {
+            return Criteria::isPropertyAttribute();
+        }
+
+        if ($type === NameSearcherType::ATTRIBUTE_TARGET_PARAMETER) {
+            return Criteria::isParameterAttribute();
+        }
+
+        if ($type === NameSearcherType::ATTRIBUTE_TARGET_METHOD) {
+            return Criteria::isMethodAttribute();
+        }
+
+        if ($type === NameSearcherType::ATTRIBUTE_TARGET_FUNCTION) {
+            return Criteria::isFunctionAttribute();
         }
 
         if ($type === NameSearcherType::CLASS_) {
