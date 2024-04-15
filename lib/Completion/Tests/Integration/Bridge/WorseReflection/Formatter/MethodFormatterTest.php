@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\WorseReflection\Formatter;
 
+use Generator;
 use Phpactor\Completion\Tests\Integration\IntegrationTestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -22,7 +23,10 @@ class MethodFormatterTest extends IntegrationTestCase
         self::assertEquals($expected, $this->formatter()->format($constant));
     }
 
-    public function provideFormatConstant()
+    /**
+     * @return Generator<array{string,string}>
+     */
+    public function provideFormatConstant(): Generator
     {
         yield [
             '<?php class Foobar {public function barfoo()}',

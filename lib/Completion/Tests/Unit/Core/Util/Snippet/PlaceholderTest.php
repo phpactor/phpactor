@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core\Util\Snippet;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\Util\Snippet\Placeholder;
 
@@ -28,8 +29,10 @@ final class PlaceholderTest extends TestCase
             Placeholder::escape($position, $text)
         );
     }
-
-    public function providePlaceholders(): iterable
+    /**
+     * @return Generator<string,array{int,string|null,string}>
+     */
+    public function providePlaceholders(): Generator
     {
         yield 'no text' => [1, null, '${1}'];
         yield 'with text' => [3, 'default', '${3:default}'];

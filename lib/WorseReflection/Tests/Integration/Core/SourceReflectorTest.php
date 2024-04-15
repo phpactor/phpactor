@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
+use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
@@ -21,27 +22,28 @@ class SourceReflectorTest extends IntegrationTestCase
         $this->createReflector($source)->$method($class);
     }
 
-    public function provideReflectClassNotCorrectType()
+    /**
+     * @return Generator<string,array{string,string,string,string}>
+     */
+    public function provideReflectClassNotCorrectType(): Generator
     {
-        return [
-            'Class' => [
-                '<?php trait Foobar {}',
-                'Foobar',
-                'reflectClass',
-                '"Foobar" is not a class',
-            ],
-            'Interface' => [
-                '<?php class Foobar {}',
-                'Foobar',
-                'reflectInterface',
-                '"Foobar" is not an interface',
-            ],
-            'Trait' => [
-                '<?php interface Foobar {}',
-                'Foobar',
-                'reflectTrait',
-                '"Foobar" is not a trait',
-            ]
+        yield 'Class' => [
+            '<?php trait Foobar {}',
+            'Foobar',
+            'reflectClass',
+            '"Foobar" is not a class',
+        ];
+        yield 'Interface' => [
+            '<?php class Foobar {}',
+            'Foobar',
+            'reflectInterface',
+            '"Foobar" is not an interface',
+        ];
+        yield 'Trait' => [
+            '<?php interface Foobar {}',
+            'Foobar',
+            'reflectTrait',
+            '"Foobar" is not a trait',
         ];
     }
 

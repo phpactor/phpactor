@@ -139,6 +139,9 @@ class WorseNamedParameterCompletorTest extends TolerantCompletorTestCase
         $this->assertCouldNotComplete($source);
     }
 
+    /**
+     * @return Generator<string, array{string}>
+     */
     public function provideCouldNotComplete(): Generator
     {
         yield 'empty string' => [ '<?php  <>' ];

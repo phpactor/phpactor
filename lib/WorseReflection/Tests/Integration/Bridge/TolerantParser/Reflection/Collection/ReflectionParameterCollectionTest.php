@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\Collection;
 
+use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -19,25 +20,26 @@ class ReflectionParameterCollectionTest extends IntegrationTestCase
         $assertion($collection);
     }
 
-    public function provideCollection()
+    /**
+     * @return Generator<string,array{string,Closure(ReflectionParameterCollection): void}>
+     */
+    public function provideCollection(): Generator
     {
-        return [
-            'returns promoted parameters' => [
-                <<<'EOT'
-                    <?php
+        yield 'returns promoted parameters' => [
+            <<<'EOT'
+                <?php
 
-                    class Foobar
-                    {
-                        public function bar(private $foo, string $cat, private $bar) {}
-                    }
-                    EOT
-                ,
-                function (ReflectionParameterCollection $collection): void {
-                    $this->assertEquals(3, $collection->count());
-                    $this->assertEquals(1, $collection->notPromoted()->count());
-                    $this->assertEquals(2, $collection->promoted()->count());
-                },
-            ],
+                class Foobar
+                {
+                    public function bar(private $foo, string $cat, private $bar) {}
+                }
+                EOT
+            ,
+            function (ReflectionParameterCollection $collection): void {
+                $this->assertEquals(3, $collection->count());
+                $this->assertEquals(1, $collection->notPromoted()->count());
+                $this->assertEquals(2, $collection->promoted()->count());
+            },
         ];
     }
 }

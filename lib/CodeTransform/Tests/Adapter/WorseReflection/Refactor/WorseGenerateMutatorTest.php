@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use Generator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMutator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -40,57 +41,55 @@ class WorseGenerateMutatorTest extends WorseTestCase
     }
 
     /**
-     * @return array<array-key, list<mixed>>
+     * @return Generator<list<mixed>>
      */
-    public function provideExtractMutator()
+    public function provideExtractMutator(): Generator
     {
         $propertyName = 'method';
 
-        return [
-            'property' => [
-                'generateMutator1.test',
-                $propertyName,
-            ],
-            'prefix and ucfirst' => [
-                'generateMutator2.test',
-                $propertyName,
-                'set',
-                true,
-            ],
-            'return type' => [
-                'generateMutator3.test',
-                $propertyName,
-            ],
-            'namespaced' => [
-                'generateMutator4.test',
-                $propertyName,
-            ],
-            'pseudo-type' => [
-                'generateMutator5.test',
-                $propertyName,
-            ],
-            'multiple-classes' => [
-                'generateMutator6.test',
-                $propertyName,
-            ],
-            'prefix but ucfirst by default' => [
-                'generateMutator7.test',
-                $propertyName,
-                'set',
-            ],
-            'prefix but ucfirst to false' => [
-                'generateMutator8.test',
-                $propertyName,
-                'set',
-                false,
-            ],
-            'fluent' => [
-                'generateMutator9.test',
-                $propertyName,
-                '',
-                false,
-                true,
-            ],
+        yield 'property' => [
+            'generateMutator1.test',
+            $propertyName,
+        ];
+        yield 'prefix and ucfirst' => [
+            'generateMutator2.test',
+            $propertyName,
+            'set',
+            true,
+        ];
+        yield 'return type' => [
+            'generateMutator3.test',
+            $propertyName,
+        ];
+        yield 'namespaced' => [
+            'generateMutator4.test',
+            $propertyName,
+        ];
+        yield 'pseudo-type' => [
+            'generateMutator5.test',
+            $propertyName,
+        ];
+        yield 'multiple-classes' => [
+            'generateMutator6.test',
+            $propertyName,
+        ];
+        yield 'prefix but ucfirst by default' => [
+            'generateMutator7.test',
+            $propertyName,
+            'set',
+        ];
+        yield 'prefix but ucfirst to false' => [
+            'generateMutator8.test',
+            $propertyName,
+            'set',
+            false,
+        ];
+        yield 'fluent' => [
+            'generateMutator9.test',
+            $propertyName,
+            '',
+            false,
+            true,
         ];
     }
 

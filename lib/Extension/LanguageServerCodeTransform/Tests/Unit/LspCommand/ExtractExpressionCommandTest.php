@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
 use Exception;
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
@@ -74,11 +75,12 @@ class ExtractExpressionCommandTest extends TestCase
          ], $showMessage->params);
     }
 
-    public function provideExceptions(): array
+    /**
+     * @return Generator<class-string, array{Exception}>
+     */
+    public function provideExceptions(): Generator
     {
-        return [
-            TransformException::class => [ new TransformException('Error message!') ],
-        ];
+        yield TransformException::class => [ new TransformException('Error message!') ];
     }
 
     /**
