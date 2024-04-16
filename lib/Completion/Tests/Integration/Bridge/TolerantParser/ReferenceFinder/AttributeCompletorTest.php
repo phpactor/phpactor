@@ -66,10 +66,10 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
-        $searcher->search('Foo', NameSearcherType::ATTRIBUTE)->willYield([
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_CLASS)->willYield([
             NameSearchResult::create('class', 'Foobar'),
         ]);
-        $searcher->search('\\Foo\\Relative', NameSearcherType::ATTRIBUTE)->willYield([
+        $searcher->search('\\Foo\\Relative', NameSearcherType::ATTRIBUTE_TARGET_CLASS)->willYield([
             NameSearchResult::create('class', 'Foo\Relative\One\Blah\Boo'),
             NameSearchResult::create('class', 'Foo\Relative\One\Glorm\Bar'),
             NameSearchResult::create('class', 'Foo\Relative\One\Blah'),
