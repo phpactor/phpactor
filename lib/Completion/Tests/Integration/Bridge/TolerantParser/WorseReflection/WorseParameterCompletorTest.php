@@ -150,7 +150,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
                     public function goodbye()
                     {
                         $hello = 'string';
-                        foobar($<>
+                        foobar($h<>
                         $hello = 1234;
                     }
                 }
