@@ -66,6 +66,8 @@ class AttributeCompletor extends NameSearcherCompletor implements TolerantComple
                     return NameSearcherType::ATTRIBUTE_TARGET_PROMOTED_PROPERTY;
                 }
             }
+
+            return NameSearcherType::ATTRIBUTE_TARGET_PARAMETER;
         }
 
         return match($targetNode::class) {
@@ -74,7 +76,6 @@ class AttributeCompletor extends NameSearcherCompletor implements TolerantComple
             MethodDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_METHOD,
             PropertyDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_PROPERTY,
             ClassConstDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_CLASS_CONSTANT,
-            Parameter::class => NameSearcherType::ATTRIBUTE_TARGET_PARAMETER,
             default => NameSearcherType::ATTRIBUTE,
         };
     }
