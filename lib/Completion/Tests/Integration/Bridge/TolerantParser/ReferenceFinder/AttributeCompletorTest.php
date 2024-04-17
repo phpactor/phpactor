@@ -86,6 +86,17 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
             ]
         ];
 
+        yield 'function' => [
+            '<?php namespace Foo { #[Foo<>] function x(); }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarFunction',
+                    'short_description' => 'FoobarFunction',
+                ]
+            ]
+        ];
+
         yield 'only show children for qualified names' => [
             '<?php namespace Foo { #[Relative\<>]class Bar{}', [
                 [
@@ -124,6 +135,9 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
         ]);
         $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_PROPERTY)->willYield([
             NameSearchResult::create('class', 'FoobarProperty'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_FUNCTION)->willYield([
+            NameSearchResult::create('class', 'FoobarFunction'),
         ]);
         $searcher->search('\\Foo\\Relative', NameSearcherType::ATTRIBUTE_TARGET_CLASS)->willYield([
             NameSearchResult::create('class', 'Foo\Relative\One\Blah\Boo'),
