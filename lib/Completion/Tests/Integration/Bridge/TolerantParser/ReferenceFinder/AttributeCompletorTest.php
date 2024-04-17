@@ -42,6 +42,39 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
             ]
         ];
 
+        yield 'method' => [
+            '<?php namespace Foo { class Bar { #[Foo<>] public function zxc() {} }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarMethod',
+                    'short_description' => 'FoobarMethod',
+                ]
+            ]
+        ];
+
+        yield 'class constant' => [
+            '<?php namespace Foo { class Bar { #[Foo<>] const X = 1; }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarClassConstsant',
+                    'short_description' => 'FoobarClassConstsant',
+                ]
+            ]
+        ];
+
+        yield 'parameter' => [
+            '<?php namespace Foo { class Bar { public function zxc(#[Foo<>] $x, $y) {} }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarParameter',
+                    'short_description' => 'FoobarParameter',
+                ]
+            ]
+        ];
+
         yield 'only show children for qualified names' => [
             '<?php namespace Foo { #[Relative\<>]class Bar{}', [
                 [
@@ -68,6 +101,15 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
         $searcher = $this->prophesize(NameSearcher::class);
         $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_CLASS)->willYield([
             NameSearchResult::create('class', 'Foobar'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_METHOD)->willYield([
+            NameSearchResult::create('class', 'FoobarMethod'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_CLASS_CONSTANT)->willYield([
+            NameSearchResult::create('class', 'FoobarClassConstsant'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_PARAMETER)->willYield([
+            NameSearchResult::create('class', 'FoobarParameter'),
         ]);
         $searcher->search('\\Foo\\Relative', NameSearcherType::ATTRIBUTE_TARGET_CLASS)->willYield([
             NameSearchResult::create('class', 'Foo\Relative\One\Blah\Boo'),
