@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\Unit;
 
+use Generator;
 use Phpactor\Phpactor;
 use PHPUnit\Framework\TestCase;
 
@@ -16,33 +17,16 @@ class PhpactorTest extends TestCase
         $this->assertEquals($isFile, Phpactor::isFile($example));
     }
 
-    public function provideIsFile()
+    /**
+     * @return Generator<array{string,bool}>
+     */
+    public function provideIsFile(): Generator
     {
-        return [
-            [
-                'Hello.php',
-                true
-            ],
-            [
-                'Hello\\Bar',
-                false
-            ],
-            [
-                'Hello',
-                false
-            ],
-            [
-                './Hello/Bar',
-                true
-            ],
-            [
-                'Foobar/*',
-                true
-            ],
-            [
-                'lib/Badger.php',
-                true
-            ]
-        ];
+        yield [ 'Hello.php', true ];
+        yield [ 'Hello\\Bar', false ];
+        yield [ 'Hello', false ];
+        yield [ './Hello/Bar', true ];
+        yield [ 'Foobar/*', true ];
+        yield [ 'lib/Badger.php', true ];
     }
 }

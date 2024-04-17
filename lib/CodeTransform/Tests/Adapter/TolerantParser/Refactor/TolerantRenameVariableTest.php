@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\Refactor;
 
+use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\TolerantParser\TolerantTestCase;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
@@ -22,46 +23,44 @@ class TolerantRenameVariableTest extends TolerantTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    public function provideRenameMethod()
+    public function provideRenameMethod(): Generator
     {
-        return [
-            'one instance no context' => [
-                'renameVariable1.test',
-                'newName'
-            ],
-            'two instances no context' => [
-                'renameVariable2.test',
-                'newName'
-            ],
-            'local scope' => [
-                'renameVariable3.test',
-                'newName',
-                RenameVariable::SCOPE_LOCAL
-            ],
-            'parameters from declaration' => [
-                'renameVariable4.test',
-                'newName'
-            ],
-            'local parameter from body' => [
-                'renameVariable4.test',
-                'newName',
-                RenameVariable::SCOPE_LOCAL
-            ],
-            'typed parameter' => [
-                'renameVariable5.test',
-                'newName',
-                RenameVariable::SCOPE_LOCAL
-            ],
-            'anonymous function use' => [
-                'renameVariable6.test',
-                'newName',
-                RenameVariable::SCOPE_LOCAL
-            ],
-            'anonymous function use within' => [
-                'renameVariable7.test',
-                'newName',
-                RenameVariable::SCOPE_LOCAL
-            ],
+        yield 'one instance no context' => [
+            'renameVariable1.test',
+            'newName'
+        ];
+        yield 'two instances no context' => [
+            'renameVariable2.test',
+            'newName'
+        ];
+        yield 'local scope' => [
+            'renameVariable3.test',
+            'newName',
+            RenameVariable::SCOPE_LOCAL
+        ];
+        yield 'parameters from declaration' => [
+            'renameVariable4.test',
+            'newName'
+        ];
+        yield 'local parameter from body' => [
+            'renameVariable4.test',
+            'newName',
+            RenameVariable::SCOPE_LOCAL
+        ];
+        yield 'typed parameter' => [
+            'renameVariable5.test',
+            'newName',
+            RenameVariable::SCOPE_LOCAL
+        ];
+        yield 'anonymous function use' => [
+            'renameVariable6.test',
+            'newName',
+            RenameVariable::SCOPE_LOCAL
+        ];
+        yield 'anonymous function use within' => [
+            'renameVariable7.test',
+            'newName',
+            RenameVariable::SCOPE_LOCAL
         ];
     }
 }

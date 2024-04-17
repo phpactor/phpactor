@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Generator;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Name;
@@ -20,7 +21,7 @@ class ReflectionScopeTest extends IntegrationTestCase
         $assertion($class);
     }
 
-    public function provideScope()
+    public function provideScope(): Generator
     {
         yield 'Returns imported classes' => [
             <<<'EOT'

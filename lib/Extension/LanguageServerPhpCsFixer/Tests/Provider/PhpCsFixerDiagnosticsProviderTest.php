@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Tests\Provider;
 
 use Amp\NullCancellationToken;
+use Generator;
 use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Tests\PhpCsFixerTestCase;
@@ -122,34 +123,32 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
     }
 
     /**
-     * @return array{0: string, 1:int}[]
+     * @return Generator<array{string, int}>
      */
-    public function fileProvider(): array
+    public function fileProvider(): Generator
     {
-        return [
-            [
-                <<<EOF
-                    <?php
+        yield [
+            <<<EOF
+                <?php
 
-                    namespace Test;
-                    \$foo = 'bar';
-                        \$test1 = true;
-                        \$test2 = true;
-                        \$test3 = true;
-                    \$lao = "tzu";
-                    EOF,
-                // expected diagnostics
-                4,
-            ],
-            [
-                <<<EOF
-                    <?php
+                namespace Test;
+                \$foo = 'bar';
+                    \$test1 = true;
+                    \$test2 = true;
+                    \$test3 = true;
+                \$lao = "tzu";
+                EOF,
+            // expected diagnostics
+            4,
+        ];
+        yield [
+            <<<EOF
+                <?php
 
-                    \$foo = 'bar';
+                \$foo = 'bar';
 
-                    EOF,
-                0
-            ]
+                EOF,
+            0
         ];
     }
 }

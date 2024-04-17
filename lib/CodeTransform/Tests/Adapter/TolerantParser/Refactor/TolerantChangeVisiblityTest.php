@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\Refactor;
 
+use Generator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantChangeVisiblity;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Tests\Adapter\TolerantParser\TolerantTestCase;
@@ -21,7 +22,10 @@ class TolerantChangeVisiblityTest extends TolerantTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    public function provideChangeVisibility()
+    /**
+     * @return Generator<string,array{string}>
+     */
+    public function provideChangeVisibility(): Generator
     {
         yield 'no op' => [ 'changeVisibility1.test' ];
         yield 'method: from public to protected' => [ 'changeVisibility2.test' ];

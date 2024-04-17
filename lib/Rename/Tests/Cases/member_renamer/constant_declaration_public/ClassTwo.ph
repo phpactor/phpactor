@@ -6,4 +6,9 @@ class ClassTwo extends ClassOne
     {
         return parent::FOO;
     }
+
+    public function barzoo(): string
+    {
+        return parent::ZOO;
+    }
 }
