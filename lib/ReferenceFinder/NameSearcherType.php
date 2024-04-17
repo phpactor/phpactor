@@ -14,6 +14,7 @@ class NameSearcherType
     public const ATTRIBUTE_TARGET_FUNCTION = 'attribute_target_function';
     public const ATTRIBUTE_TARGET_METHOD = 'attribute_target_method';
     public const ATTRIBUTE_TARGET_PROPERTY = 'attribute_target_property';
+    public const ATTRIBUTE_TARGET_PROMOTED_PROPERTY = 'attribute_target_promoted_property';
     public const ATTRIBUTE_TARGET_CLASS_CONSTANT = 'attribute_target_class_constant';
     public const ATTRIBUTE_TARGET_PARAMETER = 'attribute_target_parameter';
     public const ATTRIBUTE_IS_REPEATABLE = 'attribute_is_repeatable';

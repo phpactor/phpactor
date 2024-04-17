@@ -92,6 +92,11 @@ abstract class Criteria
         return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_PROPERTY);
     }
 
+    public static function isPromotedPropertyAttribute(): HasFlags
+    {
+        return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_PROMOTED_PROPERTY);
+    }
+
     public static function isMethodAttribute(): HasFlags
     {
         return new HasFlags(ClassRecord::FLAG_ATTRIBUTE_TARGET_METHOD);

@@ -38,8 +38,8 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'Foobar',
                     'short_description' => 'Foobar',
-                ]
-            ]
+                ],
+            ],
         ];
 
         yield 'method' => [
@@ -49,8 +49,8 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'FoobarMethod',
                     'short_description' => 'FoobarMethod',
-                ]
-            ]
+                ],
+            ],
         ];
 
         yield 'class constant' => [
@@ -60,8 +60,8 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'FoobarClassConstsant',
                     'short_description' => 'FoobarClassConstsant',
-                ]
-            ]
+                ],
+            ],
         ];
 
         yield 'parameter' => [
@@ -71,8 +71,8 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'FoobarParameter',
                     'short_description' => 'FoobarParameter',
-                ]
-            ]
+                ],
+            ],
         ];
 
         yield 'property' => [
@@ -82,8 +82,8 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'FoobarProperty',
                     'short_description' => 'FoobarProperty',
-                ]
-            ]
+                ],
+            ],
         ];
 
         yield 'function' => [
@@ -93,8 +93,24 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'FoobarFunction',
                     'short_description' => 'FoobarFunction',
-                ]
-            ]
+                ],
+            ],
+        ];
+
+        yield 'promoted property' => [
+            '<?php namespace Foo { class Bar { public function __construct(#[Foo<>] private $x); }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarParameter',
+                    'short_description' => 'FoobarParameter',
+                ],
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarProperty',
+                    'short_description' => 'FoobarProperty',
+                ],
+            ],
         ];
 
         yield 'only show children for qualified names' => [
@@ -135,6 +151,10 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
         ]);
         $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_PROPERTY)->willYield([
             NameSearchResult::create('class', 'FoobarProperty'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_PROMOTED_PROPERTY)->willYield([
+            NameSearchResult::create('class', 'FoobarProperty'),
+            NameSearchResult::create('class', 'FoobarParameter'),
         ]);
         $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_FUNCTION)->willYield([
             NameSearchResult::create('class', 'FoobarFunction'),

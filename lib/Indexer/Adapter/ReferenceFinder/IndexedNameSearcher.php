@@ -92,6 +92,10 @@ class IndexedNameSearcher implements NameSearcher
             return Criteria::isFunctionAttribute();
         }
 
+        if ($type === NameSearcherType::ATTRIBUTE_TARGET_PROMOTED_PROPERTY) {
+            return Criteria::isPromotedPropertyAttribute();
+        }
+
         if ($type === NameSearcherType::CLASS_) {
             return Criteria::isClassConcrete();
         }
