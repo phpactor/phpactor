@@ -6,7 +6,7 @@ use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\HasShortName;
 
-class ShortNameBeginsOrCamelMatchesTo extends Criteria
+class ShortNameMatchesTo extends Criteria
 {
     public function __construct(private string $name)
     {

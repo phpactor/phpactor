@@ -6,7 +6,7 @@ namespace Phpactor\Indexer\Tests\Unit\Model\Query\Criteria;
 
 use Generator;
 use PHPUnit\Framework\TestCase;
-use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsOrCamelMatchesTo;
+use Phpactor\Indexer\Model\Query\Criteria\ShortNameMatchesTo;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 
 class ShortNameBeginsOrCamelMatchesToTest extends TestCase
@@ -17,7 +17,7 @@ class ShortNameBeginsOrCamelMatchesToTest extends TestCase
     public function testCamel(string $name, string $path, bool $expected): void
     {
         $record = ClassRecord::fromName($path);
-        self::assertTrue((new ShortNameBeginsOrCamelMatchesTo($name))->isSatisfiedBy($record) === $expected);
+        self::assertTrue((new ShortNameMatchesTo($name))->isSatisfiedBy($record) === $expected);
     }
 
     public function provideSearch(): Generator
