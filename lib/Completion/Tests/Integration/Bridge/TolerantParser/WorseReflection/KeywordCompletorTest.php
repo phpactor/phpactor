@@ -81,6 +81,14 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php class F { public function foo() { if (true) { re<> } }}',
             $this->expect(['return ', 'yield ']),
         ];
+        yield 'root subnode' => [
+            '<?php <>',
+            $this->expect(['return ', 'yield ']),
+        ];
+        yield 'namespace subnode' => [
+            '<?php namespace X; <>',
+            $this->expect(['return ', 'yield ']),
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor

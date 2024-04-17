@@ -273,6 +273,15 @@ class CompletionContext
         return $node->parent instanceof MethodDeclaration;
     }
 
+    public static function statement(Node $node): bool
+    {
+        return $node instanceof CompoundStatementNode
+            || $node instanceof SourceFileNode
+            || $node->parent instanceof SourceFileNode
+            || $node->parent instanceof CompoundStatementNode
+            || $node->parent?->parent instanceof CompoundStatementNode;
+    }
+
     public static function declaration(Node $node, ByteOffset $offset): bool
     {
         if (!$node->parent) {

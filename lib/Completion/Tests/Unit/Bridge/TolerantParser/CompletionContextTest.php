@@ -86,6 +86,80 @@ class CompletionContextTest extends TestCase
     }
 
     /**
+     * @dataProvider provideStatement
+     */
+    public function testStatement(string $source, bool $expected): void
+    {
+        [$source, $offset] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        self::assertEquals($expected, CompletionContext::statement($node));
+    }
+
+    /**
+     * @return Generator<string,array<int,mixed>>
+     */
+    public function provideStatement(): Generator
+    {
+        yield 'root' => [
+            '<?php <>',
+            true,
+        ];
+        yield 'in namespace' => [
+            '<?php namespace X; <>',
+            true,
+        ];
+        yield 'statement property' => [
+            '<?php class Foo { pri<> }',
+            false,
+        ];
+        yield 'statement visibility 1' => [
+            '<?php class Foo { <> }',
+            false,
+        ];
+        yield 'statement visibility 2' => [
+            '<?php class Foo { private <> }',
+            false,
+        ];
+        yield 'visibility 3' => [
+            '<?php class Foo { private Foob<> }',
+            false,
+        ];
+        yield 'statement method body' => [
+            '<?php class Foo { private function foo() { <> } }',
+            true,
+        ];
+        yield 'nested statement method body' => [
+            '<?php class Foo { private function foo() { if (true) { $x = 1; re<> } } }',
+            true,
+        ];
+
+        yield 'statement visibility 4' => [
+            '<?php class Foo { private Foobles <> }',
+            false,
+        ];
+        yield 'statement visibility 5' => [
+            '<?php class Foo { private Foobles $<> }',
+            false,
+        ];
+        yield 'statement after class' => [
+            '<?php class Foo { private Foobles $foo; } $foo-><>',
+            false,
+        ];
+        yield 'statement const value' => [
+            '<?php class Foo { public const X = sel<> }',
+            false,
+        ];
+        yield 'statement const value 2' => [
+            '<?php class Foo { public const X = [sel<> }',
+            false,
+        ];
+        yield 'statement attribute' => [
+            '<?php class Foo { public function baz(){} #[Foo\<>]public function bar(){}}',
+            false,
+        ];
+    }
+
+    /**
      * @dataProvider provideClassMemberBody
      */
     public function testClassMemberBody(string $source, bool $expected): void

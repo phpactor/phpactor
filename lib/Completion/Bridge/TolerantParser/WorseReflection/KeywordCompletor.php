@@ -6,7 +6,6 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
-use Microsoft\PhpParser\Node\DelimitedList\ParameterDeclarationList;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -35,6 +34,12 @@ class KeywordCompletor implements TolerantCompletor
         '__wakeup' => "(): void\n{\$0\n}",
     ];
 
+    private const STATEMENT_KEYWORDS = [
+        // todo add other statements with snippets
+        'return ',
+        'yield ',
+    ];
+
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         if (CompletionContext::promotedPropertyVisibility($node)) {
@@ -59,14 +64,8 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
-        if (
-            CompletionContext::classMembersBody($node->parent?->parent)
-                && !CompletionContext::nodeOrParentIs($node->parent?->parent, ParameterDeclarationList::class)
-        ) {
-            yield from $this->keywords([
-                'return ',
-                'yield ',
-            ]);
+        if (CompletionContext::statement($node)) {
+            yield from $this->keywords(self::STATEMENT_KEYWORDS);
             return true;
         }
 
@@ -114,7 +113,7 @@ class KeywordCompletor implements TolerantCompletor
         foreach ($keywords as $keyword) {
             yield Suggestion::createWithOptions($keyword, [
                 'type' => Suggestion::TYPE_KEYWORD,
-                'priority' => 1,
+                'priority' => -255,
             ]);
         }
     }
