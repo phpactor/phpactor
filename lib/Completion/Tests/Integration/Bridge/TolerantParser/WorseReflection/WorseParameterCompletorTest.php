@@ -147,7 +147,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
 
                 class Hello
                 {
-                    public functoin goodbye()
+                    public function goodbye()
                     {
                         $hello = 'string';
                         foobar($<>
