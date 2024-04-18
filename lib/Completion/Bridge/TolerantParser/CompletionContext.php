@@ -335,6 +335,17 @@ class CompletionContext
             || $node->parent?->parent instanceof CompoundStatementNode;
     }
 
+    public static function loopOrSwitch(Node $node): bool
+    {
+        return $node->getFirstAncestor(
+            DoStatement::class,
+            ForStatement::class,
+            ForeachStatement::class,
+            SwitchStatementNode::class,
+            WhileStatement::class,
+        ) instanceof Node;
+    }
+
     public static function declaration(Node $node, ByteOffset $offset): bool
     {
         if (!$node->parent) {

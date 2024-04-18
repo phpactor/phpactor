@@ -34,6 +34,8 @@ class KeywordCompletor implements TolerantCompletor
         '__wakeup' => "(): void\n{\$0\n}",
     ];
     private const STATEMENTS = [
+        'break' => '$1;$0',
+        'continue' => '$1;$0',
         'do' => " {\n\t\$0\n} while (\$2);",
         'echo' => ' $1;$0',
         'for' => " (\${1:expr1}, \${2:expr2}, \${3:expr3}) {\n\t\$0\n}",
@@ -41,7 +43,7 @@ class KeywordCompletor implements TolerantCompletor
         'if' => " (\$1) {\$0\n}",
         'return' => ' $1;$0',
         'switch' => " (\\\$\${1:expr}) {\n\tcase \${2:expr}:\n\t\t\$0\n}",
-        'try' => "  {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
+        'try' => " {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
         'while' => " (\$1) {\$0\n}",
         'yield' => ' $1;$0',
     ];
@@ -71,7 +73,7 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         if (CompletionContext::statement($node, $offset)) {
-            yield from $this->statements();
+            yield from $this->statements(CompletionContext::loopOrSwitch($node));
             return true;
         }
 
@@ -113,9 +115,13 @@ class KeywordCompletor implements TolerantCompletor
     /**
      * @return Generator<Suggestion>
      */
-    private function statements(): Generator
+    private function statements(bool $loop): Generator
     {
         foreach (self::STATEMENTS as $name => $snippet) {
+            if (!$loop && in_array($name, ['continue', 'break'], true)) {
+                continue;
+            }
+
             yield Suggestion::createWithOptions($name . ' ', [
                 'type' => Suggestion::TYPE_KEYWORD,
                 'priority' => -255,

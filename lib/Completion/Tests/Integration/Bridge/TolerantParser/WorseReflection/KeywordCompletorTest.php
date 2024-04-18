@@ -71,43 +71,43 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         ];
         yield 'method empty body keyword' => [
             '<?php class F { public function foo() { <> }}',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(false)],
         ];
         yield 'method body keyword' => [
             '<?php class F { public function foo() { re<> }}',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(false)],
         ];
         yield 'method body subnode' => [
             '<?php class F { public function foo() { if (true) { re<> } }}',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(false)],
         ];
         yield 'root subnode' => [
             '<?php <>',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(false)],
         ];
         yield 'namespace subnode' => [
             '<?php namespace X; <>',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(false)],
         ];
         yield 'inside try' => [
             '<?php namespace X; try { re<> } catch (\Exception $e) {}',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(false)],
         ];
         yield 'inside catch' => [
             '<?php namespace X; try { } catch (\Exception $e) { re<> }',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(false)],
         ];
         yield 'inside case 1' => [
             '<?php namespace X; switch (true) { case 0: <> }',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(true)],
         ];
         yield 'inside case 2' => [
             '<?php namespace X; switch (true) { case 0: re<> }',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(true)],
         ];
         yield 'inside while condition' => [
             '<?php namespace X; while () { <> }',
-            [...$this->expectStatement()],
+            [...$this->expectStatement(true)],
         ];
     }
 
@@ -130,9 +130,11 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<array{name:string,snippet:string}>
      */
-    private function expectStatement(): Generator
+    private function expectStatement(bool $loop): Generator
     {
         $statements = [
+            'break' => '$1;$0',
+            'continue' => '$1;$0',
             'do' => " {\n\t\$0\n} while (\$2);",
             'echo' => ' $1;$0',
             'for' => " (\${1:expr1}, \${2:expr2}, \${3:expr3}) {\n\t\$0\n}",
@@ -140,12 +142,15 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             'if' => " (\$1) {\$0\n}",
             'return' => ' $1;$0',
             'switch' => " (\\\$\${1:expr}) {\n\tcase \${2:expr}:\n\t\t\$0\n}",
-            'try' => "  {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
+            'try' => " {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
             'while' => " (\$1) {\$0\n}",
             'yield' => ' $1;$0',
         ];
 
         foreach ($statements as $name => $snippet) {
+            if (!$loop && in_array($name, ['continue', 'break'], true)) {
+                continue;
+            }
             yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
         }
     }
