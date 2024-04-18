@@ -157,6 +157,18 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { private function foo() { "rrr<>" }',
             false,
         ];
+        yield 'foreach condition' => [
+            '<?php class Foo { private function foo() { foreach (<>) {} } }',
+            false,
+        ];
+        yield 'foreach condition 2' => [
+            '<?php class Foo { private function foo() { foreach (re<>) {} } }',
+            false,
+        ];
+        yield 'foreach condition key' => [
+            '<?php class Foo { private function foo() { foreach ($x as re<>) {} } }',
+            false,
+        ];
         yield 'for condition 1' => [
             '<?php class Foo { private function foo() { for (<>) {} } }',
             false,

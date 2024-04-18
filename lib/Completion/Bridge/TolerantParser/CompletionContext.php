@@ -294,11 +294,13 @@ class CompletionContext
                 || $node instanceof DoStatement
                 || $node instanceof CatchClause
                 || $node instanceof ForStatement
+                || $node instanceof ForeachStatement
                 || $node->parent instanceof ExpressionList
                 || $node->parent instanceof WhileStatement
                 || $node->parent instanceof DoStatement
                 || $node->parent instanceof IfStatementNode
                 || $node->parent instanceof CatchClause
+                || $node->parent instanceof ForeachStatement
         ) {
             return false;
         }
