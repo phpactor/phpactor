@@ -71,23 +71,23 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         ];
         yield 'method empty body keyword' => [
             '<?php class F { public function foo() { <> }}',
-            $this->expect(['return ', 'yield ']),
+            $this->expectStatement(),
         ];
         yield 'method body keyword' => [
             '<?php class F { public function foo() { re<> }}',
-            $this->expect(['return ', 'yield ']),
+            $this->expectStatement(),
         ];
         yield 'method body subnode' => [
             '<?php class F { public function foo() { if (true) { re<> } }}',
-            $this->expect(['return ', 'yield ']),
+            $this->expectStatement(),
         ];
         yield 'root subnode' => [
             '<?php <>',
-            $this->expect(['return ', 'yield ']),
+            $this->expectStatement(),
         ];
         yield 'namespace subnode' => [
             '<?php namespace X; <>',
-            $this->expect(['return ', 'yield ']),
+            $this->expectStatement(),
         ];
     }
 
@@ -105,6 +105,11 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         return array_map(fn (string $keyword) => [
             'name' => $keyword,
         ], $array);
+    }
+
+    private function expectStatement(): array
+    {
+        return $this->expect(['return ', 'yield ']);
     }
 
     /**
