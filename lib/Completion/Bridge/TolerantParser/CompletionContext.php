@@ -31,6 +31,7 @@ use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\DoStatement;
+use Microsoft\PhpParser\Node\Statement\EchoStatement;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\ForStatement;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
