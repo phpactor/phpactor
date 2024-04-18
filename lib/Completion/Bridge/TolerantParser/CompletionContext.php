@@ -19,6 +19,7 @@ use Microsoft\PhpParser\Node\DelimitedList\MatchArmConditionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -32,6 +33,7 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\DoStatement;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\ForStatement;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
@@ -288,6 +290,10 @@ class CompletionContext
             return true;
         }
 
+        if ($node instanceof MemberAccessExpression) {
+            return false;
+        }
+
         if ($node instanceof SwitchStatementNode) {
             if ([] === $node->caseStatements) {
                 return false;
@@ -322,17 +328,6 @@ class CompletionContext
             || $node->parent instanceof CompoundStatementNode
             || $node->parent?->parent instanceof CaseStatementNode
             || $node->parent?->parent instanceof CompoundStatementNode;
-    }
-
-    public static function loopOrSwitch(Node $node): bool
-    {
-        return null !== $node->getFirstAncestor(
-            DoStatement::class,
-            ForStatement::class,
-            ForeachStatement::class,
-            SwitchStatementNode::class,
-            WhileStatement::class,
-        );
     }
 
     public static function declaration(Node $node, ByteOffset $offset): bool
