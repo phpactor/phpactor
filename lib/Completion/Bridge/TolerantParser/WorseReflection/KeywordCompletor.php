@@ -33,7 +33,6 @@ class KeywordCompletor implements TolerantCompletor
         '__unset' => "(string \\\$\${1:name}): void\n{\$0\n}",
         '__wakeup' => "(): void\n{\$0\n}",
     ];
-
     private const STATEMENT_KEYWORDS = [
         // todo add other statements with snippets
         'return ',
