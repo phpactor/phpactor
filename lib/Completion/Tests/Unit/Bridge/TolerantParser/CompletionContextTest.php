@@ -265,6 +265,10 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { private function foo() { return self::<> } }',
             false,
         ];
+        yield 'echo 1' => [
+            '<?php class Foo { private function foo() { $t = 1; echo <>; $t = 2; } }',
+            false,
+        ];
     }
 
     /**

@@ -309,6 +309,7 @@ class CompletionContext
                 || $node instanceof CatchClause
                 || $node instanceof ForStatement
                 || $node instanceof ForeachStatement
+                || $node instanceof EchoStatement
                 || $node->parent instanceof ExpressionList
                 || $node->parent instanceof WhileStatement
                 || $node->parent instanceof DoStatement
