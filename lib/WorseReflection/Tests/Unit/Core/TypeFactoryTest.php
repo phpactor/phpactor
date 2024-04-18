@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -33,7 +34,7 @@ class TypeFactoryTest extends TestCase
         $this->assertEquals($phpType, $type->toPhpString(), 'phptype');
     }
 
-    public function provideToString()
+    public function provideToString(): Generator
     {
         $reflector = ReflectorBuilder::create()->build();
         yield [
@@ -166,7 +167,7 @@ class TypeFactoryTest extends TestCase
         $this->assertEquals($expectedType, $type);
     }
 
-    public function provideValues()
+    public function provideValues(): Generator
     {
         yield [
             'string',

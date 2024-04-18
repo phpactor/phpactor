@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\ClassToFile\Transformer;
 
+use Generator;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
@@ -38,7 +39,10 @@ class ClassNameFixerTransformerTest extends AdapterTestCase
         $this->assertEquals(trim($expected), trim($transformed->apply($source)));
     }
 
-    public function provideFixClassName()
+    /**
+     * @return Generator<string,array{string,string,int}>
+     */
+    public function provideFixClassName(): Generator
     {
         yield 'no op' => [
             'FileOne.php',

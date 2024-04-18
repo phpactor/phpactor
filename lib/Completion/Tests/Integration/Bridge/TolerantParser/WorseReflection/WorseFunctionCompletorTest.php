@@ -28,6 +28,9 @@ class WorseFunctionCompletorTest extends TolerantCompletorTestCase
         $this->assertCouldNotComplete($source);
     }
 
+    /**
+     * @return Generator<string,array{string,array<int,array<string,string>>}>
+     */
     public function provideComplete(): Generator
     {
         yield 'function with parameters' => [
@@ -52,6 +55,9 @@ class WorseFunctionCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
+    /**
+     * @return Generator<string,array{string}>
+     */
     public function provideCouldNotComplete(): Generator
     {
         yield 'non member access' => [ '<?php $hello<>' ];

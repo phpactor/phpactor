@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\Collection;
 
+use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Closure;
@@ -17,7 +18,10 @@ class ReflectionMethodCollectionTest extends IntegrationTestCase
         $assertion($collection);
     }
 
-    public function provideCollection()
+    /**
+     * @return Generator<string,array{string,Closure(\Phpactor\WorseReflection\Core\Reflection\ReflectionClass): void}>
+     */
+    public function provideCollection(): Generator
     {
         yield 'Get abstract methods' => [
             <<<'EOT'

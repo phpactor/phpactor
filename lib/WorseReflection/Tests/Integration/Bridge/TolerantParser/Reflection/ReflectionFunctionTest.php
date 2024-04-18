@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -21,7 +22,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
         $assertion($functions->get($functionName));
     }
 
-    public function provideReflectsFunction()
+    public function provideReflectsFunction(): Generator
     {
         yield 'single function with no params' => [
             <<<'EOT'

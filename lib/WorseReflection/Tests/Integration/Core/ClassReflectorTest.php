@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
+use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionTrait;
@@ -19,27 +20,28 @@ class ClassReflectorTest extends IntegrationTestCase
         $this->assertInstanceOf($expectedType, $reflection);
     }
 
-    public function provideReflectClassSuccess()
+    /**
+     * @return Generator<string, array{string, string, string, class-string}>
+     */
+    public function provideReflectClassSuccess(): Generator
     {
-        return [
-            'Class' => [
-                '<?php class Foobar {}',
-                'Foobar',
-                'reflectClass',
-                ReflectionClass::class
-            ],
-            'Interface' => [
-                '<?php interface Foobar {}',
-                'Foobar',
-                'reflectInterface',
-                ReflectionInterface::class
-            ],
-            'Trait' => [
-                '<?php trait Foobar {}',
-                'Foobar',
-                'reflectTrait',
-                ReflectionTrait::class
-            ]
+        yield 'Class' => [
+             '<?php class Foobar {}',
+             'Foobar',
+             'reflectClass',
+             ReflectionClass::class
+         ];
+        yield 'Interface' => [
+            '<?php interface Foobar {}',
+            'Foobar',
+            'reflectInterface',
+            ReflectionInterface::class
+        ];
+        yield 'Trait' => [
+            '<?php trait Foobar {}',
+            'Foobar',
+            'reflectTrait',
+            ReflectionTrait::class
         ];
     }
 
@@ -54,27 +56,28 @@ class ClassReflectorTest extends IntegrationTestCase
         $this->createReflector($source)->$method($class);
     }
 
-    public function provideReflectClassNotCorrectType()
+    /**
+     * @return Generator<string,array{string,string,string,string}>
+     */
+    public function provideReflectClassNotCorrectType(): Generator
     {
-        return [
-            'Class' => [
-                '<?php trait Foobar {}',
-                'Foobar',
-                'reflectClass',
-                '"Foobar" is not a class',
-            ],
-            'Interface' => [
-                '<?php class Foobar {}',
-                'Foobar',
-                'reflectInterface',
-                '"Foobar" is not an interface',
-            ],
-            'Trait' => [
-                '<?php interface Foobar {}',
-                'Foobar',
-                'reflectTrait',
-                '"Foobar" is not a trait',
-            ]
+        yield 'Class' => [
+            '<?php trait Foobar {}',
+            'Foobar',
+            'reflectClass',
+            '"Foobar" is not a class',
+        ];
+        yield 'Interface' => [
+            '<?php class Foobar {}',
+            'Foobar',
+            'reflectInterface',
+            '"Foobar" is not an interface',
+        ];
+        yield 'Trait' => [
+            '<?php interface Foobar {}',
+            'Foobar',
+            'reflectTrait',
+            '"Foobar" is not a trait',
         ];
     }
 }
