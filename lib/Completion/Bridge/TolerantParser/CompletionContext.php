@@ -33,14 +33,15 @@ use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\DoStatement;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\ForStatement;
+use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\SwitchStatementNode;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\WhileStatement;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\TraitUseClause;
-use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -281,10 +282,18 @@ class CompletionContext
         return $node->parent instanceof MethodDeclaration;
     }
 
-    public static function statement(Node $node): bool
+    public static function statement(Node $node, ByteOffset $offset): bool
     {
         if ($node instanceof CompoundStatementNode) {
             return true;
+        }
+
+        if ($node instanceof SwitchStatementNode) {
+            if (empty($node->caseStatements)) {
+                return false;
+            }
+
+            return $offset->toInt() > $node->caseStatements[0]->getStartPosition();
         }
 
         if (
@@ -301,6 +310,7 @@ class CompletionContext
                 || $node->parent instanceof IfStatementNode
                 || $node->parent instanceof CatchClause
                 || $node->parent instanceof ForeachStatement
+                || $node->parent instanceof SwitchStatementNode
         ) {
             return false;
         }
