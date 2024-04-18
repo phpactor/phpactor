@@ -286,7 +286,10 @@ class CompletionContext
 
     public static function statement(Node $node, ByteOffset $offset): bool
     {
-        if ($node instanceof CompoundStatementNode) {
+        if (
+            $node instanceof CompoundStatementNode
+                || $node instanceof CaseStatementNode
+        ) {
             return true;
         }
 
@@ -322,7 +325,6 @@ class CompletionContext
         }
 
         return $node instanceof SourceFileNode
-            || $node instanceof CaseStatementNode
             || $node->parent instanceof CaseStatementNode
             || $node->parent instanceof SourceFileNode
             || $node->parent instanceof CompoundStatementNode

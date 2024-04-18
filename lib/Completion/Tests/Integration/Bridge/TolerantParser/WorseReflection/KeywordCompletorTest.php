@@ -97,7 +97,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php namespace X; try { } catch (\Exception $e) { re<> }',
             [...$this->expectStatement()],
         ];
-        yield 'inside case' => [
+        yield 'inside case 1' => [
             '<?php namespace X; switch (true) { case 0: <> }',
             [...$this->expectStatement()],
         ];
@@ -106,7 +106,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             [...$this->expectStatement()],
         ];
         yield 'inside while condition' => [
-            '<?php namespace X; switch (true) { case 0: re<> }',
+            '<?php namespace X; while () { <> }',
             [...$this->expectStatement()],
         ];
     }
