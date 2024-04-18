@@ -284,11 +284,16 @@ class CompletionContext
 
     public static function statement(Node $node, ByteOffset $offset): bool
     {
-        if (
-            $node instanceof CompoundStatementNode
-                || $node instanceof CaseStatementNode
-        ) {
+        if ($node instanceof CaseStatementNode) {
             return true;
+        }
+
+        if ($node instanceof CompoundStatementNode) {
+            $lastStmt = \end($node->statements);
+            if (false === $lastStmt || $lastStmt->getEndPosition() > $offset->toInt()) {
+                return true;
+            }
+            return !$lastStmt instanceof EchoStatement;
         }
 
         if ($node instanceof Expression) {
