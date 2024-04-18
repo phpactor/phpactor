@@ -33,10 +33,17 @@ class KeywordCompletor implements TolerantCompletor
         '__unset' => "(string \\\$\${1:name}): void\n{\$0\n}",
         '__wakeup' => "(): void\n{\$0\n}",
     ];
-    private const STATEMENT_KEYWORDS = [
-        // todo add other statements with snippets
-        'return ',
-        'yield ',
+    private const STATEMENTS = [
+        'do' => " {\n\t\$0\n} while (\$2);",
+        'echo' => ' $1;$0',
+        'for' => " (\${1:expr1},\${1:expr2},  \${1:expr3}) {\n\$0\n}",
+        'foreach' => " (\\\$\${1:expr} as \\\$\${2:key} => \\\$\${3:value}) {\$0\n}",
+        'if' => " (\$1) {\$0\n}",
+        'return' => ' $1;$0',
+        'switch' => " (\\\$\${1:expr}) {\n\tcase \${2:expr}:\n\t\t\$0\n}",
+        'try' => "  {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
+        'while' => " (\$1) {\$0\n}",
+        'yield' => ' $1;$0',
     ];
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
@@ -64,7 +71,7 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         if (CompletionContext::statement($node)) {
-            yield from $this->keywords(self::STATEMENT_KEYWORDS);
+            yield from $this->statements();
             return true;
         }
 
@@ -98,6 +105,20 @@ class KeywordCompletor implements TolerantCompletor
                     '__construct' => -255,
                     default => 1,
                 },
+                'snippet' => $name . $snippet,
+            ]);
+        }
+    }
+
+    /**
+     * @return Generator<Suggestion>
+     */
+    private function statements(): Generator
+    {
+        foreach (self::STATEMENTS as $name => $snippet) {
+            yield Suggestion::createWithOptions($name . ' ', [
+                'type' => Suggestion::TYPE_KEYWORD,
+                'priority' => -255,
                 'snippet' => $name . $snippet,
             ]);
         }

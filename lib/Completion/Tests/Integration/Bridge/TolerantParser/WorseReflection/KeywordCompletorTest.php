@@ -71,23 +71,23 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         ];
         yield 'method empty body keyword' => [
             '<?php class F { public function foo() { <> }}',
-            $this->expectStatement(),
+            [...$this->expectStatement()],
         ];
         yield 'method body keyword' => [
             '<?php class F { public function foo() { re<> }}',
-            $this->expectStatement(),
+            [...$this->expectStatement()],
         ];
         yield 'method body subnode' => [
             '<?php class F { public function foo() { if (true) { re<> } }}',
-            $this->expectStatement(),
+            [...$this->expectStatement()],
         ];
         yield 'root subnode' => [
             '<?php <>',
-            $this->expectStatement(),
+            [...$this->expectStatement()],
         ];
         yield 'namespace subnode' => [
             '<?php namespace X; <>',
-            $this->expectStatement(),
+            [...$this->expectStatement()],
         ];
     }
 
@@ -107,9 +107,27 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         ], $array);
     }
 
-    private function expectStatement(): array
+    /**
+     * @return Generator<array{name:string,snippet:string}>
+     */
+    private function expectStatement(): Generator
     {
-        return $this->expect(['return ', 'yield ']);
+        $statements = [
+            'do' => " {\n\t\$0\n} while (\$2);",
+            'echo' => ' $1;$0',
+            'for' => " (\${1:expr1},\${1:expr2},  \${1:expr3}) {\n\$0\n}",
+            'foreach' => " (\\\$\${1:expr} as \\\$\${2:key} => \\\$\${3:value}) {\$0\n}",
+            'if' => " (\$1) {\$0\n}",
+            'return' => ' $1;$0',
+            'switch' => " (\\\$\${1:expr}) {\n\tcase \${2:expr}:\n\t\t\$0\n}",
+            'try' => "  {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
+            'while' => " (\$1) {\$0\n}",
+            'yield' => ' $1;$0',
+        ];
+
+        foreach ($statements as $name => $snippet) {
+            yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
+        }
     }
 
     /**
