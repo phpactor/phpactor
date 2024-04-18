@@ -142,6 +142,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             'if' => " (\$1) {\$0\n}",
             'return' => ' $1;$0',
             'switch' => " (\\\$\${1:expr}) {\n\tcase \${2:expr}:\n\t\t\$0\n}",
+            'throw' => ' $1;$0',
             'try' => " {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
             'while' => " (\$1) {\$0\n}",
             'yield' => ' $1;$0',
