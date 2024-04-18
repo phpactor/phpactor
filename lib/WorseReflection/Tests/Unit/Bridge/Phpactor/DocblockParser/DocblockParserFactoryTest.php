@@ -284,7 +284,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $source = TextDocumentBuilder::fromUnknown($source);
-        $class = $reflector->reflectClassesIn(
+        $class = $reflector->reflectClassLikesIn(
             $source
         )->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return self::BAR */');
@@ -304,7 +304,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $source = TextDocumentBuilder::fromUnknown($source);
-        $class = $reflector->reflectClassesIn($source)->first();
+        $class = $reflector->reflectClassLikesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return Foo::BA* */');
         self::assertEquals('Foo::BA*', $docblock->returnType()->__toString());
     }
@@ -322,7 +322,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
             EOT;
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
         $source = TextDocumentBuilder::fromUnknown($source);
-        $class = $reflector->reflectClassesIn($source)->first();
+        $class = $reflector->reflectClassLikesIn($source)->first();
         $docblock = $this->parseDocblockWithClass($reflector, $class, '/** @return array{string,Foo::*} */');
         self::assertEquals('array{string,Foo::*}', $docblock->returnType()->__toString());
     }

@@ -59,9 +59,9 @@ class CompositeReflector implements Reflector
         return $this->classReflector->reflectClassLike($className, $visited);
     }
 
-    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
+    public function reflectClassLikesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
-        return $this->sourceCodeReflector->reflectClassesIn($sourceCode, $visited);
+        return $this->sourceCodeReflector->reflectClassLikesIn($sourceCode, $visited);
     }
 
     public function reflectOffset(TextDocument $sourceCode, $offset): ReflectionOffset

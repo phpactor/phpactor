@@ -16,7 +16,7 @@ class ReflectionParameterCollectionTest extends IntegrationTestCase
     public function testCollection(string $source, Closure $assertion): void
     {
         $source = TextDocumentBuilder::fromUnknown($source);
-        $collection = $this->createReflector($source)->reflectClassesIn($source)->first()->methods()->first()->parameters();
+        $collection = $this->createReflector($source)->reflectClassLikesIn($source)->first()->methods()->first()->parameters();
         $assertion($collection);
     }
 

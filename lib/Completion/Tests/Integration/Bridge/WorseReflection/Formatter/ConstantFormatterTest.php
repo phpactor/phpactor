@@ -15,7 +15,7 @@ class ConstantFormatterTest extends IntegrationTestCase
     public function testFormatsConstant(string $code, string $expected): void
     {
         $code = TextDocumentBuilder::fromUnknown($code);
-        $constant = ReflectorBuilder::create()->build()->reflectClassesIn($code)->classes()->first()->constants()->first();
+        $constant = ReflectorBuilder::create()->build()->reflectClassLikesIn($code)->classes()->first()->constants()->first();
 
         self::assertTrue($this->formatter()->canFormat($constant));
         self::assertEquals($expected, $this->formatter()->format($constant));

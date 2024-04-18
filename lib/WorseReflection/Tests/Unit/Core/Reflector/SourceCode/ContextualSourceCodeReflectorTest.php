@@ -37,7 +37,7 @@ class ContextualSourceCodeReflectorTest extends TestCase
 
     public function testReflectsClassesIn(): void
     {
-        self::assertEquals(2, $this->reflector->reflectClassesIn(TextDocumentBuilder::fromUnknown('<?php class One{} class Two{}'))->count());
+        self::assertEquals(2, $this->reflector->reflectClassLikesIn(TextDocumentBuilder::fromUnknown('<?php class One{} class Two{}'))->count());
     }
 
     public function testReflectOffset(): void

@@ -15,7 +15,7 @@ class ReflectionClassCollectionTest extends IntegrationTestCase
      */
     public function testCollection(string $source, Closure $assertion): void
     {
-        $collection = $this->createReflector($source)->reflectClassesIn(TextDocumentBuilder::create($source)->build());
+        $collection = $this->createReflector($source)->reflectClassLikesIn(TextDocumentBuilder::create($source)->build());
         $assertion($collection);
     }
 

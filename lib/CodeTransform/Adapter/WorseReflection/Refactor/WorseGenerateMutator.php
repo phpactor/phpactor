@@ -109,7 +109,7 @@ class WorseGenerateMutator implements PropertyAccessGenerator
 
     private function class(SourceCode $source, int $offset): ReflectionClass
     {
-        $classes = $this->reflector->reflectClassesIn($source)->classes();
+        $classes = $this->reflector->reflectClassLikesIn($source)->classes();
 
         if (0 === $classes->count()) {
             throw new InvalidArgumentException(

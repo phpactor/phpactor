@@ -148,7 +148,7 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
         $visited[$className->__toString()] = true;
 
         $source = $this->sourceLocator->locate($className);
-        $classes = $this->reflectClassesIn($source, $visited);
+        $classes = $this->reflectClassLikesIn($source, $visited);
 
         if (false === $classes->has((string) $className)) {
             throw new ClassNotFound(sprintf(
@@ -165,9 +165,9 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     /**
      * Reflect all classes (or class-likes) in the given source code.
      */
-    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
+    public function reflectClassLikesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
-        return $this->sourceReflector->reflectClassesIn($sourceCode, $visited);
+        return $this->sourceReflector->reflectClassLikesIn($sourceCode, $visited);
     }
 
     /**

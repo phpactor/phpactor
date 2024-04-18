@@ -176,7 +176,7 @@ class CompleteConstructor implements Transformer
      */
     private function candidateClasses(SourceCode $source): Generator
     {
-        $classes = $this->reflector->reflectClassesIn($source)->classes();
+        $classes = $this->reflector->reflectClassLikesIn($source)->classes();
         foreach ($classes as $class) {
             if ($class instanceof ReflectionInterface) {
                 continue;

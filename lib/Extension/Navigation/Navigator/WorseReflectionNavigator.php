@@ -17,7 +17,7 @@ class WorseReflectionNavigator implements Navigator
     {
         $destinations = [];
         $source = TextDocumentBuilder::fromUri($path)->build();
-        $classes = $this->reflector->reflectClassesIn($source);
+        $classes = $this->reflector->reflectClassLikesIn($source);
 
         foreach ($classes as $class) {
             if ($class instanceof ReflectionClass) {

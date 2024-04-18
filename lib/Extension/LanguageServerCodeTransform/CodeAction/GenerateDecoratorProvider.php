@@ -33,7 +33,7 @@ class GenerateDecoratorProvider implements CodeActionProvider
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
-            $classes = $this->reflector->reflectClassesIn(TextDocumentConverter::fromLspTextItem($textDocument));
+            $classes = $this->reflector->reflectClassLikesIn(TextDocumentConverter::fromLspTextItem($textDocument));
             if (count($classes->classes()) !== 1) {
                 return [];
             }

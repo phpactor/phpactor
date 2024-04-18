@@ -36,9 +36,10 @@ class WorkspaceIndex
      */
     private $waiting = false;
 
-    public function __construct(private SourceCodeReflector $reflector,
- private int $updateInterval = 1000)
-    {
+    public function __construct(
+        private SourceCodeReflector $reflector,
+        private int $updateInterval = 1000
+    ) {
     }
 
     public function documentForName(Name $name): ?TextDocument
@@ -68,7 +69,7 @@ class WorkspaceIndex
         $this->documentToUpdate = null;
 
         $newNames = [];
-        foreach ($this->reflector->reflectClassesIn($textDocument) as $reflectionClass) {
+        foreach ($this->reflector->reflectClassLikesIn($textDocument) as $reflectionClass) {
             $newNames[] = $reflectionClass->name()->full();
         }
 

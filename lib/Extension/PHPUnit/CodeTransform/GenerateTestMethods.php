@@ -30,7 +30,7 @@ class GenerateTestMethods
     /** @return Generator<string> */
     public function getGeneratableTestMethods(SourceCode $source): Generator
     {
-        $classes = $this->reflector->reflectClassesIn($source);
+        $classes = $this->reflector->reflectClassLikesIn($source);
         if (count($classes->classes()) !== 1) {
             return;
         }
@@ -61,7 +61,7 @@ class GenerateTestMethods
             sprintf('%s can not generate "%s" with class', __CLASS__, $methodName),
         );
 
-        $class = $this->reflector->reflectClassesIn($document)->classes()->first();
+        $class = $this->reflector->reflectClassLikesIn($document)->classes()->first();
 
         $builder = SourceCodeBuilder::create();
         $builder->namespace($class->name()->namespace());

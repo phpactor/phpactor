@@ -45,7 +45,7 @@ class WorseOverrideMethod implements OverrideMethod
             $builder->uri($source->uri());
         }
 
-        $classes = $this->reflector->reflectClassesIn($builder->build())->classes();
+        $classes = $this->reflector->reflectClassLikesIn($builder->build())->classes();
 
         return $classes->get($className);
     }

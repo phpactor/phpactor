@@ -1172,6 +1172,6 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
 
     private function reflectClassesIn(Reflector $reflector, string $textDocument): ReflectionClassLikeCollection
     {
-        return $reflector->reflectClassesIn(TextDocumentBuilder::fromUnknown($textDocument));
+        return $reflector->reflectClassLikesIn(TextDocumentBuilder::fromUnknown($textDocument));
     }
 }

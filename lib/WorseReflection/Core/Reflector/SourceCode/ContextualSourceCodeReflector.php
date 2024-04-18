@@ -27,11 +27,11 @@ class ContextualSourceCodeReflector implements SourceCodeReflector
     ) {
     }
 
-    public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
+    public function reflectClassLikesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         $this->locator->pushSourceCode(TextDocumentBuilder::fromUnknown($sourceCode));
 
-        $collection = $this->innerReflector->reflectClassesIn($sourceCode, $visited);
+        $collection = $this->innerReflector->reflectClassLikesIn($sourceCode, $visited);
 
         return $collection;
     }

@@ -89,7 +89,7 @@ final class FunctionLikeSnippetFormatterTest extends TestCase
     {
         return ReflectorBuilder::create()
             ->build()
-            ->reflectClassesIn(TextDocumentBuilder::fromUnknown(\sprintf('<?php class Foo { public function %s {} }', $methodAsString)))
+            ->reflectClassLikesIn(TextDocumentBuilder::fromUnknown(\sprintf('<?php class Foo { public function %s {} }', $methodAsString)))
             ->first()
             ->methods()
             ->first()

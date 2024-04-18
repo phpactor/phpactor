@@ -23,7 +23,7 @@ class WorseGenerateDecorator implements GenerateDecorator
 
     public function getTextEdits(SourceCode $source, string $interfaceFQN): TextEdits
     {
-        $class = $this->reflector->reflectClassesIn($source)->classes()->first();
+        $class = $this->reflector->reflectClassLikesIn($source)->classes()->first();
 
         $builder = SourceCodeBuilder::create();
         $builder->namespace($class->name()->namespace());

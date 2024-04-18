@@ -77,7 +77,7 @@ class OverrideMethodHandler extends AbstractHandler
 
     private function class($source, $className = null)
     {
-        $classes = $this->reflector->reflectClassesIn(TextDocumentBuilder::fromUnknown($source));
+        $classes = $this->reflector->reflectClassLikesIn(TextDocumentBuilder::fromUnknown($source));
 
         if ($classes->count() === 0) {
             throw new InvalidArgumentException(

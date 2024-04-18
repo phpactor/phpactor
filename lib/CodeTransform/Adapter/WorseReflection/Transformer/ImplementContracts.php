@@ -34,7 +34,7 @@ class ImplementContracts implements Transformer
     {
         return new Success((function () use ($source) {
             $diagnostics = [];
-            $classes = $this->reflector->reflectClassesIn($source);
+            $classes = $this->reflector->reflectClassLikesIn($source);
             foreach ($classes->concrete() as $class) {
                 assert($class instanceof ReflectionClass);
                 $missingMethods = $this->missingClassMethods($class);
@@ -66,7 +66,7 @@ class ImplementContracts implements Transformer
     public function transform(SourceCode $source): Promise
     {
         return new Success((function () use ($source) {
-            $classes = $this->reflector->reflectClassesIn($source);
+            $classes = $this->reflector->reflectClassLikesIn($source);
             $edits = [];
             $sourceCodeBuilder = SourceCodeBuilder::create();
 

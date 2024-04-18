@@ -100,7 +100,7 @@ class PropertyAccessGeneratorHandler extends AbstractHandler
 
     private function class(string $source): ReflectionClass
     {
-        $classes = $this->reflector->reflectClassesIn(TextDocumentBuilder::fromUnknown($source))->classes();
+        $classes = $this->reflector->reflectClassLikesIn(TextDocumentBuilder::fromUnknown($source))->classes();
 
         if ($classes->count() === 0) {
             throw new InvalidArgumentException(

@@ -37,7 +37,7 @@ class WorseBuilderFactory implements BuilderFactory
                 ->build();
         }
 
-        $classes = $this->reflector->reflectClassesIn($source);
+        $classes = $this->reflector->reflectClassLikesIn($source);
         $builder = SourceCodeBuilder::create();
 
         foreach ($classes as $classLike) {

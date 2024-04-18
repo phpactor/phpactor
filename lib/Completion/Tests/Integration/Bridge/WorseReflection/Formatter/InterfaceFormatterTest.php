@@ -10,7 +10,7 @@ class InterfaceFormatterTest extends IntegrationTestCase
 {
     public function testFormatsInterface(): void
     {
-        $interface = ReflectorBuilder::create()->build()->reflectClassesIn(TextDocumentBuilder::fromUnknown('<?php namespace Bar {interface Foobar {}}'))->first();
+        $interface = ReflectorBuilder::create()->build()->reflectClassLikesIn(TextDocumentBuilder::fromUnknown('<?php namespace Bar {interface Foobar {}}'))->first();
         self::assertTrue($this->formatter()->canFormat($interface));
         self::assertEquals('Bar\\Foobar (interface)', $this->formatter()->format($interface));
     }

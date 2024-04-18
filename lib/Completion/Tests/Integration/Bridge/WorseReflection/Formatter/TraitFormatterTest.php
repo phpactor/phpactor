@@ -10,14 +10,14 @@ class TraitFormatterTest extends IntegrationTestCase
 {
     public function testFormatsTrait(): void
     {
-        $trait = ReflectorBuilder::create()->build()->reflectClassesIn(TextDocumentBuilder::fromUnknown('<?php namespace Bar {trait Foobar {}}'))->first();
+        $trait = ReflectorBuilder::create()->build()->reflectClassLikesIn(TextDocumentBuilder::fromUnknown('<?php namespace Bar {trait Foobar {}}'))->first();
         self::assertTrue($this->formatter()->canFormat($trait));
         self::assertEquals('Bar\\Foobar (trait)', $this->formatter()->format($trait));
     }
 
     public function testFormatsDeprecatedTrait(): void
     {
-        $trait = ReflectorBuilder::create()->build()->reflectClassesIn(TextDocumentBuilder::fromUnknown('<?php namespace Bar {/** @deprecated */trait Foobar {}}'))->first();
+        $trait = ReflectorBuilder::create()->build()->reflectClassLikesIn(TextDocumentBuilder::fromUnknown('<?php namespace Bar {/** @deprecated */trait Foobar {}}'))->first();
         self::assertTrue($this->formatter()->canFormat($trait));
         self::assertEquals('⚠ Bar\\Foobar (trait)', $this->formatter()->format($trait));
     }

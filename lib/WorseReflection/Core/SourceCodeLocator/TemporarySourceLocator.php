@@ -55,7 +55,7 @@ class TemporarySourceLocator implements SourceCodeLocator
     public function locate(Name $name): TextDocument
     {
         foreach ($this->sources as $source) {
-            $classes = $this->reflector->reflectClassesIn($source);
+            $classes = $this->reflector->reflectClassLikesIn($source);
 
             if ($classes->has((string) $name)) {
                 return $source;

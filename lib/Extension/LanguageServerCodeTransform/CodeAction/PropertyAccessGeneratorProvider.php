@@ -43,7 +43,7 @@ class PropertyAccessGeneratorProvider implements CodeActionProvider
             $startOffset = PositionConverter::positionToByteOffset($range->start, $textDocument->text)->toInt();
             $endOffset = PositionConverter::positionToByteOffset($range->end, $textDocument->text)->toInt();
 
-            $classes = $this->reflector->reflectClassesIn(TextDocumentConverter::fromLspTextItem($textDocument));
+            $classes = $this->reflector->reflectClassLikesIn(TextDocumentConverter::fromLspTextItem($textDocument));
 
             if ($classes->count() === 0) {
                 return [];

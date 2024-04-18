@@ -98,7 +98,7 @@ final class StubSourceLocator implements SourceCodeLocator
      */
     private function buildClassMap(SplFileInfo $file, array $map): array
     {
-        $functions = $this->reflector->reflectClassesIn(
+        $functions = $this->reflector->reflectClassLikesIn(
             TextDocumentBuilder::fromUri($file)->build()
         );
 

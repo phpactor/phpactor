@@ -15,7 +15,7 @@ class MethodFormatterTest extends IntegrationTestCase
     public function testFormatsConstant(string $code, string $expected): void
     {
         $code = TextDocumentBuilder::fromUnknown($code);
-        $constant = ReflectorBuilder::create()->build()->reflectClassesIn(
+        $constant = ReflectorBuilder::create()->build()->reflectClassLikesIn(
             $code
         )->first()->methods()->first();
 

@@ -65,7 +65,7 @@ foreach ($files as $file) {
     $message = $file->getPathname();
     try {
         $source = TextDocumentBuilder::create(file_get_contents($file->getPathname()))->uri($file->getPathname())->build();
-        $classes = $reflector->reflectClassesIn($source);
+        $classes = $reflector->reflectClassLikesIn($source);
 
         /** @var ReflectionClass $class */
         foreach ($classes as $class) {
