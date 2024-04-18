@@ -289,7 +289,7 @@ class CompletionContext
         }
 
         if ($node instanceof SwitchStatementNode) {
-            if (empty($node->caseStatements)) {
+            if ([] === $node->caseStatements) {
                 return false;
             }
 
@@ -322,6 +322,17 @@ class CompletionContext
             || $node->parent instanceof CompoundStatementNode
             || $node->parent?->parent instanceof CaseStatementNode
             || $node->parent?->parent instanceof CompoundStatementNode;
+    }
+
+    public static function loopOrSwitch(Node $node): bool
+    {
+        return null !== $node->getFirstAncestor(
+            DoStatement::class,
+            ForStatement::class,
+            ForeachStatement::class,
+            SwitchStatementNode::class,
+            WhileStatement::class,
+        );
     }
 
     public static function declaration(Node $node, ByteOffset $offset): bool
