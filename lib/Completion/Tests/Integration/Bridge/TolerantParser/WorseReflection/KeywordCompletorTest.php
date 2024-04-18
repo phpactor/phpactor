@@ -89,6 +89,14 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php namespace X; <>',
             [...$this->expectStatement()],
         ];
+        yield 'inside try' => [
+            '<?php namespace X; try { re<> } catch (\Exception $e) {}',
+            [...$this->expectStatement()],
+        ];
+        yield 'inside catch' => [
+            '<?php namespace X; try { } catch (\Exception $e) { re<> }',
+            [...$this->expectStatement()],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -115,7 +123,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         $statements = [
             'do' => " {\n\t\$0\n} while (\$2);",
             'echo' => ' $1;$0',
-            'for' => " (\${1:expr1}, \${2:expr2}, \${3:expr3}) {\n\$0\n}",
+            'for' => " (\${1:expr1}, \${2:expr2}, \${3:expr3}) {\n\t\$0\n}",
             'foreach' => " (\\\$\${1:expr} as \\\$\${2:key} => \\\$\${3:value}) {\$0\n}",
             'if' => " (\$1) {\$0\n}",
             'return' => ' $1;$0',
