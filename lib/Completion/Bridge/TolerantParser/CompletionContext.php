@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\AttributeGroup;
+use Microsoft\PhpParser\Node\CaseStatementNode;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
@@ -277,8 +278,11 @@ class CompletionContext
     {
         return $node instanceof CompoundStatementNode
             || $node instanceof SourceFileNode
+            || $node instanceof CaseStatementNode
+            || $node->parent instanceof CaseStatementNode
             || $node->parent instanceof SourceFileNode
             || $node->parent instanceof CompoundStatementNode
+            || $node->parent?->parent instanceof CaseStatementNode
             || $node->parent?->parent instanceof CompoundStatementNode;
     }
 
