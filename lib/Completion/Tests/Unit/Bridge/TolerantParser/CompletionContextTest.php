@@ -149,6 +149,14 @@ class CompletionContextTest extends TestCase
             true,
         ];
 
+        yield 'string literal' => [
+            '<?php class Foo { private function foo() { "<>" }',
+            false,
+        ];
+        yield 'string literal 2' => [
+            '<?php class Foo { private function foo() { "rrr<>" }',
+            false,
+        ];
         yield 'for condition 1' => [
             '<?php class Foo { private function foo() { for (<>) {} } }',
             false,

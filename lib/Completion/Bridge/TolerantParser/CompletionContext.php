@@ -38,6 +38,7 @@ use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\WhileStatement;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffset;
@@ -288,6 +289,7 @@ class CompletionContext
 
         if (
             $node instanceof WhileStatement
+                || $node instanceof StringLiteral
                 || $node instanceof IfStatementNode
                 || $node instanceof DoStatement
                 || $node instanceof CatchClause
