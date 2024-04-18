@@ -70,7 +70,7 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
-        if (CompletionContext::statement($node)) {
+        if (CompletionContext::statement($node, $offset)) {
             yield from $this->statements();
             return true;
         }
