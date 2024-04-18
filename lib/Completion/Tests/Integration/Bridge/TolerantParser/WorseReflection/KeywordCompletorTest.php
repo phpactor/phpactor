@@ -115,7 +115,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         $statements = [
             'do' => " {\n\t\$0\n} while (\$2);",
             'echo' => ' $1;$0',
-            'for' => " (\${1:expr1},\${1:expr2},  \${1:expr3}) {\n\$0\n}",
+            'for' => " (\${1:expr1}, \${2:expr2}, \${3:expr3}) {\n\$0\n}",
             'foreach' => " (\\\$\${1:expr} as \\\$\${2:key} => \\\$\${3:value}) {\$0\n}",
             'if' => " (\$1) {\$0\n}",
             'return' => ' $1;$0',
