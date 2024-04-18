@@ -132,7 +132,75 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { private function foo() { if (true) { $x = 1; re<> } } }',
             true,
         ];
+        yield 'case statement' => [
+            '<?php class Foo { private function foo() { switch (true) { case 1: <> } } }',
+            true,
+        ];
+        yield 'case statement 2' => [
+            '<?php class Foo { private function foo() { switch (true) { case 1: ret<> } } }',
+            true,
+        ];
+        yield 'in while body' => [
+            '<?php class Foo { private function foo() { while () {<>} } }',
+            true,
+        ];
+        yield 'in while body descendant' => [
+            '<?php class Foo { private function foo() { while () { re<>} } }',
+            true,
+        ];
 
+        yield 'for condition 1' => [
+            '<?php class Foo { private function foo() { for (<>) {} } }',
+            false,
+        ];
+        yield 'for condition 2' => [
+            '<?php class Foo { private function foo() { for (true, <>) {} } }',
+            false,
+        ];
+        yield 'for condition 1 descendant 1' => [
+            '<?php class Foo { private function foo() { for (re<>) {} } }',
+            false,
+        ];
+        yield 'for condition 2 descendant 1' => [
+            '<?php class Foo { private function foo() { for (true, re<>) {} } }',
+            false,
+        ];
+        yield 'for condition 1 descendant 2' => [
+            '<?php class Foo { private function foo() { for ($x<>) {} } }',
+            false,
+        ];
+        yield 'catch selector' => [
+            '<?php class Foo { private function foo() { try {} catch (<>) {} } }',
+            false,
+        ];
+        yield 'catch selector descendant' => [
+            '<?php class Foo { private function foo() { try {} catch (re<>) {} } }',
+            false,
+        ];
+        yield 'in do condition' => [
+            '<?php class Foo { private function foo() { do {} while (<>) } }',
+            false,
+        ];
+        yield 'in do condition descendant' => [
+            '<?php class Foo { private function foo() { do {} while (re<>) } }',
+            false,
+        ];
+        yield 'in if condition' => [
+            '<?php class Foo { private function foo() { if (<>) {} } }',
+            false,
+        ];
+        yield 'in if condition descendant' => [
+            '<?php class Foo { private function foo() { if (tr<>) {} } }',
+            false,
+        ];
+        yield 'in while condition' => [
+            '<?php class Foo { private function foo() { while (<>) {} } }',
+            false,
+        ];
+        yield 'in while condition descendant' => [
+            '<?php class Foo { private function foo() { while (tr<>) {} } }',
+            false,
+        ];
         yield 'statement visibility 4' => [
             '<?php class Foo { private Foobles <> }',
             false,

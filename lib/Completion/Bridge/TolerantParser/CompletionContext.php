@@ -9,10 +9,12 @@ use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\AttributeGroup;
 use Microsoft\PhpParser\Node\CaseStatementNode;
+use Microsoft\PhpParser\Node\CatchClause;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\ConstElement;
+use Microsoft\PhpParser\Node\DelimitedList\ExpressionList;
 use Microsoft\PhpParser\Node\DelimitedList\MatchArmConditionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
@@ -28,10 +30,14 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
+use Microsoft\PhpParser\Node\Statement\DoStatement;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\ForStatement;
+use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\Statement\WhileStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffset;
@@ -276,8 +282,26 @@ class CompletionContext
 
     public static function statement(Node $node): bool
     {
-        return $node instanceof CompoundStatementNode
-            || $node instanceof SourceFileNode
+        if ($node instanceof CompoundStatementNode) {
+            return true;
+        }
+
+        if (
+            $node instanceof WhileStatement
+                || $node instanceof IfStatementNode
+                || $node instanceof DoStatement
+                || $node instanceof CatchClause
+                || $node instanceof ForStatement
+                || $node->parent instanceof ExpressionList
+                || $node->parent instanceof WhileStatement
+                || $node->parent instanceof DoStatement
+                || $node->parent instanceof IfStatementNode
+                || $node->parent instanceof CatchClause
+        ) {
+            return false;
+        }
+
+        return $node instanceof SourceFileNode
             || $node instanceof CaseStatementNode
             || $node->parent instanceof CaseStatementNode
             || $node->parent instanceof SourceFileNode
