@@ -253,12 +253,16 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { public function baz(){} #[Foo\<>]public function bar(){}}',
             false,
         ];
-        yield 'after arrow 1' => [
+        yield 'after member access 1' => [
             '<?php class Foo { private function foo() { $this-><> } }',
             false,
         ];
-        yield 'after arrow 2' => [
+        yield 'after member access 2' => [
             '<?php class Foo { private function foo() { return $this-><> } }',
+            false,
+        ];
+        yield 'after static access 1' => [
+            '<?php class Foo { private function foo() { return self::<> } }',
             false,
         ];
     }

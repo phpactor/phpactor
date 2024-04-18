@@ -19,7 +19,6 @@ use Microsoft\PhpParser\Node\DelimitedList\MatchArmConditionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
-use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -33,7 +32,6 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\DoStatement;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
-use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\ForStatement;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
@@ -293,7 +291,7 @@ class CompletionContext
             return true;
         }
 
-        if ($node instanceof MemberAccessExpression) {
+        if ($node instanceof Expression) {
             return false;
         }
 
