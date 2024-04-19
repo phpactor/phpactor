@@ -33,9 +33,9 @@ abstract class Criteria
         return new ShortNameBeginsWith($name);
     }
 
-    public static function shortNameMatchesTo(string $name): ShortNameMatchesTo
+    public static function shortNameMatchesTo(string $name, bool $semiFuzzy): ShortNameMatchesTo
     {
-        return new ShortNameMatchesTo($name);
+        return new ShortNameMatchesTo($name, $semiFuzzy);
     }
 
     public static function fqnBeginsWith(string $name): FqnBeginsWith

@@ -32,9 +32,9 @@ class ShortNameMatchesToBench
      * @Iterations(5)
      * @param array{string, string} $data
      */
-    public function benchShortNameBeginsOrCamelMatchesTo(array $data): void
+    public function benchShortNameMatchesTo(array $data): void
     {
-        $criteria = new ShortNameMatchesTo($data[0]);
+        $criteria = new ShortNameMatchesTo($data[0], true);
 
         $record = ClassRecord::fromName($data[1]);
 

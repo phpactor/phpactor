@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\Record\HasShortName;
 
 class ShortNameMatchesTo extends Criteria
 {
-    public function __construct(private string $name)
+    public function __construct(private string $name, private bool $semiFuzzy)
     {
     }
 
@@ -22,14 +22,18 @@ class ShortNameMatchesTo extends Criteria
             return false;
         }
 
-        if (str_starts_with(mb_strtolower($record->shortName()), $this->name)) {
+        if (str_starts_with(mb_strtolower($record->shortName()), mb_strtolower($this->name))) {
             return true;
         }
 
-        return $this->search($this->name, $record->shortName());
+        if (false === $this->semiFuzzy) {
+            return false;
+        }
+
+        return $this->semiFuzzySearch($this->name, $record->shortName());
     }
 
-    private function search(string $search, string $subject): bool
+    private function semiFuzzySearch(string $search, string $subject): bool
     {
         $index = -1;
 

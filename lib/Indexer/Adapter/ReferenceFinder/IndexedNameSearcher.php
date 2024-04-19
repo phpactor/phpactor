@@ -6,6 +6,7 @@ use Generator;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\Indexer\Model\SearchClient;
+use Phpactor\Indexer\Model\SearcherNameMatcher;
 use Phpactor\Indexer\Util\PhpNameMatcher;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\ReferenceFinder\NameSearcher;
@@ -15,8 +16,10 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class IndexedNameSearcher implements NameSearcher
 {
-    public function __construct(private SearchClient $client)
-    {
+    public function __construct(
+        private SearchClient $client,
+        private bool $semiFuzzy,
+    ) {
     }
 
     /**
@@ -32,7 +35,7 @@ class IndexedNameSearcher implements NameSearcher
         if ($fullyQualified) {
             $criteria = Criteria::fqnBeginsWith(substr($name, 1));
         } else {
-            $criteria = Criteria::shortNameMatchesTo($name);
+            $criteria = Criteria::shortNameMatchesTo($name, $this->semiFuzzy);
         }
 
         $typeCriteria = $this->resolveTypeCriteria($type);
