@@ -6,7 +6,6 @@ use Generator;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record\HasPath;
 use Phpactor\Indexer\Model\SearchClient;
-use Phpactor\Indexer\Model\SearcherNameMatcher;
 use Phpactor\Indexer\Util\PhpNameMatcher;
 use Phpactor\Name\FullyQualifiedName;
 use Phpactor\ReferenceFinder\NameSearcher;
@@ -47,8 +46,8 @@ class IndexedNameSearcher implements NameSearcher
                     $typeCriteria,
 
                     // B/C for old indexes
-                    Criteria::isClassTypeUndefined()
-                )
+                    Criteria::isClassTypeUndefined(),
+                ),
             );
         }
 
@@ -56,7 +55,7 @@ class IndexedNameSearcher implements NameSearcher
             yield NameSearchResult::create(
                 $result->recordType(),
                 FullyQualifiedName::fromString($result->identifier()),
-                $result instanceof HasPath ? TextDocumentUri::fromString($result->filepath()) : null
+                $result instanceof HasPath ? TextDocumentUri::fromString($result->filepath()) : null,
             );
         }
     }
