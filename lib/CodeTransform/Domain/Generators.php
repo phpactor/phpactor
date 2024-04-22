@@ -4,6 +4,7 @@ namespace Phpactor\CodeTransform\Domain;
 
 /**
  * @extends AbstractCollection<Generator>
+ * @method string[] names()
  */
 final class Generators extends AbstractCollection
 {

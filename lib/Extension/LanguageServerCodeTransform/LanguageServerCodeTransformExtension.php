@@ -37,6 +37,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PropertyAccessGene
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
+use Phpactor\Extension\LanguageServerCodeTransform\Handler\ClassNewHandler;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ReplaceQualifierWithImportCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
@@ -68,6 +69,7 @@ class LanguageServerCodeTransformExtension implements Extension
     {
         $this->registerCommands($container);
         $this->registerCodeActions($container);
+        $this->registerHandlers($container);
     }
 
 
@@ -498,5 +500,12 @@ class LanguageServerCodeTransformExtension implements Extension
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
+    }
+
+    private function registerHandlers(ContainerBuilder $container): void
+    {
+        $container->register(ClassNewHandler::class, function (Container $container) {
+            return new ClassNewHandler($container->expect(CodeTransformExtension::SERVICE_CLASS_GENERATORS, Generators::class));
+        }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
     }
 }
