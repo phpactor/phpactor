@@ -2,6 +2,7 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
+use Generator;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Tests\IntegrationTestCase;
@@ -121,9 +122,16 @@ class FileListTest extends IntegrationTestCase
             FilePath::fromString('/vendor/foo/bar/src/foo.php'),
         ]);
 
-        self::assertCount(2, $list->excludePatterns([
-            '/vendor/**/tests/*',
-        ]));
+        self::assertEquals(
+            [
+                FilePath::fromString('/vendor/foo/bar/src/bar.php'),
+                FilePath::fromString('/vendor/foo/bar/src/foo.php'),
+            ],
+            iterator_to_array($list->includeAndExclude(
+                includePatterns: ['/**/*'],
+                excludePatterns: [ '/vendor/**/tests/*']
+            ))
+        );
     }
 
     public function testIncldesFilesMatchingPatterns(): void
@@ -135,9 +143,108 @@ class FileListTest extends IntegrationTestCase
             FilePath::fromString('/vendor/foo/bar/src/foo.php'),
         ]);
 
-        self::assertCount(2, $list->excludePatterns([
-            '/vendor/**/tests/*',
-        ]));
+        self::assertEquals(
+            [
+                FilePath::fromString('/vendor/foo/bar/tests/bartest.php'),
+                FilePath::fromString('/vendor/foo/bar/tests/footest.php'),
+            ],
+            iterator_to_array($list->includeAndExclude(
+                includePatterns: [ '/vendor/**/tests/*'],
+            ))
+        );
+    }
+
+    public function testIncludesEverythingByDefault(): void
+    {
+        $list = FileList::fromFilePaths([
+            FilePath::fromString('/vendor/cache/important/bartest.php'),
+            FilePath::fromString('/vendor/cache/important/footest.php'),
+            FilePath::fromString('/vendor/cache/bar.php'),
+            FilePath::fromString('/vendor/cache/foo.php'),
+        ])->includeAndExclude(
+            includePatterns: [],
+            excludePatterns: [],
+        );
+
+        self::assertEquals(
+            [
+                FilePath::fromString('/vendor/cache/important/bartest.php'),
+                FilePath::fromString('/vendor/cache/important/footest.php'),
+                FilePath::fromString('/vendor/cache/bar.php'),
+                FilePath::fromString('/vendor/cache/foo.php'),
+            ],
+            iterator_to_array($list)
+        );
+    }
+
+    public function testIncludesExcludePatterns(): void
+    {
+        $list = FileList::fromFilePaths([
+            FilePath::fromString('/vendor/cache/important/bartest.php'),
+            FilePath::fromString('/vendor/cache/important/footest.php'),
+            FilePath::fromString('/vendor/cache/bar.php'),
+            FilePath::fromString('/vendor/cache/foo.php'),
+        ])->includeAndExclude(
+            includePatterns: [ '/src/**/*', '/vendor/cache/important/**/*'],
+            excludePatterns: [ '/vendor/**/*' ],
+        );
+
+        self::assertEquals(
+            [
+                FilePath::fromString('/vendor/cache/important/bartest.php'),
+                FilePath::fromString('/vendor/cache/important/footest.php'),
+            ],
+            iterator_to_array($list)
+        );
+    }
+
+    /**
+     * @param array<FilePath> $fileList
+     * @param array<string> $includePatterns
+     * @param array<string> $excludePatterns
+     * @param array<FilePath> $expected
+     *
+     * @dataProvider provideExcludesWithShortFolderName
+     */
+    public function testExcludesWithShortFolderName(
+        array $fileList,
+        array $includePatterns,
+        array $excludePatterns,
+        array $expected,
+    ): void {
+        $list = FileList::fromFilePaths($fileList)->includeAndExclude(
+            includePatterns:$includePatterns,
+            excludePatterns: $excludePatterns
+        );
+
+        self::assertEquals($expected, array_map(fn (FilePath $x) => (string) $x, iterator_to_array($list)));
+    }
+
+    public function provideExcludesWithShortFolderName(): Generator
+    {
+        yield 'ascii file name' => [
+            [
+                FilePath::fromString('/src/package/test.php'),
+                FilePath::fromString('/src/a/test.php'),
+            ],
+            [ '/src/**/*'],
+            [ '/src/a/*' ],
+            [
+                '/src/package/test.php',
+            ],
+        ];
+
+        yield 'unicode file name' => [
+            [
+                FilePath::fromString('/src/package/test.php'),
+                FilePath::fromString('/src/ü/test.php'),
+            ],
+            [ '/src/**/*'],
+            [ '/src/ü/*' ],
+            [
+                '/src/package/test.php',
+            ],
+        ];
     }
 
     public function testContainingString(): void

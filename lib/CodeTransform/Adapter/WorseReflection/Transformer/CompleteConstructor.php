@@ -92,14 +92,21 @@ class CompleteConstructor implements Transformer
             $constructMethod = $class->methods()->get('__construct');
             $methodBody = (string) $constructMethod->body();
 
-            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+            // Filtering out parameters from the parent class
+            $nonPromotedParameterNames = $this->getParentClassParamaterNames($class);
+            $parametersToHandle = array_filter(
+                iterator_to_array($constructMethod->parameters()->notPromoted()),
+                fn (ReflectionParameter $parameter) => !in_array($parameter->name(), $nonPromotedParameterNames)
+            );
+
+            foreach ($parametersToHandle as $parameter) {
                 if (preg_match('{this\s*->' . $parameter->name() . '}', $methodBody)) {
                     continue;
                 }
                 $methodBuilder->body()->line('$this->' . $parameter->name() . ' = $' . $parameter->name() .';');
             }
 
-            foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
+            foreach ($parametersToHandle as $parameter) {
                 if ($parameter->isPromoted()) {
                     continue;
                 }
@@ -108,7 +115,6 @@ class CompleteConstructor implements Transformer
                 if (true === $class->properties()->has($parameter->name())) {
                     continue;
                 }
-
 
                 $propertyBuilder = $classBuilder->property($parameter->name());
                 $propertyBuilder->visibility($this->visibility);

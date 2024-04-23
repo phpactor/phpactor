@@ -55,7 +55,7 @@ class IndexedImplementationFinder implements ClassImplementationFinder
             $symbolType === Symbol::PROPERTY
         ) {
             if ($symbolType === Symbol::CASE) {
-                $symbolType = 'enum';
+                $symbolType = 'case';
             }
             if ($symbolType === Symbol::VARIABLE) {
                 $symbolType = Symbol::PROPERTY;
@@ -83,8 +83,9 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     }
 
     /**
-     * @return Locations<Location>
      * @param ReflectionMember::TYPE_* $symbolType
+     *
+     * @return Locations<Location>
      */
     private function memberImplementations(NodeContext $nodeContext, string $symbolType, bool $includeDefinition): Locations
     {

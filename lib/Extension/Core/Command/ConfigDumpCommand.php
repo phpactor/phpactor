@@ -42,7 +42,7 @@ class ConfigDumpCommand extends Command
     private function dumpMetaInformation(OutputInterface $output): void
     {
         $output->writeln('<info>Config files:</>');
-        $output->write(PHP_EOL);
+        $output->write("\n");
         foreach ($this->paths as $candidate) {
             if (!file_exists($candidate->path())) {
                 $output->write('  [✖]');
@@ -52,15 +52,15 @@ class ConfigDumpCommand extends Command
             $output->writeln(' ' .$candidate->path());
         }
 
-        $output->write(PHP_EOL);
+        $output->write("\n");
         $output->writeln('<info>File path tokens:</info>');
-        $output->write(PHP_EOL);
+        $output->write("\n");
         foreach ($this->expanders->toArray() as $tokenName => $value) {
             $output->writeln(sprintf('  <comment>%%%s%%</>: %s', $tokenName, $value));
         }
         $terminal = new Terminal();
-        $output->write(PHP_EOL);
+        $output->write("\n");
         $output->writeln(str_repeat('-', $terminal->getWidth()));
-        $output->write(PHP_EOL);
+        $output->write("\n");
     }
 }

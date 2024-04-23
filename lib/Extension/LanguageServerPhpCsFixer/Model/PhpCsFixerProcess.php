@@ -116,7 +116,7 @@ class PhpCsFixerProcess
 
                 $process = ProcessBuilder::create([...explode(' ', $this->wrapper), $phpCsFixerCommand])->mergeParentEnv()->build();
             } else {
-                $process = ProcessBuilder::create([$this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
+                $process = ProcessBuilder::create([PHP_BINARY, $this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
             }
 
             yield $process->start();

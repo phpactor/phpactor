@@ -25,7 +25,7 @@ class ParameterFormatter implements Formatter
         $paramInfo[] = '$' . $object->name();
 
         if ($object->default()->isDefined()) {
-            $paramInfo[] = '= '. str_replace(PHP_EOL, '', var_export($object->default()->value(), true));
+            $paramInfo[] = '= '. str_replace("\n", '', var_export($object->default()->value(), true));
         }
         return implode(' ', $paramInfo);
     }

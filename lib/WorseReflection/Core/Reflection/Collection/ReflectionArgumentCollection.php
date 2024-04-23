@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionArgument as PhpactorReflectionArgument;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
@@ -17,6 +18,14 @@ class ReflectionArgumentCollection extends AbstractReflectionCollection
     {
         $arguments = [];
         foreach ($list->getElements() as $element) {
+            if (!$element instanceof ArgumentExpression) {
+                continue;
+            }
+            if ($element->name) {
+                $key = $element->name->getText($element->getFileContents());
+                $arguments[$key] = new ReflectionArgument($locator, $frame, $element);
+                continue;
+            }
             $arguments[] = new ReflectionArgument($locator, $frame, $element);
         }
 

@@ -221,7 +221,7 @@ final class ReflectorBuilder
             return $locator[1];
         }, $locators);
 
-        if (empty($locators)) {
+        if ($locators === []) {
             return new NullSourceLocator();
         }
 

@@ -21,7 +21,7 @@ class PrinterTest extends TestCase
 
         $parts = explode('---', $contents);
 
-        if (empty($parts[0])) {
+        if ($parts[0] === '') {
             $this->markTestIncomplete(sprintf('No example given for "%s"', $path));
         }
 
@@ -41,14 +41,12 @@ class PrinterTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<string, array{string}>
      */
     public function provideExamples(): Generator
     {
         foreach ((array)glob(__DIR__ . '/examples/*.test') as $path) {
-            yield basename((string)$path) => [
-                $path
-            ];
+            yield basename((string)$path) => [ (string) $path ];
         }
     }
 }

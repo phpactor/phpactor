@@ -19,6 +19,10 @@ class IndexJob
     {
         foreach ($this->fileList as $fileInfo) {
             assert($fileInfo instanceof SplFileInfo);
+            if ($fileInfo->isLink()) {
+                continue;
+            }
+
             $contents = @file_get_contents($fileInfo->getPathname());
 
             if (false === $contents) {

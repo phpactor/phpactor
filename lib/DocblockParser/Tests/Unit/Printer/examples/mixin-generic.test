@@ -1,0 +1,13 @@
+/**
+ * @mixin Foobar<Baz>
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  MixinTag: = @mixin
+   GenericNode: = 
+    ClassNode: = Foobar<
+    TypeList: = 
+     ClassNode: = Baz>
+ */

@@ -4,7 +4,9 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Amp\Promise;
 use Generator;
+use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant;
@@ -57,12 +59,10 @@ class CompositeReflector implements Reflector
         return $this->classReflector->reflectClassLike($className, $visited);
     }
 
-
     public function reflectClassesIn(TextDocument $sourceCode, array $visited = []): ReflectionClassLikeCollection
     {
         return $this->sourceCodeReflector->reflectClassesIn($sourceCode, $visited);
     }
-
 
     public function reflectOffset(TextDocument $sourceCode, $offset): ReflectionOffset
     {
@@ -102,6 +102,11 @@ class CompositeReflector implements Reflector
     public function diagnostics(TextDocument $sourceCode): Promise
     {
         return $this->sourceCodeReflector->diagnostics($sourceCode);
+    }
+
+    public function reflectNodeContext(Node $node): NodeContext
+    {
+        return $this->sourceCodeReflector->reflectNodeContext($node);
     }
 
     public function reflectNode(TextDocument $sourceCode, $offset): ReflectionNode

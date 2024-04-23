@@ -52,7 +52,7 @@ class TraitUseClauseIndexerTest extends TolerantIndexerTestCase
         yield 'use trait (enum)' => [
             "// File: src/file1.php\n<?php enum C { use T; }",
             'T',
-            version_compare(PHP_VERSION, '8.1.0') >= 0 ? 1 : 0
+            1,
         ];
     }
 }

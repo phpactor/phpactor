@@ -1,0 +1,21 @@
+/**
+ * @return Generator<array{0:string,1:?Event,2?:bool}>
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ReturnTag: = @return
+   GenericNode: = 
+    ClassNode: = Generator<
+    TypeList: = 
+     ArrayShapeNode: = {
+      ArrayKeyValueList: = 
+       ArrayKeyValueNode: = 0:
+        ScalarNode: = string,
+       ArrayKeyValueNode: = ?1:
+        ClassNode: = Event,
+       ArrayKeyValueNode: = 2:
+        ScalarNode: = bool}>
+   TextNode: = 
+ */

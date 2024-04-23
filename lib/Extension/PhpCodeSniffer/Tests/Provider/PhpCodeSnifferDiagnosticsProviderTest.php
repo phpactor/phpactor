@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\PhpCodeSniffer\Tests\Provider;
 
 use Amp\NullCancellationToken;
+use Generator;
 use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\PhpCodeSniffer\Provider\PhpCodeSnifferDiagnosticsProvider;
 use Phpactor\Extension\PhpCodeSniffer\Tests\PhpCodeSnifferTestCase;
@@ -123,46 +124,44 @@ class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
     }
 
     /**
-     * @return array{0: string, 1:int}[]
+     * @return Generator<string, array{string, int}>
      */
-    public function fileProvider(): array
+    public function fileProvider(): Generator
     {
-        return [
-            'PEAR: tab indentation' => [
-                <<<EOF
-                    <?php
+        yield 'PEAR: tab indentation' => [
+            <<<EOF
+                <?php
 
-                    namespace Test;
-                    \$foo = 'bar';
-                     	\$test1 = true; // tab indent
-                      \$test2 = true;
-                        \$test3 = true;
-                    \$lao = "tzu";
-                    EOF,
-                // expected diagnostics
-                2,
-            ],
-            'PEAR: correct file' => [
-                <<<EOF
-                    <?php
+                namespace Test;
+                \$foo = 'bar';
+                 	\$test1 = true; // tab indent
+                  \$test2 = true;
+                    \$test3 = true;
+                \$lao = "tzu";
+                EOF,
+            // expected diagnostics
+            2,
+        ];
+        yield 'PEAR: correct file' => [
+            <<<EOF
+                <?php
 
-                    /**
-                     * Php version: 8.0
-                     *
-                     * File comment
-                     *
-                     * @category Category
-                     * @package  Package
-                     * @author   Firstname Lastname <3f5eY@example.com>
-                     * @license  https://mit-license.org/ MIT
-                     * @link     Link
-                     **/
+                /**
+                 * Php version: 8.0
+                 *
+                 * File comment
+                 *
+                 * @category Category
+                 * @package  Package
+                 * @author   Firstname Lastname <3f5eY@example.com>
+                 * @license  https://mit-license.org/ MIT
+                 * @link     Link
+                 **/
 
-                    \$foo = 'bar';
+                \$foo = 'bar';
 
-                    EOF,
-                0
-            ]
+                EOF,
+            0
         ];
     }
 }

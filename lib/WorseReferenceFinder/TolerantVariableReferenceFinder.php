@@ -90,6 +90,11 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
         }
 
         $name = $this->variableName($variable);
+
+        if (null === $name) {
+            return $variable;
+        }
+
         if ($variable instanceof UseVariableName) {
             $variable = $variable->getFirstAncestor(MethodDeclaration::class) ?: $variable;
         }

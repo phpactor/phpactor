@@ -116,6 +116,17 @@ final class Tokens implements IteratorAggregate
         return false;
     }
 
+    public function ifOneOf(string ...$types): bool
+    {
+        foreach ($types as $type) {
+            if (true === $this->if($type)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * If the current or next non-whitespace node matches,
      * advance internal pointer and return true;

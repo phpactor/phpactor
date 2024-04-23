@@ -63,7 +63,7 @@ class ExtensionDocumentor implements Documentor
             "\n",
         ];
 
-        $extension = new $extensionClass;
+        $extension = new $extensionClass();
 
         if (!$extension instanceof Extension) {
             throw new RuntimeException(sprintf(

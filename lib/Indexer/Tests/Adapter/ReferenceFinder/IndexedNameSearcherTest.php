@@ -56,9 +56,6 @@ class IndexedNameSearcherTest extends IndexTestCase
 
     public function testSearcherForEnum(): void
     {
-        if (version_compare(PHP_VERSION, '8.1', '<')) {
-            $this->markTestSkipped('Not supported in less than 8.1');
-        }
         $this->workspace()->put('project/Foobar.php', '<?php enum Foobar {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
@@ -93,16 +90,25 @@ class IndexedNameSearcherTest extends IndexTestCase
 
     public function testSearcherForAttribute(): void
     {
-        $this->workspace()->put('project/Bar.php', '<?php #[Attribute] class Bar {}');
+        $this->workspace()->put('project/Bap.php', '<?php use Attribute as PHPAttribute; #[PHPAttribute] class Bap {}');
+        $this->workspace()->put('project/Bar.php', '<?php #[\Attribute] class Bar {}');
+        $this->workspace()->put('project/Baj.php', '<?php #[Attribute] class Baj {}');
+        $this->workspace()->put('project/Foo/Bax.php', '<?php namespace Foo; use Not\Attribute; #[Attribute] class Bax {}');
         $this->workspace()->put('project/Baz.php', '<?php class Baz {}');
+        $this->workspace()->put('project/Attribute/Bak.php', '<?php namespace Attribute; #[\Attribute] readonly class Bak {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
         $searcher = new IndexedNameSearcher($agent->search());
 
+        $count = 0;
+
         foreach ($searcher->search('Ba', NameSearcherType::ATTRIBUTE) as $result) {
             assert($result instanceof NameSearchResult);
-            self::assertEquals('Bar', $result->name()->head()->__toString());
-            self::assertStringContainsString('Bar.php', $result->uri()->__toString());
+            self::assertContainsEquals($result->name()->head()->__toString(), ['Bar', 'Baj', 'Bap', 'Bak']);
+            self::assertMatchesRegularExpression('#project(/Attribute)?/Ba[rjpk].php$#', $result->uri()->__toString());
+            ++$count;
         }
+
+        self::assertSame(4, $count);
     }
 }

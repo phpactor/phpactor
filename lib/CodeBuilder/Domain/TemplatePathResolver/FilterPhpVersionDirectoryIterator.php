@@ -10,8 +10,6 @@ use SplFileInfo;
 class FilterPhpVersionDirectoryIterator extends FilterIterator
 {
     /**
-     * @param string $phpVersion
-     *      String the form of "major.minor.release[extra]"
      *      @see https://www.php.net/manual/en/reserved.constants.php#reserved.constants.core
      */
     public function __construct(Iterator $iterator, private string $phpVersion)

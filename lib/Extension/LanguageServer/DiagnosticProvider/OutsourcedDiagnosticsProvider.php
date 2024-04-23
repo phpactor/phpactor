@@ -7,6 +7,7 @@ use Amp\Process\Process;
 use Amp\Process\ProcessException;
 use Amp\Promise;
 use Phpactor\Amp\Process\ProcessUtil;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
@@ -31,8 +32,9 @@ class OutsourcedDiagnosticsProvider implements DiagnosticsProvider
     public function provideDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
         return call(function () use ($textDocument) {
-            $process = new Process(array_merge($this->command, [
-                '--uri=' . $textDocument->uri
+            $process = new Process(array_merge([PHP_BINARY], $this->command, [
+                '--uri=' . $textDocument->uri,
+                sprintf('--config-extra=%s', sprintf('{"%s": false}', WorseReflectionExtension::PARAM_ENABLE_CONTEXT_LOCATION))
             ]), $this->cwd);
             $pid = yield $process->start();
 

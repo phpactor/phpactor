@@ -22,7 +22,14 @@ final class Variable
 
     public function __toString(): string
     {
-        return sprintf('%s#%s %s %s', $this->name, $this->offset, $this->type, $this->classType ? $this->classType->__toString() : '');
+        return sprintf(
+            '%s#%s %s %s%s',
+            $this->name,
+            $this->offset,
+            $this->type,
+            $this->classType ? $this->classType->__toString() : '',
+            $this->wasDefined ? ' (definition)' : '',
+        );
     }
 
     public static function fromSymbolContext(NodeContext $nodeContext): Variable

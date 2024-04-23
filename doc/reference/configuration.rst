@@ -59,19 +59,6 @@ Internal use only - name of the command which was executed
 **Default**: ``null``
 
 
-.. _param_core.warn_on_develop:
-
-
-``core.warn_on_develop``
-""""""""""""""""""""""""
-
-
-Internal use only: if an warning will be issued when on develop, may be removed in the future
-
-
-**Default**: ``true``
-
-
 .. _param_core.min_memory_limit:
 
 
@@ -537,7 +524,7 @@ Completion for class like contexts.
 
 Enable or disable the ``type`` completor.
 
-Completion for types.
+Completion for scalar types.
 
 
 **Default**: ``true``
@@ -907,7 +894,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/phpactor"``
+**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1361,8 +1348,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
-
-**Default**: ``"\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+**Default**: ``"\/home\/mamazu\/packages\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:
@@ -1628,7 +1614,7 @@ Type: array
 Glob patterns to include while indexing
 
 
-**Default**: ``["\/**\/*.php"]``
+**Default**: ``["\/**\/*.php","\/**\/*.phar"]``
 
 
 .. _param_indexer.exclude_patterns:
@@ -1772,7 +1758,7 @@ Type: array
 File extensions (e.g. `php`) for files that should be indexed
 
 
-**Default**: ``["php"]``
+**Default**: ``["php","phar"]``
 
 
 .. _ObjectRendererExtension:
@@ -1839,6 +1825,32 @@ Path to the PHPStan executable
 
 
 Override the PHPStan level
+
+
+**Default**: ``null``
+
+
+.. _param_language_server_phpstan.config:
+
+
+``language_server_phpstan.config``
+""""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan configuration file
+
+
+**Default**: ``null``
+
+
+.. _param_language_server_phpstan.mem_limit:
+
+
+``language_server_phpstan.mem_limit``
+"""""""""""""""""""""""""""""""""""""
+
+
+Override the PHPStan memory limit
 
 
 **Default**: ``null``
@@ -2108,6 +2120,32 @@ Whether PHP_CodeSniffer diagnostics are shown
 
 
 **Default**: ``true``
+
+
+.. _param_php_code_sniffer.args:
+
+
+``php_code_sniffer.args``
+"""""""""""""""""""""""""
+
+
+Additional arguments to pass to the PHPCS process
+
+
+**Default**: ``[]``
+
+
+.. _param_php_code_sniffer.cwd:
+
+
+``php_code_sniffer.cwd``
+""""""""""""""""""""""""
+
+
+Working directory for PHPCS
+
+
+**Default**: ``null``
 
 
 .. _LanguageServerBlackfireExtension:

@@ -93,7 +93,7 @@ class ReflectionEnumCase extends AbstractReflectionClassMember implements CoreRe
 
     public function memberType(): string
     {
-        return ReflectionMember::TYPE_ENUM;
+        return ReflectionMember::TYPE_CASE;
     }
 
     public function withClass(ReflectionClassLike $class): ReflectionMember

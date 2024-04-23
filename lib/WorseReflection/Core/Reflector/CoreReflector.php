@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core\Reflector;
 
 use Amp\Promise;
 use Generator;
+use Microsoft\PhpParser\Node;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -12,6 +13,7 @@ use Phpactor\WorseReflection\Core\Exception\ConstantNotFound;
 use Phpactor\WorseReflection\Core\Exception\CycleDetected;
 use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
@@ -245,6 +247,11 @@ class CoreReflector implements ClassReflector, SourceCodeReflector, FunctionRefl
     public function diagnostics(TextDocument $sourceCode): Promise
     {
         return $this->sourceReflector->diagnostics($sourceCode);
+    }
+
+    public function reflectNodeContext(Node $node): NodeContext
+    {
+        return $this->sourceReflector->reflectNodeContext($node);
     }
 
     public function reflectNode($sourceCode, $offset): ReflectionNode

@@ -66,7 +66,7 @@ class StatusHandler implements Handler
             'Version: ' . $diagnostics['phpactor_version'],
             'PHP: ' . sprintf('%s (supporting %s)', phpversion(), $diagnostics['php_version']),
             'Phpactor dir: ' . realpath(__DIR__ . '/../../../../'),
-            'Work dir: ' . $diagnostics['cwd'] . PHP_EOL,
+            'Work dir: ' . $diagnostics['cwd'] . "\n",
             'Diagnostics',
             '-----------',
             $this->buildSupportMessage($diagnostics),
@@ -74,23 +74,16 @@ class StatusHandler implements Handler
             '------------',
             $this->buildConfigFileMessage(),
         ];
-        if ($diagnostics['phpactor_is_develop']) {
-            $info[] = '';
-            $info[] = 'WARNING';
-            $info[] = '-------';
-            $info[] = 'You are using the develop branch which is no longer maintained';
-            $info[] = 'Switch to master or use the latest tagged version of Phpactor';
-        }
-        return EchoResponse::fromMessage(implode(PHP_EOL, $info));
+        return EchoResponse::fromMessage(implode("\n", $info));
     }
 
     private function buildSupportMessage(array $diagnostics)
     {
-        return implode(PHP_EOL, [
-            implode(PHP_EOL, array_map(function (string $message) {
+        return implode("\n", [
+            implode("\n", array_map(function (string $message) {
                 return '[✔] ' . $message;
             }, $diagnostics['good'])),
-            implode(PHP_EOL, array_map(function (string $message) {
+            implode("\n", array_map(function (string $message) {
                 return '[✘] ' . $message;
             }, $diagnostics['bad'])),
         ]);
@@ -98,7 +91,7 @@ class StatusHandler implements Handler
 
     private function buildConfigFileMessage()
     {
-        return implode(PHP_EOL, array_map(function (PathCandidate $file) {
+        return implode("\n", array_map(function (PathCandidate $file) {
             if (file_exists($file->path())) {
                 return '[✔] ' . $file->path();
             }

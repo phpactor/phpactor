@@ -459,6 +459,41 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             },
             'method8.md'
         ];
+
+        yield 'method variadic ' => [
+            '',
+            function (Reflector $reflector) {
+                return $this->reflectClassesIn(
+                    $reflector,
+                    <<<'EOT'
+                        <?php
+
+                        class OneClass
+                        {
+                            public function foo(Foobar ...$foo) {}
+                        }
+                        EOT
+                )->get('OneClass')->methods()->get('foo');
+            },
+            'method_variadic.md',
+        ];
+        yield 'method variadic no type' => [
+            '',
+            function (Reflector $reflector) {
+                return $this->reflectClassesIn(
+                    $reflector,
+                    <<<'EOT'
+                        <?php
+
+                        class OneClass
+                        {
+                            public function foo(...$foo) {}
+                        }
+                        EOT
+                )->get('OneClass')->methods()->get('foo');
+            },
+            'method_variadic_no_type.md',
+        ];
     }
 
     /**
@@ -570,10 +605,6 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      */
     public function provideEnum(): Generator
     {
-        if (!defined('T_ENUM')) {
-            return;
-        }
-
         yield 'enum' => [
             '',
             function (Reflector $reflector) {
@@ -616,10 +647,6 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
      */
     public function provideEnumCase(): Generator
     {
-        if (!defined('T_ENUM')) {
-            return;
-        }
-
         yield 'enum case' => [
             '',
             function (Reflector $reflector) {

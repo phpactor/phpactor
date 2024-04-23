@@ -11,13 +11,19 @@ abstract class IntegrationTestCase extends TestCase
     {
         $filesystem = new Filesystem();
         if ($filesystem->exists($this->workspacePath())) {
+            if ('\\' === \DIRECTORY_SEPARATOR) {
+                // On Windows, make files in the workspace writable first (recursively),
+                // because read-only files can't be deleted using the normal filesystem APIs,
+                // and Git marks files in its .git directory as read-only.
+                $filesystem->chmod($this->workspacePath(), 0666, 0, true);
+            }
             $filesystem->remove($this->workspacePath());
         }
 
         $filesystem->mkdir($this->workspacePath());
     }
 
-    protected function workspacePath()
+    protected function workspacePath(): string
     {
         return realpath(__DIR__.'/..') . '/Workspace';
     }
@@ -28,10 +34,10 @@ abstract class IntegrationTestCase extends TestCase
         $filesystem = new Filesystem();
         $filesystem->mirror($projectPath, $this->workspacePath());
         chdir($this->workspacePath());
-        exec('composer dumpautoload 2> /dev/null');
+        exec('composer dumpautoload --quiet');
     }
 
-    protected function getProjectAutoloader()
+    protected function getProjectAutoloader(): string
     {
         return require __DIR__.'/project/vendor/autoload.php';
     }

@@ -68,7 +68,13 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
         if (empty($name)) {
             throw new CannotIndexNode(sprintf(
                 'Name is empty for file "%s"',
-                $document->uri()->path()
+                $document->uri()?->__toString() ?? 'unknown',
+            ));
+        }
+        if (!$document->uri()) {
+            throw new CannotIndexNode(sprintf(
+                'Document has no URI for class "%s"',
+                $name
             ));
         }
 
@@ -77,7 +83,7 @@ abstract class AbstractClassLikeIndexer implements TolerantIndexer
         /** @var ClassDeclaration|InterfaceDeclaration|EnumDeclaration|TraitDeclaration $node */
         $record->setStart(ByteOffset::fromInt($node->name->getStartPosition()));
         $record->setEnd(ByteOffset::fromInt($node->name->getEndPosition()));
-        $record->setFilePath($document->uri()->path());
+        $record->setFilePath($document->uriOrThrow());
         $record->setType($type);
 
         return $record;

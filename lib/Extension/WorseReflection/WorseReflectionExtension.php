@@ -18,7 +18,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingIm
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingParamProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DocblockMissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\Docblock\ClassGenericDiagnosticHelper;
-use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMethodProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnTypeProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UndefinedVariableProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
@@ -188,8 +188,8 @@ class WorseReflectionExtension implements Extension
 
     private function registerDiagnosticProviders(ContainerBuilder $container): void
     {
-        $container->register(MissingMethodProvider::class, function (Container $container) {
-            return new MissingMethodProvider();
+        $container->register(MissingMemberProvider::class, function (Container $container) {
+            return new MissingMemberProvider();
         }, [ self::TAG_DIAGNOSTIC_PROVIDER => []]);
         $container->register(DocblockMissingReturnTypeProvider::class, function (Container $container) {
             return new DocblockMissingReturnTypeProvider();

@@ -1,7 +1,6 @@
 {
   "compression": "GZ",
   "directories": [
-    "lib",
     "templates"
   ],
   "files": [
@@ -9,7 +8,13 @@
   ],
   "finder": [
     {
-      "name": "{\\.[php]}",
+      "exclude": [
+        "Tests"
+      ],
+      "in": "lib"
+    },
+    {
+      "name": "{\\.(php|bash|fish|zsh)}",
       "exclude": [
         "tests",
         "test"

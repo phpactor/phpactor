@@ -2,7 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type\EnumBackedCaseType;
 use Phpactor\WorseReflection\Core\Type\EnumCaseType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -18,30 +20,25 @@ class ReflectionEnumTest extends IntegrationTestCase
      */
     public function testReflectEnum(string $source, string $class, Closure $assertion): void
     {
-        if (!defined('T_ENUM')) {
-            $this->markTestSkipped('PHP 8.1');
-            return;
-        }
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
         $assertion($class);
     }
 
-    public function provideReflectionEnum()
+    public function provideReflectionEnum(): Generator
     {
         yield 'It reflects a enum' => [
                 <<<'EOT'
-                                    <?php
+                    <?php
 
-                                    enum Barfoo
-                                    {
-                                    }
+                    enum Barfoo
+                    {
+                    }
                     EOT
         ,
         'Barfoo',
         function ($class): void {
             $this->assertEquals('Barfoo', (string) $class->name()->short());
             $this->assertInstanceOf(ReflectionEnum::class, $class);
-            $this->assertTrue($class->isEnum());
         },
             ];
         yield 'It reflect enum methods' => [
@@ -79,6 +76,7 @@ class ReflectionEnumTest extends IntegrationTestCase
         function (ReflectionEnum $class): void {
             $this->assertCount(4, $class->members());
             $this->assertInstanceOf(ReflectionEnumCase::class, $class->members()->get('FOOBAR'));
+            $this->assertInstanceOf(ReflectionMethod::class, $class->members()->get('cases'));
         },
         ];
 
@@ -124,6 +122,31 @@ class ReflectionEnumTest extends IntegrationTestCase
                 self::assertInstanceOf(EnumBackedCaseType::class, $case->type());
                 self::assertTrue($class->isBacked());
                 self::assertEquals('string', $class->backedType());
+            },
+        ];
+        yield 'Return backed case with const' => [
+        <<<'EOT'
+                            <?php
+
+                            enum Enum1: string
+                            {
+                                public const BAR = 'BAR';
+                                case FOOBAR = self::BAR;
+                            }
+
+            EOT
+            ,
+            'Enum1',
+            function (ReflectionEnum $class): void {
+                $case = $class->cases()->get('FOOBAR');
+                self::assertEquals('FOOBAR', $case->name());
+                self::assertEquals('"BAR"', $case->value()->__toString());
+                self::assertEquals('enum(Enum1::FOOBAR)', $case->type()->__toString());
+                self::assertInstanceOf(EnumBackedCaseType::class, $case->type());
+                self::assertTrue($class->isBacked());
+                self::assertEquals('string', $class->backedType());
+                $const = $class->constants()->get('BAR');
+                self::assertEquals('BAR', $const->value());
             },
         ];
         yield 'Return backed methods' => [

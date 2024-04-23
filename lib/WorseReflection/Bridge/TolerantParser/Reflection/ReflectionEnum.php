@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ClassLikeReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionEnumCaseCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
@@ -56,7 +57,8 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         }
         try {
             $enumType = $this->isBacked() ? 'BackedEnum' : 'UnitEnum';
-            $enumMethods = $this->serviceLocator()->reflector()->reflectInterface($enumType)->members();
+            $interface = $this->serviceLocator()->reflector()->reflectInterface($enumType);
+            $enumMethods = $interface->members();
             /** @phpstan-ignore-next-line It is fine */
             return $members->merge($enumMethods)->map(
                 fn (ReflectionMember $member) => $member->withClass($this)
@@ -134,6 +136,11 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
         $this->traits = $traits;
 
         return $traits;
+    }
+
+    public function constants(): ReflectionConstantCollection
+    {
+        return $this->members()->constants();
     }
 
     /**

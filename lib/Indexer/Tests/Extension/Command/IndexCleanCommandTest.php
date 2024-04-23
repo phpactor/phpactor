@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Extension\Command;
 
+use Generator;
 use Phpactor\Indexer\Extension\Command\IndexCleanCommand;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
@@ -19,7 +20,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
         $this->initProject();
         self::assertFalse($this->workspace()->exists('cache'));
 
-        $process = new Process($command, $this->workspace()->path(), null, $input);
+        $process = new Process([PHP_BINARY, ...$command], $this->workspace()->path(), null, $input);
         $process->mustRun();
 
         self::assertEquals(0, $process->getExitCode());
@@ -28,28 +29,25 @@ class IndexCleanCommandTest extends IntegrationTestCase
     }
 
     /**
-     * @return array<string,array<int,mixed>>
+     * @return Generator<string,array<int,mixed>>
      */
-    public function provideAllIndexClean(): array
+    public function provideAllIndexClean(): Generator
     {
-        return [
-            'interactive version' => [
-                [ self::CONSOLE_PATH, 'index:clean'],
-                IndexCleanCommand::OPT_CLEAN_ALL
-            ],
-            'non-interactive version' => [
-                [ self::CONSOLE_PATH, 'index:clean', IndexCleanCommand::OPT_CLEAN_ALL, '--no-interaction'],
-                null
-            ],
-            'cleaning index 1 and 2' => [
-                [self::CONSOLE_PATH, 'index:clean'],
-                "1\n1"
-            ],
-            'cleaning multiple indexes non-interactive' => [
-                [self::CONSOLE_PATH, 'index:clean', 'project','vendor', '--no-interaction'],
-                null
-            ]
-
+        yield 'interactive version' => [
+            [ self::CONSOLE_PATH, 'index:clean'],
+            IndexCleanCommand::OPT_CLEAN_ALL
+        ];
+        yield 'non-interactive version' => [
+            [ self::CONSOLE_PATH, 'index:clean', IndexCleanCommand::OPT_CLEAN_ALL, '--no-interaction'],
+            null
+        ];
+        yield 'cleaning index 1 and 2' => [
+            [self::CONSOLE_PATH, 'index:clean'],
+            "1\n1"
+        ];
+        yield 'cleaning multiple indexes non-interactive' => [
+            [self::CONSOLE_PATH, 'index:clean', 'project','vendor', '--no-interaction'],
+            null
         ];
     }
 
@@ -61,7 +59,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
     {
         $this->initProject();
 
-        $process = new Process($command, $this->workspace()->path(), null, $input);
+        $process = new Process([PHP_BINARY, ...$command], $this->workspace()->path(), null, $input);
         $process->mustRun();
 
         self::assertEquals(0, $process->getExitCode());
@@ -70,23 +68,21 @@ class IndexCleanCommandTest extends IntegrationTestCase
     }
 
     /**
-     * @return array<string,array<int,mixed>>
+     * @return Generator<string,array<int,mixed>>
      */
-    public function provideCleanSpecificIndex(): array
+    public function provideCleanSpecificIndex(): Generator
     {
-        return [
-            'interactive version' => [
-                [ self::CONSOLE_PATH, 'index:clean'],
-                '1'
-            ],
-            'non-interactive version' => [
-                [ self::CONSOLE_PATH, 'index:clean', 'project', '--no-interaction'],
-                null
-            ],
-            'non-interactive version with index name' => [
-                [ self::CONSOLE_PATH, 'index:clean', 'project', '--no-interaction'],
-                null
-            ],
+        yield 'interactive version' => [
+            [ self::CONSOLE_PATH, 'index:clean'],
+            '1'
+        ];
+        yield 'non-interactive version' => [
+            [ self::CONSOLE_PATH, 'index:clean', 'project', '--no-interaction'],
+            null
+        ];
+        yield 'non-interactive version with index name' => [
+            [ self::CONSOLE_PATH, 'index:clean', 'project', '--no-interaction'],
+            null
         ];
     }
 
@@ -99,7 +95,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
     {
         $this->initProject();
 
-        $process = new Process($arguments, $this->workspace()->path(), null, null);
+        $process = new Process([PHP_BINARY, ...$arguments], $this->workspace()->path(), null, null);
         $process->mustRun();
 
         self::assertEquals(0, $process->getExitCode());
@@ -108,17 +104,15 @@ class IndexCleanCommandTest extends IntegrationTestCase
     }
 
     /**
-     * @return array<string,array<int,array<int,string>>>
+     * @return Generator<string,array<int,array<int,string>>>
      */
-    public function provideDoNotRemoveAnything(): array
+    public function provideDoNotRemoveAnything(): Generator
     {
-        return [
-            'it deletes nothing on empty input' => [
-                [ self::CONSOLE_PATH, 'index:clean'],
-            ],
-            'it deletes nothing on no interactive' => [
-                [ self::CONSOLE_PATH, 'index:clean', '--no-interaction'],
-            ],
+        yield 'it deletes nothing on empty input' => [
+            [ self::CONSOLE_PATH, 'index:clean'],
+        ];
+        yield 'it deletes nothing on no interactive' => [
+            [ self::CONSOLE_PATH, 'index:clean', '--no-interaction'],
         ];
     }
 }

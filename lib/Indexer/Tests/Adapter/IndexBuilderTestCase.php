@@ -8,6 +8,7 @@ use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
+use Phpactor\TextDocument\TextDocumentUri;
 use function Safe\file_get_contents;
 
 abstract class IndexBuilderTestCase extends IntegrationTestCase
@@ -49,7 +50,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
             'IamAnAttribute',
             function (ClassRecord $record): void {
                 self::assertInstanceOf(ClassRecord::class, $record);
-                self::assertEquals($this->workspace()->path('project/attribute.php'), $record->filePath());
+                self::assertEquals((string)TextDocumentUri::fromString($this->workspace()->path('project/attribute.php')), $record->filePath());
                 self::assertEquals('IamAnAttribute', $record->fqn());
                 self::assertEquals(38, $record->start()->toInt());
                 self::assertEquals(52, $record->end()->toInt());
@@ -62,7 +63,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
             'ThisClass',
             function (ClassRecord $record): void {
                 self::assertInstanceOf(ClassRecord::class, $record);
-                self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
+                self::assertEquals((string)TextDocumentUri::fromString($this->workspace()->path('project/test.php')), $record->filePath());
                 self::assertEquals('ThisClass', $record->fqn());
                 self::assertEquals(12, $record->start()->toInt());
                 self::assertEquals(21, $record->end()->toInt());
@@ -163,7 +164,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
             'ThisInterface',
             function (ClassRecord $record): void {
                 self::assertInstanceOf(ClassRecord::class, $record);
-                self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
+                self::assertEquals((string)TextDocumentUri::fromString($this->workspace()->path('project/test.php')), $record->filePath());
                 self::assertEquals('ThisInterface', $record->fqn());
                 self::assertEquals(16, $record->start()->toInt());
                 self::assertEquals(29, $record->end()->toInt());
@@ -184,7 +185,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
             'ThisTrait',
             function (ClassRecord $record): void {
                 self::assertInstanceOf(ClassRecord::class, $record);
-                self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
+                self::assertEquals((string)TextDocumentUri::fromString($this->workspace()->path('project/test.php')), $record->filePath());
                 self::assertEquals('ThisTrait', $record->fqn());
                 self::assertEquals(12, $record->start()->toInt());
                 self::assertEquals(21, $record->end()->toInt());
@@ -216,20 +217,18 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
             }
         ];
 
-        if (version_compare(PHP_VERSION, '8.1', '>=')) {
-            yield 'enum' => [
-                "// File: project/test.php\n<?php enum SomeEnum {}",
-                'SomeEnum',
-                function (ClassRecord $record): void {
-                    self::assertInstanceOf(ClassRecord::class, $record);
-                    self::assertEquals($this->workspace()->path('project/test.php'), $record->filePath());
-                    self::assertEquals('SomeEnum', $record->fqn());
-                    self::assertEquals(11, $record->start()->toInt());
-                    self::assertEquals(19, $record->end()->toInt());
-                    self::assertEquals(ClassRecord::TYPE_ENUM, $record->type());
-                }
-            ];
-        }
+        yield 'enum' => [
+            "// File: project/test.php\n<?php enum SomeEnum {}",
+            'SomeEnum',
+            function (ClassRecord $record): void {
+                self::assertInstanceOf(ClassRecord::class, $record);
+                self::assertEquals((string)TextDocumentUri::fromString($this->workspace()->path('project/test.php')), $record->filePath());
+                self::assertEquals('SomeEnum', $record->fqn());
+                self::assertEquals(11, $record->start()->toInt());
+                self::assertEquals(19, $record->end()->toInt());
+                self::assertEquals(ClassRecord::TYPE_ENUM, $record->type());
+            }
+        ];
     }
 
     /**
@@ -435,7 +434,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
             , 'Barfoos\foobar',
             function (FunctionRecord $record): void {
                 self::assertCount(1, $record->references());
-                self::assertEquals($this->workspace()->path('project/test1.php'), $record->filePath());
+                self::assertEquals((string)TextDocumentUri::fromString($this->workspace()->path('project/test1.php')), $record->filePath());
             }
         ];
     }

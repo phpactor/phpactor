@@ -32,6 +32,7 @@ class PsalmProcess
     {
         return \Amp\call(function () use ($filename) {
             $command = [
+                PHP_BINARY,
                 $this->config->psalmBin(),
                 sprintf(
                     '--show-info=%s',
@@ -75,11 +76,11 @@ class PsalmProcess
             }
 
             if ($exitCode !== 0 && $exitCode !== 2) {
-                throw new RuntimeException(
+                throw new RuntimeException(sprintf(
                     'Psalm exited with code "%s": %s',
                     $exitCode,
                     yield buffer($process->getStderr())
-                );
+                ));
             }
 
             $stdout = yield buffer($process->getStdout());

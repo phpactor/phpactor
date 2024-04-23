@@ -45,7 +45,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
         return call(function () use ($textDocument) {
             $diagnostics = $this->getDiagnostics($textDocument);
 
-            if (empty($diagnostics)) {
+            if ($diagnostics === []) {
                 return [];
             }
 

@@ -42,7 +42,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
 
     public function testNotConfirmed(): void
     {
-        /** @var $action InputCallbackAction */
+        /** @var InputCallbackAction $action */
         $action = $this->handle('move_class', [
             'source_path' => self::SOURCE_PATH,
             'dest_path' => null,

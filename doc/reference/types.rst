@@ -107,7 +107,7 @@ Conditional Types
 Phpactor undestands conditional return types of the form:
 
 
-.. code-block::
+.. code-block:: php
 
     /**
      * @return (

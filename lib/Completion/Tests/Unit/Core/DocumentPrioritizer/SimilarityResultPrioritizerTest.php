@@ -13,7 +13,7 @@ class SimilarityResultPrioritizerTest extends TestCase
     /**
      * @dataProvider providePriority
      */
-    public function testPriority(?string $one, ?string $two, int $priority): void
+    public function testPriority(string $one, string $two, int $priority): void
     {
         $one = $one ? TextDocumentUri::fromString($one) : null;
         $two = $two ? TextDocumentUri::fromString($two) : null;
@@ -22,7 +22,7 @@ class SimilarityResultPrioritizerTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<array{string, string, int}>
      */
     public function providePriority(): Generator
     {

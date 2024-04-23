@@ -27,7 +27,7 @@ class MemberIndexer implements TolerantIndexer
 
     public function beforeParse(Index $index, TextDocument $document): void
     {
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
 
         foreach ($fileRecord->references() as $outgoingReference) {
@@ -75,7 +75,7 @@ class MemberIndexer implements TolerantIndexer
         $containerType = $this->resolveContainerType($containerType, $node);
         $memberName = $this->resolveScopedPropertyAccessName($node);
 
-        if (empty($memberName)) {
+        if ($memberName === '') {
             return;
         }
 
@@ -181,10 +181,10 @@ class MemberIndexer implements TolerantIndexer
     ): void {
         $record = $index->get(MemberRecord::fromMemberReference(MemberReference::create($memberType, $containerFqn, $memberName)));
         assert($record instanceof MemberRecord);
-        $record->addReference($document->uri()->path());
+        $record->addReference($document->uriOrThrow()->__toString());
         $index->write($record);
 
-        $fileRecord = $index->get(FileRecord::fromPath($document->uri()->path()));
+        $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
         $fileRecord->addReference(
             RecordReference::fromRecordAndOffsetAndContainerType($record, $offsetStart, $offsetEnd, $containerFqn)

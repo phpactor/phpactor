@@ -22,6 +22,9 @@ final class SuperGlobals
             '_SESSION' => TypeFactory::array(),
             '_REQUEST' => TypeFactory::array(),
             '_ENV' => TypeFactory::array(),
+
+            'argc' => TypeFactory::int(),
+            'argv' => TypeFactory::array(TypeFactory::string()),
         ];
     }
 }

@@ -11,6 +11,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\UpdatePolicy;
 use Phpactor\CodeBuilder\Domain\Prototype\UseStatements;
 use Phpactor\CodeBuilder\Domain\Prototype\Interfaces;
 use Phpactor\CodeBuilder\Domain\Prototype\Traits;
+use Phpactor\CodeBuilder\Domain\Prototype\Enums;
 use Phpactor\CodeBuilder\Domain\Prototype\UseStatement;
 
 class SourceCodeBuilder extends AbstractBuilder
@@ -37,6 +38,11 @@ class SourceCodeBuilder extends AbstractBuilder
      */
     protected array $traits = [];
 
+    /**
+    * @var EnumBuilder[]
+    */
+    protected array $enums = [];
+
     public static function create(): SourceCodeBuilder
     {
         return new self();
@@ -48,6 +54,7 @@ class SourceCodeBuilder extends AbstractBuilder
             'classes',
             'interfaces',
             'traits',
+            'enums',
         ];
     }
 
@@ -97,6 +104,10 @@ class SourceCodeBuilder extends AbstractBuilder
             return $this->traits[$name];
         }
 
+        if (isset($this->enums[$name])) {
+            return $this->enums[$name];
+        }
+
         throw new InvalidArgumentException(
             'classLike can only be called as an accessor. Use class() or interface() instead'
         );
@@ -124,6 +135,17 @@ class SourceCodeBuilder extends AbstractBuilder
         return $builder;
     }
 
+    public function enum(string $name): EnumBuilder
+    {
+        if (isset($this->enums[$name])) {
+            return $this->enums[$name];
+        }
+
+        $this->enums[$name] = $builder = new EnumBuilder($this, $name);
+
+        return $builder;
+    }
+
     public function build(): SourceCode
     {
         return new SourceCode(
@@ -138,6 +160,9 @@ class SourceCodeBuilder extends AbstractBuilder
             Traits::fromTraits(array_map(function (TraitBuilder $builder) {
                 return $builder->build();
             }, $this->traits)),
+            Enums::fromEnums(array_map(function (EnumBuilder $builder) {
+                return $builder->build();
+            }, $this->enums)),
             UpdatePolicy::fromModifiedState($this->isModified())
         );
     }

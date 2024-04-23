@@ -43,11 +43,7 @@ class WorkspaceIndex
 
     public function documentForName(Name $name): ?TextDocument
     {
-        if (isset($this->byName[$name->full()])) {
-            return $this->byName[$name->full()];
-        }
-
-        return null;
+        return $this->byName[$name->full()] ?? null;
     }
 
     public function index(TextDocument $textDocument): void
@@ -116,7 +112,7 @@ class WorkspaceIndex
             unset($this->byName[$name]);
         }
 
-        if (!empty($newNames)) {
+        if ($newNames !== []) {
             $this->documentToNameMap[(string)$textDocument->uri()] = $newNames;
         } else {
             unset($this->documentToNameMap[(string)$textDocument->uri()]);

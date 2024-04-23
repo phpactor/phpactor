@@ -57,7 +57,7 @@ class ClassReferences
         foreach ($filesystem->fileList()->phpFiles() as $filePath) {
             $references = $this->fileReferences($filesystem, $filePath, $className, $replace, $dryRun);
 
-            if (empty($references['references'])) {
+            if ($references['references'] === []) {
                 continue;
             }
 
@@ -155,7 +155,7 @@ class ClassReferences
     /** @return array{int, int, string} */
     private function line(string $code, int $offset): array
     {
-        $lines = explode(PHP_EOL, $code);
+        $lines = explode("\n", $code);
         $lineNumber = 0;
         $startPosition = 0;
 

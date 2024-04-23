@@ -25,9 +25,6 @@
 # Logging
 /application.log
 
-# docs
-/doc/_build
-
 /.php-cs-fixer.cache
 /build
 __pycache__

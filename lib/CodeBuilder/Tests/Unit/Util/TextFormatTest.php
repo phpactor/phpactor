@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Util;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use RuntimeException;
@@ -16,7 +17,10 @@ class TextFormatTest extends TestCase
         self::assertEquals($expeced, (new TextFormat())->indentRemove($text));
     }
 
-    public function provideRemoveIndentation()
+    /**
+     * @return Generator<string,array{string,string}>
+     */
+    public function provideRemoveIndentation(): Generator
     {
         yield 'empty' => [
             '',
@@ -120,7 +124,10 @@ class TextFormatTest extends TestCase
         self::assertEquals($expected, (new TextFormat())->indent($text, $level));
     }
 
-    public function provideIndent()
+    /**
+     * @return Generator<string,array{string,int,string}>
+     */
+    public function provideIndent(): Generator
     {
         yield 'empty' => [
             '',

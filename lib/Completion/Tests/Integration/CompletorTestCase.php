@@ -39,6 +39,10 @@ abstract class CompletorTestCase extends IntegrationTestCase
         );
         $suggestions = iterator_to_array($suggestionGenerator, false);
         usort($suggestions, function (Suggestion $suggestion1, Suggestion $suggestion2) {
+            if ($suggestion1->priority() !== $suggestion2->priority()) {
+                return $suggestion1->priority() <=> $suggestion2->priority();
+            }
+
             return $suggestion1->name() <=> $suggestion2->name();
         });
 

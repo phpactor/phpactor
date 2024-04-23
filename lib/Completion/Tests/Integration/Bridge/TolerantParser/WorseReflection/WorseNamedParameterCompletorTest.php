@@ -109,6 +109,26 @@ class WorseNamedParameterCompletorTest extends TolerantCompletorTestCase
                 ]
             ]
         ];
+
+        yield 'Attributes' => [
+            <<<PHP
+                <?php
+                #[Attribute]
+                class SomeAttribute {
+                    public function __construct(private string \$param) {}
+                }
+
+                #[SomeAttribute(<>)]
+                class Foo {}
+                PHP,
+            [
+                [
+                    'type' => Suggestion::TYPE_FIELD,
+                    'name' => 'param: ',
+                    'short_description' => 'string $param',
+                ]
+            ]
+        ];
     }
 
     /**
@@ -119,6 +139,9 @@ class WorseNamedParameterCompletorTest extends TolerantCompletorTestCase
         $this->assertCouldNotComplete($source);
     }
 
+    /**
+     * @return Generator<string, array{string}>
+     */
     public function provideCouldNotComplete(): Generator
     {
         yield 'empty string' => [ '<?php  <>' ];

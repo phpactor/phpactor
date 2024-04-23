@@ -27,6 +27,10 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use function in_array;
+use function str_starts_with;
+use function strlen;
+use function substr;
 
 class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiable
 {
@@ -81,7 +85,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
 
         foreach ($type->expandTypes()->classLike() as $type) {
             foreach ($this->populateSuggestions($nodeContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
-                if ($partialMatch && 0 !== mb_strpos($suggestion->name(), $partialMatch)) {
+                if ($partialMatch && !str_starts_with($suggestion->name(), $partialMatch)) {
                     continue;
                 }
 
@@ -188,7 +192,8 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         }
 
         if (false === $isInstance && $classReflection instanceof ReflectionClass ||
-            $classReflection instanceof ReflectionInterface
+            $classReflection instanceof ReflectionInterface ||
+            $classReflection instanceof ReflectionEnum
         ) {
             foreach ($members->constants() as $constant) {
                 if ($publicOnly && false === $constant->visibility()->isPublic()) {

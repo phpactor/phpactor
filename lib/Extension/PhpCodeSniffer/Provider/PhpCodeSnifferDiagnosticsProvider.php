@@ -5,6 +5,7 @@ namespace Phpactor\Extension\PhpCodeSniffer\Provider;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
+use JsonException;
 use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
 use Phpactor\LanguageServerProtocol\CodeAction;
@@ -17,6 +18,7 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use SebastianBergmann\Diff\Parser;
 use ArrayIterator;
 
@@ -131,8 +133,15 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
         return \Amp\call(function () use ($textDocument) {
             $outputJson = yield $this->phpCodeSniffer->diagnose($textDocument, [ '-m' ]);
 
-            /** @var PhpcsResult $output */
-            $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
+            try {
+                /** @var PhpcsResult $output */
+                $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
+            } catch (JsonException $error) {
+                throw new RuntimeException(sprintf(
+                    'Could not decode JSON: %s',
+                    $outputJson
+                ));
+            }
 
             return $output->totals->fixable > 0;
         });
@@ -147,8 +156,15 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
         return \Amp\call(function () use ($textDocument) {
             $outputJson = yield $this->phpCodeSniffer->diagnose($textDocument);
 
-            /** @var PhpcsResult $output */
-            $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
+            try {
+                /** @var PhpcsResult $output */
+                $output = json_decode($outputJson, flags: JSON_THROW_ON_ERROR);
+            } catch (JsonException $error) {
+                throw new RuntimeException(sprintf(
+                    'Could not decode JSON: %s',
+                    $outputJson
+                ));
+            }
 
             if (empty($output->files)) {
                 return false;

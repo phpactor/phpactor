@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser;
 
+use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder;
 use PHPUnit\Framework\TestCase;
@@ -39,200 +40,211 @@ class TolerantClassReplacerTest extends TestCase
     }
 
     /**
-     * @return array<string, array<string>>
+     * @return Generator<string, array<string>>
      */
-    public function provideTestFind(): array
+    public function provideTestFind(): Generator
     {
-        return [
-            'Change references of moved class' => [
-                'Example1.php',
-                'Acme\\Foobar\\Warble',
-                'BarBar\\Hello',
-                <<<'EOT'
-                    <?php
-                    namespace Acme;
-                    use BarBar\Hello;
-                    use Acme\Foobar\Barfoo;
-                    use Acme\Barfoo as ZedZed;
+        yield 'Change references of moved class' => [
+            'Example1.php',
+            'Acme\\Foobar\\Warble',
+            'BarBar\\Hello',
+            <<<'EOT'
+                <?php
+                namespace Acme;
+                use BarBar\Hello;
+                use Acme\Foobar\Barfoo;
+                use Acme\Barfoo as ZedZed;
 
-                    class Hello
+                class Hello
+                {
+                    public function something(): void
                     {
-                        public function something(): void
-                        {
-                            $foo = new Hello();
-                    EOT
-            ],
-            'Changes class name of moved class' => [
-                'Example1.php',
-                'Acme\\Hello',
-                'Acme\\Definee',
-                <<<'EOT'
-                    <?php
-                    namespace Acme;
+                        $foo = new Hello();
+                EOT
+        ];
+        yield 'Changes class name of moved class' => [
+            'Example1.php',
+            'Acme\\Hello',
+            'Acme\\Definee',
+            <<<'EOT'
+                <?php
+                namespace Acme;
 
-                    use Acme\Foobar\Warble;
-                    use Acme\Foobar\Barfoo;
-                    use Acme\Barfoo as ZedZed;
+                use Acme\Foobar\Warble;
+                use Acme\Foobar\Barfoo;
+                use Acme\Barfoo as ZedZed;
 
-                    class Definee
-                    EOT
-            ],
-            'Change namespace of moved class 1' => [
-                'Example1.php',
-                'Acme\\Hello',
-                'Acme\\Definee\\Foobar',
-                <<<'EOT'
-                    namespace Acme\Definee;
+                class Definee
+                EOT
+        ];
+        yield 'Change namespace of moved class 1' => [
+            'Example1.php',
+            'Acme\\Hello',
+            'Acme\\Definee\\Foobar',
+            <<<'EOT'
+                namespace Acme\Definee;
 
-                    use Acme\Foobar\Warble;
-                    use Acme\Foobar\Barfoo;
-                    use Acme\Barfoo as ZedZed;
+                use Acme\Foobar\Warble;
+                use Acme\Foobar\Barfoo;
+                use Acme\Barfoo as ZedZed;
 
-                    class Foobar
-                    EOT
-            ],
-            'Change namespace of class which has same namespace as current file' => [
-                'Example2.php',
-                'Acme\\Barfoo',
-                'Acme\\Definee\\Barfoo',
-                <<<'EOT'
-                    <?php
-                    namespace Acme;
+                class Foobar
+                EOT
+        ];
+        yield 'Change namespace of class which has same namespace as current file' => [
+            'Example2.php',
+            'Acme\\Barfoo',
+            'Acme\\Definee\\Barfoo',
+            <<<'EOT'
+                <?php
+                namespace Acme;
 
-                    use Acme\Definee\Barfoo;
+                use Acme\Definee\Barfoo;
 
-                    class Hello
+                class Hello
+                {
+                    public function something(): void
                     {
-                        public function something(): void
-                        {
-                            Barfoo::foobar();
-                        }
+                        Barfoo::foobar();
                     }
-                    EOT
-            ],
-            'Change namespace of long class' => [
-                'Example3.php',
-                'Acme\\ClassMover\\RefFinder\\RefFinder\\TolerantRefFinder',
-                'Acme\\ClassMover\\Bridge\\Microsoft\\TolerantParser\\TolerantRefFinder',
-                <<<'EOT'
-                    use Acme\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefFinder;
-                    EOT
-            ],
-            'Change namespace of interface' => [
-                'Example5.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example5Interface',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarInterface',
-                <<<'EOT'
-                    <?php
-                    namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar;
-                    EOT
-            ],
-            'Change namespace of trait' => [
-                'Example6.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\ExampleTrait',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarTrait',
-                <<<'EOT'
-                    namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser\BarBar;
-                    EOT
-            ],
-            'Change name of class expansion' => [
-                'Example4.php',
-                'Acme\\ClassMover\\RefFinder\\RefFinder\\TolerantRefFinder',
-                'Acme\\ClassMover\\RefFinder\\RefFinder\\Foobar',
-                <<<'EOT'
-                    <?php
-                    namespace Acme;
-                    use Acme\ClassMover\RefFinder\RefFinder\Foobar;
-                    class Hello
+                }
+                EOT
+        ];
+        yield 'Change namespace of long class' => [
+            'Example3.php',
+            'Acme\\ClassMover\\RefFinder\\RefFinder\\TolerantRefFinder',
+            'Acme\\ClassMover\\Bridge\\Microsoft\\TolerantParser\\TolerantRefFinder',
+            <<<'EOT'
+                use Acme\ClassMover\Bridge\Microsoft\TolerantParser\TolerantRefFinder;
+                EOT
+        ];
+        yield'Change namespace of interface' => [
+            'Example5.php',
+            'Acme\ClassMover\Tests\Adapter\TolerantParser\Example5Interface',
+            'Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarInterface',
+            <<<'EOT'
+                <?php
+                namespace Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar;
+                EOT
+        ];
+        yield'Change namespace of trait' => [
+            'Example6.php',
+            'Acme\ClassMover\Tests\Adapter\TolerantParser\ExampleTrait',
+            'Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar\FoobarTrait',
+            <<<'EOT'
+                namespace Acme\ClassMover\Tests\Adapter\TolerantParser\BarBar;
+                EOT
+        ];
+        yield'Change name of class expansion' => [
+            'Example4.php',
+            'Acme\\ClassMover\\RefFinder\\RefFinder\\TolerantRefFinder',
+            'Acme\\ClassMover\\RefFinder\\RefFinder\\Foobar',
+            <<<'EOT'
+                <?php
+                namespace Acme;
+                use Acme\ClassMover\RefFinder\RefFinder\Foobar;
+                class Hello
+                {
+                    public function something(): void
                     {
-                        public function something(): void
-                        {
-                            Foobar::class;
-                        }
+                        Foobar::class;
                     }
-                    EOT
-            ],
-            'Class which includes use statement for itself' => [
-                'Example7.php',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example7',
-                'Phpactor\ClassMover\Tests\Adapter\TolerantParser\Example8',
-                <<<'EOT'
-                    class Example8
-                    EOT
-            ],
-            'Self class with no namespace to a namespace' => [
-                'Example8.php',
-                'ClassOne',
-                'Phpactor\ClassMover\Example8',
-                <<<'EOT'
-                    <?php
-                    namespace Phpactor\ClassMover;
+                }
+                EOT
+        ];
+        yield'Class which includes use statement for itself' => [
+            'Example7.php',
+            'Acme\ClassMover\Tests\Adapter\TolerantParser\Example7',
+            'Acme\ClassMover\Tests\Adapter\TolerantParser\Example8',
+            <<<'EOT'
+                class Example8
+                EOT
+        ];
+        yield'Self class with no namespace to a namespace' => [
+            'Example8.php',
+            'ClassOne',
+            'Phpactor\ClassMover\Example8',
+            <<<'EOT'
+                <?php
+                namespace Phpactor\ClassMover;
 
 
-                    class Example8
+                class Example8
+                {
+                    public function build()
                     {
-                        public function build()
-                        {
-                            return new self();
-                        }
+                        return new self();
                     }
-                    EOT
-            ],
-            'Class with no namespace to a namespace' => [
-                'Example9.php',
-                'Example',
-                'Phpactor\ClassMover\Example',
-                <<<'EOT'
-                    <?php
+                }
+                EOT
+        ];
+        yield'Class with no namespace to a namespace' => [
+            'Example9.php',
+            'Example',
+            'Phpactor\ClassMover\Example',
+            <<<'EOT'
+                <?php
 
-                    use Phpactor\ClassMover\Example;
+                use Phpactor\ClassMover\Example;
 
-                    class ClassOne
-                    {
-                        public function build(): Example
-                    EOT
-            ],
-            'Aliased class' => [
-                'Example10.php',
-                'Foobar\Example',
-                'Phpactor\ClassMover\Example',
-                <<<'EOT'
-                    <?php
+                class ClassOne
+                {
+                    public function build(): Example
+                EOT
+        ];
+        yield'Aliased class' => [
+            'Example10.php',
+            'Foobar\Example',
+            'Phpactor\ClassMover\Example',
+            <<<'EOT'
+                <?php
 
-                    use Phpactor\ClassMover\Example as BadExample;
+                use Phpactor\ClassMover\Example as BadExample;
 
-                    class ClassOne
-                    {
-                        public function build(): BadExample
-                    EOT
-            ],
-            'Aliased class named the same' => [
-                'Example11.php',
-                'Foobar\Example',
-                'Phpactor\ClassMover\Example',
-                <<<'EOT'
-                    <?php
+                class ClassOne
+                {
+                    public function build(): BadExample
+                EOT
+        ];
+        yield'Aliased class named the same' => [
+            'Example11.php',
+            'Foobar\Example',
+            'Phpactor\ClassMover\Example',
+            <<<'EOT'
+                <?php
 
-                    use Phpactor\ClassMover\Example as BadExample;
-                    class Example extends BadExample
+                use Phpactor\ClassMover\Example as BadExample;
+                class Example extends BadExample
+                {
+                }
+                EOT
+        ];
+        yield'FQN stays fully qualified' => [
+            'Example12.php',
+            'FQN\Class',
+            'OtherFQN\ClassTwo',
+            <<<EOT
+                <?php
+                class Generic
+                {
+                    public function __construct(\OtherFQN\ClassTwo \$test)
                     {
                     }
-                    EOT
-            ],
-            'FQN stays fully qualified' => [
-                'Example12.php',
-                'FQN\Class',
-                'OtherFQN\ClassTwo',
-                <<<EOT
-                    <?php
-                    class Generic
-                    {
-                        public function __construct(\OtherFQN\ClassTwo \$test)
-                        {
-                        }
-                    }
-                    EOT,
-            ]
+                }
+                EOT,
+        ];
+        yield'Rename Enum' => [
+            'Enum1.php',
+            'Acme\Hello',
+            'Acme\Goodbye',
+            <<<EOT
+                <?php
+                namespace Acme;
+                enum Goodbye
+                {
+                    case Foo;
+                }
+                EOT,
         ];
     }
 }

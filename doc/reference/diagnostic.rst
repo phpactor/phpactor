@@ -53,6 +53,88 @@ Report if trying to call a class method which does not exist.
         
         - ``ERROR``: ``Method "bar" does not exist on class "Foobar"``
         
+    .. tab:: missing enum case
+        
+        .. code-block:: php
+        
+            <?php
+            
+            enum Foobar
+            {
+                case Foo;
+            }
+            
+            Foobar::Foo;
+            Foobar::Bar;
+        
+        Diagnostic(s):
+        
+        - ``ERROR``: ``Case "Bar" does not exist on enum "Foobar"``
+        
+    .. tab:: enum contains const and case
+        
+        .. code-block:: php
+        
+            <?php
+            
+            enum Foobar
+            {
+                case Foo;
+                public const Bar = 'Bar';
+            }
+            
+            Foobar::Foo;
+            Foobar::Bar;
+        
+    .. tab:: enum static method not existing
+        
+        .. code-block:: php
+        
+            <?php
+            
+            enum Foobar
+            {
+            }
+            
+            Foobar::foobar();
+        
+        Diagnostic(s):
+        
+        - ``ERROR``: ``Method "foobar" does not exist on enum "Foobar"``
+        
+    .. tab:: missing constant on class
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                const FOO = 'bar';
+            }
+            
+            Foobar::FOO;
+            Foobar::BAR;
+        
+        Diagnostic(s):
+        
+        - ``ERROR``: ``Constant "BAR" does not exist on class "Foobar"``
+        
+    .. tab:: missing property on class is not supported yet
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public int $foo;
+            }
+            
+            $f = new Foobar();
+            $f->foo = 12;
+            $f->barfoo = 'string';
+        
 ``docblock_missing_return``
 ---------------------------
 
@@ -123,6 +205,22 @@ Report when a method has a parameter with a type that should be augmented by a d
         
         - ``WARN``: ``Method "foo" is missing @param $foobar``
         
+    .. tab:: iterable
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public function foo(iterable $foobar) {
+                }
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Method "foo" is missing @param $foobar``
+        
     .. tab:: array
         
         .. code-block:: php
@@ -138,6 +236,28 @@ Report when a method has a parameter with a type that should be augmented by a d
         Diagnostic(s):
         
         - ``WARN``: ``Method "foo" is missing @param $foobar``
+        
+    .. tab:: no false positive for vardoc on promoted property
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public function __construct(
+                    /**
+                     * @var array<'GET'|'POST'>
+                     */
+                    private array $foobar,
+                    private array $barfoo
+                ) {
+                }
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Method "__construct" is missing @param $barfoo``
         
 ``assignment_to_missing_property``
 ----------------------------------
@@ -592,6 +712,19 @@ Report if a variable is undefined and suggest variables with similar names.
         Diagnostic(s):
         
         - ``ERROR``: ``Undefined variable "$foo", did you mean one of "$foz", "$foa", "$fob"``
+        
+    .. tab:: this in anonymous class
+        
+        .. code-block:: php
+        
+                <?php
+                new class
+                {
+                    public function foo(): void
+                    {
+                        $this
+                    }
+                };
         
     .. tab:: undefined and no suggestions
         

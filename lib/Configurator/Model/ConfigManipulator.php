@@ -55,12 +55,8 @@ final class ConfigManipulator
 
     private function createConfig(): string
     {
-        return <<<EOT
-            {
-                "\$schema": "{$this->schemaPath}"
-            }
-            EOT
-        ;
+        $value = [ '$schema' => $this->schemaPath ];
+        return json_encode($value, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_THROW_ON_ERROR);
     }
 
     private function openConfig(): stdClass

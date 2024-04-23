@@ -31,7 +31,7 @@ class FeatureStepCompletor implements Completor
         $currentLine = $this->lineForOffset($source->__toString(), $byteOffset->toInt());
         $parsed = $this->parser->parseSteps($currentLine);
 
-        if (empty($parsed)) {
+        if ($parsed === []) {
             return false;
         }
         $partial = $parsed[0];

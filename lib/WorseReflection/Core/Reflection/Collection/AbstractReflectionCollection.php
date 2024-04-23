@@ -85,7 +85,7 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
      */
     public function first()
     {
-        if (empty($this->items)) {
+        if ($this->items === []) {
             throw new ItemNotFound(
                 'Collection is empty, cannot get the first item'
             );
@@ -116,6 +116,18 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
         return end($this->items);
     }
 
+    /**
+     * @return T|null
+     */
+    public function lastOrNull()
+    {
+        if (empty($this->items)) {
+            return null;
+        }
+
+        return end($this->items);
+    }
+
     public function has(string $name): bool
     {
         return isset($this->items[$name]);
@@ -131,7 +143,7 @@ abstract class AbstractReflectionCollection implements ReflectionCollection
      */
     public function byMemberClass(string $fqn): ReflectionCollection
     {
-        return new static(array_filter($this->items, function (object $member) use ($fqn) {
+        return new static(array_filter($this->items, function ($member) use ($fqn) {
             return $member instanceof $fqn;
         }));
     }

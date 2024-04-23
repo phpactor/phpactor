@@ -71,7 +71,6 @@ class MemberQuery implements IndexQuery
                     continue;
                 }
 
-
                 yield LocationConfidence::surely($location);
             }
         }

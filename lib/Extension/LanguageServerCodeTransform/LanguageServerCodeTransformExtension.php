@@ -3,17 +3,18 @@
 namespace Phpactor\Extension\LanguageServerCodeTransform;
 
 use Phpactor\ClassFileConverter\Domain\FileToClass;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillMatchArms;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Domain\Generators;
-use Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder;
+use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
 use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractExpression;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractMethod;
-use Phpactor\CodeTransform\Domain\Refactor\FillObject;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\CodeTransform\Domain\Refactor\GenerateDecorator;
-use Phpactor\CodeTransform\Domain\Refactor\GenerateMethod;
+use Phpactor\CodeTransform\Domain\Refactor\GenerateMember;
 use Phpactor\CodeTransform\Domain\Refactor\ImportName;
 use Phpactor\CodeTransform\Domain\Transformers;
 use Phpactor\Container\Container;
@@ -27,11 +28,11 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CreateUnresolvable
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractConstantProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractExpressionProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ExtractMethodProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\FillObjectProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ByteOffsetRefactorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CorrectUndefinedVariableCodeAction;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
-use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMethodProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMemberProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PropertyAccessGeneratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
@@ -43,7 +44,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionC
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractMethodCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\PropertyAccessGeneratorCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateDecoratorCommand;
-use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMethodCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\GenerateMemberCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportAllUnresolvedNamesCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\TransformCommand;
@@ -122,16 +123,16 @@ class LanguageServerCodeTransformExtension implements Extension
             ],
         ]);
 
-        $container->register(GenerateMethodCommand::class, function (Container $container) {
-            return new GenerateMethodCommand(
+        $container->register(GenerateMemberCommand::class, function (Container $container) {
+            return new GenerateMemberCommand(
                 $container->get(ClientApi::class),
                 $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
-                $container->get(GenerateMethod::class),
+                $container->get(GenerateMember::class),
                 $container->get(TextDocumentLocator::class)
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
-                'name' => GenerateMethodCommand::NAME
+                'name' => GenerateMemberCommand::NAME
             ],
         ]);
 
@@ -407,9 +408,9 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
-        $container->register(GenerateMethodProvider::class, function (Container $container) {
-            return new GenerateMethodProvider(
-                $container->get(MissingMethodFinder::class)
+        $container->register(GenerateMemberProvider::class, function (Container $container) {
+            return new GenerateMemberProvider(
+                $container->get(MissingMemberFinder::class)
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
@@ -460,9 +461,22 @@ class LanguageServerCodeTransformExtension implements Extension
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
         ]);
 
-        $container->register(FillObjectProvider::class, function (Container $container) {
-            return new FillObjectProvider(
-                $container->get(FillObject::class)
+        $container->register(ByteOffsetRefactorProvider::class.'.fill_object', function (Container $container) {
+            return new ByteOffsetRefactorProvider(
+                $container->get(WorseFillObject::class),
+                'quickfix.fill.object',
+                'Fill object',
+                'fill new object construct with named parameters',
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+        $container->register(ByteOffsetRefactorProvider::class.'.fill_match_arms', function (Container $container) {
+            return new ByteOffsetRefactorProvider(
+                $container->get(WorseFillMatchArms::class),
+                'quickfix.fill.matchArms',
+                'Fill match arms',
+                'fill missing match arms for an enum',
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []

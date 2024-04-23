@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Core\Inference\Walker;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\TokenKind;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
@@ -67,12 +68,16 @@ class FunctionLikeWalker implements Walker
     private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
     {
         $namespace = $node->getNamespaceDefinition();
-        $classNode = $node->getFirstAncestor(
-            ClassDeclaration::class,
-            InterfaceDeclaration::class,
-            TraitDeclaration::class,
-            EnumDeclaration::class
-        );
+        do {
+            // If we are here we found a normal ObjectCreationExpression like: new A(); and this is not useful and we continue traversing
+            $classNode = ($classNode ?? $node)->getFirstAncestor(
+                ClassDeclaration::class,
+                InterfaceDeclaration::class,
+                TraitDeclaration::class,
+                EnumDeclaration::class,
+                ObjectCreationExpression::class, // For Inline classes
+            );
+        } while ($classNode instanceof ObjectCreationExpression && $classNode->classTypeDesignator instanceof Node);
 
         if ($node instanceof AnonymousFunctionCreationExpression) {
             $this->addAnonymousImports($frame, $node);
@@ -85,7 +90,7 @@ class FunctionLikeWalker implements Walker
         }
 
         // works for both closure and class method (we currently ignore binding)
-        if ($classNode) {
+        if ($classNode !== null) {
             $classType = $resolver->resolveNode($frame, $classNode)->type();
             $this->addClassContext($node, $classType, $frame);
         }

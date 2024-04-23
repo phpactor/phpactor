@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Tests\Adapter\WorseTolerant;
 
+use Generator;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberReplacer;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
@@ -24,91 +25,89 @@ class WorseTolerantMemberReplacerTest extends WorseTolerantTestCase
         $this->assertStringContainsString($expectedSource, $source->__toString());
     }
 
-    /** @return array<array<string>> */
-    public function provideTestReplace(): array
+    /** @return Generator<array<string>> */
+    public function provideTestReplace(): Generator
     {
-        return [
-            'It returns unmodified if no references' => [
-                'Foobar', 'zzzzz', 'barfoo',
-                <<<'EOT'
-                    <?php
-                    $foobar = new Foobar();
-                    $foobar->foobar();
-                    EOT
-                , <<<'EOT'
-                    <?php
-                    $foobar = new Foobar();
-                    $foobar->foobar();
-                    EOT
-            ],
-            'It replaces references' => [
-                'Foobar', 'foobar', 'barfoo',
-                <<<'EOT'
-                    <?php
-                    class Foobar { function foobar() {} }
+        yield 'It returns unmodified if no references' => [
+            'Foobar', 'zzzzz', 'barfoo',
+            <<<'EOT'
+                <?php
+                $foobar = new Foobar();
+                $foobar->foobar();
+                EOT
+            , <<<'EOT'
+                <?php
+                $foobar = new Foobar();
+                $foobar->foobar();
+                EOT
+        ];
+        yield 'It replaces references' => [
+            'Foobar', 'foobar', 'barfoo',
+            <<<'EOT'
+                <?php
+                class Foobar { function foobar() {} }
 
-                    $foobar = new Foobar();
-                    $foobar->foobar();
-                    EOT
-                , <<<'EOT'
-                    $foobar->barfoo();
-                    EOT
-            ],
-            'It replaces member declarations' => [
-                'Foobar', 'foobar', 'barfoo',
-                <<<'EOT'
-                    <?php
-                    class Foobar { function foobar() {} }
+                $foobar = new Foobar();
+                $foobar->foobar();
+                EOT
+            , <<<'EOT'
+                $foobar->barfoo();
+                EOT
+        ];
+        yield 'It replaces member declarations' => [
+            'Foobar', 'foobar', 'barfoo',
+            <<<'EOT'
+                <?php
+                class Foobar { function foobar() {} }
 
-                    $foobar = new Foobar();
-                    $foobar->foobar();
-                    EOT
-                , <<<'EOT'
-                    class Foobar { function barfoo() {} }
-                    EOT
-            ],
-            'It replaces property declarations' => [
-                'Foobar', 'foobar', 'barfoo',
-                <<<'EOT'
-                    <?php
-                    class Foobar { protected $foobar; {} }
+                $foobar = new Foobar();
+                $foobar->foobar();
+                EOT
+            , <<<'EOT'
+                class Foobar { function barfoo() {} }
+                EOT
+        ];
+        yield 'It replaces property declarations' => [
+            'Foobar', 'foobar', 'barfoo',
+            <<<'EOT'
+                <?php
+                class Foobar { protected $foobar; {} }
 
-                    $foobar = new Foobar();
-                    $foobar->foobar;
-                    EOT
-                , <<<'EOT'
-                    class Foobar { protected $barfoo; {} }
-                    EOT
-            ],
-            'It replaces static property declarations' => [
-                'Foobar', 'foobar', 'barfoo',
-                <<<'EOT'
-                    <?php
-                    class Foobar { public static $foobar; {} }
+                $foobar = new Foobar();
+                $foobar->foobar;
+                EOT
+            , <<<'EOT'
+                class Foobar { protected $barfoo; {} }
+                EOT
+        ];
+        yield 'It replaces static property declarations' => [
+            'Foobar', 'foobar', 'barfoo',
+            <<<'EOT'
+                <?php
+                class Foobar { public static $foobar; {} }
 
-                    Foobar::$foobar;
-                    EOT
-                , <<<'EOT'
-                    class Foobar { public static $barfoo; {} }
+                Foobar::$foobar;
+                EOT
+            , <<<'EOT'
+                class Foobar { public static $barfoo; {} }
 
-                    Foobar::$barfoo;
-                    EOT
-            ],
-            'It replaces constants' => [
-                'Foobar', 'BARFOO', 'FOO',
-                <<<'EOT'
-                    <?php
-                    class Foobar { const BARFOO = 1; {} }
+                Foobar::$barfoo;
+                EOT
+        ];
+        yield 'It replaces constants' => [
+            'Foobar', 'BARFOO', 'FOO',
+            <<<'EOT'
+                <?php
+                class Foobar { const BARFOO = 1; {} }
 
-                    Foobar::BARFOO;
-                    EOT
-                , <<<'EOT'
-                    <?php
-                    class Foobar { const FOO = 1; {} }
+                Foobar::BARFOO;
+                EOT
+            , <<<'EOT'
+                <?php
+                class Foobar { const FOO = 1; {} }
 
-                    Foobar::FOO;
-                    EOT
-            ],
+                Foobar::FOO;
+                EOT
         ];
     }
 }

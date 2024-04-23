@@ -175,6 +175,74 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
+        yield 'adds false type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo()
+                    {
+                        return $this->baz();
+                    }
+
+                    private function baz(): string|false
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo(): string|false
+                    {
+                        return $this->baz();
+                    }
+
+                    private function baz(): string|false
+                    {
+                    }
+                }
+                EOT
+        ];
+        yield 'adds array shape type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo()
+                    {
+                        return $this->baz();
+                    }
+
+                    /**
+                     * @return array{string,string}
+                     */
+                    private function baz(): array
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo(): array
+                    {
+                        return $this->baz();
+                    }
+
+                    /**
+                     * @return array{string,string}
+                     */
+                    private function baz(): array
+                    {
+                    }
+                }
+                EOT
+        ];
     }
 
     /**

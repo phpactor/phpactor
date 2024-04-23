@@ -106,6 +106,17 @@ class CompletionHandlerTest extends TestCase
         self::assertEquals('documentation now', $response->result->documentation->value);
     }
 
+    public function testResolveCompletionItemWithNoPreviousCompletion(): void
+    {
+        $tester = $this->create([]);
+        $response = $tester->requestAndWait(
+            'completionItem/resolve',
+            new CompletionItem('hello'),
+        );
+        self::assertNotNull($response);
+        self::assertInstanceOf(CompletionItem::class, $response->result);
+    }
+
     public function testHandleAnIncompleteListOfSuggestions(): void
     {
         $tester = $this->create([
@@ -148,7 +159,7 @@ class CompletionHandlerTest extends TestCase
         $this->assertFalse($response->result->isIncomplete);
     }
 
-    public function testSuggestionWithImport(): void
+    public function testSuggestionWithClassImport(): void
     {
         $tester = $this->create(
             [
@@ -208,6 +219,71 @@ class CompletionHandlerTest extends TestCase
             ],
             $response->result->items
         );
+        $this->assertFalse($response->result->isIncomplete);
+    }
+
+    public function testSuggestionWithFunctionImport(): void
+    {
+        $tester = $this->create(
+            [
+                Suggestion::createWithOptions(
+                    'async',
+                    [
+                        'type'        => Suggestion::TYPE_FUNCTION,
+                        'name_import' => '\Amp\async',
+                        'range'       => PhpactorRange::fromStartAndEnd(0, 0),
+                    ]
+                ),
+            ],
+            true,
+            false,
+            [
+                [new TextEdit(new Range(new Position(0, 0), new Position(0, 4)), 'async')]
+            ]
+        );
+        $response = $tester->mustRequestAndWait(
+            'textDocument/completion',
+            [
+                'textDocument' => ProtocolFactory::textDocumentIdentifier(self::EXAMPLE_URI),
+                'position'     => ProtocolFactory::position(0, 0)
+            ]
+        );
+        $this->assertCompletion(
+            [
+                self::completionItem(
+                    'async',
+                    null,
+                    [
+                        'kind' => 3,
+                        'detail' => null,
+                        'insertText' => 'async',
+                        'textEdit'   => TextEdit::fromArray(
+                            [
+                                'newText' => 'async',
+                                'range'   => Range::fromArray(
+                                    [
+                                        'start' => Position::fromArray(['line' => 0, 'character' => 0]),
+                                        'end'   => Position::fromArray(['line' => 0, 'character' => 0]),
+                                    ]
+                                )
+                            ]
+                        ),
+                        'additionalTextEdits' => [
+                            TextEdit::fromArray([
+                                'newText' => 'async',
+                                'range' => Range::fromArray([
+                                    'start' => Position::fromArray(['line' => 0, 'character' => 0]),
+                                    'end' => Position::fromArray(['line' => 0, 'character' => 4]),
+                                ])
+                            ])
+                        ]
+                    ]
+                )
+            ],
+            /** @phpstan-ignore-next-line */
+            $response->result->items
+        );
+        /** @phpstan-ignore-next-line */
         $this->assertFalse($response->result->isIncomplete);
     }
 
@@ -481,6 +557,7 @@ class CompletionHandlerTest extends TestCase
     {
         return new class($suggestions, $isIncomplete) implements Completor {
             public function __construct(
+                /** @var Suggestion[] */
                 private array $suggestions,
                 private bool $isIncomplete
             ) {

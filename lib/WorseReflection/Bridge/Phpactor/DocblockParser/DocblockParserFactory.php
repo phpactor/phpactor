@@ -19,6 +19,7 @@ class DocblockParserFactory implements DocBlockFactory
         'param',
         'return',
         'method',
+        'type',
         'deprecated',
         'extends',
         'implements',
@@ -44,7 +45,7 @@ class DocblockParserFactory implements DocBlockFactory
 
     public function create(string $docblock, ReflectionScope $scope): DocBlock
     {
-        if (empty(trim($docblock))) {
+        if (trim($docblock) === '') {
             return new PlainDocblock();
         }
 
