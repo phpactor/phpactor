@@ -66,7 +66,7 @@ abstract class RenamerTestCase extends TestCase
             );
         }
 
-        $process = Process::fromShellCommandline('php ' . $this->workspace()->path('project/test.php'));
+        $process = Process::fromShellCommandline(PHP_BINARY . ' ' . $this->workspace()->path('project/test.php'));
         $process->mustRun();
         $assertion($this->reflector);
     }
