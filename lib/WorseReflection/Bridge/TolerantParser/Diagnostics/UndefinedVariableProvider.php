@@ -377,6 +377,25 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'dynamic pass by ref (without type)',
+            source: <<<'PHP'
+                <?php
+                class Foo {
+                    function foo(&$v1): void
+                    {
+                        $v1 = "";
+                    }
+                }
+
+                $f = new Foo();
+                $f->bind($var1);
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'dynamic pass by ref',
             source: <<<'PHP'
                 <?php
