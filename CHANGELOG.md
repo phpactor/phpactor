@@ -17,6 +17,7 @@ Bug fixes:
 
   - Only filter new object expression names in contextual completion #2603
   - Fixing include and exclude patterns #2593 @mamazu
+  - Fix missing @implements code action #2668 @dantleech
 
 ## 2024-03-09
 

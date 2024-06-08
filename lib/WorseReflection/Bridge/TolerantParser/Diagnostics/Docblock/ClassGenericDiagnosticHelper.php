@@ -38,7 +38,14 @@ final class ClassGenericDiagnosticHelper
     public function diagnosticsForImplements(Reflector $reflector, ByteOffsetRange $range, ReflectionClassLike $class, ?ReflectionClassLike $genericClass): Generator
     {
         if ($class instanceof ReflectionClass) {
-            yield from $this->fromReflectionClass($reflector, $range, $class, $genericClass, $class->docblock()->implements(), '@implements');
+            yield from $this->fromReflectionClass(
+                $reflector,
+                $range,
+                $class,
+                $genericClass,
+                $class->docblock()->implements(),
+                '@implements'
+            );
         }
     }
 
@@ -64,7 +71,10 @@ final class ClassGenericDiagnosticHelper
             return;
         }
 
-        $genericTypes = array_filter($genericTypes, fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue());
+        $genericTypes = array_filter(
+            $genericTypes,
+            fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue()
+        );
 
         $defaultGenericType = new GenericClassType(
             $reflector,
