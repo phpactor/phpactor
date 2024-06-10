@@ -15,6 +15,7 @@ use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Rename\Adapter\ReferenceFinder\ClassMover\ClassRenamer;
 use Phpactor\Rename\Adapter\ReferenceFinder\MemberRenamer;
 use Phpactor\Rename\Adapter\ReferenceFinder\VariableRenamer;
+use Phpactor\Rename\Adapter\WorseReflection\WorseReflectionMemberRenamer;
 use Phpactor\Rename\Model\FileRenamer;
 use Phpactor\Rename\Model\FileRenamer\LoggingFileRenamer;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
@@ -29,6 +30,7 @@ use Phpactor\ReferenceFinder\DefinitionAndReferenceFinder;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
+use Phpactor\WorseReflection\Reflector;
 
 class LanguageServerRenameWorseExtension implements Extension
 {
@@ -45,6 +47,14 @@ class LanguageServerRenameWorseExtension implements Extension
                 ),
                 $container->get(TextDocumentLocator::class),
                 $container->get('worse_reflection.tolerant_parser')
+            );
+        }, [
+            LanguageServerRenameExtension::TAG_RENAMER => []
+        ]);
+
+        $container->register(WorseReflectionMemberRenamer::class, function (Container $container) {
+            return new WorseReflectionMemberRenamer(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
             );
         }, [
             LanguageServerRenameExtension::TAG_RENAMER => []

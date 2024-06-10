@@ -29,6 +29,7 @@ abstract class RenamerTestCase extends TestCase
     protected function setUp(): void
     {
         $this->workspace()->reset();
+        $this->workspace()->mkdir('project');
         $this->reflector = ReflectorBuilder::create()
             ->addLocator(new BruteForceSourceLocator(ReflectorBuilder::create()->build(), $this->workspace()->path('project')))
             ->build();
