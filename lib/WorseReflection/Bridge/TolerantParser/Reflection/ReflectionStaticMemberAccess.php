@@ -60,7 +60,7 @@ class ReflectionStaticMemberAccess implements ReflectionNode
 
     public function name(): string
     {
-        return NodeUtil::nameFromTokenOrNode($this->node, $this->node->memberName);
+        return ltrim(NodeUtil::nameFromTokenOrNode($this->node, $this->node->memberName), '$');
     }
 
     public function scope(): ReflectionScope
@@ -72,7 +72,7 @@ class ReflectionStaticMemberAccess implements ReflectionNode
     {
         $memberName = $this->node->memberName;
         return ByteOffsetRange::fromInts(
-            $memberName->getStartPosition(),
+            $memberName->getStartPosition() + 1,
             $memberName->getEndPosition()
         );
     }
