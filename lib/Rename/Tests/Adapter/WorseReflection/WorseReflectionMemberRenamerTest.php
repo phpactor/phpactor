@@ -47,8 +47,42 @@ class WorseReflectionMemberRenamerTest extends RenamerTestCase
                 self::assertTrue($reflection->methods()->has('newName'));
             }
         ];
+        yield 'private static method declaration' => [
+            'member_renamer/method_declaration_static_private',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $method = $reflection->methods()->get('foobar');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $method->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->methods()->has('newName'));
+            }
+        ];
         yield 'private property declaration' => [
             'member_renamer/property_declaration_private',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $method = $reflection->properties()->get('foobar');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $method->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->properties()->has('newName'));
+            }
+        ];
+        yield 'private static property declaration' => [
+            'member_renamer/property_declaration_static_private',
             function (Reflector $reflector, Renamer $renamer): Generator {
                 $reflection = $reflector->reflectClass('ClassOne');
                 $method = $reflection->properties()->get('foobar');

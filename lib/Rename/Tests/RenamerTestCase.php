@@ -3,6 +3,7 @@
 namespace Phpactor\Rename\Tests;
 
 use Closure;
+use RuntimeException;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
@@ -50,6 +51,16 @@ abstract class RenamerTestCase extends TestCase
     public function testRename(string $path, Closure $operation, Closure $assertion): void
     {
         $basePath = __DIR__ . '/Cases/' . $path;
+
+
+        if (!file_exists($basePath)) {
+            throw new RuntimeException(sprintf(
+                'Case path "%s" does not yet exist',
+                $basePath
+            ));
+        }
+
+
         foreach ((array)glob($basePath . '/**.ph') as $path) {
             $this->workspace()->put(
                 'project/' . ((string)substr((string)$path, strlen($basePath))) . 'p',
