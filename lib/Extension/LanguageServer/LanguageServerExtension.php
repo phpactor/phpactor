@@ -73,6 +73,13 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Webmozart\Assert\Assert;
+use function array_filter;
+use function array_keys;
+use function array_values;
+use function get_debug_type;
+use function implode;
+use function is_string;
+use function sprintf;
 
 class LanguageServerExtension implements Extension
 {
@@ -336,7 +343,7 @@ class LanguageServerExtension implements Extension
                     throw new RuntimeException(sprintf(
                         'Tagged service provider "%s" does not implement ServiceProvider interface, is a "%s"',
                         $serviceId,
-                        is_object($provider) ? get_class($provider) : gettype($provider)
+                        get_debug_type($provider),
                     ));
                 }
                 $providers[] = $provider;

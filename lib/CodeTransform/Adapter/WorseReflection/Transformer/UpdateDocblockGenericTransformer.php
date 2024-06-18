@@ -49,7 +49,6 @@ class UpdateDocblockGenericTransformer implements Transformer
                     $builder->use($classType->name()->__toString());
                 }
 
-
                 $tag = match($diagnostic->isExtends()) {
                     true => new ExtendsTagPrototype(
                         $diagnostic->missingGenericType(),
