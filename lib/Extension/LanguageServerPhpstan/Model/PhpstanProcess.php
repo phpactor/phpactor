@@ -72,6 +72,10 @@ class PhpstanProcess
                 $process->getWorkingDirectory(),
             ));
 
+            if ($stdout === '') {
+                return [];
+            }
+
             return $this->parser->parse($stdout);
         });
     }
