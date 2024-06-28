@@ -9,6 +9,7 @@ Features:
 
 Improvements:
 
+  - Do not use indexer when renaming private properties/methods #2672 @dantleech
   - Fix contextual completion in constructor agrument position #2504
   - Basic support for `array_reduce` stub #2576
   - Support variadics in contextual completion #2603
@@ -17,6 +18,7 @@ Bug fixes:
 
   - Only filter new object expression names in contextual completion #2603
   - Fixing include and exclude patterns #2593 @mamazu
+  - Fix missing @implements code action #2668 @dantleech
 
 ## 2024-03-09
 
