@@ -73,6 +73,10 @@ class PhpstanProcess
             ));
 
             if ($stdout === '') {
+                $this->logger->error(sprintf(
+                    'Phpstan exited with code "%s": But the standard output was empty',
+                    $exitCode,
+                ));
                 return [];
             }
 
