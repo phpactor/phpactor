@@ -9,6 +9,8 @@ use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
 use Phpactor\Extension\Rpc\Response\UpdateFileSourceResponse;
 use Phpactor\Extension\Rpc\Response\Input\ListInput;
+use Phpactor\TextDocument\TextEdit as PhpactorTextEdit;
+use Phpactor\TextDocument\TextEdits;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -65,7 +67,11 @@ class OverrideMethodHandlerTest extends HandlerTestCase
             EOT
         ;
 
-        $this->overrideMethod->overrideMethod($source, 'ChildClass', 'foobar')->willReturn(TransformSourceCode::fromString('hello'));
+        $this->overrideMethod->overrideMethod(
+            $source,
+            'ChildClass',
+            'foobar'
+        )->willReturn(TextEdits::fromTextEdits([PhpactorTextEdit::create(0, strlen($source), 'hello')]));
 
         $action = $this->handle('override_method', [
             'class_name' => 'ChildClass',
@@ -93,10 +99,10 @@ class OverrideMethodHandlerTest extends HandlerTestCase
         $barfooTransformedCode = TransformSourceCode::fromString('barfoo was also added');
 
         $this->overrideMethod->overrideMethod($source, 'ChildClass', 'foobar')
-            ->willReturn($foobarTransformedCode)
+            ->willReturn(TextEdits::fromTextEdits([PhpactorTextEdit::create(0, strlen($source), $foobarTransformedCode)]))
             ->shouldBeCalledTimes(1);
         $this->overrideMethod->overrideMethod($foobarTransformedCode, 'ChildClass', 'barfoo')
-            ->willReturn($barfooTransformedCode)
+            ->willReturn(TextEdits::fromTextEdits([PhpactorTextEdit::create(0, strlen($foobarTransformedCode), $barfooTransformedCode)]))
             ->shouldBeCalledTimes(1);
 
         $action = $this->handle('override_method', [
