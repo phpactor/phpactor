@@ -5,7 +5,7 @@ namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\WorseReferenceFinder\Tests\DefinitionLocatorTestCase;
-use Phpactor\WorseReferenceFinder\TolerantVariableDefintionLocator;
+use Phpactor\WorseReferenceFinder\TolerantVariableDefinitionLocator;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
 
 class TolerantVariableDefinitionLocatorTest extends DefinitionLocatorTestCase

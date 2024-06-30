@@ -8,7 +8,7 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\MapResolver\Resolver;
-use Phpactor\WorseReferenceFinder\TolerantVariableDefintionLocator;
+use Phpactor\WorseReferenceFinder\TolerantVariableDefinitionLocator;
 use Phpactor\WorseReferenceFinder\WorsePlainTextClassDefinitionLocator;
 use Phpactor\WorseReferenceFinder\WorseReflectionDefinitionLocator;
 use Phpactor\WorseReferenceFinder\WorseReflectionTypeLocator;
