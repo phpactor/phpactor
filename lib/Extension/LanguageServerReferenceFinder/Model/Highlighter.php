@@ -307,10 +307,10 @@ class Highlighter
     /**
      * @return Generator<Highlight>
      */
-    private function namespacedNames(Node $rootNode, string $fullyQualfiedName): Generator
+    private function namespacedNames(Node $rootNode, string $fullyQualifiedName): Generator
     {
         foreach ($rootNode->getDescendantNodes() as $node) {
-            if ($node instanceof NamespaceUseClause && (string) $node->namespaceName === $fullyQualfiedName) {
+            if ($node instanceof NamespaceUseClause && (string) $node->namespaceName === $fullyQualifiedName) {
                 $nameParts = $node->namespaceName->nameParts;
                 $name = end($nameParts);
 
@@ -320,7 +320,7 @@ class Highlighter
                     DocumentHighlightKind::TEXT
                 );
             }
-            if ($node instanceof ClassDeclaration && (string)$node->getNamespacedName() === $fullyQualfiedName) {
+            if ($node instanceof ClassDeclaration && (string)$node->getNamespacedName() === $fullyQualifiedName) {
                 yield new Highlight(
                     $node->name->getStartPosition(),
                     $node->name->getEndPosition(),
@@ -328,7 +328,7 @@ class Highlighter
                 );
             }
             if ($node instanceof QualifiedName) {
-                if ($fullyQualfiedName === (string)$node->getResolvedName()) {
+                if ($fullyQualifiedName === (string)$node->getResolvedName()) {
                     yield new Highlight(
                         $node->getStartPosition(),
                         $node->getEndPosition(),

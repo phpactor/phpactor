@@ -34,7 +34,7 @@ class IndexInfos implements IteratorAggregate, Countable
         }
 
         throw new RuntimeException(sprintf(
-            'Index "%s" not found. Available indicies are: %s',
+            'Index "%s" not found. Available indices are: %s',
             $name,
             implode(', ', $this->names())
         ));

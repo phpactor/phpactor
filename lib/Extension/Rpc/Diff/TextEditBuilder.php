@@ -10,7 +10,7 @@ use SebastianBergmann\Diff\Differ as BergmannDiffer;
  * Text Edits are based on the LSP TextEdit object:
  *     https://github.com/Microsoft/language-server-protocol/blob/gh-pages/specification.md#textedit
  *
- * This is a weak implementation and uses a line-by-line diff alogrithm. All
+ * This is a weak implementation and uses a line-by-line diff algorithm. All
  * character offsets are 0.
  */
 class TextEditBuilder

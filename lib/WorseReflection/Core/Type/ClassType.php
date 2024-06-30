@@ -105,7 +105,7 @@ class ClassType extends Type implements ClassLikeType, HasEmptyType
         return $this;
     }
 
-    public function asReflectedClasssType(Reflector $reflector): ReflectedClassType
+    public function asReflectedClassType(Reflector $reflector): ReflectedClassType
     {
         if ($this instanceof ReflectedClassType) {
             return $this;

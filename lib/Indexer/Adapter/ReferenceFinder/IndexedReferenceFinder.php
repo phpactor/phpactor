@@ -107,11 +107,11 @@ class IndexedReferenceFinder implements ReferenceFinder
 
             // note that we check the all implementations: this will multiply
             // the number of NOT and MAYBE matches
-            foreach ($this->implementationsOf($containerType) as $implemenations) {
+            foreach ($this->implementationsOf($containerType) as $implementations) {
                 yield from $this->memberReferencesTo(
                     $this->symbolTypeToReferenceType($nodeContext),
                     $nodeContext->symbol()->name(),
-                    $implemenations
+                    $implementations
                 );
             }
             return;

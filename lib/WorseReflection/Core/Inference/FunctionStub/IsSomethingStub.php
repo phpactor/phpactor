@@ -39,7 +39,7 @@ class IsSomethingStub implements FunctionStub
 
         $argType = $arg0->type();
 
-        // extract to a variabe as it will not otherwise work with PHP 7.4
+        // extract to a variable as it will not otherwise work with PHP 7.4
         $type = $this->isType;
         return $context->withType(new BooleanLiteralType($argType instanceof $type));
     }

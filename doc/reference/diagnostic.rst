@@ -492,7 +492,7 @@ Report if a use statement is not required.
         
         - ``WARN``: ``Name "Foobar" is imported but not used``
         
-    .. tab:: unused imort
+    .. tab:: unused import
         
         .. code-block:: php
         
@@ -868,7 +868,7 @@ Report when a class extends a generic class but does not provide an @extends tag
             }
             
             /**
-             * @extends NeedGeneic<int>
+             * @extends NeedGeneric<int>
              */
             class Foobar extends NeedGeneric
             {

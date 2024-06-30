@@ -92,7 +92,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
     }
 
     /**
-     * @return Promise<Diagnostic[]|false> False when there are no diagnostics available for file, array othwerwise
+     * @return Promise<Diagnostic[]|false> False when there are no diagnostics available for file, array otherwise
      *                                     Array containing diagnostics to show
      */
     private function findDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
@@ -184,7 +184,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             $description = preg_replace('/Fixing examples:.*/s', '', $description);
 
             if (!is_string($description)) {
-                throw new RuntimeException(sprintf('Description was epxected to be string, got %s', gettype($description)));
+                throw new RuntimeException(sprintf('Description was expected to be string, got %s', gettype($description)));
             }
 
             $description = trim($description);

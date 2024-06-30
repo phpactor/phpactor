@@ -8,7 +8,7 @@ use Phpactor\WorseReferenceFinder\Tests\DefinitionLocatorTestCase;
 use Phpactor\WorseReferenceFinder\TolerantVariableDefintionLocator;
 use Phpactor\WorseReferenceFinder\TolerantVariableReferenceFinder;
 
-class TolerantVariableDefintionLocatorTest extends DefinitionLocatorTestCase
+class TolerantVariableDefinitionLocatorTest extends DefinitionLocatorTestCase
 {
     public function testLocatesLocalVariable(): void
     {
@@ -45,7 +45,7 @@ class TolerantVariableDefintionLocatorTest extends DefinitionLocatorTestCase
 
     protected function locator(): DefinitionLocator
     {
-        return new TolerantVariableDefintionLocator(
+        return new TolerantVariableDefinitionLocator(
             new TolerantVariableReferenceFinder(new Parser(), true)
         );
     }

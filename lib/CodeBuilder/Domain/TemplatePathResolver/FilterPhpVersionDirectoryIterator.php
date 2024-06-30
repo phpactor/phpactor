@@ -36,7 +36,7 @@ class FilterPhpVersionDirectoryIterator extends FilterIterator
 
         $filename = $file->getFilename();
 
-        if (!$file->isDir() || // Keep only directy
+        if (!$file->isDir() || // Keep only directly
             !preg_match('/^\d+\.\d+/', $filename) || // Should have at leasts major and minor version
             !version_compare($filename, $this->phpVersion, '<=') // Should be at maximum equals to the defined version
         ) {

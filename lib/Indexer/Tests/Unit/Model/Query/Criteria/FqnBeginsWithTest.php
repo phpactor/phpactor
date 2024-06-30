@@ -26,7 +26,7 @@ class FqnBeginsWithTest extends TestCase
         self::assertFalse(Criteria::fqnBeginsWith('Barfoo')->isSatisfiedBy($record));
     }
 
-    public function testMatchesPartialBeginingWith(): void
+    public function testMatchesPartialBeginningWith(): void
     {
         $record = ClassRecord::fromName('Foobar\\Barfoos');
         self::assertTrue(Criteria::fqnBeginsWith('Foo')->isSatisfiedBy($record));

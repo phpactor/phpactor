@@ -434,15 +434,15 @@ endfunction
 function! s:getEndOffsetFromMark(mark, linewise)
     let [line, column] = getpos(a:mark)[1:2]
     let offset = line2byte(line)
-    let lineLenght = strlen(getline(line))
+    let lineLength = strlen(getline(line))
 
     if v:true == a:linewise
-        return offset + lineLenght - 1
+        return offset + lineLength - 1
     endif
 
     " Note VIM returns 2,147,483,647 on this system when in block select mode
     if (column > 1000000)
-        let column = lineLenght
+        let column = lineLength
     endif
 
     return offset + column - 1

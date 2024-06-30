@@ -48,7 +48,7 @@ class CompletionWorseExtensionTest extends TestCase
         self::assertFalse(in_array('completion_worse.completor.constructor', $completors), 'Completor disabled');
     }
 
-    public function testExceptionWhenSelectingUnknownSearchPriotityStrategy(): void
+    public function testExceptionWhenSelectingUnknownSearchPriorityStrategy(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unknown search priority strategy "asd"');

@@ -12,9 +12,9 @@ class TextFormatTest extends TestCase
     /**
      * @dataProvider provideRemoveIndentation
      */
-    public function testRemoveIndentation(string $text, string $expeced): void
+    public function testRemoveIndentation(string $text, string $expected): void
     {
-        self::assertEquals($expeced, (new TextFormat())->indentRemove($text));
+        self::assertEquals($expected, (new TextFormat())->indentRemove($text));
     }
 
     /**
@@ -135,7 +135,7 @@ class TextFormatTest extends TestCase
             ''
         ];
 
-        yield 'exmaple 1' => [
+        yield 'example 1' => [
             <<<'EOT'
                 private $bar;
                 EOT

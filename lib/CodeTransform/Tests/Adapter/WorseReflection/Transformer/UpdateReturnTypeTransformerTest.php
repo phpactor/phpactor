@@ -111,7 +111,7 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
                 EOT
         ];
 
-        yield 'add multipe return types' => [
+        yield 'add multiple return types' => [
             <<<'EOT'
                 <?php
 

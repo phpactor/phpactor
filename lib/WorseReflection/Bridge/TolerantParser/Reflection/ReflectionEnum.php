@@ -117,7 +117,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
 
     public function backedType(): Type
     {
-        return NodeUtil::typeFromQualfiedNameLike($this->serviceLocator()->reflector(), $this->node, $this->node->enumType);
+        return NodeUtil::typeFromQualifiedNameLike($this->serviceLocator()->reflector(), $this->node, $this->node->enumType);
     }
 
     public function classLikeType(): string

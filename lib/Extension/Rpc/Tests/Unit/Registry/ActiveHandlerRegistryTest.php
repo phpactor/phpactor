@@ -10,7 +10,7 @@ use Phpactor\Extension\Rpc\Registry\ActiveHandlerRegistry;
 
 class ActiveHandlerRegistryTest extends TestCase
 {
-    public function testExceptionForUnkown(): void
+    public function testExceptionForUnknown(): void
     {
         $this->expectException(HandlerNotFound::class);
         $this->expectExceptionMessage('No handler "aaa"');

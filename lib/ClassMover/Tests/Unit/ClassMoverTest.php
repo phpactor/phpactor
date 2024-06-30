@@ -41,7 +41,7 @@ class ClassMoverTest extends TestCase
     }
 
     /**
-     * It should delgate to the finder to find references.
+     * It should delegate to the finder to find references.
      */
     public function testFindReferences(): FoundReferences
     {

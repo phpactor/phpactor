@@ -127,7 +127,7 @@ variable to that type, or a union of that type. See also
 Assignments
 ~~~~~~~~~~~
 
-Phpactor will track assignemnts:
+Phpactor will track assignments:
 
 .. code:: php
 

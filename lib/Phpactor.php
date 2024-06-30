@@ -277,7 +277,7 @@ class Phpactor
         }
 
         foreach ($masterSchema->errors()->errors() as $error) {
-            // do not polute STDERR for RPC, for some reason the VIM plugin reads also
+            // do not pollute STDERR for RPC, for some reason the VIM plugin reads also
             // STDERR and possibly other RPC clients too
             if ($commandName !== 'rpc') {
                 if ($output instanceof ConsoleOutputInterface) {

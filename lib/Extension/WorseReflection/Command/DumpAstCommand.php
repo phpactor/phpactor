@@ -41,7 +41,7 @@ class DumpAstCommand extends Command
         $rootNode = $this->parser->parseSourceFile($contents);
         $parseEnd = microtime(true);
 
-        $traveralStart = microtime(true);
+        $traversalStart = microtime(true);
         $out = '';
         $this->dump($output, $rootNode, $out);
         $traversalEnd = microtime(true);
@@ -49,7 +49,7 @@ class DumpAstCommand extends Command
         $output->writeln($out);
         $output->writeln('');
         $output->writeln(sprintf('Parsing time: %ss', number_format($parseEnd - $parseStart, 4)));
-        $output->writeln(sprintf('Traversal time: %ss', number_format($traversalEnd - $traveralStart, 4)));
+        $output->writeln(sprintf('Traversal time: %ss', number_format($traversalEnd - $traversalStart, 4)));
 
         return 0;
     }

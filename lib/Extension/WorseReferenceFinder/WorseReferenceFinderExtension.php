@@ -38,7 +38,7 @@ class WorseReferenceFinderExtension implements Extension
         }, [ ReferenceFinderExtension::TAG_DEFINITION_LOCATOR => []]);
 
         $container->register('worse_reference_finder.definition_locator.variable', function (Container $container) {
-            return new TolerantVariableDefintionLocator(
+            return new TolerantVariableDefinitionLocator(
                 new TolerantVariableReferenceFinder(
                     $container->get('worse_reflection.tolerant_parser'),
                     true

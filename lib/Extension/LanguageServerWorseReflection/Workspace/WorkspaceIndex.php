@@ -56,7 +56,7 @@ class WorkspaceIndex
      * Refresh the document.
      *
      * In order to prevent continuous reparsing the document will
-     * only be refreshed at the sepecified interval.
+     * only be refreshed at the specified interval.
      */
     private function updateDocument(TextDocument $textDocument): void
     {
