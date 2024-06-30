@@ -868,7 +868,7 @@ Report when a class extends a generic class but does not provide an @extends tag
             }
             
             /**
-             * @extends NeedGeneric<int>
+             * @extends NotFoundGeneric<int>
              */
             class Foobar extends NeedGeneric
             {

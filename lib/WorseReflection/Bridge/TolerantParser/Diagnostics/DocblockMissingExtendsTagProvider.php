@@ -184,7 +184,7 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
                 }
 
                 /**
-                 * @extends NeedGeneric<int>
+                 * @extends NotFoundGeneric<int>
                  */
                 class Foobar extends NeedGeneric
                 {
