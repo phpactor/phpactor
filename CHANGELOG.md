@@ -6,6 +6,7 @@ Changelog
 Features:
 
   - PHAR Indexing #2412 #2611 @dantleech
+  - Override method refactor #2686 @dantleech
 
 Improvements:
 

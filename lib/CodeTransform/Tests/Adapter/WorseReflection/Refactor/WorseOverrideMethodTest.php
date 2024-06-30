@@ -63,6 +63,6 @@ class WorseOverrideMethodTest extends WorseTestCase
         $reflector = $this->reflectorForWorkspace($source);
         $factory = new WorseBuilderFactory($reflector);
         $override = new WorseOverrideMethod($reflector, $factory, $this->updater());
-        return $override->overrideMethod(SourceCode::fromString($source), $className, $methodName);
+        return $override->overrideMethod(SourceCode::fromString($source), $className, $methodName)->apply($source);
     }
 }
