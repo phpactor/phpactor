@@ -52,7 +52,7 @@ class Example1
 
     public function complete(string $source, int $offset): Response
     {
-        list($offset, $partialMatch) = $this->getOffetToReflect($source, $offset);
+        list($offset, $partialMatch) = $this->getOffsetToReflect($source, $offset);
 
         $reflectionOffset = $this->reflector->reflectOffset(
             SourceCode::fromString($source),
@@ -72,7 +72,7 @@ class Example1
         return new Response($suggestions, Issues::fromStrings($nodeContext->issues()));
     }
 
-    private function getOffetToReflect($source, $offset)
+    private function getOffsetToReflect($source, $offset)
     {
         /** @var string $source */
         $source = str_replace("\n", ' ', $source);

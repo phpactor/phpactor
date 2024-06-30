@@ -27,7 +27,7 @@ class ShortNameBeginsWithTest extends TestCase
         self::assertFalse((new ShortNameBeginsWith('Barfoo'))->isSatisfiedBy($record));
     }
 
-    public function testMatchesPartialBeginingWith(): void
+    public function testMatchesPartialBeginningWith(): void
     {
         $record = ClassRecord::fromName('Foobar\\Barfoos');
         self::assertTrue((new ShortNameBeginsWith('Barfoo'))->isSatisfiedBy($record));

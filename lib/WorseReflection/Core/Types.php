@@ -68,7 +68,7 @@ final class Types implements IteratorAggregate
     }
 
     /**
-     * Retrurns all class-like types
+     * Returns all class-like types
      * @return Types<Type&ClassLikeType>
      */
     public function classLike(): Types

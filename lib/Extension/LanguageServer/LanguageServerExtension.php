@@ -464,8 +464,8 @@ class LanguageServerExtension implements Extension
 
         $container->register(FormattingHandler::class, function (Container $container) {
             $formatter = null;
-            foreach ($container->getServiceIdsForTag(self::TAG_FORMATTER) as $seviceId => $_) {
-                $formatter = $container->get($seviceId);
+            foreach ($container->getServiceIdsForTag(self::TAG_FORMATTER) as $serviceId => $_) {
+                $formatter = $container->get($serviceId);
                 if (null === $formatter) {
                     continue;
                 }

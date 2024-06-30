@@ -90,7 +90,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
                 $reflectionClassLike
             ));
 
-            // only inerit public and protected properties from parent classes
+            // only inherit public and protected properties from parent classes
             if ($reflectionClassLike !== $this && !$reflectionClassLike instanceof ReflectionTrait) {
                 $classLikeMembers = $classLikeMembers->byVisibilities([Visibility::public(), Visibility::protected()]);
             }

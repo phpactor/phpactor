@@ -1,5 +1,5 @@
 <?php
 
-function sprintf(strng $foo, string $bar): void
+function sprintf(string $foo, string $bar): void
 {
 }

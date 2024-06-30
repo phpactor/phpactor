@@ -14,7 +14,7 @@ List of currently available code actions:
 +---------------------------------------------+----------------------------------------+
 | :ref:`refactoring_complete_constructor`     | ``quickfix.complete_constructor``      |
 +---------------------------------------------+----------------------------------------+
-| :ref:`refactoring_add_missing_assignements` | ``quickfix.add_missing_properties``    |
+| :ref:`refactoring_add_missing_assignments`  | ``quickfix.add_missing_properties``    |
 +---------------------------------------------+----------------------------------------+
 | :ref:`implement_contracts`                  | ``quickfix.implement_contracts``       |
 +---------------------------------------------+----------------------------------------+

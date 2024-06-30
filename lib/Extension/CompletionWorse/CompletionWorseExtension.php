@@ -74,7 +74,7 @@ class CompletionWorseExtension implements Extension
     public const SERVICE_COMPLETION_WORSE_SNIPPET_FORMATTERS = 'completion_worse.snippet.formatters';
     public const NAME_SEARCH_STRATEGY_PROXIMITY = 'proximity';
     public const NAME_SEARCH_STRATEGY_NONE = 'none';
-    public const PARAM_EXPERIMENTAL = 'completion_worse.experimantal';
+    public const PARAM_EXPERIMENTAL = 'completion_worse.experimental';
     public const PARAM_SNIPPETS = 'completion_worse.snippets';
     public const PARAM_DEBUG = 'completion_worse.debug';
 

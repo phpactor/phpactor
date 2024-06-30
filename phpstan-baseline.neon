@@ -3346,7 +3346,7 @@ parameters:
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Benchmark/CodeAction/ImportNameProviderBench.php
 
 		-
-			message: "#^Parameter \\$foo of function sprintf\\(\\) has invalid type strng\\.$#"
+			message: "#^Parameter \\$foo of function sprintf\\(\\) has invalid type string\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerCodeTransform/Tests/Empty/sprintf.php
 
@@ -5946,7 +5946,7 @@ parameters:
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TraitImport/TraitImports.php
 
 		-
-			message: "#^Parameter \\#2 \\$node of static method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\NodeUtil\\:\\:typeFromQualfiedNameLike\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
+			message: "#^Parameter \\#2 \\$node of static method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\NodeUtil\\:\\:typeFromQualifiedNameLike\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/TypeResolver/DeclaredMemberTypeResolver.php
 
@@ -6336,7 +6336,7 @@ parameters:
 			path: lib/WorseReflection/Core/Util/NodeUtil.php
 
 		-
-			message: "#^Parameter \\#3 \\$nodeOrToken of static method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\NodeUtil\\:\\:typeFromQualfiedNameLike\\(\\) expects Microsoft\\\\PhpParser\\\\Node\\|Microsoft\\\\PhpParser\\\\Token\\|null, mixed given\\.$#"
+			message: "#^Parameter \\#3 \\$nodeOrToken of static method Phpactor\\\\WorseReflection\\\\Core\\\\Util\\\\NodeUtil\\:\\:typeFromQualifiedNameLike\\(\\) expects Microsoft\\\\PhpParser\\\\Node\\|Microsoft\\\\PhpParser\\\\Token\\|null, mixed given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Util/NodeUtil.php
 

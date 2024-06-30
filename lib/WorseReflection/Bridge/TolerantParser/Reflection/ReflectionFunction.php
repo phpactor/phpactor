@@ -52,7 +52,7 @@ class ReflectionFunction extends AbstractReflectedNode implements CoreReflection
 
     public function type(): Type
     {
-        $type = NodeUtil::typeFromQualfiedNameLike(
+        $type = NodeUtil::typeFromQualifiedNameLike(
             $this->serviceLocator->reflector(),
             $this->node,
             $this->node->returnTypeList

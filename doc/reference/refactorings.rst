@@ -11,7 +11,7 @@ Refactoring
 Fixes
 =====
 
-.. _refactoring_add_missing_assignements:
+.. _refactoring_add_missing_assignments:
 
 Add Missing Assignments
 -----------------------
@@ -829,7 +829,7 @@ After choosing the "Fill Object" code action:
 Override Method
 ---------------
 
-Overide a method from a parent class.
+Override a method from a parent class.
 
 .. tabs::
 

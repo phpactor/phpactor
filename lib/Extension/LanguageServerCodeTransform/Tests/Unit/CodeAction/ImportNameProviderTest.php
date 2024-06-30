@@ -81,7 +81,7 @@ class ImportNameProviderTest extends IntegrationTestCase
         //, 1, 1
         //];
 
-        yield 'code actions + diagnostic for non-existant class' => [
+        yield 'code actions + diagnostic for non-existent class' => [
             <<<'EOT'
                 // File: subject.php
                 <?php new MissingNameFoo();'
@@ -93,7 +93,7 @@ class ImportNameProviderTest extends IntegrationTestCase
 
         ];
 
-        yield 'code actions + diagnostic for namespaced non-existant class' => [
+        yield 'code actions + diagnostic for namespaced non-existent class' => [
             <<<'EOT'
                 // File: subject.php
                 <?php namespace Bar; new MissingNameFoo();'
@@ -154,7 +154,7 @@ class ImportNameProviderTest extends IntegrationTestCase
             }
         ];
 
-        yield 'built in global funtion' => [
+        yield 'built in global function' => [
             <<<'EOT'
                 // File: subject.php
                 <?php

@@ -578,7 +578,7 @@ class ReflectionMethodTest extends IntegrationTestCase
                 $this->assertEquals('echo "Hello!";', (string) $methods->get('barfoo')->body());
             },
         ];
-        yield 'It reflects a method from an inteface' => [
+        yield 'It reflects a method from an interface' => [
             <<<'EOT'
                 <?php
 

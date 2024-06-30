@@ -142,14 +142,14 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
     /**
      * @dataProvider provideInvalidClasses
      */
-    public function testInvalidClass(string $manifest, string $exectedMessage): void
+    public function testInvalidClass(string $manifest, string $expectedMessage): void
     {
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
 
         $logger = $this->prophesize(LoggerInterface::class);
 
-        $logger->warning(Argument::containingString($exectedMessage))->shouldBeCalled();
+        $logger->warning(Argument::containingString($expectedMessage))->shouldBeCalled();
 
         $agent = $this->indexAgentBuilder('src')
             ->setIndexers([

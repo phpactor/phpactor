@@ -7,7 +7,7 @@ use Phpactor\TextDocument\TextDocumentEdits;
 
 interface ExtractConstant
 {
-    public function extractConstant(SourceCode $souceCode, int $offset, string $constantName): TextDocumentEdits;
+    public function extractConstant(SourceCode $sourceCode, int $offset, string $constantName): TextDocumentEdits;
 
     public function canExtractConstant(SourceCode $source, int $offset): bool;
 }

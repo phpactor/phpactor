@@ -50,7 +50,7 @@ class WorseExtractMethodTest extends WorseTestCase
         yield 'tail variables are taken from scope' => ['extractMethod11.test'];
         yield 'replacement indentation is preserved' => ['extractMethod12.test'];
         yield 'only considers selection content for return vars' => ['extractMethod13.test'];
-        yield 'return mutated primative' => ['extractMethod14.test'];
+        yield 'return mutated primitive' => ['extractMethod14.test'];
         yield 'imports classes' => ['extractMethod15.test'];
         yield 'adds return type for scalar' => ['extractMethod16.test'];
         yield 'adds return type for nullable scalar' => ['extractMethod16A.test'];

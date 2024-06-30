@@ -9,7 +9,7 @@ function! phpactor#input#list#inputlist(label, choices, multi, ResultHandler)
     call a:ResultHandler(a:choices[choice - 1])
 endfunction
 
-" expreimental: this stategy currently does not work when used in a 
+" expreimental: this strategy currently does not work when used in a 
 " non-terminal RPC step - https://github.com/phpactor/phpactor/issues/845
 function! phpactor#input#list#fzf(label, choices, multi, ResultHandler)
     let options = [

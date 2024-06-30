@@ -13,7 +13,7 @@ use Generator;
 class ReflectionPromotedPropertyTest extends IntegrationTestCase
 {
     /**
-     * @dataProvider provideConsturctorPropertyPromotion
+     * @dataProvider provideConstructorPropertyPromotion
      */
     public function testReflectProperty(string $source, string $class, Closure $assertion): void
     {
@@ -21,7 +21,7 @@ class ReflectionPromotedPropertyTest extends IntegrationTestCase
         $assertion($class->properties());
     }
 
-    public function provideConsturctorPropertyPromotion(): Generator
+    public function provideConstructorPropertyPromotion(): Generator
     {
         yield 'Typed properties' => [
                 <<<'EOT'

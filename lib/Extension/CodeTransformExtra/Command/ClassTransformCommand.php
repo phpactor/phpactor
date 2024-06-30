@@ -29,7 +29,7 @@ class ClassTransformCommand extends Command
     {
         $this->setDescription('Apply a transformation to an existing class (path or FQN)');
         $this->addArgument('src', InputArgument::REQUIRED, 'Source path or FQN');
-        $this->addOption('transform', 't', InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Tranformations to apply', []);
+        $this->addOption('transform', 't', InputOption::VALUE_REQUIRED|InputOption::VALUE_IS_ARRAY, 'Transformations to apply', []);
         $this->addOption('dry-run', null, InputOption::VALUE_NONE, 'Do not make any changes');
         $this->addOption('diff', null, InputOption::VALUE_NONE, 'Output diff');
     }
