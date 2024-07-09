@@ -1,0 +1,13 @@
+<?php
+
+class Foo
+{
+    /**
+     * @param DataSourceExecutor<covariant DataSource> $dataSource
+     */
+    public function __construct(
+        private DataSourceExecutor $dataSource,
+    ) {
+        wrAssertType('DataSourceExecutor<DataSource>', $dataSource);
+    }
+}
