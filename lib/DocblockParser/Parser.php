@@ -314,6 +314,7 @@ final class Parser
         if ($this->tokens->current->type === Token::T_BRACKET_ANGLE_OPEN) {
             $open = $this->tokens->mustChomp();
             $typeList = null;
+            $variance = null;
             if ($this->tokens->if(Token::T_VARIABLE)) {
                 $typeList = $this->parseTypeList();
             }
@@ -439,6 +440,16 @@ final class Parser
         $types = [];
         while (true) {
             if ($this->tokens->if(Token::T_LABEL)) {
+                if (in_array($this->tokens->mustGetCurrent()->value, [
+                    'covariant',
+                    'contravariant',
+                    'invariant',
+                    'bivariant'
+                ])) {
+                    $types[] = $this->tokens->mustChomp();
+                    $this->tokens->chompWhitespace();
+                }
+
                 $types[] = $this->parseTypes();
             } elseif ($this->tokens->if(Token::T_NULLABLE)) {
                 $types[] = $this->parseTypes();
