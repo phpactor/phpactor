@@ -72,6 +72,14 @@ class PhpstanProcess
                 $process->getWorkingDirectory(),
             ));
 
+            if ($stdout === '') {
+                $this->logger->error(sprintf(
+                    'Phpstan exited with code "%s": But the standard output was empty',
+                    $exitCode,
+                ));
+                return [];
+            }
+
             return $this->parser->parse($stdout);
         });
     }

@@ -7,6 +7,7 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillMatchArms;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
+use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\Refactor\PropertyAccessGenerator;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\Refactor\ExtractConstant;
@@ -33,11 +34,13 @@ use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\CorrectUndefinedVa
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateConstructorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateMemberProvider;
+use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\OverrideMethodProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\PropertyAccessGeneratorProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ImportNameProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\ReplaceQualifierWithImportProvider;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\TransformerCodeActionPovider;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\CreateClassCommand;
+use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\OverrideMethodCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ReplaceQualifierWithImportCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractConstantCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ExtractExpressionCommand;
@@ -50,6 +53,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\TransformCommand;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\CandidateFinder;
 use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter;
+use Phpactor\Extension\LanguageServerCodeTransform\Model\OverrideMethod\OverridableMethodFinder;
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
@@ -233,6 +237,19 @@ class LanguageServerCodeTransformExtension implements Extension
                 'name' => GenerateDecoratorCommand::NAME
             ],
         ]);
+
+        $container->register(OverrideMethodCommand::class, function (Container $container) {
+            return new OverrideMethodCommand(
+                $container->get(ClientApi::class),
+                $container->get(OverrideMethod::class),
+                $container->get(OverridableMethodFinder::class),
+                $container->get(TextDocumentLocator::class)
+            );
+        }, [
+            LanguageServerExtension::TAG_COMMAND => [
+                'name' => OverrideMethodCommand::NAME
+            ],
+        ]);
     }
 
     private function registerCodeActions(ContainerBuilder $container): void
@@ -256,6 +273,18 @@ class LanguageServerCodeTransformExtension implements Extension
             return new ImportNameProvider(
                 $container->get(CandidateFinder::class),
                 $container->getParameter(self::PARAM_REPORT_NON_EXISTING_NAMES)
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
+        ]);
+        $container->register(OverridableMethodFinder::class, function (Container $container) {
+            return new OverridableMethodFinder(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+            );
+        });
+        $container->register(OverrideMethodProvider::class, function (Container $container) {
+            return new OverrideMethodProvider(
+                $container->get(OverridableMethodFinder::class),
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
