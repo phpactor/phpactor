@@ -147,9 +147,12 @@ final class Parser
 
         if ($this->tokens->if(Token::T_LABEL)) {
             $type = $this->parseTypes();
+            $this->tokens->chompWhitespace();
         }
 
-        return new ThrowsTag($tag, $type);
+        $text = $this->parseText();
+
+        return new ThrowsTag($tag, $type, $text);
     }
 
     private function parseMethod(): MethodTag

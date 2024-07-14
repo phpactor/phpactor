@@ -1,0 +1,12 @@
+/**
+ * @throws RuntimeException This happens if something breaks
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ThrowsTag: = @throws
+   ClassNode: = RuntimeException
+   TextNode: = This happens if something breaks
+ */
+

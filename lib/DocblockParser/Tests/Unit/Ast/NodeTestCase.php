@@ -21,6 +21,7 @@ class NodeTestCase extends TestCase
         self::assertIsIterable($nodes);
         self::assertEquals(0, $node->start(), 'Start offset');
         self::assertEquals(strlen($doc), $node->end(), 'End offset');
+        self::assertGreaterThanOrEqual(0, $node->length(), 'Length is negative');
 
         if ($assertion) {
             $assertion($node);
