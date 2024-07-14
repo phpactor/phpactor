@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## master
+
+Improvements:
+
+  - Support parsing generic variance e.g. `covariant` #2664 @dantleech
+
 ## 2024-06-30
 
 Features:
