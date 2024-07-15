@@ -231,7 +231,7 @@ class Phpactor
 
             if (!class_exists($extensionClass)) {
                 if ($output instanceof ConsoleOutputInterface) {
-                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). PHP_EOL);
+                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). "\n");
                 }
                 continue;
             }

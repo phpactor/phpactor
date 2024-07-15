@@ -22,6 +22,9 @@ class ReflectionArgumentTest extends IntegrationTestCase
         $assertion($reflection->arguments());
     }
 
+    /**
+     * @return Generator<string,array{string,array,Closure(Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollection): void}>
+     */
     public static function provideReflectionMethod():Generator
     {
         yield 'It guesses the name from the var name' => [

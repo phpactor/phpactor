@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit\Util;
 
+use Generator;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
 use PHPUnit\Framework\TestCase;
@@ -25,12 +26,13 @@ class SuggestionNameFormatterTest extends TestCase
         $this->assertSame($expected, $this->formatter->format($suggestion));
     }
 
-    public function dataProvider(): array
+    /**
+     * @return Generator<array{string,string,string}>
+     */
+    public function dataProvider(): Generator
     {
-        return [
-            [Suggestion::TYPE_VARIABLE, '$foo', 'foo'],
-            [Suggestion::TYPE_FUNCTION, 'foo', 'foo'],
-            [Suggestion::TYPE_FIELD, 'foo', 'foo'],
-        ];
+        yield [Suggestion::TYPE_VARIABLE, '$foo', 'foo'];
+        yield [Suggestion::TYPE_FUNCTION, 'foo', 'foo'];
+        yield [Suggestion::TYPE_FIELD, 'foo', 'foo'];
     }
 }

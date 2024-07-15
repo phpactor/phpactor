@@ -35,7 +35,6 @@ class MappedFilesystemRegistry implements FilesystemRegistry
         return isset($this->filesystems[$name]);
     }
 
-    /** @return array<string> */
     public function names(): array
     {
         return array_keys($this->filesystems);

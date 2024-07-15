@@ -4,9 +4,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "ext-pcntl": "*",
-        "ext-posix": "*",
-        "composer/package-versions-deprecated": "^1.0",
         "composer/xdebug-handler": "^3.0",
         "symfony/yaml": "^5.1",
         "phpactor/container": "^2.2.0",
@@ -19,7 +16,7 @@
         "amphp/process": "^1.1.5",
         "thecodingmachine/safe": "^1.0",
         "phpactor/phly-event-dispatcher": "^2.0.0",
-        "phpactor/language-server": "^6.1.1",
+        "phpactor/language-server": "dev-master",
         "phpactor/language-server-protocol": "^3.17.3",
         "dantleech/object-renderer": "^0.1.1",
         "monolog/monolog": "^1.23",

@@ -59,19 +59,6 @@ Internal use only - name of the command which was executed
 **Default**: ``null``
 
 
-.. _param_core.warn_on_develop:
-
-
-``core.warn_on_develop``
-""""""""""""""""""""""""
-
-
-Internal use only: if an warning will be issued when on develop, may be removed in the future
-
-
-**Default**: ``true``
-
-
 .. _param_core.min_memory_limit:
 
 
@@ -1627,7 +1614,7 @@ Type: array
 Glob patterns to include while indexing
 
 
-**Default**: ``["\/**\/*.php"]``
+**Default**: ``["\/**\/*.php","\/**\/*.phar"]``
 
 
 .. _param_indexer.exclude_patterns:
@@ -1771,7 +1758,7 @@ Type: array
 File extensions (e.g. `php`) for files that should be indexed
 
 
-**Default**: ``["php"]``
+**Default**: ``["php","phar"]``
 
 
 .. _ObjectRendererExtension:

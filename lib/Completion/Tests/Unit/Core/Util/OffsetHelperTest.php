@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core\Util;
 
+use Generator;
 use Phpactor\Completion\Core\Util\OffsetHelper;
 use Phpactor\Completion\Tests\TestCase;
 use Phpactor\TestUtils\ExtractOffset;
@@ -23,7 +24,10 @@ class OffsetHelperTest extends TestCase
         );
     }
 
-    public function provideReturnsLastNonWhitespaceOffset()
+    /**
+     * @return Generator<string,array{string}>
+     */
+    public function provideReturnsLastNonWhitespaceOffset(): Generator
     {
         yield 'empty string' => [
             '',
@@ -38,7 +42,7 @@ class OffsetHelperTest extends TestCase
         ];
 
         yield 'extra newline' => [
-            'foobar<>' . PHP_EOL,
+            'foobar<>' . "\n",
         ];
 
         yield 'extra windows newline' => [

@@ -9,11 +9,16 @@ use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\ConstElementList;
 use Microsoft\PhpParser\Node\DelimitedList\ExpressionList;
+use Microsoft\PhpParser\Node\EnumCaseDeclaration;
+use Microsoft\PhpParser\Node\EnumMembers;
+use Microsoft\PhpParser\Node\Expression;
+use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceMembers;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -138,21 +143,13 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
         }
 
         if ($node instanceof Variable) {
-            if ($node->getFirstAncestor(PropertyDeclaration::class)) {
-                return new DocumentSymbol(
-                    (string)$node->getName(),
-                    SymbolKind::PROPERTY,
-                    new Range(
-                        PositionConverter::intByteOffsetToPosition($node->parent->getStartPosition(), $source),
-                        PositionConverter::intByteOffsetToPosition($node->parent->getEndPosition(), $source)
-                    ),
-                    new Range(
-                        PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $source),
-                        PositionConverter::intByteOffsetToPosition($node->getEndPosition(), $source)
-                    ),
-                    children: []
-                );
-            }
+            return $this->resolvePropertyVariable($node, $source);
+        }
+
+        if ($node instanceof AssignmentExpression) {
+            /** @var Expression $left */
+            $left = $node->leftOperand;
+            return $this->resolvePropertyVariable($left, $source);
         }
 
         if ($node instanceof ConstElement) {
@@ -171,7 +168,63 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
             );
         }
 
+        if ($node instanceof EnumDeclaration) {
+            return new DocumentSymbol(
+                (string)$node->name->getText($source),
+                SymbolKind::ENUM,
+                new Range(
+                    PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $source),
+                    PositionConverter::intByteOffsetToPosition($node->getEndPosition(), $source)
+                ),
+                new Range(
+                    PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
+                    PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
+                ),
+                children: $this->buildNodes($this->memberNodes($node), $source)
+            );
+        }
+
+        if ($node instanceof EnumCaseDeclaration) {
+            return new DocumentSymbol(
+                (string)$node->name->getText($source),
+                SymbolKind::ENUM_MEMBER,
+                new Range(
+                    PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $source),
+                    PositionConverter::intByteOffsetToPosition($node->getEndPosition(), $source)
+                ),
+                new Range(
+                    PositionConverter::intByteOffsetToPosition($node->name->getStartPosition(), $source),
+                    PositionConverter::intByteOffsetToPosition($node->name->getEndPosition(), $source)
+                ),
+                children: []
+            );
+        }
+
         return null;
+    }
+
+
+    private function resolvePropertyVariable(Node $node, string $source): ?DocumentSymbol
+    {
+        if (!$node instanceof Variable) {
+            return null;
+        }
+        if (!$node->getFirstAncestor(PropertyDeclaration::class)) {
+            return null;
+        }
+        return new DocumentSymbol(
+            (string)$node->getName(),
+            SymbolKind::PROPERTY,
+            new Range(
+                PositionConverter::intByteOffsetToPosition($node->parent->getStartPosition(), $source),
+                PositionConverter::intByteOffsetToPosition($node->parent->getEndPosition(), $source)
+            ),
+            new Range(
+                PositionConverter::intByteOffsetToPosition($node->getStartPosition(), $source),
+                PositionConverter::intByteOffsetToPosition($node->getEndPosition(), $source)
+            ),
+            children: []
+        );
     }
 
     private function memberNodes(Node $node): Generator
@@ -181,12 +234,12 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
                 $node instanceof InterfaceMembers ||
                 $node instanceof TraitMembers ||
                 $node instanceof ClassMembersNode ||
+                $node instanceof EnumMembers ||
                 $node instanceof MethodDeclaration ||
                 $node instanceof PropertyDeclaration ||
                 $node instanceof ClassConstDeclaration ||
                 ($node instanceof ExpressionList && $node->parent instanceof PropertyDeclaration) ||
-                ($node instanceof ConstElementList && $node->parent instanceof ClassConstDeclaration)
-            ;
+                ($node instanceof ConstElementList && $node->parent instanceof ClassConstDeclaration);
         });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\Diff;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
 
@@ -17,7 +18,10 @@ class TextEditBuilderTest extends TestCase
         $this->assertEquals($expected, $chunks);
     }
 
-    public function provideDiff()
+    /**
+     * @return Generator<string,array{string,string,array<int,array<string,mixed>>}>
+     */
+    public function provideDiff(): Generator
     {
         yield 'no edits' => [
             <<<'EOT'
@@ -53,7 +57,7 @@ class TextEditBuilderTest extends TestCase
                 [
                     'start' => [ 'line' => 0, 'character' => 0 ],
                     'end' => [ 'line' => 0, 'character' => 0 ],
-                    'text' => 'new' . PHP_EOL,
+                    'text' => 'new' . "\n",
                 ],
             ],
         ];
@@ -80,7 +84,7 @@ class TextEditBuilderTest extends TestCase
                 [
                     'start' => [ 'line' => 0, 'character' => 0 ],
                     'end' => [ 'line' => 0, 'character' => 0 ],
-                    'text' => 'neworiginal' . PHP_EOL,
+                    'text' => 'neworiginal' . "\n",
                 ],
             ],
         ];

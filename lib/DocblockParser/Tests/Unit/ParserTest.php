@@ -22,7 +22,7 @@ class ParserTest extends TestCase
     }
 
     /**
-     * @return Generator<mixed>
+     * @return Generator<array{string, Docblock}>
      */
     public function provideParse(): Generator
     {

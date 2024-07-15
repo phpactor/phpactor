@@ -5,7 +5,7 @@ namespace Phpactor\TextDocument\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Symfony\Component\Filesystem\Path;
+use Phpactor\TextDocument\TextDocumentUri;
 
 class TextDocumentBuilderTest extends TestCase
 {
@@ -22,8 +22,9 @@ class TextDocumentBuilderTest extends TestCase
 
     public function testFromUri(): void
     {
-        $doc = TextDocumentBuilder::fromUri('file://' . __FILE__)->build();
-        $this->assertEquals('file://' . Path::canonicalize(__FILE__), $doc->uri());
+        $uri = (string)TextDocumentUri::fromString(__FILE__);
+        $doc = TextDocumentBuilder::fromUri($uri)->build();
+        $this->assertEquals($uri, $doc->uri());
         $this->assertEquals(file_get_contents(__FILE__), $doc->__toString());
     }
 

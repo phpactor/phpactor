@@ -2,13 +2,14 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\TextDocument\Exception\InvalidUriException;
+use Phpactor\TextDocument\TextDocumentUri;
 use RuntimeException;
 use SplFileInfo;
 use Symfony\Component\Filesystem\Path;
-use stdClass;
 
 class FilePathTest extends TestCase
 {
@@ -29,16 +30,19 @@ class FilePathTest extends TestCase
     }
 
     /**
-     * @dataProvider provideUnknown
+     * @dataProvider provideFilePathOrString
      */
-    public function testFromUnknownWith($path, string $expectedPath): void
+    public function testFromFilePathOrString(FilePath|string $path, string $expectedPath): void
     {
-        $filePath = FilePath::fromUnknown($path);
+        $filePath = FilePath::fromFilePathOrString($path);
         $this->assertInstanceOf(FilePath::class, $filePath);
         $this->assertEquals($expectedPath, (string) $filePath);
     }
 
-    public function provideUnknown()
+    /**
+     * @return Generator<string,array{FilePath|string,string}>
+     */
+    public function provideFilePathOrString(): Generator
     {
         yield 'FilePath instance' => [
             FilePath::fromString('/foo.php'),
@@ -50,48 +54,37 @@ class FilePathTest extends TestCase
             '/foo.php'
         ];
 
-        yield 'URI string' => [
+        yield 'URI string (Unix style)' => [
             'file:///foo.php',
             '/foo.php',
+        ];
+
+        yield 'URI string (Windows style)' => [
+            'file:///C:/foo.php',
+            'C:/foo.php',
         ];
 
         yield 'PHAR string' => [
             'phar:///foo.php',
             '/foo.php',
         ];
-
-        yield 'array' => [
-            [ 'one', 'two' ],
-            '/one/two'
-        ];
-
-        yield 'SplFileInfo' => [
-            new SplFileInfo(__FILE__),
-            Path::canonicalize(__FILE__)
-        ];
-        yield 'SplFileInfo with scheme' => [
-            new SplFileInfo('file://' . __FILE__),
-            Path::canonicalize(__FILE__)
-        ];
     }
 
     /**
      * @dataProvider provideUnsupportedInput
      */
-    public function testThrowExceptionOnUnknowableType($input, string $expectedExceptionMessage): void
+    public function testThrowExceptionOnUnknowableType(string $input, string $expectedExceptionMessage): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage($expectedExceptionMessage);
-        FilePath::fromUnknown($input);
+        FilePath::fromString($input);
     }
 
-    public function provideUnsupportedInput()
+    /**
+     * @return Generator<string,array{string,string}>
+     */
+    public function provideUnsupportedInput(): Generator
     {
-        yield 'object' => [
-            new stdClass(),
-            'Do not know',
-        ];
-
         yield 'unsupported scheme' => [
             'ftp://host/foo.php',
             'are supported', // only X schemes are supported
@@ -180,7 +173,7 @@ class FilePathTest extends TestCase
 
     public function testAsSplFileInfo(): void
     {
-        $path1 = FilePath::fromUnknown(new SplFileInfo('file://' . __FILE__));
+        $path1 = FilePath::fromSplFileInfo(new SplFileInfo((string)TextDocumentUri::fromString(__FILE__)));
         self::assertEquals(Path::canonicalize(__FILE__), $path1->__toString());
         self::assertEquals(Path::canonicalize(__FILE__), $path1->asSplFileInfo()->__toString());
     }

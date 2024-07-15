@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
 
 class MethodTypeResolver
 {
@@ -34,14 +33,20 @@ class MethodTypeResolver
 
     private function getDocblockTypesFromClassOrMethod(ReflectionMethod $method): Type
     {
-        $classMethodOverride = $method->class()->docblock()->methodType($method->name());
+        $classLike = $method->class();
+        $classMethodOverride = $classLike->docblock()->methodType($method->name());
 
         if (($classMethodOverride->isDefined())) {
             return $classMethodOverride;
         }
+        $returnType = $method->docblock()->returnType();
+        $aliased = $classLike->docblock()->typeAliases()->forType($returnType);
+        if ($aliased) {
+            return $aliased;
+        }
 
         // no static support here
-        return $method->docblock()->returnType();
+        return $returnType;
     }
 
     private function getTypesFromParentClass(ReflectionClassLike $reflectionClassLike): Type
@@ -67,15 +72,11 @@ class MethodTypeResolver
 
     private function getTypesFromInterfaces(ReflectionClassLike $reflectionClassLike): Type
     {
-        if (false === $reflectionClassLike->isClass()) {
+        if (!$reflectionClassLike instanceof ReflectionClass) {
             return TypeFactory::undefined();
         }
 
-        /** @var ReflectionClass $reflectionClass */
-        $reflectionClass = $reflectionClassLike;
-
-        /** @var ReflectionInterface $interface */
-        foreach ($reflectionClass->interfaces() as $interface) {
+        foreach ($reflectionClassLike->interfaces() as $interface) {
             if ($interface->methods()->has($this->method->name())) {
                 return $interface->methods()->get($this->method->name())->inferredType();
             }

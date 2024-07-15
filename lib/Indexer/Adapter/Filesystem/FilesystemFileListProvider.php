@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Adapter\Filesystem;
 
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
+use Phpactor\Indexer\Adapter\Php\FileInfoPharExpandingIterator;
 use Phpactor\Indexer\Model\FileList;
 use Phpactor\Indexer\Model\FileListProvider;
 use SplFileInfo;
@@ -20,7 +21,7 @@ class FilesystemFileListProvider implements FileListProvider
         private Filesystem $filesystem,
         private array $includePatterns = [],
         private array $excludePatterns = [],
-        private array $supportedExtensions = ['php'],
+        private array $supportedExtensions = ['php', 'phar'],
     ) {
     }
 
@@ -30,15 +31,10 @@ class FilesystemFileListProvider implements FileListProvider
             return FileList::fromSingleFilePath($subPath);
         }
 
-        $files = $this->filesystem->fileList()->byExtensions($this->supportedExtensions);
-
-        if ($this->includePatterns) {
-            $files = $files->includePatterns($this->includePatterns);
-        }
-
-        if ($this->excludePatterns) {
-            $files = $files->excludePatterns($this->excludePatterns);
-        }
+        $files = $this->filesystem->fileList()
+            ->byExtensions($this->supportedExtensions)
+            ->includeAndExclude($this->includePatterns, $this->excludePatterns)
+        ;
 
         if ($subPath) {
             $files = $files->within(FilePath::fromString($subPath));
@@ -50,6 +46,11 @@ class FilesystemFileListProvider implements FileListProvider
             });
         }
 
-        return FileList::fromInfoIterator($files->getSplFileInfoIterator());
+        return FileList::fromInfoIterator(
+            new FileInfoPharExpandingIterator(
+                $files->getSplFileInfoIterator(),
+                $this->supportedExtensions,
+            )
+        );
     }
 }

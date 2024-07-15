@@ -65,7 +65,7 @@ class ReflectionProperty extends AbstractReflectionClassMember implements CoreRe
     public function nameRange(): ByteOffsetRange
     {
         return ByteOffsetRange::fromInts(
-            $this->variable->getStartPosition(),
+            $this->variable->getStartPosition() + 1, // do not return the $
             $this->variable->getEndPosition(),
         );
     }

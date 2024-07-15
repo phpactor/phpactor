@@ -51,4 +51,9 @@ class AssignmentToMissingPropertyDiagnostic implements Diagnostic
     {
         return $this->isSubscriptAssignment;
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
 }

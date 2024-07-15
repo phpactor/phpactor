@@ -250,7 +250,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
         $this->assertComplete($source, $expected);
     }
 
-    public function provideCompleteFunctionParameter()
+    public function provideCompleteFunctionParameter(): Generator
     {
         yield 'complete after comma' => [
             <<<'EOT'
@@ -295,7 +295,7 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
         $this->assertComplete($source, $expected);
     }
 
-    public function provideCompleteStaticClassParameter()
+    public function provideCompleteStaticClassParameter(): Generator
     {
         yield 'complete static method parameter' => [
             <<<'EOT'

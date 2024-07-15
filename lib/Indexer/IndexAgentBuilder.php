@@ -45,6 +45,7 @@ final class IndexAgentBuilder
      */
     private array $includePatterns = [
         '/**/*.php',
+        '/**/*.phar',
     ];
 
     /**
@@ -68,7 +69,7 @@ final class IndexAgentBuilder
     /**
      * @var list<string>
      */
-    private array $supportedExtensions = ['php'];
+    private array $supportedExtensions = ['php', 'phar'];
 
     private LoggerInterface $logger;
 
