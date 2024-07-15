@@ -9,6 +9,7 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use function get_debug_type;
 
 class DebugContainerCommand extends Command
 {
@@ -53,12 +54,12 @@ class DebugContainerCommand extends Command
 
             try {
                 $value = $this->container->get($serviceId);
-                $type = is_object($value) ? get_class($value) : gettype($value);
+                $type = get_debug_type($value);
             } catch (RuntimeException $exception) {
                 $table->addRow(['<error>Error: '.$serviceId.'</>', $exception->getMessage()]);
             }
 
-            $table->addRow([$serviceId, $type ]);
+            $table->addRow([$serviceId, $type]);
         }
         $table->render();
         return $table;

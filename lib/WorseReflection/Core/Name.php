@@ -3,6 +3,12 @@
 namespace Phpactor\WorseReflection\Core;
 
 use InvalidArgumentException;
+use function explode;
+use function get_debug_type;
+use function implode;
+use function sprintf;
+use function str_starts_with;
+use function trim;
 
 class Name
 {
@@ -46,7 +52,7 @@ class Name
         /** @phpstan-ignore-next-line */
         throw new InvalidArgumentException(sprintf(
             'Do not know how to create class from type "%s"',
-            is_object($value) ? get_class($value) : gettype($value)
+            get_debug_type($value)
         ));
     }
 
