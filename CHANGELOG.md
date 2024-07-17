@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - Fix import position when `declare` is present #2698 @dantleech
   - Fix NULL error in Docblock parser #2693 @dantleech
 
 Improvements:

@@ -6,6 +6,8 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Node\StatementNode;
+use Microsoft\PhpParser\Node\Statement\DeclareStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
@@ -27,6 +29,9 @@ class UseStatementUpdater
         foreach ($node->getChildNodes() as $childNode) {
             if ($childNode instanceof InlineHtml) {
                 $startNode = $node->getFirstChildNode(InlineHtml::class);
+            }
+            if ($childNode instanceof DeclareStatement) {
+                $startNode = $childNode;
             }
             if ($childNode instanceof NamespaceDefinition) {
                 $startNode = $childNode;
