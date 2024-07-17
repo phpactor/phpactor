@@ -3,6 +3,10 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - Fix NULL error in Docblock parser #2693 @dantleech
+
 Improvements:
 
   - Support parsing generic variance e.g. `covariant` #2664 @dantleech
