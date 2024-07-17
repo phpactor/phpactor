@@ -10,6 +10,9 @@ Bug fixes:
 
 Improvements:
 
+  - Offer completions on attributes not associated with class member body
+    #2695 @przepompownia
+  - Show prose associated with `@throws` tag #2694 @mamazu
   - Support parsing generic variance e.g. `covariant` #2664 @dantleech
 
 ## 2024-06-30
