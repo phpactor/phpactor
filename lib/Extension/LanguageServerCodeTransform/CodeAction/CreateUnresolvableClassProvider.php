@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\ClassToFile;
 use Phpactor\ClassFileConverter\Domain\FilePath;
@@ -55,7 +56,7 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
                         $title = sprintf('Create %s file for "%s"', $name, $diagnostic->name()->__toString());
                         $actions[] = CodeAction::fromArray([
                             'title' =>  $title,
-                            'kind' => self::KIND,
+                            'kind' => $this->kinds()[0],
                             'diagnostics' => [
                                 ProtocolFactory::diagnostic(RangeConverter::toLspRange($diagnostic->range(), $textDocument->text), $diagnostic->message())
                             ],
@@ -79,7 +80,7 @@ class CreateUnresolvableClassProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND
+            CodeActionKind::QUICK_FIX,
         ];
     }
 

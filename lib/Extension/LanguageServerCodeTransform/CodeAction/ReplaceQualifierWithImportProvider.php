@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform\CodeAction;
 
 use Amp\CancellationToken;
 use Amp\Promise;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 use Phpactor\CodeTransform\Domain\Refactor\ReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -26,7 +27,8 @@ class ReplaceQualifierWithImportProvider implements CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND
+            CodeActionKind::REFACTOR_REWRITE,
+            self::KIND,
         ];
     }
 
@@ -43,7 +45,7 @@ class ReplaceQualifierWithImportProvider implements CodeActionProvider
             return [
                 CodeAction::fromArray([
                     'title' => 'Replace qualifier with import',
-                    'kind' => self::KIND,
+                    'kind' => $this->kinds()[0],
                     'diagnostics' => [],
                     'command' => new Command(
                         'Replace qualifier with import',

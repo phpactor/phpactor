@@ -17,6 +17,7 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use function Amp\call;
+use Phpactor\LanguageServerProtocol\CodeActionKind;
 
 class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
 {
@@ -30,7 +31,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
     public function kinds(): array
     {
         return [
-            self::KIND
+            CodeActionKind::QUICK_FIX,
         ];
     }
 
@@ -55,7 +56,7 @@ class CreateClassProvider implements DiagnosticsProvider, CodeActionProvider
                 $title = sprintf('Create new "%s" class', $name);
                 $actions[] = CodeAction::fromArray([
                     'title' =>  $title,
-                    'kind' => self::KIND,
+                    'kind' => $this->kinds()[0],
                     'diagnostics' => $diagnostics,
                     'command' => new Command(
                         $title,
