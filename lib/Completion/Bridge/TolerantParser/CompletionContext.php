@@ -59,7 +59,11 @@ class CompletionContext
         $previous = NodeUtil::previousSibling($node->parent);
 
         if ($previous instanceof InlineHtml) {
-            return false;
+            $phpTag = $previous->scriptSectionStartTag?->getText($previous->getFileContents());
+
+            if ($phpTag === '<?' && $node->getStartPosition() === $previous->getEndPosition()) {
+                return false;
+            }
         }
 
         return

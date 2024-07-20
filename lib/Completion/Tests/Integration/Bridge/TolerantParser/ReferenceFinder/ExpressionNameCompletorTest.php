@@ -283,6 +283,16 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
                 self::assertCount(0, $suggestions);
             }
         ];
+        yield 'after php tag' => [
+            [
+                NameSearchResult::create('class', 'Foobar'),
+                NameSearchResult::create('class', 'Class'),
+            ],
+            '<?php F<>',
+            function (Suggestions $suggestions): void {
+                self::assertCount(1, $suggestions);
+            }
+        ];
         yield 'attribute parameter value outside class' => [
             [
                 NameSearchResult::create('class', 'Xxyz'),
