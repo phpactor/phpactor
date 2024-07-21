@@ -83,10 +83,15 @@ class OverrideMethodCommand implements Command
     {
         return call(function () use ($document) {
             $methods = $this->finder->find($document);
+            usort($methods, function (ReflectionMethod $a, ReflectionMethod $b) {
+                return $a->name() <=> $b->name();
+            });
+
             $choice = yield $this->clientApi->window()->showMessageRequest()->info('Choose method:', ...array_map(
                 fn (ReflectionMethod $method) => new MessageActionItem($this->formatName($method)),
                 $methods
             ));
+
 
             foreach ($methods as $method) {
                 if ($this->formatName($method) === $choice->title) {
@@ -100,6 +105,11 @@ class OverrideMethodCommand implements Command
 
     private function formatName(ReflectionMethod $method): string
     {
-        return sprintf('%s#%s', $method->class()->name(), $method->name());
+        return sprintf(
+            '%s%s%s',
+            $method->class()->name()->short(),
+            $method->isStatic() ? '::' : '->',
+            $method->name()
+        );
     }
 }
