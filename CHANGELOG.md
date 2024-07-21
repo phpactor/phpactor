@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - Take optional parameters into account with conditional types #2700 @dantleech
   - Fix import position when `declare` is present #2698 @dantleech
   - Fix NULL error in Docblock parser #2693 @dantleech
 
