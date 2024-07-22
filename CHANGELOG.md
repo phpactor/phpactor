@@ -11,6 +11,7 @@ Bug fixes:
 
 Improvements:
 
+  - Allow exclude patterns to be set for diagnostics (e.g. `vendor/**/*`) #2705 @dantleech
   - Improve formatting for override method #2702 @dantleech
   - Offer completions on attributes not associated with class member body
     #2695 @przepompownia
