@@ -29,11 +29,18 @@ class ChainTolerantCompletor implements Completor
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator
     {
         $truncatedSource = $this->truncateSource((string) $source, $byteOffset->toInt());
+        $truncatedLength = strlen($truncatedSource);
 
-        $node = $this->parser->parseSourceFile($truncatedSource)->getDescendantNodeAtPosition(
-            // the parser requires the byte offset, not the char offset
-            strlen($truncatedSource)
-        );
+        $node = $this->parser
+            ->parseSourceFile(substr_replace((string) $source, ' ', $truncatedLength, 0))
+            ->getDescendantNodeAtPosition(
+                // the parser requires the byte offset, not the char offset
+                $truncatedLength,
+            );
+
+        if ($node->getEndPosition() > $truncatedLength) {
+            $node = $this->parser->parseSourceFile($truncatedSource)->getDescendantNodeAtPosition($truncatedLength);
+        }
 
         $isComplete = true;
 
