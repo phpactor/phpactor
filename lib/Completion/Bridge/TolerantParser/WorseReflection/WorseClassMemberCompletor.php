@@ -20,6 +20,8 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnum;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\ClassLikeType;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\Completion\Core\Suggestion;
@@ -80,10 +82,10 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $reflectionOffset = $this->reflector->reflectOffset($source, $memberStartOffset);
 
         $nodeContext = $reflectionOffset->nodeContext();
-        $type = $nodeContext->type();
+        $symbolType = $nodeContext->type();
         $static = $node instanceof ScopedPropertyAccessExpression;
 
-        foreach ($type->expandTypes()->classLike() as $type) {
+        foreach ($symbolType->expandTypes()->classLike() as $type) {
             foreach ($this->populateSuggestions($nodeContext, $type, $static, $shouldCompleteOnlyName, $isInstance) as $suggestion) {
                 if ($partialMatch && !str_starts_with($suggestion->name(), $partialMatch)) {
                     continue;
@@ -108,8 +110,15 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
         $isParent = $nodeContext->symbol()->name() === 'parent';
         $publicOnly = !in_array($nodeContext->symbol()->name(), ['this', 'self'], true);
 
-
-        $type = $type->expandTypes()->classLike()->firstOrNull();
+        $reflectionGeneric = null;
+        if ($type instanceof GenericClassType) {
+            $reflectionGeneric = $type->reflectionOrNull();
+            if ($reflectionGeneric) {
+                $reflectionGeneric->withGenericMap($type->arguments());
+            }
+        } else {
+            $type = $type->expandTypes()->classLike()->firstOrNull();
+        }
 
         if (!$type) {
             return;
@@ -119,7 +128,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
             return;
         }
 
-        $members = $type->members();
+        $members = $reflectionGeneric ? $reflectionGeneric->members() : $type->members();
 
         if (!$isParent && $static) {
             yield Suggestion::createWithOptions('class', [

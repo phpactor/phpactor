@@ -26,7 +26,7 @@ class NodeContextResolver
     ) {
     }
 
-    public function withCache(Cache $cache):self
+    public function withCache(Cache $cache): self
     {
         return new self($this->reflector, $this->docblockFactory, $this->logger, $cache, $this->resolverMap);
     }
