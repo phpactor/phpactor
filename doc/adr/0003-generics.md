@@ -64,7 +64,7 @@ $foobar = new Foobar($foo); // Foobar<string>
 - Map parameters to template map `Map{T:"hello"}`
 - Resolve new generic type `Foobar<"hello">`
 -
-## Param/Constructor injection with inheritence
+## Param/Constructor injection with inheritance
 
 ```php
 /** @template T */

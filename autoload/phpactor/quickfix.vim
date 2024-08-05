@@ -28,13 +28,13 @@ function! phpactor#quickfix#fzf(entries) abort
         call add(sortedKeys, key)
     endfor
 
-    let formatedEntries = s:align_pairs(sortedKeys, '^\(.\{-}:\d\+:\d\+:\)\s*\(.*\)\s*$', 100)
+    let formattedEntries = s:align_pairs(sortedKeys, '^\(.\{-}:\d\+:\d\+:\)\s*\(.*\)\s*$', 100)
 
     let tmp = copy(entries)
     let entries = {}
     let source = [] " Need a list to keep the order (dict does not guarantee it)
     for key in sortedKeys
-        let newKey = formatedEntries[key]
+        let newKey = formattedEntries[key]
         let entries[newKey] = tmp[key]
         call add(source, newKey)
     endfor

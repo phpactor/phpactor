@@ -85,7 +85,7 @@ class LanguageServerRenameWorseExtension implements Extension
         ]);
 
         $container->register(DefinitionAndReferenceFinder::class, function (Container $container) {
-            // wrap the definiton and reference finder to update the index with the current workspace
+            // wrap the definition and reference finder to update the index with the current workspace
             return new WorkspaceUpdateReferenceFinder(
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(Indexer::class),

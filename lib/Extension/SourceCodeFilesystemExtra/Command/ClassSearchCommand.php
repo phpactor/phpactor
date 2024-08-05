@@ -23,7 +23,7 @@ class ClassSearchCommand extends Command
 
     public function configure(): void
     {
-        $this->setDescription('Search for class by (short) name and return informations on candidates');
+        $this->setDescription('Search for class by (short) name and return information on candidates');
         $this->addArgument('name', InputArgument::REQUIRED, 'Source path or FQN');
         FormatHandler::configure($this);
         FilesystemHandler::configure($this, SourceCodeFilesystemExtension::FILESYSTEM_COMPOSER);

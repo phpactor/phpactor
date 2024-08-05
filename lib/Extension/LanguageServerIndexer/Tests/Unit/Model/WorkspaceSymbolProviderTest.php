@@ -40,8 +40,8 @@ class WorkspaceSymbolProviderTest extends IntegrationTestCase
         $locator = $container->get(TextDocumentLocator::class);
 
         $provider = new WorkspaceSymbolProvider($client, $locator, $limit);
-        $informations = wait($provider->provideFor($query));
-        $assertion($informations);
+        $information = wait($provider->provideFor($query));
+        $assertion($information);
     }
 
     /**

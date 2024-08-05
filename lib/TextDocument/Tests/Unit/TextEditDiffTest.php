@@ -43,7 +43,7 @@ class TextEditDiffTest extends TestCase
             'b',
         ];
 
-        yield 'differnet' => [
+        yield 'different' => [
             'it little profits',
             'that an idle king',
         ];

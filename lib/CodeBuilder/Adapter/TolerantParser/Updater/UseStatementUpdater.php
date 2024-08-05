@@ -104,7 +104,7 @@ class UseStatementUpdater
             // Either add after the NamespaceUseDeclaration node if there
             // already was use imports or after the namespace/php declaration
             // Since it will add before the lasts new line of the node we
-            // preprend with another one so that the use statement is on its
+            // prepend with another one so that the use statement is on its
             // own line
             $newUseStatement = "\n" . $editText;
             $edits->after($startNode, $newUseStatement);

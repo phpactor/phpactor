@@ -211,26 +211,26 @@ class BinaryExpressionResolver implements Resolver
             return $context;
         }
 
-        [$reciever, $recieverContext ] = NodeUtil::canAcceptTypeAssertion(
+        [$receiver, $receiverContext ] = NodeUtil::canAcceptTypeAssertion(
             $leftOperand
         ) ? [$leftOperand, $leftContext] : [$rightOperand, $rightContext];
         [$transmitter, $transmittingContext ]  = NodeUtil::canAcceptTypeAssertion(
             $rightOperand
         ) ? [$leftOperand, $leftContext] : [$rightOperand, $rightContext];
 
-        if (!NodeUtil::canAcceptTypeAssertion($reciever)) {
+        if (!NodeUtil::canAcceptTypeAssertion($receiver)) {
             return $context;
         }
         return match ($operator) {
             TokenKind::EqualsEqualsEqualsToken => $context->withTypeAssertion(TypeAssertion::forContext(
-                $recieverContext,
+                $receiverContext,
                 fn (Type $type) => $transmittingContext->type(),
 
                 // ???
                 fn (Type $type) => TypeCombinator::subtract($transmittingContext->type(), $type),
             )),
             TokenKind::InstanceOfKeyword => $context->withTypeAssertion(TypeAssertion::forContext(
-                $recieverContext,
+                $receiverContext,
                 function (Type $type) use ($transmittingContext) {
                     $type = TypeCombinator::acceptedByType($type, TypeFactory::object());
                     $type = TypeCombinator::narrowTo($type, $transmittingContext->type());

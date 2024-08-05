@@ -26,7 +26,7 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * TODO: Extract the responsiblities of this class, see
+ * TODO: Extract the responsibilities of this class, see
  *       https://github.com/phpactor/phpactor/issues/440
  */
 class ReferencesHandler extends AbstractHandler

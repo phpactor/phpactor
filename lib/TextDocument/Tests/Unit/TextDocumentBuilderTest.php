@@ -45,6 +45,6 @@ class TextDocumentBuilderTest extends TestCase
     public function testExceptionOnNotExists(): void
     {
         $this->expectException(TextDocumentNotFound::class);
-        TextDocumentBuilder::fromUri('file:///no-existy');
+        TextDocumentBuilder::fromUri('file:///no-exist');
     }
 }

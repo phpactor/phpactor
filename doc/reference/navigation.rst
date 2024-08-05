@@ -53,7 +53,7 @@ which you can navigate through (see ``:help quickfix``).
 The CLI command will list the references and show a highlighted line
 where the references were found.
 
-.. figure:: images/class-referenes.png
+.. figure:: images/class-references.png
    :alt: Class references
 
    Class references
@@ -193,7 +193,7 @@ to the, for example, ``Locator`` type.
 Jump to Implementation
 ----------------------
 
-Jump to the implementatoin(s) of an interface or class
+Jump to the implementation(s) of an interface or class
 
 .. tabs::
 

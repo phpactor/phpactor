@@ -208,11 +208,11 @@ class VariableRenamerTest extends TestCase
      * @param PotentialLocation[] $references
      * @param TextDocument[] $textDocuments
      */
-    private function createRenamer(array $references, ?Location $defintionLocation, array $textDocuments): VariableRenamer
+    private function createRenamer(array $references, ?Location $definitionLocation, array $textDocuments): VariableRenamer
     {
         $variableRenamer = new VariableRenamer(
             new DefinitionAndReferenceFinder(
-                TestDefinitionLocator::fromSingleLocation(TypeFactory::unknown(), $defintionLocation),
+                TestDefinitionLocator::fromSingleLocation(TypeFactory::unknown(), $definitionLocation),
                 new PredefinedReferenceFinder(...$references),
             ),
             InMemoryDocumentLocator::fromTextDocuments($textDocuments),

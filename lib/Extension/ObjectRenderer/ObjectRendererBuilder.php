@@ -55,7 +55,7 @@ final class ObjectRendererBuilder
 
     /**
      * Create a new instance of the builder.
-     * Call build() to create a new ObejctRenderer.
+     * Call build() to create a new ObjectRenderer.
      */
     public static function create(): self
     {

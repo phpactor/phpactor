@@ -23,7 +23,7 @@ class TolerantQualifiedNameResolver
      * Lists of PHP reserved keywords interpreted as QualifiedName by the Tolerant parser
      * but they should not be resolved to any namespace.
      *
-     * @todo Remove iterable when Tolerant parser does not considere it as a QualifiedName
+     * @todo Remove iterable when Tolerant parser does not consider it as a QualifiedName
      * @see https://github.com/microsoft/tolerant-php-parser/pull/348
      *
      * @var array<string>

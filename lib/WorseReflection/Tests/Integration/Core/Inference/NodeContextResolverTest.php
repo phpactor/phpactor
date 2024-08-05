@@ -921,7 +921,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         , [], ['type' => '"string"', ]
         ];
 
-        yield 'It shows the symbol name for a method declartion' => [
+        yield 'It shows the symbol name for a method declaration' => [
             <<<'EOT'
                                 <?php
 

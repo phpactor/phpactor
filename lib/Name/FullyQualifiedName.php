@@ -29,7 +29,7 @@ final class FullyQualifiedName implements Name
     }
 
     /**
-     * Reutrn the last element of the name (e.g. the class's short name)
+     * Return the last element of the name (e.g. the class's short name)
      */
     public function head(): QualifiedName
     {

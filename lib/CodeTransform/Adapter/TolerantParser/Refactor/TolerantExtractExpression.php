@@ -41,12 +41,12 @@ class TolerantExtractExpression implements ExtractExpression
         $endPosition = $expression->getEndPosition();
 
         $extractedString = rtrim(trim($source->extractSelection($startPosition, $endPosition)), ';');
-        $assigment = sprintf('$%s = %s;', $variableName, $extractedString) . "\n";
+        $assignment = sprintf('$%s = %s;', $variableName, $extractedString) . "\n";
 
         $statement = $expression->getFirstAncestor(StatementNode::class);
         assert($statement instanceof StatementNode);
 
-        $edits = $this->resolveEdits($statement, $expression, $extractedString, $assigment, $variableName);
+        $edits = $this->resolveEdits($statement, $expression, $extractedString, $assignment, $variableName);
 
         return TextEdits::fromTextEdits($edits);
     }

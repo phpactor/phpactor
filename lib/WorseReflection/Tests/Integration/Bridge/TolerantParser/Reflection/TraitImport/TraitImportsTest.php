@@ -77,7 +77,7 @@ class TraitImportsTest extends IntegrationTestCase
             }
         ];
 
-        yield 'multiple traits with single alias maping' => [
+        yield 'multiple traits with single alias mapping' => [
             '<?php trait A { function foo(){} }' .
             'trait B { function bar(){} } ' .
             'class B { use A, B { foo as foo1; bar as bar1 } }',

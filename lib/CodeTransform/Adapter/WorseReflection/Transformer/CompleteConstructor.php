@@ -93,7 +93,7 @@ class CompleteConstructor implements Transformer
             $methodBody = (string) $constructMethod->body();
 
             // Filtering out parameters from the parent class
-            $nonPromotedParameterNames = $this->getParentClassParamaterNames($class);
+            $nonPromotedParameterNames = $this->getParentClassParameterNames($class);
             $parametersToHandle = array_filter(
                 iterator_to_array($constructMethod->parameters()->notPromoted()),
                 fn (ReflectionParameter $parameter) => !in_array($parameter->name(), $nonPromotedParameterNames)
@@ -136,7 +136,7 @@ class CompleteConstructor implements Transformer
 
         foreach ($this->candidateClasses($source) as $class) {
             $constructMethod = $class->methods()->get('__construct');
-            $nonPromotedParameterNames = $this->getParentClassParamaterNames($class);
+            $nonPromotedParameterNames = $this->getParentClassParameterNames($class);
             foreach ($constructMethod->parameters()->notPromoted() as $parameter) {
                 if (in_array($parameter->name(), $nonPromotedParameterNames)) {
                     continue;
@@ -152,7 +152,7 @@ class CompleteConstructor implements Transformer
     * Get the names of the parent constructor to know which parameters should not be promoted.
     * @return array<string>
     */
-    private function getParentClassParamaterNames(ReflectionClass $class): array
+    private function getParentClassParameterNames(ReflectionClass $class): array
     {
         $ancestor = $class->parent();
         if ($ancestor === null) {

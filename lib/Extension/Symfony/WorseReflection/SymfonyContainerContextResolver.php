@@ -59,7 +59,7 @@ class SymfonyContainerContextResolver implements MemberContextResolver
             }
             $type = $service->type;
             if ($type instanceof ClassType) {
-                $type = $type->asReflectedClasssType($reflector);
+                $type = $type->asReflectedClassType($reflector);
             }
             return $type;
         }

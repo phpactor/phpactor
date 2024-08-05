@@ -203,7 +203,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      *     // ...
      * }
      *
-     * // explicitly specifying the colum to search, passing a scalar or array here will always result in finding a single record
+     * // explicitly specifying the column to search, passing a scalar or array here will always result in finding a single record
      * $model = Post::findOne(['id' => Yii::$app->request->get('id')]);
      *
      * // do NOT use the following code! it is possible to inject an array condition to filter by arbitrary column values!
@@ -229,7 +229,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      *  - an associative array of name-value pairs: query by a set of attribute values and return an array of records
      *    matching all of them (or an empty array if none was found). Note that `['id' => 1, 2]` is treated as
      *    a non-associative array.
-     *    Column names are limited to current records table columns for SQL DBMS, or filtered otherwise to be limted to simple filter conditions.
+     *    Column names are limited to current records table columns for SQL DBMS, or filtered otherwise to be limited to simple filter conditions.
      *  - a yii\db\Expression: The expression will be used directly. (@since 2.0.37)
      *
      * This method will automatically call the `all()` method and return an array of [[ActiveRecordInterface|ActiveRecord]]
@@ -271,7 +271,7 @@ interface ActiveRecordInterface extends StaticInstanceInterface
      *     // ...
      * }
      *
-     * // explicitly specifying the colum to search, passing a scalar or array here will always result in finding a single record
+     * // explicitly specifying the column to search, passing a scalar or array here will always result in finding a single record
      * $model = Post::findOne(['id' => Yii::$app->request->get('id')]);
      *
      * // do NOT use the following code! it is possible to inject an array condition to filter by arbitrary column values!

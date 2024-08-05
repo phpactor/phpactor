@@ -20,7 +20,7 @@ class CallbackExpanderTest extends ExpanderTestCase
         $this->assertEquals('bar', $this->expand('%foo%'));
     }
 
-    public function testThrowsExeceptionWhenCallbackReturnsNonString(): void
+    public function testThrowsExceptionWhenCallbackReturnsNonString(): void
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Closure in callback expander');

@@ -294,7 +294,7 @@ class UnusedImportProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
-            title: 'unused imort',
+            title: 'unused import',
             source: <<<'PHP'
                 <?php
 

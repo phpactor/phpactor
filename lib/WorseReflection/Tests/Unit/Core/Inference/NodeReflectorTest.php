@@ -14,7 +14,7 @@ class NodeReflectorTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testUnkown(): void
+    public function testUnknown(): void
     {
         $this->expectException(CouldNotResolveNode::class);
         $this->expectExceptionMessage('Did not know how');

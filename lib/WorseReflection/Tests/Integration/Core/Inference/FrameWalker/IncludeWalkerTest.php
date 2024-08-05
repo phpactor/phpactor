@@ -18,7 +18,7 @@ class IncludeWalkerTest extends FrameWalkerTestCase
 
     public function provideWalk(): Generator
     {
-        // disabled this walker for now due to perforamnce and behavioral
+        // disabled this walker for now due to performance and behavioral
         // issues.
         return;
         yield 'Require relative' => [

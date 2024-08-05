@@ -43,7 +43,7 @@ class HoverHandlerTest extends IntegrationTestCase
         ];
 
 
-        yield 'poperty' => [
+        yield 'property' => [
             '<?php class A { private $<>b; }',
         ];
 

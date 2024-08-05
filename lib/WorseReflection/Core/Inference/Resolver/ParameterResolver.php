@@ -44,7 +44,7 @@ class ParameterResolver implements Resolver
 
         $typeDeclaration = $node->typeDeclarationList;
 
-        $type = NodeUtil::typeFromQualfiedNameLike($resolver->reflector(), $node, $node->typeDeclarationList);
+        $type = NodeUtil::typeFromQualifiedNameLike($resolver->reflector(), $node, $node->typeDeclarationList);
 
         if ($node->dotDotDotToken) {
             $type = TypeFactory::array($type);

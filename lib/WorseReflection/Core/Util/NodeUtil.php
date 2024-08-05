@@ -203,7 +203,7 @@ class NodeUtil
     /**
      * @param null|Node|Token $nodeOrToken
      */
-    public static function typeFromQualfiedNameLike(Reflector $reflector, Node $node, $nodeOrToken, ?ClassName $classContext = null): Type
+    public static function typeFromQualifiedNameLike(Reflector $reflector, Node $node, $nodeOrToken, ?ClassName $classContext = null): Type
     {
         if ($nodeOrToken instanceof Token) {
             $text = (string)$nodeOrToken->getText($node->getFileContents());
@@ -247,7 +247,7 @@ class NodeUtil
                 if (null === $name) {
                     return new MissingType();
                 }
-                return self::typeFromQualfiedNameLike($reflector, $node, $name, $classContext);
+                return self::typeFromQualifiedNameLike($reflector, $node, $name, $classContext);
             }, iterator_to_array($nodeOrToken->getElements(), true)), fn ($name) => $name !== false);
 
             return ($isIntersection ? IntersectionType::fromTypes(...$types) : UnionType::fromTypes(...$types))->reduce();

@@ -12,7 +12,7 @@ class ChainResolverTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testThrowsExceptionIfNoVeresionCanBeResolved(): void
+    public function testThrowsExceptionIfNoVersionCanBeResolved(): void
     {
         $this->expectException(RuntimeException::class);
         (new ChainResolver())->resolve();

@@ -12,7 +12,7 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use function assert;
 
-class TolerantVariableDefintionLocator implements DefinitionLocator
+class TolerantVariableDefinitionLocator implements DefinitionLocator
 {
     public function __construct(private TolerantVariableReferenceFinder $finder)
     {

@@ -25,13 +25,13 @@ class ArrayPopStub implements FunctionStub
 
         if ($argType instanceof ArrayLiteral) {
             $types = $argType->types();
-            $poped = array_pop($types);
+            $popped = array_pop($types);
 
-            if (null === $poped) {
+            if (null === $popped) {
                 return $context->withType(TypeFactory::null());
             }
 
-            return $context->withType($poped);
+            return $context->withType($popped);
         }
 
         $type = TypeFactory::mixed();
