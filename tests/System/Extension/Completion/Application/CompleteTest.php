@@ -26,7 +26,7 @@ class CompleteTest extends SystemTestCase
             $this->assertEmpty($suggestions);
         }
 
-        $this->assertGreaterThanOrEqual(count($expected), count($suggestions), 'Got more suggestions than expected');
+        self::assertGreaterThanOrEqual(count($expected), count($suggestions), 'There are less suggestions than expected.');
         foreach ($expected as $index => $expectedSuggestion) {
             $this->assertArraySubset($expectedSuggestion, $suggestions[$index]);
         }
@@ -193,7 +193,49 @@ class CompleteTest extends SystemTestCase
                     'name' => 'class',
                     'short_description' => 'Foobar',
                 ],
-            ]
+            ],
+
+            'Anonoymous class properties' => [
+                <<<'EOT'
+                    <?php
+
+                    $foobar = new class(){
+                        public string $test;
+                    };
+                    $foobar-><>
+
+                    EOT
+                , [
+                    [
+                        'type' => 'property',
+                        'name' => 'test',
+                        'short_description' => 'pub $test: string',
+                    ],
+                ],
+            ],
+            'Anonoymous class methods' => [
+                <<<'EOT'
+                    <?php
+
+                    $foobar = new class() {
+                        public function doSomething(): bool {}
+                    };
+                    $foobar-><>
+
+                    EOT
+                , [
+                    [
+                        'type' => 'method',
+                        'name' => 'doSomething',
+                        'short_description' => 'pub doSomething(): bool',
+                        'documentation' => '### class@anonymous:17::doSomething
+
+```php
+<?php public function doSomething(): bool
+```'
+                    ],
+                ],
+            ],
         ];
         yield 'Static property with previous arrow accessor' => [
             <<<'EOT'
@@ -282,9 +324,9 @@ class CompleteTest extends SystemTestCase
     private function complete(string $source): array
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
-        $complete = $this->container()->get('application.complete');
-        assert($complete instanceof Complete);
-        $result = $complete->complete($source, $offset);
+        $result = $this->container()
+            ->expect('application.complete', Complete::class)
+            ->complete($source, $offset);
 
         return $result;
     }
