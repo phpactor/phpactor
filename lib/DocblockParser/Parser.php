@@ -770,7 +770,16 @@ final class Parser
     private function parseAssert(): TagNode
     {
         $tag = $this->tokens->mustChomp(Token::T_TAG);
-        $paramName = $type = null;
+        $paramName = $type = $negOrEquality = null;
+
+        if ($this->tokens->if(Token::T_EQUALS)) {
+            $negOrEquality = $this->tokens->mustChomp(Token::T_EQUALS);
+        }
+
+        if ($this->tokens->if(Token::T_BANG)) {
+            $negation = $this->tokens->mustChomp(Token::T_BANG);
+            $negOrEquality = $negation;
+        }
 
         if ($this->tokens->if(Token::T_LABEL)) {
             $type = $this->parseType();
@@ -780,6 +789,6 @@ final class Parser
             $paramName = $this->parseVariable();
         }
 
-        return new AssertTag($tag, $type, $paramName);
+        return new AssertTag($tag, $negOrEquality, $type, $paramName);
     }
 }

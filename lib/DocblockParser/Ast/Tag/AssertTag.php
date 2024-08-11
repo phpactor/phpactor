@@ -12,12 +12,14 @@ class AssertTag extends TagNode
 {
     protected const CHILD_NAMES = [
         'tag',
+        'negationOrEquality',
         'type',
         'paramName',
     ];
 
     public function __construct(
         public Token $tag,
+        public ?Token $negationOrEquality,
         public ?TypeNode $type,
         public ?VariableNode $paramName = null
     ) {

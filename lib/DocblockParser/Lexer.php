@@ -51,6 +51,7 @@ final class Lexer
         '=' => Token::T_EQUALS,
         ':' => Token::T_COLON,
         '::' => Token::T_DOUBLE_COLON,
+        '!' => Token::T_BANG,
     ];
 
     /**
