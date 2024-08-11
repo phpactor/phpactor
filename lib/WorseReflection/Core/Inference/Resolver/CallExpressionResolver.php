@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -15,6 +16,9 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\InvokeableType;
@@ -31,6 +35,10 @@ class CallExpressionResolver implements Resolver
         $context = $resolver->resolveNode($frame, $resolvableNode);
         $returnType = $context->type();
         $containerType = $context->containerType();
+
+        if ($context instanceof MemberAccessContext && $context->arguments()) {
+            $this->applyAssertions($context, $frame, $node);
+        }
 
         if ($returnType instanceof ConditionalType) {
             $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $frame, $node);
@@ -107,5 +115,36 @@ class CallExpressionResolver implements Resolver
         }
 
         return $context;
+    }
+    /**
+     * @param MemberAccessContext<ReflectionMember> $context
+     */
+    private function applyAssertions(
+        MemberAccessContext $context,
+        Frame $frame,
+        CallExpression $node,
+    ): void {
+        $member = $context->accessedMember();
+        if (!$member instanceof ReflectionMethod) {
+            return;
+        }
+        $arguments = $context->arguments();
+        if (null === $arguments) {
+            return;
+        }
+
+        $parameters = $member->parameters();
+        foreach ($member->docblock()->assertions() as $assertion) {
+            if (!$parameters->has($assertion->variableName)) {
+                continue;
+            }
+            $param = $parameters->get($assertion->variableName);
+            $arg = $arguments->at($param->index());
+            $frame->locals()->set(new PhpactorVariable(
+                $arg->symbol()->name(),
+                $node->getStartPosition(),
+                $assertion->type,
+            ));
+        }
     }
 }

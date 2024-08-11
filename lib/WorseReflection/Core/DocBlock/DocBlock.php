@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\DocBlock;
 
 use Phpactor\WorseReflection\Core\Deprecation;
+use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -55,4 +56,9 @@ interface DocBlock
      * @return Type[]
      */
     public function mixins(): array;
+
+    /**
+     * @return DocBlockTypeAssertion[]
+     */
+    public function assertions(): array;
 }

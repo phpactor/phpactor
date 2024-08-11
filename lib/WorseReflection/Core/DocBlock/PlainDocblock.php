@@ -179,4 +179,9 @@ class PlainDocblock implements DocBlock
     {
         return new DocBlockTypeAliases([]);
     }
+
+    public function assertions(): array
+    {
+        return [];
+    }
 }

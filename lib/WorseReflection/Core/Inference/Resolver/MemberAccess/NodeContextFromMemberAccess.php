@@ -100,7 +100,7 @@ class NodeContextFromMemberAccess
             }
         }
 
-        [ $containerType, $memberType, $member ] = $this->resolveContainerMemberType(
+        [ $containerType, $memberType, $member, $arguments ] = $this->resolveContainerMemberType(
             $resolver,
             $frame,
             $node,
@@ -120,6 +120,7 @@ class NodeContextFromMemberAccess
                 $containerType,
                 ByteOffsetRange::fromInts($node->memberName->getStartPosition(), $node->memberName->getEndPosition()),
                 $member,
+                $arguments,
             );
         }
 
@@ -197,7 +198,7 @@ class NodeContextFromMemberAccess
         }
 
         $containerType = UnionType::fromTypes(...$types)->reduce();
-        return [$containerType, $memberType, $member];
+        return [$containerType, $memberType, $member, $arguments];
     }
 
     private function resolveMemberType(NodeContextResolver $resolver, Frame $frame, ReflectionMember $member, ?FunctionArguments $arguments, Node $node, Type $subType): Type
