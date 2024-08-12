@@ -17,10 +17,12 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\InvokeableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -146,10 +148,15 @@ class CallExpressionResolver implements Resolver
             }
             $param = $parameters->get($assertion->variableName);
             $arg = $arguments->at($param->index());
+            $type = $assertion->type;
+            if ($assertion->negated) {
+                $type = TypeCombinator::subtract($assertion->type, $arg->type());
+            }
+
             $frame->locals()->set(new PhpactorVariable(
                 $arg->symbol()->name(),
                 $node->getStartPosition(),
-                $map->has($assertion->type->short()) ? $map->get($assertion->type->short()) : $assertion->type,
+                $map->has($type->short()) ? $map->get($type->short()) : $type,
             ));
         }
     }

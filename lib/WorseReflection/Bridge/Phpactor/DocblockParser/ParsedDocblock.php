@@ -311,7 +311,8 @@ class ParsedDocblock implements DocBlock
             }
             $assertions[] = new DocBlockTypeAssertion(
                 ltrim($assert->paramName->toString(), '$'),
-                $this->convertType($assert->type)
+                $this->convertType($assert->type),
+                $assert->negationOrEquality?->value === '!',
             );
         }
         return $assertions;
