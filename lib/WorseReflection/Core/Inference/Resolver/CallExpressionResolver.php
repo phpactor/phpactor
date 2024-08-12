@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Inference\Context\CallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
@@ -42,7 +43,11 @@ class CallExpressionResolver implements Resolver
         $returnType = $context->type();
         $containerType = $context->containerType();
 
-        if ($context instanceof MemberAccessContext && $context->arguments()) {
+        if (
+            ($context instanceof MemberAccessContext ||
+            $context instanceof FunctionCallContext)
+            && $context->arguments()
+        ) {
             $this->applyAssertions($context, $frame, $node);
         }
 
@@ -122,19 +127,15 @@ class CallExpressionResolver implements Resolver
 
         return $context;
     }
-    /**
-     * @param MemberAccessContext<ReflectionMember> $context
-     */
+
     private function applyAssertions(
-        MemberAccessContext $context,
+        CallContext $context,
         Frame $frame,
         CallExpression $node,
     ): void {
-        $member = $context->accessedMember();
-        if (!$member instanceof ReflectionMethod) {
-            return;
-        }
         $arguments = $context->arguments();
+        $member = $context->callable();
+
         if (null === $arguments) {
             return;
         }
