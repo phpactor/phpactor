@@ -156,7 +156,7 @@ class CallExpressionResolver implements Resolver
             $frame->locals()->set(new PhpactorVariable(
                 $arg->symbol()->name(),
                 $node->getStartPosition(),
-                $map->has($type->short()) ? $map->get($type->short()) : $type,
+                $map->getOrGiven($type),
             ));
         }
     }

@@ -333,10 +333,7 @@ class NodeContextFromMemberAccess
     {
         $templateMap = $this->resolver->mergeParameters($templateMap, $member->parameters(), $arguments);
         $type = $type->map(function (Type $type) use ($templateMap): Type {
-            if ($templateMap->has($type->short())) {
-                return $templateMap->get($type->short());
-            }
-            return $type;
+            return $templateMap->getOrGiven($type);
         });
 
         return $type;

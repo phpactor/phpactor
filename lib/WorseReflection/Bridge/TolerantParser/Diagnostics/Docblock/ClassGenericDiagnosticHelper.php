@@ -104,13 +104,7 @@ final class ClassGenericDiagnosticHelper
         if ($extendTagType instanceof GenericClassType) {
             $classTemplateMap = $class->templateMap();
             $extendTagType = $extendTagType->withArguments(array_map(function (Type $type) use ($classTemplateMap) {
-                if (!$type instanceof ClassType) {
-                    return $type;
-                }
-                if (!$classTemplateMap->has($type->__toString())) {
-                    return $type;
-                }
-                return $classTemplateMap->get($type->__toString());
+                return $classTemplateMap->getOrGiven($type);
             }, $extendTagType->arguments()));
         }
 
