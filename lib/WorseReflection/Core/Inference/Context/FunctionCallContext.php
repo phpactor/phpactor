@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
 final class FunctionCallContext extends NodeContext implements CallContext

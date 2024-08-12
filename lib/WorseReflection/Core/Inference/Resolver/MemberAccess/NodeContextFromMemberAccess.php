@@ -141,7 +141,7 @@ class NodeContextFromMemberAccess
     }
 
     /**
-     * @return array{Type,Type,?ReflectionMember}
+     * @return array{Type,Type,?ReflectionMember,?FunctionArguments}
      */
     private function resolveContainerMemberType(
         NodeContextResolver $resolver,

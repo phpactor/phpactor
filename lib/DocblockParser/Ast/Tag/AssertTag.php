@@ -3,7 +3,6 @@
 namespace Phpactor\DocblockParser\Ast\Tag;
 
 use Phpactor\DocblockParser\Ast\TagNode;
-use Phpactor\DocblockParser\Ast\TextNode;
 use Phpactor\DocblockParser\Ast\Token;
 use Phpactor\DocblockParser\Ast\TypeNode;
 use Phpactor\DocblockParser\Ast\VariableNode;

@@ -9,7 +9,6 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Inference\Context\CallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
-use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
@@ -20,10 +19,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\AggregateType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\InvokeableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -44,9 +40,7 @@ class CallExpressionResolver implements Resolver
         $containerType = $context->containerType();
 
         if (
-            ($context instanceof MemberAccessContext ||
-            $context instanceof FunctionCallContext)
-            && $context->arguments()
+            $context instanceof CallContext && $context->arguments()
         ) {
             $this->applyAssertions($context, $frame, $node);
         }

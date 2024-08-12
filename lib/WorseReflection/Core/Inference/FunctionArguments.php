@@ -76,12 +76,4 @@ class FunctionArguments implements IteratorAggregate, Countable
 
         return new self($this->resolver, $this->frame, $newArgs);
     }
-
-    /**
-     * @return list<Type>
-     */
-    public function toList(): array
-    {
-        return iterator_to_array($this->getIterator(), false);
-    }
 }
