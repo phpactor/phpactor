@@ -3,7 +3,9 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\TemplateMap;
@@ -72,6 +74,7 @@ class GenericMapResolver
     {
         foreach ($parameters as $parameter) {
             $parameterType = $parameter->inferredType();
+
 
             if ($parameterType instanceof ClassStringType && $parameterType->className()) {
                 $this->mapClassString($parameterType, $templateMap, $arguments, $parameter);

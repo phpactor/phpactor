@@ -11,6 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberAccessContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
+use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
@@ -27,6 +28,9 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CallExpressionResolver implements Resolver
 {
+    public function __construct(private GenericMapResolver $resolver)
+    {
+    }
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof CallExpression);
@@ -134,7 +138,9 @@ class CallExpressionResolver implements Resolver
         }
 
         $parameters = $member->parameters();
+        $map = $this->resolver->mergeParameters($member->docblock()->templateMap(), $parameters, $arguments);
         foreach ($member->docblock()->assertions() as $assertion) {
+
             if (!$parameters->has($assertion->variableName)) {
                 continue;
             }
@@ -143,7 +149,7 @@ class CallExpressionResolver implements Resolver
             $frame->locals()->set(new PhpactorVariable(
                 $arg->symbol()->name(),
                 $node->getStartPosition(),
-                $assertion->type,
+                $map->has($assertion->type->short()) ? $map->get($assertion->type->short()) : $assertion->type,
             ));
         }
     }
