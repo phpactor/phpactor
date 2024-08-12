@@ -1,0 +1,17 @@
+<?php
+
+final class Assert
+{
+    /**
+     * @phpstan-assert Foobar $class
+     */
+    public static function assertFoobar(string $class): void
+    {
+    }
+}
+
+function foo(object $obj): void
+{
+    Assert::assertFoobar($obj);
+    wrAssertType('Foobar', $obj);
+}

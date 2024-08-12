@@ -73,6 +73,7 @@ class GenericMapResolver
         foreach ($parameters as $parameter) {
             $parameterType = $parameter->inferredType();
 
+
             if ($parameterType instanceof ClassStringType && $parameterType->className()) {
                 $this->mapClassString($parameterType, $templateMap, $arguments, $parameter);
                 return $templateMap;

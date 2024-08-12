@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
 use Phpactor\DocblockParser\Ast\ParameterList;
+use Phpactor\DocblockParser\Ast\Tag\AssertTag;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
 use Phpactor\DocblockParser\Ast\Tag\ImplementsTag;
@@ -24,6 +25,7 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockParam;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockParams;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAlias;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAliases;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAssertion;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
@@ -298,6 +300,22 @@ class ParsedDocblock implements DocBlock
     public function node(): ParserDocblock
     {
         return $this->node;
+    }
+
+    public function assertions(): array
+    {
+        $assertions = [];
+        foreach ($this->node->tags(AssertTag::class) as $assert) {
+            if (!$assert->paramName) {
+                continue;
+            }
+            $assertions[] = new DocBlockTypeAssertion(
+                ltrim($assert->paramName->toString(), '$'),
+                $this->convertType($assert->type),
+                $assert->negationOrEquality?->value === '!',
+            );
+        }
+        return $assertions;
     }
 
     private function addParameters(VirtualReflectionMethod $method, ReflectionParameterCollection $collection, ?ParameterList $parameterList): void

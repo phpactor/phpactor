@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Context;
 
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -21,7 +22,8 @@ class MemberAccessContext extends NodeContext
         Type $type,
         Type $containerType,
         private ByteOffsetRange $memberNameRange,
-        private ReflectionMember $member
+        protected  ReflectionMember $member,
+        private ?FunctionArguments $arguments,
     ) {
         parent::__construct($symbol, $type, $containerType);
     }
@@ -37,5 +39,10 @@ class MemberAccessContext extends NodeContext
     public function memberNameRange(): ByteOffsetRange
     {
         return $this->memberNameRange;
+    }
+
+    public function arguments(): ?FunctionArguments
+    {
+        return $this->arguments;
     }
 }

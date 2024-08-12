@@ -19,6 +19,10 @@ Improvements:
   - Show prose associated with `@throws` tag #2694 @mamazu
   - Support parsing generic variance e.g. `covariant` #2664 @dantleech
 
+Features:
+
+  - Basic support for `@{phpstan,psalm}-assert` #2720 @dantleech
+
 ## 2024-06-30
 
 Features:

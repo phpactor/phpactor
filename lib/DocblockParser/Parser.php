@@ -5,6 +5,7 @@ namespace Phpactor\DocblockParser;
 use Phpactor\DocblockParser\Ast\ArrayKeyValueList;
 use Phpactor\DocblockParser\Ast\ArrayKeyValueNode;
 use Phpactor\DocblockParser\Ast\ConditionalNode;
+use Phpactor\DocblockParser\Ast\Tag\AssertTag;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
@@ -98,6 +99,7 @@ final class Parser
             '@throws' => $this->parseThrows(),
             '@deprecated' => $this->parseDeprecated(),
             '@method' => $this->parseMethod(),
+            '@assert' => $this->parseAssert(),
             '@type' => $this->parseTypeAlias(),
             '@property', '@property-read' => $this->parseProperty(),
             '@mixin' => $this->parseMixin(),
@@ -763,5 +765,30 @@ final class Parser
         }
 
         return new TypeAliasTag($tag, $alias, $equals, $type);
+    }
+
+    private function parseAssert(): TagNode
+    {
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
+        $paramName = $type = $negOrEquality = null;
+
+        if ($this->tokens->if(Token::T_EQUALS)) {
+            $negOrEquality = $this->tokens->mustChomp(Token::T_EQUALS);
+        }
+
+        if ($this->tokens->if(Token::T_BANG)) {
+            $negation = $this->tokens->mustChomp(Token::T_BANG);
+            $negOrEquality = $negation;
+        }
+
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $type = $this->parseType();
+        }
+
+        if ($this->tokens->if(Token::T_VARIABLE)) {
+            $paramName = $this->parseVariable();
+        }
+
+        return new AssertTag($tag, $negOrEquality, $type, $paramName);
     }
 }

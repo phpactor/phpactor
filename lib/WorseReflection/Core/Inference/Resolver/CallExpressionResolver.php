@@ -7,14 +7,18 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\ParenthesizedExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Inference\Context\CallContext;
 use Phpactor\WorseReflection\Core\Inference\Context\FunctionCallContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
+use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Resolver;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
+use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
+use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\InvokeableType;
@@ -23,6 +27,9 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class CallExpressionResolver implements Resolver
 {
+    public function __construct(private GenericMapResolver $resolver)
+    {
+    }
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof CallExpression);
@@ -31,6 +38,12 @@ class CallExpressionResolver implements Resolver
         $context = $resolver->resolveNode($frame, $resolvableNode);
         $returnType = $context->type();
         $containerType = $context->containerType();
+
+        if (
+            $context instanceof CallContext && $context->arguments()
+        ) {
+            $this->applyAssertions($context, $frame, $node);
+        }
 
         if ($returnType instanceof ConditionalType) {
             $context = $this->processConditionalType($returnType, $containerType, $context, $resolver, $frame, $node);
@@ -107,5 +120,39 @@ class CallExpressionResolver implements Resolver
         }
 
         return $context;
+    }
+
+    private function applyAssertions(
+        CallContext $context,
+        Frame $frame,
+        CallExpression $node,
+    ): void {
+        $arguments = $context->arguments();
+        $member = $context->callable();
+
+        if (null === $arguments) {
+            return;
+        }
+
+        $parameters = $member->parameters();
+        $map = $this->resolver->mergeParameters($member->docblock()->templateMap(), $parameters, $arguments);
+        foreach ($member->docblock()->assertions() as $assertion) {
+
+            if (!$parameters->has($assertion->variableName)) {
+                continue;
+            }
+            $param = $parameters->get($assertion->variableName);
+            $arg = $arguments->at($param->index());
+            $type = $assertion->type;
+            if ($assertion->negated) {
+                $type = TypeCombinator::subtract($assertion->type, $arg->type());
+            }
+
+            $frame->locals()->set(new PhpactorVariable(
+                $arg->symbol()->name(),
+                $node->getStartPosition(),
+                $map->getOrGiven($type),
+            ));
+        }
     }
 }

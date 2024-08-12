@@ -27,6 +27,7 @@ class ClassMoverExtensionTest extends TestCase
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => realpath(__DIR__ .'/..'),
             CodeTransformExtension::PARAM_TEMPLATE_PATHS => [],
         ]);
-        self::assertInstanceOf(ClassMover::class, $container->get(ClassMover::class));
+        $var = $container->get(ClassMover::class);
+        self::assertInstanceOf(ClassMover::class, $var);
     }
 }
