@@ -3,6 +3,8 @@
 namespace Phpactor\Extension\LanguageServer\Command;
 
 use Amp\CancellationTokenSource;
+use Phpactor\Extension\LanguageServerBridge\Converter\TextDocumentConverter;
+use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use RuntimeException;
@@ -18,8 +20,10 @@ class DiagnosticsCommand extends Command
     private const PARAM_URI = 'uri';
 
 
-    public function __construct(private DiagnosticsProvider $provider)
-    {
+    public function __construct(
+        private DiagnosticsProvider $provider,
+        private WorkspaceIndex $workspace,
+    ) {
         parent::__construct();
     }
 
@@ -35,6 +39,11 @@ class DiagnosticsCommand extends Command
         $uri = $input->getOption(self::PARAM_URI) ?: 'untitled:///new';
 
         $textDocument = ProtocolFactory::textDocumentItem($uri, $this->stdin());
+
+        // update the in-memory worse reflection workspace index so that we
+        // can locate the latest function and class definitions in this process.
+        $this->workspace->index(TextDocumentConverter::fromLspTextItem($textDocument));
+
         $diagnostics = wait(
             $this->provider->provideDiagnostics($textDocument, (new CancellationTokenSource())->getToken())
         );

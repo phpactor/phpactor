@@ -5,6 +5,9 @@ Changelog
 
 Bug fixes:
 
+  - Tell WorseReflection about new definitions from the stdin for the
+    diagnostics process #2723
+  - Flush index on save (make latest changes available to diagnostic process) #2722
   - Fix bad contextual filtering #2715 @dantleech
   - Take optional parameters into account with conditional types #2700 @dantleech
   - Fix import position when `declare` is present #2698 @dantleech
