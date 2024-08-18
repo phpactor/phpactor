@@ -8,6 +8,7 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
@@ -218,7 +219,10 @@ class LanguageServerExtension implements Extension
         $container->register(DiagnosticsCommand::class, function (Container $container) {
             /** @var AggregateDiagnosticsProvider $provider */
             $provider = $container->get(AggregateDiagnosticsProvider::class . '.outsourced');
-            return new DiagnosticsCommand($provider);
+            return new DiagnosticsCommand(
+                $provider,
+                $container->get(WorkspaceIndex::class),
+            );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => DiagnosticsCommand::NAME ]]);
     }
 
