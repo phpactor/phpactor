@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - Docblock: support parsing quoted string literals as array valuyes #2730
   - Tell WorseReflection about new definitions from the stdin for the
     diagnostics process #2723
   - Flush index on save (make latest changes available to diagnostic process) #2722
@@ -12,7 +13,6 @@ Bug fixes:
   - Take optional parameters into account with conditional types #2700 @dantleech
   - Fix import position when `declare` is present #2698 @dantleech
   - Fix NULL error in Docblock parser #2693 @dantleech
-  - Fix docblock parsing of `array{foo:'quoted',bar:'strings'}` #2730 @nsrosenqvist
 
 Improvements:
 
