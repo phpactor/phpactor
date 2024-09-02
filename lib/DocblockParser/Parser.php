@@ -361,6 +361,9 @@ final class Parser
             if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER)) {
                 $keyValues = $this->parseArrayKeyValues();
             }
+            if ($this->tokens->if(Token::T_QUOTED_STRING)) {
+                $keyValues = $this->parseArrayKeyValues();
+            }
             if ($this->tokens->if(Token::T_BRACKET_CURLY_CLOSE)) {
                 $close = $this->tokens->chomp();
             }
@@ -710,6 +713,9 @@ final class Parser
         }
         $type = null;
         if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER)) {
+            $type = $this->parseTypes();
+        }
+        if ($this->tokens->if(Token::T_QUOTED_STRING)) {
             $type = $this->parseTypes();
         }
 

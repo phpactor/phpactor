@@ -1,0 +1,20 @@
+/**
+ * @param array{
+ *     foo: 'foo',
+ *     bar: 'bar',
+ * } $config
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ParamTag: = @param
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = 
+     ArrayKeyValueNode: = foo:
+      LiteralStringNode: = 'foo',
+     ArrayKeyValueNode: = bar:
+      LiteralStringNode: = 'bar',}
+   VariableNode: = $config
+   TextNode: = 
+ */
