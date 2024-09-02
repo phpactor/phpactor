@@ -709,7 +709,7 @@ final class Parser
             $optional = $this->tokens->chomp();
         }
         $type = null;
-        if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER)) {
+        if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER, Token::T_QUOTED_STRING)) {
             $type = $this->parseTypes();
         }
 

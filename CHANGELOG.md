@@ -5,6 +5,7 @@ Changelog
 
 Bug fixes:
 
+  - Docblock: support parsing quoted string literals as array valuyes #2730
   - Tell WorseReflection about new definitions from the stdin for the
     diagnostics process #2723
   - Flush index on save (make latest changes available to diagnostic process) #2722
