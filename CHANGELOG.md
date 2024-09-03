@@ -25,6 +25,7 @@ Improvements:
 
 Features:
 
+  - Add support for 8.3 typed class constants
   - Basic support for `@{phpstan,psalm}-assert` #2720 @dantleech
 
 ## 2024-06-30
