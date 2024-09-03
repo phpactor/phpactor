@@ -231,6 +231,25 @@ class DocblockMissingParamProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'no false positive array shape with string literals',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @param array{foo: 'foo', bar: 'bar'} $foobar
+                     */
+                    public function foo(array $foobar) {
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'no false positive for vardoc on promoted property',
             source: <<<'PHP'
                 <?php
