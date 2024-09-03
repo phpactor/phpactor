@@ -107,7 +107,7 @@ class IndexBuildCommand extends Command
             $process = yield $this->watcher->watch();
 
             // Signals are not supported on Windows
-            if(defined('SIGINT')) {
+            if (defined('SIGINT')) {
                 Loop::onSignal(SIGINT, function () use ($output, $process): void {
                     $output->write('Shutting down watchers...');
                     $process->stop();

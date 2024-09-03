@@ -12,7 +12,6 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Phpactor\WorseReflection\TypeUtil;
 

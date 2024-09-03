@@ -164,7 +164,7 @@ class CompleteConstructor implements Transformer
         }
 
         $parameters = [];
-        foreach($ancestor->methods()->get('__construct')->parameters() as $parameter) {
+        foreach ($ancestor->methods()->get('__construct')->parameters() as $parameter) {
             $parameters[] = $parameter->name();
         }
 
