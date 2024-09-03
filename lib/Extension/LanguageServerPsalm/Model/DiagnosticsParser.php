@@ -72,7 +72,7 @@ class DiagnosticsParser
             /** @var array<PsalmDiagnostic> $decoded */
             $decoded = json_decode($jsonString, true, flags: JSON_THROW_ON_ERROR);
             return $decoded;
-        } catch(JsonException $e) {
+        } catch (JsonException $e) {
             throw new RuntimeException(sprintf(
                 'Could not decode Psalm JSON output "%s": %s',
                 $jsonString,

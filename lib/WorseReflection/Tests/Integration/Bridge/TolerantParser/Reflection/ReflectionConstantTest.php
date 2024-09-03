@@ -96,6 +96,22 @@ class ReflectionConstantTest extends IntegrationTestCase
             function (ReflectionConstantCollection $constants): void {
                 $this->assertStringContainsString('/** Hello! */', $constants->first()->docblock()->raw());
             }
+                ];
+
+        yield 'Returns declared type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    const string FOOBAR = 'foobar';
+                }
+                EOT
+            ,
+            'Foobar',
+            function (ReflectionConstantCollection $constants): void {
+                $this->assertEquals('string', $constants->first()->type()->__toString());
+            }
         ];
 
         yield 'Returns type' => [
