@@ -80,7 +80,7 @@ class TypeDefinitionHandler implements Handler, CanRegisterCapabilities
         });
     }
 
-    public function registerCapabiltiies(ServerCapabilities $capabilities): void
+    public function registerCapabilties(ServerCapabilities $capabilities): void
     {
         $capabilities->typeDefinitionProvider = true;
     }

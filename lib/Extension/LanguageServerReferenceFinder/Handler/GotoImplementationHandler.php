@@ -52,7 +52,7 @@ class GotoImplementationHandler implements Handler, CanRegisterCapabilities
         });
     }
 
-    public function registerCapabiltiies(ServerCapabilities $capabilities): void
+    public function registerCapabilties(ServerCapabilities $capabilities): void
     {
         $capabilities->implementationProvider = true;
     }

@@ -42,7 +42,7 @@ class SelectionRangeHandler implements Handler, CanRegisterCapabilities
         return new Success($this->provider->provide($textDocument->text, $offsets));
     }
 
-    public function registerCapabiltiies(ServerCapabilities $capabilities): void
+    public function registerCapabilties(ServerCapabilities $capabilities): void
     {
         $capabilities->selectionRangeProvider = true;
     }

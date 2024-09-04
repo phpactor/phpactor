@@ -50,7 +50,7 @@ class FileRenameHandler implements Handler, CanRegisterCapabilities
         });
     }
 
-    public function registerCapabiltiies(ServerCapabilities $capabilities): void
+    public function registerCapabilties(ServerCapabilities $capabilities): void
     {
         $capabilities->workspace['fileOperations'] = new FileOperationOptions(willRename: new FileOperationRegistrationOptions(
             filters: [

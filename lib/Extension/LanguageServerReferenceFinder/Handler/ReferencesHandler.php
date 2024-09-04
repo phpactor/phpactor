@@ -120,7 +120,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
         });
     }
 
-    public function registerCapabiltiies(ServerCapabilities $capabilities): void
+    public function registerCapabilties(ServerCapabilities $capabilities): void
     {
         $capabilities->referencesProvider = true;
     }

@@ -38,7 +38,7 @@ class DocumentSymbolProviderHandler implements Handler, CanRegisterCapabilities
         return new Success($this->provider->provideFor($textDocument->text));
     }
 
-    public function registerCapabiltiies(ServerCapabilities $capabilities): void
+    public function registerCapabilties(ServerCapabilities $capabilities): void
     {
         $capabilities->documentSymbolProvider = true;
     }

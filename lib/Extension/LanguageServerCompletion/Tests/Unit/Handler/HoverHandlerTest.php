@@ -33,6 +33,7 @@ class HoverHandlerTest extends IntegrationTestCase
         $this->assertInstanceOf(Hover::class, $result);
     }
 
+    /** @return Generator<array{string}> */
     public function provideHover(): Generator
     {
         yield 'var' => [

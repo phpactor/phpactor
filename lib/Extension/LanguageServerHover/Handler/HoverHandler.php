@@ -65,7 +65,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
             }
 
             $offsetReflection = $this->reflector->reflectOffset($document, $offset);
-            $info = $this->infoFromReflecionOffset($offsetReflection);
+            $info = $this->infoFromReflectionOffset($offsetReflection);
             $string = new MarkupContent('markdown', $info);
             $nodeContext = $offsetReflection->nodeContext();
 
@@ -87,7 +87,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         $capabilities->hoverProvider = true;
     }
 
-    private function infoFromReflecionOffset(ReflectionOffset $offset): string
+    private function infoFromReflectionOffset(ReflectionOffset $offset): string
     {
         $nodeContext = $offset->nodeContext();
 
