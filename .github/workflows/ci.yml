@@ -133,8 +133,8 @@ jobs:
             -
                 name: "Upload to Historian"
                 run: |
-                  curl http://${{ env.HISTORIAN_HOST }}/api/upload -XPOST \
-                    -H"X-Api-Key: ${{ env.HISTORIAN_API_KEY }}" \
+                  curl http://${{ secrets.HISTORIAN_HOST }}/api/upload -XPOST \
+                    -H"X-Api-Key: ${{ secrets.HISTORIAN_API_KEY }}" \
                     -H"X-Build: ${{ env.GITHUB_SHA }}" \
                     -Fphpunit=@phpunit-junit.xml
     phpstan:
