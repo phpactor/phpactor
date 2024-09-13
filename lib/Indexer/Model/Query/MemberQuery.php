@@ -6,7 +6,7 @@ use Generator;
 use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\IndexQuery;
 use Phpactor\Indexer\Model\LocationConfidence;
-use Phpactor\Indexer\Model\RecordReferenceEnhancer;
+use Phpactor\Indexer\Model\RecordReferenceEnhancer\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\TextDocument\Location;
 use Phpactor\Indexer\Model\Record\MemberRecord;

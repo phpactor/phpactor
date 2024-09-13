@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\Indexer\Model;
+namespace Phpactor\Indexer\Model\RecordReferenceEnhancer;
 
 use Phpactor\Indexer\Model\Record\FileRecord;
+use Phpactor\Indexer\Model\RecordReference;
 
 interface RecordReferenceEnhancer
 {

@@ -8,6 +8,7 @@ use Phpactor\Indexer\Model\Query\FileQuery;
 use Phpactor\Indexer\Model\Query\FunctionQuery;
 use Phpactor\Indexer\Model\Query\MemberQuery;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer\NullRecordReferenceEnhancer;
+use Phpactor\Indexer\Model\RecordReferenceEnhancer\RecordReferenceEnhancer;
 
 class QueryClient
 {

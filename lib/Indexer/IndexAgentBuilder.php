@@ -21,7 +21,7 @@ use Phpactor\Indexer\Model\RealIndexAgent;
 use Phpactor\Indexer\Model\IndexBuilder;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\Indexer;
-use Phpactor\Indexer\Model\RecordReferenceEnhancer;
+use Phpactor\Indexer\Model\RecordReferenceEnhancer\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer\NullRecordReferenceEnhancer;
 use Phpactor\Indexer\Model\RecordSerializer;
 use Phpactor\Indexer\Model\RecordSerializer\PhpSerializer;

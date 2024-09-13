@@ -3,7 +3,7 @@
 namespace Phpactor\Indexer\Adapter\Worse;
 
 use Phpactor\Indexer\Model\RecordReference;
-use Phpactor\Indexer\Model\RecordReferenceEnhancer;
+use Phpactor\Indexer\Model\RecordReferenceEnhancer\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
@@ -16,8 +16,11 @@ use Psr\Log\LoggerInterface;
 
 class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 {
-    public function __construct(private SourceCodeReflector $reflector, private LoggerInterface $logger, private TextDocumentLocator $locator)
-    {
+    public function __construct(
+        private SourceCodeReflector $reflector,
+        private LoggerInterface $logger,
+        private TextDocumentLocator $locator
+    ) {
     }
 
     public function enhance(FileRecord $record, RecordReference $reference): RecordReference
