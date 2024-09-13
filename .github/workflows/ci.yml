@@ -135,7 +135,7 @@ jobs:
                 run: |
                   curl http://${{ secrets.HISTORIAN_HOST }}/api/upload -XPOST \
                     -H"X-Api-Key: ${{ secrets.HISTORIAN_API_KEY }}" \
-                    -H"X-Build: ${{ env.GITHUB_SHA }}" \
+                    -H"X-Build: ${{ github.sha }}" \
                     -Fphpunit=@phpunit-junit.xml
     phpstan:
         name: "PHPStan (${{ matrix.php-version }})"
