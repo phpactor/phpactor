@@ -126,7 +126,17 @@ jobs:
                     composer-options: "--no-scripts"
             -
                 name: "Run PHPUnit"
-                run: "php -dphar.readonly=0 -dzend.assertions=1 vendor/bin/phpunit"
+                run: |
+                  php -dphar.readonly=0 \
+                    -dzend.assertions=1 \
+                    vendor/bin/phpunit --log-junit phpunit-junit.xml
+            -
+                name: "Upload to Historian"
+                run: |
+                  curl http://${{ env.HISTORIAN_HOST }}/api/upload -XPOST \
+                    -H"X-Api-Key: ${{ env.HISTORIAN_API_KEY }}" \
+                    -H"X-Build: ${{ env.GITHUB_SHA }}" \
+                    -Fphpunit=@phpunit-junit.xml
     phpstan:
         name: "PHPStan (${{ matrix.php-version }})"
 
