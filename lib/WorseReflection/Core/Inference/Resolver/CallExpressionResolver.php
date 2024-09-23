@@ -135,6 +135,9 @@ class CallExpressionResolver implements Resolver
         }
 
         $parameters = $member->parameters();
+        if (count($member->docblock()->assertions()) === 0) {
+            return;
+        }
         $map = $this->resolver->mergeParameters($member->docblock()->templateMap(), $parameters, $arguments);
         foreach ($member->docblock()->assertions() as $assertion) {
 
