@@ -1,6 +1,6 @@
 <?php
 
-functoin this_function_returns_something() {
+function this_function_returns_something() {
     return new stdClass();
 }
 
