@@ -16,11 +16,11 @@ In addition FZF support requires the FZF VIM plugin:
 FZF Choice Selection
 ~~~~~~~~~~~~~~~~~~~~
 
-Some refactorings will allow you to select multiple entires (for example
+Some refactorings will allow you to select multiple entries (for example
 `override
 method <https://phpactor.github.io/phpactor/refactorings.html#override-method>`__.
 
-FZF provides a fuzzy search interface and the possiblity to select
+FZF provides a fuzzy search interface and the possibility to select
 multiple entries at once.
 
 Use ``<tab>`` to toggle selection and CTRL-A/CTRL-D to select all/select

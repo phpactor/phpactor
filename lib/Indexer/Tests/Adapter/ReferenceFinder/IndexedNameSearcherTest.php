@@ -51,7 +51,7 @@ class IndexedNameSearcherTest extends IndexTestCase
             return;
         }
 
-        $this->fail('Could not find interace');
+        $this->fail('Could not find interface');
     }
 
     public function testSearcherForEnum(): void

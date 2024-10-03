@@ -78,9 +78,9 @@ class WorseConstructorCompletor extends AbstractParameterCompletor implements To
     /**
      * @return ReflectionClass|null
      */
-    private function reflectClass(string $source, ObjectCreationExpression $creationExpresion)
+    private function reflectClass(string $source, ObjectCreationExpression $creationExpression)
     {
-        $typeName = $creationExpresion->classTypeDesignator;
+        $typeName = $creationExpression->classTypeDesignator;
 
         if (!$typeName instanceof QualifiedName) {
             return null;

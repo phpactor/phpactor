@@ -27,8 +27,8 @@ for earlier versions.
 
 You can set the path to this file with :ref:`param_symfony.xml_path`
 
-Troubeshooting
---------------
+Troubleshooting
+---------------
 
 ### I don't get any completion suggestions or type inference.
 

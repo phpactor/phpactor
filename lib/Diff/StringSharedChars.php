@@ -3,12 +3,12 @@
 namespace Phpactor\Diff;
 
 /**
- * An utility class to get details of shared begining and ending of a string
+ * An utility class to get details of shared beginning and ending of a string
  */
 class StringSharedChars
 {
     /**
-     * Counts number of shared characters on the begining of a string
+     * Counts number of shared characters on the beginning of a string
      */
     public static function startLength(string $a, string $b): int
     {

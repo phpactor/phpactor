@@ -26,7 +26,7 @@ Execute (Goes to the method line and changes the visibility):
 Then (The cursor should not have moved):
   call AssertCursorDidntMove()
 
-Expect php (The visibility shoud have changed):
+Expect php (The visibility should have changed):
   <?php
 
   class Foo

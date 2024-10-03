@@ -363,7 +363,7 @@ abstract class UpdaterTestCase extends TestCase
                     EOT
             ];
 
-        yield 'class import: previously included class with a lexigraphically greater member before it' => [
+        yield 'class import: previously included class with a lexicographically greater member before it' => [
                 <<<'EOT'
                     <?php
 

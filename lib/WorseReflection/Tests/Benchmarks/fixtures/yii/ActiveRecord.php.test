@@ -215,7 +215,7 @@ class ActiveRecord extends BaseActiveRecord
     }
 
     /**
-     * Filters array condition before it is assiged to a Query filter.
+     * Filters array condition before it is assigned to a Query filter.
      *
      * This method will ensure that an array condition only filters on existing table columns.
      *

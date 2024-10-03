@@ -612,10 +612,10 @@ Enable or disable completion snippets
 **Default**: ``true``
 
 
-.. _param_completion_worse.experimantal:
+.. _param_completion_worse.experimental:
 
 
-``completion_worse.experimantal``
+``completion_worse.experimental``
 """""""""""""""""""""""""""""""""
 
 

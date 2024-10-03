@@ -4,7 +4,7 @@ from docutils.parsers.rst import directives
 
 
 class GitHubRepoDirective(Directive):
-    """Directive for Github Repositories."""
+    """Directive for GitHub Repositories."""
     required_arguments = 1
     optional_arguments = 0
     final_argument_whitespace = False
@@ -20,7 +20,7 @@ class GitHubRepoDirective(Directive):
         
         github_icon = nodes.image(uri=directives.uri("/images/github.svg"),width="15px",height="15px")
         title += github_icon,
-        title += nodes.emphasis(strong=True,text=' Github:')
+        title += nodes.emphasis(strong=True,text=' GitHub:')
         title += nodes.inline(text=' ')
         title += repo_link,
 

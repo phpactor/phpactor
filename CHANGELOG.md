@@ -39,7 +39,7 @@ Features:
 Improvements:
 
   - Do not use indexer when renaming private properties/methods #2672 @dantleech
-  - Fix contextual completion in constructor agrument position #2504
+  - Fix contextual completion in constructor argument position #2504
   - Basic support for `array_reduce` stub #2576
   - Support variadics in contextual completion #2603
   - Allow use of `%project_root%` in index paths #2665 @mamazon
@@ -82,9 +82,9 @@ Improvements:
   - Include project PHP and runtime version and LSP status
   - Add `iterable` "generic" `@param` in docblock #2585
   - Improved diagnostic engine #2584
-  - Ongoing windows compatiblity effort #2567 #2572 #2570 @MatmaRex
+  - Ongoing windows compatibility effort #2567 #2572 #2570 @MatmaRex
   - Ignore unnecessary files in gitexport #2570 @zonuexe
-  - Improve ANSI test compatiblity #2521 @gerardroche
+  - Improve ANSI test compatibility #2521 @gerardroche
   - More snippet support #2515 #2508 @przepompownia
   - Add completion for `@throws` #2509 @przepompownia
 
@@ -122,7 +122,7 @@ Bug fixes:
   - Fix enum cases() not existing false-positive #2423
   - Fix incorrect enum import #2400
   - Fix undefined var false positive for arra unpacking #2403
-  - Fix autoloading class conflcits with test files #2535 @gerardroche
+  - Fix autoloading class conflicts with test files #2535 @gerardroche
   - Fix enum renaming in legacy renamer #2445
   - Fix enum renaming on "new" renamer #2445
   - Fix crash on resolveItem() caused by race condition (?) #2434
@@ -153,7 +153,7 @@ Bug fixes:
   - Fix `null` error (and improve type safety) in the docblock parser #2379
   - Fix undefined-var false positive for undeclared variables that have `@var` #2366
   - Fix undefined-var false positive for pass by ref (again) #2361
-  - Do not crash lanugage server if LSP header cannot be parsed (log error
+  - Do not crash language server if LSP header cannot be parsed (log error
     instead) #2373
 
 Improvements:
@@ -251,7 +251,7 @@ Features:
   - Support for inlay hints #2138
   - Deprecation diagnostics #2120
   - Auto configuration - automatically suggest and apply configuration #2114
-  - Transform to "promote" unassigned consturctor properties #2106
+  - Transform to "promote" unassigned constructor properties #2106
   - Hierarchical namespace segment completion #2070
   - Completion for promoted property visiblity #2087
   - Option `language_server.diagnostic_outsource` to outsource diagnostics in separate process #2105
@@ -296,7 +296,7 @@ Bug fixes:
   - Do not add NULL to type list (fixes search bug) #2009
   - Create a real package for the tolerant-parser fork and use it #2033
   - Also highlight use statements when hovering on class #2039 @mamazu
-  - Fix priotity of "internal" stub locator - facilitating enum completion #2040
+  - Fix priority of "internal" stub locator - facilitating enum completion #2040
   - Require posix extension #2042 @dacianb
   - Fix evaluation of replacement assignments #1705
   - Fix crash on missing token in Indexer #2049 @vlada-dudr
@@ -382,7 +382,7 @@ Documentation:
 
 Bug fixes:
 
-  - [lsp] Import all unresolved names command no longer dupliates names #1835
+  - [lsp] Import all unresolved names command no longer duplicates names #1835
   - [tp] Update tolerant parser library fixing issue with parsing `match` keyword #1873
   - [rpc] Fix regression with :PhpactorClassNew opening in `Untitled` buffer #1881
   - [ctf] Fix token issue with simple class-to-file converter #920
@@ -394,7 +394,7 @@ Improvements:
   - [wr] Better modelling of enums
   - [wr] Add additional phpactor-specific stubs (e.g. for Enums)
   - [lsp] Enum hover improvement
-  - [lsp] Improve formating signature help parameters #1894
+  - [lsp] Improve formatting signature help parameters #1894
   - [lsp] Highlighting more 10x faster #1891
   - [cmp/lsp] inline type information for completion items
   - [cmp] complete `__construct` on `parent::` #1272
@@ -415,9 +415,9 @@ Bug fixes:
   - [in] Fix exception when indexed file has no path #1643
   - [wr] Do not complete constants on class instance #1614
   - [wr] Include virtual properties in class members #1623
-  - [wr] Fix false positive for virutal method not existing #1603
+  - [wr] Fix false positive for virtual method not existing #1603
   - [wr] Ignore exceptions (permission denied f.e.) when traversing files #1569
-  - [wr] Fix resolutin of virtual method
+  - [wr] Fix resolution of virtual method
   - [ct] Fix missing properties refactor does not import class #1534
   - [ct] Fix false diagnostic for missing method #1500
   - [dl] Fix docblock definition location at class level docblocks
@@ -492,7 +492,7 @@ Features:
   - [ls] Lazily resolve documentation for completion items
   - [ct] Generate constructor refactoring
   - [ct] Fill object refactoring
-  - [ct] Remove unused imports diagnositcs and code transformation #1758
+  - [ct] Remove unused imports diagnostic and code transformation #1758
   - [wr] Added native WR single-pass diagnostics #1700
   - [cmd] Index clean command #1691 @mamazu
   - [cmp] (re?)support completion on parent:: #1643
@@ -541,10 +541,10 @@ Features:
   - [language-server] Extract expression - @BladeMF
   - [language-server] Extract method generation - @BladeMF
   - [language-server] Initial support for method generation - @BladeMF
-  - [langauge-server] Support for renaming files (LSP 3.16) - @dantleech
+  - [language-server] Support for renaming files (LSP 3.16) - @dantleech
   - [language-server] Ability to use client file events where available - @dantleech
   - [completion] Experimental support snippets for built-in functions - @weeman1337
-  - [completion] Experimental support snippets for class constructos - @weeman1337
+  - [completion] Experimental support snippets for class constructs - @weeman1337
   - [completion] Added `experimental` flag
   - [completion] Added flag to enable / disable snippets entirely
   - [language-server] Ensure workspace is indexed before finding references - @dantleech
@@ -570,7 +570,7 @@ Bug fixes:
   - [worse-reflection] Fix variable detection in closures - @BladeMF
   - [completion] Fix snippet method completion #1172 - @BladeMF
   - [worse-reflection] Fix PHP8.0 deprecation warnings - @gregoire
-  - [completion] Tests fail due to jetbrain stubs changes - @weeman1337
+  - [completion] Tests fail due to jetbrains stubs changes - @weeman1337
   - [worse-reference-finder] Do not know how to create class from type "NULL" #1246 - @dantleech
   - [worse-reflection] Property context class not propagated
 
@@ -594,7 +594,7 @@ Features:
   - [completion] Basic Doctrine annotation completion support - @elythyr
   - [completion] References are sorted alphabetically - @elythyr
   - [completion] Show warning character if method or class is deprecated
-  - [completion] Sort class names and fucntions according to proximity to current file by default - @dantleech
+  - [completion] Sort class names and functions according to proximity to current file by default - @dantleech
 
   - [composer] Class map only mode by default (do not register autoloader at all, do not include files)
   - [file-watcher] Experimental support for [watchman](https://facebook.github.io/watchman/)
@@ -618,23 +618,23 @@ Improvements:
   - [language-server] Support document symbols (f.e. showing code outline for document)
   - [language-server] Support symbol highlighting
   - [language-server] Support for indexing constants
-  - [code-tranform] Generated accessors automatically `ucfirst` the property name when prefix is used. - @einenlum
+  - [code-transform] Generated accessors automatically `ucfirst` the property name when prefix is used. - @einenlum
   - [worse-reflection] Improved inference for property types - @elythyr
   - [worse-reflection] Include virtual members from traits - @scisssssssors
-  - [code-tranform] fix invalid missing property diagnostic (#1126) - @elythyr
-  - [code-transform] Improve performance for missing properries - @dantleech
+  - [code-transform] fix invalid missing property diagnostic (#1126) - @elythyr
+  - [code-transform] Improve performance for missing properties - @dantleech
 
 Bug fixes:
 
   - [code-transform] Catch unhandled exceptions - @dantleech
   - [text-document] valid php class names not detected for word-at-offset
-  - [code-tranform] Return types not considered for unresolved names - @dantleech
+  - [code-transform] Return types not considered for unresolved names - @dantleech
   - [completion] Avoid reflection on NULL
   - [scf] Fix support for moving and removing folders - @Lumnn
   - [indexer] Fix indexing of static properties - @BladeMF
   - [completion] Fix signature help in nested symbols - @BladeMF
   - [worse-reflection] Static properties not resolved - @BladeMF
-  - [lanaguge-server] Correctly highlight use statements against qualified
+  - [language-server] Correctly highlight use statements against qualified
     names - @dantleech
   - [language-server] Fix occasional class-not-found error on code transform (due to incorrectly formatted path)
   - [worse-reflection] Do not consider "iterable" as an FQN - @elythyr
@@ -661,9 +661,9 @@ Features:
   - [language-server-completion] Automatically import class on completion confirm - @dantleech
   - [code-transform] Consider current class as a potential conflict for imports - @dantleech
   - [completion] Indexed class name and function completion - @dantleech
-  - [indexer-extension] Support "deep references" (search over all implementaions) - @dantleech
-  - [composer] Enable disbaling of autoloader inclusion via. `composer.enable` - @dantleech
-  - [lanaguage-server-completion] Auto-import functions - @dantleech
+  - [indexer-extension] Support "deep references" (search over all implementations) - @dantleech
+  - [composer] Enable disabling of autoloader inclusion via. `composer.enable` - @dantleech
+  - [language-server-completion] Auto-import functions - @dantleech
 
 Improvements:
 
@@ -814,12 +814,12 @@ Features:
   - [vim-plugin] FZF multiple selection (#773). @elythyr
   - [vim-plugin] Maintain correct cursor position after certain text diffs (#770) - @elythyr
   - [code-transform|rpc] Generate multiple accessors for a class - @elythyr
-  - [code-tranform] Generate static methods if the call was static (#25) - @einenlum
+  - [code-transform] Generate static methods if the call was static (#25) - @einenlum
   - [completion] Use declared classes as completion source
   - [import-class] Import declared classes (as long as they can be statically
     resolved).
   - [rpc] Class import uses offset to determine type to import
-  - [class-mover] Possiblity to move related any files whose relations are
+  - [class-mover] Possibility to move related any files whose relations are
     defined in `navigator.destinations` (for both command and rpc)
   - [worse-reflection] Support virtual class properties (in addition to
     methods).
@@ -844,7 +844,7 @@ BC Break:
 
 BC Break:
 
-  - [completion] Comletion API changed to accept the new
+  - [completion] Completion API changed to accept the new
     [TextDocument](https://github.com/phpactor/text-document).
 
 Features:
@@ -1059,7 +1059,7 @@ Misc
 
 Features:
 
-  - [CodeTransform] Transformer to fix namesapce / class name #474
+  - [CodeTransform] Transformer to fix namespace / class name #474
 
 Improvements:
 
@@ -1162,7 +1162,7 @@ Improvements:
     #380
   - [RPC] Request validation (no more undefined index errors).
   - [WorseReflection] Classes inherit constants from interfaces.
-  - [CodeBuilder] Use statements added after the first lexigraphically
+  - [CodeBuilder] Use statements added after the first lexicographically
     inferior existing use-statement, fixes #176. Thanks @greg0ire.
 
 Bug fixes:

@@ -56,7 +56,7 @@ Also available in the AUR:
 Nix/OS
 ------
 
-Phpactor is avialable in NixOS.
+Phpactor is available in NixOS.
 
 .. code-block:: bash
 

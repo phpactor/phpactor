@@ -44,7 +44,7 @@ class IndexCleanCommand extends Command
             Removing an index by the number in the list view:
                 bin/console index:clean <index number>
 
-            Removing all indicies
+            Removing all indices
                 bin/console index:clean %s
 
             === Interactive version ===
@@ -69,16 +69,16 @@ class IndexCleanCommand extends Command
         }
 
         $section = $output->section();
-        $indicies = $this->getIndicies($section);
+        $indices = $this->getIndices($section);
         if (count($indexNames) !== 0) {
             if ($indexNames[0] === self::OPT_CLEAN_ALL) {
-                foreach ($indicies as $index) {
+                foreach ($indices as $index) {
                     $this->removeIndex($output, $index);
                 }
                 return 0;
             }
             foreach ($indexNames as $indexName) {
-                $this->removeIndex($section, $indicies->get($indexName));
+                $this->removeIndex($section, $indices->get($indexName));
             }
             return 0;
         }
@@ -86,14 +86,14 @@ class IndexCleanCommand extends Command
         $section->clear();
 
         while (true) {
-            $this->renderIndexTable($indicies, $section);
+            $this->renderIndexTable($indices, $section);
             if ($index) {
                 $section->writeln(sprintf('<info>Removed index "%s"</>', $index->name()));
             }
             try {
                 // pass $output instead of $section because the interactive input
                 // is corrupted with he Section.
-                $index = $this->getInteractiveAnswer($indicies, $input, $output);
+                $index = $this->getInteractiveAnswer($indices, $input, $output);
             } catch (Exception $e) {
                 $section->clear();
                 $section->writeln(sprintf('<error>%s</>', $e->getMessage()));
@@ -104,14 +104,14 @@ class IndexCleanCommand extends Command
             }
 
             if ($index->absolutePath() === self::OPT_CLEAN_ALL) {
-                foreach ($indicies as $index) {
+                foreach ($indices as $index) {
                     $this->removeIndex($output, $index);
                 }
                 break;
             }
 
             $this->removeIndex($output, $index);
-            $indicies = $indicies->remove($index);
+            $indices = $indices->remove($index);
             $section->clear();
         }
 
@@ -162,7 +162,7 @@ class IndexCleanCommand extends Command
         return $infos->get((string)$result);
     }
 
-    private function getIndicies(OutputInterface $output): IndexInfos
+    private function getIndices(OutputInterface $output): IndexInfos
     {
         $indexes = [];
         $progress = new ProgressBar($output);

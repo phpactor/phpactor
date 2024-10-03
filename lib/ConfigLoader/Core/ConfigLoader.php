@@ -27,7 +27,7 @@ class ConfigLoader
 
             if (null === $config) {
                 throw new RuntimeException(
-                    'Error occured in array_replace_recursive'
+                    'Error occurred in array_replace_recursive'
                 );
             }
         }

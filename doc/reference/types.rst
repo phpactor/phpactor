@@ -34,7 +34,7 @@ Basic Types
     Parent           ``parent``          ``*``      ✔
     Callable         ``callable``        ``*``      ✔
     Iterable         ``iterable``        ``7.1``    ✔
-    Nullable         ``?Foor``           ``7.1``    ✔
+    Nullable         ``?Foo``            ``7.1``    ✔
     Object           ``object``          ``7.2``    ✔
     Union            ``Foo|Bar``         ``8.0``    ✔
     Mixed            ``mixed``           ``8.0``    ✔
@@ -95,7 +95,7 @@ Integer Types
     ==============  =============  =========  ===========
     ``123``         ``*``          ✔          Integer
     ``0b0110``      ``*``          ✔          Binary type
-    ``0x1a``        ``*``          ✔          Hexidecimal
+    ``0x1a``        ``*``          ✔          Hexadecimal
     ``0123``        ``*``          ✔          Octal
     ``123_123``     ``7.4``        ✔          Decimal
     ``0o123``       ``8.1``        ✘          Octal

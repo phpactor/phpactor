@@ -118,7 +118,7 @@ final class TextEditDiff
             $chunks[] = $currentOps;
         }
 
-        // covert to text edits
+        // convert to text edits
         $edits = [];
         foreach ($chunks as $chunk) {
             if ($chunk[0][0] === self::ADD) {

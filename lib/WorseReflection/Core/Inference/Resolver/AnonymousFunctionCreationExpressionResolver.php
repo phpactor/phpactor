@@ -18,7 +18,7 @@ class AnonymousFunctionCreationExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof AnonymousFunctionCreationExpression);
-        $type = NodeUtil::typeFromQualfiedNameLike(
+        $type = NodeUtil::typeFromQualifiedNameLike(
             $resolver->reflector(),
             $node,
             $node->returnTypeList

@@ -9,7 +9,7 @@ use RuntimeException;
 
 class ChainResolverTest extends TestCase
 {
-    public function testThrowsExceptionIfNoVeresionCanBeResolved(): void
+    public function testThrowsExceptionIfNoVersionCanBeResolved(): void
     {
         $this->expectException(RuntimeException::class);
         (new ChainResolver())->resolve();

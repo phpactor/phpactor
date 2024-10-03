@@ -16,8 +16,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassCopyHandlerTest extends HandlerTestCase
 {
-    const SOURCE_PATH = 'souce_path';
-    const DEST_PATH = 'souce_path';
+    const SOURCE_PATH = 'source_path';
+    const DEST_PATH = 'source_path';
 
     /**
      * @var ObjectProphecy<ClassCopy>

@@ -27,7 +27,7 @@ class DeclaredMemberTypeResolver
             return TypeFactory::undefined();
         }
 
-        $type = NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $declaredTypes, $className);
+        $type = NodeUtil::typeFromQualifiedNameLike($this->reflector, $tolerantNode, $declaredTypes, $className);
 
         if (!$nullable) {
             return $type;
@@ -58,7 +58,7 @@ class DeclaredMemberTypeResolver
             return TypeFactory::undefined();
         }
 
-        $type =  NodeUtil::typeFromQualfiedNameLike($this->reflector, $tolerantNode, $tolerantType, $className);
+        $type =  NodeUtil::typeFromQualifiedNameLike($this->reflector, $tolerantNode, $tolerantType, $className);
 
         $type = $type->map(function (Type $type) use ($className) {
             if ($className && $type instanceof SelfType) {

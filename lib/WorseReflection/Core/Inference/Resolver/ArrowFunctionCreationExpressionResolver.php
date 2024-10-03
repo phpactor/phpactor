@@ -18,7 +18,7 @@ class ArrowFunctionCreationExpressionResolver implements Resolver
     public function resolve(NodeContextResolver $resolver, Frame $frame, Node $node): NodeContext
     {
         assert($node instanceof ArrowFunctionCreationExpression);
-        $returnType = NodeUtil::typeFromQualfiedNameLike(
+        $returnType = NodeUtil::typeFromQualifiedNameLike(
             $resolver->reflector(),
             $node,
             $node->returnTypeList

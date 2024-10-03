@@ -21,7 +21,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ClassMoveHandlerTest extends HandlerTestCase
 {
-    const SOURCE_PATH = 'souce_path';
+    const SOURCE_PATH = 'source_path';
     const DEST_PATH = 'dest_path';
 
     private ObjectProphecy $classMover;

@@ -41,7 +41,7 @@ class ReflectionAttribute implements PhpactorReflectionObjectCreationExpression,
         $type = $this->locator->nodeContextResolver()->resolveNode($this->frame, $this->node->name)->type();
 
         if (!$type instanceof ReflectedClassType) {
-            throw new CouldNotResolveNode(sprintf('Expceted "%s" but got "%s"', ReflectedClassType::class, get_class($type)));
+            throw new CouldNotResolveNode(sprintf('Expected "%s" but got "%s"', ReflectedClassType::class, get_class($type)));
         }
 
         $reflection = $type->reflectionOrNull();
