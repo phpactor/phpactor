@@ -131,6 +131,7 @@ jobs:
                     -dzend.assertions=1 \
                     vendor/bin/phpunit --log-junit phpunit-junit.xml
             -
+                if: "contains(github.ref, 'master')"
                 name: "Upload to Historian"
                 run: |
                   curl https://${{ secrets.HISTORIAN_HOST }}/api/upload -XPOST \
@@ -268,6 +269,7 @@ jobs:
                 name: "Run PHPBench"
                 run: "vendor/bin/phpbench run --progress=plain --iterations=1 --dump-file=phpbench.xml"
             -
+                if: "contains(github.ref, 'master')"
                 name: "Upload to Historian"
                 run: |
                   curl https://${{ secrets.HISTORIAN_HOST }}/api/upload -XPOST \
