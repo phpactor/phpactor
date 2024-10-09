@@ -2,9 +2,6 @@
 
 namespace Phpactor\ComposerInspector;
 
-use stdClass;
-use RuntimeException;
-
 final class ComposerInspector
 {
     private const DEFAULT_BIN_DIR = 'vendor/bin';
@@ -14,7 +11,7 @@ final class ComposerInspector
      */
     private array $packages = [];
 
-    private string $binDir = self::DEFAULT_BIN_DIR;
+    private string $vendorBinDir = self::DEFAULT_BIN_DIR;
 
     private bool $loaded = false;
 
@@ -34,46 +31,47 @@ final class ComposerInspector
         return $this->packages[$name];
     }
 
-    public function getBinDir(): string
+    public function binDir(): string
     {
         $this->readFiles();
-        return $this->binDir;
+        return $this->vendorBinDir;
     }
 
     private function readFiles(): void
     {
-        if ($this->loaded || !file_exists($this->lockFile) || !file_exists($this->composerFile)) {
-            $this->loaded = true;
+        if ($this->loaded) {
             return;
         }
 
         $lockContent = $this->parseFile($this->lockFile);
-        foreach ($lockContent->{'packages'} ?? [] as $pkg) {
-            $this->packages[(string)$pkg->{'name'}] = $this->forVersion($pkg->{'name'}, $pkg->{'version'}, false);
+        foreach ($lockContent['packages'] ?? [] as $pkg) {
+            $this->packages[(string)$pkg['name']] = $this->forVersion($pkg['name'], $pkg['version'], false);
         }
-        foreach ($lockContent->{'packages-dev'} ?? [] as $pkg) {
-            $this->packages[(string)$pkg->{'name'}] = $this->forVersion($pkg->{'name'}, $pkg->{'version'}, true);
+        foreach ($lockContent['packages-dev'] ?? [] as $pkg) {
+            $this->packages[(string)$pkg['name']] = $this->forVersion($pkg['name'], $pkg['version'], true);
         }
 
         $composerContent = $this->parseFile($this->composerFile);
-        $this->binDir = $composerContent->{'bin-dir'} ?? self::DEFAULT_BIN_DIR;
+        $this->vendorBinDir = $composerContent['bin-dir'] ?? self::DEFAULT_BIN_DIR;
+
+        $this->loaded = true;
     }
 
-    private function parseFile(string $fileName): ?stdClass
+    /** @return array<string, mixed> */
+    private function parseFile(string $fileName): array
     {
         $contents = file_get_contents($fileName);
-
         if (false === $contents) {
-            throw new RuntimeException(sprintf('Could not read file "%s"', $this->lockFile));
+            return [];
         }
 
-        $obj = json_decode($contents);
+        $result = json_decode($contents, associative: true);
 
-        if (!$obj instanceof stdClass) {
-            return null;
+        if (!is_array($result)) {
+            return [];
         }
 
-        return $obj;
+        return $result;
     }
 
     private function forVersion(string $name, string $version, bool $isDev): Package

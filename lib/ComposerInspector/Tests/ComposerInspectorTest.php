@@ -41,7 +41,7 @@ class ComposerInspectorTest extends TestCase
         $this->putComposerLock('{"packages-dev":[{"name":"phpstan/phpstan", "version": "^1.0"}]}');
         $this->putComposer($composerContent);
 
-        self::assertSame($binPath, $this->inspector()->getBinDir());
+        self::assertSame($binPath, $this->inspector()->binDir());
     }
 
     /**
