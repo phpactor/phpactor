@@ -15,8 +15,10 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class IndexedNameSearcher implements NameSearcher
 {
-    public function __construct(private SearchClient $client)
-    {
+    public function __construct(
+        private SearchClient $client,
+        private bool $semiFuzzy,
+    ) {
     }
 
     /**
@@ -32,7 +34,7 @@ class IndexedNameSearcher implements NameSearcher
         if ($fullyQualified) {
             $criteria = Criteria::fqnBeginsWith(substr($name, 1));
         } else {
-            $criteria = Criteria::shortNameBeginsWith($name);
+            $criteria = Criteria::shortNameMatchesTo($name, $this->semiFuzzy);
         }
 
         $typeCriteria = $this->resolveTypeCriteria($type);
@@ -44,8 +46,8 @@ class IndexedNameSearcher implements NameSearcher
                     $typeCriteria,
 
                     // B/C for old indexes
-                    Criteria::isClassTypeUndefined()
-                )
+                    Criteria::isClassTypeUndefined(),
+                ),
             );
         }
 
@@ -53,7 +55,7 @@ class IndexedNameSearcher implements NameSearcher
             yield NameSearchResult::create(
                 $result->recordType(),
                 FullyQualifiedName::fromString($result->identifier()),
-                $result instanceof HasPath ? TextDocumentUri::fromString($result->filepath()) : null
+                $result instanceof HasPath ? TextDocumentUri::fromString($result->filepath()) : null,
             );
         }
     }
