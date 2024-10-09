@@ -29,6 +29,7 @@ class DiagnosticsParser
                     range: new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
                     severity: DiagnosticSeverity::ERROR,
                     source: 'phpstan',
+                    code: $message['identifier'] ?? null,
                 );
                 if (($message['tip'] ?? null) !== null) {
                     $diagnostics[] = new Diagnostic(
@@ -37,6 +38,7 @@ class DiagnosticsParser
                         severity: DiagnosticSeverity::HINT,
                         source: 'phpstan',
                         codeDescription: $this->resolveCodeDescription($message),
+                        code: $message['identifier'] ?? null,
                     );
 
                 }
