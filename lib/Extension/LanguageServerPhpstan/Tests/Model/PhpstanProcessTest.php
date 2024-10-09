@@ -52,7 +52,8 @@ class PhpstanProcessTest extends IntegrationTestCase
                     ),
                     message: 'Variable $barfoo might not be defined.',
                     severity: DiagnosticSeverity::ERROR,
-                    source: 'phpstan'
+                    source: 'phpstan',
+                    code: 'variable.undefined'
                 )
             ]
         ];
