@@ -7,8 +7,8 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
-use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\FilePathResolver\Expander\CallbackExpander;
 use Phpactor\MapResolver\Resolver;
 
 class ComposerInspectorExtension implements Extension
@@ -24,9 +24,8 @@ class ComposerInspectorExtension implements Extension
         });
 
         $container->register('composer.bin_path_expander', function (Container $container) {
-            $path = $container->get(ComposerInspector::class)->getBinDir();
-            return new ValueExpander('composer_bin_dir', $path);
-        }, [ FilePathResolverExtension::TAG_EXPANDER => [] ]);
+            return new CallbackExpander('composer_bin_dir', fn () => $container->get(ComposerInspector::class)->binDir());
+        });
     }
 
     public function configure(Resolver $schema): void

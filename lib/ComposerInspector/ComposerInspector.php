@@ -43,6 +43,11 @@ final class ComposerInspector
             return;
         }
 
+        /** @var array{
+         *   packages?: array<array{name: string, version: string}>,
+         *   "packages-dev"?: array<array{name: string, version: string}>
+         * } $lockContent
+         */
         $lockContent = $this->parseFile($this->lockFile);
         foreach ($lockContent['packages'] ?? [] as $pkg) {
             $this->packages[(string)$pkg['name']] = $this->forVersion($pkg['name'], $pkg['version'], false);
@@ -51,6 +56,7 @@ final class ComposerInspector
             $this->packages[(string)$pkg['name']] = $this->forVersion($pkg['name'], $pkg['version'], true);
         }
 
+        /** @var array{"bin-dir"?:string} $composerContent */
         $composerContent = $this->parseFile($this->composerFile);
         $this->vendorBinDir = $composerContent['bin-dir'] ?? self::DEFAULT_BIN_DIR;
 
@@ -60,7 +66,7 @@ final class ComposerInspector
     /** @return array<string, mixed> */
     private function parseFile(string $fileName): array
     {
-        $contents = file_get_contents($fileName);
+        $contents = @file_get_contents($fileName);
         if (false === $contents) {
             return [];
         }
