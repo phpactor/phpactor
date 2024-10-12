@@ -1,10 +1,7 @@
 <?php
-
-use FQN\Class;
-
 class Generic
 {
-    public function __construct(Class $test)
+    public function __construct(\FQN\Class $test)
     {
     }
 }
