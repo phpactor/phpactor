@@ -8,7 +8,7 @@
         "symfony/yaml": "^5.1",
         "phpactor/container": "^2.2.0",
         "phpactor/class-to-file": "~0.5",
-        "twig/twig": "^2.4",
+        "twig/twig": "^3.4",
         "dnoegel/php-xdg-base-dir": "^0.1.0",
         "symfony/console": "^5.0",
         "dantleech/invoke": "^2.0",
