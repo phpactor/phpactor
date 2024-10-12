@@ -35,7 +35,7 @@ class UseStatement
         return new self(Type::fromString($type), $alias);
     }
 
-    public static function fromNameAliasAndType(string $name, ?string $alias = null, string $type): self
+    public static function fromNameAliasAndType(string $name, ?string $alias, string $type): self
     {
         return new self(Type::fromString($name), $alias, $type);
     }

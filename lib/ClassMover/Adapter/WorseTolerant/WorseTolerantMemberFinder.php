@@ -231,7 +231,7 @@ class WorseTolerantMemberFinder implements MemberFinder
             $node->callableExpression instanceof ScopedPropertyAccessExpression;
     }
 
-    private function getMemberDeclarationReference(?ReflectionClassLike $queryClass = null, Node $memberNode): ?MemberReference
+    private function getMemberDeclarationReference(?ReflectionClassLike $queryClass, Node $memberNode): ?MemberReference
     {
         assert($memberNode instanceof MethodDeclaration || $memberNode instanceof ConstElement || $memberNode instanceof Variable);
         // we don't handle Variable calls yet.
