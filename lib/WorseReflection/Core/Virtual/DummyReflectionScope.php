@@ -21,7 +21,7 @@ class DummyReflectionScope implements ReflectionScope
         return $type;
     }
 
-    public function resolveFullyQualifiedName($type, ReflectionClassLike $classLike = null): Type
+    public function resolveFullyQualifiedName($type, ?ReflectionClassLike $classLike = null): Type
     {
         if ($type instanceof Type) {
             return $type;

@@ -14,11 +14,11 @@ abstract class ClassLikePrototype extends Prototype
 
     public function __construct(
         private string $name,
-        Methods $methods = null,
-        Properties $properties = null,
-        Constants $constants = null,
-        UpdatePolicy $updatePolicy = null,
-        Docblock $docblock = null
+        ?Methods $methods = null,
+        ?Properties $properties = null,
+        ?Constants $constants = null,
+        ?UpdatePolicy $updatePolicy = null,
+        ?Docblock $docblock = null
     ) {
         parent::__construct($updatePolicy);
         $this->methods = $methods ?: Methods::empty();

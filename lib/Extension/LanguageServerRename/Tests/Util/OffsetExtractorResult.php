@@ -10,8 +10,8 @@ use function array_reduce;
 final class OffsetExtractorResult
 {
     /**
-     * @param array<string, \Phpactor\TextDocument\ByteOffset[]> $offsets
-     * @param array<string, \Phpactor\TextDocument\ByteOffsetRange[]> $ranges
+     * @param array<string, ByteOffset[]> $offsets
+     * @param array<string, ByteOffsetRange[]> $ranges
      */
     public function __construct(private string $source, private array $offsets, private array $ranges)
     {
@@ -25,7 +25,7 @@ final class OffsetExtractorResult
     /**
      * @return ByteOffset[]
      */
-    public function offsets(string $name = null): array
+    public function offsets(?string $name = null): array
     {
         if (null === $name) {
             return array_reduce($this->offsets, function (array $carry, array $offsets) {
@@ -44,7 +44,7 @@ final class OffsetExtractorResult
         return $this->offsets[$name];
     }
 
-    public function offset(string $name = null): ByteOffset
+    public function offset(?string $name = null): ByteOffset
     {
         $offsets = $this->offsets($name);
 
@@ -63,7 +63,7 @@ final class OffsetExtractorResult
     /**
      * @return ByteOffsetRange[]
      */
-    public function ranges(string $name = null): array
+    public function ranges(?string $name = null): array
     {
         if (null === $name) {
             return array_reduce($this->ranges, function (array $carry, array $ranges) {
@@ -82,7 +82,7 @@ final class OffsetExtractorResult
         return $this->ranges[$name];
     }
 
-    public function range(string $name = null): ByteOffsetRange
+    public function range(?string $name = null): ByteOffsetRange
     {
         $ranges = $this->ranges($name);
 

@@ -21,7 +21,7 @@ class WorseLocalVariableCompletor implements TolerantCompletor
 
     public function __construct(
         private VariableCompletionHelper $variableCompletionHelper,
-        ObjectFormatter $typeFormatter = null
+        ?ObjectFormatter $typeFormatter = null
     ) {
         $this->informationFormatter = $typeFormatter ?: new ObjectFormatter();
     }
@@ -53,7 +53,7 @@ class WorseLocalVariableCompletor implements TolerantCompletor
         return true;
     }
 
-    private function couldComplete(Node $node = null, TextDocument $source, ByteOffset $offset): bool
+    private function couldComplete(?Node $node = null, TextDocument $source, ByteOffset $offset): bool
     {
         if (null === $node) {
             return false;

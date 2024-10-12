@@ -8,7 +8,7 @@ class Constant extends Prototype
         private string $name,
         private Value $value,
         private ?Visibility $visibility = null,
-        UpdatePolicy $updatePolicy = null
+        ?UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($updatePolicy);
     }

@@ -53,7 +53,7 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
         ReflectionClassLike $contextClass,
         ReflectionTraitCollection $traits
     ): PhpactorReflectionMethodCollection {
-        $methods = ReflectionMethodCollection::empty();
+        $methods = PhpactorReflectionMethodCollection::empty();
 
         foreach ($traitImports as $traitImport) {
             try {
@@ -77,7 +77,7 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
 
                 $traitMethods[] = $virtualMethod;
             }
-            $methods = $methods->merge(ReflectionMethodCollection::fromReflectionMethods($traitMethods));
+            $methods = $methods->merge(PhpactorReflectionMethodCollection::fromReflectionMethods($traitMethods));
         }
 
         return $methods;

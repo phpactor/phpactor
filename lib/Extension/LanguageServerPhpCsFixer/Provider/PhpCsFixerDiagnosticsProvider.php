@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Provider;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
@@ -41,7 +42,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             return new Success([]);
         }
 
-        return \Amp\call(function () use ($textDocument, $cancel) {
+        return call(function () use ($textDocument, $cancel) {
             $diagnostics = yield $this->findDiagnostics($textDocument, $cancel);
 
             return $diagnostics ?: [];
@@ -50,7 +51,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
-        return \Amp\call(function () use ($textDocument, $cancel) {
+        return call(function () use ($textDocument, $cancel) {
             $diagnostics = yield $this->findDiagnostics($textDocument, $cancel);
 
             if (false === $diagnostics) {
@@ -97,7 +98,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
      */
     private function findDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return \Amp\call(function () use ($textDocument) {
+        return call(function () use ($textDocument) {
             $outputJson = yield $this->phpCsFixer->fix($textDocument->text, [
                 '--dry-run',
                 '--verbose',
@@ -146,7 +147,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
      */
     private function createRuleDiagnostics(string $rule, Range $range): Promise
     {
-        return \Amp\call(function () use ($rule, $range) {
+        return call(function () use ($rule, $range) {
             return Diagnostic::fromArray([
                 'message' => yield $this->explainRule($rule),
                 'range' => $range,
@@ -166,7 +167,7 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
             return new Success($this->ruleDescriptions[$rule]);
         }
 
-        return \Amp\call(function () use ($rule) {
+        return call(function () use ($rule) {
             $description = yield $this->phpCsFixer->describe($rule);
 
             // @see https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/blob/master/src/Console/Command/DescribeCommand.php

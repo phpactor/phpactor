@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Model;
 
+use function Amp\Promise\wait;
 use Generator;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanConfig;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
@@ -28,7 +29,7 @@ class PhpstanProcessTest extends IntegrationTestCase
             new PhpstanConfig(__DIR__ . '/../../../../../vendor/bin/phpstan', '7', __DIR__ . '/../../../../../phpstan-baseline.neon', '200M'),
             new NullLogger()
         );
-        $diagnostics = \Amp\Promise\wait($linter->analyse($this->workspace()->path('test.php')));
+        $diagnostics = wait($linter->analyse($this->workspace()->path('test.php')));
         self::assertEquals($expectedDiagnostics, $diagnostics);
     }
 

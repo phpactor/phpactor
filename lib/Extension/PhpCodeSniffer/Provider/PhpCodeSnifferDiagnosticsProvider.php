@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\PhpCodeSniffer\Provider;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\Promise;
 use Amp\Success;
@@ -68,7 +69,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
             return new Success([]);
         }
 
-        return \Amp\call(function () use ($textDocument, $cancel) {
+        return call(function () use ($textDocument, $cancel) {
             $diagnostics = yield $this->findDiagnostics($textDocument, $cancel);
 
             return $diagnostics ?: [];
@@ -77,7 +78,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
 
     public function provideActionsFor(TextDocumentItem $textDocument, Range $range, CancellationToken $cancel): Promise
     {
-        return \Amp\call(function () use ($textDocument, $cancel) {
+        return call(function () use ($textDocument, $cancel) {
             $isFixable = yield $this->hasFixableDiagnostics($textDocument);
             if ($isFixable === false) {
                 return [];
@@ -130,7 +131,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
      */
     private function hasFixableDiagnostics(TextDocumentItem $textDocument): Promise
     {
-        return \Amp\call(function () use ($textDocument) {
+        return call(function () use ($textDocument) {
             $outputJson = yield $this->phpCodeSniffer->diagnose($textDocument, [ '-m' ]);
 
             try {
@@ -153,7 +154,7 @@ class PhpCodeSnifferDiagnosticsProvider implements DiagnosticsProvider, CodeActi
      */
     private function findDiagnostics(TextDocumentItem $textDocument, CancellationToken $cancel): Promise
     {
-        return \Amp\call(function () use ($textDocument) {
+        return call(function () use ($textDocument) {
             $outputJson = yield $this->phpCodeSniffer->diagnose($textDocument);
 
             try {

@@ -9,5 +9,5 @@ interface ExtractExpression
 {
     public function canExtractExpression(SourceCode $source, int $offsetStart, ?int $offsetEnd = null): bool;
 
-    public function extractExpression(SourceCode $source, int $offsetStart, int $offsetEnd = null, string $variableName): TextEdits;
+    public function extractExpression(SourceCode $source, int $offsetStart, ?int $offsetEnd = null, string $variableName): TextEdits;
 }

@@ -41,7 +41,7 @@ class WorseSubscriptCompletor implements TolerantCompletor
         return true;
     }
 
-    private function couldComplete(Node $node = null, TextDocument $source, ByteOffset $offset): bool
+    private function couldComplete(?Node $node = null, TextDocument $source, ByteOffset $offset): bool
     {
         return $node instanceof SubscriptExpression;
     }

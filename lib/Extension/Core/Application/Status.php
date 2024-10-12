@@ -21,7 +21,7 @@ class Status
         private PathCandidates $paths,
         private string $workingDirectory,
         private PhpVersionResolver $phpVersionResolver,
-        ExecutableFinder $executableFinder = null,
+        ?ExecutableFinder $executableFinder = null,
     ) {
         $this->executableFinder = $executableFinder ?: new ExecutableFinder();
     }

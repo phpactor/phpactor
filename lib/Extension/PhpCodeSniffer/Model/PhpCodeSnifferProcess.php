@@ -88,7 +88,7 @@ class PhpCodeSnifferProcess
      */
     public function produceFixesDiff(TextDocumentItem $textDocument, array $sniffs = []): Promise
     {
-        return \Amp\call(function () use ($textDocument, $sniffs) {
+        return call(function () use ($textDocument, $sniffs) {
             try {
                 $tmpFilePath = $this->createTempFile($textDocument->text);
 

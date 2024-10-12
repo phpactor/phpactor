@@ -91,7 +91,7 @@ class FileFinderTest extends TestCase
         $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo', 'barfoo', 'barfoo']), $files);
     }
 
-    private function filesFor(ReflectionClassLike $class = null, string $memberName = null): FileList
+    private function filesFor(?ReflectionClassLike $class = null, ?string $memberName = null): FileList
     {
         return (new FileFinder())->filesFor($this->filesystem->reveal(), $class, $memberName);
     }

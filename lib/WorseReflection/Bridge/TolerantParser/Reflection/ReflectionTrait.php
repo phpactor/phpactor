@@ -37,7 +37,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
     ) {
     }
 
-    public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
+    public function methods(?ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
         return $this->members()->methods();
     }
@@ -110,7 +110,7 @@ class ReflectionTrait extends AbstractReflectionClass implements CoreReflectionT
         );
     }
 
-    public function traits(): ReflectionTraitCollection
+    public function traits(): PhpactorReflectionTraitCollection
     {
         return PhpactorReflectionTraitCollection::fromTraitDeclaration($this->serviceLocator, $this->node, $this->visited);
     }

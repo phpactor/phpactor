@@ -18,7 +18,7 @@ class Edits
 
     private TextFormat $format;
 
-    public function __construct(TextFormat $format = null)
+    public function __construct(?TextFormat $format = null)
     {
         $this->format = $format ?: new TextFormat();
     }

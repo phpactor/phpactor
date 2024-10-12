@@ -26,13 +26,13 @@ final class Method extends Prototype
 
     public function __construct(
         private string $name,
-        Visibility $visibility = null,
-        Parameters $parameters = null,
-        ReturnType $returnType = null,
-        Docblock $docblock = null,
+        ?Visibility $visibility = null,
+        ?Parameters $parameters = null,
+        ?ReturnType $returnType = null,
+        ?Docblock $docblock = null,
         int $modifierFlags = 0,
-        MethodBody $methodBody = null,
-        UpdatePolicy $updatePolicy = null
+        ?MethodBody $methodBody = null,
+        ?UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($updatePolicy);
         $this->visibility = $visibility ?: Visibility::public();

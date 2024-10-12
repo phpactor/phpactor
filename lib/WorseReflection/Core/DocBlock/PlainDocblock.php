@@ -137,12 +137,12 @@ class PlainDocblock implements DocBlock
 
     public function properties(ReflectionClassLike $declaringClass): CoreReflectionPropertyCollection
     {
-        return ReflectionPropertyCollection::empty();
+        return CoreReflectionPropertyCollection::empty();
     }
 
     public function methods(ReflectionClassLike $declaringClass): CoreReflectionMethodCollection
     {
-        return ReflectionMethodCollection::empty();
+        return CoreReflectionMethodCollection::empty();
     }
 
     public function deprecation(): Deprecation

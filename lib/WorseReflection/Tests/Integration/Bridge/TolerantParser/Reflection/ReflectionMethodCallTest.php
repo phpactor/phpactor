@@ -25,7 +25,7 @@ class ReflectionMethodCallTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<string,array{string,array,Closure(\Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall): void}>
+     * @return Generator<string, array{string, array, Closure(ReflectionMethodCall):void}>
      */
     public function provideReflectionMethod(): Generator
     {

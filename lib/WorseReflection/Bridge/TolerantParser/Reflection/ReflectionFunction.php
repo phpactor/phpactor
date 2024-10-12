@@ -65,7 +65,7 @@ class ReflectionFunction extends AbstractReflectedNode implements CoreReflection
         return $type;
     }
 
-    public function parameters(): ReflectionParameterCollection
+    public function parameters(): TolerantReflectionParameterCollection
     {
         return TolerantReflectionParameterCollection::fromFunctionDeclaration($this->serviceLocator, $this->node, $this);
     }

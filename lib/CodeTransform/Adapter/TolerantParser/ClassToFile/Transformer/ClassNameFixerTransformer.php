@@ -33,7 +33,7 @@ class ClassNameFixerTransformer implements Transformer
 
     public function __construct(
         private FileToClass $fileToClass,
-        Parser $parser = null
+        ?Parser $parser = null
     ) {
         $this->parser = $parser ?: new Parser();
     }

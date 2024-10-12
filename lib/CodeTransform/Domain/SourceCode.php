@@ -23,7 +23,7 @@ final class SourceCode implements TextDocument
         return new self($code, TextDocumentUri::fromString('untitled:Untitled'));
     }
 
-    public static function fromStringAndPath(string $code, string $path = null): SourceCode
+    public static function fromStringAndPath(string $code, ?string $path = null): SourceCode
     {
         return new self($code, TextDocumentUri::fromString($path));
     }

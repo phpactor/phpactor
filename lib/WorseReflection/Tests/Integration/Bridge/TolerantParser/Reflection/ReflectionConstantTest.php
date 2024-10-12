@@ -22,7 +22,7 @@ class ReflectionConstantTest extends IntegrationTestCase
         $assertion($class->constants());
     }
     /**
-     * @return Generator<string,array{string,string,Closure(\Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection): void}>
+     * @return Generator<string, array{string, string, Closure(ReflectionConstantCollection):void}>
      */
     public function provideReflectionConstant(): Generator
     {

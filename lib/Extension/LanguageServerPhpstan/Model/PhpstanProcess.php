@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Model;
 
+use function Amp\call;
 use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Diagnostic;
@@ -16,7 +17,7 @@ class PhpstanProcess
         private string $cwd,
         private PhpstanConfig $config,
         private LoggerInterface $logger,
-        DiagnosticsParser $parser = null
+        ?DiagnosticsParser $parser = null
     ) {
         $this->parser = $parser ?: new DiagnosticsParser();
     }
@@ -26,7 +27,7 @@ class PhpstanProcess
      */
     public function analyse(string $filename): Promise
     {
-        return \Amp\call(function () use ($filename) {
+        return call(function () use ($filename) {
             $args = [
                 PHP_BINARY,
                 $this->config->phpstanBin(),

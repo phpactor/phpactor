@@ -84,7 +84,7 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     public function parameters(): CoreReflectionParameterCollection
     {
-        return ReflectionParameterCollection::fromMethodDeclaration($this->serviceLocator, $this->node, $this);
+        return CoreReflectionParameterCollection::fromMethodDeclaration($this->serviceLocator, $this->node, $this);
     }
 
     public function inferredType(): Type

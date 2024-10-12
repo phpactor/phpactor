@@ -27,7 +27,7 @@ use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollecti
 
 class ReflectionInterface extends AbstractReflectionClass implements CoreReflectionInterface
 {
-    private ?ReflectionInterfaceCollection $parents = null;
+    private ?CoreReflectionInterfaceCollection $parents = null;
 
     private ?ClassLikeReflectionMemberCollection $ownMembers = null;
 
@@ -92,7 +92,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
             return $this->parents;
         }
 
-        $this->parents = ReflectionInterfaceCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $this->visited);
+        $this->parents = CoreReflectionInterfaceCollection::fromInterfaceDeclaration($this->serviceLocator, $this->node, $this->visited);
 
         return $this->parents;
     }
@@ -121,7 +121,7 @@ class ReflectionInterface extends AbstractReflectionClass implements CoreReflect
         return false;
     }
 
-    public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
+    public function methods(?ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
         return $this->members()->methods();
     }

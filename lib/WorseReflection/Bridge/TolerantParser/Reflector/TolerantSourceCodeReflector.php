@@ -44,7 +44,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     public function reflectClassesIn(
         TextDocument $sourceCode,
         array $visited = []
-    ): ReflectionClassLikeCollection {
+    ): TolerantReflectionClassCollection {
         $node = $this->parseSourceCode($sourceCode);
         return TolerantReflectionClassCollection::fromNode($this->serviceLocator, $sourceCode, $node, $visited);
     }

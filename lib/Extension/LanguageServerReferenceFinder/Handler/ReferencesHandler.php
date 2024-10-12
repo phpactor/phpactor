@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
+use function Amp\call;
 use Amp\Delayed;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -51,7 +52,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
         Position $position,
         ReferenceContext $context
     ): Promise {
-        return \Amp\call(function () use ($textDocument, $position, $context) {
+        return call(function () use ($textDocument, $position, $context) {
             $textDocument = $this->workspace->get($textDocument->uri);
             $phpactorDocument = TextDocumentBuilder::create(
                 $textDocument->text
