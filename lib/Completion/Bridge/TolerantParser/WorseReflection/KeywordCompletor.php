@@ -33,6 +33,21 @@ class KeywordCompletor implements TolerantCompletor
         '__unset' => "(string \\\$\${1:name}): void\n{\$0\n}",
         '__wakeup' => "(): void\n{\$0\n}",
     ];
+    private const STATEMENTS = [
+        'break' => '$1;$0',
+        'continue' => '$1;$0',
+        'do' => " {\n\t\$0\n} while (\$2);",
+        'echo' => ' $1;$0',
+        'for' => " (\${1:expr1}, \${2:expr2}, \${3:expr3}) {\n\t\$0\n}",
+        'foreach' => " (\\\$\${1:expr} as \\\$\${2:key} => \\\$\${3:value}) {\$0\n}",
+        'if' => " (\$1) {\$0\n}",
+        'return' => ' $1;$0',
+        'switch' => " (\\\$\${1:expr}) {\n\tcase \${2:expr}:\n\t\t\$0\n}",
+        'throw' => ' $1;$0',
+        'try' => " {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
+        'while' => " (\$1) {\$0\n}",
+        'yield' => ' $1;$0',
+    ];
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
@@ -55,6 +70,11 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         if (CompletionContext::attribute($node)) {
+            return true;
+        }
+
+        if (CompletionContext::statement($node, $offset)) {
+            yield from $this->statements(CompletionContext::loopOrSwitch($node));
             return true;
         }
 
@@ -95,6 +115,24 @@ class KeywordCompletor implements TolerantCompletor
 
     /**
      * @return Generator<Suggestion>
+     */
+    private function statements(bool $loop): Generator
+    {
+        foreach (self::STATEMENTS as $name => $snippet) {
+            if (!$loop && in_array($name, ['continue', 'break'], true)) {
+                continue;
+            }
+
+            yield Suggestion::createWithOptions($name . ' ', [
+                'type' => Suggestion::TYPE_KEYWORD,
+                'priority' => -255,
+                'snippet' => $name . $snippet,
+            ]);
+        }
+    }
+
+    /**
+     * @return Generator<Suggestion>
      * @param string[] $keywords
      */
     private function keywords(array $keywords): Generator
@@ -102,7 +140,7 @@ class KeywordCompletor implements TolerantCompletor
         foreach ($keywords as $keyword) {
             yield Suggestion::createWithOptions($keyword, [
                 'type' => Suggestion::TYPE_KEYWORD,
-                'priority' => 1,
+                'priority' => -255,
             ]);
         }
     }
