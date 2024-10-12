@@ -18,7 +18,7 @@ abstract class AbstractTolerantImportNameCase extends TolerantTestCase
     /**
      * @dataProvider provideImportClass
      */
-    public function testImportClass(string $test, string $name, string $alias = null): void
+    public function testImportClass(string $test, string $name, ?string $alias = null): void
     {
         [$expected, $transformed] = $this->importNameFromTestFile('class', $test, $name, $alias);
 
@@ -193,7 +193,7 @@ abstract class AbstractTolerantImportNameCase extends TolerantTestCase
     /**
      * @dataProvider provideImportFunction
      */
-    public function testImportFunction(string $test, string $name, string $alias = null): void
+    public function testImportFunction(string $test, string $name, ?string $alias = null): void
     {
         [$expected, $transformed] = $this->importNameFromTestFile('function', $test, $name, $alias);
 
@@ -207,7 +207,7 @@ abstract class AbstractTolerantImportNameCase extends TolerantTestCase
     /**
      * @return array{string,string}
      */
-    private function importNameFromTestFile(string $type, string $test, string $name, string $alias = null): array
+    private function importNameFromTestFile(string $type, string $test, string $name, ?string $alias = null): array
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
         $edits = TextEdits::none();

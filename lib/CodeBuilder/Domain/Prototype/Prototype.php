@@ -6,7 +6,7 @@ class Prototype
 {
     protected $updatePolicy;
 
-    public function __construct(UpdatePolicy $updatePolicy = null)
+    public function __construct(?UpdatePolicy $updatePolicy = null)
     {
         $this->updatePolicy = $updatePolicy ?: UpdatePolicy::update();
     }

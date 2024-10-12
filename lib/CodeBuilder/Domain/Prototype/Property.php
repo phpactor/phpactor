@@ -14,11 +14,11 @@ final class Property extends Prototype
 
     public function __construct(
         private string $name,
-        Visibility $visibility = null,
-        DefaultValue $defaultValue = null,
-        Type $type = null,
-        Type $docType = null,
-        UpdatePolicy $updatePolicy = null
+        ?Visibility $visibility = null,
+        ?DefaultValue $defaultValue = null,
+        ?Type $type = null,
+        ?Type $docType = null,
+        ?UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($updatePolicy);
         $this->visibility = $visibility ?: Visibility::public();

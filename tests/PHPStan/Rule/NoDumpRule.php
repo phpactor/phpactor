@@ -2,6 +2,8 @@
 
 namespace Phpactor\Tests\PHPStan\Rule;
 
+use PhpParser\Node;
+use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleErrorBuilder;
 use PhpParser\Node\Expr\FuncCall;
@@ -19,7 +21,7 @@ class NoDumpRule implements Rule
         return FuncCall::class;
     }
 
-    public function processNode(\PhpParser\Node $node, \PHPStan\Analyser\Scope $scope): array
+    public function processNode(Node $node, Scope $scope): array
     {
         assert($node instanceof FuncCall);
 

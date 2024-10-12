@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerHover\Handler;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Hover;
@@ -49,7 +50,7 @@ class HoverHandler implements Handler, CanRegisterCapabilities
         TextDocumentIdentifier $textDocument,
         Position $position
     ): Promise {
-        return \Amp\call(function () use ($textDocument, $position) {
+        return call(function () use ($textDocument, $position) {
             $document = $this->workspace->get($textDocument->uri);
             $offset = PositionConverter::positionToByteOffset($position, $document->text);
             $document = TextDocumentBuilder::create($document->text)

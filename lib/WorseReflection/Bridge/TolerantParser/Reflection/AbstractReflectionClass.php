@@ -2,7 +2,6 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Deprecation;
@@ -53,7 +52,7 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
         ReflectionClassLike $contextClass,
         ReflectionTraitCollection $traits
     ): PhpactorReflectionMethodCollection {
-        $methods = ReflectionMethodCollection::empty();
+        $methods = PhpactorReflectionMethodCollection::empty();
 
         foreach ($traitImports as $traitImport) {
             try {
@@ -77,7 +76,7 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
 
                 $traitMethods[] = $virtualMethod;
             }
-            $methods = $methods->merge(ReflectionMethodCollection::fromReflectionMethods($traitMethods));
+            $methods = $methods->merge(PhpactorReflectionMethodCollection::fromReflectionMethods($traitMethods));
         }
 
         return $methods;

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerRename\Handler;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
@@ -54,7 +55,7 @@ class RenameHandler implements Handler, CanRegisterCapabilities
      */
     public function rename(RenameParams $params): Promise
     {
-        return \Amp\call(function () use ($params) {
+        return call(function () use ($params) {
             $locatedEdits = [];
             $document = $document = $this->documentLocator->get(TextDocumentUri::fromString($params->textDocument->uri));
             $count = 0;
@@ -94,7 +95,7 @@ class RenameHandler implements Handler, CanRegisterCapabilities
     public function prepareRename(PrepareRenameParams $params): Promise
     {
         // https://microsoft.github.io/language-server-protocol/specification#textDocument_prepareRename
-        return \Amp\call(function () use ($params) {
+        return call(function () use ($params) {
             $range = $this->renamer->getRenameRange(
                 $document = $this->documentLocator->get(TextDocumentUri::fromString($params->textDocument->uri)),
                 PositionConverter::positionToByteOffset(

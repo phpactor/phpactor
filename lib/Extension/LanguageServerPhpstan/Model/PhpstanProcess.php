@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Model;
 
+use function Amp\call;
 use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Diagnostic;
@@ -16,7 +17,7 @@ class PhpstanProcess
         private string $cwd,
         private PhpstanConfig $config,
         private LoggerInterface $logger,
-        DiagnosticsParser $parser = null
+        ?DiagnosticsParser $parser = null
     ) {
         $this->parser = $parser ?: new DiagnosticsParser();
     }
@@ -26,7 +27,7 @@ class PhpstanProcess
      */
     public function analyse(string $filename): Promise
     {
-        return \Amp\call(function () use ($filename) {
+        return call(function () use ($filename) {
             $args = [
                 PHP_BINARY,
                 $this->config->phpstanBin(),
@@ -50,8 +51,8 @@ class PhpstanProcess
             $start = microtime(true);
             $pid = yield $process->start();
 
-            $stdout = yield buffer($process->getStdout());
-            $stderr = yield buffer($process->getStderr());
+            $stdout = buffer($process->getStdout());
+            $stderr = buffer($process->getStderr());
 
             $exitCode = yield $process->join();
 
@@ -59,7 +60,7 @@ class PhpstanProcess
                 $this->logger->error(sprintf(
                     'Phpstan exited with code "%s": %s',
                     $exitCode,
-                    $stderr
+                    yield $stderr
                 ));
 
                 return [];
@@ -72,6 +73,7 @@ class PhpstanProcess
                 $process->getWorkingDirectory(),
             ));
 
+            $stdout = yield $stdout;
             if ($stdout === '') {
                 $this->logger->error(sprintf(
                     'Phpstan exited with code "%s": But the standard output was empty',

@@ -31,7 +31,7 @@ class ChainSourceLocatorTest extends TestCase
      */
     public function testNoLocators(): void
     {
-        $this->expectException(\Phpactor\WorseReflection\Core\Exception\SourceNotFound::class);
+        $this->expectException(SourceNotFound::class);
         $this->locate([], ClassName::fromString('as'));
     }
 
@@ -76,7 +76,7 @@ class ChainSourceLocatorTest extends TestCase
      */
     public function testAllFail(): void
     {
-        $this->expectException(\Phpactor\WorseReflection\Core\Exception\SourceNotFound::class);
+        $this->expectException(SourceNotFound::class);
         $this->expectExceptionMessage('Could not find source with "Foobar"');
         $expectedSource = TextDocumentBuilder::create('hello')->build();
         $class = ClassName::fromString('Foobar');

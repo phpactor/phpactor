@@ -8,7 +8,7 @@ class TextInput implements Input
     {
     }
 
-    public static function fromNameLabelAndDefault(string $name, string $label, string $default = null, string $type = null)
+    public static function fromNameLabelAndDefault(string $name, string $label, ?string $default = null, ?string $type = null)
     {
         return new self($name, $label, $default, $type);
     }

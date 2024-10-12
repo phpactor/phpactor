@@ -10,10 +10,10 @@ final class Parameter extends Prototype
 
     public function __construct(
         private string $name,
-        Type $type = null,
-        DefaultValue $defaultValue = null,
+        ?Type $type = null,
+        ?DefaultValue $defaultValue = null,
         private bool $byReference = false,
-        UpdatePolicy $updatePolicy = null,
+        ?UpdatePolicy $updatePolicy = null,
         private bool $isVariadic = false,
         private ?Visibility $visibility = null
     ) {

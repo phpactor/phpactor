@@ -7,7 +7,7 @@ use Symfony\Component\Process\Process;
 
 abstract class SystemTestCase extends IntegrationTestCase
 {
-    protected function phpactorFromStringArgs(string $args, string $stdin = null): Process
+    protected function phpactorFromStringArgs(string $args, ?string $stdin = null): Process
     {
         chdir($this->workspaceDir());
 

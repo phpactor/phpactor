@@ -25,7 +25,7 @@ class IncludeWalker implements Walker
 {
     private Parser $parser;
 
-    public function __construct(private LoggerInterface $logger, private FrameResolver $resolver, Parser $parser = null)
+    public function __construct(private LoggerInterface $logger, private FrameResolver $resolver, ?Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
     }

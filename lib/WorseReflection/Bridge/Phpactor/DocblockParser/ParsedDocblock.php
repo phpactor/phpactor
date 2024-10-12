@@ -30,8 +30,6 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -212,7 +210,7 @@ class ParsedDocblock implements DocBlock
             $properties[] = $property;
         }
 
-        return ReflectionPropertyCollection::fromReflectionProperties($properties);
+        return CoreReflectionPropertyCollection::fromReflectionProperties($properties);
     }
 
     public function methods(ReflectionClassLike $declaringClass): CoreReflectionMethodCollection
@@ -242,7 +240,7 @@ class ParsedDocblock implements DocBlock
             $methods[] = $method;
         }
 
-        return ReflectionMethodCollection::fromReflectionMethods($methods);
+        return CoreReflectionMethodCollection::fromReflectionMethods($methods);
     }
 
     public function deprecation(): Deprecation

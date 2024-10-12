@@ -1,3 +1,3 @@
 <?php
 
-return new \stdClass();
+return new stdClass();
