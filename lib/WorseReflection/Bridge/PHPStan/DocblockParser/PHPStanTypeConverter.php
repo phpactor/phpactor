@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
+namespace Phpactor\WorseReflection\Bridge\PHPStan\DocblockParser;
 
 use PHPStan\PhpDocParser\Ast\ConstExpr\ConstExprFalseNode;
 use PHPStan\PhpDocParser\Ast\ConstExpr\ConstExprFloatNode;
@@ -24,6 +24,7 @@ use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ArrayKeyType;
 use Phpactor\WorseReflection\Core\Type\ArrayShapeType;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BooleanLiteralType;
@@ -53,6 +54,7 @@ use Phpactor\WorseReflection\Core\Type\NeverType;
 use Phpactor\WorseReflection\Core\Type\NullType;
 use Phpactor\WorseReflection\Core\Type\NullableType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
+use Phpactor\WorseReflection\Core\Type\ParenthesizedType;
 use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Type\ResourceType;
@@ -83,7 +85,6 @@ class PHPStanTypeConverter
             $type instanceof IdentifierTypeNode => $this->convertSimpleIdentifier($type->name),
             $type instanceof IntersectionTypeNode => $this->convertIntersection($type),
             $type instanceof NullableTypeNode => new NullableType($this->convert($type->type)),
-            // todo: ObjectShape
             $type instanceof ThisTypeNode => new ThisType(),
             $type instanceof UnionTypeNode => $this->convertUnion($type),
             default => new MissingType(),
@@ -114,7 +115,7 @@ class PHPStanTypeConverter
             'static' => new StaticType(),
             'string' => new StringType(),
             'void' => new VoidType(),
-            default => $this->scope?->resolveFullyQualifiedName(new ReflectedClassType($this->reflector, ClassName::fromString($type))) ?? new ClassType(ClassName::fromString($type)),
+            default => $this->resolveClass($type) ?? new ClassType(ClassName::fromString($type)),
         };
     }
 
@@ -137,6 +138,17 @@ class PHPStanTypeConverter
     private function convertGeneric(GenericTypeNode $type): Type
     {
         $internalType = $this->convert($type->type);
+
+        if ($internalType instanceof ListType) {
+            $parameters = $type->genericTypes;
+            if (count($parameters) === 1) {
+                return new ListType(
+                    $this->convert($parameters[0])
+                );
+            }
+            return new ListType(new MissingType());
+        }
+
         if ($internalType instanceof ArrayType) {
             $parameters = $type->genericTypes;
             if (count($parameters) === 1) {
@@ -152,6 +164,23 @@ class PHPStanTypeConverter
                 );
             }
             return new ArrayType(new MissingType());
+        }
+
+        if ($internalType instanceof PseudoIterableType) {
+            $parameters = $type->genericTypes;
+            if (count($parameters) === 1) {
+                return new PseudoIterableType(
+                    new ArrayKeyType(),
+                    $this->convert($parameters[0])
+                );
+            }
+            if (count($parameters) === 2) {
+                return new PseudoIterableType(
+                    $this->convert($parameters[0]),
+                    $this->convert($parameters[1]),
+                );
+            }
+            return new PseudoIterableType();
         }
 
         if ($internalType instanceof IntType) {
@@ -242,18 +271,32 @@ class PHPStanTypeConverter
             $type->constExpr instanceof ConstExprIntegerNode => (int)$type->constExpr->value === PHP_INT_MAX ? new IntMaxType() : new IntLiteralType((int)$type->constExpr->value),
             $type->constExpr instanceof ConstExprNullNode => new NullType(),
             $type->constExpr instanceof ConstExprTrueNode => new BooleanLiteralType(true),
-            $type->constExpr instanceof ConstFetchNode => new GlobbedConstantUnionType(new ClassType(ClassName::fromString($type->constExpr->className)), $type->constExpr->name),
+            $type->constExpr instanceof ConstFetchNode => $this->resolveConst($type->constExpr),
             default => new StringLiteralType((string) $type->constExpr),
         };
     }
 
     private function convertConditional(ConditionalTypeForParameterNode $type): Type
     {
-        return new ConditionalType(
-            $type->parameterName,
-            $this->convert($type->targetType),
-            $this->convert($type->if),
-            $this->convert($type->else)
+        return new ParenthesizedType(
+            new ConditionalType(
+                $type->parameterName,
+                $this->convert($type->targetType),
+                $this->convert($type->if),
+                $this->convert($type->else)
+            )
         );
     }
+
+    private function resolveClass(string $type): ?Type
+    {
+        return $this->scope?->resolveFullyQualifiedName(new ReflectedClassType($this->reflector, ClassName::fromString($type)));
+    }
+
+    private function resolveConst(ConstFetchNode $const): GlobbedConstantUnionType
+    {
+        return new GlobbedConstantUnionType($this->convertSimpleIdentifier($const->className), $const->name);
+    }
+
+
 }
