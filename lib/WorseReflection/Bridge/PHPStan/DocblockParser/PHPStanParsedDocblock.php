@@ -1,8 +1,9 @@
 <?php
 
-namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
+namespace Phpactor\WorseReflection\Bridge\PHPStan\DocblockParser;
 
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueParameterNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
@@ -60,11 +61,13 @@ class PHPStanParsedDocblock implements DocBlock
     public function typeAliases(): DocBlockTypeAliases
     {
         $types = [];
-        foreach ($this->node->getTypeAliasTagValues() as $tag) {
-            $types[] = new DocBlockTypeAlias(
-                $tag->alias,
-                $this->typeConverter->convert($tag->type),
-            );
+        foreach (['@phan-type', '@psalm-type', '@phpstan-type'] as $tagName) {
+            foreach ($this->node->getTypeAliasTagValues($tagName) as $tag) {
+                $types[] = new DocBlockTypeAlias(
+                    $tag->alias,
+                    $this->typeConverter->convert($tag->type),
+                );
+            }
         }
 
         return new DocBlockTypeAliases($types);
@@ -72,11 +75,13 @@ class PHPStanParsedDocblock implements DocBlock
 
     public function methodType(string $methodName): Type
     {
-        foreach ($this->node->getMethodTagValues() as $methodTag) {
-            if ($methodTag->methodName !== $methodName) {
-                continue;
+        foreach (['@method', '@phan-method', '@psalm-method', '@phpstan-method'] as $tagName) {
+            foreach ($this->node->getMethodTagValues($tagName) as $methodTag) {
+                if ($methodTag->methodName !== $methodName) {
+                    continue;
+                }
+                $this->convertType($methodTag->returnType);
             }
-            $this->convertType($methodTag->returnType);
         }
 
         return TypeFactory::undefined();
@@ -90,12 +95,13 @@ class PHPStanParsedDocblock implements DocBlock
     public function vars(): DocBlockVars
     {
         $vars = [];
-        foreach ($this->node->getVarTagValues() as $varTag) {
-            assert($varTag instanceof VarTagValueNode);
-            $vars[] = new DocBlockVar(
-                ltrim($varTag->variableName, '$'),
-                $this->convertType($varTag->type),
-            );
+        foreach (['@var', '@phan-var', '@psalm-var', '@phpstan-var'] as $tagName) {
+            foreach ($this->node->getVarTagValues($tagName) as $varTag) {
+                $vars[] = new DocBlockVar(
+                    ltrim($varTag->variableName, '$'),
+                    $this->convertType($varTag->type),
+                );
+            }
         }
 
         return new DocBlockVars($vars);
@@ -104,11 +110,13 @@ class PHPStanParsedDocblock implements DocBlock
     public function params(): DocBlockParams
     {
         $params = [];
-        foreach ($this->node->getParamTagValues() as $paramTag) {
-            $params[] = new DocBlockParam(
-                ltrim($paramTag->parameterName, '$'),
-                $this->convertType($paramTag->type),
-            );
+        foreach (['@param', '@phan-param', '@psalm-param', '@phpstan-param'] as $tagName) {
+            foreach ($this->node->getParamTagValues($tagName) as $paramTag) {
+                $params[] = new DocBlockParam(
+                    ltrim($paramTag->parameterName, '$'),
+                    $this->convertType($paramTag->type),
+                );
+            }
         }
 
         return new DocBlockParams($params);
@@ -117,12 +125,13 @@ class PHPStanParsedDocblock implements DocBlock
     public function parameterType(string $paramName): Type
     {
         $types = [];
-        foreach ($this->node->getParamTagValues() as $paramTag) {
-            assert($paramTag instanceof ParamTagValueNode);
-            if (ltrim($paramTag->parameterName, '$') !== $paramName) {
-                continue;
+        foreach (['@param', '@phan-param', '@psalm-param', '@phpstan-param'] as $tagName) {
+            foreach ($this->node->getParamTagValues($tagName) as $paramTag) {
+                if (ltrim($paramTag->parameterName, '$') !== $paramName) {
+                    continue;
+                }
+                return $this->convertType($paramTag->type);
             }
-            return $this->convertType($paramTag->type);
         }
 
         return TypeFactory::undefined();
@@ -131,11 +140,13 @@ class PHPStanParsedDocblock implements DocBlock
     public function propertyType(string $propertyName): Type
     {
         $types = [];
-        foreach ($this->node->getPropertyTagValues() as $propertyTag) {
-            if (ltrim($propertyTag->propertyName, '$') !== $propertyName) {
-                continue;
+        foreach (['@property', '@phpstan-property'] as $tagName) {
+            foreach ($this->node->getPropertyTagValues($tagName) as $propertyTag) {
+                if (ltrim($propertyTag->propertyName, '$') !== $propertyName) {
+                    continue;
+                }
+                return $this->convertType($propertyTag->type);
             }
-            return $this->convertType($propertyTag->type);
         }
 
         return TypeFactory::undefined();
@@ -157,12 +168,10 @@ class PHPStanParsedDocblock implements DocBlock
 
     public function returnType(): Type
     {
-        foreach ($this->node->getReturnTagValues() as $tag) {
-            return $this->convertType($tag->type);
-        }
-
-        foreach ($this->node->getReturnTagValues('@psalm-return') as $tag) {
-            return $this->convertType($tag->type);
+        foreach (['@return', '@phan-return', '@phan-real-return', '@psalm-return', '@phpstan-return'] as $tagName) {
+            foreach ($this->node->getReturnTagValues($tagName) as $tag) {
+                return $this->convertType($tag->type);
+            }
         }
 
         return TypeFactory::undefined();
@@ -181,23 +190,25 @@ class PHPStanParsedDocblock implements DocBlock
     public function properties(ReflectionClassLike $declaringClass): CoreReflectionPropertyCollection
     {
         $properties = [];
-        // merge read/write virtual properties
-        foreach ($this->node->getPropertyTagValues() as $propertyTag) {
-            $type = $this->convertType($propertyTag->type);
-            $property = new VirtualReflectionProperty(
-                $declaringClass->position(),
-                $declaringClass,
-                $declaringClass,
-                ltrim($propertyTag->propertyName, '$'),
-                new Frame(),
-                $this,
-                $declaringClass->scope(),
-                Visibility::public(),
-                $type,
-                $type,
-                new Deprecation(false),
-            );
-            $properties[] = $property;
+        //todo handle @property-read/@property-write
+        foreach (['@property', '@phpstan-property'] as $tagName) {
+            foreach ($this->node->getPropertyTagValues($tagName) as $propertyTag) {
+                $type = $this->convertType($propertyTag->type);
+                $property = new VirtualReflectionProperty(
+                    $declaringClass->position(),
+                    $declaringClass,
+                    $declaringClass,
+                    ltrim($propertyTag->propertyName, '$'),
+                    new Frame(),
+                    $this,
+                    $declaringClass->scope(),
+                    Visibility::public(),
+                    $type,
+                    $type,
+                    new Deprecation(false),
+                );
+                $properties[] = $property;
+            }
         }
 
         return ReflectionPropertyCollection::fromReflectionProperties($properties);
@@ -206,27 +217,29 @@ class PHPStanParsedDocblock implements DocBlock
     public function methods(ReflectionClassLike $declaringClass): CoreReflectionMethodCollection
     {
         $methods = [];
-        foreach ($this->node->getMethodTagValues() as $methodTag) {
-            $params = ReflectionParameterCollection::empty();
-            $method = new VirtualReflectionMethod(
-                $declaringClass->position(),
-                $declaringClass,
-                $declaringClass,
-                $methodTag->methodName,
-                new Frame(),
-                $this,
-                $declaringClass->scope(),
-                Visibility::public(),
-                $this->convertType($methodTag->returnType),
-                $this->convertType($methodTag->returnType),
-                $params,
-                NodeText::fromString(''),
-                false,
-                $methodTag->isStatic,
-                new Deprecation(false),
-            );
-            $this->addParameters($method, $params, $methodTag->parameters);
-            $methods[] = $method;
+        foreach (['@method', '@phan-method', '@psalm-method', '@phpstan-method'] as $tagName) {
+            foreach ($this->node->getMethodTagValues($tagName) as $methodTag) {
+                $params = ReflectionParameterCollection::empty();
+                $method = new VirtualReflectionMethod(
+                    $declaringClass->position(),
+                    $declaringClass,
+                    $declaringClass,
+                    $methodTag->methodName,
+                    new Frame(),
+                    $this,
+                    $declaringClass->scope(),
+                    Visibility::public(),
+                    $this->convertType($methodTag->returnType),
+                    $this->convertType($methodTag->returnType),
+                    $params,
+                    NodeText::fromString(''),
+                    false,
+                    $methodTag->isStatic,
+                    new Deprecation(false),
+                );
+                $this->addParameters($method, $params, $methodTag->parameters);
+                $methods[] = $method;
+            }
         }
 
         return ReflectionMethodCollection::fromReflectionMethods($methods);
@@ -247,34 +260,40 @@ class PHPStanParsedDocblock implements DocBlock
         foreach ($this->node->getTemplateTagValues() as $templateTag) {
             $map[$templateTag->name] = $this->convertType($templateTag->bound);
         }
+
         return new TemplateMap($map);
     }
 
     public function extends(): array
     {
         $extends = [];
-        foreach ($this->node->getExtendsTagValues() as $extendsTag) {
-            $extends[] = $this->convertType($extendsTag->type);
+        foreach (['@extends', '@phan-extends', '@phan-inherits', '@template-extends', '@phpstan-extends'] as $tagName) {
+            foreach ($this->node->getExtendsTagValues($tagName) as $extendsTag) {
+                $extends[] = $this->convertType($extendsTag->type);
+            }
         }
+
         return $extends;
     }
 
     public function implements(): array
     {
         $implements = [];
-        foreach ($this->node->getImplementsTagValues() as $implementsTag) {
-            $implements[] = $this->convertType($implementsTag->type);
+        foreach (['@implements', '@template-implements', '@phpstan-implements'] as $tagName) {
+            foreach ($this->node->getImplementsTagValues($tagName) as $implementsTag) {
+                $implements[] = $this->convertType($implementsTag->type);
+            }
         }
+
         return $implements;
     }
 
     public function mixins(): array
     {
-        $mixins = [];
-        foreach ($this->node->getMixinTagValues() as $mixinTag) {
-            $mixins[] = $this->convertType($mixinTag->type);
-        }
-        return $mixins;
+        return array_map(
+            fn (MixinTagValueNode $mixinTag): Type => $this->convertType($mixinTag->type),
+            $this->node->getMixinTagValues()
+        );
     }
 
     public function assertions(): array
@@ -287,7 +306,7 @@ class PHPStanParsedDocblock implements DocBlock
             $assertions[] = new DocBlockTypeAssertion(
                 ltrim($assert->parameter, '$'),
                 $this->convertType($assert->type),
-                $assert->isNegated === true || $assert->isEquality === false,
+                $assert->isNegated === true
             );
         }
         return $assertions;

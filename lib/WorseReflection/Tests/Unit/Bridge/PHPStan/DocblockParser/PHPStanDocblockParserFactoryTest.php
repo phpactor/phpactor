@@ -1,10 +1,10 @@
 <?php
 
-namespace Phpactor\WorseReflection\Tests\Unit\Bridge\Phpactor\DocblockParser;
+namespace Phpactor\WorseReflection\Tests\Unit\Bridge\PHPStan\DocblockParser;
 
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\PHPStanDocblockParserFactory;
+use Phpactor\WorseReflection\Bridge\PHPStan\DocblockParser\PHPStanDocblockParserFactory;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
