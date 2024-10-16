@@ -18,7 +18,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection as TolerantReflectionClassCollection;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset as TolerantReflectionOffset;
@@ -28,6 +27,17 @@ use Microsoft\PhpParser\Parser;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionFunctionCollection as TolerantReflectionFunctionCollection;
 use function Amp\call;
 use function Amp\delay;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
+use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
+use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionEnum;
+use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionInterface;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
+use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionTrait;
+use Microsoft\PhpParser\ClassLike;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class TolerantSourceCodeReflector implements SourceCodeReflector
 {
@@ -45,7 +55,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         array $visited = []
     ): TolerantReflectionClassCollection {
         $node = $this->parseSourceCode($sourceCode);
-        return TolerantReflectionClassCollection::fromNode($this->serviceLocator, $sourceCode, $node, $visited);
+        return $this->reflectClassesFromNode($sourceCode, $node, $visited);
     }
 
     public function reflectOffset(
@@ -146,6 +156,50 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
         $nodeReflector = new NodeReflector($this->serviceLocator);
 
         return $nodeReflector->reflectNode($frame, $node);
+    }
+
+    /**
+     * @param array<string,bool> $visited
+     */
+    private function reflectClassesFromNode(TextDocument $source, Node $node, array $visited): ReflectionClassLikeCollection
+    {
+        $items = [];
+
+        $nodeCollection = $node->getDescendantNodes(function (Node $node) {
+            return false === $node instanceof ClassLike && false === $node instanceof ObjectCreationExpression;
+        });
+
+        foreach ($nodeCollection as $child) {
+            if (false === $child instanceof ClassLike && !$child instanceof ObjectCreationExpression) {
+                continue;
+            }
+
+            if ($child instanceof TraitDeclaration) {
+                $items[(string) $child->getNamespacedName()] =  new ReflectionTrait($this->serviceLocator, $source, $child, $visited);
+                continue;
+            }
+
+            if ($child instanceof EnumDeclaration) {
+                $items[(string) $child->getNamespacedName()] =  new ReflectionEnum($this->serviceLocator, $source, $child);
+                continue;
+            }
+
+            if ($child instanceof InterfaceDeclaration) {
+                $items[(string) $child->getNamespacedName()] =  new ReflectionInterface($this->serviceLocator, $source, $child, $visited);
+                continue;
+            }
+
+            if ($child instanceof ClassDeclaration) {
+                $items[(string) $child->getNamespacedName()] = new ReflectionClass($this->serviceLocator, $source, $child, $visited);
+                continue;
+            }
+
+            if ($child instanceof ObjectCreationExpression && !($child->classTypeDesignator instanceof Node)) {
+                $items[NodeUtil::nameFromTokenOrNode($node, $child)] = new ReflectionClass($this->serviceLocator, $source, $child, $visited);
+            }
+        }
+
+        return ReflectionClassLikeCollection::fromReflections($items);
     }
 
     private function parseSourceCode(TextDocument $sourceCode): SourceFileNode
