@@ -20,7 +20,7 @@ class FeatureStepCompletor implements Completor
     public function __construct(
         private StepGenerator $generator,
         private StepParser $parser,
-        StepScorer $stepSorter = null
+        ?StepScorer $stepSorter = null
     ) {
         $this->stepSorter = $stepSorter ?: new StepScorer();
     }

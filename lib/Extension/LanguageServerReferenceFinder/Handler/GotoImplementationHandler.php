@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\ImplementationParams;
@@ -32,7 +33,7 @@ class GotoImplementationHandler implements Handler, CanRegisterCapabilities
 
     public function gotoImplementation(ImplementationParams $params): Promise
     {
-        return \Amp\call(function () use ($params) {
+        return call(function () use ($params) {
             $textDocument = $this->workspace->get($params->textDocument->uri);
             $phpactorDocument = TextDocumentBuilder::create(
                 $textDocument->text

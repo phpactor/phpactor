@@ -65,7 +65,7 @@ class OverrideMethodHandler extends AbstractHandler
                 SourceCode::fromString((string) $newCode),
                 (string) $class->name(),
                 $methodName
-            );
+            )->apply($newCode);
         }
 
         return UpdateFileSourceResponse::fromPathOldAndNewSource(

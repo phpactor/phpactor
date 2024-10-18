@@ -241,6 +241,16 @@ parameters:
 			path: lib/CodeBuilder/Domain/Builder/TraitBuilder.php
 
 		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Cases.php
+
+		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Classes.php
+
+		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Classes.php
@@ -261,14 +271,34 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Collection.php
 
 		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			message: "#^Cannot access offset string on mixed\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Constants.php
 
 		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Constants.php
+
+		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Enums.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Enums.php
+
+		-
+			message: "#^Cannot access an offset on mixed\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/ImplementsInterfaces.php
+
+		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/ImplementsInterfaces.php
 
 		-
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Domain\\\\Prototype\\\\ImplementsInterfaces\\:\\:fromTypes\\(\\) has parameter \\$types with no value type specified in iterable type array\\.$#"
@@ -291,6 +321,16 @@ parameters:
 			path: lib/CodeBuilder/Domain/Prototype/Interfaces.php
 
 		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Methods.php
+
+		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Properties.php
+
+		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/Properties.php
@@ -304,6 +344,11 @@ parameters:
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Domain/Prototype/QualifiedName.php
+
+		-
+			message: "#^Cannot access offset string on mixed\\.$#"
+			count: 1
+			path: lib/CodeBuilder/Domain/Prototype/Traits.php
 
 		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
@@ -479,6 +524,11 @@ parameters:
 			message: "#^Method Phpactor\\\\CodeBuilder\\\\Util\\\\TextUtil\\:\\:lines\\(\\) should return array but returns array\\<int, string\\>\\|false\\.$#"
 			count: 1
 			path: lib/CodeBuilder/Util/TextUtil.php
+
+		-
+			message: "#^Offset 0 does not exist on array\\{0\\?\\: string, 1\\?\\: non\\-empty\\-string\\}\\.$#"
+			count: 1
+			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantExtractExpression.php
 
 		-
 			message: "#^Cannot use array destructuring on array\\|null\\.$#"
@@ -1742,16 +1792,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: mixed given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$elements of static method Phpactor\\\\CodeTransform\\\\Domain\\\\AbstractCollection\\<Phpactor\\\\CodeTransform\\\\Domain\\\\Generator\\>\\:\\:fromArray\\(\\) expects array\\<Phpactor\\\\CodeTransform\\\\Domain\\\\Generator\\>, array\\<int\\|string, mixed\\> given\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransform/CodeTransformExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$elements of static method Phpactor\\\\CodeTransform\\\\Domain\\\\AbstractCollection\\<Phpactor\\\\CodeTransform\\\\Domain\\\\Transformer\\>\\:\\:fromArray\\(\\) expects array\\<Phpactor\\\\CodeTransform\\\\Domain\\\\Transformer\\>, array\\<int\\|string, mixed\\> given\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
@@ -4226,16 +4266,6 @@ parameters:
 			path: lib/Extension/Logger/Tests/Unit/LoggingExtensionTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$filename of function file_get_contents expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/Logger/Tests/Unit/LoggingExtensionTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$filename of function unlink expects string, string\\|false given\\.$#"
-			count: 1
-			path: lib/Extension/Logger/Tests/Unit/LoggingExtensionTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/Extension/Logger/Tests/Unit/LoggingExtensionTest.php
@@ -5431,11 +5461,6 @@ parameters:
 			path: lib/Indexer/Extension/IndexerExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$stubPaths of method Phpactor\\\\Indexer\\\\IndexAgentBuilder\\:\\:setStubPaths\\(\\) expects array\\<string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Indexer/Extension/IndexerExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\.\\.\\.\\$paths of static method Symfony\\\\Component\\\\Filesystem\\\\Path\\:\\:join\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/IndexerExtension.php
@@ -5776,6 +5801,16 @@ parameters:
 			path: lib/TextDocument/TextDocumentLocator/InMemoryDocumentLocator.php
 
 		-
+			message: "#^Offset 'path' does not exist on array\\{0\\?\\: string, scheme\\?\\: non\\-falsy\\-string\\|null, 1\\?\\: non\\-falsy\\-string\\|null, path\\?\\: non\\-empty\\-string\\|null, 2\\?\\: non\\-empty\\-string\\|null\\}\\.$#"
+			count: 1
+			path: lib/TextDocument/TextDocumentUri.php
+
+		-
+			message: "#^Offset 'scheme' does not exist on array\\{0\\?\\: string, scheme\\?\\: non\\-falsy\\-string\\|null, 1\\?\\: non\\-falsy\\-string\\|null, path\\?\\: non\\-empty\\-string\\|null, 2\\?\\: non\\-empty\\-string\\|null\\}\\.$#"
+			count: 1
+			path: lib/TextDocument/TextDocumentUri.php
+
+		-
 			message: "#^Parameter \\#2 \\$name of method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:find\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
@@ -5899,6 +5934,11 @@ parameters:
 			message: "#^Strict comparison using \\=\\=\\= between null and Microsoft\\\\PhpParser\\\\ResolvedName will always evaluate to false\\.$#"
 			count: 1
 			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/AbstractReflectionClassMember.php
+
+		-
+			message: "#^Cannot access an offset on mixed\\.$#"
+			count: 1
+			path: lib/WorseReflection/Bridge/TolerantParser/Reflection/ReflectionMethod.php
 
 		-
 			message: "#^Cannot call method getEndPosition\\(\\) on Microsoft\\\\PhpParser\\\\Token\\|null\\.$#"

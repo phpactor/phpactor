@@ -21,9 +21,9 @@ class Frame
     private VarDocBuffer $varDocBuffer;
 
     public function __construct(
-        LocalAssignments $locals = null,
-        PropertyAssignments $properties = null,
-        Problems $problems = null,
+        ?LocalAssignments $locals = null,
+        ?PropertyAssignments $properties = null,
+        ?Problems $problems = null,
         private ?Frame $parent = null
     ) {
         $this->properties = $properties ?: PropertyAssignments::create();

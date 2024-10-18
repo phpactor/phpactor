@@ -27,10 +27,10 @@ class ClassMemberReferences
 
     public function findOrReplaceReferences(
         string $scope,
-        string $class = null,
-        string $memberName = null,
-        string $memberType = null,
-        string $replace = null,
+        ?string $class = null,
+        ?string $memberName = null,
+        ?string $memberType = null,
+        ?string $replace = null,
         bool $dryRun = false
     ) {
         $className = $class ? $this->classFileNormalizer->normalizeToClass($class) : null;
@@ -79,10 +79,10 @@ class ClassMemberReferences
     private function referencesInFile(
         Filesystem $filesystem,
         $filePath,
-        string $className = null,
-        string $memberName = null,
-        string $memberType = null,
-        string $replace = null,
+        ?string $className = null,
+        ?string $memberName = null,
+        ?string $memberType = null,
+        ?string $replace = null,
         bool $dryRun = false
     ): array {
         $code = $filesystem->getContents($filePath);
@@ -189,7 +189,7 @@ class ClassMemberReferences
         return $this->memberReplacer->replaceMembers($code, $list, $replace);
     }
 
-    private function createQuery(string $className = null, string $memberName = null, $memberType = null): ClassMemberQuery
+    private function createQuery(?string $className = null, ?string $memberName = null, $memberType = null): ClassMemberQuery
     {
         $query = ClassMemberQuery::create();
 

@@ -41,8 +41,8 @@ class TolerantUpdater implements Updater
 
     public function __construct(
         private Renderer $renderer,
-        TextFormat $textFormat = null,
-        Parser $parser = null
+        ?TextFormat $textFormat = null,
+        ?Parser $parser = null
     ) {
         $this->parser = $parser ?: new Parser();
         $this->textFormat = $textFormat ?: new TextFormat();

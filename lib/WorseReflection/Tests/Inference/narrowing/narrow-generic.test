@@ -1,0 +1,19 @@
+<?php
+
+final class Assert
+{
+    /**
+     * @psalm-template ExpectedType of object
+     * @psalm-param class-string<ExpectedType> $expected
+     * @psalm-assert ExpectedType $actual
+     */
+    public static function assertFoobar(string $expected, object $actual): void
+    {
+    }
+}
+
+function foo(object $obj): void
+{
+    Assert::assertFoobar('Foobar', $obj);
+    wrAssertType('Foobar', $obj);
+}

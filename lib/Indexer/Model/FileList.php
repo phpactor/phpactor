@@ -10,7 +10,7 @@ use SplFileInfo;
 use Traversable;
 
 /**
- * @implements \IteratorAggregate<SplFileInfo>
+ * @implements IteratorAggregate<SplFileInfo>
  */
 class FileList implements IteratorAggregate, Countable
 {

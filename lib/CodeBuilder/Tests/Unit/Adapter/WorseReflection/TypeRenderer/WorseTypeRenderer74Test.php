@@ -9,6 +9,7 @@ use Phpactor\WorseReflection\Core\Type\CallableType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\FalseType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\ObjectType;
 use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\StringType;
 use Phpactor\WorseReflection\Core\Type\UnionType;
@@ -45,6 +46,10 @@ class WorseTypeRenderer74Test extends TypeRendererTestCase
         yield [
             new UnionType(new StringType(), new FalseType()),
             '',
+        ];
+        yield [
+            new ObjectType(),
+            'object',
         ];
     }
 

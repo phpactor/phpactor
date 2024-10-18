@@ -18,7 +18,7 @@ class ChainTolerantCompletor implements Completor
     /**
      * @param TolerantCompletor[] $tolerantCompletors
      */
-    public function __construct(private array $tolerantCompletors, Parser $parser = null)
+    public function __construct(private array $tolerantCompletors, ?Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
     }

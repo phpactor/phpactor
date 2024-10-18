@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Generator;
 use Phpactor\WorseReflection\Core\Type\UnionType;
 use Phpactor\WorseReflection\Core\Visibility;
@@ -17,7 +18,7 @@ class ReflectionClassTest extends IntegrationTestCase
 {
     public function testExceptionOnClassNotFound(): void
     {
-        $this->expectException(\Phpactor\WorseReflection\Core\Exception\ClassNotFound::class);
+        $this->expectException(ClassNotFound::class);
         $this->createReflector('')->reflectClassLike(ClassName::fromString('Foobar'));
     }
 

@@ -118,7 +118,7 @@ class FileList implements Iterator
                 }
 
                 $compare = strcmp($pathPartA, $partsB[$i]);
-                if($compare !== 0) {
+                if ($compare !== 0) {
                     return $compare;
                 }
             }
@@ -127,7 +127,7 @@ class FileList implements Iterator
         });
 
         return $this->filter(function (SplFileInfo $info) use ($inclusionMap): bool {
-            foreach($inclusionMap as $glob => $isIncluded) {
+            foreach ($inclusionMap as $glob => $isIncluded) {
                 if (Glob::match($info->getPathname(), $glob)) {
                     return $isIncluded;
                 }

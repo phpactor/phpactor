@@ -45,7 +45,7 @@ class ClassReferences
     public function findOrReplaceReferences(
         string $filesystemName,
         string $class,
-        string $replace = null,
+        ?string $replace = null,
         bool $dryRun = false
     ) {
         $classPath = $this->classFileNormalizerasd->normalizeToFile($class);

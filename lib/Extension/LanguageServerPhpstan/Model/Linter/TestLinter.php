@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 
+use function Amp\call;
 use Amp\Delayed;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
@@ -18,7 +19,7 @@ class TestLinter implements Linter
 
     public function lint(string $url, ?string $text): Promise
     {
-        return \Amp\call(function () {
+        return call(function () {
             yield new Delayed($this->delay);
             return $this->diagnostics;
         });

@@ -33,7 +33,7 @@ class ReflectionEnum extends AbstractReflectionClass implements CoreReflectionEn
     ) {
     }
 
-    public function methods(ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
+    public function methods(?ReflectionClassLike $contextClass = null): CoreReflectionMethodCollection
     {
         return $this->members()->methods();
     }

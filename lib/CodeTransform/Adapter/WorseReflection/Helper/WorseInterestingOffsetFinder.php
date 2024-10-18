@@ -13,7 +13,7 @@ class WorseInterestingOffsetFinder implements InterestingOffsetFinder
 {
     private Parser $parser;
 
-    public function __construct(private SourceCodeReflector $reflector, Parser $parser = null)
+    public function __construct(private SourceCodeReflector $reflector, ?Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
     }

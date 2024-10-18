@@ -2,6 +2,14 @@
 
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Patch;
 
+use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
+use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
+use Microsoft\PhpParser\Node\NamespaceUseClause;
+use Microsoft\PhpParser\Node\NamespaceUseGroupClause;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
+use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\ResolvedName;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
@@ -36,12 +44,12 @@ class TolerantQualifiedNameResolver
     public static function getResolvedName($node, $namespaceDefinition = null)
     {
         // Name resolution not applicable to constructs that define symbol names or aliases.
-        if (($node->parent instanceof Node\Statement\NamespaceDefinition && $node->parent->name->getStartPosition() === $node->getStartPosition()) ||
-            $node->parent instanceof Node\Statement\NamespaceUseDeclaration ||
-            $node->parent instanceof Node\NamespaceUseClause ||
-            $node->parent instanceof Node\NamespaceUseGroupClause ||
+        if (($node->parent instanceof NamespaceDefinition && $node->parent->name->getStartPosition() === $node->getStartPosition()) ||
+            $node->parent instanceof NamespaceUseDeclaration ||
+            $node->parent instanceof NamespaceUseClause ||
+            $node->parent instanceof NamespaceUseGroupClause ||
             //$node->parent->parent instanceof Node\TraitUseClause ||
-            $node->parent instanceof Node\TraitSelectOrAliasClause ||
+            $node->parent instanceof TraitSelectOrAliasClause ||
             ($node->parent instanceof TraitSelectOrAliasClause &&
             ($node->parent->asOrInsteadOfKeyword == null || $node->parent->asOrInsteadOfKeyword->kind === TokenKind::AsKeyword))
         ) {
@@ -121,12 +129,12 @@ class TolerantQualifiedNameResolver
     private static function isConstantName($node) : bool
     {
         return
-            ($node->parent instanceof Node\Statement\ExpressionStatement || $node->parent instanceof Expression) &&
+            ($node->parent instanceof ExpressionStatement || $node->parent instanceof Expression) &&
             !(
-                $node->parent instanceof Node\Expression\MemberAccessExpression || $node->parent instanceof CallExpression ||
+                $node->parent instanceof MemberAccessExpression || $node->parent instanceof CallExpression ||
                 $node->parent instanceof ObjectCreationExpression ||
-                $node->parent instanceof Node\Expression\ScopedPropertyAccessExpression || $node->parent instanceof AnonymousFunctionCreationExpression ||
-                ($node->parent instanceof Node\Expression\BinaryExpression && $node->parent->operator->kind === TokenKind::InstanceOfKeyword)
+                $node->parent instanceof ScopedPropertyAccessExpression || $node->parent instanceof AnonymousFunctionCreationExpression ||
+                ($node->parent instanceof BinaryExpression && $node->parent->operator->kind === TokenKind::InstanceOfKeyword)
             );
     }
 }

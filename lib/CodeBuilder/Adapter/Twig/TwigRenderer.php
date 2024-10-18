@@ -18,14 +18,14 @@ final class TwigRenderer implements Renderer
     private TemplateNameResolver $templateNameResolver;
 
     public function __construct(
-        Environment $twig = null,
-        TemplateNameResolver $templateNameResolver = null
+        ?Environment $twig = null,
+        ?TemplateNameResolver $templateNameResolver = null
     ) {
         $this->twig = $twig ?: $this->createTwig();
         $this->templateNameResolver = $templateNameResolver ?: new ClassShortNameResolver();
     }
 
-    public function render(Prototype $prototype, string $variant = null): Code
+    public function render(Prototype $prototype, ?string $variant = null): Code
     {
         $templateName = $baseTemplateName = $this->templateNameResolver->resolveName($prototype);
 
@@ -57,7 +57,7 @@ final class TwigRenderer implements Renderer
         return $twig;
     }
 
-    private function twigRender(Prototype $prototype, string $templateName, string $variant = null): string
+    private function twigRender(Prototype $prototype, string $templateName, ?string $variant = null): string
     {
         return $this->twig->render($templateName, [
             'prototype' => $prototype,

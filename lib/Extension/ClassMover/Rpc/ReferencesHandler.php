@@ -177,7 +177,7 @@ class ReferencesHandler extends AbstractHandler
         return CollectionResponse::fromActions($actions);
     }
 
-    private function classReferences(string $filesystem, NodeContext $nodeContext, string $source = null, string $replacement = null)
+    private function classReferences(string $filesystem, NodeContext $nodeContext, ?string $source = null, ?string $replacement = null)
     {
         $classType = (string) $nodeContext->type();
         $references = $this->classReferences->findOrReplaceReferences($filesystem, $classType, $replacement);
@@ -243,7 +243,7 @@ class ReferencesHandler extends AbstractHandler
         return [$source, $this->sortReferences($references)];
     }
 
-    private function doPerformFindOrReplaceReferences(NodeContext $nodeContext, string $filesystem, string $source = null, string $replacement = null)
+    private function doPerformFindOrReplaceReferences(NodeContext $nodeContext, string $filesystem, ?string $source = null, ?string $replacement = null)
     {
         return match ($nodeContext->symbol()->symbolType()) {
             Symbol::CLASS_ => $this->classReferences($filesystem, $nodeContext, $source, $replacement),

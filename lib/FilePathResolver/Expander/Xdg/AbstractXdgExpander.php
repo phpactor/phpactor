@@ -9,7 +9,7 @@ abstract class AbstractXdgExpander implements Expander
 {
     protected Xdg $xdg;
 
-    public function __construct(private string $name, Xdg $xdg = null)
+    public function __construct(private string $name, ?Xdg $xdg = null)
     {
         $this->xdg = $xdg ?: new Xdg();
     }

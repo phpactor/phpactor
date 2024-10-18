@@ -218,6 +218,11 @@ class IndexerExtension implements Extension
                 PathResolver::class
             );
             $indexPath = $resolver->resolve($container->parameter(self::PARAM_INDEX_PATH)->string());
+
+            /** @var array<string> $stubPaths */
+            $stubPaths = $container->parameter(self::PARAM_STUB_PATHS)->value();
+            $stubPaths = array_map(fn (string $path): string => $resolver->resolve($path), $stubPaths);
+
             return IndexAgentBuilder::create($indexPath, $this->projectRoot($container))
                 /** @phpstan-ignore-next-line */
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
@@ -226,7 +231,7 @@ class IndexerExtension implements Extension
                 /** @phpstan-ignore-next-line */
                 ->setSupportedExtensions($container->parameter(self::PARAM_SUPPORTED_EXTENSIONS)->value())
                 ->setFollowSymlinks($container->parameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS)->bool())
-                ->setStubPaths($container->getParameter(self::PARAM_STUB_PATHS));
+                ->setStubPaths($stubPaths);
         });
 
         $container->register(Indexer::class, function (Container $container) {

@@ -15,7 +15,7 @@ interface ReflectionScope
     /**
      * @param null|Type|string $type
      */
-    public function resolveFullyQualifiedName($type, ReflectionClassLike $classLike = null): Type;
+    public function resolveFullyQualifiedName($type, ?ReflectionClassLike $classLike = null): Type;
 
     public function resolveLocalType(Type $type): Type;
 }

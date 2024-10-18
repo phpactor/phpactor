@@ -11,9 +11,6 @@ use RuntimeException;
  */
 final class Tokens implements IteratorAggregate
 {
-    /**
-     * @var ?Token
-     */
     public ?Token $current;
 
     private int $position = 0;
