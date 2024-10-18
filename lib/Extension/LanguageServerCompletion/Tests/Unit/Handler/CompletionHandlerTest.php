@@ -2,6 +2,9 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit\Handler;
 
+use function Amp\Promise\wait;
+use function Amp\Promise\all;
+use function Amp\call;
 use Amp\Delayed;
 use DTL\Invoke\Invoke;
 use Generator;
@@ -362,9 +365,9 @@ class CompletionHandlerTest extends TestCase
             ],
             1
         );
-        $responses =\Amp\Promise\wait(\Amp\Promise\all([
+        $responses =wait(all([
             $response,
-            \Amp\call(function () use ($tester) {
+            call(function () use ($tester) {
                 yield new Delayed(10);
                 $tester->cancel(1);
             })

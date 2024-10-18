@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser;
 
 use Phpactor\DocblockParser\Ast\Docblock as ParserDocblock;
 use Phpactor\DocblockParser\Ast\ParameterList;
+use Phpactor\DocblockParser\Ast\Tag\AssertTag;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
 use Phpactor\DocblockParser\Ast\Tag\ImplementsTag;
@@ -24,12 +25,11 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockParam;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockParams;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAlias;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAliases;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAssertion;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -210,7 +210,7 @@ class ParsedDocblock implements DocBlock
             $properties[] = $property;
         }
 
-        return ReflectionPropertyCollection::fromReflectionProperties($properties);
+        return CoreReflectionPropertyCollection::fromReflectionProperties($properties);
     }
 
     public function methods(ReflectionClassLike $declaringClass): CoreReflectionMethodCollection
@@ -240,7 +240,7 @@ class ParsedDocblock implements DocBlock
             $methods[] = $method;
         }
 
-        return ReflectionMethodCollection::fromReflectionMethods($methods);
+        return CoreReflectionMethodCollection::fromReflectionMethods($methods);
     }
 
     public function deprecation(): Deprecation
@@ -298,6 +298,22 @@ class ParsedDocblock implements DocBlock
     public function node(): ParserDocblock
     {
         return $this->node;
+    }
+
+    public function assertions(): array
+    {
+        $assertions = [];
+        foreach ($this->node->tags(AssertTag::class) as $assert) {
+            if (!$assert->paramName) {
+                continue;
+            }
+            $assertions[] = new DocBlockTypeAssertion(
+                ltrim($assert->paramName->toString(), '$'),
+                $this->convertType($assert->type),
+                $assert->negationOrEquality?->value === '!',
+            );
+        }
+        return $assertions;
     }
 
     private function addParameters(VirtualReflectionMethod $method, ReflectionParameterCollection $collection, ?ParameterList $parameterList): void

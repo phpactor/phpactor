@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Handler;
 
+use function Amp\call;
 use Amp\CancellationToken;
 use Amp\CancelledException;
 use Amp\Delayed;
@@ -65,7 +66,7 @@ class IndexerHandler implements Handler, ServiceProvider
      */
     public function indexer(CancellationToken $cancel): Promise
     {
-        return \Amp\call(function () use ($cancel) {
+        return call(function () use ($cancel) {
             $job = $this->indexer->getJob();
             $size = $job->size();
             $token = WorkDoneToken::generate();
@@ -135,7 +136,7 @@ class IndexerHandler implements Handler, ServiceProvider
      */
     public function reindex(bool $soft = false): Promise
     {
-        return \Amp\call(function () use ($soft): void {
+        return call(function () use ($soft): void {
             if (false === $soft) {
                 $this->indexer->reset();
             }

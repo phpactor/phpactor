@@ -30,6 +30,10 @@ class IndexOnSaveListener implements ListenerProviderInterface
                     return;
                 }
                 $this->indexer->index($textDocument);
+
+                // flush the index to make changes available to external
+                // processes (i.e. the outsourced diagnostics).
+                $this->indexer->flush();
             };
         }
     }

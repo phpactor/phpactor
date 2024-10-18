@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Model;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Indexer\Model\Query\Criteria;
@@ -33,7 +34,7 @@ final class WorkspaceSymbolProvider
      */
     public function provideFor(string $query): Promise
     {
-        return \Amp\call(function () use ($query) {
+        return call(function () use ($query) {
             $infos = [];
             foreach ($this->client->search(Criteria::shortNameContains($query)) as $count => $record) {
                 if ($count >= $this->limit) {

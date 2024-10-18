@@ -20,7 +20,7 @@ class TolerantExtractExpression implements ExtractExpression
 {
     private Parser $parser;
 
-    public function __construct(Parser $parser = null)
+    public function __construct(?Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
     }
@@ -161,7 +161,7 @@ class TolerantExtractExpression implements ExtractExpression
         ];
     }
 
-    private function outerExpression(Node $node, Node $originalNode = null): ?Expression
+    private function outerExpression(Node $node, ?Node $originalNode = null): ?Expression
     {
         $originalNode = $originalNode ?: $node;
 

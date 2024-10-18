@@ -22,7 +22,7 @@ class ReflectionConstantTest extends IntegrationTestCase
         $assertion($class->constants());
     }
     /**
-     * @return Generator<string,array{string,string,Closure(\Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection): void}>
+     * @return Generator<string, array{string, string, Closure(ReflectionConstantCollection):void}>
      */
     public function provideReflectionConstant(): Generator
     {
@@ -95,6 +95,22 @@ class ReflectionConstantTest extends IntegrationTestCase
             'Foobar',
             function (ReflectionConstantCollection $constants): void {
                 $this->assertStringContainsString('/** Hello! */', $constants->first()->docblock()->raw());
+            }
+                ];
+
+        yield 'Returns declared type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar
+                {
+                    const string FOOBAR = 'foobar';
+                }
+                EOT
+            ,
+            'Foobar',
+            function (ReflectionConstantCollection $constants): void {
+                $this->assertEquals('string', $constants->first()->type()->__toString());
             }
         ];
 

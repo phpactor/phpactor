@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
+use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
+use function Amp\Promise\wait;
 use Amp\Promise;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
 use Phpactor\Extension\LanguageServerCodeTransform\LspCommand\ImportNameCommand;
@@ -66,7 +68,7 @@ class ImportNameCommandTest extends TestCase
             true,
             null
         )->willReturn(NameImporterResult::createResult(
-            \Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport::forClass('Foobar'),
+            NameImport::forClass('Foobar'),
             [$this->textEditProphecy->reveal()]
         ));
 
@@ -113,7 +115,7 @@ class ImportNameCommandTest extends TestCase
     {
         $expectedResponse = new ApplyWorkspaceEditResult(true, null);
         $this->rpcClient->responseWatcher()->resolveLastResponse($expectedResponse);
-        $result = \Amp\Promise\wait($promise);
+        $result = wait($promise);
         $this->assertEquals($expectedResponse, $result);
     }
 }

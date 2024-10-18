@@ -10,13 +10,13 @@ final class ClassPrototype extends ClassLikePrototype
 
     public function __construct(
         string $name,
-        Properties $properties = null,
-        Constants $constants = null,
-        Methods $methods = null,
-        ExtendsClass $extendsClass = null,
-        ImplementsInterfaces $implementsInterfaces = null,
-        UpdatePolicy $updatePolicy = null,
-        Docblock $docblock = null
+        ?Properties $properties = null,
+        ?Constants $constants = null,
+        ?Methods $methods = null,
+        ?ExtendsClass $extendsClass = null,
+        ?ImplementsInterfaces $implementsInterfaces = null,
+        ?UpdatePolicy $updatePolicy = null,
+        ?Docblock $docblock = null
     ) {
         parent::__construct($name, $methods, $properties, $constants, $updatePolicy, $docblock);
         $this->extendsClass = $extendsClass ?: ExtendsClass::none();

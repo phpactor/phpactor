@@ -32,7 +32,7 @@ abstract class FrameWalkerTestCase extends IntegrationTestCase
         return null;
     }
 
-    private function createReflectorWithWalker($source, Walker $frameWalker = null): Reflector
+    private function createReflectorWithWalker($source, ?Walker $frameWalker = null): Reflector
     {
         $reflector = $this->createBuilder($source);
 

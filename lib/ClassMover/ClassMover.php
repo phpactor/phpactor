@@ -18,7 +18,7 @@ class ClassMover
 
     private ClassReplacer $replacer;
 
-    public function __construct(ClassFinder $finder = null, ClassReplacer $replacer = null)
+    public function __construct(?ClassFinder $finder = null, ?ClassReplacer $replacer = null)
     {
         $this->finder = $finder ?: new TolerantClassFinder();
         $this->replacer = $replacer ?: new TolerantClassReplacer(new TolerantUpdater(new TwigRenderer()));

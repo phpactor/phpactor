@@ -2,6 +2,7 @@
 
 namespace Phpactor\ComposerInspector\Tests;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ComposerInspector\ComposerInspector;
 use Phpactor\TestUtils\Workspace;
@@ -17,7 +18,7 @@ class ComposerInspectorTest extends TestCase
 
     public function testReturnsPackage(): void
     {
-        $this->putComposer('{"packages":[{"name":"phpstan/phpstan", "version": "^1.0"}]}');
+        $this->putComposerLock('{"packages":[{"name":"phpstan/phpstan", "version": "^1.0"}]}');
         $package = $this->inspector()->package('phpstan/phpstan');
         self::assertNotNull($package);
         self::assertEquals('phpstan/phpstan', $package->name);
@@ -27,20 +28,46 @@ class ComposerInspectorTest extends TestCase
 
     public function testReturnsDevPackage(): void
     {
-        $this->putComposer('{"packages-dev":[{"name":"phpstan/phpstan", "version": "^1.0"}]}');
+        $this->putComposerLock('{"packages-dev":[{"name":"phpstan/phpstan", "version": "^1.0"}]}');
         $package = $this->inspector()->package('phpstan/phpstan');
         self::assertNotNull($package);
         self::assertEquals('phpstan/phpstan', $package->name);
         self::assertTrue($package->isDev);
     }
 
-    private function inspector(): ComposerInspector
+    /** @dataProvider provideReturnsBinDirectory */
+    public function testReturnsBinDirectory(string $composerContent, string $binPath): void
     {
-        return (new ComposerInspector($this->workspace->path('composer.lock')));
+        $this->putComposerLock('{"packages-dev":[{"name":"phpstan/phpstan", "version": "^1.0"}]}');
+        $this->putComposer($composerContent);
+
+        self::assertSame($binPath, $this->inspector()->binDir());
     }
 
-    private function putComposer(string $file): void
+    /**
+    * @return Generator<array{string, string}>
+    */
+    public function provideReturnsBinDirectory(): Generator
     {
-        $this->workspace->put('composer.lock', $file);
+        yield 'no bin directory' => ['', 'vendor/bin'];
+        yield 'bin directory specified' => ['{"bin-dir": "bin"}', 'bin'];
+    }
+
+    private function inspector(): ComposerInspector
+    {
+        return (new ComposerInspector(
+            $this->workspace->path('composer.lock'),
+            $this->workspace->path('composer.json')
+        ));
+    }
+
+    private function putComposer(string $contents): void
+    {
+        $this->workspace->put('composer.json', $contents);
+    }
+
+    private function putComposerLock(string $contents): void
+    {
+        $this->workspace->put('composer.lock', $contents);
     }
 }

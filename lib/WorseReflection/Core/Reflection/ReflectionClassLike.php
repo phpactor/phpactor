@@ -18,7 +18,7 @@ interface ReflectionClassLike extends ReflectionNode
 
     public function name(): ClassName;
 
-    public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection;
+    public function methods(?ReflectionClassLike $contextClass = null): ReflectionMethodCollection;
 
     /**
      * @return ReflectionMemberCollection<ReflectionMember>

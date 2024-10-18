@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Model\SearchIndex;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
@@ -13,7 +14,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class FilteredSearchIndexTest extends IntegrationTestCase
 {
-    use \Prophecy\PhpUnit\ProphecyTrait;
+    use ProphecyTrait;
 
     /**
      * @var ObjectProphecy<SearchIndex>

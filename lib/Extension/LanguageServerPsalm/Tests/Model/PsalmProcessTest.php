@@ -29,9 +29,9 @@ class PsalmProcessTest extends IntegrationTestCase
      * @dataProvider provideLint
      * @param Closure(list<Diagnostic>):void $assertion
      */
-    public function testLint(string $source, Closure $assertion, int $initLevel = 1, bool $shouldShowInfo = true, int $errorLevel = null): void
+    public function testLint(string $source, Closure $assertion, int $initLevel = 1, bool $shouldShowInfo = true, ?int $errorLevel = null): void
     {
-        $psalmBin = __DIR__ . '/../../../../../vendor/bin/psalm';
+        $psalmBin = __DIR__ . '/../../../../../vendor/bin/psalm.phar';
 
         // without a src dir, psalm crashes
         $this->workspace()->mkdir('src');

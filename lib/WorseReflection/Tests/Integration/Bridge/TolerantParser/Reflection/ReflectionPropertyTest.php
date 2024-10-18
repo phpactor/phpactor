@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as PhpactorReflectionPropertyCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -32,7 +31,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
         yield 'It reflects a property with union type' => [
             '<?php class Foobar { private int|string $property;}',
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals('property', $properties->get('property')->name());
                     $this->assertEquals(TypeFactory::union(...[
                         TypeFactory::int(),
@@ -58,7 +57,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals('property', $properties->get('property')->name());
                     $this->assertInstanceOf(ReflectionProperty::class, $properties->get('property'));
                 },
@@ -75,7 +74,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals(Visibility::private(), $properties->get('property')->visibility());
                 },
             ];
@@ -91,7 +90,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals(Visibility::protected(), $properties->get('property')->visibility());
                 },
             ];
@@ -107,7 +106,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals(Visibility::public(), $properties->get('property')->visibility());
                 },
             ];
@@ -165,7 +164,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals(
                         'Acme\Post',
                         $properties->get('property1')->inferredType()->__toString(),
@@ -190,7 +189,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals(
                         TypeFactory::unknown(),
                         $properties->get('property1')->type()
@@ -211,7 +210,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertTrue($properties->has('property1'));
                 },
             ];
@@ -229,7 +228,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertTrue($properties->get('property1')->isStatic());
                 },
             ];
@@ -245,7 +244,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals('Foobar', $properties->get('property1')->declaringClass()->name()->__toString());
                 },
             ];
@@ -266,7 +265,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals(TypeFactory::fromString('string'), $properties->get('bar')->inferredType());
                 },
             ];
@@ -288,7 +287,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredType()->__toString());
                 },
             ];
@@ -314,7 +313,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Foobar',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredType()->__toString());
                 },
             ];
@@ -341,7 +340,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Test\Barfoo',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals('Bar\Foo', $properties->get('bar')->type()->__toString());
                     $this->assertEquals('Bar\Foo', $properties->get('bar')->inferredType()->__toString());
 
@@ -371,7 +370,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Test\Barfoo',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals(
                         TypeFactory::fromString('?string'),
                         $properties->get('foo')->type()
@@ -392,7 +391,7 @@ class ReflectionPropertyTest extends IntegrationTestCase
                     EOT
                 ,
                 'Test\Barfoo',
-                function (ReflectionPropertyCollection $properties): void {
+                function (PhpactorReflectionPropertyCollection $properties): void {
                     $this->assertEquals(
                         TypeFactory::intersection(
                             TypeFactory::class('Test\Foo'),

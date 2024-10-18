@@ -17,7 +17,7 @@ class GitFilesystem extends SimpleFilesystem
 {
     private FilePath $path;
 
-    public function __construct(FilePath $path, FileListProvider $fileListProvider = null)
+    public function __construct(FilePath $path, ?FileListProvider $fileListProvider = null)
     {
         parent::__construct($path, $fileListProvider);
         $this->path = $path;

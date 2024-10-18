@@ -18,7 +18,7 @@ abstract class NameSearcherCompletor
 {
     private DocumentPrioritizer $prioritizer;
 
-    public function __construct(protected NameSearcher $nameSearcher, DocumentPrioritizer $prioritizer = null)
+    public function __construct(protected NameSearcher $nameSearcher, ?DocumentPrioritizer $prioritizer = null)
     {
         $this->prioritizer = $prioritizer ?: new DefaultResultPrioritizer();
     }

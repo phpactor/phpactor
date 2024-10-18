@@ -10,6 +10,7 @@ final class Token implements Element
     public const T_PHPDOC_CLOSE = 'PHPDOC_CLOSE';
     public const T_VARIABLE = 'VARIABLE';
     public const T_UNKNOWN = 'UNKNOWN';
+    public const T_BANG = 'BANG';
     public const T_NULLABLE = 'NULLABLE';
     public const T_BAR = 'BAR';
     public const T_TAG = 'TAG';

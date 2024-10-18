@@ -55,4 +55,9 @@ interface DocBlock
      * @return Type[]
      */
     public function mixins(): array;
+
+    /**
+     * @return DocBlockTypeAssertion[]
+     */
+    public function assertions(): array;
 }

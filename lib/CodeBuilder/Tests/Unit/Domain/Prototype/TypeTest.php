@@ -11,7 +11,7 @@ class TypeTest extends TestCase
     /**
      * @dataProvider provideNamespace
      */
-    public function testItReturnsANamespace(string $classFqn, string $expectedNamespace = null): void
+    public function testItReturnsANamespace(string $classFqn, ?string $expectedNamespace = null): void
     {
         $type = Type::fromString($classFqn);
         $this->assertEquals($expectedNamespace, $type->namespace());

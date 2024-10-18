@@ -24,7 +24,7 @@ class WorseGenerateAccessor implements PropertyAccessGenerator
         private Reflector $reflector,
         private Updater $updater,
         private string $prefix = '',
-        bool $upperCaseFirst = null
+        ?bool $upperCaseFirst = null
     ) {
         $this->upperCaseFirst = ($prefix && $upperCaseFirst === null) || $upperCaseFirst;
     }

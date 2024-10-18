@@ -1,0 +1,13 @@
+// File: source
+<?php
+
+declare(strict_types=1);
+
+new Foo<>bar();
+// File: expected
+<?php
+
+declare(strict_types=1);
+use Barfoo\Foobar;
+
+new Foobar();

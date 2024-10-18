@@ -68,7 +68,7 @@ class LocationsTest extends TestCase
         $this->assertNotSame($locations, $sortedLocations);
         $this->assertCount(count($unsortedLocationsArray), $sortedLocations);
 
-        foreach(iterator_to_array($sortedLocations) as $index => $sortedLocation) {
+        foreach (iterator_to_array($sortedLocations) as $index => $sortedLocation) {
             $expectedLocation = $sortedLocationsArray[$index];
 
             self::assertEquals($sortedLocation, new Location($expectedLocation->uri(), $expectedLocation->range()));

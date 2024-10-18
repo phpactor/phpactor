@@ -28,6 +28,7 @@ class DocblockParserFactory implements DocBlockFactory
         'template-extends',
         'mixin',
         'throws',
+        'assert',
     ];
 
     private Lexer $lexer;

@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Builder;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Builder\Exception\InvalidBuilderException;
 use Phpactor\CodeBuilder\Domain\Builder\NamedBuilder;
@@ -10,7 +11,7 @@ use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
 
 class MethodBuilderTest extends TestCase
 {
-    use \Prophecy\PhpUnit\ProphecyTrait;
+    use ProphecyTrait;
 
     public function testExceptionOnAddNonParameterBuilder(): void
     {

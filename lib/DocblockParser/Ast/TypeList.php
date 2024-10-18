@@ -37,7 +37,7 @@ class TypeList extends Node implements IteratorAggregate, Countable
 
     public function types(): TypeNodes
     {
-        return new TypeNodes(...array_filter($this->list, function (Element $element) {
+        return new TypeNodes(...array_filter($this->list, function (?Element $element) {
             return $element instanceof TypeNode;
         }));
     }

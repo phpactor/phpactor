@@ -31,7 +31,7 @@ class TolerantImportName implements ImportName
 
     public function __construct(
         private Updater $updater,
-        Parser $parser = null,
+        ?Parser $parser = null,
         private bool $importGlobals = false
     ) {
         $this->parser = $parser ?: new Parser();

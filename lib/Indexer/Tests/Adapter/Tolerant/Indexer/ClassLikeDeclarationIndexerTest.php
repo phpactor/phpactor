@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\EnumDeclarationIndexer;
@@ -17,7 +18,7 @@ use RuntimeException;
 
 class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
 {
-    use \Prophecy\PhpUnit\ProphecyTrait;
+    use ProphecyTrait;
 
     /**
      * @dataProvider provideImplementations

@@ -3,9 +3,31 @@ Changelog
 
 ## master
 
+Bug fixes:
+
+  - Docblock: support parsing quoted string literals as array valuyes #2730
+  - Tell WorseReflection about new definitions from the stdin for the
+    diagnostics process #2723
+  - Flush index on save (make latest changes available to diagnostic process) #2722
+  - Fix bad contextual filtering #2715 @dantleech
+  - Take optional parameters into account with conditional types #2700 @dantleech
+  - Fix import position when `declare` is present #2698 @dantleech
+  - Fix NULL error in Docblock parser #2693 @dantleech
+  - Handle "source not found" when resolving template map #2716 @dantleech
+
 Improvements:
 
+  - Allow exclude patterns to be set for diagnostics (e.g. `vendor/**/*`) #2705 @dantleech
+  - Improve formatting for override method #2702 @dantleech
+  - Offer completions on attributes not associated with class member body
+    #2695 @przepompownia
+  - Show prose associated with `@throws` tag #2694 @mamazu
   - Support parsing generic variance e.g. `covariant` #2664 @dantleech
+
+Features:
+
+  - Add support for 8.3 typed class constants
+  - Basic support for `@{phpstan,psalm}-assert` #2720 @dantleech
 
 ## 2024-06-30
 
