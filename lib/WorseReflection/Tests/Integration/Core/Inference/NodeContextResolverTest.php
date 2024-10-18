@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use Phpactor\WorseReflection\Bridge\PHPStan\DocblockParser\PHPStanDocblockParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\DefaultResolverFactory;
@@ -1175,7 +1176,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         $nameResolver = new NodeToTypeConverter($reflector, $this->logger());
         $resolver = new NodeContextResolver(
             $reflector,
-            new DocblockParserFactory($reflector),
+            new PHPStanDocblockParserFactory($reflector),
             $this->logger(),
             new StaticCache(),
             (new DefaultResolverFactory(
