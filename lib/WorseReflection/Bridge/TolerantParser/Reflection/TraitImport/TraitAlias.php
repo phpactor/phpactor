@@ -18,7 +18,7 @@ class TraitAlias
         return $this->originalName;
     }
 
-    public function visiblity(Visibility $default = null): Visibility
+    public function visiblity(?Visibility $default = null): Visibility
     {
         return $this->visiblity ?: $default ?: Visibility::public();
     }

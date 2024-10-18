@@ -1,0 +1,23 @@
+ /**
+  * @param array{0: 'w', 1: 'o', 2: 'r', 3: 'l', 4: 'd'} $input
+  */
+---
+Docblock: = 
+ ElementList: =  /**
+  * 
+  ParamTag: = @param
+   ArrayShapeNode: = {
+    ArrayKeyValueList: = 
+     ArrayKeyValueNode: = 0:
+      LiteralStringNode: = 'w',
+     ArrayKeyValueNode: = 1:
+      LiteralStringNode: = 'o',
+     ArrayKeyValueNode: = 2:
+      LiteralStringNode: = 'r',
+     ArrayKeyValueNode: = 3:
+      LiteralStringNode: = 'l',
+     ArrayKeyValueNode: = 4:
+      LiteralStringNode: = 'd'}
+   VariableNode: = $input
+   TextNode: = 
+  */

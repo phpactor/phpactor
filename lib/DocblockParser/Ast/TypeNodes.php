@@ -3,6 +3,7 @@
 namespace Phpactor\DocblockParser\Ast;
 
 use ArrayIterator;
+use Countable;
 use IteratorAggregate;
 use RuntimeException;
 use Traversable;
@@ -10,7 +11,7 @@ use Traversable;
 /**
  * @implements IteratorAggregate<TypeNode>
  */
-class TypeNodes implements IteratorAggregate
+class TypeNodes implements IteratorAggregate, Countable
 {
     /**
      * @var TypeNode[]
@@ -36,5 +37,10 @@ class TypeNodes implements IteratorAggregate
         throw new RuntimeException(sprintf(
             'List has no first element'
         ));
+    }
+
+    public function count(): int
+    {
+        return count($this->types);
     }
 }

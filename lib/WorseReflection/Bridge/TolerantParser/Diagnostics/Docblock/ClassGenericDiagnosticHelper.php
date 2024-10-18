@@ -11,7 +11,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -104,13 +103,7 @@ final class ClassGenericDiagnosticHelper
         if ($extendTagType instanceof GenericClassType) {
             $classTemplateMap = $class->templateMap();
             $extendTagType = $extendTagType->withArguments(array_map(function (Type $type) use ($classTemplateMap) {
-                if (!$type instanceof ClassType) {
-                    return $type;
-                }
-                if (!$classTemplateMap->has($type->__toString())) {
-                    return $type;
-                }
-                return $classTemplateMap->get($type->__toString());
+                return $classTemplateMap->getOrGiven($type);
             }, $extendTagType->arguments()));
         }
 

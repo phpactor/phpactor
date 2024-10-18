@@ -28,7 +28,7 @@ class WorseExtractConstant implements ExtractConstant
     public function __construct(
         private Reflector $reflector,
         private Updater $updater,
-        Parser $parser = null
+        ?Parser $parser = null
     ) {
         $this->parser = $parser ?: new Parser();
     }

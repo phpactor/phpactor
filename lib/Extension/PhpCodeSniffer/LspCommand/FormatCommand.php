@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\PhpCodeSniffer\LspCommand;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Diff\DiffToTextEditsConverter;
 use Phpactor\Extension\PhpCodeSniffer\Model\PhpCodeSnifferProcess;
@@ -28,7 +29,7 @@ class FormatCommand implements Command
      */
     public function __invoke(string $uri): Promise
     {
-        return \Amp\call(function () use ($uri) {
+        return call(function () use ($uri) {
             $path = TextDocumentUri::fromString($uri)->path();
             $textDocument = $this->workspace->get($uri);
 

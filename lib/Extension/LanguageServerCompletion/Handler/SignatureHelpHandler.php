@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Handler;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Position;
@@ -34,7 +35,7 @@ class SignatureHelpHandler implements Handler, CanRegisterCapabilities
         TextDocumentIdentifier $textDocument,
         Position $position
     ): Promise {
-        return \Amp\call(function () use ($textDocument, $position) {
+        return call(function () use ($textDocument, $position) {
             $textDocument = $this->workspace->get($textDocument->uri);
 
             $languageId = $textDocument->languageId ?: 'php';

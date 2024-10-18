@@ -23,7 +23,7 @@ class TraitImportsTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<string,array{string,Closure(Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TraitImport\TraitImports): void}>
+     * @return Generator<string, array{string, Closure(TraitImports):void}>
      */
     public function provideTraitImports(): Generator
     {

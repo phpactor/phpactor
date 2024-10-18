@@ -23,7 +23,7 @@ class ReflectionArgumentTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<string,array{string,array,Closure(Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionArgumentCollection): void}>
+     * @return Generator<string, array{string, array, Closure(ReflectionArgumentCollection):void}>
      */
     public static function provideReflectionMethod():Generator
     {

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\LanguageServerProtocol\Location;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -40,7 +41,7 @@ class GotoDefinitionHandler implements Handler, CanRegisterCapabilities
      */
     public function definition(DefinitionParams $params): Promise
     {
-        return \Amp\call(function () use ($params) {
+        return call(function () use ($params) {
             $textDocument = $this->workspace->get($params->textDocument->uri);
 
             $offset = PositionConverter::positionToByteOffset($params->position, $textDocument->text);

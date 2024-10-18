@@ -1276,6 +1276,19 @@ If applicable diagnostics should be "outsourced" to a different process
 **Default**: ``true``
 
 
+.. _param_language_server.diagnostic_exclude_paths:
+
+
+``language_server.diagnostic_exclude_paths``
+""""""""""""""""""""""""""""""""""""""""""""
+
+
+List of paths to exclude from diagnostics, e.g. `vendor/**/*`
+
+
+**Default**: ``[]``
+
+
 .. _param_language_server.file_events:
 
 

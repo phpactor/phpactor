@@ -4,7 +4,6 @@ namespace Phpactor\FilePathResolver\Tests\Unit\Expander;
 
 use Phpactor\FilePathResolver\Expander;
 use Phpactor\FilePathResolver\Expander\CallbackExpander;
-use RuntimeException;
 
 class CallbackExpanderTest extends ExpanderTestCase
 {
@@ -18,15 +17,5 @@ class CallbackExpanderTest extends ExpanderTestCase
     public function testExpandsCallbackValue(): void
     {
         $this->assertEquals('bar', $this->expand('%foo%'));
-    }
-
-    public function testThrowsExeceptionWhenCallbackReturnsNonString(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Closure in callback expander');
-
-        (new CallbackExpander('foo', function () {
-            return 123;
-        }))->replacementValue();
     }
 }

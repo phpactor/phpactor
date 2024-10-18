@@ -1,0 +1,11 @@
+/**
+ * @phpstan-assert =Foobar $foobar
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  AssertTag: = @phpstan-assert=
+   ClassNode: = Foobar
+   VariableNode: = $foobar
+ */

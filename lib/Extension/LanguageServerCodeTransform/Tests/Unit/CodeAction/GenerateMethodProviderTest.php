@@ -58,7 +58,7 @@ class GenerateMethodProviderTest extends TestCase
     }
 
     /**
-     * @return Generator<string,array{array,array}|array{array<int,Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod>,array<int,Phpactor\LanguageServerProtocol\Diagnostic>}>
+     * @return Generator<string, (array{array, array} | array{array<int, Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod>, array<int, Diagnostic>})>
      */
     public function provideDiagnosticsTestData(): Generator
     {
@@ -101,7 +101,7 @@ class GenerateMethodProviderTest extends TestCase
     }
 
     /**
-     * @return Generator<string,array{array,array}|array{array<int,Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod>,array<int,Phpactor\LanguageServerProtocol\CodeAction>}>
+     * @return Generator<string, (array{array, array} | array{array<int, Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod>, array<int, CodeAction>})>
      */
     public function provideActionsTestData(): Generator
     {

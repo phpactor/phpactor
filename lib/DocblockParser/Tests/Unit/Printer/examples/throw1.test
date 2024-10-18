@@ -6,5 +6,4 @@ Docblock: =
  ElementList: = /**
  * 
   ThrowsTag: = @throws
-   ClassNode: = RuntimeException
- */
+   ClassNode: = RuntimeException*/

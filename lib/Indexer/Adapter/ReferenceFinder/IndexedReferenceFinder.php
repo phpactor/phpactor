@@ -129,7 +129,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             return;
         }
 
-        foreach($this->query->class()->implementing($fqn) as $implementation) {
+        foreach ($this->query->class()->implementing($fqn) as $implementation) {
             yield $implementation->__toString();
         }
     }

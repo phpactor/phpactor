@@ -23,7 +23,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
         private Reflector $reflector,
         private BuilderFactory $factory,
         private Updater $updater,
-        Parser $parser = null
+        ?Parser $parser = null
     ) {
         $this->parser = $parser ?: new Parser();
     }

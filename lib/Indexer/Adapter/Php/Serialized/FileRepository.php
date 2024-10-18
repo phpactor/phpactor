@@ -103,7 +103,7 @@ class FileRepository
         return $deserialized;
     }
 
-    public function putTimestamp(int $time = null): void
+    public function putTimestamp(?int $time = null): void
     {
         $time = $time ?? time();
         $this->ensureDirectoryExists(dirname($this->timestampPath()));

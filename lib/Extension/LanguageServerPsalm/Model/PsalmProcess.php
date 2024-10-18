@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPsalm\Model;
 
+use function Amp\call;
 use Amp\Process\Process;
 use Amp\Process\ProcessException;
 use Amp\Promise;
@@ -19,7 +20,7 @@ class PsalmProcess
         private string $cwd,
         private PsalmConfig $config,
         private LoggerInterface $logger,
-        DiagnosticsParser $parser = null,
+        ?DiagnosticsParser $parser = null,
         private int $timeoutSeconds = 10,
     ) {
         $this->parser = $parser ?: new DiagnosticsParser();
@@ -30,7 +31,7 @@ class PsalmProcess
      */
     public function analyse(string $filename): Promise
     {
-        return \Amp\call(function () use ($filename) {
+        return call(function () use ($filename) {
             $command = [
                 PHP_BINARY,
                 $this->config->psalmBin(),

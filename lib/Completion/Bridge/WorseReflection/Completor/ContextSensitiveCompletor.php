@@ -85,25 +85,32 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
         $argumentNb = 0;
         $memberAccessOrObjectCreation = $node;
         $node = NodeUtil::firstDescendantNodeBeforeOffset($node, $offset->toInt());
+
         if ($node instanceof QualifiedName) {
             $memberAccessOrObjectCreation = null;
-            $argumentExpression = $node->getFirstAncestor(ArgumentExpression::class);
+            $argumentExpression = $node->parent?->parent;
+
             if ($argumentExpression instanceof ArgumentExpression) {
                 $list = $argumentExpression->getFirstAncestor(ArgumentExpressionList::class);
+
                 if (!$list instanceof ArgumentExpressionList) {
                     return null;
                 }
                 $argumentNb = NodeUtil::argumentOffset($list, $argumentExpression) ?? 0;
                 $memberAccessOrObjectCreation = $list->parent;
             }
-        }
-        $argumentList = $node->getFirstAncestor(ArgumentExpressionList::class);
-        if ($argumentList instanceof ArgumentExpressionList) {
-            $argumentNb = max(0, count(iterator_to_array($argumentList->getValues())) - 1);
-            $memberAccessOrObjectCreation = $argumentList->parent;
+        } else {
+            $argumentList = $node->parent?->parent;
+            if ($argumentList instanceof ArgumentExpressionList) {
+                $argumentNb = max(0, count(iterator_to_array($argumentList->getValues())) - 1);
+                $memberAccessOrObjectCreation = $argumentList->parent;
+            }
         }
 
-        if (!$memberAccessOrObjectCreation instanceof CallExpression && !$memberAccessOrObjectCreation instanceof ObjectCreationExpression) {
+        if (
+            !$memberAccessOrObjectCreation instanceof CallExpression &&
+            !$memberAccessOrObjectCreation instanceof ObjectCreationExpression
+        ) {
             return null;
         }
 
@@ -123,7 +130,6 @@ class ContextSensitiveCompletor implements TolerantCompletor, TolerantQualifiabl
         if ($memberAccessOrObjectCreation instanceof ClassLikeContext) {
             return $this->typeFromClassInstantiation($memberAccessOrObjectCreation, $argumentNb);
         }
-
 
         return null;
     }

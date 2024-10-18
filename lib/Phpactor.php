@@ -81,7 +81,7 @@ use function sprintf;
 
 class Phpactor
 {
-    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir, string $phpactorBin = null): Container
+    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir, ?string $phpactorBin = null): Container
     {
         $config = [];
 

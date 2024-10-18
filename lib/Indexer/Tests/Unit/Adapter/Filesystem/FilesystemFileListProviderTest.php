@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Adapter\Filesystem;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Filesystem\Adapter\Simple\SimpleFilesystem;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Indexer\Adapter\Filesystem\FilesystemFileListProvider;
@@ -12,7 +13,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class FilesystemFileListProviderTest extends IntegrationTestCase
 {
-    use \Prophecy\PhpUnit\ProphecyTrait;
+    use ProphecyTrait;
 
     private FilesystemFileListProvider $provider;
 

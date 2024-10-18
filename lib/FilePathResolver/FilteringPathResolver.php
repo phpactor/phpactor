@@ -5,7 +5,7 @@ namespace Phpactor\FilePathResolver;
 class FilteringPathResolver implements PathResolver
 {
     /**
-     * @param \Phpactor\FilePathResolver\Filter[] $filters
+     * @param Filter[] $filters
      */
     public function __construct(private array $filters = [])
     {
