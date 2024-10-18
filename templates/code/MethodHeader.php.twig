@@ -5,10 +5,9 @@
 {% endfor %}
  */
 {% endif %}
-{% if prototype.isAbstract %}abstract {%endif %}{{ prototype.visibility }} {% if prototype.isStatic %}static {%endif %}function {{ prototype.name}}({% spaceless %}
-{% for parameter in prototype.parameters %}
+{% if prototype.isAbstract %}abstract {%endif %}{{ prototype.visibility }} {% if prototype.isStatic %}static {%endif %}function {{ prototype.name}}({% for parameter in prototype.parameters %}
 {% if parameter.type.notNone %}{{ parameter.type }} {% endif %}
 {% if true %}${{ parameter.name }}{% endif %}
 {% if parameter.defaultValue.notNone %} = {{ parameter.defaultValue.export|raw }}{% endif %}
 {% if not loop.last %}, {% endif %}
-{% endfor %}{% endspaceless %}){% if prototype.returnType.notNone %}: {{ prototype.returnType }}{% endif %}
+{% endfor %}){% if prototype.returnType.notNone %}: {{ prototype.returnType }}{% endif %}

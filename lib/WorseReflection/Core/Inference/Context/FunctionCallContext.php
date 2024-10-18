@@ -8,8 +8,9 @@ use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
-final class FunctionCallContext extends NodeContext
+final class FunctionCallContext extends NodeContext implements CallContext
 {
     public function __construct(
         Symbol $symbol,
@@ -33,7 +34,7 @@ final class FunctionCallContext extends NodeContext
         return $this->function;
     }
 
-    public function arguments(): FunctionArguments
+    public function arguments(): ?FunctionArguments
     {
         return $this->arguments;
     }
@@ -50,5 +51,10 @@ final class FunctionCallContext extends NodeContext
             $function,
             $arguments,
         );
+    }
+
+    public function callable(): ReflectionMethod|ReflectionFunction
+    {
+        return $this->function;
     }
 }

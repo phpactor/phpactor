@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Adapter\Php\Serialized;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Indexer\Adapter\Php\Serialized\FileRepository;
 use Phpactor\Indexer\Model\Exception\CorruptedRecord;
 use Phpactor\Indexer\Model\RecordSerializer;
@@ -13,7 +14,7 @@ use Psr\Log\LoggerInterface;
 
 class FileRepositoryTest extends IntegrationTestCase
 {
-    use \Prophecy\PhpUnit\ProphecyTrait;
+    use ProphecyTrait;
 
     public function testResetRemovesTheIndex(): void
     {

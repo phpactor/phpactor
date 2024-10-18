@@ -133,7 +133,7 @@ final class DefaultResolverFactory
             Variable::class => new VariableResolver(),
             MemberAccessExpression::class => new MemberAccessExpressionResolver($this->nodeContextFromMemberAccess),
             ScopedPropertyAccessExpression::class => new ScopedPropertyAccessResolver($this->nodeContextFromMemberAccess),
-            CallExpression::class => new CallExpressionResolver(),
+            CallExpression::class => new CallExpressionResolver($this->genericResolver),
             ParenthesizedExpression::class => new ParenthesizedExpressionResolver(),
             BinaryExpression::class => new BinaryExpressionResolver(),
             UnaryOpExpression::class => new UnaryOpExpressionResolver(),

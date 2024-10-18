@@ -17,13 +17,13 @@ class SourceCode extends Prototype
     private Enums $enums;
 
     public function __construct(
-        QualifiedName $namespace = null,
-        UseStatements $useStatements = null,
-        Classes $classes = null,
-        Interfaces $interfaces = null,
-        Traits $traits = null,
-        Enums $enums = null,
-        UpdatePolicy $updatePolicy = null
+        ?QualifiedName $namespace = null,
+        ?UseStatements $useStatements = null,
+        ?Classes $classes = null,
+        ?Interfaces $interfaces = null,
+        ?Traits $traits = null,
+        ?Enums $enums = null,
+        ?UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($updatePolicy);
         $this->namespace = $namespace ?: NamespaceName::fromString('');

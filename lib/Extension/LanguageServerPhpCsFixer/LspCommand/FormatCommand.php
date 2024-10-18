@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand;
 
+use function Amp\call;
 use Amp\Promise;
 use Phpactor\Diff\DiffToTextEditsConverter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
@@ -30,7 +31,7 @@ class FormatCommand implements Command
      */
     public function __invoke(string $uri, ?array $rules = null): Promise
     {
-        return \Amp\call(function () use ($uri, $rules) {
+        return call(function () use ($uri, $rules) {
             $path = TextDocumentUri::fromString($uri)->path();
             $textDocument = $this->workspace->get($uri);
 

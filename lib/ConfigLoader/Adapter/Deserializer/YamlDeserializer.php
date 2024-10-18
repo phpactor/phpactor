@@ -11,7 +11,7 @@ class YamlDeserializer implements Deserializer
 {
     private Parser $parser;
 
-    public function __construct(Parser $parser = null)
+    public function __construct(?Parser $parser = null)
     {
         $this->parser = $parser ?: new Parser();
     }

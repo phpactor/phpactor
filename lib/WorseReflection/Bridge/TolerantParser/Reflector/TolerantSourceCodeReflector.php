@@ -16,7 +16,6 @@ use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\TextDocument\TextDocument;
@@ -54,7 +53,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     public function reflectClassesIn(
         TextDocument $sourceCode,
         array $visited = []
-    ): ReflectionClassLikeCollection {
+    ): TolerantReflectionClassCollection {
         $node = $this->parseSourceCode($sourceCode);
         return $this->reflectClassesFromNode($sourceCode, $node, $visited);
     }

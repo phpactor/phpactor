@@ -9,7 +9,7 @@ use RuntimeException;
 use Traversable;
 
 /**
- * @template T of object
+ * @template-covariant T of object
  * @implements IteratorAggregate<array-key,T>
  */
 class NavigatorElementCollection implements IteratorAggregate

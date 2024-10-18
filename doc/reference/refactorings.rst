@@ -833,6 +833,10 @@ Overide a method from a parent class.
 
 .. tabs::
 
+   .. tab:: LSP
+
+      Invoke code action on file with classes with overridable methods
+
    .. tab:: VIM Context Menu
 
        *Class context menu > Override method*.

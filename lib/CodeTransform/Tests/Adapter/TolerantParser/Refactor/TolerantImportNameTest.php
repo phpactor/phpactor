@@ -66,6 +66,11 @@ class TolerantImportNameTest extends AbstractTolerantImportNameCase
             'importClass10.test',
             'Barfoo\Foobar',
         ];
+
+        yield 'with declare only' => [
+            'importClass_with_strict_types.test',
+            'Barfoo\Foobar',
+        ];
     }
 
     public function provideImportFunction(): Generator

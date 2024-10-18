@@ -19,7 +19,7 @@ interface ReflectionClass extends ReflectionClassLike
 
     public function ancestors(): ReflectionClassCollection;
 
-    public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection;
+    public function properties(?ReflectionClassLike $contextClass = null): ReflectionPropertyCollection;
 
     /**
      * @return ReflectionInterfaceCollection<ReflectionInterface>

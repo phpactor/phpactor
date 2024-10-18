@@ -299,5 +299,24 @@ class ContextSensitiveCompletorTest extends TestCase
                 'Object1',
             ],
         ];
+
+        yield 'within closure' => [
+            [
+                'Object1',
+                'Object2',
+            ],
+            <<<'EOT'
+                <?php
+                class Foo { public function __construct(Closure $foo){}}
+
+                $f = new Foo(function () {
+                    return new Obj<>
+                });
+                EOT,
+            [
+                'Object1',
+                'Object2',
+            ],
+        ];
     }
 }

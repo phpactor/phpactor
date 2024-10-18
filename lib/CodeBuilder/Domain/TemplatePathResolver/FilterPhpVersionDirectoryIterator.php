@@ -6,6 +6,10 @@ use Iterator;
 use FilterIterator;
 use RuntimeException;
 use SplFileInfo;
+use function get_debug_type;
+use function preg_match;
+use function sprintf;
+use function version_compare;
 
 class FilterPhpVersionDirectoryIterator extends FilterIterator
 {
@@ -25,7 +29,7 @@ class FilterPhpVersionDirectoryIterator extends FilterIterator
             throw new RuntimeException(
                 sprintf(
                     'Expected instance of "\SplFileInfo", got "%s".',
-                    \is_object($file) ? \get_class($file) : \gettype($file)
+                    get_debug_type($file)
                 )
             );
         }

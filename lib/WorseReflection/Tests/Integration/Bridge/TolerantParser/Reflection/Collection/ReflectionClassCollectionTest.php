@@ -20,7 +20,7 @@ class ReflectionClassCollectionTest extends IntegrationTestCase
     }
 
     /**
-     * @return Generator<string,array{string,Closure(Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection): void}>
+     * @return Generator<string, array{string, Closure(ReflectionClassLikeCollection):void}>
      */
     public function provideCollection(): Generator
     {

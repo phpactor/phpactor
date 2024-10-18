@@ -1,0 +1,12 @@
+<?php
+
+class Example
+{
+    public const string FOOBAR = 'bar';
+    public const int BARFOO = 123;
+}
+
+wrAssertType('"bar"', Example::FOOBAR);
+
+
+

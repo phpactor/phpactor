@@ -5,7 +5,7 @@ namespace Phpactor\Extension\Navigation\Navigator;
 class ChainNavigator implements Navigator
 {
     /**
-     * @param \Phpactor\Extension\Navigation\Navigator\Navigator[] $navigators
+     * @param Navigator[] $navigators
      */
     public function __construct(private array $navigators)
     {

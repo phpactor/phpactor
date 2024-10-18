@@ -1,0 +1,16 @@
+/**
+ * @param Foobar<covariant Barfoo, contravariant Barfoo> $foobar
+ */
+---
+Docblock: = 
+ ElementList: = /**
+ * 
+  ParamTag: = @param
+   GenericNode: = 
+    ClassNode: = Foobar<
+    TypeList: = covariant
+     ClassNode: = Barfoo,contravariant
+     ClassNode: = Barfoo>
+   VariableNode: = $foobar
+   TextNode: = 
+ */

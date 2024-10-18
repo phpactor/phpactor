@@ -10,7 +10,7 @@ use Traversable;
 
 /**
  * @template T
- * @implements \IteratorAggregate<string,T>
+ * @implements IteratorAggregate<string, T>
  */
 abstract class AbstractCollection implements IteratorAggregate, Countable
 {

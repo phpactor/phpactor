@@ -116,6 +116,27 @@ class TolerantDocumentSymbolProviderTest extends TestCase
             ]
         ];
 
+        yield 'class property with value' => [
+            '<?php class Foo { private $bar = "Hallo"; }',
+            [
+                DocumentSymbol::fromArray([
+                    'name' => 'Foo',
+                    'kind' => SymbolKind::CLASS_,
+                    'range' => $this->dummyRange(),
+                    'selectionRange' => $this->dummyRange(),
+                    'children' => [
+                        DocumentSymbol::fromArray([
+                            'name' => 'bar',
+                            'kind' => SymbolKind::PROPERTY,
+                            'range' => $this->dummyRange(),
+                            'selectionRange' => $this->dummyRange(),
+                            'children' => [],
+                        ]),
+                    ]
+                ])
+            ]
+        ];
+
         yield 'class property' => [
             '<?php class Foo { private $bar; }',
             [

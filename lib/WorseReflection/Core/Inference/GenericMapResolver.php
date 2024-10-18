@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference;
 
 use Phpactor\WorseReflection\Core\ClassName;
+use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
@@ -30,7 +31,11 @@ class GenericMapResolver
             return null;
         }
 
-        $topReflection = $this->reflector->reflectClassLike($topClass->name());
+        try {
+            $topReflection = $this->reflector->reflectClassLike($topClass->name());
+        } catch (SourceNotFound) {
+            return null;
+        }
 
         $templateMap = $topReflection->templateMap();
         $templateMap = $templateMap->mapArguments($arguments);
@@ -72,6 +77,7 @@ class GenericMapResolver
     {
         foreach ($parameters as $parameter) {
             $parameterType = $parameter->inferredType();
+
 
             if ($parameterType instanceof ClassStringType && $parameterType->className()) {
                 $this->mapClassString($parameterType, $templateMap, $arguments, $parameter);

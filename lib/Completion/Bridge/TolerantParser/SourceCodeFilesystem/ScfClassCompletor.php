@@ -78,7 +78,7 @@ class ScfClassCompletor implements TolerantCompletor, TolerantQualifiable
     /**
      * @param array<int,ResolvedName[]> $imports
      */
-    private function getClassNameForImport(ClassName $candidate, array $imports, string $currentNamespace = null): ?string
+    private function getClassNameForImport(ClassName $candidate, array $imports, ?string $currentNamespace = null): ?string
     {
         $candidateNamespace = $candidate->namespace();
 

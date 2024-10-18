@@ -44,4 +44,9 @@ class Indexer
     {
         $this->index->reset();
     }
+
+    public function flush(): void
+    {
+        $this->index->done();
+    }
 }
