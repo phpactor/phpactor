@@ -18,6 +18,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection as TolerantReflectionClassCollection;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionOffset as TolerantReflectionOffset;
@@ -161,7 +162,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     /**
      * @param array<string,bool> $visited
      */
-    private function reflectClassesFromNode(TextDocument $source, Node $node, array $visited): ReflectionClassLikeCollection
+    private function reflectClassesFromNode(TextDocument $source, Node $node, array $visited): TolerantReflectionClassCollection
     {
         $items = [];
 
@@ -199,7 +200,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
             }
         }
 
-        return ReflectionClassLikeCollection::fromReflections($items);
+        return TolerantReflectionClassCollection::fromReflections($items);
     }
 
     private function parseSourceCode(TextDocument $sourceCode): SourceFileNode
