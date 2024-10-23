@@ -45,7 +45,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             function (Container $container) {
                 return new PhpstanLinter(
                     $container->get(PhpstanProcess::class),
-                    $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value() ?  $container->parameter(self::PARAM_TMP_FILE_DISABLED)->bool() : null,
+                    $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value() ?  $container->parameter(self::PARAM_TMP_FILE_DISABLED)->bool() : false,
                 );
             }
         );

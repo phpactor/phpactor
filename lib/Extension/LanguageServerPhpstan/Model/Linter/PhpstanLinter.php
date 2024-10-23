@@ -17,7 +17,7 @@ class PhpstanLinter implements Linter
 {
     public function __construct(
         private PhpstanProcess $process,
-        private ?bool $disableTmpFile = null,
+        private bool $disableTmpFile = false,
     ) {
     }
 
