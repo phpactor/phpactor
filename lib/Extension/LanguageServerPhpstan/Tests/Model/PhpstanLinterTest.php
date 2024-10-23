@@ -16,7 +16,6 @@ class PhpstanLinterTest extends TestCase
         $phpstanProcess = $this->createMock(PhpstanProcess::class);
         $phpstanProcess->expects($this->once())
             ->method('analyse')
-            // ->with($this->stringContains(sys_get_temp_dir() . '/phpstanls'));
             ->with($this->callback(function ($analyzedFilePath) use ($originalFilePath, $expectedFileContent) {
 
                 // Infer that a temporary file was used by confirming that the PHPStan
