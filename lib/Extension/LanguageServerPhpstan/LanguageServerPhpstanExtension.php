@@ -24,6 +24,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
     public const PARAM_CONFIG = 'language_server_phpstan.config';
     public const PARAM_MEM_LIMIT = 'language_server_phpstan.mem_limit';
     public const PARAM_ENABLED = 'language_server_phpstan.enabled';
+    public const PARAM_TMP_FILE_DISABLED = 'language_server_phpstan.tmp_file_disabled';
 
     public function load(ContainerBuilder $container): void
     {
@@ -42,7 +43,10 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $container->register(
             Linter::class,
             function (Container $container) {
-                return new PhpstanLinter($container->get(PhpstanProcess::class));
+                return new PhpstanLinter(
+                    $container->get(PhpstanProcess::class),
+                    $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value() ?  $container->parameter(self::PARAM_TMP_FILE_DISABLED)->bool() : null,
+                );
             }
         );
 
@@ -85,6 +89,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             self::PARAM_LEVEL => null,
             self::PARAM_CONFIG => null,
             self::PARAM_MEM_LIMIT => null,
+            self::PARAM_TMP_FILE_DISABLED => false,
             ]
         );
         $schema->setDescriptions(
@@ -93,6 +98,9 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             self::PARAM_LEVEL => 'Override the PHPStan level',
             self::PARAM_CONFIG => 'Override the PHPStan configuration file',
             self::PARAM_MEM_LIMIT => 'Override the PHPStan memory limit',
+            self::PARAM_TMP_FILE_DISABLED => 'Disable the use of temporary files when.'
+                . ' This prevents as-you-type diagnostics, but ensures paths in phpstan config are respected.'
+                . ' See https://github.com/phpactor/phpactor/issues/2763',
             ]
         );
     }
