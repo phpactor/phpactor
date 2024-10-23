@@ -21,6 +21,11 @@ class PhpstanLinter implements Linter
     ) {
     }
 
+    public function isTmpFileDisabled(): bool
+    {
+        return $this->disableTmpFile;
+    }
+
     public function lint(string $url, ?string $text): Promise
     {
         return call(function () use ($url, $text) {
