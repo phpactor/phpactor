@@ -23,6 +23,7 @@ Improvements:
     #2695 @przepompownia
   - Show prose associated with `@throws` tag #2694 @mamazu
   - Support parsing generic variance e.g. `covariant` #2664 @dantleech
+  - Support opt-out of using temporary files with phpstan #2764 @tsterker
 
 Features:
 
