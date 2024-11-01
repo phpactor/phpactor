@@ -185,7 +185,7 @@ class PHPStanDocblockParserFactoryTest extends IntegrationTestCase
 
         yield 'parenthesized' => [
             '/** @return null|(callable(int):string)|string|int */',
-            'null|(callable(int): string)|string|int',
+            'null|callable(int): string|string|int',
         ];
 
         yield 'multiline array shape' => [
