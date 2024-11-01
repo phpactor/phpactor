@@ -6,6 +6,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueParameterNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Deprecation;
@@ -55,7 +56,9 @@ class PHPStanParsedDocblock implements DocBlock
         foreach ($this->node->getTags() as $tag) {
             $type = match (true) {
                 $tag->value instanceof MethodTagValueNode => $tag->value->returnType,
+                $tag->value instanceof TemplateTagValueNode => $tag->value->bound,
                 property_exists($tag->value, 'type') => $tag->value->type,
+                default => null
             };
             $types[] = $this->typeConverter->convert($type);
         }
