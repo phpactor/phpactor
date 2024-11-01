@@ -2,11 +2,10 @@
 
 namespace Phpactor\WorseReflection\Bridge\PHPStan\DocblockParser;
 
+use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueParameterNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MixinTagValueNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use Phpactor\WorseReflection\Core\DefaultValue;
 use Phpactor\WorseReflection\Core\Deprecation;
@@ -42,16 +41,22 @@ class PHPStanParsedDocblock implements DocBlock
     {
     }
 
+    public function rawNode(): PhpDocNode
+    {
+        return $this->node;
+    }
+
     /**
      * @return Types<Type>
      */
     public function types(): Types
     {
         $types = [];
-        foreach ($this->node->getTags() as $type) {
-            if (!$type instanceof TypeNode) {
-                continue;
-            }
+        foreach ($this->node->getTags() as $tag) {
+            $type = match (true) {
+                $tag->value instanceof MethodTagValueNode => $tag->value->returnType,
+                property_exists($tag->value, 'type') => $tag->value->type,
+            };
             $types[] = $this->typeConverter->convert($type);
         }
 
@@ -80,7 +85,7 @@ class PHPStanParsedDocblock implements DocBlock
                 if ($methodTag->methodName !== $methodName) {
                     continue;
                 }
-                $this->convertType($methodTag->returnType);
+                return $this->convertType($methodTag->returnType);
             }
         }
 
@@ -257,8 +262,10 @@ class PHPStanParsedDocblock implements DocBlock
     public function templateMap(): TemplateMap
     {
         $map = [];
-        foreach ($this->node->getTemplateTagValues() as $templateTag) {
-            $map[$templateTag->name] = $this->convertType($templateTag->bound);
+        foreach (['@template',  '@phpstan-template', '@psalm-template'] as $tagName) {
+            foreach ($this->node->getTemplateTagValues($tagName) as $templateTag) {
+                $map[$templateTag->name] = $this->convertType($templateTag->bound);
+            }
         }
 
         return new TemplateMap($map);
@@ -299,15 +306,17 @@ class PHPStanParsedDocblock implements DocBlock
     public function assertions(): array
     {
         $assertions = [];
-        foreach ($this->node->getAssertTagValues() as $assert) {
-            if (!$assert->parameter) {
-                continue;
+        foreach (['@phpstan-assert', '@psalm-assert'] as $tagName) {
+            foreach ($this->node->getAssertTagValues($tagName) as $assert) {
+                if (!$assert->parameter) {
+                    continue;
+                }
+                $assertions[] = new DocBlockTypeAssertion(
+                    ltrim($assert->parameter, '$'),
+                    $this->convertType($assert->type),
+                    $assert->isNegated === true
+                );
             }
-            $assertions[] = new DocBlockTypeAssertion(
-                ltrim($assert->parameter, '$'),
-                $this->convertType($assert->type),
-                $assert->isNegated === true
-            );
         }
         return $assertions;
     }
