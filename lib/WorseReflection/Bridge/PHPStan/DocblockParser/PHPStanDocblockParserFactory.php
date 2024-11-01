@@ -16,24 +16,6 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
 
 class PHPStanDocblockParserFactory implements DocBlockFactory
 {
-    private const SUPPORTED_TAGS = [
-        'assert',
-        'deprecated',
-        'extends',
-        'implements',
-        'method',
-        'mixin',
-        'param',
-        'property',
-        'return',
-        'template',
-        'template-covariant',
-        'template-extends',
-        'throws',
-        'type',
-        'var',
-    ];
-
     private PhpDocParser $parser;
 
     public function __construct(
@@ -47,21 +29,9 @@ class PHPStanDocblockParserFactory implements DocBlockFactory
 
     public function create(string $docblock, ReflectionScope $scope): DocBlock
     {
-        if (trim($docblock) === '') {
-            return new PlainDocblock();
-        }
-
-        // if no supported tags in the docblock, do not parse it
-        if (0 === preg_match(
-            sprintf('{@((psalm|phpstan|phan)-)?(%s)}', implode('|', self::SUPPORTED_TAGS)),
-            $docblock,
-            $matches
-        )) {
-            return new PlainDocblock($docblock);
-        }
-
+        $docblock = $this->sanitizeDocblock($docblock);
         try {
-            $node = $this->parser->parse(new TokenIterator($this->lexer->tokenize(trim($docblock))));
+            $node = $this->parser->parse(new TokenIterator($this->lexer->tokenize($docblock)));
         } catch (ParserException) {
             return new PlainDocblock($docblock);
         }
@@ -71,5 +41,15 @@ class PHPStanDocblockParserFactory implements DocBlockFactory
             new PHPStanTypeConverter($this->reflector, $scope),
             $docblock
         );
+    }
+
+    /**
+     * phpstan/docblock-parser is pretty strict about the doc it parses -- any short comments or
+     * excessive new lines lead to parser exception, so try to get rid of them before parsing.
+     */
+    private function sanitizeDocblock(string $docblock): string
+    {
+        $docblock = preg_replace('~\h*\/\/.*~', '', $docblock) ?? $docblock;
+        return trim($docblock);
     }
 }
