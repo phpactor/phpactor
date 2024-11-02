@@ -2,17 +2,18 @@
 
 namespace Phpactor\WorseReflection\Bridge\PHPStan\DocblockParser;
 
-use PHPStan\PhpDocParser\Parser\ParserException;
-use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
-use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
-use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
-use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
-use Phpactor\WorseReflection\Reflector;
+use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
+use PHPStan\PhpDocParser\Parser\ParserException;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
+use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionScope;
+use Phpactor\WorseReflection\Reflector;
 
 class PHPStanDocblockParserFactory implements DocBlockFactory
 {
@@ -30,8 +31,19 @@ class PHPStanDocblockParserFactory implements DocBlockFactory
     public function create(string $docblock, ReflectionScope $scope): DocBlock
     {
         $docblock = $this->sanitizeDocblock($docblock);
+        $node = new PhpDocNode([]);
         try {
-            $node = $this->parser->parse(new TokenIterator($this->lexer->tokenize($docblock)));
+            $tokens = $this->lexer->tokenize($docblock);
+            $docblockBeginnings = array_filter(
+                $tokens,
+                /** @param array{string, int, int} $token */
+                static fn (array $token) => $token[1] === Lexer::TOKEN_OPEN_PHPDOC
+            );
+            // _force_ phpstan to iterate all docblocks found in current fragment
+            foreach ($docblockBeginnings as $i => $docblockBeginning) {
+                $iterator = new TokenIterator($tokens, $i);
+                array_push($node->children, ...$this->parser->parse($iterator)->children);
+            }
         } catch (ParserException) {
             return new PlainDocblock($docblock);
         }
