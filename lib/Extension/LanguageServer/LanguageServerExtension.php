@@ -10,6 +10,7 @@ use Phpactor\Container\Extension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
+use Phpactor\Extension\LanguageServer\CodeAction\TolerantCodeActionProvider;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\PathExcludingDiagnosticsProvider;
@@ -454,6 +455,9 @@ class LanguageServerExtension implements Extension
 
         $container->register(CodeActionHandler::class, function (Container $container) {
             $services = $this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER, CodeActionProvider::class);
+            $services = array_map(function (CodeActionProvider $provider) use ($container) {
+                return new TolerantCodeActionProvider($provider, $container->get(ClientApi::class));
+            }, $services);
             if ($container->parameter(self::PARAM_PROFILE)->bool()) {
                 $services = array_map(
                     fn (CodeActionProvider $provider) => new ProfilingCodeActionProvider(
