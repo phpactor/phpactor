@@ -6,6 +6,8 @@ Changelog
 Improvements:
 
   - Tolerate code action provider failures #2761 @dantleech
+  - Limit number of methods that are documented on classes to improve
+    completion/resolve performance for large classes #2768 @dantleech
 
 ## 2024-11-05
 
