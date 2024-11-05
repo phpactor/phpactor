@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## master
+
+Improvements:
+
+  - Tolerate code action provider failures #2761 @dantleech
+
 ## 2024-11-05
 
 Bug fixes:
