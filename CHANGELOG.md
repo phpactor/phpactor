@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## master
+## 2024-11-05
 
 Bug fixes:
 
