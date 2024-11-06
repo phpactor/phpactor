@@ -138,7 +138,7 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
             assertion: function (Diagnostics $diagnostics): void {
                 Assert::assertCount(1, $diagnostics);
                 Assert::assertEquals(
-                    'Generic tag `@extends NeedGeneric` should be compatible with `@extends NeedGeneric<int>`',
+                    'Missing generic tag `@extends NeedGeneric<int>`',
                     $diagnostics->at(0)->message()
                 );
             }
