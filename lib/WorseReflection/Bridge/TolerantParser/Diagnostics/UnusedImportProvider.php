@@ -10,11 +10,7 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Token;
 use PHPUnit\Framework\Assert;
-use Phpactor\DocblockParser\Ast\Docblock as AstDocblock;
-use Phpactor\DocblockParser\Ast\Type\CallableNode;
-use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\ParsedDocblock;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
@@ -46,11 +42,7 @@ class UnusedImportProvider implements DiagnosticProvider
             new ReflectionScope($resolver->reflector(), $node)
         );
 
-        /* if ($docblock instanceof ParsedDocblock) { */
-        /*         $this->oldExtractDocblockNames($docblock->rawNode(), $resolver, $node); */
-        /* } else { */
         $this->extractDocblockNames($docblock, $resolver, $node);
-        /* } */
 
         if ($node instanceof QualifiedName && !$node->parent instanceof NamespaceUseClause && !$node->parent instanceof NamespaceDefinition && !$node->parent instanceof NamespaceUseGroupClause) {
             $prefix = $node->getNameParts()[0];
@@ -122,7 +114,6 @@ class UnusedImportProvider implements DiagnosticProvider
                     continue;
                 }
 
-                // @todo I don't like this.
                 if (str_starts_with($usedName, $importedIdentifierName . '\\')) {
                     continue 2;
                 }
@@ -476,21 +467,6 @@ class UnusedImportProvider implements DiagnosticProvider
     public function name(): string
     {
         return 'unused_import';
-    }
-
-    private function oldExtractDocblockNames(AstDocblock $docblock, NodeContextResolver $resolver, Node $node): void
-    {
-        $prefix = sprintf('%s:', $this->getNamespaceName($node));
-
-        foreach ($docblock->descendantElements(ClassNode::class) as $type) {
-            $this->usedPrefixes[$prefix . $type->toString()] = true;
-        }
-        foreach ($docblock->descendantElements(CallableNode::class) as $type) {
-            assert($type instanceof CallableNode);
-            if ($type->name->toString() === 'Closure') {
-                $this->usedPrefixes[$prefix . 'Closure'] = true;
-            }
-        }
     }
 
     private function extractDocblockNames(DocBlock $docblock, NodeContextResolver $resolver, Node $node): void
