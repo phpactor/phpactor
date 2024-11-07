@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-php -dopcache.validate_timestamps=Off -dopcache.file_cache_only=On -dopcache.enable_cli=On -dopcache.file_cache=/home/daniel/www/phpactor/phpactor/opcache /home/daniel/www/phpactor/phpactor/bin/phpactor $@
