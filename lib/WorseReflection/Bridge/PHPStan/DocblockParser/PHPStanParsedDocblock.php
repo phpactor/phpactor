@@ -198,8 +198,7 @@ class PHPStanParsedDocblock implements DocBlock
     public function properties(ReflectionClassLike $declaringClass): CoreReflectionPropertyCollection
     {
         $properties = [];
-        //todo handle @property-read/@property-write
-        foreach (['@property', '@phpstan-property'] as $tagName) {
+        foreach (['@property', '@phpstan-property', '@property-read', '@property-write'] as $tagName) {
             foreach ($this->node->getPropertyTagValues($tagName) as $propertyTag) {
                 $type = $this->convertType($propertyTag->type);
                 $property = new VirtualReflectionProperty(
