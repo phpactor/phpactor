@@ -63,6 +63,7 @@ class ServiceLocator
         Cache $cache,
         private CacheForDocument $cacheForDocument,
         bool $enableContextualLocation = false,
+        bool $usePhpStanDocblock = false,
     ) {
         $sourceReflector = $reflectorFactory->create($this);
 
@@ -90,10 +91,10 @@ class ServiceLocator
 
         $this->sourceLocator = $sourceLocator;
 
-        if (!true) {
-            $this->docblockFactory = new DocblockParserFactory($this->reflector);
-        } else {
+        if ($usePhpStanDocblock) {
             $this->docblockFactory = new PHPStanDocblockParserFactory($this->reflector);
+        } else {
+            $this->docblockFactory = new DocblockParserFactory($this->reflector);
         }
 
         $this->docblockFactory = new UnsupportedTagsParserFactory($this->docblockFactory);
