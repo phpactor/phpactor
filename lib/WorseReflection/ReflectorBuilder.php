@@ -254,7 +254,7 @@ final class ReflectorBuilder
         return new NullCache();
     }
 
-    private function enablePHPStanDocblockParser(): ReflectorBuilder
+    public function enablePHPStanDocblockParser(): ReflectorBuilder
     {
         $this->usePhpStanDocblock = true;
         return $this;
