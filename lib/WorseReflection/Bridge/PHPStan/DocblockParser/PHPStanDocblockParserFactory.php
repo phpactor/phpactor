@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\PHPStan\DocblockParser;
 
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocNode;
 use PHPStan\PhpDocParser\Lexer\Lexer;
+use PHPStan\PhpDocParser\ParserConfig;
 use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\ParserException;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
@@ -19,13 +20,18 @@ class PHPStanDocblockParserFactory implements DocBlockFactory
 {
     private PhpDocParser $parser;
 
+    private Lexer $lexer;
+
     public function __construct(
         private Reflector $reflector,
-        private Lexer $lexer = new Lexer(),
+        ?Lexer $lexer = null,
         ?PhpDocParser $parser = null,
     ) {
-        $parser ??= new PhpDocParser(new TypeParser(new ConstExprParser()), new ConstExprParser());
-        $this->parser = $parser;
+        $config = new ParserConfig(usedAttributes: ['lines' => true, 'indexes' => true]);
+        $this->lexer = $lexer ?? new Lexer($config);
+        $constExprParser = new ConstExprParser($config);
+        $typeParser = new TypeParser($config, $constExprParser);
+        $this->parser = $parser ?? new PhpDocParser($config, $typeParser, $constExprParser);
     }
 
     public function create(string $docblock, ReflectionScope $scope): DocBlock

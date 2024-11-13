@@ -21,7 +21,7 @@ class StringLiteralType extends StringType implements Literal, Generalizable, Co
 
     public function __toString(): string
     {
-        return sprintf('"%s"', $this->value);
+        return sprintf('"%s"', trim($this->value, '"'));
     }
 
     public function value(): string
