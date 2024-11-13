@@ -462,6 +462,25 @@ class UnusedImportProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'used by docblock with import as array',
+            source: <<<'PHP'
+                <?php
+
+                namespace Phpactor;
+
+                use Dummy;
+
+                class Test {
+                    /** @var Dummy[] */
+                    private array $foo;
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
     public function name(): string

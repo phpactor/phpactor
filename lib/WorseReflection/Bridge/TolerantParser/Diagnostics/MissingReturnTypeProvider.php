@@ -86,6 +86,24 @@ class MissingReturnTypeProvider implements DiagnosticProvider
                 );
             }
         );
+        yield new DiagnosticExample(
+            title: 'finds return type on function',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar {
+                    /** @return string */
+                    public function foo()
+                    {
+                        return 'bar';
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
