@@ -45,6 +45,7 @@ class WorseReflectionExtension implements Extension
     const TAG_FRAME_WALKER = 'worse_reflection.frame_walker';
     const TAG_MEMBER_PROVIDER = 'worse_reflection.member_provider';
     const PARAM_ENABLE_CACHE = 'worse_reflection.enable_cache';
+    const PARAM_PHPDOC_PARSER = 'worse_reflection.phpdoc_parser';
     const PARAM_STUB_DIR = 'worse_reflection.stub_dir';
     const PARAM_STUB_CACHE_DIR = 'worse_reflection.cache_dir';
     const PARAM_CACHE_LIFETIME = 'worse_reflection.cache_lifetime';
@@ -60,6 +61,7 @@ class WorseReflectionExtension implements Extension
         $schema->setDefaults([
             self::PARAM_IMPORT_GLOBALS => false,
             self::PARAM_ENABLE_CACHE => true,
+            self::PARAM_PHPDOC_PARSER => 'native',
             self::PARAM_CACHE_LIFETIME => 1.0,
             self::PARAM_ENABLE_CONTEXT_LOCATION => true,
             self::PARAM_STUB_CACHE_DIR => '%cache%/worse-reflection',
@@ -68,6 +70,7 @@ class WorseReflectionExtension implements Extension
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLE_CACHE => 'If reflection caching should be enabled',
+            self::PARAM_PHPDOC_PARSER => 'Which PHPDoc parser to use: "native" or "phpstan"',
             self::PARAM_CACHE_LIFETIME => 'If caching is enabled, limit the amount of time a cache entry can stay alive',
             self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 'Levenshtein distance to use when suggesting corrections for variable names',
             self::PARAM_ENABLE_CONTEXT_LOCATION => <<<'EOT'
@@ -109,6 +112,10 @@ class WorseReflectionExtension implements Extension
                 $builder->enableCache();
                 $builder->withCache($container->get(Cache::class));
                 $builder->withCacheForDocument($container->get(CacheForDocument::class));
+            }
+
+            if ($container->parameter(self::PARAM_PHPDOC_PARSER)->string() === 'phpstan') {
+                $builder->enablePHPStanDocblockParser();
             }
 
             foreach ($container->getServiceIdsForTag(self::TAG_SOURCE_LOCATOR) as $serviceId => $attrs) {

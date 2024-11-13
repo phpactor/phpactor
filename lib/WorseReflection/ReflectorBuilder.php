@@ -36,7 +36,7 @@ final class ReflectorBuilder
 
     private bool $enableContextualSourceLocation = false;
 
-    private bool $usePhpStanDocblock = true;
+    private bool $usePhpStanDocblock = false;
 
     private ?SourceCodeReflectorFactory $sourceReflectorFactory = null;
 
@@ -252,5 +252,11 @@ final class ReflectorBuilder
         }
 
         return new NullCache();
+    }
+
+    private function enablePHPStanDocblockParser(): ReflectorBuilder
+    {
+        $this->usePhpStanDocblock = true;
+        return $this;
     }
 }
