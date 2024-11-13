@@ -19,6 +19,7 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Type\AggregateType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 
 /**
  * Report if a use statement is not required.
@@ -494,7 +495,7 @@ class UnusedImportProvider implements DiagnosticProvider
 
         $allTypes = [];
         foreach ($docblock->types() as $type) {
-            if ($type instanceof AggregateType) {
+            if ($type instanceof AggregateType || $type instanceof PseudoIterableType) {
                 foreach ($type->allTypes() as $type) {
                     $allTypes[] = $type;
                 }
