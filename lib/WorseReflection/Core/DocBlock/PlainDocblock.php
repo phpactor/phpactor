@@ -28,6 +28,7 @@ class PlainDocblock implements DocBlock
         $this->raw = $raw;
     }
 
+    /** @return Types<Type> */
     public function types(): Types
     {
         return new Types([]);
