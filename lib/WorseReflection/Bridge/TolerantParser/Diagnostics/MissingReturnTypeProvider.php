@@ -162,11 +162,16 @@ class MissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        if ($method->docblock()->returnType()->isMixed()) {
+        $docblockReturn = $method->docblock()->returnType();
+        if ($docblockReturn->isMixed()) {
             return;
         }
 
-        if ($method->class()->templateMap()->has($method->docblock()->returnType()->__toString())) {
+        if ($docblockReturn->isDefined()) {
+            return;
+        }
+
+        if ($method->class()->templateMap()->has($docblockReturn->__toString())) {
             return;
         }
 
