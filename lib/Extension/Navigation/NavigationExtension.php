@@ -2,16 +2,21 @@
 
 namespace Phpactor\Extension\Navigation;
 
+use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
-use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\MapResolver\Resolver;
-use Phpactor\Container\Container;
+use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Navigation\Application\Navigator;
-use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Handler\NavigateHandler;
+use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Navigator\PathFinderNavigator;
 use Phpactor\Extension\Navigation\Navigator\WorseReflectionNavigator;
+use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
+use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\Filesystem\Domain\FilePath;
+use Phpactor\MapResolver\Resolver;
 use Phpactor\PathFinder\PathFinder;
 
 class NavigationExtension implements Extension
@@ -40,16 +45,24 @@ class NavigationExtension implements Extension
     private function registerPathFinder(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_PATH_FINDER, function (Container $container) {
-            return PathFinder::fromDestinations($container->getParameter(self::PATH_FINDER_DESTINATIONS));
+            return PathFinder::fromAbsoluteDestinations($container->parameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)->string(), $container->parameter(self::PATH_FINDER_DESTINATIONS)->value());
         });
 
         $container->register('application.navigator', function (Container $container) {
             return new Navigator(
                 $container->get('navigation.navigator.chain'),
                 $container->get('application.class_new'),
-                $container->getParameter(self::NAVIGATOR_AUTOCREATE)
+                $container->parameter(self::NAVIGATOR_AUTOCREATE)->value(),
+                FilePath::fromString($this->projectRoot($container))
             );
         });
+    }
+
+    private function projectRoot(Container $container): string
+    {
+        /** @var PathResolver $resolver */
+        $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
+        return $resolver->resolve($container->parameter(SourceCodeFilesystemExtension::PARAM_PROJECT_ROOT)->string());
     }
 
     private function registerRpc(ContainerBuilder $container): void

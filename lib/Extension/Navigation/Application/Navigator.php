@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\Navigation\Application;
 
 use Phpactor\Extension\Navigation\Navigator\Navigator as NavigatorInterface;
+use Phpactor\Filesystem\Domain\FilePath;
 use RuntimeException;
 use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
 
@@ -11,7 +12,8 @@ class Navigator
     public function __construct(
         private NavigatorInterface $navigator,
         private ClassNew $classNew,
-        private array $autoCreateConfig
+        private array $autoCreateConfig,
+        private FilePath $path
     ) {
     }
 
@@ -50,7 +52,7 @@ class Navigator
             ));
         }
 
-        return $destinations[$destinationName];
+        return $this->path->makeAbsoluteFromString($destinations[$destinationName]);
     }
 
     private function variant(string $destinationName)
