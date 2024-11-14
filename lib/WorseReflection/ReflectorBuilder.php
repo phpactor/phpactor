@@ -211,6 +211,12 @@ final class ReflectorBuilder
         return $this;
     }
 
+    public function enablePHPStanDocblockParser(): ReflectorBuilder
+    {
+        $this->usePhpStanDocblock = true;
+        return $this;
+    }
+
     private function buildLocator(): SourceCodeLocator
     {
         $locators = $this->locators;
@@ -252,11 +258,5 @@ final class ReflectorBuilder
         }
 
         return new NullCache();
-    }
-
-    public function enablePHPStanDocblockParser(): ReflectorBuilder
-    {
-        $this->usePhpStanDocblock = true;
-        return $this;
     }
 }
