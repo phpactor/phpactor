@@ -654,6 +654,7 @@ class LanguageServerExtension implements Extension
      */
     private function collectDiagnosticProviders(Container $container, ?bool $outsourced): array
     {
+        /** @var DiagnosticsProvider[] */
         $providers = [];
         foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
             Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
