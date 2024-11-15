@@ -21,6 +21,10 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
     public function render(Type $type): ?string
     {
         if ($type instanceof NullableType) {
+            if ($type->type instanceof ClassType) {
+                return $this->render($type->type);
+            }
+
             return '?' . $this->render($type->type);
         }
 

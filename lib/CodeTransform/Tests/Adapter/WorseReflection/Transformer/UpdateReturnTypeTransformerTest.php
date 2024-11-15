@@ -243,6 +243,29 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
                 }
                 EOT
         ];
+        yield 'on interface nullable type' => [
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Arg\Foo;
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Arg\Foo;
+                }
+                EOT
+        ];
     }
 
     /**
