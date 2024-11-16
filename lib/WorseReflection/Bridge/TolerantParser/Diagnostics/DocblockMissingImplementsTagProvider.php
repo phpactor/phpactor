@@ -186,9 +186,4 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
             }
         );
     }
-
-    public function name(): string
-    {
-        return 'docblock_missing_implements_tag';
-    }
 }

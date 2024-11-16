@@ -86,7 +86,7 @@ class LanguageServerWorseReflectionExtension implements Extension
                 return null;
             }
             return new WorseDiagnosticProvider(
-                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class)
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
             );
         }, [ LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('code-action', true) ]);
 

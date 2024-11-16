@@ -313,9 +313,4 @@ class MissingMemberProvider implements DiagnosticProvider
             }
         );
     }
-
-    public function name(): string
-    {
-        return 'missing_method';
-    }
 }

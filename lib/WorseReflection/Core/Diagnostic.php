@@ -6,6 +6,8 @@ use Phpactor\TextDocument\ByteOffsetRange;
 
 interface Diagnostic
 {
+    public function code(): string;
+
     public function range(): ByteOffsetRange;
 
     public function severity(): DiagnosticSeverity;

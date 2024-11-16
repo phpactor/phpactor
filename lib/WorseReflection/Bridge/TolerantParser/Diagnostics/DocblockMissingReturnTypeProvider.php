@@ -152,9 +152,4 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
             }
         );
     }
-
-    public function name(): string
-    {
-        return 'docblock_missing_return';
-    }
 }

@@ -457,11 +457,6 @@ class UnusedImportProvider implements DiagnosticProvider
         );
     }
 
-    public function name(): string
-    {
-        return 'unused_import';
-    }
-
     private function extractDocblockNames(Docblock $docblock, NodeContextResolver $resolver, Node $node): void
     {
         $prefix = sprintf('%s:', $this->getNamespaceName($node));

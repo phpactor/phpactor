@@ -11,7 +11,8 @@ class BareDiagnostic implements Diagnostic
     public function __construct(
         private ByteOffsetRange $range,
         private DiagnosticSeverity $severity,
-        private string $message
+        private string $message,
+        private string $code,
     ) {
     }
 
@@ -33,5 +34,10 @@ class BareDiagnostic implements Diagnostic
     public function tags(): array
     {
         return [];
+    }
+
+    public function code(): string
+    {
+        return $this->code;
     }
 }
