@@ -59,4 +59,9 @@ class DocblockMissingParamDiagnostic implements Diagnostic
     {
         return [];
     }
+
+    public function code(): string
+    {
+        return 'docblock_missing_param';
+    }
 }

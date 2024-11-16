@@ -86,6 +86,15 @@ final class NameUtil
         return '\\' . $name;
     }
 
+    public static function namespace(string $fqn): string
+    {
+        $shortNamePos = strrpos($fqn, '\\');
+        if (false === $shortNamePos) {
+            return $fqn;
+        }
+        return substr($fqn, 0, $shortNamePos);
+    }
+
     private static function normalize(string $name): string
     {
         // trim?

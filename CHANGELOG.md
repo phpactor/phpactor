@@ -3,11 +3,21 @@ Changelog
 
 ## master
 
+Features:
+
+  - Show codes for all diagnostics and allow them to be ignored @dantleech
+    #2781
+
 Improvements:
 
   - Tolerate code action provider failures #2761 @dantleech
   - Limit number of methods that are documented on classes to improve
     completion/resolve performance for large classes #2768 @dantleech
+
+Bug fixes:
+
+  - Preserve PHAR scheme when indexing PHAR stubs @dantleech #2754
+  - Fix duplicated types when updating methods @mamazu #2779
 
 ## 2024-11-05
 

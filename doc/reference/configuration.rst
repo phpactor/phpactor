@@ -1289,6 +1289,19 @@ List of paths to exclude from diagnostics, e.g. `vendor/**/*`
 **Default**: ``[]``
 
 
+.. _param_language_server.diagnostic_ignore_codes:
+
+
+``language_server.diagnostic_ignore_codes``
+"""""""""""""""""""""""""""""""""""""""""""
+
+
+Ignore diagnostics that have the codes listed here, e.g. ["fix_namespace_class_name"]. The codes match those shown in the LSP client.
+
+
+**Default**: ``[]``
+
+
 .. _param_language_server.file_events:
 
 
@@ -1867,6 +1880,19 @@ Override the PHPStan memory limit
 
 
 **Default**: ``null``
+
+
+.. _param_language_server_phpstan.tmp_file_disabled:
+
+
+``language_server_phpstan.tmp_file_disabled``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+Disable the use of temporary files when. This prevents as-you-type diagnostics, but ensures paths in phpstan config are respected. See https://github.com/phpactor/phpactor/issues/2763
+
+
+**Default**: ``false``
 
 
 .. _LanguageServerPsalmExtension:
