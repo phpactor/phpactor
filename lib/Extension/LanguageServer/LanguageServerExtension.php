@@ -110,6 +110,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_ON_SAVE = 'language_server.diagnostics_on_save';
     public const PARAM_DIAGNOSTIC_ON_OPEN = 'language_server.diagnostics_on_open';
     public const PARAM_DIAGNOSTIC_PROVIDERS = 'language_server.diagnostic_providers';
+    public const PARAM_DISABLED_DIAGNOSTICS = 'language_server.disabled_diagnostics';
     public const PARAM_DIAGNOSTIC_OUTSOURCE = 'language_server.diagnostic_outsource';
     public const PARAM_FILE_EVENTS = 'language_server.file_events';
     public const PARAM_FILE_EVENT_GLOBS = 'language_server.file_event_globs';
@@ -134,6 +135,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => true,
             self::PARAM_DIAGNOSTIC_ON_OPEN => true,
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
+            self::PARAM_DISABLED_DIAGNOSTICS => null,
             self::PARAM_DIAGNOSTIC_OUTSOURCE => true,
             self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS => [],
             self::PARAM_FILE_EVENTS => true,
@@ -159,6 +161,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_SAVE => 'Perform diagnostics when the text document is saved',
             self::PARAM_DIAGNOSTIC_ON_OPEN => 'Perform diagnostics when opening a text document',
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
+            self::PARAM_DISABLED_DIAGNOSTICS => 'List of diagnostics that should be disabled',
             self::PARAM_DIAGNOSTIC_OUTSOURCE => 'If applicable diagnostics should be "outsourced" to a different process',
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 'Kill the diagnostics process if it outlives this timeout',
             self::PARAM_FILE_EVENTS => 'Register to receive file events',
@@ -651,6 +654,7 @@ class LanguageServerExtension implements Extension
      */
     private function collectDiagnosticProviders(Container $container, ?bool $outsourced): array
     {
+        /** @var DiagnosticsProvider[] */
         $providers = [];
         foreach ($container->getServiceIdsForTag(self::TAG_DIAGNOSTICS_PROVIDER) as $serviceId => $attrs) {
             Assert::isArray($attrs, 'Attributes must be an array, got "%s"');
@@ -680,6 +684,16 @@ class LanguageServerExtension implements Extension
                 ));
             }
             $providers = array_intersect_key($providers, array_flip($enabled));
+        }
+
+        $disabledDiagnostics = $container->parameter(self::PARAM_DISABLED_DIAGNOSTICS)->value();
+
+        if (null !== $disabledDiagnostics) {
+            Assert::isArray($disabledDiagnostics);
+            $providers = array_filter(
+                $providers,
+                fn (DiagnosticsProvider $provider) => !in_array($provider->name(), $disabledDiagnostics)
+            );
         }
 
         /** @var DiagnosticsProvider[] $providers */
