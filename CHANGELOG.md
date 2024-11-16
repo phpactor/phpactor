@@ -10,6 +10,8 @@ Features:
 
 Improvements:
 
+  - Do not highlight entire class for fix class/namespace name diagnostic
+    #2728 @dantleech
   - Tolerate code action provider failures #2761 @dantleech
   - Limit number of methods that are documented on classes to improve
     completion/resolve performance for large classes #2768 @dantleech
