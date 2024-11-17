@@ -21,6 +21,7 @@ class DebugContainerCommand extends Command
     protected function configure(): void
     {
         $this->addOption('services', null, InputOption::VALUE_NONE, 'List all services');
+        $this->addOption('parameters', null, InputOption::VALUE_NONE, 'List all parameters');
         $this->addOption('tags', null, InputOption::VALUE_NONE, 'List all tags');
         $this->addOption('tag', null, InputOption::VALUE_OPTIONAL|InputOption::VALUE_IS_ARRAY, 'Show specific tag');
     }
@@ -32,6 +33,9 @@ class DebugContainerCommand extends Command
         }
         if ($input->getOption('tags')) {
             $this->renderTags($output);
+        }
+        if ($input->getOption('parameters')) {
+            $this->renderParameters($output);
         }
 
         foreach ((array)$input->getOption('tag') as $tag) {
@@ -92,6 +96,19 @@ class DebugContainerCommand extends Command
         ]);
         foreach ($this->container->getServiceIdsForTag($tag) as $serviceId => $attrs) {
             $table->addRow([$serviceId, json_encode($attrs, JSON_PRETTY_PRINT)]);
+        }
+        $table->render();
+    }
+
+    private function renderParameters(OutputInterface $output): void
+    {
+        $table = new Table($output);
+        $table->setStyle('borderless');
+        $table->setHeaders([
+            'parameter','value',
+        ]);
+        foreach ($this->container->getParameters() as $key => $value) {
+            $table->addRow([$key, json_encode($value, JSON_PRETTY_PRINT)]);
         }
         $table->render();
     }
