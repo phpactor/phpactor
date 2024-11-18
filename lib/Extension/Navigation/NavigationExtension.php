@@ -11,9 +11,7 @@ use Phpactor\Extension\Navigation\Handler\NavigateHandler;
 use Phpactor\Extension\Navigation\Navigator\ChainNavigator;
 use Phpactor\Extension\Navigation\Navigator\PathFinderNavigator;
 use Phpactor\Extension\Navigation\Navigator\WorseReflectionNavigator;
-use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
-use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\PathFinder\PathFinder;
 
@@ -55,16 +53,9 @@ class NavigationExtension implements Extension
                 $container->get('navigation.navigator.chain'),
                 $container->get('application.class_new'),
                 $container->parameter(self::NAVIGATOR_AUTOCREATE)->value(), // @phpstan-ignore argument.type
-                $this->projectRoot($container)
+                $container->parameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)->string()
             );
         });
-    }
-
-    private function projectRoot(Container $container): string
-    {
-        /** @var PathResolver $resolver */
-        $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
-        return $resolver->resolve($container->parameter(SourceCodeFilesystemExtension::PARAM_PROJECT_ROOT)->string());
     }
 
     private function registerRpc(ContainerBuilder $container): void
