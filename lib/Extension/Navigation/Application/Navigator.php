@@ -3,9 +3,9 @@
 namespace Phpactor\Extension\Navigation\Application;
 
 use Phpactor\Extension\Navigation\Navigator\Navigator as NavigatorInterface;
-use Phpactor\Filesystem\Domain\FilePath;
 use RuntimeException;
 use Phpactor\Extension\CodeTransformExtra\Application\ClassNew;
+use Symfony\Component\Filesystem\Path;
 
 class Navigator
 {
@@ -13,7 +13,7 @@ class Navigator
         private NavigatorInterface $navigator,
         private ClassNew $classNew,
         private array $autoCreateConfig,
-        private FilePath $path
+        private string $absolutePath
     ) {
     }
 
@@ -52,7 +52,7 @@ class Navigator
             ));
         }
 
-        return $this->path->makeAbsoluteFromString($destinations[$destinationName]);
+        return Path::makeAbsolute($destinations[$destinationName], $this->absolutePath);
     }
 
     private function variant(string $destinationName)

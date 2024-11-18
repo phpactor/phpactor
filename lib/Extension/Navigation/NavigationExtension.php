@@ -56,7 +56,7 @@ class NavigationExtension implements Extension
                 $container->get('navigation.navigator.chain'),
                 $container->get('application.class_new'),
                 $container->parameter(self::NAVIGATOR_AUTOCREATE)->value(),
-                FilePath::fromString($this->projectRoot($container))
+                $this->projectRoot($container)
             );
         });
     }
