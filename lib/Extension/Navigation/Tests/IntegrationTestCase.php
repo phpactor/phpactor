@@ -59,6 +59,7 @@ abstract class IntegrationTestCase extends TestCase
             LoggingExtension::PARAM_ENABLED=> true,
             LoggingExtension::PARAM_PATH=> 'php://stderr',
             WorseReflectionExtension::PARAM_ENABLE_CACHE=> false,
+            ComposerAutoloaderExtension::PARAM_COMPOSER_ENABLE => false,
             WorseReflectionExtension::PARAM_STUB_DIR => $this->workspace()->path(),
             FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ . '/../',
             FilePathResolverExtension::PARAM_PROJECT_ROOT => $this->workspace()->path(),
