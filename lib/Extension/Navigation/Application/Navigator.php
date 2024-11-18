@@ -18,6 +18,7 @@ class Navigator
     ) {
     }
 
+    /** @return array<string, string> */
     public function destinationsFor(string $path): array
     {
         return $this->navigator->destinationsFor($path);

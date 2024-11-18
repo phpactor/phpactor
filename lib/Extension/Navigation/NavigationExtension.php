@@ -14,7 +14,6 @@ use Phpactor\Extension\Navigation\Navigator\WorseReflectionNavigator;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\FilePathResolver\PathResolver;
-use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\PathFinder\PathFinder;
 
@@ -55,7 +54,7 @@ class NavigationExtension implements Extension
             return new Navigator(
                 $container->get('navigation.navigator.chain'),
                 $container->get('application.class_new'),
-                $container->parameter(self::NAVIGATOR_AUTOCREATE)->value(),
+                $container->parameter(self::NAVIGATOR_AUTOCREATE)->value(), // @phpstan-ignore argument.type
                 $this->projectRoot($container)
             );
         });
