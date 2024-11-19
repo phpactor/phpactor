@@ -1,0 +1,21 @@
+// File: source
+<?php
+
+class generateMethod
+{
+    /** @var non-empty-string */
+    pr<>ivate $method;
+}
+// File: expected
+<?php
+
+class generateMethod
+{
+    /** @var non-empty-string */
+    private $method;
+
+    public function getmethod(): string
+    {
+        return $this->method;
+    }
+}
