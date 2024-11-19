@@ -113,7 +113,7 @@ class PHPStanTypeConverter
             'resource' => new ResourceType(),
             'self' => new SelfType(),
             'static' => new StaticType(),
-            'string' => new StringType(),
+            'string','non-empty-string' => new StringType(),
             'void' => new VoidType(),
             default => $this->resolveClass($type) ?? new ClassType(ClassName::fromString($type)),
         };
