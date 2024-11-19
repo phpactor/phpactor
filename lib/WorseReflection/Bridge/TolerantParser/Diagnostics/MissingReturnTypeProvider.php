@@ -189,9 +189,4 @@ class MissingReturnTypeProvider implements DiagnosticProvider
     {
         return [];
     }
-
-    public function name(): string
-    {
-        return 'missing_return_type';
-    }
 }

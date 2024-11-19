@@ -6,7 +6,7 @@
         "php": "^8.1",
         "composer/xdebug-handler": "^3.0",
         "symfony/yaml": "^5.1",
-        "phpactor/container": "^2.2.0",
+        "phpactor/container": "^3.0",
         "phpactor/class-to-file": "~0.5",
         "twig/twig": "^3.4",
         "dnoegel/php-xdg-base-dir": "^0.1.0",

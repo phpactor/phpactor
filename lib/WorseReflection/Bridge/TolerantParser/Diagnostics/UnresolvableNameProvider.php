@@ -293,11 +293,6 @@ class UnresolvableNameProvider implements DiagnosticProvider
         );
     }
 
-    public function name(): string
-    {
-        return 'unresolvable_name';
-    }
-
     /**
      * @return iterable<UnresolvableNameDiagnostic>
      */

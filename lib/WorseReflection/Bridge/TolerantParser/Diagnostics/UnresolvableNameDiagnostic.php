@@ -61,4 +61,9 @@ class UnresolvableNameDiagnostic implements Diagnostic
     {
         return [];
     }
+
+    public function code(): string
+    {
+        return 'unresolved_name';
+    }
 }
