@@ -48,7 +48,7 @@ class IndexedNameSearcher implements NameSearcher
 
         foreach ($this->client->search($criteria) as $result) {
             yield NameSearchResult::create(
-                $result->recordType(),
+                $result->recordType()->value,
                 FullyQualifiedName::fromString($result->identifier()),
                 $result instanceof HasPath ? TextDocumentUri::fromString($result->filepath()) : null
             );

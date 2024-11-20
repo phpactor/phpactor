@@ -83,7 +83,7 @@ class IndexSearchCommand extends Command
             }
             $output->writeln(sprintf(
                 '<comment>%s</> <fg=cyan>#</> %s%s',
-                $result->recordType(),
+                $result->recordType()->value,
                 $result->identifier(),
                 $result instanceof ClassRecord ? sprintf(' (%s)', $result->type()) : '',
             ));

@@ -7,6 +7,7 @@ use Phpactor\Indexer\Adapter\Tolerant\Indexer\MemberIndexer;
 use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\MemberReference;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\Indexer\Model\Record\MemberRecordType;
 use Phpactor\Indexer\Tests\Adapter\Tolerant\TolerantIndexerTestCase;
 
 class MemberIndexerTest extends TolerantIndexerTestCase
@@ -50,73 +51,73 @@ class MemberIndexerTest extends TolerantIndexerTestCase
     {
         yield 'single ref' => [
             "// File: src/file1.php\n<?php Foobar::static()",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'static'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Foobar', 'static'),
             [0, 0, 1]
         ];
 
         yield '> 1 same name method with different container type and specified search type' => [
             "// File: src/file1.php\n<?php Foobar::static(); Barfoo::static();",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'static'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Foobar', 'static'),
             [ 1, 0, 1 ],
         ];
 
         yield '> 1 same name method with different container type and no specified search type' => [
             "// File: src/file1.php\n<?php Foobar::static(); Barfoo::static();",
-            MemberReference::create(MemberRecord::TYPE_METHOD, null, 'static'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, null, 'static'),
             [ 0, 0, 2 ],
         ];
 
         yield 'multiple ref' => [
             "// File: src/file1.php\n<?php Foobar::static(); Foobar::static();",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'static'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Foobar', 'static'),
             [ 0, 0, 2 ],
         ];
 
-        yield MemberRecord::TYPE_CONSTANT => [
+        yield MemberRecordType::TYPE_CONSTANT->value => [
             "// File: src/file1.php\n<?php Foobar::FOOBAR;",
-            MemberReference::create(MemberRecord::TYPE_CONSTANT, 'Foobar', 'FOOBAR'),
+            MemberReference::create(MemberRecordType::TYPE_CONSTANT, 'Foobar', 'FOOBAR'),
             [ 0, 0, 1 ],
         ];
 
         yield 'constant in call' => [
             "// File: src/file1.php\n<?php get(Foobar::FOOBAR);",
-            MemberReference::create(MemberRecord::TYPE_CONSTANT, 'Foobar', 'FOOBAR'),
+            MemberReference::create(MemberRecordType::TYPE_CONSTANT, 'Foobar', 'FOOBAR'),
             [ 0, 0, 1 ]
         ];
 
-        yield MemberRecord::TYPE_PROPERTY => [
+        yield MemberRecordType::TYPE_PROPERTY->value => [
             "// File: src/file1.php\n<?php Foobar::\$foobar;",
-            MemberReference::create(MemberRecord::TYPE_PROPERTY, 'Foobar', 'foobar'),
+            MemberReference::create(MemberRecordType::TYPE_PROPERTY, 'Foobar', 'foobar'),
             [ 0, 0, 1 ]
         ];
 
         yield 'namespaced static access' => [
             "// File: src/file1.php\n<?php use Barfoo\\Foobar; Foobar::hello();",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Barfoo\\Foobar', 'hello'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Barfoo\\Foobar', 'hello'),
             [ 0, 0, 1 ]
         ];
 
         yield 'self' => [
             "// File: src/file1.php\n<?php class Foobar { function bar() {} function foo() { self::bar(); } }",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'bar'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Foobar', 'bar'),
             [ 0, 0, 1 ]
         ];
 
         yield 'self (property)' => [
             "// File: src/file1.php\n<?php class Foobar { static \$barProp; function foo() { self::\$barProp = 5; \$var1 = self::\$barProp; } }",
-            MemberReference::create(MemberRecord::TYPE_PROPERTY, 'Foobar', 'barProp'),
+            MemberReference::create(MemberRecordType::TYPE_PROPERTY, 'Foobar', 'barProp'),
             [ 0, 0, 2 ]
         ];
 
         yield 'parent' => [
             "// File: src/file1.php\n<?php class Foobar { function bar() {}} class Barfoo extends Foobar { function foo() { parent::bar(); } }",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'bar'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Foobar', 'bar'),
             [ 0, 0, 1 ]
         ];
 
         yield 'property with invalid access' => [
             "// File: src/file1.php\n<?php \$json = json_encode(['some#hash' => 'value']);\$object = json_decode(\$json);echo \$object->{'some#hash'};",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'bar'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Foobar', 'bar'),
             [ 0, 0, 0 ]
         ];
     }
@@ -128,25 +129,25 @@ class MemberIndexerTest extends TolerantIndexerTestCase
     {
         yield 'method call with wrong container type' => [
             "// File: src/file1.php\n<?php class Foobar {}; \$foobar = new Foobar(); \$foobar->hello();",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Barfoo', 'hello'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Barfoo', 'hello'),
             [ 1, 0, 0 ],
         ];
 
         yield 'method call' => [
             "// File: src/file1.php\n<?php \$foobar->hello();",
-            MemberReference::create(MemberRecord::TYPE_METHOD, 'Foobar', 'hello'),
+            MemberReference::create(MemberRecordType::TYPE_METHOD, 'Foobar', 'hello'),
             [ 0, 1, 0 ],
         ];
 
         yield 'property access' => [
             "// File: src/file1.php\n<?php \$foobar->hello;",
-            MemberReference::create(MemberRecord::TYPE_PROPERTY, 'Foobar', 'hello'),
+            MemberReference::create(MemberRecordType::TYPE_PROPERTY, 'Foobar', 'hello'),
             [ 0, 1, 0 ],
         ];
 
         yield 'resolvable property instance container type' => [
             "// File: src/file1.php\n<?php class Foobar {}; \$foobar = new Foobar(); \$foobar->hello;",
-            MemberReference::create(MemberRecord::TYPE_PROPERTY, 'Foobar', 'hello'),
+            MemberReference::create(MemberRecordType::TYPE_PROPERTY, 'Foobar', 'hello'),
             [ 0, 0, 1 ],
         ];
     }

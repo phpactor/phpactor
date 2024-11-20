@@ -3,11 +3,11 @@
 namespace Phpactor\Indexer\Tests\Adapter\Worse;
 
 use Generator;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\FileRecord;
-use Phpactor\Indexer\Model\Record\MemberRecord;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -31,7 +31,7 @@ class WorseRecordReferenceEnhancerTest extends IntegrationTestCase
             new FilesystemTextDocumentLocator(),
         );
         $fileRecord = FileRecord::fromPath($this->workspace()->path('test.php'));
-        $reference = new RecordReference(MemberRecord::RECORD_TYPE, 'foobar', (int)$offset, end: (int)$offset);
+        $reference = new RecordReference(RecordType::MEMBER, 'foobar', (int)$offset, end: (int)$offset);
         $reference = $enhancer->enhance($fileRecord, $reference);
         self::assertEquals($expectedType, $reference->contaninerType());
     }

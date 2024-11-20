@@ -8,6 +8,7 @@ use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\RecordFactory;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\HasFlags;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\Indexer\Model\SearchIndex;
 use Safe\Exceptions\FilesystemException;
 use function Safe\file_get_contents;
@@ -24,7 +25,7 @@ class FileSearchIndex implements SearchIndex
     private bool $initialized = false;
 
     /**
-     * @var array<array{string,string,string|null}>
+     * @var array<array{RecordType,string,string|null}>
      */
     private array $subjects = [];
 
@@ -40,7 +41,7 @@ class FileSearchIndex implements SearchIndex
     {
         $this->open();
 
-        foreach ($this->subjects as [ $recordType, $identifier, $type, $flags ]) {
+        foreach ($this->subjects as [$recordType, $identifier, $type, $flags ]) {
             $record = RecordFactory::create($recordType, $identifier);
             if ($record instanceof ClassRecord) {
                 $record = $record->withType($type);
@@ -87,7 +88,7 @@ class FileSearchIndex implements SearchIndex
         $this->open();
 
         $content = implode("\n", array_unique(array_map(function (array $parts) {
-            return implode(self::DELIMITER, $parts);
+            return implode(self::DELIMITER, [$parts[0]->value, $parts[1], $parts[2]]);
         }, $this->subjects)));
 
         try {
@@ -117,7 +118,7 @@ class FileSearchIndex implements SearchIndex
         $this->subjects = array_filter(array_map(function (string $line) {
             $parts = explode(self::DELIMITER, $line);
 
-            return [$parts[0], $parts[1], $parts[2] ?? null, $parts[3] ?? null];
+            return [RecordType::from($parts[0]), $parts[1], $parts[2] ?? null, $parts[3] ?? null];
         }, explode("\n", file_get_contents($this->path))));
 
         $this->initialized = true;
@@ -125,6 +126,6 @@ class FileSearchIndex implements SearchIndex
 
     private function recordHash(Record $record): string
     {
-        return $record->recordType().$record->identifier();
+        return $record->recordType()->value.$record->identifier();
     }
 }

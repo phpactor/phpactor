@@ -93,7 +93,7 @@ class IndexQueryCommand extends Command
     private function renderMember(OutputInterface $output, MemberRecord $member): void
     {
         $output->writeln('<info>Member:</>'.$member->memberName());
-        $output->writeln('<info>Member Type:</>'.$member->type());
+        $output->writeln('<info>Member Type:</>'.$member->type()->value);
         $output->writeln('<info>Referenced by</>:');
         foreach ($this->query->member()->referencesTo($member->type(), $member->memberName()) as $index => $location) {
             $output->writeln(sprintf(

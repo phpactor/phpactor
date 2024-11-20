@@ -16,6 +16,8 @@ use Phpactor\Indexer\Model\MemberReference;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\Indexer\Model\Record\MemberRecordType;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\TextDocument\TextDocument;
 
 class MemberIndexer implements TolerantIndexer
@@ -31,7 +33,7 @@ class MemberIndexer implements TolerantIndexer
         assert($fileRecord instanceof FileRecord);
 
         foreach ($fileRecord->references() as $outgoingReference) {
-            if ($outgoingReference->type() !== MemberRecord::RECORD_TYPE) {
+            if ($outgoingReference->type() !== RecordType::MEMBER) {
                 continue;
             }
 
@@ -61,11 +63,12 @@ class MemberIndexer implements TolerantIndexer
         }
     }
 
-    /**
-     * @param MemberRecord::TYPE_* $memberType
-     */
-    private function indexScopedPropertyAccess(Index $index, TextDocument $document, ScopedPropertyAccessExpression $node, ?string $memberType = null): void
-    {
+    private function indexScopedPropertyAccess(
+        Index $index,
+        TextDocument $document,
+        ScopedPropertyAccessExpression $node,
+        ?MemberRecordType $memberType = null,
+    ): void {
         $containerType = $node->scopeResolutionQualifier;
 
         if (!$containerType instanceof QualifiedName) {
@@ -92,32 +95,26 @@ class MemberIndexer implements TolerantIndexer
         );
     }
 
-    /**
-     * @return MemberRecord::TYPE_*
-     */
-    private function resolveScopedPropertyAccessMemberType(ScopedPropertyAccessExpression $node): string
+    private function resolveScopedPropertyAccessMemberType(ScopedPropertyAccessExpression $node): MemberRecordType
     {
         if ($node->parent instanceof CallExpression) {
-            return MemberRecord::TYPE_METHOD;
+            return MemberRecordType::TYPE_METHOD;
         }
 
         if ($node->memberName instanceof Variable) {
-            return MemberRecord::TYPE_PROPERTY;
+            return MemberRecordType::TYPE_PROPERTY;
         }
 
-        return MemberRecord::TYPE_CONSTANT;
+        return MemberRecordType::TYPE_CONSTANT;
     }
 
-    /**
-     * @return MemberRecord::TYPE_METHOD|MemberRecord::TYPE_PROPERTY
-     */
-    private function resolveMemberAccessType(MemberAccessExpression $node): string
+    private function resolveMemberAccessType(MemberAccessExpression $node): MemberRecordType
     {
         if ($node->parent instanceof CallExpression) {
-            return MemberRecord::TYPE_METHOD;
+            return MemberRecordType::TYPE_METHOD;
         }
 
-        return MemberRecord::TYPE_PROPERTY;
+        return MemberRecordType::TYPE_PROPERTY;
     }
 
     private function resolveScopedPropertyAccessName(ScopedPropertyAccessExpression $node): string
@@ -167,12 +164,9 @@ class MemberIndexer implements TolerantIndexer
         );
     }
 
-    /**
-     * @param MemberRecord::TYPE_* $memberType
-     */
     private function writeIndex(
         Index $index,
-        string $memberType,
+        MemberRecordType $memberType,
         ?string $containerFqn,
         string $memberName,
         TextDocument $document,
@@ -232,7 +226,7 @@ class MemberIndexer implements TolerantIndexer
     private function indexTraitSelectOrAliasClause(Index $index, TextDocument $document, TraitSelectOrAliasClause $node): void
     {
         if ($node->name instanceof ScopedPropertyAccessExpression) {
-            $this->indexScopedPropertyAccess($index, $document, $node->name, MemberRecord::TYPE_METHOD);
+            $this->indexScopedPropertyAccess($index, $document, $node->name, MemberRecordType::TYPE_METHOD);
         }
     }
 }

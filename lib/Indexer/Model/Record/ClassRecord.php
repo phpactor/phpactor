@@ -11,7 +11,6 @@ final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath,
     use HasFileReferencesTrait;
     use HasPathTrait;
     use HasFlagsTrait;
-    public const RECORD_TYPE = 'class';
     public const TYPE_CLASS = 'class';
     public const TYPE_INTERFACE = 'interface';
     public const TYPE_TRAIT = 'trait';
@@ -101,9 +100,9 @@ final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath,
     }
 
 
-    public function recordType(): string
+    public function recordType(): RecordType
     {
-        return self::RECORD_TYPE;
+        return RecordType::CLASS_;
     }
 
     public function withType(?string $type): ClassRecord

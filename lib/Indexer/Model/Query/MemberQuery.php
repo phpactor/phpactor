@@ -8,6 +8,7 @@ use Phpactor\Indexer\Model\IndexQuery;
 use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
+use Phpactor\Indexer\Model\Record\MemberRecordType;
 use Phpactor\TextDocument\Location;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 
@@ -33,10 +34,9 @@ class MemberQuery implements IndexQuery
     }
 
     /**
-     * @param MemberRecord::TYPE_* $type
      * @return Generator<LocationConfidence>
      */
-    public function referencesTo(string $type, string $memberName, ?string $containerType = null): Generator
+    public function referencesTo(MemberRecordType $type, string $memberName, ?string $containerType = null): Generator
     {
         $record = $this->getByTypeAndName($type, $memberName);
 
@@ -76,8 +76,8 @@ class MemberQuery implements IndexQuery
         }
     }
 
-    private function getByTypeAndName(string $type, string $name): ?MemberRecord
+    private function getByTypeAndName(MemberRecordType $type, string $name): ?MemberRecord
     {
-        return $this->get($type . '#' . $name);
+        return $this->get($type->value . '#' . $name);
     }
 }

@@ -4,6 +4,7 @@ namespace Phpactor\Indexer\Model;
 
 use Phpactor\Indexer\Model\Record\HasFlags;
 use Phpactor\Indexer\Model\Record\HasFlagsTrait;
+use Phpactor\Indexer\Model\Record\RecordType;
 
 class RecordReference implements HasFlags
 {
@@ -14,7 +15,7 @@ class RecordReference implements HasFlags
      * Order matters here for B/C, new parameters must be added after old ones.
      */
     public function __construct(
-        private string $type,
+        private RecordType $type,
         private string $identifier,
         private int $start,
         private ?string $contaninerType = null,
@@ -39,7 +40,7 @@ class RecordReference implements HasFlags
         return $this->identifier;
     }
 
-    public function type(): string
+    public function type(): RecordType
     {
         return $this->type;
     }
