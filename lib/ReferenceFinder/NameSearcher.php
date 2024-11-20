@@ -9,7 +9,6 @@ interface NameSearcher
 {
     /**
      * @return Generator<NameSearchResult>
-     * @param NameSearcherType::* $type
      */
-    public function search(string $search, ?string $type = null): Generator;
+    public function search(string $search, ?NameSearcherType $type = null): Generator;
 }

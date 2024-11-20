@@ -43,7 +43,7 @@ class ClassLikeCompletor implements TolerantCompletor
             yield Suggestion::createWithOptions($result->name()->head(), [
                 'type' => Suggestion::TYPE_CLASS,
                 'priority' => $this->prioritizer->priority($result->uri(), $source->uri()),
-                'short_description' => sprintf('%s %s', $type ?: '', $result->name()->__toString()),
+                'short_description' => sprintf('%s %s', (string) $type?->value, $result->name()->__toString()),
                 'class_import' => $result->name()->__toString(),
                 'name_import' => $result->name()->__toString(),
             ]);
@@ -52,10 +52,7 @@ class ClassLikeCompletor implements TolerantCompletor
         return true;
     }
 
-    /**
-     * @return NameSearcherType::INTERFACE|NameSearcherType::CLASS_|NameSearcherType::TRAIT
-     */
-    private function resolveType(Node $node): ?string
+    private function resolveType(Node $node): ?NameSearcherType
     {
         if (CompletionContext::nodeOrParentIs($node->parent, InterfaceBaseClause::class)) {
             return NameSearcherType::INTERFACE;

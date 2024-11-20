@@ -31,7 +31,7 @@ abstract class NameSearcherCompletor
         string $name,
         ?TextDocumentUri $sourceUri = null,
         ?Node $node = null,
-        ?string $type = null,
+        ?NameSearcherType $type = null,
     ): Generator {
         $wasQualified = NameUtil::isQualified($name);
         $visitedChildSegments = [];

@@ -4,6 +4,7 @@ namespace Phpactor\ReferenceFinder\Search;
 
 use Generator;
 use Phpactor\ReferenceFinder\NameSearcher;
+use Phpactor\ReferenceFinder\NameSearcherType;
 
 class PredefinedNameSearcher implements NameSearcher
 {
@@ -17,7 +18,7 @@ class PredefinedNameSearcher implements NameSearcher
     /**
      * @return Generator<NameSearchResult>
      */
-    public function search(string $search, ?string $type = null): Generator
+    public function search(string $search, ?NameSearcherType $type = null): Generator
     {
         $fullyQualified = str_starts_with($search, '\\');
         foreach ($this->results as $result) {

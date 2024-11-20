@@ -2,12 +2,12 @@
 
 namespace Phpactor\ReferenceFinder;
 
-class NameSearcherType
+enum NameSearcherType: string
 {
-    const FUNCTION = 'function';
-    const CLASS_ = 'class';
-    const INTERFACE = 'interface';
-    const TRAIT = 'trait';
-    const ENUM = 'enum';
-    const ATTRIBUTE = 'attribute';
+    case FUNCTION = 'function';
+    case CLASS_ = 'class';
+    case INTERFACE = 'interface';
+    case TRAIT = 'trait';
+    case ENUM = 'enum';
+    case ATTRIBUTE = 'attribute';
 }
