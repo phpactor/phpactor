@@ -25,7 +25,7 @@ class FileSearchIndex implements SearchIndex
     private bool $initialized = false;
 
     /**
-     * @var array<array{RecordType,string,string|null}>
+     * @var array<array{RecordType,string,string|null, string|int|null}>
      */
     private array $subjects = [];
 
@@ -88,7 +88,7 @@ class FileSearchIndex implements SearchIndex
         $this->open();
 
         $content = implode("\n", array_unique(array_map(function (array $parts) {
-            return implode(self::DELIMITER, [$parts[0]->value, $parts[1], $parts[2]]);
+            return implode(self::DELIMITER, [$parts[0]->value, $parts[1], $parts[2], $parts[3]]);
         }, $this->subjects)));
 
         try {
