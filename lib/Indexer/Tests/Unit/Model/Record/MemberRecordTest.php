@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Tests\Unit\Model\Record;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Model\Record\MemberRecord;
 use RuntimeException;
+use ValueError;
 
 class MemberRecordTest extends TestCase
 {
@@ -17,8 +18,8 @@ class MemberRecordTest extends TestCase
 
     public function testExceptionOnInvalidType(): void
     {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Invalid member type');
+        $this->expectException(ValueError::class);
+        $this->expectExceptionMessage('"asd" is not a valid backing value for enum Phpactor\Indexer\Model\Record\MemberRecordType');
         MemberRecord::fromIdentifier('asd#member');
     }
 }
