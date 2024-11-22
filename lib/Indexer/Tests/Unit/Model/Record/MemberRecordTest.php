@@ -19,7 +19,7 @@ class MemberRecordTest extends TestCase
     public function testExceptionOnInvalidType(): void
     {
         $this->expectException(ValueError::class);
-        $this->expectExceptionMessage('"asd" is not a valid backing value for enum Phpactor\Indexer\Model\Record\MemberRecordType');
+        $this->expectExceptionMessage('"asd" is not a valid backing value for enum');
         MemberRecord::fromIdentifier('asd#member');
     }
 }

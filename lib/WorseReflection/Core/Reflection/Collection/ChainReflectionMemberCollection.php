@@ -76,7 +76,6 @@ final class ChainReflectionMemberCollection implements ReflectionMemberCollectio
 
     /**
      * @param ReflectionMemberCollection<ReflectionMember> $collection
-     * @phpstan-ignore-next-line
      */
     public function merge(ReflectionCollection $collection): self
     {

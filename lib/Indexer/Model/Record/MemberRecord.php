@@ -50,7 +50,6 @@ class MemberRecord implements HasFileReferences, Record, HasShortName
         $parts = explode(self::ID_DELIMITER, $identifier);
         [$type, $memberName] = $parts;
 
-        /** @phpstan-ignore-next-line */
         return new self(MemberRecordType::from($type), $memberName);
     }
 

@@ -472,7 +472,6 @@ class LanguageServerExtension implements Extension
                 );
             }
             return new CodeActionHandler(
-                /** @phpstan-ignore-next-line */
                 new AggregateCodeActionProvider(...$services),
                 $this->workspace($container),
                 $container->get(ProgressNotifier::class),
