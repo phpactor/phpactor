@@ -57,7 +57,7 @@ class TextEditBuilderTest extends TestCase
                 [
                     'start' => [ 'line' => 0, 'character' => 0 ],
                     'end' => [ 'line' => 0, 'character' => 0 ],
-                    'text' => 'new' . "\n",
+                    'text' => 'new' . PHP_EOL,
                 ],
             ],
         ];
@@ -84,7 +84,7 @@ class TextEditBuilderTest extends TestCase
                 [
                     'start' => [ 'line' => 0, 'character' => 0 ],
                     'end' => [ 'line' => 0, 'character' => 0 ],
-                    'text' => 'neworiginal' . "\n",
+                    'text' => 'neworiginal' . PHP_EOL,
                 ],
             ],
         ];
