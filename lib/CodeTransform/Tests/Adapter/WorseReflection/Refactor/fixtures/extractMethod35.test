@@ -1,0 +1,38 @@
+// File: source
+<?php
+
+class Foo {
+
+    public function bar() {
+        $foo = 1;
+        $bar = 1;
+        if (<> $foo && $bar <>) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+// File: expected
+<?php
+
+class Foo {
+
+    public function bar() {
+        $foo = 1;
+        $bar = 1;
+        if ($this->newMethod($foo, $bar)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function newMethod($foo, int $bar): bool
+    {
+        return $foo && $bar;
+    }
+
+}
+
