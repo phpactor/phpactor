@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## master
+## 2024-11-28
 
 Features:
 
@@ -18,6 +18,7 @@ Improvements:
 
 Bug fixes:
 
+  - Navigator: Fix attempt to create existing directories #2776 @bart-jaskulsi
   - Fix goto constant within a trait #2784 @dantleech
   - Preserve PHAR scheme when indexing PHAR stubs @dantleech #2754
   - Fix duplicated types when updating methods @mamazu #2779
