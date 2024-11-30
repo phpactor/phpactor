@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2024-11-28.1
+
+Bug fixes:
+
+- Do not include the file scheme in when including/excluding files #2794
+
 ## 2024-11-28
 
 Features:
