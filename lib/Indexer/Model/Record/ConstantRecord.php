@@ -8,7 +8,6 @@ final class ConstantRecord implements HasPath, Record, HasFullyQualifiedName
 {
     use FullyQualifiedReferenceTrait;
     use HasPathTrait;
-    public const RECORD_TYPE = 'constant';
 
     public static function fromName(string $name): self
     {
@@ -16,8 +15,8 @@ final class ConstantRecord implements HasPath, Record, HasFullyQualifiedName
     }
 
 
-    public function recordType(): string
+    public function recordType(): RecordType
     {
-        return self::RECORD_TYPE;
+        return RecordType::CONSTANT;
     }
 }

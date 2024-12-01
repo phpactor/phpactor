@@ -5,7 +5,7 @@ namespace Phpactor\Indexer\Adapter\Worse;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\Record\FileRecord;
-use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -22,7 +22,7 @@ class WorseRecordReferenceEnhancer implements RecordReferenceEnhancer
 
     public function enhance(FileRecord $record, RecordReference $reference): RecordReference
     {
-        if ($reference->type() !== MemberRecord::RECORD_TYPE) {
+        if ($reference->type() !== RecordType::MEMBER) {
             return $reference;
         }
 

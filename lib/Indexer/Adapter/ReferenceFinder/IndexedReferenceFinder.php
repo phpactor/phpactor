@@ -9,7 +9,8 @@ use Phpactor\Indexer\Model\LocationConfidence;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FileRecord;
-use Phpactor\Indexer\Model\Record\MemberRecord;
+use Phpactor\Indexer\Model\Record\MemberRecordType;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\ReferenceFinder\PotentialLocation;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
@@ -155,19 +156,16 @@ class IndexedReferenceFinder implements ReferenceFinder
         };
     }
 
-    /**
-     * @return MemberRecord::TYPE_*
-     */
-    private function symbolTypeToReferenceType(NodeContext $nodeContext): string
+    private function symbolTypeToReferenceType(NodeContext $nodeContext): MemberRecordType
     {
         $symbolType = $nodeContext->symbol()->symbolType();
 
         return match ($symbolType) {
-            Symbol::CASE => MemberRecord::TYPE_CONSTANT,
-            Symbol::METHOD => MemberRecord::TYPE_METHOD,
-            Symbol::PROPERTY => MemberRecord::TYPE_PROPERTY,
-            Symbol::VARIABLE => MemberRecord::TYPE_PROPERTY,
-            Symbol::CONSTANT => MemberRecord::TYPE_CONSTANT,
+            Symbol::CASE => MemberRecordType::TYPE_CONSTANT,
+            Symbol::METHOD => MemberRecordType::TYPE_METHOD,
+            Symbol::PROPERTY => MemberRecordType::TYPE_PROPERTY,
+            Symbol::VARIABLE => MemberRecordType::TYPE_PROPERTY,
+            Symbol::CONSTANT => MemberRecordType::TYPE_CONSTANT,
 
             default => throw new RuntimeException(sprintf(
                 'Could not convert symbol type "%s" to reference type',
@@ -177,12 +175,11 @@ class IndexedReferenceFinder implements ReferenceFinder
     }
 
     /**
-     * @param "method"|"constant"|"property" $referenceType
      * @return Generator<LocationConfidence>
      */
-    private function memberReferencesTo(string $referenceType, string $memberName, string $containerType): Generator
+    private function memberReferencesTo(MemberRecordType $referenceType, string $memberName, string $containerType): Generator
     {
-        if ($memberName === '__construct' && $referenceType === 'method') {
+        if ($memberName === '__construct' && $referenceType === MemberRecordType::TYPE_METHOD) {
             yield from $this->newObjectReferences($containerType);
             return;
         }
@@ -207,7 +204,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             }
             foreach ($file->references() as $fileReference) {
                 if (
-                    $fileReference->type() !== 'class' ||
+                    $fileReference->type() !== RecordType::CLASS_ ||
                     !$fileReference->hasFlag(RecordReference::FLAG_NEW_OBJECT) ||
                     $fileReference->identifier() !== $containerType
                 ) {

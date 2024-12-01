@@ -178,7 +178,7 @@ class FileRepository
         return sprintf(
             '%s/%s_%s/%s/%s.cache',
             $this->path,
-            $record->recordType(),
+            $record->recordType()->value,
             substr($hash, 0, 1),
             substr($hash, 1, 1),
             $hash
@@ -187,6 +187,6 @@ class FileRepository
 
     private function bufferKey(Record $record): string
     {
-        return $record->recordType().$record->identifier();
+        return $record->recordType()->value.$record->identifier();
     }
 }

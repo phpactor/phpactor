@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Model\SearchIndex;
 
+use Phpactor\Indexer\Model\Record\RecordType;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Record\ClassRecord;
@@ -26,7 +27,7 @@ class FilteredSearchIndexTest extends IntegrationTestCase
     protected function setUp(): void
     {
         $this->innerIndex = $this->prophesize(SearchIndex::class);
-        $this->index = new FilteredSearchIndex($this->innerIndex->reveal(), [ClassRecord::RECORD_TYPE]);
+        $this->index = new FilteredSearchIndex($this->innerIndex->reveal(), [RecordType::CLASS_]);
     }
 
     public function testDecoration(): void

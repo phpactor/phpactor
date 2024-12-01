@@ -9,6 +9,7 @@ use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\FileRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\TextDocument\TextDocument;
 
 class FunctionReferenceIndexer extends AbstractClassLikeIndexer
@@ -24,7 +25,7 @@ class FunctionReferenceIndexer extends AbstractClassLikeIndexer
         assert($fileRecord instanceof FileRecord);
 
         foreach ($fileRecord->references() as $outgoingReference) {
-            if ($outgoingReference->type() !== FunctionRecord::RECORD_TYPE) {
+            if ($outgoingReference->type() !== RecordType::FUNCTION) {
                 continue;
             }
 
@@ -56,7 +57,7 @@ class FunctionReferenceIndexer extends AbstractClassLikeIndexer
 
         $fileRecord->addReference(
             new RecordReference(
-                FunctionRecord::RECORD_TYPE,
+                RecordType::FUNCTION,
                 $targetRecord->identifier(),
                 $node->getStartPosition(),
                 end: $node->getEndPosition()

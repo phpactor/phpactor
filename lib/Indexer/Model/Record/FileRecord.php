@@ -11,10 +11,9 @@ use SplFileInfo;
 class FileRecord implements HasPath, Record
 {
     use HasPathTrait;
-    public const RECORD_TYPE = 'file';
 
     /**
-     * @var array<array{string,string,int, ?string,int, int}>
+     * @var array<array{RecordType,string,int, ?string,int, int}>
      */
     private array $references = [];
 
@@ -33,9 +32,9 @@ class FileRecord implements HasPath, Record
     }
 
 
-    public function recordType(): string
+    public function recordType(): RecordType
     {
-        return self::RECORD_TYPE;
+        return RecordType::FILE;
     }
 
     public static function fromFileInfo(SplFileInfo $info): self
@@ -74,7 +73,7 @@ class FileRecord implements HasPath, Record
         }, $this->references));
     }
 
-    public function removeReferencesToRecordType(string $type): self
+    public function removeReferencesToRecordType(RecordType $type): self
     {
         $this->references = array_filter($this->references, function (array $reference) use ($type) {
             return $reference[0] !== $type;

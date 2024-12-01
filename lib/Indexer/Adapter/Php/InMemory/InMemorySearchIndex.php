@@ -7,12 +7,13 @@ use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\RecordFactory;
 use Phpactor\Indexer\Model\Record\ClassRecord;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\Indexer\Model\SearchIndex;
 
 class InMemorySearchIndex implements SearchIndex
 {
     /**
-     * @var array<string,array{string,string}>
+     * @var array<string,array{RecordType,string}>
      */
     private array $buffer = [];
 

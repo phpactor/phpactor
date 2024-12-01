@@ -5,6 +5,7 @@ namespace Phpactor\Rename\Tests\Adapter\ClassMover;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\ClassMover\ClassMover;
 use Phpactor\Indexer\Model\Record;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\Rename\Adapter\ClassMover\FileRenamer;
 use Phpactor\Rename\Adapter\ClassToFile\ClassToFileUriToNameConverter;
 use Phpactor\Rename\Model\LocatedTextEditsMap;
@@ -44,9 +45,9 @@ class FileRenamerTest extends IntegrationTestCase
                     ->addReference((string)TextDocumentUri::fromString($this->path('3.php')))
                     ->addReference((string)TextDocumentUri::fromString($this->path('4.php'))),
                 FileRecord::fromPath((string)TextDocumentUri::fromString($this->path('3.php')))
-                    ->addReference(new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)),
+                    ->addReference(new RecordReference(RecordType::CLASS_, 'One', 10, end: 20)),
                 FileRecord::fromPath((string)TextDocumentUri::fromString($this->path('4.php')))
-                    ->addReference(new RecordReference(ClassRecord::RECORD_TYPE, 'One', 10, end: 20)),
+                    ->addReference(new RecordReference(RecordType::CLASS_, 'One', 10, end: 20)),
            ]
         );
 
