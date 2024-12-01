@@ -6,7 +6,7 @@ use Phpactor\TextDocument\TextDocument;
 
 interface IndexBuilder
 {
-    public function index(TextDocument $document): void;
+    public function index(Index $index, TextDocument $document): void;
 
-    public function done(): void;
+    public function done(Index $index): void;
 }

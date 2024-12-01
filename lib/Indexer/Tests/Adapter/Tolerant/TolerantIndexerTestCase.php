@@ -2,31 +2,34 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant;
 
-use Phpactor\Indexer\Model\Indexer;
-use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexBuilder;
+use Phpactor\Indexer\Model\IndexBuilder;
 use Phpactor\Indexer\Model\TestIndexAgent;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
 
 class TolerantIndexerTestCase extends IntegrationTestCase
 {
-    /**
-     * @param list<TolerantIndexer>|TolerantIndexer $indexer
-     */
-    protected function runIndexer(array|TolerantIndexer $indexer, string $path): TestIndexAgent
+    protected function runSingleIndexer(TolerantIndexer $indexer, string $path): TestIndexAgent
     {
+        $indexBuilder = new TolerantIndexBuilder([$indexer]);
+
         // run the indexer twice - the results should not be affected
-        $this->doRunIndexer($indexer, $path);
-        return $this->doRunIndexer($indexer, $path);
+        $this->doRunIndexer($indexBuilder, $path);
+        return $this->doRunIndexer($indexBuilder, $path);
     }
 
-    /**
-     * @param list<TolerantIndexer>|TolerantIndexer $indexer
-     */
-    private function doRunIndexer(array|TolerantIndexer $indexer, string $path): TestIndexAgent
+    protected function runIndexer(IndexBuilder $indexBuilder, string $path): TestIndexAgent
     {
-        $indexer = is_array($indexer) ? $indexer : [$indexer];
-        $agent = $this->indexAgentBuilder('src')
-            ->setIndexers((array)$indexer)->buildTestAgent();
+        // run the indexer twice - the results should not be affected
+        $this->doRunIndexer($indexBuilder, $path);
+        return $this->doRunIndexer($indexBuilder, $path);
+    }
+
+    private function doRunIndexer(IndexBuilder $indexBuilder, string $path): TestIndexAgent
+    {
+        $agent = $this->indexAgentBuilder('src', $indexBuilder)
+            ->buildTestAgent();
 
         $agent->indexer()->getJob()->run();
 

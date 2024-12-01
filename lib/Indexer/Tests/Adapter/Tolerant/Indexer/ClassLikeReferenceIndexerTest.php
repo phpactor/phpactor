@@ -17,7 +17,7 @@ class ClassLikeReferenceIndexerTest extends TolerantIndexerTestCase
     {
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
-        $agent = $this->runIndexer(new ClassLikeReferenceIndexer(), 'src');
+        $agent = $this->runSingleIndexer(new ClassLikeReferenceIndexer(), 'src');
 
         $counts = [
             LocationConfidence::CONFIDENCE_NOT => 0,

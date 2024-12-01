@@ -26,6 +26,7 @@ use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\Indexer\Adapter\Php\PhpIndexerLister;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedNameSearcher;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexBuilder;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
 use Phpactor\Indexer\Adapter\Worse\IndexerConstantSourceLocator;
 use Phpactor\Indexer\Adapter\Worse\IndexerFunctionSourceLocator;
@@ -35,6 +36,7 @@ use Phpactor\Indexer\Extension\Command\IndexSearchCommand;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Indexer\Model\IndexAccess;
+use Phpactor\Indexer\Model\IndexBuilder;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Extension\Command\IndexQueryCommand;
@@ -223,7 +225,11 @@ class IndexerExtension implements Extension
             $stubPaths = $container->parameter(self::PARAM_STUB_PATHS)->value();
             $stubPaths = array_map(fn (string $path): string => $resolver->resolve($path), $stubPaths);
 
-            return IndexAgentBuilder::create($indexPath, $this->projectRoot($container))
+            return IndexAgentBuilder::create(
+                $indexPath,
+                $this->projectRoot($container),
+                $container->get(IndexBuilder::class),
+            )
                 /** @phpstan-ignore-next-line */
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
                 /** @phpstan-ignore-next-line */
@@ -236,6 +242,10 @@ class IndexerExtension implements Extension
 
         $container->register(Indexer::class, function (Container $container) {
             return $container->get(IndexAgent::class)->indexer();
+        });
+
+        $container->register(IndexBuilder::class, function (Container $container) {
+            return TolerantIndexBuilder::create($this->logger($container));
         });
 
         $container->register(self::SERVICE_INDEXER_EXCLUDE_PATTERNS, function (Container $container) {

@@ -3,6 +3,7 @@
 namespace Phpactor\Rename\Tests;
 
 use Closure;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexBuilder;
 use RuntimeException;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +37,8 @@ abstract class RenamerTestCase extends TestCase
             ->build();
         $this->indexAgent = IndexAgentBuilder::create(
             $this->workspace()->path('index'),
-            $this->workspace()->path('project')
+            $this->workspace()->path('project'),
+            TolerantIndexBuilder::create()
         )->setReferenceEnhancer(new WorseRecordReferenceEnhancer(
             $this->reflector,
             new NullLogger(),

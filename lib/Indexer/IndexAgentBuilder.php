@@ -9,8 +9,6 @@ use Phpactor\Indexer\Adapter\Filesystem\FilesystemFileListProvider;
 use Phpactor\Indexer\Adapter\Php\FileSearchIndex;
 use Phpactor\Indexer\Adapter\Php\Serialized\FileRepository;
 use Phpactor\Indexer\Adapter\Php\Serialized\SerializedIndex;
-use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexBuilder;
-use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexer;
 use Phpactor\Indexer\Model\FileListProvider;
 use Phpactor\Indexer\Model\FileListProvider\ChainFileListProvider;
 use Phpactor\Indexer\Model\FileListProvider\DirtyFileListProvider;
@@ -51,18 +49,12 @@ final class IndexAgentBuilder
     /**
      * @var array<string>
      */
-    private array $stubPaths = [];
+    private array $excludePatterns = [ ];
 
     /**
      * @var array<string>
      */
-    private array $excludePatterns = [
-    ];
-
-    /**
-     * @var array<TolerantIndexer>|null
-     */
-    private ?array $indexers = null;
+    private array $stubPaths = [];
 
     private bool $followSymlinks = false;
 
@@ -73,15 +65,21 @@ final class IndexAgentBuilder
 
     private LoggerInterface $logger;
 
-    private function __construct(private string $indexRoot, private string $projectRoot)
-    {
+    private function __construct(
+        private string $indexRoot,
+        private string $projectRoot,
+        private IndexBuilder $indexBuilder,
+    ) {
         $this->enhancer = new NullRecordReferenceEnhancer();
         $this->logger = new NullLogger();
     }
 
-    public static function create(string $indexRootPath, string $projectRoot): self
-    {
-        return new self($indexRootPath, $projectRoot);
+    public static function create(
+        string $indexRootPath,
+        string $projectRoot,
+        IndexBuilder $indexBuilder,
+    ): self {
+        return new self($indexRootPath, $projectRoot, $indexBuilder);
     }
 
     public function setLogger(LoggerInterface $logger): self
@@ -116,21 +114,10 @@ final class IndexAgentBuilder
         $search = $this->buildSearch($index);
         $index = new SearchAwareIndex($index, $search);
         $query = $this->buildQuery($index);
-        $builder = $this->buildBuilder($index);
-        $indexer = $this->buildIndexer($builder, $index);
+        $indexer = $this->buildIndexer($this->indexBuilder, $index);
         $search = new HydratingSearchClient($index, $search);
 
         return new RealIndexAgent($index, $query, $search, $indexer);
-    }
-
-    /**
-     * @param array<TolerantIndexer> $indexers
-     */
-    public function setIndexers(array $indexers): self
-    {
-        $this->indexers = $indexers;
-
-        return $this;
     }
 
     /**
@@ -180,6 +167,9 @@ final class IndexAgentBuilder
         return $this;
     }
 
+    /**
+     * Builds the file index
+     */
     private function buildIndex(): Index
     {
         $repository = new FileRepository(
@@ -210,14 +200,6 @@ final class IndexAgentBuilder
         ]);
 
         return $search;
-    }
-
-    private function buildBuilder(Index $index): IndexBuilder
-    {
-        if (null !== $this->indexers) {
-            return new TolerantIndexBuilder($index, $this->indexers, $this->logger);
-        }
-        return TolerantIndexBuilder::create($index);
     }
 
     private function buildIndexer(IndexBuilder $builder, Index $index): Indexer

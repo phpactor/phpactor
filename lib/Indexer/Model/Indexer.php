@@ -21,6 +21,7 @@ class Indexer
     public function getJob(?string $subPath = null): IndexJob
     {
         return new IndexJob(
+            $this->index,
             $this->builder,
             $this->provider->provideFileList($this->index, $subPath)
         );
@@ -28,7 +29,7 @@ class Indexer
 
     public function index(TextDocument $textDocument): void
     {
-        $this->builder->index($textDocument);
+        $this->builder->index($this->index, $textDocument);
     }
 
     /**
@@ -37,7 +38,7 @@ class Indexer
     public function indexDirty(TextDocument $textDocument): void
     {
         $this->dirtyDocumentTracker->markDirty($textDocument->uri());
-        $this->builder->index($textDocument);
+        $this->builder->index($this->index, $textDocument);
     }
 
     public function reset(): void

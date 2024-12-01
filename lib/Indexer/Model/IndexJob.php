@@ -8,8 +8,11 @@ use SplFileInfo;
 
 class IndexJob
 {
-    public function __construct(private IndexBuilder $indexBuilder, private FileList $fileList)
-    {
+    public function __construct(
+        private Index $index,
+        private IndexBuilder $indexBuilder,
+        private FileList $fileList,
+    ) {
     }
 
     /**
@@ -30,11 +33,12 @@ class IndexJob
             }
 
             $this->indexBuilder->index(
+                $this->index,
                 TextDocumentBuilder::create($contents)->uri($fileInfo->getPathname())->build()
             );
             yield $fileInfo->getPathname();
         }
-        $this->indexBuilder->done();
+        $this->indexBuilder->done($this->index);
     }
 
     public function run(): void

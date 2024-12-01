@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
+use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexBuilder;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
@@ -28,10 +29,11 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
 
-        $agent = $this->indexAgentBuilder('src')
-            ->setIndexers([
-                new ClassDeclarationIndexer(),
-            ])->buildAgent();
+        $agent = $this->indexAgentBuilder(
+            'src',
+            new TolerantIndexBuilder([new ClassDeclarationIndexer()]),
+        )
+            ->buildAgent();
 
         $agent->indexer()->getJob()->run();
 
@@ -77,12 +79,12 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
         $agent = $this->runIndexer(
-            [
+            new TolerantIndexBuilder([
                 new ClassDeclarationIndexer(),
                 new EnumDeclarationIndexer(),
                 new InterfaceDeclarationIndexer(),
                 new TraitDeclarationIndexer(),
-            ],
+            ]),
             'src'
         );
         $foundRecords = $agent->search()->search(new ShortNameBeginsWith($search));
@@ -152,10 +154,15 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
 
         $logger->warning(Argument::containingString($exectedMessage))->shouldBeCalled();
 
-        $agent = $this->indexAgentBuilder('src')
-            ->setIndexers([
-                new ClassDeclarationIndexer(),
-            ])->setLogger($logger->reveal())->buildAgent();
+        $agent = $this->indexAgentBuilder(
+            'src',
+            new TolerantIndexBuilder(
+                [new ClassDeclarationIndexer()],
+                $logger->reveal(),
+            ),
+        )
+            ->setLogger($logger->reveal())
+            ->buildAgent();
 
         $agent->indexer()->getJob()->run();
         $this->addToAssertionCount(1);
