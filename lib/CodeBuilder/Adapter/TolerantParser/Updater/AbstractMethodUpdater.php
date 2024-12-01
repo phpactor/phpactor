@@ -6,6 +6,7 @@ use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ParameterDeclarationList;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
@@ -30,8 +31,11 @@ abstract class AbstractMethodUpdater
     {
     }
 
-    public function updateMethods(Edits $edits, ClassLikePrototype $classPrototype, ClassLike $classNode): void
-    {
+    public function updateMethods(
+        Edits $edits,
+        ClassLikePrototype $classPrototype,
+        ClassLike|ObjectCreationExpression $classNode,
+    ): void {
         if (count($classPrototype->methods()) === 0) {
             return;
         }
@@ -137,10 +141,10 @@ abstract class AbstractMethodUpdater
     /**
     * @return array<Node>
     */
-    abstract protected function memberDeclarations(ClassLike $classNode): array;
+    abstract protected function memberDeclarations(ClassLike|ObjectCreationExpression $classNode): array;
 
     /** @return TMembersNodeType */
-    abstract protected function memberDeclarationsNode(ClassLike $classNode);
+    abstract protected function memberDeclarationsNode(ClassLike|ObjectCreationExpression $classNode);
 
     abstract protected function renderMethod(Renderer $renderer, Method $method): string;
 

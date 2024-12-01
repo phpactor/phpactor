@@ -96,12 +96,15 @@ class NodeUtil
     }
 
     /**
-     * @param Token|Node|mixed $nodeOrToken
+     * @param Token|Node|ObjectCreationExpression|mixed $nodeOrToken
      */
     public static function nameFromTokenOrNode(Node $node, $nodeOrToken): string
     {
         if ($nodeOrToken instanceof Token) {
             return (string)$nodeOrToken->getText($node->getFileContents());
+        }
+        if ($nodeOrToken instanceof ObjectCreationExpression) {
+            return 'class@anonymous:'.$nodeOrToken->getStartPosition();
         }
         if ($nodeOrToken instanceof Node) {
             return (string)$nodeOrToken->getText();

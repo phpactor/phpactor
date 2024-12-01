@@ -1,6 +1,7 @@
 <?php
 namespace Phpactor\CodeBuilder\Adapter\TolerantParser;
 
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -22,6 +23,8 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\InterfaceUpdater;
 use Phpactor\CodeBuilder\Adapter\TolerantParser\Updater\TraitUpdater;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
+use Microsoft\PhpParser\Token;
 
 class TolerantUpdater implements Updater
 {
@@ -119,6 +122,13 @@ class TolerantUpdater implements Updater
             if ($classNode instanceof EnumDeclaration) {
                 $name = $classNode->name->getText($node->getFileContents());
                 $enumNodes[$name] = $classNode;
+            }
+        }
+
+        foreach ($node->getDescendantNodes() as $classNode) {
+            if ($classNode instanceof ObjectCreationExpression && $classNode->classTypeDesignator instanceof Token) {
+                $name = NodeUtil::nameFromTokenOrNode($classNode, $classNode);
+                $classNodes[$name] = $classNode;
             }
         }
 
