@@ -3,6 +3,10 @@
 namespace Phpactor\Indexer\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Phpactor\Indexer\Adapter\Tolerant\CompositeIndexer;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantCompositeIndexer;
+use Phpactor\Indexer\Model\CompositeIndexer as PhpactorCompositeIndexer;
+use Phpactor\Indexer\Model\Indexer;
 use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
@@ -50,11 +54,14 @@ class IntegrationTestCase extends TestCase
         return $this->indexAgentBuilder()->buildTestAgent();
     }
 
-    protected function indexAgentBuilder(string $path = 'project'): IndexAgentBuilder
-    {
+    protected function indexAgentBuilder(
+        string $path = 'project',
+        ?PhpactorCompositeIndexer $indexBuilder = null,
+    ): IndexAgentBuilder {
         return IndexAgentBuilder::create(
             $this->workspace()->path('repo'),
             $this->workspace()->path($path),
+            $indexBuilder ?? TolerantCompositeIndexer::create(),
         )->setReferenceEnhancer(
             new WorseRecordReferenceEnhancer(
                 $this->createReflector(),
@@ -94,7 +101,9 @@ class IntegrationTestCase extends TestCase
             )
         );
     }
-
+    /**
+     * @param array<int,mixed> $config
+     */
     protected function container(array $config = []): Container
     {
         $key = serialize($config);
