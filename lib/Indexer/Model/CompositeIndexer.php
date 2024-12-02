@@ -4,7 +4,7 @@ namespace Phpactor\Indexer\Model;
 
 use Phpactor\TextDocument\TextDocument;
 
-interface IndexBuilder
+interface CompositeIndexer
 {
     public function index(Index $index, TextDocument $document): void;
 

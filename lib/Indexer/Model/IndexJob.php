@@ -10,7 +10,7 @@ class IndexJob
 {
     public function __construct(
         private Index $index,
-        private IndexBuilder $indexBuilder,
+        private CompositeIndexer $indexBuilder,
         private FileList $fileList,
     ) {
     }

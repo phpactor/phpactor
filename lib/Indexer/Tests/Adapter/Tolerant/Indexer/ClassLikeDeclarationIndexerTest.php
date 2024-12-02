@@ -2,7 +2,8 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
-use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexBuilder;
+use Phpactor\Indexer\Adapter\Tolerant\CompositeIndexer;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantCompositeIndexer;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
@@ -31,7 +32,7 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
 
         $agent = $this->indexAgentBuilder(
             'src',
-            new TolerantIndexBuilder([new ClassDeclarationIndexer()]),
+            new TolerantCompositeIndexer([new ClassDeclarationIndexer()]),
         )
             ->buildAgent();
 
@@ -79,7 +80,7 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
         $agent = $this->runIndexer(
-            new TolerantIndexBuilder([
+            new TolerantCompositeIndexer([
                 new ClassDeclarationIndexer(),
                 new EnumDeclarationIndexer(),
                 new InterfaceDeclarationIndexer(),
@@ -156,7 +157,7 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
 
         $agent = $this->indexAgentBuilder(
             'src',
-            new TolerantIndexBuilder(
+            new TolerantCompositeIndexer(
                 [new ClassDeclarationIndexer()],
                 $logger->reveal(),
             ),

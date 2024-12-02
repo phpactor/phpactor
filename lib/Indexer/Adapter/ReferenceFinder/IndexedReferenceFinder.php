@@ -41,10 +41,7 @@ class IndexedReferenceFinder implements ReferenceFinder
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         try {
-            $nodeContext = $this->reflector->reflectOffset(
-                $document,
-                $byteOffset->toInt()
-            )->nodeContext();
+            $nodeContext = $this->reflector->reflectOffset($document, $byteOffset->toInt())->nodeContext();
         } catch (NotFound) {
             return;
         }

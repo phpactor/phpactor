@@ -10,7 +10,7 @@ class Indexer
     private DirtyDocumentTracker $dirtyDocumentTracker;
 
     public function __construct(
-        private IndexBuilder $builder,
+        private CompositeIndexer $indexer,
         private Index $index,
         private FileListProvider $provider,
         ?DirtyDocumentTracker $dirtyDocumentTracker = null
@@ -22,14 +22,14 @@ class Indexer
     {
         return new IndexJob(
             $this->index,
-            $this->builder,
+            $this->indexer,
             $this->provider->provideFileList($this->index, $subPath)
         );
     }
 
     public function index(TextDocument $textDocument): void
     {
-        $this->builder->index($this->index, $textDocument);
+        $this->indexer->index($this->index, $textDocument);
     }
 
     /**
@@ -38,7 +38,7 @@ class Indexer
     public function indexDirty(TextDocument $textDocument): void
     {
         $this->dirtyDocumentTracker->markDirty($textDocument->uri());
-        $this->builder->index($this->index, $textDocument);
+        $this->indexer->index($this->index, $textDocument);
     }
 
     public function reset(): void

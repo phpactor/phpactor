@@ -9,6 +9,7 @@ use Phpactor\Indexer\Adapter\Filesystem\FilesystemFileListProvider;
 use Phpactor\Indexer\Adapter\Php\FileSearchIndex;
 use Phpactor\Indexer\Adapter\Php\Serialized\FileRepository;
 use Phpactor\Indexer\Adapter\Php\Serialized\SerializedIndex;
+use Phpactor\Indexer\Model\CompositeIndexer;
 use Phpactor\Indexer\Model\FileListProvider;
 use Phpactor\Indexer\Model\FileListProvider\ChainFileListProvider;
 use Phpactor\Indexer\Model\FileListProvider\DirtyFileListProvider;
@@ -68,7 +69,7 @@ final class IndexAgentBuilder
     private function __construct(
         private string $indexRoot,
         private string $projectRoot,
-        private IndexBuilder $indexBuilder,
+        private CompositeIndexer $indexBuilder,
     ) {
         $this->enhancer = new NullRecordReferenceEnhancer();
         $this->logger = new NullLogger();
@@ -77,7 +78,7 @@ final class IndexAgentBuilder
     public static function create(
         string $indexRootPath,
         string $projectRoot,
-        IndexBuilder $indexBuilder,
+        CompositeIndexer $indexBuilder,
     ): self {
         return new self($indexRootPath, $projectRoot, $indexBuilder);
     }
@@ -202,7 +203,7 @@ final class IndexAgentBuilder
         return $search;
     }
 
-    private function buildIndexer(IndexBuilder $builder, Index $index): Indexer
+    private function buildIndexer(CompositeIndexer $builder, Index $index): Indexer
     {
         return new Indexer(
             $builder,

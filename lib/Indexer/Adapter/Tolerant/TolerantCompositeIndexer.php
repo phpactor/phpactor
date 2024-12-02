@@ -14,16 +14,16 @@ use Phpactor\Indexer\Adapter\Tolerant\Indexer\InterfaceDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\MemberIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\TraitDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\TraitUseClauseIndexer;
+use Phpactor\Indexer\Model\CompositeIndexer;
 use Phpactor\Indexer\Model\Exception\CannotIndexNode;
 use Phpactor\Indexer\Model\Index;
-use Phpactor\Indexer\Model\IndexBuilder;
 use Phpactor\TextDocument\TextDocument;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use RuntimeException;
 use Throwable;
 
-final class TolerantIndexBuilder implements IndexBuilder
+final class TolerantCompositeIndexer implements CompositeIndexer
 {
     private Parser $parser;
 
@@ -66,7 +66,7 @@ final class TolerantIndexBuilder implements IndexBuilder
             $indexer->beforeParse($index, $document);
         }
 
-        $node = $this->parser->parseSourceFile($document->__toString(), $document->uri()->__toString());
+        $node = $this->parser->parseSourceFile($document->__toString(), $document->uri()?->__toString());
         $this->indexNode($index, $document, $node);
     }
 

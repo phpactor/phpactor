@@ -5,7 +5,7 @@ namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 use Closure;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ConstantDeclarationIndexer;
-use Phpactor\Indexer\Adapter\Tolerant\TolerantIndexBuilder;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantCompositeIndexer;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record\ConstantRecord;
@@ -26,7 +26,7 @@ class ConstantDeclarationIndexerTest extends TolerantIndexerTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
 
-        $agent = $this->indexAgentBuilder('src', new TolerantIndexBuilder(
+        $agent = $this->indexAgentBuilder('src', new TolerantCompositeIndexer(
             [ new ConstantDeclarationIndexer() ],
         ))->buildAgent();
         $agent->indexer()->getJob()->run();
