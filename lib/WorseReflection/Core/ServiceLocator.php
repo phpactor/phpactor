@@ -2,32 +2,34 @@
 
 namespace Phpactor\WorseReflection\Core;
 
+use Phpactor\WorseReflection\Bridge\PHPStan\DocblockParser\PHPStanDocblockParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
+use Phpactor\WorseReflection\Core\DocBlock\UnsupportedTagsParserFactory;
+use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\NodeContextFromMemberAccess;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Inference\Walker\DiagnosticsWalker;
-use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\FunctionLikeWalker;
+use Phpactor\WorseReflection\Core\Inference\Walker\PassThroughWalker;
 use Phpactor\WorseReflection\Core\Inference\Walker\VariableWalker;
-use Phpactor\WorseReflection\Core\Inference\NodeToTypeConverter;
-use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
-use Phpactor\WorseReflection\Core\Inference\FrameResolver;
-use Phpactor\WorseReflection\Core\Virtual\ChainReflectionMemberProvider;
-use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
-use Phpactor\WorseReflection\Reflector;
-use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
-use Phpactor\WorseReflection\Core\Reflector\CompositeReflector;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector\MemonizedReflector;
+use Phpactor\WorseReflection\Core\Reflector\CompositeReflector;
+use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
+use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflectorFactory;
 use Phpactor\WorseReflection\Core\Reflector\SourceCode\ContextualSourceCodeReflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
-use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
-use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflectorFactory;
+use Phpactor\WorseReflection\Core\Virtual\ChainReflectionMemberProvider;
+use Phpactor\WorseReflection\Core\Virtual\ReflectionMemberProvider;
+use Phpactor\WorseReflection\Reflector;
 use Psr\Log\LoggerInterface;
 
 class ServiceLocator
@@ -61,6 +63,7 @@ class ServiceLocator
         Cache $cache,
         private CacheForDocument $cacheForDocument,
         bool $enableContextualLocation = false,
+        bool $usePhpStanDocblock = false,
     ) {
         $sourceReflector = $reflectorFactory->create($this);
 
@@ -87,7 +90,14 @@ class ServiceLocator
         );
 
         $this->sourceLocator = $sourceLocator;
-        $this->docblockFactory = new DocblockParserFactory($this->reflector);
+
+        if ($usePhpStanDocblock) {
+            $this->docblockFactory = new PHPStanDocblockParserFactory($this->reflector);
+        } else {
+            $this->docblockFactory = new DocblockParserFactory($this->reflector);
+        }
+
+        $this->docblockFactory = new UnsupportedTagsParserFactory($this->docblockFactory);
         if (!$cache instanceof NullCache) {
             $this->docblockFactory = new CachedParserFactory($this->docblockFactory, $cache);
         }

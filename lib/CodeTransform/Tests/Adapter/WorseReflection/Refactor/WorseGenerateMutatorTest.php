@@ -91,6 +91,10 @@ class WorseGenerateMutatorTest extends WorseTestCase
             false,
             true,
         ];
+        yield 'synthetic types' => [
+            'generateMutator10.test',
+            $propertyName,
+        ];
     }
 
     public function testNonProperty(): void

@@ -10,6 +10,7 @@ use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Deprecation;
 use Phpactor\WorseReflection\Core\TypeResolver;
+use Phpactor\WorseReflection\Core\Types;
 
 class PlainDocblock implements DocBlock
 {
@@ -25,6 +26,12 @@ class PlainDocblock implements DocBlock
     public function __construct(string $raw = '')
     {
         $this->raw = $raw;
+    }
+
+    /** @return Types<Type> */
+    public function types(): Types
+    {
+        return new Types([]);
     }
 
     public function methodType(string $methodName): Type

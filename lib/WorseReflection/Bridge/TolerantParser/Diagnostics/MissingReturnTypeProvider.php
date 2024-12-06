@@ -86,6 +86,24 @@ class MissingReturnTypeProvider implements DiagnosticProvider
                 );
             }
         );
+        yield new DiagnosticExample(
+            title: 'finds return type on function',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar {
+                    /** @return string */
+                    public function foo()
+                    {
+                        return 'bar';
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
@@ -144,11 +162,16 @@ class MissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        if ($method->docblock()->returnType()->isMixed()) {
+        $docblockReturn = $method->docblock()->returnType();
+        if ($docblockReturn->isMixed()) {
             return;
         }
 
-        if ($method->class()->templateMap()->has($method->docblock()->returnType()->__toString())) {
+        if ($docblockReturn->isDefined()) {
+            return;
+        }
+
+        if ($method->class()->templateMap()->has($docblockReturn->__toString())) {
             return;
         }
 

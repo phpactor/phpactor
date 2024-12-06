@@ -10,17 +10,16 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Token;
 use PHPUnit\Framework\Assert;
-use Phpactor\DocblockParser\Ast\Docblock;
-use Phpactor\DocblockParser\Ast\Type\CallableNode;
-use Phpactor\DocblockParser\Ast\Type\ClassNode;
 use Phpactor\TextDocument\ByteOffsetRange;
-use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\ParsedDocblock;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionScope;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
 use Phpactor\WorseReflection\Core\Diagnostics;
+use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
+use Phpactor\WorseReflection\Core\Type\AggregateType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 
 /**
  * Report if a use statement is not required.
@@ -44,9 +43,7 @@ class UnusedImportProvider implements DiagnosticProvider
             new ReflectionScope($resolver->reflector(), $node)
         );
 
-        if ($docblock instanceof ParsedDocblock) {
-            $this->extractDocblockNames($docblock->rawNode(), $resolver, $node);
-        }
+        $this->extractDocblockNames($docblock, $resolver, $node);
 
         if ($node instanceof QualifiedName && !$node->parent instanceof NamespaceUseClause && !$node->parent instanceof NamespaceDefinition && !$node->parent instanceof NamespaceUseGroupClause) {
             $prefix = $node->getNameParts()[0];
@@ -111,7 +108,18 @@ class UnusedImportProvider implements DiagnosticProvider
 
             // scan all usages and check if imported name is used relatively
             foreach (array_keys($this->usedPrefixes) as $prefix) {
-                if (0 === strpos($prefix, $importedName . '\\')) {
+                [$importedNamespace, $importedIdentifierName] = explode(':', $importedName);
+                [$usedNamespace, $usedName] = explode(':', $prefix);
+
+                if ($importedNamespace !== $usedNamespace) {
+                    continue;
+                }
+
+                if (str_starts_with($usedName, $importedIdentifierName . '\\')) {
+                    continue 2;
+                }
+
+                if (str_ends_with($usedName, $importedIdentifierName)) {
                     continue 2;
                 }
             }
@@ -455,19 +463,71 @@ class UnusedImportProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
+        yield new DiagnosticExample(
+            title: 'used by docblock with import as array',
+            source: <<<'PHP'
+                <?php
+
+                namespace Phpactor;
+
+                use Dummy;
+
+                class Test {
+                    /** @var Dummy[] */
+                    private array $foo;
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'used by docblock with generics',
+            source: <<<'PHP'
+                <?php
+
+                namespace Phpactor;
+
+                use Foo;
+                use Bar;
+
+                class Test {
+                    /** @return Foo<Bar> */
+                    public funtion foo($param): Foo {
+                      return $param;
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
     }
 
-    private function extractDocblockNames(Docblock $docblock, NodeContextResolver $resolver, Node $node): void
+    public function name(): string
+    {
+        return 'unused_import';
+    }
+
+    private function extractDocblockNames(DocBlock $docblock, NodeContextResolver $resolver, Node $node): void
     {
         $prefix = sprintf('%s:', $this->getNamespaceName($node));
-        foreach ($docblock->descendantElements(ClassNode::class) as $type) {
-            $this->usedPrefixes[$prefix . $type->toString()] = true;
-        }
-        foreach ($docblock->descendantElements(CallableNode::class) as $type) {
-            assert($type instanceof CallableNode);
-            if ($type->name->toString() === 'Closure') {
-                $this->usedPrefixes[$prefix . 'Closure'] = true;
+
+        $allTypes = [];
+        foreach ($docblock->types() as $type) {
+            if ($type instanceof AggregateType || $type instanceof PseudoIterableType) {
+                foreach ($type->allTypes() as $type) {
+                    $allTypes[] = $type;
+                }
+            } else {
+                $allTypes[] = $type;
             }
+        }
+
+        foreach ($allTypes as $type) {
+            $this->usedPrefixes[$prefix . $type->__toString()] = true;
         }
     }
 

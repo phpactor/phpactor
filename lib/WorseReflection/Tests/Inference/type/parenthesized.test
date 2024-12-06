@@ -3,10 +3,10 @@
 /** @var (string|int)|int */
 $foo;
 
-wrAssertType('(string|int)|int', $foo);
+wrAssertType('string|int', $foo);
 
 if (!is_int($foo)) {
-    wrAssertType('string|int', $foo);
+    wrAssertType('string', $foo);
 }
 
 if (is_int($foo)) {

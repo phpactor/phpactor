@@ -79,6 +79,12 @@ class WorseGenerateAccessorTest extends WorseTestCase
             'get',
             false,
         ];
+        yield 'synthetic types in phpdoc' => [
+            'generateAccessor9.test',
+            $propertyName,
+            'get',
+            false,
+        ];
     }
 
     public function testNonProperty(): void

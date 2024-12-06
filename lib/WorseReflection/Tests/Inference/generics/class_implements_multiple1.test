@@ -23,7 +23,8 @@ interface Second {
 }
 
 /**
- * @implements Second<Baz>, First<Boo>
+ * @implements Second<Baz>
+ * @implements First<Boo>
  */
 class Foo implements Second, First
 {

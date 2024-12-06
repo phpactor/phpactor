@@ -36,6 +36,8 @@ final class ReflectorBuilder
 
     private bool $enableContextualSourceLocation = false;
 
+    private bool $usePhpStanDocblock = false;
+
     private ?SourceCodeReflectorFactory $sourceReflectorFactory = null;
 
     /**
@@ -144,7 +146,8 @@ final class ReflectorBuilder
             $this->memberContextResolvers,
             $this->buildCache(),
             $this->cacheForDocument ?? new CacheForDocument(fn () => new NullCache()),
-            $this->enableContextualSourceLocation
+            $this->enableContextualSourceLocation,
+            $this->usePhpStanDocblock
         ))->reflector();
     }
 
@@ -205,6 +208,12 @@ final class ReflectorBuilder
     public function addMemberContextResolver(MemberContextResolver $memberContextResolver): self
     {
         $this->memberContextResolvers[] = $memberContextResolver;
+        return $this;
+    }
+
+    public function enablePHPStanDocblockParser(): ReflectorBuilder
+    {
+        $this->usePhpStanDocblock = true;
         return $this;
     }
 
