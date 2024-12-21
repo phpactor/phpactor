@@ -12,6 +12,14 @@
     </include>
     <exclude>
       <directory>vendor/</directory>
+      <directory>./tests/System</directory>
+      <directory>./tests/Unit</directory>
+      <directory>./tests/Smoke</directory>
+      <directory>./tests/Integration</directory>
+      <directory>./tests</directory>
+
+      <directory>./lib/*/Tests/</directory>
+      <directory>./lib/Extension/*/Tests/</directory>
     </exclude>
   </coverage>
   <testsuites>
