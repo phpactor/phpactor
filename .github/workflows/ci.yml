@@ -112,6 +112,11 @@ jobs:
                       os: 'windows-2022'
 
         steps:
+            -   name: Set git to use LF
+                if: "contains(matrix.os, 'windows')"
+                run: |
+                    git config --global core.autocrlf false
+                    git config --global core.eol lf
             -
                 name: "Checkout code"
                 uses: "actions/checkout@v4"
