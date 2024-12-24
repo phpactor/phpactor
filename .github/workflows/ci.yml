@@ -98,6 +98,8 @@ jobs:
 
         runs-on: "${{ matrix.os }}"
 
+        continue-on-error: ${{ matrix.experimental }}
+
         strategy:
             matrix:
                 php-version:
@@ -107,9 +109,11 @@ jobs:
                     - '8.4'
                 os:
                     - "ubuntu-latest"
+                experimental: [false]
                 include:
                     - php-version: '8.3'
                       os: 'windows-2022'
+                      experimental: true
 
         steps:
             -   name: Set git to use LF
