@@ -9,22 +9,10 @@ use Phpactor\LanguageServerProtocol\Range;
 
 class EvaluatableExpression
 {
-    /**
-     *
-     * @var string|null
-     */
-    public $expression;
+    public ?string $expression;
 
-    /**
-     *
-     * @var Range
-     */
-    public $range;
+    public Range $range;
 
-    /**
-     * @param string|null $expression
-     * @param Range $range
-     */
     public function __construct(Range $range, ?string $expression = null)
     {
         $this->expression = $expression;
@@ -51,7 +39,7 @@ class EvaluatableExpression
 
                 throw new RuntimeException(sprintf(
                     'Parameter "%s" on class "%s" not known, known parameters: "%s"',
-                    $key, 
+                    $key,
                     self::class,
                     implode('", "', array_keys($map))
                 ));
@@ -81,7 +69,7 @@ class EvaluatableExpression
             $names = $map[$key]['names'];
             $value = self::invokeFromNames($names, $value, $allowUnknownKeys) ?: $value;
         }
-        
+
         return Invoke::new(self::class, $array);
     }
 
@@ -104,5 +92,5 @@ class EvaluatableExpression
 
         throw $lastException;
     }
-        
+
 }

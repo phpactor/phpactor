@@ -15,7 +15,6 @@ use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
 use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
-use Phpactor\ObjectRenderer\Model\ObjectRenderer;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -74,10 +73,6 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
         $capabilities->experimental['xevaluatableExpressionProvider'] = true;
     }
 
-    /**
-     * @param Node $node
-     * @return EvaluatableExpression|null
-     */
     private function nodeToEvaluatable(Node $node): ?EvaluatableExpression
     {
         if ($node instanceof Node\Parameter) {
@@ -99,7 +94,7 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
                     expression: $node->getText($node->getFileContents()),
                     range: $this->byteOffsetRangeForNode($node),
                 );
-    }
+        }
         return null;
     }
 
@@ -111,5 +106,5 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
         // Note: Cloud have usexd NodeUtil::byteOffsetRangeForNode but it's limited to Variable
         $boRange = ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition());
         return RangeConverter::toLspRange($boRange, $node->getFileContents());
-    }    
+    }
 }
