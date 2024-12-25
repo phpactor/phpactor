@@ -60,11 +60,8 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
 
             $rootNode = $this->parser->parseSourceFile((string) $document, $document->uri()?->__toString());
             $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
-            if ($node) {
-                $ret = $this->nodeToEvaluatable($node);
-                return $ret;
-            }
-            return null;
+            $ret = $this->nodeToEvaluatable($node);
+            return $ret;
         });
     }
 
@@ -83,7 +80,6 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
                 );
         }
         if (
-            $node instanceof Node\Parameter ||
             $node instanceof Node\Expression\Variable ||
             $node instanceof Node\Expression\SubscriptExpression ||
             $node instanceof Node\Expression\MemberAccessExpression ||
@@ -91,7 +87,7 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
         ) {
             return
                 new EvaluatableExpression(
-                    expression: $node->getText($node->getFileContents()),
+                    expression: $node->getText(),
                     range: $this->byteOffsetRangeForNode($node, $node),
                 );
         }
