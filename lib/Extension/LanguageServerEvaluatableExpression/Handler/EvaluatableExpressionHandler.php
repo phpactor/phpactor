@@ -6,6 +6,7 @@ use function Amp\call;
 use Amp\Promise;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Token;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\Protocol\EvaluatableExpression;
@@ -69,7 +70,6 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
-        // TODO
         $capabilities->experimental['xevaluatableExpressionProvider'] = true;
     }
 
@@ -79,7 +79,7 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
             return
                 new EvaluatableExpression(
                     expression: $node->variableName->getText($node->getFileContents()),
-                    range: $this->byteOffsetRangeForNode($node),
+                    range: $this->byteOffsetRangeForNode($node->variableName, $node),
                 );
         }
         if (
@@ -92,7 +92,7 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
             return
                 new EvaluatableExpression(
                     expression: $node->getText($node->getFileContents()),
-                    range: $this->byteOffsetRangeForNode($node),
+                    range: $this->byteOffsetRangeForNode($node, $node),
                 );
         }
         return null;
@@ -101,10 +101,10 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
     /**
      * Converts Microsoft PhpParser Node to LSP Range.
      */
-    private function byteOffsetRangeForNode(Node $node): Range
+    private function byteOffsetRangeForNode(Node|Token $token, Node $textNode): Range
     {
         // Note: Cloud have usexd NodeUtil::byteOffsetRangeForNode but it's limited to Variable
-        $boRange = ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition());
-        return RangeConverter::toLspRange($boRange, $node->getFileContents());
+        $boRange = ByteOffsetRange::fromInts($token->getStartPosition(), $token->getEndPosition());
+        return RangeConverter::toLspRange($boRange, $textNode->getFileContents());
     }
 }

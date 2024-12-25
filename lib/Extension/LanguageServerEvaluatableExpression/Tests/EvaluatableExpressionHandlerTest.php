@@ -53,5 +53,8 @@ class EvaluatableExpressionHandlerTest extends IntegrationTestCase
         yield 'just foo' => [
             '<?php if (<>$fo<>o<>->abc[$aaa] == "test") {};',
         ];
+        yield 'arg' => [
+            '<?php function test(Sometype <>$a<>rg<>) {};',
+        ];
     }
 }
