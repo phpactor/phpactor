@@ -9,6 +9,8 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\Handler\EvaluatableExpressionHandler;
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
+use Microsoft\PhpParser\Parser;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 
 class LanguageServerEvaluatableExpressionExtension implements Extension
 {
@@ -16,8 +18,8 @@ class LanguageServerEvaluatableExpressionExtension implements Extension
     {
         $container->register('language_server_completion.handler.evaluatable_expression', function (Container $container) {
             return new EvaluatableExpressionHandler(
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => []]);
     }
