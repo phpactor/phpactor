@@ -368,7 +368,7 @@ class NodeUtil
         return false;
     }
 
-    public static function byteOffsetRangeForNode(Variable $node): ByteOffsetRange
+    public static function byteOffsetRangeForNode(Node $node): ByteOffsetRange
     {
         return ByteOffsetRange::fromInts($node->getStartPosition(), $node->getEndPosition());
     }
