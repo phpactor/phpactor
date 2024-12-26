@@ -64,6 +64,8 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
     {
+        $capabilities->experimental ??= [];
+        // @phpstan-ignore offsetAccess.nonOffsetAccessible
         $capabilities->experimental['xevaluatableExpressionProvider'] = true;
     }
 
