@@ -16,7 +16,7 @@ class LanguageServerEvaluatableExpressionExtension implements Extension
 {
     public function load(ContainerBuilder $container): void
     {
-        $container->register('language_server_completion.handler.evaluatable_expression', function (Container $container) {
+        $container->register('language_server_evaluatable_expression.handler', function (Container $container) {
             return new EvaluatableExpressionHandler(
                 $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
                 $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),

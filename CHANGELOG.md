@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## master
+
+Features:
+
+  - Support vscode evaluatable expressions #2905 @zobo
+
 ## 2024-11-28.1
 
 Bug fixes:
