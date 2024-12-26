@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerEvaluatableExpression\Handler;
 
-use function Amp\call;
+use Amp\Success;
 use Amp\Promise;
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Node;
@@ -43,25 +43,23 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
         TextDocumentIdentifier $textDocument,
         Position $position
     ): Promise {
-        return call(function () use ($textDocument, $position) {
-            $document = $this->workspace->get($textDocument->uri);
-            $offset = PositionConverter::positionToByteOffset($position, $document->text);
-            $document = TextDocumentBuilder::create($document->text)
-                ->uri($document->uri)
-                ->language('php')
-                ->build();
+        $document = $this->workspace->get($textDocument->uri);
+        $offset = PositionConverter::positionToByteOffset($position, $document->text);
+        $document = TextDocumentBuilder::create($document->text)
+            ->uri($document->uri)
+            ->language('php')
+            ->build();
 
-            $char = substr($document, $offset->toInt(), 1);
+        $char = substr($document, $offset->toInt(), 1);
 
-            // do not provide evaluatable for whitespace
-            if (trim($char) == '') {
-                return null;
-            }
+        // do not provide evaluatable for whitespace
+        if (trim($char) == '') {
+            return new Success(null);
+        }
 
-            $rootNode = $this->parser->parseSourceFile((string) $document, $document->uri()?->__toString());
-            $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
-            return $this->nodeToEvaluatable($node);
-        });
+        $rootNode = $this->parser->parseSourceFile((string) $document, $document->uri()?->__toString());
+        $node = $rootNode->getDescendantNodeAtPosition($offset->toInt());
+        return new Success($this->nodeToEvaluatable($node));
     }
 
     public function registerCapabiltiies(ServerCapabilities $capabilities): void
