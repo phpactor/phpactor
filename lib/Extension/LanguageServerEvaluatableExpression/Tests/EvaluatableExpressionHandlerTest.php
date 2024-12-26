@@ -30,6 +30,7 @@ class EvaluatableExpressionHandlerTest extends IntegrationTestCase
             'textDocument' => new TextDocumentIdentifier(self::PATH),
             'position' => PositionConverter::byteOffsetToPosition(ByteOffset::fromInt((int)$offset), $text)
         ]);
+        self::assertNotNull($response);
         $tester->assertSuccess($response);
         $result = $response->result;
         $this->assertInstanceOf(EvaluatableExpression::class, $result);

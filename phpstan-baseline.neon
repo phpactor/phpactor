@@ -3678,16 +3678,6 @@ parameters:
 		-
 			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
 			count: 1
-			path: lib/Extension/LanguageServerEvaluatableExpression/Tests/EvaluatableExpressionHandlerTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$response of method Phpactor\\\\LanguageServer\\\\Test\\\\LanguageServerTester\\:\\:assertSuccess\\(\\) expects Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage, Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerEvaluatableExpression/Tests/EvaluatableExpressionHandlerTest.php
-
-		-
-			message: "#^Cannot access property \\$result on Phpactor\\\\LanguageServer\\\\Core\\\\Rpc\\\\ResponseMessage\\|null\\.$#"
-			count: 1
 			path: lib/Extension/LanguageServerCompletion/Tests/Unit/Handler/SignatureHelpHandlerTest.php
 
 		-
