@@ -7,12 +7,12 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Diff\RangesForDiff;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand\FormatCommand;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
-use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
-use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -25,6 +25,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
     public const PARAM_SHOW_DIAGNOSTICS = 'language_server_php_cs_fixer.show_diagnostics';
     public const PARAM_CONFIG = 'language_server_php_cs_fixer.config';
     public const PARAM_ENABLED = 'language_server_php_cs_fixer.enabled';
+    public const PARAM_WRAPPER = 'language_server_php_cs_fixer.wrapper';
 
     public function load(ContainerBuilder $container): void
     {
@@ -40,11 +41,17 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                     $configPath = $pathResolver->resolve($container->parameter(self::PARAM_CONFIG)->string());
                 }
 
+                $wrapper = null;
+                if ($container->parameter(self::PARAM_WRAPPER)->value()) {
+                    $wrapper = $pathResolver->resolve($container->parameter(self::PARAM_WRAPPER)->string());
+                }
+
                 return new PhpCsFixerProcess(
                     $path,
                     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
                     $container->parameter(self::PARAM_ENV)->value(),
-                    $configPath
+                    $configPath,
+                    $wrapper
                 );
             }
         );
@@ -52,7 +59,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
         $container->register(PhpCsFixerFormatter::class, function (Container $container) {
             return new PhpCsFixerFormatter($container->get(PhpCsFixerProcess::class));
         }, [
-            LanguageServerExtension::TAG_FORMATTER => []
+            LanguageServerExtension::TAG_FORMATTER => [],
         ]);
 
         $container->register(PhpCsFixerDiagnosticsProvider::class, function (Container $container) {
@@ -64,7 +71,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('php-cs-fixer'),
-            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
         ]);
 
         $container->register(FormatCommand::class, function (Container $container) {
@@ -76,7 +83,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
-                'name' => 'php_cs_fixer.fix'
+                'name' => 'php_cs_fixer.fix',
             ],
         ]);
     }
@@ -91,13 +98,15 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             ],
             self::PARAM_SHOW_DIAGNOSTICS => true,
             self::PARAM_CONFIG => null,
+            self::PARAM_WRAPPER => null,
         ]);
 
         $schema->setDescriptions([
             self::PARAM_PHP_CS_FIXER_BIN => 'Path to the php-cs-fixer executable',
             self::PARAM_ENV => 'Environment for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)',
             self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP CS Fixer diagnostics are shown',
-            self::PARAM_CONFIG => 'Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php'
+            self::PARAM_CONFIG => 'Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php',
+            self::PARAM_WRAPPER => 'Run PHP CS Fixer in wrapper as command argument. Ex., "docker exec -i container_name /bin/sh -c"',
         ]);
     }
 
