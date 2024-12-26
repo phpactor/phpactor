@@ -3,14 +3,18 @@
 namespace Phpactor\Extension\LanguageServerEvaluatableExpression\Tests;
 
 use Generator;
+use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
+use Phpactor\Extension\LanguageServerEvaluatableExpression\Handler\EvaluatableExpressionHandler;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\Protocol\EvaluatableExpression;
 use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
-use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
+use Phpactor\LanguageServer\LanguageServerTesterBuilder;
+use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\TestUtils\ExtractOffset;
+use Phpactor\TestUtils\PHPUnit\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 
-class EvaluatableExpressionHandlerTest extends IntegrationTestCase
+class EvaluatableExpressionHandlerTest extends TestCase
 {
     private const PATH = 'file:///hello';
 
@@ -57,5 +61,12 @@ class EvaluatableExpressionHandlerTest extends IntegrationTestCase
         yield 'arg' => [
             '<?php function test(Sometype <>$a<>rg<>) {};',
         ];
+    }
+
+    protected function createTester(): LanguageServerTester
+    {
+        $tester = LanguageServerTesterBuilder::create();
+        $tester->addHandler(new EvaluatableExpressionHandler($tester->workspace(), new Parser()));
+        return $tester->build();
     }
 }

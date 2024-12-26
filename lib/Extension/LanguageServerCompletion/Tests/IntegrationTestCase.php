@@ -14,7 +14,6 @@ use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformEx
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServerCompletion\Tests\Extension\TestExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
-use Phpactor\Extension\LanguageServerEvaluatableExpression\LanguageServerEvaluatableExpressionExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -56,7 +55,6 @@ class IntegrationTestCase extends TestCase
             SourceCodeFilesystemExtension::class,
             LanguageServerWorseReflectionExtension::class,
             LanguageServerHoverExtension::class,
-            LanguageServerEvaluatableExpressionExtension::class,
             PhpExtension::class,
             TestExtension::class,
             IndexerExtension::class,
