@@ -8,7 +8,6 @@ use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
-use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\Protocol\EvaluatableExpression;
 use Phpactor\LanguageServerProtocol\Position;
 use Phpactor\LanguageServerProtocol\ServerCapabilities;
@@ -17,8 +16,6 @@ use Phpactor\LanguageServer\Core\Handler\CanRegisterCapabilities;
 use Phpactor\LanguageServer\Core\Handler\Handler;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\TextDocument\TextDocumentBuilder;
-use Phpactor\WorseReflection\Core\Util\NodeUtil;
-use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\LanguageServerProtocol\Range;
 
 class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
@@ -72,25 +69,28 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
     private function nodeToEvaluatable(Node $node): ?EvaluatableExpression
     {
         if ($node instanceof Node\Parameter) {
-            return
-                new EvaluatableExpression(
-                    expression: $node->variableName->getText($node->getFileContents()),
-                    range: $this->byteOffsetRangeForNode($node->variableName, $node),
-                );
+            return $this->evaluatableExpressionForNode($node->variableName, $node);
         }
         if (
             $node instanceof Node\Expression\Variable ||
             $node instanceof Node\Expression\SubscriptExpression ||
-            $node instanceof Node\Expression\MemberAccessExpression ||
-            (($node2 = $node->getFirstAncestor(Node\Expression\SubscriptExpression::class)) && ($node = $node2))
+            $node instanceof Node\Expression\MemberAccessExpression
         ) {
-            return
-                new EvaluatableExpression(
-                    expression: $node->getText(),
-                    range: $this->byteOffsetRangeForNode($node, $node),
-                );
+            return $this->evaluatableExpressionForNode($node, $node);
+        }
+        if ($node2 = $node->getFirstAncestor(Node\Expression\SubscriptExpression::class)) {
+            return $this->evaluatableExpressionForNode($node2, $node2);
         }
         return null;
+    }
+
+    private function evaluatableExpressionForNode(Node|Token $token, Node $textNode): EvaluatableExpression
+    {
+        return
+            new EvaluatableExpression(
+                expression: (string)$token->getText($textNode->getFileContents()),
+                range: $this->byteOffsetRangeForNode($token, $textNode),
+            );
     }
 
     /**
@@ -98,8 +98,9 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
      */
     private function byteOffsetRangeForNode(Node|Token $token, Node $textNode): Range
     {
-        // Note: Cloud have usexd NodeUtil::byteOffsetRangeForNode but it's limited to Variable
-        $boRange = ByteOffsetRange::fromInts($token->getStartPosition(), $token->getEndPosition());
-        return RangeConverter::toLspRange($boRange, $textNode->getFileContents());
+        return new Range(
+            PositionConverter::intByteOffsetToPosition($token->getStartPosition(), $textNode->getFileContents()),
+            PositionConverter::intByteOffsetToPosition($token->getEndPosition(), $textNode->getFileContents()),
+        );
     }
 }
