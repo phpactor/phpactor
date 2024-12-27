@@ -526,11 +526,6 @@ parameters:
 			path: lib/CodeBuilder/Util/TextUtil.php
 
 		-
-			message: "#^Offset 0 does not exist on array\\{0\\?\\: string, 1\\?\\: non\\-empty\\-string\\}\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantExtractExpression.php
-
-		-
 			message: "#^Cannot use array destructuring on array\\|null\\.$#"
 			count: 1
 			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantImportName.php
@@ -689,21 +684,6 @@ parameters:
 			message: "#^Cannot access property \\$parent on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 2
 			path: lib/Completion/Bridge/TolerantParser/DebugTolerantCompletor.php
-
-		-
-			message: "#^Cannot call method __toString\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
-
-		-
-			message: "#^Parameter \\#1 \\$candidate of method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletor\\:\\:getClassNameForImport\\(\\) expects Phpactor\\\\ClassFileConverter\\\\Domain\\\\ClassName, mixed given\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:complete\\(\\) should return bool but returns mixed\\.$#"
@@ -3591,11 +3571,6 @@ parameters:
 			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:constants\\(\\)\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:properties\\(\\)\\.$#"
 			count: 5
 			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
@@ -4271,31 +4246,6 @@ parameters:
 			path: lib/Extension/Logger/Tests/Unit/LoggingExtensionTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:__construct\\(\\) has parameter \\$autoCreateConfig with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:canCreateNew\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:destination\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:destinationsFor\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:variant\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/Handler/NavigateHandler.php
@@ -4304,11 +4254,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/Handler/NavigateHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$destinations of static method Phpactor\\\\PathFinder\\\\PathFinder\\:\\:fromDestinations\\(\\) expects array\\<string, string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/NavigationExtension.php
 
 		-
 			message: "#^Parameter \\#1 \\$navigator of class Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator constructor expects Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\Navigator, mixed given\\.$#"
@@ -4337,11 +4282,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$classNew of class Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator constructor expects Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassNew, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/NavigationExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$autoCreateConfig of class Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator constructor expects array, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/NavigationExtension.php
 
@@ -5246,11 +5186,6 @@ parameters:
 			path: lib/Extension/WorseReflectionAnalyse/WorseReflectionAnalyseExtension.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:constants\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\ClassReflector\\:\\:reflect\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
@@ -6016,11 +5951,6 @@ parameters:
 			path: lib/WorseReflection/Core/DefaultValue.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\DocBlock\\\\DocBlockInspector\\:\\:typesForMethod\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/DocBlockInspector.php
-
-		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/FrameResolver.php
@@ -6239,11 +6169,6 @@ parameters:
 			message: "#^Parameter \\#3 \\$parameter of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionParameter constructor expects Microsoft\\\\PhpParser\\\\Node\\\\Parameter, mixed given\\.$#"
 			count: 2
 			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionParameterCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionSourceCode\\:\\:findClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionSourceCode.php
 
 		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:\\$innerReflector is never read, only written\\.$#"
