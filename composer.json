@@ -114,7 +114,8 @@
         ],
         "integrate": [
             "@composer validate --strict",
-            "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix",
+            "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+            "@php vendor/bin/php-cs-fixer fix",
             "@php vendor/bin/phpstan analyse --memory-limit=-1",
             "@php vendor/bin/phpunit",
             "@php vendor/bin/phpbench run --iterations=1 --revs=1",
