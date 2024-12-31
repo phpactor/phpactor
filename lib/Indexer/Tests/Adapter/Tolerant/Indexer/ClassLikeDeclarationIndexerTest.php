@@ -2,7 +2,6 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
-use Phpactor\Indexer\Adapter\Tolerant\CompositeIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantCompositeIndexer;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Generator;

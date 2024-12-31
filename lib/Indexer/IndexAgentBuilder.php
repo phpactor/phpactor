@@ -17,7 +17,6 @@ use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\IndexAccess;
 use Phpactor\Indexer\Model\Index\SearchAwareIndex;
 use Phpactor\Indexer\Model\RealIndexAgent;
-use Phpactor\Indexer\Model\IndexBuilder;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\Indexer;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer;

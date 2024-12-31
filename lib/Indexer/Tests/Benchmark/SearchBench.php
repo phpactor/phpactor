@@ -3,7 +3,6 @@
 namespace Phpactor\Indexer\Tests\Benchmark;
 
 use Phpactor\Indexer\Adapter\Php\FileSearchIndex;
-use Phpactor\Indexer\Adapter\Tolerant\CompositeIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\TolerantCompositeIndexer;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
