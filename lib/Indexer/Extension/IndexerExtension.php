@@ -26,6 +26,7 @@ use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\Indexer\Adapter\Php\PhpIndexerLister;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedNameSearcher;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantCompositeIndexer;
 use Phpactor\Indexer\Adapter\Worse\IndexerClassSourceLocator;
 use Phpactor\Indexer\Adapter\Worse\IndexerConstantSourceLocator;
 use Phpactor\Indexer\Adapter\Worse\IndexerFunctionSourceLocator;
@@ -34,7 +35,9 @@ use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
 use Phpactor\Indexer\Extension\Command\IndexSearchCommand;
 use Phpactor\Indexer\IndexAgent;
 use Phpactor\Indexer\IndexAgentBuilder;
+use Phpactor\Indexer\Model\CompositeIndexer;
 use Phpactor\Indexer\Model\IndexAccess;
+use Phpactor\Indexer\Model\Indexer;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Extension\Command\IndexQueryCommand;
@@ -43,7 +46,6 @@ use Phpactor\Indexer\Extension\Command\IndexCleanCommand;
 use Phpactor\Indexer\Extension\Rpc\IndexHandler;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\Indexer\Model\SearchClient;
-use Phpactor\Indexer\Model\Indexer;
 use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentLocator;
 use Phpactor\TextDocument\TextDocumentUri;
@@ -223,7 +225,11 @@ class IndexerExtension implements Extension
             $stubPaths = $container->parameter(self::PARAM_STUB_PATHS)->value();
             $stubPaths = array_map(fn (string $path): string => $resolver->resolve($path), $stubPaths);
 
-            return IndexAgentBuilder::create($indexPath, $this->projectRoot($container))
+            return IndexAgentBuilder::create(
+                $indexPath,
+                $this->projectRoot($container),
+                $container->get(CompositeIndexer::class),
+            )
                 /** @phpstan-ignore-next-line */
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
                 /** @phpstan-ignore-next-line */
@@ -236,6 +242,10 @@ class IndexerExtension implements Extension
 
         $container->register(Indexer::class, function (Container $container) {
             return $container->get(IndexAgent::class)->indexer();
+        });
+
+        $container->register(CompositeIndexer::class, function (Container $container) {
+            return TolerantCompositeIndexer::create($this->logger($container));
         });
 
         $container->register(self::SERVICE_INDEXER_EXCLUDE_PATTERNS, function (Container $container) {

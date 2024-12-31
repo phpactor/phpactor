@@ -21,7 +21,7 @@ class MemberIndexerTest extends TolerantIndexerTestCase
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
 
-        $agent = $this->runIndexer(new MemberIndexer(), 'src');
+        $agent = $this->runSingleIndexer(new MemberIndexer(), 'src');
 
         $memberRecord = $agent->index()->get(MemberRecord::fromMemberReference($memberReference));
         assert($memberRecord instanceof MemberRecord);

@@ -3,6 +3,7 @@
 namespace Phpactor\Indexer\Tests\Benchmark;
 
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantCompositeIndexer;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\TestUtils\Workspace;
 use Phpactor\TextDocument\ByteOffset;
@@ -23,6 +24,7 @@ class IndexedReferenceFinderBench
         $agent = IndexAgentBuilder::create(
             $this->workspace()->path('.index'),
             $this->workspace()->path(),
+            TolerantCompositeIndexer::create()
         )->buildAgent();
         $agent->indexer()->getJob()->run();
 

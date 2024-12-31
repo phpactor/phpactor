@@ -15,7 +15,7 @@ class TraitUseClauseIndexerTest extends TolerantIndexerTestCase
     {
         $this->workspace()->reset();
         $this->workspace()->loadManifest($manifest);
-        $agent = $this->runIndexer(new TraitUseClauseIndexer(), 'src');
+        $agent = $this->runSingleIndexer(new TraitUseClauseIndexer(), 'src');
         self::assertEquals($expectedCount, count($agent->query()->class()->implementing($fqn)));
     }
 

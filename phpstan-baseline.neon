@@ -526,11 +526,6 @@ parameters:
 			path: lib/CodeBuilder/Util/TextUtil.php
 
 		-
-			message: "#^Offset 0 does not exist on array\\{0\\?\\: string, 1\\?\\: non\\-empty\\-string\\}\\.$#"
-			count: 1
-			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantExtractExpression.php
-
-		-
 			message: "#^Cannot use array destructuring on array\\|null\\.$#"
 			count: 1
 			path: lib/CodeTransform/Adapter/TolerantParser/Refactor/TolerantImportName.php
@@ -689,21 +684,6 @@ parameters:
 			message: "#^Cannot access property \\$parent on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 2
 			path: lib/Completion/Bridge/TolerantParser/DebugTolerantCompletor.php
-
-		-
-			message: "#^Cannot call method __toString\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
-
-		-
-			message: "#^Parameter \\#1 \\$candidate of method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletor\\:\\:getClassNameForImport\\(\\) expects Phpactor\\\\ClassFileConverter\\\\Domain\\\\ClassName, mixed given\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
 
 		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:complete\\(\\) should return bool but returns mixed\\.$#"
@@ -3591,11 +3571,6 @@ parameters:
 			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:constants\\(\\)\\.$#"
-			count: 2
-			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
-
-		-
 			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:properties\\(\\)\\.$#"
 			count: 5
 			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
@@ -4106,16 +4081,6 @@ parameters:
 			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
 
 		-
-			message: "#^Parameter \\#2 \\$offsets of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult constructor expects array\\<string, array\\<Phpactor\\\\TextDocument\\\\ByteOffset\\>\\>, array\\<int\\|string, array\\<int\\<0, max\\>, Phpactor\\\\TextDocument\\\\ByteOffset\\>\\> given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
-
-		-
-			message: "#^Parameter \\#3 \\$ranges of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult constructor expects array\\<string, array\\<Phpactor\\\\TextDocument\\\\ByteOffsetRange\\>\\>, array\\<int\\|string, array\\<int\\<0, max\\>, Phpactor\\\\TextDocument\\\\ByteOffsetRange\\>\\> given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
-
-		-
 			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractor\\:\\:\\$points type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
@@ -4271,31 +4236,6 @@ parameters:
 			path: lib/Extension/Logger/Tests/Unit/LoggingExtensionTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:__construct\\(\\) has parameter \\$autoCreateConfig with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:canCreateNew\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:destination\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:destinationsFor\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator\\:\\:variant\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/Application/Navigator.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/Handler/NavigateHandler.php
@@ -4304,11 +4244,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\Navigation\\\\Handler\\\\NavigateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/Handler/NavigateHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$destinations of static method Phpactor\\\\PathFinder\\\\PathFinder\\:\\:fromDestinations\\(\\) expects array\\<string, string\\>, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/NavigationExtension.php
 
 		-
 			message: "#^Parameter \\#1 \\$navigator of class Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator constructor expects Phpactor\\\\Extension\\\\Navigation\\\\Navigator\\\\Navigator, mixed given\\.$#"
@@ -4337,11 +4272,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#2 \\$classNew of class Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator constructor expects Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Application\\\\ClassNew, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/Navigation/NavigationExtension.php
-
-		-
-			message: "#^Parameter \\#3 \\$autoCreateConfig of class Phpactor\\\\Extension\\\\Navigation\\\\Application\\\\Navigator constructor expects array, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/Navigation/NavigationExtension.php
 
@@ -5246,11 +5176,6 @@ parameters:
 			path: lib/Extension/WorseReflectionAnalyse/WorseReflectionAnalyseExtension.php
 
 		-
-			message: "#^Call to an undefined method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionClassLike\\:\\:constants\\(\\)\\.$#"
-			count: 1
-			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\WorseReflectionExtra\\\\Application\\\\ClassReflector\\:\\:reflect\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/WorseReflectionExtra/Application/ClassReflector.php
@@ -5384,11 +5309,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$name of static method Phpactor\\\\Indexer\\\\Model\\\\Record\\\\ClassRecord\\:\\:fromName\\(\\) expects string, Microsoft\\\\PhpParser\\\\ResolvedName\\|string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
-
-		-
-			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
 
 		-
 			message: "#^Parameter \\#1 \\.\\.\\.\\$paths of static method Symfony\\\\Component\\\\Filesystem\\\\Path\\:\\:join\\(\\) expects string, string\\|null given\\.$#"
@@ -5571,7 +5491,17 @@ parameters:
 			path: lib/Indexer/Tests/Benchmark/SearchBench.php
 
 		-
-			message: "#^Method Phpactor\\\\Indexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			message: "#^Parameter \\#1 \\$config of method Phpactor\\\\Indexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) expects array\\<int, mixed\\>, array\\<string, array\\<int, string\\>\\> given\\.$#"
+			count: 1
+			path: lib/Indexer/Tests/Extension/IndexerExtensionTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$config of method Phpactor\\\\Indexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) expects array\\<int, mixed\\>, array\\<string, array\\> given\\.$#"
+			count: 1
+			path: lib/Indexer/Tests/Extension/IndexerExtensionTest.php
+
+		-
+			message: "#^Parameter \\#2 \\$parameters of static method Phpactor\\\\Container\\\\PhpactorContainer\\:\\:fromExtensions\\(\\) expects array\\<string, mixed\\>, array\\<int\\|string, mixed\\> given\\.$#"
 			count: 1
 			path: lib/Indexer/Tests/IntegrationTestCase.php
 

@@ -3,6 +3,7 @@
 namespace Phpactor\Indexer\Tests\Benchmark;
 
 use Phpactor\Indexer\Adapter\Php\FileSearchIndex;
+use Phpactor\Indexer\Adapter\Tolerant\TolerantCompositeIndexer;
 use Phpactor\Indexer\IndexAgentBuilder;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\SearchClient;
@@ -29,7 +30,8 @@ class SearchBench
         $indexPath = __DIR__ . '/../../cache';
         $this->search = IndexAgentBuilder::create(
             $indexPath,
-            __DIR__ .'/../../'
+            __DIR__ .'/../../',
+            TolerantCompositeIndexer::create(),
         )
             ->buildAgent()->search();
     }
