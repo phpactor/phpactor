@@ -63,54 +63,21 @@ class IndexedNameSearcher implements NameSearcher
      */
     private function resolveTypeCriteria(?string $type): ?Criteria
     {
-        // todo before merge check if this condition occurs anywhere and possibly remove it
-        if ($type === NameSearcherType::ATTRIBUTE) {
-            return Criteria::isAttribute();
-        }
-
-        if ($type === NameSearcherType::ATTRIBUTE_TARGET_CLASS) {
-            return Criteria::isClassAttribute();
-        }
-
-        if ($type === NameSearcherType::ATTRIBUTE_TARGET_CLASS_CONSTANT) {
-            return Criteria::isClassConstantAttribute();
-        }
-
-        if ($type === NameSearcherType::ATTRIBUTE_TARGET_PROPERTY) {
-            return Criteria::isPropertyAttribute();
-        }
-
-        if ($type === NameSearcherType::ATTRIBUTE_TARGET_PARAMETER) {
-            return Criteria::isParameterAttribute();
-        }
-
-        if ($type === NameSearcherType::ATTRIBUTE_TARGET_METHOD) {
-            return Criteria::isMethodAttribute();
-        }
-
-        if ($type === NameSearcherType::ATTRIBUTE_TARGET_FUNCTION) {
-            return Criteria::isFunctionAttribute();
-        }
-
-        if ($type === NameSearcherType::ATTRIBUTE_TARGET_PROMOTED_PROPERTY) {
-            return Criteria::isPromotedPropertyAttribute();
-        }
-
-        if ($type === NameSearcherType::CLASS_) {
-            return Criteria::isClassConcrete();
-        }
-
-        if ($type === NameSearcherType::INTERFACE) {
-            return Criteria::isClassInterface();
-        }
-
-        if ($type === NameSearcherType::TRAIT) {
-            return Criteria::isClassTrait();
-        }
-        if ($type === NameSearcherType::ENUM) {
-            return Criteria::isClassEnum();
-        }
-
-        return null;
+        return match($type) {
+            // todo before merge check if this condition occurs anywhere and possibly remove it
+            NameSearcherType::ATTRIBUTE => Criteria::isAttribute(),
+            NameSearcherType::ATTRIBUTE_TARGET_CLASS => Criteria::isClassAttribute(),
+            NameSearcherType::ATTRIBUTE_TARGET_CLASS_CONSTANT => Criteria::isClassConstantAttribute(),
+            NameSearcherType::ATTRIBUTE_TARGET_PROPERTY => Criteria::isPropertyAttribute(),
+            NameSearcherType::ATTRIBUTE_TARGET_PARAMETER => Criteria::isParameterAttribute(),
+            NameSearcherType::ATTRIBUTE_TARGET_METHOD => Criteria::isMethodAttribute(),
+            NameSearcherType::ATTRIBUTE_TARGET_FUNCTION => Criteria::isFunctionAttribute(),
+            NameSearcherType::ATTRIBUTE_TARGET_PROMOTED_PROPERTY => Criteria::isPromotedPropertyAttribute(),
+            NameSearcherType::CLASS_ => Criteria::isClassConcrete(),
+            NameSearcherType::INTERFACE => Criteria::isClassInterface(),
+            NameSearcherType::TRAIT => Criteria::isClassTrait(),
+            NameSearcherType::ENUM => Criteria::isClassEnum(),
+            default => null,
+        };
     }
 }
