@@ -219,21 +219,23 @@ abstract class AbstractMethodUpdater
             return;
         }
 
-        $returnType = (string) $this->renderer->render($returnType->type());
+        $returnType = trim((string) $this->renderer->render($returnType->type()));
+        if ($returnType === '') {
+            return;
+        }
 
-        if (!$methodDeclaration->returnTypeList && trim($returnType)) {
+        // Add the new return type
+        if ($methodDeclaration->returnTypeList === null) {
             $edits->after($methodDeclaration->closeParen, ': ' . $returnType);
             return;
         }
 
         $firstReturnType = QualifiedNameListUtil::firstQualifiedNameOrNullOrToken($methodDeclaration->returnTypeList);
-
         if (null === $firstReturnType) {
             return;
         }
 
         $existingReturnType = $returnType ? NodeHelper::resolvedShortName($methodDeclaration, $firstReturnType) : null;
-
         if (null === $existingReturnType) {
             // TODO: Add return type
             return;
@@ -243,7 +245,9 @@ abstract class AbstractMethodUpdater
             return;
         }
 
-        $edits->replace($firstReturnType, ' ' . $returnType);
+        $startToken = $methodDeclaration->questionToken ?? $firstReturnType;
+
+        $edits->replaceMultiple($startToken, $methodDeclaration->returnTypeList, $returnType);
     }
 
     private function prototypeSameAsDeclaration(Method $methodPrototype, MethodDeclaration $methodDeclaration): bool

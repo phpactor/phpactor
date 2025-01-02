@@ -56,4 +56,9 @@ class AssignmentToMissingPropertyDiagnostic implements Diagnostic
     {
         return [];
     }
+
+    public function code(): string
+    {
+        return 'assignment_to_missing_property';
+    }
 }

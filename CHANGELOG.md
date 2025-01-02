@@ -3,6 +3,40 @@ Changelog
 
 ## master
 
+Features:
+
+  - Support vscode evaluatable expressions #2905 @zobo
+
+## 2024-11-28.1
+
+Bug fixes:
+
+- Do not include the file scheme in when including/excluding files #2794
+
+## 2024-11-28
+
+Features:
+
+  - Show codes for all diagnostics and allow them to be ignored @dantleech
+    #2781
+
+Improvements:
+
+  - Do not highlight entire class for fix class/namespace name diagnostic
+    #2728 @dantleech
+  - Tolerate code action provider failures #2761 @dantleech
+  - Limit number of methods that are documented on classes to improve
+    completion/resolve performance for large classes #2768 @dantleech
+
+Bug fixes:
+
+  - Navigator: Fix attempt to create existing directories #2776 @bart-jaskulsi
+  - Fix goto constant within a trait #2784 @dantleech
+  - Preserve PHAR scheme when indexing PHAR stubs @dantleech #2754
+  - Fix duplicated types when updating methods @mamazu #2779
+
+## 2024-11-05
+
 Bug fixes:
 
   - Docblock: support parsing quoted string literals as array valuyes #2730
@@ -23,6 +57,7 @@ Improvements:
     #2695 @przepompownia
   - Show prose associated with `@throws` tag #2694 @mamazu
   - Support parsing generic variance e.g. `covariant` #2664 @dantleech
+  - Support opt-out of using temporary files with phpstan #2764 @tsterker
 
 Features:
 

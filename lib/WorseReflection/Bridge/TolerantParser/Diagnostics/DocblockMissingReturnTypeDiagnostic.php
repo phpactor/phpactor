@@ -52,4 +52,9 @@ class DocblockMissingReturnTypeDiagnostic implements Diagnostic
     {
         return [];
     }
+
+    public function code(): string
+    {
+        return 'docblock_missing_return_type';
+    }
 }

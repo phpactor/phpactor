@@ -1,0 +1,47 @@
+// File: source
+<?php
+
+namespace Phpactor;
+
+#[Attribute()]
+class SomeAttribute
+{
+    public function __construct(string $barfoo) {
+    }
+}
+
+#[SomeAttrib<>ute()]
+class Foo {
+}
+
+// File: expected
+<?php
+
+namespace Phpactor;
+
+#[Attribute()]
+class SomeAttribute
+{
+    public function __construct(string $barfoo) {
+    }
+}
+
+#[SomeAttribute(barfoo: '')]
+class Foo {
+}
+
+// File: nonamed
+<?php
+
+namespace Phpactor;
+
+#[Attribute()]
+class SomeAttribute
+{
+    public function __construct(string $barfoo) {
+    }
+}
+
+#[SomeAttribute('' /** $barfoo string */)]
+class Foo {
+}

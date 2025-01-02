@@ -514,9 +514,4 @@ class UndefinedVariableProvider implements DiagnosticProvider
             })
         );
     }
-
-    public function name(): string
-    {
-        return 'undefined_variable';
-    }
 }

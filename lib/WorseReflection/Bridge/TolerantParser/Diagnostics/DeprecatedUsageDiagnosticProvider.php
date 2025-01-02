@@ -222,11 +222,6 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
         );
     }
 
-    public function name(): string
-    {
-        return 'deprecated usage';
-    }
-
     /**
      * @param MemberAccessContext<ReflectionMember> $resolved
      * @return Generator<DeprecatedUsageDiagnostic>
