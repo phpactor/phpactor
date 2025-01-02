@@ -1,0 +1,9 @@
+{# classes such as Carbon have 1k members and rendering documentation for each
+   is both time consuming and pointless - limit number of displayed members to finite amount #}
+{% set members = object.byVisibilities(["public"]) %}
+{% for index, member in  members|slice(0,50) -%}
+{{ '    ' ~ render(member) }}
+{% endfor -%}
+{% if members|length > 50 %}
+    // and {{ members|length - 50 }} more...
+{% endif %}

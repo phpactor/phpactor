@@ -40,7 +40,6 @@ class DiagnosticsParser
                         codeDescription: $this->resolveCodeDescription($message),
                         code: $message['identifier'] ?? null,
                     );
-
                 }
             }
         }

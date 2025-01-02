@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
+use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -37,11 +38,16 @@ class WorseFillObject implements ByteOffsetRefactor
 
     public function refactor(TextDocument $document, ByteOffset $offset): TextEdits
     {
-        $node = $this->parser->parseSourceFile($document->__toString())->getDescendantNodeAtPosition($offset->toInt());
-        $node = $node->getFirstAncestor(ObjectCreationExpression::class);
-        if (!$node instanceof ObjectCreationExpression) {
+        /** @var ObjectCreationExpression|Attribute|null $node */
+        $node = $this->parser
+            ->parseSourceFile($document->__toString())
+            ->getDescendantNodeAtPosition($offset->toInt())
+            ->getFirstAncestor(ObjectCreationExpression::class, Attribute::class)
+        ;
+        if ($node === null) {
             return TextEdits::none();
         }
+
         try {
             $offset = $this->reflector->reflectNode($document, $node->getStartPosition());
         } catch (NotFound $notFound) {
@@ -104,9 +110,11 @@ class WorseFillObject implements ByteOffsetRefactor
             $closedParen = ')';
         }
 
-        $textEdits = $textEdits->add(TextEdit::create($endPosition, 0, sprintf('%s%s%s', $openParen, implode(', ', $args), $closedParen)));
-
-        return $textEdits;
+        return $textEdits->add(TextEdit::create(
+            $endPosition,
+            0,
+            sprintf('%s%s%s', $openParen, implode(', ', $args), $closedParen),
+        ));
     }
 
     private function renderEmptyValue(Type $type): string
