@@ -160,7 +160,6 @@ class NodeContextFromMemberAccess
         foreach ($classType->expandTypes()->classLike() as $subType) {
             // upcast to ClassType to reflected type
             if (get_class($subType) === ClassType::class) {
-                /** @phpstan-ignore-next-line */
                 $subType = $subType->asReflectedClasssType($resolver->reflector());
             }
 

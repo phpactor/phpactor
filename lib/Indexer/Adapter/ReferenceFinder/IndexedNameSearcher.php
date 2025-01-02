@@ -19,10 +19,7 @@ class IndexedNameSearcher implements NameSearcher
     {
     }
 
-    /**
-     * @param null|NameSearcherType::* $type
-     */
-    public function search(string $name, ?string $type = null): Generator
+    public function search(string $name, ?NameSearcherType $type = null): Generator
     {
         if (false === PhpNameMatcher::isPhpFqn($name)) {
             return;
@@ -51,37 +48,22 @@ class IndexedNameSearcher implements NameSearcher
 
         foreach ($this->client->search($criteria) as $result) {
             yield NameSearchResult::create(
-                $result->recordType(),
+                $result->recordType()->value,
                 FullyQualifiedName::fromString($result->identifier()),
                 $result instanceof HasPath ? TextDocumentUri::fromString($result->filepath()) : null
             );
         }
     }
 
-    /**
-     * @param null|NameSearcherType::* $type
-     */
-    private function resolveTypeCriteria(?string $type): ?Criteria
+    private function resolveTypeCriteria(?NameSearcherType $type): ?Criteria
     {
-        if ($type === NameSearcherType::ATTRIBUTE) {
-            return Criteria::isAttribute();
-        }
-
-        if ($type === NameSearcherType::CLASS_) {
-            return Criteria::isClassConcrete();
-        }
-
-        if ($type === NameSearcherType::INTERFACE) {
-            return Criteria::isClassInterface();
-        }
-
-        if ($type === NameSearcherType::TRAIT) {
-            return Criteria::isClassTrait();
-        }
-        if ($type === NameSearcherType::ENUM) {
-            return Criteria::isClassEnum();
-        }
-
-        return null;
+        return match ($type) {
+            NameSearcherType::ATTRIBUTE =>  Criteria::isAttribute(),
+            NameSearcherType::CLASS_ =>  Criteria::isClassConcrete(),
+            NameSearcherType::INTERFACE =>  Criteria::isClassInterface(),
+            NameSearcherType::TRAIT =>  Criteria::isClassTrait(),
+            NameSearcherType::ENUM =>  Criteria::isClassEnum(),
+            default => null,
+        };
     }
 }

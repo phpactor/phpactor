@@ -76,7 +76,6 @@ class UpdateReturnTypeTransformer implements Transformer
                 );
             }
 
-            /** @phpstan-ignore-next-line */
             return Diagnostics::fromArray($diagnostics);
         });
     }

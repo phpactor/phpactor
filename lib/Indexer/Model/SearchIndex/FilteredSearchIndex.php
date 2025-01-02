@@ -5,12 +5,13 @@ namespace Phpactor\Indexer\Model\SearchIndex;
 use Generator;
 use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\Indexer\Model\SearchIndex;
 
 class FilteredSearchIndex implements SearchIndex
 {
     /**
-     * @param array<string> $recordTypes
+     * @param array<RecordType> $recordTypes
      */
     public function __construct(private SearchIndex $innerIndex, private array $recordTypes)
     {
