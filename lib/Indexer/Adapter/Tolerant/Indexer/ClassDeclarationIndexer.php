@@ -66,41 +66,17 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
                 }
 
                 foreach ($targetTexts as $targetText) {
-                    switch ($targetText) {
-                        case 'Attribute::TARGET_CLASS':
-                        case '1':
-                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS);
-                            break;
-                        case 'Attribute::TARGET_FUNCTION':
-                        case '2':
-                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_FUNCTION);
-                            break;
-                        case 'Attribute::TARGET_METHOD':
-                        case '4':
-                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_METHOD);
-                            break;
-                        case 'Attribute::TARGET_PROPERTY':
-                        case '8':
-                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_PROPERTY);
-                            break;
-                        case 'Attribute::TARGET_CLASS_CONSTANT':
-                        case '16':
-                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS_CONSTANT);
-                            break;
-                        case 'Attribute::TARGET_PARAMETER':
-                        case '32':
-                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_TARGET_PARAMETER);
-                            break;
-                        case 'Attribute::TARGET_ALL':
-                        case '63':
-                        default:
-                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
-                            break;
-                        case 'Attribute::IS_REPEATABLE':
-                        case '64':
-                            $record->addFlag(ClassRecord::FLAG_ATTRIBUTE_IS_REPEATABLE);
-                            break;
-                    }
+                    $record->addFlag(match($targetText) {
+                        (string)\Attribute::TARGET_CLASS, 'Attribute::TARGET_CLASS' => ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS,
+                        (string)\Attribute::TARGET_FUNCTION, 'Attribute::TARGET_FUNCTION' => ClassRecord::FLAG_ATTRIBUTE_TARGET_FUNCTION,
+                        (string)\Attribute::TARGET_METHOD, 'Attribute::TARGET_METHOD' => ClassRecord::FLAG_ATTRIBUTE_TARGET_METHOD,
+                        (string)\Attribute::TARGET_PROPERTY, 'Attribute::TARGET_PROPERTY' => ClassRecord::FLAG_ATTRIBUTE_TARGET_PROPERTY,
+                        (string)\Attribute::TARGET_CLASS_CONSTANT, 'Attribute::TARGET_CLASS_CONSTANT' => ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS_CONSTANT,
+                        (string)\Attribute::TARGET_PARAMETER, 'Attribute::TARGET_PARAMETER' => ClassRecord::FLAG_ATTRIBUTE_TARGET_PARAMETER,
+                        (string)\Attribute::IS_REPEATABLE, 'Attribute::IS_REPEATABLE' => ClassRecord::FLAG_ATTRIBUTE_IS_REPEATABLE,
+                        (string)\Attribute::TARGET_CLASS, 'Attribute::TARGET_CLASS' => ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS,
+                        default => ClassRecord::FLAG_ATTRIBUTE,
+                    });
                 }
 
                 return;
