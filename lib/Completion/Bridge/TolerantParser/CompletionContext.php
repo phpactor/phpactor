@@ -43,6 +43,7 @@ use Microsoft\PhpParser\Node\Statement\SwitchStatementNode;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\WhileStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -193,6 +194,10 @@ class CompletionContext
 
         $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
+        if ($node->parent instanceof MethodDeclaration && $node->openBrace instanceof MissingToken) {
+            return false;
+        }
+
         if ($nodeBeforeOffset instanceof ClassMembersNode) {
             return true;
         }
@@ -288,7 +293,11 @@ class CompletionContext
             return false;
         }
 
-        return $node->parent instanceof MethodDeclaration;
+        if (!$node->parent instanceof MethodDeclaration) {
+            return false;
+        }
+
+        return $node->parent->openParen instanceof MissingToken;
     }
 
     public static function statement(Node $node, ByteOffset $offset): bool
@@ -298,10 +307,15 @@ class CompletionContext
         }
 
         if ($node instanceof CompoundStatementNode) {
+            if ($node->parent instanceof MethodDeclaration && $node->openBrace instanceof MissingToken) {
+                return false;
+            }
+
             $lastStmt = \end($node->statements);
             if (false === $lastStmt || $lastStmt->getEndPosition() > $offset->toInt()) {
                 return true;
             }
+
             return !$lastStmt instanceof EchoStatement;
         }
 
