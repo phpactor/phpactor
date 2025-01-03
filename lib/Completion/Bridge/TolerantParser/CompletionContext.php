@@ -43,7 +43,6 @@ use Microsoft\PhpParser\Node\Statement\SwitchStatementNode;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\WhileStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
-use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
