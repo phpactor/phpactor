@@ -2166,21 +2166,6 @@ parameters:
 			path: lib/Extension/CodeTransformExtra/Command/ClassTransformCommand.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:generate\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ChangeVisiblityHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Rpc/ChangeVisiblityHandler.php
@@ -3004,11 +2989,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Formatter\\\\Highlight\\:\\:highlightAtCol\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Core/Console/Formatter/Highlight.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\PhpactorCommandLoader\\:\\:get\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/Core/Console/PhpactorCommandLoader.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\BashPrompt\\:\\:getBashPath\\(\\) has no return type specified\\.$#"
