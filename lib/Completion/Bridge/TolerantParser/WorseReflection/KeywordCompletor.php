@@ -15,6 +15,10 @@ use Phpactor\TextDocument\TextDocument;
 
 class KeywordCompletor implements TolerantCompletor
 {
+    private const EXPRESSIONS = [
+        'match' => " (\$1) {\$0\n}",
+        'throw' => ' $1',
+    ];
     private const MAGIC_METHODS = [
         '__construct' => "(\$1)\n{\$0\n}",
         '__call' => "(string \\\$\${1:name}, array \\\$\${2:arguments}): \${3:mixed}\n{\$0\n}",
@@ -48,10 +52,6 @@ class KeywordCompletor implements TolerantCompletor
         'try' => " {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
         'while' => " (\$1) {\$0\n}",
         'yield' => ' $1;$0',
-    ];
-    private const EXPRESSIONS = [
-        'match' => " (\$1) {\$0\n}",
-        'throw' => ' $1',
     ];
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
