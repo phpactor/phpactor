@@ -47,6 +47,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             [...$this->expectMagicMethods()],
         ];
 
+        yield 'no magic methods here' => [
+            '<?php class Foobar { public function x(<>)',
+            [],
+        ];
 
         yield 'class implements 1' => [
             '<?php class Foobar <>',
