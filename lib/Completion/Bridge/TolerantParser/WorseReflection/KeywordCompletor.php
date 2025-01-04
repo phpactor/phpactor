@@ -48,6 +48,10 @@ class KeywordCompletor implements TolerantCompletor
         'while' => " (\$1) {\$0\n}",
         'yield' => ' $1;$0',
     ];
+    private const EXPRESSIONS = [
+        'match' => " (\$1) {\$0\n}",
+        'throw' => ' $1',
+    ];
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
@@ -78,6 +82,10 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
+        if (CompletionContext::expression($node)) {
+            yield from $this->matchExpr();
+        }
+
         if (
             CompletionContext::classMembersBody($node->parent)
         ) {
@@ -94,6 +102,17 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         return true;
+    }
+
+    private function matchExpr(): Generator
+    {
+        foreach (self::EXPRESSIONS as $name => $snippet) {
+            yield Suggestion::createWithOptions($name . ' ', [
+                'type' => Suggestion::TYPE_KEYWORD,
+                'priority' => -255,
+                'snippet' => $name . $snippet,
+            ]);
+        }
     }
 
     /**

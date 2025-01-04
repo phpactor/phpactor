@@ -113,6 +113,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php namespace X; while () { <> }',
             [...$this->expectStatement(true)],
         ];
+        yield 'match keyword' => [
+            '<?php class F { public function foo() { $x = mat<> }}',
+            [...$this->expectExpressions()],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -156,6 +160,21 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             if (!$loop && in_array($name, ['continue', 'break'], true)) {
                 continue;
             }
+            yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
+        }
+    }
+
+    /**
+     * @return Generator<array{name:string,snippet:string}>
+     */
+    private function expectExpressions(): Generator
+    {
+        $expressions = [
+            'match' => " (\$1) {\$0\n}",
+            'throw' => ' $1',
+        ];
+
+        foreach ($expressions as $name => $snippet) {
             yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
         }
     }
