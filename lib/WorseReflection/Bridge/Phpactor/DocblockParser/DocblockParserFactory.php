@@ -19,6 +19,7 @@ class DocblockParserFactory implements DocBlockFactory
         'param',
         'return',
         'method',
+        'type',
         'deprecated',
         'extends',
         'implements',
@@ -27,6 +28,7 @@ class DocblockParserFactory implements DocBlockFactory
         'template-extends',
         'mixin',
         'throws',
+        'assert',
     ];
 
     private Lexer $lexer;

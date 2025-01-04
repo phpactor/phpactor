@@ -11,7 +11,6 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflector\ClassReflector;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
@@ -38,7 +37,14 @@ final class ClassGenericDiagnosticHelper
     public function diagnosticsForImplements(Reflector $reflector, ByteOffsetRange $range, ReflectionClassLike $class, ?ReflectionClassLike $genericClass): Generator
     {
         if ($class instanceof ReflectionClass) {
-            yield from $this->fromReflectionClass($reflector, $range, $class, $genericClass, $class->docblock()->implements(), '@implements');
+            yield from $this->fromReflectionClass(
+                $reflector,
+                $range,
+                $class,
+                $genericClass,
+                $class->docblock()->implements(),
+                '@implements'
+            );
         }
     }
 
@@ -64,7 +70,10 @@ final class ClassGenericDiagnosticHelper
             return;
         }
 
-        $genericTypes = array_filter($genericTypes, fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue());
+        $genericTypes = array_filter(
+            $genericTypes,
+            fn (Type $extendTagType) => $parentClass->type()->accepts($extendTagType)->isTrue()
+        );
 
         $defaultGenericType = new GenericClassType(
             $reflector,
@@ -94,13 +103,7 @@ final class ClassGenericDiagnosticHelper
         if ($extendTagType instanceof GenericClassType) {
             $classTemplateMap = $class->templateMap();
             $extendTagType = $extendTagType->withArguments(array_map(function (Type $type) use ($classTemplateMap) {
-                if (!$type instanceof ClassType) {
-                    return $type;
-                }
-                if (!$classTemplateMap->has($type->__toString())) {
-                    return $type;
-                }
-                return $classTemplateMap->get($type->__toString());
+                return $classTemplateMap->getOrGiven($type);
             }, $extendTagType->arguments()));
         }
 

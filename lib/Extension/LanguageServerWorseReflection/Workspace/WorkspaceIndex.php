@@ -43,11 +43,7 @@ class WorkspaceIndex
 
     public function documentForName(Name $name): ?TextDocument
     {
-        if (isset($this->byName[$name->full()])) {
-            return $this->byName[$name->full()];
-        }
-
-        return null;
+        return $this->byName[$name->full()] ?? null;
     }
 
     public function index(TextDocument $textDocument): void

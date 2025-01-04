@@ -13,6 +13,7 @@ use Phpactor\Rename\Model\Renamer;
 use Phpactor\Rename\Tests\RenamerTestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionPropertyAccess;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Reflector;
 
@@ -27,9 +28,7 @@ class MemberRenamerTest extends RenamerTestCase
         yield from $this->propertyRenames();
         yield from $this->constantRenames();
         yield from $this->traitRenames();
-        if (defined('T_ENUM')) {
-            yield from $this->enumRenames();
-        }
+        yield from $this->enumRenames();
     }
 
     protected function createRenamer(): Renamer
@@ -66,6 +65,24 @@ class MemberRenamerTest extends RenamerTestCase
             function (Reflector $reflector): void {
                 $reflection = $reflector->reflectClass('ClassOne');
                 self::assertTrue($reflection->methods()->has('newName'));
+            }
+        ];
+
+        yield 'attributed method declaration' => [
+            'member_renamer/method_declaration',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $method = $reflection->methods()->get('złom');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $method->nameRange()->start(),
+                    'scrap'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->methods()->has('scrap'));
             }
         ];
 
@@ -160,6 +177,35 @@ class MemberRenamerTest extends RenamerTestCase
             }
         ];
 
+        yield 'attributed property declaration public' => [
+            'member_renamer/property_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $property = $reflection->properties()->get('found');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'results'
+                );
+            },
+            function (Reflector $reflector): void {
+                $propertyAccesses = [...$reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
+                )->propertyAccesses()];
+                $property = end($propertyAccesses);
+                self::assertInstanceOf(ReflectionPropertyAccess::class, $property);
+                self::assertEquals('results', $property->name());
+
+                $propertyAccesses = [...$reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build()
+                )->propertyAccesses()->getIterator()];
+                $property = end($propertyAccesses);
+                self::assertInstanceOf(ReflectionPropertyAccess::class, $property);
+                self::assertEquals('results', $property->name());
+            }
+        ];
+
         yield 'property declaration generic' => [
             'member_renamer/property_declaration_public_generic',
             function (Reflector $reflector, Renamer $renamer): Generator {
@@ -209,6 +255,34 @@ class MemberRenamerTest extends RenamerTestCase
                 )->propertyAccesses();
                 $first = $propertyAccesses->first();
                 self::assertEquals('newName', $first->name());
+            }
+        ];
+
+        yield 'attributed promoted property declaration public' => [
+            'member_renamer/property_promoted_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('Test\ClassOne');
+                $property = $reflection->properties()->get('depOld');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $property->nameRange()->start(),
+                    'depNew'
+                );
+            },
+            function (Reflector $reflector): void {
+                $propertyAccesses = [...$reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/ClassTwo.php'))->build()
+                )->propertyAccesses()];
+                $property = end($propertyAccesses);
+                self::assertInstanceOf(ReflectionPropertyAccess::class, $property);
+                self::assertEquals('depNew', $property->name());
+                $propertyAccesses = [...$reflector->navigate(
+                    TextDocumentBuilder::fromUri($this->workspace()->path('project/test.php'))->build()
+                )->propertyAccesses()];
+                $property = end($propertyAccesses);
+                self::assertInstanceOf(ReflectionPropertyAccess::class, $property);
+                self::assertEquals('depNew', $property->name());
             }
         ];
 
@@ -295,6 +369,23 @@ class MemberRenamerTest extends RenamerTestCase
                 self::assertTrue($reflection->constants()->has('newName'));
             }
         ];
+        yield 'attributed constant declaration public' => [
+            'member_renamer/constant_declaration_public',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectClass('ClassOne');
+                $constant = $reflection->constants()->get('ZOO');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $constant->nameRange()->start(),
+                    'ZŁOM'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectClass('ClassOne');
+                self::assertTrue($reflection->constants()->has('ZŁOM'));
+            }
+        ];
     }
 
     /**
@@ -307,6 +398,24 @@ class MemberRenamerTest extends RenamerTestCase
             function (Reflector $reflector, Renamer $renamer): Generator {
                 $reflection = $reflector->reflectEnum('ClassOne');
                 $enum = $reflection->cases()->get('BAR');
+
+                return $renamer->rename(
+                    $reflection->sourceCode(),
+                    $enum->nameRange()->start(),
+                    'newName'
+                );
+            },
+            function (Reflector $reflector): void {
+                $reflection = $reflector->reflectEnum('ClassOne');
+                self::assertTrue($reflection->cases()->has('newName'));
+            }
+        ];
+
+        yield 'enum attributed case declaration' => [
+            'member_renamer/enum_case_declaration_private',
+            function (Reflector $reflector, Renamer $renamer): Generator {
+                $reflection = $reflector->reflectEnum('ClassOne');
+                $enum = $reflection->cases()->get('BAZ');
 
                 return $renamer->rename(
                     $reflection->sourceCode(),

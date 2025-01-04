@@ -20,6 +20,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformEx
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
+use Phpactor\Extension\LanguageServerEvaluatableExpression\LanguageServerEvaluatableExpressionExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanSuggestExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
@@ -31,7 +32,6 @@ use Phpactor\Extension\LanguageServerSymbolProvider\LanguageServerSymbolProvider
 use Phpactor\Extension\LanguageServerSelectionRange\LanguageServerSelectionRangeExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\LanguageServerWorseReflectionExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
-use Phpactor\Extension\LanguageServer\LanguageServerExtraExtension;
 use Phpactor\Extension\ObjectRenderer\ObjectRendererExtension;
 use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferExtension;
 use Phpactor\Extension\PhpCodeSniffer\PhpCodeSnifferSuggestExtension;
@@ -82,7 +82,7 @@ use function sprintf;
 
 class Phpactor
 {
-    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir, string $phpactorBin = null): Container
+    public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir, ?string $phpactorBin = null): Container
     {
         $config = [];
 
@@ -177,11 +177,11 @@ class Phpactor
             LanguageServerWorseReflectionExtension::class,
             LanguageServerIndexerExtension::class,
             LanguageServerHoverExtension::class,
+            LanguageServerEvaluatableExpressionExtension::class,
             LanguageServerBridgeExtension::class,
             LanguageServerCodeTransformExtension::class,
             LanguageServerSymbolProviderExtension::class,
             LanguageServerSelectionRangeExtension::class,
-            LanguageServerExtraExtension::class,
             LanguageServerDiagnosticsExtension::class,
             LanguageServerRenameExtension::class,
             LanguageServerRenameWorseExtension::class,
@@ -228,7 +228,7 @@ class Phpactor
 
             if (!class_exists($extensionClass)) {
                 if ($output instanceof ConsoleOutputInterface) {
-                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). PHP_EOL);
+                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). "\n");
                 }
                 continue;
             }
@@ -298,13 +298,13 @@ class Phpactor
      */
     public static function normalizePath(string $path): string
     {
-        return Path::makeAbsolute($path, (string) getcwd());
+        return Path::makeAbsolute($path, (string)getcwd());
     }
 
     public static function relativizePath(string $path): string
     {
-        if (str_starts_with($path, (string)getcwd())) {
-            return substr($path, strlen((string) getcwd()) + 1);
+        if (Path::isBasePath((string)getcwd(), $path)) {
+            return Path::makeRelative($path, (string)getcwd());
         }
 
         return $path;

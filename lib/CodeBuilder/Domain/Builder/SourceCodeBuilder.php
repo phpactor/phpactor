@@ -65,14 +65,14 @@ class SourceCodeBuilder extends AbstractBuilder
         return $this;
     }
 
-    public function use(string $use, string $alias = null): SourceCodeBuilder
+    public function use(string $use, ?string $alias = null): SourceCodeBuilder
     {
         $this->useStatements[$use] = UseStatement::fromNameAndAlias($use, $alias);
 
         return $this;
     }
 
-    public function useFunction(string $name, string $alias = null): SourceCodeBuilder
+    public function useFunction(string $name, ?string $alias = null): SourceCodeBuilder
     {
         $this->useStatements[$name] = UseStatement::fromNameAliasAndType($name, $alias, UseStatement::TYPE_FUNCTION);
 

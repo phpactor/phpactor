@@ -31,6 +31,11 @@ class ByteOffsetRange
         return $this->start;
     }
 
+    public function length(): int
+    {
+        return $this->end->toInt() - $this->start->toInt();
+    }
+
     public function end(): ByteOffset
     {
         return $this->end;

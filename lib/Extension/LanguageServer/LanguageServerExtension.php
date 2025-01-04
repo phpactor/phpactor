@@ -8,9 +8,14 @@ use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
+use Phpactor\Extension\LanguageServer\CodeAction\TolerantCodeActionProvider;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
+use Phpactor\Extension\LanguageServer\DiagnosticProvider\AggregateDiagnosticsProvider;
+use Phpactor\Extension\LanguageServer\DiagnosticProvider\CodeFilteringDiagnosticProvider;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
+use Phpactor\Extension\LanguageServer\DiagnosticProvider\PathExcludingDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
@@ -28,7 +33,6 @@ use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
-use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsEngine;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Diagnostics\CodeActionDiagnosticsProvider;
@@ -72,7 +76,15 @@ use Phpactor\MapResolver\ResolverErrors;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use Symfony\Component\Filesystem\Path;
 use Webmozart\Assert\Assert;
+use function array_filter;
+use function array_keys;
+use function array_values;
+use function get_debug_type;
+use function implode;
+use function is_string;
+use function sprintf;
 
 class LanguageServerExtension implements Extension
 {
@@ -109,6 +121,8 @@ class LanguageServerExtension implements Extension
     public const PARAM_SELF_DESTRUCT_TIMEOUT = 'language_server.self_destruct_timeout';
     public const PARAM_PHPACTOR_BIN = 'language_server.phpactor_bin';
     public const PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT = 'language_server.diagnostic_outsource_timeout';
+    public const PARAM_DIAGNOSTIC_EXCLUDE_PATHS = 'language_server.diagnostic_exclude_paths';
+    public const PARAM_DIAGNOSTIC_IGNORE_CODES = 'language_server.diagnostic_ignore_codes';
 
     public function configure(Resolver $schema): void
     {
@@ -123,6 +137,8 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_ON_OPEN => true,
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
             self::PARAM_DIAGNOSTIC_OUTSOURCE => true,
+            self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS => [],
+            self::PARAM_DIAGNOSTIC_IGNORE_CODES => [],
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
@@ -148,7 +164,9 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
             self::PARAM_DIAGNOSTIC_OUTSOURCE => 'If applicable diagnostics should be "outsourced" to a different process',
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 'Kill the diagnostics process if it outlives this timeout',
+            self::PARAM_DIAGNOSTIC_IGNORE_CODES => 'Ignore diagnostics that have the codes listed here, e.g. ["fix_namespace_class_name"]. The codes match those shown in the LSP client.',
             self::PARAM_FILE_EVENTS => 'Register to receive file events',
+            self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS => 'List of paths to exclude from diagnostics, e.g. `vendor/**/*`',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time (in milliseconds) to wait before responding to a shutdown notification',
             self::PARAM_SELF_DESTRUCT_TIMEOUT => 'Wait this amount of time (in milliseconds) after a shutdown request before self-destructing',
             self::PARAM_PHPACTOR_BIN => 'Internal use only - name path to Phpactor binary',
@@ -206,7 +224,10 @@ class LanguageServerExtension implements Extension
         $container->register(DiagnosticsCommand::class, function (Container $container) {
             /** @var AggregateDiagnosticsProvider $provider */
             $provider = $container->get(AggregateDiagnosticsProvider::class . '.outsourced');
-            return new DiagnosticsCommand($provider);
+            return new DiagnosticsCommand(
+                $provider,
+                $container->get(WorkspaceIndex::class),
+            );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => DiagnosticsCommand::NAME ]]);
     }
 
@@ -336,7 +357,7 @@ class LanguageServerExtension implements Extension
                     throw new RuntimeException(sprintf(
                         'Tagged service provider "%s" does not implement ServiceProvider interface, is a "%s"',
                         $serviceId,
-                        is_object($provider) ? get_class($provider) : gettype($provider)
+                        get_debug_type($provider),
                     ));
                 }
                 $providers[] = $provider;
@@ -438,6 +459,9 @@ class LanguageServerExtension implements Extension
 
         $container->register(CodeActionHandler::class, function (Container $container) {
             $services = $this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER, CodeActionProvider::class);
+            $services = array_map(function (CodeActionProvider $provider) use ($container) {
+                return new TolerantCodeActionProvider($provider, $container->get(ClientApi::class));
+            }, $services);
             if ($container->parameter(self::PARAM_PROFILE)->bool()) {
                 $services = array_map(
                     fn (CodeActionProvider $provider) => new ProfilingCodeActionProvider(
@@ -504,6 +528,35 @@ class LanguageServerExtension implements Extension
                 $container,
                 outsourced: $container->parameter(self::PARAM_DIAGNOSTIC_OUTSOURCE)->bool() ? false : null,
             );
+
+            $projectRoot = $container->parameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)->string();
+
+            /**
+             * @var string[] $excludePaths
+             */
+            $excludePaths = $container->parameter(self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS)->value();
+
+            if (count($excludePaths)) {
+                $providers = array_map(function (DiagnosticsProvider $provider) use ($projectRoot, $excludePaths) {
+                    return new PathExcludingDiagnosticsProvider(
+                        $provider,
+                        // make all the exclude paths absolute before passing to the provider
+                        array_map(fn (string $path) => Path::join($projectRoot, $path), $excludePaths)
+                    );
+                }, $providers);
+            }
+
+            $ignoreCodes = $container->parameter(self::PARAM_DIAGNOSTIC_IGNORE_CODES)->listOfString();
+
+            if (count($ignoreCodes)) {
+                $providers = array_map(function (DiagnosticsProvider $provider) use ($ignoreCodes) {
+                    return new CodeFilteringDiagnosticProvider(
+                        $provider,
+                        $ignoreCodes,
+                    );
+                }, $providers);
+            }
+
             return new DiagnosticsEngine(
                 $container->get(ClientApi::class),
                 $this->logger($container, 'LSPDIAG'),

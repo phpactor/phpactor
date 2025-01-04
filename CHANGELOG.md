@@ -5,18 +5,146 @@ Changelog
 
 Features:
 
-  - Completion suggestions filtered by accepting type #2456
+  - Support vscode evaluatable expressions #2905 @zobo
 
-Improvements:
-
-  - Clear document diagnostic cache on save #2458
-  - Skip parent parameters on complete constructor #2471 @mamazu
-  - Support generics on `@mixin` #2463
+## 2024-11-28.1
 
 Bug fixes:
 
+- Do not include the file scheme in when including/excluding files #2794
+
+## 2024-11-28
+
+Features:
+
+  - Show codes for all diagnostics and allow them to be ignored @dantleech
+    #2781
+
+Improvements:
+
+  - Do not highlight entire class for fix class/namespace name diagnostic
+    #2728 @dantleech
+  - Tolerate code action provider failures #2761 @dantleech
+  - Limit number of methods that are documented on classes to improve
+    completion/resolve performance for large classes #2768 @dantleech
+
+Bug fixes:
+
+  - Navigator: Fix attempt to create existing directories #2776 @bart-jaskulsi
+  - Fix goto constant within a trait #2784 @dantleech
+  - Preserve PHAR scheme when indexing PHAR stubs @dantleech #2754
+  - Fix duplicated types when updating methods @mamazu #2779
+
+## 2024-11-05
+
+Bug fixes:
+
+  - Docblock: support parsing quoted string literals as array valuyes #2730
+  - Tell WorseReflection about new definitions from the stdin for the
+    diagnostics process #2723
+  - Flush index on save (make latest changes available to diagnostic process) #2722
+  - Fix bad contextual filtering #2715 @dantleech
+  - Take optional parameters into account with conditional types #2700 @dantleech
+  - Fix import position when `declare` is present #2698 @dantleech
+  - Fix NULL error in Docblock parser #2693 @dantleech
+  - Handle "source not found" when resolving template map #2716 @dantleech
+
+Improvements:
+
+  - Allow exclude patterns to be set for diagnostics (e.g. `vendor/**/*`) #2705 @dantleech
+  - Improve formatting for override method #2702 @dantleech
+  - Offer completions on attributes not associated with class member body
+    #2695 @przepompownia
+  - Show prose associated with `@throws` tag #2694 @mamazu
+  - Support parsing generic variance e.g. `covariant` #2664 @dantleech
+  - Support opt-out of using temporary files with phpstan #2764 @tsterker
+
+Features:
+
+  - Add support for 8.3 typed class constants
+  - Basic support for `@{phpstan,psalm}-assert` #2720 @dantleech
+
+## 2024-06-30
+
+Features:
+
+  - PHAR Indexing #2412 #2611 @dantleech
+  - Override method refactor #2686 @dantleech
+
+Improvements:
+
+  - Do not use indexer when renaming private properties/methods #2672 @dantleech
+  - Fix contextual completion in constructor agrument position #2504
+  - Basic support for `array_reduce` stub #2576
+  - Support variadics in contextual completion #2603
+  - Allow use of `%project_root%` in index paths #2665 @mamazon
+  - Fix another `PHP_BINARY` avoid writing to `dev/null` and other windows fixes @MatmaRex
+  - Use `get_debug_type` @zonuexe
+  - Show strikethrough for deprecated diagnostics #2623 @mamazu
+  - Adding more type coverage #2606 #2614 @mamazu
+
+Bug fixes:
+
+  - Fix renaming attributed class members @przepompownia
+  - Do not error when PHPStan returns no output @mamazu
+  - Only filter new object expression names in contextual completion #2603
+  - Fixing include and exclude patterns #2593 @mamazu
+  - Fix missing @implements code action #2668 @dantleech
+  - Initialized properties don't appear in LSP document symbols #2678 @mamazu
+
+## 2024-03-09
+
+Features:
+
+  - Completion suggestions filtered by accepting type #2456
+  - Basic support for local type aliases #2462
+
+Improvements:
+
+  - Show enums in LSP document symbol provider #2575 @gmli
+  - PHPStan show tip if as a dignostic hint if available #2512
+  - Docblock completion, suggest `@throws` @przepompownia
+  - Suggest named parameters on attributes @mamazu
+  - Remove redundant documentation #2500 @einenlum
+  - Resolve inherited generic types #2474
+  - Allow additional CLI arguments to be passed to php code sniffer #2465
+  - Clear document diagnostic cache on save #2458
+  - Skip parent parameters on complete constructor #2471 @mamazu
+  - Support generics on `@mixin` #2463
+  - Remove "on develop warning" service #2533
+  - Disable the processing of includes/requires, it doesn't work very well but
+    it has massive performance impact on certain projects #2580
+  - Include project PHP and runtime version and LSP status
+  - Add `iterable` "generic" `@param` in docblock #2585
+  - Improved diagnostic engine #2584
+  - Ongoing windows compatiblity effort #2567 #2572 #2570 @MatmaRex
+  - Ignore unnecessary files in gitexport #2570 @zonuexe
+  - Improve ANSI test compatiblity #2521 @gerardroche
+  - More snippet support #2515 #2508 @przepompownia
+  - Add completion for `@throws` #2509 @przepompownia
+
+Bug fixes:
+
+  - Fix completion of constants in enums #2541 @eviljeks
+  - Fix `renderException` call in bin/phpactor #2548 @MatmaRex
+  - Psalm: fix exception handling #2587 @przepompownia
+  - Do not generalize generated return types (i.e. false instead of bool) #2588
+  - Fix diagnostic process concurrency and do not lint outdated files #2538
+  - Upgrade `amp/process` to fix #2516 thanks to @gerardroche
+  - Fix division by zero edge case
+  - Fix crash if referenced file no longer exists on class rename #2518
+  - Fix detection of import used relatively in an annotation #2539
+  - Fix PHAR crashing issue on PHP8.3 #2533
+  - Fix UTF-16 conversion for LSP #2530 #2557
+  - Fix support for Attributes on readonly classes #2493
   - Fix `$this` undefined var false positive in anon. class #2469 @mamazu
   - Fix `$argv` undefined var false positives #2468 @mamazu
+
+Documentation:
+
+  - Added Helix LSP instructions #2581 @lens0021
+  - Fix typos in Behat #2534 @vuon9
+  - Fix broken external links #2500 @einenlum
 
 ## 2023-12-03
 

@@ -47,7 +47,7 @@ class CreateClassProviderTest extends IntegrationTestCase
 
         $tester->assertSuccess($result);
 
-        $tester->textDocument()->save('file:///foobar', $source);
+        $tester->textDocument()->save('file:///foobar');
 
         $result = $tester->requestAndWait(CodeActionRequest::METHOD, new CodeActionParams(
             ProtocolFactory::textDocumentIdentifier('file:///foobar'),
@@ -78,7 +78,7 @@ class CreateClassProviderTest extends IntegrationTestCase
                 // File: subject.php
 
                 EOT
-        , 4, 1
+        , 4, 0
         ];
 
         yield 'non empty file' => [

@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use PHPUnit\Framework\Assert;
 use Phpactor\TextDocument\ByteOffsetRange;
@@ -53,8 +54,12 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
         if ($class instanceof ReflectionClass) {
             /** @phpstan-ignore-next-line TP Lies */
             foreach ($node->classInterfaceClause?->interfaceNameList?->getChildNodes() ?? [] as $implementedInterface) {
+                if (!$implementedInterface instanceof QualifiedName) {
+                    continue;
+                }
                 try {
-                    $implementedInterface = $resolver->reflector()->reflectClassLike($implementedInterface->getText());
+                    $name = (string)$implementedInterface->getResolvedName();
+                    $implementedInterface = $resolver->reflector()->reflectClassLike($name);
                 } catch (NotFound) {
                     continue;
                 }
@@ -180,10 +185,5 @@ class DocblockMissingImplementsTagProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
-    }
-
-    public function name(): string
-    {
-        return 'docblock_missing_implements_tag';
     }
 }

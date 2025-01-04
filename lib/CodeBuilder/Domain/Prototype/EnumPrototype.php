@@ -7,8 +7,8 @@ final class EnumPrototype extends ClassLikePrototype
     public function __construct(
         string $name,
         private Cases $cases,
-        Methods $methods = null,
-        UpdatePolicy $updatePolicy = null
+        ?Methods $methods = null,
+        ?UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct(name: $name, methods: $methods, updatePolicy: $updatePolicy);
     }

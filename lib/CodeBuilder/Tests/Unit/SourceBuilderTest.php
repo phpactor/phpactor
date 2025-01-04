@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\SourceBuilder;
 use Phpactor\CodeBuilder\Domain\Renderer;
@@ -13,7 +14,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class SourceBuilderTest extends TestCase
 {
-    use \Prophecy\PhpUnit\ProphecyTrait;
+    use ProphecyTrait;
 
     /**
      * @var ObjectProphecy<Updater>

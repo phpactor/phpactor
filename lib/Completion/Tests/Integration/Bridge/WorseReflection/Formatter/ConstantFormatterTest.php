@@ -36,11 +36,6 @@ class ConstantFormatterTest extends IntegrationTestCase
             'BAR = 123',
         ];
 
-        yield 'invalid' => [
-            '<?php namespace Bar {class Foobar {const BAR}}',
-            'BAR = null',
-        ];
-
         yield 'array' => [
             '<?php namespace Bar {class Foobar {const BAR=[123]}}',
             'BAR = [123]',

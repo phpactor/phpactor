@@ -13,7 +13,7 @@ class ChoiceInput implements Input
     ) {
     }
 
-    public static function fromNameLabelChoicesAndDefault(string $name, string $label, array $choices, string $default = null): self
+    public static function fromNameLabelChoicesAndDefault(string $name, string $label, array $choices, ?string $default = null): self
     {
         return new static($name, $label, $choices, $default);
     }

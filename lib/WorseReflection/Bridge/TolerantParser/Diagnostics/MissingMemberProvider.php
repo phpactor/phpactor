@@ -64,28 +64,36 @@ class MissingMemberProvider implements DiagnosticProvider
             return;
         }
 
-        $memberType = (function (ReflectionClassLike $reflection) use ($node) {
-            if ($reflection instanceof ReflectionEnum) {
-                if ($node instanceof ScopedPropertyAccessExpression) {
-                    return ReflectionMember::TYPE_CASE;
-                }
-                return ReflectionMember::TYPE_METHOD;
-            }
-
-            if ($node instanceof ScopedPropertyAccessExpression) {
-                return ReflectionMember::TYPE_CONSTANT;
-            }
-
-            return ReflectionMember::TYPE_METHOD;
-        })($reflection);
-
         $methodName = $memberName->getText($node->getFileContents());
         if (!is_string($methodName)) {
             return;
         }
-        try {
-            $name = $containerType->members()->byMemberType($memberType)->get($methodName);
-        } catch (NotFound) {
+
+        $memberTypes = (function (ReflectionClassLike $reflection) use ($node) {
+            if ($node instanceof ScopedPropertyAccessExpression) {
+                $types = [ReflectionMember::TYPE_CONSTANT];
+
+                if ($reflection instanceof ReflectionEnum) {
+                    $types[] = ReflectionMember::TYPE_CASE;
+                }
+
+                return $types;
+            }
+            return [ReflectionMember::TYPE_METHOD];
+        })($reflection);
+
+
+        $found = false;
+        foreach ($memberTypes as $memberType) {
+            try {
+                $containerType->members()->byMemberType($memberType)->get($methodName);
+            } catch (NotFound) {
+                continue;
+            }
+            $found = true;
+        }
+
+        if (!$found) {
             yield new MissingMemberDiagnostic(
                 ByteOffsetRange::fromInts(
                     $memberName->getStartPosition(),
@@ -216,6 +224,25 @@ class MissingMemberProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'enum contains const and case',
+            source: <<<'PHP'
+                <?php
+
+                enum Foobar
+                {
+                    case Foo;
+                    public const Bar = 'Bar';
+                }
+
+                Foobar::Foo;
+                Foobar::Bar;
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'enum static method not existing',
             source: <<<'PHP'
                 <?php
@@ -285,10 +312,5 @@ class MissingMemberProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
-    }
-
-    public function name(): string
-    {
-        return 'missing_method';
     }
 }

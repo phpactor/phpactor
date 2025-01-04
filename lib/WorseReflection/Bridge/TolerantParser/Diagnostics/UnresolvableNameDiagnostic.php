@@ -56,4 +56,14 @@ class UnresolvableNameDiagnostic implements Diagnostic
     {
         return $this->name;
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
+
+    public function code(): string
+    {
+        return 'unresolved_name';
+    }
 }

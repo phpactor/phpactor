@@ -33,7 +33,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
         $actualReferences = iterator_to_array($finder->findReferences($document, ByteOffset::fromInt($selectionOffset)), false);
 
         $this->assertEquals(count($expectedReferences), count($actualReferences));
-        foreach($expectedReferences as $index => $reference) {
+        foreach ($expectedReferences as $index => $reference) {
             $this->assertEquals($reference->location()->uri(), $actualReferences[$index]->location()->uri());
             $this->assertEquals($reference->isSurely(), $actualReferences[$index]->isSurely());
             $this->assertEquals($reference->isMaybe(), $actualReferences[$index]->isMaybe());

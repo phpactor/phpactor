@@ -30,4 +30,23 @@ class ContainerTypeResolver
             return $containerFqn;
         }
     }
+
+    /**
+     * @param ReflectionMember::TYPE_* $memberType
+     */
+    public function resolveDeclaringClass(string $memberType, string $memberName, ?string $containerFqn): ?string
+    {
+        if (null === $containerFqn) {
+            return null;
+        }
+
+        try {
+            $classLike = $this->reflector->reflectClassLike($containerFqn);
+            $members = $classLike->members()->byMemberType($memberType);
+
+            return $members->get($memberName)->declaringClass()->name()->__toString();
+        } catch (NotFound) {
+            return $containerFqn;
+        }
+    }
 }

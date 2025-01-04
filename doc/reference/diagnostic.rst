@@ -13,8 +13,8 @@ Diagnostics
    :local:
 
 
-``missing_method``
-------------------
+MissingMemberProvider
+---------------------
 
 Report if trying to call a class method which does not exist.
 
@@ -71,6 +71,21 @@ Report if trying to call a class method which does not exist.
         
         - ``ERROR``: ``Case "Bar" does not exist on enum "Foobar"``
         
+    .. tab:: enum contains const and case
+        
+        .. code-block:: php
+        
+            <?php
+            
+            enum Foobar
+            {
+                case Foo;
+                public const Bar = 'Bar';
+            }
+            
+            Foobar::Foo;
+            Foobar::Bar;
+        
     .. tab:: enum static method not existing
         
         .. code-block:: php
@@ -120,8 +135,8 @@ Report if trying to call a class method which does not exist.
             $f->foo = 12;
             $f->barfoo = 'string';
         
-``docblock_missing_return``
----------------------------
+DocblockMissingReturnTypeProvider
+---------------------------------
 
 Report when a method has a return type should be augmented by a docblock tag
 
@@ -144,8 +159,8 @@ Report when a method has a return type should be augmented by a docblock tag
         
         - ``WARN``: ``Method "foo" is missing docblock return type: string``
         
-``docblock_missing_param``
---------------------------
+DocblockMissingParamProvider
+----------------------------
 
 Report when a method has a parameter with a type that should be augmented by a docblock tag.
 
@@ -190,6 +205,22 @@ Report when a method has a parameter with a type that should be augmented by a d
         
         - ``WARN``: ``Method "foo" is missing @param $foobar``
         
+    .. tab:: iterable
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public function foo(iterable $foobar) {
+                }
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Method "foo" is missing @param $foobar``
+        
     .. tab:: array
         
         .. code-block:: php
@@ -206,8 +237,30 @@ Report when a method has a parameter with a type that should be augmented by a d
         
         - ``WARN``: ``Method "foo" is missing @param $foobar``
         
-``assignment_to_missing_property``
-----------------------------------
+    .. tab:: no false positive for vardoc on promoted property
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar
+            {
+                public function __construct(
+                    /**
+                     * @var array<'GET'|'POST'>
+                     */
+                    private array $foobar,
+                    private array $barfoo
+                ) {
+                }
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Method "__construct" is missing @param $barfoo``
+        
+AssignmentToMissingPropertyProvider
+-----------------------------------
 
 Report when assigning to a missing property definition.
 
@@ -229,8 +282,8 @@ Report when assigning to a missing property definition.
         
         - ``WARN``: ``Property "bar" has not been defined``
         
-``missing_return_type``
------------------------
+MissingReturnTypeProvider
+-------------------------
 
 Report if a method is missing a return type.
 
@@ -273,8 +326,8 @@ Report if a method is missing a return type.
         
         - ``WARN``: ``Method "foo" is missing return type and the type could not be determined``
         
-``unresolvable_name``
----------------------
+UnresolvableNameProvider
+------------------------
 
 Report if a name (class, function, constant etc) can not be resolved.
 
@@ -367,8 +420,8 @@ Report if a name (class, function, constant etc) can not be resolved.
         
         - ``ERROR``: ``Function "foobar" not found``
         
-``unused_import``
------------------
+UnusedImportProvider
+--------------------
 
 Report if a use statement is not required.
 
@@ -451,8 +504,8 @@ Report if a use statement is not required.
         
         - ``WARN``: ``Name "Foobar" is imported but not used``
         
-``deprecated usage``
---------------------
+DeprecatedUsageDiagnosticProvider
+---------------------------------
 
 Report when a deprecated symbol (class, method, constant, function etc) is used.
 
@@ -620,8 +673,8 @@ Report when a deprecated symbol (class, method, constant, function etc) is used.
         
         - ``WARN``: ``Call to deprecated property "deprecated": This is deprecated``
         
-``undefined_variable``
-----------------------
+UndefinedVariableProvider
+-------------------------
 
 Report if a variable is undefined and suggest variables with similar names.
 
@@ -660,6 +713,19 @@ Report if a variable is undefined and suggest variables with similar names.
         
         - ``ERROR``: ``Undefined variable "$foo", did you mean one of "$foz", "$foa", "$fob"``
         
+    .. tab:: this in anonymous class
+        
+        .. code-block:: php
+        
+                <?php
+                new class
+                {
+                    public function foo(): void
+                    {
+                        $this
+                    }
+                };
+        
     .. tab:: undefined and no suggestions
         
         .. code-block:: php
@@ -687,8 +753,8 @@ Report if a variable is undefined and suggest variables with similar names.
             
             return $list;
         
-``docblock_missing_extends_tag``
---------------------------------
+DocblockMissingExtendsTagProvider
+---------------------------------
 
 Report when a class extends a generic class but does not provide an @extends tag.
 
@@ -838,8 +904,8 @@ Report when a class extends a generic class but does not provide an @extends tag
         
         - ``WARN``: ``Generic tag `@extends NeedGeneric<int>` should be compatible with `@extends NeedGeneric<mixed,mixed,mixed>```
         
-``docblock_missing_implements_tag``
------------------------------------
+DocblockMissingImplementsTagProvider
+------------------------------------
 
 Report when a class extends a generic class but does not provide an @extends tag.
 

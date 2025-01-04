@@ -83,8 +83,9 @@ class IndexedImplementationFinder implements ClassImplementationFinder
     }
 
     /**
-     * @return Locations<Location>
      * @param ReflectionMember::TYPE_* $symbolType
+     *
+     * @return Locations<Location>
      */
     private function memberImplementations(NodeContext $nodeContext, string $symbolType, bool $includeDefinition): Locations
     {

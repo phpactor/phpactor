@@ -7,6 +7,8 @@ use Phpactor\Indexer\Model\Name\FullyQualifiedName;
 use Phpactor\Indexer\Adapter\Php\InMemory\InMemoryIndex;
 use Phpactor\Indexer\Adapter\Worse\IndexerFunctionSourceLocator;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
+use Phpactor\TextDocument\TextDocumentUri;
+use Symfony\Component\Filesystem\Path;
 use Phpactor\WorseReflection\Core\Exception\SourceNotFound;
 use Phpactor\WorseReflection\Core\Name;
 
@@ -27,7 +29,7 @@ class IndexerFunctionSourceLocatorTest extends TestCase
         $record = new FunctionRecord(
             FullyQualifiedName::fromString('Foobar')
         );
-        $record->setFilePath('nope.php');
+        $record->setFilePath(TextDocumentUri::fromString('/nope.php'));
         $index = new InMemoryIndex();
         $index->write($record);
         $locator = $this->createLocator($index);
@@ -39,12 +41,12 @@ class IndexerFunctionSourceLocatorTest extends TestCase
         $record = new FunctionRecord(
             FullyQualifiedName::fromString('Foobar')
         );
-        $record->setFilePath(__FILE__);
+        $record->setFilePath(TextDocumentUri::fromString(__FILE__));
         $index = new InMemoryIndex();
         $index->write($record);
         $locator = $this->createLocator($index);
         $sourceCode = $locator->locate(Name::fromString('Foobar'));
-        $this->assertEquals(__FILE__, $sourceCode->uri()?->path());
+        $this->assertEquals(Path::canonicalize(__FILE__), $sourceCode->uri()?->path());
     }
 
     private function createLocator(InMemoryIndex $index): IndexerFunctionSourceLocator

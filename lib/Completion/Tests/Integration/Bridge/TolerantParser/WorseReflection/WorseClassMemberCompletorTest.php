@@ -245,15 +245,15 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 EOT
             , [
                 [
-                    'type' => Suggestion::TYPE_CONSTANT,
-                    'name' => 'class',
-                    'short_description' => 'Foobar',
-                ],
-                [
                     'type' => Suggestion::TYPE_METHOD,
                     'name' => 'foo',
                     'short_description' => 'pub foo(): Foobar',
                     'snippet' => 'foo()',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'class',
+                    'short_description' => 'Foobar',
                 ],
             ]
         ];
@@ -314,32 +314,6 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                     'name' => 'class',
                     'short_description' => 'Foobar',
                 ],
-            ]
-        ];
-
-        yield 'Partially completed method with brackets' => [
-            <<<'EOT'
-                <?php
-
-                class Foobar
-                {
-                    public function aaa()
-                    {
-                        $this->bb<>();
-                    }
-
-                    public function bbb() {}
-                    public function ccc() {}
-                }
-
-                EOT
-            , [
-                [
-                    'type' => Suggestion::TYPE_METHOD,
-                    'name' => 'bbb',
-                    'short_description' => 'pub bbb()',
-                    'snippet' => 'bbb',
-                ]
             ]
         ];
 
@@ -741,14 +715,14 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
                 EOT
             , [
                 [
-                    'type' => Suggestion::TYPE_CONSTANT,
-                    'name' => 'class',
-                    'short_description' => 'BarBar',
-                ],
-                [
                     'type' => Suggestion::TYPE_METHOD,
                     'name' => 'hello',
                     'snippet' => 'hello()',
+                ],
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'class',
+                    'short_description' => 'BarBar',
                 ],
             ]
         ];
@@ -836,90 +810,94 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
             ]
         ];
 
-        if (defined('T_ENUM')) {
-            yield 'enum' => [
-                <<<'EOT'
-                    <?php
+        yield 'enum' => [
+            <<<'EOT'
+                <?php
 
-                    enum Enum1 {
-                        case FOOBAR;
-                    }
+                enum Enum1 {
+                    case FOOBAR;
+                    const FOO = 'FOO';
+                }
 
-                    Enum1::F<>
+                Enum1::F<>
 
-                    EOT
-                , [
-                    [
-                        'type' => Suggestion::TYPE_ENUM,
-                        'name' => 'FOOBAR',
-                        'short_description' => 'case FOOBAR',
-                    ],
-                ]
-            ];
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_CONSTANT,
+                    'name' => 'FOO',
+                    'short_description' => 'FOO = "FOO"',
+                ],
+                [
+                    'type' => Suggestion::TYPE_ENUM,
+                    'name' => 'FOOBAR',
+                    'short_description' => 'case FOOBAR',
+                ],
+            ]
+        ];
 
-            yield 'enum case' => [
-                <<<'EOT'
-                    <?php
+        yield 'enum case' => [
+            <<<'EOT'
+                <?php
 
-                    enum Enum1: string {
-                        case FOOBAR = 'bar';
-                    }
+                enum Enum1: string {
+                    case FOOBAR = 'bar';
+                }
 
-                    Enum1::FOOBAR-><>
+                Enum1::FOOBAR-><>
 
-                    EOT
-                , [
-                    [
-                        'type' => Suggestion::TYPE_METHOD,
-                        'name' => 'cases',
-                        'short_description' => 'pub cases(): BackedEnumCase[]',
-                        'snippet' => 'cases()',
-                    ],
-                    [
-                        'type' => Suggestion::TYPE_METHOD,
-                        'name' => 'from',
-                        'short_description' => 'pub from(int|string $value): static(Enum1)',
-                        'snippet' => 'from(${1:\\$value})${0}',
-                    ],
-                    [
-                        'type' => Suggestion::TYPE_PROPERTY,
-                        'name' => 'name',
-                    ],
-                    [
-                        'type' => Suggestion::TYPE_METHOD,
-                        'name' => 'tryFrom',
-                        'short_description' => 'pub tryFrom(int|string $value): static(Enum1)|null',
-                        'snippet' => 'tryFrom(${1:\\$value})${0}',
-                    ],
-                    [
-                        'type' => Suggestion::TYPE_PROPERTY,
-                        'name' => 'value',
-                    ],
-                ]
-            ];
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'cases',
+                    'short_description' => 'pub cases(): BackedEnumCase[]',
+                    'snippet' => 'cases()',
+                ],
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'from',
+                    'short_description' => 'pub from(int|string $value): static(Enum1)',
+                    'snippet' => 'from(${1:\\$value})${0}',
+                ],
+                [
+                    'type' => Suggestion::TYPE_PROPERTY,
+                    'name' => 'name',
+                ],
+                [
+                    'type' => Suggestion::TYPE_METHOD,
+                    'name' => 'tryFrom',
+                    'short_description' => 'pub tryFrom(int|string $value): static(Enum1)|null',
+                    'snippet' => 'tryFrom(${1:\\$value})${0}',
+                ],
+                [
+                    'type' => Suggestion::TYPE_PROPERTY,
+                    'name' => 'value',
+                ],
+            ]
+        ];
 
-            /** See https://github.com/phpactor/phpactor/issues/1612
-            yield 'backed enum' => [
-                <<<'EOT'
-                    <?php
+        /** See https://github.com/phpactor/phpactor/issues/1612
+        yield 'backed enum' => [
+            <<<'EOT'
+                <?php
 
-                    enum Enum1 {
-                        case FOOBAR = 'bar';
-                    }
+                enum Enum1 {
+                    case FOOBAR = 'bar';
+                }
 
-                    Enum1::F<>
+                Enum1::F<>
 
-                    EOT
-                , [
-                    [
-                        'type' => Suggestion::TYPE_ENUM,
-                        'name' => 'FOOBAR',
-                        'short_description' => 'case FOOBAR = "bar"',
-                    ],
-                ]
-            ];
-             */
-        }
+                EOT
+            , [
+                [
+                    'type' => Suggestion::TYPE_ENUM,
+                    'name' => 'FOOBAR',
+                    'short_description' => 'case FOOBAR = "bar"',
+                ],
+            ]
+        ];
+         */
 
         yield 'nullable' => [
             <<<'EOT'

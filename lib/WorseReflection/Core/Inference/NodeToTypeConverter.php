@@ -43,7 +43,7 @@ class NodeToTypeConverter
     /**
      * @param null|Type|string $type
      */
-    public function resolve(Node $node, $type = null, Name $currentClass = null): Type
+    public function resolve(Node $node, $type = null, ?Name $currentClass = null): Type
     {
         $type = $type ?: $node->getText();
 
@@ -108,7 +108,7 @@ class NodeToTypeConverter
         );
     }
 
-    private function currentClass(Node $node, Name $currentClass = null): Type
+    private function currentClass(Node $node, ?Name $currentClass = null): Type
     {
         if ($currentClass) {
             return TypeFactory::fromStringWithReflector($currentClass->full(), $this->reflector);

@@ -10,6 +10,19 @@ use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 
 final class ClassHierarchyResolver
 {
+    public const INCLUDE_TRAIT =     0x00000001;
+    public const INCLUDE_INTERFACE = 0x00000010;
+    public const INCLUDE_PARENT =    0x00000100;
+    public const INCLUDE_MIXIN =     0x00001000;
+
+    /**
+     * @param int-mask-of<self::INCLUDE_*> $mode
+     */
+    public function __construct(
+        private int $mode = self::INCLUDE_TRAIT | self::INCLUDE_INTERFACE | self::INCLUDE_PARENT | self::INCLUDE_MIXIN
+    ) {
+    }
+
     /**
      * @param array<string,ReflectionClassLike> $resolved
      * @return ReflectionClassLike[]
@@ -63,25 +76,33 @@ final class ClassHierarchyResolver
      */
     private function resolveReflectionClass(ReflectionClass $classLike, array $resolved): array
     {
-        $parent = $classLike->parent();
-        if ($parent) {
-            $resolved = $this->doResolve($parent, $resolved);
+        if ($this->mode & self::INCLUDE_PARENT) {
+            $parent = $classLike->parent();
+            if ($parent) {
+                $resolved = $this->doResolve($parent, $resolved);
+            }
         }
 
-        foreach ($classLike->interfaces() as $interface) {
-            $resolved = $this->doResolve($interface, $resolved);
+        if ($this->mode & self::INCLUDE_INTERFACE) {
+            foreach ($classLike->interfaces() as $interface) {
+                $resolved = $this->doResolve($interface, $resolved);
+            }
         }
 
-        foreach ($classLike->traits() as $interface) {
-            $resolved = $this->doResolve($interface, $resolved);
+        if ($this->mode & self::INCLUDE_TRAIT) {
+            foreach ($classLike->traits() as $interface) {
+                $resolved = $this->doResolve($interface, $resolved);
+            }
         }
 
-        // consider making this an extension point and "mixins" an extension
-        foreach ($classLike->docblock()->mixins() as $mixin) {
-            if ($mixin instanceof ReflectedClassType) {
-                $reflection = $mixin->reflectionOrNull();
-                if ($reflection) {
-                    $resolved = $this->doResolve($reflection, $resolved);
+        if ($this->mode & self::INCLUDE_MIXIN) {
+            // consider making this an extension point and "mixins" an extension
+            foreach ($classLike->docblock()->mixins() as $mixin) {
+                if ($mixin instanceof ReflectedClassType) {
+                    $reflection = $mixin->reflectionOrNull();
+                    if ($reflection) {
+                        $resolved = $this->doResolve($reflection, $resolved);
+                    }
                 }
             }
         }

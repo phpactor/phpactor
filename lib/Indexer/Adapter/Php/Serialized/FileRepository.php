@@ -17,7 +17,7 @@ class FileRepository
     /**
      * Increment this number each time there is a B/C break in the index.
      */
-    private const VERSION = 1;
+    private const VERSION = 2;
 
     /**
      * Flush to the filesystem after BATCH_SIZE updates
@@ -103,7 +103,7 @@ class FileRepository
         return $deserialized;
     }
 
-    public function putTimestamp(int $time = null): void
+    public function putTimestamp(?int $time = null): void
     {
         $time = $time ?? time();
         $this->ensureDirectoryExists(dirname($this->timestampPath()));

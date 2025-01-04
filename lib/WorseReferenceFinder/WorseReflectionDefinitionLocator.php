@@ -97,7 +97,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $class->sourceCode()->uri()?->path();
+        $path = $class->sourceCode()->uri();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(
@@ -191,13 +191,20 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                 case Symbol::CONSTANT:
                     if ($containingClass instanceof ReflectionEnum) {
                         $members = $containingClass->cases();
-                        break;
+                        if ($members->has($symbolName)) {
+                            break;
+                        }
                     }
-                    assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionInterface);
                     $members = $containingClass->constants();
                     break;
                 case Symbol::PROPERTY:
-                    assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionTrait || $containingClass instanceof ReflectionEnum);
+                    if (
+                        !$containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionTrait || $containingClass instanceof ReflectionEnum) {
+                        throw new CouldNotLocateDefinition(sprintf(
+                            'ClassLike "%s" has no properties!',
+                            $containingClass::class
+                        ));
+                    }
                     $members = $containingClass->properties();
                     break;
                 default:

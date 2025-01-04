@@ -52,4 +52,14 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
     {
         return $this->tagName === '@extends';
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
+
+    public function code(): string
+    {
+        return 'doblock_missing_class_generic';
+    }
 }

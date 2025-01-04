@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\TemplatePathResolver;
 
+use Generator;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\CodeBuilder\Tests\IntegrationTestCase;
 
@@ -22,7 +23,7 @@ class PhpVersionPathResolverTest extends IntegrationTestCase
         array $expectedPaths
     ): void {
         foreach ($fullTemplatePaths as $fullTemplatePath) {
-            $this->workspace()->mkdir($fullTemplatePath, '');
+            $this->workspace()->mkdir($fullTemplatePath);
         }
 
         $resolver = new PhpVersionPathResolver($phpVersion);
@@ -33,7 +34,7 @@ class PhpVersionPathResolverTest extends IntegrationTestCase
         }, $templatePaths)));
     }
 
-    public function provideResolvePaths()
+    public function provideResolvePaths(): Generator
     {
         yield 'none' => [
             '5.6',

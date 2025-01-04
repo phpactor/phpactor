@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
@@ -22,34 +23,32 @@ class WorseOverrideMethodTest extends WorseTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    public function provideExtractMethod()
+    public function provideExtractMethod(): Generator
     {
-        return [
-            'root type as param and return type' => [
-                'overrideMethod1.test',
-                'ChildClass',
-                'barbar'
-            ],
-            'no params or return type' => [
-                'overrideMethod2.test',
-                'ChildClass',
-                'barbar'
-            ],
-            'scalar type as param and return type' => [
-                'overrideMethod3.test',
-                'ChildClass',
-                'barbar'
-            ],
-            'default value' => [
-                'overrideMethod4.test',
-                'ChildClass',
-                'barbar'
-            ],
-            'parent class with > 1 method' => [
-                'overrideMethod5.test',
-                'ChildClass',
-                'barbar'
-            ],
+        yield 'root type as param and return type' => [
+            'overrideMethod1.test',
+            'ChildClass',
+            'barbar'
+        ];
+        yield 'no params or return type' => [
+            'overrideMethod2.test',
+            'ChildClass',
+            'barbar'
+        ];
+        yield 'scalar type as param and return type' => [
+            'overrideMethod3.test',
+            'ChildClass',
+            'barbar'
+        ];
+        yield 'default value' => [
+            'overrideMethod4.test',
+            'ChildClass',
+            'barbar'
+        ];
+        yield 'parent class with > 1 method' => [
+            'overrideMethod5.test',
+            'ChildClass',
+            'barbar'
         ];
     }
 
@@ -59,11 +58,11 @@ class WorseOverrideMethodTest extends WorseTestCase
         $this->overrideMethod('<?php class Foobar {}', 'Foobar', 'foo');
     }
 
-    private function overrideMethod($source, string $className, $methodName)
+    private function overrideMethod(string $source, string $className, string $methodName): string
     {
         $reflector = $this->reflectorForWorkspace($source);
         $factory = new WorseBuilderFactory($reflector);
         $override = new WorseOverrideMethod($reflector, $factory, $this->updater());
-        return $override->overrideMethod(SourceCode::fromString($source), $className, $methodName);
+        return $override->overrideMethod(SourceCode::fromString($source), $className, $methodName)->apply($source);
     }
 }

@@ -14,6 +14,26 @@ use Phpactor\TextDocument\TextDocument;
 
 class KeywordCompletor implements TolerantCompletor
 {
+    private const MAGIC_METHODS = [
+        '__construct' => "(\$1)\n{\$0\n}",
+        '__call' => "(string \\\$\${1:name}, array \\\$\${2:arguments}): \${3:mixed}\n{\$0\n}",
+        '__callStatic' => "(string \\\$\${1:name}, array \\\$\${2:arguments}): \${3:mixed}\n{\$0\n}",
+        '__clone' => "(): void\n{\$0\n}",
+        '__debugInfo' => "(): array\n{\$0\n}",
+        '__destruct' => "(): void\n{\$0\n}",
+        '__get' => "(string \\\$\${1:name}): \${3:mixed}\n{\$0\n}",
+        '__invoke' => "(\$1): \${2:mixed}\n{\$0\n}",
+        '__isset' => "(string \\\$\${1:name}): bool\n{\$0\n}",
+        '__serialize' => "(): array\n{\$0\n}",
+        '__set' => "(string \\\$\${1:name}, mixed \\\$\${2:value}): void\n{\$0\n}",
+        '__set_state' => "(array \\\$\${1:properties}): object\n{\$0\n}",
+        '__sleep' => "(): array\n{\$0\n}",
+        '__toString' => "(): string\n{\$0\n}",
+        '__unserialize' => "(array \\\$\${1:data}): void\n{\$0\n}",
+        '__unset' => "(string \\\$\${1:name}): void\n{\$0\n}",
+        '__wakeup' => "(): void\n{\$0\n}",
+    ];
+
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         if (CompletionContext::promotedPropertyVisibility($node)) {
@@ -25,14 +45,12 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
         if (CompletionContext::declaration($node, $offset)) {
-            yield from $this->keywords(['class ', 'trait ', 'function ', 'interface ']);
+            yield from $this->keywords(['class ', 'enum ', 'trait ', 'function ', 'interface ']);
             return true;
         }
 
         if (CompletionContext::methodName($node)) {
-            yield from $this->keywords([
-                '__construct(',
-            ]);
+            yield from $this->methods();
             return true;
         }
 
@@ -56,6 +74,23 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         return true;
+    }
+
+    /**
+     * @return Generator<Suggestion>
+     */
+    private function methods(): Generator
+    {
+        foreach (self::MAGIC_METHODS as $name => $snippet) {
+            yield Suggestion::createWithOptions($name . '(', [
+                'type' => Suggestion::TYPE_METHOD,
+                'priority' => match ($name) {
+                    '__construct' => -255,
+                    default => 1,
+                },
+                'snippet' => $name . $snippet,
+            ]);
+        }
     }
 
     /**

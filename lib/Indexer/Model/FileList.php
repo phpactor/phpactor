@@ -7,9 +7,10 @@ use Countable;
 use Iterator;
 use IteratorAggregate;
 use SplFileInfo;
+use Traversable;
 
 /**
- * @implements \IteratorAggregate<SplFileInfo>
+ * @implements IteratorAggregate<SplFileInfo>
  */
 class FileList implements IteratorAggregate, Countable
 {
@@ -38,9 +39,9 @@ class FileList implements IteratorAggregate, Countable
     }
 
     /**
-     * @param Iterator<SplFileInfo> $splFileInfos
+     * @param Traversable<SplFileInfo> $splFileInfos
      */
-    public static function fromInfoIterator(Iterator $splFileInfos): self
+    public static function fromInfoIterator(Traversable $splFileInfos): self
     {
         return new self($splFileInfos);
     }

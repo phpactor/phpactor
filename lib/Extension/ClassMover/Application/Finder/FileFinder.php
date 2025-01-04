@@ -13,7 +13,7 @@ use SplFileInfo;
 
 class FileFinder
 {
-    public function filesFor(Filesystem $filesystem, ReflectionClassLike $reflection = null, string $memberName = null): FileList
+    public function filesFor(Filesystem $filesystem, ?ReflectionClassLike $reflection = null, ?string $memberName = null): FileList
     {
         // if no member name, then we are searching for all members of the
         // class, and we can't really optimise this...
@@ -41,8 +41,8 @@ class FileFinder
             // we have public members or a non-class, we need to search the
             // whole tree, but we can discount any files which do not contain
             // the member name string.
-            return $this->allPhpFiles($filesystem)->filter(function (SplFileInfo $file) use ($memberName) {
-                return preg_match('{' . $memberName . '}', file_get_contents($file->getPathname()));
+            return $this->allPhpFiles($filesystem)->filter(function (SplFileInfo $file) use ($memberName): bool {
+                return preg_match('{' . $memberName . '}', file_get_contents($file->getPathname())) === 1;
             });
         }
 
@@ -57,12 +57,14 @@ class FileFinder
         return $this->pathsFromReflectionClass($reflection, $private);
     }
 
-    private function pathsFromReflectionClass(ReflectionClass $reflection, bool $private)
+    private function pathsFromReflectionClass(ReflectionClass $reflection, bool $private): FileList
     {
         $path = $reflection->sourceCode()->uri()?->path();
 
         if (!$path) {
-            throw new RuntimeException('Source has no path associated with it');
+            throw new RuntimeException(
+                sprintf('Source class "%s" has no path associated with it', $reflection->name()),
+            );
         }
 
         $filePaths = [ $path ];
@@ -78,35 +80,61 @@ class FileFinder
         return FileList::fromFilePaths($filePaths);
     }
 
-    private function allPhpFiles(Filesystem $filesystem)
+    private function allPhpFiles(Filesystem $filesystem): FileList
     {
-        $filePaths = $filesystem->fileList()->existing()->phpFiles();
-        return $filePaths;
+        return $filesystem->fileList()->existing()->phpFiles();
     }
 
-    private function parentFilePaths(ReflectionClass $reflection, $filePaths)
+    /**
+     * @param array<string> $filePaths
+     *
+     * @return array<string>
+     */
+    private function parentFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         $context = $reflection->parent();
         while ($context) {
-            $filePaths[] = $context->sourceCode()->uri()?->path();
+            $path = $context->sourceCode()->uri()?->path();
+            if ($path === null) {
+                continue;
+            }
+            $filePaths[] = $path;
             $context = $context->parent();
         }
 
         return $filePaths;
     }
 
-    private function traitFilePaths(ReflectionClass $reflection, $filePaths)
+    /**
+     * @param array<string> $filePaths
+     *
+     * @return array<string>
+     */
+    private function traitFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         foreach ($reflection->traits() as $trait) {
-            $filePaths[] = $trait->sourceCode()->uri()?->path();
+            $path = $trait->sourceCode()->uri()?->path();
+            if ($path === null) {
+                continue;
+            }
+            $filePaths[] = $path;
         }
         return $filePaths;
     }
 
-    private function interfaceFilePaths(ReflectionClass $reflection, $filePaths)
+    /**
+     * @param array<string> $filePaths
+     *
+     * @return array<string>
+     */
+    private function interfaceFilePaths(ReflectionClass $reflection, array $filePaths): array
     {
         foreach ($reflection->interfaces() as $interface) {
-            $filePaths[] = $interface->sourceCode()->uri()?->path();
+            $path = $interface->sourceCode()->uri()?->path();
+            if ($path === null) {
+                continue;
+            }
+            $filePaths[] = $path;
         }
 
         return $filePaths;

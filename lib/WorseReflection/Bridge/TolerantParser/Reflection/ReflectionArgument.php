@@ -38,7 +38,7 @@ class ReflectionArgument implements CoreReflectionArgument
         if ($this->node->expression instanceof Variable) {
             $name = $this->node->expression->name->getText($this->node->getFileContents());
 
-            if (is_string($name) && substr($name, 0, 1) == '$') {
+            if (is_string($name) && str_starts_with($name, '$')) {
                 return substr($name, 1);
             }
 
@@ -67,12 +67,12 @@ class ReflectionArgument implements CoreReflectionArgument
 
     public function type(): Type
     {
-        return $this->info()->type();
+        return $this->nodeContext()->type();
     }
 
     public function value(): mixed
     {
-        return TypeUtil::valueOrNull($this->info()->type());
+        return TypeUtil::valueOrNull($this->nodeContext()->type());
     }
 
     public function position(): ByteOffsetRange
@@ -83,7 +83,7 @@ class ReflectionArgument implements CoreReflectionArgument
         );
     }
 
-    private function info(): NodeContext
+    public function nodeContext(): NodeContext
     {
         return $this->services->nodeContextResolver()->resolveNode($this->frame, $this->node);
     }

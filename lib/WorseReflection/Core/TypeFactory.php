@@ -57,7 +57,7 @@ class TypeFactory
         return self::fromString($type, $reflector);
     }
 
-    public static function fromString(string $type, Reflector $reflector = null): Type
+    public static function fromString(string $type, ?Reflector $reflector = null): Type
     {
         if (str_starts_with($type, '?')) {
             return self::nullable(self::typeFromString(substr($type, 1)));
@@ -183,7 +183,7 @@ class TypeFactory
     /**
      * @param string|ClassName $className
      */
-    public static function class($className, ClassReflector $reflector = null): ClassType
+    public static function class($className, ?ClassReflector $reflector = null): ClassType
     {
         $name = ClassName::fromUnknown($className);
         if ($reflector) {
@@ -385,7 +385,7 @@ class TypeFactory
         return new IntNegative();
     }
 
-    private static function typeFromString(string $type, Reflector $reflector = null): Type
+    private static function typeFromString(string $type, ?Reflector $reflector = null): Type
     {
         if ('' === $type) {
             return self::unknown();

@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\WorseReflection\Core\DiagnosticTag;
 
 class UnusedImportDiagnostic implements Diagnostic
 {
@@ -35,5 +36,15 @@ class UnusedImportDiagnostic implements Diagnostic
     public function name(): string
     {
         return $this->name;
+    }
+
+    public function tags(): array
+    {
+        return [DiagnosticTag::UNNECESSARY];
+    }
+
+    public function code(): string
+    {
+        return 'unused_import';
     }
 }

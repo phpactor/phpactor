@@ -18,7 +18,7 @@ class Edits
 
     private TextFormat $format;
 
-    public function __construct(TextFormat $format = null)
+    public function __construct(?TextFormat $format = null)
     {
         $this->format = $format ?: new TextFormat();
     }
@@ -53,6 +53,18 @@ class Edits
     public function replace($node, string $text): void
     {
         $this->edits[] = TextEdit::create($node->getFullStartPosition(), $node->getFullWidth(), $text);
+    }
+
+    public function replaceMultiple(
+        Node|Token|QualifiedName $firstNodeToReplace,
+        Node|Token|QualifiedName $lastToReplace,
+        string $text,
+    ): void {
+        $this->edits[] = TextEdit::create(
+            $firstNodeToReplace->getStartPosition(),
+            $lastToReplace->getEndPosition() - $firstNodeToReplace->getStartPosition(),
+            $text
+        );
     }
 
     public function textEdits(): TextEdits

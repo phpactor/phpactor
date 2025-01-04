@@ -2,13 +2,13 @@
 
 namespace Phpactor\Extension\LanguageServer\Tests\Unit;
 
+use Phpactor\Extension\LanguageServer\DiagnosticProvider\AggregateDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServerProtocol\CodeActionRequest;
 use Phpactor\LanguageServerProtocol\DidChangeWatchedFilesClientCapabilities;
 use Phpactor\LanguageServerProtocol\InitializeParams;
 use Phpactor\LanguageServerProtocol\WorkspaceClientCapabilities;
-use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Rpc\NotificationMessage;
 use Phpactor\LanguageServer\Core\Rpc\RequestMessage;
 use Phpactor\LanguageServer\Core\Rpc\ResponseMessage;
@@ -139,10 +139,10 @@ class LanguageServerExtensionTest extends LanguageServerTestCase
     public function testRegistersCodeActionProvider(): void
     {
         $serverTester = $this->createTester();
-        $serverTester->textDocument()->open('file://foo', 'bar');
+        $serverTester->textDocument()->open('file:///foo', 'bar');
         $response = $serverTester->mustRequestAndWait(CodeActionRequest::METHOD, [
             'textDocument' => [
-                'uri' => 'file://foo'
+                'uri' => 'file:///foo'
             ],
             'range' => [
                 'start' => [ 'line' => 0, 'character' => 0, ],

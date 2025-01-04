@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\Collection;
 
+use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
@@ -18,41 +19,42 @@ class ReflectionClassCollectionTest extends IntegrationTestCase
         $assertion($collection);
     }
 
-    public function provideCollection()
+    /**
+     * @return Generator<string, array{string, Closure(ReflectionClassLikeCollection):void}>
+     */
+    public function provideCollection(): Generator
     {
-        return [
-            'It has all the classes' => [
-                <<<'EOT'
-                    <?php
+        yield 'It has all the classes' => [
+            <<<'EOT'
+                <?php
 
+                class Foobar
+                {
+                }
+
+                class Barfoo
+                {
+                }
+                EOT
+            ,
+            function (ReflectionClassLikeCollection $collection): void {
+                $this->assertEquals(2, $collection->count());
+            },
+        ];
+        yield 'It reflects nested classes' => [
+            <<<'EOT'
+                <?php
+
+                if (true) {
                     class Foobar
                     {
                     }
-
-                    class Barfoo
-                    {
-                    }
-                    EOT
-                ,
-                function (ReflectionClassLikeCollection $collection): void {
-                    $this->assertEquals(2, $collection->count());
-                },
-            ],
-            'It reflects nested classes' => [
-                <<<'EOT'
-                    <?php
-
-                    if (true) {
-                        class Foobar
-                        {
-                        }
-                    }
-                    EOT
-                ,
-                function (ReflectionClassLikeCollection $collection): void {
-                    $this->assertEquals(1, $collection->count());
-                },
-            ],
+                }
+                EOT
+            ,
+            function (ReflectionClassLikeCollection $collection): void {
+                $this->assertEquals(1, $collection->count());
+            },
         ];
     }
 }

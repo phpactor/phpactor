@@ -39,12 +39,12 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         ];
 
         yield '__construct' => [
-            '<?php class Foobar { public function __<>',
-            $this->expect(['__construct(']),
+            '<?php class Foobar { public function __c<>',
+            [...$this->expectMagicMethods()],
         ];
         yield '__construct 2' => [
-            '<?php class Foo extends Bar implements One {    public function __<> }',
-            $this->expect(['__construct(']),
+            '<?php class Foo extends Bar implements One {    public function __c<> }',
+            [...$this->expectMagicMethods()],
         ];
 
 
@@ -59,15 +59,15 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
 
         yield 'class keyword' => [
             '<?php cl<>',
-            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
+            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
         yield 'class keyword 2' => [
             '<?php class F {} cl<>',
-            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
+            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
         yield 'class keyword 3' => [
             '<?php class F {function fo() {}} cl<>',
-            $this->expect(['class ', 'function ', 'interface ', 'trait ']),
+            $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
     }
 
@@ -85,5 +85,35 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         return array_map(fn (string $keyword) => [
             'name' => $keyword,
         ], $array);
+    }
+
+    /**
+     * @return Generator<array{name:string,snippet:string}>
+     */
+    private function expectMagicMethods(): Generator
+    {
+        $methods = [
+            '__construct' => "(\$1)\n{\$0\n}",
+            '__call' => "(string \\\$\${1:name}, array \\\$\${2:arguments}): \${3:mixed}\n{\$0\n}",
+            '__callStatic' => "(string \\\$\${1:name}, array \\\$\${2:arguments}): \${3:mixed}\n{\$0\n}",
+            '__clone' => "(): void\n{\$0\n}",
+            '__debugInfo' => "(): array\n{\$0\n}",
+            '__destruct' => "(): void\n{\$0\n}",
+            '__get' => "(string \\\$\${1:name}): \${3:mixed}\n{\$0\n}",
+            '__invoke' => "(\$1): \${2:mixed}\n{\$0\n}",
+            '__isset' => "(string \\\$\${1:name}): bool\n{\$0\n}",
+            '__serialize' => "(): array\n{\$0\n}",
+            '__set' => "(string \\\$\${1:name}, mixed \\\$\${2:value}): void\n{\$0\n}",
+            '__set_state' => "(array \\\$\${1:properties}): object\n{\$0\n}",
+            '__sleep' => "(): array\n{\$0\n}",
+            '__toString' => "(): string\n{\$0\n}",
+            '__unserialize' => "(array \\\$\${1:data}): void\n{\$0\n}",
+            '__unset' => "(string \\\$\${1:name}): void\n{\$0\n}",
+            '__wakeup' => "(): void\n{\$0\n}",
+        ];
+
+        foreach ($methods as $name => $snippet) {
+            yield ['name' => $name . '(', 'snippet' => $name . $snippet];
+        }
     }
 }

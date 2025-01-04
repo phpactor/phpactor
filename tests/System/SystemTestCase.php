@@ -7,13 +7,14 @@ use Symfony\Component\Process\Process;
 
 abstract class SystemTestCase extends IntegrationTestCase
 {
-    protected function phpactorFromStringArgs(string $args, string $stdin = null): Process
+    protected function phpactorFromStringArgs(string $args, ?string $stdin = null): Process
     {
         chdir($this->workspaceDir());
 
-        $bin = __DIR__ . '/../../bin/phpactor --verbose ';
+        $bin = __DIR__ . '/../../bin/phpactor --no-ansi --verbose ';
         $process = Process::fromShellCommandline(sprintf(
-            '%s %s',
+            '%s %s %s',
+            PHP_BINARY,
             $bin,
             $args
         ), null, [

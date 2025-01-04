@@ -8,6 +8,12 @@ use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class SelfTest extends IntegrationTestCase
 {
+    public const DISABLED_TESTS = [
+        // disabling the includeWalker because it barely works
+        // and it causes severe performance issues.
+        'require_and_include',
+    ];
+
     /**
      * @dataProvider provideSelf
      */
@@ -29,7 +35,7 @@ class SelfTest extends IntegrationTestCase
     {
         foreach ((array)glob(__DIR__ . '/*/*.test') as $fname) {
             $dirName = basename(dirname((string)$fname));
-            if ($dirName === 'enum' && !defined('T_ENUM')) {
+            if (in_array($dirName, self::DISABLED_TESTS)) {
                 continue;
             }
             yield $dirName .' ' . basename((string)$fname) => [

@@ -47,4 +47,14 @@ class DocblockMissingReturnTypeDiagnostic implements Diagnostic
     {
         return $this->actualReturnType;
     }
+
+    public function tags(): array
+    {
+        return [];
+    }
+
+    public function code(): string
+    {
+        return 'docblock_missing_return_type';
+    }
 }

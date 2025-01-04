@@ -103,7 +103,7 @@ abstract class AbstractMethodUpdater
         }
 
         if ($newLine) {
-            $edits->after($lastMember, PHP_EOL);
+            $edits->after($lastMember, "\n");
         }
 
         foreach ($methodPrototypes as $methodPrototype) {
@@ -112,12 +112,12 @@ abstract class AbstractMethodUpdater
                 if ($lastNonMethodMember === null) {
                     $edits->after(
                         $this->memberDeclarationsNode($classNode)->openBrace,
-                        PHP_EOL.$edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1).PHP_EOL
+                        "\n".$edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)."\n"
                     );
                 } else {
                     $edits->after(
                         $lastNonMethodMember,
-                        PHP_EOL.PHP_EOL.$edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)
+                        "\n"."\n".$edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)
                     );
                 }
                 continue;
@@ -125,11 +125,11 @@ abstract class AbstractMethodUpdater
 
             $edits->after(
                 $lastMember,
-                PHP_EOL . $edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)
+                "\n" . $edits->indent($this->renderMethod($this->renderer, $methodPrototype), 1)
             );
 
             if (false === $classPrototype->methods()->isLast($methodPrototype)) {
-                $edits->after($lastMember, PHP_EOL);
+                $edits->after($lastMember, "\n");
             }
         }
     }
@@ -154,7 +154,7 @@ abstract class AbstractMethodUpdater
 
         foreach ($method->body()->lines() ?? [] as $line) {
             // do not add duplicate lines
-            $bodyNodeLines = explode(PHP_EOL, $bodyNode->getText());
+            $bodyNodeLines = explode("\n", $bodyNode->getText());
 
             foreach ($bodyNodeLines as $bodyNodeLine) {
                 if (trim($bodyNodeLine) == trim((string) $line)) {
@@ -164,7 +164,7 @@ abstract class AbstractMethodUpdater
 
             $edits->after(
                 $lastStatement,
-                PHP_EOL . $edits->indent((string) $line, 2)
+                "\n" . $edits->indent((string) $line, 2)
             );
         }
     }
@@ -219,21 +219,23 @@ abstract class AbstractMethodUpdater
             return;
         }
 
-        $returnType = (string) $this->renderer->render($returnType->type());
+        $returnType = trim((string) $this->renderer->render($returnType->type()));
+        if ($returnType === '') {
+            return;
+        }
 
-        if (!$methodDeclaration->returnTypeList && trim($returnType)) {
+        // Add the new return type
+        if ($methodDeclaration->returnTypeList === null) {
             $edits->after($methodDeclaration->closeParen, ': ' . $returnType);
             return;
         }
 
         $firstReturnType = QualifiedNameListUtil::firstQualifiedNameOrNullOrToken($methodDeclaration->returnTypeList);
-
         if (null === $firstReturnType) {
             return;
         }
 
         $existingReturnType = $returnType ? NodeHelper::resolvedShortName($methodDeclaration, $firstReturnType) : null;
-
         if (null === $existingReturnType) {
             // TODO: Add return type
             return;
@@ -243,7 +245,9 @@ abstract class AbstractMethodUpdater
             return;
         }
 
-        $edits->replace($firstReturnType, ' ' . $returnType);
+        $startToken = $methodDeclaration->questionToken ?? $firstReturnType;
+
+        $edits->replaceMultiple($startToken, $methodDeclaration->returnTypeList, $returnType);
     }
 
     private function prototypeSameAsDeclaration(Method $methodPrototype, MethodDeclaration $methodDeclaration): bool

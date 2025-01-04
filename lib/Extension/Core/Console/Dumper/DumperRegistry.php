@@ -15,7 +15,7 @@ final class DumperRegistry
         }
     }
 
-    public function get(string $name = null): Dumper
+    public function get(?string $name = null): Dumper
     {
         $name = $name ?: $this->default;
         if (!isset($this->dumpers[$name])) {

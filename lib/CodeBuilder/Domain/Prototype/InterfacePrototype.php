@@ -8,9 +8,9 @@ final class InterfacePrototype extends ClassLikePrototype
 
     public function __construct(
         string $name,
-        Methods $methods = null,
-        ExtendsInterfaces $extendsInterfaces = null,
-        UpdatePolicy $updatePolicy = null
+        ?Methods $methods = null,
+        ?ExtendsInterfaces $extendsInterfaces = null,
+        ?UpdatePolicy $updatePolicy = null
     ) {
         parent::__construct($name, $methods, null, null, $updatePolicy);
         $this->extendsInterfaces = $extendsInterfaces ?: ExtendsInterfaces::empty();

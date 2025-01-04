@@ -70,7 +70,7 @@ class IndexBuildCommand extends Command
         $job = $this->indexer->getJob($subPath);
         $output->writeln('done');
         $output->writeln('<info>Building index:</info>');
-        $output->write(PHP_EOL);
+        $output->write("\n");
 
         if ($job->size() === 0) {
             $output->writeln('No files found');
@@ -91,8 +91,8 @@ class IndexBuildCommand extends Command
         }
 
         $progress->finish();
-        $output->write(PHP_EOL);
-        $output->write(PHP_EOL);
+        $output->write("\n");
+        $output->write("\n");
 
         $output->writeln(sprintf(
             '<bg=green;fg=black;option>Done in %s seconds using %sb of memory</>',
@@ -106,12 +106,15 @@ class IndexBuildCommand extends Command
         Loop::run(function () use ($output) {
             $process = yield $this->watcher->watch();
 
-            Loop::onSignal(SIGINT, function () use ($output, $process): void {
-                $output->write('Shutting down watchers...');
-                $process->stop();
-                $output->writeln('done');
-                Loop::stop();
-            });
+            // Signals are not supported on Windows
+            if (defined('SIGINT')) {
+                Loop::onSignal(SIGINT, function () use ($output, $process): void {
+                    $output->write('Shutting down watchers...');
+                    $process->stop();
+                    $output->writeln('done');
+                    Loop::stop();
+                });
+            }
 
             $output->writeln(sprintf('<info>Watching for file changes with </>%s<info>...</>', $this->watcher->describe()));
 

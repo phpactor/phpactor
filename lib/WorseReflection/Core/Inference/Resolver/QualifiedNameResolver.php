@@ -136,9 +136,7 @@ class QualifiedNameResolver implements Resolver
             $function = VirtualReflectionFunction::empty($name, $range);
         }
 
-        $context = FunctionCallContext::create($name, $range, $function);
-
-        $stub = $this->registry->get($name->short());
+        $context = FunctionCallContext::create($name, $range, $function, FunctionArguments::fromList($resolver, $frame, $parent->argumentExpressionList));
 
         $byReference = $function->parameters()->passedByReference();
         $arguments = null;
@@ -161,6 +159,7 @@ class QualifiedNameResolver implements Resolver
             }
         }
 
+        $stub = $this->registry->get($name->short());
         if ($stub) {
             $arguments = $arguments ?: FunctionArguments::fromList(
                 $resolver,

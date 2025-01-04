@@ -14,6 +14,7 @@ use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ScalarType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
+use Phpactor\WorseReflection\Core\Type\ObjectType;
 
 class WorseTypeRenderer74 implements WorseTypeRenderer
 {
@@ -21,6 +22,10 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
     {
         if ($type instanceof NullableType) {
             return '?' . $this->render($type->type);
+        }
+
+        if ($type instanceof ObjectType) {
+            return $type->toPhpString();
         }
 
         if ($type instanceof AggregateType) {

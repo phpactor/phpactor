@@ -7,8 +7,6 @@ use FilesystemIterator;
 class PhpVersionPathResolver
 {
     /**
-     * @param string $phpVersion
-     *      String the form of "major.minor.release[extra]"
      *      @see https://www.php.net/manual/en/reserved.constants.php#reserved.constants.core
      */
     public function __construct(

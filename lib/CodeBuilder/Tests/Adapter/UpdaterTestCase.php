@@ -2030,8 +2030,8 @@ abstract class UpdaterTestCase extends TestCase
 
     private function assertUpdate(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
-        $existingCode = '<?php'.PHP_EOL.$existingCode;
+        $existingCode = '<?php'."\n".$existingCode;
         $edits = $this->updater()->textEditsFor($prototype, Code::fromString($existingCode));
-        $this->assertEquals('<?php' . PHP_EOL . $expectedCode, $edits->apply($existingCode));
+        $this->assertEquals('<?php' . "\n" . $expectedCode, $edits->apply($existingCode));
     }
 }

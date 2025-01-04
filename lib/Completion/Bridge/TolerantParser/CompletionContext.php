@@ -16,6 +16,7 @@ use Microsoft\PhpParser\Node\DelimitedList\MatchArmConditionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
+use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -48,13 +49,21 @@ class CompletionContext
             return false;
         }
 
+        if ($parent instanceof ArgumentExpression) {
+            return true;
+        }
+
         if (self::classMembersBody($node)) {
             return false;
         }
         $previous = NodeUtil::previousSibling($node->parent);
 
         if ($previous instanceof InlineHtml) {
-            return false;
+            $phpTag = $previous->scriptSectionStartTag?->getText($previous->getFileContents());
+
+            if ($phpTag === '<?' && $node->getStartPosition() === $previous->getEndPosition()) {
+                return false;
+            }
         }
 
         return

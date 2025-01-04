@@ -20,6 +20,7 @@ use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\MixedType;
+use Phpactor\WorseReflection\Core\Type\PseudoIterableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -93,6 +94,9 @@ class DocblockMissingParamProvider implements DiagnosticProvider
 
             if ($type instanceof ArrayType) {
                 $type = new ArrayType(TypeFactory::int(), TypeFactory::mixed());
+            }
+            if ($type::class === PseudoIterableType::class) {
+                $type = new PseudoIterableType(TypeFactory::int(), TypeFactory::mixed());
             }
 
             // replace <undefined> with "mixed"
@@ -172,6 +176,24 @@ class DocblockMissingParamProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'iterable',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    public function foo(iterable $foobar) {
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                $diagnostics = $diagnostics->byClass(DocblockMissingParamDiagnostic::class);
+                Assert::assertCount(1, $diagnostics);
+                Assert::assertEquals('Method "foo" is missing @param $foobar', $diagnostics->at(0)->message());
+            }
+        );
+        yield new DiagnosticExample(
             title: 'array',
             source: <<<'PHP'
                 <?php
@@ -198,6 +220,25 @@ class DocblockMissingParamProvider implements DiagnosticProvider
                 {
                     /**
                      * @param array<'GET'|'POST'> $foobar
+                     */
+                    public function foo(array $foobar) {
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'no false positive array shape with string literals',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar
+                {
+                    /**
+                     * @param array{foo: 'foo', bar: 'bar'} $foobar
                      */
                     public function foo(array $foobar) {
                     }
@@ -266,11 +307,6 @@ class DocblockMissingParamProvider implements DiagnosticProvider
                 Assert::assertCount(0, $diagnostics);
             }
         );
-    }
-
-    public function name(): string
-    {
-        return 'docblock_missing_param';
     }
 
     private function upcastType(Type $type, NodeContextResolver $resolver): Type

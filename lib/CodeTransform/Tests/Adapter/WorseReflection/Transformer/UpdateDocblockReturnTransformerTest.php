@@ -258,6 +258,27 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'add void return to interfaces by default' => [
+            <<<'EOT'
+                <?php
+
+                interface Foo {
+                    public function eat();
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                interface Foo {
+                    /**
+                     * @return void
+                     */
+                    public function eat();
+                }
+                EOT
+        ];
+
         yield 'and interfaces' => [
             <<<'EOT'
                 <?php

@@ -28,6 +28,14 @@ class UpdateDocblockGenericTransformerTest extends WorseTestCase
             'Example2.php',
             '<?php /** @template T of object */class NeedsObject{ }'
         );
+        $this->workspace()->put(
+            'Example3.php',
+            '<?php /** @template T */interface GenericInterface{ }'
+        );
+        $this->workspace()->put(
+            'Example4.php',
+            '<?php /** @template T of object */interface NeedsObjectInterface{ }'
+        );
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
         $transformed = wait($transformer->transform($source))->apply($source);
@@ -162,6 +170,47 @@ class UpdateDocblockGenericTransformerTest extends WorseTestCase
                  * @extends NeedsObject<string>
                  */
                 class Foobar extends NeedsObject {
+                }
+                EOT
+        ];
+        yield 'implements' => [
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+                use \GenericInterface;
+
+                class Foobar implements GenericInterface {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+                use \GenericInterface;
+                /**
+                 * @implements GenericInterface<mixed>
+                 */
+                class Foobar implements GenericInterface {
+                }
+                EOT
+        ];
+        yield 'implements of' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar implements NeedsObjectInterface {
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                /**
+                 * @implements NeedsObjectInterface<object>
+                 */
+                class Foobar implements NeedsObjectInterface {
                 }
                 EOT
         ];

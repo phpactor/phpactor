@@ -13,3 +13,7 @@ if (ClassOne::FOO !== 'bar') {
     echo 'expected "foobar" but didn\'t get it';
     exit(127);
 }
+if (ClassOne::ZOO !== 'bar') {
+    echo 'expected "foobar" but didn\'t get it';
+    exit(127);
+}

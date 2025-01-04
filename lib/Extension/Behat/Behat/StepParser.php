@@ -21,10 +21,6 @@ class StepParser
     {
         preg_match_all('{('.implode('|', $keywords).')\s*(.*)}', $string, $matches);
 
-        if (isset($matches[2])) {
-            return $matches[2];
-        }
-
-        return [];
+        return $matches[2] ?? [];
     }
 }

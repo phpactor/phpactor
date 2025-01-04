@@ -4,17 +4,18 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflector;
 
 use Amp\Promise;
 use Generator;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionNavigation;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\Diagnostics;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Exception\MethodCallNotFound;
+use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionDeclaredConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionNode;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethodCall;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection as TolerantReflectionClassCollection;
@@ -42,7 +43,7 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     public function reflectClassesIn(
         TextDocument $sourceCode,
         array $visited = []
-    ): ReflectionClassLikeCollection {
+    ): TolerantReflectionClassCollection {
         $node = $this->parseSourceCode($sourceCode);
         return TolerantReflectionClassCollection::fromNode($this->serviceLocator, $sourceCode, $node, $visited);
     }
@@ -124,6 +125,13 @@ class TolerantSourceCodeReflector implements SourceCodeReflector
     {
         return new ReflectionNavigation($this->serviceLocator, $this->parseSourceCode($sourceCode));
     }
+
+    public function reflectNodeContext(Node $node): NodeContext
+    {
+        $frame = $this->serviceLocator->frameBuilder()->build($node);
+        return $this->serviceLocator->nodeContextResolver()->resolveNode($frame, $node);
+    }
+
 
     public function reflectNode(
         TextDocument $sourceCode,

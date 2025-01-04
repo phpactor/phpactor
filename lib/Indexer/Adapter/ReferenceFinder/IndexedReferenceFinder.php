@@ -90,7 +90,7 @@ class IndexedReferenceFinder implements ReferenceFinder
             Symbol::VARIABLE,
             Symbol::CASE,
         ])) {
-            $containerType = $this->containerTypeResolver->resolveDeclaringContainerType(
+            $containerType = $this->containerTypeResolver->resolveDeclaringClass(
                 $this->symbolTypeToMemberType($nodeContext),
                 $nodeContext->symbol()->name(),
                 $nodeContext->containerType()
@@ -107,11 +107,11 @@ class IndexedReferenceFinder implements ReferenceFinder
 
             // note that we check the all implementations: this will multiply
             // the number of NOT and MAYBE matches
-            foreach ($this->implementationsOf($containerType) as $containerType) {
+            foreach ($this->implementationsOf($containerType) as $implemenations) {
                 yield from $this->memberReferencesTo(
                     $this->symbolTypeToReferenceType($nodeContext),
                     $nodeContext->symbol()->name(),
-                    $containerType
+                    $implemenations
                 );
             }
             return;
@@ -130,7 +130,7 @@ class IndexedReferenceFinder implements ReferenceFinder
         }
 
         foreach ($this->query->class()->implementing($fqn) as $implementation) {
-            yield from $this->implementationsOf($implementation->__toString());
+            yield $implementation->__toString();
         }
     }
 
@@ -153,7 +153,6 @@ class IndexedReferenceFinder implements ReferenceFinder
                 $symbolType
             ))
         };
-
     }
 
     /**

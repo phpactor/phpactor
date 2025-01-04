@@ -9,7 +9,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextEdits;
 
-class TolerantImportNameTest extends AbstractTolerantImportNameTest
+class TolerantImportNameTest extends AbstractTolerantImportNameCase
 {
     public function provideImportClass(): Generator
     {
@@ -64,6 +64,11 @@ class TolerantImportNameTest extends AbstractTolerantImportNameTest
 
         yield 'from phpdoc (resolved in a SourceFileNode)' => [
             'importClass10.test',
+            'Barfoo\Foobar',
+        ];
+
+        yield 'with declare only' => [
+            'importClass_with_strict_types.test',
             'Barfoo\Foobar',
         ];
     }

@@ -50,9 +50,9 @@ class WorseTolerantMemberFinder implements MemberFinder
     private LoggerInterface $logger;
 
     public function __construct(
-        Reflector $reflector = null,
-        Parser $parser = null,
-        LoggerInterface $logger = null
+        ?Reflector $reflector = null,
+        ?Parser $parser = null,
+        ?LoggerInterface $logger = null
     ) {
         $this->reflector = $reflector ?: ReflectorBuilder::create()->addSource(TextDocumentBuilder::empty());
         $this->parser = $parser ?: new Parser();
@@ -210,7 +210,7 @@ class WorseTolerantMemberFinder implements MemberFinder
             $memberName = (string) $node->memberName->getText($node->getFileContents());
 
             // TODO: Some better way to determine if member names are properties
-            if (substr($memberName, 0, 1) == '$' && $query->matchesMemberName($memberName)) {
+            if (str_starts_with($memberName, '$') && $query->matchesMemberName($memberName)) {
                 $memberNodes[] = $node;
             }
         }
@@ -231,7 +231,7 @@ class WorseTolerantMemberFinder implements MemberFinder
             $node->callableExpression instanceof ScopedPropertyAccessExpression;
     }
 
-    private function getMemberDeclarationReference(ReflectionClassLike $queryClass = null, Node $memberNode): ?MemberReference
+    private function getMemberDeclarationReference(?ReflectionClassLike $queryClass, Node $memberNode): ?MemberReference
     {
         assert($memberNode instanceof MethodDeclaration || $memberNode instanceof ConstElement || $memberNode instanceof Variable);
         // we don't handle Variable calls yet.

@@ -24,11 +24,14 @@ class PhpCodeSnifferProcess
 
     /**
      * @param array<string,string> $env
+     * @param list<string> $additionalArgs
      */
     public function __construct(
         private string $binPath,
         private LoggerInterface $logger,
         private array $env = [],
+        private array $additionalArgs = [],
+        private ?string $cwd = null
     ) {
     }
 
@@ -37,8 +40,21 @@ class PhpCodeSnifferProcess
      */
     public function run(string ...$args): Promise
     {
+        $args = array_merge($args, $this->additionalArgs);
         return call(function () use ($args) {
-            $process = ProcessBuilder::create([$this->binPath, ...$args])->mergeParentEnv()->env($this->env)->build();
+            $process = ProcessBuilder::create([
+                PHP_BINARY,
+                '-d',
+                'display_errors=stderr',
+                '-d',
+                'error_reporting=24575',
+                $this->binPath,
+                ...$args
+            ])->mergeParentEnv()->env($this->env);
+            if ($this->cwd !== null) {
+                $process->cwd($this->cwd);
+            }
+            $process = $process->build();
             yield $process->start();
 
             $process->join()
@@ -72,9 +88,10 @@ class PhpCodeSnifferProcess
      */
     public function produceFixesDiff(TextDocumentItem $textDocument, array $sniffs = []): Promise
     {
-        return \Amp\call(function () use ($textDocument, $sniffs) {
+        return call(function () use ($textDocument, $sniffs) {
             try {
                 $tmpFilePath = $this->createTempFile($textDocument->text);
+
             } catch (FilesystemException) {
                 $this->logger->error(
                     'Failed to create temporary file for phpcs diagnostics. Without this results would be unreliable.'

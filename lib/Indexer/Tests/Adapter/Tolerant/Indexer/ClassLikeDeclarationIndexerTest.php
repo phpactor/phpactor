@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\EnumDeclarationIndexer;
@@ -10,13 +11,14 @@ use Phpactor\Indexer\Adapter\Tolerant\Indexer\TraitDeclarationIndexer;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameBeginsWith;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Tests\Adapter\Tolerant\TolerantIndexerTestCase;
+use Phpactor\TextDocument\TextDocumentUri;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
 {
-    use \Prophecy\PhpUnit\ProphecyTrait;
+    use ProphecyTrait;
 
     /**
      * @dataProvider provideImplementations
@@ -122,13 +124,13 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
         yield 'exact match' => [
             "// File: src/file1.php\n<?php class Barfoo implements Foobar{}",
             'Barfoo',
-            [ClassRecord::fromName('Barfoo')->setFilePath($this->workspace()->path('src/file1.php'))]
+            [ClassRecord::fromName('Barfoo')->setFilePath($this->workspacePath('src/file1.php'))]
         ];
 
         yield 'namespaced match' => [
             "// File: src/file1.php\n<?php namespace Bar; class Barfoo implements Foobar{}",
             'Barfoo',
-            [ClassRecord::fromName('Bar\Barfoo')->setFilePath($this->workspace()->path('src/file1.php'))]
+            [ClassRecord::fromName('Bar\Barfoo')->setFilePath($this->workspacePath('src/file1.php'))]
         ];
 
         yield 'gh-2098: does not index reserved class name' => [
@@ -168,5 +170,10 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
             "// File: src/file1.php\n<?php class {}",
             'Class name is missing',
         ];
+    }
+
+    private function workspacePath(string $path): TextDocumentUri
+    {
+        return TextDocumentUri::fromString($this->workspace()->path($path));
     }
 }

@@ -203,11 +203,11 @@ class WorseReflectionTypeLocatorTest extends IntegrationTestCase
         self::assertEquals($this->workspace->path('Two.php'), $typeLocations->first()->location()->uri()->path());
     }
 
-    protected function locate(string $manifset, string $source): TypeLocations
+    protected function locate(string $manifest, string $source): TypeLocations
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
 
-        $this->workspace->loadManifest($manifset);
+        $this->workspace->loadManifest($manifest);
 
         return (new WorseReflectionTypeLocator($this->reflector()))->locateTypes(
             TextDocumentBuilder::create($source)->language('php')->build(),

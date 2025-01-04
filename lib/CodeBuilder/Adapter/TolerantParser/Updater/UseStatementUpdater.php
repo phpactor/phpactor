@@ -6,6 +6,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\NamespaceUseClause;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
+use Microsoft\PhpParser\Node\Statement\DeclareStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
@@ -27,6 +28,9 @@ class UseStatementUpdater
         foreach ($node->getChildNodes() as $childNode) {
             if ($childNode instanceof InlineHtml) {
                 $startNode = $node->getFirstChildNode(InlineHtml::class);
+            }
+            if ($childNode instanceof DeclareStatement) {
+                $startNode = $childNode;
             }
             if ($childNode instanceof NamespaceDefinition) {
                 $startNode = $childNode;
@@ -61,7 +65,7 @@ class UseStatementUpdater
 
         if ($startNode instanceof NamespaceDefinition) {
             // Add a new line to be in the same case that if it was an InlineHtml node
-            $edits->after($startNode, PHP_EOL);
+            $edits->after($startNode, "\n");
         }
 
         foreach ($usePrototypes as $usePrototype) {
@@ -90,7 +94,7 @@ class UseStatementUpdater
                         if ($cmp > 0) {
                             // Add before one of the use import and add a new
                             // line so the new import is on its own line
-                            $edits->before($childNode, $editText . PHP_EOL);
+                            $edits->before($childNode, $editText . "\n");
                             continue 3;
                         }
                     }
@@ -102,14 +106,14 @@ class UseStatementUpdater
             // Since it will add before the lasts new line of the node we
             // preprend with another one so that the use statement is on its
             // own line
-            $newUseStatement = PHP_EOL . $editText;
+            $newUseStatement = "\n" . $editText;
             $edits->after($startNode, $newUseStatement);
         }
 
         if ($startNode instanceof InlineHtml) {
             // Add a new line after the last use statement so that it's on its
             // own line
-            $edits->after($startNode, PHP_EOL);
+            $edits->after($startNode, "\n");
         }
 
         // Add another new line to separate the new use declaration from
@@ -118,7 +122,7 @@ class UseStatementUpdater
             !$startNode instanceof NamespaceUseDeclaration &&
             $bodyNode && NodeHelper::emptyLinesPrecedingNode($bodyNode) === 0
         ) {
-            $edits->after($startNode, PHP_EOL);
+            $edits->after($startNode, "\n");
         }
     }
 

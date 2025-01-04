@@ -14,13 +14,20 @@ use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use RuntimeException;
+use Phpactor\TextDocument\TextDocument;
 
 class FileFinderTest extends TestCase
 {
     use ProphecyTrait;
 
+    /**
+     * @var ObjectProphecy<Filesystem>
+     */
     private ObjectProphecy $filesystem;
 
+    /**
+    * @var ObjectProphecy<FileList>
+    */
     private ObjectProphecy $fileList;
 
     public function setUp(): void
@@ -71,7 +78,7 @@ class FileFinderTest extends TestCase
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
-        $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo'], $files), $files);
+        $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo']), $files);
     }
 
     public function testParentsTraitsAndInterfacesIfMemberIsProtected(): void
@@ -81,10 +88,10 @@ class FileFinderTest extends TestCase
             'Foobar'
         );
         $files = $this->filesFor($class, 'foobar');
-        $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo', 'barfoo', 'barfoo'], $files), $files);
+        $this->assertEquals(FileList::fromFilePaths(['barfoo', 'barfoo', 'barfoo', 'barfoo']), $files);
     }
 
-    private function filesFor(ReflectionClassLike $class = null, string $memberName = null)
+    private function filesFor(?ReflectionClassLike $class = null, ?string $memberName = null): FileList
     {
         return (new FileFinder())->filesFor($this->filesystem->reveal(), $class, $memberName);
     }
@@ -96,7 +103,7 @@ class FileFinderTest extends TestCase
         $this->fileList->phpFiles()->willReturn($this->fileList->reveal());
     }
 
-    private function reflectClass($source, string $name)
+    private function reflectClass(string|TextDocument $source, string $name): ReflectionClassLike
     {
         if (is_string($source)) {
             $source = '<?php ' . $source;

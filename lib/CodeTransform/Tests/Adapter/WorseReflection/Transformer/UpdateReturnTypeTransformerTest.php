@@ -111,6 +111,54 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'update nullable type' => [
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Arg\Foo;
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Foo;
+                }
+                EOT
+        ];
+
+        yield 'update nullable type unions' => [
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Arg\Foo|int;
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Foo|int;
+                }
+                EOT
+        ];
+
         yield 'add multipe return types' => [
             <<<'EOT'
                 <?php
@@ -170,6 +218,74 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
                     }
 
                     private function baz(): void
+                    {
+                    }
+                }
+                EOT
+        ];
+        yield 'adds false type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo()
+                    {
+                        return $this->baz();
+                    }
+
+                    private function baz(): string|false
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo(): string|false
+                    {
+                        return $this->baz();
+                    }
+
+                    private function baz(): string|false
+                    {
+                    }
+                }
+                EOT
+        ];
+        yield 'adds array shape type' => [
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo()
+                    {
+                        return $this->baz();
+                    }
+
+                    /**
+                     * @return array{string,string}
+                     */
+                    private function baz(): array
+                    {
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                class Foobar {
+                    private function foo(): array
+                    {
+                        return $this->baz();
+                    }
+
+                    /**
+                     * @return array{string,string}
+                     */
+                    private function baz(): array
                     {
                     }
                 }

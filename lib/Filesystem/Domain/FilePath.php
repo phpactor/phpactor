@@ -29,11 +29,15 @@ final class FilePath
         return new self($textDocumentUri);
     }
 
+    /**
+     * @param array<string> $parts
+     */
     public static function fromParts(array $parts): FilePath
     {
         $path = Path::join(...$parts);
-        if (!str_starts_with($path, '/')) {
-            $path = '/'.$path;
+        if (!Path::isAbsolute($path)) {
+            // Not sure if this makes sense… Maybe it should just throw?
+            $path = Path::makeAbsolute($path, '/');
         }
 
         return self::fromString($path);
@@ -44,7 +48,7 @@ final class FilePath
         return self::fromString((string) $fileInfo);
     }
 
-    public static function fromUnknown($path): FilePath
+    public static function fromFilePathOrString(FilePath|string $path): FilePath
     {
         if ($path instanceof FilePath) {
             return $path;
@@ -53,19 +57,6 @@ final class FilePath
         if (is_string($path)) {
             return self::fromString($path);
         }
-
-        if (is_array($path)) {
-            return self::fromParts($path);
-        }
-
-        if ($path instanceof SplFileInfo) {
-            return self::fromSplFileInfo($path);
-        }
-
-        throw new RuntimeException(sprintf(
-            'Do not know how to create FilePath from "%s"',
-            is_object($path) ? get_class($path) : gettype($path)
-        ));
     }
 
     public function isDirectory(): bool
@@ -73,12 +64,12 @@ final class FilePath
         return is_dir($this->uri->path());
     }
 
-    /**
-     * This will lose the scheme
-     */
     public function asSplFileInfo(): SplFileInfo
     {
-        return new SplFileInfo($this->uri->path());
+        if ($this->uri->scheme() === 'file') {
+            return new SplFileInfo($this->uri->path());
+        }
+        return new SplFileInfo($this->uri->__toString());
     }
 
     public function makeAbsoluteFromString(string $path): FilePath
@@ -107,7 +98,7 @@ final class FilePath
 
     public function isWithin(FilePath $path): bool
     {
-        return str_starts_with($this->path(), $path->path().'/');
+        return Path::isBasePath($path->path(), $this->path());
     }
 
     public function isWithinOrSame(FilePath $path): bool

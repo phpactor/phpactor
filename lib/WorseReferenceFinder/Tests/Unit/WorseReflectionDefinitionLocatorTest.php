@@ -310,9 +310,6 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
 
     public function testLocatesCase(): void
     {
-        if (!defined('T_ENUM')) {
-            $this->markTestSkipped('PHP8.1');
-        }
         $location = $this->locate(<<<'EOT'
             // File: FoobarEnum.php
             <?php enum FoobarEnum { case BAR; }
@@ -320,6 +317,30 @@ class WorseReflectionDefinitionLocatorTest extends DefinitionLocatorTestCase
             , '<?php FoobarEnum::B<>AR;');
 
         $this->assertTypeLocation($location->first(), 'FoobarEnum.php', 24, 33);
+    }
+
+    public function testLocatesEnumConst(): void
+    {
+        $location = $this->locate(<<<'EOT'
+            // File: FoobarEnum.php
+            <?php enum FoobarEnum { case BAR; const FOOBAR = 'FOOBAR'; }
+            EOT
+            , '<?php FoobarEnum::FOO<>BAR;');
+
+        $this->assertTypeLocation($location->first(), 'FoobarEnum.php', 34, 58);
+    }
+
+    public function testLocatesTraitConst(): void
+    {
+        // note this isn't actually valid PHP but I'm too lazy
+        // to test it proeprtly #2784
+        $location = $this->locate(<<<'EOT'
+            // File: FoobarTrait.php
+            <?php trait FoobarTrait { const FOOBAR = 'FOOBAR'; }
+            EOT
+            , '<?php FoobarTrait::FOO<>BAR;');
+
+        $this->assertTypeLocation($location->first(), 'FoobarTrait.php', 26, 50);
     }
 
     public function testExceptionIfPropertyIsInterface(): void

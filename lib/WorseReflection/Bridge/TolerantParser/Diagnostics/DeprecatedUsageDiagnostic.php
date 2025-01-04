@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\Diagnostic;
 use Phpactor\WorseReflection\Core\DiagnosticSeverity;
+use Phpactor\WorseReflection\Core\DiagnosticTag;
 
 class DeprecatedUsageDiagnostic implements Diagnostic
 {
@@ -29,5 +30,15 @@ class DeprecatedUsageDiagnostic implements Diagnostic
         }
 
         return sprintf('Call to deprecated %s "%s": %s', $this->memberType, $this->memberName, $this->message);
+    }
+
+    public function tags(): array
+    {
+        return [DiagnosticTag::DEPRECATED];
+    }
+
+    public function code(): string
+    {
+        return 'deprecated_usage';
     }
 }

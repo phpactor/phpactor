@@ -79,10 +79,6 @@ final class Types implements IteratorAggregate
 
     public function at(int $index): Type
     {
-        if (isset($this->types[$index])) {
-            return $this->types[$index];
-        }
-
-        return new MissingType();
+        return $this->types[$index] ?? new MissingType();
     }
 }

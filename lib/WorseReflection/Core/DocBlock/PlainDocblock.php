@@ -2,8 +2,6 @@
 
 namespace Phpactor\WorseReflection\Core\DocBlock;
 
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
-use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection as CoreReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -137,12 +135,12 @@ class PlainDocblock implements DocBlock
 
     public function properties(ReflectionClassLike $declaringClass): CoreReflectionPropertyCollection
     {
-        return ReflectionPropertyCollection::empty();
+        return CoreReflectionPropertyCollection::empty();
     }
 
     public function methods(ReflectionClassLike $declaringClass): CoreReflectionMethodCollection
     {
-        return ReflectionMethodCollection::empty();
+        return CoreReflectionMethodCollection::empty();
     }
 
     public function deprecation(): Deprecation
@@ -173,5 +171,15 @@ class PlainDocblock implements DocBlock
     public function withTypeResolver(TypeResolver $classLikeTypeResolver): DocBlock
     {
         return $this;
+    }
+
+    public function typeAliases(): DocBlockTypeAliases
+    {
+        return new DocBlockTypeAliases([]);
+    }
+
+    public function assertions(): array
+    {
+        return [];
     }
 }

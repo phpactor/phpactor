@@ -4,6 +4,9 @@ namespace Phpactor\CodeBuilder\Domain\Builder;
 
 use Generator;
 use RuntimeException;
+use function is_object;
+use function sprintf;
+use function get_debug_type;
 
 abstract class AbstractBuilder implements Builder
 {
@@ -60,7 +63,7 @@ abstract class AbstractBuilder implements Builder
                     throw new RuntimeException(sprintf(
                         'Child "%s" is not a builder instance, it is a "%s"',
                         $childName,
-                        is_object($child) ? get_class($child) : gettype($child)
+                        get_debug_type($child),
                     ));
                 }
 

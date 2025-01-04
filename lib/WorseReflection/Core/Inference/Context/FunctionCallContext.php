@@ -3,17 +3,20 @@
 namespace Phpactor\WorseReflection\Core\Inference\Context;
 
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
 use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 
-final class FunctionCallContext extends NodeContext
+final class FunctionCallContext extends NodeContext implements CallContext
 {
     public function __construct(
         Symbol $symbol,
         private ByteOffsetRange $byteOffsetRange,
         private ReflectionFunction $function,
+        private FunctionArguments $arguments,
     ) {
         parent::__construct(
             $symbol,
@@ -31,8 +34,27 @@ final class FunctionCallContext extends NodeContext
         return $this->function;
     }
 
-    public static function create(Name $name, ByteOffsetRange $byteOffsetRange, ReflectionFunction $function): self
+    public function arguments(): ?FunctionArguments
     {
-        return new self(Symbol::fromTypeNameAndPosition(Symbol::FUNCTION, $name, $byteOffsetRange), $byteOffsetRange, $function);
+        return $this->arguments;
+    }
+
+    public static function create(
+        Name $name,
+        ByteOffsetRange $byteOffsetRange,
+        ReflectionFunction $function,
+        FunctionArguments $arguments,
+    ): self {
+        return new self(
+            Symbol::fromTypeNameAndPosition(Symbol::FUNCTION, $name, $byteOffsetRange),
+            $byteOffsetRange,
+            $function,
+            $arguments,
+        );
+    }
+
+    public function callable(): ReflectionMethod|ReflectionFunction
+    {
+        return $this->function;
     }
 }

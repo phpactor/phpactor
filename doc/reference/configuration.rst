@@ -59,19 +59,6 @@ Internal use only - name of the command which was executed
 **Default**: ``null``
 
 
-.. _param_core.warn_on_develop:
-
-
-``core.warn_on_develop``
-""""""""""""""""""""""""
-
-
-Internal use only: if an warning will be issued when on develop, may be removed in the future
-
-
-**Default**: ``true``
-
-
 .. _param_core.min_memory_limit:
 
 
@@ -537,7 +524,7 @@ Completion for class like contexts.
 
 Enable or disable the ``type`` completor.
 
-Completion for types.
+Completion for scalar types.
 
 
 **Default**: ``true``
@@ -1289,6 +1276,32 @@ If applicable diagnostics should be "outsourced" to a different process
 **Default**: ``true``
 
 
+.. _param_language_server.diagnostic_exclude_paths:
+
+
+``language_server.diagnostic_exclude_paths``
+""""""""""""""""""""""""""""""""""""""""""""
+
+
+List of paths to exclude from diagnostics, e.g. `vendor/**/*`
+
+
+**Default**: ``[]``
+
+
+.. _param_language_server.diagnostic_ignore_codes:
+
+
+``language_server.diagnostic_ignore_codes``
+"""""""""""""""""""""""""""""""""""""""""""
+
+
+Ignore diagnostics that have the codes listed here, e.g. ["fix_namespace_class_name"]. The codes match those shown in the LSP client.
+
+
+**Default**: ``[]``
+
+
 .. _param_language_server.file_events:
 
 
@@ -1627,7 +1640,7 @@ Type: array
 Glob patterns to include while indexing
 
 
-**Default**: ``["\/**\/*.php"]``
+**Default**: ``["\/**\/*.php","\/**\/*.phar"]``
 
 
 .. _param_indexer.exclude_patterns:
@@ -1771,7 +1784,7 @@ Type: array
 File extensions (e.g. `php`) for files that should be indexed
 
 
-**Default**: ``["php"]``
+**Default**: ``["php","phar"]``
 
 
 .. _ObjectRendererExtension:
@@ -1867,6 +1880,19 @@ Override the PHPStan memory limit
 
 
 **Default**: ``null``
+
+
+.. _param_language_server_phpstan.tmp_file_disabled:
+
+
+``language_server_phpstan.tmp_file_disabled``
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
+Disable the use of temporary files when. This prevents as-you-type diagnostics, but ensures paths in phpstan config are respected. See https://github.com/phpactor/phpactor/issues/2763
+
+
+**Default**: ``false``
 
 
 .. _LanguageServerPsalmExtension:
@@ -2120,6 +2146,32 @@ Whether PHP_CodeSniffer diagnostics are shown
 
 
 **Default**: ``true``
+
+
+.. _param_php_code_sniffer.args:
+
+
+``php_code_sniffer.args``
+"""""""""""""""""""""""""
+
+
+Additional arguments to pass to the PHPCS process
+
+
+**Default**: ``[]``
+
+
+.. _param_php_code_sniffer.cwd:
+
+
+``php_code_sniffer.cwd``
+""""""""""""""""""""""""
+
+
+Working directory for PHPCS
+
+
+**Default**: ``null``
 
 
 .. _LanguageServerBlackfireExtension:

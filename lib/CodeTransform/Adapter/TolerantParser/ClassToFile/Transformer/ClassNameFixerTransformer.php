@@ -5,6 +5,7 @@ namespace Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer;
 use Amp\Promise;
 use Amp\Success;
 use Microsoft\PhpParser\ClassLike;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -14,6 +15,7 @@ use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\NamespaceDefinition;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Parser;
+use Microsoft\PhpParser\Token;
 use Phpactor\ClassFileConverter\Domain\ClassName;
 use Phpactor\ClassFileConverter\Domain\FilePath;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
@@ -33,7 +35,7 @@ class ClassNameFixerTransformer implements Transformer
 
     public function __construct(
         private FileToClass $fileToClass,
-        Parser $parser = null
+        ?Parser $parser = null
     ) {
         $this->parser = $parser ?: new Parser();
     }
@@ -97,15 +99,18 @@ class ClassNameFixerTransformer implements Transformer
         }
         if (null !== $edits = $this->fixClassName($rootNode, $correctClassName)) {
             $classLike = $rootNode->getFirstDescendantNode(ClassLike::class);
+            $nameToken = $this->nameToken($classLike);
 
-            $diagnostics[] = new Diagnostic(
-                ByteOffsetRange::fromInts(
-                    $classLike ? $classLike->getStartPosition() : 0,
-                    $classLike ? $classLike->getEndPosition() : 0
-                ),
-                sprintf('Class name should probably be "%s"', $correctClassName),
-                Diagnostic::WARNING
-            );
+            if ($nameToken) {
+                $diagnostics[] = new Diagnostic(
+                    ByteOffsetRange::fromInts(
+                        $nameToken->getStartPosition(),
+                        $nameToken->getEndPosition(),
+                    ),
+                    sprintf('Class name should probably be "%s"', $correctClassName),
+                    Diagnostic::WARNING
+                );
+            }
         }
 
         return new Success(new Diagnostics($diagnostics));
@@ -141,10 +146,10 @@ class ClassNameFixerTransformer implements Transformer
             $scriptStart = $rootNode->getFirstDescendantNode(InlineHtml::class);
             $scriptStart = $scriptStart ? $scriptStart->getEndPosition() : 0;
 
-            $statement = PHP_EOL . $statement . PHP_EOL;
+            $statement = "\n" . $statement . "\n";
 
             if (0 === $scriptStart) {
-                $statement = '<?php' . PHP_EOL . $statement;
+                $statement = '<?php' . "\n" . $statement;
             }
 
 
@@ -181,5 +186,24 @@ class ClassNameFixerTransformer implements Transformer
         $classFqn = $candidates->best();
 
         return $classFqn;
+    }
+
+    private function nameToken(?Node $classLike): ?Token
+    {
+        if (null === $classLike) {
+            return null;
+        }
+
+        if (!property_exists($classLike, 'name')) {
+            return null;
+        }
+
+        $name = $classLike->name;
+
+        if (!$name instanceof Token) {
+            return null;
+        }
+
+        return $name;
     }
 }

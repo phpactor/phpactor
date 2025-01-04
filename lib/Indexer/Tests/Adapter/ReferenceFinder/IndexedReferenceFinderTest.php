@@ -101,6 +101,23 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
         ,
             2
         ];
+
+        yield 'class deep references if implementation implements some additional interface' => [
+            <<<'EOT'
+                // File: project/subject.php
+                <?php interface Watche<>r {}
+                // File: project/AnotherInterface.php
+                <?php interface AnotherInterface {}
+                // File: project/TestWatcher.php
+                <?php class TestWatcher implements Watcher, AnotherInterface {}
+                // File: project/class2.php
+                <?php
+
+                function bar(AnotherInterface $ai);
+                EOT
+        ,
+            1
+        ];
     }
 
     /**
@@ -110,6 +127,9 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
     {
         yield 'single trait' => [
             <<<'EOT'
+                // File: project/trait.php
+                <?php trait Bar { };
+
                 // File: project/subject.php
                 <?php class Foo { use Ba<>r; };
                 EOT
@@ -119,6 +139,9 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
 
         yield 'implementation' => [
             <<<'EOT'
+                // File: project/trait.php
+                <?php trait Bar { };
+
                 // File: project/subject.php
                 <?php class Foo { use Ba<>r; };
 
@@ -159,6 +182,44 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
      */
     public function provideMembers(): Generator
     {
+        yield 'show new object expressions when finding references on __construct except for superclass' => [
+            <<<'EOT'
+                // File: project/Bar.php
+                <?php class Bar { public function __construct() {} }
+                // File: project/subject.php
+                <?php class SubBar extends Bar { public function __c<>onstruct() {} }
+                // File: project/subject.php
+                <?php class Other extends Bar { public function __construct() {} }
+
+                // File: project/class1.php
+                <?php
+                new Bar(); // Should not be found, too low
+                new SubBar(); // Should be found
+                new Other(); // Should not be found, it's overridden with its own constructor
+                EOT
+                ,
+                1
+        ];
+
+        yield 'show new object expressions when finding references on __construct except for superclass 2' => [
+            <<<'EOT'
+                // File: project/Bar.php
+                <?php class Bar { public function __construct() {} }
+                // File: project/subject.php
+                <?php class SubBar extends Bar { public function __c<>onstruct() {} }
+                // File: project/subject.php
+                <?php class Other extends SubBar { }
+
+                // File: project/class1.php
+                <?php
+                new Bar(); // Should not be found
+                new SubBar(); // Should be found
+                new Other(); // Should be found, since it's not overridden
+                EOT
+                ,
+                2
+        ];
+
         yield 'static members' => [
             <<<'EOT'
                 // File: project/subject.php
@@ -206,17 +267,35 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
                 <?php namespace Bar; $foo = new Foobar(); $foo->b<>ar();
 
                 // File: project/subject1.php
-                <?php namespace Bar; $foo = new Barfoo(); $foo->bar();
+                <?php namespace Bar; $bar = new Barfoo(); $bar->bar();
 
                 // File: project/class1.php
-                <?php namespace Bar; class Foobar extends Barfoo { public function bar() {}}
+                <?php namespace Bar; class Barfoo { public function bar() {}}
 
                 // File: project/class2.php
-                <?php namespace Bar; class Barfoo { public function bar() {}}
+                <?php namespace Bar; class Foobar extends Barfoo { public function bar() {}}
 
                 EOT
         ,
-            2, 4 // total number is multipled due to implementation recursion
+            1, 2
+        ];
+
+        yield 'deep members no override' => [
+            <<<'EOT'
+                // File: project/subject.php
+                <?php $foo = new Foobar(); $foo->met<>hod();
+
+                // File: project/subject1.php
+                <?php $bar = new ParentalClass(); $bar->method();
+
+                // File: project/class1.php
+                <?php class ParentalClass { public function method() {}}
+
+                // File: project/class2.php
+                <?php class Foobar extends ParentalClass { }
+                EOT
+        ,
+            2, 4 // total number is multiple due to implementation recursion
         ];
 
         yield 'static properties' => [

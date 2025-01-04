@@ -186,12 +186,12 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         }
     }
 
-    public function properties(ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
+    public function properties(?ReflectionClassLike $contextClass = null): ReflectionPropertyCollection
     {
         return $this->members()->properties();
     }
 
-    public function methods(ReflectionClassLike $contextClass = null): ReflectionMethodCollection
+    public function methods(?ReflectionClassLike $contextClass = null): ReflectionMethodCollection
     {
         return $this->members()->methods();
     }
@@ -300,11 +300,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
     public function isConcrete(): bool
     {
-        if (false === $this->isClass()) {
-            return false;
-        }
-
-        return false === $this->isAbstract();
+        return !$this->isAbstract();
     }
 
     public function docblock(): DocBlock

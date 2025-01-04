@@ -80,10 +80,19 @@ final class NameUtil
 
     public static function toFullyQualified(string $name): string
     {
-        if (substr($name, 0, 1) == '\\') {
+        if (str_starts_with($name, '\\')) {
             return $name;
         }
         return '\\' . $name;
+    }
+
+    public static function namespace(string $fqn): string
+    {
+        $shortNamePos = strrpos($fqn, '\\');
+        if (false === $shortNamePos) {
+            return $fqn;
+        }
+        return substr($fqn, 0, $shortNamePos);
     }
 
     private static function normalize(string $name): string

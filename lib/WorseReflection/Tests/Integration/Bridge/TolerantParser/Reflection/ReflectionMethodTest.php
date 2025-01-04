@@ -30,7 +30,7 @@ class ReflectionMethodTest extends IntegrationTestCase
         $assertion($class->methods(), $this->logger());
     }
 
-    public function provideReflectionMethod()
+    public function provideReflectionMethod(): Generator
     {
         yield 'It reflects a method' => [
             <<<'EOT'
@@ -795,7 +795,7 @@ class ReflectionMethodTest extends IntegrationTestCase
         $assertion($class);
     }
 
-    public function provideReflectionMethodCollection()
+    public function provideReflectionMethodCollection(): array
     {
         return [
             'Only methods belonging to a given class' => [

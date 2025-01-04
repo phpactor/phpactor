@@ -5,6 +5,7 @@ namespace Phpactor\DocblockParser;
 use Phpactor\DocblockParser\Ast\ArrayKeyValueList;
 use Phpactor\DocblockParser\Ast\ArrayKeyValueNode;
 use Phpactor\DocblockParser\Ast\ConditionalNode;
+use Phpactor\DocblockParser\Ast\Tag\AssertTag;
 use Phpactor\DocblockParser\Ast\Tag\DeprecatedTag;
 use Phpactor\DocblockParser\Ast\Docblock;
 use Phpactor\DocblockParser\Ast\Tag\ExtendsTag;
@@ -16,6 +17,7 @@ use Phpactor\DocblockParser\Ast\Tag\ParameterTag;
 use Phpactor\DocblockParser\Ast\Tag\PropertyTag;
 use Phpactor\DocblockParser\Ast\Tag\ReturnTag;
 use Phpactor\DocblockParser\Ast\Tag\TemplateTag;
+use Phpactor\DocblockParser\Ast\Tag\TypeAliasTag;
 use Phpactor\DocblockParser\Ast\TextNode;
 use Phpactor\DocblockParser\Ast\TypeList;
 use Phpactor\DocblockParser\Ast\Type\ArrayNode;
@@ -97,6 +99,8 @@ final class Parser
             '@throws' => $this->parseThrows(),
             '@deprecated' => $this->parseDeprecated(),
             '@method' => $this->parseMethod(),
+            '@assert' => $this->parseAssert(),
+            '@type' => $this->parseTypeAlias(),
             '@property', '@property-read' => $this->parseProperty(),
             '@mixin' => $this->parseMixin(),
             '@return' => $this->parseReturn(),
@@ -145,9 +149,12 @@ final class Parser
 
         if ($this->tokens->if(Token::T_LABEL)) {
             $type = $this->parseTypes();
+            $this->tokens->chompWhitespace();
         }
 
-        return new ThrowsTag($tag, $type);
+        $text = $this->parseText();
+
+        return new ThrowsTag($tag, $type, $text);
     }
 
     private function parseMethod(): MethodTag
@@ -312,6 +319,7 @@ final class Parser
         if ($this->tokens->current->type === Token::T_BRACKET_ANGLE_OPEN) {
             $open = $this->tokens->mustChomp();
             $typeList = null;
+            $variance = null;
             if ($this->tokens->if(Token::T_VARIABLE)) {
                 $typeList = $this->parseTypeList();
             }
@@ -437,6 +445,16 @@ final class Parser
         $types = [];
         while (true) {
             if ($this->tokens->if(Token::T_LABEL)) {
+                if (in_array($this->tokens->mustGetCurrent()->value, [
+                    'covariant',
+                    'contravariant',
+                    'invariant',
+                    'bivariant'
+                ])) {
+                    $types[] = $this->tokens->mustChomp();
+                    $this->tokens->chompWhitespace();
+                }
+
                 $types[] = $this->parseTypes();
             } elseif ($this->tokens->if(Token::T_NULLABLE)) {
                 $types[] = $this->parseTypes();
@@ -691,7 +709,7 @@ final class Parser
             $optional = $this->tokens->chomp();
         }
         $type = null;
-        if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER)) {
+        if ($this->tokens->ifOneOf(Token::T_LABEL, Token::T_INTEGER, Token::T_QUOTED_STRING)) {
             $type = $this->parseTypes();
         }
 
@@ -727,5 +745,50 @@ final class Parser
         $right = $this->parseTypes();
 
         return new ConditionalNode($variable, $is, $isType, $question, $left, $colon, $right);
+    }
+
+    private function parseTypeAlias(): TagNode
+    {
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
+        $alias = $equals = $type = null;
+
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $alias = $this->parseType();
+        }
+
+        if ($this->tokens->if(Token::T_EQUALS)) {
+            $equals = $this->tokens->chomp(Token::T_EQUALS);
+        }
+
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $type = $this->parseTypes();
+        }
+
+        return new TypeAliasTag($tag, $alias, $equals, $type);
+    }
+
+    private function parseAssert(): TagNode
+    {
+        $tag = $this->tokens->mustChomp(Token::T_TAG);
+        $paramName = $type = $negOrEquality = null;
+
+        if ($this->tokens->if(Token::T_EQUALS)) {
+            $negOrEquality = $this->tokens->mustChomp(Token::T_EQUALS);
+        }
+
+        if ($this->tokens->if(Token::T_BANG)) {
+            $negation = $this->tokens->mustChomp(Token::T_BANG);
+            $negOrEquality = $negation;
+        }
+
+        if ($this->tokens->if(Token::T_LABEL)) {
+            $type = $this->parseType();
+        }
+
+        if ($this->tokens->if(Token::T_VARIABLE)) {
+            $paramName = $this->parseVariable();
+        }
+
+        return new AssertTag($tag, $negOrEquality, $type, $paramName);
     }
 }

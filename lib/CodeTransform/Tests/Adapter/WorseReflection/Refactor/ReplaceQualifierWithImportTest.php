@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use Generator;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseReplaceQualifierWithImport;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
@@ -36,13 +37,11 @@ class ReplaceQualifierWithImportTest extends WorseTestCase
     }
 
     /**
-     * @return array<string,array<string>>
+     * @return Generator<string,array<string>>
      */
-    public function dataFQNToImport(): array
+    public function dataFQNToImport(): Generator
     {
-        return [
-            'in an expression' => [ 'replaceQualifierWithImport1.test' ],
-            'in a parameter' => [ 'replaceQualifierWithImport2.test' ],
-        ];
+        yield 'in an expression' => [ 'replaceQualifierWithImport1.test' ];
+        yield 'in a parameter' => [ 'replaceQualifierWithImport2.test' ];
     }
 }

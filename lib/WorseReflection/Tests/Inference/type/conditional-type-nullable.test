@@ -1,0 +1,22 @@
+<?php
+
+class ResponseFactory
+{
+    public function json(): string
+    {
+    }
+}
+
+/**
+ * Return a new response from the application.
+ *
+ * @param  string|array|null  $content
+ * @param  int  $status
+ * @param  array  $headers
+ * @return ($content is null ? ResponseFactory : \Illuminate\Http\Response)
+ */
+function response($content = null, $status = 200, array $headers = [])
+{
+}
+
+wrAssertType('ResponseFactory', response());
