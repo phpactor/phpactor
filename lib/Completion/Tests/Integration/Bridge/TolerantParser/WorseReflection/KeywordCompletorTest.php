@@ -73,6 +73,14 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php class F {function fo() {}} cl<>',
             $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
+        yield 'match keyword' => [
+            '<?php class F { public function foo() { $x = mat<> }}',
+            [...$this->expectExpressions()],
+        ];
+        yield 'match unexpected' => [
+            '<?php class F { public function foo() { $this->mat<> }}',
+            [],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -89,6 +97,21 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         return array_map(fn (string $keyword) => [
             'name' => $keyword,
         ], $array);
+    }
+
+    /**
+     * @return Generator<array{name:string,snippet:string}>
+     */
+    private function expectExpressions(): Generator
+    {
+        $expressions = [
+            'match' => " (\$1) {\$0\n}",
+            'throw' => ' $1',
+        ];
+
+        foreach ($expressions as $name => $snippet) {
+            yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
+        }
     }
 
     /**
