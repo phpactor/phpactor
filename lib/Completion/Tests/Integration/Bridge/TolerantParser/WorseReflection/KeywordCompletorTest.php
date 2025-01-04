@@ -47,6 +47,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             [...$this->expectMagicMethods()],
         ];
 
+        yield 'no magic methods here' => [
+            '<?php class Foobar { public function x(<>)',
+            [],
+        ];
 
         yield 'class implements 1' => [
             '<?php class Foobar <>',
@@ -69,6 +73,54 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php class F {function fo() {}} cl<>',
             $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
+        yield 'method empty body keyword' => [
+            '<?php class F { public function foo() { <> }}',
+            [...$this->expectStatement(false)],
+        ];
+        yield 'method body keyword' => [
+            '<?php class F { public function foo() { re<> }}',
+            [...$this->expectStatement(false)],
+        ];
+        yield 'method body subnode' => [
+            '<?php class F { public function foo() { if (true) { re<> } }}',
+            [...$this->expectStatement(false)],
+        ];
+        yield 'root subnode' => [
+            '<?php <>',
+            [...$this->expectStatement(false)],
+        ];
+        yield 'namespace subnode' => [
+            '<?php namespace X; <>',
+            [...$this->expectStatement(false)],
+        ];
+        yield 'inside try' => [
+            '<?php namespace X; try { re<> } catch (\Exception $e) {}',
+            [...$this->expectStatement(false)],
+        ];
+        yield 'inside catch' => [
+            '<?php namespace X; try { } catch (\Exception $e) { re<> }',
+            [...$this->expectStatement(false)],
+        ];
+        yield 'inside case 1' => [
+            '<?php namespace X; switch (true) { case 0: <> }',
+            [...$this->expectStatement(true)],
+        ];
+        yield 'inside case 2' => [
+            '<?php namespace X; switch (true) { case 0: re<> }',
+            [...$this->expectStatement(true)],
+        ];
+        yield 'inside while condition' => [
+            '<?php namespace X; while () { <> }',
+            [...$this->expectStatement(true)],
+        ];
+        yield 'match keyword' => [
+            '<?php class F { public function foo() { $x = mat<> }}',
+            [...$this->expectExpressions()],
+        ];
+        yield 'match unexpected' => [
+            '<?php class F { public function foo() { $this->mat<> }}',
+            [],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -85,6 +137,50 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         return array_map(fn (string $keyword) => [
             'name' => $keyword,
         ], $array);
+    }
+
+    /**
+     * @return Generator<array{name:string,snippet:string}>
+     */
+    private function expectStatement(bool $loop): Generator
+    {
+        $statements = [
+            'break' => '$1;$0',
+            'continue' => '$1;$0',
+            'do' => " {\n\t\$0\n} while (\$2);",
+            'echo' => ' $1;$0',
+            'for' => " (\${1:expr1}, \${2:expr2}, \${3:expr3}) {\n\t\$0\n}",
+            'foreach' => " (\\\$\${1:expr} as \\\$\${2:key} => \\\$\${3:value}) {\$0\n}",
+            'if' => " (\$1) {\$0\n}",
+            'return' => ' $1;$0',
+            'switch' => " (\\\$\${1:expr}) {\n\tcase \${2:expr}:\n\t\t\$0\n}",
+            'throw' => ' $1;$0',
+            'try' => " {\$3\n} catch (\${1:Exception} \\\$\${2:error}) {\$4\n}",
+            'while' => " (\$1) {\$0\n}",
+            'yield' => ' $1;$0',
+        ];
+
+        foreach ($statements as $name => $snippet) {
+            if (!$loop && in_array($name, ['continue', 'break'], true)) {
+                continue;
+            }
+            yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
+        }
+    }
+
+    /**
+     * @return Generator<array{name:string,snippet:string}>
+     */
+    private function expectExpressions(): Generator
+    {
+        $expressions = [
+            'match' => " (\$1) {\$0\n}",
+            'throw' => ' $1',
+        ];
+
+        foreach ($expressions as $name => $snippet) {
+            yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
+        }
     }
 
     /**

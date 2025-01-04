@@ -8,15 +8,19 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ArrayElement;
 use Microsoft\PhpParser\Node\Attribute;
 use Microsoft\PhpParser\Node\AttributeGroup;
+use Microsoft\PhpParser\Node\CaseStatementNode;
+use Microsoft\PhpParser\Node\CatchClause;
 use Microsoft\PhpParser\Node\ClassBaseClause;
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
 use Microsoft\PhpParser\Node\ClassMembersNode;
 use Microsoft\PhpParser\Node\ConstElement;
+use Microsoft\PhpParser\Node\DelimitedList\ExpressionList;
 use Microsoft\PhpParser\Node\DelimitedList\MatchArmConditionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -28,10 +32,17 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
+use Microsoft\PhpParser\Node\Statement\DoStatement;
+use Microsoft\PhpParser\Node\Statement\EchoStatement;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\ForStatement;
+use Microsoft\PhpParser\Node\Statement\ForeachStatement;
+use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\SwitchStatementNode;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\Statement\WhileStatement;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -46,6 +57,10 @@ class CompletionContext
         $parent = $node->parent;
 
         if (null === $parent) {
+            return false;
+        }
+
+        if ($node instanceof MemberAccessExpression) {
             return false;
         }
 
@@ -177,9 +192,13 @@ class CompletionContext
             return false;
         }
 
+        if ($node instanceof Variable) {
+            return false;
+        }
+
         $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
-        if ($node instanceof Variable) {
+        if ($node->parent instanceof MethodDeclaration && $node->openBrace instanceof MissingToken) {
             return false;
         }
 
@@ -273,7 +292,85 @@ class CompletionContext
 
     public static function methodName(Node $node): bool
     {
-        return $node->parent instanceof MethodDeclaration;
+        // If the body (as the current node) is empty, the parent is MethodDeclaration
+        if ($node instanceof CompoundStatementNode && !$node->openBrace instanceof MissingToken) {
+            return false;
+        }
+
+        if (!$node->parent instanceof MethodDeclaration) {
+            return false;
+        }
+
+        return $node->parent->openParen instanceof MissingToken;
+    }
+
+    public static function statement(Node $node, ByteOffset $offset): bool
+    {
+        if ($node instanceof CaseStatementNode) {
+            return true;
+        }
+
+        if ($node instanceof CompoundStatementNode) {
+            if ($node->parent instanceof MethodDeclaration && $node->openBrace instanceof MissingToken) {
+                return false;
+            }
+
+            $lastStmt = \end($node->statements);
+            if (false === $lastStmt || $lastStmt->getEndPosition() > $offset->toInt()) {
+                return true;
+            }
+
+            return !$lastStmt instanceof EchoStatement;
+        }
+
+        if ($node instanceof Expression) {
+            return false;
+        }
+
+        if ($node instanceof SwitchStatementNode) {
+            if ([] === $node->caseStatements) {
+                return false;
+            }
+
+            return $offset->toInt() > $node->caseStatements[0]->getStartPosition();
+        }
+
+        if (
+            $node instanceof WhileStatement
+                || $node instanceof IfStatementNode
+                || $node instanceof DoStatement
+                || $node instanceof CatchClause
+                || $node instanceof ForStatement
+                || $node instanceof ForeachStatement
+                || $node instanceof EchoStatement
+                || $node->parent instanceof ExpressionList
+                || $node->parent instanceof WhileStatement
+                || $node->parent instanceof DoStatement
+                || $node->parent instanceof IfStatementNode
+                || $node->parent instanceof CatchClause
+                || $node->parent instanceof ForeachStatement
+                || $node->parent instanceof SwitchStatementNode
+        ) {
+            return false;
+        }
+
+        return $node instanceof SourceFileNode
+            || $node->parent instanceof CaseStatementNode
+            || $node->parent instanceof SourceFileNode
+            || $node->parent instanceof CompoundStatementNode
+            || $node->parent?->parent instanceof CaseStatementNode
+            || $node->parent?->parent instanceof CompoundStatementNode;
+    }
+
+    public static function loopOrSwitch(Node $node): bool
+    {
+        return $node->getFirstAncestor(
+            DoStatement::class,
+            ForStatement::class,
+            ForeachStatement::class,
+            SwitchStatementNode::class,
+            WhileStatement::class,
+        ) instanceof Node;
     }
 
     public static function declaration(Node $node, ByteOffset $offset): bool
