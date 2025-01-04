@@ -107,6 +107,9 @@ class KeywordCompletor implements TolerantCompletor
         return true;
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     private function matchExpr(): Generator
     {
         foreach (self::EXPRESSIONS as $name => $snippet) {
