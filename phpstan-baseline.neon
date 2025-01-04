@@ -691,21 +691,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/DebugTolerantCompletor.php
 
 		-
-			message: "#^Cannot call method __toString\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
-
-		-
-			message: "#^Cannot call method name\\(\\) on mixed\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
-
-		-
-			message: "#^Parameter \\#1 \\$candidate of method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\SourceCodeFilesystem\\\\ScfClassCompletor\\:\\:getClassNameForImport\\(\\) expects Phpactor\\\\ClassFileConverter\\\\Domain\\\\ClassName, mixed given\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletor.php
-
-		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:complete\\(\\) should return bool but returns mixed\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
@@ -2181,21 +2166,6 @@ parameters:
 			path: lib/Extension/CodeTransformExtra/Command/ClassTransformCommand.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:generate\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ChangeVisiblityHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Rpc/ChangeVisiblityHandler.php
@@ -3019,11 +2989,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Formatter\\\\Highlight\\:\\:highlightAtCol\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Core/Console/Formatter/Highlight.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\PhpactorCommandLoader\\:\\:get\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/Core/Console/PhpactorCommandLoader.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\BashPrompt\\:\\:getBashPath\\(\\) has no return type specified\\.$#"
@@ -5971,11 +5936,6 @@ parameters:
 			path: lib/WorseReflection/Core/DefaultValue.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\DocBlock\\\\DocBlockInspector\\:\\:typesForMethod\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/DocBlock/DocBlockInspector.php
-
-		-
 			message: "#^Parameter \\#1 \\$node of method Phpactor\\\\WorseReflection\\\\Core\\\\Inference\\\\FrameResolver\\:\\:resolveScopeNode\\(\\) expects Microsoft\\\\PhpParser\\\\Node, Microsoft\\\\PhpParser\\\\Node\\|null given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Inference/FrameResolver.php
@@ -6194,11 +6154,6 @@ parameters:
 			message: "#^Parameter \\#3 \\$parameter of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionParameter constructor expects Microsoft\\\\PhpParser\\\\Node\\\\Parameter, mixed given\\.$#"
 			count: 2
 			path: lib/WorseReflection/Core/Reflection/Collection/ReflectionParameterCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionSourceCode\\:\\:findClass\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/ReflectionSourceCode.php
 
 		-
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Reflector\\\\ClassReflector\\\\MemonizedReflector\\:\\:\\$innerReflector is never read, only written\\.$#"

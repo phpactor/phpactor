@@ -196,11 +196,11 @@ class CompletionContext
             return false;
         }
 
-        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
-
         if ($node->parent instanceof MethodDeclaration && $node->openBrace instanceof MissingToken) {
             return false;
         }
+
+        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
         if ($nodeBeforeOffset instanceof ClassMembersNode) {
             return true;
