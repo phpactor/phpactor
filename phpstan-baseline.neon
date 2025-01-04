@@ -4081,6 +4081,16 @@ parameters:
 			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
 
 		-
+			message: "#^Parameter \\#2 \\$offsets of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult constructor expects array\\<string, array\\<Phpactor\\\\TextDocument\\\\ByteOffset\\>\\>, array\\<int\\|string, array\\<int\\<0, max\\>, Phpactor\\\\TextDocument\\\\ByteOffset\\>\\> given\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
+
+		-
+			message: "#^Parameter \\#3 \\$ranges of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult constructor expects array\\<string, array\\<Phpactor\\\\TextDocument\\\\ByteOffsetRange\\>\\>, array\\<int\\|string, array\\<int\\<0, max\\>, Phpactor\\\\TextDocument\\\\ByteOffsetRange\\>\\> given\\.$#"
+			count: 1
+			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
+
+		-
 			message: "#^Property Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractor\\:\\:\\$points type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
