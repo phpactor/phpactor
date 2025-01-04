@@ -84,7 +84,7 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         if (CompletionContext::expression($node)) {
-            yield from $this->matchExpr();
+            yield from $this->expressions();
             return true;
         }
 
@@ -110,7 +110,7 @@ class KeywordCompletor implements TolerantCompletor
     /**
      * @return Generator<Suggestion>
      */
-    private function matchExpr(): Generator
+    private function expressions(): Generator
     {
         foreach (self::EXPRESSIONS as $name => $snippet) {
             yield Suggestion::createWithOptions($name . ' ', [
