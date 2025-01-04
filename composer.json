@@ -36,7 +36,7 @@
         "phpunit/phpunit": "^9.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpactor/test-utils": "^1.1.4",
-        "symfony/var-dumper": "^5.2",
+        "symfony/var-dumper": "^6.4",
         "phpbench/phpbench": "^1.1",
         "dms/phpunit-arraysubset-asserts": "dev-master",
         "psr/log": "^1.1",
