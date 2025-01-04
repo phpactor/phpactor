@@ -177,11 +177,15 @@ class CompletionContext
             return false;
         }
 
-        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
-
         if ($node instanceof Variable) {
             return false;
         }
+
+        if ($node->parent instanceof MethodDeclaration && $node->openBrace instanceof MissingToken) {
+            return false;
+        }
+
+        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
         if ($nodeBeforeOffset instanceof ClassMembersNode) {
             return true;
@@ -273,7 +277,16 @@ class CompletionContext
 
     public static function methodName(Node $node): bool
     {
-        return $node->parent instanceof MethodDeclaration;
+        // If the body (as the current node) is empty, the parent is MethodDeclaration
+        if ($node instanceof CompoundStatementNode && !$node->openBrace instanceof MissingToken) {
+            return false;
+        }
+
+        if (!$node->parent instanceof MethodDeclaration) {
+            return false;
+        }
+
+        return $node->parent->openParen instanceof MissingToken;
     }
 
     public static function declaration(Node $node, ByteOffset $offset): bool

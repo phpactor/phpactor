@@ -676,6 +676,11 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
 
 		-
+			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\:\\:\\$openBrace\\.$#"
+			count: 1
+			path: lib/Completion/Bridge/TolerantParser/CompletionContext.php
+
+		-
 			message: "#^Cannot call method getEndPosition\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/CompletionContext.php
