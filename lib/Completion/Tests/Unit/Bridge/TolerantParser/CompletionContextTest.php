@@ -301,4 +301,29 @@ class CompletionContextTest extends TestCase
             false,
         ];
     }
+
+    /**
+     * @dataProvider provideMethodName
+     */
+    public function testMethodName(string $source, bool $expected): void
+    {
+        [$source, $offset] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        self::assertEquals($expected, CompletionContext::methodName($node));
+    }
+
+    /**
+     * @return Generator<array<int,mixed>>
+     */
+    public function provideMethodName(): Generator
+    {
+        yield [
+            '<?php class A { public function __construct(<>',
+            false,
+        ];
+        yield [
+            '<?php class A { public function __con<>',
+            true,
+        ];
+    }
 }
