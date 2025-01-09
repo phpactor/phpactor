@@ -2166,21 +2166,6 @@ parameters:
 			path: lib/Extension/CodeTransformExtra/Command/ClassTransformCommand.php
 
 		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:generate\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\AbstractClassGenerateHandler\\:\\:handle\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Extension/CodeTransformExtra/Rpc/AbstractClassGenerateHandler.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\CodeTransformExtra\\\\Rpc\\\\ChangeVisiblityHandler\\:\\:handle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/CodeTransformExtra/Rpc/ChangeVisiblityHandler.php
@@ -3004,11 +2989,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Formatter\\\\Highlight\\:\\:highlightAtCol\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: lib/Extension/Core/Console/Formatter/Highlight.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\PhpactorCommandLoader\\:\\:get\\(\\) has parameter \\$name with no type specified\\.$#"
-			count: 1
-			path: lib/Extension/Core/Console/PhpactorCommandLoader.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\Core\\\\Console\\\\Prompt\\\\BashPrompt\\:\\:getBashPath\\(\\) has no return type specified\\.$#"
@@ -6324,21 +6304,6 @@ parameters:
 			message: "#^Property Phpactor\\\\WorseReflection\\\\Core\\\\Virtual\\\\VirtualReflectionMethod\\:\\:\\$type is unused\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionMethod.php
-
-		-
-			message: "#^Cannot use array destructuring on Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\.$#"
-			count: 2
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: mixed given\\.$#"
-			count: 1
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:\\$locators \\(array\\<Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\>\\) does not accept array\\<array\\<int, int\\|Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\>\\|Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\>\\.$#"
-			count: 1
-			path: lib/WorseReflection/ReflectorBuilder.php
 
 		-
 			message: "#^Cannot cast mixed to string\\.$#"
