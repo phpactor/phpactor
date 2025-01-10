@@ -6306,21 +6306,6 @@ parameters:
 			path: lib/WorseReflection/Core/Virtual/VirtualReflectionMethod.php
 
 		-
-			message: "#^Cannot use array destructuring on Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\.$#"
-			count: 2
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: mixed given\\.$#"
-			count: 1
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
-			message: "#^Property Phpactor\\\\WorseReflection\\\\ReflectorBuilder\\:\\:\\$locators \\(array\\<Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\>\\) does not accept array\\<array\\<int, int\\|Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\>\\|Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\>\\.$#"
-			count: 1
-			path: lib/WorseReflection/ReflectorBuilder.php
-
-		-
 			message: "#^Cannot cast mixed to string\\.$#"
 			count: 1
 			path: lib/WorseReflection/TypeUtil.php
