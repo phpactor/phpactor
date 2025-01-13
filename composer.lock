@@ -1816,12 +1816,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/tolerant-php-parser.git",
-                "reference": "3bd51bd63a2aa47e9c686c21b8833eb67d2c4808"
+                "reference": "8a42bdf799fd8868c85f6c6926014fefa5454ffc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/3bd51bd63a2aa47e9c686c21b8833eb67d2c4808",
-                "reference": "3bd51bd63a2aa47e9c686c21b8833eb67d2c4808",
+                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/8a42bdf799fd8868c85f6c6926014fefa5454ffc",
+                "reference": "8a42bdf799fd8868c85f6c6926014fefa5454ffc",
                 "shasum": ""
             },
             "require": {
@@ -1854,7 +1854,7 @@
             "support": {
                 "source": "https://github.com/phpactor/tolerant-php-parser/tree/main"
             },
-            "time": "2024-09-03T16:49:23+00:00"
+            "time": "2025-01-13T20:19:07+00:00"
         },
         {
             "name": "psr/container",
@@ -8226,17 +8226,17 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "phpactor/language-server": 20,
+        "dms/phpunit-arraysubset-asserts": 20,
         "jetbrains/phpstorm-stubs": 20,
-        "phpactor/tolerant-php-parser": 20,
-        "dms/phpunit-arraysubset-asserts": 20
+        "phpactor/language-server": 20,
+        "phpactor/tolerant-php-parser": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.1.0"
     },
