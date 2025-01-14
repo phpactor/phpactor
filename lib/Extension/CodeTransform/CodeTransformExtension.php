@@ -28,6 +28,7 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariabl
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMemberFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillMatchArms;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseHereDoc;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMutator;
@@ -296,6 +297,11 @@ class CodeTransformExtension implements Extension
         $container->register(WorseFillMatchArms::class, function (Container $container) {
             return new WorseFillMatchArms(
                 $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
+            );
+        });
+        $container->register(WorseHereDoc::class, function (Container $container) {
+            return new WorseHereDoc(
                 $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
             );
         });

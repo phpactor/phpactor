@@ -1,0 +1,14 @@
+// File: source
+<?php
+
+$foo = 10;
+echo
+    "Testing: $fo<>o";
+// File: expected
+<?php
+
+$foo = 10;
+echo
+    <<<TEXT
+Testing: $foo
+TEXT;

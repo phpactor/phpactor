@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerCodeTransform;
 
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillMatchArms;
+use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseHereDoc;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\CodeTransform\Domain\Helper\MissingMemberFinder;
@@ -506,6 +507,16 @@ class LanguageServerCodeTransformExtension implements Extension
                 'quickfix.fill.matchArms',
                 'Fill match arms',
                 'fill missing match arms for an enum',
+            );
+        }, [
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+        ]);
+        $container->register(ByteOffsetRefactorProvider::class.'.here_doc_provider', function (Container $container) {
+            return new ByteOffsetRefactorProvider(
+                $container->get(WorseHereDoc::class),
+                'quickfix.here_doc_provider',
+                'Convert HereDoc',
+                'replace string with HereDoc',
             );
         }, [
             LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
