@@ -81,6 +81,14 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php class F { public function foo() { $this->mat<> }}',
             [],
         ];
+        yield 'match unexpected 2' => [
+            '<?php class F { public function foo() { $this->foo(<>) }}',
+            [],
+        ];
+        yield 'match unexpected 3' => [
+            '<?php class F { public function foo() { $this->foo(self::<>) }}',
+            [],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
