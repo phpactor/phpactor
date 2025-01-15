@@ -28,7 +28,7 @@ final class ReflectorBuilder
     private ?LoggerInterface $logger = null;
 
     /**
-     * @var SourceCodeLocator[]
+     * @var array<array{int,SourceCodeLocator}>
      */
     private array $locators = [];
 

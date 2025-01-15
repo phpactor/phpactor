@@ -32,7 +32,7 @@ If you want to profile Phpactor for debugging purposes:
 - ``:LspPhpactorBlackfireStart``: Start :ref:`developing_blackfire_profiling` (if enabled with :ref:`param_blackfire.enabled`)
 - ``:LspPhpactorBlackfireFinish``: Finish profiling and get the profiling URL
 
-.. code-block:: lua
+.. code-block:: text
 
     -- requires plenary (which is required by telescope)
     local Float = require "plenary.window.float"
