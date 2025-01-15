@@ -83,7 +83,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         ];
         yield 'match unexpected 2' => [
             '<?php class F { public function foo() { $this->foo(<>) }}',
-            [],
+            [...$this->expectExpressions()],
         ];
         yield 'match unexpected 3' => [
             '<?php class F { public function foo() { $this->foo(self::<>) }}',

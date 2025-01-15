@@ -70,6 +70,10 @@ class CompletionContextTest extends TestCase
             "<?php class Foo { public function bar() {\necho 'hello world'; \$bar = 12;} A<> }",
             false,
         ];
+        yield 'not in scoped property access expr' => [
+            '<?php class Foo { public function foo() { $this->foo(self::<>) }',
+            false,
+        ];
 
         yield 'in class method body 1' => [
             '<?php class Foo { public function foo() { A<> }',
@@ -77,6 +81,10 @@ class CompletionContextTest extends TestCase
         ];
         yield 'in class method body 2' => [
             '<?php class Foo { public function bar() { if (true) { return false; } A<> } }',
+            true,
+        ];
+        yield 'in function call' => [
+            '<?php class Foo { public function foo() { $this->foo(<>) }',
             true,
         ];
         yield 'in foreach' => [

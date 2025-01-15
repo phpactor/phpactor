@@ -17,7 +17,9 @@ use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -52,6 +54,14 @@ class CompletionContext
 
         if ($node instanceof MemberAccessExpression) {
             return false;
+        }
+
+        if ($node instanceof ScopedPropertyAccessExpression) {
+            return false;
+        }
+
+        if ($node instanceof CallExpression) {
+            return true;
         }
 
         if ($parent instanceof ArgumentExpression) {
