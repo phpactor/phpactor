@@ -32,6 +32,7 @@ use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -49,6 +50,14 @@ class CompletionContext
         $parent = $node->parent;
 
         if (null === $parent) {
+            return false;
+        }
+
+        if ($node instanceof Variable) {
+            return false;
+        }
+
+        if ($node instanceof ExpressionStatement && $node->expression instanceof MissingToken) {
             return false;
         }
 
