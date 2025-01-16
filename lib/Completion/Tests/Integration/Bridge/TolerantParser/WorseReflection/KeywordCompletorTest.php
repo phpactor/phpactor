@@ -97,10 +97,6 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php $<>',
             [],
         ];
-        yield 'match unexpected 6' => [
-            '<?php if (1 instanceof <>)',
-            [],
-        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor

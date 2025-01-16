@@ -57,7 +57,7 @@ class CompletionContext
             return false;
         }
 
-        if ($node instanceof ExpressionStatement && $node->expression instanceof MissingToken) {
+        if ($node instanceof ExpressionStatement) {
             return false;
         }
 
