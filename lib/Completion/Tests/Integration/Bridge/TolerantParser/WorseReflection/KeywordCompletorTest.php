@@ -158,7 +158,6 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<array{name:string,snippet:string}>
      */
-<<<<<<< HEAD
     private function expectStatement(bool $loop): Generator
     {
         $statements = [
@@ -203,24 +202,6 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<array{name:string,snippet:string}>
      */
-||||||| 216c1af8
-=======
-    private function expectExpressions(): Generator
-    {
-        $expressions = [
-            'match' => " (\$1) {\$0\n}",
-            'throw' => ' $1',
-        ];
-
-        foreach ($expressions as $name => $snippet) {
-            yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
-        }
-    }
-
-    /**
-     * @return Generator<array{name:string,snippet:string}>
-     */
->>>>>>> keyword-complete-expressions
     private function expectMagicMethods(): Generator
     {
         $methods = [
