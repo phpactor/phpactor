@@ -121,6 +121,22 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php class F { public function foo() { $this->mat<> }}',
             [],
         ];
+        yield 'match unexpected 2' => [
+            '<?php class F { public function foo() { $this->foo(<>) }}',
+            [...$this->expectExpressions()],
+        ];
+        yield 'match unexpected 3' => [
+            '<?php class F { public function foo() { $this->foo(self::<>) }}',
+            [],
+        ];
+        yield 'match unexpected 4' => [
+            '<?php if (1)<> {}',
+            [],
+        ];
+        yield 'match unexpected 5' => [
+            '<?php $<>',
+            [],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
@@ -142,6 +158,7 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<array{name:string,snippet:string}>
      */
+<<<<<<< HEAD
     private function expectStatement(bool $loop): Generator
     {
         $statements = [
@@ -186,6 +203,24 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<array{name:string,snippet:string}>
      */
+||||||| 216c1af8
+=======
+    private function expectExpressions(): Generator
+    {
+        $expressions = [
+            'match' => " (\$1) {\$0\n}",
+            'throw' => ' $1',
+        ];
+
+        foreach ($expressions as $name => $snippet) {
+            yield ['name' => $name . ' ', 'snippet' => $name . $snippet];
+        }
+    }
+
+    /**
+     * @return Generator<array{name:string,snippet:string}>
+     */
+>>>>>>> keyword-complete-expressions
     private function expectMagicMethods(): Generator
     {
         $methods = [

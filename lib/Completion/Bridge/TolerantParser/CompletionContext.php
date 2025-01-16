@@ -20,7 +20,9 @@ use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -38,6 +40,7 @@ use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\ForStatement;
 use Microsoft\PhpParser\Node\Statement\ForeachStatement;
 use Microsoft\PhpParser\Node\Statement\IfStatementNode;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\SwitchStatementNode;
@@ -60,8 +63,24 @@ class CompletionContext
             return false;
         }
 
+        if ($node instanceof Variable) {
+            return false;
+        }
+
+        if ($node instanceof ExpressionStatement) {
+            return false;
+        }
+
         if ($node instanceof MemberAccessExpression) {
             return false;
+        }
+
+        if ($node instanceof ScopedPropertyAccessExpression) {
+            return false;
+        }
+
+        if ($node instanceof CallExpression) {
+            return true;
         }
 
         if ($parent instanceof ArgumentExpression) {
