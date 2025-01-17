@@ -74,6 +74,6 @@ class InMemoryIndex implements Index
 
     private function recordKey(Record $record): string
     {
-        return $record->recordType().$record->identifier();
+        return $record->recordType()->value.$record->identifier();
     }
 }

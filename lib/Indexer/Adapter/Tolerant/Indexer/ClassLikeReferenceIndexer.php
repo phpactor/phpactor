@@ -11,6 +11,7 @@ use Phpactor\Indexer\Model\Index;
 use Phpactor\Indexer\Model\RecordReference;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FileRecord;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameResolver;
 use Phpactor\TextDocument\TextDocument;
 
@@ -35,7 +36,7 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
         assert($fileRecord instanceof FileRecord);
 
         foreach ($fileRecord->references() as $outgoingReference) {
-            if ($outgoingReference->type() !== ClassRecord::RECORD_TYPE) {
+            if ($outgoingReference->type() !== RecordType::CLASS_) {
                 continue;
             }
 
@@ -74,7 +75,7 @@ class ClassLikeReferenceIndexer extends AbstractClassLikeIndexer
         $fileRecord = $index->get(FileRecord::fromPath($document->uriOrThrow()->__toString()));
         assert($fileRecord instanceof FileRecord);
         $reference = new RecordReference(
-            ClassRecord::RECORD_TYPE,
+            RecordType::CLASS_,
             $targetRecord->identifier(),
             $node->getStartPosition(),
             end: $node->getEndPosition()

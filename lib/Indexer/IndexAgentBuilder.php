@@ -25,9 +25,7 @@ use Phpactor\Indexer\Model\RecordReferenceEnhancer;
 use Phpactor\Indexer\Model\RecordReferenceEnhancer\NullRecordReferenceEnhancer;
 use Phpactor\Indexer\Model\RecordSerializer;
 use Phpactor\Indexer\Model\RecordSerializer\PhpSerializer;
-use Phpactor\Indexer\Model\Record\ClassRecord;
-use Phpactor\Indexer\Model\Record\ConstantRecord;
-use Phpactor\Indexer\Model\Record\FunctionRecord;
+use Phpactor\Indexer\Model\Record\RecordType;
 use Phpactor\Indexer\Model\SearchClient\HydratingSearchClient;
 use Phpactor\Indexer\Model\SearchIndex;
 use Phpactor\Indexer\Model\SearchIndex\FilteredSearchIndex;
@@ -193,10 +191,7 @@ final class IndexAgentBuilder
 
     private function buildQuery(Index $index): QueryClient
     {
-        return new QueryClient(
-            $index,
-            $this->enhancer
-        );
+        return new QueryClient($index, $this->enhancer);
     }
 
     private function buildSearch(IndexAccess $index): SearchIndex
@@ -204,9 +199,9 @@ final class IndexAgentBuilder
         $search = new FileSearchIndex($this->indexRoot . '/search');
         $search = new ValidatingSearchIndex($search, $index, $this->logger);
         $search = new FilteredSearchIndex($search, [
-            ClassRecord::RECORD_TYPE,
-            FunctionRecord::RECORD_TYPE,
-            ConstantRecord::RECORD_TYPE,
+            RecordType::CLASS_,
+            RecordType::FUNCTION,
+            RecordType::CONSTANT,
         ]);
 
         return $search;
