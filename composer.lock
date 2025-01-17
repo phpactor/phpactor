@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21bf07630bbd527889df8d84df646b39",
+    "content-hash": "e4b270130878f76a179bd52fcd206bb9",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1643,16 +1643,16 @@
         },
         {
             "name": "phpactor/language-server-protocol",
-            "version": "3.17.3",
+            "version": "3.17.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/language-server-protocol.git",
-                "reference": "065fc70b6a26a8d78e034f7db92c8872367356df"
+                "reference": "1f7d7218db2cc77223bbb4e03961d0bceea50e60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/065fc70b6a26a8d78e034f7db92c8872367356df",
-                "reference": "065fc70b6a26a8d78e034f7db92c8872367356df",
+                "url": "https://api.github.com/repos/phpactor/language-server-protocol/zipball/1f7d7218db2cc77223bbb4e03961d0bceea50e60",
+                "reference": "1f7d7218db2cc77223bbb4e03961d0bceea50e60",
                 "shasum": ""
             },
             "require": {
@@ -1662,7 +1662,7 @@
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.0",
                 "friendsofphp/php-cs-fixer": "^2.17",
-                "phpstan/phpstan": "~0.12.0",
+                "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^9.2"
             },
             "type": "library",
@@ -1689,9 +1689,9 @@
             "description": "Langauge Server Protocol for PHP (transpiled)",
             "support": {
                 "issues": "https://github.com/phpactor/language-server-protocol/issues",
-                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17.3"
+                "source": "https://github.com/phpactor/language-server-protocol/tree/3.17.4"
             },
-            "time": "2023-03-11T13:19:45+00:00"
+            "time": "2024-11-21T20:07:12+00:00"
         },
         {
             "name": "phpactor/map-resolver",
@@ -8240,5 +8240,5 @@
     "platform-overrides": {
         "php": "8.1.0"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
