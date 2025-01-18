@@ -37,6 +37,7 @@ class WorseDiagnosticProvider implements DiagnosticsProvider
                 $lspDiagnostic->severity = self::toLspSeverity($diagnostic->severity());
                 $lspDiagnostic->source = 'phpactor';
                 $lspDiagnostic->tags = self::toLspTags($diagnostic->tags());
+                $lspDiagnostic->code = 'worse.'.$diagnostic->code();
 
                 if ($diagnostic instanceof DeprecatedUsageDiagnostic) {
                     $lspDiagnostic->tags[] = DiagnosticTag::DEPRECATED;

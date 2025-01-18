@@ -1,0 +1,10 @@
+<?php
+
+class Foo {
+    public function bar(): string
+    {
+    return 'asd';
+    }
+}
+
+wrAssertType('string', new Foo()->bar());

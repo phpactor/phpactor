@@ -193,6 +193,24 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
             'class_reflection3.md',
         ];
 
+        yield 'too many members' => [
+            '',
+            function (Reflector $reflector) {
+                return $this->reflectClassesIn(
+                    $reflector,
+                    sprintf(
+                        '<?php class SomeClass { %s }',
+                        implode(' ', array_map(
+                            fn (int $number) => sprintf('public function fun%s():void{}', $number),
+                            range(1, 53),
+                        ))
+                    ),
+                )->get('SomeClass');
+            },
+            'class_reflection_too_many_members.md',
+            false,
+        ];
+
         yield 'final class' => [
             '',
             function (Reflector $reflector) {

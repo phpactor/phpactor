@@ -22,6 +22,4 @@ interface DiagnosticProvider
      * @return iterable<DiagnosticExample>
      */
     public function examples(): iterable;
-
-    public function name(): string;
 }

@@ -52,4 +52,9 @@ class MissingMemberDiagnostic implements Diagnostic
     {
         return [];
     }
+
+    public function code(): string
+    {
+        return 'missing_member';
+    }
 }

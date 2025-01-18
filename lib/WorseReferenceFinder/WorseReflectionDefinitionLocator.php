@@ -195,11 +195,16 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
                             break;
                         }
                     }
-                    assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionInterface || $containingClass instanceof ReflectionEnum);
                     $members = $containingClass->constants();
                     break;
                 case Symbol::PROPERTY:
-                    assert($containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionTrait || $containingClass instanceof ReflectionEnum);
+                    if (
+                        !$containingClass instanceof ReflectionClass || $containingClass instanceof ReflectionTrait || $containingClass instanceof ReflectionEnum) {
+                        throw new CouldNotLocateDefinition(sprintf(
+                            'ClassLike "%s" has no properties!',
+                            $containingClass::class
+                        ));
+                    }
                     $members = $containingClass->properties();
                     break;
                 default:

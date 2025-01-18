@@ -55,6 +55,18 @@ class Edits
         $this->edits[] = TextEdit::create($node->getFullStartPosition(), $node->getFullWidth(), $text);
     }
 
+    public function replaceMultiple(
+        Node|Token|QualifiedName $firstNodeToReplace,
+        Node|Token|QualifiedName $lastToReplace,
+        string $text,
+    ): void {
+        $this->edits[] = TextEdit::create(
+            $firstNodeToReplace->getStartPosition(),
+            $lastToReplace->getEndPosition() - $firstNodeToReplace->getStartPosition(),
+            $text
+        );
+    }
+
     public function textEdits(): TextEdits
     {
         return TextEdits::fromTextEdits($this->edits);

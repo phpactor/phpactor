@@ -20,6 +20,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformEx
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
+use Phpactor\Extension\LanguageServerEvaluatableExpression\LanguageServerEvaluatableExpressionExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanSuggestExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
@@ -176,6 +177,7 @@ class Phpactor
             LanguageServerWorseReflectionExtension::class,
             LanguageServerIndexerExtension::class,
             LanguageServerHoverExtension::class,
+            LanguageServerEvaluatableExpressionExtension::class,
             LanguageServerBridgeExtension::class,
             LanguageServerCodeTransformExtension::class,
             LanguageServerSymbolProviderExtension::class,

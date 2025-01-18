@@ -353,9 +353,4 @@ class DocblockMissingExtendsTagProvider implements DiagnosticProvider
             }
         );
     }
-
-    public function name(): string
-    {
-        return 'docblock_missing_extends_tag';
-    }
 }

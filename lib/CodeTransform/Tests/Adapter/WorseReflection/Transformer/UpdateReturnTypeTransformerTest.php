@@ -111,6 +111,54 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
                 EOT
         ];
 
+        yield 'update nullable type' => [
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Arg\Foo;
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Foo;
+                }
+                EOT
+        ];
+
+        yield 'update nullable type unions' => [
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Arg\Foo|int;
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                use Arg\Foo;
+
+                interface Animal
+                {
+                    public function jump(): ?Foo|int;
+                }
+                EOT
+        ];
+
         yield 'add multipe return types' => [
             <<<'EOT'
                 <?php

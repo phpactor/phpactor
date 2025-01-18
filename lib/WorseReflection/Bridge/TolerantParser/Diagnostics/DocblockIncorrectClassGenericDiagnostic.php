@@ -43,4 +43,9 @@ class DocblockIncorrectClassGenericDiagnostic implements Diagnostic
     {
         return [];
     }
+
+    public function code(): string
+    {
+        return 'docblock_incorrect_class_generic';
+    }
 }

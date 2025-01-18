@@ -64,4 +64,9 @@ class UndefinedVariableDiagnostic implements Diagnostic
     {
         return [];
     }
+
+    public function code(): string
+    {
+        return 'undefined_variable';
+    }
 }
