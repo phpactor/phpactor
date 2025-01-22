@@ -7,6 +7,7 @@ Features:
 
   - Support new expression without parenthesis #2811
   - Support vscode evaluatable expressions #2905 @zobo
+  - Support `match` and `throw` expression keywords completion #2819 @przepompownia
 
 ## 2024-11-28.1
 
