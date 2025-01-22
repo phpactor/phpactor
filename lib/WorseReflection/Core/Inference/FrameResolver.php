@@ -194,7 +194,7 @@ final class FrameResolver
             ));
         }
 
-        // if this is an anonymous functoin, traverse the parent scope to
+        // if this is an anonymous function, traverse the parent scope to
         // resolve any potential variable imports.
         if ($scopeNode instanceof AnonymousFunctionCreationExpression || $scopeNode instanceof ArrowFunctionCreationExpression) {
             return $this->resolveScopeNode($scopeNode->parent);
