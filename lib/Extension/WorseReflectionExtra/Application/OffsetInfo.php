@@ -8,8 +8,8 @@ use Phpactor\TextDocument\ByteOffset;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Application\Helper\FilesystemHelper;
 use Phpactor\WorseReflection\TypeUtil;
+use RuntimeException;
 use Symfony\Component\Filesystem\Path;
-use function Safe\getcwd;
 
 final class OffsetInfo
 {
@@ -25,10 +25,14 @@ final class OffsetInfo
     /** @return array<string, mixed> */
     public function infoForOffset(string $sourcePath, int $offset, bool $showFrame = false): array
     {
+        $cwd = getcwd();
+        if (false === $cwd) {
+            throw new RuntimeException('CWD could not be resolved');
+        }
         $result = $this->reflector->reflectOffset(
             TextDocumentBuilder::create(
                 $this->filesystemHelper->contentsFromFileOrStdin($sourcePath)
-            )->uri(Path::makeAbsolute($sourcePath, getcwd()))->build(),
+            )->uri(Path::makeAbsolute($sourcePath, $cwd))->build(),
             ByteOffset::fromInt($offset)
         );
 

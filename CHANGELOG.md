@@ -7,6 +7,7 @@ Features:
 
   - Support new expression without parenthesis #2811
   - Support vscode evaluatable expressions #2905 @zobo
+  - Runtime support for PHP 8.4 #2829
 
 ## 2024-11-28.1
 
