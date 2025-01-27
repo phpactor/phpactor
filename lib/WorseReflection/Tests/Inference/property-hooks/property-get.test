@@ -1,0 +1,12 @@
+<?php
+
+class Some
+{
+    public string $foobar {
+        get {
+            return 'fuck';
+        }
+    }
+}
+
+wrAssertType('string', new Some()->foobar);
