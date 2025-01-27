@@ -1,18 +1,18 @@
 <?php
 
-namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
+namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\Refactor;
 
 use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseHereDoc;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantHereDoc;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use SplFileInfo;
 
-class WorseHereDocTest extends WorseTestCase
+class TolerantHereDocTest extends WorseTestCase
 {
     /**
      * @dataProvider provideData
@@ -58,8 +58,8 @@ class WorseHereDocTest extends WorseTestCase
         }
     }
 
-    private function createHereDoc(string $source): WorseHereDoc
+    private function createHereDoc(string $source): TolerantHereDoc
     {
-        return new WorseHereDoc(new Parser());
+        return new TolerantHereDoc(new Parser());
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
+namespace Phpactor\CodeTransform\Adapter\TolerantParser\Refactor;
 
 use Microsoft\PhpParser\Parser;
 use Microsoft\PhpParser\Node\StringLiteral;
@@ -15,7 +15,7 @@ use Microsoft\PhpParser\Token;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\TokenKind;
 
-class WorseHereDoc implements ByteOffsetRefactor
+class TolerantHereDoc implements ByteOffsetRefactor
 {
     public function __construct(private Parser $parser)
     {
@@ -55,7 +55,7 @@ class WorseHereDoc implements ByteOffsetRefactor
         return TextEdits::fromTextEdits([TextEdit::create(
             $node->getStartPosition(),
             $node->getEndPosition() - $node->getStartPosition(),
-            '<<<TEXT'.PHP_EOL.$content.PHP_EOL.'TEXT'
+            '<<<EOF'.PHP_EOL.$content.PHP_EOL.'EOF'
         )]);
 
     }

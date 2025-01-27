@@ -25,10 +25,10 @@ use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantImportName;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpression;
 use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\InterfaceFromExistingGenerator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
+use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantHereDoc;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMemberFinder;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillMatchArms;
-use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseHereDoc;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseFillObject;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateConstructor;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMutator;
@@ -300,8 +300,8 @@ class CodeTransformExtension implements Extension
                 $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
             );
         });
-        $container->register(WorseHereDoc::class, function (Container $container) {
-            return new WorseHereDoc(
+        $container->register(TolerantHereDoc::class, function (Container $container) {
+            return new TolerantHereDoc(
                 $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
             );
         });
