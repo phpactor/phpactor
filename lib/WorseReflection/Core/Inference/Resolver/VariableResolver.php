@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\BracedExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\PropertyHook;
 use Phpactor\WorseReflection\Core\Inference\Context\MemberDeclarationContext;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\MemberTypeResolver;
@@ -30,8 +31,10 @@ class VariableResolver implements Resolver
     {
         assert($node instanceof Variable);
 
-        if ($node->getFirstAncestor(PropertyDeclaration::class)) {
-            return $this->resolvePropertyVariable($resolver, $node);
+        if ($ancestor = $node->getFirstAncestor(PropertyHook::class, PropertyDeclaration::class)) {
+            if ($ancestor instanceof PropertyDeclaration) {
+                return $this->resolvePropertyVariable($resolver, $node);
+            }
         }
 
         if ($node->name instanceof BracedExpression) {
