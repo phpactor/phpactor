@@ -2,6 +2,7 @@
 /phpactor.schema.json
 /lib/Extension/WorseReflection/stubs
 /.phpbench
+.nova
 
 # Composer
 /vendor
