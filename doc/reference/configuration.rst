@@ -1934,6 +1934,22 @@ Path to psalm if different from vendor/bin/psalm
 **Default**: ``"%project_root%\/vendor\/bin\/psalm"``
 
 
+.. _param_language_server_psalm.config:
+
+
+``language_server_psalm.config``
+""""""""""""""""""""""""""""""""
+
+
+Type: string
+
+
+Path to psalm config. Like %project_root%/psalm.xml
+
+
+**Default**: ``""``
+
+
 .. _param_language_server_psalm.show_info:
 
 
