@@ -25,7 +25,7 @@
         system,
         ...
       }: let 
-        phpWithXdebug = (pkgs.php81.buildEnv {
+        phpWithXdebug = (pkgs.php84.buildEnv {
           extensions = ({ enabled, all }: enabled ++ (with all; [
             xdebug
           ]));
@@ -44,7 +44,7 @@
           buildInputs = [
             pkgs.python3
             phpWithXdebug
-            pkgs.php81.packages.composer
+            pkgs.php84.packages.composer
           ];
           shellHook = ''
           if [ ! -d ".venv" ]; then

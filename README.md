@@ -31,6 +31,7 @@ Requirements
 
 - PHP 8.1+
 - [Composer](https://getcomposer.org/)
+- Linux or MacOS (Windows users will need to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install))
 
 Project Recommendations
 -----------------------

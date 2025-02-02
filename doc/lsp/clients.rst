@@ -11,6 +11,7 @@ Clients
    vscode
    emacs
    helix
+   nova
 
 .. toctree::
    :hidden:

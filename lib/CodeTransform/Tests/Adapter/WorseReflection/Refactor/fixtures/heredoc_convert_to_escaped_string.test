@@ -1,0 +1,8 @@
+// File: source
+<?php
+echo <<<TA
+And then<> he said: "You can see the source"!
+TA;
+// File: expected
+<?php
+echo "And then he said: \"You can see the source\"!";

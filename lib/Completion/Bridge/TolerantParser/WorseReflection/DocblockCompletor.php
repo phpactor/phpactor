@@ -25,6 +25,7 @@ class DocblockCompletor implements TolerantCompletor
         '@return',
         '@method',
         '@deprecated',
+        '@internal',
         '@extends',
         '@implements',
         '@template',

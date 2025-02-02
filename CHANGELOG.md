@@ -1,6 +1,24 @@
 Changelog
 =========
 
+## master
+
+Features:
+
+  - String <=> Heredoc code action #2825 @mamazu
+  - Support new expression without parenthesis #2811
+  - Support vscode evaluatable expressions #2905 @zobo
+  - Runtime support for PHP 8.4 #2829
+Improvements:
+
+  - Completion for `@internal`  tag #2827 @mamazu
+  - Add documentation for Nova Language Client #2830 @EmranMR 
+  - Enable fill constructor code action on attributes #2810 @mamazu
+
+Bug fix:
+
+  - Handle zero modulo evaluation
+
 ## 2024-11-28.1
 
 Bug fixes:
