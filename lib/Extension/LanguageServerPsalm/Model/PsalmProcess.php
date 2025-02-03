@@ -64,7 +64,7 @@ class PsalmProcess
                 }
                 $command[] = "--config=$config";
                 return $command;
-            })($command, $this->config->threads());
+            })($command, $this->config->config());
 
             if (!$this->config->useCache()) {
                 $command[] = '--no-cache';
