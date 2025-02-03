@@ -66,7 +66,7 @@ class LanguageServerPsalmExtension implements OptionalExtension
                     $useCache,
                     $errorLevel ? (int)$errorLevel : null,
                     $threads ? (int)$threads : null,
-                    $configPath,
+                    $configPath === '' ? null : $configPath,
                 ),
                 LoggingExtension::channelLogger($container, 'PSALM'),
                 null,
@@ -80,7 +80,7 @@ class LanguageServerPsalmExtension implements OptionalExtension
     {
         $schema->setDefaults([
             self::PARAM_PSALM_BIN => '%project_root%/vendor/bin/psalm',
-            self::PARAM_PSALM_CONFIG => null,
+            self::PARAM_PSALM_CONFIG => '',
             self::PARAM_PSALM_SHOW_INFO => true,
             self::PARAM_PSALM_USE_CACHE => true,
             self::PARAM_PSALM_ERROR_LEVEL => null,
