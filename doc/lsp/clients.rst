@@ -12,6 +12,7 @@ Clients
    emacs
    helix
    nova
+   zed
 
 .. toctree::
    :hidden:
