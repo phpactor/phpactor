@@ -3,4 +3,4 @@
 Zed
 ===
 
-phpactor is default LSP for zed. Install zed's `Php extension <https://github.com/zed-industries/zed/tree/main/extensions/php/>`_.
+Phpactor is default LSP for Zed. Install Zed's `PHP extension <https://github.com/zed-industries/zed/tree/main/extensions/php/>`_.
