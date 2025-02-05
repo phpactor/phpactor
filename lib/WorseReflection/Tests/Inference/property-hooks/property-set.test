@@ -1,0 +1,16 @@
+<?php
+
+class Example
+{
+    private bool $modified = false;
+
+    public string $foo {
+        set(string $value) {
+            $this->foo = strtolower($value);
+            $this->modified = true;
+            wrAssertType('string', $value);
+        }
+    }
+}
+
+wrAssertType('string', (new Example())->foo);
