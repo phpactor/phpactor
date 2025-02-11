@@ -676,11 +676,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
 
 		-
-			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\:\\:\\$openBrace\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/CompletionContext.php
-
-		-
 			message: "#^Cannot call method getEndPosition\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/CompletionContext.php
@@ -4062,16 +4057,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractor\\:\\:parse\\(\\) should return Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult but returns \\$this\\(Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractor\\)\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
-
-		-
-			message: "#^Parameter \\#2 \\$offsets of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult constructor expects array\\<string, array\\<Phpactor\\\\TextDocument\\\\ByteOffset\\>\\>, array\\<int\\|string, array\\<int\\<0, max\\>, Phpactor\\\\TextDocument\\\\ByteOffset\\>\\> given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
-
-		-
-			message: "#^Parameter \\#3 \\$ranges of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult constructor expects array\\<string, array\\<Phpactor\\\\TextDocument\\\\ByteOffsetRange\\>\\>, array\\<int\\|string, array\\<int\\<0, max\\>, Phpactor\\\\TextDocument\\\\ByteOffsetRange\\>\\> given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
 

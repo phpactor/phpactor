@@ -7,9 +7,6 @@ use Phpactor\Indexer\Util\Filesystem;
 use Phpactor\Indexer\Model\Record;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use function Safe\file_get_contents;
-use function Safe\file_put_contents;
-use function Safe\mkdir;
 use Throwable;
 
 class FileRepository
@@ -75,7 +72,7 @@ class FileRepository
         }
 
         try {
-            $deserialized = $this->serializer->deserialize(file_get_contents($path));
+            $deserialized = $this->serializer->deserialize((string)file_get_contents($path));
         } catch (Throwable $corrupted) {
             $this->logger->warning(sprintf(
                 'Record at path "%s" is corrupted, removing: %s',

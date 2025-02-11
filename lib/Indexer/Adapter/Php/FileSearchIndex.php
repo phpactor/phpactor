@@ -9,9 +9,7 @@ use Phpactor\Indexer\Model\RecordFactory;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\HasFlags;
 use Phpactor\Indexer\Model\SearchIndex;
-use Safe\Exceptions\FilesystemException;
-use function Safe\file_get_contents;
-use function Safe\file_put_contents;
+use RuntimeException;
 
 class FileSearchIndex implements SearchIndex
 {
@@ -90,11 +88,13 @@ class FileSearchIndex implements SearchIndex
             return implode(self::DELIMITER, $parts);
         }, $this->subjects)));
 
-        try {
-            file_put_contents($this->path, $content);
-        } catch (FilesystemException $e) {
+        $written = file_put_contents($this->path, $content);
+        if (false === $written) {
             if (file_exists(dirname($this->path))) {
-                throw $e;
+                throw new RuntimeException(sprintf(
+                    'Directory "%s" already exists',
+                    dirname($this->path),
+                ));
             }
 
             mkdir(dirname($this->path), 0777, true);
@@ -118,7 +118,7 @@ class FileSearchIndex implements SearchIndex
             $parts = explode(self::DELIMITER, $line);
 
             return [$parts[0], $parts[1], $parts[2] ?? null, $parts[3] ?? null];
-        }, explode("\n", file_get_contents($this->path))));
+        }, explode("\n", (string)file_get_contents($this->path))));
 
         $this->initialized = true;
     }
