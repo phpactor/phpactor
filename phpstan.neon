@@ -10,7 +10,6 @@ parameters:
         - */lib/WorseReflection/Tests/*
         - lib/Completion/Tests/Unit/Core/Util/OffsetHelperTest.php
         - */lib/ClassMover/Tests/Adapter/TolerantParser/examples/*
-        - lib/Test.php
         - lib/WorseReflection/Core/SourceCodeLocator/InternalStubs/*
         - lib/Extension/LanguageServerCodeTransform/Tests/Stub/*
     reportUnmatchedIgnoredErrors: false

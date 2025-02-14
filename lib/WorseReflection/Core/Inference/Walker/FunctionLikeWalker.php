@@ -19,6 +19,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextFactory;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\PropertyHook;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Phpactor\WorseReflection\Core\Inference\Walker;
@@ -36,6 +37,7 @@ class FunctionLikeWalker implements Walker
             MethodDeclaration::class,
             AnonymousFunctionCreationExpression::class,
             ArrowFunctionCreationExpression::class,
+            PropertyHook::class,
         ];
     }
 
@@ -44,6 +46,7 @@ class FunctionLikeWalker implements Walker
         assert(
             $node instanceof MethodDeclaration ||
             $node instanceof FunctionDeclaration ||
+            $node instanceof PropertyHook ||
             $node instanceof AnonymousFunctionCreationExpression ||
             $node instanceof ArrowFunctionCreationExpression
         );
@@ -63,7 +66,7 @@ class FunctionLikeWalker implements Walker
     }
 
     /**
-     * @param MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression|ArrowFunctionCreationExpression $node
+     * @param PropertyHook|MethodDeclaration|FunctionDeclaration|AnonymousFunctionCreationExpression|ArrowFunctionCreationExpression $node
      */
     private function walkFunctionLike(FrameResolver $resolver, Frame $frame, FunctionLike $node): void
     {

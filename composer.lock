@@ -1149,12 +1149,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/JetBrains/phpstorm-stubs.git",
-                "reference": "7bcd596c3b30e852a8115a12ae59cb625b3faae0"
+                "reference": "03273d078e30d26e5893b49e79bc0bde65585956"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/7bcd596c3b30e852a8115a12ae59cb625b3faae0",
-                "reference": "7bcd596c3b30e852a8115a12ae59cb625b3faae0",
+                "url": "https://api.github.com/repos/JetBrains/phpstorm-stubs/zipball/03273d078e30d26e5893b49e79bc0bde65585956",
+                "reference": "03273d078e30d26e5893b49e79bc0bde65585956",
                 "shasum": ""
             },
             "require-dev": {
@@ -1189,7 +1189,7 @@
             "support": {
                 "source": "https://github.com/JetBrains/phpstorm-stubs/tree/master"
             },
-            "time": "2025-01-13T11:40:57+00:00"
+            "time": "2025-02-05T13:37:34+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -1814,12 +1814,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/tolerant-php-parser.git",
-                "reference": "0d3aad04d4c95f8be3f6b969eedadac2f9652838"
+                "reference": "092205e10b6172d1d2f61087147606b7bc383ae9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/0d3aad04d4c95f8be3f6b969eedadac2f9652838",
-                "reference": "0d3aad04d4c95f8be3f6b969eedadac2f9652838",
+                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/092205e10b6172d1d2f61087147606b7bc383ae9",
+                "reference": "092205e10b6172d1d2f61087147606b7bc383ae9",
                 "shasum": ""
             },
             "require": {
@@ -1852,7 +1852,7 @@
             "support": {
                 "source": "https://github.com/phpactor/tolerant-php-parser/tree/main"
             },
-            "time": "2025-01-26T23:34:49+00:00"
+            "time": "2025-02-05T22:27:00+00:00"
         },
         {
             "name": "psr/container",
@@ -3177,16 +3177,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.18.0",
+            "version": "v3.19.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "acffa88cc2b40dbe42eaf3a5025d6c0d4600cc50"
+                "reference": "d4f8c2b86374f08efc859323dbcd95c590f7124e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/acffa88cc2b40dbe42eaf3a5025d6c0d4600cc50",
-                "reference": "acffa88cc2b40dbe42eaf3a5025d6c0d4600cc50",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/d4f8c2b86374f08efc859323dbcd95c590f7124e",
+                "reference": "d4f8c2b86374f08efc859323dbcd95c590f7124e",
                 "shasum": ""
             },
             "require": {
@@ -3241,7 +3241,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.18.0"
+                "source": "https://github.com/twigphp/Twig/tree/v3.19.0"
             },
             "funding": [
                 {
@@ -3253,7 +3253,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-12-29T10:51:50+00:00"
+            "time": "2025-01-29T07:06:14+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -4145,16 +4145,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.68.1",
+            "version": "v3.68.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "b9db2b2ea3cdba7201067acee46f984ef2397cff"
+                "reference": "7bedb718b633355272428c60736dc97fb96daf27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/b9db2b2ea3cdba7201067acee46f984ef2397cff",
-                "reference": "b9db2b2ea3cdba7201067acee46f984ef2397cff",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7bedb718b633355272428c60736dc97fb96daf27",
+                "reference": "7bedb718b633355272428c60736dc97fb96daf27",
                 "shasum": ""
             },
             "require": {
@@ -4236,7 +4236,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.68.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.68.5"
             },
             "funding": [
                 {
@@ -4244,7 +4244,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-17T09:20:36+00:00"
+            "time": "2025-01-30T17:00:50+00:00"
         },
         {
             "name": "jangregor/phpstan-prophecy",
@@ -5673,16 +5673,16 @@
         },
         {
             "name": "psalm/phar",
-            "version": "6.0.0",
+            "version": "6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/phar.git",
-                "reference": "859187f245d76b38d1b320bb9f976fb48bfe5213"
+                "reference": "38771dadf1f2c64cadc3a81d12a73c23d040380f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phar/zipball/859187f245d76b38d1b320bb9f976fb48bfe5213",
-                "reference": "859187f245d76b38d1b320bb9f976fb48bfe5213",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/38771dadf1f2c64cadc3a81d12a73c23d040380f",
+                "reference": "38771dadf1f2c64cadc3a81d12a73c23d040380f",
                 "shasum": ""
             },
             "require": {
@@ -5702,9 +5702,9 @@
             "description": "Composer-based Psalm Phar",
             "support": {
                 "issues": "https://github.com/psalm/phar/issues",
-                "source": "https://github.com/psalm/phar/tree/6.0.0"
+                "source": "https://github.com/psalm/phar/tree/6.4.0"
             },
-            "time": "2025-01-26T12:07:59+00:00"
+            "time": "2025-02-05T14:15:07+00:00"
         },
         {
             "name": "psr/cache",
@@ -7816,16 +7816,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v6.4.15",
+            "version": "v6.4.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "38254d5a5ac2e61f2b52f9caf54e7aa3c9d36b80"
+                "reference": "4ad10cf8b020e77ba665305bb7804389884b4837"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/38254d5a5ac2e61f2b52f9caf54e7aa3c9d36b80",
-                "reference": "38254d5a5ac2e61f2b52f9caf54e7aa3c9d36b80",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/4ad10cf8b020e77ba665305bb7804389884b4837",
+                "reference": "4ad10cf8b020e77ba665305bb7804389884b4837",
                 "shasum": ""
             },
             "require": {
@@ -7881,7 +7881,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v6.4.15"
+                "source": "https://github.com/symfony/var-dumper/tree/v6.4.18"
             },
             "funding": [
                 {
@@ -7897,7 +7897,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-08T15:28:48+00:00"
+            "time": "2025-01-17T11:26:11+00:00"
         },
         {
             "name": "theseer/tokenizer",
