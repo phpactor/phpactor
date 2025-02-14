@@ -105,6 +105,14 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php namespace X; switch (true) { case 0: <> }',
             [...$this->expectStatement(true)],
         ];
+        yield 'at the end of full name' => [
+            '<?php class F { public function foo() { while<> }}',
+            [...$this->expectStatement(true)] + [...$this->expectExpressions()],
+        ];
+        yield 'parent is stmt, inside parens' => [
+            '<?php class F { public function foo() { while (<> }}',
+            [],
+        ];
         yield 'inside case 2' => [
             '<?php namespace X; switch (true) { case 0: re<> }',
             [...$this->expectStatement(true)],

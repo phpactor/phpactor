@@ -301,6 +301,14 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { private function foo() { echo <> $t = 1;} }',
             false,
         ];
+        yield 'at the end of full name' => [
+            '<?php class F { public function foo() { while<> ',
+            true,
+        ];
+        yield 'parent is stmt, inside parens' => [
+            '<?php class F { public function foo() { while (<> ',
+            false,
+        ];
     }
 
     /**

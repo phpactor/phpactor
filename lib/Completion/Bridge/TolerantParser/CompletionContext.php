@@ -359,6 +359,20 @@ class CompletionContext
         }
 
         if (
+            $node->parent && $node->parent->getEndPosition() === $offset->toInt()
+                && (
+                    $node->parent instanceof WhileStatement
+                        || $node->parent instanceof DoStatement
+                        || $node->parent instanceof IfStatementNode
+                        || $node->parent instanceof CatchClause
+                        || $node->parent instanceof ForeachStatement
+                        || $node->parent instanceof SwitchStatementNode
+                ) && $node->parent->openParen instanceof MissingToken
+        ) {
+            return true;
+        }
+
+        if (
             $node instanceof WhileStatement
                 || $node instanceof IfStatementNode
                 || $node instanceof DoStatement
