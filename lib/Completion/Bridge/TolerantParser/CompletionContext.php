@@ -43,6 +43,7 @@ use Microsoft\PhpParser\Node\Statement\IfStatementNode;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
+use Microsoft\PhpParser\Node\Statement\NamespaceUseDeclaration;
 use Microsoft\PhpParser\Node\Statement\SwitchStatementNode;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\Statement\WhileStatement;
@@ -329,6 +330,10 @@ class CompletionContext
 
     public static function statement(Node $node, ByteOffset $offset): bool
     {
+        if ($node instanceof NamespaceUseDeclaration) {
+            return false;
+        }
+
         if ($node instanceof CaseStatementNode) {
             return true;
         }
