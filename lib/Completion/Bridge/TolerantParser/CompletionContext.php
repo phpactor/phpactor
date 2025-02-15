@@ -396,8 +396,7 @@ class CompletionContext
             return false;
         }
 
-        return $node instanceof SourceFileNode
-            || $node->parent instanceof CaseStatementNode
+        return $node->parent instanceof CaseStatementNode
             || $node->parent instanceof SourceFileNode
             || $node->parent instanceof CompoundStatementNode
             || $node->parent?->parent instanceof CaseStatementNode

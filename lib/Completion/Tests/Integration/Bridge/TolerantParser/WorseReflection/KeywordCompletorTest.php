@@ -149,6 +149,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php use <>',
             [],
         ];
+        yield 'inside comment' => [
+            '<?php // <>',
+            [],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
