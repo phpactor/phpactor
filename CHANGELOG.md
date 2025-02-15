@@ -20,7 +20,8 @@ Improvements:
 
 Bug fix:
 
-  - Handle zero modulo evaluation
+  - Handle zero modulo evaluation @dantleech
+  - Do not use FQNs for imported classes in generated docblocks #2843 @dantleech
 
 Documentation:
 
