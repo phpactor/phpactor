@@ -171,7 +171,7 @@ abstract class AggregateType extends Type
 
     public function map(Closure $mapper): Type
     {
-        return $this->withTypes(...array_map($mapper, $this->types));
+        return $this->withTypes(...array_map(fn (Type $type) => $type->map($mapper), $this->types));
     }
 
     public function filter(Closure $closure): AggregateType
