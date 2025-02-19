@@ -21,9 +21,12 @@ use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
-use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
+use Phpactor\Indexer\Model\Name\FullyQualifiedName;
+use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
+use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -33,47 +36,29 @@ use Phpactor\WorseReflection\Reflector;
 final class SymfonyFormTypeCompletor implements TolerantCompletor
 {
     const FORM_BUILDER_INTERFACE = 'Symfony\\Component\\Form\\FormBuilderInterface';
+    const FORM_TYPE_INTERFACE = 'Symfony\\Component\\Form\\FormTypeInterface';
 
     private Parser $parser;
 
-    public function __construct(private Reflector $reflector, private ClientLogger $clientLogger)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private QueryClient $queryClient,
+    ) {
         $this->parser = new Parser();
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
-        $inQuote = false;
-        if ($node instanceof StringLiteral) {
-            $inQuote = true;
+        $completeFormTypes = false;
 
-            if (!($node->parent instanceof ArrayElement)) {
-                return;
+        if ($node instanceof ArgumentExpressionList) {
+            $argumentExpressionCount = iterator_count($node->getChildNodes());
+            if ($argumentExpressionCount === 1) {
+                $completeFormTypes = true;
             }
-
-            $arrayElementNode = $node->parent;
-
-            $arrayChildNodes = $arrayElementNode->getChildNodes();
-            $arrayChildNodes->next();
-
-            $isLHS = $arrayChildNodes->current() !== $node;
-
-            if (!$isLHS) {
-                return;
-            }
-
-            if (!($arrayElementNode->parent instanceof ArrayElementList)) {
-                return;
-            }
-        } else {
-            if (!($node instanceof ArrayCreationExpression)) {
-                return;
-            }
-
-            $arrayElementNode = $node;
         }
 
-        $callNode = $arrayElementNode->getFirstAncestor(CallExpression::class);
+        $callNode = $node->getFirstAncestor(CallExpression::class);
         if (!($callNode instanceof CallExpression)) {
             return;
         }
@@ -103,6 +88,11 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
             return;
         }
 
+        if ($completeFormTypes) {
+            yield from $this->completeFormTypes();
+            return;
+        }
+
         $generator = $argumentListNode->getChildNodes();
         $generator->next();
 
@@ -110,6 +100,36 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
 
         if (!($formTypeNode instanceof ArgumentExpression)) {
             return;
+        }
+
+        $inQuote = false;
+        if ($node instanceof StringLiteral) {
+            $inQuote = true;
+
+            if (!($node->parent instanceof ArrayElement)) {
+                return;
+            }
+
+            $arrayElementNode = $node->parent;
+
+            $arrayChildNodes = $arrayElementNode->getChildNodes();
+            $arrayChildNodes->next();
+
+            $isLHS = $arrayChildNodes->current() !== $node;
+
+            if (!$isLHS) {
+                return;
+            }
+
+            if (!($arrayElementNode->parent instanceof ArrayElementList)) {
+                return;
+            }
+        } else {
+            if (!($node instanceof ArrayCreationExpression)) {
+                return;
+            }
+
+            $arrayElementNode = $node;
         }
 
         $formTypeClassType = $this->reflector->reflectOffset($source, $formTypeNode->getEndPosition())->nodeContext()->type();
@@ -141,7 +161,7 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
                     'short_description' => '',
                     'documentation' => '',
                     'type' => Suggestion::TYPE_CONSTANT,
-                    'priority' => 555,
+                    'priority' => Suggestion::PRIORITY_HIGH,
                 ]
             );
         }
@@ -159,7 +179,12 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
             return;
         }
 
-        $reflectionClass = $this->reflector->reflectClass($fqn);
+        try {
+            $reflectionClass = $this->reflector->reflectClass($fqn);
+        } catch (NotFound) {
+            return;
+        }
+
         $classSourceCode = $reflectionClass->sourceCode();
 
         $visited[] = $fqn;
@@ -234,9 +259,6 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
         }
 
         foreach ($methodBody->statements as $statement) {
-            // we're looking for setDefaults([x => y])
-            // and setDefault(x, y)
-            // and we're collecting x
             if ($statement instanceof ExpressionStatement) {
                 $callExpression = $statement->getFirstDescendantNode(CallExpression::class);
                 if (!($callExpression instanceof CallExpression)) {
@@ -250,15 +272,18 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
 
                 $methodName = NodeUtil::nameFromTokenOrNode($callExpression, $callableExpression->memberName);
 
-                if ($methodName === 'setInfo') {
-                    continue;
-                }
-                if ($methodName === 'setAllowedTypes') {
-                    continue;
-                }
-
                 if ($methodName == 'setDefault') {
+                    $argumentExpression = $callExpression->getFirstDescendantNode(ArgumentExpression::class);
+                    if (!($argumentExpression instanceof ArgumentExpression)) {
+                        continue;
+                    }
 
+                    $expression = $argumentExpression->expression;
+                    if (!($expression instanceof StringLiteral)) {
+                        continue;
+                    }
+
+                    $options[$expression->getText()] = 1;
                 }
 
                 if ($methodName == 'setDefaults') {
@@ -282,4 +307,51 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
             }
         }
     }
+
+    private function getImplementors(FullyQualifiedName $type, bool $yieldFirst): Generator
+    {
+        if ($yieldFirst) {
+            yield $type;
+        }
+
+        foreach ($this->queryClient->class()->implementing($type) as $implementingType) {
+            yield from $this->getImplementors($implementingType, true);
+        }
+    }
+
+    private function completeFormTypes(): Generator
+    {
+        $fqn = FullyQualifiedName::fromString(self::FORM_TYPE_INTERFACE);
+
+        $implementors = $this->getImplementors($fqn, false);
+
+        foreach ($implementors as $implementor) {
+            $record = $this->queryClient->class()->get($implementor);
+
+            if (!$record instanceof ClassRecord) {
+                continue;
+            }
+
+            $fullyQualifiedName = $record->fqn();
+            $className = $record->shortName();
+
+            $reflectionClass = $this->reflector->reflectClassLike($fullyQualifiedName->__toString());
+            if (!$reflectionClass->isConcrete()) {
+                continue;
+            }
+
+            yield Suggestion::createWithOptions(
+                $className.'::class',
+                [
+                    'label' => $className.'::class',
+                    'short_description' => '',
+                    'documentation' => '',
+                    'type' => Suggestion::TYPE_CLASS,
+                    'priority' => Suggestion::PRIORITY_HIGH,
+                    'class_import' => $fullyQualifiedName,
+                ]
+            );
+        }
+    }
+
 }
