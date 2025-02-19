@@ -14,6 +14,7 @@ use Microsoft\PhpParser\Node\Expression\ArrayCreationExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\ReturnStatement;
@@ -55,6 +56,19 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
             $argumentExpressionCount = iterator_count($node->getChildNodes());
             if ($argumentExpressionCount === 1) {
                 $completeFormTypes = true;
+            }
+        }
+
+        if ($node instanceof QualifiedName) {
+            $argumentExpressionList = $node->parent?->parent;
+
+            if ($argumentExpressionList instanceof ArgumentExpressionList) {
+                $arguments = iterator_to_array($argumentExpressionList->getChildNodes());
+                if (count($arguments) >= 2) {
+                    if ($node->parent === $arguments[1]) {
+                        $completeFormTypes = true;
+                    }
+                }
             }
         }
 
