@@ -9,12 +9,11 @@ use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\Symfony\Adapter\Symfony\XmlSymfonyContainerInspector;
 use Phpactor\Extension\Symfony\Completor\SymfonyCompletor;
-use Phpactor\Extension\Symfony\Completor\SymfonyContainerCompletor;
-use Phpactor\Extension\Symfony\Completor\SymfonyFormTypeCompletor;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
 use Phpactor\Extension\Symfony\WorseReflection\SymfonyContainerContextResolver;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Reflector;
 
@@ -44,7 +43,8 @@ class SymfonyExtension implements OptionalExtension
             function (Container $container) {
                 return new SymfonyCompletor(
                     $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                    $container->get(SymfonyContainerInspector::class)
+                    $container->get(SymfonyContainerInspector::class),
+                    $container->get(QueryClient::class),
                 );
             },
             [

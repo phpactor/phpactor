@@ -6,6 +6,7 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
+use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
@@ -17,11 +18,14 @@ class SymfonyCompletor implements TolerantCompletor
     */
     private array $completors = [];
 
-    public function __construct(private Reflector $reflector, private SymfonyContainerInspector $inspector)
-    {
+    public function __construct(
+        Reflector $reflector,
+        SymfonyContainerInspector $inspector,
+        QueryClient $queryClient,
+    ) {
         $this->completors = [
             new SymfonyContainerCompletor($reflector, $inspector),
-            new SymfonyFormTypeCompletor($reflector),
+            new SymfonyFormTypeCompletor($reflector, $queryClient),
             new SymfonyTemplatePathCompletor($reflector),
         ];
     }
