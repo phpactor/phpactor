@@ -162,8 +162,7 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
 
         $this->findFormTypeOptions($formTypeClassFQN, $options);
 
-        foreach ($options as $option => $v) {
-
+        foreach ($options as $option => $priority) {
             if ($inQuote) {
                 $option = trim($option, '\'');
             }
@@ -175,15 +174,15 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
                     'short_description' => '',
                     'documentation' => '',
                     'type' => Suggestion::TYPE_CONSTANT,
-                    'priority' => Suggestion::PRIORITY_HIGH,
+                    'priority' => Suggestion::PRIORITY_HIGH + $priority,
                 ]
             );
         }
-
+        
         return true;
     }
 
-    private function findFormTypeOptions(?string $fqn, array &$options = [], array &$visited = []): void
+    private function findFormTypeOptions(?string $fqn, array &$options = [], array &$visited = [], int &$priority = 0): void
     {
         if ($fqn === null) {
             return;
@@ -222,6 +221,8 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
             $extendsFQN = $extendsClassType->name()?->full();
         }
 
+        $priority++;
+
         $membersNode = $ast->getFirstDescendantNode(ClassMembersNode::class);
         $parentFQN = null;
 
@@ -232,14 +233,14 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
                 }
 
                 if ($member->getName() === 'configureOptions') {
-                    $this->extractOptionsFromConfiguration($member, $options);
+                    $this->extractOptionsFromConfiguration($member, $options, $priority);
                 }
 
             }
         }
 
-        $this->findFormTypeOptions($extendsFQN, $options, $visited);
-        $this->findFormTypeOptions($parentFQN, $options, $visited);
+        $this->findFormTypeOptions($extendsFQN, $options, $visited, $priority);
+        $this->findFormTypeOptions($parentFQN, $options, $visited, $priority);
     }
 
     private function extractParentTypeFromMethod(TextDocument $source, MethodDeclaration $methodDeclaration): ?string
@@ -265,7 +266,7 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
         return null;
     }
 
-    private function extractOptionsFromConfiguration(MethodDeclaration $methodDeclaration, array &$options): void
+    private function extractOptionsFromConfiguration(MethodDeclaration $methodDeclaration, array &$options, int $priority): void
     {
         $methodBody = $methodDeclaration->getFirstDescendantNode(CompoundStatementNode::class);
         if (!($methodBody instanceof CompoundStatementNode)) {
@@ -297,7 +298,7 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
                         continue;
                     }
 
-                    $options[$expression->getText()] = 1;
+                    $options[$expression->getText()] = $priority;
                 }
 
                 if ($methodName == 'setDefaults') {
@@ -314,7 +315,7 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
                                 continue;
                             }
 
-                            $options[$key->getText()] = 1;
+                            $options[$key->getText()] = $priority;
                         }
                     }
                 }
