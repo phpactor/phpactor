@@ -19,6 +19,7 @@ Improvements:
   - Completion for `@internal`  tag #2827 @mamazu
   - Add documentation for Nova Language Client #2830 @EmranMR 
   - Enable fill constructor code action on attributes #2810 @mamazu
+  - Require `ext-mbstring` extension to avoid off-by-one issues #2838 @dantleech
 
 Bug fix:
 
