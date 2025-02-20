@@ -4,7 +4,6 @@ namespace Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer;
 
 use Generator;
 use Phpactor\Indexer\Model\Indexer;
-use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
@@ -14,13 +13,19 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class WorkspaceUpdateReferenceFinder implements ReferenceFinder
 {
+    /**
+     * @var array<string,int>
+     */
+    private array $documentVersions = [];
+
+    private int $counter = 0;
+
     public function __construct(
         private Workspace $workspace,
         private Indexer $indexer,
         private ReferenceFinder $innerReferenceFinder
     ) {
     }
-
 
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
@@ -33,9 +38,20 @@ class WorkspaceUpdateReferenceFinder implements ReferenceFinder
 
     private function indexWorkspace(): void
     {
+        // put an upper limit on the size of the cache
+        if ($this->counter++ === 1_000) {
+            $this->documentVersions = [];
+        }
+
         // ensure that the index is current with the workspace
         foreach ($this->workspace as $document) {
-            assert($document instanceof TextDocumentItem);
+
+            // avoid reindexing documents that have not changed
+            if (($this->documentVersions[$document->uri] ?? null) === $document->version) {
+                continue;
+            }
+            $this->documentVersions[$document->uri] = $document->version;
+
             try {
                 $this->indexer->indexDirty(
                     TextDocumentBuilder::fromUri($document->uri)->text($document->text)->build()
