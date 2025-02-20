@@ -26,7 +26,9 @@ class WorkspaceUpdateReferenceFinder implements ReferenceFinder
     {
         $this->indexWorkspace();
 
-        yield from $this->innerReferenceFinder->findReferences($document, $byteOffset);
+        $generator = $this->innerReferenceFinder->findReferences($document, $byteOffset);
+        yield from $generator;
+        return $generator->getReturn();
     }
 
     private function indexWorkspace(): void

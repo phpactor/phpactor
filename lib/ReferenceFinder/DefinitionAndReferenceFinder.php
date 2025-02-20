@@ -22,8 +22,10 @@ class DefinitionAndReferenceFinder implements ReferenceFinder
         } catch (CouldNotLocateDefinition) {
         }
 
-        foreach ($this->referenceFinder->findReferences($document, $byteOffset) as $reference) {
+        $generator = $this->referenceFinder->findReferences($document, $byteOffset);
+        foreach ($generator as $reference) {
             yield $reference;
         }
+        return $generator->getReturn();
     }
 }
