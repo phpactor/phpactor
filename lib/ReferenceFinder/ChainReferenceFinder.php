@@ -23,8 +23,16 @@ final class ChainReferenceFinder implements ReferenceFinder
     public function findReferences(TextDocument $document, ByteOffset $byteOffset): Generator
     {
         foreach ($this->finders as $finder) {
-            yield from $finder->findReferences($document, $byteOffset);
+            $generator = $finder->findReferences($document, $byteOffset);
+            yield from $generator;
+
+            // stop no more generators should be executed
+            if ($generator->getReturn() === true) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     private function add(ReferenceFinder $finder): void

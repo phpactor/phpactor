@@ -13,6 +13,8 @@ Features:
 
 Improvements:
 
+  - Refenreces: Do not run Indexed reference finder if references handled by
+    Variable reference finder @dantleech
   - Psalm: add `config` option to specify Psalm config @GDXbsv #2835
   - Completion for `@internal`  tag #2827 @mamazu
   - Add documentation for Nova Language Client #2830 @EmranMR 
