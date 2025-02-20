@@ -178,10 +178,14 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
                 ]
             );
         }
-        
+
         return true;
     }
 
+    /**
+    * @param array<string, int> $options
+    * @param array<string> $visited
+    */
     private function findFormTypeOptions(?string $fqn, array &$options = [], array &$visited = [], int &$priority = 0): void
     {
         if ($fqn === null) {
@@ -218,7 +222,7 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
                 return;
             }
 
-            $extendsFQN = $extendsClassType->name()?->full();
+            $extendsFQN = $extendsClassType->name()->full();
         }
 
         $priority++;
@@ -226,7 +230,7 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
         $membersNode = $ast->getFirstDescendantNode(ClassMembersNode::class);
         $parentFQN = null;
 
-        foreach ($membersNode->getChildNodes() as $member) {
+        foreach ($membersNode?->getChildNodes() ?? [] as $member) {
             if ($member instanceof MethodDeclaration) {
                 if ($member->getName() === 'getParent') {
                     $parentFQN = $this->extractParentTypeFromMethod($classSourceCode, $member);
@@ -253,6 +257,11 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
         foreach ($methodBody->statements as $statement) {
             if ($statement instanceof ReturnStatement) {
                 $returnExpression = $statement->expression;
+
+                if ($returnExpression === null) {
+                    return null;
+                }
+
                 $reflectOffset = $this->reflector->reflectOffset($source, $returnExpression->getEndPosition())->nodeContext()->type();
 
                 if (!($reflectOffset instanceof ClassStringType)) {
@@ -266,6 +275,9 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
         return null;
     }
 
+    /**
+    * @param array<string, int> $options
+    */
     private function extractOptionsFromConfiguration(MethodDeclaration $methodDeclaration, array &$options, int $priority): void
     {
         $methodBody = $methodDeclaration->getFirstDescendantNode(CompoundStatementNode::class);
@@ -323,6 +335,9 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
         }
     }
 
+    /**
+    * @return Generator<FullyQualifiedName>
+    */
     private function getImplementors(FullyQualifiedName $type, bool $yieldFirst): Generator
     {
         if ($yieldFirst) {
@@ -334,13 +349,14 @@ final class SymfonyFormTypeCompletor implements TolerantCompletor
         }
     }
 
+    /**
+    * @return Generator<Suggestion>
+    */
     private function completeFormTypes(): Generator
     {
         $fqn = FullyQualifiedName::fromString(self::FORM_TYPE_INTERFACE);
 
-        $implementors = $this->getImplementors($fqn, false);
-
-        foreach ($implementors as $implementor) {
+        foreach ($this->getImplementors($fqn, false) as $implementor) {
             $record = $this->queryClient->class()->get($implementor);
 
             if (!$record instanceof ClassRecord) {

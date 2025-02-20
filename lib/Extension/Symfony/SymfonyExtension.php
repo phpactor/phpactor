@@ -72,16 +72,16 @@ class SymfonyExtension implements OptionalExtension
     {
         $schema->setDefaults(
             [
-            self::XML_PATH => '%project_root%/var/cache/dev/App_KernelDevDebugContainer.xml',
-            self::PARAM_COMPLETOR_ENABLED => true,
-            self::PARAM_PUBLIC_SERVICES_ONLY => false,
+                self::XML_PATH => '%project_root%/var/cache/dev/App_KernelDevDebugContainer.xml',
+                self::PARAM_COMPLETOR_ENABLED => true,
+                self::PARAM_PUBLIC_SERVICES_ONLY => false,
             ]
         );
         $schema->setDescriptions(
             [
-            self::XML_PATH => 'Path to the Symfony container XML dump file',
-            self::PARAM_COMPLETOR_ENABLED => 'Enable/disable the Symfony completor - depends on Symfony extension being enabled',
-            self::PARAM_PUBLIC_SERVICES_ONLY => 'Only consider public services when providing analysis for the service locator',
+                self::XML_PATH => 'Path to the Symfony container XML dump file',
+                self::PARAM_COMPLETOR_ENABLED => 'Enable/disable the Symfony completor - depends on Symfony extension being enabled',
+                self::PARAM_PUBLIC_SERVICES_ONLY => 'Only consider public services when providing analysis for the service locator',
             ]
         );
     }

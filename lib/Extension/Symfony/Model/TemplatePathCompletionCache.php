@@ -14,9 +14,12 @@ final class TemplatePathCompletionCache
     {
     }
 
+    /**
+     * @return Generator<Suggestion>
+     */
     public function complete(): Generator
     {
-        $files = $this->_getFilesRecursively('templates', 'twig');
+        $files = $this->getFilesRecursively('templates', 'twig');
 
         foreach ($files as $file) {
             yield Suggestion::createWithOptions(
@@ -30,14 +33,12 @@ final class TemplatePathCompletionCache
                 ]
             );
         }
-
-        return true;
     }
 
     /**
      * @return Generator<string>
      */
-    private function _getFilesRecursively(string $path, string $filetype): Generator
+    private function getFilesRecursively(string $path, string $filetype): Generator
     {
         if (!is_dir($path)) {
             return true;

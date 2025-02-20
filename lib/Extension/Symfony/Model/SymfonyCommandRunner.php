@@ -4,7 +4,7 @@ namespace Phpactor\Extension\Symfony\Model;
 
 final class SymfonyCommandRunner
 {
-    public static function run(string $command, string... $args): string
+    public static function run(string $command, string... $args): ?string
     {
         $escapedArgs = implode(' ', array_map('escapeshellarg', $args));
 
@@ -14,6 +14,11 @@ final class SymfonyCommandRunner
             $escapedArgs,
         );
 
-        return shell_exec($cmd);
+        $result = shell_exec($cmd);
+        if (!$result) {
+            return null;
+        }
+
+        return $result;
     }
 }
