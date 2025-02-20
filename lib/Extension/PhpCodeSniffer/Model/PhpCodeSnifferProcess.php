@@ -9,13 +9,9 @@ use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\TextDocument\TextDocumentUri;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Safe\Exceptions\FilesystemException;
 use Throwable;
 use function Amp\ByteStream\buffer;
 use function Amp\call;
-use function Safe\rename;
-use function Safe\tempnam;
-use function Safe\file_put_contents;
 
 class PhpCodeSnifferProcess
 {
@@ -89,10 +85,8 @@ class PhpCodeSnifferProcess
     public function produceFixesDiff(TextDocumentItem $textDocument, array $sniffs = []): Promise
     {
         return call(function () use ($textDocument, $sniffs) {
-            try {
-                $tmpFilePath = $this->createTempFile($textDocument->text);
-
-            } catch (FilesystemException) {
+            $tmpFilePath = $this->createTempFile($textDocument->text);
+            if (null === $tmpFilePath) {
                 $this->logger->error(
                     'Failed to create temporary file for phpcs diagnostics. Without this results would be unreliable.'
                 );
@@ -175,12 +169,18 @@ class PhpCodeSnifferProcess
      * Filename MUST include PHP extension, otherwise phpcs will not
      * process it.
      */
-    private function createTempFile(string $text): string
+    private function createTempFile(string $text): ?string
     {
         $tmpName = tempnam(sys_get_temp_dir(), 'phpcsls');
         $name = sprintf('%s.php', $tmpName);
-        rename($tmpName, $name);
-        file_put_contents($name, $text);
+        if (false === rename($tmpName, $name)) {
+            throw new RuntimeException('Could not rename file');
+        }
+        $written = file_put_contents($name, $text);
+
+        if (false === $written) {
+            return null;
+        }
 
         return $name;
     }

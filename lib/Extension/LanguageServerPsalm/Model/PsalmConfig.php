@@ -9,7 +9,8 @@ final class PsalmConfig
         private bool $shouldShowInfo,
         private bool $useCache,
         private ?int $errorLevel = null,
-        private ?int $threads = null
+        private ?int $threads = null,
+        private ?string $config = null,
     ) {
     }
 
@@ -36,5 +37,10 @@ final class PsalmConfig
     public function errorLevel(): ?int
     {
         return $this->errorLevel;
+    }
+
+    public function config(): ?string
+    {
+        return $this->config;
     }
 }

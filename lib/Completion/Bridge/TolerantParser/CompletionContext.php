@@ -181,7 +181,11 @@ class CompletionContext
             return false;
         }
 
-        if ($node->parent instanceof MethodDeclaration && $node->openBrace instanceof MissingToken) {
+        if (
+            $node->parent instanceof MethodDeclaration
+                && $node instanceof CompoundStatementNode
+                && $node->openBrace instanceof MissingToken
+        ) {
             return false;
         }
 

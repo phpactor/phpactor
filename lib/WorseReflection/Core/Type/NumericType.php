@@ -25,7 +25,7 @@ abstract class NumericType extends ScalarType
     public function modulo(NumericType $right): NumericType
     {
         if ($this instanceof Literal && $right instanceof Literal) {
-            return $this->withValue($this->value() % $right->value());
+            return $this->withValue($this->value() % max(1, $right->value()));
         }
         return $this;
     }
