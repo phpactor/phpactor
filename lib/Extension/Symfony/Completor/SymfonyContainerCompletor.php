@@ -29,7 +29,7 @@ class SymfonyContainerCompletor implements TolerantCompletor
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         $inQuote = false;
-        if ($node instanceof StringLiteral && $node->parent->parent) {
+        if ($node instanceof StringLiteral && $node->parent?->parent) {
             $inQuote = true;
             $node = $node->getFirstAncestor(CallExpression::class);
         }
