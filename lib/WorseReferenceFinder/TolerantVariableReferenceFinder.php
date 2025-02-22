@@ -40,7 +40,7 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
         $sourceNode = $this->sourceNode($document->__toString());
         $variable = $this->variableNodeFromSource($sourceNode, $byteOffset->toInt());
         if ($variable === null) {
-            return;
+            return false;
         }
 
         $scopeNode = $this->scopeNode($variable);
@@ -53,6 +53,8 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
         if ($referencesGenerator->valid()) {
             yield from $referencesGenerator;
         }
+
+        return true;
     }
 
     private function sourceNode(string $source): SourceFileNode
@@ -71,6 +73,12 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
             false === $node instanceof CatchClause
         ) {
             return null;
+        }
+
+        if ($node instanceof Parameter) {
+            if ($node->visibilityToken) {
+                return null;
+            }
         }
 
         if (
@@ -139,8 +147,11 @@ class TolerantVariableReferenceFinder implements ReferenceFinder
     /**
      * @return Generator<PotentialLocation>
      */
-    private function find(Node $scopeNode, string $name, string $uri): Generator
+    private function find(Node $scopeNode, ?string $name, ?string $uri): Generator
     {
+        if (null === $uri || null === $name) {
+            return;
+        }
         if ($scopeNode instanceof CatchClause && $scopeNode->variableName instanceof Token && $name == substr((string)$scopeNode->variableName->getText($scopeNode->getFileContents()), 1)) {
             yield PotentialLocation::surely(
                 Location::fromPathAndOffsets($uri, $scopeNode->variableName->start, $scopeNode->variableName->getEndPosition())

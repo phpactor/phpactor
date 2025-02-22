@@ -62,6 +62,8 @@ class IndexedReferenceFinder implements ReferenceFinder
 
             yield PotentialLocation::not($locationConfidence->location());
         }
+
+        return true;
     }
 
     /**

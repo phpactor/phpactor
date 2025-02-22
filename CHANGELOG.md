@@ -13,10 +13,15 @@ Features:
 
 Improvements:
 
+  - Performance: Do not run Indexed reference finder if references handled by
+    Variable reference finder @dantleech
+  - Performance: Do needlessly re-index documents before searching for
+    references @dantleech
   - Psalm: add `config` option to specify Psalm config @GDXbsv #2835
   - Completion for `@internal`  tag #2827 @mamazu
   - Add documentation for Nova Language Client #2830 @EmranMR 
   - Enable fill constructor code action on attributes #2810 @mamazu
+  - Require `ext-mbstring` extension to avoid off-by-one issues #2838 @dantleech
 
 Bug fix:
 

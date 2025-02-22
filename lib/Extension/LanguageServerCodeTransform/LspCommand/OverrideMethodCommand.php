@@ -92,6 +92,10 @@ class OverrideMethodCommand implements Command
                 $methods
             ));
 
+            if ($choice === null) {
+                return null;
+            }
+
 
             foreach ($methods as $method) {
                 if ($this->formatName($method) === $choice->title) {
