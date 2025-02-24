@@ -1443,6 +1443,19 @@ Stop searching for references after this time (in seconds) has expired
 **Default**: ``60``
 
 
+.. _param_language_server_reference_finder.soft_timeout:
+
+
+``language_server_reference_finder.soft_timeout``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Interupt and ask for confirmation to continue after this timeout (in seconds)
+
+
+**Default**: ``10``
+
+
 .. _LanguageServerWorseReflectionExtension:
 
 

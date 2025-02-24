@@ -13,6 +13,7 @@ Features:
 
 Improvements:
 
+  - Reference finding: Ask for confirmation to continue after soft timeout @dantleech #2856
   - Performance: Do not run Indexed reference finder if references handled by
     Variable reference finder @dantleech
   - Performance: Do needlessly re-index documents before searching for
