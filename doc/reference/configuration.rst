@@ -2115,6 +2115,19 @@ Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php
 **Default**: ``null``
 
 
+.. _param_language_server_php_cs_fixer.wrapper:
+
+
+``language_server_php_cs_fixer.wrapper``
+""""""""""""""""""""""""""""""""""""""""
+
+
+Run PHP CS Fixer in wrapper as command argument. Ex., "docker exec -i container_name /bin/sh -c"
+
+
+**Default**: ``null``
+
+
 .. _PhpCodeSnifferExtension:
 
 
