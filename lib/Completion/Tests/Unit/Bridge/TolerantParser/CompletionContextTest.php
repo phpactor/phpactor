@@ -78,6 +78,10 @@ class CompletionContextTest extends TestCase
             '<?php $<>',
             false,
         ];
+        yield 'not in string literal' => [
+            '<?php strlen(\'<>',
+            false,
+        ];
         yield 'not in scoped property access expr' => [
             '<?php class Foo { public function foo() { $this->foo(self::<>) }',
             false,
