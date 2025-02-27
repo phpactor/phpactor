@@ -30,6 +30,7 @@ Requirements
 ------------
 
 - PHP 8.1+
+- PHP [mbstring](https://www.php.net/manual/en/book.mbstring.php) extension.
 - [Composer](https://getcomposer.org/)
 - Linux or MacOS (Windows users will need to use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install))
 
