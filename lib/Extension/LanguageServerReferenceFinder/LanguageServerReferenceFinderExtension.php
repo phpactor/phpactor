@@ -24,6 +24,7 @@ use Phpactor\ReferenceFinder\ReferenceFinder;
 class LanguageServerReferenceFinderExtension implements Extension
 {
     const PARAM_REFERENCE_TIMEOUT = 'language_server_reference_reference_finder.reference_timeout';
+    const PARAM_REFERENCE_SOFT_TIMEOUT = 'language_server_reference_finder.soft_timeout';
 
 
     public function load(ContainerBuilder $container): void
@@ -61,7 +62,8 @@ class LanguageServerReferenceFinderExtension implements Extension
                 $container->get(ReferenceFinderExtension::SERVICE_DEFINITION_LOCATOR),
                 $container->get(LocationConverter::class),
                 $container->get(ClientApi::class),
-                $container->getParameter(self::PARAM_REFERENCE_TIMEOUT)
+                $container->parameter(self::PARAM_REFERENCE_TIMEOUT)->int(),
+                $container->parameter(self::PARAM_REFERENCE_SOFT_TIMEOUT)->int(),
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
 
@@ -85,10 +87,12 @@ class LanguageServerReferenceFinderExtension implements Extension
     public function configure(Resolver $schema): void
     {
         $schema->setDefaults([
-            self::PARAM_REFERENCE_TIMEOUT => 60
+            self::PARAM_REFERENCE_TIMEOUT => 60,
+            self::PARAM_REFERENCE_SOFT_TIMEOUT => 10,
         ]);
         $schema->setDescriptions([
             self::PARAM_REFERENCE_TIMEOUT => 'Stop searching for references after this time (in seconds) has expired',
+            self::PARAM_REFERENCE_SOFT_TIMEOUT => 'Interupt and ask for confirmation to continue after this timeout (in seconds)',
         ]);
     }
 }

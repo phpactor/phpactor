@@ -1443,6 +1443,19 @@ Stop searching for references after this time (in seconds) has expired
 **Default**: ``60``
 
 
+.. _param_language_server_reference_finder.soft_timeout:
+
+
+``language_server_reference_finder.soft_timeout``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Interupt and ask for confirmation to continue after this timeout (in seconds)
+
+
+**Default**: ``10``
+
+
 .. _LanguageServerWorseReflectionExtension:
 
 
@@ -1932,6 +1945,22 @@ Path to psalm if different from vendor/bin/psalm
 
 
 **Default**: ``"%project_root%\/vendor\/bin\/psalm"``
+
+
+.. _param_language_server_psalm.config:
+
+
+``language_server_psalm.config``
+""""""""""""""""""""""""""""""""
+
+
+Type: string
+
+
+Path to psalm config. Like %project_root%/psalm.xml
+
+
+**Default**: ``""``
 
 
 .. _param_language_server_psalm.show_info:

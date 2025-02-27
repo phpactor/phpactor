@@ -14,7 +14,6 @@ use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Filesystem\Path;
-use function Safe\file_get_contents;
 
 class GenerateMethodHandlerTest extends HandlerTestCase
 {
