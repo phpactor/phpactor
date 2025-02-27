@@ -36,6 +36,7 @@ use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -53,27 +54,20 @@ class CompletionContext
             return false;
         }
 
-        if ($node instanceof Variable) {
+        if (
+            $node instanceof Variable
+            || $node instanceof ExpressionStatement
+            || $node instanceof MemberAccessExpression
+            || $node instanceof ScopedPropertyAccessExpression
+            || $node instanceof StringLiteral
+        ) {
             return false;
         }
 
-        if ($node instanceof ExpressionStatement) {
-            return false;
-        }
-
-        if ($node instanceof MemberAccessExpression) {
-            return false;
-        }
-
-        if ($node instanceof ScopedPropertyAccessExpression) {
-            return false;
-        }
-
-        if ($node instanceof CallExpression) {
-            return true;
-        }
-
-        if ($parent instanceof ArgumentExpression) {
+        if (
+            $node instanceof CallExpression
+            || $parent instanceof ArgumentExpression
+        ) {
             return true;
         }
 
