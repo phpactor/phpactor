@@ -93,6 +93,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php if (1)<> {}',
             [],
         ];
+        yield 'match unexpected in string' => [
+            '<?php strlen(\'<>',
+            [],
+        ];
         yield 'match unexpected 5' => [
             '<?php $<>',
             [],
