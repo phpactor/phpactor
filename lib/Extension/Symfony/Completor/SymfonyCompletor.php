@@ -6,12 +6,13 @@ use Generator;
 use Microsoft\PhpParser\Node;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
+use Phpactor\Extension\Symfony\Model\SymfonyTemplateCache;
 use Phpactor\Indexer\Model\QueryClient;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
 
-class SymfonyCompletor implements TolerantCompletor
+final class SymfonyCompletor implements TolerantCompletor
 {
     /**
     * @var array<TolerantCompletor>
@@ -22,11 +23,12 @@ class SymfonyCompletor implements TolerantCompletor
         Reflector $reflector,
         SymfonyContainerInspector $inspector,
         QueryClient $queryClient,
+        SymfonyTemplateCache $templatePathCache,
     ) {
         $this->completors = [
             new SymfonyContainerCompletor($reflector, $inspector),
             new SymfonyFormTypeCompletor($reflector, $queryClient),
-            new SymfonyTemplatePathCompletor($reflector),
+            new SymfonyTemplateCompletor($reflector, $templatePathCache),
         ];
     }
 

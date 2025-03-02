@@ -9,19 +9,21 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
-use Phpactor\Extension\Symfony\Model\TemplatePathCompletionCache;
+use Phpactor\Extension\Symfony\Model\SymfonyTemplateCache;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Reflector;
 
-final class SymfonyTemplatePathCompletor implements TolerantCompletor
+final class SymfonyTemplateCompletor implements TolerantCompletor
 {
     const ABSTRACT_CONTROLLER = 'Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController';
 
-    public function __construct(private Reflector $reflector)
-    {
+    public function __construct(
+        private Reflector $reflector,
+        private SymfonyTemplateCache $templatePathCache
+    ) {
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
@@ -64,8 +66,6 @@ final class SymfonyTemplatePathCompletor implements TolerantCompletor
             return;
         }
 
-        $completor = new TemplatePathCompletionCache();
-
-        yield from $completor->complete();
+        yield from $this->templatePathCache->completePath();
     }
 }

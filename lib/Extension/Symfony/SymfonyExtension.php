@@ -2,18 +2,25 @@
 
 namespace Phpactor\Extension\Symfony;
 
+use Phpactor\CodeTransform\Domain\Generators;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
+use Phpactor\Extension\CodeTransform\CodeTransformExtension;
 use Phpactor\Extension\CompletionWorse\CompletionWorseExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
+use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Symfony\Adapter\Symfony\XmlSymfonyContainerInspector;
+use Phpactor\Extension\Symfony\Command\SymfonyCreateTemplateCommand;
 use Phpactor\Extension\Symfony\Completor\SymfonyCompletor;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
+use Phpactor\Extension\Symfony\Model\SymfonyTemplateCache;
 use Phpactor\Extension\Symfony\WorseReflection\SymfonyContainerContextResolver;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Reflector;
 
@@ -39,14 +46,39 @@ class SymfonyExtension implements OptionalExtension
         );
 
         $container->register(
+            SymfonyTemplateCache::class,
+            fn (Container $container): SymfonyTemplateCache => new SymfonyTemplateCache(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+            ),
+            [
+                LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
+            ]
+        );
+
+        $container->register(
+            SymfonyCreateTemplateCommand::class,
+            fn (Container $container) => new SymfonyCreateTemplateCommand(
+                $container->get(ClientApi::class),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
+                $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class),
+                $container->expect(CodeTransformExtension::SERVICE_CLASS_GENERATORS, Generators::class),
+                $container->get(SymfonyTemplateCache::class),
+            ),
+            [
+                LanguageServerExtension::TAG_COMMAND => [
+                    'name' => SymfonyCreateTemplateCommand::NAME
+                ],
+            ]
+        );
+
+        $container->register(
             SymfonyCompletor::class,
-            function (Container $container) {
-                return new SymfonyCompletor(
-                    $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
-                    $container->get(SymfonyContainerInspector::class),
-                    $container->get(QueryClient::class),
-                );
-            },
+            fn (Container $container): SymfonyCompletor => new SymfonyCompletor(
+                $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                $container->get(SymfonyContainerInspector::class),
+                $container->get(QueryClient::class),
+                $container->get(SymfonyTemplateCache::class),
+            ),
             [
                 CompletionWorseExtension::TAG_TOLERANT_COMPLETOR => [
                     'name' => 'symfony',
