@@ -3,6 +3,12 @@ Changelog
 
 ## master
 
+Improvements:
+
+  - Do not render `void` on PHP versions 7.0-7.3
+
+## 2025.02.21
+
 Features:
 
   - String <=> Heredoc code action #2825 @mamazu
