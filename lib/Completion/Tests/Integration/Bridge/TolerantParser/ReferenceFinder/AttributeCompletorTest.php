@@ -33,13 +33,84 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
     {
         yield 'new class instance' => [
             '<?php namespace Foo { #[Foo<>]class Bar{}',
- [
+            [
                 [
                     'type'              => Suggestion::TYPE_CLASS,
                     'name'              => 'Foobar',
                     'short_description' => 'Foobar',
-                ]
-            ]
+                ],
+            ],
+        ];
+
+        yield 'method' => [
+            '<?php namespace Foo { class Bar { #[Foo<>] public function zxc() {} }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarMethod',
+                    'short_description' => 'FoobarMethod',
+                ],
+            ],
+        ];
+
+        yield 'class constant' => [
+            '<?php namespace Foo { class Bar { #[Foo<>] const X = 1; }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarClassConstsant',
+                    'short_description' => 'FoobarClassConstsant',
+                ],
+            ],
+        ];
+
+        yield 'parameter' => [
+            '<?php namespace Foo { class Bar { public function zxc(#[Foo<>] $x, $y) {} }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarParameter',
+                    'short_description' => 'FoobarParameter',
+                ],
+            ],
+        ];
+
+        yield 'property' => [
+            '<?php namespace Foo { class Bar { #[Foo<>] private $x; }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarProperty',
+                    'short_description' => 'FoobarProperty',
+                ],
+            ],
+        ];
+
+        yield 'function' => [
+            '<?php namespace Foo { #[Foo<>] function x(); }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarFunction',
+                    'short_description' => 'FoobarFunction',
+                ],
+            ],
+        ];
+
+        yield 'promoted property' => [
+            '<?php namespace Foo { class Bar { public function __construct(#[Foo<>] private $x); }',
+            [
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarParameter',
+                    'short_description' => 'FoobarParameter',
+                ],
+                [
+                    'type'              => Suggestion::TYPE_CLASS,
+                    'name'              => 'FoobarProperty',
+                    'short_description' => 'FoobarProperty',
+                ],
+            ],
         ];
 
         yield 'only show children for qualified names' => [
@@ -66,10 +137,29 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
     {
         $searcher = $this->prophesize(NameSearcher::class);
-        $searcher->search('Foo', NameSearcherType::ATTRIBUTE)->willYield([
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_CLASS)->willYield([
             NameSearchResult::create('class', 'Foobar'),
         ]);
-        $searcher->search('\\Foo\\Relative', NameSearcherType::ATTRIBUTE)->willYield([
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_METHOD)->willYield([
+            NameSearchResult::create('class', 'FoobarMethod'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_CLASS_CONSTANT)->willYield([
+            NameSearchResult::create('class', 'FoobarClassConstsant'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_PARAMETER)->willYield([
+            NameSearchResult::create('class', 'FoobarParameter'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_PROPERTY)->willYield([
+            NameSearchResult::create('class', 'FoobarProperty'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_PROMOTED_PROPERTY)->willYield([
+            NameSearchResult::create('class', 'FoobarProperty'),
+            NameSearchResult::create('class', 'FoobarParameter'),
+        ]);
+        $searcher->search('Foo', NameSearcherType::ATTRIBUTE_TARGET_FUNCTION)->willYield([
+            NameSearchResult::create('class', 'FoobarFunction'),
+        ]);
+        $searcher->search('\\Foo\\Relative', NameSearcherType::ATTRIBUTE_TARGET_CLASS)->willYield([
             NameSearchResult::create('class', 'Foo\Relative\One\Blah\Boo'),
             NameSearchResult::create('class', 'Foo\Relative\One\Glorm\Bar'),
             NameSearchResult::create('class', 'Foo\Relative\One\Blah'),
