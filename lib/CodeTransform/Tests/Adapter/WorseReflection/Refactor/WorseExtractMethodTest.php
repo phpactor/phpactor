@@ -69,6 +69,7 @@ class WorseExtractMethodTest extends WorseTestCase
         yield 'union argument' => ['extractMethod32.test'];
         yield 'extract method from trait' => ['extractMethod33.test'];
         yield 'extract static method' => ['extractMethod34.test'];
+        yield 'inside if statement with a minimal whitespace' => ['extractMethod35.test'];
     }
 
     /**
