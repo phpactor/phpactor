@@ -8,6 +8,8 @@ use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Extension\Symfony\Model\SymfonyContainerInspector;
 use Phpactor\Extension\Symfony\Model\SymfonyTemplateCache;
 use Phpactor\Indexer\Model\QueryClient;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
+use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Reflector;
@@ -24,10 +26,12 @@ final class SymfonyCompletor implements TolerantCompletor
         SymfonyContainerInspector $inspector,
         QueryClient $queryClient,
         SymfonyTemplateCache $templatePathCache,
+        ClientApi $clientApi,
+        Workspace $workspace,
     ) {
         $this->completors = [
             new SymfonyContainerCompletor($reflector, $inspector),
-            new SymfonyFormTypeCompletor($reflector, $queryClient),
+            new SymfonyFormTypeCompletor($reflector, $queryClient, $clientApi, $workspace),
             new SymfonyTemplateCompletor($reflector, $templatePathCache),
         ];
     }

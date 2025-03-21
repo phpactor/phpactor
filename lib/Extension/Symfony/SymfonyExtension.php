@@ -78,6 +78,8 @@ class SymfonyExtension implements OptionalExtension
                 $container->get(SymfonyContainerInspector::class),
                 $container->get(QueryClient::class),
                 $container->get(SymfonyTemplateCache::class),
+                $container->get(ClientApi::class),
+                $container->expect(LanguageServerExtension::SERVICE_SESSION_WORKSPACE, Workspace::class),
             ),
             [
                 CompletionWorseExtension::TAG_TOLERANT_COMPLETOR => [
