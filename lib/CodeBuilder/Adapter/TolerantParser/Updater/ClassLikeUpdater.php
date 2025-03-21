@@ -5,6 +5,7 @@ namespace Phpactor\CodeBuilder\Adapter\TolerantParser\Updater;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
@@ -109,11 +110,11 @@ abstract class ClassLikeUpdater
         return $insert;
     }
 
-    /**
-     * @param ClassDeclaration|TraitDeclaration|EnumDeclaration|InterfaceDeclaration $classLikeDeclaration
-     */
-    protected function updateDocblock(Edits $edits, ClassLikePrototype $classPrototype, $classLikeDeclaration): void
-    {
+    protected function updateDocblock(
+        Edits $edits,
+        ClassLikePrototype $classPrototype,
+        ClassDeclaration|TraitDeclaration|EnumDeclaration|InterfaceDeclaration|ObjectCreationExpression $classLikeDeclaration,
+    ): void {
         if (!$classPrototype->docblock()->notNone()) {
             return;
         }

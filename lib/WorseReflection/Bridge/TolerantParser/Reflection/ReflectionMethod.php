@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 
 use Microsoft\PhpParser\ClassLike;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\TokenKind;
@@ -21,6 +22,7 @@ use Phpactor\WorseReflection\Core\Reflection\TypeResolver\MethodTypeResolver;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Microsoft\PhpParser\NamespacedNameInterface;
 use InvalidArgumentException;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
 class ReflectionMethod extends AbstractReflectionClassMember implements CoreReflectionMethod
 {
@@ -59,7 +61,11 @@ class ReflectionMethod extends AbstractReflectionClassMember implements CoreRefl
 
     public function declaringClass(): ReflectionClassLike
     {
-        $classDeclaration = $this->node->getFirstAncestor(ClassLike::class);
+        $classDeclaration = $this->node->getFirstAncestor(ClassLike::class, ObjectCreationExpression::class);
+        if ($classDeclaration instanceof ObjectCreationExpression) {
+            return $this->class ?? $this->serviceLocator->reflector()
+                ->reflectClassLike(NodeUtil::nameFromTokenOrNode($classDeclaration, $classDeclaration));
+        }
 
         assert($classDeclaration instanceof NamespacedNameInterface);
         $class = $classDeclaration->getNamespacedName();
