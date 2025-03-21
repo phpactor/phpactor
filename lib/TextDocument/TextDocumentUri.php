@@ -21,6 +21,9 @@ class TextDocumentUri
         if ($this->scheme === self::SCHEME_UNTITLED) {
             return sprintf('%s:%s', $this->scheme, $this->path);
         }
+        if ($this->scheme === self::SCHEME_PHAR) {
+            return sprintf('%s://%s', $this->scheme, $this->path);
+        }
         return sprintf('%s:///%s', $this->scheme, ltrim($this->path, '/'));
     }
 
@@ -82,7 +85,10 @@ class TextDocumentUri
             ));
         }
 
-        $path = Path::makeAbsolute(substr($path, 1), '/');
+        if (str_starts_with($path, '/')) {
+            $path = substr($path, 1);
+        }
+        $path = Path::makeAbsolute($path, '/');
         return new self($scheme, $path);
     }
 
