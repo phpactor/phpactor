@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e4b270130878f76a179bd52fcd206bb9",
+    "content-hash": "f32073d073d39d0c0dd3ba931c19e989",
     "packages": [
         {
             "name": "amphp/amp",
@@ -7953,9 +7953,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dms/phpunit-arraysubset-asserts": 20,
         "jetbrains/phpstorm-stubs": 20,
-        "phpactor/tolerant-php-parser": 20
+        "phpactor/tolerant-php-parser": 20,
+        "dms/phpunit-arraysubset-asserts": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
@@ -7963,7 +7963,7 @@
         "php": "^8.1",
         "ext-mbstring": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.1.0"
     },
