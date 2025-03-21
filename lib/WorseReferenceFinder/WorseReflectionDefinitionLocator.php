@@ -122,7 +122,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $function->sourceCode()->uri()?->path();
+        $path = $function->sourceCode()->uri();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(
@@ -149,7 +149,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $constant->sourceCode()->uri()?->path();
+        $path = $constant->sourceCode()->uri();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(
@@ -220,7 +220,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
             $member = $members->get($symbolName);
 
-            $path = $member->declaringClass()->sourceCode()->uri()?->path();
+            $path = $member->declaringClass()->sourceCode()->uri();
 
             if (null === $path) {
                 throw new CouldNotLocateDefinition(sprintf(
@@ -261,7 +261,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
 
-        $path = $member->declaringClass()->sourceCode()->uri()?->path();
+        $path = $member->declaringClass()->sourceCode()->uri();
 
         if (null === $path) {
             throw new CouldNotLocateDefinition(sprintf(
