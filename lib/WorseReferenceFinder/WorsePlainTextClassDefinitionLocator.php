@@ -45,12 +45,19 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
             ), 0, $notFound);
         }
 
-        $path = $reflectionClass->sourceCode()->uri()?->path();
+        $uri = $reflectionClass->sourceCode()->uri();
 
+        if (null === $uri) {
+            throw new CouldNotLocateDefinition(sprintf(
+                'The source code for class "%s" has no path associated with it.',
+                (string) $reflectionClass->type()
+            ));
+        }
+        
         return new TypeLocations([
             new TypeLocation(
                 $reflectionClass->type(),
-                new Location(TextDocumentUri::fromString($path), $reflectionClass->position())
+                new Location($uri, $reflectionClass->position())
             )
         ]);
     }

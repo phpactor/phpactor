@@ -97,9 +97,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $class->sourceCode()->uri();
+        $uri = $class->sourceCode()->uri();
 
-        if (null === $path) {
+        if (null === $uri) {
             throw new CouldNotLocateDefinition(sprintf(
                 'The source code for class "%s" has no path associated with it.',
                 $class->name()
@@ -107,7 +107,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
         return new TypeLocations([new TypeLocation($className, new Location(
-            TextDocumentUri::fromString($path),
+            $uri,
             $class->position()
         ))]);
     }
@@ -122,9 +122,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $function->sourceCode()->uri();
+        $uri = $function->sourceCode()->uri();
 
-        if (null === $path) {
+        if (null === $uri) {
             throw new CouldNotLocateDefinition(sprintf(
                 'The source code for function "%s" has no path associated with it.',
                 $function->name()
@@ -133,7 +133,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
         return new TypeLocations([
             new TypeLocation(TypeFactory::unknown(), new Location(
-                TextDocumentUri::fromString($path),
+                $uri,
                 $function->position()
             ))
         ]);
@@ -149,9 +149,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             throw new CouldNotLocateDefinition($e->getMessage(), 0, $e);
         }
 
-        $path = $constant->sourceCode()->uri();
+        $uri = $constant->sourceCode()->uri();
 
-        if (null === $path) {
+        if (null === $uri) {
             throw new CouldNotLocateDefinition(sprintf(
                 'The source code for constant "%s" has no path associated with it.',
                 $constant->name()
@@ -160,7 +160,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
         return new TypeLocations([
             new TypeLocation(TypeFactory::unknown(), new Location(
-                TextDocumentUri::fromString($path),
+                $uri,
                 $constant->position()
             ))
         ]);
@@ -220,9 +220,9 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
             $member = $members->get($symbolName);
 
-            $path = $member->declaringClass()->sourceCode()->uri();
+            $uri = $member->declaringClass()->sourceCode()->uri();
 
-            if (null === $path) {
+            if (null === $uri) {
                 throw new CouldNotLocateDefinition(sprintf(
                     'The source code for class "%s" has no path associated with it.',
                     (string) $containingClass->name()
@@ -231,7 +231,7 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
 
             $locations[] = new TypeLocation(
                 $namedType,
-                new Location(TextDocumentUri::fromString($path), $member->position())
+                new Location($uri, $member->position())
             );
         }
 
@@ -261,18 +261,17 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
         }
 
 
-        $path = $member->declaringClass()->sourceCode()->uri();
+        $uri = $member->declaringClass()->sourceCode()->uri();
 
-        if (null === $path) {
+        if (null === $uri) {
             throw new CouldNotLocateDefinition(sprintf(
                 'The source code for class "%s" has no path associated with it.',
                 (string) $member->declaringClass()->name()
             ));
         }
 
-        return new TypeLocations([new TypeLocation($nodeContext->classType(), new Location(
-            TextDocumentUri::fromString($path),
-            $member->position()
-        ))]);
+        return new TypeLocations([new TypeLocation($nodeContext->classType(),
+            new Location($uri, $member->position())
+        )]);
     }
 }
