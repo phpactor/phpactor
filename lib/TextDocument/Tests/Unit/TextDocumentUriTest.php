@@ -23,6 +23,14 @@ class TextDocumentUriTest extends TestCase
         $this->assertEquals('phar:///home/daniel/www/phpactor/phpactor/vendor/phpstan/phpstan/phpstan.phar/resources/functionMap.php', (string) $uri);
     }
 
+    public function testFromPharWindown(): void
+    {
+        $uri = TextDocumentUri::fromString('phar://C:/zobo/vscode-phpactor/phpactor.phar/vendor/jetbrains/phpstorm-stubs\Core\Core.php');
+        $this->assertEquals('phar://C:/zobo/vscode-phpactor/phpactor.phar/vendor/jetbrains/phpstorm-stubs/Core/Core.php', (string) $uri);
+        $uri = TextDocumentUri::fromString('phar:///C:/zobo/vscode-phpactor/phpactor.phar/vendor/jetbrains/phpstorm-stubs\Core\Core.php');
+        $this->assertEquals('phar://C:/zobo/vscode-phpactor/phpactor.phar/vendor/jetbrains/phpstorm-stubs/Core/Core.php', (string) $uri);
+    }
+
     public function testExceptionOnInvalidFormatUnix(): void
     {
         $this->expectException(InvalidUriException::class);
