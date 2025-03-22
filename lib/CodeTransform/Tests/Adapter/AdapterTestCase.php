@@ -7,6 +7,7 @@ use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
 use Phpactor\TestUtils\ExtractOffset;
+use Symfony\Component\Filesystem\Path;
 
 class AdapterTestCase extends TestCase
 {
@@ -30,6 +31,7 @@ class AdapterTestCase extends TestCase
         $workspace = $this->workspace();
         $workspace->reset();
 
+        $manifestPath = Path::canonicalize($manifestPath);
         if (!file_exists($manifestPath)) {
             touch($manifestPath);
         }
