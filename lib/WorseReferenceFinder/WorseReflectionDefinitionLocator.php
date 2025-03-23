@@ -8,7 +8,6 @@ use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -270,7 +269,8 @@ class WorseReflectionDefinitionLocator implements DefinitionLocator
             ));
         }
 
-        return new TypeLocations([new TypeLocation($nodeContext->classType(),
+        return new TypeLocations([new TypeLocation(
+            $nodeContext->classType(),
             new Location($uri, $member->position())
         )]);
     }

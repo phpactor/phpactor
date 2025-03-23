@@ -15,7 +15,6 @@ use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\Util\WordAtOffset;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -53,7 +52,7 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
                 (string) $reflectionClass->type()
             ));
         }
-        
+
         return new TypeLocations([
             new TypeLocation(
                 $reflectionClass->type(),
