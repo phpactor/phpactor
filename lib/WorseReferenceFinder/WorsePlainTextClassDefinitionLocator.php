@@ -15,7 +15,6 @@ use Phpactor\ReferenceFinder\TypeLocations;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\Util\WordAtOffset;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -45,12 +44,19 @@ class WorsePlainTextClassDefinitionLocator implements DefinitionLocator
             ), 0, $notFound);
         }
 
-        $path = $reflectionClass->sourceCode()->uri()?->path();
+        $uri = $reflectionClass->sourceCode()->uri();
+
+        if (null === $uri) {
+            throw new CouldNotLocateDefinition(sprintf(
+                'The source code for class "%s" has no path associated with it.',
+                (string) $reflectionClass->type()
+            ));
+        }
 
         return new TypeLocations([
             new TypeLocation(
                 $reflectionClass->type(),
-                new Location(TextDocumentUri::fromString($path), $reflectionClass->position())
+                new Location($uri, $reflectionClass->position())
             )
         ]);
     }
