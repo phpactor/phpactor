@@ -866,26 +866,6 @@ parameters:
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
 
 		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor1 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor&Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifiable\\>\\) does not accept \\$this\\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\)\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor2 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor&Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifiable\\>\\) does not accept \\$this\\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\)\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\LimitingCompletorTest\\:\\:primeInnerCompletor\\(\\) has parameter \\$suggestions with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\LimitingCompletorTest\\:\\:suggestion\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$completor of class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\LimitingCompletor constructor expects Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor, object given\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
@@ -3736,11 +3716,6 @@ parameters:
 			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
 
 		-
-			message: "#^Parameter \\#2 \\$path of method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Model\\\\WorkspaceSymbolProvider\\:\\:toLspPosition\\(\\) expects string, string\\|null given\\.$#"
-			count: 6
-			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerIndexer/Tests/IntegrationTestCase.php
@@ -3862,11 +3837,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#3 \\$definitionLocator of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler constructor expects Phpactor\\\\ReferenceFinder\\\\DefinitionLocator, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
-
-		-
-			message: "#^Parameter \\#6 \\$timeoutSeconds of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler constructor expects float, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
 
@@ -5301,11 +5271,6 @@ parameters:
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
 
 		-
-			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
-
-		-
 			message: "#^Parameter \\#1 \\.\\.\\.\\$paths of static method Symfony\\\\Component\\\\Filesystem\\\\Path\\:\\:join\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/Command/IndexBuildCommand.php
@@ -5409,11 +5374,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$time of class Amp\\\\Delayed constructor expects int, mixed given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/Rpc/IndexHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of method Phpactor\\\\Indexer\\\\Model\\\\DirtyDocumentTracker\\:\\:markDirty\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Indexer.php
 
 		-
 			message: "#^Cannot call method references\\(\\) on Phpactor\\\\Indexer\\\\Model\\\\Record\\\\FunctionRecord\\|null\\.$#"
@@ -6116,42 +6076,12 @@ parameters:
 			path: lib/WorseReflection/Core/NodeText.php
 
 		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:byMemberClass\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<M of T&object&T\\>\\)\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:fromReflections\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\)\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:merge\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\)\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
-
-		-
-			message: "#^PHPDoc tag @return contains generic type static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ClassLikeReflectionMemberCollection\\) but class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ClassLikeReflectionMemberCollection is not generic\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/ClassLikeReflectionMemberCollection.php
-
-		-
 			message: "#^Parameter \\#4 \\$node of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionConstant constructor expects Microsoft\\\\PhpParser\\\\Node\\\\ConstElement, mixed given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/ClassLikeReflectionMemberCollection.php
 
 		-
 			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant not found\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\:\\:fromMembers\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\<T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\)\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\:\\:map\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\<T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\)\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
 
