@@ -4,10 +4,11 @@ Changelog
 ## 2025.03.28.0
 
 Improvements:
+
   - Reference finding: Ask for confirmation to continue after soft timeout @dantleech #2856
   - PHAR fixes for Windows @zobo
   - LSP - Support for inline values @zobo
-  - Code action prioritization @mamazu=====
+  - Code action prioritization @mamazu
 
 ## 2025.02.21.0
 
