@@ -135,11 +135,14 @@ class LimitingCompletorTest extends TestCase
         return new LimitingCompletor($this->innerCompletor->reveal(), $limit);
     }
 
-    private function suggestion(string $name)
+    private function suggestion(string $name): Suggestion
     {
         return Suggestion::create($name);
     }
 
+    /**
+    * @param array<Suggestion> $suggestions
+    */
     private function primeInnerCompletor(array $suggestions, bool $isComplete = true): void
     {
         $this->innerCompletor->complete(
