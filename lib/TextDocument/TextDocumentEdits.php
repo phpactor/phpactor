@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phpactor\TextDocument;
 
 use Iterator;
@@ -17,7 +19,7 @@ class TextDocumentEdits implements IteratorAggregate
     public static function fromTextDocument(TextDocument $textDocument, TextEdits $edits): self
     {
         return new self(
-            TextDocumentUri::fromString($textDocument->uriOrThrow()),
+            $textDocument->uriOrThrow(),
             $edits
         );
     }
