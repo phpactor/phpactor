@@ -298,7 +298,7 @@ class LanguageServerCodeTransformExtension implements Extension
                 'Promote Constructor (private)'
             );
         }, [
-            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [ 'priority' => 100]
         ]);
 
         $container->register(TransformerCodeActionPovider::class.'promote_constructor_public', function (Container $container) {
