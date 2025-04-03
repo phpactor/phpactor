@@ -306,6 +306,26 @@ Report if a method is missing a return type.
         
         - ``WARN``: ``Missing return type `string```
         
+    .. tab:: reports missing return type if docblock does not match inferred type
+        
+        .. code-block:: php
+        
+            <?php
+            
+            class Foobar1 {
+                /**
+                 * @return int
+                 */
+                public function foobar()
+                {
+                    return 'hello';
+                }
+            }
+        
+        Diagnostic(s):
+        
+        - ``WARN``: ``Missing return type `string```
+        
     .. tab:: unable to infer return type
         
         .. code-block:: php

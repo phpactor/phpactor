@@ -1,5 +1,13 @@
 Changelog
-====
+=========
+
+## master
+
+Improvements:
+
+  - Do not suggest code action for missing return type if type is accurately
+    provided by docblock @dantleech
+  - Do not generate `void` return type on PHP 7.0
 
 ## 2025.03.28.0
 
