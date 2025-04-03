@@ -4,6 +4,7 @@ namespace Phpactor\Extension\CodeTransform;
 
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer;
+use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer70;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer74;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer80;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\TypeRenderer\WorseTypeRenderer81;
@@ -419,6 +420,7 @@ class CodeTransformExtension implements Extension
             assert($version instanceof PhpVersionResolver);
             $version = $version->resolve();
             return (new WorseTypeRendererFactory([
+                '7.0' => new WorseTypeRenderer70(),
                 '7.4' => new WorseTypeRenderer74(),
                 '8.0' => new WorseTypeRenderer80(),
                 '8.1' => new WorseTypeRenderer81(),
