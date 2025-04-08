@@ -17,6 +17,9 @@ use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -29,9 +32,11 @@ use Microsoft\PhpParser\Node\StatementNode;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
+use Microsoft\PhpParser\Node\Statement\ExpressionStatement;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
+use Microsoft\PhpParser\Node\StringLiteral;
 use Microsoft\PhpParser\Node\TraitUseClause;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
@@ -49,7 +54,20 @@ class CompletionContext
             return false;
         }
 
-        if ($parent instanceof ArgumentExpression) {
+        if (
+            $node instanceof Variable
+            || $node instanceof ExpressionStatement
+            || $node instanceof MemberAccessExpression
+            || $node instanceof ScopedPropertyAccessExpression
+            || $node instanceof StringLiteral
+        ) {
+            return false;
+        }
+
+        if (
+            $node instanceof CallExpression
+            || $parent instanceof ArgumentExpression
+        ) {
             return true;
         }
 
