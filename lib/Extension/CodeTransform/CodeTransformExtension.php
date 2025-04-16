@@ -103,6 +103,7 @@ class CodeTransformExtension implements Extension
     public const PARAM_OBJECT_FILL_NAMED = 'code_transform.refactor.object_fill.named_parameters';
     public const PARAM_OBJECT_FILL_HINT = 'code_transform.refactor.object_fill.hint';
     private const APP_TEMPLATE_PATH = '%application_root%/templates/code';
+    private const APP_TEMPLATE_PATH2 = '%application_root%/vendor/phpactor/phpactor/templates/code';
 
 
     public function configure(Resolver $schema): void
@@ -386,6 +387,7 @@ class CodeTransformExtension implements Extension
             $loader = new ChainLoader();
             $templatePaths = $container->getParameter(self::PARAM_TEMPLATE_PATHS);
             $templatePaths[] = self::APP_TEMPLATE_PATH;
+            $templatePaths[] = self::APP_TEMPLATE_PATH2;
 
             $resolvedTemplatePaths = array_map(function (string $path) use ($resolver) {
                 return $resolver->resolve($path);
