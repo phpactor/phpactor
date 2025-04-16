@@ -19,6 +19,7 @@
 # File frequently used for testing
 /lib/Test.php
 /.phpactor.yml
+/.phpactor.json
 /.phpactor/*
 
 # Logging
