@@ -1,13 +1,18 @@
 Changelog
 =========
 
-## master
+## 2025.04.17.0
 
 Improvements:
 
   - Do not suggest code action for missing return type if type is accurately
     provided by docblock @dantleech
   - Do not generate `void` return type on PHP 7.0
+
+Bug fixes:
+
+  - Support loading code templates when Phpactor included as a dependency
+    @zobo
 
 ## 2025.03.28.0
 
