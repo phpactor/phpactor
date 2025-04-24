@@ -74,6 +74,27 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php class F {function fo() {}} cl<>',
             $this->expect(['class ', 'enum ', 'function ', 'interface ', 'trait ']),
         ];
+
+        yield 'if condition classes' => [
+            '<?php class Stuff { public function testing() { if ($this <>} }',
+            $this->expect(['instanceof ']),
+        ];
+        yield 'if condition' => [
+            '<?php if ($test <>',
+            $this->expect(['instanceof ']),
+        ];
+        yield 'while condition' => [
+            '<?php while ($test <>',
+            $this->expect(['instanceof ']),
+        ];
+        yield 'while condition (without variable)' => [
+            '<?php while ( <>',
+            [],
+        ];
+        yield 'while condition (with expression)' => [
+            '<?php while ($node->getParent()<>',
+            $this->expect(['instanceof ']),
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
