@@ -35,7 +35,7 @@ class RemoveUnusedImportsTransformer implements Transformer
     public function transform(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $rootNode = $this->parser->parseSourceFile($code);
+            $rootNode = $this->parser->parseSourceFile($code, $code->uri());
             $edits = [];
 
             foreach ((yield $this->reflector->diagnostics($code))->byClass(UnusedImportDiagnostic::class) as $unusedImport) {

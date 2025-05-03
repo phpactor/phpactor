@@ -62,7 +62,7 @@ final class ReflectorBuilder
      */
     private array $memberContextResolvers = [];
 
-    private CacheForDocument $cacheForDocument;
+    private ?CacheForDocument $cacheForDocument = null;
 
     /**
      * Create a new instance of the builder
@@ -143,7 +143,7 @@ final class ReflectorBuilder
             $this->diagnosticProviders,
             $this->memberContextResolvers,
             $this->buildCache(),
-            $this->cacheForDocument ?? new CacheForDocument(fn () => new NullCache()),
+            $this->cacheForDocument ?? CacheForDocument::none(),
             $this->enableContextualSourceLocation
         ))->reflector();
     }

@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
+use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\DefaultResolverFactory;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
@@ -1177,7 +1178,9 @@ class NodeContextResolverTest extends IntegrationTestCase
             $reflector,
             new DocblockParserFactory($reflector),
             $this->logger(),
-            new StaticCache(),
+            new CacheForDocument(function () {
+                return new StaticCache();
+            }),
             (new DefaultResolverFactory(
                 $reflector,
                 $nameResolver,

@@ -25,7 +25,7 @@ class TolerantChangeVisiblity implements ChangeVisiblity
 
     public function changeVisiblity(SourceCode $source, int $offset): SourceCode
     {
-        $node = $this->parser->parseSourceFile((string) $source);
+        $node = $this->parser->parseSourceFile((string) $source, $source->uri()->__toString());
         $node = $node->getDescendantNodeAtPosition($offset);
 
         $node = $this->resolveMemberNode($node);

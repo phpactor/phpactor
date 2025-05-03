@@ -41,7 +41,7 @@ class AddMissingProperties implements Transformer
     public function transform(SourceCode $code): Promise
     {
         return call(function () use ($code) {
-            $rootNode = $this->parser->parseSourceFile($code->__toString());
+            $rootNode = $this->parser->parseSourceFile($code->__toString(), $code->uri());
             $wrDiagnostics = yield $this->reflector->diagnostics($code);
             $sourceBuilder = SourceCodeBuilder::create();
 

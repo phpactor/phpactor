@@ -15,7 +15,7 @@ class ChannelLogger extends AbstractLogger
     {
         $this->innerLogger->log(
             $level,
-            $message,
+            sprintf('[%s] %s', getmypid(), $message),
             array_merge([
                 'channel' => $this->name,
             ], $context),

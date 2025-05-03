@@ -28,17 +28,12 @@ class TolerantRenameVariable implements RenameVariable
 
     public function renameVariable(SourceCode $sourceCode, int $offset, string $newName, string $scope = self::SCOPE_FILE): SourceCode
     {
-        $sourceNode = $this->sourceNode($sourceCode->__toString());
+        $sourceNode = $this->parser->parseSourceFile($sourceCode, $sourceCode->uri());
         $variable = $this->variableNodeFromSource($sourceNode, $offset);
         $scopeNode = $this->scopeNode($variable, $scope);
         $textEdits = $this->textEditsToRename($scopeNode, $variable, $newName);
 
         return $sourceCode->withSource(TextEdits::fromTextEdits($textEdits)->apply($sourceCode->__toString()));
-    }
-
-    private function sourceNode(string $source): SourceFileNode
-    {
-        return $this->parser->parseSourceFile($source);
     }
 
     private function variableNodeFromSource(SourceFileNode $sourceNode, int $offset): Node

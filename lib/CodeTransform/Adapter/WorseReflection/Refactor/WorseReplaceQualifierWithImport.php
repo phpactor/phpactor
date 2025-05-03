@@ -58,7 +58,7 @@ class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
 
     public function canReplaceWithImport(SourceCode $source, int $offset): bool
     {
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->parseSourceFile($source->__toString(), $source->uri());
         $targetNode = $node->getDescendantNodeAtPosition($offset);
 
         if ($targetNode instanceof QualifiedName) {
