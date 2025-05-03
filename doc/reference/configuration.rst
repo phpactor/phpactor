@@ -2115,6 +2115,26 @@ Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php
 **Default**: ``null``
 
 
+.. _LanguageServerHighlightExtension:
+
+
+LanguageServerHighlightExtension
+--------------------------------
+
+
+.. _param_language_server_highlight.enabled:
+
+
+``language_server_highlight.enabled``
+"""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the highlighter (can be expensive on large documents)
+
+
+**Default**: ``true``
+
+
 .. _PhpCodeSnifferExtension:
 
 

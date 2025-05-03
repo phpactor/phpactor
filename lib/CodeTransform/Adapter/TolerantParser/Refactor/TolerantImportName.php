@@ -63,7 +63,7 @@ class TolerantImportName implements ImportName
             return TextEdits::none();
         }
 
-        $sourceNode = $this->parser->parseSourceFile($source);
+        $sourceNode = $this->parser->parseSourceFile((string) $source, $source->uri()->__toString());
         $node = $this->getLastNodeAtPosition($sourceNode, $offset);
 
         $this->assertNotAlreadyImported($node, $nameImport);
