@@ -8,13 +8,17 @@ Phpactor is not currently very performant as a **language server** when used on
 large and complex files. This is due to the (blocking) static analysis overhead
 from diagnostics.
 
-You can improve performance by :ref:`disabling diagnostics<param_language_server.diagnostics_on_update>` when documents are _updated_
+You can improve performance by :
 
-The following command (run in the project root) will update ``.phpactor.json`` to disable diagnostics:
+-  :ref:`disabling diagnostics<param_language_server.diagnostics_on_update>` when documents are _updated_
+-  :ref:`disabling document highlighting<param_language_server_highlight.enabled>` when documents are _updated_
+
+You can disable both settings with:
 
 .. code-block:: bash
 
    $ phpactor config:set language_server.diagnostics_on_update false
+   $ phpactor config:set language_server_highlight.enabled false
 
 Indexing
 --------

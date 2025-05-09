@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## matser
+
+Improvements:
+
+  - Extract document highlighter to own module and add config option to
+    disable it.
+
 ## 2025.04.17.0
 
 Improvements:
