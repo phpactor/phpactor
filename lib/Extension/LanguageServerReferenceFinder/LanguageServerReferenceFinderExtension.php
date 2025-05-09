@@ -2,17 +2,14 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder;
 
-use Microsoft\PhpParser\Parser;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\Extension\LanguageServerBridge\Converter\LocationConverter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoDefinitionHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\GotoImplementationHandler;
-use Phpactor\Extension\LanguageServerReferenceFinder\Handler\HighlightHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\ReferencesHandler;
 use Phpactor\Extension\LanguageServerReferenceFinder\Handler\TypeDefinitionHandler;
-use Phpactor\Extension\LanguageServerReferenceFinder\Model\Highlighter;
 use Phpactor\Extension\LanguageServerReferenceFinder\Adapter\Indexer\WorkspaceUpdateReferenceFinder;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
@@ -72,13 +69,6 @@ class LanguageServerReferenceFinderExtension implements Extension
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
                 $container->get(ReferenceFinderExtension::SERVICE_IMPLEMENTATION_FINDER),
                 $container->get(LocationConverter::class)
-            );
-        }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
-
-        $container->register(HighlightHandler::class, function (Container $container) {
-            return new HighlightHandler(
-                $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                new Highlighter(new Parser())
             );
         }, [ LanguageServerExtension::TAG_METHOD_HANDLER => [] ]);
     }
