@@ -25,6 +25,7 @@ use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
 use Phpactor\Extension\LanguageServer\Middleware\TraceMiddleware;
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
+use Phpactor\Extension\LanguageServer\Status\StatsStatusProvider;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
@@ -272,6 +273,12 @@ class LanguageServerExtension implements Extension
             );
         }, [
             self::TAG_LISTENER_PROVIDER => [],
+        ]);
+
+        $container->register(StatsStatusProvider::class, function (Container $container) {
+            return new StatsStatusProvider();
+        }, [
+            LanguageServerExtension::TAG_STATUS_PROVIDER => [],
         ]);
 
         $container->register('language_server.session.handler.session', function (Container $container) {
