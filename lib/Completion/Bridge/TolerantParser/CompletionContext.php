@@ -30,6 +30,8 @@ use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\CompoundStatementNode;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InlineHtml;
+use Microsoft\PhpParser\Node\Statement\IfStatementNode;
+use Microsoft\PhpParser\Node\Statement\WhileStatement;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitUseClause;
@@ -361,6 +363,21 @@ class CompletionContext
             return false;
         }
         if (NodeUtil::nullOrMissing($parameter->variableName)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function conditionInfix(Node $node): bool
+    {
+        // If the current node is not a variable we're at the beginning of the condition like "if (<>"
+        if ($node->getText() === '') {
+            return false;
+        }
+
+        $parent = $node->getParent();
+        if ($parent instanceof IfStatementNode || $parent instanceof WhileStatement) {
             return true;
         }
 
