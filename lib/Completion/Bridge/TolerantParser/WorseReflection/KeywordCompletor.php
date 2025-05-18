@@ -73,6 +73,11 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
+        if (CompletionContext::conditionInfix($node)) {
+            yield from $this->keywords(['instanceof ']);
+            return true;
+        }
+
         return true;
     }
 
