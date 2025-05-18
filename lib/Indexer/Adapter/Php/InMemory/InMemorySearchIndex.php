@@ -9,12 +9,23 @@ use Phpactor\Indexer\Model\RecordFactory;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\SearchIndex;
 
-class InMemorySearchIndex implements SearchIndex
+final class InMemorySearchIndex implements SearchIndex
 {
     /**
      * @var array<string,array{string,string}>
      */
     private array $buffer = [];
+
+    public static function fromRecords(Record ...$records): self
+    {
+        $instance = new self();
+        foreach ($records as $record) {
+            $instance->write($record);
+        }
+
+        return $instance;
+    }
+
 
     /**
      * @return Generator<Record>

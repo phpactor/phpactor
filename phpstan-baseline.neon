@@ -1742,7 +1742,7 @@ parameters:
 
 		-
 			message: "#^Cannot access an offset on mixed\\.$#"
-			count: 1
+			count: 2
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Phpactor\CodeTransform\Adapter\WorseReflection\Refactor;
 
 use Microsoft\PhpParser\Node;
@@ -14,7 +16,6 @@ use Phpactor\CodeTransform\Domain\Refactor\GenerateConstructor;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentEdits;
-use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\WorkspaceEdits;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ClassInvocation;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -88,8 +89,11 @@ class WorseGenerateConstructor implements GenerateConstructor
 
         return new WorkspaceEdits(
             new TextDocumentEdits(
-                TextDocumentUri::fromString($reflectionNode->class()->sourceCode()->uriOrThrow()),
-                $this->updater->textEditsFor($builder->build(), Code::fromString($reflectionNode->class()->sourceCode()))
+                $reflectionNode->class()->sourceCode()->uriOrThrow(),
+                $this->updater->textEditsFor(
+                    $builder->build(),
+                    Code::fromString((string) $reflectionNode->class()->sourceCode()),
+                )
             )
         );
     }
