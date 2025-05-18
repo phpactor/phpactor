@@ -6,7 +6,12 @@ Changelog
 Improvements:
 
   - Extract document highlighter to own module and add config option to
-    disable it.
+    disable it @dantleech
+
+Features:
+
+  - Search filtering (as applicable to autocomplete, name importing etc)
+    @dantleech
 
 ## 2025.04.17.0
 

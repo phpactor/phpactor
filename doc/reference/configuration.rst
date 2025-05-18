@@ -1800,6 +1800,22 @@ File extensions (e.g. `php`) for files that should be indexed
 **Default**: ``["php","phar"]``
 
 
+.. _param_indexer.search_include_patterns:
+
+
+``indexer.search_include_patterns``
+"""""""""""""""""""""""""""""""""""
+
+
+Type: array
+
+
+When searching the index exclude records whose fully qualified names match any of these regex patterns (use to exclude suggestions from search results). Namespace separators must be escaped as `\\\\` for example `^Foo\\\\` to include all namespaces whose first segment is `Foo`
+
+
+**Default**: ``[]``
+
+
 .. _ObjectRendererExtension:
 
 
