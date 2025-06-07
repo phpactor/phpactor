@@ -63,9 +63,7 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
-        if (
-            CompletionContext::classMembersBody($node->parent)
-        ) {
+        if (CompletionContext::classMembersBody($node->parent)) {
             yield from $this->keywords([
                 'function ',
                 'const ',
