@@ -9,11 +9,14 @@ use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
+use Phpactor\Completion\Core\Suggestion;
 
+/** @phpstan-import-type SuggestionOptions from Suggestion */
 class WorseClassMemberCompletorTestWithoutSnippetFormatter extends WorseClassMemberCompletorTest
 {
     /**
      * @dataProvider provideComplete
+     * @param array<SuggestionOptions> $expected
      */
     public function testComplete(string $source, array $expected): void
     {

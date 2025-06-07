@@ -147,9 +147,9 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
                 continue;
             }
 
-            $snippet = [];
+            $snippet = null;
             if ($this->snippetFormatter->canFormat($method)) {
-                $snippet['snippet'] = $completeOnlyName ? $method->name() : $this->snippetFormatter->format($method);
+                $snippet = $completeOnlyName ? $method->name() : $this->snippetFormatter->format($method);
             }
 
             yield Suggestion::createWithOptions($method->name(), [
@@ -162,7 +162,7 @@ class WorseClassMemberCompletor implements TolerantCompletor, TolerantQualifiabl
                         $method->name()
                     ), $method->docblock()->formatted(), $method));
                 },
-                ...$snippet
+                'snippet' => $snippet,
             ]);
         }
 

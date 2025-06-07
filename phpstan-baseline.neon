@@ -796,11 +796,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseClassMemberCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseClassMemberCompletorTest.php
-
-		-
 			message: "#^Class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseConstantCompletor does not have a constructor and must be instantiated without any parameters\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseConstantCompletorTest.php
@@ -3802,11 +3797,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\GotoImplementationHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
-
-		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\HighlightHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
 
