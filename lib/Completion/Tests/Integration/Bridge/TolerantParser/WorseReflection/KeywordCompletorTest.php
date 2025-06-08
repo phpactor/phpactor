@@ -83,6 +83,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php if ($test i<>',
             $this->expect(['instanceof ']),
         ];
+        yield 'while with empty expression' => [
+            '<?php while (<>',
+            $this->expect([]),
+        ];
         yield 'while condition' => [
             '<?php while ($test i<>',
             $this->expect(['instanceof ']),
