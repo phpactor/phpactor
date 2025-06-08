@@ -383,12 +383,12 @@ class CompletionContext
     public static function conditionInfix(Node $node): bool
     {
         // If the current node is not a variable we're at the beginning of the condition like "if (<>"
-        //if ($node->getText() === '') {
-            //return false;
-        //}
+        if ($node->getText() === '') {
+            return false;
+        }
 
         $parent = $node->parent;
-        if (!$parent instanceof ExpressionStatement){
+        if (!$parent instanceof ExpressionStatement) {
             return false;
         }
 
