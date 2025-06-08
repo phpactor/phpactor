@@ -76,23 +76,23 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
         ];
 
         yield 'if condition classes' => [
-            '<?php class Stuff { public function testing() { if ($this <>} }',
+            '<?php class Stuff { public function testing() { if ($this i<>} }',
             $this->expect(['instanceof ']),
         ];
         yield 'if condition' => [
-            '<?php if ($test <>',
+            '<?php if ($test i<>',
             $this->expect(['instanceof ']),
         ];
         yield 'while condition' => [
-            '<?php while ($test <>',
+            '<?php while ($test i<>',
             $this->expect(['instanceof ']),
         ];
         yield 'while condition (without variable)' => [
-            '<?php while ( <>',
+            '<?php while (<>',
             [],
         ];
         yield 'while condition (with expression)' => [
-            '<?php while ($node->getParent()<>',
+            '<?php while ($node->getParent() i<>',
             $this->expect(['instanceof ']),
         ];
     }
