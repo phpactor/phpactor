@@ -17,6 +17,7 @@ use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -33,6 +34,7 @@ use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitUseClause;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -46,6 +48,14 @@ class CompletionContext
         $parent = $node->parent;
 
         if (null === $parent) {
+            return false;
+        }
+
+        if (
+            $parent instanceof BinaryExpression
+                && $parent->operator->kind === TokenKind::LessThanToken
+                && str_starts_with(ltrim($parent->__toString()), '<<<')
+        ) {
             return false;
         }
 
