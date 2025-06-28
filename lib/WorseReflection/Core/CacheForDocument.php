@@ -10,16 +10,21 @@ use Psr\Log\NullLogger;
 
 class CacheForDocument
 {
+    const TTL_FOREVER = -1.0;
+
     /**
-     * @var array<string,Cache>
+     * @var array<string,array{float,Cache}>
      */
     private array $caches = [];
 
     /**
      * @param Closure(): Cache $cacheFactory
      */
-    public function __construct(private Closure $cacheFactory, private LoggerInterface $logger = new NullLogger())
-    {
+    public function __construct(
+        private Closure $cacheFactory,
+        private LoggerInterface $logger = new NullLogger(),
+        private float $purgeGracePeriodSeconds = 5,
+    ) {
     }
 
     public static function none(): self
@@ -34,16 +39,31 @@ class CacheForDocument
      */
     public function getOrSet(TextDocumentUri $uri, string $key, Closure $setter)
     {
-        if (!isset($this->caches[$uri->__toString()])) {
-            $this->caches[$uri->__toString()] = ($this->cacheFactory)();
+        $uri = $uri->__toString();
+        // if key not set, then create a new cache instance
+        if (!isset($this->caches[$uri])) {
+            $this->caches[$uri] = [self::TTL_FOREVER, ($this->cacheFactory)()];
         }
-        $this->logger->debug(sprintf('[cache] resolved cache for "%s"', $uri->__toString()));
-        return $this->caches[$uri->__toString()]->getOrSet($key, $setter);
+
+        // if entry has expired then reinitialize it
+        $entry = $this->caches[$uri];
+        if ($entry[0] > 0 && microtime(true) > $entry[0]) {
+            $this->logger->debug(sprintf('[cache] purging after timeout "%s"', $uri));
+            $this->caches[$uri] = [self::TTL_FOREVER, ($this->cacheFactory)()];
+        }
+
+        return $this->caches[$uri][1]->getOrSet($key, $setter);
     }
 
     public function purge(TextDocumentUri $uri): void
     {
-        $this->logger->debug(sprintf('[cache] purging cache for "%s"', $uri->__toString()));
-        unset($this->caches[$uri->__toString()]);
+        if (!isset($this->caches[$uri->__toString()])) {
+            return;
+        }
+
+        if ($this->caches[$uri->__toString()][0] === self::TTL_FOREVER) {
+            $this->logger->debug(sprintf('[cache] scheduling cache purge for "%s"', $uri->__toString()));
+            $this->caches[$uri->__toString()][0] = microtime(true) + $this->purgeGracePeriodSeconds;
+        }
     }
 }

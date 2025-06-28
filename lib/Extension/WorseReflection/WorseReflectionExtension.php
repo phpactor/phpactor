@@ -157,6 +157,7 @@ class WorseReflectionExtension implements Extension
             return new CacheForDocument(
                 fn () => new StaticCache(),
                 $container->expect(LoggingExtension::SERVICE_LOGGER, LoggerInterface::class),
+                $container->parameter(self::PARAM_CACHE_LIFETIME)->float(),
             );
         });
     }
