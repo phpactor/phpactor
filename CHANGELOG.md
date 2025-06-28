@@ -15,6 +15,7 @@ Features:
 
 Bug fixes:
   - Fix parameter type resolution priority @dantleech
+  - Fix completion rendering when snippets are disabled @mamazu
 
 ## 2025.04.17.0
 

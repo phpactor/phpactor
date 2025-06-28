@@ -12,10 +12,12 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
 use Generator;
 
+/** @phpstan-import-type SuggestionOptions from Suggestion */
 class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
 {
     /**
      * @dataProvider provideComplete
+     * @param array<SuggestionOptions> $expected
      */
     public function testComplete(string $source, array $expected): void
     {
@@ -23,7 +25,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
     }
 
     /**
-     * @return Generator<string,array{string,array<int,array<string,string>>}>
+     * @return Generator<string,array{string,array<SuggestionOptions>}>
      */
     public function provideComplete(): Generator
     {
