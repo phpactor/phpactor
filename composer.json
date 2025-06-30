@@ -35,7 +35,7 @@
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.0",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpactor/test-utils": "^1.1.4",
+        "phpactor/test-utils": "^1.1.6",
         "symfony/var-dumper": "^6.4",
         "phpbench/phpbench": "^1.4",
         "dms/phpunit-arraysubset-asserts": "dev-master",
@@ -114,7 +114,8 @@
         ],
         "integrate": [
             "@composer validate --strict",
-            "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix",
+            "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+            "@php vendor/bin/php-cs-fixer fix",
             "@php vendor/bin/phpstan analyse --memory-limit=-1",
             "@php vendor/bin/phpunit",
             "@php vendor/bin/phpbench run --iterations=1 --revs=1",
