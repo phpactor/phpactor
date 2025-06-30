@@ -3911,7 +3911,7 @@ parameters:
 			path: lib/Extension/LanguageServerRename/LanguageServerRenameExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Util\\\\LocatedTextEditConverter constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Util\\\\WorkspaceOperationsConverter constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/LanguageServerRenameExtension.php
 
@@ -3987,11 +3987,6 @@ parameters:
 
 		-
 			message: "#^Offset 'fileOperations' does not exist on array\\{workspaceFolders\\: Phpactor\\\\LanguageServerProtocol\\\\WorkspaceFoldersServerCapabilities, fileOperations\\: Phpactor\\\\LanguageServerProtocol\\\\FileOperationOptions\\}\\|null\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Unit/Handler/FileRenameHandlerTest.php
-
-		-
-			message: "#^Parameter \\#2 \\$haystack of static method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, array\\<Phpactor\\\\LanguageServerProtocol\\\\CreateFile\\|Phpactor\\\\LanguageServerProtocol\\\\DeleteFile\\|Phpactor\\\\LanguageServerProtocol\\\\RenameFile\\|Phpactor\\\\LanguageServerProtocol\\\\TextDocumentEdit\\>\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Unit/Handler/FileRenameHandlerTest.php
 
@@ -5606,7 +5601,7 @@ parameters:
 			path: lib/ReferenceFinder/Tests/Unit/ChainReferenceFinderTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\LocatedTextEditsMap\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
+			message: "#^Method Phpactor\\\\Rename\\\\Adapter\\\\ClassMover\\\\FileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\WorkspaceOperations\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/Rename/Adapter/ClassMover/FileRenamer.php
 
@@ -5626,7 +5621,7 @@ parameters:
 			path: lib/Rename/Adapter/ReferenceFinder/MemberRenamer.php
 
 		-
-			message: "#^Method Phpactor\\\\Rename\\\\Model\\\\FileRenamer\\\\LoggingFileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\LocatedTextEditsMap\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
+			message: "#^Method Phpactor\\\\Rename\\\\Model\\\\FileRenamer\\\\LoggingFileRenamer\\:\\:renameFile\\(\\) should return Amp\\\\Promise\\<Phpactor\\\\Rename\\\\Model\\\\WorkspaceOperations\\> but returns Amp\\\\Promise\\<mixed\\>\\.$#"
 			count: 1
 			path: lib/Rename/Model/FileRenamer/LoggingFileRenamer.php
 
