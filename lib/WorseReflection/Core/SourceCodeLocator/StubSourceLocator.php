@@ -15,6 +15,11 @@ use SplFileInfo;
 
 final class StubSourceLocator implements SourceCodeLocator
 {
+    /**
+     * @var array<string,string>
+     */
+    private ?array $map = null;
+
     public function __construct(
         private Reflector $reflector,
         private string $stubPath,
@@ -42,11 +47,25 @@ final class StubSourceLocator implements SourceCodeLocator
      */
     private function map(): array
     {
+        if ($this->map !== null) {
+            return $this->map;
+        }
+
         if (file_exists($this->serializedMapPath())) {
-            return unserialize((string)file_get_contents($this->serializedMapPath()));
+            $map = unserialize((string)file_get_contents($this->serializedMapPath()));
+
+            if (!is_array($map)) {
+                throw new RuntimeException(sprintf('Invalid serialized stub data, expected an array, got: %s', get_debug_type($map)));
+            }
+
+            /** @var array<string,string> $map */
+            $this->map = $map;
+
+            return $this->map;
         }
 
         $this->buildCache();
+
         return $this->map();
     }
 
