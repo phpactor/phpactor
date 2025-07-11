@@ -37,6 +37,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
+use Psr\Log\LoggerInterface;
 
 class WorseReflectionExtension implements Extension
 {
@@ -146,7 +147,7 @@ class WorseReflectionExtension implements Extension
         });
 
         $container->register(self::SERVICE_PARSER, function (Container $container) {
-            return new CachedParser($container->get(Cache::class));
+            return new CachedParser($container->get(Cache::class), $container->get(CacheForDocument::class));
         });
 
         $container->register(Cache::class, function (Container $container) {
@@ -155,6 +156,8 @@ class WorseReflectionExtension implements Extension
         $container->register(CacheForDocument::class, function (Container $container) {
             return new CacheForDocument(
                 fn () => new StaticCache(),
+                $container->expect(LoggingExtension::SERVICE_LOGGER, LoggerInterface::class),
+                $container->parameter(self::PARAM_CACHE_LIFETIME)->float(),
             );
         });
     }
