@@ -40,6 +40,12 @@ jobs:
             - name: Execute Phar
               run: ./build/phpactor.phar
 
+            - name: Archive phar
+              uses: actions/upload-artifact@v4
+              with:
+                  name: phar
+                  path: build/phpactor.phar
+
       #- name: "Attach signature to Release"
       #  uses: actions/upload-release-asset@v1
       #  env:
