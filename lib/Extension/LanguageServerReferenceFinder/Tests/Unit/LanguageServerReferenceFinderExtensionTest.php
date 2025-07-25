@@ -17,7 +17,6 @@ use Phpactor\LanguageServer\LanguageServerBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\TestUtils\Workspace;
-use function Safe\file_get_contents;
 
 class LanguageServerReferenceFinderExtensionTest extends TestCase
 {
@@ -29,7 +28,7 @@ class LanguageServerReferenceFinderExtensionTest extends TestCase
     public function testDefinition(): void
     {
         $tester = $this->createTester();
-        $tester->textDocument()->open(__FILE__, file_get_contents(__FILE__));
+        $tester->textDocument()->open(__FILE__, (string)file_get_contents(__FILE__));
 
         $response = $tester->requestAndWait('textDocument/definition', [
             'textDocument' => new TextDocumentIdentifier(__FILE__),
@@ -41,7 +40,7 @@ class LanguageServerReferenceFinderExtensionTest extends TestCase
     public function testTypeDefinition(): void
     {
         $tester = $this->createTester();
-        $tester->textDocument()->open(__FILE__, file_get_contents(__FILE__));
+        $tester->textDocument()->open(__FILE__, (String)file_get_contents(__FILE__));
 
         $response = $tester->requestAndWait('textDocument/typeDefinition', [
             'textDocument' => new TextDocumentIdentifier(__FILE__),
@@ -54,7 +53,7 @@ class LanguageServerReferenceFinderExtensionTest extends TestCase
     public function testReferenceFinder(): void
     {
         $tester = $this->createTester();
-        $tester->textDocument()->open(__FILE__, file_get_contents(__FILE__));
+        $tester->textDocument()->open(__FILE__, (string)file_get_contents(__FILE__));
 
         $response = $tester->requestAndWait('textDocument/references', [
             'textDocument' => new TextDocumentIdentifier(__FILE__),

@@ -20,7 +20,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
     /**
     * @dataProvider provideReferences
     */
-    public function testReferences(string $source, bool $includeDefinition = false): void
+    public function testReferences(string $source, bool $includeDefinition = false, bool $isDone = true): void
     {
         $uri = 'file:///root/testDoc';
         [$source, $selectionOffset, $expectedReferences] = $this->offsetsFromSource($source, $uri);
@@ -30,7 +30,9 @@ class TolerantVariableReferenceFinderTest extends TestCase
             ->build();
 
         $finder = new TolerantVariableReferenceFinder(new Parser(), $includeDefinition);
-        $actualReferences = iterator_to_array($finder->findReferences($document, ByteOffset::fromInt($selectionOffset)), false);
+        $generator = $finder->findReferences($document, ByteOffset::fromInt($selectionOffset));
+        $actualReferences = iterator_to_array($generator, false);
+
 
         $this->assertEquals(count($expectedReferences), count($actualReferences));
         foreach ($expectedReferences as $index => $reference) {
@@ -40,6 +42,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
             $this->assertEquals($reference->isNot(), $actualReferences[$index]->isNot());
             $this->assertEquals($reference->location()->range()->start(), $actualReferences[$index]->location()->range()->start());
         }
+        self::assertEquals($isDone, $generator->getReturn());
     }
 
     /**
@@ -48,7 +51,9 @@ class TolerantVariableReferenceFinderTest extends TestCase
     public function provideReferences(): Generator
     {
         yield 'not on variable' => [
-            '<?php $var1 = <>5;'
+            '<?php $var1 = <>5;',
+            false,
+            false,
         ];
 
         yield 'basic' => [
@@ -173,16 +178,28 @@ class TolerantVariableReferenceFinderTest extends TestCase
         yield 'skip: static property access' => [
             '<?php '.
                 'class C1 { static $prop1; function M1() { self::$pro<>p1 = 5; $var4 = self::$prop1; } }',
+            false,
+            false
         ];
 
         yield 'skip: static property declaration' => [
             '<?php '.
                 'class C1 { static $pr<>op1; function M1() { self::$prop1 = 5; $var4 = self::$prop1; } }',
+            false,
+            false
         ];
 
         yield 'skip: instance property declaration' => [
             '<?php '.
                 'class C1 { public $pr<>op1; function M1() { $this->prop1 = 5; $var4 = $this->prop1; } }',
+            false,
+            false
+        ];
+
+        yield 'skip: promoted property' => [
+            '<?php class C1 { public function _construct(private string $pr<>op1){ $this->prop1; } }',
+            false,
+            false
         ];
     }
 

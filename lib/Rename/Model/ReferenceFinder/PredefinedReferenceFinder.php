@@ -25,5 +25,6 @@ class PredefinedReferenceFinder implements ReferenceFinder
         foreach ($this->locations as $location) {
             yield $location;
         }
+        return true;
     }
 }

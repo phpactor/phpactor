@@ -1,0 +1,8 @@
+// File: source
+<?php
+echo <<<TA
+I'm a st<>ring
+TA;
+// File: expected
+<?php
+echo "I'm a string";

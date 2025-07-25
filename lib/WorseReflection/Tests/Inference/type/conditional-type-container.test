@@ -1,0 +1,35 @@
+<?php
+
+namespace Bar;
+
+use Bang\Foobar;
+
+interface ContainerInterface
+{
+    /**
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
+     * @throws ContainerExceptionInterface Error while retrieving the entry.
+     *
+     * @return mixed Entry.
+     */
+    public function get(string $id);
+}
+
+interface Container extends ContainerInterface
+{
+    /**
+     * @template T of object
+     * @param class-string<T>|string $id
+     * @return ($id is class-string<T> ? T : mixed)
+     */
+    public function get($id);
+}
+
+function foo(Container $container): void
+{
+    $map = $container->get(Foobar::class);
+
+    wrAssertType('Bang\Foobar', $map);
+}

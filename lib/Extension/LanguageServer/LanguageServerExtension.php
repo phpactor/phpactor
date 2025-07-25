@@ -76,6 +76,7 @@ use Phpactor\MapResolver\ResolverErrors;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use SplPriorityQueue;
 use Symfony\Component\Filesystem\Path;
 use Webmozart\Assert\Assert;
 use function array_filter;
@@ -458,19 +459,20 @@ class LanguageServerExtension implements Extension
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(CodeActionHandler::class, function (Container $container) {
-            $services = $this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER, CodeActionProvider::class);
-            $services = array_map(function (CodeActionProvider $provider) use ($container) {
-                return new TolerantCodeActionProvider($provider, $container->get(ClientApi::class));
-            }, $services);
-            if ($container->parameter(self::PARAM_PROFILE)->bool()) {
-                $services = array_map(
-                    fn (CodeActionProvider $provider) => new ProfilingCodeActionProvider(
-                        $provider,
-                        $this->logger($container)
-                    ),
-                    $services
+            $services = new SplPriorityQueue();
+            $profile = $container->parameter(self::PARAM_PROFILE)->bool();
+            foreach ($container->getServiceIdsForTag(self::TAG_CODE_ACTION_PROVIDER) as $serviceId => $attributes) {
+                $provider = new TolerantCodeActionProvider(
+                    $container->expect($serviceId, CodeActionProvider::class),
+                    $container->get(ClientApi::class),
                 );
+                if ($profile) {
+                    $provider = new ProfilingCodeActionProvider($provider, $this->logger($container));
+                }
+
+                $services->insert($provider, $attributes['priority'] ?? 0);
             }
+
             return new CodeActionHandler(
                 /** @phpstan-ignore-next-line */
                 new AggregateCodeActionProvider(...$services),

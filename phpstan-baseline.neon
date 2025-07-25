@@ -676,11 +676,6 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/ChainTolerantCompletor.php
 
 		-
-			message: "#^Access to an undefined property Microsoft\\\\PhpParser\\\\Node\\:\\:\\$openBrace\\.$#"
-			count: 1
-			path: lib/Completion/Bridge/TolerantParser/CompletionContext.php
-
-		-
 			message: "#^Cannot call method getEndPosition\\(\\) on Microsoft\\\\PhpParser\\\\Node\\|null\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/CompletionContext.php
@@ -801,11 +796,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseClassMemberCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseClassMemberCompletorTest.php
-
-		-
 			message: "#^Class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseConstantCompletor does not have a constructor and must be instantiated without any parameters\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseConstantCompletorTest.php
@@ -869,16 +859,6 @@ parameters:
 			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:create\\(\\) has parameter \\$completors with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\LimitingCompletorTest\\:\\:primeInnerCompletor\\(\\) has parameter \\$suggestions with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\LimitingCompletorTest\\:\\:suggestion\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$completor of class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\LimitingCompletor constructor expects Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor, object given\\.$#"
@@ -1757,7 +1737,7 @@ parameters:
 
 		-
 			message: "#^Cannot access an offset on mixed\\.$#"
-			count: 1
+			count: 2
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
@@ -3731,11 +3711,6 @@ parameters:
 			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
 
 		-
-			message: "#^Parameter \\#2 \\$path of method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Model\\\\WorkspaceSymbolProvider\\:\\:toLspPosition\\(\\) expects string, string\\|null given\\.$#"
-			count: 6
-			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerIndexer/Tests/IntegrationTestCase.php
@@ -3826,11 +3801,6 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\HighlightHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
@@ -3857,11 +3827,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#3 \\$definitionLocator of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler constructor expects Phpactor\\\\ReferenceFinder\\\\DefinitionLocator, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
-
-		-
-			message: "#^Parameter \\#6 \\$timeoutSeconds of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler constructor expects float, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
 
@@ -4062,16 +4027,6 @@ parameters:
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractor\\:\\:parse\\(\\) should return Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult but returns \\$this\\(Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractor\\)\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
-
-		-
-			message: "#^Parameter \\#2 \\$offsets of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult constructor expects array\\<string, array\\<Phpactor\\\\TextDocument\\\\ByteOffset\\>\\>, array\\<int\\|string, array\\<int\\<0, max\\>, Phpactor\\\\TextDocument\\\\ByteOffset\\>\\> given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
-
-		-
-			message: "#^Parameter \\#3 \\$ranges of class Phpactor\\\\Extension\\\\LanguageServerRename\\\\Tests\\\\Util\\\\OffsetExtractorResult constructor expects array\\<string, array\\<Phpactor\\\\TextDocument\\\\ByteOffsetRange\\>\\>, array\\<int\\|string, array\\<int\\<0, max\\>, Phpactor\\\\TextDocument\\\\ByteOffsetRange\\>\\> given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerRename/Tests/Util/OffsetExtractor.php
 
@@ -5306,11 +5261,6 @@ parameters:
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
 
 		-
-			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
-
-		-
 			message: "#^Parameter \\#1 \\.\\.\\.\\$paths of static method Symfony\\\\Component\\\\Filesystem\\\\Path\\:\\:join\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/Command/IndexBuildCommand.php
@@ -5414,11 +5364,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$time of class Amp\\\\Delayed constructor expects int, mixed given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/Rpc/IndexHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of method Phpactor\\\\Indexer\\\\Model\\\\DirtyDocumentTracker\\:\\:markDirty\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Indexer.php
 
 		-
 			message: "#^Cannot call method references\\(\\) on Phpactor\\\\Indexer\\\\Model\\\\Record\\\\FunctionRecord\\|null\\.$#"
@@ -5729,16 +5674,6 @@ parameters:
 			message: "#^Offset 'scheme' does not exist on array\\{0\\?\\: string, scheme\\?\\: non\\-falsy\\-string\\|null, 1\\?\\: non\\-falsy\\-string\\|null, path\\?\\: non\\-empty\\-string\\|null, 2\\?\\: non\\-empty\\-string\\|null\\}\\.$#"
 			count: 1
 			path: lib/TextDocument/TextDocumentUri.php
-
-		-
-			message: "#^Parameter \\#2 \\$name of method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:find\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
-
-		-
-			message: "#^Parameter \\#3 \\$uri of method Phpactor\\\\WorseReferenceFinder\\\\TolerantVariableReferenceFinder\\:\\:find\\(\\) expects string, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/WorseReferenceFinder/TolerantVariableReferenceFinder.php
 
 		-
 			message: "#^Method Phpactor\\\\WorseReferenceFinder\\\\WorsePlainTextClassDefinitionLocator\\:\\:resolveImportTable\\(\\) return type has no value type specified in iterable type array\\.$#"

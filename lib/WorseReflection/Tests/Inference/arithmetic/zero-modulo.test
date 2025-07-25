@@ -1,0 +1,3 @@
+<?php
+
+wrAssertType('0', 10 % 0);

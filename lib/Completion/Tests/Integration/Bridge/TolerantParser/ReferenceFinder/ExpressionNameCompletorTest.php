@@ -143,7 +143,7 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
                 NameSearchResult::create('class', 'Class'),
                 NameSearchResult::create('class', 'FOOBAR'),
             ],
-            '<?php class Foobar { private const FOO; private const BAR = self::F<>  }',
+            '<?php class Foobar { private const FOO = 1; private const BAR = self::F<>  }',
             function (Suggestions $suggestions): void {
                 self::assertCount(0, $suggestions);
             }
@@ -155,7 +155,7 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
                 NameSearchResult::create('class', 'Class'),
                 NameSearchResult::create('constant', 'FOO'),
             ],
-            '<?php class Foobar { private const FOO; private const BAR = FOO<>  }',
+            '<?php class Foobar { private const FOO = 1; private const BAR = FOO<>  }',
             function (Suggestions $suggestions): void {
                 self::assertCount(1, $suggestions);
                 self::assertEquals(Suggestion::TYPE_CONSTANT, $suggestions->at(0)->type());
@@ -163,11 +163,22 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
             }
         ];
 
+        yield 'class name inside heredoc' => [
+            [
+                NameSearchResult::create('class', 'Foobar'),
+                NameSearchResult::create('constant', 'FOO'),
+            ],
+            '<?php $x = <<<F<>',
+            function (Suggestions $suggestions): void {
+                self::assertCount(0, $suggestions);
+            }
+        ];
+
         yield 'nested class name inside class constant declaration' => [
             [
                 NameSearchResult::create('constant', 'FOO'),
             ],
-            '<?php class Foobar { private const FOO; private const BAR = [ FOO<>  }',
+            '<?php class Foobar { private const FOO = 1; private const BAR = [ FOO<>  }',
             function (Suggestions $suggestions): void {
                 self::assertCount(1, $suggestions);
                 self::assertEquals(Suggestion::TYPE_CONSTANT, $suggestions->at(0)->type());

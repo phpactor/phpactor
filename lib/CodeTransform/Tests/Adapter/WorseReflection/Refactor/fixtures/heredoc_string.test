@@ -1,0 +1,10 @@
+// File: source
+<?php
+
+echo "Tes<>ting";
+// File: expected
+<?php
+
+echo <<<TEXT
+Testing
+TEXT;

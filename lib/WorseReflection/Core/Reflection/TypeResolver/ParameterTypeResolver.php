@@ -39,7 +39,7 @@ class ParameterTypeResolver
             ClassHierarchyResolver::INCLUDE_PARENT | ClassHierarchyResolver::INCLUDE_INTERFACE
         ))->resolve($functionLike->class());
 
-        foreach ($hierarchy as $classLike) {
+        foreach (array_reverse($hierarchy) as $classLike) {
             // find declaring class
             if (!$classLike->methods()->has($functionLike->name())) {
                 continue;
@@ -50,7 +50,9 @@ class ParameterTypeResolver
             if (!$type->isDefined()) {
                 continue;
             }
+
             $aliased = $classLike->docblock()->typeAliases()->forType($type);
+
             if ($aliased) {
                 return $aliased;
             }

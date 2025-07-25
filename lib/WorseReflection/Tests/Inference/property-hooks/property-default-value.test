@@ -1,0 +1,18 @@
+<?php
+
+class Example
+{
+    private bool $modified = false;
+
+    public string $foo = 'bar' {
+        get => $this->foo . ($this->modified ? ' (modified)' : '');
+        set(string $value) {
+            wrAssertType('Example', $this);
+            wrAssertType('string', $value);
+            wrAssertType('<missing>', $modified);
+
+        }
+    }
+}
+
+wrAssertType('string', (new Example())->foo);
