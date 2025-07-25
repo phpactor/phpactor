@@ -37,7 +37,7 @@ class ShortNameMatchesTo extends Criteria
     {
         $index = -1;
 
-        foreach(mb_str_split($search) as $char) {
+        foreach (mb_str_split($search) as $char) {
             $newIndex = mb_strpos($subject, $char, $index + 1);
 
             if (false === $newIndex) {
