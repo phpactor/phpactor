@@ -16,7 +16,7 @@ use Phpactor\WorseReflection\Core\Type\SelfType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 use Phpactor\WorseReflection\Core\Type\ObjectType;
 
-class WorseTypeRenderer74 implements WorseTypeRenderer
+class WorseTypeRenderer74 extends WorseTypeRenderer70 implements WorseTypeRenderer
 {
     public function render(Type $type): ?string
     {
@@ -68,6 +68,6 @@ class WorseTypeRenderer74 implements WorseTypeRenderer
             return $type->toPhpString();
         }
 
-        return null;
+        return parent::render($type);
     }
 }

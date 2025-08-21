@@ -1800,6 +1800,22 @@ File extensions (e.g. `php`) for files that should be indexed
 **Default**: ``["php","phar"]``
 
 
+.. _param_indexer.search_include_patterns:
+
+
+``indexer.search_include_patterns``
+"""""""""""""""""""""""""""""""""""
+
+
+Type: array
+
+
+When searching the index exclude records whose fully qualified names match any of these regex patterns (use to exclude suggestions from search results). Namespace separators must be escaped as `\\\\` for example `^Foo\\\\` to include all namespaces whose first segment is `Foo`
+
+
+**Default**: ``[]``
+
+
 .. _ObjectRendererExtension:
 
 
@@ -2113,6 +2129,26 @@ Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php
 
 
 **Default**: ``null``
+
+
+.. _LanguageServerHighlightExtension:
+
+
+LanguageServerHighlightExtension
+--------------------------------
+
+
+.. _param_language_server_highlight.enabled:
+
+
+``language_server_highlight.enabled``
+"""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the highlighter (can be expensive on large documents)
+
+
+**Default**: ``true``
 
 
 .. _PhpCodeSnifferExtension:
