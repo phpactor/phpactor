@@ -456,6 +456,18 @@ class UndefinedVariableProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'map unpacking',
+            source: <<<'PHP'
+                <?php
+                $test = [['a' => 10, 'b' => 2]];
+                foreach ($test as ['a' => $a, 'b' => $b]) {}
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: '@var declaration in global context',
             source: <<<'PHP'
                 <?php
