@@ -17,14 +17,13 @@ final class NameSearchResult
     /**
      * @param string|FullyQualifiedName $name
      * @param string|NameSearchResultType $type
-     * @param string|TextDocumentUri $uri
      */
-    public static function create($type, $name, $uri = null): self
+    public static function create($type, $name, ?TextDocumentUri $uri = null): self
     {
         return new self(
             is_string($type) ? new NameSearchResultType($type) : $type,
             is_string($name) ? FullyQualifiedName::fromString($name) : $name,
-            $uri ? (is_string($uri) ? TextDocumentUri::fromString($uri) : $uri) : null
+            $uri
         );
     }
 

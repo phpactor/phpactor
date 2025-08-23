@@ -25,6 +25,10 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
             'Example.php',
             '<?php namespace Namespaced; class NsTest { /** @return Baz[] */public function bazes(): array {}} class Baz{}'
         );
+        $this->workspace()->put(
+            'Example2.php',
+            '<?php namespace Namespaced; class NsTest2 { /** @return Baz[] */public function bazes(): array {}} class Baz{}'
+        );
         $reflector = $this->reflectorForWorkspace($example);
         $transformer = $this->createTransformer($reflector);
         $transformed = wait($transformer->transform($source))->apply($source);
@@ -331,6 +335,46 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
                     public function baz()
                     {
                         yield 'foo';
+                    }
+                }
+                EOT
+        ];
+
+        yield 'generator with unioned namespaced classes' => [
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                use Namespaced\NsTest;
+                use Namespaced\NsTest2;
+
+                class Foobar {
+                    public function baz(): Generator
+                    {
+                        yield ['1', new NSTest()];
+                        yield ['2', new NSTest2()];
+                    }
+                }
+                EOT
+            ,
+            <<<'EOT'
+                <?php
+
+                namespace Foo;
+
+                use Generator;
+                use Namespaced\NsTest;
+                use Namespaced\NsTest2;
+
+                class Foobar {
+                    /**
+                     * @return Generator<array{string,NSTest}|array{string,NSTest2}>
+                     */
+                    public function baz(): Generator
+                    {
+                        yield ['1', new NSTest()];
+                        yield ['2', new NSTest2()];
                     }
                 }
                 EOT

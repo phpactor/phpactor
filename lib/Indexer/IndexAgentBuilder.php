@@ -31,6 +31,7 @@ use Phpactor\Indexer\Model\Record\FunctionRecord;
 use Phpactor\Indexer\Model\SearchClient\HydratingSearchClient;
 use Phpactor\Indexer\Model\SearchIndex;
 use Phpactor\Indexer\Model\SearchIndex\FilteredSearchIndex;
+use Phpactor\Indexer\Model\SearchIndex\SearchIncludeIndex;
 use Phpactor\Indexer\Model\SearchIndex\ValidatingSearchIndex;
 use Phpactor\Indexer\Model\TestIndexAgent;
 use Psr\Log\LoggerInterface;
@@ -65,6 +66,11 @@ final class IndexAgentBuilder
     private ?array $indexers = null;
 
     private bool $followSymlinks = false;
+
+    /**
+     * @var list<string>
+     */
+    private array $searchIncludePatterns = [];
 
     /**
      * @var list<string>
@@ -152,6 +158,16 @@ final class IndexAgentBuilder
 
         return $this;
     }
+    /**
+     * @param list<string> $searchIncludePatterns
+     */
+    public function setSearchIncludePatterns(array $searchIncludePatterns): self
+    {
+        $this->searchIncludePatterns = $searchIncludePatterns;
+
+        return $this;
+    }
+
 
     /**
      * @param list<string> $supportedExtensions
@@ -208,6 +224,9 @@ final class IndexAgentBuilder
             FunctionRecord::RECORD_TYPE,
             ConstantRecord::RECORD_TYPE,
         ]);
+        if ($this->searchIncludePatterns !== []) {
+            $search = new SearchIncludeIndex($search, $this->searchIncludePatterns);
+        }
 
         return $search;
     }

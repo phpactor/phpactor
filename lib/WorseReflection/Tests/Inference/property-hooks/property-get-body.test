@@ -1,0 +1,12 @@
+<?php
+
+class Some
+{
+    private string $bar = 'b';
+    public string $foobar {
+        get {
+            $foo = 'bar';
+            wrAssertType('"bar"', $foo);
+        }
+    }
+}

@@ -1443,6 +1443,19 @@ Stop searching for references after this time (in seconds) has expired
 **Default**: ``60``
 
 
+.. _param_language_server_reference_finder.soft_timeout:
+
+
+``language_server_reference_finder.soft_timeout``
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+Interupt and ask for confirmation to continue after this timeout (in seconds)
+
+
+**Default**: ``10``
+
+
 .. _LanguageServerWorseReflectionExtension:
 
 
@@ -1787,6 +1800,22 @@ File extensions (e.g. `php`) for files that should be indexed
 **Default**: ``["php","phar"]``
 
 
+.. _param_indexer.search_include_patterns:
+
+
+``indexer.search_include_patterns``
+"""""""""""""""""""""""""""""""""""
+
+
+Type: array
+
+
+When searching the index exclude records whose fully qualified names match any of these regex patterns (use to exclude suggestions from search results). Namespace separators must be escaped as `\\\\` for example `^Foo\\\\` to include all namespaces whose first segment is `Foo`
+
+
+**Default**: ``[]``
+
+
 .. _ObjectRendererExtension:
 
 
@@ -1932,6 +1961,22 @@ Path to psalm if different from vendor/bin/psalm
 
 
 **Default**: ``"%project_root%\/vendor\/bin\/psalm"``
+
+
+.. _param_language_server_psalm.config:
+
+
+``language_server_psalm.config``
+""""""""""""""""""""""""""""""""
+
+
+Type: string
+
+
+Path to psalm config. Like %project_root%/psalm.xml
+
+
+**Default**: ``""``
 
 
 .. _param_language_server_psalm.show_info:
@@ -2084,6 +2129,26 @@ Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php
 
 
 **Default**: ``null``
+
+
+.. _LanguageServerHighlightExtension:
+
+
+LanguageServerHighlightExtension
+--------------------------------
+
+
+.. _param_language_server_highlight.enabled:
+
+
+``language_server_highlight.enabled``
+"""""""""""""""""""""""""""""""""""""
+
+
+Enable or disable the highlighter (can be expensive on large documents)
+
+
+**Default**: ``true``
 
 
 .. _PhpCodeSnifferExtension:

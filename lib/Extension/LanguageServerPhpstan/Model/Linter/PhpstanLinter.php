@@ -10,9 +10,6 @@ use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\TextDocument\TextDocumentUri;
 
-use function Safe\tempnam;
-use function Safe\file_put_contents;
-
 class PhpstanLinter implements Linter
 {
     public function __construct(

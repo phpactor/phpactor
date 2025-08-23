@@ -12,6 +12,7 @@ use Phpactor\Extension\Configuration\ConfigurationExtension;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
 use Phpactor\Extension\LanguageServerConfiguration\LanguageServerConfigurationExtension;
+use Phpactor\Extension\LanguageServerHighlight\LanguageServerHighlightExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
@@ -21,6 +22,7 @@ use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtensio
 use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
 use Phpactor\Extension\LanguageServerEvaluatableExpression\LanguageServerEvaluatableExpressionExtension;
+use Phpactor\Extension\LanguageServerInlineValue\LanguageServerInlineValueExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanSuggestExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
@@ -178,6 +180,7 @@ class Phpactor
             LanguageServerIndexerExtension::class,
             LanguageServerHoverExtension::class,
             LanguageServerEvaluatableExpressionExtension::class,
+            LanguageServerInlineValueExtension::class,
             LanguageServerBridgeExtension::class,
             LanguageServerCodeTransformExtension::class,
             LanguageServerSymbolProviderExtension::class,
@@ -195,6 +198,7 @@ class Phpactor
             LanguageServerPsalmSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             LanguageServerPhpCsFixerSuggestExtension::class,
+            LanguageServerHighlightExtension::class,
             PhpCodeSnifferExtension::class,
             PhpCodeSnifferSuggestExtension::class,
 

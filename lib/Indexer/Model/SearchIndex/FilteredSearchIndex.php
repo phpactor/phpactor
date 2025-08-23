@@ -7,6 +7,9 @@ use Phpactor\Indexer\Model\Query\Criteria;
 use Phpactor\Indexer\Model\Record;
 use Phpactor\Indexer\Model\SearchIndex;
 
+/**
+ * Only writes the given record types to the underlying index.
+ */
 class FilteredSearchIndex implements SearchIndex
 {
     /**
