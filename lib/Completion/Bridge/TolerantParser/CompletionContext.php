@@ -20,6 +20,7 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
@@ -66,6 +67,7 @@ class CompletionContext
 
         if (
             $node instanceof Variable
+            || $node instanceof ObjectCreationExpression
             || $node instanceof ExpressionStatement
             || $node instanceof MemberAccessExpression
             || $node instanceof ScopedPropertyAccessExpression

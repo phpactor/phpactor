@@ -103,6 +103,10 @@ class CompletionContextTest extends TestCase
             '<?php class Foo { public function bar() { if (true) { return false; } foreach(<> } }',
             true,
         ];
+        yield 'not after new keyword' => [
+            '<?php class Foo { public function foo() { $x = new <> }',
+            false,
+        ];
     }
 
     /**

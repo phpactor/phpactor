@@ -101,6 +101,10 @@ class KeywordCompletorTest extends TolerantCompletorTestCase
             '<?php $<>',
             [],
         ];
+        yield 'match unexpected after new' => [
+            '<?php new <>',
+            [],
+        ];
     }
 
     protected function createTolerantCompletor(TextDocument $source): TolerantCompletor
