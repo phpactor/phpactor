@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Phpactor\Container\Container;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Console\ConsoleExtension;
+use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\LanguageServer\Tests\Example\TestExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -34,7 +35,8 @@ class LanguageServerTestCase extends TestCase
             ConsoleExtension::class,
             LanguageServerExtension::class,
             LoggingExtension::class,
-            FilePathResolverExtension::class
+            FilePathResolverExtension::class,
+            CoreExtension::class,
         ], array_merge([
             LanguageServerExtension::PARAM_CATCH_ERRORS => false,
         ], $params));

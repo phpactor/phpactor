@@ -12,6 +12,7 @@ use Phpactor\Rename\Model\Renamer;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\ByteOffsetRange;
+use Phpactor\TextDocument\Exception\TextDocumentNotFound;
 use Phpactor\TextDocument\Location;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\TextDocument\TextDocumentLocator;
@@ -52,7 +53,11 @@ abstract class AbstractReferenceRenamer implements Renamer
                 continue;
             }
 
-            yield $this->renameEdit($reference->location(), $range, $originalName, $newName);
+            try {
+                yield $this->renameEdit($reference->location(), $range, $originalName, $newName);
+            } catch (TextDocumentNotFound) {
+                continue;
+            }
         }
     }
 

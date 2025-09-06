@@ -1,6 +1,16 @@
 Changelog
 =========
 
+## master
+
+Security:
+
+  - Ask permission before loading project-level `.phpactor.json`
+
+Bug fixes:
+
+  - rename: Do not throw error if there is a reference to a now-non-existing file.
+
 ## 2025-07-25.0
 
 Improvements:

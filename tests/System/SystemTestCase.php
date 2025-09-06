@@ -19,6 +19,7 @@ abstract class SystemTestCase extends IntegrationTestCase
             $args
         ), null, [
             'XDG_CACHE_HOME' => __DIR__ . '/../Assets/Cache',
+            'PHPACTOR_UNCONDITIONAL_TRUST' => true,
         ]);
 
         if ($stdin) {

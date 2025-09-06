@@ -4,6 +4,7 @@ namespace Phpactor\Extension\LanguageServerConfiguration\Listener;
 
 use Generator;
 use Phpactor\Configurator\Configurator;
+use Phpactor\Extension\Core\Trust\Trust;
 use Phpactor\LanguageServerProtocol\MessageActionItem;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Event\Initialized;
@@ -16,8 +17,7 @@ class AutoConfigListener implements ListenerProviderInterface
     const YES = 'yes';
     const NO = 'no';
 
-
-    public function __construct(private Configurator $configurator, private ClientApi $clientApi)
+    public function __construct(private Configurator $configurator, private ClientApi $clientApi, Trust $trust)
     {
     }
 
