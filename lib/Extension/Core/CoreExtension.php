@@ -5,9 +5,11 @@ namespace Phpactor\Extension\Core;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Command\DebugContainerCommand;
+use Phpactor\Extension\Core\Command\TrustCommand;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\Core\Trust\Trust;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
@@ -39,6 +41,9 @@ class CoreExtension implements Extension
     const PARAM_COMMAND = 'command';
     const PARAM_MIN_MEMORY_LIMIT = 'core.min_memory_limit';
     const PARAM_SCHEMA = '$schema';
+    const PARAM_PROJECT_CONFIG_CANDIDATES = 'core.project_config_candidates';
+    const PARAM_TRUST = 'core.trust';
+    const PARAM_TRUSTED = 'core.trusted';
 
     public function configure(Resolver $schema): void
     {
@@ -48,6 +53,9 @@ class CoreExtension implements Extension
             self::PARAM_COMMAND => null,
             self::PARAM_MIN_MEMORY_LIMIT => 1610612736,
             self::PARAM_SCHEMA => '',
+            self::PARAM_PROJECT_CONFIG_CANDIDATES => [],
+            self::PARAM_TRUST => new Trust([], null),
+            self::PARAM_TRUSTED => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
@@ -55,6 +63,9 @@ class CoreExtension implements Extension
             self::PARAM_DUMPER => 'Name of the "dumper" (renderer) to use for some CLI commands',
             self::PARAM_MIN_MEMORY_LIMIT => 'Ensure that PHP has a memory_limit of at least this amount in bytes',
             self::PARAM_SCHEMA => 'Path to JSON schema, which can be used for config autocompletion, use phpactor config:initialize to update',
+            self::PARAM_PROJECT_CONFIG_CANDIDATES => '(internal) list of potential project-level configuration files',
+            self::PARAM_TRUST => '(internal) map of trusted project directories',
+            self::PARAM_TRUSTED => '(internal) if the configuration is trusted',
         ]);
     }
 
@@ -82,6 +93,14 @@ class CoreExtension implements Extension
                 $container
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'container:dump']]);
+
+        $container->register('command.trust', function (Container $container) {
+            return new TrustCommand(
+                /** @phpstan-ignore argument.type */
+                $container->parameter(self::PARAM_TRUST)->value(),
+                $container->parameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)->string(),
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:trust']]);
 
         $container->register('command.cache_clear', function (Container $container) {
             return new CacheClearCommand(
