@@ -5,6 +5,7 @@
     "require": {
         "php": "^8.1",
         "ext-mbstring": "*",
+        "ext-tokenizer": "*",
         "composer/xdebug-handler": "^3.0",
         "symfony/yaml": "^5.1",
         "phpactor/container": "^3.0",
