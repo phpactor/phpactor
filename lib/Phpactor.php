@@ -121,7 +121,8 @@ class Phpactor
             [$projectRoot . '/.phpactor.yml', 'yaml'],
         ];
 
-        if ($trust->isTrusted($projectRoot) === true) {
+        $trusted = $trust->isTrusted($projectRoot);
+        if ($trusted === true) {
             foreach ($projectCandidates as [$path, $type]) {
                 $loader = $loader->addCandidate($path, $type);
             }
@@ -133,6 +134,7 @@ class Phpactor
         $config[CoreExtension::PARAM_PROJECT_CONFIG_CANDIDATES] = array_column($projectCandidates, 0);
 
         $config[CoreExtension::PARAM_TRUST] = $trust;
+        $config[CoreExtension::PARAM_TRUSTED] = $trusted;
 
         if ($phpactorBin) {
             $config[LanguageServerExtension::PARAM_PHPACTOR_BIN] = $phpactorBin;
@@ -170,7 +172,8 @@ class Phpactor
             unset($xdebug);
         }
 
-        if (!$trust->isTrusted($projectRoot)) {
+        $trusted = $trust->isTrusted($projectRoot);
+        if (!$trusted) {
             foreach ($projectCandidates as [$candidate, $_]) {
                 if (file_exists($candidate)) {
                     $errorOutput->writeln(sprintf(

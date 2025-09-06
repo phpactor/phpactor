@@ -19,6 +19,7 @@ abstract class SystemTestCase extends IntegrationTestCase
             $args
         ), null, [
             'XDG_CACHE_HOME' => __DIR__ . '/../Assets/Cache',
+            'XDG_DATA_HOME' => $this->workspace()->path(),
             'PHPACTOR_UNCONDITIONAL_TRUST' => true,
         ]);
 

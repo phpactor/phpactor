@@ -43,6 +43,7 @@ class CoreExtension implements Extension
     const PARAM_SCHEMA = '$schema';
     const PARAM_PROJECT_CONFIG_CANDIDATES = 'core.project_config_candidates';
     const PARAM_TRUST = 'core.trust';
+    const PARAM_TRUSTED = 'core.trusted';
 
     public function configure(Resolver $schema): void
     {
@@ -54,6 +55,7 @@ class CoreExtension implements Extension
             self::PARAM_SCHEMA => '',
             self::PARAM_PROJECT_CONFIG_CANDIDATES => [],
             self::PARAM_TRUST => new Trust([], null),
+            self::PARAM_TRUSTED => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
@@ -63,6 +65,7 @@ class CoreExtension implements Extension
             self::PARAM_SCHEMA => 'Path to JSON schema, which can be used for config autocompletion, use phpactor config:initialize to update',
             self::PARAM_PROJECT_CONFIG_CANDIDATES => '(internal) list of potential project-level configuration files',
             self::PARAM_TRUST => '(internal) map of trusted project directories',
+            self::PARAM_TRUSTED => '(internal) if the configuration is trusted',
         ]);
     }
 

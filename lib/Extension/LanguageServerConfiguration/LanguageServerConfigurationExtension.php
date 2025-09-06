@@ -6,6 +6,7 @@ use Phpactor\Configurator\Configurator;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\Core\CoreExtension;
 use Phpactor\Extension\LanguageServerConfiguration\Listener\AutoConfigListener;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
@@ -25,6 +26,7 @@ class LanguageServerConfigurationExtension implements Extension
             return new AutoConfigListener(
                 $container->get(Configurator::class),
                 $container->get(ClientApi::class),
+                $container->parameter(CoreExtension::PARAM_TRUSTED)->bool(),
             );
         }, [
             LanguageServerExtension::TAG_LISTENER_PROVIDER => [],
