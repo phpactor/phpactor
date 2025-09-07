@@ -3,13 +3,17 @@ Changelog
 
 ## master
 
+Improvements:
+
+  - Improved inlay type hints #2825 @dantleech
+
 Security:
 
-  - Ask permission before loading project-level `.phpactor.json`
+  - Ask permission before loading project-level `.phpactor.json` @dantleech
 
 Bug fixes:
 
-  - rename: Do not throw error if there is a reference to a now-non-existing file.
+  - rename: Do not throw error if there is a reference to a now-non-existing file. @dantleech
 
 ## 2025-07-25.0
 
