@@ -48,7 +48,7 @@ class WorseExtractMethod implements ExtractMethod
         if ($offsetEnd == $offsetStart || $offsetEnd - $offsetStart === strlen($source->__toString())) {
             return false;
         }
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->parseSourceFile($source->__toString(), $source->uri());
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
         $startNode = $node->getDescendantNodeAtPosition($offsetStart);
 
@@ -426,7 +426,7 @@ class WorseExtractMethod implements ExtractMethod
 
     private function isSelectionAnExpression(SourceCode $source, int $offsetStart, int $offsetEnd): bool
     {
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->parseSourceFile($source->__toString(), $source->uri());
         $endNode = $node->getDescendantNodeAtPosition($offsetEnd);
 
         // end node is in the statement body, get last child node

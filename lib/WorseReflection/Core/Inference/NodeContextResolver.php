@@ -5,7 +5,9 @@ namespace Phpactor\WorseReflection\Core\Inference;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Token;
+use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\WorseReflection\Core\Cache;
+use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Reflector;
@@ -21,14 +23,9 @@ class NodeContextResolver
         private Reflector $reflector,
         private DocBlockFactory $docblockFactory,
         private LoggerInterface $logger,
-        private Cache $cache,
+        private CacheForDocument $cache,
         private array $resolverMap = []
     ) {
-    }
-
-    public function withCache(Cache $cache):self
-    {
-        return new self($this->reflector, $this->docblockFactory, $this->logger, $cache, $this->resolverMap);
     }
 
     /**
@@ -46,6 +43,7 @@ class NodeContextResolver
 
     public function reflector(): Reflector
     {
+
         return $this->reflector;
     }
 
@@ -69,16 +67,24 @@ class NodeContextResolver
             return NodeContext::none();
         }
 
-        $key = 'sc:'.spl_object_id($node).':'.$frame->version();
+        if (!$node instanceof Node) {
+            throw new CouldNotResolveNode(sprintf(
+                'Non-node class passed to resolveNode, got "%s"',
+                get_class($node)
+            ));
+        }
 
-        return $this->cache->getOrSet($key, function () use ($frame, $node) {
-            if (false === $node instanceof Node) {
-                throw new CouldNotResolveNode(sprintf(
-                    'Non-node class passed to resolveNode, got "%s"',
-                    get_class($node)
-                ));
-            }
+        $key = 'node_resolver.'.spl_object_id($node).'.'.$frame->version();
 
+        if (!$node->getUri()) {
+            $this->logger->debug(sprintf('cache miss document without URI "%s"', $key));
+            $context = $this->doResolveNode($frame, $node);
+            $context = $context->withScope(new ReflectionScope($this->reflector, $node));
+
+            return $context;
+        }
+
+        return $this->cache->getOrSet(TextDocumentUri::fromString($node->getUri()), $key, function () use ($frame, $node) {
             $context = $this->doResolveNode($frame, $node);
             $context = $context->withScope(new ReflectionScope($this->reflector, $node));
 
@@ -88,9 +94,9 @@ class NodeContextResolver
 
     private function doResolveNode(Frame $frame, Node $node): NodeContext
     {
-        $this->logger->debug(sprintf('Resolving: %s', get_class($node)));
 
         if (isset($this->resolverMap[get_class($node)])) {
+            $this->logger->debug(sprintf('Resolving: %s %s', $node->getUri() ?? '<unknown>', get_class($node)));
             return $this->resolverMap[get_class($node)]->resolve($this, $frame, $node);
         }
 

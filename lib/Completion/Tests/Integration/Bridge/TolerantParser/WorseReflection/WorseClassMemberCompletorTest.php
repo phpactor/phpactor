@@ -8,6 +8,8 @@ use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompleto
 use Phpactor\ObjectRenderer\ObjectRendererBuilder;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
+use Phpactor\WorseReflection\Core\CacheForDocument;
+use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseClassMemberCompletor;
 use Generator;
@@ -1064,6 +1066,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
     {
         $reflector = ReflectorBuilder::create()
             ->addMemberProvider(new DocblockMemberProvider())
+            ->withCacheForDocument(new CacheForDocument(fn () => new StaticCache()))
             ->addSource($source)->build();
 
         return new WorseClassMemberCompletor(
