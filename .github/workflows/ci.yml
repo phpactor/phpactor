@@ -91,6 +91,7 @@ jobs:
                     composer validate --strict
                     composer install --optimize-autoloader --classmap-authoritative
                     bin/phpactor --version
+                    export PHPACTOR_UNCONDITIONAL_TRUST=1
                     git clone https://github.com/junegunn/vader.vim.git
 
             -

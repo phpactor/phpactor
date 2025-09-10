@@ -82,6 +82,8 @@ class LanguageServerReferenceFinderExtensionTest extends TestCase
             FilePathResolverExtension::class,
             LanguageServerBridgeExtension::class,
             TestIndexerExtension::class,
+        ], [
+            LanguageServerExtension::PARAM_ENABLE_TRUST_CHECK => false,
         ]);
 
         $builder = $container->get(LanguageServerBuilder::class);
