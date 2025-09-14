@@ -25,9 +25,23 @@
         system,
         ...
       }: let 
+        jaeger = pkgs.stdenv.mkDerivation {
+          pname = "jaeger";
+          version = "1.49.0";
+          src = pkgs.fetchurl {
+            url = "https://github.com/jaegertracing/jaeger/releases/download/v1.73.0/jaeger-1.73.0-linux-amd64.tar.gz";
+            hash = "sha256-1T179tK7Rc+YJDwO73xpDU19dJWHImIf0MzsgT5lx0U=";
+          };
+          phases = [ "unpackPhase" "installPhase" "fixupPhase" ];
+          installPhase = ''
+            mkdir -p $out/bin
+            install ./jaeger-all-in-one $out/bin
+          '';
+        };
         phpWithXdebug = (pkgs.php84.buildEnv {
           extensions = ({ enabled, all }: enabled ++ (with all; [
             xdebug
+            opentelemetry
           ]));
           extraConfig = ''
             xdebug.mode=debug
@@ -42,9 +56,11 @@
           name = "php-devshell";
 
           buildInputs = [
+            jaeger
             pkgs.python3
             phpWithXdebug
             pkgs.php84.packages.composer
+
           ];
           shellHook = ''
           if [ ! -d ".venv" ]; then
