@@ -3,7 +3,7 @@
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Phpactor\Application;
-
+use Phpactor\OpenTelemetry\Telemetry;
 
 foreach ([
     __DIR__ . '/../../../autoload.php',
@@ -41,6 +41,9 @@ require_once $autoloadFile;
 $phpactorBin = $argv[0];
 $application = new Application(realpath(dirname($autoloadFile)), $phpactorBin);
 $output = new ConsoleOutput();
+
+$instrumentation = new \OpenTelemetry\API\Instrumentation\CachedInstrumentation('acme_application', null, 'https://opentelemetry.io/schemas/1.36.0');
+Telemetry::register($instrumentation);;
 
 try {
     $application->run(null, $output);
