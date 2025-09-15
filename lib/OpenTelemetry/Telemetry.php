@@ -37,7 +37,6 @@ class Telemetry
                     $name = sprintf('NOT %s', $message->method);
                 } elseif ($message instanceof ResponseMessage) {
                     $name = 'RESPONSE';
-                    $nam
                 } else {
                     return;
                 }
@@ -46,7 +45,8 @@ class Telemetry
                 $builder = $instrumentation
                     ->tracer()
                     ->spanBuilder($name)
-                    ->setSpanKind(SpanKind::KIND_INTERNAL)
+                    ->setSpanKind(SpanKind::KIND_SERVER)
+                    ->setAttribute('params', $params)
                     ->setAttribute(CodeAttributes::CODE_FUNCTION_NAME, sprintf('%s::%s', $class, $function))
                     ->setParent($parent)
                     ->setAttribute(CodeAttributes::CODE_FILE_PATH, $filename)

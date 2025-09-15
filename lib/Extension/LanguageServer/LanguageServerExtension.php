@@ -708,6 +708,7 @@ class LanguageServerExtension implements Extension
 
         if (null !== $enabled) {
             Assert::isArray($enabled);
+
             if ($diff = array_diff($enabled, array_keys($providers))) {
                 throw new RuntimeException(sprintf(
                     'Unknown diagnostic provider(s) "%s", known providers: "%s"',
