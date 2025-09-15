@@ -67,6 +67,7 @@ class IntegrationTestCase extends TestCase
             ObjectRendererExtension::PARAM_TEMPLATE_PATHS => [],
             IndexerExtension::PARAM_ENABLED_WATCHERS => [],
             LanguageServerExtension::PARAM_DIAGNOSTIC_OUTSOURCE => false,
+            LanguageServerExtension::PARAM_ENABLE_TRUST_CHECK => false,
         ]);
 
         $builder = $container->get(LanguageServerBuilder::class);

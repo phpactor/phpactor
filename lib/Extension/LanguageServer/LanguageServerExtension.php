@@ -7,6 +7,7 @@ use Phly\EventDispatcher\EventDispatcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\Core\CoreExtension as PhpactorCoreExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
@@ -20,6 +21,7 @@ use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
+use Phpactor\Extension\LanguageServer\Listener\ProjectConfigTrustListener;
 use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
 use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
@@ -124,6 +126,7 @@ class LanguageServerExtension implements Extension
     public const PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT = 'language_server.diagnostic_outsource_timeout';
     public const PARAM_DIAGNOSTIC_EXCLUDE_PATHS = 'language_server.diagnostic_exclude_paths';
     public const PARAM_DIAGNOSTIC_IGNORE_CODES = 'language_server.diagnostic_ignore_codes';
+    public const PARAM_ENABLE_TRUST_CHECK = 'language_server.enable_trust_check';
 
     public function configure(Resolver $schema): void
     {
@@ -140,6 +143,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_OUTSOURCE => true,
             self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS => [],
             self::PARAM_DIAGNOSTIC_IGNORE_CODES => [],
+            self::PARAM_ENABLE_TRUST_CHECK => true,
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
@@ -150,6 +154,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 5,
         ]);
         $schema->setDescriptions([
+            self::PARAM_ENABLE_TRUST_CHECK => 'Check to see if project path is trusted before loading configurations from it',
             self::PARAM_TRACE => 'Log incoming and outgoing messages (needs log formatter to be set to ``json``)',
             self::PARAM_PROFILE => 'Logs timing information for incoming LSP requests',
             self::PARAM_METHOD_ALIAS_MAP => 'Allow method names to be re-mapped. Useful for maintaining backwards compatibility',
@@ -252,6 +257,20 @@ class LanguageServerExtension implements Extension
             return new InvalidConfigListener(
                 $container->get(ClientApi::class),
                 $container->has(ResolverErrors::class) ? $container->get(ResolverErrors::class) : new ResolverErrors([])
+            );
+        }, [
+            self::TAG_LISTENER_PROVIDER => [],
+        ]);
+
+        $container->register(ProjectConfigTrustListener::class, function (Container $container) {
+            if (false === $container->parameter(self::PARAM_ENABLE_TRUST_CHECK)->bool()) {
+                return null;
+            }
+            return new ProjectConfigTrustListener(
+                $container->get(ClientApi::class),
+                $container->parameter(PhpactorCoreExtension::PARAM_PROJECT_CONFIG_CANDIDATES)->listOfString(),
+                /** @phpstan-ignore argument.type */
+                $container->parameter(PhpactorCoreExtension::PARAM_TRUST)->value(),
             );
         }, [
             self::TAG_LISTENER_PROVIDER => [],
