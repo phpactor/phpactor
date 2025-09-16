@@ -120,6 +120,7 @@ class FileListTest extends IntegrationTestCase
             FilePath::fromString('/vendor/foo/bar/tests/footest.php'),
             FilePath::fromString('/vendor/foo/bar/src/bar.php'),
             FilePath::fromString('/vendor/foo/bar/src/foo.php'),
+            FilePath::fromString('/resultCache.php'),
         ]);
 
         self::assertEquals(
@@ -129,7 +130,7 @@ class FileListTest extends IntegrationTestCase
             ],
             iterator_to_array($list->includeAndExclude(
                 includePatterns: ['/**/*'],
-                excludePatterns: [ '/vendor/**/tests/*']
+                excludePatterns: ['/vendor/**/tests/*', '/resultCache.php']
             ))
         );
     }
