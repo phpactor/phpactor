@@ -8,7 +8,7 @@ interface StatusProvider
     /**
      * Return key => value status report
      *
-     * @return array<string,string>
+     * @return array<string,string|int>
      */
     public function provide(): array;
 }

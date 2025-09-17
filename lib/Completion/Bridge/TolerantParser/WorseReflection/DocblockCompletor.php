@@ -60,7 +60,7 @@ class DocblockCompletor implements TolerantCompletor
         // we re-parse the document because the above node is for the truncated
         // doc, which will often (if not always) result in a SourceFileNode
         // with no namespace context
-        $node = $this->parser->parseSourceFile($source->__toString());
+        $node = $this->parser->parseSourceFile($source->__toString(), $source->uri());
         $node = NodeUtil::firstDescendantNodeAfterOffset($node, $byteOffset->toInt());
 
         [$tag, $type, $var] = $this->extractTag($source, $byteOffset);

@@ -54,7 +54,7 @@ class WorseSignatureHelper implements SignatureHelper
 
     private function doSignatureHelp(TextDocument $textDocument, ByteOffset $offset): SignatureHelp // NOSONAR
     {
-        $rootNode = $this->parser->parseSourceFile($textDocument->__toString());
+        $rootNode = $this->parser->parseSourceFile($textDocument->__toString(), $textDocument->uri());
         $nodeAtPosition = $rootNode->getDescendantNodeAtPosition($offset->toInt());
 
         [$argsNode, $callNode] = $this->resolveArgsAndCallNode($nodeAtPosition, $offset);
