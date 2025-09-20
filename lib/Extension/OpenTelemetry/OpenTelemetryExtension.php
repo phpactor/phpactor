@@ -6,11 +6,12 @@ use Phpactor\Container\BootableExtension;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\OpenTelemetry\Model\HookBootstrap;
 use Phpactor\Extension\OpenTelemetry\Model\HookProvider;
 use Phpactor\MapResolver\Resolver;
 
-final class OpenTelemetryExtension implements Extension, BootableExtension
+final class OpenTelemetryExtension implements Extension, BootableExtension, OptionalExtension
 {
     const SERVICE_HOOK_PROVIDERS = 'open_telemetry.hook_providers';
     const TAG_HOOK_PROVIDER = 'open.telemetry.hook_provider';
@@ -34,5 +35,10 @@ final class OpenTelemetryExtension implements Extension, BootableExtension
     public function boot(Container $container): void
     {
         $container->get(HookBootstrap::class)->bootstrap();
+    }
+
+    public function name(): string
+    {
+        return 'open_telemetry';
     }
 }

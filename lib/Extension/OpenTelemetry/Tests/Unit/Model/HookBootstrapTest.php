@@ -41,7 +41,7 @@ class TestProvider implements HookProvider
             ExampleClass::class,
             'foo',
             function (TracerContext $tracer, PreContext $context) {
-                return $tracer->spanBuilder('test')->startSpan();
+                return $tracer->spanBuilder($context, 'test')->startSpan();
             },
         );
     }

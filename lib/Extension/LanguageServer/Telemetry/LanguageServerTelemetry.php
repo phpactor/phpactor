@@ -26,9 +26,11 @@ final class LanguageServerTelemetry implements HookProvider
             MiddlewareDispatcher::class,
             'dispatch',
             function (TracerContext $tracer, PreContext $context) {
+                $message = $context->param(0);
+                assert($message instanceof Message);
                 return $tracer->spanBuilder(
                     $context,
-                    self::resolveSpanName($context->param(0, Message::class)),
+                    self::resolveSpanName($message),
                 )->startSpan();
             },
             function (TracerContext $tracer, PostContext $context) {

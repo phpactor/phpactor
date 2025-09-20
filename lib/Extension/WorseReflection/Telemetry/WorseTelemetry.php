@@ -10,6 +10,7 @@ use Phpactor\Extension\OpenTelemetry\Model\HookProvider;
 use Phpactor\Extension\OpenTelemetry\Model\PreContext;
 use Phpactor\Extension\OpenTelemetry\Model\TracerContext;
 use Phpactor\WorseReflection\Core\Reflector\CoreReflector;
+use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
 use Phpactor\WorseReflection\Reflector;
 use ReflectionClass;
@@ -21,6 +22,15 @@ class WorseTelemetry implements HookProvider
         $reflection = new ReflectionClass(Reflector::class);
         foreach ($reflection->getMethods() as $method) {
             yield new ClassHook(CoreReflector::class, $method->getName(), function (TracerContext $tracing, PreContext $context) use ($method) {
+                return $tracing->spanBuilder(
+                    $context,
+                    $method->getName()
+                )->setSpanKind(SpanKind::KIND_INTERNAL)->setParent($context->context())->startSpan();
+            });
+        }
+        $reflection = new ReflectionClass(SourceCodeReflector::class);
+        foreach ($reflection->getMethods() as $method) {
+            yield new ClassHook(SourceCodeReflector::class, $method->getName(), function (TracerContext $tracing, PreContext $context) use ($method) {
                 return $tracing->spanBuilder(
                     $context,
                     $method->getName()

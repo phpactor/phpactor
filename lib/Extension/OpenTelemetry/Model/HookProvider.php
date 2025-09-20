@@ -4,6 +4,9 @@ namespace Phpactor\Extension\OpenTelemetry\Model;
 
 use Generator;
 
+/**
+ * Opinionated abstraction for the OpenTelemetry SDK.
+ */
 interface HookProvider
 {
     /**

@@ -2,21 +2,17 @@
 
 namespace Phpactor\Extension\OpenTelemetry\Model;
 
-use OpenTelemetry\API\Trace\SpanInterface;
 use OpenTelemetry\Context\Context;
 use OpenTelemetry\Context\ContextInterface;
 use RuntimeException;
 
 final class PreContext
 {
-    public function __construct(
-        public object $object,
-        public array $params,
-        public string $class,
-        public string $function,
-        public ?string $filename,
-        public ?int $lineno
-    ) {
+    /**
+     * @param array<int,mixed> $params
+     */
+    public function __construct(public object $object, public array $params, public string $class, public string $function, public ?string $filename, public ?int $lineno)
+    {
     }
 
     public function context(): ContextInterface
@@ -24,12 +20,7 @@ final class PreContext
         return Context::getCurrent();
     }
 
-    /**
-     * @template TType of object|null
-     * @param class-string<TType> $class|null
-     * @return ($class is class-string<TType> ? TType : mixed)
-     */
-    public function param(int $offset, ?string $class = null): mixed
+    public function param(int $offset): mixed
     {
         if (!isset($this->params[$offset])) {
             throw new RuntimeException(sprintf(
@@ -39,26 +30,6 @@ final class PreContext
             ));
         }
 
-        $value = $this->params[$offset];
-        if ($class === null) {
-            return $value;
-        }
-
-        if (!$value instanceof $class) {
-            throw new RuntimeException(sprintf(
-                'Expected param %d to be of class "%s" but it\'s "%s"',
-                $offset,
-                $class,
-                get_debug_type($class)
-            ));
-        }
-
-        return $value;
+        return $this->params[$offset];
     }
-
-    public function attachSpanToParent(SpanInterface $span): void
-    {
-        Context::storage()->attach($span->storeInContext($parent));
-    }
-
 }
