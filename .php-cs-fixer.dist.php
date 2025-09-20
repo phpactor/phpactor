@@ -17,7 +17,6 @@ $finder = Finder::create()
 
 return (new Config())
     ->setRiskyAllowed(true)
-    ->setUnsupportedPhpVersionAllowed(true)
     ->setRules([
         '@PSR2' => true,
         'no_unused_imports' => true,

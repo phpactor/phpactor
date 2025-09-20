@@ -14,6 +14,9 @@ final class HookBootstrapTest extends TestCase
 {
     public function testBoostrap(): void
     {
+        if (!extension_loaded('opentelemetry')) {
+            $this->markTestSkipped('Requires opentelemetry extension');
+        }
         $bootstrap = new HookBootstrap([new TestProvider()]);
         ($bootstrap)->bootstrap();
         self::assertTrue($bootstrap->initialized);
