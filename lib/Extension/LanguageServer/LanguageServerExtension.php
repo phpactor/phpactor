@@ -27,6 +27,7 @@ use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
 use Phpactor\Extension\LanguageServer\Middleware\TraceMiddleware;
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
+use Phpactor\Extension\LanguageServer\Telemetry\LanguageServerTelemetry;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
@@ -75,6 +76,7 @@ use Phpactor\LanguageServer\Service\DiagnosticsService;
 use Phpactor\LanguageServer\WorkDoneProgress\ProgressNotifier;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\MapResolver\ResolverErrors;
+use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
@@ -192,6 +194,7 @@ class LanguageServerExtension implements Extension
         $this->registerDiagnostics($container);
         $this->registerHandlers($container);
         $this->registerServices($container);
+        $this->registerTelemetry($container);
     }
 
     private function registerServer(ContainerBuilder $container): void
@@ -708,6 +711,7 @@ class LanguageServerExtension implements Extension
 
         if (null !== $enabled) {
             Assert::isArray($enabled);
+
             if ($diff = array_diff($enabled, array_keys($providers))) {
                 throw new RuntimeException(sprintf(
                     'Unknown diagnostic provider(s) "%s", known providers: "%s"',
@@ -720,5 +724,12 @@ class LanguageServerExtension implements Extension
 
         /** @var DiagnosticsProvider[] $providers */
         return $providers;
+    }
+
+    private function registerTelemetry(ContainerBuilder $container): void
+    {
+        $container->register(LanguageServerTelemetry::class, function (Container $container) {
+            return new LanguageServerTelemetry();
+        }, [OpenTelemetryExtension::TAG_HOOK_PROVIDER => []]);
     }
 }
