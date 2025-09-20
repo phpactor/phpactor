@@ -3,13 +3,12 @@
 namespace Phpactor\Extension\OpenTelemetry\Tests\Unit\Model;
 
 use Generator;
-use OpenTelemetry\API\Trace\TracerInterface;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\OpenTelemetry\Model\PreContext;
 use Phpactor\Extension\OpenTelemetry\Model\ClassHook;
 use Phpactor\Extension\OpenTelemetry\Model\HookBootstrap;
 use Phpactor\Extension\OpenTelemetry\Model\HookProvider;
-use Phpactor\Extension\OpenTelemetry\Model\PostContext;
+use Phpactor\Extension\OpenTelemetry\Model\TracerContext;
 
 final class HookBootstrapTest extends TestCase
 {
@@ -18,20 +17,32 @@ final class HookBootstrapTest extends TestCase
         $bootstrap = new HookBootstrap([new TestProvider()]);
         ($bootstrap)->bootstrap();
         self::assertTrue($bootstrap->initialized);
+        $class = new ExampleClass();
+        $class->foo();
+    }
+
+    public function hookTest(): void
+    {
     }
 }
 
-class TestProvider implements HookProvider {
+class ExampleClass
+{
+    public function foo(): void
+    {
+    }
+}
+
+class TestProvider implements HookProvider
+{
     public function hooks(): Generator
     {
         yield new ClassHook(
-            self::class,
-            'testBootstrap',
-            function (TracerInterface $tracer, PreContext $context) {
-            },
-            function (TracerInterface $tracer, PostContext $context) {
+            ExampleClass::class,
+            'foo',
+            function (TracerContext $tracer, PreContext $context) {
+                return $tracer->spanBuilder('test')->startSpan();
             },
         );
     }
-
 }
