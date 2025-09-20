@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\OpenTelemetry;
 
+use Phpactor\Container\BootableExtension;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
@@ -9,7 +10,7 @@ use Phpactor\Extension\OpenTelemetry\Model\HookBootstrap;
 use Phpactor\Extension\OpenTelemetry\Model\HookProvider;
 use Phpactor\MapResolver\Resolver;
 
-final class OpenTelemetryExtension implements Extension
+final class OpenTelemetryExtension implements Extension, BootableExtension
 {
     const SERVICE_HOOK_PROVIDERS = 'open_telemetry.hook_providers';
     const TAG_HOOK_PROVIDER = 'open.telemetry.hook_provider';
@@ -28,5 +29,10 @@ final class OpenTelemetryExtension implements Extension
 
     public function configure(Resolver $schema): void
     {
+    }
+
+    public function boot(Container $container): void
+    {
+        $container->get(HookBootstrap::class)->bootstrap();
     }
 }
