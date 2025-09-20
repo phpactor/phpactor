@@ -10,6 +10,8 @@ use Phpactor\Extension\ClassToFile\ClassToFileExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\WorseReflection\Command\DumpAstCommand;
 use Phpactor\Extension\WorseReflection\Documentor\DiagnosticDocumentor;
+use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
+use Phpactor\Extension\WorseReflection\Telemetry\WorseTelemetry;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
@@ -92,6 +94,7 @@ class WorseReflectionExtension implements Extension
         $this->registerSourceLocators($container);
         $this->registerMemberProviders($container);
         $this->registerDiagnosticProviders($container);
+        $this->registerTelemetry($container);
     }
 
     private function registerReflection(ContainerBuilder $container): void
@@ -241,5 +244,12 @@ class WorseReflectionExtension implements Extension
                 'name' => 'worse:dump-ast',
             ]
         ]);
+    }
+
+    private function registerTelemetry(ContainerBuilder $container): void
+    {
+        $container->register(WorseTelemetry::class, function (Container $container) {
+            return new WorseTelemetry();
+        }, [OpenTelemetryExtension::TAG_HOOK_PROVIDER => []]);
     }
 }
