@@ -6,6 +6,7 @@ Changelog
 Improvements:
 
   - Improved inlay type hints #2825 @dantleech
+  - Improve static analysis performance in some cases #2929 @dantleech
 
 Security:
 

@@ -37,7 +37,7 @@ class IfStatementResolver implements Resolver
         }
 
         // apply type assertions only within the if block
-        $this->ifBranch(
+        $context = $this->ifBranch(
             $resolver,
             $frame,
             $node,
@@ -63,9 +63,17 @@ class IfStatementResolver implements Resolver
             }
         }
 
-        // restore state frame to what it was before the if statement
-        foreach ($frame->locals()->lessThan($node->getStartPosition())->mostRecent() as $assignment) {
-            $frame->locals()->set($assignment->withOffset($node->getEndPosition()));
+        $terminates = $this->branchTerminates($resolver, $frame, $node);
+
+        if ($terminates) {
+            $this->unsetAssignedVariables($frame, $node);
+        } else {
+            // if the branch DOES terminate, then we retain the negated types
+            // else we do this and restore state frame to what it was before
+            // the if statement
+            foreach ($frame->locals()->lessThan($node->getStartPosition())->mostRecent() as $assignment) {
+                $frame->locals()->set($assignment->withOffset($node->getEndPosition()));
+            }
         }
 
         // handle termination, negate the types if the branch terminates and
@@ -75,7 +83,8 @@ class IfStatementResolver implements Resolver
             $frame,
             $node,
             $node->getStartPosition(),
-            $node->getEndPosition()
+            $node->getEndPosition(),
+            $context,
         );
 
         // handle terminateion for elseif clauses
@@ -106,19 +115,25 @@ class IfStatementResolver implements Resolver
         $node,
         int $start,
         int $end
-    ): void {
+    ): NodeContext {
         $context = $resolver->resolveNode($frame, $node->expression);
+
+        // apply type assertions from this
         $frame->applyTypeAssertions($context->typeAssertions(), $start);
 
         foreach ($node->getChildNodes() as $child) {
             $resolver->resolveNode($frame, $child);
         }
 
+        // but negate them after the block finishes (this applies for `else`
+        // conditions).
         $frame->applyTypeAssertions(
             $context->typeAssertions()->negate(),
             $start,
-            $end
+            createAtOffset: $end
         );
+
+        return $context;
     }
 
     /**
@@ -129,17 +144,18 @@ class IfStatementResolver implements Resolver
         Frame $frame,
         $node,
         int $start,
-        int $end
+        int $end,
+        ?NodeContext $context = null,
     ): void {
-        $context = $resolver->resolveNode($frame, $node->expression);
+        $context = $context ?? $resolver->resolveNode($frame, $node->expression);
         $terminates = $this->branchTerminates($resolver, $frame, $node);
 
+        if ($node instanceof ElseIfClauseNode && $terminates) {
+            $frame->applyTypeAssertions($context->typeAssertions(), $start, $end);
+            return;
+        }
+
         if ($terminates) {
-            $frame->applyTypeAssertions(
-                $context->typeAssertions()->negate(),
-                $start,
-                $end
-            );
             return;
         }
 
@@ -223,5 +239,14 @@ class IfStatementResolver implements Resolver
         }
 
         return $node->getEndPosition();
+    }
+
+    private function unsetAssignedVariables(Frame $frame, IfStatementNode $node): void
+    {
+        foreach ($frame->locals()->greaterThanOrEqualTo($node->getStartPosition())->lessThan($node->getEndPosition())->assignmentsOnly()->mostRecent() as $innerVariable) {
+            foreach ($frame->locals()->byName($innerVariable->name())->lessThan($node->getStartPosition())->mostRecent() as $assignment) {
+                $frame->locals()->set($assignment->withOffset($node->getEndPosition()));
+            }
+        }
     }
 }
