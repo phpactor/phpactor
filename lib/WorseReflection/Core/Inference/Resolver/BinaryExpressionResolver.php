@@ -102,6 +102,8 @@ class BinaryExpressionResolver implements Resolver
 
         $this->addVariable($operator, $frame, $leftOperand, $context);
 
+        $frame->applyTypeAssertions($context->typeAssertions(), $node->getStartPosition());
+
         return $context;
     }
 

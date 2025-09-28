@@ -16,8 +16,6 @@ class Frame
 
     private ?Type $returnType = null;
 
-    private int $version = 1;
-
     private VarDocBuffer $varDocBuffer;
 
     public function __construct(
@@ -81,7 +79,6 @@ class Frame
     public function setReturnType(Type $type): self
     {
         $this->returnType = $type;
-        $this->version++;
         return $this;
     }
 
@@ -91,6 +88,7 @@ class Frame
             [ $typeAssertions->properties(), $this->properties() ],
             [ $typeAssertions->variables(), $this->locals() ],
         ] as [ $typeAssertions, $frameVariables ]) {
+
             foreach ($typeAssertions as $typeAssertion) {
                 $original = null;
                 foreach ($frameVariables->byName($typeAssertion->name())->lessThanOrEqualTo($contextOffset) as $variable) {
@@ -115,21 +113,6 @@ class Frame
     public function returnType(): Type
     {
         return $this->returnType ?: new VoidType();
-    }
-
-    /**
-     * The version is incremented when the frame or one of it's components is
-     * modified and can be used for cache busting.
-     */
-    public function version(): string
-    {
-        return sprintf(
-            '%s-%s-%s-%s',
-            $this->locals()->version(),
-            $this->properties()->version(),
-            $this->varDocBuffer()->version(),
-            $this->version
-        );
     }
 
     public function varDocBuffer(): VarDocBuffer

@@ -69,7 +69,7 @@ class NodeContextResolver
             return NodeContext::none();
         }
 
-        $key = 'sc:'.spl_object_id($node).':'.$frame->version();
+        $key = 'sc:'.spl_object_id($node);
 
         return $this->cache->getOrSet($key, function () use ($frame, $node) {
             if (false === $node instanceof Node) {
