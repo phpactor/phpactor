@@ -4,6 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\Core\Application;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Core\Trust\Trust;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
@@ -30,7 +31,13 @@ class StatusTest extends TestCase
         $this->registry = $this->prophesize(FilesystemRegistry::class);
         $this->resolver = $this->prophesize(PhpVersionResolver::class);
         $this->paths = new PathCandidates([]);
-        $this->status = new Status($this->registry->reveal(), $this->paths, '/path/to/here', $this->resolver->reveal());
+        $this->status = new Status(
+            $this->registry->reveal(),
+            $this->paths,
+            '/path/to/here',
+            $this->resolver->reveal(),
+            new Trust([], null),
+        );
     }
 
     public function testStatusNoComposerOrGit(): void

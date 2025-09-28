@@ -178,11 +178,13 @@ class Phpactor
         if (!$trusted) {
             foreach ($projectCandidates as [$candidate, $_]) {
                 if (file_exists($candidate)) {
-                    $errorOutput->writeln(sprintf(
-                        '<fg=yellow>Local config "%s" found but it\'s in an untrusted directory, ' .
-                        'run `phpactor config:trust` if you want it to be loaded</>',
-                        basename($candidate),
-                    ));
+                    if ($commandName !== 'rpc') {
+                        $errorOutput->writeln(sprintf(
+                            '<fg=yellow>Local config "%s" found but it\'s in an untrusted directory, ' .
+                            'run `phpactor config:trust` if you want it to be loaded</>',
+                            basename($candidate),
+                        ));
+                    }
                 }
             }
         }
