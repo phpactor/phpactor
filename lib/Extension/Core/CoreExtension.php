@@ -110,7 +110,7 @@ class CoreExtension implements Extension
 
         $container->register('command.status', function (Container $container) {
             return new StatusCommand(
-                $container->get('application.status')
+                $container->get('application.status'),
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'status' ]]);
 
@@ -162,6 +162,7 @@ class CoreExtension implements Extension
                 $container->has('config_loader.candidates') ? $container->get('config_loader.candidates') : new PathCandidates([]),
                 $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
                 $container->get(PhpVersionResolver::class),
+                $container->parameter(self::PARAM_TRUST)->value(),
                 null,
             );
         });
