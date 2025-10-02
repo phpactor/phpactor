@@ -1,12 +1,20 @@
 <?php
 
-namespace Phpactor\WorseReflection\Core\Inference;
+namespace Phpactor\WorseReflection\Core\Inference\Frame;
 
+use Phpactor\WorseReflection\Core\Inference\TypeAssertions;
+use Phpactor\WorseReflection\Core\Inference\Assignments;
+use Phpactor\WorseReflection\Core\Inference\VarDocBuffer;
+use Phpactor\WorseReflection\Core\Inference\Problems;
+use Phpactor\WorseReflection\Core\Inference\LocalAssignments;
+use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
+use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\Type\MissingType;
 use Phpactor\WorseReflection\Core\Type\VoidType;
 
-class Frame
+class ConcreteFrame implements Frame
 {
     private PropertyAssignments $properties;
 

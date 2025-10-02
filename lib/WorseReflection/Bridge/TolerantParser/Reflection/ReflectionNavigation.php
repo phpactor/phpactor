@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\NavigatorElementCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 

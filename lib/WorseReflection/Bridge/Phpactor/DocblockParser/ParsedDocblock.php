@@ -27,7 +27,7 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAlias;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAliases;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAssertion;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
-use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;

@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
-use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant as PhpactorReflectionDeclaredConstant;
 use Phpactor\TextDocument\TextDocument;

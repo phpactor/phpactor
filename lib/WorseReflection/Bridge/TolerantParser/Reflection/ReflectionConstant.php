@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\Decla
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;

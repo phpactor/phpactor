@@ -10,7 +10,7 @@ use Microsoft\PhpParser\Node\Parameter;
 use Phpactor\WorseReflection\Core\Type;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\DefaultValue;
-use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as CoreReflectionParameter;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\ParameterTypeResolver;

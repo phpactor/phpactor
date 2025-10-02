@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
-use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Inference\NodeReflector;
 use Phpactor\WorseReflection\Core\Inference\Frame;

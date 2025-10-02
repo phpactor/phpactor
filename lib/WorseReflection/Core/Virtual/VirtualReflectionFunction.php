@@ -6,7 +6,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
-use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\NodeText;
