@@ -7,7 +7,6 @@ use Phpactor\WorseReflection\Core\Exception\CouldNotResolveNode;
 use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Phpactor\WorseReflection\Core\Inference\NodeReflector;
-use Phpactor\WorseReflection\Core\Inference\Frame;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Prophecy\PhpUnit\ProphecyTrait;
 

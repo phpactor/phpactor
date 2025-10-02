@@ -24,7 +24,9 @@ interface Frame extends Stringable
 
     public function root(): Frame;
 
-    public function setReturnType(Type $type): self;
+    public function setReturnType(Type $type): Frame;
 
     public function applyTypeAssertions(TypeAssertions $typeAssertions, int $contextOffset, ?int $createAtOffset = null): void;
+    public function returnType(): Type;
+    public function varDocBuffer(): VarDocBuffer;
 }

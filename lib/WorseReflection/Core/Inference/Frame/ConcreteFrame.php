@@ -84,7 +84,7 @@ class ConcreteFrame implements Frame
         return $this->parent->root();
     }
 
-    public function setReturnType(Type $type): self
+    public function setReturnType(Type $type): Frame
     {
         $this->returnType = $type;
         return $this;

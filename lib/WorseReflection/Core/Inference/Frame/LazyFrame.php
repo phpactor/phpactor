@@ -8,6 +8,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 use Phpactor\WorseReflection\Core\Inference\FrameResolver;
 use Phpactor\WorseReflection\Core\Inference\Problems;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertions;
+use Phpactor\WorseReflection\Core\Inference\VarDocBuffer;
 use Phpactor\WorseReflection\Core\Type;
 
 class LazyFrame implements Frame
@@ -30,7 +31,7 @@ class LazyFrame implements Frame
 
     public function locals(): Assignments
     {
-        return $this->frame()->__toString();
+        return $this->frame()->locals();
     }
 
     public function properties(): Assignments
@@ -53,7 +54,7 @@ class LazyFrame implements Frame
         return $this->frame()->root();
     }
 
-    public function setReturnType(Type $type): self
+    public function setReturnType(Type $type): Frame
     {
         return $this->frame()->setReturnType($type);
     }
@@ -61,6 +62,16 @@ class LazyFrame implements Frame
     public function applyTypeAssertions(TypeAssertions $typeAssertions, int $contextOffset, ?int $createAtOffset = null): void
     {
         $this->frame()->applyTypeAssertions($typeAssertions, $contextOffset, $createAtOffset);
+    }
+
+    public function returnType(): Type
+    {
+        return $this->frame()->returnType();
+    }
+
+    public function varDocBuffer(): VarDocBuffer
+    {
+        return $this->frame()->varDocBuffer();
     }
 
     private function frame(): Frame
