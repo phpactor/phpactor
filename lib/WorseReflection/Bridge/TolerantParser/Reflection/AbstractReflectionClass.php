@@ -69,7 +69,6 @@ abstract class AbstractReflectionClass extends AbstractReflectedNode implements 
                 }
 
                 $traitAlias = $traitImport->getAlias($method->name());
-                dump('HERE', $this->name(), $trait->name(), $method->name());
 
                 $virtualMethod = VirtualReflectionMethod::fromReflectionMethod($trait->methods()->get($traitAlias->originalName()))
                     ->withName($traitAlias->newName())
