@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\Decla
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
-use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as CoreReflectionConstant;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
@@ -60,7 +60,7 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
 
     public function inferredType(): Type
     {
-        $value = $this->serviceLocator->nodeContextResolver()->resolveNode(new Frame(), $this->node->assignment);
+        $value = $this->serviceLocator->nodeContextResolver()->resolveNode(new ConcreteFrame(), $this->node->assignment);
         return $value->type();
     }
 
@@ -74,7 +74,7 @@ class ReflectionConstant extends AbstractReflectionClassMember implements CoreRe
         return TypeUtil::valueOrNull($this->serviceLocator()
             ->nodeContextResolver()
             ->resolveNode(
-                new Frame(),
+                new ConcreteFrame(),
                 $this->node->assignment
             )->type());
     }

@@ -10,7 +10,7 @@ use Microsoft\PhpParser\Node\Parameter;
 use Phpactor\WorseReflection\Core\Type;
 use Microsoft\PhpParser\Node;
 use Phpactor\WorseReflection\Core\DefaultValue;
-use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionParameter as CoreReflectionParameter;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\TypeResolver\DeclaredMemberTypeResolver;
 use Phpactor\WorseReflection\Core\Reflection\TypeResolver\ParameterTypeResolver;
@@ -76,7 +76,7 @@ class ReflectionParameter extends AbstractReflectedNode implements CoreReflectio
         if (null === $this->parameter->default) {
             return DefaultValue::undefined();
         }
-        $value = $this->serviceLocator->nodeContextResolver()->resolveNode(new Frame(), $this->parameter->default)->type();
+        $value = $this->serviceLocator->nodeContextResolver()->resolveNode(new ConcreteFrame(), $this->parameter->default)->type();
 
         return DefaultValue::fromValue(TypeUtil::valueOrNull($value));
     }

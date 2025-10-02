@@ -127,7 +127,7 @@ final class FrameResolver
     private function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): Generator
     {
         if ($frame === null) {
-            $frame = new Frame();
+            $frame = new ConcreteFrame();
         }
 
         foreach ($this->globalWalkers as $walker) {
