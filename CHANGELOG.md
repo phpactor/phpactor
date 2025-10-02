@@ -13,6 +13,7 @@ Improvements:
 
   - Improved inlay type hints #2825 @dantleech
   - Improve static analysis performance in some cases #2929 @dantleech
+  - Support for asymmetrical visiblity in parser #2926 @dantleech
 
 Security:
 
