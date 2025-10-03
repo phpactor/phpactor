@@ -111,6 +111,19 @@ Path to JSON schema, which can be used for config autocompletion, use phpactor c
 **Default**: ``{"trust":[],"path":null}``
 
 
+.. _param_core.trusted:
+
+
+``core.trusted``
+""""""""""""""""
+
+
+(internal) if the configuration is trusted
+
+
+**Default**: ``false``
+
+
 .. _ClassToFileExtension:
 
 
@@ -2313,6 +2326,29 @@ ProphecyExtension
 
 ``prophecy.enabled``
 """"""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _OpenTelemetryExtension:
+
+
+OpenTelemetryExtension
+----------------------
+
+
+.. _param_open_telemetry.enabled:
+
+
+``open_telemetry.enabled``
+""""""""""""""""""""""""""
 
 
 Type: boolean

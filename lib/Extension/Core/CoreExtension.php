@@ -9,6 +9,7 @@ use Phpactor\Extension\Core\Command\TrustCommand;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\Core\Rpc\TrustHandler;
 use Phpactor\Extension\Core\Trust\Trust;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
@@ -110,7 +111,7 @@ class CoreExtension implements Extension
 
         $container->register('command.status', function (Container $container) {
             return new StatusCommand(
-                $container->get('application.status')
+                $container->get('application.status'),
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'status' ]]);
 
@@ -162,7 +163,9 @@ class CoreExtension implements Extension
                 $container->has('config_loader.candidates') ? $container->get('config_loader.candidates') : new PathCandidates([]),
                 $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
                 $container->get(PhpVersionResolver::class),
-                null,
+                /** @phpstan-ignore argument.type */
+                $container->parameter(self::PARAM_TRUST)->value(),
+                null
             );
         });
     }
@@ -180,6 +183,14 @@ class CoreExtension implements Extension
         $container->register('core.rpc.handler.config', function (Container $container) {
             return new ConfigHandler($container->getParameters());
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ConfigHandler::CONFIG] ]);
+
+        $container->register('core.rpc.handler.trust', function (Container $container) {
+            return new TrustHandler(
+                /** @phpstan-ignore argument.type */
+                $container->parameter(self::PARAM_TRUST)->value(),
+                $container->parameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)->string(),
+            );
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => TrustHandler::NAME] ]);
     }
 
     private function registerFilePathExpanders(ContainerBuilder $container): void

@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
@@ -127,7 +128,7 @@ final class FrameResolver
     private function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): Generator
     {
         if ($frame === null) {
-            $frame = new Frame();
+            $frame = new ConcreteFrame();
         }
 
         foreach ($this->globalWalkers as $walker) {

@@ -7,7 +7,7 @@ use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Phpactor\TextDocument\ByteOffset;
-use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\NavigatorElementCollection;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 
@@ -28,14 +28,14 @@ class ReflectionNavigation
                 if (!$node->parent instanceof CallExpression) {
                     continue;
                 }
-                $calls[] = new ReflectionStaticMethodCall($this->locator, new Frame(), $node);
+                $calls[] = new ReflectionStaticMethodCall($this->locator, new ConcreteFrame(), $node);
                 continue;
             }
             if ($node instanceof MemberAccessExpression) {
                 if (!$node->parent instanceof CallExpression) {
                     continue;
                 }
-                $calls[] = new ReflectionMethodCall($this->locator, new Frame(), $node);
+                $calls[] = new ReflectionMethodCall($this->locator, new ConcreteFrame(), $node);
                 continue;
             }
         }
@@ -55,7 +55,7 @@ class ReflectionNavigation
         $elements = [];
         foreach ($this->node->getDescendantNodes() as $node) {
             if ($node instanceof ScopedPropertyAccessExpression) {
-                $elements[] = new ReflectionStaticMemberAccess($this->locator, new Frame(), $node);
+                $elements[] = new ReflectionStaticMemberAccess($this->locator, new ConcreteFrame(), $node);
                 continue;
             }
             if (!$node instanceof MemberAccessExpression) {

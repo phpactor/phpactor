@@ -3,9 +3,16 @@ Changelog
 
 ## master
 
+BREAKING
+
+  - VIM plugin: Local `.phpactor.json` configuration files are no longer loaded by
+    default. If you use the VIM plugin you **must** explicitly trust the
+    configuration file with `:PhpactorTrust`.
+
 Improvements:
 
   - Improved inlay type hints #2825 @dantleech
+  - Improve static analysis performance in some cases #2929 @dantleech
 
 Security:
 

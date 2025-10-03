@@ -74,3 +74,9 @@ command! -buffer -nargs=0 PhpactorGenerateMutators call phpactor#GenerateMutator
 " Automatically add any missing properties to a class
 command! -buffer -nargs=0 PhpactorTransform call phpactor#Transform()
 
+""
+" Trust configuration in the current working directory
+command! -buffer -nargs=0 PhpactorTrust call phpactor#Trust()
+
+" Revoke trust in the current working directory
+command! -buffer -nargs=0 PhpactorUntrust call phpactor#Untrust()

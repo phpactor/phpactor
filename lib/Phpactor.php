@@ -3,6 +3,7 @@
 namespace Phpactor;
 
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
+use Phpactor\Container\BootableExtension;
 use Phpactor\Container\Container;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\Behat\BehatExtension;
@@ -45,6 +46,7 @@ use Phpactor\Extension\Symfony\SymfonyExtension;
 use Phpactor\Extension\Symfony\SymfonySuggestExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
+use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
 use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\NullOutput;
@@ -176,11 +178,13 @@ class Phpactor
         if (!$trusted) {
             foreach ($projectCandidates as [$candidate, $_]) {
                 if (file_exists($candidate)) {
-                    $errorOutput->writeln(sprintf(
-                        '<fg=yellow>Local config "%s" found but it\'s in an untrusted directory, ' .
-                        'run `phpactor config:trust` if you want it to be loaded</>',
-                        basename($candidate),
-                    ));
+                    if ($commandName !== 'rpc') {
+                        $errorOutput->writeln(sprintf(
+                            '<fg=yellow>Local config "%s" found but it\'s in an untrusted directory, ' .
+                            'run `phpactor config:trust` if you want it to be loaded</>',
+                            basename($candidate),
+                        ));
+                    }
                 }
             }
         }
@@ -248,6 +252,7 @@ class Phpactor
             LanguageServerBlackfireExtension::class,
 
             ProphecyExtension::class,
+            OpenTelemetryExtension::class,
             ProphecySuggestExtension::class,
 
             BehatExtension::class,
@@ -317,6 +322,9 @@ class Phpactor
                 }
             }
             $extension->load($container);
+            if ($extension instanceof BootableExtension) {
+                $extension->boot($container);
+            }
         }
 
         if (isset($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT])) {

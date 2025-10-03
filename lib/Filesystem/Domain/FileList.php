@@ -105,6 +105,12 @@ class FileList implements Iterator
 
         // Sort map by keys so that more specific paths are getting matched first
         uksort($inclusionMap, function (string $a, string $b) {
+            $aIsDynamic = Glob::isDynamic($a);
+            $bIsDynamic = Glob::isDynamic($b);
+            if ($aIsDynamic !== $bIsDynamic) {
+                return $aIsDynamic ? 1 : -1;
+            }
+
             $partsA = explode(DIRECTORY_SEPARATOR, $a);
             $partsB = explode(DIRECTORY_SEPARATOR, $b);
             $countDiff = count($partsA) <=> count($partsB);
