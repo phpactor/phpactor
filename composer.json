@@ -33,7 +33,7 @@
     "require-dev": {
         "dantleech/what-changed": "~0.4",
         "friendsofphp/php-cs-fixer": "^3.32",
-        "phpstan/phpstan": "^1.0",
+        "phpstan/phpstan": "^1.12",
         "phpunit/phpunit": "^9.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpactor/test-utils": "^1.1.4",
