@@ -10,20 +10,15 @@ class PhpstanLinterTest extends TestCase
 {
     public function testLinterUsesTmpFileByDefault(): void
     {
-        $originalFilePath = '/foo';
-        $expectedFileContent = '<file content that will be written to tmp file>';
+        $filePathInProject = '/foo';
+        $fileContent = '<file content that will be written to tmp file>';
 
         $phpstanProcess = $this->createMock(PhpstanProcess::class);
         $phpstanProcess->expects($this->once())
-            ->method('analyseInPlace')
-            ->with($this->callback(function ($analyzedFilePath) use ($originalFilePath, $expectedFileContent) {
-
-                // Infer that a temporary file was used by confirming that the PHPStan
-                // does not get the original file path passed.
-                $this->assertNotEquals($originalFilePath, $analyzedFilePath);
-
-                // Confirm the file content was written to the temporary file.
-                $this->assertStringEqualsFile($analyzedFilePath, $expectedFileContent);
+            ->method('editorModeAnalyse')
+            ->with($filePathInProject, $this->callback(function (string $tempFile) use ($fileContent) {
+                // Assert the temp file has the same content as the project file
+                $this->assertStringEqualsFile($tempFile, $fileContent);
 
                 // Explicitly confirm a temporary file is used.
                 //
@@ -36,14 +31,14 @@ class PhpstanLinterTest extends TestCase
                 //       /private/<sys_get_temp_dir>/<prefix>...
                 //
                 $expectedPathSegment = sys_get_temp_dir() . '/phpstanls';
-                $this->assertStringContainsString($expectedPathSegment, $analyzedFilePath);
+                $this->assertStringContainsString($expectedPathSegment, $tempFile);
 
                 return true;
             }));
 
         $linter = new PhpstanLinter($phpstanProcess);
 
-        $linter->lint($originalFilePath, $expectedFileContent);
+        $linter->lint($filePathInProject, $fileContent);
     }
 
     public function testLinterUsesOriginalFilePathWhenTmpFileDisabled(): void
@@ -56,7 +51,7 @@ class PhpstanLinterTest extends TestCase
             ->with($originalFilePath);
 
         $linter = new PhpstanLinter(
-            process: $phpstanProcess,
+            phpstanProcess: $phpstanProcess,
             disableTmpFile: true,
         );
 
