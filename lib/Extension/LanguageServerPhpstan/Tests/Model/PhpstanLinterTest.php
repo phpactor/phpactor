@@ -36,7 +36,7 @@ class PhpstanLinterTest extends TestCase
                 return true;
             }));
 
-        $linter = new PhpstanLinter($phpstanProcess);
+        $linter = new PhpstanLinter($phpstanProcess, editorMode: true);
 
         $linter->lint($filePathInProject, $fileContent);
     }
