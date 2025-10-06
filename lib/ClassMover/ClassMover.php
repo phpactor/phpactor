@@ -33,6 +33,14 @@ class ClassMover
         return new FoundReferences($source, $name, $references);
     }
 
+    public function findLocalReferences(FullyQualifiedName $sourceName, string $sourceCode): FoundReferences
+    {
+        $sourceCode = TextDocumentBuilder::create($sourceCode)->build();
+        $references = $this->finder->findIn($sourceCode)->filterLocal($sourceName)->filterLocal($sourceName);
+
+        return new FoundReferences($sourceCode, $sourceName, $references);
+    }
+
     public function replaceReferences(FoundReferences $foundReferences, string $newFullyQualifiedName): TextEdits
     {
         $newName = FullyQualifiedName::fromString($newFullyQualifiedName);
