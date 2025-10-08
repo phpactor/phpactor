@@ -51,7 +51,7 @@ class PhpstanProcess
             '--no-progress',
             '--error-format=json',
             '--tmp-file='.$tempFile,
-            '--instead-of="'.$filename.'"',
+            '--instead-of='.$filename,
             $filename
         ];
 
