@@ -42,7 +42,7 @@ class PhpstanProcess
     /**
      * @return Promise<array<Diagnostic>>
      */
-    public function editorModeAnalyse(string $projectFile, string $tempFile): Promise
+    public function editorModeAnalyse(string $filename, string $tempFile): Promise
     {
         $args = [
             PHP_BINARY,
@@ -51,8 +51,8 @@ class PhpstanProcess
             '--no-progress',
             '--error-format=json',
             '--tmp-file='.$tempFile,
-            '--instead-of='.$projectFile,
-            $projectFile
+            '--instead-of="'.$filename.'"',
+            $filename
         ];
 
         return $this->runPhpstan($args);
@@ -110,8 +110,6 @@ class PhpstanProcess
                 ));
                 return [];
             }
-
-            $this->logger->error($stdout);
 
             return $this->parser->parse($stdout);
         });

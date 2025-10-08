@@ -45,7 +45,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $container->register(
             Linter::class,
             function (Container $container) {
-                if ($container->parameter(self::PARAM_EDITOR_MODE)->value()
+                if ($container->parameter(self::PARAM_EDITOR_MODE)->bool()
                     && $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value()
                 ) {
                     throw new InvalidArgumentException('You can not disable temp files with editor mode enabled');
