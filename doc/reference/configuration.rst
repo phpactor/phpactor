@@ -1976,6 +1976,19 @@ Disable the use of temporary files when. This prevents as-you-type diagnostics, 
 **Default**: ``false``
 
 
+.. _param_language_server_phpstan.editor_mode:
+
+
+``language_server_phpstan.editor_mode``
+"""""""""""""""""""""""""""""""""""""""
+
+
+Use the editor mode of Phpstan https://phpstan.org/user-guide/editor-mode (Requires phpstan 2.14 or higher)
+
+
+**Default**: ``false``
+
+
 .. _LanguageServerPsalmExtension:
 
 
