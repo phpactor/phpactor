@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9971b805aad2f65e152c2196edb73ce6",
+    "content-hash": "cfd43f14f05240cb1947d8d429e612b6",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1463,20 +1463,20 @@
         },
         {
             "name": "phpactor/class-to-file",
-            "version": "0.5.2",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/class-to-file.git",
-                "reference": "290dabd216a5486c3faff32e5f84742e6c038108"
+                "reference": "2fcf99a39f830b0d57c374bacaa9471e5c0483e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/290dabd216a5486c3faff32e5f84742e6c038108",
-                "reference": "290dabd216a5486c3faff32e5f84742e6c038108",
+                "url": "https://api.github.com/repos/phpactor/class-to-file/zipball/2fcf99a39f830b0d57c374bacaa9471e5c0483e3",
+                "reference": "2fcf99a39f830b0d57c374bacaa9471e5c0483e3",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 || ^8.0",
+                "php": "^8.1",
                 "psr/log": "^1.0 || ^2.0 || ^3.0",
                 "symfony/filesystem": "^4.2 || ^5.0 || ^6.0"
             },
@@ -1511,9 +1511,9 @@
             ],
             "description": "Library to covert class names to file paths and vice-versa",
             "support": {
-                "source": "https://github.com/phpactor/class-to-file/tree/0.5.2"
+                "source": "https://github.com/phpactor/class-to-file/tree/0.6.0"
             },
-            "time": "2022-10-08T08:32:21+00:00"
+            "time": "2025-10-02T14:48:57+00:00"
         },
         {
             "name": "phpactor/container",
@@ -1809,20 +1809,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/tolerant-php-parser.git",
-                "reference": "092205e10b6172d1d2f61087147606b7bc383ae9"
+                "reference": "e2b5a43cbc6521f14f801ca26a02f385fcee2164"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/092205e10b6172d1d2f61087147606b7bc383ae9",
-                "reference": "092205e10b6172d1d2f61087147606b7bc383ae9",
+                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/e2b5a43cbc6521f14f801ca26a02f385fcee2164",
+                "reference": "e2b5a43cbc6521f14f801ca26a02f385fcee2164",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2"
+                "php": ">=8.1"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.8",
-                "phpunit/phpunit": "^8.5.15"
+                "phpunit/phpunit": "^10.0"
             },
             "default-branch": true,
             "type": "library",
@@ -1847,7 +1847,7 @@
             "support": {
                 "source": "https://github.com/phpactor/tolerant-php-parser/tree/main"
             },
-            "time": "2025-02-05T22:27:00+00:00"
+            "time": "2025-10-03T12:48:22+00:00"
         },
         {
             "name": "psr/container",
@@ -4779,16 +4779,16 @@
         },
         {
             "name": "open-telemetry/api",
-            "version": "1.6.0",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opentelemetry-php/api.git",
-                "reference": "ee17d937652eca06c2341b6fadc0f74c1c1a5af2"
+                "reference": "610b79ad9d6d97e8368bcb6c4d42394fbb87b522"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opentelemetry-php/api/zipball/ee17d937652eca06c2341b6fadc0f74c1c1a5af2",
-                "reference": "ee17d937652eca06c2341b6fadc0f74c1c1a5af2",
+                "url": "https://api.github.com/repos/opentelemetry-php/api/zipball/610b79ad9d6d97e8368bcb6c4d42394fbb87b522",
+                "reference": "610b79ad9d6d97e8368bcb6c4d42394fbb87b522",
                 "shasum": ""
             },
             "require": {
@@ -4808,7 +4808,7 @@
                     ]
                 },
                 "branch-alias": {
-                    "dev-main": "1.4.x-dev"
+                    "dev-main": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -4845,7 +4845,7 @@
                 "issues": "https://github.com/open-telemetry/opentelemetry-php/issues",
                 "source": "https://github.com/open-telemetry/opentelemetry-php"
             },
-            "time": "2025-09-19T00:05:49+00:00"
+            "time": "2025-10-02T23:44:28+00:00"
         },
         {
             "name": "open-telemetry/context",
@@ -5035,22 +5035,22 @@
         },
         {
             "name": "open-telemetry/sdk",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opentelemetry-php/sdk.git",
-                "reference": "105c6e81e3d86150bd5704b00c7e4e165e957b89"
+                "reference": "8986bcbcbea79cb1ba9e91c1d621541ad63d6b3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opentelemetry-php/sdk/zipball/105c6e81e3d86150bd5704b00c7e4e165e957b89",
-                "reference": "105c6e81e3d86150bd5704b00c7e4e165e957b89",
+                "url": "https://api.github.com/repos/opentelemetry-php/sdk/zipball/8986bcbcbea79cb1ba9e91c1d621541ad63d6b3e",
+                "reference": "8986bcbcbea79cb1ba9e91c1d621541ad63d6b3e",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "nyholm/psr7-server": "^1.1",
-                "open-telemetry/api": "^1.6",
+                "open-telemetry/api": "^1.7",
                 "open-telemetry/context": "^1.4",
                 "open-telemetry/sem-conv": "^1.0",
                 "php": "^8.1",
@@ -5085,7 +5085,7 @@
                     ]
                 },
                 "branch-alias": {
-                    "dev-main": "1.0.x-dev"
+                    "dev-main": "1.9.x-dev"
                 }
             },
             "autoload": {
@@ -5128,7 +5128,7 @@
                 "issues": "https://github.com/open-telemetry/opentelemetry-php/issues",
                 "source": "https://github.com/open-telemetry/opentelemetry-php"
             },
-            "time": "2025-09-19T00:05:49+00:00"
+            "time": "2025-10-02T23:44:28+00:00"
         },
         {
             "name": "open-telemetry/sem-conv",
@@ -6152,16 +6152,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.31",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpstan-phar-composer-source.git",
-                "reference": "git1"
-            },
+            "version": "1.12.32",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a7630bb5311a41d13a2364634c78c5f4da250d53",
-                "reference": "a7630bb5311a41d13a2364634c78c5f4da250d53",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/2770dcdf5078d0b0d53f94317e06affe88419aa8",
+                "reference": "2770dcdf5078d0b0d53f94317e06affe88419aa8",
                 "shasum": ""
             },
             "require": {
@@ -6206,7 +6201,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-09-24T15:58:55+00:00"
+            "time": "2025-09-30T10:16:31+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",

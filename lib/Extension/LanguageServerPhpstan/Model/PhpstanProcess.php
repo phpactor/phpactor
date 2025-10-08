@@ -25,18 +25,47 @@ class PhpstanProcess
     /**
      * @return Promise<array<Diagnostic>>
      */
-    public function analyse(string $filename): Promise
+    public function analyseInPlace(string $filename): Promise
     {
-        return call(function () use ($filename) {
-            $args = [
-                PHP_BINARY,
-                $this->config->phpstanBin(),
-                'analyse',
-                '--no-progress',
-                '--error-format=json',
-                $filename
-            ];
+        $args = [
+            PHP_BINARY,
+            $this->config->phpstanBin(),
+            'analyse',
+            '--no-progress',
+            '--error-format=json',
+            $filename,
+        ];
 
+        return $this->runPhpstan($args);
+    }
+
+    /**
+     * @return Promise<array<Diagnostic>>
+     */
+    public function editorModeAnalyse(string $filename, string $tempFile): Promise
+    {
+        $args = [
+            PHP_BINARY,
+            $this->config->phpstanBin(),
+            'analyse',
+            '--no-progress',
+            '--error-format=json',
+            '--tmp-file='.$tempFile,
+            '--instead-of='.$filename,
+            $filename
+        ];
+
+        return $this->runPhpstan($args);
+    }
+
+    /**
+    * @param array<string> $args
+    *
+    * @return Promise<array<Diagnostic>>
+    */
+    private function runPhpstan(array $args): Promise
+    {
+        return call(function () use ($args) {
             if (null !== $this->config->level()) {
                 $args[] = '--level=' . (string)$this->config->level();
             }

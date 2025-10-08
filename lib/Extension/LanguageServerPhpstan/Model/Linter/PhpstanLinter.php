@@ -13,8 +13,9 @@ use Phpactor\TextDocument\TextDocumentUri;
 class PhpstanLinter implements Linter
 {
     public function __construct(
-        private PhpstanProcess $process,
+        private PhpstanProcess $phpstanProcess,
         private bool $disableTmpFile = false,
+        private bool $editorMode = false,
     ) {
     }
 
@@ -37,17 +38,25 @@ class PhpstanLinter implements Linter
      */
     private function doLint(string $url, ?string $text): Generator
     {
+        $path = TextDocumentUri::fromString($url)->path();
+
         if (null === $text || $this->disableTmpFile) {
-            return yield $this->process->analyse(TextDocumentUri::fromString($url)->path());
+            return yield $this->phpstanProcess->analyseInPlace($path);
         }
 
-        $name = tempnam(sys_get_temp_dir(), 'phpstanls');
-        file_put_contents($name, $text);
+        $tempFile = tempnam(sys_get_temp_dir(), 'phpstanls');
+        file_put_contents($tempFile, $text);
+
         try {
-            $diagnostics = yield $this->process->analyse($name);
+            if ($this->editorMode) {
+                $diagnostics = yield $this->phpstanProcess->editorModeAnalyse($path, $tempFile);
+            } else {
+                $diagnostics = yield $this->phpstanProcess->analyseInPlace($tempFile);
+            }
         } finally {
-            @unlink($name);
+            @unlink($tempFile);
         }
+
         return $diagnostics;
     }
 }
