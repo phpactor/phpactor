@@ -33,6 +33,7 @@ class AttributeCompletor extends NameSearcherCompletor implements TolerantComple
             $name = NameUtil::toFullyQualified((string)$node->getResolvedName());
         }
 
+        /** @var ClassDeclaration|ClassConstDeclaration|MethodDeclaration|FunctionDeclaration|PropertyDeclaration|Parameter|null $targetNode */
         $targetNode = $node->getFirstAncestor(
             ClassDeclaration::class,
             FunctionDeclaration::class,
