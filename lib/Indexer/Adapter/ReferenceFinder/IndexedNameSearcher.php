@@ -29,23 +29,20 @@ class IndexedNameSearcher implements NameSearcher
         }
 
         $fullyQualified = str_starts_with($name, '\\');
-        if ($fullyQualified) {
-            $criteria = Criteria::fqnBeginsWith(substr($name, 1));
-        } else {
-            $criteria = Criteria::shortNameBeginsWith($name);
-        }
+
+        $criteria = $fullyQualified ? Criteria::fqnBeginsWith(substr($name, 1)) : Criteria::shortNameBeginsWith($name);
 
         $typeCriteria = $this->resolveTypeCriteria($type);
 
-        if ($typeCriteria) {
+        if (null !== $typeCriteria) {
             $criteria = Criteria::and(
                 $criteria,
                 Criteria::or(
                     $typeCriteria,
 
                     // B/C for old indexes
-                    Criteria::isClassTypeUndefined()
-                )
+                    Criteria::isClassTypeUndefined(),
+                ),
             );
         }
 
@@ -53,7 +50,7 @@ class IndexedNameSearcher implements NameSearcher
             yield NameSearchResult::create(
                 $result->recordType(),
                 FullyQualifiedName::fromString($result->identifier()),
-                $result instanceof HasPath ? TextDocumentUri::fromString($result->filepath()) : null
+                $result instanceof HasPath ? TextDocumentUri::fromString($result->filepath()) : null,
             );
         }
     }
@@ -64,7 +61,6 @@ class IndexedNameSearcher implements NameSearcher
     private function resolveTypeCriteria(?string $type): ?Criteria
     {
         return match($type) {
-            // todo before merge check if this condition occurs anywhere and possibly remove it
             NameSearcherType::ATTRIBUTE => Criteria::isAttribute(),
             NameSearcherType::ATTRIBUTE_TARGET_CLASS => Criteria::isClassAttribute(),
             NameSearcherType::ATTRIBUTE_TARGET_CLASS_CONSTANT => Criteria::isClassConstantAttribute(),

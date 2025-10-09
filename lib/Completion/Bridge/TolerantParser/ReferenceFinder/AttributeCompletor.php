@@ -42,27 +42,35 @@ class AttributeCompletor extends NameSearcherCompletor implements TolerantComple
             Parameter::class,
         );
 
+        if (null === $targetNode) {
+            return true;
+        }
+
         yield from $this->completeName($name, $source->uri(), $node, $this->matchTargetNode($targetNode));
 
         return true;
     }
 
     /**
-     * @return NameSearcherType::ATTRIBUTE_TARGET_*|NameSearcherType::ATTRIBUTE
+     * @return NameSearcherType::ATTRIBUTE_TARGET_*
      */
-    private function matchTargetNode(?Node $targetNode): string
-    {
-        if (null === $targetNode) {
-            return NameSearcherType::ATTRIBUTE;
-        }
-
+    private function matchTargetNode(
+        ClassDeclaration
+        |ClassConstDeclaration
+        |MethodDeclaration
+        |FunctionDeclaration
+        |PropertyDeclaration
+        |Parameter $targetNode,
+    ): string {
         if ($targetNode instanceof Parameter) {
             foreach ($targetNode->getChildTokens() as $token) {
-                if (in_array($token->kind, [
+                if (
+                    in_array($token->kind, [
                     TokenKind::PublicKeyword,
                     TokenKind::ProtectedKeyword,
                     TokenKind::PrivateKeyword,
-                ], true)) {
+                    ], true)
+                ) {
                     return NameSearcherType::ATTRIBUTE_TARGET_PROMOTED_PROPERTY;
                 }
             }
@@ -70,13 +78,12 @@ class AttributeCompletor extends NameSearcherCompletor implements TolerantComple
             return NameSearcherType::ATTRIBUTE_TARGET_PARAMETER;
         }
 
-        return match($targetNode::class) {
+        return match ($targetNode::class) {
             ClassDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_CLASS,
             FunctionDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_FUNCTION,
             MethodDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_METHOD,
             PropertyDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_PROPERTY,
             ClassConstDeclaration::class => NameSearcherType::ATTRIBUTE_TARGET_CLASS_CONSTANT,
-            default => NameSearcherType::ATTRIBUTE,
         };
     }
 }

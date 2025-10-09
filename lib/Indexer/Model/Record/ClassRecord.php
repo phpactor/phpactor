@@ -17,7 +17,7 @@ final class ClassRecord implements Record, HasFileReferences, HasFlags, HasPath,
     public const TYPE_INTERFACE = 'interface';
     public const TYPE_TRAIT = 'trait';
     public const TYPE_ENUM = 'enum';
-    public const FLAG_ATTRIBUTE = 63;
+    public const FLAG_ATTRIBUTE = Attribute::TARGET_ALL & ~ Attribute::IS_REPEATABLE;
     public const FLAG_ATTRIBUTE_TARGET_CLASS = Attribute::TARGET_CLASS;
     public const FLAG_ATTRIBUTE_TARGET_FUNCTION = Attribute::TARGET_FUNCTION;
     public const FLAG_ATTRIBUTE_TARGET_METHOD = Attribute::TARGET_METHOD;

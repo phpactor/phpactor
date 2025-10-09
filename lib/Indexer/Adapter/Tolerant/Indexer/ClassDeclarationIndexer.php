@@ -74,7 +74,6 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
                         (string)\Attribute::TARGET_CLASS_CONSTANT, 'Attribute::TARGET_CLASS_CONSTANT' => ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS_CONSTANT,
                         (string)\Attribute::TARGET_PARAMETER, 'Attribute::TARGET_PARAMETER' => ClassRecord::FLAG_ATTRIBUTE_TARGET_PARAMETER,
                         (string)\Attribute::IS_REPEATABLE, 'Attribute::IS_REPEATABLE' => ClassRecord::FLAG_ATTRIBUTE_IS_REPEATABLE,
-                        (string)\Attribute::TARGET_CLASS, 'Attribute::TARGET_CLASS' => ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS,
                         default => ClassRecord::FLAG_ATTRIBUTE,
                     });
                 }
