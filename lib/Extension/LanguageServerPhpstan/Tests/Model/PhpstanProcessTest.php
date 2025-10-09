@@ -29,7 +29,7 @@ class PhpstanProcessTest extends IntegrationTestCase
             new PhpstanConfig(__DIR__ . '/../../../../../vendor/bin/phpstan', '7', __DIR__ . '/../../../../../phpstan-baseline.neon', '200M'),
             new NullLogger()
         );
-        $diagnostics = wait($linter->analyse($this->workspace()->path('test.php')));
+        $diagnostics = wait($linter->analyseInPlace($this->workspace()->path('test.php')));
         self::assertEquals($expectedDiagnostics, $diagnostics);
     }
 
