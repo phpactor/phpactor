@@ -866,6 +866,16 @@ parameters:
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
 
 		-
+			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor1 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor&Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifiable\\>\\) does not accept \\$this\\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\)\\.$#"
+			count: 1
+			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
+
+		-
+			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor2 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor&Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifiable\\>\\) does not accept \\$this\\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\)\\.$#"
+			count: 1
+			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
+
+		-
 			message: "#^Parameter \\#1 \\$completor of class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\LimitingCompletor constructor expects Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor, object given\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
@@ -994,21 +1004,6 @@ parameters:
 			message: "#^Method Phpactor\\\\ConfigLoader\\\\Tests\\\\Integration\\\\ConfigLoaderTest\\:\\:createConfig\\(\\) has parameter \\$array with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/ConfigLoader/Tests/Integration/ConfigLoaderTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Destr\\:\\:fff\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Destr.php
-
-		-
-			message: "#^PHPDoc tag @return with type iterable\\<array\\<string, int\\>\\> is not subtype of native type Generator\\.$#"
-			count: 1
-			path: lib/Destr.php
-
-		-
-			message: "#^PHPDoc tag @return with type iterable\\<array\\<string, int\\>\\> is not subtype of native type array\\.$#"
-			count: 1
-			path: lib/Destr.php
 
 		-
 			message: "#^Cannot call method length\\(\\) on Phpactor\\\\DocblockParser\\\\Ast\\\\Token\\|null\\.$#"
@@ -3186,46 +3181,6 @@ parameters:
 			path: lib/Extension/LanguageServer/LanguageServerExtension.php
 
 		-
-			message: "#^Call to method context\\(\\) on an unknown class OpenTelemetry\\\\Context\\\\ScopeInterface\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Telemetry/LanguageServerTelemetry.php
-
-		-
-			message: "#^Call to method detach\\(\\) on an unknown class OpenTelemetry\\\\Context\\\\ScopeInterface\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Telemetry/LanguageServerTelemetry.php
-
-		-
-			message: "#^Call to method end\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanInterface\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Telemetry/LanguageServerTelemetry.php
-
-		-
-			message: "#^Call to method scope\\(\\) on an unknown class OpenTelemetry\\\\Context\\\\ContextStorageInterface\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Telemetry/LanguageServerTelemetry.php
-
-		-
-			message: "#^Call to method startSpan\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanBuilderInterface\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Telemetry/LanguageServerTelemetry.php
-
-		-
-			message: "#^Call to static method fromContext\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\Span\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Telemetry/LanguageServerTelemetry.php
-
-		-
-			message: "#^Class OpenTelemetry\\\\API\\\\Trace\\\\SpanInterface not found\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Telemetry/LanguageServerTelemetry.php
-
-		-
-			message: "#^Class OpenTelemetry\\\\Context\\\\ScopeInterface not found\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServer/Telemetry/LanguageServerTelemetry.php
-
-		-
 			message: "#^Parameter \\#1 \\$command of class Symfony\\\\Component\\\\Console\\\\Tester\\\\CommandTester constructor expects Symfony\\\\Component\\\\Console\\\\Command\\\\Command, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServer/Tests/Unit/Command/StartCommandTest.php
@@ -4341,141 +4296,6 @@ parameters:
 			path: lib/Extension/ObjectRenderer/ObjectRendererExtension.php
 
 		-
-			message: "#^Parameter \\$pre of method Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\ClassHook\\:\\:__construct\\(\\) has invalid type OpenTelemetry\\\\API\\\\Trace\\\\SpanInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/ClassHook.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\ClassHook\\:\\:\\$pre has unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanInterface as its type\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/ClassHook.php
-
-		-
-			message: "#^Call to method end\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/HookBootstrap.php
-
-		-
-			message: "#^Call to method storeInContext\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/HookBootstrap.php
-
-		-
-			message: "#^Call to method tracer\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Instrumentation\\\\CachedInstrumentation\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/HookBootstrap.php
-
-		-
-			message: "#^Call to static method getCurrent\\(\\) on an unknown class OpenTelemetry\\\\Context\\\\Context\\.$#"
-			count: 2
-			path: lib/Extension/OpenTelemetry/Model/HookBootstrap.php
-
-		-
-			message: "#^Call to static method span\\(\\) on an unknown class OpenTelemetry\\\\Context\\\\ContextKeys\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/HookBootstrap.php
-
-		-
-			message: "#^Call to static method storage\\(\\) on an unknown class OpenTelemetry\\\\Context\\\\Context\\.$#"
-			count: 4
-			path: lib/Extension/OpenTelemetry/Model/HookBootstrap.php
-
-		-
-			message: "#^Class OpenTelemetry\\\\API\\\\Trace\\\\SpanInterface not found\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/HookBootstrap.php
-
-		-
-			message: "#^Instantiated class OpenTelemetry\\\\API\\\\Instrumentation\\\\CachedInstrumentation not found\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/HookBootstrap.php
-
-		-
-			message: "#^Call to static method getCurrent\\(\\) on an unknown class OpenTelemetry\\\\Context\\\\Context\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/PreContext.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\PreContext\\:\\:context\\(\\) has invalid return type OpenTelemetry\\\\Context\\\\ContextInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/PreContext.php
-
-		-
-			message: "#^Access to constant CODE_FILE_PATH on an unknown class OpenTelemetry\\\\SemConv\\\\Attributes\\\\CodeAttributes\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Access to constant CODE_FUNCTION_NAME on an unknown class OpenTelemetry\\\\SemConv\\\\Attributes\\\\CodeAttributes\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Access to constant CODE_LINE_NUMBER on an unknown class OpenTelemetry\\\\SemConv\\\\Attributes\\\\CodeAttributes\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Access to constant KIND_SERVER on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanKind\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Call to method spanBuilder\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\TracerInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:currentContext\\(\\) has invalid return type OpenTelemetry\\\\Context\\\\ContextInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:spanBuilder\\(\\) has invalid return type OpenTelemetry\\\\API\\\\Trace\\\\SpanBuilderInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Method Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:storage\\(\\) has invalid return type OpenTelemetry\\\\Context\\\\ContextStorageInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Parameter \\$context of method Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:__construct\\(\\) has invalid type OpenTelemetry\\\\Context\\\\ContextInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Parameter \\$storage of method Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:__construct\\(\\) has invalid type OpenTelemetry\\\\Context\\\\ContextStorageInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Parameter \\$tracer of method Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:__construct\\(\\) has invalid type OpenTelemetry\\\\API\\\\Trace\\\\TracerInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:\\$context has unknown class OpenTelemetry\\\\Context\\\\ContextInterface as its type\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:\\$storage has unknown class OpenTelemetry\\\\Context\\\\ContextStorageInterface as its type\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Property Phpactor\\\\Extension\\\\OpenTelemetry\\\\Model\\\\TracerContext\\:\\:\\$tracer has unknown class OpenTelemetry\\\\API\\\\Trace\\\\TracerInterface as its type\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Model/TracerContext.php
-
-		-
-			message: "#^Call to method startSpan\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanBuilderInterface\\.$#"
-			count: 1
-			path: lib/Extension/OpenTelemetry/Tests/Unit/Model/HookBootstrapTest.php
-
-		-
 			message: "#^Parameter \\#2 \\$className of static method Phpactor\\\\WorseReflection\\\\Core\\\\TypeFactory\\:\\:reflectedClass\\(\\) expects Phpactor\\\\WorseReflection\\\\Core\\\\ClassName\\|string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Extension/PHPUnit/FrameWalker/AssertInstanceOfWalker.php
@@ -5254,16 +5074,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$reflector of class Phpactor\\\\WorseReferenceFinder\\\\WorseReflectionTypeLocator constructor expects Phpactor\\\\WorseReflection\\\\Reflector, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/WorseReferenceFinder/WorseReferenceFinderExtension.php
-
-		-
-			message: "#^Access to constant KIND_INTERNAL on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanKind\\.$#"
-			count: 4
-			path: lib/Extension/WorseReflection/Telemetry/WorseTelemetry.php
-
-		-
-			message: "#^Call to method setSpanKind\\(\\) on an unknown class OpenTelemetry\\\\API\\\\Trace\\\\SpanBuilderInterface\\.$#"
-			count: 4
-			path: lib/Extension/WorseReflection/Telemetry/WorseTelemetry.php
 
 		-
 			message: "#^Method Phpactor\\\\Extension\\\\WorseReflection\\\\Tests\\\\Unit\\\\WorseReflectionExtensionTest\\:\\:createReflector\\(\\) should return Phpactor\\\\WorseReflection\\\\Reflector but returns mixed\\.$#"
@@ -6271,12 +6081,42 @@ parameters:
 			path: lib/WorseReflection/Core/NodeText.php
 
 		-
+			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:byMemberClass\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<M of T&object&T\\>\\)\\.$#"
+			count: 1
+			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
+
+		-
+			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:fromReflections\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\)\\.$#"
+			count: 1
+			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
+
+		-
+			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\:\\:merge\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\AbstractReflectionCollection\\<T\\>\\)\\.$#"
+			count: 1
+			path: lib/WorseReflection/Core/Reflection/Collection/AbstractReflectionCollection.php
+
+		-
+			message: "#^PHPDoc tag @return contains generic type static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ClassLikeReflectionMemberCollection\\) but class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ClassLikeReflectionMemberCollection is not generic\\.$#"
+			count: 1
+			path: lib/WorseReflection/Core/Reflection/Collection/ClassLikeReflectionMemberCollection.php
+
+		-
 			message: "#^Parameter \\#4 \\$node of class Phpactor\\\\WorseReflection\\\\Bridge\\\\TolerantParser\\\\Reflection\\\\ReflectionConstant constructor expects Microsoft\\\\PhpParser\\\\Node\\\\ConstElement, mixed given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/ClassLikeReflectionMemberCollection.php
 
 		-
 			message: "#^Class Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\ReflectionConstant not found\\.$#"
+			count: 1
+			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
+
+		-
+			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\:\\:fromMembers\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\<T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\)\\.$#"
+			count: 1
+			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
+
+		-
+			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\:\\:map\\(\\) should return static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\<T of Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\) but returns static\\(Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\Collection\\\\HomogeneousReflectionMemberCollection\\<Phpactor\\\\WorseReflection\\\\Core\\\\Reflection\\\\ReflectionMember\\>\\)\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/Reflection/Collection/HomogeneousReflectionMemberCollection.php
 
