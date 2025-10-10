@@ -51,7 +51,8 @@ final class NamespacedClassReferences implements IteratorAggregate
     {
         return new self($this->namespaceRef, array_filter($this->classRefs, function (ClassReference $classRef) use ($name) {
             return $classRef->fullName()->parentNamespace()->equals($name->parentNamespace())
-                && false === $classRef->fullName()->equals($name); // skip self reference
+                && false === $classRef->fullName()->equals($name)
+                && ! in_array($classRef->name()->__toString(), ['self', 'static', 'parent'], true);
         }));
     }
 
