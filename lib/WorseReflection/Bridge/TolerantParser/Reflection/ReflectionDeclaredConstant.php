@@ -5,6 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Reflection;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
+use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\StringLiteral;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
@@ -13,6 +14,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionDeclaredConstant as Phpac
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\Type;
 use Phpactor\WorseReflection\Core\ServiceLocator;
+use Phpactor\WorseReflection\Core\TypeFactory;
 
 class ReflectionDeclaredConstant extends AbstractReflectedNode implements PhpactorReflectionDeclaredConstant
 {
@@ -35,6 +37,13 @@ class ReflectionDeclaredConstant extends AbstractReflectedNode implements Phpact
 
     public function type(): Type
     {
+        // gh-2913: do not try and lookup constant values in order to avoid
+        // infinite loops.
+        //
+        // @phpstan-ignore instanceof.alwaysFalse
+        if ($this->value->expression instanceof QualifiedName) {
+            return TypeFactory::unknown();
+        }
         return $this->serviceLocator->nodeContextResolver()->resolveNode(new ConcreteFrame(), $this->value)->type();
     }
 

@@ -28,6 +28,7 @@ Security:
 Bug fixes:
 
   - rename: Do not throw error if there is a reference to a now-non-existing file. @dantleech
+  - avoid infinite loop when looking up constant type #2913 @dantleech
 
 ## 2025-07-25.0
 
