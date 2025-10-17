@@ -18,7 +18,6 @@ use Phpactor\LanguageServerProtocol\Range;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Psr\Log\LoggerInterface;
 use SebastianBergmann\Diff\Parser;
-use RuntimeException;
 
 class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionProvider
 {
@@ -175,19 +174,11 @@ class PhpCsFixerDiagnosticsProvider implements DiagnosticsProvider, CodeActionPr
 
             // preg_replace calls below are matching content generated from above class, not content of individual rules.
 
-            // remove a generic line
-            $description = preg_replace('/Description of ([\\w\\-\\_ ]+) rule.*/', '', $description);
-
-            // remove configuration option descriptions, as that's not describing problem that's showing in code
-            $description = preg_replace('/Fixer is configurable using following option.*/s', '', $description);
-
-            // remove example diffs for the rule
-            $description = preg_replace('/Fixing examples:.*/s', '', $description);
-
-            if (!is_string($description)) {
-                throw new RuntimeException(sprintf('Description was epxected to be string, got %s', gettype($description)));
-            }
-
+            // "clean up" the description
+            $description = (string)preg_replace('/Description of ([\\w\\-\\_ ]+) rule.*/', '', $description);
+            $description = (string)preg_replace('/Fixer is configurable using following option.*/s', '', $description);
+            $description = (string)preg_replace('/Fixing examples:.*/s', '', $description);
+            $description = (string)preg_replace('/Description of the `[^`]+` rule./s', '', $description);
             $description = trim($description);
 
             $this->ruleDescriptions[$rule] = $description;
