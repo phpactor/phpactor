@@ -262,8 +262,6 @@ jobs:
             -
                 name: "Run PHPBench"
                 run: "vendor/bin/phpbench run --progress=plain --iterations=1 --dump-file=phpbench.xml"
-            -
-                if: "contains(github.ref, 'master')"
     docs:
         name: "Lint Docs (${{ matrix.php-version }})"
 
