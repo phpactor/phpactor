@@ -24,7 +24,7 @@ class SelfTest extends IntegrationTestCase
                 'Feature not supported by current %s runtime',
                 phpversion()
             ));
-;
+            ;
         }
 
         $source = TextDocumentBuilder::fromUri($path)->build();
