@@ -9,10 +9,17 @@ BREAKING
     default. If you use the VIM plugin you **must** explicitly trust the
     configuration file with `:PhpactorTrust`.
 
+Features:
+
+  - Support PHPStan editormode #2936 @mamazu
+  - (development) optional opentelemertry extension.
+
 Improvements:
 
+  - Indexer: prioritize static include/exclude over dynamic paths #2927 @zonuexe
   - Improved inlay type hints #2825 @dantleech
   - Improve static analysis performance in some cases #2929 @dantleech
+  - Support for asymmetrical visiblity in parser #2926 @dantleech
 
 Security:
 

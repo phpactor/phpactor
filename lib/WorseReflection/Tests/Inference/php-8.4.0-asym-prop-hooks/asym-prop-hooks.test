@@ -1,0 +1,18 @@
+<?php
+
+class Book
+{
+    public function __construct(
+        public private(set) string $title,
+        public protected(set) string $author,
+        protected private(get) int $pubYear,
+        public string $bar,
+    ) {}
+
+    public function methodThatNowWontParse(): void
+    {}
+}
+
+$book = new Book();
+wrAssertType('string',$book->bar);
+
