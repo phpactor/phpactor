@@ -12,38 +12,34 @@ Client Guides
     .. tab:: Neovim LSP
 
         Prerequisites:
-            - Neovim 0.5.0 or higher.
-            - `nvim-lspconfig <https://github.com/neovim/nvim-lspconfig>`_ package (this contains common LSP configurations)
+            - Neovim 0.11.0 or higher.
             - The ``phpactor`` binary is :ref:`installed<installation>` and executable in your path
 
-        For example: include it in your ``.vimrc`` with Plug:
+        For example: include it in your ``init.lua``:
 
         ::
 
-            Plug 'neovim/nvim-lspconfig'
+            vim.lsp.enable('phpactor')
 
-        Then enable it in your ``.vimrc``. (note that `on_attach` is a
-        `callback
-        <https://github.com/neovim/nvim-lspconfig#suggested-configuration>`_
-        which can be used for key bindings):
+        Then in ``~/.config/nvim/`` (or another `&runtimepath` component) create ``lsp/phpactor.lua``, for example:
 
         ::
 
-            lua << EOF
-            require'lspconfig'.phpactor.setup{
-                on_attach = on_attach,
+            return {
+                cmd = { 'phpactor', 'language-server' },
+                filetypes = { 'php' },
+                root_markers = { '.git', 'composer.json', '.phpactor.json', '.phpactor.yml' },
+                workspace_required = true,
                 init_options = {
                     ["language_server_phpstan.enabled"] = false,
                     ["language_server_psalm.enabled"] = false,
                 }
             }
-            EOF
+
 
         The ``init_options`` key maps directly to Phpactors :ref:`ref_configuration`.
 
-        Please refer to the `nvim-lspconfig
-        <https://github.com/neovim/nvim-lspconfig>`_ package for keybindings
-        (also see ``:help lsp``).
+        Please refer to the (``:help lsp``).
 
         See :doc:`vim-lsp` for useful snippets (e.g. reindex, show config, etc).
 
