@@ -137,18 +137,6 @@ jobs:
                   php -dphar.readonly=0 \
                     -dzend.assertions=1 \
                     vendor/bin/phpunit --log-junit phpunit-junit.xml
-            -
-                if: "contains(github.ref, 'master')"
-                name: "Upload to Historian"
-                run: |
-                  curl https://${{ secrets.HISTORIAN_HOST }}/api/upload -XPOST \
-                    -H"X-Api-Key: ${{ secrets.HISTORIAN_API_KEY }}" \
-                    -H"X-Build: ${{ github.run_number }}" \
-                    -H"X-Commit-Sh: ${{ github.sha }}" \
-                    -H"X-Author-Name: ${{ github.event.head_commit.author.name }}" \
-                    -H"X-Author-Email: ${{ github.event.head_commit.author.email }}" \
-                    -H"X-Host: ${{ runner.name }}" \
-                    -Fphpunit=@phpunit-junit.xml
     phpstan:
         name: "PHPStan (${{ matrix.php-version }})"
 
@@ -274,18 +262,6 @@ jobs:
             -
                 name: "Run PHPBench"
                 run: "vendor/bin/phpbench run --progress=plain --iterations=1 --dump-file=phpbench.xml"
-            -
-                if: "contains(github.ref, 'master')"
-                name: "Upload to Historian"
-                run: |
-                  curl https://${{ secrets.HISTORIAN_HOST }}/api/upload -XPOST \
-                    -H"X-Api-Key: ${{ secrets.HISTORIAN_API_KEY }}" \
-                    -H"X-Build: ${{ github.run_number }}" \
-                    -H"X-Commit-Sh: ${{ github.sha }}" \
-                    -H"X-Author-Name: ${{ github.event.head_commit.author.name }}" \
-                    -H"X-Author-Email: ${{ github.event.head_commit.author.email }}" \
-                    -H"X-Host: ${{ runner.name }}" \
-                    -Fphpbench=@phpbench.xml
     docs:
         name: "Lint Docs (${{ matrix.php-version }})"
 

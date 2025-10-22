@@ -19,6 +19,14 @@ class SelfTest extends IntegrationTestCase
      */
     public function testSelf(string $path): void
     {
+        if (self::shouldSkip($path)) {
+            self::markTestSkipped(sprintf(
+                'Feature not supported by current %s runtime',
+                phpversion()
+            ));
+            ;
+        }
+
         $source = TextDocumentBuilder::fromUri($path)->build();
         $reflector = $this->createBuilder($source)->enableCache()->build();
         $reflector->reflectOffset($source, mb_strlen($source));
@@ -42,5 +50,14 @@ class SelfTest extends IntegrationTestCase
                 $fname
             ];
         }
+    }
+
+    private static function shouldSkip(string $path): bool
+    {
+        if (!preg_match('{php-([0-9]+\.[0-9]+\.[0-9]+)-}', $path, $matches)) {
+            return false;
+        }
+
+        return version_compare(phpversion(), $matches[1], 'lt');
     }
 }
