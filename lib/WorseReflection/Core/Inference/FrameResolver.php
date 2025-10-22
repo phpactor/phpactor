@@ -10,6 +10,7 @@ use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
 
@@ -127,7 +128,7 @@ final class FrameResolver
     private function walkNode(Node $node, Node $targetNode, ?Frame $frame = null): Generator
     {
         if ($frame === null) {
-            $frame = new Frame();
+            $frame = new ConcreteFrame();
         }
 
         foreach ($this->globalWalkers as $walker) {
@@ -194,7 +195,7 @@ final class FrameResolver
             ));
         }
 
-        // if this is an anonymous functoin, traverse the parent scope to
+        // if this is an anonymous function, traverse the parent scope to
         // resolve any potential variable imports.
         if ($scopeNode instanceof AnonymousFunctionCreationExpression || $scopeNode instanceof ArrowFunctionCreationExpression) {
             return $this->resolveScopeNode($scopeNode->parent);
