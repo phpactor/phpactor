@@ -5,6 +5,7 @@ namespace Phpactor\Indexer\Adapter\Tolerant\Indexer;
 use Microsoft\PhpParser\MissingToken;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Attribute;
+use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Phpactor\Indexer\Model\Exception\CannotIndexNode;
 use Phpactor\Indexer\Model\Index;
@@ -54,10 +55,30 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
                     continue;
                 }
                 /** @phpstan-ignore-next-line */
-                if ((string) $attribute->name?->getResolvedName() === \Attribute::class) {
+                if ((string) $attribute->name?->getResolvedName() !== \Attribute::class) {
+                    continue;
+                }
+
+                $targetTexts = $this->listAttributeTargetTexts($attribute);
+                if ([] === $targetTexts) {
                     $record->addFlag(ClassRecord::FLAG_ATTRIBUTE);
                     return;
                 }
+
+                foreach ($targetTexts as $targetText) {
+                    $record->addFlag(match($targetText) {
+                        (string)\Attribute::TARGET_CLASS, 'Attribute::TARGET_CLASS' => ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS,
+                        (string)\Attribute::TARGET_FUNCTION, 'Attribute::TARGET_FUNCTION' => ClassRecord::FLAG_ATTRIBUTE_TARGET_FUNCTION,
+                        (string)\Attribute::TARGET_METHOD, 'Attribute::TARGET_METHOD' => ClassRecord::FLAG_ATTRIBUTE_TARGET_METHOD,
+                        (string)\Attribute::TARGET_PROPERTY, 'Attribute::TARGET_PROPERTY' => ClassRecord::FLAG_ATTRIBUTE_TARGET_PROPERTY,
+                        (string)\Attribute::TARGET_CLASS_CONSTANT, 'Attribute::TARGET_CLASS_CONSTANT' => ClassRecord::FLAG_ATTRIBUTE_TARGET_CLASS_CONSTANT,
+                        (string)\Attribute::TARGET_PARAMETER, 'Attribute::TARGET_PARAMETER' => ClassRecord::FLAG_ATTRIBUTE_TARGET_PARAMETER,
+                        (string)\Attribute::IS_REPEATABLE, 'Attribute::IS_REPEATABLE' => ClassRecord::FLAG_ATTRIBUTE_IS_REPEATABLE,
+                        default => ClassRecord::FLAG_ATTRIBUTE,
+                    });
+                }
+
+                return;
             }
         }
     }
@@ -99,5 +120,25 @@ class ClassDeclarationIndexer extends AbstractClassLikeIndexer
         assert($baseClassRecord instanceof ClassRecord);
         $baseClassRecord->addImplementation($record->fqn());
         $index->write($baseClassRecord);
+    }
+
+    /**
+     * @return string[]
+     */
+    private function listAttributeTargetTexts(Node $attribute): array
+    {
+        $targetTexts = [];
+
+        $isNotTarget = fn (Node $node): bool => !$node instanceof ScopedPropertyAccessExpression;
+
+        foreach ($attribute->getDescendantNodes($isNotTarget) as $target) {
+            if ($isNotTarget($target)) {
+                continue;
+            }
+
+            $targetTexts[] = ltrim($target->getText(), '\\');
+        }
+
+        return $targetTexts;
     }
 }

@@ -63,7 +63,7 @@ class CompletionContextTest extends TestCase
             false,
         ];
         yield 'not after method 2' => [
-            '<?php class Foo { private $foo; public function bar() {} public function boo() {} A<> public functoin baz() {}}',
+            '<?php class Foo { private $foo; public function bar() {} public function boo() {} A<> public function baz() {}}',
             false,
         ];
         yield 'not after method 3' => [

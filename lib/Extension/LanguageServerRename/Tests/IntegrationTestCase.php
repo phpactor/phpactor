@@ -36,7 +36,9 @@ class IntegrationTestCase extends TestCase
             LanguageServerBridgeExtension::class,
             LoggingExtension::class,
             ReferenceFinderExtension::class,
-        ], $config);
+        ], array_merge([
+            LanguageServerExtension::PARAM_ENABLE_TRUST_CHECK => false,
+        ], $config));
 
         return $container;
     }

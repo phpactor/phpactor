@@ -3,6 +3,82 @@ Changelog
 
 ## master
 
+BREAKING
+
+  - VIM plugin: Local `.phpactor.json` configuration files are no longer loaded by
+    default. If you use the VIM plugin you **must** explicitly trust the
+    configuration file with `:PhpactorTrust`.
+
+Features:
+
+  - Support PHPStan editormode #2936 @mamazu
+  - (development) optional opentelemertry extension.
+
+Improvements:
+
+  - Indexer: prioritize static include/exclude over dynamic paths #2927 @zonuexe
+  - Improved inlay type hints #2825 @dantleech
+  - Improve static analysis performance in some cases #2929 @dantleech
+  - Support for asymmetrical visiblity in parser #2926 @dantleech
+  - Ignore rector-stubs by default (frequently causes PHPUnit testcase
+    reflection issues) #2944 @dantleech
+
+Security:
+
+  - Ask permission before loading project-level `.phpactor.json` @dantleech
+
+Bug fixes:
+
+  - rename: Do not throw error if there is a reference to a now-non-existing file. @dantleech
+  - avoid infinite loop when looking up constant type #2913 @dantleech
+
+## 2025-07-25.0
+
+Improvements:
+
+  - Extract document highlighter to own module and add config option to
+    disable it @dantleech
+  - Fix false diagnostic for missing `__destruct` return type @przepompownia #2900
+  - Add depth info to `worse:dump-ast` command @mamazo #2897
+  - Ensure that stub locator results are cached in-memory @dantleech #2911
+  - Upload PHAR as artifact on builds @drzraf #2915
+
+Features:
+
+  - Search filtering (as applicable to autocomplete, name importing etc)
+    @dantleech
+
+Bug fixes:
+
+  - Require `ext-tokenizer` (fixes nixos distribution) @drupol
+  - Don't complete HEREDOC identifier @przepompownia #2909
+  - Fix parameter type resolution priority @dantleech
+  - Fix completion rendering when snippets are disabled @mamazu #2898
+
+## 2025.04.17.0
+
+Improvements:
+
+  - Do not suggest code action for missing return type if type is accurately
+    provided by docblock @dantleech
+  - Do not generate `void` return type on PHP 7.0
+
+Bug fixes:
+
+  - Support loading code templates when Phpactor included as a dependency
+    @zobo
+
+## 2025.03.28.0
+
+Improvements:
+
+  - Reference finding: Ask for confirmation to continue after soft timeout @dantleech #2856
+  - PHAR fixes for Windows @zobo
+  - LSP - Support for inline values @zobo
+  - Code action prioritization @mamazu
+
+## 2025.02.21.0
+
 Features:
 
   - String <=> Heredoc code action #2825 @mamazu
@@ -13,7 +89,6 @@ Features:
 
 Improvements:
 
-  - Reference finding: Ask for confirmation to continue after soft timeout @dantleech #2856
   - Performance: Do not run Indexed reference finder if references handled by
     Variable reference finder @dantleech
   - Performance: Do needlessly re-index documents before searching for

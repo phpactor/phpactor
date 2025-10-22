@@ -280,6 +280,14 @@ function! phpactor#MoveFile()
     call phpactor#rpc("move_class", { "source_path": phpactor#_path() })
 endfunction
 
+function! phpactor#Trust()
+    call phpactor#rpc("trust", { "trust": 1 })
+endfunction
+
+function! phpactor#Untrust()
+    call phpactor#rpc("trust", { "trust": 0 })
+endfunction
+
 function! phpactor#OffsetTypeInfo()
     call phpactor#rpc("offset_info", { "offset": phpactor#_offset(), "source": phpactor#_source()})
 endfunction

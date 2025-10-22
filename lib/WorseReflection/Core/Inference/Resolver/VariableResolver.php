@@ -75,7 +75,6 @@ class VariableResolver implements Resolver
             $type = $frameVariable->type();
         }
 
-
         $context = NodeContextFactory::forVariableAt(
             $frame,
             $node->getStartPosition(),

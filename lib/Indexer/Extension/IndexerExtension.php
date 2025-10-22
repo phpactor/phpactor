@@ -70,6 +70,7 @@ class IndexerExtension implements Extension
     private const SERVICE_INDEXER_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     private const SERVICE_INDEXER_INCLUDE_PATTERNS = 'indexer.include_patterns';
     private const PARAM_PROJECT_ROOT = 'indexer.project_root';
+    private const PARAM_SEARCH_INCLUDE_PATTERNS = 'indexer.search_include_patterns';
 
 
     public function configure(Resolver $schema): void
@@ -85,6 +86,9 @@ class IndexerExtension implements Extension
                 '/vendor/**/Tests/**/*',
                 '/vendor/**/tests/**/*',
                 '/vendor/composer/**/*',
+                // rector frequently breaks phpunit testcase reflection so just
+                // ignore the stubs by default
+                '/vendor/rector/rector/stubs-rector'
             ],
             self::PARAM_STUB_PATHS => [],
             self::PARAM_INDEXER_POLL_TIME => 5000,
@@ -94,6 +98,7 @@ class IndexerExtension implements Extension
             self::PARAM_REFERENCES_DEEP_REFERENCES => true,
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => true,
             self::PARAM_SUPPORTED_EXTENSIONS => ['php', 'phar'],
+            self::PARAM_SEARCH_INCLUDE_PATTERNS => [],
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLED_WATCHERS => 'List of allowed watchers. The first watcher that supports the current system will be used',
@@ -108,6 +113,7 @@ class IndexerExtension implements Extension
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'Recurse over class implementations to resolve all references',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
             self::PARAM_SUPPORTED_EXTENSIONS => 'File extensions (e.g. `php`) for files that should be indexed',
+            self::PARAM_SEARCH_INCLUDE_PATTERNS => 'When searching the index exclude records whose fully qualified names match any of these regex patterns (use to exclude suggestions from search results). Namespace separators must be escaped as `\\\\\\\\` for example `^Foo\\\\\\\\` to include all namespaces whose first segment is `Foo`',
         ]);
         $schema->setTypes([
             self::PARAM_ENABLED_WATCHERS => 'array',
@@ -122,6 +128,7 @@ class IndexerExtension implements Extension
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'boolean',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'boolean',
             self::PARAM_SUPPORTED_EXTENSIONS => 'array',
+            self::PARAM_SEARCH_INCLUDE_PATTERNS => 'array',
         ]);
     }
 
@@ -228,6 +235,7 @@ class IndexerExtension implements Extension
                 ->setExcludePatterns($container->get(self::SERVICE_INDEXER_EXCLUDE_PATTERNS))
                 /** @phpstan-ignore-next-line */
                 ->setIncludePatterns($container->get(self::SERVICE_INDEXER_INCLUDE_PATTERNS))
+                ->setSearchIncludePatterns($container->parameter(self::PARAM_SEARCH_INCLUDE_PATTERNS)->listOfString())
                 /** @phpstan-ignore-next-line */
                 ->setSupportedExtensions($container->parameter(self::PARAM_SUPPORTED_EXTENSIONS)->value())
                 ->setFollowSymlinks($container->parameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS)->bool())

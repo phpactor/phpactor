@@ -15,7 +15,7 @@ Phpactor is a PHP :ref:`language_server` providing:
 -  :ref:`refactoring`: Move classes, complete constructors, implement
    contracts, generate methods, etc.
 -  :ref:`diagnostics`: Diagnostics related to code actions.
--  :ref:`extensions`: Integrates with popular tools and frameworks such as Symfony, PHPStan, etc.
+-  :ref:`integrations`: Integrates with popular tools and frameworks such as Symfony, PHPStan, etc.
 -  :ref:`vim_plugin`: Lightweight VIM plugin.
 
 Proceed to the :doc:`usage/getting-started` guide to find out how to be getting

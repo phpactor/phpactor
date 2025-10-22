@@ -24,6 +24,9 @@ final class ClassHierarchyResolver
     }
 
     /**
+     * Returns an ordered list of all classes in the heierarchy with the base
+     * class being first and the provided class being last.
+     *
      * @param array<string,ReflectionClassLike> $resolved
      * @return ReflectionClassLike[]
      */

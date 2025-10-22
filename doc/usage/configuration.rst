@@ -3,7 +3,7 @@
 Configuration
 =============
 
-Configuration files are loaded from your current directory, and then
+**Trusted** configuration files are loaded from your current directory, and then
 from the XDG standard user and system directories, for example:
 
 -  ``/home/daniel/www/phpactor/phpactor/.phpactor.yml``
@@ -12,6 +12,16 @@ from the XDG standard user and system directories, for example:
 
 Phpactor will merge configuration files, with more specific
 configurations overriding the less specific ones.
+
+Trusting Configuration
+----------------------
+
+By default Phpactor will not load configuration files from the project root or
+current working directory as a maliciously placed configuration file in a project
+would allow arbitrary code execution. Therefore directories must be **trusted**.
+
+When using the langauge server a dialog will show up asking if you trust the configuration
+file if one is present. On the CLI you can use the `phpactor config:trust` command.
 
 Config Dump
 -----------

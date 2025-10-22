@@ -27,7 +27,7 @@ use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAlias;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAliases;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockTypeAssertion;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockVar;
-use Phpactor\WorseReflection\Core\Inference\Frame;
+use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\NodeText;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as CoreReflectionPropertyCollection;
@@ -199,7 +199,7 @@ class ParsedDocblock implements DocBlock
                 $declaringClass,
                 $declaringClass,
                 ltrim($propertyTag->propertyName() ?? '', '$'),
-                new Frame(),
+                new ConcreteFrame(),
                 $this,
                 $declaringClass->scope(),
                 Visibility::public(),
@@ -224,7 +224,7 @@ class ParsedDocblock implements DocBlock
                 $declaringClass,
                 $declaringClass,
                 $methodTag->methodName() ?? '',
-                new Frame(),
+                new ConcreteFrame(),
                 $this,
                 $declaringClass->scope(),
                 Visibility::public(),

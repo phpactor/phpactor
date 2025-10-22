@@ -686,6 +686,11 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/DebugTolerantCompletor.php
 
 		-
+			message: "#^Match expression does not handle remaining values\\: \\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\ClassConstDeclaration\\>&literal\\-string\\)\\|\\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\MethodDeclaration\\>&literal\\-string\\)\\|\\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\PropertyDeclaration\\>&literal\\-string\\)\\|\\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\ClassDeclaration\\>&literal\\-string\\)\\|\\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\FunctionDeclaration\\>&literal\\-string\\)$#"
+			count: 1
+			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/AttributeCompletor.php
+
+		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:complete\\(\\) should return bool but returns mixed\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
@@ -796,11 +801,6 @@ parameters:
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/SourceCodeFilesystem/ScfClassCompletorTest.php
 
 		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Integration\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseClassMemberCompletorTest\\:\\:testComplete\\(\\) has parameter \\$expected with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseClassMemberCompletorTest.php
-
-		-
 			message: "#^Class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\WorseConstantCompletor does not have a constructor and must be instantiated without any parameters\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/WorseReflection/WorseConstantCompletorTest.php
@@ -874,16 +874,6 @@ parameters:
 			message: "#^Property Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\:\\:\\$qualifiableCompletor2 \\(Prophecy\\\\Prophecy\\\\ObjectProphecy\\<Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor&Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantQualifiable\\>\\) does not accept \\$this\\(Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\ChainTolerantCompletorTest\\)\\.$#"
 			count: 1
 			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/ChainTolerantCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\LimitingCompletorTest\\:\\:primeInnerCompletor\\(\\) has parameter \\$suggestions with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
-
-		-
-			message: "#^Method Phpactor\\\\Completion\\\\Tests\\\\Unit\\\\Bridge\\\\TolerantParser\\\\LimitingCompletorTest\\:\\:suggestion\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: lib/Completion/Tests/Unit/Bridge/TolerantParser/LimitingCompletorTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$completor of class Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\LimitingCompletor constructor expects Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\TolerantCompletor, object given\\.$#"
@@ -1762,7 +1752,7 @@ parameters:
 
 		-
 			message: "#^Cannot access an offset on mixed\\.$#"
-			count: 1
+			count: 2
 			path: lib/Extension/CodeTransform/CodeTransformExtension.php
 
 		-
@@ -3736,11 +3726,6 @@ parameters:
 			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
 
 		-
-			message: "#^Parameter \\#2 \\$path of method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Model\\\\WorkspaceSymbolProvider\\:\\:toLspPosition\\(\\) expects string, string\\|null given\\.$#"
-			count: 6
-			path: lib/Extension/LanguageServerIndexer/Model/WorkspaceSymbolProvider.php
-
-		-
 			message: "#^Method Phpactor\\\\Extension\\\\LanguageServerIndexer\\\\Tests\\\\IntegrationTestCase\\:\\:container\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerIndexer/Tests/IntegrationTestCase.php
@@ -3831,11 +3816,6 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
 
 		-
-			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\HighlightHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
-
-		-
 			message: "#^Parameter \\#1 \\$workspace of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler constructor expects Phpactor\\\\LanguageServer\\\\Core\\\\Workspace\\\\Workspace, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
@@ -3862,11 +3842,6 @@ parameters:
 
 		-
 			message: "#^Parameter \\#3 \\$definitionLocator of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler constructor expects Phpactor\\\\ReferenceFinder\\\\DefinitionLocator, mixed given\\.$#"
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
-
-		-
-			message: "#^Parameter \\#6 \\$timeoutSeconds of class Phpactor\\\\Extension\\\\LanguageServerReferenceFinder\\\\Handler\\\\ReferencesHandler constructor expects float, mixed given\\.$#"
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/LanguageServerReferenceFinderExtension.php
 
@@ -5301,11 +5276,6 @@ parameters:
 			path: lib/Indexer/Adapter/Tolerant/Indexer/ClassDeclarationIndexer.php
 
 		-
-			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null\\.$#"
-			count: 1
-			path: lib/Indexer/Adapter/Tolerant/TolerantIndexBuilder.php
-
-		-
 			message: "#^Parameter \\#1 \\.\\.\\.\\$paths of static method Symfony\\\\Component\\\\Filesystem\\\\Path\\:\\:join\\(\\) expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/Command/IndexBuildCommand.php
@@ -5409,11 +5379,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$time of class Amp\\\\Delayed constructor expects int, mixed given\\.$#"
 			count: 1
 			path: lib/Indexer/Extension/Rpc/IndexHandler.php
-
-		-
-			message: "#^Parameter \\#1 \\$uri of method Phpactor\\\\Indexer\\\\Model\\\\DirtyDocumentTracker\\:\\:markDirty\\(\\) expects Phpactor\\\\TextDocument\\\\TextDocumentUri, Phpactor\\\\TextDocument\\\\TextDocumentUri\\|null given\\.$#"
-			count: 1
-			path: lib/Indexer/Model/Indexer.php
 
 		-
 			message: "#^Cannot call method references\\(\\) on Phpactor\\\\Indexer\\\\Model\\\\Record\\\\FunctionRecord\\|null\\.$#"
@@ -6234,11 +6199,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$file of method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\BruteForceSourceLocator\\:\\:buildFunctionMap\\(\\) expects SplFileInfo, mixed given\\.$#"
 			count: 1
 			path: lib/WorseReflection/Core/SourceCodeLocator/BruteForceSourceLocator.php
-
-		-
-			message: "#^Method Phpactor\\\\WorseReflection\\\\Core\\\\SourceCodeLocator\\\\StubSourceLocator\\:\\:map\\(\\) should return array\\<string, string\\> but returns mixed\\.$#"
-			count: 1
-			path: lib/WorseReflection/Core/SourceCodeLocator/StubSourceLocator.php
 
 		-
 			message: "#^Cannot call method __toString\\(\\) on Phpactor\\\\WorseReflection\\\\Core\\\\Type\\|null\\.$#"
