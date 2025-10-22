@@ -686,6 +686,11 @@ parameters:
 			path: lib/Completion/Bridge/TolerantParser/DebugTolerantCompletor.php
 
 		-
+			message: "#^Match expression does not handle remaining values\\: \\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\ClassConstDeclaration\\>&literal\\-string\\)\\|\\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\MethodDeclaration\\>&literal\\-string\\)\\|\\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\PropertyDeclaration\\>&literal\\-string\\)\\|\\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\ClassDeclaration\\>&literal\\-string\\)\\|\\(class\\-string\\<Microsoft\\\\PhpParser\\\\Node\\\\Statement\\\\FunctionDeclaration\\>&literal\\-string\\)$#"
+			count: 1
+			path: lib/Completion/Bridge/TolerantParser/ReferenceFinder/AttributeCompletor.php
+
+		-
 			message: "#^Method Phpactor\\\\Completion\\\\Bridge\\\\TolerantParser\\\\WorseReflection\\\\DoctrineAnnotationCompletor\\:\\:complete\\(\\) should return bool but returns mixed\\.$#"
 			count: 1
 			path: lib/Completion/Bridge/TolerantParser/WorseReflection/DoctrineAnnotationCompletor.php
