@@ -309,11 +309,6 @@ class DocblockMissingParamProvider implements DiagnosticProvider
         );
     }
 
-    public function name(): string
-    {
-        return 'docblock_missing_param';
-    }
-
     private function upcastType(Type $type, NodeContextResolver $resolver): Type
     {
         if (!$type instanceof ReflectedClassType) {

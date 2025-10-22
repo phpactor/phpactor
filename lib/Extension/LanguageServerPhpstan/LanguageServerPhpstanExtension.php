@@ -16,6 +16,7 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\MapResolver\Resolver;
+use InvalidArgumentException;
 
 class LanguageServerPhpstanExtension implements OptionalExtension
 {
@@ -24,6 +25,8 @@ class LanguageServerPhpstanExtension implements OptionalExtension
     public const PARAM_CONFIG = 'language_server_phpstan.config';
     public const PARAM_MEM_LIMIT = 'language_server_phpstan.mem_limit';
     public const PARAM_ENABLED = 'language_server_phpstan.enabled';
+    public const PARAM_TMP_FILE_DISABLED = 'language_server_phpstan.tmp_file_disabled';
+    public const PARAM_EDITOR_MODE = 'language_server_phpstan.editor_mode';
 
     public function load(ContainerBuilder $container): void
     {
@@ -42,7 +45,17 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $container->register(
             Linter::class,
             function (Container $container) {
-                return new PhpstanLinter($container->get(PhpstanProcess::class));
+                if ($container->parameter(self::PARAM_EDITOR_MODE)->bool()
+                    && $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value()
+                ) {
+                    throw new InvalidArgumentException('You can not disable temp files with editor mode enabled');
+                }
+
+                return new PhpstanLinter(
+                    $container->get(PhpstanProcess::class),
+                    $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value() ?  $container->parameter(self::PARAM_TMP_FILE_DISABLED)->bool() : false,
+                    $container->parameter(self::PARAM_EDITOR_MODE)->bool(),
+                );
             }
         );
 
@@ -85,6 +98,8 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             self::PARAM_LEVEL => null,
             self::PARAM_CONFIG => null,
             self::PARAM_MEM_LIMIT => null,
+            self::PARAM_TMP_FILE_DISABLED => false,
+            self::PARAM_EDITOR_MODE => false,
             ]
         );
         $schema->setDescriptions(
@@ -93,6 +108,11 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             self::PARAM_LEVEL => 'Override the PHPStan level',
             self::PARAM_CONFIG => 'Override the PHPStan configuration file',
             self::PARAM_MEM_LIMIT => 'Override the PHPStan memory limit',
+            self::PARAM_TMP_FILE_DISABLED => 'Disable the use of temporary files when.'
+                . ' This prevents as-you-type diagnostics, but ensures paths in phpstan config are respected.'
+                    . ' See https://github.com/phpactor/phpactor/issues/2763',
+            self::PARAM_EDITOR_MODE => 'Use the editor mode of Phpstan https://phpstan.org/user-guide/editor-mode'
+                . ' (Requires phpstan 2.14 or higher)',
             ]
         );
     }

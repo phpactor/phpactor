@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
+use Phpactor\LanguageServerProtocol\MessageActionItem;
 use function Amp\call;
 use Amp\Delayed;
 use Amp\Promise;
@@ -32,7 +33,8 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
         private DefinitionLocator $definitionLocator,
         private LocationConverter $locationConverter,
         private ClientApi $clientApi,
-        private float $timeoutSeconds = 5.0
+        private float $timeoutSeconds = 30.0,
+        private float $softTimeoutSeconds = 10.0,
     ) {
     }
 
@@ -76,6 +78,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
             $start = microtime(true);
             $count = 0;
             $risky = 0;
+            $dontAsk = false;
             foreach ($this->finder->findReferences($phpactorDocument, $offset) as $potentialLocation) {
                 if ($potentialLocation->isSurely()) {
                     $locations[] = $potentialLocation->location();
@@ -91,6 +94,33 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                         $count - 1,
                         count($locations)
                     ));
+                }
+
+                if (false === $dontAsk && microtime(true) - $start > $this->softTimeoutSeconds) {
+                    $no = new MessageActionItem('No, show me what you got');
+                    $another = new MessageActionItem(sprintf('Another %.2f seconds', $this->softTimeoutSeconds));
+                    $until = new MessageActionItem(sprintf('Keep going until the %.2f second hard timeout', $this->timeoutSeconds));
+                    $selection = yield $this->clientApi->window()->showMessageRequest()->info(
+                        sprintf(
+                            'Finding references is taking a while, scanned %d and confirmed %d - do you want to continue?',
+                            $count - 1,
+                            count($locations),
+                        ),
+                        $no,
+                        $another,
+                        $until,
+                    );
+                    if ($selection == $no) {
+                        break;
+                    }
+                    if ($selection == $another) {
+                        $this->clientApi->window()->showMessage()->info(sprintf('Searching for another %.2f seconds', $this->softTimeoutSeconds));
+                        $start = microtime(true);
+                        continue;
+                    }
+                    if ($selection == $until) {
+                        $dontAsk = true;
+                    }
                 }
 
                 if (microtime(true) - $start > $this->timeoutSeconds) {

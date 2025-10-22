@@ -63,7 +63,7 @@ class CompletionContextTest extends TestCase
             false,
         ];
         yield 'not after method 2' => [
-            '<?php class Foo { private $foo; public function bar() {} public function boo() {} A<> public functoin baz() {}}',
+            '<?php class Foo { private $foo; public function bar() {} public function boo() {} A<> public function baz() {}}',
             false,
         ];
         yield 'not after method 3' => [
@@ -299,6 +299,31 @@ class CompletionContextTest extends TestCase
         yield [
             '<?php class A { public function a(<>$a) { ',
             false,
+        ];
+    }
+
+    /**
+     * @dataProvider provideMethodName
+     */
+    public function testMethodName(string $source, bool $expected): void
+    {
+        [$source, $offset] = ExtractOffset::fromSource($source);
+        $node = (new Parser())->parseSourceFile($source)->getDescendantNodeAtPosition((int)$offset);
+        self::assertEquals($expected, CompletionContext::methodName($node));
+    }
+
+    /**
+     * @return Generator<array<int,mixed>>
+     */
+    public function provideMethodName(): Generator
+    {
+        yield [
+            '<?php class A { public function __construct(<>',
+            false,
+        ];
+        yield [
+            '<?php class A { public function __con<>',
+            true,
         ];
     }
 }

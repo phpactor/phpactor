@@ -64,12 +64,12 @@ final class FilePath
         return is_dir($this->uri->path());
     }
 
-    /**
-     * This will lose the scheme
-     */
     public function asSplFileInfo(): SplFileInfo
     {
-        return new SplFileInfo($this->uri->path());
+        if ($this->uri->scheme() === 'file') {
+            return new SplFileInfo($this->uri->path());
+        }
+        return new SplFileInfo($this->uri->__toString());
     }
 
     public function makeAbsoluteFromString(string $path): FilePath

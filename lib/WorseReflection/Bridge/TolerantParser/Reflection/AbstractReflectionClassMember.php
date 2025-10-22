@@ -7,6 +7,7 @@ use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Deprecation;
+use Phpactor\WorseReflection\Core\Inference\Frame\LazyFrame;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\ClassLike;
@@ -50,7 +51,7 @@ abstract class AbstractReflectionClassMember extends AbstractReflectedNode imple
 
     public function frame(): Frame
     {
-        return $this->serviceLocator()->frameBuilder()->build($this->node());
+        return new LazyFrame($this->serviceLocator()->frameBuilder(), $this->node());
     }
 
     public function docblock(): DocBlock

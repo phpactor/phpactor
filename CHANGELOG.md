@@ -3,6 +3,141 @@ Changelog
 
 ## master
 
+BREAKING
+
+  - VIM plugin: Local `.phpactor.json` configuration files are no longer loaded by
+    default. If you use the VIM plugin you **must** explicitly trust the
+    configuration file with `:PhpactorTrust`.
+
+Features:
+
+  - Support PHPStan editormode #2936 @mamazu
+  - (development) optional opentelemertry extension.
+
+Improvements:
+
+  - Indexer: prioritize static include/exclude over dynamic paths #2927 @zonuexe
+  - Improved inlay type hints #2825 @dantleech
+  - Improve static analysis performance in some cases #2929 @dantleech
+  - Support for asymmetrical visiblity in parser #2926 @dantleech
+  - Ignore rector-stubs by default (frequently causes PHPUnit testcase
+    reflection issues) #2944 @dantleech
+
+Security:
+
+  - Ask permission before loading project-level `.phpactor.json` @dantleech
+
+Bug fixes:
+
+  - rename: Do not throw error if there is a reference to a now-non-existing file. @dantleech
+  - avoid infinite loop when looking up constant type #2913 @dantleech
+
+## 2025-07-25.0
+
+Improvements:
+
+  - Extract document highlighter to own module and add config option to
+    disable it @dantleech
+  - Fix false diagnostic for missing `__destruct` return type @przepompownia #2900
+  - Add depth info to `worse:dump-ast` command @mamazo #2897
+  - Ensure that stub locator results are cached in-memory @dantleech #2911
+  - Upload PHAR as artifact on builds @drzraf #2915
+
+Features:
+
+  - Search filtering (as applicable to autocomplete, name importing etc)
+    @dantleech
+
+Bug fixes:
+
+  - Require `ext-tokenizer` (fixes nixos distribution) @drupol
+  - Don't complete HEREDOC identifier @przepompownia #2909
+  - Fix parameter type resolution priority @dantleech
+  - Fix completion rendering when snippets are disabled @mamazu #2898
+
+## 2025.04.17.0
+
+Improvements:
+
+  - Do not suggest code action for missing return type if type is accurately
+    provided by docblock @dantleech
+  - Do not generate `void` return type on PHP 7.0
+
+Bug fixes:
+
+  - Support loading code templates when Phpactor included as a dependency
+    @zobo
+
+## 2025.03.28.0
+
+Improvements:
+
+  - Reference finding: Ask for confirmation to continue after soft timeout @dantleech #2856
+  - PHAR fixes for Windows @zobo
+  - LSP - Support for inline values @zobo
+  - Code action prioritization @mamazu
+
+## 2025.02.21.0
+
+Features:
+
+  - String <=> Heredoc code action #2825 @mamazu
+  - Support new expression without parenthesis #2811
+  - Support vscode evaluatable expressions #2905 @zobo
+  - Runtime support for PHP 8.4 #2829
+  - Initial support for property hooks @dantleech #2833
+
+Improvements:
+
+  - Performance: Do not run Indexed reference finder if references handled by
+    Variable reference finder @dantleech
+  - Performance: Do needlessly re-index documents before searching for
+    references @dantleech
+  - Psalm: add `config` option to specify Psalm config @GDXbsv #2835
+  - Completion for `@internal`  tag #2827 @mamazu
+  - Add documentation for Nova Language Client #2830 @EmranMR 
+  - Enable fill constructor code action on attributes #2810 @mamazu
+  - Require `ext-mbstring` extension to avoid off-by-one issues #2838 @dantleech
+
+Bug fix:
+
+  - Handle zero modulo evaluation @dantleech
+  - Do not use FQNs for imported classes in generated docblocks #2843 @dantleech
+
+Documentation:
+
+  - Add information for Zed editor @sethstha #2836
+
+## 2024-11-28.1
+
+Bug fixes:
+
+- Do not include the file scheme in when including/excluding files #2794
+
+## 2024-11-28
+
+Features:
+
+  - Show codes for all diagnostics and allow them to be ignored @dantleech
+    #2781
+
+Improvements:
+
+  - Do not highlight entire class for fix class/namespace name diagnostic
+    #2728 @dantleech
+  - Tolerate code action provider failures #2761 @dantleech
+  - Limit number of methods that are documented on classes to improve
+    completion/resolve performance for large classes #2768 @dantleech
+
+Bug fixes:
+
+  - Navigator: Fix attempt to create existing directories #2776 @bart-jaskulsi
+  - Fix goto constant within a trait #2784 @dantleech
+  - Preserve PHAR scheme when indexing PHAR stubs @dantleech #2754
+  - Fix duplicated types when updating methods @mamazu #2779
+
+## 2024-11-05
+
 Bug fixes:
 
   - Docblock: support parsing quoted string literals as array valuyes #2730
@@ -23,6 +158,7 @@ Improvements:
     #2695 @przepompownia
   - Show prose associated with `@throws` tag #2694 @mamazu
   - Support parsing generic variance e.g. `covariant` #2664 @dantleech
+  - Support opt-out of using temporary files with phpstan #2764 @tsterker
 
 Features:
 

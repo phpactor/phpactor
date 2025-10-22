@@ -9,14 +9,13 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 use Phpactor\TextDocument\TextDocumentUri;
-use function Safe\file_get_contents;
 
 abstract class IndexBuilderTestCase extends IntegrationTestCase
 {
     protected function setUp(): void
     {
         $this->workspace()->reset();
-        $this->workspace()->loadManifest(file_get_contents(__DIR__ . '/Manifest/buildIndex.php.test'));
+        $this->workspace()->loadManifest((string)file_get_contents(__DIR__ . '/Manifest/buildIndex.php.test'));
     }
 
     /**

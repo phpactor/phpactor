@@ -7,21 +7,27 @@ use Phly\EventDispatcher\EventDispatcher;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Extension;
+use Phpactor\Extension\Core\CoreExtension as PhpactorCoreExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServer\CodeAction\ProfilingCodeActionProvider;
+use Phpactor\Extension\LanguageServer\CodeAction\TolerantCodeActionProvider;
 use Phpactor\Extension\LanguageServer\Command\DiagnosticsCommand;
+use Phpactor\Extension\LanguageServer\DiagnosticProvider\AggregateDiagnosticsProvider;
+use Phpactor\Extension\LanguageServer\DiagnosticProvider\CodeFilteringDiagnosticProvider;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\OutsourcedDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\DiagnosticProvider\PathExcludingDiagnosticsProvider;
 use Phpactor\Extension\LanguageServer\Dispatcher\PhpactorDispatcherFactory;
 use Phpactor\Extension\LanguageServer\EventDispatcher\LazyAggregateProvider;
 use Phpactor\Extension\LanguageServer\Handler\DebugHandler;
 use Phpactor\Extension\LanguageServer\Listener\InvalidConfigListener;
+use Phpactor\Extension\LanguageServer\Listener\ProjectConfigTrustListener;
 use Phpactor\Extension\LanguageServer\Listener\SelfDestructListener;
 use Phpactor\Extension\LanguageServer\Logger\ClientLogger;
 use Phpactor\Extension\LanguageServer\Middleware\ProfilerMiddleware;
 use Phpactor\Extension\LanguageServer\Middleware\TraceMiddleware;
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
+use Phpactor\Extension\LanguageServer\Telemetry\LanguageServerTelemetry;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\LanguageServer\Command\StartCommand;
@@ -30,7 +36,6 @@ use Phpactor\LanguageServerProtocol\ClientCapabilities;
 use Phpactor\LanguageServer\Core\CodeAction\AggregateCodeActionProvider;
 use Phpactor\LanguageServer\Core\CodeAction\CodeActionProvider;
 use Phpactor\LanguageServer\Core\Command\CommandDispatcher;
-use Phpactor\LanguageServer\Core\Diagnostics\AggregateDiagnosticsProvider;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsEngine;
 use Phpactor\LanguageServer\Core\Diagnostics\DiagnosticsProvider;
 use Phpactor\LanguageServer\Diagnostics\CodeActionDiagnosticsProvider;
@@ -71,9 +76,11 @@ use Phpactor\LanguageServer\Service\DiagnosticsService;
 use Phpactor\LanguageServer\WorkDoneProgress\ProgressNotifier;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\MapResolver\ResolverErrors;
+use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use SplPriorityQueue;
 use Symfony\Component\Filesystem\Path;
 use Webmozart\Assert\Assert;
 use function array_filter;
@@ -120,6 +127,8 @@ class LanguageServerExtension implements Extension
     public const PARAM_PHPACTOR_BIN = 'language_server.phpactor_bin';
     public const PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT = 'language_server.diagnostic_outsource_timeout';
     public const PARAM_DIAGNOSTIC_EXCLUDE_PATHS = 'language_server.diagnostic_exclude_paths';
+    public const PARAM_DIAGNOSTIC_IGNORE_CODES = 'language_server.diagnostic_ignore_codes';
+    public const PARAM_ENABLE_TRUST_CHECK = 'language_server.enable_trust_check';
 
     public function configure(Resolver $schema): void
     {
@@ -135,6 +144,8 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_PROVIDERS => null,
             self::PARAM_DIAGNOSTIC_OUTSOURCE => true,
             self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS => [],
+            self::PARAM_DIAGNOSTIC_IGNORE_CODES => [],
+            self::PARAM_ENABLE_TRUST_CHECK => true,
             self::PARAM_FILE_EVENTS => true,
             self::PARAM_FILE_EVENT_GLOBS => ['**/*.php'],
             self::PARAM_PROFILE => false,
@@ -145,6 +156,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 5,
         ]);
         $schema->setDescriptions([
+            self::PARAM_ENABLE_TRUST_CHECK => 'Check to see if project path is trusted before loading configurations from it',
             self::PARAM_TRACE => 'Log incoming and outgoing messages (needs log formatter to be set to ``json``)',
             self::PARAM_PROFILE => 'Logs timing information for incoming LSP requests',
             self::PARAM_METHOD_ALIAS_MAP => 'Allow method names to be re-mapped. Useful for maintaining backwards compatibility',
@@ -160,6 +172,7 @@ class LanguageServerExtension implements Extension
             self::PARAM_DIAGNOSTIC_PROVIDERS => 'Specify which diagnostic providers should be active (default to all)',
             self::PARAM_DIAGNOSTIC_OUTSOURCE => 'If applicable diagnostics should be "outsourced" to a different process',
             self::PARAM_DIAGNOSTIC_OUTSOURCE_TIMEOUT => 'Kill the diagnostics process if it outlives this timeout',
+            self::PARAM_DIAGNOSTIC_IGNORE_CODES => 'Ignore diagnostics that have the codes listed here, e.g. ["fix_namespace_class_name"]. The codes match those shown in the LSP client.',
             self::PARAM_FILE_EVENTS => 'Register to receive file events',
             self::PARAM_DIAGNOSTIC_EXCLUDE_PATHS => 'List of paths to exclude from diagnostics, e.g. `vendor/**/*`',
             self::PARAM_SHUTDOWN_GRACE_PERIOD => 'Amount of time (in milliseconds) to wait before responding to a shutdown notification',
@@ -181,6 +194,7 @@ class LanguageServerExtension implements Extension
         $this->registerDiagnostics($container);
         $this->registerHandlers($container);
         $this->registerServices($container);
+        $this->registerTelemetry($container);
     }
 
     private function registerServer(ContainerBuilder $container): void
@@ -246,6 +260,20 @@ class LanguageServerExtension implements Extension
             return new InvalidConfigListener(
                 $container->get(ClientApi::class),
                 $container->has(ResolverErrors::class) ? $container->get(ResolverErrors::class) : new ResolverErrors([])
+            );
+        }, [
+            self::TAG_LISTENER_PROVIDER => [],
+        ]);
+
+        $container->register(ProjectConfigTrustListener::class, function (Container $container) {
+            if (false === $container->parameter(self::PARAM_ENABLE_TRUST_CHECK)->bool()) {
+                return null;
+            }
+            return new ProjectConfigTrustListener(
+                $container->get(ClientApi::class),
+                $container->parameter(PhpactorCoreExtension::PARAM_PROJECT_CONFIG_CANDIDATES)->listOfString(),
+                /** @phpstan-ignore argument.type */
+                $container->parameter(PhpactorCoreExtension::PARAM_TRUST)->value(),
             );
         }, [
             self::TAG_LISTENER_PROVIDER => [],
@@ -453,16 +481,20 @@ class LanguageServerExtension implements Extension
         }, [ self::TAG_METHOD_HANDLER => []]);
 
         $container->register(CodeActionHandler::class, function (Container $container) {
-            $services = $this->taggedServices($container, self::TAG_CODE_ACTION_PROVIDER, CodeActionProvider::class);
-            if ($container->parameter(self::PARAM_PROFILE)->bool()) {
-                $services = array_map(
-                    fn (CodeActionProvider $provider) => new ProfilingCodeActionProvider(
-                        $provider,
-                        $this->logger($container)
-                    ),
-                    $services
+            $services = new SplPriorityQueue();
+            $profile = $container->parameter(self::PARAM_PROFILE)->bool();
+            foreach ($container->getServiceIdsForTag(self::TAG_CODE_ACTION_PROVIDER) as $serviceId => $attributes) {
+                $provider = new TolerantCodeActionProvider(
+                    $container->expect($serviceId, CodeActionProvider::class),
+                    $container->get(ClientApi::class),
                 );
+                if ($profile) {
+                    $provider = new ProfilingCodeActionProvider($provider, $this->logger($container));
+                }
+
+                $services->insert($provider, $attributes['priority'] ?? 0);
             }
+
             return new CodeActionHandler(
                 /** @phpstan-ignore-next-line */
                 new AggregateCodeActionProvider(...$services),
@@ -534,6 +566,17 @@ class LanguageServerExtension implements Extension
                         $provider,
                         // make all the exclude paths absolute before passing to the provider
                         array_map(fn (string $path) => Path::join($projectRoot, $path), $excludePaths)
+                    );
+                }, $providers);
+            }
+
+            $ignoreCodes = $container->parameter(self::PARAM_DIAGNOSTIC_IGNORE_CODES)->listOfString();
+
+            if (count($ignoreCodes)) {
+                $providers = array_map(function (DiagnosticsProvider $provider) use ($ignoreCodes) {
+                    return new CodeFilteringDiagnosticProvider(
+                        $provider,
+                        $ignoreCodes,
                     );
                 }, $providers);
             }
@@ -668,6 +711,7 @@ class LanguageServerExtension implements Extension
 
         if (null !== $enabled) {
             Assert::isArray($enabled);
+
             if ($diff = array_diff($enabled, array_keys($providers))) {
                 throw new RuntimeException(sprintf(
                     'Unknown diagnostic provider(s) "%s", known providers: "%s"',
@@ -680,5 +724,12 @@ class LanguageServerExtension implements Extension
 
         /** @var DiagnosticsProvider[] $providers */
         return $providers;
+    }
+
+    private function registerTelemetry(ContainerBuilder $container): void
+    {
+        $container->register(LanguageServerTelemetry::class, function (Container $container) {
+            return new LanguageServerTelemetry();
+        }, [OpenTelemetryExtension::TAG_HOOK_PROVIDER => []]);
     }
 }

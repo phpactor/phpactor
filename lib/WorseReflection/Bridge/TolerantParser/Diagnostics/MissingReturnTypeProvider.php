@@ -63,6 +63,46 @@ class MissingReturnTypeProvider implements DiagnosticProvider
             }
         );
         yield new DiagnosticExample(
+            title: 'does not report missing return type if defined in docblock',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar1 {
+                    /**
+                     * @return string
+                     */
+                    public function foobar()
+                    {
+                        return 'hello';
+                    }
+                }
+                PHP,
+            valid: true,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(0, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
+            title: 'reports missing return type if docblock does not match inferred type',
+            source: <<<'PHP'
+                <?php
+
+                class Foobar1 {
+                    /**
+                     * @return int
+                     */
+                    public function foobar()
+                    {
+                        return 'hello';
+                    }
+                }
+                PHP,
+            valid: false,
+            assertion: function (Diagnostics $diagnostics): void {
+                Assert::assertCount(1, $diagnostics);
+            }
+        );
+        yield new DiagnosticExample(
             title: 'unable to infer return type',
             source: <<<'PHP'
                 <?php
@@ -154,6 +194,11 @@ class MissingReturnTypeProvider implements DiagnosticProvider
 
         $returnType = $frame->returnType();
 
+        $docblockReturnType = $method->docblock()->returnType();
+        if ($docblockReturnType->isDefined() && $docblockReturnType->accepts($returnType)->isTrue()) {
+            return;
+        }
+
         yield new MissingReturnTypeDiagnostic(
             $method->nameRange(),
             $reflection->name()->__toString(),
@@ -165,10 +210,5 @@ class MissingReturnTypeProvider implements DiagnosticProvider
     public function enter(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
         return [];
-    }
-
-    public function name(): string
-    {
-        return 'missing_return_type';
     }
 }

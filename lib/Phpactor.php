@@ -3,15 +3,18 @@
 namespace Phpactor;
 
 use Phpactor\ClassMover\Extension\ClassMoverExtension as MainClassMoverExtension;
+use Phpactor\Container\BootableExtension;
 use Phpactor\Container\Container;
 use Phpactor\Container\OptionalExtension;
 use Phpactor\Extension\Behat\BehatExtension;
 use Phpactor\Extension\Behat\BehatSuggestExtension;
 use Phpactor\Extension\ComposerInspector\ComposerInspectorExtension;
 use Phpactor\Extension\Configuration\ConfigurationExtension;
+use Phpactor\Extension\Core\Trust\Trust;
 use Phpactor\Extension\Debug\DebugExtension;
 use Phpactor\Extension\LanguageServerBlackfire\LanguageServerBlackfireExtension;
 use Phpactor\Extension\LanguageServerConfiguration\LanguageServerConfigurationExtension;
+use Phpactor\Extension\LanguageServerHighlight\LanguageServerHighlightExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerExtension;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LanguageServerPhpCsFixerSuggestExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanExtension;
@@ -20,6 +23,8 @@ use Phpactor\Extension\LanguageServerCodeTransform\LanguageServerCodeTransformEx
 use Phpactor\Extension\LanguageServerCompletion\LanguageServerCompletionExtension;
 use Phpactor\Extension\LanguageServerDiagnostics\LanguageServerDiagnosticsExtension;
 use Phpactor\Extension\LanguageServerHover\LanguageServerHoverExtension;
+use Phpactor\Extension\LanguageServerEvaluatableExpression\LanguageServerEvaluatableExpressionExtension;
+use Phpactor\Extension\LanguageServerInlineValue\LanguageServerInlineValueExtension;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
 use Phpactor\Extension\LanguageServerPhpstan\LanguageServerPhpstanSuggestExtension;
 use Phpactor\Extension\LanguageServerPsalm\LanguageServerPsalmExtension;
@@ -41,8 +46,10 @@ use Phpactor\Extension\Symfony\SymfonyExtension;
 use Phpactor\Extension\Symfony\SymfonySuggestExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
+use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
 use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\Core\CoreExtension;
@@ -76,6 +83,7 @@ use Phpactor\ConfigLoader\ConfigLoaderBuilder;
 use Phpactor\Extension\ReferenceFinderRpc\ReferenceFinderRpcExtension;
 use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Symfony\Component\Filesystem\Path;
+use XdgBaseDir\Xdg;
 use function ini_set;
 use function sprintf;
 
@@ -83,6 +91,7 @@ class Phpactor
 {
     public static function boot(InputInterface $input, OutputInterface $output, string $vendorDir, ?string $phpactorBin = null): Container
     {
+        $errorOutput = $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : new NullOutput();
         $config = [];
 
         $projectRoot = getcwd();
@@ -91,19 +100,44 @@ class Phpactor
             $projectRoot = $input->getParameterOption([ '--working-dir', '-d' ]);
         }
 
+        if (!is_string($projectRoot)) {
+            throw new RuntimeException(sprintf(
+                'Unexpected type for project root, expected string got: %s',
+                get_debug_type($projectRoot)
+            ));
+        }
+
         $commandName = $input->getFirstArgument();
+
+        $trustPath = (new Xdg())->getHomeDataDir() . '/phpactor/trust.json';
+        $trust = Trust::load($trustPath);
 
         $loader = ConfigLoaderBuilder::create()
             ->enableJsonDeserializer('json')
             ->enableYamlDeserializer('yaml')
             ->addXdgCandidate('phpactor', 'phpactor.json', 'json')
-            ->addXdgCandidate('phpactor', 'phpactor.yml', 'yaml')
-            ->addCandidate($projectRoot . '/.phpactor.json', 'json')
-            ->addCandidate($projectRoot . '/.phpactor.yml', 'yaml')
-            ->loader();
+            ->addXdgCandidate('phpactor', 'phpactor.yml', 'yaml');
 
+        $projectCandidates = [
+            [$projectRoot . '/.phpactor.json', 'json'],
+            [$projectRoot . '/.phpactor.yml', 'yaml'],
+        ];
+
+        $trusted = $trust->isTrusted($projectRoot);
+        if ($trusted === true) {
+            foreach ($projectCandidates as [$path, $type]) {
+                $loader = $loader->addCandidate($path, $type);
+            }
+        }
+
+        $loader = $loader->loader();
         $config = $loader->load();
         $config[CoreExtension::PARAM_COMMAND] = $input->getFirstArgument();
+        $config[CoreExtension::PARAM_PROJECT_CONFIG_CANDIDATES] = array_column($projectCandidates, 0);
+
+        $config[CoreExtension::PARAM_TRUST] = $trust;
+        $config[CoreExtension::PARAM_TRUSTED] = $trusted;
+
         if ($phpactorBin) {
             $config[LanguageServerExtension::PARAM_PHPACTOR_BIN] = $phpactorBin;
         }
@@ -139,6 +173,22 @@ class Phpactor
             $xdebug->check();
             unset($xdebug);
         }
+
+        $trusted = $trust->isTrusted($projectRoot);
+        if (!$trusted) {
+            foreach ($projectCandidates as [$candidate, $_]) {
+                if (file_exists($candidate)) {
+                    if ($commandName !== 'rpc') {
+                        $errorOutput->writeln(sprintf(
+                            '<fg=yellow>Local config "%s" found but it\'s in an untrusted directory, ' .
+                            'run `phpactor config:trust` if you want it to be loaded</>',
+                            basename($candidate),
+                        ));
+                    }
+                }
+            }
+        }
+
 
         $extensionNames = [
             CoreExtension::class,
@@ -176,6 +226,8 @@ class Phpactor
             LanguageServerWorseReflectionExtension::class,
             LanguageServerIndexerExtension::class,
             LanguageServerHoverExtension::class,
+            LanguageServerEvaluatableExpressionExtension::class,
+            LanguageServerInlineValueExtension::class,
             LanguageServerBridgeExtension::class,
             LanguageServerCodeTransformExtension::class,
             LanguageServerSymbolProviderExtension::class,
@@ -193,12 +245,14 @@ class Phpactor
             LanguageServerPsalmSuggestExtension::class,
             LanguageServerPhpCsFixerExtension::class,
             LanguageServerPhpCsFixerSuggestExtension::class,
+            LanguageServerHighlightExtension::class,
             PhpCodeSnifferExtension::class,
             PhpCodeSnifferSuggestExtension::class,
 
             LanguageServerBlackfireExtension::class,
 
             ProphecyExtension::class,
+            OpenTelemetryExtension::class,
             ProphecySuggestExtension::class,
 
             BehatExtension::class,
@@ -225,9 +279,7 @@ class Phpactor
             $schema = new Resolver();
 
             if (!class_exists($extensionClass)) {
-                if ($output instanceof ConsoleOutputInterface) {
-                    $output->getErrorOutput()->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). "\n");
-                }
+                $errorOutput->writeln(sprintf('<error>Extension "%s" does not exist</>', $extensionClass). "\n");
                 continue;
             }
 
@@ -270,6 +322,9 @@ class Phpactor
                 }
             }
             $extension->load($container);
+            if ($extension instanceof BootableExtension) {
+                $extension->boot($container);
+            }
         }
 
         if (isset($config[CoreExtension::PARAM_MIN_MEMORY_LIMIT])) {

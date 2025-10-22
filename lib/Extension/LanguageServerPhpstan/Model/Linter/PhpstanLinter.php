@@ -9,13 +9,19 @@ use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\TextDocument\TextDocumentUri;
-use function Safe\tempnam;
-use function Safe\file_put_contents;
 
 class PhpstanLinter implements Linter
 {
-    public function __construct(private PhpstanProcess $process)
+    public function __construct(
+        private PhpstanProcess $phpstanProcess,
+        private bool $disableTmpFile = false,
+        private bool $editorMode = false,
+    ) {
+    }
+
+    public function isTmpFileDisabled(): bool
     {
+        return $this->disableTmpFile;
     }
 
     public function lint(string $url, ?string $text): Promise
@@ -32,14 +38,25 @@ class PhpstanLinter implements Linter
      */
     private function doLint(string $url, ?string $text): Generator
     {
-        if (null === $text) {
-            return yield $this->process->analyse(TextDocumentUri::fromString($url)->path());
+        $path = TextDocumentUri::fromString($url)->path();
+
+        if (null === $text || $this->disableTmpFile) {
+            return yield $this->phpstanProcess->analyseInPlace($path);
         }
 
-        $name = tempnam(sys_get_temp_dir(), 'phpstanls');
-        file_put_contents($name, $text);
-        $diagnostics = yield $this->process->analyse($name);
-        unlink($name);
+        $tempFile = tempnam(sys_get_temp_dir(), 'phpstanls');
+        file_put_contents($tempFile, $text);
+
+        try {
+            if ($this->editorMode) {
+                $diagnostics = yield $this->phpstanProcess->editorModeAnalyse($path, $tempFile);
+            } else {
+                $diagnostics = yield $this->phpstanProcess->analyseInPlace($tempFile);
+            }
+        } finally {
+            @unlink($tempFile);
+        }
+
         return $diagnostics;
     }
 }

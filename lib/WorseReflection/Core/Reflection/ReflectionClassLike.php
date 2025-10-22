@@ -7,6 +7,7 @@ use Phpactor\TextDocument\ByteOffsetRange;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\TextDocument\TextDocument;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
+use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionConstantCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\TemplateMap;
@@ -45,4 +46,6 @@ interface ReflectionClassLike extends ReflectionNode
     public function type(): ReflectedClassType;
 
     public function classLikeType(): string;
+
+    public function constants(): ReflectionConstantCollection;
 }

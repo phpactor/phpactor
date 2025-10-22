@@ -40,6 +40,12 @@ jobs:
             - name: Execute Phar
               run: ./build/phpactor.phar
 
+            - name: Archive phar
+              uses: actions/upload-artifact@v4
+              with:
+                  name: phar
+                  path: build/phpactor.phar
+
       #- name: "Attach signature to Release"
       #  uses: actions/upload-release-asset@v1
       #  env:
@@ -85,6 +91,7 @@ jobs:
                     composer validate --strict
                     composer install --optimize-autoloader --classmap-authoritative
                     bin/phpactor --version
+                    export PHPACTOR_UNCONDITIONAL_TRUST=1
                     git clone https://github.com/junegunn/vader.vim.git
 
             -
@@ -104,6 +111,7 @@ jobs:
                     - '8.1'
                     - '8.2'
                     - '8.3'
+                    - '8.4'
 
         steps:
             -
@@ -129,18 +137,6 @@ jobs:
                   php -dphar.readonly=0 \
                     -dzend.assertions=1 \
                     vendor/bin/phpunit --log-junit phpunit-junit.xml
-            -
-                if: "contains(github.ref, 'master')"
-                name: "Upload to Historian"
-                run: |
-                  curl https://${{ secrets.HISTORIAN_HOST }}/api/upload -XPOST \
-                    -H"X-Api-Key: ${{ secrets.HISTORIAN_API_KEY }}" \
-                    -H"X-Build: ${{ github.run_number }}" \
-                    -H"X-Commit-Sh: ${{ github.sha }}" \
-                    -H"X-Author-Name: ${{ github.event.head_commit.author.name }}" \
-                    -H"X-Author-Email: ${{ github.event.head_commit.author.email }}" \
-                    -H"X-Host: ${{ runner.name }}" \
-                    -Fphpunit=@phpunit-junit.xml
     phpstan:
         name: "PHPStan (${{ matrix.php-version }})"
 
@@ -266,18 +262,6 @@ jobs:
             -
                 name: "Run PHPBench"
                 run: "vendor/bin/phpbench run --progress=plain --iterations=1 --dump-file=phpbench.xml"
-            -
-                if: "contains(github.ref, 'master')"
-                name: "Upload to Historian"
-                run: |
-                  curl https://${{ secrets.HISTORIAN_HOST }}/api/upload -XPOST \
-                    -H"X-Api-Key: ${{ secrets.HISTORIAN_API_KEY }}" \
-                    -H"X-Build: ${{ github.run_number }}" \
-                    -H"X-Commit-Sh: ${{ github.sha }}" \
-                    -H"X-Author-Name: ${{ github.event.head_commit.author.name }}" \
-                    -H"X-Author-Email: ${{ github.event.head_commit.author.email }}" \
-                    -H"X-Host: ${{ runner.name }}" \
-                    -Fphpbench=@phpbench.xml
     docs:
         name: "Lint Docs (${{ matrix.php-version }})"
 

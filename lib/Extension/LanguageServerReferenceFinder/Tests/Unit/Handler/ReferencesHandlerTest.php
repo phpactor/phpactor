@@ -175,7 +175,7 @@ class ReferencesHandlerTest extends TestCase
         $this->assertInstanceOf(LspLocation::class, $lspLocation);
     }
 
-    private function createTester(): LanguageServerTester
+    private function createTester(float $timeout = 60, float $softTimeout = 10): LanguageServerTester
     {
         $builder = LanguageServerTesterBuilder::create();
         $builder->addHandler(
@@ -184,7 +184,9 @@ class ReferencesHandlerTest extends TestCase
                 $this->finder->reveal(),
                 $this->locator->reveal(),
                 new LocationConverter(new WorkspaceTextDocumentLocator($builder->workspace())),
-                new ClientApi(TestRpcClient::create())
+                new ClientApi(TestRpcClient::create()),
+                $timeout,
+                $softTimeout,
             )
         );
         $tester = $builder->build();

@@ -36,6 +36,10 @@ class Indexer
      */
     public function indexDirty(TextDocument $textDocument): void
     {
+        if (null === $textDocument->uri()) {
+            return;
+        }
+
         $this->dirtyDocumentTracker->markDirty($textDocument->uri());
         $this->builder->index($textDocument);
     }

@@ -36,4 +36,9 @@ class DeprecatedUsageDiagnostic implements Diagnostic
     {
         return [DiagnosticTag::DEPRECATED];
     }
+
+    public function code(): string
+    {
+        return 'deprecated_usage';
+    }
 }

@@ -64,7 +64,7 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        if ($method->name() === '__construct') {
+        if ($method->name() === '__construct' || $method->name() === '__destruct') {
             return;
         }
 
@@ -151,10 +151,5 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
                 Assert::assertCount(1, $diagnostics);
             }
         );
-    }
-
-    public function name(): string
-    {
-        return 'docblock_missing_return';
     }
 }

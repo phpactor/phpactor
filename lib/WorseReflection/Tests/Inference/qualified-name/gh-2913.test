@@ -1,0 +1,9 @@
+<?php
+
+define('Timer', Timer);
+
+// we do not evaluate possible constant references in constant declarations to avoid
+// inifinite loops
+wrAssertType('<missing>', Timer);
+
+

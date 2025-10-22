@@ -20,7 +20,7 @@ class WorseDiagnosticProviderTest extends TestCase
     public function testDiagnostics(): void
     {
         $reflector = ReflectorBuilder::create()->addDiagnosticProvider(new InMemoryDiagnosticProvider([
-            new BareDiagnostic(ByteOffsetRange::fromInts(1, 1), DiagnosticSeverity::WARNING(), 'Foo')
+            new BareDiagnostic(ByteOffsetRange::fromInts(1, 1), DiagnosticSeverity::WARNING(), 'Foo', 'foo')
         ]))->build();
 
         $cancel = (new CancellationTokenSource())->getToken();
@@ -35,6 +35,7 @@ class WorseDiagnosticProviderTest extends TestCase
         self::assertCount(1, $lspDiagnostics);
         self::assertInstanceOf(Diagnostic::class, $lspDiagnostics[0]);
         self::assertEquals('Foo', $lspDiagnostics[0]->message);
+        self::assertEquals('worse.foo', $lspDiagnostics[0]->code);
         self::assertEquals(PhpactorDiagnosticSeverity::WARNING, $lspDiagnostics[0]->severity);
     }
 }

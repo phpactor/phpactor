@@ -17,6 +17,7 @@ use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression;
 use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\BinaryExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Microsoft\PhpParser\Node\MatchArm;
@@ -33,6 +34,7 @@ use Microsoft\PhpParser\Node\Statement\InlineHtml;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Microsoft\PhpParser\Node\TraitUseClause;
+use Microsoft\PhpParser\TokenKind;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 
@@ -46,6 +48,14 @@ class CompletionContext
         $parent = $node->parent;
 
         if (null === $parent) {
+            return false;
+        }
+
+        if (
+            $parent instanceof BinaryExpression
+                && $parent->operator->kind === TokenKind::LessThanToken
+                && str_starts_with(ltrim($parent->__toString()), '<<<')
+        ) {
             return false;
         }
 
@@ -177,11 +187,19 @@ class CompletionContext
             return false;
         }
 
-        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
-
         if ($node instanceof Variable) {
             return false;
         }
+
+        if (
+            $node->parent instanceof MethodDeclaration
+                && $node instanceof CompoundStatementNode
+                && $node->openBrace instanceof MissingToken
+        ) {
+            return false;
+        }
+
+        $nodeBeforeOffset = NodeUtil::firstDescendantNodeBeforeOffset($node->getRoot(), $node->parent->getStartPosition());
 
         if ($nodeBeforeOffset instanceof ClassMembersNode) {
             return true;
@@ -273,7 +291,16 @@ class CompletionContext
 
     public static function methodName(Node $node): bool
     {
-        return $node->parent instanceof MethodDeclaration;
+        // If the body (as the current node) is empty, the parent is MethodDeclaration
+        if ($node instanceof CompoundStatementNode && !$node->openBrace instanceof MissingToken) {
+            return false;
+        }
+
+        if (!$node->parent instanceof MethodDeclaration) {
+            return false;
+        }
+
+        return $node->parent->openParen instanceof MissingToken;
     }
 
     public static function declaration(Node $node, ByteOffset $offset): bool

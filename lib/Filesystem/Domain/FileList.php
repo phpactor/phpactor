@@ -7,6 +7,7 @@ use Iterator;
 use RegexIterator;
 use ReturnTypeWillChange;
 use SplFileInfo;
+use Symfony\Component\Filesystem\Path;
 use Traversable;
 use Webmozart\Glob\Glob;
 use ArrayIterator;
@@ -104,6 +105,12 @@ class FileList implements Iterator
 
         // Sort map by keys so that more specific paths are getting matched first
         uksort($inclusionMap, function (string $a, string $b) {
+            $aIsDynamic = Glob::isDynamic($a);
+            $bIsDynamic = Glob::isDynamic($b);
+            if ($aIsDynamic !== $bIsDynamic) {
+                return $aIsDynamic ? 1 : -1;
+            }
+
             $partsA = explode(DIRECTORY_SEPARATOR, $a);
             $partsB = explode(DIRECTORY_SEPARATOR, $b);
             $countDiff = count($partsA) <=> count($partsB);
@@ -128,7 +135,14 @@ class FileList implements Iterator
 
         return $this->filter(function (SplFileInfo $info) use ($inclusionMap): bool {
             foreach ($inclusionMap as $glob => $isIncluded) {
-                if (Glob::match($info->getPathname(), $glob)) {
+                $path = $info->getPathname();
+
+                // do not include the scheme in comparisons
+                if ($schemePos = strpos($path, '://')) {
+                    $path = substr($path, $schemePos + 3);
+                }
+
+                if (Glob::match($path, $glob)) {
                     return $isIncluded;
                 }
             }

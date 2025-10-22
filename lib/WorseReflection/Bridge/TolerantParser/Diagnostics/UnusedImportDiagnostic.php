@@ -42,4 +42,9 @@ class UnusedImportDiagnostic implements Diagnostic
     {
         return [DiagnosticTag::UNNECESSARY];
     }
+
+    public function code(): string
+    {
+        return 'unused_import';
+    }
 }

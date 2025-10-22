@@ -54,12 +54,12 @@ class DumpAstCommand extends Command
         return 0;
     }
 
-    private function dump(OutputInterface $output, Node $node, string &$out): void
+    private function dump(OutputInterface $output, Node $node, string &$out, int $depth = 0): void
     {
         foreach ($node->getChildNodesAndTokens() as $child) {
             if ($child instanceof Node) {
-                $out .= sprintf('<info><%s></>', $child->getNodeKindName());
-                $this->dump($output, $child, $out);
+                $out .= sprintf('<info><%s ↓%s></>', $child->getNodeKindName(), $depth);
+                $this->dump($output, $child, $out, $depth + 1);
             }
             if ($child instanceof Token) {
                 $out .= $child->getFullText($node->getFileContents());
