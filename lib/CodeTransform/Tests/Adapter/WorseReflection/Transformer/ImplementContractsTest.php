@@ -475,6 +475,35 @@ class ImplementContractsTest extends WorseTestCase
                 }
                 EOT
         ];
+
+        yield 'Implementing in anonymous classes' => [
+                <<<'EOT'
+                    <?php
+
+                    interface Animal
+                    {
+                        public function jump(): iterable;
+                    }
+
+                    $bird = new class() implements Animal {
+                    }
+                    EOT
+                ,
+                <<<'EOT'
+                    <?php
+
+                    interface Animal
+                    {
+                        public function jump(): iterable;
+                    }
+
+                    $bird = new class() implements Animal {
+                        public function jump(): iterable
+                        {
+                        }
+                    }
+                    EOT
+        ];
         yield 'It uses "iterable"' => [
             <<<'EOT'
                 <?php

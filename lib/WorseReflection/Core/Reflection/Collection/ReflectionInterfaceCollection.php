@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
 use Microsoft\PhpParser\Node\ClassInterfaceClause;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\InterfaceBaseClause;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -25,8 +26,10 @@ class ReflectionInterfaceCollection extends AbstractReflectionCollection
         return self::fromBaseClause($serviceLocator, $interface->interfaceBaseClause, $visited);
     }
 
-    public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class): self
-    {
+    public static function fromClassDeclaration(
+        ServiceLocator $serviceLocator,
+        ClassDeclaration|ObjectCreationExpression $class,
+    ): self {
         return self::fromBaseClause($serviceLocator, $class->classInterfaceClause, []);
     }
 

@@ -31,4 +31,6 @@ interface ReflectionClass extends ReflectionClassLike
     public function memberListPosition(): ByteOffsetRange;
 
     public function isFinal(): bool;
+
+    public function isAnonymous(): bool;
 }

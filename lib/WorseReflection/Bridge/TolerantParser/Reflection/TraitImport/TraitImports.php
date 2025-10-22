@@ -6,6 +6,8 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ClassMembersNode;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\QualifiedName;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -103,8 +105,12 @@ final class TraitImports implements Countable, IteratorAggregate
         }
     }
 
-    public static function forClassDeclaration(ClassDeclaration $classDeclaration): self
+    public static function forClassDeclaration(ClassDeclaration|ObjectCreationExpression $classDeclaration): self
     {
+        if (!$classDeclaration->classMembers instanceof ClassMembersNode) {
+            return new self([]);
+        }
+
         return new self($classDeclaration->classMembers->classMemberDeclarations);
     }
 

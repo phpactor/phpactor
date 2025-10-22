@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Core\Reflection\Collection;
 
+use Microsoft\PhpParser\Node\ClassMembersNode;
+use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
 use Phpactor\WorseReflection\Core\Exception\NotFound;
@@ -17,8 +19,14 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Patch\TolerantQualifiedNameRe
  */
 class ReflectionTraitCollection extends AbstractReflectionCollection
 {
-    public static function fromClassDeclaration(ServiceLocator $serviceLocator, ClassDeclaration $class): self
-    {
+    public static function fromClassDeclaration(
+        ServiceLocator $serviceLocator,
+        ClassDeclaration|ObjectCreationExpression $class,
+    ): self {
+        if (!$class->classMembers instanceof ClassMembersNode) {
+            throw new NotFound('ObjectCreationExpression does not contain anonymous class');
+        }
+
         $items = [];
         foreach ($class->classMembers->classMemberDeclarations as $memberDeclaration) {
             if (false === $memberDeclaration instanceof TraitUseClause) {
