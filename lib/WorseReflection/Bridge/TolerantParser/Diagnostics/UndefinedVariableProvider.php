@@ -5,7 +5,6 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Microsoft\PhpParser\Node\PropertyDeclaration;
 use Microsoft\PhpParser\Node\PropertyElement;
 use PHPUnit\Framework\Assert;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
