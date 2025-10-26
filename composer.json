@@ -26,7 +26,7 @@
         "symfony/filesystem": "^6.0",
         "symfony/process": "^6.0",
         "jetbrains/phpstorm-stubs": "dev-master",
-        "phpactor/tolerant-php-parser": "dev-main",
+        "phpactor/tolerant-php-parser": "dev-phan-phactor-fixes",
         "phpactor/map-resolver": "^1.5.0",
         "webmozart/assert": "^1.11"
     },
@@ -95,6 +95,9 @@
             "phpstan/extension-installer": true,
             "php-http/discovery": false,
             "tbachert/spi": false
+        },
+        "preferred-install": {
+            "phan/tolerant-php-parser": "source"
         }
     },
     "autoload": {

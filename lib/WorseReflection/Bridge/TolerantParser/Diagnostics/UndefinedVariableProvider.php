@@ -5,7 +5,7 @@ namespace Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
-use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\PropertyElement;
 use PHPUnit\Framework\Assert;
 use Phpactor\WorseReflection\Core\DiagnosticExample;
 use Phpactor\WorseReflection\Core\DiagnosticProvider;
@@ -490,10 +490,13 @@ class UndefinedVariableProvider implements DiagnosticProvider
 
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable
     {
+        if ($node instanceof PropertyElement) {
+            return [];
+        }
         if (!$node instanceof Variable) {
             return [];
         }
-        if ($node->parent?->parent instanceof PropertyDeclaration) {
+        if ($node->parent instanceof PropertyElement) {
             return [];
         }
         if ($node->parent instanceof ScopedPropertyAccessExpression) {

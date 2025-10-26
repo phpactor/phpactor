@@ -6,11 +6,11 @@ use Closure;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\ClassConstDeclaration;
 use Microsoft\PhpParser\Node\EnumCaseDeclaration;
-use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\PropertyElement;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
@@ -26,6 +26,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as PhpactorReflectionConstant;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface as PhpactorReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as PhpactorReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as PhpactorReflectionProperty;
@@ -256,21 +257,17 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                 continue;
             }
 
-            if ($member instanceof PropertyDeclaration) {
-                /** @phpstan-ignore-next-line TP lies */
-                foreach ($member->propertyElements as $propertyElement) {
-                    foreach ($propertyElement as $variable) {
-                        if ($variable instanceof AssignmentExpression) {
-                            $variable = $variable->leftOperand;
-                        }
-
-                        if (false === $variable instanceof Variable) {
-                            continue;
-                        }
-                        $property = new ReflectionProperty($serviceLocator, $classLike, $member, $variable);
-                        $new->properties[$property->name()] = $property;
-                        $new->items[$property->name()] = $property;
+            // Phan's fork parses properties in interfaces, whereas the upstream one seems not to.
+            if ($member instanceof PropertyDeclaration && !$classLike instanceof PhpactorReflectionInterface) {
+                foreach ($member->propertyElements->getChildNodes() as $propertyElement) {
+                    assert($propertyElement instanceof PropertyElement);
+                    $variable = $propertyElement->variable;
+                    if (false === $variable instanceof Variable) {
+                        continue;
                     }
+                    $property = new ReflectionProperty($serviceLocator, $classLike, $member, $variable);
+                    $new->properties[$property->name()] = $property;
+                    $new->items[$property->name()] = $property;
                 }
                 continue;
             }

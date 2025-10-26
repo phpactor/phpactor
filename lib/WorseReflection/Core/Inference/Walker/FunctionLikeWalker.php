@@ -98,12 +98,19 @@ class FunctionLikeWalker implements Walker
             $this->addClassContext($node, $classType, $frame);
         }
 
-        if (null === $node->parameters) {
+        // todo: PropertyHook name for parameters is inconsistent with other function-likes
+        if ($node instanceof PropertyHook) {
+            $parameters = $node->parameterList;
+        } else {
+            $parameters = $node->parameters;
+        }
+
+        if (null === $parameters) {
             return;
         }
 
         /** @var Parameter $parameterNode */
-        foreach ($node->parameters->getElements() as $parameterNode) {
+        foreach ($parameters->getElements() as $parameterNode) {
             $parameterName = $parameterNode->variableName->getText($node->getFileContents());
 
             $nodeContext = $resolver->resolveNode($frame, $parameterNode);
