@@ -257,8 +257,7 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             }
 
             if ($member instanceof PropertyDeclaration) {
-                /** @phpstan-ignore-next-line TP lies */
-                foreach ($member->propertyElements as $propertyElement) {
+                foreach ($member->propertyElements->children as $propertyElement) {
                     foreach ($propertyElement as $variable) {
                         if ($variable instanceof AssignmentExpression) {
                             $variable = $variable->leftOperand;
