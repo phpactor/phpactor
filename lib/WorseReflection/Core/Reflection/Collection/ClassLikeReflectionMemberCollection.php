@@ -27,6 +27,7 @@ use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionConstant as PhpactorReflectionConstant;
+use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface as PhpactorReflectionInterface;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod as PhpactorReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty as PhpactorReflectionProperty;
@@ -257,7 +258,8 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
                 continue;
             }
 
-            if ($member instanceof PropertyDeclaration) {
+            // Phan's fork parses properties in interfaces, whereas the upstream one seems not to.
+            if ($member instanceof PropertyDeclaration && !$classLike instanceof PhpactorReflectionInterface) {
                 foreach ($member->propertyElements->getChildNodes() as $propertyElement) {
                     assert($propertyElement instanceof PropertyElement);
                     $variable = $propertyElement->variable;
