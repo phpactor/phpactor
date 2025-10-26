@@ -3,6 +3,13 @@ Changelog
 
 ## master
 
+Imrprovements:
+
+  - Restrict attribute completion using targets #2629 @przepompownia
+  - Use the Phan fork of the Tolerant Parser as a base #2946 @dantleech
+
+## 2025.10.17.0
+
 BREAKING
 
   - VIM plugin: Local `.phpactor.json` configuration files are no longer loaded by
