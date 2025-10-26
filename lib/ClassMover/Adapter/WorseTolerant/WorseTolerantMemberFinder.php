@@ -12,6 +12,7 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\PropertyElement;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
 use Microsoft\PhpParser\Node\Statement\TraitDeclaration;
@@ -184,14 +185,15 @@ class WorseTolerantMemberFinder implements MemberFinder
         if ($node instanceof PropertyDeclaration) {
             if ($node->propertyElements->children) {
                 foreach ($node->propertyElements->getChildNodes() as $propertyElement) {
-                    if ($propertyElement instanceof AssignmentExpression) {
-                        $propertyElement = $propertyElement->leftOperand;
-                    }
+                    if ($propertyElement instanceof PropertyElement) {
+                        $variable = $propertyElement->variable;
+                        if (null === $variable) {
+                            continue;
+                        }
 
-                    if ($propertyElement instanceof Variable) {
-                        $memberName = (string) $propertyElement->name->getText($propertyElement->getFileContents());
+                        $memberName = (string) $variable->name->getText($propertyElement->getFileContents());
                         if ($query->matchesMemberName($memberName)) {
-                            $memberNodes[] = $propertyElement;
+                            $memberNodes[] = $variable;
                         }
                     }
                 }

@@ -8,6 +8,7 @@ use Microsoft\PhpParser\Node\Expression\AssignmentExpression;
 use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\PropertyElement;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
@@ -31,6 +32,9 @@ abstract class ClassLikeUpdater
 
     protected function resolvePropertyName(Node|Token $property): ?string
     {
+        if ($property instanceof PropertyElement) {
+            $property = $property->variable;
+        }
         if ($property instanceof Variable) {
             return $property->getName();
         }
@@ -41,7 +45,7 @@ abstract class ClassLikeUpdater
 
         throw new InvalidArgumentException(sprintf(
             'Do not know how to resolve property element of type "%s"',
-            get_class($property)
+            get_debug_type($property)
         ));
     }
 
