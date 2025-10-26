@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "32066d7438dad811ef21f85f790281ca",
+    "content-hash": "c9195f6961f105fe052a22adb921dbeb",
     "packages": [
         {
             "name": "amphp/amp",
@@ -1401,53 +1401,6 @@
             "time": "2022-06-09T08:53:42+00:00"
         },
         {
-            "name": "phan/tolerant-php-parser",
-            "version": "dev-main",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phan/phan-tolerant.git",
-                "reference": "aceb541776559ff34a1812a1189a3ceae88f3e56"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phan/phan-tolerant/zipball/aceb541776559ff34a1812a1189a3ceae88f3e56",
-                "reference": "aceb541776559ff34a1812a1189a3ceae88f3e56",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^1.8",
-                "phpunit/phpunit": "^8.5.15"
-            },
-            "default-branch": true,
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Microsoft\\PhpParser\\": [
-                        "src/"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rob Lourens",
-                    "email": "roblou@microsoft.com"
-                }
-            ],
-            "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
-            "support": {
-                "issues": "https://github.com/phan/phan-tolerant/issues",
-                "source": "https://github.com/phan/phan-tolerant/tree/main"
-            },
-            "time": "2025-10-23T11:37:07+00:00"
-        },
-        {
             "name": "phpactor/amp-fswatch",
             "version": "0.3.0",
             "source": {
@@ -1849,6 +1802,51 @@
                 "source": "https://github.com/phly/phly-event-dispatcher"
             },
             "time": "2025-01-26T23:32:28+00:00"
+        },
+        {
+            "name": "phpactor/tolerant-php-parser",
+            "version": "dev-phan-phactor-fixes",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpactor/tolerant-php-parser.git",
+                "reference": "04145b103d666be297c44d38616f9243becaac04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpactor/tolerant-php-parser/zipball/04145b103d666be297c44d38616f9243becaac04",
+                "reference": "04145b103d666be297c44d38616f9243becaac04",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^8.5.15"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Microsoft\\PhpParser\\": [
+                        "src/"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rob Lourens",
+                    "email": "roblou@microsoft.com"
+                }
+            ],
+            "description": "Tolerant PHP-to-AST parser designed for IDE usage scenarios",
+            "support": {
+                "source": "https://github.com/phpactor/tolerant-php-parser/tree/phan-phactor-fixes"
+            },
+            "time": "2025-10-26T11:15:12+00:00"
         },
         {
             "name": "psr/container",
@@ -9537,7 +9535,7 @@
     "stability-flags": {
         "dms/phpunit-arraysubset-asserts": 20,
         "jetbrains/phpstorm-stubs": 20,
-        "phan/tolerant-php-parser": 20
+        "phpactor/tolerant-php-parser": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
