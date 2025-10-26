@@ -11,6 +11,7 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\Parameter;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\PropertyElement;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\InterfaceDeclaration;
@@ -257,19 +258,15 @@ final class ClassLikeReflectionMemberCollection extends AbstractReflectionCollec
             }
 
             if ($member instanceof PropertyDeclaration) {
-                foreach ($member->propertyElements->children as $propertyElement) {
-                    foreach ($propertyElement as $variable) {
-                        if ($variable instanceof AssignmentExpression) {
-                            $variable = $variable->leftOperand;
-                        }
-
-                        if (false === $variable instanceof Variable) {
-                            continue;
-                        }
-                        $property = new ReflectionProperty($serviceLocator, $classLike, $member, $variable);
-                        $new->properties[$property->name()] = $property;
-                        $new->items[$property->name()] = $property;
+                foreach ($member->propertyElements->getChildNodes() as $propertyElement) {
+                    assert($propertyElement instanceof PropertyElement);
+                    $variable = $propertyElement->variable;
+                    if (false === $variable instanceof Variable) {
+                        continue;
                     }
+                    $property = new ReflectionProperty($serviceLocator, $classLike, $member, $variable);
+                    $new->properties[$property->name()] = $property;
+                    $new->items[$property->name()] = $property;
                 }
                 continue;
             }
