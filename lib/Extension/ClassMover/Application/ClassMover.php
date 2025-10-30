@@ -5,6 +5,11 @@ namespace Phpactor\Extension\ClassMover\Application;
 use Exception;
 use Phpactor\ClassMover\ClassMover as ClassMoverFacade;
 use Phpactor\ClassMover\Domain\Name\FullyQualifiedName;
+use Phpactor\ClassMover\FoundReferences;
+use Phpactor\CodeBuilder\Adapter\TolerantParser\TolerantUpdater;
+use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
+use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
+use Phpactor\CodeBuilder\Domain\Code;
 use Phpactor\Filesystem\Domain\FilePath;
 use Phpactor\Filesystem\Domain\Filesystem;
 use Phpactor\PathFinder\Exception\NoMatchingSourceException;
@@ -130,7 +135,23 @@ class ClassMover
             $srcClassName = $this->classFileNormalizer->fileToClass($srcPath->path());
             $destClassName = $this->classFileNormalizer->fileToClass($destPath->path());
 
+            // Find local references which will need a use-statement after the move
+            $useStatements = SourceCodeBuilder::create();
+            $srcFQN = FullyQualifiedName::fromString($srcClassName);
+            $localReferences = $this->classMover->findLocalReferences($srcFQN, $filesystem->getContents($srcPath));
+            $logger->import($srcPath, $localReferences);
+            foreach ($localReferences->references() as $reference) {
+                $useStatements->use($reference->fullName());
+            }
+
+
             $this->replaceReferences($logger, $filesystem, $srcClassName, $destClassName);
+
+            // TODO: remove now redundant use statements
+            $updater = new TolerantUpdater(new TwigRenderer());
+            $source = $filesystem->getContents($srcPath);
+            $edits = $updater->textEditsFor($useStatements->build(), Code::fromString($source));
+            $filesystem->writeContents($srcPath, $edits->apply($source));
         }
     }
 
