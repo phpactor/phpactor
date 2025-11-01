@@ -7,6 +7,7 @@ Imrprovements:
 
   - Restrict attribute completion using targets #2629 @przepompownia
   - Use the Phan fork of the Tolerant Parser as a base #2946 @dantleech
+  - Show find references progress with LSP progress #2947 @dantleech
 
 ## 2025.10.17.0
 
