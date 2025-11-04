@@ -28,6 +28,11 @@ class GenerateTestMethodsTest extends WorseTestCase
         );
     }
 
+    public function tearDown(): void
+    {
+        $this->workspace()->reset();
+    }
+
     /**
      * @param array<string> $expected
      *
