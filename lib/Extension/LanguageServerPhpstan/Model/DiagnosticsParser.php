@@ -14,7 +14,7 @@ class DiagnosticsParser
     /**
      * @return array<Diagnostic>
      */
-    public function parse(string $jsonString): array
+    public function parse(string $jsonString, int $severity): array
     {
         $decoded = $this->decodeJson($jsonString);
         $diagnostics = [];
@@ -27,7 +27,7 @@ class DiagnosticsParser
                 $diagnostics[] = new Diagnostic(
                     message: $text,
                     range: new Range(new Position($lineNo, 1), new Position($lineNo, 100)),
-                    severity: DiagnosticSeverity::ERROR,
+                    severity: $severity,
                     source: 'phpstan',
                     code: $message['identifier'] ?? null,
                 );

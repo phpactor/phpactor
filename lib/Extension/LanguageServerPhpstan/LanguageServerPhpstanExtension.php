@@ -15,6 +15,7 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\MapResolver\Resolver;
 use InvalidArgumentException;
 
@@ -27,6 +28,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
     public const PARAM_ENABLED = 'language_server_phpstan.enabled';
     public const PARAM_TMP_FILE_DISABLED = 'language_server_phpstan.tmp_file_disabled';
     public const PARAM_EDITOR_MODE = 'language_server_phpstan.editor_mode';
+    public const PARAM_SEVERITY = 'language_server_phpstan.severity';
 
     public function load(ContainerBuilder $container): void
     {
@@ -75,6 +77,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
 
                 $phpstanConfig =  new PhpstanConfig(
                     $binPath,
+                    $container->parameter(self::PARAM_SEVERITY)->value() ? $container->parameter(self::PARAM_SEVERITY)->int() : DiagnosticSeverity::ERROR,
                     $container->parameter(self::PARAM_LEVEL)->value() ?  $container->parameter(self::PARAM_LEVEL)->string() : null,
                     $configPath,
                     $container->parameter(self::PARAM_MEM_LIMIT)->value() ?  $container->parameter(self::PARAM_MEM_LIMIT)->string() : null,
@@ -100,6 +103,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             self::PARAM_MEM_LIMIT => null,
             self::PARAM_TMP_FILE_DISABLED => false,
             self::PARAM_EDITOR_MODE => false,
+            self::PARAM_SEVERITY => DiagnosticSeverity::ERROR,
             ]
         );
         $schema->setDescriptions(
@@ -113,6 +117,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
                     . ' See https://github.com/phpactor/phpactor/issues/2763',
             self::PARAM_EDITOR_MODE => 'Use the editor mode of Phpstan https://phpstan.org/user-guide/editor-mode'
                 . ' (Requires phpstan 2.14 or higher)',
+            self::PARAM_SEVERITY => 'Severity at which PHPStan diagnostics should be reported. Ranges from 1 (error) to 4 (hint).'
             ]
         );
     }
