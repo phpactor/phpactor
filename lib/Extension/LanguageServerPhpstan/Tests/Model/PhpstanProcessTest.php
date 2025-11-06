@@ -26,7 +26,7 @@ class PhpstanProcessTest extends IntegrationTestCase
         $this->workspace()->put('test.php', $source);
         $linter = new PhpstanProcess(
             $this->workspace()->path(),
-            new PhpstanConfig(__DIR__ . '/../../../../../vendor/bin/phpstan', '7', __DIR__ . '/../../../../../phpstan-baseline.neon', '200M'),
+            new PhpstanConfig(__DIR__ . '/../../../../../vendor/bin/phpstan', DiagnosticSeverity::ERROR, '7', __DIR__ . '/../../../../../phpstan-baseline.neon', '200M'),
             new NullLogger()
         );
         $diagnostics = wait($linter->analyseInPlace($this->workspace()->path('test.php')));

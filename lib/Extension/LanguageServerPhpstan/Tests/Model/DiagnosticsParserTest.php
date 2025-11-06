@@ -6,6 +6,7 @@ use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerPhpstan\Model\DiagnosticsParser;
 use Phpactor\LanguageServerProtocol\CodeDescription;
+use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use RuntimeException;
 
 class DiagnosticsParserTest extends TestCase
@@ -15,7 +16,7 @@ class DiagnosticsParserTest extends TestCase
      */
     public function testParse(string $phpstanJson, int $count): void
     {
-        self::assertCount($count, (new DiagnosticsParser())->parse($phpstanJson));
+        self::assertCount($count, (new DiagnosticsParser())->parse($phpstanJson, DiagnosticSeverity::ERROR));
     }
 
     /**
@@ -108,7 +109,8 @@ class DiagnosticsParserTest extends TestCase
                         ]
                     ]
                 ],
-            ], JSON_THROW_ON_ERROR)
+            ], JSON_THROW_ON_ERROR),
+            DiagnosticSeverity::ERROR
         );
         self::assertCount(2, $diagnostics);
         $diagnostic = $diagnostics[1];
@@ -122,6 +124,6 @@ class DiagnosticsParserTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('stdout was not JSON');
-        (new DiagnosticsParser())->parse('stdout was not JSON');
+        (new DiagnosticsParser())->parse('stdout was not JSON', DiagnosticSeverity::ERROR);
     }
 }
