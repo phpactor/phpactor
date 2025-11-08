@@ -98,17 +98,18 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $schema->setDefaults(
             [
             self::PARAM_PHPSTAN_BIN => '%project_root%/vendor/bin/phpstan',
+            self::PARAM_SEVERITY => DiagnosticSeverity::ERROR,
             self::PARAM_LEVEL => null,
             self::PARAM_CONFIG => null,
             self::PARAM_MEM_LIMIT => null,
             self::PARAM_TMP_FILE_DISABLED => false,
             self::PARAM_EDITOR_MODE => false,
-            self::PARAM_SEVERITY => DiagnosticSeverity::ERROR,
             ]
         );
         $schema->setDescriptions(
             [
             self::PARAM_PHPSTAN_BIN => 'Path to the PHPStan executable',
+            self::PARAM_SEVERITY => 'Severity at which PHPStan diagnostics should be reported. Ranges from 1 (error) to 4 (hint).',
             self::PARAM_LEVEL => 'Override the PHPStan level',
             self::PARAM_CONFIG => 'Override the PHPStan configuration file',
             self::PARAM_MEM_LIMIT => 'Override the PHPStan memory limit',
@@ -117,7 +118,6 @@ class LanguageServerPhpstanExtension implements OptionalExtension
                     . ' See https://github.com/phpactor/phpactor/issues/2763',
             self::PARAM_EDITOR_MODE => 'Use the editor mode of Phpstan https://phpstan.org/user-guide/editor-mode'
                 . ' (Requires phpstan 2.14 or higher)',
-            self::PARAM_SEVERITY => 'Severity at which PHPStan diagnostics should be reported. Ranges from 1 (error) to 4 (hint).'
             ]
         );
     }
