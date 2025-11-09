@@ -12,6 +12,8 @@ use RuntimeException;
 class DiagnosticsParser
 {
     /**
+     * @param string $jsonString
+     * @param DiagnosticSeverity::* $severity
      * @return array<Diagnostic>
      */
     public function parse(string $jsonString, int $severity): array
