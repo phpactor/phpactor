@@ -75,9 +75,12 @@ class LanguageServerPhpstanExtension implements OptionalExtension
                     $configPath = $pathResolver->resolve($container->parameter(self::PARAM_CONFIG)->string());
                 }
 
+                /** @var DiagnosticSeverity::* $severity */
+                $severity = $container->parameter(self::PARAM_SEVERITY)->value() ? $container->parameter(self::PARAM_SEVERITY)->int() : DiagnosticSeverity::ERROR;
+
                 $phpstanConfig =  new PhpstanConfig(
                     $binPath,
-                    $container->parameter(self::PARAM_SEVERITY)->value() ? $container->parameter(self::PARAM_SEVERITY)->int() : DiagnosticSeverity::ERROR,
+                    $severity,
                     $container->parameter(self::PARAM_LEVEL)->value() ?  $container->parameter(self::PARAM_LEVEL)->string() : null,
                     $configPath,
                     $container->parameter(self::PARAM_MEM_LIMIT)->value() ?  $container->parameter(self::PARAM_MEM_LIMIT)->string() : null,

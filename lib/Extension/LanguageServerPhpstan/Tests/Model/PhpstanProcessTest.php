@@ -16,6 +16,7 @@ use Phpactor\Extension\LanguageServerPhpstan\Tests\IntegrationTestCase;
 class PhpstanProcessTest extends IntegrationTestCase
 {
     /**
+     * @param DiagnosticSeverity::* $configuredSeverity
      * @param array<Diagnostic> $expectedDiagnostics
      *
      * @dataProvider provideLint
