@@ -5,6 +5,18 @@ namespace Phpactor\Completion\Core;
 use Closure;
 use RuntimeException;
 
+/** @phpstan-type SuggestionOptions array{
+ *   short_description?:string|null|Closure,
+ *   documentation?:string|null|Closure,
+ *   type?:string|null,
+ *   class_import?:string|null,
+ *   name_import?:string|null,
+ *   fqn?:string|null,
+ *   label?:string|null,
+ *   range?:Range|null,
+ *   snippet?:string|null,
+ *   priority?:int|null
+ * } */
 class Suggestion
 {
     /**
@@ -66,18 +78,7 @@ class Suggestion
     }
 
     /**
-     * @param array{
-     *   short_description?:string|null|Closure,
-     *   documentation?:string|null|Closure,
-     *   type?:string|null,
-     *   class_import?:string|null,
-     *   name_import?:string|null,
-     *   fqn?:string|null,
-     *   label?:string|null,
-     *   range?:Range|null,
-     *   snippet?:string|null,
-     *   priority?:int|null
-     * } $options
+     * @param SuggestionOptions $options
      */
     public static function createWithOptions(string $name, array $options): self
     {

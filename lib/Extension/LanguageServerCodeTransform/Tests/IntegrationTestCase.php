@@ -52,6 +52,7 @@ class IntegrationTestCase extends TestCase
             LoggingExtension::PARAM_ENABLED => true,
             IndexerExtension::PARAM_ENABLED_WATCHERS => [],
             LanguageServerExtension::PARAM_DIAGNOSTIC_SLEEP_TIME => 0,
+            LanguageServerExtension::PARAM_ENABLE_TRUST_CHECK => false,
         ], $config));
 
         return $container;

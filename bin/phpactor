@@ -3,7 +3,7 @@
 
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Phpactor\Application;
-
+use Phpactor\OpenTelemetry\Telemetry;
 
 foreach ([
     __DIR__ . '/../../../autoload.php',

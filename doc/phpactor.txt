@@ -154,6 +154,9 @@ COMMANDS                                                   *phpactor-commands*
 :[N]PhpactorTransform                                     *:PhpactorTransform*
   Automatically add any missing properties to a class
 
+:[N]PhpactorTrust                                             *:PhpactorTrust*
+  Trust configuration in the current working directory
+
 :PhpactorUpdate                                              *:PhpactorUpdate*
   Update Phpactor to the latest version using the branch defined with
   |g:phpactorBranch|

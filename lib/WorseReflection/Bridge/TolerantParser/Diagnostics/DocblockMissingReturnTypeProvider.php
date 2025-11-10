@@ -64,7 +64,7 @@ class DocblockMissingReturnTypeProvider implements DiagnosticProvider
             return;
         }
 
-        if ($method->name() === '__construct') {
+        if ($method->name() === '__construct' || $method->name() === '__destruct') {
             return;
         }
 

@@ -85,6 +85,45 @@ Path to JSON schema, which can be used for config autocompletion, use phpactor c
 **Default**: ``""``
 
 
+.. _param_core.project_config_candidates:
+
+
+``core.project_config_candidates``
+""""""""""""""""""""""""""""""""""
+
+
+(internal) list of potential project-level configuration files
+
+
+**Default**: ``[]``
+
+
+.. _param_core.trust:
+
+
+``core.trust``
+""""""""""""""
+
+
+(internal) map of trusted project directories
+
+
+**Default**: ``{"trust":[],"path":null}``
+
+
+.. _param_core.trusted:
+
+
+``core.trusted``
+""""""""""""""""
+
+
+(internal) if the configuration is trusted
+
+
+**Default**: ``false``
+
+
 .. _ClassToFileExtension:
 
 
@@ -1302,6 +1341,19 @@ Ignore diagnostics that have the codes listed here, e.g. ["fix_namespace_class_n
 **Default**: ``[]``
 
 
+.. _param_language_server.enable_trust_check:
+
+
+``language_server.enable_trust_check``
+""""""""""""""""""""""""""""""""""""""
+
+
+Check to see if project path is trusted before loading configurations from it
+
+
+**Default**: ``true``
+
+
 .. _param_language_server.file_events:
 
 
@@ -1924,6 +1976,19 @@ Disable the use of temporary files when. This prevents as-you-type diagnostics, 
 **Default**: ``false``
 
 
+.. _param_language_server_phpstan.editor_mode:
+
+
+``language_server_phpstan.editor_mode``
+"""""""""""""""""""""""""""""""""""""""
+
+
+Use the editor mode of Phpstan https://phpstan.org/user-guide/editor-mode (Requires phpstan 2.14 or higher)
+
+
+**Default**: ``false``
+
+
 .. _LanguageServerPsalmExtension:
 
 
@@ -2274,6 +2339,29 @@ ProphecyExtension
 
 ``prophecy.enabled``
 """"""""""""""""""""
+
+
+Type: boolean
+
+
+Enable or disable this extension
+
+
+**Default**: ``false``
+
+
+.. _OpenTelemetryExtension:
+
+
+OpenTelemetryExtension
+----------------------
+
+
+.. _param_open_telemetry.enabled:
+
+
+``open_telemetry.enabled``
+""""""""""""""""""""""""""
 
 
 Type: boolean
