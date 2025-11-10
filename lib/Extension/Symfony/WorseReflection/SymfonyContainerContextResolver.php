@@ -48,14 +48,19 @@ class SymfonyContainerContextResolver implements MemberContextResolver
         if ($argument instanceof StringLiteralType) {
             $service = $this->inspector->service($argument->value());
             if (null === $service) {
-                return TypeFactory::union(TypeFactory::object(), TypeFactory::null());
+                return null; // Return null instead of object|null fallback
             }
-            return $service->type;
+            $type = $service->type;
+            // Convert to reflected class type (instance) if it's a ClassType
+            if ($type instanceof ClassType) {
+                $type = $type->asReflectedClasssType($reflector);
+            }
+            return $type;
         }
         if ($argument instanceof ClassStringType && $argument->className()) {
             $service = $this->inspector->service($argument->className()->__toString());
             if (null === $service) {
-                return TypeFactory::union(TypeFactory::object(), TypeFactory::null());
+                return null; // Return null instead of object|null fallback
             }
             $type = $service->type;
             if ($type instanceof ClassType) {
@@ -64,6 +69,6 @@ class SymfonyContainerContextResolver implements MemberContextResolver
             return $type;
         }
 
-        return TypeFactory::undefined();
+        return null; // Return null instead of undefined
     }
 }
