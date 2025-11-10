@@ -49,6 +49,11 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
+        if (CompletionContext::conditionInfix($node)) {
+            yield from $this->keywords(['instanceof ']);
+            return true;
+        }
+
         if (CompletionContext::methodName($node)) {
             yield from $this->methods();
             return true;
@@ -58,9 +63,7 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
-        if (
-            CompletionContext::classMembersBody($node->parent)
-        ) {
+        if (CompletionContext::classMembersBody($node->parent)) {
             yield from $this->keywords([
                 'function ',
                 'const ',
