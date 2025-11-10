@@ -8,7 +8,6 @@ use Phpactor\WorseReflection\Core\Inference\FunctionArguments;
 use Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess\MemberContextResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMember;
 use Phpactor\WorseReflection\Core\Type;
-use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ClassStringType;
 use Phpactor\WorseReflection\Core\Type\ClassType;
 use Phpactor\WorseReflection\Core\Type\StringLiteralType;
@@ -48,10 +47,9 @@ class SymfonyContainerContextResolver implements MemberContextResolver
         if ($argument instanceof StringLiteralType) {
             $service = $this->inspector->service($argument->value());
             if (null === $service) {
-                return null; // Return null instead of object|null fallback
+                return null;
             }
             $type = $service->type;
-            // Convert to reflected class type (instance) if it's a ClassType
             if ($type instanceof ClassType) {
                 $type = $type->asReflectedClasssType($reflector);
             }
@@ -60,7 +58,7 @@ class SymfonyContainerContextResolver implements MemberContextResolver
         if ($argument instanceof ClassStringType && $argument->className()) {
             $service = $this->inspector->service($argument->className()->__toString());
             if (null === $service) {
-                return null; // Return null instead of object|null fallback
+                return null;
             }
             $type = $service->type;
             if ($type instanceof ClassType) {
@@ -69,6 +67,6 @@ class SymfonyContainerContextResolver implements MemberContextResolver
             return $type;
         }
 
-        return null; // Return null instead of undefined
+        return null;
     }
 }
