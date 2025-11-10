@@ -4,6 +4,7 @@ namespace Phpactor\Extension\Core\Application;
 
 use Composer\InstalledVersions;
 use Phpactor\ConfigLoader\Core\PathCandidates;
+use Phpactor\Extension\Core\Trust\Trust;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Filesystem\Domain\FilesystemRegistry;
@@ -21,6 +22,7 @@ class Status
         private PathCandidates $paths,
         private string $workingDirectory,
         private PhpVersionResolver $phpVersionResolver,
+        private Trust $trust,
         ?ExecutableFinder $executableFinder = null,
     ) {
         $this->executableFinder = $executableFinder ?: new ExecutableFinder();
@@ -54,6 +56,12 @@ class Status
             $diagnostics['bad'][] = 'XDebug is enabled. XDebug has a negative effect on performance.';
         } else {
             $diagnostics['good'][] = 'XDebug is disabled. XDebug has a negative effect on performance.';
+        }
+
+        if ($this->trust->isTrusted($this->workingDirectory)) {
+            $diagnostics['good'][] = sprintf('Path "%s" is trusted and configuration will be loaded from it.', $this->workingDirectory);
+        } else {
+            $diagnostics['bad'][] = sprintf('Path "%s" is not trusted and configuration will not be loaded from it.', $this->workingDirectory);
         }
 
         foreach ($this->paths as $configFile) {

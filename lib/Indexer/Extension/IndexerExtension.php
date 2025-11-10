@@ -86,6 +86,9 @@ class IndexerExtension implements Extension
                 '/vendor/**/Tests/**/*',
                 '/vendor/**/tests/**/*',
                 '/vendor/composer/**/*',
+                // rector frequently breaks phpunit testcase reflection so just
+                // ignore the stubs by default
+                '/vendor/rector/rector/stubs-rector'
             ],
             self::PARAM_STUB_PATHS => [],
             self::PARAM_INDEXER_POLL_TIME => 5000,

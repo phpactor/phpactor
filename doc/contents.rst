@@ -17,4 +17,3 @@ Contents
    index
    vim
    adr
-   extensions

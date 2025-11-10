@@ -5,9 +5,12 @@ namespace Phpactor\Extension\Core;
 use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Extension\Core\Application\Helper\ClassFileNormalizer;
 use Phpactor\Extension\Core\Command\DebugContainerCommand;
+use Phpactor\Extension\Core\Command\TrustCommand;
 use Phpactor\Extension\Core\Rpc\CacheClearHandler;
 use Phpactor\Extension\Core\Rpc\ConfigHandler;
 use Phpactor\Extension\Core\Rpc\StatusHandler;
+use Phpactor\Extension\Core\Rpc\TrustHandler;
+use Phpactor\Extension\Core\Trust\Trust;
 use Phpactor\Extension\Php\Model\PhpVersionResolver;
 use Phpactor\Extension\Rpc\RpcExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
@@ -39,6 +42,9 @@ class CoreExtension implements Extension
     const PARAM_COMMAND = 'command';
     const PARAM_MIN_MEMORY_LIMIT = 'core.min_memory_limit';
     const PARAM_SCHEMA = '$schema';
+    const PARAM_PROJECT_CONFIG_CANDIDATES = 'core.project_config_candidates';
+    const PARAM_TRUST = 'core.trust';
+    const PARAM_TRUSTED = 'core.trusted';
 
     public function configure(Resolver $schema): void
     {
@@ -48,6 +54,9 @@ class CoreExtension implements Extension
             self::PARAM_COMMAND => null,
             self::PARAM_MIN_MEMORY_LIMIT => 1610612736,
             self::PARAM_SCHEMA => '',
+            self::PARAM_PROJECT_CONFIG_CANDIDATES => [],
+            self::PARAM_TRUST => new Trust([], null),
+            self::PARAM_TRUSTED => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_XDEBUG_DISABLE => 'If XDebug should be automatically disabled',
@@ -55,6 +64,9 @@ class CoreExtension implements Extension
             self::PARAM_DUMPER => 'Name of the "dumper" (renderer) to use for some CLI commands',
             self::PARAM_MIN_MEMORY_LIMIT => 'Ensure that PHP has a memory_limit of at least this amount in bytes',
             self::PARAM_SCHEMA => 'Path to JSON schema, which can be used for config autocompletion, use phpactor config:initialize to update',
+            self::PARAM_PROJECT_CONFIG_CANDIDATES => '(internal) list of potential project-level configuration files',
+            self::PARAM_TRUST => '(internal) map of trusted project directories',
+            self::PARAM_TRUSTED => '(internal) if the configuration is trusted',
         ]);
     }
 
@@ -83,6 +95,14 @@ class CoreExtension implements Extension
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'container:dump']]);
 
+        $container->register('command.trust', function (Container $container) {
+            return new TrustCommand(
+                /** @phpstan-ignore argument.type */
+                $container->parameter(self::PARAM_TRUST)->value(),
+                $container->parameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)->string(),
+            );
+        }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'config:trust']]);
+
         $container->register('command.cache_clear', function (Container $container) {
             return new CacheClearCommand(
                 $container->get('application.cache_clear')
@@ -91,7 +111,7 @@ class CoreExtension implements Extension
 
         $container->register('command.status', function (Container $container) {
             return new StatusCommand(
-                $container->get('application.status')
+                $container->get('application.status'),
             );
         }, [ ConsoleExtension::TAG_COMMAND => [ 'name' => 'status' ]]);
 
@@ -143,7 +163,9 @@ class CoreExtension implements Extension
                 $container->has('config_loader.candidates') ? $container->get('config_loader.candidates') : new PathCandidates([]),
                 $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
                 $container->get(PhpVersionResolver::class),
-                null,
+                /** @phpstan-ignore argument.type */
+                $container->parameter(self::PARAM_TRUST)->value(),
+                null
             );
         });
     }
@@ -161,6 +183,14 @@ class CoreExtension implements Extension
         $container->register('core.rpc.handler.config', function (Container $container) {
             return new ConfigHandler($container->getParameters());
         }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => ConfigHandler::CONFIG] ]);
+
+        $container->register('core.rpc.handler.trust', function (Container $container) {
+            return new TrustHandler(
+                /** @phpstan-ignore argument.type */
+                $container->parameter(self::PARAM_TRUST)->value(),
+                $container->parameter(FilePathResolverExtension::PARAM_PROJECT_ROOT)->string(),
+            );
+        }, [ RpcExtension::TAG_RPC_HANDLER => ['name' => TrustHandler::NAME] ]);
     }
 
     private function registerFilePathExpanders(ContainerBuilder $container): void

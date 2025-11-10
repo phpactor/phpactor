@@ -17,6 +17,7 @@ use Microsoft\PhpParser\Node\Expression\Variable;
 use Microsoft\PhpParser\Node\InterfaceMembers;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Microsoft\PhpParser\Node\PropertyDeclaration;
+use Microsoft\PhpParser\Node\PropertyElement;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
 use Microsoft\PhpParser\Node\Statement\EnumDeclaration;
 use Microsoft\PhpParser\Node\Statement\FunctionDeclaration;
@@ -142,8 +143,12 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
             );
         }
 
-        if ($node instanceof Variable) {
-            return $this->resolvePropertyVariable($node, $source);
+        if ($node instanceof PropertyDeclaration) {
+            // note this only supports single property declarations
+            foreach ($node->propertyElements->getChildNodes() as $element) {
+                assert($element instanceof PropertyElement);
+                return $this->resolvePropertyVariable($element->variable, $source);
+            }
         }
 
         if ($node instanceof AssignmentExpression) {
@@ -204,7 +209,7 @@ class TolerantDocumentSymbolProvider implements DocumentSymbolProvider
     }
 
 
-    private function resolvePropertyVariable(Node $node, string $source): ?DocumentSymbol
+    private function resolvePropertyVariable(?Node $node, string $source): ?DocumentSymbol
     {
         if (!$node instanceof Variable) {
             return null;

@@ -28,6 +28,23 @@ _RpcHandler_status
 **Default**: ``"formatted"``
 
 
+.. _RpcHandler_trust:
+
+
+_RpcHandler_trust
+-----------------
+
+
+.. _RpcCommand_trust_trust:
+
+
+``trust``
+"""""""""
+
+
+**Default**: ``null``
+
+
 .. _RpcHandler_file_info:
 
 
