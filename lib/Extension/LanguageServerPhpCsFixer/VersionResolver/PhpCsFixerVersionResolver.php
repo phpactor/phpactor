@@ -13,9 +13,9 @@ use function Amp\Promise\wait;
 class PhpCsFixerVersionResolver implements SemVersionResolver
 {
     public function __construct(
-        private ?string $version = null,
         private string $binPath,
         private LoggerInterface $logger,
+        private ?string $version = null,
     ) {
     }
 

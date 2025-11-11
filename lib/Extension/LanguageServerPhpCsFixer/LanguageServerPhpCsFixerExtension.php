@@ -37,9 +37,9 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             $path = $pathResolver->resolve($container->parameter(self::PARAM_PHP_CS_FIXER_BIN)->string());
 
             return new PhpCsFixerVersionResolver(
-                $container->parameter(self::PARAM_PHP_CS_FIXER_VERSION)->value(),
                 $path,
                 LoggingExtension::channelLogger($container, 'php-cs-fixer'),
+                $container->parameter(self::PARAM_PHP_CS_FIXER_VERSION)->value(),
             );
         });
 
