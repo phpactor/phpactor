@@ -44,15 +44,15 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                     $path,
                     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
                     $container->parameter(self::PARAM_ENV)->value(),
-                    $configPath
-                );
-            }
+                    $configPath,
+                )->ignorePhpVersion();
+            },
         );
 
         $container->register(PhpCsFixerFormatter::class, function (Container $container) {
             return new PhpCsFixerFormatter($container->get(PhpCsFixerProcess::class));
         }, [
-            LanguageServerExtension::TAG_FORMATTER => []
+            LanguageServerExtension::TAG_FORMATTER => [],
         ]);
 
         $container->register(PhpCsFixerDiagnosticsProvider::class, function (Container $container) {
@@ -64,7 +64,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             );
         }, [
             LanguageServerExtension::TAG_DIAGNOSTICS_PROVIDER => DiagnosticProviderTag::create('php-cs-fixer'),
-            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => []
+            LanguageServerExtension::TAG_CODE_ACTION_PROVIDER => [],
         ]);
 
         $container->register(FormatCommand::class, function (Container $container) {
@@ -72,11 +72,11 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                 $container->get(PhpCsFixerProcess::class),
                 $container->get(ClientApi::class),
                 $container->get(LanguageServerExtension::SERVICE_SESSION_WORKSPACE),
-                LoggingExtension::channelLogger($container, 'php-cs-fixer')
+                LoggingExtension::channelLogger($container, 'php-cs-fixer'),
             );
         }, [
             LanguageServerExtension::TAG_COMMAND => [
-                'name' => 'php_cs_fixer.fix'
+                'name' => 'php_cs_fixer.fix',
             ],
         ]);
     }
@@ -97,7 +97,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
             self::PARAM_PHP_CS_FIXER_BIN => 'Path to the php-cs-fixer executable',
             self::PARAM_ENV => 'Environment for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)',
             self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP CS Fixer diagnostics are shown',
-            self::PARAM_CONFIG => 'Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php'
+            self::PARAM_CONFIG => 'Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php',
         ]);
     }
 

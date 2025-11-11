@@ -7,14 +7,19 @@ use Amp\Promise;
 use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Exception\PhpCsFixerError;
 use Psr\Log\LoggerInterface;
+
 use function Amp\ByteStream\buffer;
 use function Amp\call;
+
 use Throwable;
 
 class PhpCsFixerProcess
 {
     public const EXIT_SOME_FILES_INVALID = 4;
     public const EXIT_FILES_NEEDS_FIXING = 8;
+
+    /** @var string[] */
+    private array $ignorePhpVersionArgs = ['--allow-unsupported-php-version=yes'];
 
     /**
      * @param array<string,string> $env
@@ -23,7 +28,7 @@ class PhpCsFixerProcess
         private string $binPath,
         private LoggerInterface $logger,
         private array $env = [],
-        private ?string $configPath = null
+        private ?string $configPath = null,
     ) {
     }
 
@@ -40,7 +45,11 @@ class PhpCsFixerProcess
             }
 
             /** @var Process */
-            $process = yield $this->run('fix', ...[...$options, '-']);
+            $process = yield $this->run('fix', ...[
+                ...$this->ignorePhpVersionArgs,
+                ...$options,
+                '-',
+            ]);
 
             $stdin = $process->getStdin();
             $stdin->write($content);
@@ -49,7 +58,8 @@ class PhpCsFixerProcess
             $stdout = yield buffer($process->getStdout());
             $exitCode = yield $process->join();
 
-            if ($exitCode !== 0
+            if (
+                $exitCode !== 0
                 && $exitCode !== self::EXIT_SOME_FILES_INVALID
                 && $exitCode !== self::EXIT_FILES_NEEDS_FIXING
                 && $exitCode !== (self::EXIT_SOME_FILES_INVALID | self::EXIT_FILES_NEEDS_FIXING)
@@ -58,7 +68,7 @@ class PhpCsFixerProcess
                     $exitCode,
                     $process->getCommand(),
                     yield buffer($process->getStderr()),
-                    $stdout
+                    $stdout,
                 );
             }
 
@@ -85,7 +95,7 @@ class PhpCsFixerProcess
                     $exitCode,
                     $process->getCommand(),
                     yield buffer($process->getStderr()),
-                    $stdout
+                    $stdout,
                 );
             }
 
@@ -109,12 +119,28 @@ class PhpCsFixerProcess
                         sprintf(
                             'Executed %s, which exited with %s',
                             $process->getCommand(),
-                            $data
-                        )
+                            $data,
+                        ),
                     );
                 });
 
             return $process;
         });
+    }
+
+    public function ignorePhpVersion(): static
+    {
+        // this is The Resolver at the moment ;)
+        $useNewerVersions = true;
+
+        if ($useNewerVersions) {
+            unset($this->env['PHP_CS_FIXER_IGNORE_ENV']);
+            return $this;
+        }
+
+        $this->ignorePhpVersionArgs = [];
+        $this->env['PHP_CS_FIXER_IGNORE_ENV'] = 1;
+
+        return $this;
     }
 }
