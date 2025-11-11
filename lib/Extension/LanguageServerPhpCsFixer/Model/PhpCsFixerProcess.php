@@ -140,9 +140,9 @@ class PhpCsFixerProcess
             return;
         }
 
-        $useNewerVersions = $version->greaterThanOrEqualTo('3.89.2');
+        $useCommandOption = $version->greaterThanOrEqualTo('3.89.2');
 
-        if ($useNewerVersions) {
+        if ($useCommandOption) {
             unset($this->env['PHP_CS_FIXER_IGNORE_ENV']);
             return;
         }
