@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServerPhpCsFixer\Formatter\PhpCsFixerFormatter;
 use Phpactor\Extension\LanguageServerPhpCsFixer\LspCommand\FormatCommand;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Provider\PhpCsFixerDiagnosticsProvider;
+use Phpactor\Extension\LanguageServerPhpCsFixer\VersionResolver\PhpCsFixerVersionResolver;
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
@@ -20,6 +21,7 @@ use Phpactor\MapResolver\Resolver;
 
 class LanguageServerPhpCsFixerExtension implements OptionalExtension
 {
+    public const SERVICE_VERSION_RESOLVER = 'php_cs_fixer.version.resolver';
     public const PARAM_PHP_CS_FIXER_BIN = 'language_server_php_cs_fixer.bin';
     public const PARAM_PHP_CS_FIXER_VERSION = 'language_server_php_cs_fixer.version';
     public const PARAM_ENV = 'language_server_php_cs_fixer.env';
@@ -29,6 +31,18 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
 
     public function load(ContainerBuilder $container): void
     {
+        $container->register(self::SERVICE_VERSION_RESOLVER, function (Container $container) {
+            $pathResolver = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
+
+            $path = $pathResolver->resolve($container->parameter(self::PARAM_PHP_CS_FIXER_BIN)->string());
+
+            return new PhpCsFixerVersionResolver(
+                $container->parameter(self::PARAM_PHP_CS_FIXER_VERSION)->value(),
+                $path,
+                LoggingExtension::channelLogger($container, 'php-cs-fixer'),
+            );
+        });
+
         $container->register(
             PhpCsFixerProcess::class,
             function (Container $container) {
@@ -44,9 +58,9 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                 return new PhpCsFixerProcess(
                     $path,
                     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
+                    $container->get(self::SERVICE_VERSION_RESOLVER),
                     $container->parameter(self::PARAM_ENV)->value(),
                     $configPath,
-                    $container->parameter(self::PARAM_PHP_CS_FIXER_VERSION)->value(),
                 );
             },
         );

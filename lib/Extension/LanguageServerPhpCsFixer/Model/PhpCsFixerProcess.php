@@ -6,12 +6,11 @@ use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Exception\PhpCsFixerError;
+use Phpactor\VersionResolver\SemVersionResolver;
 use Psr\Log\LoggerInterface;
-use Composer\Semver\Comparator;
 
 use function Amp\ByteStream\buffer;
 use function Amp\call;
-use function Amp\Promise\wait;
 
 use Throwable;
 
@@ -29,9 +28,9 @@ class PhpCsFixerProcess
     public function __construct(
         private string $binPath,
         private LoggerInterface $logger,
+        private ?SemVersionResolver $versionResolver = null,
         private array $env = [],
         private ?string $configPath = null,
-        private ?string $version = null,
     ) {
     }
 
@@ -135,13 +134,13 @@ class PhpCsFixerProcess
 
     private function ignorePhpVersion(): void
     {
-        $version = $this->version ?? $this->checkVersion();
+        $version = $this->versionResolver?->resolve();
 
         if (null === $version) {
             return;
         }
 
-        $useNewerVersions = Comparator::greaterThanOrEqualTo($version, '3.89.2');
+        $useNewerVersions = $version->greaterThanOrEqualTo('3.89.2');
 
         if ($useNewerVersions) {
             unset($this->env['PHP_CS_FIXER_IGNORE_ENV']);
@@ -150,21 +149,5 @@ class PhpCsFixerProcess
 
         $this->ignorePhpVersionArgs = [];
         $this->env['PHP_CS_FIXER_IGNORE_ENV'] = '1';
-
-        return;
-    }
-
-    private function checkVersion(): ?string
-    {
-        $versionQuery = wait((new self($this->binPath, $this->logger, []))->run('--version'));
-        $stdout = wait(buffer($versionQuery->getStdout()));
-
-        if (wait($versionQuery->join()) !== 0) {
-            return null;
-        }
-
-        preg_match('/^PHP CS Fixer (\d+\.\d+\.\d+) /', $stdout, $version);
-
-        return $version[1] ?? null;
     }
 }
