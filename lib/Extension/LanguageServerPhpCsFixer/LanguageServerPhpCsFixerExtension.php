@@ -21,6 +21,7 @@ use Phpactor\MapResolver\Resolver;
 class LanguageServerPhpCsFixerExtension implements OptionalExtension
 {
     public const PARAM_PHP_CS_FIXER_BIN = 'language_server_php_cs_fixer.bin';
+    public const PARAM_PHP_CS_FIXER_VERSION = 'language_server_php_cs_fixer.version';
     public const PARAM_ENV = 'language_server_php_cs_fixer.env';
     public const PARAM_SHOW_DIAGNOSTICS = 'language_server_php_cs_fixer.show_diagnostics';
     public const PARAM_CONFIG = 'language_server_php_cs_fixer.config';
@@ -45,6 +46,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
                     $container->parameter(self::PARAM_ENV)->value(),
                     $configPath,
+                    $container->parameter(self::PARAM_PHP_CS_FIXER_VERSION)->value(),
                 );
             },
         );
@@ -85,6 +87,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
     {
         $schema->setDefaults([
             self::PARAM_PHP_CS_FIXER_BIN => '%project_root%/vendor/bin/php-cs-fixer',
+            self::PARAM_PHP_CS_FIXER_VERSION => null,
             self::PARAM_ENV => [
                 'XDEBUG_MODE' => 'off',
             ],
@@ -94,7 +97,8 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
 
         $schema->setDescriptions([
             self::PARAM_PHP_CS_FIXER_BIN => 'Path to the php-cs-fixer executable',
-            self::PARAM_ENV => 'Environment for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)',
+            self::PARAM_PHP_CS_FIXER_VERSION => 'Arbitrary php-cs-fixer version (to avoid autodetection)',
+            self::PARAM_ENV => 'Environment for PHP CS Fixer',
             self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP CS Fixer diagnostics are shown',
             self::PARAM_CONFIG => 'Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php',
         ]);

@@ -31,6 +31,7 @@ class PhpCsFixerProcess
         private LoggerInterface $logger,
         private array $env = [],
         private ?string $configPath = null,
+        private ?string $version = null,
     ) {
     }
 
@@ -134,7 +135,7 @@ class PhpCsFixerProcess
 
     private function ignorePhpVersion(): void
     {
-        $version = $this->checkVersion();
+        $version = $this->version ?? $this->checkVersion();
 
         if (null === $version) {
             return;
