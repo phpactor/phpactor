@@ -15,7 +15,7 @@ class PhpCsFixerProcessTest extends PhpCsFixerTestCase
         $phpCsFixer = $this->getPhpCsFixer();
 
         $process = call(function () use ($phpCsFixer) {
-            $process = yield $phpCsFixer->run('--version');
+            $process = yield $phpCsFixer->run([], '--version');
             $stdout = yield buffer($process->getStdout());
 
             self::assertStringContainsString('PHP CS Fixer ', $stdout, sprintf("Expected php-cs-fixer --version to return it's name followed with version, got: %s", $stdout));
