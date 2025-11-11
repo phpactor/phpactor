@@ -18,9 +18,6 @@ use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
 
-use function Amp\Promise\wait;
-use function Amp\ByteStream\buffer;
-
 class LanguageServerPhpCsFixerExtension implements OptionalExtension
 {
     public const PARAM_PHP_CS_FIXER_BIN = 'language_server_php_cs_fixer.bin';
@@ -43,21 +40,12 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                     $configPath = $pathResolver->resolve($container->parameter(self::PARAM_CONFIG)->string());
                 }
 
-                // $versionQuery = wait((new PhpCsFixerProcess(
-                //     $path,
-                //     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
-                //     [],
-                // ))->run('--version'));
-                // $stdout = wait(buffer($versionQuery->getStdout()));
-                // preg_match(...)
-                // Comparator::greaterThanOrEqualTo($stdout, '3.89.0');
-
                 return new PhpCsFixerProcess(
                     $path,
                     LoggingExtension::channelLogger($container, 'php-cs-fixer'),
                     $container->parameter(self::PARAM_ENV)->value(),
                     $configPath,
-                )->ignorePhpVersion();
+                );
             },
         );
 

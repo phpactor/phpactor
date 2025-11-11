@@ -7,9 +7,11 @@ use Amp\Promise;
 use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Exception\PhpCsFixerError;
 use Psr\Log\LoggerInterface;
+use Composer\Semver\Comparator;
 
 use function Amp\ByteStream\buffer;
 use function Amp\call;
+use function Amp\Promise\wait;
 
 use Throwable;
 
@@ -40,6 +42,8 @@ class PhpCsFixerProcess
     public function fix(string $content, array $options = []): Promise
     {
         return call(function () use ($content, $options) {
+            $this->ignorePhpVersion();
+
             if (false === array_search('--rules', $options, true) && null !== $this->configPath) {
                 $options = array_merge($options, ['--config', $this->configPath]);
             }
@@ -128,19 +132,38 @@ class PhpCsFixerProcess
         });
     }
 
-    public function ignorePhpVersion(): static
+    private function ignorePhpVersion(): void
     {
-        // this is The Resolver at the moment ;)
-        $useNewerVersions = true;
+        $version = $this->checkVersion();
+
+        if (null === $version) {
+            return;
+        }
+
+        $useNewerVersions = Comparator::greaterThanOrEqualTo($version, '3.89.2');
 
         if ($useNewerVersions) {
             unset($this->env['PHP_CS_FIXER_IGNORE_ENV']);
-            return $this;
+            return;
         }
 
         $this->ignorePhpVersionArgs = [];
-        $this->env['PHP_CS_FIXER_IGNORE_ENV'] = 1;
+        $this->env['PHP_CS_FIXER_IGNORE_ENV'] = '1';
 
-        return $this;
+        return;
+    }
+
+    private function checkVersion(): ?string
+    {
+        $versionQuery = wait((new self($this->binPath, $this->logger, []))->run('--version'));
+        $stdout = wait(buffer($versionQuery->getStdout()));
+
+        if (wait($versionQuery->join()) !== 0) {
+            return null;
+        }
+
+        preg_match('/^PHP CS Fixer (\d+\.\d+\.\d+) /', $stdout, $version);
+
+        return $version[1] ?? null;
     }
 }
