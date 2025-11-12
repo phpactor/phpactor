@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerPhpCsFixer\Tests;
 use Amp\Promise;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
+use Phpactor\Extension\LanguageServerPhpCsFixer\VersionResolver\PhpCsFixerVersionResolver;
 use Psr\Log\NullLogger;
 
 class PhpCsFixerTestCase extends TestCase
