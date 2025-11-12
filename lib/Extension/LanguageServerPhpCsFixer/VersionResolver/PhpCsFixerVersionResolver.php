@@ -15,16 +15,11 @@ class PhpCsFixerVersionResolver implements SemVersionResolver
     public function __construct(
         private string $binPath,
         private LoggerInterface $logger,
-        private ?string $version = null,
     ) {
     }
 
     public function resolve(): ?SemVersion
     {
-        if (null !== $this->version) {
-            return new SemVersion($this->version);
-        }
-
         $versionQuery = wait((new PhpCsFixerProcess($this->binPath, $this->logger))->run('--version'));
         $stdout = wait(buffer($versionQuery->getStdout()));
 

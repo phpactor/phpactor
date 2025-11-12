@@ -18,7 +18,9 @@ use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\MapResolver\Resolver;
+use Phpactor\VersionResolver\ArbitrarySemVerResolver;
 use Phpactor\VersionResolver\CachedSemVerResolver;
+use Phpactor\VersionResolver\CompoundSemVerResolver;
 
 class LanguageServerPhpCsFixerExtension implements OptionalExtension
 {
@@ -37,11 +39,12 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
 
             $path = $pathResolver->resolve($container->parameter(self::PARAM_PHP_CS_FIXER_BIN)->string());
 
-            return new CachedSemVerResolver(new PhpCsFixerVersionResolver(
-                $path,
-                LoggingExtension::channelLogger($container, 'php-cs-fixer'),
-                $container->parameter(self::PARAM_PHP_CS_FIXER_VERSION)->value(),
-            ));
+            return new CachedSemVerResolver(
+                new CompoundSemVerResolver(
+                    new ArbitrarySemVerResolver($container->parameter(self::PARAM_PHP_CS_FIXER_VERSION)->value()),
+                    new PhpCsFixerVersionResolver($path, LoggingExtension::channelLogger($container, 'php-cs-fixer')),
+                ),
+            );
         });
 
         $container->register(
