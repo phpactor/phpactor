@@ -2,6 +2,9 @@
 
 namespace Phpactor\VersionResolver;
 
+use Amp\Promise;
+use function Amp\call;
+
 class CompoundSemVerResolver implements SemVersionResolver
 {
     /** @var SemVersionResolver[] */
@@ -13,15 +16,20 @@ class CompoundSemVerResolver implements SemVersionResolver
         $this->resolvers = $resolvers;
     }
 
-    public function resolve(): ?SemVersion
+    /**
+     * @return Promise<?SemVersion>
+     */
+    public function resolve(): Promise
     {
-        foreach ($this->resolvers as $resolver) {
-            $version = $resolver->resolve();
-            if (null !== $version) {
-                return $version;
+        return call(function () {
+            foreach ($this->resolvers as $resolver) {
+                $version = yield $resolver->resolve();
+                if (null !== $version) {
+                    return $version;
+                }
             }
-        }
 
-        return null;
+            return null;
+        });
     }
 }

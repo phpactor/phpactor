@@ -2,6 +2,11 @@
 
 namespace Phpactor\VersionResolver;
 
+use Amp\Promise;
+use Phpactor\VersionResolver\SemVersion;
+
+use function Amp\call;
+
 class ArbitrarySemVerResolver implements SemVersionResolver
 {
     public function __construct(
@@ -9,12 +14,17 @@ class ArbitrarySemVerResolver implements SemVersionResolver
     ) {
     }
 
-    public function resolve(): ?SemVersion
+    /**
+     * @return Promise<?SemVersion>
+     */
+    public function resolve(): Promise
     {
-        if (null === $this->version) {
-            return null;
-        }
+        return call(function () {
+            if (null === $this->version) {
+                return null;
+            }
 
-        return new SemVersion($this->version);
+            return new SemVersion($this->version);
+        });
     }
 }

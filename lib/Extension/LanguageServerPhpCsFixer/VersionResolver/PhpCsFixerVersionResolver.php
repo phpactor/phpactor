@@ -2,13 +2,14 @@
 
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\VersionResolver;
 
+use Amp\Promise;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Model\PhpCsFixerProcess;
 use Phpactor\VersionResolver\SemVersion;
 use Phpactor\VersionResolver\SemVersionResolver;
-
 use Psr\Log\LoggerInterface;
+
 use function Amp\ByteStream\buffer;
-use function Amp\Promise\wait;
+use function Amp\call;
 
 class PhpCsFixerVersionResolver implements SemVersionResolver
 {
@@ -18,17 +19,23 @@ class PhpCsFixerVersionResolver implements SemVersionResolver
     ) {
     }
 
-    public function resolve(): ?SemVersion
+    /**
+     * @return Promise<?SemVersion>
+     */
+    public function resolve(): Promise
     {
-        $versionQuery = wait((new PhpCsFixerProcess($this->binPath, $this->logger))->run('--version'));
-        $stdout = wait(buffer($versionQuery->getStdout()));
+        return call(function () {
+            $versionQuery = yield (new PhpCsFixerProcess($this->binPath, $this->logger))->run('--version');
+            $stdout = yield buffer($versionQuery->getStdout());
+            $exitCode = yield $versionQuery->join();
 
-        if (wait($versionQuery->join()) !== 0) {
-            return null;
-        }
+            if ($exitCode !== 0) {
+                return null;
+            }
 
-        preg_match('/^PHP CS Fixer (\d+\.\d+\.\d+) /', $stdout, $version);
+            preg_match('/^PHP CS Fixer (\d+\.\d+\.\d+) /', $stdout, $version);
 
-        return new SemVersion($version[1]) ?? null;
+            return (count($version) > 0) ? new SemVersion($version[1]) : null;
+        });
     }
 }

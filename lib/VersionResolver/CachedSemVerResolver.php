@@ -2,6 +2,11 @@
 
 namespace Phpactor\VersionResolver;
 
+use Amp\Promise;
+use Phpactor\VersionResolver\SemVersion;
+
+use function Amp\call;
+
 class CachedSemVerResolver implements SemVersionResolver
 {
     private ?SemVersion $version;
@@ -11,14 +16,19 @@ class CachedSemVerResolver implements SemVersionResolver
     ) {
     }
 
-    public function resolve(): ?SemVersion
+    /**
+     * @return Promise<?SemVersion>
+     */
+    public function resolve(): Promise
     {
-        if (isset($this->version)) {
+        return call(function () {
+            if (isset($this->version)) {
+                return $this->version;
+            }
+
+            $this->version = yield $this->resolver->resolve();
+
             return $this->version;
-        }
-
-        $this->version = $this->resolver->resolve();
-
-        return $this->version;
+        });
     }
 }

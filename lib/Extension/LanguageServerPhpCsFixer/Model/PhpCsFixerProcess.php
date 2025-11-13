@@ -6,6 +6,7 @@ use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Exception\PhpCsFixerError;
+use Phpactor\VersionResolver\SemVersion;
 use Phpactor\VersionResolver\SemVersionResolver;
 use Psr\Log\LoggerInterface;
 
@@ -42,7 +43,9 @@ class PhpCsFixerProcess
     public function fix(string $content, array $options = []): Promise
     {
         return call(function () use ($content, $options) {
-            $this->ignorePhpVersion();
+            $version = yield $this->versionResolver?->resolve();
+
+            $this->ignorePhpVersion($version);
 
             if (false === array_search('--rules', $options, true) && null !== $this->configPath) {
                 $options = array_merge($options, ['--config', $this->configPath]);
@@ -132,10 +135,8 @@ class PhpCsFixerProcess
         });
     }
 
-    private function ignorePhpVersion(): void
+    private function ignorePhpVersion(?SemVersion $version): void
     {
-        $version = $this->versionResolver?->resolve();
-
         if (null === $version) {
             return;
         }

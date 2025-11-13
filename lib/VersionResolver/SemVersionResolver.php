@@ -2,7 +2,12 @@
 
 namespace Phpactor\VersionResolver;
 
+use Amp\Promise;
+
 interface SemVersionResolver
 {
-    public function resolve(): ?SemVersion;
+    /**
+     * @return Promise<?SemVersion>
+     */
+    public function resolve(): Promise;
 }
