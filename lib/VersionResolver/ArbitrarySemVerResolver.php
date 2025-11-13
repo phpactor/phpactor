@@ -3,7 +3,6 @@
 namespace Phpactor\VersionResolver;
 
 use Amp\Promise;
-use Phpactor\VersionResolver\SemVersion;
 
 use function Amp\call;
 
