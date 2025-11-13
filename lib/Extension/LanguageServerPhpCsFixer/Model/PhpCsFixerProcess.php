@@ -43,9 +43,7 @@ class PhpCsFixerProcess
     public function fix(string $content, array $options = []): Promise
     {
         return call(function () use ($content, $options) {
-            $version = yield $this->versionResolver?->resolve();
-
-            $this->ignorePhpVersion($version);
+            $this->ignorePhpVersion(yield $this->versionResolver?->resolve());
 
             if (false === array_search('--rules', $options, true) && null !== $this->configPath) {
                 $options = array_merge($options, ['--config', $this->configPath]);
