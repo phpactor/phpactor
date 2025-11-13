@@ -115,7 +115,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
 
         $schema->setDescriptions([
             self::PARAM_PHP_CS_FIXER_BIN => 'Path to the php-cs-fixer executable',
-            self::PARAM_PHP_CS_FIXER_VERSION => 'Arbitrary php-cs-fixer version (to avoid autodetection, usable only to ignore PHP version)',
+            self::PARAM_PHP_CS_FIXER_VERSION => 'Arbitrary version (if not provided, phpactor tries to detect it - only to run it on unsupported PHP versions)',
             self::PARAM_ENV => 'Environment for PHP CS Fixer',
             self::PARAM_SHOW_DIAGNOSTICS => 'Whether PHP CS Fixer diagnostics are shown',
             self::PARAM_CONFIG => 'Set custom PHP CS config path. Ex., %project_root%/.php-cs-fixer.php',

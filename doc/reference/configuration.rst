@@ -2177,7 +2177,7 @@ Path to the php-cs-fixer executable
 """"""""""""""""""""""""""""""""""""""""
 
 
-Arbitrary php-cs-fixer version (to avoid autodetection, usable only to ignore PHP version)
+Arbitrary version (if not provided, phpactor tries to detect it - only to run it on unsupported PHP versions)
 
 
 **Default**: ``null``
