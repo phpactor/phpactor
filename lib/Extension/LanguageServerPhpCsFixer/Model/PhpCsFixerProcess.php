@@ -6,9 +6,13 @@ use Amp\Process\Process;
 use Amp\Promise;
 use Phpactor\Amp\Process\ProcessBuilder;
 use Phpactor\Extension\LanguageServerPhpCsFixer\Exception\PhpCsFixerError;
+use Phpactor\VersionResolver\SemVersion;
+use Phpactor\VersionResolver\SemVersionResolver;
 use Psr\Log\LoggerInterface;
+
 use function Amp\ByteStream\buffer;
 use function Amp\call;
+
 use Throwable;
 
 class PhpCsFixerProcess
@@ -16,14 +20,18 @@ class PhpCsFixerProcess
     public const EXIT_SOME_FILES_INVALID = 4;
     public const EXIT_FILES_NEEDS_FIXING = 8;
 
+    /** @var string[] */
+    private array $ignorePhpVersionArgs = ['--allow-unsupported-php-version=yes'];
+
     /**
      * @param array<string,string> $env
      */
     public function __construct(
         private string $binPath,
         private LoggerInterface $logger,
+        private ?SemVersionResolver $versionResolver = null,
         private array $env = [],
-        private ?string $configPath = null
+        private ?string $configPath = null,
     ) {
     }
 
@@ -35,12 +43,18 @@ class PhpCsFixerProcess
     public function fix(string $content, array $options = []): Promise
     {
         return call(function () use ($content, $options) {
+            $this->ignorePhpVersion(yield $this->versionResolver?->resolve());
+
             if (false === array_search('--rules', $options, true) && null !== $this->configPath) {
                 $options = array_merge($options, ['--config', $this->configPath]);
             }
 
             /** @var Process */
-            $process = yield $this->run('fix', ...[...$options, '-']);
+            $process = yield $this->run('fix', ...[
+                ...$this->ignorePhpVersionArgs,
+                ...$options,
+                '-',
+            ]);
 
             $stdin = $process->getStdin();
             $stdin->write($content);
@@ -49,7 +63,8 @@ class PhpCsFixerProcess
             $stdout = yield buffer($process->getStdout());
             $exitCode = yield $process->join();
 
-            if ($exitCode !== 0
+            if (
+                $exitCode !== 0
                 && $exitCode !== self::EXIT_SOME_FILES_INVALID
                 && $exitCode !== self::EXIT_FILES_NEEDS_FIXING
                 && $exitCode !== (self::EXIT_SOME_FILES_INVALID | self::EXIT_FILES_NEEDS_FIXING)
@@ -58,7 +73,7 @@ class PhpCsFixerProcess
                     $exitCode,
                     $process->getCommand(),
                     yield buffer($process->getStderr()),
-                    $stdout
+                    $stdout,
                 );
             }
 
@@ -85,7 +100,7 @@ class PhpCsFixerProcess
                     $exitCode,
                     $process->getCommand(),
                     yield buffer($process->getStderr()),
-                    $stdout
+                    $stdout,
                 );
             }
 
@@ -109,12 +124,27 @@ class PhpCsFixerProcess
                         sprintf(
                             'Executed %s, which exited with %s',
                             $process->getCommand(),
-                            $data
-                        )
+                            $data,
+                        ),
                     );
                 });
 
             return $process;
         });
+    }
+
+    private function ignorePhpVersion(?SemVersion $version): void
+    {
+        if (null === $version) {
+            return;
+        }
+
+        if ($version->greaterThanOrEqualTo(new SemVersion('3.89.2'))) {
+            unset($this->env['PHP_CS_FIXER_IGNORE_ENV']);
+            return;
+        }
+
+        $this->ignorePhpVersionArgs = [];
+        $this->env['PHP_CS_FIXER_IGNORE_ENV'] = '1';
     }
 }
