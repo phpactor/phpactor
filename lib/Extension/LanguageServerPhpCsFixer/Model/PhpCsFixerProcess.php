@@ -141,7 +141,7 @@ class PhpCsFixerProcess
             return;
         }
 
-        if ($version->greaterThanOrEqualTo('3.89.2')) {
+        if ($version->greaterThanOrEqualTo(new SemVersion('3.89.2'))) {
             unset($this->env['PHP_CS_FIXER_IGNORE_ENV']);
             return;
         }
