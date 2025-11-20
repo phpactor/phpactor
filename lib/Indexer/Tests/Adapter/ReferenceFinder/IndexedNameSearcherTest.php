@@ -29,7 +29,7 @@ class IndexedNameSearcherTest extends IndexTestCase
         $this->workspace()->put('project/Barfoo.php', '<?php namespace Foo; class Foobar {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
-        $searcher = new IndexedNameSearcher($agent->search());
+        $searcher = new IndexedNameSearcher($agent->search(), false);
 
         $results = iterator_to_array($searcher->search('\Foo'));
 
@@ -41,7 +41,7 @@ class IndexedNameSearcherTest extends IndexTestCase
         $this->workspace()->put('project/Foobar.php', '<?php class Foobar {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
-        $searcher = new IndexedNameSearcher($agent->search());
+        $searcher = new IndexedNameSearcher($agent->search(), false);
 
         foreach ($searcher->search('Foo') as $result) {
             assert($result instanceof NameSearchResult);
@@ -56,7 +56,7 @@ class IndexedNameSearcherTest extends IndexTestCase
         $this->workspace()->put('project/Foobar.php', '<?php interface Foobar {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
-        $searcher = new IndexedNameSearcher($agent->search());
+        $searcher = new IndexedNameSearcher($agent->search(), false);
 
         foreach ($searcher->search('Foo', NameSearcherType::INTERFACE) as $result) {
             assert($result instanceof NameSearchResult);
@@ -74,7 +74,7 @@ class IndexedNameSearcherTest extends IndexTestCase
         $this->workspace()->put('project/Foobar.php', '<?php enum Foobar {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
-        $searcher = new IndexedNameSearcher($agent->search());
+        $searcher = new IndexedNameSearcher($agent->search(), false);
 
         foreach ($searcher->search('Foo', NameSearcherType::ENUM) as $result) {
             assert($result instanceof NameSearchResult);
@@ -92,7 +92,7 @@ class IndexedNameSearcherTest extends IndexTestCase
         $this->workspace()->put('project/Foobar.php', '<?php trait Foobar {}');
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
-        $searcher = new IndexedNameSearcher($agent->search());
+        $searcher = new IndexedNameSearcher($agent->search(), false);
 
         foreach ($searcher->search('Foo', NameSearcherType::TRAIT) as $result) {
             assert($result instanceof NameSearchResult);
@@ -118,7 +118,7 @@ class IndexedNameSearcherTest extends IndexTestCase
 
         $agent = $this->indexAgent();
         $agent->indexer()->getJob()->run();
-        $searcher = new IndexedNameSearcher($agent->search());
+        $searcher = new IndexedNameSearcher($agent->search(), false);
 
         $resultPaths = [];
         $offset = 1 + mb_strlen($this->workspace()->path());
