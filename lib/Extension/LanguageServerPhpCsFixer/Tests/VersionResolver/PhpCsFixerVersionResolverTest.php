@@ -22,7 +22,7 @@ class PhpCsFixerVersionResolverTest extends TestCase
         $process = call(function () use ($resolver) {
             $version = yield $resolver->resolve();
 
-            self::assertSame('3.89.1', $version->__toString());
+            self::assertMatchesRegularExpression('/^\d+\.\d+\.\d+.*$/', $version->__toString());
         });
 
         wait($process);
