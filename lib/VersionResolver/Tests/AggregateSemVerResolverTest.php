@@ -2,12 +2,9 @@
 
 namespace Phpactor\VersionResolver\Tests;
 
-use Amp\Success;
-use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\VersionResolver\AggregateSemVerResolver;
-use Phpactor\VersionResolver\SemVersion;
-use Phpactor\VersionResolver\SemVersionResolver;
+use Phpactor\VersionResolver\ArbitrarySemVerResolver;
 use Prophecy\PhpUnit\ProphecyTrait;
 
 use function Amp\Promise\wait;
@@ -21,7 +18,10 @@ class AggregateSemVerResolverTest extends TestCase
      */
     public function testResolve(?string $expected, ?string ...$componentVersions): void
     {
-        $resolver = new AggregateSemVerResolver(...[...$this->mockResolvers(...$componentVersions)]);
+        $resolver = new AggregateSemVerResolver(...array_map(
+            fn (?string $version) => new ArbitrarySemVerResolver($version),
+            $componentVersions,
+        ));
 
         $actual = wait($resolver->resolve());
 
@@ -43,20 +43,5 @@ class AggregateSemVerResolverTest extends TestCase
         yield 'not null first' => ['1', '1', null];
         yield 'null first' => ['1', null, '1'];
         yield 'null only' => [null, null, null];
-    }
-
-    /**
-     * @return Generator<SemVersionResolver>
-     */
-    private function mockResolvers(?string ...$componentVersions): Generator
-    {
-        foreach ($componentVersions as $version) {
-            $resolver = $this->prophesize(SemVersionResolver::class);
-            $resolver
-                ->resolve()
-                ->willReturn(new Success((null === $version) ? null : new SemVersion($version)));
-
-            yield $resolver->reveal();
-        }
     }
 }
