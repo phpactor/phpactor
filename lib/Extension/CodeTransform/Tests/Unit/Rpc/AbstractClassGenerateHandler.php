@@ -16,7 +16,7 @@ use Phpactor\TestUtils\Workspace;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Filesystem\Path;
 
-abstract class AbstractClassGenerateHandlerTest extends TestCase
+abstract class AbstractClassGenerateHandler extends TestCase
 {
     const EXAMPLE_PATH = '/path/to.php';
     const EXAMPLE_NEW_PATH = '/new/path.php';
