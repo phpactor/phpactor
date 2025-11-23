@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use RuntimeException;
 use Generator;
@@ -45,9 +46,9 @@ abstract class RenamerTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideRename
      * @param Closure(Reflector,Renamer):Generator<LocatedTextEdit> $operation
      */
+    #[DataProvider('provideRename')]
     public function testRename(string $path, Closure $operation, Closure $assertion): void
     {
         $basePath = __DIR__ . '/Cases/' . $path;
@@ -69,7 +70,7 @@ abstract class RenamerTestCase extends TestCase
         }
         $this->indexAgent->indexer()->getJob()->run();
 
-        $generator = $operation($this->reflector, $this->createRenamer());
+        $generator = $operation->bindTo($this)->__invoke($this->reflector, $this->createRenamer());
         $edits = LocatedTextEdits::fromLocatedEditsToCollection(iterator_to_array($generator, false));
         foreach ($edits as $documentEdits) {
             file_put_contents(

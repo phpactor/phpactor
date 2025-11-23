@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\Collection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -9,19 +10,18 @@ use Closure;
 
 class ReflectionMethodCollectionTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideCollection
-     */
+    #[DataProvider('provideCollection')]
     public function testCollection(string $source, Closure $assertion): void
     {
         $collection = $this->createReflector($source)->reflectClass('Foobar');
+        $assertion = $assertion->bindTo($this);
         $assertion($collection);
     }
 
     /**
      * @return Generator<string, array{string, Closure(ReflectionClass):void}>
      */
-    public function provideCollection(): Generator
+    public static function provideCollection(): Generator
     {
         yield 'Get abstract methods' => [
             <<<'EOT'

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\TolerantCompletorTestCase;
@@ -16,9 +17,9 @@ use Generator;
 class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
 {
     /**
-     * @dataProvider provideComplete
      * @param array<SuggestionOptions> $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
@@ -27,7 +28,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<string,array{string,array<SuggestionOptions>}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'Public property' => [
             <<<'EOT'
@@ -1041,9 +1042,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCouldNotComplete
-     */
+    #[DataProvider('provideCouldNotComplete')]
     public function testCouldNotComplete(string $source): void
     {
         $this->assertCouldNotComplete($source);
@@ -1052,7 +1051,7 @@ class WorseClassMemberCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideCouldNotComplete(): Generator
+    public static function provideCouldNotComplete(): Generator
     {
         yield 'non member access' => [ '<?php $hello<>' ];
         yield 'variable with previous accessor' => [ '<?php $foobar->hello; $hello<>' ];

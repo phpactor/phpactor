@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\TraitImport;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Microsoft\PhpParser\Node\Statement\ClassDeclaration;
@@ -12,9 +13,7 @@ use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class TraitImportsTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideTraitImports
-     */
+    #[DataProvider('provideTraitImports')]
     public function testTraitImports(string $source, Closure $assertion): void
     {
         $rootNode = $this->parseSource($source);

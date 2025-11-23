@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerBridge\Tests\Converter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\LanguageServerProtocol\Position;
@@ -61,11 +62,9 @@ class LocationConverterTest extends IntegrationTestCase
         self::assertEquals($expected, $this->converter->toLspLocations($locations));
     }
 
-    /**
-     * @dataProvider provideDiskLocations
-     * @dataProvider provideMultibyte
-     * @dataProvider provideOutOfRange
-     */
+    #[DataProvider('provideDiskLocations')]
+    #[DataProvider('provideMultibyte')]
+    #[DataProvider('provideOutOfRange')]
     public function testLocationToLspLocation(string $text, int $start, int $end, Range $expectedRange): void
     {
         $this->workspace()->put('test.php', $text);

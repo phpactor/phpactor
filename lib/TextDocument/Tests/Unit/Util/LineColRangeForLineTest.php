@@ -2,6 +2,7 @@
 
 namespace Phpactor\TextDocument\Tests\Unit\Util;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\LineCol;
@@ -10,9 +11,7 @@ use Phpactor\TextDocument\Util\LineColRangeForLine;
 
 class LineColRangeForLineTest extends TestCase
 {
-    /**
-     * @dataProvider provideRangeForLine
-     */
+    #[DataProvider('provideRangeForLine')]
     public function testRangeForLine(string $text, int $lineNo, LineColRange $expected): void
     {
         self::assertEquals($expected, (new LineColRangeForLine())->rangeFromLine($text, $lineNo));
@@ -21,7 +20,7 @@ class LineColRangeForLineTest extends TestCase
     /**
      * @return Generator<array{string, int, LineColRange}>
      */
-    public function provideRangeForLine(): Generator
+    public static function provideRangeForLine(): Generator
     {
         yield [
             'one',

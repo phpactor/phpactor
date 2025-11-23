@@ -2,6 +2,8 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\GenerateFromExisting;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Domain\ClassName;
@@ -9,10 +11,8 @@ use Phpactor\CodeTransform\Adapter\WorseReflection\GenerateFromExisting\Interfac
 
 class InterfaceFromExistingGeneratorTest extends WorseTestCase
 {
-    /**
-     * @testdox Generate interface
-     * @dataProvider provideGenerateInterface
-     */
+    #[DataProvider('provideGenerateInterface')]
+    #[TestDox('Generate interface')]
     public function testGenerateInterface(string $className, string $targetName, string $source, string $expected): void
     {
         $reflector = $this->reflectorForWorkspace($source);
@@ -24,7 +24,7 @@ class InterfaceFromExistingGeneratorTest extends WorseTestCase
     /**
      * @return Generator<string,array{string,string,string,string}>
      */
-    public function provideGenerateInterface(): Generator
+    public static function provideGenerateInterface(): Generator
     {
         yield 'Generates interface' => [
             'Music\Beat',

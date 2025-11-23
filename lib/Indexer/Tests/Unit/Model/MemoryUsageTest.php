@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Model\MemoryUsage;
@@ -21,9 +22,7 @@ class MemoryUsageTest extends TestCase
         self::assertIsInt(MemoryUsage::create()->memoryUsage());
     }
 
-    /**
-     * @dataProvider provideFormat
-     */
+    #[DataProvider('provideFormat')]
     public function testFormat(string $limit, int $usage, string $expected): void
     {
         self::assertEquals($expected, MemoryUsage::createFromLimitAndUsage($limit, $usage)->memoryUsageFormatted());
@@ -32,7 +31,7 @@ class MemoryUsageTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideFormat(): Generator
+    public static function provideFormat(): Generator
     {
         yield 'infinite memory' => [
             '-1',

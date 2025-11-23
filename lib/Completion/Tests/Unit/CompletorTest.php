@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Tests\TestCase;
@@ -13,6 +14,7 @@ use Phpactor\Completion\Core\Suggestion;
 
 class CompletorTest extends TestCase
 {
+    use ProphecyTrait;
     const EXAMPLE_SOURCE = 'test source';
     const EXAMPLE_OFFSET = 1234;
 

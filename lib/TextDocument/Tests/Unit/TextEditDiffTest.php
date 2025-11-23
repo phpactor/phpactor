@@ -2,15 +2,14 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextEditDiff;
 
 class TextEditDiffTest extends TestCase
 {
-    /**
-     * @dataProvider provideDiff
-     */
+    #[DataProvider('provideDiff')]
     public function testDiff(string $one, string $two): void
     {
         $edits = (new TextEditDiff())->diff($one, $two);
@@ -23,7 +22,7 @@ class TextEditDiffTest extends TestCase
     /**
       * @return Generator<string,array{string,string}>
       */
-    public function provideDiff(): Generator
+    public static function provideDiff(): Generator
     {
         yield 'add string' => [
             'foo',

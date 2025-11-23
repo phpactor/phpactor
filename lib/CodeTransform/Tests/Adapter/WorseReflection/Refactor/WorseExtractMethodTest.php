@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractMethod;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -12,9 +13,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class WorseExtractMethodTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideExtractMethod
-     */
+    #[DataProvider('provideExtractMethod')]
     public function testExtractMethod(string $test): void
     {
         [$source, $expected, $offsetStart, $offsetEnd] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
@@ -36,7 +35,7 @@ class WorseExtractMethodTest extends WorseTestCase
     }
 
     /** @return Generator<array<string>> */
-    public function provideExtractMethod(): Generator
+    public static function provideExtractMethod(): Generator
     {
         yield 'no free variables' => ['extractMethod1.test'];
         yield 'free variable' => ['extractMethod2.test'];
@@ -71,9 +70,7 @@ class WorseExtractMethodTest extends WorseTestCase
         yield 'extract static method' => ['extractMethod34.test'];
     }
 
-    /**
-     * @dataProvider provideExtractMethodFromDifferentScopes
-     */
+    #[DataProvider('provideExtractMethodFromDifferentScopes')]
     public function testExtractingMethodsFromDifferentScopes(string $test): void
     {
         $this->expectException(Exception::class);
@@ -83,7 +80,7 @@ class WorseExtractMethodTest extends WorseTestCase
     }
 
     /** @return Generator<array<string>> */
-    public function provideExtractMethodFromDifferentScopes(): Generator
+    public static function provideExtractMethodFromDifferentScopes(): Generator
     {
         yield['extractMethod24.test'];
         yield['extractMethod25.test'];

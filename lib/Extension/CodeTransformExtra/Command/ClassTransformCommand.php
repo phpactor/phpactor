@@ -5,6 +5,7 @@ namespace Phpactor\Extension\CodeTransformExtra\Command;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Phpactor;
 use SebastianBergmann\Diff\Differ;
+use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,7 +23,7 @@ class ClassTransformCommand extends Command
         private Transformer $transformer
     ) {
         parent::__construct();
-        $this->differ = new Differ();
+        $this->differ = new Differ(new UnifiedDiffOutputBuilder());
     }
 
     public function configure(): void

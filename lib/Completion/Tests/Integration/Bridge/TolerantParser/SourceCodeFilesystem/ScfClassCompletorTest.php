@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\SourceCodeFilesystem;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\ClassFileConverter\Adapter\Simple\SimpleFileToClass;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassQualifier;
@@ -15,15 +16,13 @@ use Phpactor\TextDocument\TextDocument;
 
 class ScfClassCompletorTest extends TolerantCompletorTestCase
 {
-    /**
-     * @dataProvider provideComplete
-     */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'extends' => [
             '<?php class Foobar extends <>',
@@ -150,15 +149,13 @@ class ScfClassCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideImportClass
-     */
+    #[DataProvider('provideImportClass')]
     public function testImportClass($source, $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    public function provideImportClass(): Generator
+    public static function provideImportClass(): Generator
     {
         yield 'does not import from the root namespace when in the root namespace' => [
             '<?php Without<>',

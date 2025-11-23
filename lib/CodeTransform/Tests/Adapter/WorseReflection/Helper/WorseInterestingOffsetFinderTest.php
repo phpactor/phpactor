@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Helper;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseInterestingOffsetFinder;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\TestUtils\ExtractOffset;
@@ -11,9 +12,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 
 class WorseInterestingOffsetFinderTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideFindSomethingInterestingWhen
-     */
+    #[DataProvider('provideFindSomethingInterestingWhen')]
     public function testFindSomethingIterestingWhen(string $source, string $expectedSymbolType): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -27,7 +26,7 @@ class WorseInterestingOffsetFinderTest extends WorseTestCase
         $this->assertEquals($expectedSymbolType, $reflectionOffset->nodeContext()->symbol()->symbolType());
     }
 
-    public function provideFindSomethingInterestingWhen()
+    public static function provideFindSomethingInterestingWhen()
     {
         yield 'offset in empty file' => [
             <<<'EOT'

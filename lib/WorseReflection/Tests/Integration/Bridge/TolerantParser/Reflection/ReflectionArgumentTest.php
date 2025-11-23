@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\NodeContext;
@@ -12,9 +13,7 @@ use Closure;
 
 class ReflectionArgumentTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideReflectionMethod
-     */
+    #[DataProvider('provideReflectionMethod')]
     public function testReflectMethodCall(string $source, array $frame, Closure $assertion): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);

@@ -2,6 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerInlineValue\Handler;
 
+use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Amp\Success;
 use Amp\Promise;
 use Microsoft\PhpParser\Parser;
@@ -53,8 +57,8 @@ class InlineValueHandler implements Handler, CanRegisterCapabilities
 
         $i = $root->getDescendantNodes(fn ($child) => $child->getStartPosition() <= $end && $child->getEndPosition() >= $start);
         $i = new CallbackFilterIterator($i, fn ($node) =>
-            ($node instanceof Node\Expression\Variable ||
-            $node instanceof Node\Parameter));
+            ($node instanceof Variable ||
+            $node instanceof Parameter));
         $ret = array_map(
             function ($node) {
                 /** @var Node $node */
@@ -84,17 +88,17 @@ class InlineValueHandler implements Handler, CanRegisterCapabilities
      */
     private function nodeToEvaluatable(Node $node): ?array
     {
-        if ($node instanceof Node\Parameter) {
+        if ($node instanceof Parameter) {
             return $this->nodeToExpressionRange($node->variableName, $node);
         }
         if (
-            $node instanceof Node\Expression\Variable ||
-            $node instanceof Node\Expression\SubscriptExpression ||
-            $node instanceof Node\Expression\MemberAccessExpression
+            $node instanceof Variable ||
+            $node instanceof SubscriptExpression ||
+            $node instanceof MemberAccessExpression
         ) {
             return $this->nodeToExpressionRange($node, $node);
         }
-        if ($node2 = $node->getFirstAncestor(Node\Expression\SubscriptExpression::class)) {
+        if ($node2 = $node->getFirstAncestor(SubscriptExpression::class)) {
             return $this->nodeToExpressionRange($node2, $node2);
         }
         return null;

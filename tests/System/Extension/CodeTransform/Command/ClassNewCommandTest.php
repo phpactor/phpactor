@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\CodeTransform\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
@@ -26,9 +27,8 @@ class ClassNewCommandTest extends SystemTestCase
 
     /**
      * Application level smoke tests
-     *
-     * @dataProvider provideNewClass
      */
+    #[DataProvider('provideNewClass')]
     public function testNewClass(string $command, string $expected, string $expectedFile): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -41,7 +41,7 @@ class ClassNewCommandTest extends SystemTestCase
     /**
      * @return Generator<string,array{string,string,string}>
      */
-    public function provideNewClass(): Generator
+    public static function provideNewClass(): Generator
     {
         yield 'New class' => [
             'class:new lib/Badger/Teeth.php --no-interaction --force',

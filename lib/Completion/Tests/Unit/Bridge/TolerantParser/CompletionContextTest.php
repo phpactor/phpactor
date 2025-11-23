@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
@@ -11,9 +12,7 @@ use Phpactor\TextDocument\ByteOffset;
 
 class CompletionContextTest extends TestCase
 {
-    /**
-     * @dataProvider provideExpression
-     */
+    #[DataProvider('provideExpression')]
     public function testExpression(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -24,7 +23,7 @@ class CompletionContextTest extends TestCase
     /**
      * @return Generator<string,array<int,mixed>>
      */
-    public function provideExpression(): Generator
+    public static function provideExpression(): Generator
     {
         yield 'not class clause' => [
             '<?php class Foo i<>',
@@ -85,9 +84,7 @@ class CompletionContextTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideClassMemberBody
-     */
+    #[DataProvider('provideClassMemberBody')]
     public function testClassMemberBody(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -98,7 +95,7 @@ class CompletionContextTest extends TestCase
     /**
      * @return Generator<string,array<int,mixed>>
      */
-    public function provideClassMemberBody(): Generator
+    public static function provideClassMemberBody(): Generator
     {
         yield 'property' => [
             '<?php class Foo { pri<> }',
@@ -144,9 +141,7 @@ class CompletionContextTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideClassClause
-     */
+    #[DataProvider('provideClassClause')]
     public function testClassClause(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -157,7 +152,7 @@ class CompletionContextTest extends TestCase
     /**
      * @return Generator<string,array<int,mixed>>
      */
-    public function provideClassClause(): Generator
+    public static function provideClassClause(): Generator
     {
         yield 'clause' => [
             '<?php class Foo i<>',
@@ -182,9 +177,7 @@ class CompletionContextTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAttribute
-     */
+    #[DataProvider('provideAttribute')]
     public function testAttribute(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -195,7 +188,7 @@ class CompletionContextTest extends TestCase
     /**
      * @return Generator<string,array{string,bool}>
      */
-    public function provideAttribute(): Generator
+    public static function provideAttribute(): Generator
     {
         yield 'not attribute' => [
             '<?php $hello<>',
@@ -223,9 +216,7 @@ class CompletionContextTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAnonymousUse
-     */
+    #[DataProvider('provideAnonymousUse')]
     public function testAnonymousUse(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -236,7 +227,7 @@ class CompletionContextTest extends TestCase
     /**
      * @return Generator<array<int,mixed>>
      */
-    public function provideAnonymousUse(): Generator
+    public static function provideAnonymousUse(): Generator
     {
         yield [
             '<?php function () use ($<>) { ',
@@ -264,9 +255,7 @@ class CompletionContextTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providePromotedProperty
-     */
+    #[DataProvider('providePromotedProperty')]
     public function testPromotedProperty(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -277,7 +266,7 @@ class CompletionContextTest extends TestCase
     /**
      * @return Generator<array<int,mixed>>
      */
-    public function providePromotedProperty(): Generator
+    public static function providePromotedProperty(): Generator
     {
         yield [
             '<?php class A { public function __construct(<>',
@@ -302,9 +291,7 @@ class CompletionContextTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideMethodName
-     */
+    #[DataProvider('provideMethodName')]
     public function testMethodName(string $source, bool $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -315,7 +302,7 @@ class CompletionContextTest extends TestCase
     /**
      * @return Generator<array<int,mixed>>
      */
-    public function provideMethodName(): Generator
+    public static function provideMethodName(): Generator
     {
         yield [
             '<?php class A { public function __construct(<>',

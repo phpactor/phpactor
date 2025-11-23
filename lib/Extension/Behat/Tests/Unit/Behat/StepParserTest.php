@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Behat\Tests\Unit\Behat;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Behat\StepParser;
@@ -9,9 +10,9 @@ use Phpactor\Extension\Behat\Behat\StepParser;
 class StepParserTest extends TestCase
 {
     /**
-     * @dataProvider provideSteps
      * @param array<int,string> $expected
      */
+    #[DataProvider('provideSteps')]
     public function testParsesPhpStepsDefinitions(string $docblock, array $expected): void
     {
         $parser = new StepParser();
@@ -22,7 +23,7 @@ class StepParserTest extends TestCase
     /**
      * @return Generator<array{string,array<int,string>}>
      */
-    public function provideSteps(): Generator
+    public static function provideSteps(): Generator
     {
         yield [
             '* @Given I visit Berlin',

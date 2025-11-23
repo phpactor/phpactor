@@ -17,7 +17,7 @@ use Phpactor\Extension\Console\ConsoleExtension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use Phpactor\Container\Container;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
 
 class IntegrationTestCase extends TestCase

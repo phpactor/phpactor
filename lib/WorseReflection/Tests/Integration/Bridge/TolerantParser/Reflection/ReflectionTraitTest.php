@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -13,9 +14,9 @@ use Closure;
 class ReflectionTraitTest extends IntegrationTestCase
 {
     /**
-     * @dataProvider provideReflectionTrait
      * @param Closure(ReflectionTrait): void $assertion
      */
+    #[DataProvider('provideReflectionTrait')]
     public function testReflectTrait(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Tests\Unit\Rpc;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ClassFileConverter\Domain\FileToClass;
 use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
@@ -16,8 +17,9 @@ use Phpactor\TestUtils\Workspace;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Filesystem\Path;
 
-abstract class AbstractClassGenerateHandlerTest extends TestCase
+abstract class AbstractClassGenerateHandler extends TestCase
 {
+    use ProphecyTrait;
     const EXAMPLE_PATH = '/path/to.php';
     const EXAMPLE_NEW_PATH = '/new/path.php';
     const EXAMPLE_VARIANT = 'one';

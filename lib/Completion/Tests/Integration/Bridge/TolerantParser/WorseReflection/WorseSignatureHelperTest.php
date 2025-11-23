@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseSignatureHelper;
 use Phpactor\Completion\Core\Exception\CouldNotHelpWithSignature;
@@ -16,10 +17,8 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseSignatureHelperTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideSignatureHelper
-     * @dataProvider providePhp8
-     */
+    #[DataProvider('provideSignatureHelper')]
+    #[DataProvider('providePhp8')]
     public function testSignatureHelper(string $source, ?SignatureHelp $expected): void
     {
         if ($expected === null) {
@@ -40,7 +39,7 @@ class WorseSignatureHelperTest extends IntegrationTestCase
         $this->assertEquals($expected, $help);
     }
 
-    public function provideSignatureHelper(): Generator
+    public static function provideSignatureHelper(): Generator
     {
         yield 'not a signature' => [
             '<?php echo "h<>ello";',
@@ -453,7 +452,7 @@ class WorseSignatureHelperTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function providePhp8(): Generator
+    public static function providePhp8(): Generator
     {
         if (PHP_VERSION_ID < 80000) {
             return;

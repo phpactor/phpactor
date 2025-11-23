@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\WorseReflection\Completor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
@@ -16,10 +17,10 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 class ContextSensitiveCompletorTest extends TestCase
 {
     /**
-     * @dataProvider provideComplete
      * @param string[] $suggestions
      * @param string[] $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(array $suggestions, string $source, array $expected): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);

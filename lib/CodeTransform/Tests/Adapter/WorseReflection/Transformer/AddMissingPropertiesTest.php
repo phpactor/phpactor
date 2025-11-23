@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\AddMissingProperties;
@@ -10,9 +11,7 @@ use function Amp\Promise\wait;
 
 class AddMissingPropertiesTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideCompleteConstructor
-     */
+    #[DataProvider('provideCompleteConstructor')]
     public function testAddMissingProperties(string $example, string $expected): void
     {
         $this->workspace()->put('Bag.php', '<?php namespace Test; class Bag { public function bar(): Boo {} }');
@@ -27,7 +26,7 @@ class AddMissingPropertiesTest extends WorseTestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideCompleteConstructor(): Generator
+    public static function provideCompleteConstructor(): Generator
     {
         yield 'It does nothing on source with no classes' => [
             <<<'EOT'
@@ -583,9 +582,7 @@ class AddMissingPropertiesTest extends WorseTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideDiagnostics
-     */
+    #[DataProvider('provideDiagnostics')]
     public function testDiagnostics(string $example, int $diagnosticsCount): void
     {
         $source = SourceCode::fromString($example);
@@ -597,7 +594,7 @@ class AddMissingPropertiesTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideDiagnostics(): Generator
+    public static function provideDiagnostics(): Generator
     {
         yield 'empty' => [
             '<?php',

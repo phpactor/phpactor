@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\ClassToFile\Transformer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\ClassFileConverter\Adapter\Composer\ComposerFileToClass;
 use Phpactor\CodeTransform\Adapter\TolerantParser\ClassToFile\Transformer\ClassNameFixerTransformer;
@@ -15,9 +16,7 @@ class ClassNameFixerTransformerTest extends AdapterTestCase
 {
     private static $composerAutoload;
 
-    /**
-     * @dataProvider provideFixClassName
-     */
+    #[DataProvider('provideFixClassName')]
     public function testFixClassName(string $filePath, string $test, int $diagnosticCount): void
     {
         $workspace = $this->workspace();
@@ -42,7 +41,7 @@ class ClassNameFixerTransformerTest extends AdapterTestCase
     /**
      * @return Generator<string,array{string,string,int}>
      */
-    public function provideFixClassName(): Generator
+    public static function provideFixClassName(): Generator
     {
         yield 'no op' => [
             'FileOne.php',

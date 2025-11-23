@@ -2,6 +2,7 @@ parameters:
     level: max
     paths:
         - lib
+
     excludePaths:
         - */lib/*Tests/Workspace/*
         - */lib/*Tests/Example/*
@@ -12,8 +13,10 @@ parameters:
         - */lib/ClassMover/Tests/Adapter/TolerantParser/examples/*
         - lib/WorseReflection/Core/SourceCodeLocator/InternalStubs/*
         - lib/Extension/LanguageServerCodeTransform/Tests/Stub/*
+
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
+
 rules:
     - Phpactor\Tests\PHPStan\Rule\NoDumpRule
 

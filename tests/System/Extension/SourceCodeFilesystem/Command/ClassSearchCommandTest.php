@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\SourceCodeFilesystem\Command;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\Tests\System\SystemTestCase;
 
 class ClassSearchCommandTest extends SystemTestCase
@@ -12,9 +13,7 @@ class ClassSearchCommandTest extends SystemTestCase
         $this->loadProject('Animals');
     }
 
-    /**
-     * @testdox It should return information baesd on a class "short" name.
-     */
+    #[TestDox('It should return information baesd on a class "short" name.')]
     public function testSearchName(): void
     {
         $process = $this->phpactorFromStringArgs('class:search "Badger"');
@@ -22,9 +21,7 @@ class ClassSearchCommandTest extends SystemTestCase
         $this->assertStringContainsString('Badger.php', $process->getOutput());
     }
 
-    /**
-     * @testdox It should return information baesd on a class "short" name.
-     */
+    #[TestDox('It should return information baesd on a class "short" name.')]
     public function testSearchNameJson(): void
     {
         $process = $this->phpactorFromStringArgs('class:search "Badger" --format=json');
@@ -39,9 +36,7 @@ class ClassSearchCommandTest extends SystemTestCase
         $this->assertStringContainsString('Carnivorous.php"', $process->getOutput());
     }
 
-    /**
-     * @testdox It should return information baesd on a class "short" name.
-     */
+    #[TestDox('It should return information baesd on a class "short" name.')]
     public function testSearchNameInternalName(): void
     {
         $process = $this->phpactorFromStringArgs('class:search "DateTime" --format=json');

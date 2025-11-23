@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\WorseReflection\Command;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\Tests\System\SystemTestCase;
 
 class OffsetInfoCommandTest extends SystemTestCase
@@ -12,9 +13,7 @@ class OffsetInfoCommandTest extends SystemTestCase
         $this->loadProject('Animals');
     }
 
-    /**
-     * @testdox It provides information about the thing under the cursor.
-     */
+    #[TestDox('It provides information about the thing under the cursor.')]
     public function testProvideInformationForOffset(): void
     {
         $process = $this->phpactorFromStringArgs('offset:info lib/Badger.php 163');
@@ -23,9 +22,7 @@ class OffsetInfoCommandTest extends SystemTestCase
         $this->assertStringContainsString('Badger/Carnivorous.php', $process->getOutput());
     }
 
-    /**
-     * @testdox It provides information about the thing under the cursor as JSON
-     */
+    #[TestDox('It provides information about the thing under the cursor as JSON')]
     public function testProvideInformationForOffsetAsJson(): void
     {
         $process = $this->phpactorFromStringArgs('offset:info lib/Badger.php 137 --format=json');

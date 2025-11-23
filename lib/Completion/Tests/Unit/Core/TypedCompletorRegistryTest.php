@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Completion\Core\ChainCompletor;
 use Phpactor\Completion\Core\Completor;
 use Phpactor\Completion\Core\TypedCompletorRegistry;
@@ -11,6 +12,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class TypedCompletorRegistryTest extends TestCase
 {
+    use ProphecyTrait;
     public function testReturnsCompletorsForAType(): void
     {
         $completor = $this->prophesize(Completor::class);

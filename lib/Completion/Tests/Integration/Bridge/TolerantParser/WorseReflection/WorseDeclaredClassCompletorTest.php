@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseDeclaredClassCompletor;
@@ -13,9 +14,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseDeclaredClassCompletorTest extends TolerantCompletorTestCase
 {
-    /**
-     * @dataProvider provideComplete
-     */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
@@ -24,7 +23,7 @@ class WorseDeclaredClassCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<string,array{string,array<int,array<string,string>>}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'array object' => [
             <<<'EOT'

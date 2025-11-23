@@ -2,15 +2,14 @@
 
 namespace Phpactor\Name\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Name\NameUtil;
 
 class NameUtilTest extends TestCase
 {
-    /**
-     * @dataProvider provideRelativeTo
-     */
+    #[DataProvider('provideRelativeTo')]
     public function testRelativeTo(string $search, string $fqn, string $expected): void
     {
         self::assertEquals($expected, NameUtil::relativeToSearch($search, $fqn));
@@ -18,7 +17,7 @@ class NameUtilTest extends TestCase
     /**
      * @return Generator<array{string,string,string}>
      */
-    public function provideRelativeTo(): Generator
+    public static function provideRelativeTo(): Generator
     {
         yield [
             'Foo',
@@ -48,9 +47,9 @@ class NameUtilTest extends TestCase
     }
 
     /**
-     * @dataProvider provideSegmentAtSearch
      * @param array{string,bool} $expected
      */
+    #[DataProvider('provideSegmentAtSearch')]
     public function testSegmentAtSearch(string $fqn, string $search, array $expected): void
     {
         self::assertEquals($expected, NameUtil::childSegmentAtSearch($fqn, $search));
@@ -58,7 +57,7 @@ class NameUtilTest extends TestCase
     /**
      * @return Generator<array{string,string,array{(null|string),bool}}>
      */
-    public function provideSegmentAtSearch(): Generator
+    public static function provideSegmentAtSearch(): Generator
     {
         yield [
             'Foo',

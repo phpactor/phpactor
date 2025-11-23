@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Amp\CancellationTokenSource;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -33,9 +34,7 @@ class ExtractExpressionProviderTest extends TestCase
         $this->extractExpression = $this->prophesize(ExtractExpression::class);
     }
 
-    /**
-     * @dataProvider provideActionsData
-     */
+    #[DataProvider('provideActionsData')]
     public function testProvideActions(bool $shouldSucceed, array $expectedValue): void
     {
         $textDocumentItem = new TextDocumentItem(self::EXAMPLE_FILE, 'php', 1, self::EXAMPLE_SOURCE);
@@ -61,7 +60,7 @@ class ExtractExpressionProviderTest extends TestCase
         );
     }
 
-    public function provideActionsData(): Generator
+    public static function provideActionsData(): Generator
     {
         yield 'Fail' => [
             false,

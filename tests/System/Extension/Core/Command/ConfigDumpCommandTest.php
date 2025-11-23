@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\Core\Command;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\Tests\System\SystemTestCase;
 
 class ConfigDumpCommandTest extends SystemTestCase
@@ -13,9 +14,7 @@ class ConfigDumpCommandTest extends SystemTestCase
         $this->assertStringContainsString('Config files', $process->getOutput());
     }
 
-    /**
-     * @testdox It should dump only configuration
-     */
+    #[TestDox('It should dump only configuration')]
     public function testConfigDumpOnly(): void
     {
         $process = $this->phpactorFromStringArgs('config:dump --config-only');

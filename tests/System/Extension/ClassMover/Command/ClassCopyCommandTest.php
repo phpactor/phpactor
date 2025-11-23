@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\ClassMover\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
@@ -15,9 +16,8 @@ class ClassCopyCommandTest extends SystemTestCase
 
     /**
      * Application level smoke tests
-     *
-     * @dataProvider provideSmokeSuccess
      */
+    #[DataProvider('provideSmokeSuccess')]
     public function testSmokeSuccess(string $command, array $fileMap = [], array $contentExpectations = []): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -41,7 +41,7 @@ class ClassCopyCommandTest extends SystemTestCase
         }
     }
 
-    public function provideSmokeSuccess(): Generator
+    public static function provideSmokeSuccess(): Generator
     {
         yield 'Copy file 1' => [
             'class:copy lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php',
@@ -104,9 +104,8 @@ class ClassCopyCommandTest extends SystemTestCase
 
     /**
      * Application level failures
-     *
-     * @dataProvider provideSmokeFailure
      */
+    #[DataProvider('provideSmokeFailure')]
     public function testSmokeFailure(string $command, ?string $expectedMessage = null): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -116,7 +115,7 @@ class ClassCopyCommandTest extends SystemTestCase
     /**
     * @return Generator<string, array{string, string|null}>
     */
-    public function provideSmokeFailure(): Generator
+    public static function provideSmokeFailure(): Generator
     {
         yield 'Copy class by name force file' => [
             'mv "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious" --type=file',

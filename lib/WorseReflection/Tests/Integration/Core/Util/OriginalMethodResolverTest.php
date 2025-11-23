@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Util;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TestUtils\ExtractOffset;
 use Phpactor\WorseReflection\Core\Util\OriginalMethodResolver;
@@ -9,9 +10,7 @@ use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class OriginalMethodResolverTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideResolve
-     */
+    #[DataProvider('provideResolve')]
     public function testResolve(
         array $manifest,
         string $memberType,
@@ -36,7 +35,7 @@ class OriginalMethodResolverTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideResolve(): Generator
+    public static function provideResolve(): Generator
     {
         yield 'declaring container type' => [
             ["// File: test.php\n<?php class Foobar { public function barfoo() {}}"],

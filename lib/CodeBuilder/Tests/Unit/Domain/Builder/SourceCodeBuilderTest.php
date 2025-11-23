@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Builder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -13,9 +14,7 @@ use Closure;
 
 class SourceCodeBuilderTest extends TestCase
 {
-    /**
-     * @dataProvider provideModificationTracking
-     */
+    #[DataProvider('provideModificationTracking')]
     public function testModificationTracking(Closure $setup, Closure $assertion): void
     {
         $builder = $this->builder();
@@ -244,9 +243,7 @@ class SourceCodeBuilderTest extends TestCase
         $this->assertSame($methodBuilder, $builder->trait('Bar')->method('foo'));
     }
 
-    /**
-     * @dataProvider provideMethodBuilder
-     */
+    #[DataProvider('provideMethodBuilder')]
     public function testMethodBuilder(MethodBuilder $methodBuilder, Closure $assertion): void
     {
         $builder = $this->builder();

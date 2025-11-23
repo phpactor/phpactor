@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 use Generator;
 use Phpactor\WorseReflection\Core\Type\UnionType;
@@ -22,13 +23,11 @@ class ReflectionClassTest extends IntegrationTestCase
         $this->createReflector('')->reflectClassLike(ClassName::fromString('Foobar'));
     }
 
-    /**
-     * @dataProvider provideReflectionClass
-     */
+    #[DataProvider('provideReflectionClass')]
     public function testReflectClass(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class);
+        $assertion->bindTo($this)->__invoke($class);
     }
 
     /**
@@ -788,13 +787,11 @@ class ReflectionClassTest extends IntegrationTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideVirtualMethods
-     */
+    #[DataProvider('provideVirtualMethods')]
     public function testVirtualMethods(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class);
+        $assertion->bindTo($this)->__invoke($class);
     }
 
     /**
@@ -1054,13 +1051,11 @@ class ReflectionClassTest extends IntegrationTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideVirtualProperties
-     */
+    #[DataProvider('provideVirtualProperties')]
     public function testVirtualProperties(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class);
+        $assertion->bindTo($this)->__invoke($class);
     }
 
     /**

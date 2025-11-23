@@ -2,6 +2,7 @@
 
 namespace Phpactor\TextDocument\Tests\Unit\Util;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\ExtractOffset;
@@ -9,9 +10,7 @@ use Phpactor\TextDocument\Util\WordAtOffset;
 
 class WordAtOffsetTest extends TestCase
 {
-    /**
-     * @dataProvider provideWordAtOffset
-     */
+    #[DataProvider('provideWordAtOffset')]
     public function testWordAtOffset(string $text, string $expectedWord, string $split = WordAtOffset::SPLIT_WORD): void
     {
         [ $text, $offset ] = ExtractOffset::fromSource($text);
@@ -23,7 +22,7 @@ class WordAtOffsetTest extends TestCase
     /**
      * @return Generator<string, array{string, string}|array{string, string, string}>
      */
-    public function provideWordAtOffset(): Generator
+    public static function provideWordAtOffset(): Generator
     {
         yield 'middle word' => [
             'hello thi<>s is',

@@ -9,7 +9,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 
 class FunctionLikeWalkerTest extends FrameWalkerTestCase
 {
-    public function provideWalk(): Generator
+    public static function provideWalk(): Generator
     {
         yield 'It returns this' => [
             <<<'EOT'

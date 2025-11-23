@@ -10,7 +10,7 @@ use Generator;
 
 class AssignmentWalkerTest extends FrameWalkerTestCase
 {
-    public function provideWalk(): Generator
+    public static function provideWalk(): Generator
     {
         yield 'It registers string assignments' => [
             <<<'EOT'

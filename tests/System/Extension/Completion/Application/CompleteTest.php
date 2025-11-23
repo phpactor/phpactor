@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\Completion\Application;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use Phpactor\Extension\CompletionExtra\Application\Complete;
@@ -12,9 +13,7 @@ class CompleteTest extends SystemTestCase
 {
     use ArraySubsetAsserts;
 
-    /**
-     * @dataProvider provideComplete
-     */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $suggestions = $this->complete($source)['suggestions'];
@@ -34,7 +33,7 @@ class CompleteTest extends SystemTestCase
     /**
      * @return Generator<string,array<int,mixed>>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'Public property' => [
             <<<'EOT'

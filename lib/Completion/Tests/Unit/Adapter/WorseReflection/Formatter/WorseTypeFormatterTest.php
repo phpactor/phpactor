@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Adapter\WorseReflection\Formatter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\TypeFormatter;
 use Phpactor\Completion\Tests\TestCase;
@@ -12,9 +13,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseTypeFormatterTest extends TestCase
 {
-    /**
-     * @dataProvider provideFormat
-     */
+    #[DataProvider('provideFormat')]
     public function testFormat(Type $type, string $expected): void
     {
         $formatter = new ObjectFormatter([
@@ -27,7 +26,7 @@ class WorseTypeFormatterTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideFormat(): Generator
+    public static function provideFormat(): Generator
     {
         $reflector = ReflectorBuilder::create()->build();
         yield 'no types' => [

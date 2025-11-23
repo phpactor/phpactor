@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstructorCompletor;
@@ -12,15 +13,13 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseConstructorCompletorTest extends TolerantCompletorTestCase
 {
-    /**
-     * @dataProvider provideCompleteMethodParameter
-     */
+    #[DataProvider('provideCompleteMethodParameter')]
     public function testCompleteMethodParameter(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    public function provideCompleteMethodParameter(): Generator
+    public static function provideCompleteMethodParameter(): Generator
     {
         yield 'no parameters' => [
             <<<'EOT'
@@ -158,15 +157,13 @@ class WorseConstructorCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCouldNotComplete
-     */
+    #[DataProvider('provideCouldNotComplete')]
     public function testCouldNotComplete(string $source): void
     {
         $this->assertCouldNotComplete($source);
     }
 
-    public function provideCouldNotComplete(): Generator
+    public static function provideCouldNotComplete(): Generator
     {
         yield 'non member access' => [ '<?php $hello<>' ];
         yield 'variable with previous accessor' => [ '<?php $foobar->hello; $hello<>' ];

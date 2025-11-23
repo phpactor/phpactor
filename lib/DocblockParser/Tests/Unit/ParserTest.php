@@ -2,6 +2,7 @@
 
 namespace Phpactor\DocblockParser\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\DocblockParser\Ast\Docblock;
@@ -12,9 +13,7 @@ use Phpactor\DocblockParser\Ast\Token;
 
 class ParserTest extends TestCase
 {
-    /**
-     * @dataProvider provideParse
-     */
+    #[DataProvider('provideParse')]
     public function testParse(string $text, Node $expected): void
     {
         $node = (new Parser())->parse((new Lexer())->lex($text));
@@ -24,7 +23,7 @@ class ParserTest extends TestCase
     /**
      * @return Generator<array{string, Docblock}>
      */
-    public function provideParse(): Generator
+    public static function provideParse(): Generator
     {
         yield [
             '/** */',

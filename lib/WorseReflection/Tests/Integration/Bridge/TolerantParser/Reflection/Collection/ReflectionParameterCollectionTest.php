@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\Collection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionParameterCollection;
@@ -10,9 +11,7 @@ use Closure;
 
 class ReflectionParameterCollectionTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideCollection
-     */
+    #[DataProvider('provideCollection')]
     public function testCollection(string $source, Closure $assertion): void
     {
         $source = TextDocumentBuilder::fromUnknown($source);

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServer\Tests\Unit\DiagnosticsProvider;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Amp\CancellationTokenSource;
 use Amp\Success;
 use Generator;
@@ -15,9 +16,9 @@ use function Amp\Promise\wait;
 class PathExcludingDiagnosticsProviderTest extends TestCase
 {
     /**
-     * @dataProvider provideProvide
      * @param array<int,string> $excludePatterns
      */
+    #[DataProvider('provideProvide')]
     public function testProvide(TextDocumentItem $item, array $excludePatterns, int $expectedCount): void
     {
         $cancel = new CancellationTokenSource();
@@ -34,7 +35,7 @@ class PathExcludingDiagnosticsProviderTest extends TestCase
     /**
      * @return Generator<string,array{TextDocumentItem,array<int,string>,int}>
      */
-    public function provideProvide(): Generator
+    public static function provideProvide(): Generator
     {
         yield 'match pattern' => [
             ProtocolFactory::textDocumentItem(

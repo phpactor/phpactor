@@ -2,6 +2,8 @@
 
 namespace Phpactor\Tests\System\Extension\CodeTransform\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
@@ -15,9 +17,8 @@ class ClassInflectCommandTest extends SystemTestCase
 
     /**
      * Application level smoke tests
-     *
-     * @dataProvider provideInflectClass
      */
+    #[DataProvider('provideInflectClass')]
     public function testInflectClass(string $command, string $expectedFilePath, string $expectedContents): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -32,7 +33,7 @@ class ClassInflectCommandTest extends SystemTestCase
     /**
      * @return Generator<string, array{string, string, string}>
      */
-    public function provideInflectClass(): Generator
+    public static function provideInflectClass(): Generator
     {
         yield 'Glob' => [
             'class:inflect "lib/Badger/*.php" lib/Badger/Api interface',
@@ -59,9 +60,7 @@ class ClassInflectCommandTest extends SystemTestCase
         ];
     }
 
-    /**
-     * @testdox It does not overwrite existing file unless forced.
-     */
+    #[TestDox('It does not overwrite existing file unless forced.')]
     public function testInflectClassExistingAndForce(): void
     {
         $filePath =  'lib/Badger/Carnivorous.php';
@@ -76,9 +75,8 @@ class ClassInflectCommandTest extends SystemTestCase
 
     /**
      * Application level failures
-     *
-     * @dataProvider provideSmokeFailure
      */
+    #[DataProvider('provideSmokeFailure')]
     public function testSmokeFailure(string $command, ?string $expectedMessage = null): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -88,7 +86,7 @@ class ClassInflectCommandTest extends SystemTestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideSmokeFailure(): Generator
+    public static function provideSmokeFailure(): Generator
     {
         yield 'non-existing' => [
             'class:inflect lib/Badger/BooNotExist.php lib/Badger/Api/CarnivorousInterface.php interface',

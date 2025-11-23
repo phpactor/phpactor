@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\Core\Console\Dumper;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Dumper\DumperRegistry;
 use Phpactor\Extension\Core\Console\Dumper\Dumper;
@@ -12,9 +13,7 @@ class DumperRegistryTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @testdox It throws exception if dumper not found.
-     */
+    #[TestDox('It throws exception if dumper not found.')]
     public function testNotFound(): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -26,9 +25,7 @@ class DumperRegistryTest extends TestCase
         $registry->get('foobar');
     }
 
-    /**
-     * @testdox It returns the requested dumper.
-     */
+    #[TestDox('It returns the requested dumper.')]
     public function testGetDumper(): void
     {
         $registry = $this->create([
@@ -38,9 +35,7 @@ class DumperRegistryTest extends TestCase
         $this->assertSame($dumper, $registry->get('foobar'));
     }
 
-    /**
-     * @testdox It should use default if no argument given.
-     */
+    #[TestDox('It should use default if no argument given.')]
     public function testDefault(): void
     {
         $registry = $this->create([

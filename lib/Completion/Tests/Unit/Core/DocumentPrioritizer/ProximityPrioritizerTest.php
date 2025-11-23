@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core\DocumentPrioritizer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\DocumentPrioritizer\ProximityPrioritizer;
@@ -10,9 +11,7 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class ProximityPrioritizerTest extends TestCase
 {
-    /**
-     * @dataProvider providePriority
-     */
+    #[DataProvider('providePriority')]
     public function testPriority(?string $one, ?string $two, int $priority): void
     {
         $one = $one ? TextDocumentUri::fromString($one) : null;
@@ -24,7 +23,7 @@ class ProximityPrioritizerTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function providePriority(): Generator
+    public static function providePriority(): Generator
     {
         yield [
             null,

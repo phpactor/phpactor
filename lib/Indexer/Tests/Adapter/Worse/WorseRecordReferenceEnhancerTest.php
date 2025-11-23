@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Worse;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\FilesystemTextDocumentLocator;
 use Phpactor\Indexer\Adapter\Worse\WorseRecordReferenceEnhancer;
@@ -15,9 +16,7 @@ use Psr\Log\NullLogger;
 
 class WorseRecordReferenceEnhancerTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideEnhance
-     */
+    #[DataProvider('provideEnhance')]
     public function testEnhance(string $source, string $expectedType): void
     {
         [$source,$offset] = ExtractOffset::fromSource($source);
@@ -39,7 +38,7 @@ class WorseRecordReferenceEnhancerTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideEnhance(): Generator
+    public static function provideEnhance(): Generator
     {
         yield [
             <<<'EOT'

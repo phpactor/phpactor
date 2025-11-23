@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -13,9 +14,7 @@ use Phpactor\WorseReflection\TypeUtil;
 
 class TypeUtilTest extends TestCase
 {
-    /**
-     * @dataProvider provideToLocalType
-     */
+    #[DataProvider('provideToLocalType')]
     public function testToLocalType(string $source, Type $type, string $expected): void
     {
         $reflector = ReflectorBuilder::create()->addSource($source)->build();
@@ -26,7 +25,7 @@ class TypeUtilTest extends TestCase
         );
     }
 
-    public function provideToLocalType(): Generator
+    public static function provideToLocalType(): Generator
     {
         $reflector = ReflectorBuilder::create()->build();
         yield [
@@ -63,9 +62,7 @@ class TypeUtilTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideShort
-     */
+    #[DataProvider('provideShort')]
     public function testShort(Type $type, string $expected): void
     {
         self::assertEquals(
@@ -74,7 +71,7 @@ class TypeUtilTest extends TestCase
         );
     }
 
-    public function provideShort(): Generator
+    public static function provideShort(): Generator
     {
         yield 'scalar' => [
             TypeFactory::string(),
@@ -104,9 +101,7 @@ class TypeUtilTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideShortenClassTypes
-     */
+    #[DataProvider('provideShortenClassTypes')]
     public function testShortenClassTypes(Type $type, string $expected): void
     {
         self::assertEquals(
@@ -115,7 +110,7 @@ class TypeUtilTest extends TestCase
         );
     }
 
-    public function provideShortenClassTypes(): Generator
+    public static function provideShortenClassTypes(): Generator
     {
         yield 'scalar' => [
             TypeFactory::string(),

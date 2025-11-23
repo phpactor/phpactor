@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Behat\Tests\Integration\Completor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -23,9 +24,9 @@ class FeatureStepCompletorTest extends TestCase
     use ArraySubsetAsserts;
 
     /**
-     * @dataProvider provideComplete
      * @param array<int,array<string,mixed>> $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         [$source, $start, $end] = ExtractOffset::fromSource($source);
@@ -42,7 +43,7 @@ class FeatureStepCompletorTest extends TestCase
     /**
      * @return Generator<string,array{string,array<int,array<string,mixed>>}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'all' => [
             <<<'EOT'

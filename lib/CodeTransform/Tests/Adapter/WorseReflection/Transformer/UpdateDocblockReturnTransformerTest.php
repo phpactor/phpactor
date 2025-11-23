@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
@@ -15,9 +16,7 @@ use function Amp\Promise\wait;
 
 class UpdateDocblockReturnTransformerTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideUpdateReturn
-     */
+    #[DataProvider('provideUpdateReturn')]
     public function testUpdateReturn(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -38,7 +37,7 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideUpdateReturn(): Generator
+    public static function provideUpdateReturn(): Generator
     {
         yield 'add missing docblock' => [
             <<<'EOT'
@@ -827,9 +826,9 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
     }
 
     /**
-     * @dataProvider provideDiagnostics
      * @param string[] $expected
      */
+    #[DataProvider('provideDiagnostics')]
     public function testDiagnostics(string $example, array $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -842,7 +841,7 @@ class UpdateDocblockReturnTransformerTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideDiagnostics(): Generator
+    public static function provideDiagnostics(): Generator
     {
         yield 'no methods' => [
             <<<'EOT'

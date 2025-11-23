@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -12,14 +13,12 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionFunction;
 
 class ReflectionFunctionTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideReflectsFunction
-     */
+    #[DataProvider('provideReflectsFunction')]
     public function testReflects(string $source, string $functionName, Closure $assertion): void
     {
         $source = TextDocumentBuilder::fromUnknown($source);
         $functions = $this->createReflector($source)->reflectFunctionsIn($source);
-        $assertion($functions->get($functionName));
+        $assertion->bindTo($this)->__invoke($functions->get($functionName));
     }
 
     public function provideReflectsFunction(): Generator

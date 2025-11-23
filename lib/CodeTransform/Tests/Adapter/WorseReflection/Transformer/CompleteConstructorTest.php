@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 
@@ -11,9 +12,7 @@ use function Amp\Promise\wait;
 
 class CompleteConstructorTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideDiagnostics
-     */
+    #[DataProvider('provideDiagnostics')]
     public function testDiagnostics(string $example, int $expectedCount): void
     {
         $source = SourceCode::fromString($example);
@@ -23,7 +22,7 @@ class CompleteConstructorTest extends WorseTestCase
     /**
      * @return Generator<string,array{string,int}>
      */
-    public function provideDiagnostics(): Generator
+    public static function provideDiagnostics(): Generator
     {
         yield 'empty' => [
             <<<'EOT'
@@ -47,9 +46,7 @@ class CompleteConstructorTest extends WorseTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCompleteConstructor
-     */
+    #[DataProvider('provideCompleteConstructor')]
     public function testCompleteConstructor(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -60,7 +57,7 @@ class CompleteConstructorTest extends WorseTestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideCompleteConstructor(): Generator
+    public static function provideCompleteConstructor(): Generator
     {
         yield 'It does nothing on source with no classes' => [
             <<<'EOT'
@@ -638,9 +635,7 @@ class CompleteConstructorTest extends WorseTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCompleteConstructorPromote
-     */
+    #[DataProvider('provideCompleteConstructorPromote')]
     public function testCompleteConstructorPromote(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -652,7 +647,7 @@ class CompleteConstructorTest extends WorseTestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideCompleteConstructorPromote(): Generator
+    public static function provideCompleteConstructorPromote(): Generator
     {
         yield  'It does adds assignations and properties' => [
             <<<'EOT'
@@ -705,9 +700,7 @@ class CompleteConstructorTest extends WorseTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCompleteConstructorWithParentClass
-     */
+    #[DataProvider('provideCompleteConstructorWithParentClass')]
     public function testCompleteConstructorWithParentClass(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -719,7 +712,7 @@ class CompleteConstructorTest extends WorseTestCase
     /**
     * @return Generator<array{string, string}>
     */
-    public function provideCompleteConstructorWithParentClass(): Generator
+    public static function provideCompleteConstructorWithParentClass(): Generator
     {
         yield 'Do not promote constructor arguments if a parent class already has the same argument' => [
             <<<'EOT'

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\ReferenceFinder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedReferenceFinder;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
@@ -17,13 +18,11 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
         $this->workspace()->reset();
     }
 
-    /**
-     * @dataProvider provideClasses
-     * @dataProvider provideTraits
-     * @dataProvider provideFunctions
-     * @dataProvider provideMembers
-     * @dataProvider provideUnknown
-     */
+    #[DataProvider('provideClasses')]
+    #[DataProvider('provideTraits')]
+    #[DataProvider('provideFunctions')]
+    #[DataProvider('provideMembers')]
+    #[DataProvider('provideUnknown')]
     public function testFinder(string $manifest, int $expectedConfirmed, ?int $expectedTotal = 0): void
     {
         $expectedTotal = $expectedTotal ?: $expectedConfirmed;
@@ -57,7 +56,7 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideClasses(): Generator
+    public static function provideClasses(): Generator
     {
         yield 'single class' => [
             <<<'EOT'
@@ -123,7 +122,7 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideTraits(): Generator
+    public static function provideTraits(): Generator
     {
         yield 'single trait' => [
             <<<'EOT'
@@ -157,7 +156,7 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideFunctions(): Generator
+    public static function provideFunctions(): Generator
     {
         yield 'function references' => [
             <<<'EOT'
@@ -180,7 +179,7 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideMembers(): Generator
+    public static function provideMembers(): Generator
     {
         yield 'show new object expressions when finding references on __construct except for superclass' => [
             <<<'EOT'
@@ -347,7 +346,7 @@ class IndexedReferenceFinderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideUnknown(): Generator
+    public static function provideUnknown(): Generator
     {
         yield 'variable' => [
             <<<'EOT'

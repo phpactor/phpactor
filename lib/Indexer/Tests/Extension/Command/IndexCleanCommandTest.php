@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Extension\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Extension\Command\IndexCleanCommand;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
@@ -12,9 +13,9 @@ class IndexCleanCommandTest extends IntegrationTestCase
     private const CONSOLE_PATH = __DIR__ . '/../../bin/console';
 
     /**
-     * @dataProvider provideAllIndexClean
      * @param array<string> $command
      */
+    #[DataProvider('provideAllIndexClean')]
     public function testCleanIndexWithAllInput(array $command, ?string $input): void
     {
         $this->initProject();
@@ -31,7 +32,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
     /**
      * @return Generator<string,array<int,mixed>>
      */
-    public function provideAllIndexClean(): Generator
+    public static function provideAllIndexClean(): Generator
     {
         yield 'interactive version' => [
             [ self::CONSOLE_PATH, 'index:clean'],
@@ -52,9 +53,9 @@ class IndexCleanCommandTest extends IntegrationTestCase
     }
 
     /**
-     * @dataProvider provideCleanSpecificIndex
      * @param array<string> $command
      */
+    #[DataProvider('provideCleanSpecificIndex')]
     public function testCleanIndexWithSpecificInput(array $command, ?string $input): void
     {
         $this->initProject();
@@ -70,7 +71,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
     /**
      * @return Generator<string,array<int,mixed>>
      */
-    public function provideCleanSpecificIndex(): Generator
+    public static function provideCleanSpecificIndex(): Generator
     {
         yield 'interactive version' => [
             [ self::CONSOLE_PATH, 'index:clean'],
@@ -87,10 +88,9 @@ class IndexCleanCommandTest extends IntegrationTestCase
     }
 
     /**
-     * @dataProvider provideDoNotRemoveAnything
-     *
      * @param array<string> $arguments
      */
+    #[DataProvider('provideDoNotRemoveAnything')]
     public function testCleanDoesNotRemoveIndexWithoutInput(array $arguments): void
     {
         $this->initProject();
@@ -106,7 +106,7 @@ class IndexCleanCommandTest extends IntegrationTestCase
     /**
      * @return Generator<string,array<int,array<int,string>>>
      */
-    public function provideDoNotRemoveAnything(): Generator
+    public static function provideDoNotRemoveAnything(): Generator
     {
         yield 'it deletes nothing on empty input' => [
             [ self::CONSOLE_PATH, 'index:clean'],

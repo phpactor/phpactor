@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Behat\Tests\Unit\ReferenceFinder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Behat\Context;
@@ -39,9 +40,7 @@ class StepDefinitionLocatorTest extends TestCase
         );
     }
 
-    /**
-     * @dataProvider provideLocateDefinition
-     */
+    #[DataProvider('provideLocateDefinition')]
     public function testLocateDefinition(string $step): void
     {
         $this->generator->getIterator()->will(function () use ($step) {
@@ -81,7 +80,7 @@ class StepDefinitionLocatorTest extends TestCase
     /**
      * @return Generator<int|string,array{string}>
      */
-    public function provideLocateDefinition(): Generator
+    public static function provideLocateDefinition(): Generator
     {
         yield [
             'my name is ":name"',

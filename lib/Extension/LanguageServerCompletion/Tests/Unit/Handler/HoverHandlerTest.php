@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit\Handler;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\LanguageServerProtocol\Hover;
@@ -14,9 +15,7 @@ class HoverHandlerTest extends IntegrationTestCase
 {
     private const PATH = 'file:///hello';
 
-    /**
-     * @dataProvider provideHover
-     */
+    #[DataProvider('provideHover')]
     public function testHover(string $test): void
     {
         [ $text, $offset ] = ExtractOffset::fromSource($test);
@@ -33,7 +32,7 @@ class HoverHandlerTest extends IntegrationTestCase
         $this->assertInstanceOf(Hover::class, $result);
     }
 
-    public function provideHover(): Generator
+    public static function provideHover(): Generator
     {
         yield 'var' => [
             '<?php $foo = "foo"; $f<>oo;',

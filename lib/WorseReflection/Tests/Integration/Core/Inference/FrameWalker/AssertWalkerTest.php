@@ -8,7 +8,7 @@ use Generator;
 
 class AssertWalkerTest extends FrameWalkerTestCase
 {
-    public function provideWalk(): Generator
+    public static function provideWalk(): Generator
     {
         yield 'assert instanceof' => [
             <<<'EOT'

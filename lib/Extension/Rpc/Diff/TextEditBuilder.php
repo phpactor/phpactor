@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\Rpc\Diff;
 
 use SebastianBergmann\Diff\Differ as BergmannDiffer;
+use SebastianBergmann\Diff\Output\UnifiedDiffOutputBuilder;
 
 /**
  * Build an array of text edits required to transform one source file to another.
@@ -18,7 +19,7 @@ class TextEditBuilder
     private BergmannDiffer $differ;
     public function __construct(?BergmannDiffer $differ = null)
     {
-        $this->differ = $differ ?: new BergmannDiffer();
+        $this->differ = $differ ?: new BergmannDiffer(new UnifiedDiffOutputBuilder());
     }
 
     public function calculateTextEdits(string $original, string $new)

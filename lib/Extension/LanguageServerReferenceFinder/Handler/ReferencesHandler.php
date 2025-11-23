@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Handler;
 
 use Phpactor\LanguageServerProtocol\MessageActionItem;
+use Phpactor\LanguageServer\WorkDoneProgress\WorkDoneToken;
 use function Amp\call;
 use Amp\Delayed;
 use Amp\Promise;
@@ -75,6 +76,8 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                 }
             }
 
+            $token = WorkDoneToken::generate();
+            $this->clientApi->workDoneProgress()->begin($token, 'Finding references');
             $start = microtime(true);
             $count = 0;
             $risky = 0;
@@ -88,13 +91,12 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                     $risky++;
                 }
 
-                if ($count++ % 100 === 0) {
-                    $this->clientApi->window()->showMessage()->info(sprintf(
-                        '... scanned %s references confirmed %s ...',
-                        $count - 1,
-                        count($locations)
-                    ));
-                }
+                $count++;
+                $this->clientApi->workDoneProgress()->report($token, sprintf(
+                    '... analysed %s references confirmed %s ...',
+                    $count - 1,
+                    count($locations)
+                ));
 
                 if (false === $dontAsk && microtime(true) - $start > $this->softTimeoutSeconds) {
                     $no = new MessageActionItem('No, show me what you got');
@@ -114,7 +116,10 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                         break;
                     }
                     if ($selection == $another) {
-                        $this->clientApi->window()->showMessage()->info(sprintf('Searching for another %.2f seconds', $this->softTimeoutSeconds));
+                        $this->clientApi->workDoneProgress()->report(
+                            $token,
+                            sprintf('searching for another %.2f seconds', $this->softTimeoutSeconds)
+                        );
                         $start = microtime(true);
                         continue;
                     }
@@ -124,14 +129,17 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                 }
 
                 if (microtime(true) - $start > $this->timeoutSeconds) {
-                    $this->clientApi->window()->showMessage()->info(sprintf(
-                        'Reference find stopped, %s/%s references confirmed but took too long (%s/%s seconds). Adjust `%s`',
-                        count($locations),
-                        $count,
-                        number_format(microtime(true) - $start, 2),
-                        $this->timeoutSeconds,
-                        LanguageServerReferenceFinderExtension::PARAM_REFERENCE_TIMEOUT
-                    ));
+                    $this->clientApi->workDoneProgress()->end(
+                        $token,
+                        sprintf(
+                            'Reference finding stopped, %s/%s references confirmed but took too long (%s/%s seconds). Adjust `%s`',
+                            count($locations),
+                            $count,
+                            number_format(microtime(true) - $start, 2),
+                            $this->timeoutSeconds,
+                            LanguageServerReferenceFinderExtension::PARAM_REFERENCE_TIMEOUT
+                        )
+                    );
                     return $this->toLocations($locations);
                 }
 
@@ -141,7 +149,7 @@ class ReferencesHandler implements Handler, CanRegisterCapabilities
                 }
             }
 
-            $this->clientApi->window()->showMessage()->info(sprintf(
+            $this->clientApi->workDoneProgress()->end($token, sprintf(
                 'Found %s reference(s)%s',
                 count($locations),
                 $risky ? sprintf(' %s unresolvable references excluded', $risky) : ''

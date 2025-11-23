@@ -2,16 +2,15 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 
 class ArrayLiteralTypeTest extends TestCase
 {
-    /**
-     * @dataProvider provideGeneralize
-     */
+    #[DataProvider('provideGeneralize')]
     public function testGeneralize(ArrayLiteral $type, string $expected): void
     {
         self::assertEquals($expected, $type->generalize()->__toString());
@@ -20,7 +19,7 @@ class ArrayLiteralTypeTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideGeneralize(): Generator
+    public static function provideGeneralize(): Generator
     {
         yield [
             // ['foo','bar']
