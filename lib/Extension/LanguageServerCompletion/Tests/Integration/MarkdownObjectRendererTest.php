@@ -73,7 +73,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     {
         $this->workspace()->loadManifest($manifest);
 
-        $object = $objectFactory($this->reflector);
+        $object = $objectFactory->bindTo($this)->__invoke($this->reflector);
         $path = __DIR__ . '/expected/'. $expected;
 
         if (!file_exists($path)) {

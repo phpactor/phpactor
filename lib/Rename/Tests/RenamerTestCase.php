@@ -70,7 +70,7 @@ abstract class RenamerTestCase extends TestCase
         }
         $this->indexAgent->indexer()->getJob()->run();
 
-        $generator = $operation($this->reflector, $this->createRenamer());
+        $generator = $operation->bindTo($this)->__invoke($this->reflector, $this->createRenamer());
         $edits = LocatedTextEdits::fromLocatedEditsToCollection(iterator_to_array($generator, false));
         foreach ($edits as $documentEdits) {
             file_put_contents(
