@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\SourceCodeFilesystem\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Extension\ComposerAutoloader\ComposerAutoloaderExtension;
@@ -14,9 +15,7 @@ use Phpactor\Filesystem\Domain\FilesystemRegistry;
 
 class SourceCodeFilesystemExtensionTest extends TestCase
 {
-    /**
-     * @dataProvider provideFilesystems
-     */
+    #[DataProvider('provideFilesystems')]
     public function testFilesystems(string $filesystem, string $expectedClass): void
     {
         $registry = $this->createRegistry([
@@ -25,7 +24,7 @@ class SourceCodeFilesystemExtensionTest extends TestCase
         $this->assertInstanceOf($expectedClass, $registry->get($filesystem));
     }
 
-    public function provideFilesystems()
+    public static function provideFilesystems()
     {
         // disable this as travis does not have git when tested via. the
         // Phpactor test suite (this is there installed as a dependency).

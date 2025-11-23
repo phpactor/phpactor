@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\WorseReflection\Formatter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\FunctionLikeSnippetFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\SnippetFormatter\ParametersSnippetFormatter;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
@@ -14,9 +15,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 final class FunctionLikeSnippetFormatterTest extends TestCase
 {
-    /**
-     * @dataProvider provideReflectionToFormat
-     */
+    #[DataProvider('provideReflectionToFormat')]
     public function testFormat(ReflectionFunctionLike $reflection, string $expected): void
     {
         $this->assertEquals(

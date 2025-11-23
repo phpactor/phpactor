@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionEnumCase;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
@@ -15,9 +16,7 @@ use Closure;
 
 class ReflectionEnumTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideReflectionEnum
-     */
+    #[DataProvider('provideReflectionEnum')]
     public function testReflectEnum(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));

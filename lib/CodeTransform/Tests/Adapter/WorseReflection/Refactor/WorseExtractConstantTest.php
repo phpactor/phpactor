@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseExtractConstant;
@@ -11,9 +12,7 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class WorseExtractConstantTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideExtractMethod
-     */
+    #[DataProvider('provideExtractMethod')]
     public function testExtractConstant(string $test, string $name): void
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
@@ -31,7 +30,7 @@ class WorseExtractConstantTest extends WorseTestCase
     /**
      * @return Generator<string,array<int,string>>
      */
-    public function provideExtractMethod(): Generator
+    public static function provideExtractMethod(): Generator
     {
         yield 'string' => [ 'extractConstant1.test', 'HELLO_WORLD' ];
         yield 'numeric' => [ 'extractConstant2.test', 'HELLO_WORLD' ];

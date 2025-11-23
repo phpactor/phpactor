@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseTypeRenderer74Test extends TypeRendererTestCase
 {
-    public function provideType(): Generator
+    public static function provideType(): Generator
     {
         yield [
             new FalseType(),

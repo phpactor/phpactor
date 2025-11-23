@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseFunctionCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -12,17 +13,13 @@ use Generator;
 
 class WorseFunctionCompletorTest extends TolerantCompletorTestCase
 {
-    /**
-     * @dataProvider provideComplete
-     */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    /**
-     * @dataProvider provideCouldNotComplete
-     */
+    #[DataProvider('provideCouldNotComplete')]
     public function testCouldNotComplete(string $source): void
     {
         $this->assertCouldNotComplete($source);
@@ -31,7 +28,7 @@ class WorseFunctionCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<string,array{string,array<int,array<string,string>>}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'function with parameters' => [
             '<?php function mystrpos ($haystack, $needle, $offset = 0):int {}; mystrpos<>', [
@@ -58,7 +55,7 @@ class WorseFunctionCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideCouldNotComplete(): Generator
+    public static function provideCouldNotComplete(): Generator
     {
         yield 'non member access' => [ '<?php $hello<>' ];
 

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core\Util;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Core\Util\OffsetHelper;
 use Phpactor\Completion\Tests\TestCase;
@@ -9,9 +10,7 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class OffsetHelperTest extends TestCase
 {
-    /**
-     * @dataProvider provideReturnsLastNonWhitespaceOffset
-     */
+    #[DataProvider('provideReturnsLastNonWhitespaceOffset')]
     public function testReturnsLastNonWhitespaceOffset(string $example): void
     {
         [$source, $expectedOffset] = ExtractOffset::fromSource($example);
@@ -27,7 +26,7 @@ class OffsetHelperTest extends TestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideReturnsLastNonWhitespaceOffset(): Generator
+    public static function provideReturnsLastNonWhitespaceOffset(): Generator
     {
         yield 'empty string' => [
             '',

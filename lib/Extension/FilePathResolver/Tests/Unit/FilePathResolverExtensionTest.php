@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\FilePathResolver\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
@@ -53,9 +54,9 @@ class FilePathResolverExtensionTest extends TestCase
     }
 
     /**
-     * @dataProvider provideProjectIdCalculate
      * @param mixed $input
      */
+    #[DataProvider('provideProjectIdCalculate')]
     public function testProjectIdCalculate($input, ?string $expectedId = null, ?string $expectedException = null): void
     {
         if ($expectedException) {
@@ -68,7 +69,7 @@ class FilePathResolverExtensionTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideProjectIdCalculate(): Generator
+    public static function provideProjectIdCalculate(): Generator
     {
         yield [
             false,

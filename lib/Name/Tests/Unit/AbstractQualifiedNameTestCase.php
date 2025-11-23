@@ -2,6 +2,7 @@
 
 namespace Phpactor\Name\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Name\Exception\InvalidName;
 use Phpactor\Name\Name;
@@ -9,15 +10,13 @@ use Phpactor\Name\QualifiedName;
 
 abstract class AbstractQualifiedNameTestCase extends TestCase
 {
-    /**
-     * @dataProvider provideCreateFromArray
-     */
+    #[DataProvider('provideCreateFromArray')]
     public function testCreateFromArray(array $parts, string $expected): void
     {
         $this->assertEquals($expected, $this->createFromArray($parts));
     }
 
-    public function provideCreateFromArray()
+    public static function provideCreateFromArray()
     {
         yield [
             ['Hello'],
@@ -30,15 +29,13 @@ abstract class AbstractQualifiedNameTestCase extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCreateFromString
-     */
+    #[DataProvider('provideCreateFromString')]
     public function testCreateFromString(string $string, string $expected): void
     {
         $this->assertEquals($expected, $this->createFromString($string));
     }
 
-    public function provideCreateFromString()
+    public static function provideCreateFromString()
     {
         yield [
             '\\Hello',

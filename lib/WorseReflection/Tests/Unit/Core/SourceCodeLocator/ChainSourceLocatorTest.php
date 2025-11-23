@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\SourceCodeLocator;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\SourceCodeLocator;
@@ -26,18 +27,14 @@ class ChainSourceLocatorTest extends TestCase
         $this->locator2 = $this->prophesize(SourceCodeLocator::class);
     }
 
-    /**
-     * @testdox It throws an exception if no loaders found.
-     */
+    #[TestDox('It throws an exception if no loaders found.')]
     public function testNoLocators(): void
     {
         $this->expectException(SourceNotFound::class);
         $this->locate([], ClassName::fromString('as'));
     }
 
-    /**
-     * @testdox It delegates to first loader.
-     */
+    #[TestDox('It delegates to first loader.')]
     public function testDelegateToFirst(): void
     {
         $expectedSource = TextDocumentBuilder::create('hello')->build();
@@ -53,9 +50,7 @@ class ChainSourceLocatorTest extends TestCase
         $this->assertSame($expectedSource, $source);
     }
 
-    /**
-     * @testdox It delegates to second if first throws exception.
-     */
+    #[TestDox('It delegates to second if first throws exception.')]
     public function testDelegateToSecond(): void
     {
         $expectedSource = TextDocumentBuilder::create('hello')->build();
@@ -71,9 +66,7 @@ class ChainSourceLocatorTest extends TestCase
         $this->assertSame($expectedSource, $source);
     }
 
-    /**
-     * @testdox It throws an exception if all fail
-     */
+    #[TestDox('It throws an exception if all fail')]
     public function testAllFail(): void
     {
         $this->expectException(SourceNotFound::class);

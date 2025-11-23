@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeBuilder\Util\TextFormat;
 use Phpactor\CodeTransform\Adapter\DocblockParser\ParserDocblockUpdater;
@@ -14,9 +15,7 @@ use function Amp\Promise\wait;
 
 class UpdateDocblockParamsTransformerTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideTransform
-     */
+    #[DataProvider('provideTransform')]
     public function testTransform(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -37,7 +36,7 @@ class UpdateDocblockParamsTransformerTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideTransform(): Generator
+    public static function provideTransform(): Generator
     {
         yield 'add missing docblock and param' => [
             <<<'EOT'

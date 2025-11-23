@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Adapter\TolerantParser\Util;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
@@ -10,9 +11,7 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class NodeHelperTest extends TestCase
 {
-    /**
-     * @dataProvider provideEmptyLinesPrecedingNode
-     */
+    #[DataProvider('provideEmptyLinesPrecedingNode')]
     public function testEmptyLinesPrecedingNode(string $source, int $expectedLines): void
     {
         [ $source, $offset ] = ExtractOffset::fromSource($source);
@@ -23,7 +22,7 @@ class NodeHelperTest extends TestCase
     /**
      * @return Generator<array{string, int}>
      */
-    public function provideEmptyLinesPrecedingNode(): Generator
+    public static function provideEmptyLinesPrecedingNode(): Generator
     {
         yield [
             "<?php \nfo<>obar();",

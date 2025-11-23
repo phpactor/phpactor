@@ -15,6 +15,7 @@ use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\Logger\LoggingExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\MapResolver\Resolver;
 use InvalidArgumentException;
 
@@ -27,6 +28,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
     public const PARAM_ENABLED = 'language_server_phpstan.enabled';
     public const PARAM_TMP_FILE_DISABLED = 'language_server_phpstan.tmp_file_disabled';
     public const PARAM_EDITOR_MODE = 'language_server_phpstan.editor_mode';
+    public const PARAM_SEVERITY = 'language_server_phpstan.severity';
 
     public function load(ContainerBuilder $container): void
     {
@@ -73,8 +75,12 @@ class LanguageServerPhpstanExtension implements OptionalExtension
                     $configPath = $pathResolver->resolve($container->parameter(self::PARAM_CONFIG)->string());
                 }
 
+                /** @var DiagnosticSeverity::* $severity */
+                $severity = $container->parameter(self::PARAM_SEVERITY)->value() ? $container->parameter(self::PARAM_SEVERITY)->int() : DiagnosticSeverity::ERROR;
+
                 $phpstanConfig =  new PhpstanConfig(
                     $binPath,
+                    $severity,
                     $container->parameter(self::PARAM_LEVEL)->value() ?  $container->parameter(self::PARAM_LEVEL)->string() : null,
                     $configPath,
                     $container->parameter(self::PARAM_MEM_LIMIT)->value() ?  $container->parameter(self::PARAM_MEM_LIMIT)->string() : null,
@@ -95,6 +101,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $schema->setDefaults(
             [
             self::PARAM_PHPSTAN_BIN => '%project_root%/vendor/bin/phpstan',
+            self::PARAM_SEVERITY => DiagnosticSeverity::ERROR,
             self::PARAM_LEVEL => null,
             self::PARAM_CONFIG => null,
             self::PARAM_MEM_LIMIT => null,
@@ -105,6 +112,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $schema->setDescriptions(
             [
             self::PARAM_PHPSTAN_BIN => 'Path to the PHPStan executable',
+            self::PARAM_SEVERITY => 'Severity at which PHPStan diagnostics should be reported. Ranges from 1 (error) to 4 (hint).',
             self::PARAM_LEVEL => 'Override the PHPStan level',
             self::PARAM_CONFIG => 'Override the PHPStan configuration file',
             self::PARAM_MEM_LIMIT => 'Override the PHPStan memory limit',

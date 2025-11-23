@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseParameterCompletor;
@@ -12,15 +13,13 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class WorseParameterCompletorTest extends TolerantCompletorTestCase
 {
-    /**
-     * @dataProvider provideCompleteMethodParameter
-     */
+    #[DataProvider('provideCompleteMethodParameter')]
     public function testCompleteMethodParameter(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    public function provideCompleteMethodParameter(): Generator
+    public static function provideCompleteMethodParameter(): Generator
     {
         yield 'no parameters' => [
             <<<'EOT'
@@ -242,15 +241,13 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCompleteFunctionParameter
-     */
+    #[DataProvider('provideCompleteFunctionParameter')]
     public function testCompleteFunctionParameter(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    public function provideCompleteFunctionParameter(): Generator
+    public static function provideCompleteFunctionParameter(): Generator
     {
         yield 'complete after comma' => [
             <<<'EOT'
@@ -287,15 +284,13 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCompleteStaticClassParameter
-     */
+    #[DataProvider('provideCompleteStaticClassParameter')]
     public function testCompleteStaticClassParameter(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    public function provideCompleteStaticClassParameter(): Generator
+    public static function provideCompleteStaticClassParameter(): Generator
     {
         yield 'complete static method parameter' => [
             <<<'EOT'
@@ -315,15 +310,13 @@ class WorseParameterCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideCouldNotComplete
-     */
+    #[DataProvider('provideCouldNotComplete')]
     public function testCouldNotComplete(string $source): void
     {
         $this->assertCouldNotComplete($source);
     }
 
-    public function provideCouldNotComplete(): Generator
+    public static function provideCouldNotComplete(): Generator
     {
         yield 'non member access' => [ '<?php $hello<>' ];
         yield 'variable with previous accessor' => [ '<?php $foobar->hello; $hello<>' ];

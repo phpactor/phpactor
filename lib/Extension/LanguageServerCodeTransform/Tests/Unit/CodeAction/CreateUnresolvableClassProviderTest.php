@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Amp\CancellationTokenSource;
 use Closure;
 use Generator;
@@ -27,9 +28,7 @@ class CreateUnresolvableClassProviderTest extends IntegrationTestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @dataProvider provideCodeAction
-     */
+    #[DataProvider('provideCodeAction')]
     public function testReturnsCodeActions(string $source, Closure $assertion): void
     {
         [$source, $start, $end] = ExtractOffset::fromSource($source);
@@ -61,7 +60,7 @@ class CreateUnresolvableClassProviderTest extends IntegrationTestCase
     /**
      * @return Generator<string,mixed>
      */
-    public function provideCodeAction(): Generator
+    public static function provideCodeAction(): Generator
     {
         yield 'empty file' => [
             '<<>?php <>',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\ClassToFile\Command;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\Tests\System\SystemTestCase;
 
 class FileInfoCommandTest extends SystemTestCase
@@ -12,9 +13,7 @@ class FileInfoCommandTest extends SystemTestCase
         $this->loadProject('Animals');
     }
 
-    /**
-     * @testdox It provides information about the file.
-     */
+    #[TestDox('It provides information about the file.')]
     public function testProvideInformationForOffset(): void
     {
         $process = $this->phpactorFromStringArgs('file:info lib/Badger.php');
@@ -22,9 +21,7 @@ class FileInfoCommandTest extends SystemTestCase
         $this->assertStringContainsString('class:Animals\Badger', $process->getOutput());
     }
 
-    /**
-     * @testdox It provides information about the file as JSON
-     */
+    #[TestDox('It provides information about the file as JSON')]
     public function testProvideInformationForOffsetAsJson(): void
     {
         $process = $this->phpactorFromStringArgs('file:info lib/Badger.php --format=json');

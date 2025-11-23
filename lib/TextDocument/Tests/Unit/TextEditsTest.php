@@ -2,6 +2,7 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextEdit;
@@ -10,11 +11,11 @@ use Phpactor\TextDocument\TextEdits;
 class TextEditsTest extends TestCase
 {
     /**
-     * @dataProvider provideMerge
      * @param TextEdit[] $edits1
      * @param TextEdit[] $edits2
      * @param TextEdit[] $expectedEdits
      */
+    #[DataProvider('provideMerge')]
     public function testMerge(array $edits1, array $edits2, array $expectedEdits): void
     {
         self::assertEquals(
@@ -28,7 +29,7 @@ class TextEditsTest extends TestCase
     /**
     * @return Generator<string, array{array<TextEdit>, array<TextEdit>, array<TextEdit>}>
     */
-    public function provideMerge(): Generator
+    public static function provideMerge(): Generator
     {
         yield 'empty' => [
             [
@@ -87,9 +88,7 @@ class TextEditsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideApplyTextEdits
-     */
+    #[DataProvider('provideApplyTextEdits')]
     public function testApplyTextEdits(string $source, TextEdits $textEdits, string $expected): void
     {
         self::assertEquals(
@@ -101,7 +100,7 @@ class TextEditsTest extends TestCase
     /**
      * @return Generator<string, array{string, TextEdits, string}>
      */
-    public function provideApplyTextEdits(): Generator
+    public static function provideApplyTextEdits(): Generator
     {
         yield 'nothing' => [
             '',
@@ -139,9 +138,7 @@ class TextEditsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideApplyTextEditsErrors
-     */
+    #[DataProvider('provideApplyTextEditsErrors')]
     public function testApplyTextEditsErrors(string $source, TextEdits $textEdits, string $expectedMessage): void
     {
         $this->expectExceptionMessage($expectedMessage);
@@ -151,7 +148,7 @@ class TextEditsTest extends TestCase
     /**
      * @return Generator<string, array{string, TextEdits, string}>
      */
-    public function provideApplyTextEditsErrors(): Generator
+    public static function provideApplyTextEditsErrors(): Generator
     {
         yield 'shows debug information' => [
             'hello      ',

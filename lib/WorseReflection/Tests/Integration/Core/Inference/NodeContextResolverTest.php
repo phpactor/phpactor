@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\DefaultResolverFactory;
@@ -29,9 +30,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         //var_dump($this->logger());
     }
 
-    /**
-     * @dataProvider provideGeneral
-     */
+    #[DataProvider('provideGeneral')]
     public function testGeneral(string $source, array $locals, array $expectedInformation): void
     {
         $variables = [];
@@ -68,9 +67,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         $this->assertExpectedInformation($expectedInformation, $symbolInfo);
     }
 
-    /**
-     * @dataProvider provideValues
-     */
+    #[DataProvider('provideValues')]
     public function testValues(string $source, array $variables, array $expected): void
     {
         $information = $this->resolveNodeAtOffset(
@@ -85,9 +82,8 @@ class NodeContextResolverTest extends IntegrationTestCase
      * These tests test the case where a class in the resolution tree was not found, however
      * their usefulness is limited because we use the StringSourceLocator for these tests which
      * "always" finds the source.
-     *
-     * @dataProvider provideNotResolvableClass
      */
+    #[DataProvider('provideNotResolvableClass')]
     public function testNotResolvableClass(string $source): void
     {
         $value = $this->resolveNodeAtOffset(
@@ -106,7 +102,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         $this->assertEquals(TypeFactory::unknown(), $value->type());
     }
 
-    public function provideGeneral()
+    public static function provideGeneral()
     {
         yield 'It should return none value for whitespace' => [
             '  <>  ', [],
@@ -854,7 +850,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         ];
     }
 
-    public function provideValues()
+    public static function provideValues()
     {
         yield 'It returns type for self' => [
             <<<'EOT'
@@ -1048,7 +1044,7 @@ class NodeContextResolverTest extends IntegrationTestCase
         ];
     }
 
-    public function provideNotResolvableClass()
+    public static function provideNotResolvableClass()
     {
         yield 'Calling property method for non-existing class' => [
             <<<'EOT'

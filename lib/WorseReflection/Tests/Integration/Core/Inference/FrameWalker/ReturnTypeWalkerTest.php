@@ -13,7 +13,7 @@ class ReturnTypeWalkerTest extends FrameWalkerTestCase
         parent::setUp();
     }
 
-    public function provideWalk(): Generator
+    public static function provideWalk(): Generator
     {
         yield 'Get return type from frame' => [
             <<<'EOT'

@@ -26,6 +26,10 @@ class ConfigLoaderBench extends TestCase
     private string $config1yaml;
 
     private string $config2yaml;
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
 
     public function setUp(): void
     {

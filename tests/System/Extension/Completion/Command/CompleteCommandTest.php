@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\Completion\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
@@ -13,9 +14,7 @@ class CompleteCommandTest extends SystemTestCase
         $this->loadProject('Animals');
     }
 
-    /**
-     * @dataProvider provideComplete
-     */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $command, string $expected): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -26,7 +25,7 @@ class CompleteCommandTest extends SystemTestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'Complete' => [
             'complete lib/Badger.php 181',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Trinary;
@@ -11,9 +12,7 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class UnionTypeTest extends TestCase
 {
-    /**
-     * @dataProvider provideAccepts
-     */
+    #[DataProvider('provideAccepts')]
     public function testAccepts(UnionType $union, Type $type, Trinary $accepts): void
     {
         self::assertEquals($accepts, $union->accepts($type));
@@ -22,7 +21,7 @@ class UnionTypeTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideAccepts(): Generator
+    public static function provideAccepts(): Generator
     {
         yield [
             TypeFactory::union(TypeFactory::int(), TypeFactory::string()),

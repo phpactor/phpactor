@@ -60,6 +60,6 @@ class DocblockMissingClassGenericDiagnostic implements Diagnostic
 
     public function code(): string
     {
-        return 'doblock_missing_class_generic';
+        return 'docblock_missing_class_generic';
     }
 }

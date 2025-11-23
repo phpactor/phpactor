@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core\LabelFormatter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Completion\Core\LabelFormatter\HelpfulLabelFormatter;
@@ -9,9 +10,9 @@ use Phpactor\Completion\Core\LabelFormatter\HelpfulLabelFormatter;
 class HelpfulLabelFormatterTest extends TestCase
 {
     /**
-     * @dataProvider provideFormat
      * @param array<string,bool> $seen
      */
+    #[DataProvider('provideFormat')]
     public function testFormat(string $name, array $seen, string $expected): void
     {
         $formatter = new HelpfulLabelFormatter();
@@ -21,7 +22,7 @@ class HelpfulLabelFormatterTest extends TestCase
     /**
      * @return Generator<array{string,array<string,bool>,string}>
      */
-    public function provideFormat(): Generator
+    public static function provideFormat(): Generator
     {
         yield [
             'Request',

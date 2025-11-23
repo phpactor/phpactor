@@ -2,15 +2,14 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\Type;
 
 class TypeTest extends TestCase
 {
-    /**
-     * @dataProvider provideNamespace
-     */
+    #[DataProvider('provideNamespace')]
     public function testItReturnsANamespace(string $classFqn, ?string $expectedNamespace = null): void
     {
         $type = Type::fromString($classFqn);
@@ -20,7 +19,7 @@ class TypeTest extends TestCase
     /**
      * @return Generator<array{string,string|null}>
      */
-    public function provideNamespace(): Generator
+    public static function provideNamespace(): Generator
     {
         yield [
             'Foo\\Bar',

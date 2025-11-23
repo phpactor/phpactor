@@ -2,15 +2,14 @@
 
 namespace Phpactor\Extension\Php\Tests\Unit\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Extension\Php\Model\ComposerPhpVersionResolver;
 use Phpactor\Extension\Php\Tests\IntegrationTestCase;
 
 class ComposerPhpVersionResolverTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideRequireVersion
-     */
+    #[DataProvider('provideRequireVersion')]
     public function testFromRequireVersion(string $version, string $expected): void
     {
         $this->workspace()->reset();
@@ -28,7 +27,7 @@ class ComposerPhpVersionResolverTest extends IntegrationTestCase
         self::assertEquals($expected, $resolver->resolve());
     }
 
-    public function provideRequireVersion(): Generator
+    public static function provideRequireVersion(): Generator
     {
         yield [ '^7.0', '7.0' ];
         yield [ '7.0', '7.0' ];

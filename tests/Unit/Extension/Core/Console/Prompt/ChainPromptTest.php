@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\Core\Console\Prompt;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Core\Console\Prompt\Prompt;
 use Phpactor\Extension\Core\Console\Prompt\ChainPrompt;
@@ -37,9 +38,7 @@ class ChainPromptTest extends TestCase
         ]);
     }
 
-    /**
-     * @testdox It delegates to a supporting prompt
-     */
+    #[TestDox('It delegates to a supporting prompt')]
     public function testDelegateToSupporting(): void
     {
         $this->prompt1->isSupported()->willReturn(false);
@@ -51,9 +50,7 @@ class ChainPromptTest extends TestCase
         $this->assertEquals('Goodbye', $response);
     }
 
-    /**
-     * @testdox It throws an exception if no prompts are supported.
-     */
+    #[TestDox('It throws an exception if no prompts are supported.')]
     public function testPromptsNotSupported(): void
     {
         $this->expectException(RuntimeException::class);

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Behat\Tests\Unit\Behat;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Behat\Behat\Context;
@@ -12,10 +13,10 @@ use Phpactor\TextDocument\Location;
 class StepScorerTest extends TestCase
 {
     /**
-     * @dataProvider provideSortSteps
      * @param array<string,int> $expectedScores
      * @param array<Step> $exampleSteps
      */
+    #[DataProvider('provideSortSteps')]
     public function testSortSteps(array $exampleSteps, string $partial, array $expectedScores): void
     {
         $sort = new StepScorer();

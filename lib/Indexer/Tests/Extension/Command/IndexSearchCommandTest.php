@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Extension\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
@@ -10,8 +11,8 @@ class IndexSearchCommandTest extends IntegrationTestCase
 {
     /**
      * @param array<string> $args
-     * @dataProvider provideQuery
      */
+    #[DataProvider('provideQuery')]
     public function testQueryIndex(array $args = []): void
     {
         $this->initProject();
@@ -28,7 +29,7 @@ class IndexSearchCommandTest extends IntegrationTestCase
     /**
      * @return Generator<string, array{array<string>}>
      */
-    public function provideQuery(): Generator
+    public static function provideQuery(): Generator
     {
         yield 'all' => [
             [

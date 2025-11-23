@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\ImplementContracts;
@@ -10,9 +11,7 @@ use function Amp\Promise\wait;
 
 class ImplementContractsTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideCompleteConstructor
-     */
+    #[DataProvider('provideCompleteConstructor')]
     public function testImplementContracts(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -25,7 +24,7 @@ class ImplementContractsTest extends WorseTestCase
     /**
      * @return Generator<string,array<int,string>>
      */
-    public function provideCompleteConstructor(): Generator
+    public static function provideCompleteConstructor(): Generator
     {
         yield 'It does nothing on source with no classes' => [
             <<<'EOT'
@@ -505,9 +504,7 @@ class ImplementContractsTest extends WorseTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideDiagnostics
-     */
+    #[DataProvider('provideDiagnostics')]
     public function testDiagnostics(string $example, int $expectedCount): void
     {
         $source = SourceCode::fromString($example);
@@ -522,7 +519,7 @@ class ImplementContractsTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideDiagnostics(): Generator
+    public static function provideDiagnostics(): Generator
     {
         yield 'empty' => [
             <<<'EOT'

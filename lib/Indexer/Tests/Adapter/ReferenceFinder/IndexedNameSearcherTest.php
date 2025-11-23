@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\ReferenceFinder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedNameSearcher;
 use Phpactor\Indexer\Tests\Adapter\IndexTestCase;
@@ -106,10 +107,10 @@ class IndexedNameSearcherTest extends IndexTestCase
     }
 
     /**
-     * @dataProvider provideWorkspaceToSearchAttributes
      * @param NameSearcherType::* $type
      * @param string[] $expectedResultPaths
      */
+    #[DataProvider('provideWorkspaceToSearchAttributes')]
     public function testSearcherForAttribute(string $query, string $type, array $expectedResultPaths): void
     {
         foreach (self::ATTR_WORKSPACE as $path => $contents) {
@@ -134,7 +135,7 @@ class IndexedNameSearcherTest extends IndexTestCase
     /**
      * @return Generator<string,array{query:string,type:string,expectedResultPaths:array<int,string>}>
      */
-    public function provideWorkspaceToSearchAttributes(): Generator
+    public static function provideWorkspaceToSearchAttributes(): Generator
     {
         yield 'not targeted attributes' => [
             'query' => 'Ba',

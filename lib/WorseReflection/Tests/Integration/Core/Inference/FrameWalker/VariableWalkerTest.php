@@ -8,7 +8,7 @@ use Phpactor\WorseReflection\Core\Inference\Frame;
 
 class VariableWalkerTest extends FrameWalkerTestCase
 {
-    public function provideWalk(): Generator
+    public static function provideWalk(): Generator
     {
         yield 'Redeclared variables' => [
             <<<'EOT'

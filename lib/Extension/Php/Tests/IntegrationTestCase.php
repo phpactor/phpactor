@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Php\Tests;
 
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
 
 class IntegrationTestCase extends TestCase

@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -10,9 +12,7 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class SourceReflectorTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideReflectClassNotCorrectType
-     */
+    #[DataProvider('provideReflectClassNotCorrectType')]
     public function testReflectClassNotCorrectType(string $source, string $class, string $method, string $expectedErrorMessage): void
     {
         $source = TextDocumentBuilder::fromUnknown($source);
@@ -25,7 +25,7 @@ class SourceReflectorTest extends IntegrationTestCase
     /**
      * @return Generator<string,array{string,string,string,string}>
      */
-    public function provideReflectClassNotCorrectType(): Generator
+    public static function provideReflectClassNotCorrectType(): Generator
     {
         yield 'Class' => [
             '<?php trait Foobar {}',
@@ -47,9 +47,7 @@ class SourceReflectorTest extends IntegrationTestCase
         ];
     }
 
-    /**
-     * @testdox It reflects the value at an offset.
-     */
+    #[TestDox('It reflects the value at an offset.')]
     public function testReflectOffset(): void
     {
         $source = <<<'EOT'
@@ -65,9 +63,7 @@ class SourceReflectorTest extends IntegrationTestCase
         $this->assertEquals('"Hello"', (string) $offset->nodeContext()->type());
     }
 
-    /**
-     * @testdox It reflects the value at an offset.
-     */
+    #[TestDox('It reflects the value at an offset.')]
     public function testReflectOffsetRedeclared(): void
     {
         $source = <<<'EOT'

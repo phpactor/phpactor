@@ -2,6 +2,8 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
@@ -39,10 +41,8 @@ use Phpactor\CodeBuilder\Domain\Renderer;
 
 abstract class GeneratorTestCase extends TestCase
 {
-    /**
-     * @testdox It should use twig to render a template
-     * @dataProvider provideRender
-     */
+    #[DataProvider('provideRender')]
+    #[TestDox('It should use twig to render a template')]
     public function testRender(Prototype $prototype, string $expectedCode): void
     {
         $code = $this->renderer()->render($prototype);
@@ -52,7 +52,7 @@ abstract class GeneratorTestCase extends TestCase
     /**
      * @return Generator<string, array{Prototype, string}>
      */
-    public function provideRender(): Generator
+    public static function provideRender(): Generator
     {
         yield 'Renders an empty PHP file' => [
             new SourceCode(),

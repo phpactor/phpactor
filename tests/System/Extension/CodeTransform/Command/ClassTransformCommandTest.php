@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\CodeTransform\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
@@ -25,9 +26,8 @@ class ClassTransformCommandTest extends SystemTestCase
 
     /**
      * Application level smoke tests
-     *
-     * @dataProvider provideSmokeSuccess
      */
+    #[DataProvider('provideSmokeSuccess')]
     public function testSmokeSuccess(string $command, string $expectedOutput, bool $error = false): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -44,7 +44,7 @@ class ClassTransformCommandTest extends SystemTestCase
     /**
      * @return Generator<string,array{string,string}|array{string,string,bool}>
      */
-    public function provideSmokeSuccess(): Generator
+    public static function provideSmokeSuccess(): Generator
     {
         yield 'No arguments' => [
             'class:transform lib/Foobar.php',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassDeclarationIndexer;
@@ -20,9 +21,7 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @dataProvider provideImplementations
-     */
+    #[DataProvider('provideImplementations')]
     public function testImplementations(string $manifest, string $fqn, int $expectedCount): void
     {
         $this->workspace()->reset();
@@ -41,7 +40,7 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideImplementations(): Generator
+    public static function provideImplementations(): Generator
     {
         yield 'no implementations' => [
             "// File: src/file1.php\n<?php class Barfoo {}",
@@ -69,9 +68,9 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
     }
 
     /**
-     * @dataProvider provideSearch
      * @param array<ClassRecord> $expectedRecords
      */
+    #[DataProvider('provideSearch')]
     public function testSearch(string $manifest, string $search, array $expectedRecords): void
     {
         $this->workspace()->reset();
@@ -140,9 +139,7 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideInvalidClasses
-     */
+    #[DataProvider('provideInvalidClasses')]
     public function testInvalidClass(string $manifest, string $exectedMessage): void
     {
         $this->workspace()->reset();
@@ -164,7 +161,7 @@ class ClassLikeDeclarationIndexerTest extends TolerantIndexerTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideInvalidClasses(): Generator
+    public static function provideInvalidClasses(): Generator
     {
         yield 'no class name' => [
             "// File: src/file1.php\n<?php class {}",

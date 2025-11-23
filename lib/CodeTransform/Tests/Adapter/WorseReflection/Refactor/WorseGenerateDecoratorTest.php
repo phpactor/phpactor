@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateDecorator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
@@ -9,9 +10,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 class WorseGenerateDecoratorTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideGenerateDecorator
-     */
+    #[DataProvider('provideGenerateDecorator')]
     public function testGenerateDecorator(string $test): void
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
@@ -31,7 +30,7 @@ class WorseGenerateDecoratorTest extends WorseTestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideGenerateDecorator(): Generator
+    public static function provideGenerateDecorator(): Generator
     {
         yield 'decorating untyped method' => [ 'generateDecorator1.test'];
         yield 'decorating method with parameters' => [ 'generateDecorator2.test'];

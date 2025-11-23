@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionInterface;
@@ -11,9 +12,7 @@ use Phpactor\WorseReflection\Core\Exception\ClassNotFound;
 
 class ClassReflectorTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideReflectClassSuccess
-     */
+    #[DataProvider('provideReflectClassSuccess')]
     public function testReflectClassSuccess(string $source, string $class, string $method, string $expectedType): void
     {
         $reflection = $this->createReflector($source)->$method($class);
@@ -23,7 +22,7 @@ class ClassReflectorTest extends IntegrationTestCase
     /**
      * @return Generator<string, array{string, string, string, class-string}>
      */
-    public function provideReflectClassSuccess(): Generator
+    public static function provideReflectClassSuccess(): Generator
     {
         yield 'Class' => [
              '<?php class Foobar {}',
@@ -45,9 +44,7 @@ class ClassReflectorTest extends IntegrationTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideReflectClassNotCorrectType
-     */
+    #[DataProvider('provideReflectClassNotCorrectType')]
     public function testReflectClassNotCorrectType(string $source, string $class, string $method, string $expectedErrorMessage): void
     {
         $this->expectException(ClassNotFound::class);
@@ -59,7 +56,7 @@ class ClassReflectorTest extends IntegrationTestCase
     /**
      * @return Generator<string,array{string,string,string,string}>
      */
-    public function provideReflectClassNotCorrectType(): Generator
+    public static function provideReflectClassNotCorrectType(): Generator
     {
         yield 'Class' => [
             '<?php trait Foobar {}',

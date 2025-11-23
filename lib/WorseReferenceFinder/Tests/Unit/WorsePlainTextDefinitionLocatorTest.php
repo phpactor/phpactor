@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\ReferenceFinder\DefinitionLocator;
 use Phpactor\ReferenceFinder\Exception\CouldNotLocateDefinition;
@@ -10,9 +11,7 @@ use Phpactor\WorseReferenceFinder\WorsePlainTextClassDefinitionLocator;
 
 class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
 {
-    /**
-     * @dataProvider provideGotoWord
-     */
+    #[DataProvider('provideGotoWord')]
     public function testGotoWord(string $text, string $expectedPath): void
     {
         $location = $this->locate(<<<'EOT'
@@ -44,7 +43,7 @@ class WorsePlainTextDefinitionLocatorTest extends DefinitionLocatorTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideGotoWord(): Generator
+    public static function provideGotoWord(): Generator
     {
         yield 'property docblock' => [ '/** @var Foob<>ar */', 'Foobar.php' ];
         yield 'fully qualified' => [ '/** @var \Barfoo\Barf<>oo */', 'Barfoo.php' ];

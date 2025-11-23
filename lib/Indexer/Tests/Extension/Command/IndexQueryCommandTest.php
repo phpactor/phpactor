@@ -2,15 +2,14 @@
 
 namespace Phpactor\Indexer\Tests\Extension\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
 
 class IndexQueryCommandTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideQuery
-     */
+    #[DataProvider('provideQuery')]
     public function testQueryIndex(string $query): void
     {
         $this->initProject();
@@ -28,7 +27,7 @@ class IndexQueryCommandTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideQuery(): Generator
+    public static function provideQuery(): Generator
     {
         yield 'method' => [
             'method#testQueryIndex',

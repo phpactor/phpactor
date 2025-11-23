@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\MessageType;
@@ -64,9 +65,7 @@ class GenerateMethodCommandTest extends TestCase
         ], $applyEdit->params);
     }
 
-    /**
-     * @dataProvider provideExceptions
-     */
+    #[DataProvider('provideExceptions')]
     public function testFailedCall(Exception $exception): void
     {
         $generateMethod = $this->prophesize(GenerateMember::class);
@@ -88,7 +87,7 @@ class GenerateMethodCommandTest extends TestCase
     /**
      * @return Generator<class-string, array<Exception>>
      */
-    public function provideExceptions(): Generator
+    public static function provideExceptions(): Generator
     {
         yield TransformException::class => [ new TransformException('Error message!') ];
         yield MethodCallNotFound::class => [ new MethodCallNotFound('Error message!') ];

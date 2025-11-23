@@ -2,6 +2,10 @@
 
 namespace Phpactor\Extension\LanguageServerEvaluatableExpression\Handler;
 
+use Microsoft\PhpParser\Node\Parameter;
+use Microsoft\PhpParser\Node\Expression\Variable;
+use Microsoft\PhpParser\Node\Expression\SubscriptExpression;
+use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Amp\Success;
 use Amp\Promise;
 use Microsoft\PhpParser\Parser;
@@ -68,17 +72,17 @@ class EvaluatableExpressionHandler implements Handler, CanRegisterCapabilities
 
     private function nodeToEvaluatable(Node $node): ?EvaluatableExpression
     {
-        if ($node instanceof Node\Parameter) {
+        if ($node instanceof Parameter) {
             return $this->evaluatableExpressionForNode($node->variableName, $node);
         }
         if (
-            $node instanceof Node\Expression\Variable ||
-            $node instanceof Node\Expression\SubscriptExpression ||
-            $node instanceof Node\Expression\MemberAccessExpression
+            $node instanceof Variable ||
+            $node instanceof SubscriptExpression ||
+            $node instanceof MemberAccessExpression
         ) {
             return $this->evaluatableExpressionForNode($node, $node);
         }
-        if ($node2 = $node->getFirstAncestor(Node\Expression\SubscriptExpression::class)) {
+        if ($node2 = $node->getFirstAncestor(SubscriptExpression::class)) {
             return $this->evaluatableExpressionForNode($node2, $node2);
         }
         return null;

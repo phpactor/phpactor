@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\KeywordCompletor;
@@ -11,9 +12,9 @@ use Phpactor\TextDocument\TextDocument;
 class KeywordCompletorTest extends TolerantCompletorTestCase
 {
     /**
-     * @dataProvider provideComplete
      * @param array{string,array<string,mixed>[]} $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);

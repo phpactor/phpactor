@@ -111,7 +111,7 @@ class PhpstanProcess
                 return [];
             }
 
-            return $this->parser->parse($stdout);
+            return $this->parser->parse($stdout, $this->config->severity());
         });
     }
 }

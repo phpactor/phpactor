@@ -7,6 +7,10 @@ use Symfony\Component\Process\Process;
 
 class BaseBenchCase extends IntegrationTestCase
 {
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
     protected function runCommand(string $command, ?string $stdin = null): string
     {
         if (!file_exists($this->workspaceDir())) {

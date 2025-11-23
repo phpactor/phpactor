@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
@@ -12,9 +13,9 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 class TypeCombinatorTest extends TestCase
 {
     /**
-     * @dataProvider provideNarrow
      * @param Type[] $narrows
      */
+    #[DataProvider('provideNarrow')]
     public function testNarrow(Type $type, array $narrows, string $expected): void
     {
         self::assertEquals(

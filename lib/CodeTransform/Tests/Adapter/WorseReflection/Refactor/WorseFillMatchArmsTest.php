@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
@@ -13,9 +14,7 @@ use SplFileInfo;
 
 class WorseFillMatchArmsTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideFill
-     */
+    #[DataProvider('provideFill')]
     public function testFill(
         string $path
     ): void {
@@ -33,7 +32,7 @@ class WorseFillMatchArmsTest extends WorseTestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideFill(): Generator
+    public static function provideFill(): Generator
     {
         foreach ((new GlobIterator(__DIR__ . '/fixtures/fillMatchArms*.test')) as $fileInfo) {
             assert($fileInfo instanceof SplFileInfo);

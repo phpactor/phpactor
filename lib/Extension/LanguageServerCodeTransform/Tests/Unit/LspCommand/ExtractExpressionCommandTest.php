@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -54,9 +55,7 @@ class ExtractExpressionCommandTest extends TestCase
         ], $applyEdit->params);
     }
 
-    /**
-     * @dataProvider provideExceptions
-     */
+    #[DataProvider('provideExceptions')]
     public function testFailedCall(Exception $exception): void
     {
         $extractExpression = $this->prophesize(ExtractExpression::class);
@@ -78,7 +77,7 @@ class ExtractExpressionCommandTest extends TestCase
     /**
      * @return Generator<class-string, array{Exception}>
      */
-    public function provideExceptions(): Generator
+    public static function provideExceptions(): Generator
     {
         yield TransformException::class => [ new TransformException('Error message!') ];
     }

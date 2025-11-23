@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Trinary;
@@ -12,9 +13,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class IntersectionTypeTest extends TestCase
 {
-    /**
-     * @dataProvider provideAccepts
-     */
+    #[DataProvider('provideAccepts')]
     public function testAccepts(IntersectionType $intersection, Type $type, Trinary $accepts): void
     {
         self::assertEquals($accepts, $intersection->accepts($type));
@@ -23,7 +22,7 @@ class IntersectionTypeTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideAccepts(): Generator
+    public static function provideAccepts(): Generator
     {
         yield 'does not accept non-class types' => [
             TypeFactory::intersection(TypeFactory::intLiteral(12), TypeFactory::string()),

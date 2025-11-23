@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\WorseReflection\Command;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\Tests\System\SystemTestCase;
 
 class ClassReflectorCommandTest extends SystemTestCase
@@ -12,9 +13,7 @@ class ClassReflectorCommandTest extends SystemTestCase
         $this->loadProject('Animals');
     }
 
-    /**
-     * @testdox Test reflection
-     */
+    #[TestDox('Test reflection')]
     public function testReflectCommand(): void
     {
         $process = $this->phpactorFromStringArgs('class:reflect lib/Badger.php');
@@ -24,9 +23,7 @@ class ClassReflectorCommandTest extends SystemTestCase
         $this->assertStringContainsString('methods', $output);
     }
 
-    /**
-     * @testdox Test for class
-     */
+    #[TestDox('Test for class')]
     public function testReflectCommandWithClass(): void
     {
         $process = $this->phpactorFromStringArgs('class:reflect "Animals\\Badger"');

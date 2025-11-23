@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Tests\Adapter\WorseTolerant;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
@@ -9,9 +10,7 @@ use Closure;
 
 class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
 {
-    /**
-     * @dataProvider provideFindMember
-     */
+    #[DataProvider('provideFindMember')]
     public function testFindMember(string $source, ClassMemberQuery $classMember, int $expectedCount, int $expectedRiskyCount = 0): void
     {
         $finder = $this->createFinder($source);
@@ -23,7 +22,7 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
     /**
     * @return Generator<string, array{0: string, 1: ClassMemberQuery, 2: int, 3?:int}>
     */
-    public function provideFindMember(): Generator
+    public static function provideFindMember(): Generator
     {
         yield 'It returns zero references when there are no methods at all' => [
              <<<'EOT'
@@ -564,9 +563,7 @@ class WorseTolerantMemberFinderTest extends WorseTolerantTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideOffset
-     */
+    #[DataProvider('provideOffset')]
     public function testOffset(string $source, ClassMemberQuery $classMember, Closure $assertion): void
     {
         $finder = $this->createFinder($source);

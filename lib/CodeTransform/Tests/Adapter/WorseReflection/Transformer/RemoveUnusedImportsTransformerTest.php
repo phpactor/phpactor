@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\RemoveUnusedImportsTransformer;
@@ -11,9 +12,7 @@ use function Amp\Promise\wait;
 
 class RemoveUnusedImportsTransformerTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideRemoveUnusedImports
-     */
+    #[DataProvider('provideRemoveUnusedImports')]
     public function testRemoveUnusedImport(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -28,7 +27,7 @@ class RemoveUnusedImportsTransformerTest extends WorseTestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideRemoveUnusedImports(): Generator
+    public static function provideRemoveUnusedImports(): Generator
     {
         yield 'It does nothing on source with no classes' => [
             <<<'EOT'

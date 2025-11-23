@@ -1721,7 +1721,7 @@ Type: array
 Glob patterns to exclude while indexing
 
 
-**Default**: ``["\/vendor\/**\/Tests\/**\/*","\/vendor\/**\/tests\/**\/*","\/vendor\/composer\/**\/*"]``
+**Default**: ``["\/vendor\/**\/Tests\/**\/*","\/vendor\/**\/tests\/**\/*","\/vendor\/composer\/**\/*","\/vendor\/rector\/rector\/stubs-rector"]``
 
 
 .. _param_indexer.stub_paths:
@@ -1937,6 +1937,19 @@ Path to the PHPStan executable
 
 
 **Default**: ``"%project_root%\/vendor\/bin\/phpstan"``
+
+
+.. _param_language_server_phpstan.severity:
+
+
+``language_server_phpstan.severity``
+""""""""""""""""""""""""""""""""""""
+
+
+Severity at which PHPStan diagnostics should be reported. Ranges from 1 (error) to 4 (hint).
+
+
+**Default**: ``1``
 
 
 .. _param_language_server_phpstan.level:
@@ -2172,6 +2185,19 @@ Path to the php-cs-fixer executable
 **Default**: ``"%project_root%\/vendor\/bin\/php-cs-fixer"``
 
 
+.. _param_language_server_php_cs_fixer.version:
+
+
+``language_server_php_cs_fixer.version``
+""""""""""""""""""""""""""""""""""""""""
+
+
+Arbitrary version (if not provided, phpactor tries to detect it - only to run it on unsupported PHP versions)
+
+
+**Default**: ``null``
+
+
 .. _param_language_server_php_cs_fixer.env:
 
 
@@ -2179,10 +2205,10 @@ Path to the php-cs-fixer executable
 """"""""""""""""""""""""""""""""""""
 
 
-Environment for PHP CS Fixer (e.g. to set PHP_CS_FIXER_IGNORE_ENV)
+Environment for PHP CS Fixer
 
 
-**Default**: ``{"XDEBUG_MODE":"off","PHP_CS_FIXER_IGNORE_ENV":true}``
+**Default**: ``{"XDEBUG_MODE":"off"}``
 
 
 .. _param_language_server_php_cs_fixer.show_diagnostics:

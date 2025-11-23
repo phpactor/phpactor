@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Microsoft\PhpParser\Node;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\AlwaysQualfifier;
@@ -16,6 +17,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class LimitingCompletorTest extends TestCase
 {
+    use ProphecyTrait;
     const EXAMPLE_SOURCE = '<?php';
     const EXAMPLE_OFFSET = 15;
 

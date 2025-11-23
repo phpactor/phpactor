@@ -2,14 +2,13 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\Docblock;
 
 class DocblockTest extends TestCase
 {
-    /**
-     * @testdox It returns docblock as lines.
-     */
+    #[TestDox('It returns docblock as lines.')]
     public function testAsLines(): void
     {
         $this->assertEquals([''], Docblock::fromString('')->asLines());

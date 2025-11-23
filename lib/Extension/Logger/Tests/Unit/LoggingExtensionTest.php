@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Logger\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\FingersCrossedHandler;
 use Monolog\Handler\NullHandler;
@@ -29,9 +30,7 @@ class LoggingExtensionTest extends TestCase
         $this->assertInstanceOf(NullHandler::class, $handlers[0]);
     }
 
-    /**
-     * @dataProvider provideLoggingFormatters
-     */
+    #[DataProvider('provideLoggingFormatters')]
     public function testLoggingFormatters(string $formatter): void
     {
         $container = $this->create([
@@ -44,7 +43,7 @@ class LoggingExtensionTest extends TestCase
         $this->assertInstanceOf(StreamHandler::class, $handlers[0]);
     }
 
-    public function provideLoggingFormatters()
+    public static function provideLoggingFormatters()
     {
         yield [
             'line'

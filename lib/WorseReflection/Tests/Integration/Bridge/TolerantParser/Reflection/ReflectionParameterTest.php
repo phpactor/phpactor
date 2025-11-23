@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -12,14 +13,12 @@ use Closure;
 
 class ReflectionParameterTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideReflectionParameter
-     */
+    #[DataProvider('provideReflectionParameter')]
     public function testReflectParameter(string $source, Closure $assertion): void
     {
         $source = sprintf('<?php namespace Acme; class Foobar { public function method(%s) }', $source);
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString('Acme\Foobar'));
-        $assertion($class->methods()->get('method'));
+        $assertion->bindTo($this)->__invoke($class->methods()->get('method'));
     }
 
     public function provideReflectionParameter()
@@ -203,14 +202,12 @@ class ReflectionParameterTest extends IntegrationTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideReflectionParameterWithDocblock
-     */
+    #[DataProvider('provideReflectionParameterWithDocblock')]
     public function testReflectParameterWithDocblock(string $source, string $docblock, Closure $assertion): void
     {
         $source = sprintf('<?php namespace Acme; class Foobar { %s public function method(%s) }', $docblock, $source);
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString('Acme\Foobar'));
-        $assertion($class->methods()->get('method'));
+        $assertion->bindTo($this)->__invoke($class->methods()->get('method'));
     }
 
     public function provideReflectionParameterWithDocblock()

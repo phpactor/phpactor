@@ -2,23 +2,23 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\DefaultValue;
 
 class DefaultValueTest extends TestCase
 {
-    /**
-     * @testdox It exports values.
-     * @dataProvider provideExportValues
-     */
+    #[DataProvider('provideExportValues')]
+    #[TestDox('It exports values.')]
     public function testExportValues($value, $expected): void
     {
         $value = DefaultValue::fromValue($value);
         $this->assertEquals($expected, $value->export());
     }
 
-    public function provideExportValues(): Generator
+    public static function provideExportValues(): Generator
     {
         yield 'escaped string' => [
             'hello',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\NameImport;
 use function Amp\Promise\wait;
 use Amp\Promise;
@@ -16,11 +17,12 @@ use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServerProtocol\ApplyWorkspaceEditResult;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\TextEdit;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Prophecy\ObjectProphecy;
 
 class ImportNameCommandTest extends TestCase
 {
+    use ProphecyTrait;
     const EXAMPLE_CONTENT = 'hello this is some text';
     const EXAMPLE_PATH = '/foobar.php';
     const EXAMPLE_OFFSET = 12;

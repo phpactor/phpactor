@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\WorseReflection\Core\Exception\FunctionNotFound;
@@ -12,9 +13,7 @@ use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 
 class FunctionReflectorTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideReflectFunction
-     */
+    #[DataProvider('provideReflectFunction')]
     public function testReflectFunction(string $manifest, string $name, Closure $assertion): void
     {
         $this->workspace()->reset();

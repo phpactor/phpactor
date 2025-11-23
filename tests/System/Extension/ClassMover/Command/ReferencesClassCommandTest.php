@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\ClassMover\Command;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\Tests\System\SystemTestCase;
 
 class ReferencesClassCommandTest extends SystemTestCase
@@ -12,9 +13,7 @@ class ReferencesClassCommandTest extends SystemTestCase
         $this->loadProject('Animals');
     }
 
-    /**
-     * @testdox It should show all references to Badger
-     */
+    #[TestDox('It should show all references to Badger')]
     public function testReferences(): void
     {
         $process = $this->phpactorFromStringArgs('references:class "Animals\Badger"');
@@ -22,9 +21,7 @@ class ReferencesClassCommandTest extends SystemTestCase
         $this->assertStringContainsString('class ⟶Badger⟵', $process->getOutput());
     }
 
-    /**
-     * @testdox It should accept a format
-     */
+    #[TestDox('It should accept a format')]
     public function testReferencesFormatted(): void
     {
         $process = $this->phpactorFromStringArgs('references:class "Animals\Badger" --format=json');
@@ -32,9 +29,7 @@ class ReferencesClassCommandTest extends SystemTestCase
         $this->assertStringContainsString('"line":"class Badger', $process->getOutput());
     }
 
-    /**
-     * @testdox It should replace class references
-     */
+    #[TestDox('It should replace class references')]
     public function testReferencesReplace(): void
     {
         $process = $this->phpactorFromStringArgs('references:class "Animals\Badger" --replace="Kangaroo"');
@@ -45,9 +40,7 @@ class ReferencesClassCommandTest extends SystemTestCase
         ));
     }
 
-    /**
-     * @testdox It should replace class references
-     */
+    #[TestDox('It should replace class references')]
     public function testReferencesReplaceDryRun(): void
     {
         $process = $this->phpactorFromStringArgs('references:class "Animals\Badger" --dry-run --replace="Kangaroo"');
@@ -58,9 +51,7 @@ class ReferencesClassCommandTest extends SystemTestCase
         ));
     }
 
-    /**
-     * @testdox It can use a different scope
-     */
+    #[TestDox('It can use a different scope')]
     public function testReferencesScope(): void
     {
         $process = $this->phpactorFromStringArgs('references:class "Animals\Badger" --filesystem=simple');

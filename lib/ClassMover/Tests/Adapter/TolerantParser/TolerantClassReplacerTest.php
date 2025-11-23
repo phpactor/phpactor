@@ -2,6 +2,8 @@
 
 namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder;
@@ -14,10 +16,8 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class TolerantClassReplacerTest extends TestCase
 {
-    /**
-     * @testdox It finds all class references.
-     * @dataProvider provideTestFind
-     */
+    #[DataProvider('provideTestFind')]
+    #[TestDox('It finds all class references.')]
     public function testFind(string $fileName, string $classFqn, string $replaceWithFqn, string $expectedSource): void
     {
         $parser = new Parser();
@@ -42,7 +42,7 @@ class TolerantClassReplacerTest extends TestCase
     /**
      * @return Generator<string, array<string>>
      */
-    public function provideTestFind(): Generator
+    public static function provideTestFind(): Generator
     {
         yield 'Change references of moved class' => [
             'Example1.php',
