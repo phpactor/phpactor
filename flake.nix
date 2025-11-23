@@ -38,7 +38,7 @@
             install ./jaeger $out/bin
           '';
         };
-        phpWithXdebug = (pkgs.php81.buildEnv {
+        phpWithXdebug = (pkgs.php84.buildEnv {
           extensions = ({ enabled, all }: enabled ++ (with all; [
             xdebug
             opentelemetry
