@@ -78,6 +78,6 @@ class PhpstanLinterTest extends TestCase
             versionResolver: new ArbitrarySemVerResolver(SemVersion::fromString('2.4.0')),
         );
 
-        $linter->lint($originalFilePath, '<file content that will be ignored and not used for a tmp file>');
+        $linter->lint($originalFilePath, 'example');
     }
 }

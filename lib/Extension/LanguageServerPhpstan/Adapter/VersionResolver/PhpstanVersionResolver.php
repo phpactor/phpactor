@@ -8,7 +8,7 @@ use Phpactor\VersionResolver\SemVersion;
 use Phpactor\VersionResolver\SemVersionResolver;
 use function Amp\call;
 
-class PHPStanVersionResolver implements SemVersionResolver
+class PhpstanVersionResolver implements SemVersionResolver
 {
     public function __construct(private PhpstanProcess $process)
     {

@@ -5,7 +5,7 @@ namespace Phpactor\Extension\LanguageServerPhpstan;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
-use Phpactor\Extension\LanguageServerPhpstan\Adapter\VersionResolver\PHPStanVersionResolver;
+use Phpactor\Extension\LanguageServerPhpstan\Adapter\VersionResolver\PhpstanVersionResolver;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\PhpstanLinter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanConfig;
@@ -33,9 +33,9 @@ class LanguageServerPhpstanExtension implements OptionalExtension
 
     public function load(ContainerBuilder $container): void
     {
-        $container->register(PHPStanVersionResolver::class, function (Container $container) {
+        $container->register(PhpstanVersionResolver::class, function (Container $container) {
             return new CachedSemVerResolver(
-                new PHPStanVersionResolver($container->get(PhpstanProcess::class)),
+                new PhpstanVersionResolver($container->get(PhpstanProcess::class)),
                 LoggingExtension::channelLogger($container, 'phpstan'),
             );
         });
@@ -57,7 +57,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             function (Container $container) {
                 return new PhpstanLinter(
                     $container->get(PhpstanProcess::class),
-                    $container->get(PHPStanVersionResolver::class),
+                    $container->get(PhpstanVersionResolver::class),
                     $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value() ?  $container->parameter(self::PARAM_TMP_FILE_DISABLED)->bool() : false,
                 );
             }

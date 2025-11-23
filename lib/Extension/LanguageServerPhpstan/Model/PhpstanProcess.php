@@ -71,7 +71,12 @@ class PhpstanProcess
             ];
             $process = new Process($args, $this->cwd);
             yield $process->start();
-            yield $process->join();
+            $exitCode = yield $process->join();
+
+            if ($exitCode !== 0) {
+                return null;
+            }
+
             $stdout = yield buffer($process->getStdout());
 
             if (!is_string($stdout)) {
