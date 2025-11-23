@@ -11,7 +11,7 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantImportNameTest extends AbstractTolerantImportNameCase
 {
-    public function provideImportClass(): Generator
+    public static function provideImportClass(): Generator
     {
         yield 'with existing class imports' => [
             'importClass1.test',
@@ -73,7 +73,7 @@ class TolerantImportNameTest extends AbstractTolerantImportNameCase
         ];
     }
 
-    public function provideImportFunction(): Generator
+    public static function provideImportFunction(): Generator
     {
         yield 'import function' => [
             'importFunction1.test',

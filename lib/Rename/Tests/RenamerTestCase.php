@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use RuntimeException;
 use Generator;
@@ -45,9 +46,9 @@ abstract class RenamerTestCase extends TestCase
     }
 
     /**
-     * @dataProvider provideRename
      * @param Closure(Reflector,Renamer):Generator<LocatedTextEdit> $operation
      */
+    #[DataProvider('provideRename')]
     public function testRename(string $path, Closure $operation, Closure $assertion): void
     {
         $basePath = __DIR__ . '/Cases/' . $path;

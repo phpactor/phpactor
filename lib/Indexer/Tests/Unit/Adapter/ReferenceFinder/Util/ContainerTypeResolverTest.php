@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Unit\Adapter\ReferenceFinder\Util;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\Util\ContainerTypeResolver;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
@@ -9,9 +10,7 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class ContainerTypeResolverTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideResolve
-     */
+    #[DataProvider('provideResolve')]
     public function testResolve(
         array $manifest,
         string $memberType,
@@ -37,7 +36,7 @@ class ContainerTypeResolverTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideResolve(): Generator
+    public static function provideResolve(): Generator
     {
         yield 'no container type' => [
             ["// File: test.php\n"],

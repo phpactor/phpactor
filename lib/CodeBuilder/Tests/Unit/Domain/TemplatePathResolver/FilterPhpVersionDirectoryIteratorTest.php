@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\TemplatePathResolver;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use ArrayIterator;
 use Iterator;
 use PHPUnit\Framework\TestCase;
@@ -13,9 +14,7 @@ class FilterPhpVersionDirectoryIteratorTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @dataProvider provideDirectoriesToFilter
-     */
+    #[DataProvider('provideDirectoriesToFilter')]
     public function testThatItKeepsOnlyDirectoriesOfInferiorOrEqualVersion(
         Iterator $iterator,
         string $phpVersion,

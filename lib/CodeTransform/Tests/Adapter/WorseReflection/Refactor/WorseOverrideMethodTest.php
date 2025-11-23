@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -11,9 +12,7 @@ use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 
 class WorseOverrideMethodTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideExtractMethod
-     */
+    #[DataProvider('provideExtractMethod')]
     public function testOverrideMethod(string $test, string $className, $methodName): void
     {
         [$source, $expected] = $this->sourceExpected(__DIR__ . '/fixtures/' . $test);
@@ -23,7 +22,7 @@ class WorseOverrideMethodTest extends WorseTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    public function provideExtractMethod(): Generator
+    public static function provideExtractMethod(): Generator
     {
         yield 'root type as param and return type' => [
             'overrideMethod1.test',

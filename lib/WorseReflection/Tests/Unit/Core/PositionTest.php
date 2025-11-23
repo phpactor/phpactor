@@ -2,14 +2,13 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffsetRange;
 
 class PositionTest extends TestCase
 {
-    /**
-     * @testdox It provides width
-     */
+    #[TestDox('It provides width')]
     public function testWidth(): void
     {
         $position = ByteOffsetRange::fromInts(15, 35);

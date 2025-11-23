@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\TestUtils\PHPUnit\TestCase;
@@ -16,9 +17,7 @@ class ReflectedClassTypeTest extends TestCase
 {
     use TrinaryAssert;
 
-    /**
-     * @dataProvider provideAccepts
-     */
+    #[DataProvider('provideAccepts')]
     public function testAccepts(Type $type, Closure $closure): void
     {
         $closure($type);

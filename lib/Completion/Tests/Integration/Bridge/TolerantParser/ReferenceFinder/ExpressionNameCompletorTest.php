@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceFinder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Microsoft\PhpParser\Parser;
@@ -19,11 +20,11 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 class ExpressionNameCompletorTest extends IntegrationTestCase
 {
     /**
-     * @dataProvider provideComplete
      *
      * @param array<int,NameSearchResult> $searchResults
      * @param Closure(Suggestions): void $assertion
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(array $searchResults, string $source, Closure $assertion): void
     {
         $searcher = new PredefinedNameSearcher($searchResults);
@@ -53,7 +54,7 @@ class ExpressionNameCompletorTest extends IntegrationTestCase
     /**
      * @return Generator<string,array{list<NameSearchResult>,string,Closure(Suggestions):void}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'new class instance' => [
             [

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\WorseReflection\Core\Inference\Assignments;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
@@ -10,9 +11,7 @@ use Phpactor\WorseReflection\Core\Inference\PropertyAssignments;
 
 class FrameTest extends TestCase
 {
-    /**
-     * @testdox It returns local and class assignments.
-     */
+    #[TestDox('It returns local and class assignments.')]
     public function testAssignments(): void
     {
         $frame = new ConcreteFrame();

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser\Helper;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Microsoft\PhpParser\Node;
@@ -22,9 +23,7 @@ class NodeQueryTest extends TestCase
         $this->parser = new Parser();
     }
 
-    /**
-     * @dataProvider provideFirstAncestorVia
-     */
+    #[DataProvider('provideFirstAncestorVia')]
     public function testFirstAncestorVia(string $source, Closure $assertion): void
     {
         $node = $this->nodeFromSource($source);
@@ -34,7 +33,7 @@ class NodeQueryTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideFirstAncestorVia(): Generator
+    public static function provideFirstAncestorVia(): Generator
     {
         yield [
             '<?php new Barfoo(new Foobar($foo, $ba<>));',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerEvaluatableExpression\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -18,9 +19,7 @@ class EvaluatableExpressionHandlerTest extends TestCase
 {
     private const PATH = 'file:///hello';
 
-    /**
-     * @dataProvider provideEvaluatableExpression
-     */
+    #[DataProvider('provideEvaluatableExpression')]
     public function testEvaluatableExpression(string $test): void
     {
         [ $text, $start, $offset ] = ExtractOffset::fromSource($test);
@@ -41,7 +40,7 @@ class EvaluatableExpressionHandlerTest extends TestCase
         $this->assertEquals($eval, $result->expression);
     }
 
-    public function provideEvaluatableExpression(): Generator
+    public static function provideEvaluatableExpression(): Generator
     {
         yield 'var' => [
             '<?php $foo = "foo"; <>$f<>oo<>;',

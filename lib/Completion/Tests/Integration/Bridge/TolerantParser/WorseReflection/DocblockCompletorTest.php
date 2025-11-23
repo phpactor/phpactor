@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use Microsoft\PhpParser\Parser;
@@ -21,9 +22,9 @@ class DocblockCompletorTest extends TestCase
     use ArraySubsetAsserts;
 
     /**
-     * @dataProvider provideComplete
      * @param array<string> $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $results = [
@@ -55,7 +56,7 @@ class DocblockCompletorTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'not in docblock' => [
             '@param<>',

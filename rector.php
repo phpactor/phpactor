@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
 use Rector\PHPUnit\PHPUnit100\Rector\Class_\AddProphecyTraitRector;
+use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Php84\Rector\Param\ExplicitNullableParamTypeRector;
 
 return RectorConfig::configure()
@@ -15,6 +16,9 @@ return RectorConfig::configure()
     ->withSkipPath('*/Workspace/*')
     ->withSkipPath('/tests/Assets/*')
     ->withSkipPath('/*/examples/*')
+    ->withSets(
+        PHPUnitSetList::PHPUNIT_100,
+    )
     ->withRules([
         ExplicitNullableParamTypeRector::class,
         AddProphecyTraitRector::class,

@@ -13,7 +13,7 @@ use Phpactor\WorseReflection\Core\Type\UnionType;
 
 class WorseTypeRenderer82Test extends TypeRendererTestCase
 {
-    public function provideType(): Generator
+    public static function provideType(): Generator
     {
         yield [
             new FalseType(),

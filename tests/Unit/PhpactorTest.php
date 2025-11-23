@@ -2,16 +2,16 @@
 
 namespace Phpactor\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use Phpactor\Phpactor;
 use PHPUnit\Framework\TestCase;
 
 class PhpactorTest extends TestCase
 {
-    /**
-     * @testdox It returns true if the subject looks like a file.
-     * @dataProvider provideIsFile
-     */
+    #[DataProvider('provideIsFile')]
+    #[TestDox('It returns true if the subject looks like a file.')]
     public function testIsFile(string $example, bool $isFile): void
     {
         $this->assertEquals($isFile, Phpactor::isFile($example));
@@ -20,7 +20,7 @@ class PhpactorTest extends TestCase
     /**
      * @return Generator<array{string,bool}>
      */
-    public function provideIsFile(): Generator
+    public static function provideIsFile(): Generator
     {
         yield [ 'Hello.php', true ];
         yield [ 'Hello\\Bar', false ];

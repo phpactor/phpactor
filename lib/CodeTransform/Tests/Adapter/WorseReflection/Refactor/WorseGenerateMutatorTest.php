@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMutator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
@@ -10,9 +11,7 @@ use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 
 class WorseGenerateMutatorTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideExtractMutator
-     */
+    #[DataProvider('provideExtractMutator')]
     public function testGenerateMutator(
         string $test,
         string $propertyName,
@@ -43,7 +42,7 @@ class WorseGenerateMutatorTest extends WorseTestCase
     /**
      * @return Generator<list<mixed>>
      */
-    public function provideExtractMutator(): Generator
+    public static function provideExtractMutator(): Generator
     {
         $propertyName = 'method';
 

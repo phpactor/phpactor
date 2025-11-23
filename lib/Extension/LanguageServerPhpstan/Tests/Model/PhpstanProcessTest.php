@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use function Amp\Promise\wait;
 use Generator;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanConfig;
@@ -18,9 +19,8 @@ class PhpstanProcessTest extends IntegrationTestCase
     /**
      * @param DiagnosticSeverity::* $configuredSeverity
      * @param array<Diagnostic> $expectedDiagnostics
-     *
-     * @dataProvider provideLint
      */
+    #[DataProvider('provideLint')]
     public function testLint(string $source, int $configuredSeverity, array $expectedDiagnostics): void
     {
         $this->workspace()->reset();
@@ -37,7 +37,7 @@ class PhpstanProcessTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideLint(): Generator
+    public static function provideLint(): Generator
     {
         yield [
             '<?php $foobar = "string";',

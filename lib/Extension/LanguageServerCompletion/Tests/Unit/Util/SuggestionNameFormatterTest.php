@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Unit\Util;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Core\Suggestion;
 use Phpactor\Extension\LanguageServerCompletion\Util\SuggestionNameFormatter;
@@ -16,9 +17,7 @@ class SuggestionNameFormatterTest extends TestCase
         $this->formatter = new SuggestionNameFormatter(true);
     }
 
-    /**
-     * @dataProvider dataProvider
-     */
+    #[DataProvider('dataProvider')]
     public function testFormat(string $type, string $name, string $expected): void
     {
         $suggestion = Suggestion::createWithOptions($name, ['type' => $type]);
@@ -29,7 +28,7 @@ class SuggestionNameFormatterTest extends TestCase
     /**
      * @return Generator<array{string,string,string}>
      */
-    public function dataProvider(): Generator
+    public static function dataProvider(): Generator
     {
         yield [Suggestion::TYPE_VARIABLE, '$foo', 'foo'];
         yield [Suggestion::TYPE_FUNCTION, 'foo', 'foo'];

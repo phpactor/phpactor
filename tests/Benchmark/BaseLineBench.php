@@ -15,6 +15,10 @@ use PhpBench\Benchmark\Metadata\Annotations\Warmup;
  */
 class BaseLineBench extends BaseBenchCase
 {
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
     public function benchVersion(): void
     {
         $this->runCommand('--version');

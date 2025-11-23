@@ -2,15 +2,14 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\LineCol;
 
 class LineColTest extends TestCase
 {
-    /**
-     * @dataProvider provideConvertLineColToOffset
-     */
+    #[DataProvider('provideConvertLineColToOffset')]
     public function testToByteOffset(string $text, LineCol $lineCol, int $expectedOffset, ?string $sanityCheck = null): void
     {
         $this->assertEquals($expectedOffset, $lineCol->toByteOffset($text)->toInt());
@@ -22,7 +21,7 @@ class LineColTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideConvertLineColToOffset(): Generator
+    public static function provideConvertLineColToOffset(): Generator
     {
         yield [
             '',

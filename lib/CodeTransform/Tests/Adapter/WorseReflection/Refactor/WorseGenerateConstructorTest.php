@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use GlobIterator;
 use Microsoft\PhpParser\Parser;
@@ -13,9 +14,7 @@ use SplFileInfo;
 
 class WorseGenerateConstructorTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideCreate
-     */
+    #[DataProvider('provideCreate')]
     public function testCreate(
         string $path
     ): void {
@@ -38,7 +37,7 @@ class WorseGenerateConstructorTest extends WorseTestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideCreate(): Generator
+    public static function provideCreate(): Generator
     {
         foreach ((new GlobIterator(__DIR__ . '/fixtures/generateConstructor*.test')) as $fileInfo) {
             assert($fileInfo instanceof SplFileInfo);

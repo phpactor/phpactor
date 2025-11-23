@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerReferenceFinder\Tests\Integration\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Microsoft\PhpParser\Parser;
@@ -15,13 +16,11 @@ use function Amp\Promise\wait;
 
 class HighlighterTest extends TestCase
 {
-    /**
-     * @dataProvider provideVariables
-     * @dataProvider provideProperties
-     * @dataProvider provideMethods
-     * @dataProvider provideNames
-     * @dataProvider provideConstants
-     */
+    #[DataProvider('provideVariables')]
+    #[DataProvider('provideProperties')]
+    #[DataProvider('provideMethods')]
+    #[DataProvider('provideNames')]
+    #[DataProvider('provideConstants')]
     public function testHighlight(string $source, Closure $assertion): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -36,7 +35,7 @@ class HighlighterTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideVariables(): Generator
+    public static function provideVariables(): Generator
     {
         yield 'none' => [
             '<?php',
@@ -79,7 +78,7 @@ class HighlighterTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideProperties(): Generator
+    public static function provideProperties(): Generator
     {
         yield 'property declaration' => [
             '<?php class Foobar { private $f<>oobar; }',
@@ -145,7 +144,7 @@ class HighlighterTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideMethods(): Generator
+    public static function provideMethods(): Generator
     {
         yield 'method declaration' => [
             '<?php class Foobar { public function f<>oobar() {} }',
@@ -177,7 +176,7 @@ class HighlighterTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideNames(): Generator
+    public static function provideNames(): Generator
     {
         yield 'class name' => [
             '<?php class Foo<>bar {}',
@@ -213,7 +212,7 @@ class HighlighterTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideConstants(): Generator
+    public static function provideConstants(): Generator
     {
         yield 'class constant' => [
             '<?php class Foo { const B<>AR = "";}',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generator;
 use Microsoft\PhpParser\Parser;
@@ -17,9 +18,9 @@ class TypeSuggestionProviderTest extends TestCase
 {
     use ArraySubsetAsserts;
     /**
-     * @dataProvider provideProvide
      * @param array<string> $expected
      */
+    #[DataProvider('provideProvide')]
     public function testProvide(string $source, string $search, array $expected): void
     {
         $searcher = new PredefinedNameSearcher([
@@ -40,7 +41,7 @@ class TypeSuggestionProviderTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideProvide(): Generator
+    public static function provideProvide(): Generator
     {
         yield [
             '<?php <>',

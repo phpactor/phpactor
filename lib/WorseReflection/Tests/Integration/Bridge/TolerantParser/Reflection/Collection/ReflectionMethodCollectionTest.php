@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\Collection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -9,9 +10,7 @@ use Closure;
 
 class ReflectionMethodCollectionTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideCollection
-     */
+    #[DataProvider('provideCollection')]
     public function testCollection(string $source, Closure $assertion): void
     {
         $collection = $this->createReflector($source)->reflectClass('Foobar');

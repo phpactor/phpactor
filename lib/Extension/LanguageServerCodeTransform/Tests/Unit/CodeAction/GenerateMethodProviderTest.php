@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Amp\CancellationTokenSource;
 use Amp\Success;
 use Generator;
@@ -39,9 +40,7 @@ class GenerateMethodProviderTest extends TestCase
         $this->finder = $this->prophesize(MissingMemberFinder::class);
     }
 
-    /**
-     * @dataProvider provideDiagnosticsTestData
-     */
+    #[DataProvider('provideDiagnosticsTestData')]
     public function testDiagnostics(array $missingMethods, array $expectedDiagnostics): void
     {
         $this->finder->find(Argument::type(TextDocument::class))->willReturn(new Success($missingMethods));
@@ -60,7 +59,7 @@ class GenerateMethodProviderTest extends TestCase
     /**
      * @return Generator<string, (array{array, array} | array{array<int, Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod>, array<int, Diagnostic>})>
      */
-    public function provideDiagnosticsTestData(): Generator
+    public static function provideDiagnosticsTestData(): Generator
     {
         yield 'No missing methods' => [
             [],
@@ -82,9 +81,7 @@ class GenerateMethodProviderTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideActionsTestData
-     */
+    #[DataProvider('provideActionsTestData')]
     public function testProvideActions(array $missingMethods, array $expectedActions): void
     {
         $this->finder->find(Argument::type(TextDocument::class))->willReturn(new Success($missingMethods));
@@ -103,7 +100,7 @@ class GenerateMethodProviderTest extends TestCase
     /**
      * @return Generator<string, (array{array, array} | array{array<int, Phpactor\CodeTransform\Domain\Helper\MissingMethodFinder\MissingMethod>, array<int, CodeAction>})>
      */
-    public function provideActionsTestData(): Generator
+    public static function provideActionsTestData(): Generator
     {
         yield 'No missing methods' => [
             [],

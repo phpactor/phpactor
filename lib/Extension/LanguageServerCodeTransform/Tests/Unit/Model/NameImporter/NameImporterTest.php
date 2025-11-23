@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LanguageServerCodeTransform\Unit\Model\NameImporter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use Generator;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
@@ -77,7 +78,7 @@ class NameImporterTest extends TestCase
         $this->subject = new NameImporter($this->importNameProphecy->reveal());
     }
 
-    public function provideTestImportData(): Generator
+    public static function provideTestImportData(): Generator
     {
         yield 'function' => [
             '\in_array',
@@ -92,9 +93,7 @@ class NameImporterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideTestImportData
-     */
+    #[DataProvider('provideTestImportData')]
     public function testImport(
         string $fqn,
         string $importType,

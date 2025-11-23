@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\TypeAssertion;
@@ -11,9 +12,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 class TypeAssertionsTest extends TestCase
 {
-    /**
-     * @dataProvider provideOr
-     */
+    #[DataProvider('provideOr')]
     public function testOr(Type $type, TypeAssertion $a, TypeAssertion $b, Type $expected, Type $negated): void
     {
         $assertions = new TypeAssertions([$a]);
@@ -24,7 +23,7 @@ class TypeAssertionsTest extends TestCase
         self::assertEquals($negated->__toString(), $assertion->negate()->apply($type)->__toString());
     }
 
-    public function provideOr(): Generator
+    public static function provideOr(): Generator
     {
         yield [
             TypeFactory::mixed(),
@@ -61,9 +60,7 @@ class TypeAssertionsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideAnd
-     */
+    #[DataProvider('provideAnd')]
     public function testAnd(Type $type, TypeAssertion $a, TypeAssertion $b, Type $expected, Type $negated): void
     {
         $assertions = new TypeAssertions([$a]);
@@ -74,7 +71,7 @@ class TypeAssertionsTest extends TestCase
         self::assertEquals($negated->__toString(), $assertion->negate()->apply($type)->__toString());
     }
 
-    public function provideAnd(): Generator
+    public static function provideAnd(): Generator
     {
         yield [
             TypeFactory::mixed(),

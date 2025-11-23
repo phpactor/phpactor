@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\WorseReflection\Tests\Example;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Container\PhpactorContainer;
@@ -14,9 +15,7 @@ use function Amp\Promise\wait;
 
 class DiagnosticsTest extends TestCase
 {
-    /**
-     * @dataProvider provideDiagnostics
-     */
+    #[DataProvider('provideDiagnostics')]
     public function testDiagnostics(DiagnosticProvider $provider, DiagnosticExample $example): void
     {
         $reflector = ReflectorBuilder::create()->addSource($example->source)->addDiagnosticProvider($provider)->build();
@@ -36,7 +35,7 @@ class DiagnosticsTest extends TestCase
     /**
      * @return Generator<array{DiagnosticProvider,DiagnosticExample}>
      */
-    public function provideDiagnostics(): Generator
+    public static function provideDiagnostics(): Generator
     {
         $container = PhpactorContainer::fromExtensions([
             WorseReflectionExtension::class,

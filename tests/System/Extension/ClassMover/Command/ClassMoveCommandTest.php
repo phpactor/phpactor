@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Extension\ClassMover\Command;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Tests\System\SystemTestCase;
 
@@ -17,9 +18,8 @@ class ClassMoveCommandTest extends SystemTestCase
      * Application level smoke tests
      *
      * @param array<string, bool> $fileMap
-     *
-     * @dataProvider provideSmokeSuccess
      */
+    #[DataProvider('provideSmokeSuccess')]
     public function testSmokeSuccess(string $command, array $fileMap): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -40,7 +40,7 @@ class ClassMoveCommandTest extends SystemTestCase
     /**
      * @return Generator<string, array{string,array<string, bool>}>
      */
-    public function provideSmokeSuccess(): Generator
+    public static function provideSmokeSuccess(): Generator
     {
         yield 'Move file 1' => [
             'class:move lib/Badger/Carnivorous.php lib/Aardvark/Insectarian.php',
@@ -120,9 +120,8 @@ class ClassMoveCommandTest extends SystemTestCase
 
     /**
      * Application level failures
-     *
-     * @dataProvider provideSmokeFailure
      */
+    #[DataProvider('provideSmokeFailure')]
     public function testSmokeFailure(string $command, ?string $expectedMessage = null): void
     {
         $process = $this->phpactorFromStringArgs($command);
@@ -132,7 +131,7 @@ class ClassMoveCommandTest extends SystemTestCase
     /**
      * @return Generator<string, array{string, string|null}>
      */
-    public function provideSmokeFailure(): Generator
+    public static function provideSmokeFailure(): Generator
     {
         yield 'Move class by name force file' => [
             'mv "Animals\\Badger\\Carnivorous" "Animals\\Badger\\Vicious" --type=file',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerInlineValue\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
@@ -18,9 +19,7 @@ class InlineValueHandlerTest extends TestCase
 {
     private const PATH = 'file:///hello';
 
-    /**
-     * @dataProvider provideInlineValue
-     */
+    #[DataProvider('provideInlineValue')]
     public function testInlineValue(string $test): void
     {
         $ranges = [];
@@ -55,7 +54,7 @@ class InlineValueHandlerTest extends TestCase
         }
     }
 
-    public function provideInlineValue(): Generator
+    public static function provideInlineValue(): Generator
     {
         yield 'var' => [
             <<<'EOF'

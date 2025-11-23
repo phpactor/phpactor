@@ -2,6 +2,7 @@
 
 namespace Phpactor\PathFinder\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\PathFinder\Exception\NoPlaceHoldersException;
@@ -12,9 +13,7 @@ class PathFinderTest extends TestCase
 {
     const PROJECT_ROOT = '/home/user/src/github.com/organisation/project';
 
-    /**
-     * @dataProvider provideTeleport
-     */
+    #[DataProvider('provideTeleport')]
     public function testTeleport(array $targets, string $path, array $expectedTargets): void
     {
         $teleport = PathFinder::fromAbsoluteDestinations(self::PROJECT_ROOT, $targets);
@@ -26,7 +25,7 @@ class PathFinderTest extends TestCase
     /**
      * @return Generator<string,array{array<string,string>,string,array<string,string>}>
      */
-    public function provideTeleport(): Generator
+    public static function provideTeleport(): Generator
     {
         yield 'no available targets' => [
             [

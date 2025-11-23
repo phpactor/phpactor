@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\Tests\IntegrationTestCase;
@@ -16,10 +18,8 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class CreateClassProviderTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideClassCreateProvider
-     * @group flakey
-     */
+    #[DataProvider('provideClassCreateProvider')]
+    #[Group('flakey')]
     public function testClassCreateProvider(string $manifest, int $expectedCount, int $expectedDiagnosticCount, bool $imprtGlobals = false): void
     {
         $this->workspace()->reset();
@@ -71,7 +71,7 @@ class CreateClassProviderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideClassCreateProvider(): Generator
+    public static function provideClassCreateProvider(): Generator
     {
         yield 'empty file' => [
             <<<'EOT'

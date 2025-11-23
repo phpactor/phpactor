@@ -12,6 +12,10 @@ use PhpBench\Benchmark\Metadata\Annotations\Iterations;
  */
 class CompleteBench extends BaseBenchCase
 {
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
     public function setUp(): void
     {
         $this->workspace()->reset();

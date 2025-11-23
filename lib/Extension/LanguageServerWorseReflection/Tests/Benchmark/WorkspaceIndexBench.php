@@ -15,6 +15,10 @@ use Generator;
  */
 class WorkspaceIndexBench extends IntegrationTestCase
 {
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
     private LanguageServerTester $tester;
 
     public function setUp(): void

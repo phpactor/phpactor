@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerWorseReflection\Tests\InlayHint;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintOptions;
@@ -17,8 +18,8 @@ class InlayHintProviderTest extends IntegrationTestCase
 {
     /**
      * @param Closure(iterable<InlayHint>): void $assertion
-     * @dataProvider provideInlayHintProvider
      */
+    #[DataProvider('provideInlayHintProvider')]
     public function testInlayHintProvider(
         string $source,
         Closure $assertion
@@ -41,7 +42,7 @@ class InlayHintProviderTest extends IntegrationTestCase
     /**
      * @return Generator<string,array{string,Closure(list<InlayHint>): void}>
      */
-    public function provideInlayHintProvider(): Generator
+    public static function provideInlayHintProvider(): Generator
     {
         yield 'inlay hint for member' => [
             '<?php class Foo{ function bar(string $bar): void {}} (new Foo())->bar("hello");',

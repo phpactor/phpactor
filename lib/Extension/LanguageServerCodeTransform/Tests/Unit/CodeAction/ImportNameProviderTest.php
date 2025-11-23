@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Closure;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
@@ -21,10 +23,8 @@ use function Amp\delay;
 
 class ImportNameProviderTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideImportProvider
-     * @group flakey
-     */
+    #[DataProvider('provideImportProvider')]
+    #[Group('flakey')]
     public function testImportProvider(string $manifest, Closure $assertion, bool $imprtGlobals = false): void
     {
         $this->workspace()->reset();
@@ -68,7 +68,7 @@ class ImportNameProviderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideImportProvider(): Generator
+    public static function provideImportProvider(): Generator
     {
         // this test is very flakey
         //yield 'code action + diagnostic for non-imported name' => [

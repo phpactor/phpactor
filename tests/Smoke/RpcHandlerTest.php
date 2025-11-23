@@ -2,15 +2,14 @@
 
 namespace Phpactor\Tests\Smoke;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Tests\IntegrationTestCase;
 
 class RpcHandlerTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideName
-     */
+    #[DataProvider('provideName')]
     public function testRpcCommandIsAvailable(string $name): void
     {
         $registry = $this->container()->expect('rpc.handler_registry', HandlerRegistry::class);
@@ -21,7 +20,7 @@ class RpcHandlerTest extends IntegrationTestCase
     /**
      * @return Generator<array{string}>
      */
-    public function provideName(): Generator
+    public static function provideName(): Generator
     {
         yield [ 'cache_clear' ];
         yield [ 'class_inflect' ];

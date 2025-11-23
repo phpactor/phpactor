@@ -2,6 +2,7 @@
 
 namespace Phpactor\Diff\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Diff\RangesForDiff;
 use Phpactor\LanguageServerProtocol\Position;
@@ -27,8 +28,8 @@ class RangesForDiffTest extends TestCase
 
     /**
      * @param Range[] $expectedRanges
-     * @dataProvider diffProvider
      */
+    #[DataProvider('diffProvider')]
     public function testCreatingRanges(string $diff, array $expectedRanges): void
     {
         $parser = new Parser();
@@ -44,7 +45,7 @@ class RangesForDiffTest extends TestCase
      *   'ranges': Range[]
      * }>
      */
-    public function diffProvider(): iterable
+    public static function diffProvider(): iterable
     {
         yield 'multiple replacements' => [
           'diff' => <<<EOF

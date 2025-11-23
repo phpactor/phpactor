@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Type;
@@ -12,9 +13,9 @@ use Phpactor\WorseReflection\Core\Type\MissingType;
 class AggregateTypeTest extends TestCase
 {
     /**
-     * @dataProvider provideRemove
      * @param Type[] $types
      */
+    #[DataProvider('provideRemove')]
     public function testRemove(array $types, Type $remove, string $expected): void
     {
         self::assertEquals($expected, TypeFactory::union(...$types)->remove($remove)->__toString());
@@ -23,7 +24,7 @@ class AggregateTypeTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideRemove(): Generator
+    public static function provideRemove(): Generator
     {
         yield [
             [
@@ -56,9 +57,9 @@ class AggregateTypeTest extends TestCase
     }
 
     /**
-     * @dataProvider provideClean
      * @param Type[] $types
      */
+    #[DataProvider('provideClean')]
     public function testClean(array $types, string $expected): void
     {
         self::assertEquals($expected, TypeFactory::union(...$types)->clean()->__toString());
@@ -67,7 +68,7 @@ class AggregateTypeTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideClean(): Generator
+    public static function provideClean(): Generator
     {
         yield [[], ''];
         yield [[TypeFactory::undefined()], ''];
@@ -105,9 +106,9 @@ class AggregateTypeTest extends TestCase
     }
 
     /**
-     * @dataProvider provideReduce
      * @param Type[] $types
      */
+    #[DataProvider('provideReduce')]
     public function testReduce(array $types, string $expected): void
     {
         self::assertEquals($expected, TypeFactory::union(...$types)->reduce()->__toString());
@@ -116,7 +117,7 @@ class AggregateTypeTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideReduce(): Generator
+    public static function provideReduce(): Generator
     {
         yield [[], '<missing>'];
         yield [[TypeFactory::undefined()], '<missing>'];

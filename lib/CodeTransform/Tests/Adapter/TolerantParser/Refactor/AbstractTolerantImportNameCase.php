@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\AliasAlreadyUsedException;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass\ClassIsCurrentClassException;
@@ -15,9 +16,7 @@ use Phpactor\TextDocument\TextEdits;
 
 abstract class AbstractTolerantImportNameCase extends TolerantTestCase
 {
-    /**
-     * @dataProvider provideImportClass
-     */
+    #[DataProvider('provideImportClass')]
     public function testImportClass(string $test, string $name, ?string $alias = null): void
     {
         [$expected, $transformed] = $this->importNameFromTestFile('class', $test, $name, $alias);
@@ -25,7 +24,7 @@ abstract class AbstractTolerantImportNameCase extends TolerantTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    abstract public function provideImportClass(): Generator;
+    abstract public static function provideImportClass(): Generator;
 
     public function testThrowsExceptionIfClassAlreadyImported(): void
     {
@@ -190,9 +189,7 @@ abstract class AbstractTolerantImportNameCase extends TolerantTestCase
         $this->importName($source, 64, NameImport::forClass('Barfoo\Barfoo'));
     }
 
-    /**
-     * @dataProvider provideImportFunction
-     */
+    #[DataProvider('provideImportFunction')]
     public function testImportFunction(string $test, string $name, ?string $alias = null): void
     {
         [$expected, $transformed] = $this->importNameFromTestFile('function', $test, $name, $alias);
@@ -200,7 +197,7 @@ abstract class AbstractTolerantImportNameCase extends TolerantTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    abstract public function provideImportFunction(): Generator;
+    abstract public static function provideImportFunction(): Generator;
 
     abstract protected function importName(string $source, int $offset, NameImport $nameImport, bool $importGlobals = true): TextEdits;
 

@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Tests\Unit\Domain;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ClassMover\Domain\SourceCode;
@@ -11,8 +12,8 @@ class SourceCodeTest extends TestCase
 {
     /**
      * It should add a use statement.
-     * @dataProvider provideAddUse
      */
+    #[DataProvider('provideAddUse')]
     public function testAddUse(string $source, string $expected): void
     {
         $source = SourceCode::fromString($source);
@@ -21,7 +22,7 @@ class SourceCodeTest extends TestCase
     }
 
     /** @return Generator<array{string, string}> */
-    public function provideAddUse(): Generator
+    public static function provideAddUse(): Generator
     {
         yield 'No namespace' => [
             <<<'EOT'
@@ -81,9 +82,7 @@ class SourceCodeTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideNamespaceAdd
-     */
+    #[DataProvider('provideNamespaceAdd')]
     public function testNamespaceAdd(string $source, string $expected): void
     {
         $source = SourceCode::fromString($source);
@@ -94,7 +93,7 @@ class SourceCodeTest extends TestCase
     /**
      * @return Generator<array{string, string}>
      */
-    public function provideNamespaceAdd(): Generator
+    public static function provideNamespaceAdd(): Generator
     {
         yield 'Add namespace' => [
             <<<'EOT'

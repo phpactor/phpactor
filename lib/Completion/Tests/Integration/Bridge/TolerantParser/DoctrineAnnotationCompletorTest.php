@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
 use Phpactor\Completion\Core\Completor;
@@ -16,15 +17,13 @@ use Prophecy\Argument;
 
 class DoctrineAnnotationCompletorTest extends CompletorTestCase
 {
-    /**
-     * @dataProvider provideComplete
-     */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'not a docblock' => [
             <<<'EOT'

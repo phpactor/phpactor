@@ -2,6 +2,8 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Filesystem\Domain\FileList;
 use Phpactor\Filesystem\Domain\FilePath;
@@ -15,9 +17,7 @@ class FileListTest extends IntegrationTestCase
         $this->workspace()->reset();
     }
 
-    /**
-     * @testdox It returns true if it contains a file path.
-     */
+    #[TestDox('It returns true if it contains a file path.')]
     public function testContains(): void
     {
         $list = FileList::fromFilePaths([
@@ -28,9 +28,7 @@ class FileListTest extends IntegrationTestCase
         $this->assertTrue($list->contains(FilePath::fromString('/Foo/Bar.php')));
     }
 
-    /**
-     * @testdox It returns files within a path
-     */
+    #[TestDox('It returns files within a path')]
     public function testWithin(): void
     {
         $list = FileList::fromFilePaths([
@@ -204,9 +202,8 @@ class FileListTest extends IntegrationTestCase
      * @param array<string> $includePatterns
      * @param array<string> $excludePatterns
      * @param array<FilePath> $expected
-     *
-     * @dataProvider provideExcludesWithShortFolderName
      */
+    #[DataProvider('provideExcludesWithShortFolderName')]
     public function testExcludesWithShortFolderName(
         array $fileList,
         array $includePatterns,
@@ -221,7 +218,7 @@ class FileListTest extends IntegrationTestCase
         self::assertEquals($expected, array_map(fn (FilePath $x) => (string) $x, iterator_to_array($list)));
     }
 
-    public function provideExcludesWithShortFolderName(): Generator
+    public static function provideExcludesWithShortFolderName(): Generator
     {
         yield 'ascii file name' => [
             [

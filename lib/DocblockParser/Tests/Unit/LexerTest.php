@@ -2,6 +2,7 @@
 
 namespace Phpactor\DocblockParser\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\DocblockParser\Lexer;
@@ -10,9 +11,9 @@ use Phpactor\DocblockParser\Ast\Token;
 class LexerTest extends TestCase
 {
     /**
-     * @dataProvider provideLex
      * @param list<array{string,string}> $expectedTokens
      */
+    #[DataProvider('provideLex')]
     public function testLex(string $lex, array $expectedTokens): void
     {
         $tokens = (new Lexer())->lex($lex)->toArray();
@@ -29,7 +30,7 @@ class LexerTest extends TestCase
     /**
      * @return Generator<array{string, array<array{string, string}>}>
      */
-    public function provideLex(): Generator
+    public static function provideLex(): Generator
     {
         yield [ '', [] ];
         yield [

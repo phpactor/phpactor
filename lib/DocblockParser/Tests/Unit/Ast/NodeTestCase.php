@@ -2,6 +2,7 @@
 
 namespace Phpactor\DocblockParser\Tests\Unit\Ast;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use PHPUnit\Framework\TestCase;
 use Phpactor\DocblockParser\Ast\Element;
@@ -11,9 +12,7 @@ use Phpactor\DocblockParser\Parser;
 
 class NodeTestCase extends TestCase
 {
-    /**
-     * @dataProvider provideNode
-     */
+    #[DataProvider('provideNode')]
     public function testNode(string $doc, ?Closure $assertion = null): void
     {
         $node = $this->parse($doc);
@@ -28,9 +27,7 @@ class NodeTestCase extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideNode
-     */
+    #[DataProvider('provideNode')]
     public function testPartialParse(string $doc): void
     {
         $node = $this->parse($doc);
@@ -42,9 +39,7 @@ class NodeTestCase extends TestCase
         }
     }
 
-    /**
-     * @dataProvider provideNode
-     */
+    #[DataProvider('provideNode')]
     public function testIsomorphism(string $doc): void
     {
         $one = $this->parse($doc);

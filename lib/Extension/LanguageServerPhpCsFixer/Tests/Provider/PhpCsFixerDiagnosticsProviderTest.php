@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpCsFixer\Tests\Provider;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Amp\NullCancellationToken;
 use Generator;
 use Phpactor\Diff\RangesForDiff;
@@ -17,9 +18,7 @@ use function Amp\Promise\wait;
 
 class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
 {
-    /**
-     * @dataProvider fileProvider
-     */
+    #[DataProvider('fileProvider')]
     public function testProvideDiagnosticsVisible(string $fileContent, int $expectedDiagnostics): void
     {
         $provider = $this->getPhpCsFixerDiagnosticsProvider(true);
@@ -35,9 +34,7 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
         self::assertCount($expectedDiagnostics, $diagnostics);
     }
 
-    /**
-     * @dataProvider fileProvider
-     */
+    #[DataProvider('fileProvider')]
     public function testProvideDiagnosticsHidden(string $fileContent): void
     {
         $provider = $this->getPhpCsFixerDiagnosticsProvider(false);
@@ -50,9 +47,7 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
         self::assertCount(0, $diagnostics);
     }
 
-    /**
-     * @dataProvider fileProvider
-     */
+    #[DataProvider('fileProvider')]
     public function testProvideActionsForVisibleDiagnostics(string $fileContent, int $expectedDiagnostics): void
     {
         $provider = $this->getPhpCsFixerDiagnosticsProvider(true);
@@ -80,9 +75,7 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
         }
     }
 
-    /**
-     * @dataProvider fileProvider
-     */
+    #[DataProvider('fileProvider')]
     public function testProvideActionsForHiddenDiagnostics(string $fileContent, int $expectedDiagnostics): void
     {
         $provider = $this->getPhpCsFixerDiagnosticsProvider(false);
@@ -125,7 +118,7 @@ class PhpCsFixerDiagnosticsProviderTest extends PhpCsFixerTestCase
     /**
      * @return Generator<array{string, int}>
      */
-    public function fileProvider(): Generator
+    public static function fileProvider(): Generator
     {
         yield [
             <<<EOF

@@ -2,15 +2,14 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\TraitUseClauseIndexer;
 use Phpactor\Indexer\Tests\Adapter\Tolerant\TolerantIndexerTestCase;
 
 class TraitUseClauseIndexerTest extends TolerantIndexerTestCase
 {
-    /**
-    * @dataProvider provideImplementations
-    */
+    #[DataProvider('provideImplementations')]
     public function testImplementations(string $manifest, string $fqn, int $expectedCount): void
     {
         $this->workspace()->reset();
@@ -22,7 +21,7 @@ class TraitUseClauseIndexerTest extends TolerantIndexerTestCase
     /**
     * @return Generator<mixed>
     */
-    public function provideImplementations(): Generator
+    public static function provideImplementations(): Generator
     {
         yield 'use trait (basic)' => [
             "// File: src/file1.php\n<?php namespace N; use T; class C { use T; }",

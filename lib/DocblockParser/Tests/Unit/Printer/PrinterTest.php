@@ -2,6 +2,7 @@
 
 namespace Phpactor\DocblockParser\Tests\Unit\Printer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\DocblockParser\Lexer;
@@ -10,9 +11,7 @@ use Phpactor\DocblockParser\Printer\TestPrinter;
 
 class PrinterTest extends TestCase
 {
-    /**
-     * @dataProvider provideExamples
-     */
+    #[DataProvider('provideExamples')]
     public function testPrint(string $path): void
     {
         $update = false;
@@ -43,7 +42,7 @@ class PrinterTest extends TestCase
     /**
      * @return Generator<string, array{string}>
      */
-    public function provideExamples(): Generator
+    public static function provideExamples(): Generator
     {
         foreach ((array)glob(__DIR__ . '/examples/*.test') as $path) {
             yield basename((string)$path) => [ (string) $path ];

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Amp\CancellationTokenSource;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -25,9 +26,7 @@ class PropertyAccessGeneratorProviderTest extends TestCase
     {
     }
 
-    /**
-     * @dataProvider provideActionsTestData
-     */
+    #[DataProvider('provideActionsTestData')]
     public function testProvideActions(string $sourceCode, array $expectedActions): void
     {
         [$source, $start, $end] = ExtractOffset::fromSource($sourceCode);
@@ -44,7 +43,7 @@ class PropertyAccessGeneratorProviderTest extends TestCase
         );
     }
 
-    public function provideActionsTestData(): Generator
+    public static function provideActionsTestData(): Generator
     {
         yield 'provide actions'  => [
             '<?php class Foo { <>private $foo;<> }',

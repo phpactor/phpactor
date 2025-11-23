@@ -19,6 +19,10 @@ use Phpactor\ConfigLoader\Tests\TestCase;
  */
 class ConfigLoaderBench extends TestCase
 {
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
     private string $config1;
 
     private string $config2;

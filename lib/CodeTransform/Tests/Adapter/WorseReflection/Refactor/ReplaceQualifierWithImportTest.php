@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeBuilder\Adapter\WorseReflection\WorseBuilderFactory;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseReplaceQualifierWithImport;
@@ -10,9 +11,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 class ReplaceQualifierWithImportTest extends WorseTestCase
 {
-    /**
-     * @dataProvider dataFQNToImport
-     */
+    #[DataProvider('dataFQNToImport')]
     public function testFQNToImport(string $test): void
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
@@ -39,7 +38,7 @@ class ReplaceQualifierWithImportTest extends WorseTestCase
     /**
      * @return Generator<string,array<string>>
      */
-    public function dataFQNToImport(): Generator
+    public static function dataFQNToImport(): Generator
     {
         yield 'in an expression' => [ 'replaceQualifierWithImport1.test' ];
         yield 'in a parameter' => [ 'replaceQualifierWithImport2.test' ];

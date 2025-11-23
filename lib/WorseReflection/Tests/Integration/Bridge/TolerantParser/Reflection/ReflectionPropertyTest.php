@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionPropertyCollection as PhpactorReflectionPropertyCollection;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -13,10 +14,8 @@ use Generator;
 
 class ReflectionPropertyTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideReflectionPropertyTypes
-     * @dataProvider provideReflectionProperty
-     */
+    #[DataProvider('provideReflectionPropertyTypes')]
+    #[DataProvider('provideReflectionProperty')]
     public function testReflectProperty(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));

@@ -2,6 +2,7 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Location;
@@ -53,11 +54,11 @@ class LocationsTest extends TestCase
     }
 
     /**
-     * @dataProvider provideUnsortedLocations
      *
      * @param Location[] $unsortedLocationsArray
      * @param Location[] $sortedLocationsArray
      */
+    #[DataProvider('provideUnsortedLocations')]
     public function testSortLocations(
         array $unsortedLocationsArray,
         array $sortedLocationsArray
@@ -78,7 +79,7 @@ class LocationsTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideUnsortedLocations(): Generator
+    public static function provideUnsortedLocations(): Generator
     {
         yield 'Same file is sorted by start position' => [[
             Location::fromPathAndOffsets('/path/to.php', 30, 50),

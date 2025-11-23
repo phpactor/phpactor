@@ -2,15 +2,14 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\Prototype;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\TraitPrototype;
 use Phpactor\CodeBuilder\Domain\Prototype\Traits;
 
 class TraitsTest extends TestCase
 {
-    /**
-     * @testdox Create from traits
-     */
+    #[TestDox('Create from traits')]
     public function testCreateFromTraits(): void
     {
         $traits = Traits::fromTraits([

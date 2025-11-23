@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Bridge\TolerantParser\Reflection\Collection;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionClass;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionClassLikeCollection;
@@ -28,9 +29,7 @@ class ReflectionClassCollectionTest extends TestCase
         $this->reflection3 = $this->prophesize(ReflectionClass::class);
     }
 
-    /**
-     * @testdox It returns only concrete classes.
-     */
+    #[TestDox('It returns only concrete classes.')]
     public function testConcrete(): void
     {
         $this->reflection1->isConcrete()->willReturn(false);

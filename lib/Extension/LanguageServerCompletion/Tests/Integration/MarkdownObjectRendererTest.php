@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCompletion\Tests\Integration;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\Extension\LanguageServerCompletion\Tests\IntegrationTestCase;
@@ -51,23 +52,23 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     }
 
     /**
-     * @dataProvider provideHoverInformation
-     * @dataProvider provideClass
-     * @dataProvider provideInterface
-     * @dataProvider provideMethod
-     * @dataProvider provideVariable
-     * @dataProvider provideProperty
-     * @dataProvider provideConstant
-     * @dataProvider provideEnum
-     * @dataProvider provideEnumCase
-     * @dataProvider provideTrait
-     * @dataProvider provideFunction
-     * @dataProvider provideSymbolOffset
-     * @dataProvider provideDeclaredConstant
-     * @dataProvider provideType
-     * @dataProvider provideMemberDocblock
      * @param Closure(Reflector): HoverInformation $objectFactory
      */
+    #[DataProvider('provideHoverInformation')]
+    #[DataProvider('provideClass')]
+    #[DataProvider('provideInterface')]
+    #[DataProvider('provideMethod')]
+    #[DataProvider('provideVariable')]
+    #[DataProvider('provideProperty')]
+    #[DataProvider('provideConstant')]
+    #[DataProvider('provideEnum')]
+    #[DataProvider('provideEnumCase')]
+    #[DataProvider('provideTrait')]
+    #[DataProvider('provideFunction')]
+    #[DataProvider('provideSymbolOffset')]
+    #[DataProvider('provideDeclaredConstant')]
+    #[DataProvider('provideType')]
+    #[DataProvider('provideMemberDocblock')]
     public function testRender(string $manifest, Closure $objectFactory, string $expected, bool $capture = false): void
     {
         $this->workspace()->loadManifest($manifest);
@@ -747,7 +748,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideFunction(): Generator
+    public static function provideFunction(): Generator
     {
         yield 'simple function' => [
             '',
@@ -783,7 +784,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideDeclaredConstant(): Generator
+    public static function provideDeclaredConstant(): Generator
     {
         yield 'define constant' => [
             '',
@@ -804,7 +805,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideSymbolOffset(): Generator
+    public static function provideSymbolOffset(): Generator
     {
         yield 'whitespace' => [
             '',
@@ -846,7 +847,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideType(): Generator
+    public static function provideType(): Generator
     {
         yield 'mixed' => [
             '',
@@ -1175,7 +1176,7 @@ class MarkdownObjectRendererTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideVariable(): Generator
+    public static function provideVariable(): Generator
     {
         yield 'variable:' => [
             '',

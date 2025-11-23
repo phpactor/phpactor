@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Generator;
@@ -27,7 +28,7 @@ class VariableRenamerTest extends TestCase
 {
     const URI = 'file:///test/Class1.php';
 
-    /** @dataProvider provideGetRenameRange */
+    #[DataProvider('provideGetRenameRange')]
     public function testGetRenameRange(string $source): void
     {
         $extractor = OffsetExtractor::create()
@@ -53,7 +54,7 @@ class VariableRenamerTest extends TestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideGetRenameRange(): Generator
+    public static function provideGetRenameRange(): Generator
     {
         yield 'Rename argument' => [
             '<?php class Class1 { public function method1(${{a<>rg1}}){ } }'
@@ -92,7 +93,7 @@ class VariableRenamerTest extends TestCase
         ];
     }
 
-    /** @dataProvider provideRename */
+    #[DataProvider('provideRename')]
     public function testRename(string $source): void
     {
         $extractor = OffsetExtractor::create()
@@ -153,7 +154,7 @@ class VariableRenamerTest extends TestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideRename(): Generator
+    public static function provideRename(): Generator
     {
         yield 'Rename variable' => [
             '<?php class Class1 { function method1(){ <d>${{va<>r1}} = 5; $var2 = <r>${{var1}} + 5; } }'
