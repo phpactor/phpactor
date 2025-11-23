@@ -18,7 +18,7 @@ class ReflectionFunctionTest extends IntegrationTestCase
     {
         $source = TextDocumentBuilder::fromUnknown($source);
         $functions = $this->createReflector($source)->reflectFunctionsIn($source);
-        $assertion($functions->get($functionName));
+        $assertion->bindTo($this)->__invoke($functions->get($functionName));
     }
 
     public function provideReflectsFunction(): Generator

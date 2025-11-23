@@ -26,7 +26,7 @@ class ReflectionMethodTest extends IntegrationTestCase
     public function testReflectMethod(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class->methods(), $this->logger());
+        $assertion->bindTo($this)->__invoke($class->methods(), $this->logger());
     }
 
     public function provideReflectionMethod(): Generator

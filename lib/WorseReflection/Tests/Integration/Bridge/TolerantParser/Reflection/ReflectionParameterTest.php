@@ -18,7 +18,7 @@ class ReflectionParameterTest extends IntegrationTestCase
     {
         $source = sprintf('<?php namespace Acme; class Foobar { public function method(%s) }', $source);
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString('Acme\Foobar'));
-        $assertion($class->methods()->get('method'));
+        $assertion->bindTo($this)->__invoke($class->methods()->get('method'));
     }
 
     public function provideReflectionParameter()
@@ -207,7 +207,7 @@ class ReflectionParameterTest extends IntegrationTestCase
     {
         $source = sprintf('<?php namespace Acme; class Foobar { %s public function method(%s) }', $docblock, $source);
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString('Acme\Foobar'));
-        $assertion($class->methods()->get('method'));
+        $assertion->bindTo($this)->__invoke($class->methods()->get('method'));
     }
 
     public function provideReflectionParameterWithDocblock()

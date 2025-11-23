@@ -20,7 +20,6 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 class ExpressionNameCompletorTest extends IntegrationTestCase
 {
     /**
-     *
      * @param array<int,NameSearchResult> $searchResults
      * @param Closure(Suggestions): void $assertion
      */

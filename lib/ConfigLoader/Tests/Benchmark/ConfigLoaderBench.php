@@ -19,10 +19,6 @@ use Phpactor\ConfigLoader\Tests\TestCase;
  */
 class ConfigLoaderBench extends TestCase
 {
-    public function __construct()
-    {
-        parent::__construct(static::class);
-    }
     private string $config1;
 
     private string $config2;
@@ -30,6 +26,10 @@ class ConfigLoaderBench extends TestCase
     private string $config1yaml;
 
     private string $config2yaml;
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
 
     public function setUp(): void
     {

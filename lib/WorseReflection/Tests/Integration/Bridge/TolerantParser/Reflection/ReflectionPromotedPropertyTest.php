@@ -17,7 +17,7 @@ class ReflectionPromotedPropertyTest extends IntegrationTestCase
     public function testReflectProperty(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class->properties());
+        $assertion->bindTo($this)->__invoke($class->properties());
     }
 
     public function provideConsturctorPropertyPromotion(): Generator

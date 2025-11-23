@@ -14,13 +14,14 @@ class ReflectionMethodCollectionTest extends IntegrationTestCase
     public function testCollection(string $source, Closure $assertion): void
     {
         $collection = $this->createReflector($source)->reflectClass('Foobar');
+        $assertion = $assertion->bindTo($this);
         $assertion($collection);
     }
 
     /**
      * @return Generator<string, array{string, Closure(ReflectionClass):void}>
      */
-    public function provideCollection(): Generator
+    public static function provideCollection(): Generator
     {
         yield 'Get abstract methods' => [
             <<<'EOT'

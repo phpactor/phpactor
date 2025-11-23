@@ -3,7 +3,6 @@
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Inference;
 
 use PHPUnit\Framework\Attributes\TestDox;
-use Phpactor\WorseReflection\Core\Inference\Assignments;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Core\Inference\LocalAssignments;

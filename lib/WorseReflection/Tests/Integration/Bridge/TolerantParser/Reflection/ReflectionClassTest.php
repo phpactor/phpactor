@@ -27,7 +27,7 @@ class ReflectionClassTest extends IntegrationTestCase
     public function testReflectClass(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class);
+        $assertion->bindTo($this)->__invoke($class);
     }
 
     /**
@@ -791,7 +791,7 @@ class ReflectionClassTest extends IntegrationTestCase
     public function testVirtualMethods(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class);
+        $assertion->bindTo($this)->__invoke($class);
     }
 
     /**
@@ -1055,7 +1055,7 @@ class ReflectionClassTest extends IntegrationTestCase
     public function testVirtualProperties(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class);
+        $assertion->bindTo($this)->__invoke($class);
     }
 
     /**

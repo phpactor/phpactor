@@ -54,7 +54,6 @@ class LocationsTest extends TestCase
     }
 
     /**
-     *
      * @param Location[] $unsortedLocationsArray
      * @param Location[] $sortedLocationsArray
      */
