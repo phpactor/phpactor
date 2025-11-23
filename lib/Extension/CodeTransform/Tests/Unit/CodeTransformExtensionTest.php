@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
@@ -28,9 +29,7 @@ class CodeTransformExtensionTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    /**
-     * @dataProvider provideClassNew
-     */
+    #[DataProvider('provideClassNew')]
     public function testClassNew(string $variant): void
     {
         /** @var array<string,ClassGenerator> */
@@ -42,7 +41,7 @@ class CodeTransformExtensionTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideClassNew(): Generator
+    public static function provideClassNew(): Generator
     {
         yield ['default'];
         yield ['interface'];

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseConstantCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -11,23 +12,19 @@ use Phpactor\TextDocument\TextDocument;
 
 class WorseConstantCompletorTest extends TolerantCompletorTestCase
 {
-    /**
-     * @dataProvider provideComplete
-     */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    /**
-     * @dataProvider provideCouldNotComplete
-     */
+    #[DataProvider('provideCouldNotComplete')]
     public function testCouldNotComplete(string $source): void
     {
         $this->assertCouldNotComplete($source);
     }
 
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         define('PHPACTOR_TEST_FOO', 'Hello');
         yield 'constant' => [
@@ -52,7 +49,7 @@ class WorseConstantCompletorTest extends TolerantCompletorTestCase
         ];
     }
 
-    public function provideCouldNotComplete(): Generator
+    public static function provideCouldNotComplete(): Generator
     {
         yield 'non member access' => [ '<?php $hello<>' ];
     }

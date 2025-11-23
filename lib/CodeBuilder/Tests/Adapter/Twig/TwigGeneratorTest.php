@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter\Twig;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\CodeBuilder\Tests\Adapter\GeneratorTestCase;
 use Phpactor\CodeBuilder\Domain\Renderer;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
@@ -9,10 +10,8 @@ use Phpactor\CodeBuilder\Domain\Builder\SourceCodeBuilder;
 
 class TwigGeneratorTest extends GeneratorTestCase
 {
-    /**
-     * @testdox It should fallback to the default templates if variant template
-     *          does not exist.
-     */
+    #[TestDox('It should fallback to the default templates if variant template
+         does not exist.')]
     public function testFallback(): void
     {
         $builder = SourceCodeBuilder::create();

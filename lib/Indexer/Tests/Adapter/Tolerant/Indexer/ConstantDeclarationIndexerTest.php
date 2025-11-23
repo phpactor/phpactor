@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ConstantDeclarationIndexer;
@@ -16,10 +17,9 @@ class ConstantDeclarationIndexerTest extends TolerantIndexerTestCase
     use ProphecyTrait;
 
     /**
-     * @dataProvider provideDeclaration
-     *
      * @param Closure(IndexAgent):void $assertion
      */
+    #[DataProvider('provideDeclaration')]
     public function testDeclaration(string $manifest, Closure $assertion): void
     {
         $this->workspace()->reset();
@@ -38,7 +38,7 @@ class ConstantDeclarationIndexerTest extends TolerantIndexerTestCase
     /**
      * @return Generator<array{string, Closure(IndexAgent):void}>
      */
-    public function provideDeclaration(): Generator
+    public static function provideDeclaration(): Generator
     {
         yield 'no implementations' => [
             "// File: src/file1.php\n<?php const BARFOO = 1",

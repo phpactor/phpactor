@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use Generator;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantExtractExpression;
@@ -10,9 +11,7 @@ use Phpactor\CodeTransform\Tests\Adapter\TolerantParser\TolerantTestCase;
 
 class TolerantExtractExpressionTest extends TolerantTestCase
 {
-    /**
-     * @dataProvider provideExtractExpression
-     */
+    #[DataProvider('provideExtractExpression')]
     public function testExtractExpression(string $test, string $name, ?string $expectedExceptionMessage = null): void
     {
         [$source, $expected, $offsetStart, $offsetEnd] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
@@ -29,7 +28,7 @@ class TolerantExtractExpressionTest extends TolerantTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    public function provideExtractExpression(): Generator
+    public static function provideExtractExpression(): Generator
     {
         yield 'no op' => [
             'extractExpression1.test',

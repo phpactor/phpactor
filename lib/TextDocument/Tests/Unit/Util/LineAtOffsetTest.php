@@ -2,6 +2,7 @@
 
 namespace Phpactor\TextDocument\Tests\Unit\Util;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use OutOfBoundsException;
 use PHPUnit\Framework\TestCase;
@@ -10,9 +11,7 @@ use Phpactor\TextDocument\Util\LineAtOffset;
 
 class LineAtOffsetTest extends TestCase
 {
-    /**
-     * @dataProvider provideLineAtOffset
-     */
+    #[DataProvider('provideLineAtOffset')]
     public function testLineAtOffset(string $text, string $expectedWord): void
     {
         [ $text, $offset ] = ExtractOffset::fromSource($text);
@@ -24,7 +23,7 @@ class LineAtOffsetTest extends TestCase
     /**
      * @return Generator<array{string, string}>
      */
-    public function provideLineAtOffset(): Generator
+    public static function provideLineAtOffset(): Generator
     {
         yield [
             'hello thi<>s is',

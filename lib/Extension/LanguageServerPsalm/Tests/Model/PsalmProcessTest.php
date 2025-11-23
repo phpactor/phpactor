@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerPsalm\Tests\Model;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\Extension\LanguageServerPsalm\Model\PsalmConfig;
@@ -15,9 +17,7 @@ use Phpactor\Extension\LanguageServerPsalm\Tests\IntegrationTestCase;
 use Symfony\Component\Process\Process;
 use function Amp\Promise\wait;
 
-/**
- * @group slow
- */
+#[Group('slow')]
 class PsalmProcessTest extends IntegrationTestCase
 {
     protected function setUp(): void
@@ -26,9 +26,9 @@ class PsalmProcessTest extends IntegrationTestCase
     }
 
     /**
-     * @dataProvider provideLint
      * @param Closure(list<Diagnostic>):void $assertion
      */
+    #[DataProvider('provideLint')]
     public function testLint(string $source, Closure $assertion, int $initLevel = 1, bool $shouldShowInfo = true, ?int $errorLevel = null): void
     {
         $psalmBin = __DIR__ . '/../../../../../vendor/bin/psalm.phar';
@@ -71,7 +71,7 @@ class PsalmProcessTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideLint(): Generator
+    public static function provideLint(): Generator
     {
         yield [
             '<?php $foobar = "string"; echo $foobar;',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ClassMover\Domain\ClassFinder;
 use Phpactor\ClassMover\Domain\ClassReplacer;
@@ -65,9 +66,8 @@ class ClassMoverTest extends TestCase
 
     /**
      * It should replace references.
-     *
-     * @depends testFindReferences
      */
+    #[Depends('testFindReferences')]
     public function testReplaceReferences(FoundReferences $references): void
     {
         $newFqn = 'SomethingElse';

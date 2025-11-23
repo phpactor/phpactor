@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\WorseReflection\Formatter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Tests\Integration\IntegrationTestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
@@ -9,9 +10,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class MethodFormatterTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideFormatConstant
-     */
+    #[DataProvider('provideFormatConstant')]
     public function testFormatsConstant(string $code, string $expected): void
     {
         $code = TextDocumentBuilder::fromUnknown($code);
@@ -26,7 +25,7 @@ class MethodFormatterTest extends IntegrationTestCase
     /**
      * @return Generator<array{string,string}>
      */
-    public function provideFormatConstant(): Generator
+    public static function provideFormatConstant(): Generator
     {
         yield [
             '<?php class Foobar {public function barfoo()}',

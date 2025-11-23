@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LanguageServerCodeTransform\Unit\Model\NameImporter;
 
+use Prophecy\PhpUnit\ProphecyTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use Generator;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
@@ -17,7 +19,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\TextEdit as LspTextEdit;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
@@ -27,6 +29,7 @@ use RuntimeException;
 
 class NameImporterTest extends TestCase
 {
+    use ProphecyTrait;
     const EXAMPLE_CONTENT = 'hello this is some text';
     const EXAMPLE_PATH = '/foobar.php';
     const EXAMPLE_OFFSET = 12;
@@ -77,7 +80,7 @@ class NameImporterTest extends TestCase
         $this->subject = new NameImporter($this->importNameProphecy->reveal());
     }
 
-    public function provideTestImportData(): Generator
+    public static function provideTestImportData(): Generator
     {
         yield 'function' => [
             '\in_array',
@@ -92,9 +95,7 @@ class NameImporterTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideTestImportData
-     */
+    #[DataProvider('provideTestImportData')]
     public function testImport(
         string $fqn,
         string $importType,

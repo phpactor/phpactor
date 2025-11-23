@@ -2,6 +2,8 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceFinder;
 
+use Prophecy\PhpUnit\ProphecyTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\AttributeCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
@@ -16,11 +18,11 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class AttributeCompletorTest extends TolerantCompletorTestCase
 {
+    use ProphecyTrait;
     /**
-     * @dataProvider provideComplete
-     *
      * @param array{string,array<int,array<string,string>>} $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
@@ -29,7 +31,7 @@ class AttributeCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<string,array{string,array<int,array<string,string>>}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'new class instance' => [
             '<?php namespace Foo { #[Foo<>]class Bar{}',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMethodCollection;
 use Phpactor\WorseReflection\Core\TypeFactory;
@@ -19,15 +20,13 @@ class ReflectionMethodTest extends IntegrationTestCase
 {
     use TrinaryAssert;
 
-    /**
-     * @dataProvider provideReflectionMethod
-     * @dataProvider provideGenerics
-     * @dataProvider provideDeprecations
-     */
+    #[DataProvider('provideReflectionMethod')]
+    #[DataProvider('provideGenerics')]
+    #[DataProvider('provideDeprecations')]
     public function testReflectMethod(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));
-        $assertion($class->methods(), $this->logger());
+        $assertion->bindTo($this)->__invoke($class->methods(), $this->logger());
     }
 
     public function provideReflectionMethod(): Generator
@@ -641,7 +640,7 @@ class ReflectionMethodTest extends IntegrationTestCase
      *
      * @return Generator<mixed>
      */
-    public function provideGenerics(): Generator
+    public static function provideGenerics(): Generator
     {
         yield 'return type from generic' => [
             <<<'PHP'
@@ -786,9 +785,7 @@ class ReflectionMethodTest extends IntegrationTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideReflectionMethodCollection
-     */
+    #[DataProvider('provideReflectionMethodCollection')]
     public function testReflectCollection(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));

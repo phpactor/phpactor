@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerSymbolProvider\Tests\Unit\Adapter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use Generator;
 use Phpactor\LanguageServerProtocol\DocumentSymbol;
@@ -21,18 +22,17 @@ class TolerantDocumentSymbolProviderTest extends TestCase
     const DUMMY_RANGE = 10000;
 
     /**
-     * @dataProvider provideClasses
-     * @dataProvider provideInterfaces
-     * @dataProvider provideTraits
-     * @dataProvider provideFunctions
-     * @dataProvider provideEnums
-     *
      * @param DocumentSymbol[] $expected
      * @throws Exception
      * @throws InvalidArgumentException
      * @throws FrameworkException
      * @throws ExpectationFailedException
      */
+    #[DataProvider('provideClasses')]
+    #[DataProvider('provideInterfaces')]
+    #[DataProvider('provideTraits')]
+    #[DataProvider('provideFunctions')]
+    #[DataProvider('provideEnums')]
     public function testBuildDocumentSymbol(string $source, array $expected): void
     {
         $actual = (new TolerantDocumentSymbolProvider(new Parser()))->provideFor($source);

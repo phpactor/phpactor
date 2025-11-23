@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit\Domain;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\ClassName;
 
@@ -25,27 +26,21 @@ class ClassNameTest extends TestCase
         $this->assertEquals('', $class->namespace());
     }
 
-    /**
-     * @testdox It returns the class short name
-     */
+    #[TestDox('It returns the class short name')]
     public function testShort(): void
     {
         $class = ClassName::fromString('Namespace\\ClassName');
         $this->assertEquals('ClassName', $class->short());
     }
 
-    /**
-     * @testdox It returns the class short name with no namespace
-     */
+    #[TestDox('It returns the class short name with no namespace')]
     public function testShortNoNamespace(): void
     {
         $class = ClassName::fromString('ClassName');
         $this->assertEquals('ClassName', $class->short());
     }
 
-    /**
-     * @testdox It throws exception if classname is empty.
-     */
+    #[TestDox('It throws exception if classname is empty.')]
     public function testEmpty(): void
     {
         $this->expectExceptionMessage('Class name cannot be empty');

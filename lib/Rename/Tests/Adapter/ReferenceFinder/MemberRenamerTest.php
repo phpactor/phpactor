@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Generator;
@@ -25,9 +26,7 @@ class MemberRenamerTest extends TestCase
 {
     const EXAMPLE_DOCUMENT_URI = 'file:///test/Class1.php';
 
-    /**
-     * @dataProvider provideGetRenameRange
-     */
+    #[DataProvider('provideGetRenameRange')]
     public function testGetRenameRange(string $source): void
     {
         $extractor = OffsetExtractor::create()
@@ -60,7 +59,7 @@ class MemberRenamerTest extends TestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideGetRenameRange(): Generator
+    public static function provideGetRenameRange(): Generator
     {
         yield 'method declaration' => [
             '<?php class Class1 { public function {{me<>thod1}}(){ } }'
@@ -88,9 +87,7 @@ class MemberRenamerTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideRename
-     */
+    #[DataProvider('provideRename')]
     public function testRename(string $source): void
     {
         $extractor = OffsetExtractor::create()
@@ -151,7 +148,7 @@ class MemberRenamerTest extends TestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideRename(): Generator
+    public static function provideRename(): Generator
     {
         yield 'method declaration' => [
             '<?php class Class1 { function {{<r>meth<>od1}}() { } }'

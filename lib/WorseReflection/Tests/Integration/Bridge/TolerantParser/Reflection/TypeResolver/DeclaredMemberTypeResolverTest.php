@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection\TypeResolver;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\WorseReflection\Core\ClassName;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
@@ -11,9 +12,7 @@ use Generator;
 
 class DeclaredMemberTypeResolverTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideResolveTypes
-     */
+    #[DataProvider('provideResolveTypes')]
     public function testResolveTypes(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClass(ClassName::fromString($class));

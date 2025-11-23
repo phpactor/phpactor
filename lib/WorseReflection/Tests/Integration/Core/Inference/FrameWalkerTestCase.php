@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Inference\Walker;
 use Phpactor\WorseReflection\Reflector;
@@ -12,9 +13,7 @@ use Generator;
 
 abstract class FrameWalkerTestCase extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideWalk
-     */
+    #[DataProvider('provideWalk')]
     public function testWalk(string $source, Closure $assertion): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -22,10 +21,10 @@ abstract class FrameWalkerTestCase extends IntegrationTestCase
         $source = TextDocumentBuilder::create($source)->uri($path)->build();
         $reflector = $this->createReflectorWithWalker($source, $this->walker());
         $reflectionOffset = $reflector->reflectOffset($source, $offset);
-        $assertion($reflectionOffset->frame(), $offset);
+        $assertion->bindTo($this)->__invoke($reflectionOffset->frame(), $offset);
     }
 
-    abstract public function provideWalk(): Generator;
+    abstract public static function provideWalk(): Generator;
 
     public function walker(): ?Framewalker
     {

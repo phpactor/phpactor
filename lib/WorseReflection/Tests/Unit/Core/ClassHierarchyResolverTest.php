@@ -2,8 +2,9 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -13,8 +14,8 @@ final class ClassHierarchyResolverTest extends TestCase
     /**
      * @param list<string> $definitions
      * @param list<string> $expected
-     * @dataProvider provideClassHierarchy
      */
+    #[DataProvider('provideClassHierarchy')]
     public function testClassHierarchy(array $definitions, array $expected): void
     {
         $reflector = ReflectorBuilder::create()->addSource(implode("\n", $definitions))->build();

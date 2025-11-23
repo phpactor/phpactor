@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Unit\Domain\TemplatePathResolver;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeBuilder\Domain\TemplatePathResolver\PhpVersionPathResolver;
 use Phpactor\CodeBuilder\Tests\IntegrationTestCase;
@@ -13,9 +14,7 @@ class PhpVersionPathResolverTest extends IntegrationTestCase
         $this->workspace()->reset();
     }
 
-    /**
-     * @dataProvider provideResolvePaths
-     */
+    #[DataProvider('provideResolvePaths')]
     public function testResolvePaths(
         string $phpVersion,
         array $fullTemplatePaths,
@@ -34,7 +33,7 @@ class PhpVersionPathResolverTest extends IntegrationTestCase
         }, $templatePaths)));
     }
 
-    public function provideResolvePaths(): Generator
+    public static function provideResolvePaths(): Generator
     {
         yield 'none' => [
             '5.6',

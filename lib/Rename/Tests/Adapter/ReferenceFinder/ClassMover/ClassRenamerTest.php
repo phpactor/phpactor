@@ -2,6 +2,7 @@
 
 namespace Phpactor\Rename\Tests\Adapter\ReferenceFinder\ClassMover;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ClassMover\ClassMover;
@@ -53,9 +54,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
         $this->addToAssertionCount(1);
     }
 
-    /**
-     * @dataProvider provideRename
-     */
+    #[DataProvider('provideRename')]
     public function testRename(
         string $oldPath,
         string $source,
@@ -100,7 +99,7 @@ class ClassRenamerTest extends ReferenceRenamerIntegrationTestCase
     /**
      * @return Generator<string,array{string,string,string,null|string,int,null|string}>
      */
-    public function provideRename(): Generator
+    public static function provideRename(): Generator
     {
         yield 'class' => [
             '/foo/Class1.php',

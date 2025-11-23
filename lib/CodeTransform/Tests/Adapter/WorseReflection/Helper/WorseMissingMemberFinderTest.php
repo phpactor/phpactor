@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Helper;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Helper\WorseMissingMemberFinder;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
@@ -11,9 +12,7 @@ use function Amp\Promise\wait;
 
 class WorseMissingMemberFinderTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideFindMissingMethods
-     */
+    #[DataProvider('provideFindMissingMethods')]
     public function testFindMissingMethods(string $source, int $expectedCount): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);
@@ -27,7 +26,7 @@ class WorseMissingMemberFinderTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideFindMissingMethods(): Generator
+    public static function provideFindMissingMethods(): Generator
     {
         yield 'no methods' => [
             <<<'EOT'

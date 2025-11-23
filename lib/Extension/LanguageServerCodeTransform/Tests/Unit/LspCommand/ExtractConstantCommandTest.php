@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\LspCommand;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Exception\TransformException;
@@ -59,9 +60,7 @@ class ExtractConstantCommandTest extends TestCase
         ], $applyEdit->params);
     }
 
-    /**
-     * @dataProvider provideExceptions
-     */
+    #[DataProvider('provideExceptions')]
     public function testFailedCall(Exception $exception): void
     {
         /** @var ObjectProphecy<ExtractConstant> $extractConstant */
@@ -85,7 +84,7 @@ class ExtractConstantCommandTest extends TestCase
          ], $showMessage->params);
     }
 
-    public function provideExceptions(): array
+    public static function provideExceptions(): array
     {
         return [
             TransformException::class => [ new TransformException('Error message!') ],

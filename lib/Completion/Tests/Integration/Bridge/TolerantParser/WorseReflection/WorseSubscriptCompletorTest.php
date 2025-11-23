@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\WorseSubscriptCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -13,17 +14,15 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 class WorseSubscriptCompletorTest extends TolerantCompletorTestCase
 {
     /**
-     * @dataProvider provideComplete
      * @param array<int,mixed> $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    /**
-     * @dataProvider provideCouldNotComplete
-     */
+    #[DataProvider('provideCouldNotComplete')]
     public function testCouldNotComplete(string $source): void
     {
         $this->assertCouldNotComplete($source);
@@ -32,7 +31,7 @@ class WorseSubscriptCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideCouldNotComplete(): Generator
+    public static function provideCouldNotComplete(): Generator
     {
         yield 'empty string' => [ '<?php  <>' ];
         yield 'function call' => [ '<?php echo<>' ];
@@ -43,7 +42,7 @@ class WorseSubscriptCompletorTest extends TolerantCompletorTestCase
     /**
      * @return Generator<array{string,array<int,array<string,string>>}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'variable' => [
             '<?php $foo<>', []

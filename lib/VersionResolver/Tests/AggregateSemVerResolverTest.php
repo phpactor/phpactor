@@ -2,6 +2,7 @@
 
 namespace Phpactor\VersionResolver\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\VersionResolver\AggregateSemVerResolver;
 use Phpactor\VersionResolver\ArbitrarySemVerResolver;
@@ -13,9 +14,7 @@ class AggregateSemVerResolverTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @dataProvider provideResolverData
-     */
+    #[DataProvider('provideResolverData')]
     public function testResolve(?string $expected, ?string ...$componentVersions): void
     {
         $resolver = new AggregateSemVerResolver(...array_map(
@@ -38,7 +37,7 @@ class AggregateSemVerResolverTest extends TestCase
     /**
      * @return iterable<array<int, string|null>>
      */
-    public function provideResolverData(): iterable
+    public static function provideResolverData(): iterable
     {
         yield 'not null first' => ['1', '1', null];
         yield 'null first' => ['1', null, '1'];

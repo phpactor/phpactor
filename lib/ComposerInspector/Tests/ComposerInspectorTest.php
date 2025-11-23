@@ -2,6 +2,7 @@
 
 namespace Phpactor\ComposerInspector\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ComposerInspector\ComposerInspector;
@@ -35,7 +36,7 @@ class ComposerInspectorTest extends TestCase
         self::assertTrue($package->isDev);
     }
 
-    /** @dataProvider provideReturnsBinDirectory */
+    #[DataProvider('provideReturnsBinDirectory')]
     public function testReturnsBinDirectory(string $composerContent, string $binPath): void
     {
         $this->putComposerLock('{"packages-dev":[{"name":"phpstan/phpstan", "version": "^1.0"}]}');
@@ -47,7 +48,7 @@ class ComposerInspectorTest extends TestCase
     /**
     * @return Generator<array{string, string}>
     */
-    public function provideReturnsBinDirectory(): Generator
+    public static function provideReturnsBinDirectory(): Generator
     {
         yield 'no bin directory' => ['', 'vendor/bin'];
         yield 'bin directory specified' => ['{"bin-dir": "bin"}', 'bin'];

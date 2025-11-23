@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Core\Inference;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -10,9 +11,7 @@ use Closure;
 
 class FrameBuilderTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideForMethod
-     */
+    #[DataProvider('provideForMethod')]
     public function testForMethod(string $source, array $classAndMethod, Closure $assertion): void
     {
         [$className, $methodName] = $classAndMethod;

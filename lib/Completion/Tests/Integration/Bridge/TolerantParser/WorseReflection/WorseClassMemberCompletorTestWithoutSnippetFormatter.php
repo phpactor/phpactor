@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Formatter\ObjectFormatter;
 use Phpactor\ObjectRenderer\ObjectRendererBuilder;
@@ -14,10 +15,14 @@ use Phpactor\Completion\Core\Suggestion;
 /** @phpstan-import-type SuggestionOptions from Suggestion */
 class WorseClassMemberCompletorTestWithoutSnippetFormatter extends WorseClassMemberCompletorTest
 {
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
     /**
-     * @dataProvider provideComplete
      * @param array<SuggestionOptions> $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         // Expect all snippets to be null

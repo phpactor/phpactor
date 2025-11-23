@@ -18,6 +18,10 @@ class ImportNameProviderBench extends IntegrationTestCase
     private LanguageServerTester $tester;
 
     private ImportNameProvider $provider;
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
 
     public function setUp(): void
     {

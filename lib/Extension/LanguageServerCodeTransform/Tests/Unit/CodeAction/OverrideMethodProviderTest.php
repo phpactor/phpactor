@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Amp\CancellationTokenSource;
 use Closure;
 use Generator;
@@ -17,9 +18,7 @@ use function Amp\Promise\wait;
 
 class OverrideMethodProviderTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideOverrideMethod
-     */
+    #[DataProvider('provideOverrideMethod')]
     public function testOverrideMethod(string $manifest, Closure $assertion): void
     {
         $this->workspace()->reset();
@@ -44,7 +43,7 @@ class OverrideMethodProviderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideOverrideMethod(): Generator
+    public static function provideOverrideMethod(): Generator
     {
         yield 'no parent class' => [
             <<<'EOT'

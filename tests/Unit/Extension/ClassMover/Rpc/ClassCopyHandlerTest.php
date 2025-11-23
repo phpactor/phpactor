@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
@@ -36,9 +37,7 @@ class ClassCopyHandlerTest extends HandlerTestCase
         );
     }
 
-    /**
-     * @testdox It should request the dest path if none is given.
-     */
+    #[TestDox('It should request the dest path if none is given.')]
     public function testNoDestPath(): void
     {
         /** @var InputCallbackAction $action */

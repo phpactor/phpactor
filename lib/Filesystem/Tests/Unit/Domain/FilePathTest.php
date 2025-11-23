@@ -2,6 +2,8 @@
 
 namespace Phpactor\Filesystem\Tests\Unit\Domain;
 
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Filesystem\Domain\FilePath;
@@ -13,9 +15,7 @@ use Symfony\Component\Filesystem\Path;
 
 class FilePathTest extends TestCase
 {
-    /**
-     * @testdox It should throw an exception if the path is not absolute
-     */
+    #[TestDox('It should throw an exception if the path is not absolute')]
     public function testNotAbsolute(): void
     {
         $this->expectException(InvalidUriException::class);
@@ -29,9 +29,7 @@ class FilePathTest extends TestCase
         $this->assertEquals('/Hello/Goodbye', $path->path());
     }
 
-    /**
-     * @dataProvider provideFilePathOrString
-     */
+    #[DataProvider('provideFilePathOrString')]
     public function testFromFilePathOrString(FilePath|string $path, string $expectedPath): void
     {
         $filePath = FilePath::fromFilePathOrString($path);
@@ -42,7 +40,7 @@ class FilePathTest extends TestCase
     /**
      * @return Generator<string,array{FilePath|string,string}>
      */
-    public function provideFilePathOrString(): Generator
+    public static function provideFilePathOrString(): Generator
     {
         yield 'FilePath instance' => [
             FilePath::fromString('/foo.php'),
@@ -70,9 +68,7 @@ class FilePathTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideUnsupportedInput
-     */
+    #[DataProvider('provideUnsupportedInput')]
     public function testThrowExceptionOnUnknowableType(string $input, string $expectedExceptionMessage): void
     {
         $this->expectException(RuntimeException::class);
@@ -83,7 +79,7 @@ class FilePathTest extends TestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideUnsupportedInput(): Generator
+    public static function provideUnsupportedInput(): Generator
     {
         yield 'unsupported scheme' => [
             'ftp://host/foo.php',
@@ -96,9 +92,7 @@ class FilePathTest extends TestCase
         ];
     }
 
-    /**
-     * @testdox It generates an absolute path from a relative.
-     */
+    #[TestDox('It generates an absolute path from a relative.')]
     public function testAbsoluteFromString(): void
     {
         $base = FilePath::fromString('/path/to/something');
@@ -106,10 +100,8 @@ class FilePathTest extends TestCase
         $this->assertEquals('/path/to/something/else/yes', $new->path());
     }
 
-    /**
-     * @testdox If creating a descendant file and the path is absolute and NOT in th
-     *          current branch, an exception should be thrown.
-     */
+    #[TestDox('If creating a descendant file and the path is absolute and NOT in th
+         current branch, an exception should be thrown.')]
     public function testDescendantOutsideOfBranchException(): void
     {
         $this->expectException(RuntimeException::class);
@@ -118,9 +110,7 @@ class FilePathTest extends TestCase
         $base->makeAbsoluteFromString('/else/yes');
     }
 
-    /**
-     * @testdox If given an absolute path and it lies within the current branch, return new file path.
-     */
+    #[TestDox('If given an absolute path and it lies within the current branch, return new file path.')]
     public function testDescendantInsideOfBranchException(): void
     {
         $base = FilePath::fromString('/path/to/something');
@@ -128,18 +118,14 @@ class FilePathTest extends TestCase
         $this->assertEquals('/path/to/something/yes', (string) $path);
     }
 
-    /**
-     * @testdox It should provide the absolute path.
-     */
+    #[TestDox('It should provide the absolute path.')]
     public function testAbsolute(): void
     {
         $path = FilePath::fromString('/path/to/something/else/yes');
         $this->assertEquals('/path/to/something/else/yes', $path->path());
     }
 
-    /**
-     * @testdox It should return true if it is within another path
-     */
+    #[TestDox('It should return true if it is within another path')]
     public function testWithin(): void
     {
         $path1 = FilePath::fromString('/else/yes');
@@ -148,18 +134,14 @@ class FilePathTest extends TestCase
         $this->assertTrue($path2->isWithin($path1));
     }
 
-    /**
-     * @testdox It returns the files extension.
-     */
+    #[TestDox('It returns the files extension.')]
     public function itReturnsTheExtension(): void
     {
         $path = FilePath::fromString('/foobar.php');
         $this->assertEquals('php', $path->extension());
     }
 
-    /**
-     * @testdox It returns true or false if it is named a given name.
-     */
+    #[TestDox('It returns true or false if it is named a given name.')]
     public function testIsNamed(): void
     {
         $path1 = FilePath::fromString('/else/foobar');

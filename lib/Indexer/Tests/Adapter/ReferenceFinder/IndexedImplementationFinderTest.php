@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\ReferenceFinder;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Adapter\ReferenceFinder\IndexedImplementationFinder;
 use Phpactor\Indexer\Tests\IntegrationTestCase;
@@ -16,10 +17,8 @@ class IndexedImplementationFinderTest extends IntegrationTestCase
         $this->workspace()->reset();
     }
 
-    /**
-     * @dataProvider provideClassLikes
-     * @dataProvider provideClassMembers
-     */
+    #[DataProvider('provideClassLikes')]
+    #[DataProvider('provideClassMembers')]
     public function testFinder(string $manifest, int $expectedLocationCount): void
     {
         $this->workspace()->loadManifest($manifest);
@@ -44,7 +43,7 @@ class IndexedImplementationFinderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideClassLikes(): Generator
+    public static function provideClassLikes(): Generator
     {
         yield 'interface implementations' => [
             <<<'EOT'
@@ -107,7 +106,7 @@ class IndexedImplementationFinderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideClassMembers(): Generator
+    public static function provideClassMembers(): Generator
     {
         yield 'none' => [
             <<<'EOT'

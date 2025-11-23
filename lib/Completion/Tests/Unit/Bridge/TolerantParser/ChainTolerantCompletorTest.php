@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Bridge\TolerantParser;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Bridge\TolerantParser\ChainTolerantCompletor;
@@ -18,6 +19,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class ChainTolerantCompletorTest extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @var ObjectProphecy<TolerantCompletor>
      */

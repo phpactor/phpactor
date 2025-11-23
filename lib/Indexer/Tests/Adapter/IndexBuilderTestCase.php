@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\Indexer\Model\Record;
@@ -18,10 +19,8 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
         $this->workspace()->loadManifest((string)file_get_contents(__DIR__ . '/Manifest/buildIndex.php.test'));
     }
 
-    /**
-     * @dataProvider provideIndexesClassLike
-     * @dataProvider provideIndexesReferences
-     */
+    #[DataProvider('provideIndexesClassLike')]
+    #[DataProvider('provideIndexesReferences')]
     public function testIndexClass(string $source, string $name, Closure $assertions): void
     {
         $this->workspace()->loadManifest($source);
@@ -233,7 +232,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
     /**
      * @return Generator<string, array>
      */
-    public function provideIndexesReferences(): Generator
+    public static function provideIndexesReferences(): Generator
     {
         yield 'single reference' => [
             <<<'EOT'
@@ -362,9 +361,7 @@ abstract class IndexBuilderTestCase extends IntegrationTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideIndexesFunctions
-     */
+    #[DataProvider('provideIndexesFunctions')]
     public function testIndexFunction(string $source, string $name, Closure $assertions): void
     {
         $this->workspace()->loadManifest($source);

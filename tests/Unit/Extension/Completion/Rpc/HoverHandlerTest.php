@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\Completion\Rpc;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\ClassFormatter;
 use Phpactor\Completion\Bridge\WorseReflection\Formatter\MethodFormatter;
@@ -26,9 +27,7 @@ class HoverHandlerTest extends HandlerTestCase
         $this->formatter = new ObjectFormatter([]);
     }
 
-    /**
-     * @dataProvider provideHover
-     */
+    #[DataProvider('provideHover')]
     public function testHover(string $source, string $expectedMessage): void
     {
         [ $source, $offset ] = ExtractOffset::fromSource($source);
@@ -43,7 +42,7 @@ class HoverHandlerTest extends HandlerTestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideHover(): Generator
+    public static function provideHover(): Generator
     {
         yield 'method' => [
             '<?php class Foobar { public function fo<>obar() { } }',
@@ -76,9 +75,7 @@ class HoverHandlerTest extends HandlerTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideHoverWithFormatter
-     */
+    #[DataProvider('provideHoverWithFormatter')]
     public function testHoverWithFormatter(string $source, string $expectedMessage): void
     {
         $this->formatter = new ObjectFormatter([
@@ -99,7 +96,7 @@ class HoverHandlerTest extends HandlerTestCase
     /**
      * @return Generator<string,array{string,string}>
      */
-    public function provideHoverWithFormatter(): Generator
+    public static function provideHoverWithFormatter(): Generator
     {
         yield 'method' => [
             '<?php class Foobar { public function fo<>obar() { } }',

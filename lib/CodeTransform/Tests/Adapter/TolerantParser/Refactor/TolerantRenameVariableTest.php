@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\TolerantParser\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\TolerantParser\TolerantTestCase;
 use Phpactor\CodeTransform\Adapter\TolerantParser\Refactor\TolerantRenameVariable;
@@ -10,9 +11,7 @@ use Phpactor\CodeTransform\Domain\SourceCode;
 
 class TolerantRenameVariableTest extends TolerantTestCase
 {
-    /**
-     * @dataProvider provideRenameMethod
-     */
+    #[DataProvider('provideRenameMethod')]
     public function testRenameVariable(string $test, $name, string $scope = RenameVariable::SCOPE_FILE): void
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
@@ -23,7 +22,7 @@ class TolerantRenameVariableTest extends TolerantTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    public function provideRenameMethod(): Generator
+    public static function provideRenameMethod(): Generator
     {
         yield 'one instance no context' => [
             'renameVariable1.test',

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\MemberIndexer;
 use Phpactor\Indexer\Model\LocationConfidence;
@@ -12,10 +13,10 @@ use Phpactor\Indexer\Tests\Adapter\Tolerant\TolerantIndexerTestCase;
 class MemberIndexerTest extends TolerantIndexerTestCase
 {
     /**
-     * @dataProvider provideStaticAccess
-     * @dataProvider provideInstanceAccess
      * @param array{int,int,int} $expectedCounts
      */
+    #[DataProvider('provideStaticAccess')]
+    #[DataProvider('provideInstanceAccess')]
     public function testMembers(string $manifest, MemberReference $memberReference, array $expectedCounts): void
     {
         $this->workspace()->reset();
@@ -46,7 +47,7 @@ class MemberIndexerTest extends TolerantIndexerTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideStaticAccess(): Generator
+    public static function provideStaticAccess(): Generator
     {
         yield 'single ref' => [
             "// File: src/file1.php\n<?php Foobar::static()",
@@ -124,7 +125,7 @@ class MemberIndexerTest extends TolerantIndexerTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideInstanceAccess(): Generator
+    public static function provideInstanceAccess(): Generator
     {
         yield 'method call with wrong container type' => [
             "// File: src/file1.php\n<?php class Foobar {}; \$foobar = new Foobar(); \$foobar->hello();",

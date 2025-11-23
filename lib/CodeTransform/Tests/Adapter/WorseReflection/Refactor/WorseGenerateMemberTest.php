@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateMember;
@@ -12,9 +13,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class WorseGenerateMemberTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideGenerateMember
-     */
+    #[DataProvider('provideGenerateMember')]
     public function testGenerateMethod(string $test, ?string $name = null): void
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
@@ -27,7 +26,7 @@ class WorseGenerateMemberTest extends WorseTestCase
     /**
      * @return Generator<string, list<string>>
      */
-    public function provideGenerateMember(): Generator
+    public static function provideGenerateMember(): Generator
     {
         yield 'string' => [ 'generateMember1.test' ];
         yield 'parameter' => [ 'generateMember2.test' ];

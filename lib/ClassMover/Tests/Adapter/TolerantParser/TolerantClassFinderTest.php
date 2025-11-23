@@ -2,6 +2,7 @@
 
 namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Microsoft\PhpParser\Parser;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder;
 use PHPUnit\Framework\TestCase;
@@ -9,9 +10,7 @@ use Phpactor\TextDocument\TextDocumentBuilder;
 
 class TolerantClassFinderTest extends TestCase
 {
-    /**
-     * @testdox It finds all class references.
-     */
+    #[TestDox('It finds all class references.')]
     public function testFind(): void
     {
         $parser = new Parser();

@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Integration\Bridge\TolerantParser\Reflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
 use Phpactor\WorseReflection\Core\ClassName;
@@ -12,9 +13,7 @@ use Closure;
 
 class ReflectionScopeTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideScope
-     */
+    #[DataProvider('provideScope')]
     public function testScope(string $source, string $class, Closure $assertion): void
     {
         $class = $this->createReflector($source)->reflectClassLike(ClassName::fromString($class));

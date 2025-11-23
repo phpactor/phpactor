@@ -2,6 +2,8 @@
 
 namespace Phpactor\ClassMover\Tests\Adapter\WorseTolerant;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use Phpactor\ClassMover\Domain\SourceCode;
 use Phpactor\ClassMover\Adapter\WorseTolerant\WorseTolerantMemberReplacer;
@@ -9,10 +11,8 @@ use Phpactor\ClassMover\Domain\Model\ClassMemberQuery;
 
 class WorseTolerantMemberReplacerTest extends WorseTolerantTestCase
 {
-    /**
-     * @testdox It replaces all member references
-     * @dataProvider provideTestReplace
-     */
+    #[DataProvider('provideTestReplace')]
+    #[TestDox('It replaces all member references')]
     public function testReplace(string $classFqn, string $memberName, string $newMemberName, string $source, string $expectedSource): void
     {
         $finder = $this->createFinder($source);
@@ -26,7 +26,7 @@ class WorseTolerantMemberReplacerTest extends WorseTolerantTestCase
     }
 
     /** @return Generator<array<string>> */
-    public function provideTestReplace(): Generator
+    public static function provideTestReplace(): Generator
     {
         yield 'It returns unmodified if no references' => [
             'Foobar', 'zzzzz', 'barfoo',

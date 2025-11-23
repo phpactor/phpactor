@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerIndexer\Tests\Unit\Model;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\Extension\LanguageServerIndexer\LanguageServerIndexerExtension;
@@ -21,9 +22,7 @@ class WorkspaceSymbolProviderTest extends IntegrationTestCase
         $this->workspace()->reset();
     }
 
-    /**
-     * @dataProvider provideProvide
-     */
+    #[DataProvider('provideProvide')]
     public function testProvide(array $workspace, Closure $assertion, string $query, int $limit = 250): void
     {
         $container = $this->container([
@@ -47,7 +46,7 @@ class WorkspaceSymbolProviderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideProvide(): Generator
+    public static function provideProvide(): Generator
     {
         yield 'No matches' => [
             [

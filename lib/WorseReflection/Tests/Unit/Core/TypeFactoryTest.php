@@ -2,6 +2,8 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Type;
@@ -24,17 +26,15 @@ class TypeFactoryTest extends TestCase
         self::assertEquals(new FalseType(), TypeFactory::fromString('false'));
     }
 
-    /**
-     * @testdox It should __toString the given type.
-     * @dataProvider provideToString
-     */
+    #[DataProvider('provideToString')]
+    #[TestDox('It should __toString the given type.')]
     public function testToString(Type $type, $toString, $phpType): void
     {
         $this->assertEquals($toString, (string) $type, '__toString()');
         $this->assertEquals($phpType, $type->toPhpString(), 'phptype');
     }
 
-    public function provideToString(): Generator
+    public static function provideToString(): Generator
     {
         $reflector = ReflectorBuilder::create()->build();
         yield [
@@ -158,16 +158,14 @@ class TypeFactoryTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideValues
-     */
+    #[DataProvider('provideValues')]
     public function testItCanBeCreatedFromAValue($value, Type $expectedType): void
     {
         $type = TypeFactory::fromValue($value);
         $this->assertEquals($expectedType, $type);
     }
 
-    public function provideValues(): Generator
+    public static function provideValues(): Generator
     {
         yield [
             'string',

@@ -2,15 +2,14 @@
 
 namespace Phpactor\Extension\Rpc\Tests\Unit\Diff;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\Diff\TextEditBuilder;
 
 class TextEditBuilderTest extends TestCase
 {
-    /**
-     * @dataProvider provideDiff
-     */
+    #[DataProvider('provideDiff')]
     public function testDiff(string $one, string $two, array $expected): void
     {
         $textEditBuilder = new TextEditBuilder();
@@ -21,7 +20,7 @@ class TextEditBuilderTest extends TestCase
     /**
      * @return Generator<string,array{string,string,array<int,array<string,mixed>>}>
      */
-    public function provideDiff(): Generator
+    public static function provideDiff(): Generator
     {
         yield 'no edits' => [
             <<<'EOT'

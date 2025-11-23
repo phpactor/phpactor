@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Inference;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Tests\Integration\IntegrationTestCase;
@@ -14,9 +15,7 @@ class SelfTest extends IntegrationTestCase
         'require_and_include',
     ];
 
-    /**
-     * @dataProvider provideSelf
-     */
+    #[DataProvider('provideSelf')]
     public function testSelf(string $path): void
     {
         if (self::shouldSkip($path)) {
@@ -39,7 +38,7 @@ class SelfTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>mixed
      */
-    public function provideSelf(): Generator
+    public static function provideSelf(): Generator
     {
         foreach ((array)glob(__DIR__ . '/*/*.test') as $fname) {
             $dirName = basename(dirname((string)$fname));

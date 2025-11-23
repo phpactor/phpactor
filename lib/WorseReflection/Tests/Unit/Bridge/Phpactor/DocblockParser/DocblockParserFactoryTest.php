@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Bridge\Phpactor\DocblockParser;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
@@ -38,9 +39,9 @@ class DocblockParserFactoryTest extends IntegrationTestCase
 {
     use ProphecyTrait;
     /**
-     * @dataProvider provideResolveType
      * @param Type|string $expected
      */
+    #[DataProvider('provideResolveType')]
     public function testResolveType(string $docblock, $expected): void
     {
         $docblock = $this->parseDocblock($docblock);
@@ -57,7 +58,7 @@ class DocblockParserFactoryTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideResolveType(): Generator
+    public static function provideResolveType(): Generator
     {
         yield [
             '/** @return string */',

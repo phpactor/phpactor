@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Amp\Success;
 use PHPUnit\Framework\TestCase;
@@ -18,9 +19,7 @@ class CodeTransformTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @testdox It should apply the given transformers to source code.
-     */
+    #[TestDox('It should apply the given transformers to source code.')]
     public function testApplyTransformers(): void
     {
         $expectedCode = SourceCode::fromString('hello goodbye');

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\Qualifier;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantQualifier;
@@ -10,9 +11,7 @@ use Phpactor\TestUtils\ExtractOffset;
 
 abstract class TolerantQualifierTestCase extends TestCase
 {
-    /**
-     * @dataProvider provideCouldComplete
-     */
+    #[DataProvider('provideCouldComplete')]
     public function testCouldComplete(string $source, Closure $assertion): void
     {
         [$source, $offset] = ExtractOffset::fromSource($source);

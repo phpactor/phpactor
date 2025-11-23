@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Type\IntLiteralType;
 use Phpactor\WorseReflection\Core\Type\IntType;
 

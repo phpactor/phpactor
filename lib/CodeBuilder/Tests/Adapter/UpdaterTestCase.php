@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeBuilder\Tests\Adapter;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeBuilder\Domain\Prototype\Visibility;
@@ -13,10 +14,8 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 
 abstract class UpdaterTestCase extends TestCase
 {
-    /**
-     * @dataProvider provideClassImport
-     * @dataProvider provideFunctionImport
-     */
+    #[DataProvider('provideClassImport')]
+    #[DataProvider('provideFunctionImport')]
     public function testNamespaceAndUse(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
@@ -25,7 +24,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string,array{string,SourceCode,string}>
      */
-    public function provideClassImport(): Generator
+    public static function provideClassImport(): Generator
     {
         yield 'It does nothing when given an empty source code prototype' => [
 
@@ -418,7 +417,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string,array{string,SourceCode,string}>
      */
-    public function provideFunctionImport(): Generator
+    public static function provideFunctionImport(): Generator
     {
         yield 'It adds use function statements' => [
 
@@ -501,10 +500,8 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-    /**
-     * @dataProvider provideClasses
-     * @dataProvider provideMethodParameters
-     */
+    #[DataProvider('provideClasses')]
+    #[DataProvider('provideMethodParameters')]
     public function testClasses(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
@@ -513,7 +510,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string,array{string,SourceCode,string}>
      */
-    public function provideClasses(): Generator
+    public static function provideClasses(): Generator
     {
         yield 'It does nothing when prototype has only the class' => [
 
@@ -737,15 +734,13 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-    /**
-     * @dataProvider provideEnums
-    */
+    #[DataProvider('provideEnums')]
     public function testEnums(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
     }
 
-    public function provideEnums(): Generator
+    public static function provideEnums(): Generator
     {
         yield 'Rendering an enum' => [
             '',
@@ -812,9 +807,7 @@ abstract class UpdaterTestCase extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideTraits
-     */
+    #[DataProvider('provideTraits')]
     public function testTraits(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
@@ -823,7 +816,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string, array{string, SourceCode, string}>
      */
-    public function provideTraits(): Generator
+    public static function provideTraits(): Generator
     {
         yield 'It does nothing when prototype has only the trait' => [
 
@@ -931,9 +924,7 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-    /**
-     * @dataProvider provideProperties
-     */
+    #[DataProvider('provideProperties')]
     public function testProperties(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
@@ -942,7 +933,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string, array{string, SourceCode, string}>
      */
-    public function provideProperties(): Generator
+    public static function provideProperties(): Generator
     {
         yield 'It adds a property' => [
                 <<<'EOT'
@@ -1153,9 +1144,7 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-    /**
-     * @dataProvider provideTraitProperties
-     */
+    #[DataProvider('provideTraitProperties')]
     public function testTraitProperties(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
@@ -1164,7 +1153,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string, array{string, SourceCode, string}>
      */
-    public function provideTraitProperties(): Generator
+    public static function provideTraitProperties(): Generator
     {
         yield 'trait: It adds a property' => [
                 <<<'EOT'
@@ -1323,9 +1312,7 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-    /**
-     * @dataProvider provideMethods
-     */
+    #[DataProvider('provideMethods')]
     public function testMethods(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
@@ -1333,7 +1320,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string,array{string,SourceCode,string}>
      */
-    public function provideMethods(): Generator
+    public static function provideMethods(): Generator
     {
         yield 'It adds a method' => [
                 <<<'EOT'
@@ -1764,9 +1751,7 @@ abstract class UpdaterTestCase extends TestCase
             ];
     }
 
-    /**
-     * @dataProvider provideConstants
-     */
+    #[DataProvider('provideConstants')]
     public function testConstants(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
@@ -1775,7 +1760,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string, array{string, SourceCode, string}>
      */
-    public function provideConstants(): Generator
+    public static function provideConstants(): Generator
     {
         yield 'It adds a constant' => [
                 <<<'EOT'
@@ -1906,9 +1891,7 @@ abstract class UpdaterTestCase extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider provideInterfaces
-     */
+    #[DataProvider('provideInterfaces')]
     public function testInterfaces(string $existingCode, SourceCode $prototype, string $expectedCode): void
     {
         $this->assertUpdate($existingCode, $prototype, $expectedCode);
@@ -1917,7 +1900,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string, array{string, SourceCode, string}>
      */
-    public function provideInterfaces(): Generator
+    public static function provideInterfaces(): Generator
     {
         yield 'It adds an interface' => [
 
@@ -1966,7 +1949,7 @@ abstract class UpdaterTestCase extends TestCase
     /**
      * @return Generator<string,array{string,SourceCode,string}>
      */
-    public function provideMethodParameters(): Generator
+    public static function provideMethodParameters(): Generator
     {
         yield 'It adds parameters' => [
                 <<<'EOT'

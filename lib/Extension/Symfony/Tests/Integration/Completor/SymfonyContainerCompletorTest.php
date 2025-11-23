@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Symfony\Tests\Integration\Completor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -22,9 +23,9 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 class SymfonyContainerCompletorTest extends TestCase
 {
     /**
-     * @dataProvider provideComplete
      * @param SymfonyContainerService[] $services
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $services, Closure $assertion): void
     {
         [$source, $start] = ExtractOffset::fromSource($source);
@@ -39,7 +40,7 @@ class SymfonyContainerCompletorTest extends TestCase
     /**
      * @return Generator<array-key,array{string,array<array-key,SymfonyContainerService>,Closure(Suggestion[]):void}>
      */
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'not on symfony container, get method' => [
             <<<'EOT'

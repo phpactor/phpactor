@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\WorseReflection;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\Qualifier\ClassQualifier;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
@@ -14,15 +15,15 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 class ImportedNameCompletorTest extends TolerantCompletorTestCase
 {
     /**
-     * @dataProvider provideComplete
      * @param array<string,mixed> $expected
      */
+    #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {
         $this->assertComplete($source, $expected);
     }
 
-    public function provideComplete(): Generator
+    public static function provideComplete(): Generator
     {
         yield 'no imports' => [
             <<<'EOT'

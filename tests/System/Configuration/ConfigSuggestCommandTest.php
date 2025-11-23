@@ -2,6 +2,7 @@
 
 namespace Phpactor\Tests\System\Configuration;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use Phpactor\Configurator\Model\JsonConfig;
@@ -29,8 +30,8 @@ class ConfigSuggestCommandTest extends IntegrationTestCase
     /**
      * @param array<string,mixed> $composerJson
      * @param Closure(JsonConfig): void $assertion
-     * @dataProvider provideSuggest
      */
+    #[DataProvider('provideSuggest')]
     public function testSuggest(array $composerJson, Closure $assertion): void
     {
         $this->workspace()->put('composer.lock', (string)json_encode($composerJson));
@@ -43,7 +44,7 @@ class ConfigSuggestCommandTest extends IntegrationTestCase
     /**
      * @return Generator<array{array<string,mixed>,Closure(JsonConfig): void}>
      */
-    public function provideSuggest(): Generator
+    public static function provideSuggest(): Generator
     {
         yield 'phpstan' => [
             ['packages' => [['name' => 'phpstan/phpstan', 'version' => '^1.0']]],

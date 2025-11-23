@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Unit\Domain;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Prophecy\PhpUnit\ProphecyTrait;
 use PHPUnit\Framework\TestCase;
 use Phpactor\CodeTransform\Domain\Generator;
@@ -11,9 +12,7 @@ class GeneratorsTest extends TestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @testdox It can retrieve and iterate generators.
-     */
+    #[TestDox('It can retrieve and iterate generators.')]
     public function testIterateAndRetrieve(): void
     {
         $generator1 = $this->prophesize(Generator::class);

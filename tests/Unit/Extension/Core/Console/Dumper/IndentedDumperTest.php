@@ -2,13 +2,12 @@
 
 namespace Phpactor\Tests\Unit\Extension\Core\Console\Dumper;
 
+use PHPUnit\Framework\Attributes\TestDox;
 use Phpactor\Extension\Core\Console\Dumper\IndentedDumper;
 
 class IndentedDumperTest extends DumperTestCase
 {
-    /**
-     * @testdox It outputs indented dump
-     */
+    #[TestDox('It outputs indented dump')]
     public function testIndentedOutput(): void
     {
         $output = $this->dump([

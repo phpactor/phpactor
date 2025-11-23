@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerInlineValue\Tests;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\LanguageServerBridge\Converter\RangeConverter;
@@ -11,16 +12,14 @@ use Phpactor\LanguageServerProtocol\InlineValueVariableLookup;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\TestUtils\ExtractOffset;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffsetRange;
 
 class InlineValueHandlerTest extends TestCase
 {
     private const PATH = 'file:///hello';
 
-    /**
-     * @dataProvider provideInlineValue
-     */
+    #[DataProvider('provideInlineValue')]
     public function testInlineValue(string $test): void
     {
         $ranges = [];
@@ -55,7 +54,7 @@ class InlineValueHandlerTest extends TestCase
         }
     }
 
-    public function provideInlineValue(): Generator
+    public static function provideInlineValue(): Generator
     {
         yield 'var' => [
             <<<'EOF'

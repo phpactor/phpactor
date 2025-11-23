@@ -2,6 +2,7 @@
 
 namespace Phpactor\WorseReferenceFinder\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
@@ -17,9 +18,7 @@ use Exception;
 
 class TolerantVariableReferenceFinderTest extends TestCase
 {
-    /**
-    * @dataProvider provideReferences
-    */
+    #[DataProvider('provideReferences')]
     public function testReferences(string $source, bool $includeDefinition = false, bool $isDone = true): void
     {
         $uri = 'file:///root/testDoc';
@@ -48,7 +47,7 @@ class TolerantVariableReferenceFinderTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideReferences(): Generator
+    public static function provideReferences(): Generator
     {
         yield 'not on variable' => [
             '<?php $var1 = <>5;',

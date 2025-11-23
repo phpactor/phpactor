@@ -11,7 +11,7 @@ use Phpactor\Extension\ReferenceFinder\ReferenceFinderExtension;
 use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\Container\PhpactorContainer;
 use Phpactor\Container\Container;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
 
 class IntegrationTestCase extends TestCase

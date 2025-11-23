@@ -15,7 +15,7 @@ use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 
-class ClassInflectHandlerTest extends AbstractClassGenerateHandlerTest
+class ClassInflectHandlerTest extends AbstractClassGenerateHandler
 {
     use ProphecyTrait;
 

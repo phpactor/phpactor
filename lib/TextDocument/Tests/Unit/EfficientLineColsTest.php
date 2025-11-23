@@ -2,6 +2,7 @@
 
 namespace Phpactor\TextDocument\Tests\Unit;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Closure;
 use Generator;
 use PHPUnit\Framework\TestCase;
@@ -10,9 +11,9 @@ use Phpactor\TextDocument\EfficientLineCols;
 class EfficientLineColsTest extends TestCase
 {
     /**
-     * @dataProvider provideConvertOffsetsToLineCol
      * @param list<int> $offsets
      */
+    #[DataProvider('provideConvertOffsetsToLineCol')]
     public function testFromByteOffsets(array $offsets, string $text, Closure $assertion): void
     {
         $converter = EfficientLineCols::fromByteOffsetInts($text, $offsets);
@@ -22,7 +23,7 @@ class EfficientLineColsTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideConvertOffsetsToLineCol(): Generator
+    public static function provideConvertOffsetsToLineCol(): Generator
     {
         yield [
             [],
@@ -52,9 +53,9 @@ class EfficientLineColsTest extends TestCase
     }
 
     /**
-     * @dataProvider provideConvertOffsetsToLineColAsOffset
      * @param list<int> $offsets
      */
+    #[DataProvider('provideConvertOffsetsToLineColAsOffset')]
     public function testFromByteOffsetsAsOffset(array $offsets, string $text, Closure $assertion): void
     {
         $converter = EfficientLineCols::fromByteOffsetInts($text, $offsets, true);
@@ -64,7 +65,7 @@ class EfficientLineColsTest extends TestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideConvertOffsetsToLineColAsOffset(): Generator
+    public static function provideConvertOffsetsToLineColAsOffset(): Generator
     {
         yield 'cat' => [
             [5],

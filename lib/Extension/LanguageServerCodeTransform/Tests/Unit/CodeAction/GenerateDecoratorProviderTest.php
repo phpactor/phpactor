@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerCodeTransform\Tests\Unit\CodeAction;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use Generator;
 use Phpactor\Extension\LanguageServerBridge\Converter\PositionConverter;
 use Phpactor\Extension\LanguageServerCodeTransform\CodeAction\GenerateDecoratorProvider;
@@ -17,10 +19,8 @@ use Phpactor\TestUtils\ExtractOffset;
 
 class GenerateDecoratorProviderTest extends IntegrationTestCase
 {
-    /**
-     * @dataProvider provideGenerateDecoratorProvider
-     * @group flakey
-     */
+    #[DataProvider('provideGenerateDecoratorProvider')]
+    #[Group('flakey')]
     public function testGenerateDecoratorProvider(string $source, int $expectedCount): void
     {
         $this->workspace()->reset();
@@ -53,7 +53,7 @@ class GenerateDecoratorProviderTest extends IntegrationTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideGenerateDecoratorProvider(): Generator
+    public static function provideGenerateDecoratorProvider(): Generator
     {
         yield 'class with no interfaces' => [
             <<<'EOT'

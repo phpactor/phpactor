@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\PhpCodeSniffer\Tests\Provider;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Amp\NullCancellationToken;
 use Generator;
 use Phpactor\Diff\RangesForDiff;
@@ -18,9 +19,7 @@ use function Amp\Promise\wait;
 class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
 {
 
-    /**
-     * @dataProvider fileProvider
-     */
+    #[DataProvider('fileProvider')]
     public function testProvideDiagnosticsVisible(string $fileContent, int $expectedDiagnostics): void
     {
         $provider = $this->getPhpCodeSnifferDiagnosticsProvider(true);
@@ -36,9 +35,7 @@ class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
         self::assertCount($expectedDiagnostics, $diagnostics);
     }
 
-    /**
-     * @dataProvider fileProvider
-     */
+    #[DataProvider('fileProvider')]
     public function testProvideDiagnosticsHidden(string $fileContent): void
     {
         $provider = $this->getPhpCodeSnifferDiagnosticsProvider(false);
@@ -51,9 +48,7 @@ class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
         self::assertCount(0, $diagnostics);
     }
 
-    /**
-     * @dataProvider fileProvider
-     */
+    #[DataProvider('fileProvider')]
     public function testProvideActionsForVisibleDiagnostics(string $fileContent, int $expectedDiagnostics): void
     {
         $provider = $this->getPhpCodeSnifferDiagnosticsProvider(true);
@@ -81,9 +76,7 @@ class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
         }
     }
 
-    /**
-     * @dataProvider fileProvider
-     */
+    #[DataProvider('fileProvider')]
     public function testProvideActionsForHiddenDiagnostics(string $fileContent, int $expectedDiagnostics): void
     {
         $provider = $this->getPhpCodeSnifferDiagnosticsProvider(false);
@@ -126,7 +119,7 @@ class PhpCodeSnifferDiagnosticsProviderTest extends PhpCodeSnifferTestCase
     /**
      * @return Generator<string, array{string, int}>
      */
-    public function fileProvider(): Generator
+    public static function fileProvider(): Generator
     {
         yield 'PEAR: tab indentation' => [
             <<<EOF

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\PHPUnit\Tests\Unit\CodeTransform;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use InvalidArgumentException;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -30,9 +31,8 @@ class GenerateTestMethodsTest extends WorseTestCase
 
     /**
      * @param array<string> $expected
-     *
-     * @dataProvider dataCanMethodBeGenerated
      */
+    #[DataProvider('dataCanMethodBeGenerated')]
     public function testCanMethodBeGenerated(string $source, array $expected): void
     {
         $sourceCode = SourceCode::fromStringAndPath('<?php '.$source, 'file:///source');
@@ -45,7 +45,7 @@ class GenerateTestMethodsTest extends WorseTestCase
     /**
      * @return Generator<string, array{string, array<string>}>
      */
-    public function dataCanMethodBeGenerated(): Generator
+    public static function dataCanMethodBeGenerated(): Generator
     {
         yield 'no classes' => ['echo "Hello"', []];
 
@@ -79,9 +79,7 @@ class GenerateTestMethodsTest extends WorseTestCase
         ];
     }
 
-    /**
-     * @dataProvider provideGenerateTestMethods
-     */
+    #[DataProvider('provideGenerateTestMethods')]
     public function testGenerateDecorator(string $test): void
     {
         [$source, $expected, $offset] = $this->sourceExpectedAndOffset(__DIR__ . '/fixtures/' . $test);
@@ -100,7 +98,7 @@ class GenerateTestMethodsTest extends WorseTestCase
     /**
      * @return Generator<string,array{string}>
      */
-    public function provideGenerateTestMethods(): Generator
+    public static function provideGenerateTestMethods(): Generator
     {
         yield 'generating a method that already exists' => [ 'generateTestMethods_existing.test'];
         yield 'generating a new setUp method' => [ 'generateTestMethods_generate.test'];

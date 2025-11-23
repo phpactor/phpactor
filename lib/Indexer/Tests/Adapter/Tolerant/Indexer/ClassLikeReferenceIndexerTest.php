@@ -2,6 +2,7 @@
 
 namespace Phpactor\Indexer\Tests\Adapter\Tolerant\Indexer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Indexer\Adapter\Tolerant\Indexer\ClassLikeReferenceIndexer;
 use Phpactor\Indexer\Model\LocationConfidence;
@@ -10,9 +11,9 @@ use Phpactor\Indexer\Tests\Adapter\Tolerant\TolerantIndexerTestCase;
 class ClassLikeReferenceIndexerTest extends TolerantIndexerTestCase
 {
     /**
-     * @dataProvider provideClasses
      * @param array{int,int,int} $expectedCounts
      */
+    #[DataProvider('provideClasses')]
     public function testMembers(string $manifest, string $fqn, array $expectedCounts): void
     {
         $this->workspace()->reset();
@@ -35,7 +36,7 @@ class ClassLikeReferenceIndexerTest extends TolerantIndexerTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideClasses(): Generator
+    public static function provideClasses(): Generator
     {
         yield 'single ref' => [
             "// File: src/file1.php\n<?php Foobar::bar()",

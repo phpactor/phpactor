@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Transformer;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Transformer\UpdateReturnTypeTransformer;
 use Phpactor\CodeTransform\Domain\Diagnostic;
@@ -12,9 +13,7 @@ use function Amp\Promise\wait;
 
 class UpdateReturnTypeTransformerTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideTransform
-     */
+    #[DataProvider('provideTransform')]
     public function testTransform(string $example, string $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -31,7 +30,7 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideTransform(): Generator
+    public static function provideTransform(): Generator
     {
         yield 'add missing return type' => [
             <<<'EOT'
@@ -294,9 +293,9 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
     }
 
     /**
-     * @dataProvider provideDiagnostics
      * @param string[] $expected
      */
+    #[DataProvider('provideDiagnostics')]
     public function testDiagnostics(string $example, array $expected): void
     {
         $source = SourceCode::fromString($example);
@@ -309,7 +308,7 @@ class UpdateReturnTypeTransformerTest extends WorseTestCase
     /**
      * @return Generator<mixed>
      */
-    public function provideDiagnostics(): Generator
+    public static function provideDiagnostics(): Generator
     {
         yield 'no methods' => [
             <<<'EOT'

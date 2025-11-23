@@ -2,6 +2,7 @@
 
 namespace Phpactor\CodeTransform\Tests\Adapter\WorseReflection\Refactor;
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\CodeTransform\Tests\Adapter\WorseReflection\WorseTestCase;
 use Phpactor\CodeTransform\Adapter\WorseReflection\Refactor\WorseGenerateAccessor;
@@ -10,9 +11,7 @@ use Phpactor\WorseReflection\Core\Exception\ItemNotFound;
 
 class WorseGenerateAccessorTest extends WorseTestCase
 {
-    /**
-     * @dataProvider provideExtractAccessor
-     */
+    #[DataProvider('provideExtractAccessor')]
     public function testGenerateAccessor(
         string $test,
         string $propertyName,
@@ -38,7 +37,7 @@ class WorseGenerateAccessorTest extends WorseTestCase
         $this->assertEquals(trim($expected), trim($transformed));
     }
 
-    public function provideExtractAccessor(): Generator
+    public static function provideExtractAccessor(): Generator
     {
         $propertyName = 'method';
 
