@@ -17,6 +17,7 @@ use Psr\Log\LoggerInterface;
 class ChainSignatureHelperTest extends TestCase
 {
     use ProphecyTrait;
+
     /**
      * @var ObjectProphecy<LoggerInterface>
      */

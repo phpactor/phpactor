@@ -17,7 +17,7 @@ class NavigatorTest extends IntegrationTestCase
         $this->workspace->put('src/Kernel.php', '<?php');
         $result = $navigator->destinationsFor($this->workspace->path('src/Kernel.php'));
 
-        self::assertSame(['unit_test' => 'tests/Unit/KernelTest.php'], $result);
+        self::assertSame(['unit_test' => 'tests/Unit/KernelFoo.php'], $result);
     }
 
     public function testCanCreate(): void
@@ -35,7 +35,7 @@ class NavigatorTest extends IntegrationTestCase
         $navigator = $this->navigator();
 
         $this->workspace->put('src/Kernel.php', '<?php');
-        $this->workspace->put('tests/Unit/KernelTest.php', '<?php');
+        $this->workspace->put('tests/Unit/KernelFoo.php', '<?php');
         $result = $navigator->canCreateNew($this->workspace->path('src/Kernel.php'), 'unit_test');
 
         self::assertFalse($result);
@@ -46,7 +46,7 @@ class NavigatorTest extends IntegrationTestCase
      * @param array<string,string> $autocreate
      */
     private function navigator(
-        array $destinations = ['source' => 'src/<kernel>.php', 'unit_test' => 'tests/Unit/<kernel>Test.php'],
+        array $destinations = ['source' => 'src/<kernel>.php', 'unit_test' => 'tests/Unit/<kernel>Foo.php'],
         array $autocreate = ['source' => 'source', 'unit_test' => 'unit_test'],
     ): Navigator {
         $container = $this->container([

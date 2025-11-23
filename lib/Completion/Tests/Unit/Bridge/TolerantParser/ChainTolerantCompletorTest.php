@@ -20,6 +20,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class ChainTolerantCompletorTest extends TestCase
 {
     use ProphecyTrait;
+
     /**
      * @var ObjectProphecy<TolerantCompletor>
      */
