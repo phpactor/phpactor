@@ -4,16 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     colors="true" 
     bootstrap="vendor/autoload.php" 
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+    displayDetailsOnPhpunitDeprecations="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
   >
-  <coverage includeUncoveredFiles="true">
+  <source>
     <include>
       <directory>.</directory>
     </include>
     <exclude>
       <directory>vendor/</directory>
     </exclude>
-  </coverage>
+  </source>
   <testsuites>
     <testsuite name="PhpActor Test Suite">
       <directory>./tests/System</directory>
