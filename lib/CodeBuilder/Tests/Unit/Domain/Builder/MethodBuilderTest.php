@@ -16,7 +16,9 @@ class MethodBuilderTest extends TestCase
     public function testExceptionOnAddNonParameterBuilder(): void
     {
         $this->expectException(InvalidBuilderException::class);
+
         $builder = $this->prophesize(NamedBuilder::class);
+
         SourceCodeBuilder::create()
             ->class('One')
             ->method('two')

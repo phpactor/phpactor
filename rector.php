@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\PHPUnit\PHPUnit100\Rector\Class_\AddProphecyTraitRector;
 use Rector\Php84\Rector\Param\ExplicitNullableParamTypeRector;
 
 return RectorConfig::configure()
@@ -16,4 +17,5 @@ return RectorConfig::configure()
     ->withSkipPath('/*/examples/*')
     ->withRules([
         ExplicitNullableParamTypeRector::class,
+        AddProphecyTraitRector::class,
     ]);
