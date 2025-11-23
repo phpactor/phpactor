@@ -4,7 +4,7 @@ namespace Phpactor\Extension\WorseReflection\Tests\Command;
 
 use Microsoft\PhpParser\Parser;
 use Phpactor\Extension\WorseReflection\Command\DumpAstCommand;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TestUtils\Workspace;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;

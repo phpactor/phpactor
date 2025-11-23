@@ -8,7 +8,7 @@ use Phpactor\Indexer\Model\Record\ClassRecord;
 use Phpactor\Indexer\Model\Record\ConstantRecord;
 use Phpactor\Indexer\Model\Record\FunctionRecord;
 use Phpactor\Indexer\Model\SearchIndex\SearchIncludeIndex;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class SearchIncludeIndexTest extends TestCase
 {

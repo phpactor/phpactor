@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Type;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayLiteral;
 

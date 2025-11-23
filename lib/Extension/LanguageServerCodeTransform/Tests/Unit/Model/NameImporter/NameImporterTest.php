@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace LanguageServerCodeTransform\Unit\Model\NameImporter;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Exception;
 use Generator;
@@ -18,7 +19,7 @@ use Phpactor\Extension\LanguageServerCodeTransform\Model\NameImport\NameImporter
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\LanguageServerProtocol\TextDocumentItem;
 use Phpactor\LanguageServerProtocol\TextEdit as LspTextEdit;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 use Phpactor\TextDocument\TextDocumentUri;
 use Phpactor\TextDocument\TextEdit;
@@ -28,6 +29,7 @@ use RuntimeException;
 
 class NameImporterTest extends TestCase
 {
+    use ProphecyTrait;
     const EXAMPLE_CONTENT = 'hello this is some text';
     const EXAMPLE_PATH = '/foobar.php';
     const EXAMPLE_OFFSET = 12;

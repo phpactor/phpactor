@@ -2,7 +2,7 @@
 
 namespace Phpactor\WorseReflection\Tests\Unit\Core\DocBlock;
 
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlock;
 use Phpactor\WorseReflection\Core\DocBlock\PlainDocblock;
 

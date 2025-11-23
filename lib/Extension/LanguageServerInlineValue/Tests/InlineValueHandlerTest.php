@@ -12,7 +12,7 @@ use Phpactor\LanguageServerProtocol\InlineValueVariableLookup;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\TestUtils\ExtractOffset;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffsetRange;
 
 class InlineValueHandlerTest extends TestCase

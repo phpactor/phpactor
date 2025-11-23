@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Unit\Core;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use Phpactor\Completion\Core\ChainSignatureHelper;
 use Phpactor\Completion\Core\Exception\CouldNotHelpWithSignature;
 use Phpactor\Completion\Core\SignatureHelp;
@@ -15,6 +16,7 @@ use Psr\Log\LoggerInterface;
 
 class ChainSignatureHelperTest extends TestCase
 {
+    use ProphecyTrait;
     /**
      * @var ObjectProphecy<LoggerInterface>
      */

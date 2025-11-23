@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "83704cbac4200d04cc367f4644471bde",
+    "content-hash": "ea23e42e8ecca4f75e792dda0e89ffb4",
     "packages": [
         {
             "name": "amphp/amp",
@@ -5560,27 +5560,27 @@
         },
         {
             "name": "phpactor/test-utils",
-            "version": "1.1.6",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpactor/test-utils.git",
-                "reference": "7d081c8e187da3a86e835c28e82e0ce0dbfaef9c"
+                "reference": "049f6e11a3809d5f124dd683f53cb2ab00f99b2f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/7d081c8e187da3a86e835c28e82e0ce0dbfaef9c",
-                "reference": "7d081c8e187da3a86e835c28e82e0ce0dbfaef9c",
+                "url": "https://api.github.com/repos/phpactor/test-utils/zipball/049f6e11a3809d5f124dd683f53cb2ab00f99b2f",
+                "reference": "049f6e11a3809d5f124dd683f53cb2ab00f99b2f",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3 || ^8.0",
+                "php": "^8.1",
                 "symfony/filesystem": "^4.2 || ^5.0 || ^6.0 || ^7.0"
             },
             "require-dev": {
                 "dms/phpunit-arraysubset-asserts": "dev-master",
                 "ergebnis/composer-normalize": "^2.0",
                 "friendsofphp/php-cs-fixer": "^2.17",
-                "phpspec/prophecy-phpunit": "dev-master",
+                "phpspec/prophecy-phpunit": "^2.0",
                 "phpstan/phpstan": "~0.12.0",
                 "phpunit/phpunit": "^9.0"
             },
@@ -5608,9 +5608,9 @@
             "description": "Utilities for managing the test environment",
             "support": {
                 "issues": "https://github.com/phpactor/test-utils/issues",
-                "source": "https://github.com/phpactor/test-utils/tree/1.1.6"
+                "source": "https://github.com/phpactor/test-utils/tree/2.0.0"
             },
-            "time": "2024-12-24T17:52:07+00:00"
+            "time": "2025-11-23T17:05:07+00:00"
         },
         {
             "name": "phpbench/container",

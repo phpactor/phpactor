@@ -4,7 +4,7 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\ClassHierarchyResolver;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
 use Phpactor\WorseReflection\ReflectorBuilder;

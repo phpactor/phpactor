@@ -40,7 +40,7 @@
         "open-telemetry/exporter-otlp": "^1.3",
         "open-telemetry/sdk": "^1.7",
         "php-http/guzzle7-adapter": "^1.1",
-        "phpactor/test-utils": "^1.1.4",
+        "phpactor/test-utils": "^2.0.0",
         "phpbench/phpbench": "^1.4",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/extension-installer": "^1.1",

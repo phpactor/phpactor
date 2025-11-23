@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser\ReferenceFinder;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\AttributeCompletor;
@@ -17,6 +18,7 @@ use Phpactor\WorseReflection\ReflectorBuilder;
 
 class AttributeCompletorTest extends TolerantCompletorTestCase
 {
+    use ProphecyTrait;
     /**
      * @param array{string,array<int,array<string,string>>} $expected
      */

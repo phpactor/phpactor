@@ -12,7 +12,7 @@ use Phpactor\LanguageServerProtocol\TextDocumentIdentifier;
 use Phpactor\LanguageServer\LanguageServerTesterBuilder;
 use Phpactor\LanguageServer\Test\LanguageServerTester;
 use Phpactor\TestUtils\ExtractOffset;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\ByteOffset;
 
 class EvaluatableExpressionHandlerTest extends TestCase

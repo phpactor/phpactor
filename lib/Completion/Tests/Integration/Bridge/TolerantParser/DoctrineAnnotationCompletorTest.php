@@ -2,6 +2,7 @@
 
 namespace Phpactor\Completion\Tests\Integration\Bridge\TolerantParser;
 
+use Prophecy\PhpUnit\ProphecyTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Generator;
 use Phpactor\Completion\Bridge\TolerantParser\WorseReflection\DoctrineAnnotationCompletor;
@@ -17,6 +18,7 @@ use Prophecy\Argument;
 
 class DoctrineAnnotationCompletorTest extends CompletorTestCase
 {
+    use ProphecyTrait;
     #[DataProvider('provideComplete')]
     public function testComplete(string $source, array $expected): void
     {

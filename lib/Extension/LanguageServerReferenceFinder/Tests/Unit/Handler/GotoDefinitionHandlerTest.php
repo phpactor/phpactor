@@ -14,7 +14,7 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Phpactor\ReferenceFinder\TestDefinitionLocator;
 use Phpactor\ReferenceFinder\TypeLocation;
 use Phpactor\ReferenceFinder\TypeLocations;
-use Phpactor\TestUtils\PHPUnit\TestCase;
+use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\Location as PhpactorLocation;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\TypeFactory;
