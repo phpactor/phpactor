@@ -17,6 +17,6 @@ class ArbitrarySemVerResolver implements SemVersionResolver
      */
     public function resolve(): Promise
     {
-        return new Success((null === $this->version) ? null : new SemVersion($this->version));
+        return new Success((null === $this->version) ? null : SemVersion::fromString($this->version));
     }
 }

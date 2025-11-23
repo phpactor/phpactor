@@ -4,9 +4,9 @@ namespace Phpactor\VersionResolver;
 
 use Composer\Semver\Comparator;
 
-class SemVersion
+final class SemVersion
 {
-    public function __construct(
+    private function __construct(
         private string $version,
     ) {
     }
@@ -14,6 +14,11 @@ class SemVersion
     public function __toString(): string
     {
         return $this->version;
+    }
+
+    public static function fromString(string $string): self
+    {
+        return new self($string);
     }
 
     public function greaterThanOrEqualTo(SemVersion $version): bool

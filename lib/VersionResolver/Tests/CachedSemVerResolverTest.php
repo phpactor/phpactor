@@ -21,7 +21,7 @@ class CachedSemVerResolverTest extends TestCase
         $resolver = $this->prophesize(SemVersionResolver::class);
         $resolver
             ->resolve()
-            ->willReturn(new Success(new SemVersion($version)))
+            ->willReturn(new Success(SemVersion::fromString($version)))
             ->shouldBeCalledOnce()
         ;
 

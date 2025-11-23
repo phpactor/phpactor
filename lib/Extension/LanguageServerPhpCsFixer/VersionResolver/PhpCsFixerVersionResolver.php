@@ -35,7 +35,7 @@ class PhpCsFixerVersionResolver implements SemVersionResolver
 
             preg_match('/^PHP CS Fixer (\d+\.\d+\.\d+) /', $stdout, $version);
 
-            return (count($version) > 0) ? new SemVersion($version[1]) : null;
+            return (count($version) > 0) ? SemVersion::fromString($version[1]) : null;
         });
     }
 }
