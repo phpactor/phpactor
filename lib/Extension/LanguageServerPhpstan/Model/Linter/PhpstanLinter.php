@@ -2,6 +2,8 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 
+use Phpactor\VersionResolver\SemVersion;
+use Phpactor\VersionResolver\SemVersionResolver;
 use function Amp\call;
 use Amp\Promise;
 use Generator;
@@ -14,8 +16,8 @@ class PhpstanLinter implements Linter
 {
     public function __construct(
         private PhpstanProcess $phpstanProcess,
+        private SemVersionResolver $versionResolver,
         private bool $disableTmpFile = false,
-        private bool $editorMode = false,
     ) {
     }
 
@@ -27,7 +29,15 @@ class PhpstanLinter implements Linter
     public function lint(string $url, ?string $text): Promise
     {
         return call(function () use ($url, $text) {
-            $diagnostics = yield from $this->doLint($url, $text);
+            $version = yield $this->versionResolver->resolve();
+
+            if (!$version instanceof SemVersion) {
+                throw new \RuntimeException(sprintf(
+                    'Could not determine PHPStan version'
+                ));
+            }
+
+            $diagnostics = yield from $this->doLint($url, $text, $version);
 
             return $diagnostics;
         });
@@ -36,7 +46,7 @@ class PhpstanLinter implements Linter
     /**
      * @return Generator<Promise<array<Diagnostic>>>
      */
-    private function doLint(string $url, ?string $text): Generator
+    private function doLint(string $url, ?string $text, SemVersion $version): Generator
     {
         $path = TextDocumentUri::fromString($url)->path();
 
@@ -48,15 +58,16 @@ class PhpstanLinter implements Linter
         file_put_contents($tempFile, $text);
 
         try {
-            if ($this->editorMode) {
-                $diagnostics = yield $this->phpstanProcess->editorModeAnalyse($path, $tempFile);
-            } else {
-                $diagnostics = yield $this->phpstanProcess->analyseInPlace($tempFile);
+            if ($version->greaterThanOrEqualTo(
+                SemVersion::fromString('2.1.17'),
+                SemVersion::fromString('1.12.27'),
+            )) {
+                return yield $this->phpstanProcess->editorModeAnalyse($path, $tempFile);
             }
+
+            return yield $this->phpstanProcess->analyseInPlace($tempFile);
         } finally {
             @unlink($tempFile);
         }
-
-        return $diagnostics;
     }
 }

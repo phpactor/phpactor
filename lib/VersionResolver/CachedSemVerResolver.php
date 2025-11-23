@@ -4,6 +4,7 @@ namespace Phpactor\VersionResolver;
 
 use Amp\Promise;
 
+use Psr\Log\LoggerInterface;
 use function Amp\call;
 
 class CachedSemVerResolver implements SemVersionResolver
@@ -12,6 +13,7 @@ class CachedSemVerResolver implements SemVersionResolver
 
     public function __construct(
         private SemVersionResolver $resolver,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -26,6 +28,13 @@ class CachedSemVerResolver implements SemVersionResolver
             }
 
             $this->version = yield $this->resolver->resolve();
+
+            if (null !== $this->version) {
+                $this->logger->info(sprintf(
+                    'resolved version "%s"',
+                    $this->version->__toString()
+                ));
+            }
 
             return $this->version;
         });

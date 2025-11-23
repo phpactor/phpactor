@@ -25,11 +25,7 @@ class PhpstanProcessTest extends IntegrationTestCase
     {
         $this->workspace()->reset();
         $this->workspace()->put('test.php', $source);
-        $linter = new PhpstanProcess(
-            $this->workspace()->path(),
-            new PhpstanConfig(__DIR__ . '/../../../../../vendor/bin/phpstan', $configuredSeverity, '7', __DIR__ . '/../../../../../phpstan-baseline.neon', '200M'),
-            new NullLogger()
-        );
+        $linter = $this->createProcess($configuredSeverity);
         $diagnostics = wait($linter->analyseInPlace($this->workspace()->path('test.php')));
         self::assertEquals($expectedDiagnostics, $diagnostics);
     }
@@ -78,5 +74,26 @@ class PhpstanProcessTest extends IntegrationTestCase
                 )
             ]
         ];
+    }
+
+    public function testVersion(): void
+    {
+        $this->workspace()->reset();
+        $process = $this->createProcess();
+        $version = wait($process->version());
+        self::assertIsString($version);
+        self::assertMatchesRegularExpression('{^[0-9]+\.[0-9]+\.[0-9]+}', $version);
+    }
+
+    /**
+     * @param DiagnosticSeverity::* $configuredSeverity
+     */
+    private function createProcess(int $configuredSeverity = DiagnosticSeverity::ERROR): PhpstanProcess
+    {
+        return new PhpstanProcess(
+            $this->workspace()->path(),
+            new PhpstanConfig(__DIR__ . '/../../../../../vendor/bin/phpstan', $configuredSeverity, '7', __DIR__ . '/../../../../../phpstan-baseline.neon', '200M'),
+            new NullLogger()
+        );
     }
 }

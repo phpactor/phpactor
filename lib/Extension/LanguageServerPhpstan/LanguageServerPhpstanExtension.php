@@ -5,6 +5,7 @@ namespace Phpactor\Extension\LanguageServerPhpstan;
 use Phpactor\Container\Container;
 use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\OptionalExtension;
+use Phpactor\Extension\LanguageServerPhpstan\Adapter\VersionResolver\PHPStanVersionResolver;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\PhpstanLinter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanConfig;
@@ -18,6 +19,7 @@ use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\MapResolver\Resolver;
 use InvalidArgumentException;
+use Phpactor\VersionResolver\CachedSemVerResolver;
 
 class LanguageServerPhpstanExtension implements OptionalExtension
 {
@@ -32,6 +34,13 @@ class LanguageServerPhpstanExtension implements OptionalExtension
 
     public function load(ContainerBuilder $container): void
     {
+        $container->register(PHPStanVersionResolver::class, function (Container $container) {
+            return new CachedSemVerResolver(
+                new PHPStanVersionResolver($container->get(PhpstanProcess::class)),
+                LoggingExtension::channelLogger($container, 'phpstan'),
+            );
+        });
+
         $container->register(
             PhpstanDiagnosticProvider::class,
             function (Container $container) {
@@ -47,16 +56,10 @@ class LanguageServerPhpstanExtension implements OptionalExtension
         $container->register(
             Linter::class,
             function (Container $container) {
-                if ($container->parameter(self::PARAM_EDITOR_MODE)->bool()
-                    && $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value()
-                ) {
-                    throw new InvalidArgumentException('You can not disable temp files with editor mode enabled');
-                }
-
                 return new PhpstanLinter(
                     $container->get(PhpstanProcess::class),
+                    $container->get(PHPStanVersionResolver::class),
                     $container->parameter(self::PARAM_TMP_FILE_DISABLED)->value() ?  $container->parameter(self::PARAM_TMP_FILE_DISABLED)->bool() : false,
-                    $container->parameter(self::PARAM_EDITOR_MODE)->bool(),
                 );
             }
         );
@@ -119,8 +122,7 @@ class LanguageServerPhpstanExtension implements OptionalExtension
             self::PARAM_TMP_FILE_DISABLED => 'Disable the use of temporary files when.'
                 . ' This prevents as-you-type diagnostics, but ensures paths in phpstan config are respected.'
                     . ' See https://github.com/phpactor/phpactor/issues/2763',
-            self::PARAM_EDITOR_MODE => 'Use the editor mode of Phpstan https://phpstan.org/user-guide/editor-mode'
-                . ' (Requires phpstan 2.14 or higher)',
+            self::PARAM_EDITOR_MODE => 'DEPRECATED. Editor mode of Phpstan is used automatically when it\'s supported.'
             ]
         );
     }

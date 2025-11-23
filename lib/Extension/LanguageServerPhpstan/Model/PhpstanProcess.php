@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\LanguageServerPhpstan\Model;
 
+use Phpactor\VersionResolver\SemVersion;
 use function Amp\call;
 use Amp\Process\Process;
 use Amp\Promise;
@@ -112,6 +113,32 @@ class PhpstanProcess
             }
 
             return $this->parser->parse($stdout, $this->config->severity());
+        });
+    }
+
+    /**
+     * @return Promise<string|null>
+     */
+    public function version(): Promise
+    {
+        return call(function () {
+            $args = [
+                PHP_BINARY,
+                $this->config->phpstanBin(),
+                '--version',
+            ];
+            $process = new Process($args, $this->cwd);
+            yield $process->start();
+            yield $process->join();
+            $stdout = yield buffer($process->getStdout());
+
+            if (!is_string($stdout)) {
+                return null;
+            }
+
+            preg_match('{[0-9]+\.[0-9]+\.[0-9]+}', $stdout, $matches);
+
+            return $matches[0] ?? null;
         });
     }
 }
