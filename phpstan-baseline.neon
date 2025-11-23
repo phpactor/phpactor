@@ -1135,26 +1135,8 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Adapter/TolerantParser/Util/ImporterNamesTest.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\CodeBuilder\\Tests\\Unit\\Domain\\Builder\\MethodBuilderTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/MethodBuilderTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/MethodBuilderTest.php
-
-		-
 			message: '#^Cannot call method visibility\(\) on Phpactor\\CodeBuilder\\Domain\\Prototype\\Parameter\|null\.$#'
 			identifier: method.nonObject
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/MethodBuilderTest.php
-
-		-
-			message: '#^Parameter \#1 \$builder of method Phpactor\\CodeBuilder\\Domain\\Builder\\MethodBuilder\:\:add\(\) expects Phpactor\\CodeBuilder\\Domain\\Builder\\NamedBuilder, mixed given\.$#'
-			identifier: argument.type
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/Domain/Builder/MethodBuilderTest.php
 
@@ -1333,42 +1315,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/Prototype/DefaultValueTest.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\CodeBuilder\\Tests\\Unit\\Domain\\TemplatePathResolver\\FilterPhpVersionDirectoryIteratorTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/FilterPhpVersionDirectoryIteratorTest.php
-
-		-
-			message: '#^Cannot call method getFilename\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/FilterPhpVersionDirectoryIteratorTest.php
-
-		-
-			message: '#^Cannot call method isDir\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/FilterPhpVersionDirectoryIteratorTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/FilterPhpVersionDirectoryIteratorTest.php
-
-		-
-			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/FilterPhpVersionDirectoryIteratorTest.php
-
-		-
-			message: '#^Method Phpactor\\CodeBuilder\\Tests\\Unit\\Domain\\TemplatePathResolver\\FilterPhpVersionDirectoryIteratorTest\:\:createFakeSplFileInfo\(\) should return SplFileInfo but returns mixed\.$#'
-			identifier: return.type
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/FilterPhpVersionDirectoryIteratorTest.php
-
-		-
 			message: '#^Method Phpactor\\CodeBuilder\\Tests\\Unit\\Domain\\TemplatePathResolver\\FilterPhpVersionDirectoryIteratorTest\:\:provideDirectoriesToFilter\(\) return type has no value type specified in iterable type iterable\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -1417,12 +1363,6 @@ parameters:
 			path: lib/CodeBuilder/Tests/Unit/Domain/TemplatePathResolver/PhpVersionPathResolverTest.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\CodeBuilder\\Tests\\Unit\\SourceBuilderTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 3
-			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
-
-		-
 			message: '#^Cannot call method apply\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 1
@@ -1437,24 +1377,12 @@ parameters:
 		-
 			message: '#^Cannot call method reveal\(\) on mixed\.$#'
 			identifier: method.nonObject
-			count: 5
+			count: 4
 			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
 
 		-
 			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
 			identifier: method.nonObject
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
-
-		-
-			message: '#^Parameter \#1 \$generator of class Phpactor\\CodeBuilder\\SourceBuilder constructor expects Phpactor\\CodeBuilder\\Domain\\Renderer, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
-
-		-
-			message: '#^Parameter \#2 \$updater of class Phpactor\\CodeBuilder\\SourceBuilder constructor expects Phpactor\\CodeBuilder\\Domain\\Updater, object given\.$#'
-			identifier: argument.type
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
 
@@ -1473,12 +1401,6 @@ parameters:
 		-
 			message: '#^Property Phpactor\\CodeBuilder\\Tests\\Unit\\SourceBuilderTest\:\:\$prototype has no type specified\.$#'
 			identifier: missingType.property
-			count: 1
-			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
-
-		-
-			message: '#^Property Phpactor\\CodeBuilder\\Tests\\Unit\\SourceBuilderTest\:\:\$updater \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\CodeBuilder\\Domain\\Updater\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
 			count: 1
 			path: lib/CodeBuilder/Tests/Unit/SourceBuilderTest.php
 
@@ -3595,38 +3517,8 @@ parameters:
 			path: lib/Completion/Tests/Benchmark/CompletorBenchCase.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\Completion\\Tests\\Integration\\Bridge\\TolerantParser\\DoctrineAnnotationCompletorTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/DoctrineAnnotationCompletorTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/DoctrineAnnotationCompletorTest.php
-
-		-
-			message: '#^Cannot call method search\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 4
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/DoctrineAnnotationCompletorTest.php
-
-		-
-			message: '#^Cannot call method willYield\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 4
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/DoctrineAnnotationCompletorTest.php
-
-		-
 			message: '#^Method Phpactor\\Completion\\Tests\\Integration\\Bridge\\TolerantParser\\DoctrineAnnotationCompletorTest\:\:testComplete\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/DoctrineAnnotationCompletorTest.php
-
-		-
-			message: '#^Parameter \#1 \$nameSearcher of class Phpactor\\Completion\\Bridge\\TolerantParser\\WorseReflection\\DoctrineAnnotationCompletor constructor expects Phpactor\\ReferenceFinder\\NameSearcher, mixed given\.$#'
-			identifier: argument.type
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/DoctrineAnnotationCompletorTest.php
 
@@ -3635,66 +3527,6 @@ parameters:
 			identifier: phpunit.dataProviderMethod
 			count: 1
 			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/Qualifier/TolerantQualifierTestCase.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Completion\\Tests\\Integration\\Bridge\\TolerantParser\\ReferenceFinder\\AttributeCompletorTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/AttributeCompletorTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/AttributeCompletorTest.php
-
-		-
-			message: '#^Cannot call method search\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 8
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/AttributeCompletorTest.php
-
-		-
-			message: '#^Cannot call method willYield\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 8
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/AttributeCompletorTest.php
-
-		-
-			message: '#^Parameter \#1 \$nameSearcher of class Phpactor\\Completion\\Bridge\\TolerantParser\\ReferenceFinder\\AttributeCompletor constructor expects Phpactor\\ReferenceFinder\\NameSearcher, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/AttributeCompletorTest.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Completion\\Tests\\Integration\\Bridge\\TolerantParser\\ReferenceFinder\\UseNameCompletorTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/UseNameCompletorTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/UseNameCompletorTest.php
-
-		-
-			message: '#^Cannot call method search\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/UseNameCompletorTest.php
-
-		-
-			message: '#^Cannot call method willYield\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/UseNameCompletorTest.php
-
-		-
-			message: '#^Parameter \#1 \$nameSearcher of class Phpactor\\Completion\\Bridge\\TolerantParser\\ReferenceFinder\\UseNameCompletor constructor expects Phpactor\\ReferenceFinder\\NameSearcher, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Completion/Tests/Integration/Bridge/TolerantParser/ReferenceFinder/UseNameCompletorTest.php
 
 		-
 			message: '#^Method Phpactor\\Completion\\Tests\\Integration\\Bridge\\TolerantParser\\SourceCodeFilesystem\\ScfClassCompletorTest\:\:testComplete\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
@@ -3907,12 +3739,6 @@ parameters:
 			path: lib/Completion/Tests/Unit/Bridge/WorseReflection/Formatter/FunctionLikeSnippetFormatterTest.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\Completion\\Tests\\Unit\\Core\\ChainSignatureHelperTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 3
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
 			message: '#^Cannot call method signatureHelp\(\) on mixed\.$#'
 			identifier: method.nonObject
 			count: 3
@@ -3929,54 +3755,6 @@ parameters:
 			identifier: missingType.iterableValue
 			count: 1
 			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: '#^Property Phpactor\\Completion\\Tests\\Unit\\Core\\ChainSignatureHelperTest\:\:\$help \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\Completion\\Core\\SignatureHelp\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: '#^Property Phpactor\\Completion\\Tests\\Unit\\Core\\ChainSignatureHelperTest\:\:\$helper1 \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\Completion\\Core\\SignatureHelper\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: '#^Property Phpactor\\Completion\\Tests\\Unit\\Core\\ChainSignatureHelperTest\:\:\$logger \(Prophecy\\Prophecy\\ObjectProphecy\<Psr\\Log\\LoggerInterface\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/ChainSignatureHelperTest.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Completion\\Tests\\Unit\\Core\\TypedCompletorRegistryTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/TypedCompletorRegistryTest.php
-
-		-
-			message: '#^Cannot call method complete\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/TypedCompletorRegistryTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: lib/Completion/Tests/Unit/Core/TypedCompletorRegistryTest.php
-
-		-
-			message: '#^Cannot call method shouldBeCalled\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/TypedCompletorRegistryTest.php
-
-		-
-			message: '#^Parameter \#1 \$completorMap of class Phpactor\\Completion\\Core\\TypedCompletorRegistry constructor expects array\<string, Phpactor\\Completion\\Core\\Completor\>, array\<string, mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Completion/Tests/Unit/Core/TypedCompletorRegistryTest.php
 
 		-
 			message: '#^Function sprintf invoked with 3 parameters, 2 required\.$#'
@@ -6355,20 +6133,8 @@ parameters:
 			path: lib/Extension/CodeTransform/Rpc/TransformHandler.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\Extension\\CodeTransform\\Tests\\Unit\\Rpc\\AbstractClassGenerateHandler\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Extension/CodeTransform/Tests/Unit/Rpc/AbstractClassGenerateHandler.php
-
-		-
 			message: '#^Method Phpactor\\Extension\\CodeTransform\\Tests\\Unit\\Rpc\\AbstractClassGenerateHandler\:\:exampleNewPath\(\) has no return type specified\.$#'
 			identifier: missingType.return
-			count: 1
-			path: lib/Extension/CodeTransform/Tests/Unit/Rpc/AbstractClassGenerateHandler.php
-
-		-
-			message: '#^Property Phpactor\\Extension\\CodeTransform\\Tests\\Unit\\Rpc\\AbstractClassGenerateHandler\:\:\$fileToClass \(Prophecy\\Prophecy\\ObjectProphecy\) does not accept mixed\.$#'
-			identifier: assign.propertyType
 			count: 1
 			path: lib/Extension/CodeTransform/Tests/Unit/Rpc/AbstractClassGenerateHandler.php
 
@@ -11059,6 +10825,12 @@ parameters:
 			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
 
 		-
+			message: '#^Parameter \#1 \$object of method Phpactor\\ObjectRenderer\\Model\\ObjectRenderer\:\:render\(\) expects object, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Extension/LanguageServerCompletion/Tests/Integration/MarkdownObjectRendererTest.php
+
+		-
 			message: '#^Parameter \#1 \$string of function trim expects string, string\|false given\.$#'
 			identifier: argument.type
 			count: 1
@@ -12241,45 +12013,15 @@ parameters:
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoDefinitionHandlerTest.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\Extension\\LanguageServerReferenceFinder\\Tests\\Unit\\Handler\\GotoImplementationHandlerTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
 			message: '#^Cannot access property \$result on Phpactor\\LanguageServer\\Core\\Rpc\\ResponseMessage\|null\.$#'
 			identifier: property.nonObject
 			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
-			message: '#^Property Phpactor\\Extension\\LanguageServerReferenceFinder\\Tests\\Unit\\Handler\\GotoImplementationHandlerTest\:\:\$finder \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\ReferenceFinder\\ClassImplementationFinder\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/GotoImplementationHandlerTest.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Extension\\LanguageServerReferenceFinder\\Tests\\Unit\\Handler\\ReferencesHandlerTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
 
 		-
 			message: '#^Cannot access property \$result on Phpactor\\LanguageServer\\Core\\Rpc\\ResponseMessage\|null\.$#'
 			identifier: property.nonObject
 			count: 3
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
-
-		-
-			message: '#^Property Phpactor\\Extension\\LanguageServerReferenceFinder\\Tests\\Unit\\Handler\\ReferencesHandlerTest\:\:\$finder \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\ReferenceFinder\\ReferenceFinder\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
-
-		-
-			message: '#^Property Phpactor\\Extension\\LanguageServerReferenceFinder\\Tests\\Unit\\Handler\\ReferencesHandlerTest\:\:\$locator \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\ReferenceFinder\\DefinitionLocator\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
 			path: lib/Extension/LanguageServerReferenceFinder/Tests/Unit/Handler/ReferencesHandlerTest.php
 
 		-
@@ -12947,36 +12689,6 @@ parameters:
 			identifier: offsetAccess.invalidOffset
 			count: 1
 			path: lib/Extension/Logger/LoggingExtension.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Extension\\Logger\\Tests\\Unit\\Formatter\\FormatterRegistryTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 3
-			path: lib/Extension/Logger/Tests/Unit/Formatter/FormatterRegistryTest.php
-
-		-
-			message: '#^Cannot call method get\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Logger/Tests/Unit/Formatter/FormatterRegistryTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 4
-			path: lib/Extension/Logger/Tests/Unit/Formatter/FormatterRegistryTest.php
-
-		-
-			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Extension/Logger/Tests/Unit/Formatter/FormatterRegistryTest.php
-
-		-
-			message: '#^Parameter \#1 \$container of class Phpactor\\Extension\\Logger\\Formatter\\FormatterRegistry constructor expects Psr\\Container\\ContainerInterface, mixed given\.$#'
-			identifier: argument.type
-			count: 2
-			path: lib/Extension/Logger/Tests/Unit/Formatter/FormatterRegistryTest.php
 
 		-
 			message: '#^Method Phpactor\\Extension\\Logger\\Tests\\Unit\\Formatter\\PrettyFormatterTest\:\:provideFormat\(\) has no return type specified\.$#'
@@ -15679,88 +15391,16 @@ parameters:
 			path: lib/Filesystem/Tests/Adapter/IntegrationTestCase.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\Filesystem\\Tests\\Unit\\Domain\\ChainFileListProviderTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: lib/Filesystem/Tests/Unit/Domain/ChainFileListProviderTest.php
-
-		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Phpactor\\\\Filesystem\\\\Domain\\\\FileList'' and Phpactor\\Filesystem\\Domain\\FileList will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
 			path: lib/Filesystem/Tests/Unit/Domain/ChainFileListProviderTest.php
 
 		-
-			message: '#^Cannot call method fileList\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: lib/Filesystem/Tests/Unit/Domain/ChainFileListProviderTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: lib/Filesystem/Tests/Unit/Domain/ChainFileListProviderTest.php
-
-		-
-			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: lib/Filesystem/Tests/Unit/Domain/ChainFileListProviderTest.php
-
-		-
-			message: '#^Parameter \#1 \$providers of class Phpactor\\Filesystem\\Domain\\ChainFileListProvider constructor expects array\<Phpactor\\Filesystem\\Domain\\FileListProvider\>, array\<int, mixed\> given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/ChainFileListProviderTest.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Filesystem\\Domain\\FilesystemRegistry\|Prophecy\\Prophecy\\ObjectProphecy\:\:reveal\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Filesystem\\Tests\\Unit\\Domain\\FallbackFilesystemRegistryTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: '#^Parameter \#1 \$registry of class Phpactor\\Filesystem\\Domain\\FallbackFilesystemRegistry constructor expects Phpactor\\Filesystem\\Domain\\FilesystemRegistry, object given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: '#^Property Phpactor\\Filesystem\\Tests\\Unit\\Domain\\FallbackFilesystemRegistryTest\:\:\$filesystem1 \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\Filesystem\\Domain\\Filesystem\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
-			message: '#^Property Phpactor\\Filesystem\\Tests\\Unit\\Domain\\FallbackFilesystemRegistryTest\:\:\$innerRegistry \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\Filesystem\\Domain\\FilesystemRegistry\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/FallbackFilesystemRegistryTest.php
-
-		-
 			message: '#^Call to method PHPUnit\\Framework\\Assert\:\:assertInstanceOf\(\) with ''Phpactor\\\\Filesystem\\\\Domain\\\\FilePath'' and Phpactor\\Filesystem\\Domain\\FilePath will always evaluate to true\.$#'
 			identifier: method.alreadyNarrowedType
 			count: 1
 			path: lib/Filesystem/Tests/Unit/Domain/FilePathTest.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Filesystem\\Tests\\Unit\\Domain\\MappedFilesystemRegistryTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
-
-		-
-			message: '#^Property Phpactor\\Filesystem\\Tests\\Unit\\Domain\\MappedFilesystemRegistryTest\:\:\$filesystem \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\Filesystem\\Domain\\Filesystem\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Filesystem/Tests/Unit/Domain/MappedFilesystemRegistryTest.php
 
 		-
 			message: '#^Cannot cast mixed to int\.$#'
@@ -16759,78 +16399,6 @@ parameters:
 			path: lib/Indexer/Tests/IntegrationTestCase.php
 
 		-
-			message: '#^Call to an undefined method Phpactor\\Indexer\\Tests\\Unit\\Adapter\\Filesystem\\FilesystemFileListProviderTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Filesystem/FilesystemFileListProviderTest.php
-
-		-
-			message: '#^Property Phpactor\\Indexer\\Tests\\Unit\\Adapter\\Filesystem\\FilesystemFileListProviderTest\:\:\$index \(Prophecy\\Prophecy\\ObjectProphecy\<Phpactor\\Indexer\\Model\\Index\>\) does not accept mixed\.$#'
-			identifier: assign.propertyType
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Filesystem/FilesystemFileListProviderTest.php
-
-		-
-			message: '#^Call to an undefined method Phpactor\\Indexer\\Tests\\Unit\\Adapter\\Php\\Serialized\\FileRepositoryTest\:\:prophesize\(\)\.$#'
-			identifier: method.notFound
-			count: 2
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Cannot call method deserialize\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Cannot call method reveal\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 2
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Cannot call method serialize\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Cannot call method shouldHaveBeenCalled\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Cannot call method warning\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Cannot call method willReturn\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Cannot call method willThrow\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Parameter \#2 \$serializer of class Phpactor\\Indexer\\Adapter\\Php\\Serialized\\FileRepository constructor expects Phpactor\\Indexer\\Model\\RecordSerializer, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
-			message: '#^Parameter \#3 \$logger of class Phpactor\\Indexer\\Adapter\\Php\\Serialized\\FileRepository constructor expects Psr\\Log\\LoggerInterface\|null, mixed given\.$#'
-			identifier: argument.type
-			count: 1
-			path: lib/Indexer/Tests/Unit/Adapter/Php/Serialized/FileRepositoryTest.php
-
-		-
 			message: '#^Method Phpactor\\Indexer\\Tests\\Unit\\Adapter\\ReferenceFinder\\Util\\ContainerTypeResolverTest\:\:testResolve\(\) has parameter \$manifest with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -17473,7 +17041,19 @@ parameters:
 			path: lib/Rename/Tests/RenamerTestCase.php
 
 		-
+			message: '#^Parameter \#1 \$edits of static method Phpactor\\Rename\\Model\\LocatedTextEdits\:\:fromLocatedEditsToCollection\(\) expects array\<Phpactor\\Rename\\Model\\LocatedTextEdit\>, list\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Rename/Tests/RenamerTestCase.php
+
+		-
 			message: '#^Parameter \#1 \$foo of function sprintf expects strng, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: lib/Rename/Tests/RenamerTestCase.php
+
+		-
+			message: '#^Parameter \#1 \$iterator of function iterator_to_array expects Traversable, mixed given\.$#'
 			identifier: argument.type
 			count: 1
 			path: lib/Rename/Tests/RenamerTestCase.php

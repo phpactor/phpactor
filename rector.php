@@ -16,10 +16,9 @@ return RectorConfig::configure()
     ->withSkipPath('*/Workspace/*')
     ->withSkipPath('/tests/Assets/*')
     ->withSkipPath('/*/examples/*')
-    ->withSets(
+    ->withSets([
         PHPUnitSetList::PHPUNIT_100,
-    )
+    ])
     ->withRules([
         ExplicitNullableParamTypeRector::class,
-        AddProphecyTraitRector::class,
     ]);
