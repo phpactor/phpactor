@@ -41,6 +41,9 @@ class ShortNameMatchesToBench
         $criteria->isSatisfiedBy($record);
     }
 
+    /**
+     * @return Generator<string,array{string,string}>
+     */
     public function provideSearch(): Generator
     {
         yield 'leading substring' => ['Bag', 'Foobar\\Bagno'];

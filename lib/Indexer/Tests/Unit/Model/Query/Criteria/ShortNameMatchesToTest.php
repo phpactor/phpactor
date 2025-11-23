@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace Phpactor\Indexer\Tests\Unit\Model\Query\Criteria;
 
 use Generator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Indexer\Model\Query\Criteria\ShortNameMatchesTo;
 use Phpactor\Indexer\Model\Record\ClassRecord;
 
 class ShortNameMatchesToTest extends TestCase
 {
-    /**
-     * @dataProvider provideSearch
-     */
+    #[DataProvider('provideSearch')]
     public function testLeadingOnly(string $name, string $path, bool $expectedLeading, bool $expectedFuzzy): void
     {
         $record = ClassRecord::fromName($path);
@@ -24,7 +23,7 @@ class ShortNameMatchesToTest extends TestCase
     /**
      * @return Generator<string,array{string,string,bool,bool}>
      */
-    public function provideSearch(): Generator
+    public static function provideSearch(): Generator
     {
         yield 'empty search' => ['', 'Foobar\\Bagno', false, false];
         yield 'no match' => ['Barfoo', 'Foobar\\Bazfoo', false, false];
