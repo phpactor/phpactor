@@ -7,7 +7,6 @@ use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\PhpstanLinter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
 use Phpactor\VersionResolver\ArbitrarySemVerResolver;
 use Phpactor\VersionResolver\SemVersion;
-use Prophecy\Argument;
 
 class PhpstanLinterTest extends TestCase
 {

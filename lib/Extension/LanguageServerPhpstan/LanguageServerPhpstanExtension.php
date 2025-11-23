@@ -18,7 +18,6 @@ use Phpactor\Extension\FilePathResolver\FilePathResolverExtension;
 use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\LanguageServerProtocol\DiagnosticSeverity;
 use Phpactor\MapResolver\Resolver;
-use InvalidArgumentException;
 use Phpactor\VersionResolver\CachedSemVerResolver;
 
 class LanguageServerPhpstanExtension implements OptionalExtension

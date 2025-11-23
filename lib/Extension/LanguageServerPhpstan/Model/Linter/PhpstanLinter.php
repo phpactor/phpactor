@@ -11,6 +11,7 @@ use Phpactor\Extension\LanguageServerPhpstan\Model\Linter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
 use Phpactor\LanguageServerProtocol\Diagnostic;
 use Phpactor\TextDocument\TextDocumentUri;
+use RuntimeException;
 
 class PhpstanLinter implements Linter
 {
@@ -32,7 +33,7 @@ class PhpstanLinter implements Linter
             $version = yield $this->versionResolver->resolve();
 
             if (!$version instanceof SemVersion) {
-                throw new \RuntimeException(sprintf(
+                throw new RuntimeException(sprintf(
                     'Could not determine PHPStan version'
                 ));
             }
@@ -62,7 +63,7 @@ class PhpstanLinter implements Linter
                 $version->greaterThanOrEqualTo(SemVersion::fromString('2.1.17'))
                 ||
                 (
-                    $version->greaterThanOrEqualTo(SemVersion::fromString('1.12.27')) && 
+                    $version->greaterThanOrEqualTo(SemVersion::fromString('1.12.27')) &&
                     $version->lessThan(SemVersion::fromString('2.0.0'))
                 )
             ) {
