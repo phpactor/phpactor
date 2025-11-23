@@ -13,6 +13,7 @@ parameters:
         - */lib/ClassMover/Tests/Adapter/TolerantParser/examples/*
         - lib/WorseReflection/Core/SourceCodeLocator/InternalStubs/*
         - lib/Extension/LanguageServerCodeTransform/Tests/Stub/*
+        - lib/Extension/LanguageServerCodeTransform/Tests/Empty/*
 
     reportUnmatchedIgnoredErrors: false
     inferPrivatePropertyTypeFromConstructor: true
