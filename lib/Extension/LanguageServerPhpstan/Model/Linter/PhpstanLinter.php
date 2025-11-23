@@ -58,10 +58,14 @@ class PhpstanLinter implements Linter
         file_put_contents($tempFile, $text);
 
         try {
-            if ($version->greaterThanOrEqualTo(
-                SemVersion::fromString('2.1.17'),
-                SemVersion::fromString('1.12.27'),
-            )) {
+            if (
+                $version->greaterThanOrEqualTo(SemVersion::fromString('2.1.17'))
+                ||
+                (
+                    $version->greaterThanOrEqualTo(SemVersion::fromString('1.12.27')) && 
+                    $version->lessThan(SemVersion::fromString('2.0.0'))
+                )
+            ) {
                 return yield $this->phpstanProcess->editorModeAnalyse($path, $tempFile);
             }
 

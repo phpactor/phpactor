@@ -21,14 +21,13 @@ final class SemVersion
         return new self($string);
     }
 
-    public function greaterThanOrEqualTo(SemVersion ...$versions): bool
+    public function greaterThanOrEqualTo(SemVersion $version): bool
     {
-        foreach  ($versions as $version) {
-            if (Comparator::greaterThanOrEqualTo($this->version, $version->__toString())) {
-                return true;
-            }
-        }
+        return Comparator::greaterThanOrEqualTo($this->version, $version->__toString());
+    }
 
-        return false;
+    public function lessThan(SemVersion $version): bool
+    {
+        return Comparator::lessThan($this->version, $version->__toString());
     }
 }
