@@ -6,6 +6,7 @@ namespace Phpactor\Completion\Bridge\TolerantParser\WorseReflection;
 
 use Generator;
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\StatementNode;
 use Phpactor\Completion\Bridge\TolerantParser\CompletionContext;
 use Phpactor\Completion\Bridge\TolerantParser\TolerantCompletor;
 use Phpactor\Completion\Core\Suggestion;
@@ -14,6 +15,10 @@ use Phpactor\TextDocument\TextDocument;
 
 class KeywordCompletor implements TolerantCompletor
 {
+    private const EXPRESSIONS = [
+        'match' => " (\$1) {\$0\n}",
+        'throw' => ' $1',
+    ];
     private const MAGIC_METHODS = [
         '__construct' => "(\$1)\n{\$0\n}",
         '__call' => "(string \\\$\${1:name}, array \\\$\${2:arguments}): \${3:mixed}\n{\$0\n}",
@@ -37,7 +42,7 @@ class KeywordCompletor implements TolerantCompletor
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator
     {
         if (CompletionContext::promotedPropertyVisibility($node)) {
-            yield from $this->keywords(['private ', 'public ', 'protected ', ]);
+            yield from $this->keywords(['private ', 'public ', 'protected ']);
             return true;
         }
         if (CompletionContext::classClause($node, $offset)) {
@@ -58,8 +63,14 @@ class KeywordCompletor implements TolerantCompletor
             return true;
         }
 
+        if (CompletionContext::expression($node)) {
+            yield from $this->expressions();
+            return true;
+        }
+
         if (
             CompletionContext::classMembersBody($node->parent)
+                && !$node->parent instanceof StatementNode
         ) {
             yield from $this->keywords([
                 'function ',
@@ -74,6 +85,20 @@ class KeywordCompletor implements TolerantCompletor
         }
 
         return true;
+    }
+
+    /**
+     * @return Generator<Suggestion>
+     */
+    private function expressions(): Generator
+    {
+        foreach (self::EXPRESSIONS as $name => $snippet) {
+            yield Suggestion::createWithOptions($name . ' ', [
+                'type' => Suggestion::TYPE_KEYWORD,
+                'priority' => -255,
+                'snippet' => $name . $snippet,
+            ]);
+        }
     }
 
     /**
