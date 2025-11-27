@@ -43,6 +43,7 @@ class StubFileMemberProvider implements ReflectionMemberProvider
         }
 
         $reflector = ReflectorBuilder::create()
+            ->addLocator($locator->sourceLocator())
             ->build();
         $classes = [];
         foreach ($this->stubFiles as $stubFile) {

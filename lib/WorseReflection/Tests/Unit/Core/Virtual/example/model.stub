@@ -2,7 +2,7 @@
 
 namespace Example;
 
-class Model implements ModelInterface {
+interface ModelInterface {
     /**
      * @return \Phalcon\Mvc\Model\Criteria<static>
      */

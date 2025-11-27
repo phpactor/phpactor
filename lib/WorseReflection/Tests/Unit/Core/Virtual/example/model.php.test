@@ -2,13 +2,15 @@
 
 namespace Example;
 
+interface ModelInterface {
+    public static function findOne();
+}
+
 class Model implements ModelInterface {
     public static function query($dependencyInjector = null)
     {
     }
-
-    public static function findOne()
-    {
-    }
 }
 
+
+class Blog extends Model {}
