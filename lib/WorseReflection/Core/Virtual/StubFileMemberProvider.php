@@ -16,6 +16,7 @@ class StubFileMemberProvider implements ReflectionMemberProvider
      * @var array<string,ReflectionClassLike>
      */
     private array $stubClasses = [];
+
     private bool $initialized = false;
 
     /**
