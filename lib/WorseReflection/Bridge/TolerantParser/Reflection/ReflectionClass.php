@@ -86,6 +86,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
         $providedMembers = ClassLikeReflectionMemberCollection::empty();
         foreach ($this->hierarchy() as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
+            /** @phpstan-ignore-next-line collection IS compatible */
             $providedMembers = $providedMembers->merge($this->serviceLocator->methodProviders()->provideMembers(
                 $this->serviceLocator,
                 $reflectionClassLike
