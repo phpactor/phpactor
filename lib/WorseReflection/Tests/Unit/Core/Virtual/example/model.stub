@@ -1,0 +1,17 @@
+<?php
+
+namespace Example;
+
+class Model implements ModelInterface {
+    /**
+     * @return \Phalcon\Mvc\Model\Criteria<static>
+     */
+    public static function query(\Phalcon\DiInterface $dependencyInjector = null);
+    /**
+     * @return static|false
+     */
+    public static function findOne()
+    {
+    }
+}
+

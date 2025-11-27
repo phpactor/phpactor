@@ -1,0 +1,14 @@
+<?php
+
+namespace Example;
+
+class Model implements ModelInterface {
+    public static function query($dependencyInjector = null)
+    {
+    }
+
+    public static function findOne()
+    {
+    }
+}
+

@@ -83,9 +83,10 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
             return $this->members;
         }
         $members = ClassLikeReflectionMemberCollection::empty();
+        $providedMembers = ClassLikeReflectionMemberCollection::empty();
         foreach ($this->hierarchy() as $reflectionClassLike) {
             $classLikeMembers = $reflectionClassLike->ownMembers();
-            $classLikeMembers = $classLikeMembers->merge($this->serviceLocator->methodProviders()->provideMembers(
+            $providedMembers = $providedMembers->merge($this->serviceLocator->methodProviders()->provideMembers(
                 $this->serviceLocator,
                 $reflectionClassLike
             ));
@@ -97,10 +98,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
 
             // we only take constants from interfaces, methods must be implemented.
             if ($reflectionClassLike instanceof ReflectionInterface) {
-                /** @phpstan-ignore-next-line collection IS compatible */
-                $members = $members->merge($classLikeMembers->constants());
-                /** @phpstan-ignore-next-line collection IS compatible */
-                $members = $members->merge($classLikeMembers->virtual());
+                $members = $members->merge($classLikeMembers);
                 continue;
             }
 
@@ -115,6 +113,7 @@ class ReflectionClass extends AbstractReflectionClass implements CoreReflectionC
                 continue;
             }
         }
+        $members = $members->merge($providedMembers);
         $this->members = $members->map(fn (ReflectionMember $member) => $member->withClass($this));
 
         return $this->members;
