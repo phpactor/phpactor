@@ -10,12 +10,14 @@ use Phpactor\Extension\LanguageServerWorseReflection\Handler\InlayHintHandler;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintOptions;
 use Phpactor\Extension\LanguageServerWorseReflection\InlayHint\InlayHintProvider;
 use Phpactor\Extension\LanguageServerWorseReflection\Listener\InvalidateDocumentCacheListener;
+use Phpactor\Extension\LanguageServerWorseReflection\Listener\StubValidationListener;
 use Phpactor\Extension\LanguageServerWorseReflection\SourceLocator\WorkspaceSourceLocator;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndex;
 use Phpactor\Extension\LanguageServerWorseReflection\Workspace\WorkspaceIndexListener;
 use Phpactor\Extension\LanguageServer\Container\DiagnosticProviderTag;
 use Phpactor\Extension\LanguageServer\LanguageServerExtension;
 use Phpactor\Extension\WorseReflection\WorseReflectionExtension;
+use Phpactor\LanguageServer\Core\Server\ClientApi;
 use Phpactor\LanguageServer\Core\Workspace\Workspace;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\WorseReflection\Core\CacheForDocument;
@@ -34,6 +36,13 @@ class LanguageServerWorseReflectionExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $this->registerSourceLocator($container);
+
+        $container->register(StubValidationListener::class, function (Container $container) {
+            return new StubValidationListener(
+                $container->get(ClientApi::class),
+                $container->parameter(WorseReflectionExtension::PARAM_ADDITIVE_STUBS)->listOfString(),
+            );
+        }, [ LanguageServerExtension::TAG_LISTENER_PROVIDER => [] ]);
     }
 
     public function configure(Resolver $schema): void

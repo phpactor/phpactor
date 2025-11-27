@@ -39,6 +39,21 @@ class WorseReflectionExtensionTest extends TestCase
         $this->assertEquals((string) $reflector->reflectClass(__CLASS__)->name(), __CLASS__);
     }
 
+    public function testAdditiveStubPaths(): void
+    {
+        $reflector = $this->createReflector([
+            WorseReflectionExtension::PARAM_ADDITIVE_STUBS => [
+                'example/stub.stub',
+            ],
+            FilePathResolverExtension::PARAM_APPLICATION_ROOT => __DIR__ . '/../../../../..',
+            FilePathResolverExtension::PARAM_PROJECT_ROOT => __DIR__
+        ]);
+
+        $reflection = $reflector->reflectClass(__CLASS__);
+        $method = $reflection->methods()->byName('testAdditiveStubPaths')->first();
+        self::assertEquals('string', $method->inferredType()->__toString());
+    }
+
     public function testProvideReflectorWithStubsAndCustomCacheDir(): void
     {
         $reflector = $this->createReflector([

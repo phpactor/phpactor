@@ -903,6 +903,19 @@ Location of the core PHP stubs - these will be scanned and cached on the first r
 **Default**: ``"%application_root%\/vendor\/jetbrains\/phpstorm-stubs"``
 
 
+.. _param_worse_reflection.additive_stubs:
+
+
+``worse_reflection.additive_stubs``
+"""""""""""""""""""""""""""""""""""
+
+
+Additive stubs files relative to the project root. These stubs augment existing defininitions.
+
+
+**Default**: ``[]``
+
+
 .. _param_worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance:
 
 
@@ -933,7 +946,7 @@ FilePathResolverExtension
 """""""""""""""""""""""""""""""""""
 
 
-**Default**: ``"\/home\/arctgx\/dev\/arctgx\/php\/phpactor\/phpactor-dev"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor"``
 
 
 .. _param_file_path_resolver.app_name:
@@ -1426,7 +1439,7 @@ Amount of time (in milliseconds) to wait before responding to a shutdown notific
 Internal use only - name path to Phpactor binary
 
 
-**Default**: ``"\/home\/arctgx\/dev\/arctgx\/php\/phpactor\/phpactor-dev\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
+**Default**: ``"\/home\/daniel\/www\/phpactor\/phpactor\/lib\/Extension\/LanguageServer\/..\/..\/..\/bin\/phpactor"``
 
 
 .. _param_language_server.self_destruct_timeout:

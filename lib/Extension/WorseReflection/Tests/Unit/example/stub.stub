@@ -1,0 +1,14 @@
+<?php
+
+namespace Phpactor\Extension\WorseReflection\Tests\Unit;
+
+class WorseReflectionExtensionTest extends TestCase
+{
+    /**
+     * @return string
+     */
+    public function testAdditiveStubPaths(): void
+    {
+    }
+}
+

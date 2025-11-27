@@ -3,7 +3,11 @@ Changelog
 
 ## master
 
-Imrprovements:
+Features:
+
+  - Additive stubs #2968 @dantleech
+
+Improvements:
 
   - Restrict attribute completion using targets #2629 @przepompownia
   - Use the Phan fork of the Tolerant Parser as a base #2946 @dantleech

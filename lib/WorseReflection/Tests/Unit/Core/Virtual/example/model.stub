@@ -1,0 +1,21 @@
+<?php
+
+namespace Example;
+
+/**
+ * @property string $virtualString
+ * @method \stdClass foobar(string $bar)
+ */
+interface ModelInterface {
+    /**
+     * @return \Phalcon\Mvc\Model\Criteria<static>
+     */
+    public static function query(\Phalcon\DiInterface $dependencyInjector = null);
+    /**
+     * @return static|false
+     */
+    public static function findOne()
+    {
+    }
+}
+
