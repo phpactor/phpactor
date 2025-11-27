@@ -5,20 +5,15 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Virtual;
 use PHPUnit\Framework\TestCase;
 use Phpactor\TextDocument\TextDocumentBuilder;
 use Phpactor\WorseReflection\Core\Virtual\StubFileMemberProvider;
+use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\ReflectorBuilder;
 
 class StubMemberProviderTest extends TestCase
 {
     public function testProvider(): void
     {
-        $reflector = ReflectorBuilder::create()
-            ->enableContextualSourceLocation()
-            ->addMemberProvider(
-                new StubFileMemberProvider([
-                    __DIR__ . '/example/model.stub',
-                ])
-            )
-            ->build();
+        $stubs = [__DIR__ . '/example/model.stub'];
+        $reflector = $this->createReflector($stubs);
 
         $classes = $reflector->reflectClassesIn(
             TextDocumentBuilder::fromUri(__DIR__ . '/example/model.php.test')->build()
@@ -30,14 +25,8 @@ class StubMemberProviderTest extends TestCase
 
     public function testProviderExtended(): void
     {
-        $reflector = ReflectorBuilder::create()
-            ->enableContextualSourceLocation()
-            ->addMemberProvider(
-                new StubFileMemberProvider([
-                    __DIR__ . '/example/model.stub',
-                ])
-            )
-            ->build();
+        $stubs = [__DIR__ . '/example/model.stub'];
+        $reflector = $this->createReflector($stubs);
 
         $classes = $reflector->reflectClassesIn(
             TextDocumentBuilder::fromUri(__DIR__ . '/example/model.php.test')->build()
@@ -45,10 +34,24 @@ class StubMemberProviderTest extends TestCase
 
         $reflection = $classes->get('Example\Blog');
         self::assertEquals(
-            'static(Example\Model)|false',
+            'static(Example\Blog)|false',
             $reflection->methods()->get(
                 'findOne'
             )->inferredType()->__toString()
         );
+    }
+
+    /**
+     * @param string[]  $stubs
+     */
+    private function createReflector(array $stubs): Reflector
+    {
+        $reflector = ReflectorBuilder::create()
+            ->enableContextualSourceLocation()
+            ->addMemberProvider(
+                new StubFileMemberProvider($stubs)
+            )
+            ->build();
+        return $reflector;
     }
 }
