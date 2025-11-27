@@ -41,6 +41,22 @@ class StubMemberProviderTest extends TestCase
         );
     }
 
+    public function testProvideVirtualMethodsFromStubs(): void
+    {
+        $stubs = [__DIR__ . '/example/model.stub'];
+        $reflector = $this->createReflector($stubs);
+
+        $classes = $reflector->reflectClassesIn(
+            TextDocumentBuilder::fromUri(__DIR__ . '/example/model.php.test')->build()
+        );
+
+        $reflection = $classes->get('Example\Blog');
+        self::assertEquals(
+            'string',
+            $reflection->properties()->get('virtualString')->inferredType()->__toString()
+        );
+    }
+
     /**
      * @param string[]  $stubs
      */

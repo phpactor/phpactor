@@ -2,6 +2,10 @@
 
 namespace Example;
 
+/**
+ * @property string $virtualString
+ * @method \stdClass foobar(string $bar)
+ */
 interface ModelInterface {
     public static function findOne();
 }

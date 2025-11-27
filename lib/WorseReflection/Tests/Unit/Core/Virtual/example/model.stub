@@ -2,6 +2,10 @@
 
 namespace Example;
 
+/**
+ * @property string $virtualString
+ * @method \stdClass foobar(string $bar)
+ */
 interface ModelInterface {
     /**
      * @return \Phalcon\Mvc\Model\Criteria<static>

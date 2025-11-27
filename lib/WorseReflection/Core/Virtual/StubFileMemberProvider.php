@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Virtual;
 
 use Phpactor\TextDocument\TextDocumentBuilder;
+use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ChainReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\Collection\ReflectionMemberCollection;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionClassLike;
@@ -44,6 +45,7 @@ class StubFileMemberProvider implements ReflectionMemberProvider
 
         $reflector = ReflectorBuilder::create()
             ->addLocator($locator->sourceLocator())
+            ->addMemberProvider(new DocblockMemberProvider())
             ->build();
         $classes = [];
         foreach ($this->stubFiles as $stubFile) {
