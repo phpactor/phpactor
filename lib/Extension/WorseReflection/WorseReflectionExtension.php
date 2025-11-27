@@ -58,7 +58,7 @@ class WorseReflectionExtension implements Extension
     const TAG_MEMBER_TYPE_RESOLVER = 'worse_reflection.member_type_resolver';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
     const PARAM_UNDEFINED_VAR_LEVENSHTEIN = 'worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance';
-    const PARAM_EXTRA_STUBS = 'worse_reflection.extra_stubs';
+    const PARAM_ADDITIVE_STUBS = 'worse_reflection.extra_stubs';
 
     public function configure(Resolver $schema): void
     {
@@ -69,7 +69,7 @@ class WorseReflectionExtension implements Extension
             self::PARAM_ENABLE_CONTEXT_LOCATION => true,
             self::PARAM_STUB_CACHE_DIR => '%cache%/worse-reflection',
             self::PARAM_STUB_DIR => '%application_root%/vendor/jetbrains/phpstorm-stubs',
-            self::PARAM_EXTRA_STUBS => [],
+            self::PARAM_ADDITIVE_STUBS => [],
             self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 4,
         ]);
         $schema->setDescriptions([
@@ -83,7 +83,7 @@ class WorseReflectionExtension implements Extension
                 EOT
         ,
             self::PARAM_STUB_DIR => 'Location of the core PHP stubs - these will be scanned and cached on the first request',
-            self::PARAM_EXTRA_STUBS => 'Additional stubs _files_ relative to the project root, for example for Laravel',
+            self::PARAM_ADDITIVE_STUBS => 'Additivve stubs files relative to the project root',
             self::PARAM_STUB_CACHE_DIR => 'Cache directory for stubs',
             self::PARAM_IMPORT_GLOBALS => 'Show hints for non-imported global classes and functions',
         ]);
@@ -193,11 +193,11 @@ class WorseReflectionExtension implements Extension
         $container->register('worse_reflection.member_provider.docblock', function (Container $container) {
             return new DocblockMemberProvider();
         }, [ self::TAG_MEMBER_PROVIDER => []]);
-        $container->register('worse_reflection.member_provider.docblock', function (Container $container) {
+        $container->register('worse_reflection.member_provider.stubs', function (Container $container) {
             $resolver = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
             return new StubFileMemberProvider(array_map(function (string $path) use ($resolver) {
                 return $resolver->resolve($path);
-            }, $container->parameter(self::PARAM_EXTRA_STUBS)->listOfString()));
+            }, $container->parameter(self::PARAM_ADDITIVE_STUBS)->listOfString()));
         }, [ self::TAG_MEMBER_PROVIDER => []]);
     }
 
