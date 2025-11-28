@@ -135,7 +135,7 @@ class PhpCsFixerProcess
      */
     private function resolveExtraArgs(?SemVersion $version, string ...$args): array
     {
-        if ($version?->greaterThanOrEqualTo(new SemVersion('3.89.2'))) {
+        if ($version?->greaterThanOrEqualTo(SemVersion::fromString('3.89.2'))) {
             return [...['--allow-unsupported-php-version=yes'], ...$args];
         }
 
@@ -153,7 +153,7 @@ class PhpCsFixerProcess
             return $env;
         }
 
-        if ($version->greaterThanOrEqualTo(new SemVersion('3.89.2'))) {
+        if ($version->greaterThanOrEqualTo(SemVersion::fromString('3.89.2'))) {
             unset($env['PHP_CS_FIXER_IGNORE_ENV']);
 
             return $env;

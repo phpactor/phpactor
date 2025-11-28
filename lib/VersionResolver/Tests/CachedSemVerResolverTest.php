@@ -9,6 +9,7 @@ use Phpactor\VersionResolver\SemVersion;
 use Phpactor\VersionResolver\SemVersionResolver;
 use Prophecy\PhpUnit\ProphecyTrait;
 
+use Psr\Log\LoggerInterface;
 use function Amp\Promise\wait;
 
 class CachedSemVerResolverTest extends TestCase
@@ -21,11 +22,17 @@ class CachedSemVerResolverTest extends TestCase
         $resolver = $this->prophesize(SemVersionResolver::class);
         $resolver
             ->resolve()
-            ->willReturn(new Success(new SemVersion($version)))
+            ->willReturn(new Success(SemVersion::fromString($version)))
             ->shouldBeCalledOnce()
         ;
 
-        $cachedResolver = new CachedSemVerResolver($resolver->reveal());
+        $logger = $this->prophesize(LoggerInterface::class);
+        $logger->info('resolved version "1"')->shouldBeCalledOnce();
+
+        $cachedResolver = new CachedSemVerResolver(
+            $resolver->reveal(),
+            $logger->reveal(),
+        );
 
         for ($i = 1; $i <= 2; $i++) {
             $actual = wait($cachedResolver->resolve());

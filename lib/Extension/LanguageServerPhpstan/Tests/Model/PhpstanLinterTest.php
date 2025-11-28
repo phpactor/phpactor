@@ -5,6 +5,8 @@ namespace Phpactor\Extension\LanguageServerPhpstan\Tests\Model;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerPhpstan\Model\Linter\PhpstanLinter;
 use Phpactor\Extension\LanguageServerPhpstan\Model\PhpstanProcess;
+use Phpactor\VersionResolver\ArbitrarySemVerResolver;
+use Phpactor\VersionResolver\SemVersion;
 
 class PhpstanLinterTest extends TestCase
 {
@@ -36,7 +38,10 @@ class PhpstanLinterTest extends TestCase
                 return true;
             }));
 
-        $linter = new PhpstanLinter($phpstanProcess, editorMode: true);
+        $linter = new PhpstanLinter(
+            $phpstanProcess,
+            new ArbitrarySemVerResolver(SemVersion::fromString('2.30.0'))
+        );
 
         $linter->lint($filePathInProject, $fileContent);
     }
@@ -52,9 +57,27 @@ class PhpstanLinterTest extends TestCase
 
         $linter = new PhpstanLinter(
             phpstanProcess: $phpstanProcess,
+            versionResolver: new ArbitrarySemVerResolver(SemVersion::fromString('1.0.0')),
             disableTmpFile: true,
         );
 
         $linter->lint($originalFilePath, '<file content that will be ignored and not used for a tmp file>');
+    }
+
+    public function testLinterUsesEditoMode(): void
+    {
+        $originalFilePath = '/foo';
+
+        $phpstanProcess = $this->createMock(PhpstanProcess::class);
+        $phpstanProcess->expects($this->once())
+            ->method('editorModeAnalyse')
+            ->with($originalFilePath);
+
+        $linter = new PhpstanLinter(
+            phpstanProcess: $phpstanProcess,
+            versionResolver: new ArbitrarySemVerResolver(SemVersion::fromString('2.4.0')),
+        );
+
+        $linter->lint($originalFilePath, 'example');
     }
 }

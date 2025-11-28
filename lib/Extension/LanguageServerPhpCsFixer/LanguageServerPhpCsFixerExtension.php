@@ -45,6 +45,7 @@ class LanguageServerPhpCsFixerExtension implements OptionalExtension
                     new ArbitrarySemVerResolver($container->parameter(self::PARAM_PHP_CS_FIXER_VERSION)->stringOrNull()),
                     new PhpCsFixerVersionResolver($path, LoggingExtension::channelLogger($container, 'php-cs-fixer')),
                 ),
+                LoggingExtension::channelLogger($container, 'php-cs-fixer'),
             );
         });
 

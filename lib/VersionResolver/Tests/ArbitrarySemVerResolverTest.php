@@ -14,7 +14,7 @@ class ArbitrarySemVerResolverTest extends TestCase
     {
         $version = '1';
 
-        $resolver = new ArbitrarySemVerResolver(new SemVersion($version));
+        $resolver = new ArbitrarySemVerResolver(SemVersion::fromString($version));
 
         $version = wait($resolver->resolve());
 
