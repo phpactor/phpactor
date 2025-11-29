@@ -4,6 +4,7 @@ namespace Phpactor\WorseReflection\Core;
 
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\CachedParserFactory;
 use Phpactor\WorseReflection\Bridge\Phpactor\DocblockParser\DocblockParserFactory;
+use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Core\Cache\NullCache;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
 use Phpactor\WorseReflection\Core\Inference\GenericMapResolver;
@@ -28,6 +29,7 @@ use Phpactor\WorseReflection\Core\SourceCodeLocator\ChainSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\TemporarySourceLocator;
 use Phpactor\WorseReflection\Core\DocBlock\DocBlockFactory;
 use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflectorFactory;
+use Phpactor\WorseReflection\ReflectorBuilder;
 use Psr\Log\LoggerInterface;
 
 class ServiceLocator
@@ -169,5 +171,13 @@ class ServiceLocator
     public function newDiagnosticsWalker(): DiagnosticsWalker
     {
         return new DiagnosticsWalker($this->diagnosticProviders);
+    }
+
+    public function stubReflector(): Reflector
+    {
+        return ReflectorBuilder::create()
+            ->addLocator($this->sourceLocator)
+            ->addMemberProvider(new DocblockMemberProvider())
+            ->build();
     }
 }

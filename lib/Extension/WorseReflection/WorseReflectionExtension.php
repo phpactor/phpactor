@@ -12,6 +12,7 @@ use Phpactor\Extension\WorseReflection\Command\DumpAstCommand;
 use Phpactor\Extension\WorseReflection\Documentor\DiagnosticDocumentor;
 use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
 use Phpactor\Extension\WorseReflection\Telemetry\WorseTelemetry;
+use Phpactor\FilePathResolver\PathResolver;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
@@ -32,6 +33,7 @@ use Phpactor\WorseReflection\Core\Cache\TtlCache;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\NativeReflectionFunctionSourceLocator;
 use Phpactor\WorseReflection\Core\SourceCodeLocator\StubSourceLocator;
 use Phpactor\WorseReflection\Bridge\Phpactor\ClassToFileSourceLocator;
+use Phpactor\WorseReflection\Core\Virtual\StubFileMemberProvider;
 use Phpactor\WorseReflection\ReflectorBuilder;
 use Phpactor\Container\Extension;
 use Phpactor\MapResolver\Resolver;
@@ -39,6 +41,7 @@ use Phpactor\Container\ContainerBuilder;
 use Phpactor\Container\Container;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\CachedParser;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflector\TolerantFactory;
+use Symfony\Component\Filesystem\Path;
 
 class WorseReflectionExtension implements Extension
 {
@@ -56,6 +59,7 @@ class WorseReflectionExtension implements Extension
     const TAG_MEMBER_TYPE_RESOLVER = 'worse_reflection.member_type_resolver';
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
     const PARAM_UNDEFINED_VAR_LEVENSHTEIN = 'worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance';
+    const PARAM_ADDITIVE_STUBS = 'worse_reflection.additive_stubs';
 
     public function configure(Resolver $schema): void
     {
@@ -66,6 +70,7 @@ class WorseReflectionExtension implements Extension
             self::PARAM_ENABLE_CONTEXT_LOCATION => true,
             self::PARAM_STUB_CACHE_DIR => '%cache%/worse-reflection',
             self::PARAM_STUB_DIR => '%application_root%/vendor/jetbrains/phpstorm-stubs',
+            self::PARAM_ADDITIVE_STUBS => [],
             self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 4,
         ]);
         $schema->setDescriptions([
@@ -79,6 +84,7 @@ class WorseReflectionExtension implements Extension
                 EOT
         ,
             self::PARAM_STUB_DIR => 'Location of the core PHP stubs - these will be scanned and cached on the first request',
+            self::PARAM_ADDITIVE_STUBS => 'Additive stubs files relative to the project root. These stubs augment existing defininitions.',
             self::PARAM_STUB_CACHE_DIR => 'Cache directory for stubs',
             self::PARAM_IMPORT_GLOBALS => 'Show hints for non-imported global classes and functions',
         ]);
@@ -100,6 +106,7 @@ class WorseReflectionExtension implements Extension
     private function registerReflection(ContainerBuilder $container): void
     {
         $container->register(self::SERVICE_REFLECTOR, function (Container $container) {
+            $resolver = $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER);
             $builder = ReflectorBuilder::create()
                 ->withSourceReflectorFactory(new TolerantFactory($container->expect(self::SERVICE_PARSER, Parser::class)))
                 ->cacheLifetime($container->parameter(self::PARAM_CACHE_LIFETIME)->float());
@@ -186,6 +193,13 @@ class WorseReflectionExtension implements Extension
     {
         $container->register('worse_reflection.member_provider.docblock', function (Container $container) {
             return new DocblockMemberProvider();
+        }, [ self::TAG_MEMBER_PROVIDER => []]);
+        $container->register('worse_reflection.member_provider.stubs', function (Container $container) {
+            $resolver = $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class);
+            return new StubFileMemberProvider(array_map(function (string $path) use ($resolver) {
+                $projectRoot = $resolver->resolve('%project_root%');
+                return Path::join($projectRoot, $resolver->resolve($path));
+            }, $container->parameter(self::PARAM_ADDITIVE_STUBS)->listOfString()));
         }, [ self::TAG_MEMBER_PROVIDER => []]);
     }
 
