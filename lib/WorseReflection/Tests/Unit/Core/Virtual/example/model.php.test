@@ -1,0 +1,20 @@
+<?php
+
+namespace Example;
+
+/**
+ * @property string $virtualString
+ * @method \stdClass foobar(string $bar)
+ */
+interface ModelInterface {
+    public static function findOne();
+}
+
+class Model implements ModelInterface {
+    public static function query($dependencyInjector = null)
+    {
+    }
+}
+
+
+class Blog extends Model {}
