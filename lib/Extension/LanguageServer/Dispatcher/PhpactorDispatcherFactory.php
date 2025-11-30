@@ -104,9 +104,18 @@ class PhpactorDispatcherFactory implements DispatcherFactory
 
         $parameters = $resolver->resolve($parameters);
 
-        $container->register(ResolverErrors::class, function () use ($resolver) {
-            return $resolver->errors();
-        });
+        (function () use ($container, $resolver): void {
+            // the validation probably already happened in the parent container and
+            // the invalid keys would have been removed, meaning the above resolver will
+            // always be valid
+            if ($this->container->has(ResolverErrors::class)) {
+                $container->register(ResolverErrors::class, fn () => $this->container->get(ResolverErrors::class));
+                return;
+            }
+
+            // otherwise use the errors here (this really only happens in tests)
+            $container->register(ResolverErrors::class, fn () => $resolver->errors());
+        })();
 
         foreach ($extensions as $extension) {
             if ($extension instanceof OptionalExtension) {

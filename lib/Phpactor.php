@@ -47,6 +47,7 @@ use Phpactor\Extension\Symfony\SymfonySuggestExtension;
 use Phpactor\Extension\WorseReflectionAnalyse\WorseReflectionAnalyseExtension;
 use Phpactor\Indexer\Extension\IndexerExtension;
 use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
+use Phpactor\MapResolver\ResolverErrors;
 use RuntimeException;
 use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\NullOutput;
@@ -340,6 +341,8 @@ class Phpactor
                 }
             }
         }
+
+        $container->register(ResolverErrors::class, fn () => $masterSchema->errors());
 
         return $container->build($config);
     }
