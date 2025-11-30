@@ -13,6 +13,10 @@ Improvements:
   - Use the Phan fork of the Tolerant Parser as a base #2946 @dantleech
   - Show find references progress with LSP progress #2947 @dantleech
 
+Bug fixes:
+
+  - Fix display of configuration warnings #2971 @dantleech
+
 ## 2025.10.17.0
 
 BREAKING

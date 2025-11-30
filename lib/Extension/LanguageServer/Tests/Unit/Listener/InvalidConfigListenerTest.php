@@ -15,12 +15,13 @@ class InvalidConfigListenerTest extends LanguageServerTestCase
             'capabilities' => new ClientCapabilities(),
             'rootUri' => 'file:///',
             'initializationOptions' => [
-                'foobar' => 'barfoo',
+                'language_server.trce' => 'barfoo',
+                'path' => 'barfoo',
             ]
         ]));
         $response = $tester->initialize();
         $message = $tester->transmitter()->filterByMethod('window/showMessage')->shiftNotification();
         self::assertNotNull($message);
-        self::assertStringContainsString('are not known', $message->params['message']);
+        self::assertStringContainsString('did you mean any of', $message->params['message']);
     }
 }
