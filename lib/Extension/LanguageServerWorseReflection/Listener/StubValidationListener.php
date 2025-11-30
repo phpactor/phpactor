@@ -28,7 +28,7 @@ class StubValidationListener implements ListenerProviderInterface
         yield function (): void {
             $invalidPaths = [];
             foreach ($this->stubPaths as $stubPath) {
-                if (file_exists($stubPath)) {
+                if (file_exists($stubPath) && is_file($stubPath)) {
                     continue;
                 }
 
@@ -40,7 +40,7 @@ class StubValidationListener implements ListenerProviderInterface
             }
 
             $this->api->window()->showMessage()->warning(sprintf(
-                'The following stubs could not be found: "%s"',
+                'The following stubs could not be found or were not files: "%s"',
                 implode('", "', $invalidPaths)
             ));
         };
