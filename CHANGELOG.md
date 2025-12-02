@@ -106,6 +106,7 @@ Features:
   - String <=> Heredoc code action #2825 @mamazu
   - Support new expression without parenthesis #2811
   - Support vscode evaluatable expressions #2905 @zobo
+  - Support `match` and `throw` expression keywords completion #2819 @przepompownia
   - Runtime support for PHP 8.4 #2829
   - Initial support for property hooks @dantleech #2833
 
