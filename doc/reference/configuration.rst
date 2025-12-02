@@ -2009,7 +2009,7 @@ Disable the use of temporary files when. This prevents as-you-type diagnostics, 
 """""""""""""""""""""""""""""""""""""""
 
 
-Use the editor mode of Phpstan https://phpstan.org/user-guide/editor-mode (Requires phpstan 2.14 or higher)
+DEPRECATED. Editor mode of Phpstan is used automatically when it's supported.
 
 
 **Default**: ``false``

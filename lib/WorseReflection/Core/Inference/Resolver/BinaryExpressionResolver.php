@@ -23,6 +23,7 @@ use Phpactor\WorseReflection\Core\TypeFactory;
 use Phpactor\WorseReflection\Core\Type\ArrayType;
 use Phpactor\WorseReflection\Core\Type\BitwiseOperable;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\Comparable;
 use Phpactor\WorseReflection\Core\Type\Concatable;
 use Phpactor\WorseReflection\Core\Type\MissingType;
@@ -157,6 +158,13 @@ class BinaryExpressionResolver implements Resolver
             TokenKind::SlashToken => TypeUtil::toNumber($left)->divide(TypeUtil::toNumber($right)),
             TokenKind::PercentToken => TypeUtil::toNumber($left)->modulo(TypeUtil::toNumber($right)),
             TokenKind::AsteriskAsteriskToken => TypeUtil::toNumber($left)->exp(TypeUtil::toNumber($right)),
+            TokenKind::PipeToken => (function (Type $left, Type $right) {
+                if ($right instanceof ClosureType) {
+                    return $right->returnType();
+                }
+
+                return $right;
+            })($left, $right),
             default => null,
         };
         if ($value !== null) {

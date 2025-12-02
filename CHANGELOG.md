@@ -7,6 +7,7 @@ Features:
 
   - Additive stubs #2968 @dantleech
   - Support for 1st-class callables @dantleech
+  - Support for the PHP 8.5 pipe operator @dantleech
 
 Improvements:
 
