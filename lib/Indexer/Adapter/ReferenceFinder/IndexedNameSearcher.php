@@ -15,8 +15,10 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 class IndexedNameSearcher implements NameSearcher
 {
-    public function __construct(private SearchClient $client)
-    {
+    public function __construct(
+        private SearchClient $client,
+        private bool $semiFuzzy,
+    ) {
     }
 
     /**
@@ -30,7 +32,7 @@ class IndexedNameSearcher implements NameSearcher
 
         $fullyQualified = str_starts_with($name, '\\');
 
-        $criteria = $fullyQualified ? Criteria::fqnBeginsWith(substr($name, 1)) : Criteria::shortNameBeginsWith($name);
+        $criteria = $fullyQualified ? Criteria::fqnBeginsWith(substr($name, 1)) : Criteria::shortNameMatchesTo($name, $this->semiFuzzy);
 
         $typeCriteria = $this->resolveTypeCriteria($type);
 
