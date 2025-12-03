@@ -28,6 +28,7 @@ use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionProperty;
 use Phpactor\WorseReflection\Core\TemplateMap;
 use Phpactor\WorseReflection\Core\Type\ClassType;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\GenericClassType;
 use Phpactor\WorseReflection\Core\Type\GlobbedConstantUnionType;
 use Phpactor\WorseReflection\Core\Type\SelfType;
@@ -116,6 +117,14 @@ class NodeContextFromMemberAccess
 
         if ($member instanceof ReflectionMember) {
             if ($member instanceof ReflectionMethod) {
+                if (NodeUtil::isFirstClassCallable($node->parent)) {
+                    return $context->withType(new ClosureType(
+                        $resolver->reflector(),
+                        $member->parameters()->types()->toArray(),
+                        $member->type(),
+                    ));
+                }
+
                 return new MethodCallContext(
                     $context->symbol(),
                     $memberType->reduce(),

@@ -10,6 +10,8 @@ use Phpactor\WorseReflection\Core\ServiceLocator;
 use Microsoft\PhpParser\Node\MethodDeclaration;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Reflection\ReflectionParameter;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionMethod;
+use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Types;
 
 /**
  * @extends AbstractReflectionCollection<PhpactorReflectionParameter>
@@ -102,6 +104,16 @@ final class ReflectionParameterCollection extends AbstractReflectionCollection
         }
 
         return null;
+    }
+    /**
+     * @return Types<Type>
+     */
+    public function types(): Types
+    {
+        return new Types(array_map(
+            static fn (PhpactorReflectionParameter $parameter) => $parameter->type(),
+            $this->items
+        ));
     }
 
     public function passedByReference(): PhpactorReflectionParameterCollection

@@ -1,0 +1,30 @@
+<?php
+
+$callable = foobar(...);
+wrAssertType('Closure(): string', $callable);
+
+function foobar(): string
+{
+}
+
+$callable = foobar_with_params(...);
+wrAssertType('Closure(string,int): string', $callable);
+wrAssertType('string', $callable());
+
+function foobar_with_params(string $p1, int $p2): string
+{
+}
+
+class Foobar {
+    public function baz(string $foo): bool {}
+    public static function boo(string $foo): bool {}
+}
+
+
+$callable = (new Foobar())->baz(...);
+wrAssertType('Closure(string): bool', $callable);
+wrAssertType('bool', $callable());
+
+$callable = Foobar::boo(...);
+wrAssertType('Closure(string): bool', $callable);
+wrAssertType('bool', $callable());
