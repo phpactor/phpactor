@@ -6,6 +6,7 @@ Changelog
 Features:
 
   - Additive stubs #2968 @dantleech
+  - Support for 1st-class callables @dantleech
 
 Improvements:
 

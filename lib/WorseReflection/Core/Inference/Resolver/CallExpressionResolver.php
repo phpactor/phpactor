@@ -20,6 +20,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\WorseReflection\Core\Inference\TypeCombinator;
 use Phpactor\WorseReflection\Core\Inference\Variable as PhpactorVariable;
 use Phpactor\WorseReflection\Core\Type;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\ConditionalType;
 use Phpactor\WorseReflection\Core\Type\InvokeableType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
@@ -38,6 +39,14 @@ class CallExpressionResolver implements Resolver
         $context = $resolver->resolveNode($frame, $resolvableNode);
         $returnType = $context->type();
         $containerType = $context->containerType();
+
+        // if this is a closure type then this _was_ a first-class callable
+        // and the "retutn type" is just the Closure type
+        if ($returnType instanceof ClosureType) {
+            if (NodeUtil::isFirstClassCallable($node)) {
+                return $context;
+            }
+        }
 
         if (
             $context instanceof CallContext && $context->arguments()

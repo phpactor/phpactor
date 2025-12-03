@@ -9,6 +9,7 @@ use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\DelimitedList\QualifiedNameList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
 use Microsoft\PhpParser\Node\Expression\ObjectCreationExpression;
 use Microsoft\PhpParser\Node\Expression\UnaryExpression;
@@ -387,5 +388,26 @@ class NodeUtil
         }
 
         return null;
+    }
+
+    public static function isFirstClassCallable(?Node $node): bool
+    {
+        if (!$node instanceof CallExpression) {
+            return false;
+        }
+
+        foreach ($node?->argumentExpressionList->children ?? [] as $child) {
+            if (!$child instanceof ArgumentExpression) {
+                continue;
+            }
+
+            if ($child->dotDotDotToken !== null) {
+                return true;
+            }
+
+            break;
+        }
+
+        return false;
     }
 }

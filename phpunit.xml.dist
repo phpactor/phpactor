@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
     colors="true" 
     bootstrap="vendor/autoload.php" 
-    displayDetailsOnPhpunitDeprecations="true"
+    displayDetailsOnPhpunitDeprecations="false"
     displayDetailsOnTestsThatTriggerDeprecations="true"
 
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"

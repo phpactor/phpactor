@@ -81,4 +81,12 @@ final class Types implements IteratorAggregate
     {
         return $this->types[$index] ?? new MissingType();
     }
+
+    /**
+     * @return list<Type>
+     */
+    public function toArray(): array
+    {
+        return array_values($this->types);
+    }
 }

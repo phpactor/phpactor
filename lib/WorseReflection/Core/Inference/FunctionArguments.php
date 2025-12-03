@@ -6,6 +6,8 @@ use Countable;
 use IteratorAggregate;
 use Microsoft\PhpParser\Node\DelimitedList\ArgumentExpressionList;
 use Microsoft\PhpParser\Node\Expression\ArgumentExpression;
+use Phpactor\WorseReflection\Core\Types;
+use Phpactor\WorseReflection\Core\Type;
 use Traversable;
 
 /**
@@ -34,7 +36,7 @@ class FunctionArguments implements IteratorAggregate, Countable
         }
         return new self($resolver, $frame, array_values(array_filter(
             $list->children,
-            fn ($nodeOrToken) => $nodeOrToken instanceof ArgumentExpression
+            fn ($nodeOrToken) => $nodeOrToken instanceof ArgumentExpression,
         )));
     }
 
@@ -57,6 +59,17 @@ class FunctionArguments implements IteratorAggregate, Countable
         foreach ($this->arguments as $argument) {
             yield $this->resolver->resolveNode($this->frame, $argument);
         }
+    }
+
+    /**
+     * @return Types<Type>
+     */
+    public function types(): Types
+    {
+        return new Types(array_map(
+            fn (NodeContext $context) => $context->type(),
+            iterator_to_array($this->getIterator())
+        ));
     }
 
     public function count(): int

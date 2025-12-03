@@ -21,6 +21,7 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
 use Phpactor\WorseReflection\Core\Inference\Variable;
 use Phpactor\WorseReflection\Core\Name;
 use Phpactor\WorseReflection\Core\TypeFactory;
+use Phpactor\WorseReflection\Core\Type\ClosureType;
 use Phpactor\WorseReflection\Core\Type\ReflectedClassType;
 use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use Phpactor\WorseReflection\Core\Virtual\VirtualReflectionFunction;
@@ -136,7 +137,23 @@ class QualifiedNameResolver implements Resolver
             $function = VirtualReflectionFunction::empty($name, $range);
         }
 
-        $context = FunctionCallContext::create($name, $range, $function, FunctionArguments::fromList($resolver, $frame, $parent->argumentExpressionList));
+
+        if (NodeUtil::isFirstClassCallable($parent)) {
+            $context = NodeContextFactory::create(
+                $parent->getText(),
+                $parent->getStartPosition(),
+                $parent->getEndPosition(),
+            );
+
+            return $context->withType(new ClosureType(
+                $resolver->reflector(),
+                $function->parameters()->types()->toArray(),
+                $function->type()
+            ));
+        }
+
+        $arguments = FunctionArguments::fromList($resolver, $frame, $parent->argumentExpressionList);
+        $context = FunctionCallContext::create($name, $range, $function, $arguments);
 
         $byReference = $function->parameters()->passedByReference();
         $arguments = null;
