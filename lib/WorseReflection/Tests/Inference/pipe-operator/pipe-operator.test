@@ -1,0 +1,17 @@
+<?php
+
+$title = ' PHP 8.5 Released ';
+
+$slug = $title
+    |> trim(...)
+    |> strtolower(...)
+    |> (fn ($str) => new \stdClass());
+
+wrAssertType('stdClass', $slug);
+
+function strtolower(): string  {}
+$slug = $title
+    |> trim(...)
+    |> strtolower(...);
+
+wrAssertType('string', $slug);
