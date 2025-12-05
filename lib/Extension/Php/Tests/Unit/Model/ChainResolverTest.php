@@ -17,8 +17,9 @@ class ChainResolverTest extends TestCase
 
     public function testResolvesVersion(): void
     {
-        $resolver = $this->prophesize(PhpVersionResolver::class);
-        $resolver->resolve()->willReturn('7.1');
-        self::assertEquals('7.1', (new ChainResolver($resolver->reveal()))->resolve());
+        $resolver = $this->createMock(PhpVersionResolver::class);
+        $resolver->expects(self::once())->method('resolve')->willReturn('7.1');
+
+        self::assertEquals('7.1', (new ChainResolver($resolver))->resolve());
     }
 }

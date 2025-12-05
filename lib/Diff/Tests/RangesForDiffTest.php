@@ -20,7 +20,7 @@ class RangesForDiffTest extends TestCase
 
     public function testNoChanges(): void
     {
-        $emptyDiff = new Diff('', '');
+        $emptyDiff = new Diff('a', 'a');
         $ranges = $this->rangesForDiff->createRangesForDiff($emptyDiff);
         self::assertCount(0, $ranges);
     }

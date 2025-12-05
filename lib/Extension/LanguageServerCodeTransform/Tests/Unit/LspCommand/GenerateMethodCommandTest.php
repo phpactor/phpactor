@@ -30,6 +30,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 class GenerateMethodCommandTest extends TestCase
 {
     use ProphecyTrait;
+
     const EXAMPLE_SOURCE = '<?php ';
     const EXAMPLE_URI = 'file:///file.php';
     const EXAMPLE_OFFSET = 5;

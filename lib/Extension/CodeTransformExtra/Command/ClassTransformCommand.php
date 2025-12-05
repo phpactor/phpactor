@@ -13,6 +13,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Phpactor\Extension\CodeTransformExtra\Application\Transformer;
 use Webmozart\Glob\Glob;
 use RuntimeException;
+use SebastianBergmann\Diff\Output\DiffOnlyOutputBuilder;
 
 class ClassTransformCommand extends Command
 {
@@ -22,7 +23,7 @@ class ClassTransformCommand extends Command
         private Transformer $transformer
     ) {
         parent::__construct();
-        $this->differ = new Differ();
+        $this->differ = new Differ(new DiffOnlyOutputBuilder());
     }
 
     public function configure(): void

@@ -21,7 +21,10 @@ class DebugHandlerTest extends LanguageServerTestCase
             'return' => true,
         ]);
         $this->assertSuccess($response);
-        self::assertJson($response->result);
+
+        $result = $response->result;
+        self::assertIsString($result);
+        self::assertJson($result);
     }
 
     public function testDumpWorkspace(): void

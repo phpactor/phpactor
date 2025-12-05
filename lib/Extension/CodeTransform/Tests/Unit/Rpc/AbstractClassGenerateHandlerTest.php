@@ -13,11 +13,14 @@ use Phpactor\Extension\Rpc\Response\Input\ConfirmInput;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\Extension\Rpc\Test\HandlerTester;
 use Phpactor\TestUtils\Workspace;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Symfony\Component\Filesystem\Path;
 
 abstract class AbstractClassGenerateHandlerTest extends TestCase
 {
+    use ProphecyTrait;
+    
     const EXAMPLE_PATH = '/path/to.php';
     const EXAMPLE_NEW_PATH = '/new/path.php';
     const EXAMPLE_VARIANT = 'one';

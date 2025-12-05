@@ -12,7 +12,6 @@ use Phpactor\LanguageServer\Test\ProtocolFactory;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\LanguageServerSymbolProvider\Adapter\TolerantDocumentSymbolProvider;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use PHPUnit\Framework\Exception as FrameworkException;
 use PHPUnit\Framework\ExpectationFailedException;
 
@@ -29,7 +28,6 @@ class TolerantDocumentSymbolProviderTest extends TestCase
      *
      * @param DocumentSymbol[] $expected
      * @throws Exception
-     * @throws InvalidArgumentException
      * @throws FrameworkException
      * @throws ExpectationFailedException
      */
@@ -360,7 +358,6 @@ class TolerantDocumentSymbolProviderTest extends TestCase
     /**
      * @param DocumentSymbol[] $actual
      * @param DocumentSymbol[] $expected
-     * @throws InvalidArgumentException
      * @throws FrameworkException
      * @throws ExpectationFailedException
      */
