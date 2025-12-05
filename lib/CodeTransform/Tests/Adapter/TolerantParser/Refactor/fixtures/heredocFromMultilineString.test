@@ -1,0 +1,12 @@
+// File: source
+<?php
+
+$test = 'Hello this is a long<> test string.
+Can we even do that in PHP?';
+// File: expected
+<?php
+
+$test = <<<EOF
+Hello this is a long test string.
+Can we even do that in PHP?
+EOF;
