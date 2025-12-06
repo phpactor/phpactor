@@ -181,24 +181,33 @@ class NodeUtil
     /**
      * For debugging: pretty print the AST
      */
-    public static function dump(Node $node, int $level = 0): string
+    public static function dump(array|Node $nodes, int $level = 0): string
     {
-        $out = [
-            sprintf(
-                '%s %d:%d - %s',
-                str_repeat('  ', $level) . $node->getNodeKindName(),
-                $node->getStartPosition(),
-                $node->getEndPosition(),
-                str_replace("\n", '\\n', $node->getText()),
-            )
-        ];
-
-        $level++;
-        foreach ($node->getChildNodes() as $child) {
-            $out[] = self::dump($child, $level);
+        if (!is_array($nodes)) {
+            $nodes = [$nodes];
         }
 
-        return implode("\n", $out);
+        $dumps = [];
+        foreach ($nodes as $node) {
+            $out = [
+                sprintf(
+                    '%s %d:%d - %s',
+                    str_repeat('  ', $level) . $node->getNodeKindName(),
+                    $node->getStartPosition(),
+                    $node->getEndPosition(),
+                    str_replace("\n", '\\n', $node->getText()),
+                )
+            ];
+
+            $level++;
+            foreach ($node->getChildNodes() as $child) {
+                $out[] = self::dump($child, $level);
+            }
+
+            $dumps[]= implode("\n", $out);
+        }
+
+        return implode("\n", $dumps);
     }
 
     /**
