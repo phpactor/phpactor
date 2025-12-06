@@ -13,8 +13,8 @@ class Indexer
         private IndexBuilder $builder,
         private Index $index,
         private FileListProvider $provider,
+        private ?int $maxFileSizeToIndex,
         ?DirtyDocumentTracker $dirtyDocumentTracker = null,
-        ?int $maxFileSizeToIndex
     ) {
         $this->dirtyDocumentTracker = $dirtyDocumentTracker ?: new NullDirtyDocumentTracker();
     }

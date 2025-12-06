@@ -12,8 +12,7 @@ class IndexJob
         private IndexBuilder $indexBuilder,
         private FileList $fileList,
         private ?int $maxFileSizeToIndex,
-    )
-    {
+    ) {
     }
 
     /**

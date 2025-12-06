@@ -79,8 +79,6 @@ final class IndexAgentBuilder
 
     /**
      * Max filesize to index in bytes. (Default 1MB)
-     *
-     * @var int
      */
     private int $maxFileSizeToIndex = 1_000_000;
 
@@ -261,8 +259,8 @@ final class IndexAgentBuilder
             $builder,
             $index,
             $this->buildFileListProvider(),
-            $this->buildDirtyTracker(),
             $this->maxFileSizeToIndex,
+            $this->buildDirtyTracker(),
         );
     }
 
