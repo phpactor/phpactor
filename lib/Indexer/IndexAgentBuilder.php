@@ -77,10 +77,19 @@ final class IndexAgentBuilder
      */
     private array $supportedExtensions = ['php', 'phar'];
 
+    /**
+     * Max filesize to index in bytes. (Default 1MB)
+     *
+     * @var int
+     */
+    private int $maxFileSizeToIndex = 1_000_000;
+
     private LoggerInterface $logger;
 
-    private function __construct(private string $indexRoot, private string $projectRoot)
-    {
+    private function __construct(
+        private string $indexRoot,
+        private string $projectRoot,
+    ) {
         $this->enhancer = new NullRecordReferenceEnhancer();
         $this->logger = new NullLogger();
     }
@@ -196,6 +205,13 @@ final class IndexAgentBuilder
         return $this;
     }
 
+    public function setMaxFileSizeToIndex(int $maxFileSizeToIndex): self
+    {
+        $this->maxFileSizeToIndex = $maxFileSizeToIndex;
+
+        return $this;
+    }
+
     private function buildIndex(): Index
     {
         $repository = new FileRepository(
@@ -245,7 +261,8 @@ final class IndexAgentBuilder
             $builder,
             $index,
             $this->buildFileListProvider(),
-            $this->buildDirtyTracker()
+            $this->buildDirtyTracker(),
+            $this->maxFileSizeToIndex,
         );
     }
 

@@ -62,6 +62,7 @@ class IndexerExtension implements Extension
     public const PARAM_EXCLUDE_PATTERNS = 'indexer.exclude_patterns';
     public const PARAM_INDEXER_BUFFER_TIME = 'indexer.buffer_time';
     public const PARAM_INDEXER_FOLLOW_SYMLINKS = 'indexer.follow_symlinks';
+    public const PARAM_INDEXER_MAX_FILESIZE_TO_INDEX = 'indexer.max_filesize_to_index';
     public const PARAM_REFERENCES_DEEP_REFERENCES = 'indexer.reference_finder.deep';
     public const PARAM_IMPLEMENTATIONS_DEEP_REFERENCES = 'indexer.implementation_finder.deep';
     public const PARAM_STUB_PATHS = 'indexer.stub_paths';
@@ -94,6 +95,7 @@ class IndexerExtension implements Extension
             self::PARAM_INDEXER_POLL_TIME => 5000,
             self::PARAM_INDEXER_BUFFER_TIME => 500,
             self::PARAM_INDEXER_FOLLOW_SYMLINKS => false,
+            self::PARAM_INDEXER_MAX_FILESIZE_TO_INDEX => 1_000_000,
             self::PARAM_PROJECT_ROOT => '%project_root%',
             self::PARAM_REFERENCES_DEEP_REFERENCES => true,
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => true,
@@ -109,6 +111,7 @@ class IndexerExtension implements Extension
             self::PARAM_INDEXER_POLL_TIME => 'For polling indexers only: the time, in milliseconds, between polls (e.g. filesystem scans)',
             self::PARAM_INDEXER_BUFFER_TIME => 'For real-time indexers only: the time, in milliseconds, to buffer the results',
             self::PARAM_INDEXER_FOLLOW_SYMLINKS => 'To allow indexer to follow symlinks',
+            self::PARAM_INDEXER_MAX_FILESIZE_TO_INDEX => 'Files larger than this will not be indexed. (Size in bytes)',
             self::PARAM_PROJECT_ROOT => 'The root path to use for scanning the index',
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'Recurse over class implementations to resolve all references',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'Recurse over class implementations to resolve all class implementations (not just the classes directly implementing the subject)',
@@ -124,6 +127,7 @@ class IndexerExtension implements Extension
             self::PARAM_INDEXER_POLL_TIME => 'integer',
             self::PARAM_INDEXER_BUFFER_TIME => 'integer',
             self::PARAM_INDEXER_FOLLOW_SYMLINKS => 'boolean',
+            self::PARAM_INDEXER_MAX_FILESIZE_TO_INDEX => 'integer',
             self::PARAM_PROJECT_ROOT => 'string',
             self::PARAM_REFERENCES_DEEP_REFERENCES => 'boolean',
             self::PARAM_IMPLEMENTATIONS_DEEP_REFERENCES => 'boolean',
@@ -239,6 +243,7 @@ class IndexerExtension implements Extension
                 /** @phpstan-ignore-next-line */
                 ->setSupportedExtensions($container->parameter(self::PARAM_SUPPORTED_EXTENSIONS)->value())
                 ->setFollowSymlinks($container->parameter(self::PARAM_INDEXER_FOLLOW_SYMLINKS)->bool())
+                ->setMaxFileSizeToIndex($container->parameter(self::PARAM_INDEXER_MAX_FILESIZE_TO_INDEX)->int())
                 ->setStubPaths($stubPaths);
         });
 

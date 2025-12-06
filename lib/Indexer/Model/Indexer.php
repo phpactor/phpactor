@@ -13,7 +13,8 @@ class Indexer
         private IndexBuilder $builder,
         private Index $index,
         private FileListProvider $provider,
-        ?DirtyDocumentTracker $dirtyDocumentTracker = null
+        ?DirtyDocumentTracker $dirtyDocumentTracker = null,
+        ?int $maxFileSizeToIndex
     ) {
         $this->dirtyDocumentTracker = $dirtyDocumentTracker ?: new NullDirtyDocumentTracker();
     }
@@ -22,7 +23,8 @@ class Indexer
     {
         return new IndexJob(
             $this->builder,
-            $this->provider->provideFileList($this->index, $subPath)
+            $this->provider->provideFileList($this->index, $subPath),
+            $this->maxFileSizeToIndex,
         );
     }
 

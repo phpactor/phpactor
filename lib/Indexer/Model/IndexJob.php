@@ -8,7 +8,11 @@ use SplFileInfo;
 
 class IndexJob
 {
-    public function __construct(private IndexBuilder $indexBuilder, private FileList $fileList)
+    public function __construct(
+        private IndexBuilder $indexBuilder,
+        private FileList $fileList,
+        private ?int $maxFileSizeToIndex,
+    )
     {
     }
 
@@ -23,8 +27,7 @@ class IndexJob
                 continue;
             }
 
-            // Skip files that are bigger than a megabyte
-            if (($fileInfo->getSize() ?: 0) >= 1e6) {
+            if (($fileInfo->getSize() ?: 0) >= $this->maxFileSizeToIndex) {
                 continue;
             }
 
