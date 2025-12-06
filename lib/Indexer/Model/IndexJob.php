@@ -23,6 +23,11 @@ class IndexJob
                 continue;
             }
 
+            // Skip files that are bigger than a megabyte
+            if (($fileInfo->getSize() ?: 0) >= 1e6) {
+                continue;
+            }
+
             $contents = @file_get_contents($fileInfo->getPathname());
 
             if (false === $contents) {
