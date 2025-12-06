@@ -27,6 +27,8 @@ class NodeContextResolver
     ) {
     }
 
+    public int $cacheMisses = 0;
+
     public function withCache(Cache $cache):self
     {
         return new self($this->reflector, $this->docblockFactory, $this->logger, $cache, $this->resolverMap);
@@ -83,6 +85,7 @@ class NodeContextResolver
 
             $context = $this->doResolveNode($frame, $node);
             $context = $context->withScope(new ReflectionScope($this->reflector, $node));
+            $context = $context->withNodeId(spl_object_id($node));
 
             return $context;
         });

@@ -1,1 +1,2 @@
+## id: {{ object.nodeId }}
 {% if object.symbol.isKnown %}{{ object.symbol.symbolType }} {% endif %}{{ object.symbol.name }}{% if object.type.isDefined %}: `{{- render(object.type) -}}`{% endif %}

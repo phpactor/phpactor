@@ -13,6 +13,7 @@ use Phpactor\Extension\WorseReflection\Documentor\DiagnosticDocumentor;
 use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
 use Phpactor\Extension\WorseReflection\Telemetry\WorseTelemetry;
 use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\TolerantAstDiff\AstDiff;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
@@ -26,6 +27,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnType
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UndefinedVariableProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\MergingParser;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
@@ -60,6 +62,7 @@ class WorseReflectionExtension implements Extension
     const PARAM_IMPORT_GLOBALS = 'language_server_code_transform.import_globals';
     const PARAM_UNDEFINED_VAR_LEVENSHTEIN = 'worse_reflection.diagnostics.undefined_variable.suggestion_levenshtein_disatance';
     const PARAM_ADDITIVE_STUBS = 'worse_reflection.additive_stubs';
+    const PARAM_EXPERIMENTAL_PARSER = 'worse_reflection.experimental_parser';
 
     public function configure(Resolver $schema): void
     {
@@ -72,6 +75,7 @@ class WorseReflectionExtension implements Extension
             self::PARAM_STUB_DIR => '%application_root%/vendor/jetbrains/phpstorm-stubs',
             self::PARAM_ADDITIVE_STUBS => [],
             self::PARAM_UNDEFINED_VAR_LEVENSHTEIN => 4,
+            self::PARAM_EXPERIMENTAL_PARSER => false,
         ]);
         $schema->setDescriptions([
             self::PARAM_ENABLE_CACHE => 'If reflection caching should be enabled',
@@ -156,6 +160,10 @@ class WorseReflectionExtension implements Extension
         });
 
         $container->register(self::SERVICE_PARSER, function (Container $container) {
+            if ($container->parameter(self::PARAM_EXPERIMENTAL_PARSER)->bool()) {
+                return new MergingParser(new AstDiff());
+            }
+
             return new CachedParser(
                 $container->get(Cache::class),
                 $container->get(CacheForDocument::class),

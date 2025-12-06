@@ -64,6 +64,7 @@ class ServiceLocator
         private CacheForDocument $cacheForDocument,
         bool $enableContextualLocation = false,
     ) {
+        $cache = new StaticCache();
         $sourceReflector = $reflectorFactory->create($this);
 
         if ($enableContextualLocation) {
@@ -128,7 +129,7 @@ class ServiceLocator
             // use a cache which is local to this resolver instance
             // this avoids issues with stale cache data while also
             // providing memoised caching for this resolver instance.
-            new StaticCache(),
+            $this->cache,
             (new DefaultResolverFactory(
                 $this->reflector,
                 $this->nameResolver,
