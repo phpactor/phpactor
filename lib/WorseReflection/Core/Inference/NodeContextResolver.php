@@ -81,6 +81,7 @@ class NodeContextResolver
 
             $context = $this->doResolveNode($frame, $node);
             $context = $context->withScope(new ReflectionScope($this->reflector, $node));
+            $context = $context->withNodeId(spl_object_id($node));
 
             return $context;
         });
