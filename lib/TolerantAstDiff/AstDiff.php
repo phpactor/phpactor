@@ -200,22 +200,16 @@ final class AstDiff
 
         $lastPosition = $node1->getFullStartPosition();
         foreach ($node1->getChildNames() as $childName) {
+            /** @var Node|Token|null */
             $member1 = $node1->$childName;
             $member2 = $node2->$childName;
-
-            if (is_array($member1)) {
-                foreach ($member1 as $member) {
-                    assert($member instanceof Token || $member instanceof Node);
-                    $lastPosition = $member->getFullStartPosition();
-                }
-                continue;
-            }
 
             if ($member1 instanceof Node || $member1 instanceof Token) {
                 $lastPosition = $member1->getFullStartPosition();
             }
 
             if ($member2 instanceof Token || $member2 === null) {
+                $node1->$childName = $member2;
                 $this->applyEdit($node1, TextEdit::create(
                     $lastPosition,
                     $member1?->getFullWidth() ?? 0,
@@ -225,7 +219,6 @@ final class AstDiff
                     // TODO: do we care if we modify the "new" AST by reference?
                     $member2 = deep_copy($member2);
                 }
-                $node1->$childName = $member2;
                 continue;
             }
         }
