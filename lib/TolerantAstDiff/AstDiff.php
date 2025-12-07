@@ -88,10 +88,9 @@ final class AstDiff
                         continue;
                     }
 
+                    // if the class type is different then it's
+                    // replace the whole subtree.
                     if ($node1Child::class !== $node2Child::class) {
-                        // if the class type is different then it's
-                        // replace the whole subtree.
-
                         /** @phpstan-ignore-next-line */
                         $node1->$childName[$elementIndex] = $node2Child;
                         $this->applyEdit(TextEdit::create(
@@ -105,6 +104,7 @@ final class AstDiff
                     if ($node2Child instanceof Node) {
                         // recurse on the listed node:
                         $this->doMerge($node1Child, $node2Child);
+                        continue;
                     }
                 }
 
@@ -153,7 +153,7 @@ final class AstDiff
             if ($member2 instanceof Token) {
                 /** @phpstan-ignore-next-line */
                 $replacement = $member2->getFullText($this->fileSource2->getFileContents());
-                $node1->$childName = $member2;
+                $node1->$childName = $this->copyNode($member2);
                 $this->applyEdit(TextEdit::create(
                     $member1->getFullStartPosition(),
                     $member1->getFullWidth(),
@@ -162,9 +162,22 @@ final class AstDiff
                 continue;
             }
 
+            // if we got here then the nodes are of the same class so let's
+            // merge them
             if ($member2 instanceof Node && $member1 instanceof Node) {
                 $this->doMerge($member1, $member2);
+                continue;
             }
+
+            // nothing and nothing is nothing
+            if ($member2 === null && $member1 === null) {
+                continue;
+            }
+
+            throw new \RuntimeException(sprintf(
+                'Do not know what to do with %s vs. %s',
+                get_debug_type($member1), get_debug_type($member2)
+            ));
         }
 
         return;
@@ -263,7 +276,7 @@ final class AstDiff
         }
     }
 
-    private function copyNode(Node|Token $node): Node
+    private function copyNode(Node|Token $node): Node|Token
     {
         return deep_copy($node);
     }
