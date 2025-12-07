@@ -21,8 +21,9 @@ final class AstDiffTest extends TestCase
         $diff = (new AstDiff());
         $diff->merge($ast1, $ast2);
 
-        self::assertSame($ast2->getText(), $ast1->getText());
-        self::assertSame($ast2->getFullWidth(), $ast1->getFullWidth());
+        self::assertSame($source2, $ast1->getFullText(), 'AST content matches');
+        self::assertSame($ast2->getFullText(), $ast1->getFullText(), 'AST content matches');
+        self::assertSame($ast2->getFullWidth(), $ast1->getFullWidth(), 'AST width matches');
     }
     /**
      * @return Generator<string,array{string,string}>

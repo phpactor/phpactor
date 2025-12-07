@@ -3,6 +3,7 @@
 namespace Phpactor\TolerantAstDiff;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\DelimitedList\ArrayElementList;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\TextEdit;
@@ -23,6 +24,7 @@ final class AstDiff
         $this->fileSource2 = $node2->getRoot();
 
         $this->doMerge($node1, $node2);
+        self::reindex($node1);
     }
 
     private function doMerge(Node $node1, Node $node2): void
@@ -35,45 +37,65 @@ final class AstDiff
             ));
         }
 
-
-        if ($this->isSame($node1, $node2)) {
-            return;
-        }
-
-        $this->mapNode($node1, $node2);
-
         $node1ChildNames = $node1->getChildNames();
         $node2ChildNames = $node2->getChildNames();
 
+        $lastPosition = $node1->getFullStartPosition();
         foreach ($node1ChildNames as $childName) {
 
-            $node1Prop = $node1->$childName;
-            $node2Prop = $node2->$childName;
+            $member1 = $node1->$childName;
+            $member2 = $node2->$childName;
 
-            if (is_array($node1Prop)) {
-                assert(is_array($node2Prop));
-                $offset = -1;
-                foreach (array_keys($node1Prop) as $offset) {
-                    $node1Child = $node1Prop[$offset];
-                    $node2Child = $node2Prop[$offset] ?? null;
+            // this property is a list of nodes we need to figure out which
+            // items to add, remove or update
+            if (is_array($member1)) {
+
+                /** @var list<Token|Node> $member1 */
+                /** @var list<Token|Node> $member2 */
+
+                $elementIndex = -1;
+                foreach (array_keys($member1) as $elementIndex) {
+                    $node1Child = $member1[$elementIndex];
+                    $node2Child = $member2[$elementIndex] ?? null;
+
+                    $lastPosition = $node1Child->getFullStartPosition();
 
                     if ($node2Child === null) {
-                        $this->removeChildFrom($node1, $childName, $offset);
+
+                        // if there's no corresponding node in the second AST
+                        // then remove it's correspondant and all subsequent
+                        // nodes from the list
+                        $this->removeChildFrom($node1, $childName, $elementIndex);
+
+                        // we can break early noow
                         break;
                     }
 
                     if ($node1Child instanceof Token) {
-                        continue;
-                    }
+                        // if we have a single token, then just replace it
+                        // with the corresponding token/node/null
 
-                    if (!$node1Child instanceof Node || !$node2Child instanceof Node) {
-                        // should never happen
+                        /** @phpstan-ignore-next-line */
+                        $node1->$childName[$elementIndex] = $node2Child;
+                        $replacement = $node2Child->getFullText(
+                            $this->fileSource2->getFileContents()
+                        );
+                        $this->applyEdit(TextEdit::create(
+                            $node1Child->getFullStartPosition(),
+                            $node1Child->getFullWidth(),
+                            $replacement,
+                        ));
+
                         continue;
                     }
 
                     if ($node1Child::class !== $node2Child::class) {
-                        $node1->$childName[$offset] = $node2Child;
-                        $this->applyEdit($node1, TextEdit::create(
+                        // if the class type is different then it's
+                        // replace the whole subtree.
+
+                        /** @phpstan-ignore-next-line */
+                        $node1->$childName[$elementIndex] = $node2Child;
+                        $this->applyEdit(TextEdit::create(
                             $node1Child->getFullStartPosition(),
                             $node1Child->getFullWidth(),
                             $node2Child->getFullText(),
@@ -81,56 +103,116 @@ final class AstDiff
                         continue;
                     }
 
-                    $this->doMerge($node1Child, $node2Child);
+                    if ($node2Child instanceof Node) {
+                        // recurse on the listed node:
+                        $this->doMerge($node1Child, $node2Child);
+                    }
                 }
 
-                $this->appendChildren($node1, $childName, array_slice($node2Prop, ++$offset));
+                // if we get here then we are adding elements
+                // so we take all elements after the last index
+                // (or after -1 if we didn't enter the above loop).
+                $this->appendChildren($node1, $childName, array_slice($member2, ++$elementIndex));
+
+                // we're done with this list property, move on to
+                // the next property in the Node.
                 continue;
             }
 
-            if ($node1Prop instanceof Node) {
-                $this->doMerge($node1Prop, $node2Prop);
+            // it's possible that property is NULL, if it's not then the last
+            // position of the last property would be used by ommission
+            if ($member1 instanceof Node || $member1 instanceof Token) {
+                $lastPosition = $member1->getFullStartPosition();
+            }
+
+            // if the original member is NULL but the new member is
+            // NOT null then just replace it
+            if ($member2 === null && $member1 !== null) {
+                $node1->$childName = $this->copyNode($member2);
+                $this->applyEdit(TextEdit::create(
+                    $lastPosition,
+                    0,
+                    $member2?->getFullText($this->fileSource2->getFileContents()) ?? '',
+                ));
+                continue;
+            }
+
+            // if the members are both nodes then just replace it and continue
+            if ($member2 instanceof Node && $member2::class !== $member1::class) {
+                // update the reference content in the source node by
+                // applying a text edit - we'll reindex the offsets later.
+                $node1->$childName = $this->copyNode($member2);
+                $this->applyEdit(TextEdit::create(
+                    $lastPosition,
+                    $member1?->getFullWidth(),
+                    $member2?->getFullText($this->fileSource2->getFileContents()) ?? '',
+                ));
+                continue;
+            }
+
+            // if the new member is a token then just replace it
+            if ($member2 instanceof Token) {
+                /** @phpstan-ignore-next-line */
+                $replacement = $member2->getFullText($this->fileSource2->getFileContents());
+                $node1->$childName = $member2;
+                $this->applyEdit(TextEdit::create(
+                    $member1->getFullStartPosition(),
+                    $member1->getFullWidth(),
+                    $replacement ?? '',
+                ));
+                continue;
+            }
+
+            if ($member2 instanceof Node && $member1 instanceof Node) {
+                $this->doMerge($member1, $member2);
             }
         }
 
         return;
     }
 
-    /**
-     * Compare the inner node content
-     */
-    private static function isSame(Node $node1, Node $node2): bool
-    {
-        return $node1->getFullText() === $node2->getFullText();
-    }
-
-    private function removeChildFrom(Node $parent, string $childName, int $offset): void
+    private function removeChildFrom(Node $parent, string $childName, int $index): void
     {
         /** @var list<Node> */
-        $keepNodes = $parent->$childName;
-        $removedNodes = array_slice($keepNodes, $offset);
+        $existingNodes = $parent->$childName;
+        // we need to figure out the length of the nodes we're removing
+        // so that we can compensate
+        $removedNodes = array_slice($existingNodes, $index);
 
+        // if we didn't remove anything then there's nothing to see here.
         if (count($removedNodes) === 0) {
             return;
         }
 
+        // we want to truncate the source code from this point
         $firstRemovedNode = $removedNodes[0];
-        $keepNodes = array_slice($keepNodes, 0, $offset);
 
+        // update the AST with just the nodes that were not removed
+        $keepNodes = array_slice($existingNodes, 0, $index);
         $parent->$childName = $keepNodes;
 
-        $removeLength = array_sum(array_map(fn (Node|Token $node) => $node->getFullWidth(), $removedNodes));
+        $removeLength = array_sum(array_map(
+            fn (Node|Token $node) => $node->getFullWidth(),
+            $removedNodes
+        ));
+
         $this->applyEdit(
-            $parent,
-            TextEdit::create($firstRemovedNode->getFullStartPosition(), $removeLength, '')
+            TextEdit::create(
+                $firstRemovedNode->getFullStartPosition(),
+                $removeLength,
+                ''
+            )
         );
     }
 
     /**
-     * @param list<Node> $newNodes
+     * @param list<Node|Token> $newNodes
      */
     private function appendChildren(Node $parent, string $childName, array $newNodes): void
     {
+        $newNodes = array_map(function (Node|Token $node) {
+            return $this->copyNode($node);
+        }, $newNodes);
         if (empty($newNodes)) {
             return;
         }
@@ -153,7 +235,6 @@ final class AstDiff
         );
 
         $this->applyEdit(
-            $parent,
             TextEdit::create(
                 $lastExistingNode->getFullStartPosition(),
                 0,
@@ -163,64 +244,28 @@ final class AstDiff
 
     }
 
-    private function applyEdit(Node $node, TextEdit $edit): void
+    private function applyEdit(TextEdit $edit): void
     {
         $source = $this->fileSource1;
-        $distance = strlen($edit->replacement()) - $edit->length();
-        $existing = substr($source, $edit->start()->toInt(), $edit->length());
-
-        if ($existing === $edit->replacement()) {
-            return;
-        }
-
-        foreach ($source->getDescendantTokens() as $token) {
-            if ($token->getFullStartPosition() < $edit->start()->toInt()) {
-                continue;
-            }
-//                dump(
-//                    Token::getTokenKindNameFromValue($token->kind),
-//                    $token->getText($source)
-//                );
-            $token->start += $distance;
-            $token->fullStart += $distance;
-        }
-
         $source->fileContents = TextEdits::one($edit)->apply($source->getFileContents());
+        self::reindex($this->fileSource1);
     }
 
-    private function mapNode(Node $node1, Node $node2): void
+    private static function reindex(Node $node): void
     {
-        if ($node2::class !== $node1::class) {
-            throw new RuntimeException(sprintf(
-                'Can only map nodes of the same type to eachother, got %s and %s',
-                $node2::class,
-                $node1::class
-            ));
+        $offset = 0;
+        foreach ($node->getDescendantTokens() as $token) {
+            $leading = $token->fullStart - $token->start;
+
+            $token->fullStart = $offset;
+            $token->start = $offset + $leading;
+
+            $offset += $token->length;
         }
+    }
 
-        $lastPosition = $node1->getFullStartPosition();
-        foreach ($node1->getChildNames() as $childName) {
-            /** @var Node|Token|null */
-            $member1 = $node1->$childName;
-            $member2 = $node2->$childName;
-
-            if ($member1 instanceof Node || $member1 instanceof Token) {
-                $lastPosition = $member1->getFullStartPosition();
-            }
-
-            if ($member2 instanceof Token || $member2 === null) {
-                $node1->$childName = $member2;
-                $this->applyEdit($node1, TextEdit::create(
-                    $lastPosition,
-                    $member1?->getFullWidth() ?? 0,
-                    $member2?->getFullText($this->fileSource2->getFileContents()) ?? '',
-                ));
-                if ($member2 !== null) {
-                    // TODO: do we care if we modify the "new" AST by reference?
-                    $member2 = deep_copy($member2);
-                }
-                continue;
-            }
-        }
+    private function copyNode(Node|Token $node): Node
+    {
+        return deep_copy($node);
     }
 }
