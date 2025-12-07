@@ -111,7 +111,7 @@ final class AstDiff
                         $this->applyEdit(TextEdit::create(
                             $node1Child->getFullStartPosition(),
                             $node1Child->getFullWidth(),
-                            $node2Child->getFullText(),
+                            $node2Child->getFullText($this->fileSource2->getFileContents()),
                         ));
                         continue;
                     }
