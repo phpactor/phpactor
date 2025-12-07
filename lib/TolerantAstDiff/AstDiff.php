@@ -18,8 +18,11 @@ final class AstDiff
 
     private SourceFileNode $fileSource2;
 
+    private array $visited = [];
+
     public function merge(Node $node1, Node $node2): void
     {
+        $this->visited = [];
         $this->fileSource1 = $node1->getRoot();
         $this->fileSource2 = $node2->getRoot();
 
@@ -28,6 +31,18 @@ final class AstDiff
 
     private function doMerge(Node $node1, Node $node2): void
     {
+        if ($node1->getText() === $node2->getText()) {
+            return;
+        }
+
+        // check for circular references
+        // TODO: this was added for debugging can probably be removed
+        if (isset($this->visited[spl_object_id($node1)])) {
+            throw new \RuntimeException('Circular reference');
+        }
+
+        $this->visited[spl_object_id($node1)] = true;
+
         if ($node1::class !== $node2::class) {
             throw new RuntimeException(sprintf(
                 'Can only compare nodes of the same type, got: %s vs %s',
@@ -257,6 +272,7 @@ final class AstDiff
     }
 
     private function applyEdit(TextEdit $edit): void
+
     {
         $source = $this->fileSource1;
         $source->fileContents = TextEdits::one($edit)->apply($source->getFileContents());
@@ -267,7 +283,7 @@ final class AstDiff
     {
         $offset = 0;
         foreach ($node->getDescendantTokens() as $token) {
-            $leading = $token->fullStart - $token->start;
+            $leading = $token->start - $token->fullStart;
 
             $token->fullStart = $offset;
             $token->start = $offset + $leading;

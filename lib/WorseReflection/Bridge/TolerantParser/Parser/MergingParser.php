@@ -24,11 +24,9 @@ class MergingParser extends Parser
 
     public function parseSourceFile(string $source, ?string $uri = null): SourceFileNode
     {
-        if ($uri === null) {
+        if (!$uri) {
             return parent::parseSourceFile($source);
         }
-
-
 
         if (!isset($this->documents[$uri])) {
             $node = parent::parseSourceFile($source, $uri);
@@ -37,14 +35,11 @@ class MergingParser extends Parser
         }
 
         $node1 = $this->documents[$uri];
+
+        $start = microtime(true);
         $node2 = parent::parseSourceFile($source, $uri);
+        $this->merger->merge($node1,   $node2);
 
-
-        if ($uri === 'file://'.__FILE__) {
-            $this->merger->merge($node1,   $node2);
-            $this->merger->merge($node1,   $node2);
-        }
-
-        return $node2;
+        return $node1;
     }
 }
