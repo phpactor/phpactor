@@ -15,7 +15,7 @@ class NodeContext
      * @var string[]
      */
     private array $issues = [];
-    private int $nodeId;
+    private int $nodeId = 0;
 
     protected function __construct(
         protected Symbol $symbol,
