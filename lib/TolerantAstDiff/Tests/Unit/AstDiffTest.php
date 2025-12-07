@@ -176,25 +176,25 @@ final class AstDiffTest extends TestCase
             PHP,
         ];
 
-            yield 'asd' => [
-                <<<'PHP'
-                <?php
-                if ($uri === 'file://'.__FILE__) {
-                    $this->merger->merge($node1,   $node2);
-                    dump(NodeUtil::dump($node1));
-                }
-                PHP,
-                <<<'PHP'
-                <?php
-                if ($uri === 'file://'.__FILE__) {
-                    $this->merger->merge($node1,   $node2);
-                    dump(NodeUtil::dump($node1));
-                }
-                PHP,
-                function (Node $node) {
-                    $node = $node->getDescendantNodeAtPosition(79);
-                    self::assertEquals('$node2', $node->getText());
-                },
-            ];
+        yield 'node text is aligned' => [
+            <<<'PHP'
+            <?php
+            if ($uri === 'file://'.__FILE__) {
+                $this->merger->merge($node1,   $node2);
+                dump(NodeUtil::dump($node1));
+            }
+            PHP,
+            <<<'PHP'
+            <?php
+            if ($uri === 'file://'.__FILE__) {
+                $this->merger->merge($node1,   $node2);
+                dump(NodeUtil::dump($node1));
+            }
+            PHP,
+            function (Node $node) {
+                $node = $node->getDescendantNodeAtPosition(79);
+                self::assertEquals('$node2', $node->getText());
+            },
+        ];
     }
 }

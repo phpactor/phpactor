@@ -31,7 +31,7 @@ final class AstDiff
 
     private function doMerge(Node $node1, Node $node2): void
     {
-        if ($node1->getText() === $node2->getText()) {
+        if ($node1->getFullText() === $node2->getFullText()) {
             return;
         }
 
@@ -294,6 +294,6 @@ final class AstDiff
 
     private function copyNode(Node|Token $node): Node|Token
     {
-        return deep_copy($node);
+        return $node;
     }
 }
