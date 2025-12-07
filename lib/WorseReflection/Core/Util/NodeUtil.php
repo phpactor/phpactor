@@ -181,43 +181,24 @@ class NodeUtil
     /**
      * For debugging: pretty print the AST
      */
-    public static function dump(array|Node|Token $nodes, int $level = 0): string
+    public static function dump(Node $node, int $level = 0): string
     {
-        if (!is_array($nodes)) {
-            $nodes = [$nodes];
+        $out = [
+            sprintf(
+                '%s %d:%d - %s',
+                str_repeat('  ', $level) . $node->getNodeKindName(),
+                $node->getStartPosition(),
+                $node->getEndPosition(),
+                str_replace("\n", '\\n', $node->getText()),
+            )
+        ];
+
+        $level++;
+        foreach ($node->getChildNodes() as $child) {
+            $out[] = self::dump($child, $level);
         }
 
-        $dumps = [];
-        foreach ($nodes as $node) {
-            if ($node instanceof Token) {
-                $dumps[] = sprintf(
-                    '%sToken(kind: %s, fs: %d, s %d, len: %d)',
-                    str_repeat('  ', $level),
-                    Token::getTokenKindNameFromValue($node->kind),
-                    $node->fullStart,
-                    $node->start,
-                    $node->length,
-                );
-                continue;
-            }
-            $out = [
-                sprintf(
-                    '%s %d:%d - %s',
-                    str_repeat('  ', $level) . $node->getNodeKindName(),
-                    $node->getStartPosition(),
-                    $node->getEndPosition(),
-                    str_replace("\n", '\\n', $node->getText()),
-                )
-            ];
-
-            foreach ($node->getChildNodesAndTokens() as $child) {
-                $out[] = self::dump($child, $level + 1);
-            }
-
-            $dumps[]= implode("\n", $out);
-        }
-
-        return implode("\n", $dumps);
+        return implode("\n", $out);
     }
 
     /**

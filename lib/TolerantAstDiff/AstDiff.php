@@ -24,7 +24,6 @@ final class AstDiff
         $this->fileSource2 = $node2->getRoot();
 
         $this->doMerge($node1, $node2);
-        self::reindex($node1);
     }
 
     private function doMerge(Node $node1, Node $node2): void

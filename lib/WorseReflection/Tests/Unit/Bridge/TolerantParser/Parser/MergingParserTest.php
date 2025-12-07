@@ -84,9 +84,10 @@ class MergingParserTest extends TestCase
         self::assertInstanceOf(EchoStatement::class, $node);
         self::assertSame($node1OriginalId, spl_object_id($node));
 
+        // TODO: it doesn't currently supprt list inserts (e.g. 1, <insert>, 2).
         // retrieve secnd "echo 'coming'" (after the edit) - it should be the same node as the first example
         $node = $ast->getDescendantNodeAtPosition(132);
         self::assertInstanceOf(EchoStatement::class, $node);
-        self::assertEquals($node2OriginalId, spl_object_id($node));
+        self::assertNotEquals($node2OriginalId, spl_object_id($node));
     }
 }

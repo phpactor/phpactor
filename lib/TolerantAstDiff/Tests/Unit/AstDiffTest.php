@@ -86,6 +86,11 @@ final class AstDiffTest extends TestCase
             '<?php class Bar {}',
         ];
 
+        yield 'insert infix' => [
+            '<?php function hello(): string {echo "hello";echo 2;}',
+            '<?php function hello(): string {echo "hello";echo 5;echo 2;}',
+        ];
+
         yield 'artbitrary change' => [
             <<<'PHP'
                 <?php
