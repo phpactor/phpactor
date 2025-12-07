@@ -41,12 +41,8 @@ class MergingParser extends Parser
 
 
         if ($uri === 'file://'.__FILE__) {
-        //dump('BEFORE:' . $node1->getFileContents());
-            //
-
             $this->merger->merge($node1,   $node2);
-
-            dump(NodeUtil::dump($node1));
+            $this->merger->merge($node1,   $node2);
         }
 
         return $node2;

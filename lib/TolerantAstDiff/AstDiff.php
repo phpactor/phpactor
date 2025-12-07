@@ -121,7 +121,7 @@ final class AstDiff
             // it's possible that property is NULL, if it's not then the last
             // position of the last property would be used by ommission
             if ($member1 instanceof Node || $member1 instanceof Token) {
-                $lastPosition = $member1->getFullStartPosition();
+                $lastPosition = $member1->getStartPosition();
             }
 
             // if the original member is NULL but the new member is

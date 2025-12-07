@@ -3,6 +3,7 @@
 namespace Phpactor\TolerantAstDiff\Tests\Unit;
 
 use Generator;
+use Microsoft\PhpParser\Node;
 use Microsoft\PhpParser\Parser;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Phpactor\ConfigLoader\Tests\TestCase;
@@ -12,7 +13,7 @@ use Phpactor\WorseReflection\Core\Util\NodeUtil;
 final class AstDiffTest extends TestCase
 {
     #[DataProvider('provideDiffTree')]
-    public function testDiffTree(string $source1, string $source2): void
+    public function testDiffTree(string $source1, string $source2, ?\Closure $assertion = null): void
     {
         $parser = new Parser();
         $ast1 = $parser->parseSourceFile($source1);
@@ -24,6 +25,11 @@ final class AstDiffTest extends TestCase
         self::assertSame($source2, $ast1->getFullText(), 'AST content matches');
         self::assertSame($ast2->getFullText(), $ast1->getFullText(), 'AST content matches');
         self::assertSame($ast2->getFullWidth(), $ast1->getFullWidth(), 'AST width matches');
+
+        if ($assertion === null) {
+            return;
+        }
+        $assertion->bindTo($this)->__invoke($ast1);
     }
     /**
      * @return Generator<string,array{string,string}>
@@ -169,5 +175,26 @@ final class AstDiffTest extends TestCase
             }
             PHP,
         ];
+
+            yield 'asd' => [
+                <<<'PHP'
+                <?php
+                if ($uri === 'file://'.__FILE__) {
+                    $this->merger->merge($node1,   $node2);
+                    dump(NodeUtil::dump($node1));
+                }
+                PHP,
+                <<<'PHP'
+                <?php
+                if ($uri === 'file://'.__FILE__) {
+                    $this->merger->merge($node1,   $node2);
+                    dump(NodeUtil::dump($node1));
+                }
+                PHP,
+                function (Node $node) {
+                    $node = $node->getDescendantNodeAtPosition(79);
+                    self::assertEquals('$node2', $node->getText());
+                },
+            ];
     }
 }
