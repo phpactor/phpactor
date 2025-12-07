@@ -106,5 +106,30 @@ final class AstDiffTest extends TestCase
                 }
                 PHP
         ];
+
+        yield 'intoduce new line' => [
+            <<<'PHP'
+                <?php
+                class Foo
+                {
+                    public function bar()
+                    {
+                        echo 'foobar';
+                    }
+                }
+                PHP,
+            <<<'PHP'
+                <?php
+                class Foo
+                {
+                    public function bar()
+                    {
+
+
+                        echo 'foobar';
+                    }
+                }
+                PHP
+        ];
     }
 }

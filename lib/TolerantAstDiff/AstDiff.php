@@ -7,14 +7,12 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
-use ReflectionClass;
-use ReflectionProperty;
 use RuntimeException;
-use function Amp\Promise\wait;
 
 final class AstDiff
 {
     private SourceFileNode $fileSource1;
+
     private SourceFileNode $fileSource2;
 
     public function merge(Node $node1, Node $node2): void
@@ -182,9 +180,10 @@ final class AstDiff
     private function mapNode(Node $node1, Node $node2): void
     {
         if ($node2::class !== $node1::class) {
-            throw new \RuntimeException(sprintf(
+            throw new RuntimeException(sprintf(
                 'Can only map nodes of the same type to eachother, got %s and %s',
-                $node2::class, $node1::class
+                $node2::class,
+                $node1::class
             ));
         }
 
