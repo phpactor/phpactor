@@ -21,7 +21,8 @@ final class AstDiffTest extends TestCase
         $diff = (new AstDiff());
         $diff->merge($ast1, $ast2);
 
-        self::assertEquals($ast2->getText(), $ast1->getText());
+        self::assertSame($ast2->getText(), $ast1->getText());
+        self::assertSame($ast2->getFullWidth(), $ast1->getFullWidth());
     }
     /**
      * @return Generator<string,array{string,string}>
@@ -29,8 +30,8 @@ final class AstDiffTest extends TestCase
     public static function provideDiffTree(): Generator
     {
         yield 'same' => [
-            '<?php function hello(): string { echo "hello"; }',
-            '<?php function hello(): string { echo "hello"; }',
+            '<?php function hello(): string { echo "hello"; } ',
+            '<?php function hello(): string { echo "hello"; } ',
         ];
 
         yield 'remove 1' => [
@@ -130,6 +131,37 @@ final class AstDiffTest extends TestCase
                     }
                 }
                 PHP
+        ];
+
+        yield 'misc' => [
+            <<<'PHP'
+            <?php
+            function a() {
+                if (true) {
+                    echo 'hello';
+                    echo 'goodbye';
+                }
+                if (true) {
+                    echo 'coming';
+                    echo 'going';
+                }
+            }
+            PHP,
+            <<<'PHP'
+            <?php
+            function a() {
+                if (true) {
+                    echo 'hello';
+                    echo 'goodbye';
+                }
+
+
+                if (true) {
+                    echo 'coming';
+                    echo 'going';
+                }
+            }
+            PHP,
         ];
     }
 }

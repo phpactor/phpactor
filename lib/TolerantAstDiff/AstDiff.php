@@ -7,7 +7,9 @@ use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
 use Phpactor\TextDocument\TextEdit;
 use Phpactor\TextDocument\TextEdits;
+use Phpactor\WorseReflection\Core\Util\NodeUtil;
 use RuntimeException;
+use function DeepCopy\deep_copy;
 
 final class AstDiff
 {
@@ -165,11 +167,20 @@ final class AstDiff
     {
         $source = $this->fileSource1;
         $distance = strlen($edit->replacement()) - $edit->length();
+        $existing = substr($source, $edit->start()->toInt(), $edit->length());
+
+        if ($existing === $edit->replacement()) {
+            return;
+        }
 
         foreach ($source->getDescendantTokens() as $token) {
-            if ($token->getFullStartPosition() <= $edit->start()->toInt()) {
+            if ($token->getFullStartPosition() < $edit->start()->toInt()) {
                 continue;
             }
+//                dump(
+//                    Token::getTokenKindNameFromValue($token->kind),
+//                    $token->getText($source)
+//                );
             $token->start += $distance;
             $token->fullStart += $distance;
         }
@@ -193,24 +204,28 @@ final class AstDiff
             $member2 = $node2->$childName;
 
             if (is_array($member1)) {
-                //foreach ($member1 as $member) {
-                //    $lastPosition = $member->getFullStartPosition();
-                //}
+                foreach ($member1 as $member) {
+                    assert($member instanceof Token || $member instanceof Node);
+                    $lastPosition = $member->getFullStartPosition();
+                }
                 continue;
             }
 
-            if ($member1 !== null) {
+            if ($member1 instanceof Node || $member1 instanceof Token) {
                 $lastPosition = $member1->getFullStartPosition();
             }
 
             if ($member2 instanceof Token || $member2 === null) {
-                $node1->$childName = $member2;
-
                 $this->applyEdit($node1, TextEdit::create(
                     $lastPosition,
                     $member1?->getFullWidth() ?? 0,
                     $member2?->getFullText($this->fileSource2->getFileContents()) ?? '',
                 ));
+                if ($member2 !== null) {
+                    // TODO: do we care if we modify the "new" AST by reference?
+                    $member2 = deep_copy($member2);
+                }
+                $node1->$childName = $member2;
                 continue;
             }
         }

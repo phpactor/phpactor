@@ -35,7 +35,7 @@ class MergingParserTest extends TestCase
         $node2OriginalId = spl_object_id($node);
 
         // new source code introduces new line between the two nodes
-        $ast = $parser->parseSourceFile(<<<'PHP'
+        $ast = $parser->parseSourceFile($source = <<<'PHP'
         <?php
         function a() {
             if (true) {
@@ -51,10 +51,37 @@ class MergingParserTest extends TestCase
         }
         PHP, 'file://path');
 
+        self::assertEquals($source, $ast->getText());
         $node = $ast->getDescendantNodeAtPosition(46);
         self::assertInstanceOf(EchoStatement::class, $node);
         self::assertSame($node1OriginalId, spl_object_id($node));
         $node = $ast->getDescendantNodeAtPosition(115);
+        self::assertInstanceOf(EchoStatement::class, $node);
+        self::assertEquals($node2OriginalId, spl_object_id($node));
+
+        // new source code introduces a new statement
+        $ast = $parser->parseSourceFile($source = <<<'PHP'
+        <?php
+        function a() {
+            if (true) {
+                echo 'hello';
+                echo 'goodbye';
+            }
+
+            echo "fo";
+
+            if (true) {
+                echo 'coming';
+                echo 'going';
+            }
+        }
+        PHP, 'file://path');
+
+        self::assertEquals($source, $ast->getText());
+        $node = $ast->getDescendantNodeAtPosition(46);
+        self::assertInstanceOf(EchoStatement::class, $node);
+        self::assertSame($node1OriginalId, spl_object_id($node));
+        $node = $ast->getDescendantNodeAtPosition(126);
         self::assertInstanceOf(EchoStatement::class, $node);
         self::assertEquals($node2OriginalId, spl_object_id($node));
     }
