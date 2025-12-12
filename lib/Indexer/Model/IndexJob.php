@@ -8,8 +8,11 @@ use SplFileInfo;
 
 class IndexJob
 {
-    public function __construct(private IndexBuilder $indexBuilder, private FileList $fileList)
-    {
+    public function __construct(
+        private IndexBuilder $indexBuilder,
+        private FileList $fileList,
+        private ?int $maxFileSizeToIndex,
+    ) {
     }
 
     /**
@@ -20,6 +23,10 @@ class IndexJob
         foreach ($this->fileList as $fileInfo) {
             assert($fileInfo instanceof SplFileInfo);
             if ($fileInfo->isLink()) {
+                continue;
+            }
+
+            if (($fileInfo->getSize() ?: 0) >= $this->maxFileSizeToIndex) {
                 continue;
             }
 

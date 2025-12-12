@@ -1801,6 +1801,22 @@ To allow indexer to follow symlinks
 **Default**: ``false``
 
 
+.. _param_indexer.max_filesize_to_index:
+
+
+``indexer.max_filesize_to_index``
+"""""""""""""""""""""""""""""""""
+
+
+Type: integer
+
+
+Files larger than this will not be indexed. (Size in bytes)
+
+
+**Default**: ``1000000``
+
+
 .. _param_indexer.project_root:
 
 
