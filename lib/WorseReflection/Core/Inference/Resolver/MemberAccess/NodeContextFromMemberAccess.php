@@ -3,6 +3,7 @@
 namespace Phpactor\WorseReflection\Core\Inference\Resolver\MemberAccess;
 
 use Microsoft\PhpParser\Node;
+use Microsoft\PhpParser\Node\ConstElement;
 use Microsoft\PhpParser\Node\DelimitedList\TraitSelectOrAliasClauseList;
 use Microsoft\PhpParser\Node\Expression\CallExpression;
 use Microsoft\PhpParser\Node\Expression\MemberAccessExpression;
@@ -99,6 +100,12 @@ class NodeContextFromMemberAccess
                     return $context;
                 }
                 return $context->withType(TypeFactory::classString($classType->name()->full()));
+            }
+
+            $constantAssignment = $node->getParent();
+            // If you're trying to assign a constant to itself like "const T = self::T;"
+            if ($constantAssignment instanceof ConstElement && $constantAssignment->getName() === $memberName) {
+                return $context;
             }
         }
 
