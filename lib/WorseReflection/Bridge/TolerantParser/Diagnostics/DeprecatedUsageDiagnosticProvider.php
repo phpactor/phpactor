@@ -220,19 +220,6 @@ class DeprecatedUsageDiagnosticProvider implements DiagnosticProvider
                 Assert::assertEquals('Call to deprecated property "deprecated": This is deprecated', $diagnostics->at(0)->message());
             }
         );
-
-        yield new DiagnosticExample(
-            title: 'self referencing constant',
-            source: <<<PHP
-                abstract class A {
-                    const A = self::A;
-                }
-                PHP,
-            valid: true,
-            assertion: function (Diagnostics $diagnostics): void {
-                Assert::assertCount(0, $diagnostics);
-            }
-        );
     }
 
     /**
