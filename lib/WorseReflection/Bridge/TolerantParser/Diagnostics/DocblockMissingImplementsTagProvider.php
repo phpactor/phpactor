@@ -22,11 +22,8 @@ use Phpactor\WorseReflection\Core\Inference\NodeContextResolver;
  */
 class DocblockMissingImplementsTagProvider implements DiagnosticProvider
 {
-    private ClassGenericDiagnosticHelper $helper;
-
-    public function __construct(?ClassGenericDiagnosticHelper $helper = null)
+    public function __construct(private ClassGenericDiagnosticHelper $helper = new ClassGenericDiagnosticHelper())
     {
-        $this->helper = $helper ?: new ClassGenericDiagnosticHelper();
     }
 
     public function exit(NodeContextResolver $resolver, Frame $frame, Node $node): iterable

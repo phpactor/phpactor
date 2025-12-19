@@ -23,11 +23,8 @@ use Symfony\Component\Filesystem\Path;
  */
 class IncludeWalker implements Walker
 {
-    private Parser $parser;
-
-    public function __construct(private LoggerInterface $logger, private FrameResolver $resolver, ?Parser $parser = null)
+    public function __construct(private LoggerInterface $logger, private FrameResolver $resolver, private Parser $parser = new Parser())
     {
-        $this->parser = $parser ?: new Parser();
     }
 
 

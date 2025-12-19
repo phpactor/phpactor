@@ -31,7 +31,7 @@ abstract class AbstractParameterCompletor
         private ObjectFormatter $formatter,
         ?VariableCompletionHelper $variableCompletionHelper = null
     ) {
-        $this->variableCompletionHelper = $variableCompletionHelper ?: new VariableCompletionHelper($reflector);
+        $this->variableCompletionHelper = $variableCompletionHelper ?? new VariableCompletionHelper($reflector);
     }
 
     /**

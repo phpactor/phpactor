@@ -14,16 +14,13 @@ use Psr\Log\LoggerInterface;
 
 class PsalmProcess
 {
-    private DiagnosticsParser $parser;
-
     public function __construct(
         private string $cwd,
         private PsalmConfig $config,
         private LoggerInterface $logger,
-        ?DiagnosticsParser $parser = null,
+        private DiagnosticsParser $parser = new DiagnosticsParser(),
         private int $timeoutSeconds = 10,
     ) {
-        $this->parser = $parser ?: new DiagnosticsParser();
     }
 
     /**

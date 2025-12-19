@@ -31,14 +31,11 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseSignatureHelper implements SignatureHelper
 {
-    private Parser $parser;
-
     public function __construct(
         private Reflector $reflector,
         private ObjectFormatter $formatter,
-        ?Parser $parser = null
+        private Parser $parser = new Parser(),
     ) {
-        $this->parser = $parser ?: new Parser();
     }
 
     public function signatureHelp(

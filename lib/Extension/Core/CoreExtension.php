@@ -158,14 +158,13 @@ class CoreExtension implements Extension
 
         $container->register('application.status', function (Container $container) {
             return new Status(
-                $container->get('source_code_filesystem.registry'),
+                registry: $container->get('source_code_filesystem.registry'),
                 // candidates are bootstrapped outside of the extensions and are not loaded in the language server
-                $container->has('config_loader.candidates') ? $container->get('config_loader.candidates') : new PathCandidates([]),
-                $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
-                $container->get(PhpVersionResolver::class),
+                paths: $container->has('config_loader.candidates') ? $container->get('config_loader.candidates') : new PathCandidates([]),
+                workingDirectory: $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
+                phpVersionResolver: $container->get(PhpVersionResolver::class),
                 /** @phpstan-ignore argument.type */
-                $container->parameter(self::PARAM_TRUST)->value(),
-                null
+                trust: $container->parameter(self::PARAM_TRUST)->value(),
             );
         });
     }

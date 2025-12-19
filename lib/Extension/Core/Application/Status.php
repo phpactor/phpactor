@@ -15,17 +15,14 @@ use Phar;
 
 class Status
 {
-    private ExecutableFinder $executableFinder;
-
     public function __construct(
         private FilesystemRegistry $registry,
         private PathCandidates $paths,
         private string $workingDirectory,
         private PhpVersionResolver $phpVersionResolver,
         private Trust $trust,
-        ?ExecutableFinder $executableFinder = null,
+        private ExecutableFinder $executableFinder = new ExecutableFinder()
     ) {
-        $this->executableFinder = $executableFinder ?: new ExecutableFinder();
     }
 
     public function check(): array

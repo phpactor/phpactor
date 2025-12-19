@@ -16,17 +16,16 @@ class ChainSourceLocator implements SourceCodeLocator
      */
     private array $locators = [];
 
-    private LoggerInterface $logger;
-
     /**
      * @param SourceCodeLocator[] $sourceLocators
      */
-    public function __construct(array $sourceLocators, ?LoggerInterface $logger = null)
-    {
+    public function __construct(
+        array $sourceLocators,
+        private LoggerInterface $logger = new NullLogger(),
+    ) {
         foreach ($sourceLocators as $sourceLocator) {
             $this->add($sourceLocator);
         }
-        $this->logger = $logger ?: new NullLogger();
     }
 
     public function locate(Name $name): TextDocument

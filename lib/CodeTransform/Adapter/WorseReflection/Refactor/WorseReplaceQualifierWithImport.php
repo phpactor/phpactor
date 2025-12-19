@@ -17,15 +17,8 @@ use Phpactor\WorseReflection\Reflector;
 
 class WorseReplaceQualifierWithImport implements ReplaceQualifierWithImport
 {
-    private Parser $parser;
-
-    public function __construct(
-        private Reflector $reflector,
-        private BuilderFactory $factory,
-        private Updater $updater,
-        ?Parser $parser = null
-    ) {
-        $this->parser = $parser ?: new Parser();
+    public function __construct(private Reflector $reflector, private BuilderFactory $factory, private Updater $updater, private Parser $parser = new Parser())
+    {
     }
 
     public function getTextEdits(SourceCode $sourceCode, int $offset): TextDocumentEdits

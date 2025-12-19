@@ -14,14 +14,10 @@ use Phpactor\TextDocument\TextEdits;
 
 class ClassMover
 {
-    private ClassFinder $finder;
-
-    private ClassReplacer $replacer;
-
-    public function __construct(?ClassFinder $finder = null, ?ClassReplacer $replacer = null)
-    {
-        $this->finder = $finder ?: new TolerantClassFinder();
-        $this->replacer = $replacer ?: new TolerantClassReplacer(new TolerantUpdater(new TwigRenderer()));
+    public function __construct(
+        private ClassFinder $finder = new TolerantClassFinder(),
+        private ClassReplacer $replacer = new TolerantClassReplacer(new TolerantUpdater(new TwigRenderer())),
+    ) {
     }
 
     public function findReferences(string $source, string $fullyQualifiedName): FoundReferences

@@ -13,14 +13,13 @@ use Phpactor\TextDocument\TextDocument;
 
 class ChainTolerantCompletor implements Completor
 {
-    private Parser $parser;
-
     /**
      * @param TolerantCompletor[] $tolerantCompletors
      */
-    public function __construct(private array $tolerantCompletors, ?Parser $parser = null)
-    {
-        $this->parser = $parser ?: new Parser();
+    public function __construct(
+        private array $tolerantCompletors,
+        private Parser $parser = new Parser(),
+    ) {
     }
 
     /**

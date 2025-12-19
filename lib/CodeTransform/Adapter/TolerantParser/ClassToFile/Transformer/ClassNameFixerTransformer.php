@@ -31,13 +31,8 @@ use RuntimeException;
 
 class ClassNameFixerTransformer implements Transformer
 {
-    private Parser $parser;
-
-    public function __construct(
-        private FileToClass $fileToClass,
-        ?Parser $parser = null
-    ) {
-        $this->parser = $parser ?: new Parser();
+    public function __construct(private FileToClass $fileToClass, private Parser $parser = new Parser())
+    {
     }
 
     /**

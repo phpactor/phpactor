@@ -25,8 +25,6 @@ use Throwable;
 
 final class TolerantIndexBuilder implements IndexBuilder
 {
-    private Parser $parser;
-
     /**
      * @param TolerantIndexer[] $indexers
      */
@@ -34,9 +32,8 @@ final class TolerantIndexBuilder implements IndexBuilder
         private Index $index,
         private array $indexers,
         private LoggerInterface $logger,
-        ?Parser $parser = null
+        private Parser $parser = new Parser(),
     ) {
-        $this->parser = $parser ?: new Parser();
     }
 
     public static function create(Index $index, ?LoggerInterface $logger = null): self

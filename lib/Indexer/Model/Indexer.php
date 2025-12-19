@@ -7,16 +7,13 @@ use Phpactor\TextDocument\TextDocument;
 
 class Indexer
 {
-    private DirtyDocumentTracker $dirtyDocumentTracker;
-
     public function __construct(
         private IndexBuilder $builder,
         private Index $index,
         private FileListProvider $provider,
         private ?int $maxFileSizeToIndex,
-        ?DirtyDocumentTracker $dirtyDocumentTracker = null,
+        private DirtyDocumentTracker $dirtyDocumentTracker = new NullDirtyDocumentTracker(),
     ) {
-        $this->dirtyDocumentTracker = $dirtyDocumentTracker ?: new NullDirtyDocumentTracker();
     }
 
     public function getJob(?string $subPath = null): IndexJob

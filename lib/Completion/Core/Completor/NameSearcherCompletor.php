@@ -16,11 +16,10 @@ use Phpactor\TextDocument\TextDocumentUri;
 
 abstract class NameSearcherCompletor
 {
-    private DocumentPrioritizer $prioritizer;
-
-    public function __construct(protected NameSearcher $nameSearcher, ?DocumentPrioritizer $prioritizer = null)
-    {
-        $this->prioritizer = $prioritizer ?: new DefaultResultPrioritizer();
+    public function __construct(
+        protected NameSearcher $nameSearcher,
+        private DocumentPrioritizer $prioritizer = new DefaultResultPrioritizer(),
+    ) {
     }
 
     /**

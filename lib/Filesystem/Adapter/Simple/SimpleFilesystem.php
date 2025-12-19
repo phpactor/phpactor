@@ -17,15 +17,12 @@ class SimpleFilesystem implements Filesystem
 {
     private FileListProvider $fileListProvider;
 
-    private SymfonyFilesystem $filesystem;
-
     public function __construct(
         private FilePath $path,
         ?FileListProvider $fileListProvider = null,
-        ?SymfonyFilesystem $filesystem = null
+        private SymfonyFilesystem $filesystem = new SymfonyFilesystem()
     ) {
-        $this->fileListProvider = $fileListProvider ?: new SimpleFileListProvider($this->path);
-        $this->filesystem = $filesystem ?: new SymfonyFilesystem();
+        $this->fileListProvider = $fileListProvider ?? new SimpleFileListProvider($this->path);
     }
 
     public function fileList(): FileList
