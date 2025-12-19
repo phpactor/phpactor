@@ -14,6 +14,7 @@ use Phpactor\ReferenceFinder\ChainTypeLocator;
 use Phpactor\ReferenceFinder\NameSearcher;
 use Phpactor\ReferenceFinder\ReferenceFinder;
 use Phpactor\ReferenceFinder\Search\NullNameSearcher;
+use Phpactor\ReferenceFinder\TypeLocator;
 
 class ReferenceFinderExtension implements Extension
 {
@@ -43,9 +44,10 @@ class ReferenceFinderExtension implements Extension
         });
 
         $container->register(self::SERVICE_TYPE_LOCATOR, function (Container $container) {
+            /** @var list<TypeLocator> $locators */
             $locators = [];
             foreach (array_keys($container->getServiceIdsForTag(self::TAG_TYPE_LOCATOR)) as $serviceId) {
-                $locators[] = $container->get($serviceId);
+                $locators[] = $container->expect($serviceId, TypeLocator::class);
             }
 
             return new ChainTypeLocator($locators, LoggingExtension::channelLogger($container, 'LSP-REF'));

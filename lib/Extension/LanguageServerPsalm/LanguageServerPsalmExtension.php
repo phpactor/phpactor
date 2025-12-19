@@ -59,8 +59,8 @@ class LanguageServerPsalmExtension implements OptionalExtension
             }
 
             return new PsalmProcess(
-                $root,
-                new PsalmConfig(
+                cwd: $root,
+                config: new PsalmConfig(
                     $binPath,
                     $shouldShowInfo,
                     $useCache,
@@ -68,9 +68,8 @@ class LanguageServerPsalmExtension implements OptionalExtension
                     $threads ? (int)$threads : null,
                     $configPath === '' ? null : $configPath,
                 ),
-                LoggingExtension::channelLogger($container, 'PSALM'),
-                null,
-                $container->parameter(self::PARAM_TIMEOUT)->int(),
+                logger: LoggingExtension::channelLogger($container, 'PSALM'),
+                timeoutSeconds: $container->parameter(self::PARAM_TIMEOUT)->int(),
             );
         });
     }

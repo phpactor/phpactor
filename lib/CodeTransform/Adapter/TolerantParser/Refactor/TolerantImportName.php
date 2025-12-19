@@ -31,8 +31,7 @@ class TolerantImportName implements ImportName
         private Updater $updater,
         private Parser $parser = new Parser(),
         private bool $importGlobals = false,
-    )
-    {
+    ) {
     }
 
     public function importName(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits

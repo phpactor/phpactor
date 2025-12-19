@@ -30,6 +30,8 @@ use Phpactor\Container\Extension;
 use Phpactor\FilePathResolver\Expander\ValueExpander;
 use Phpactor\ConfigLoader\Core\PathCandidates;
 use Phpactor\FilePathResolver\Expanders;
+use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\Filesystem\Domain\FilesystemRegistry;
 use Phpactor\MapResolver\Resolver;
 use Phpactor\Container\ContainerBuilder;
 
@@ -157,11 +159,14 @@ class CoreExtension implements Extension
         });
 
         $container->register('application.status', function (Container $container) {
+            /** @var PathCandidates $paths */
+            $paths = $container->has('config_loader.candidates') ? $container->get('config_loader.candidates') : new PathCandidates([]);
+
             return new Status(
-                registry: $container->get('source_code_filesystem.registry'),
+                registry: $container->expect('source_code_filesystem.registry', FilesystemRegistry::class),
                 // candidates are bootstrapped outside of the extensions and are not loaded in the language server
-                paths: $container->has('config_loader.candidates') ? $container->get('config_loader.candidates') : new PathCandidates([]),
-                workingDirectory: $container->get(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER)->resolve('%project_root%'),
+                paths: $paths,
+                workingDirectory: $container->expect(FilePathResolverExtension::SERVICE_FILE_PATH_RESOLVER, PathResolver::class)->resolve('%project_root%'),
                 phpVersionResolver: $container->get(PhpVersionResolver::class),
                 /** @phpstan-ignore argument.type */
                 trust: $container->parameter(self::PARAM_TRUST)->value(),

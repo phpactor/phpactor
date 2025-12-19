@@ -3,6 +3,7 @@
 namespace Phpactor\Extension\CompletionWorse;
 
 use Closure;
+use Microsoft\PhpParser\Parser;
 use Phpactor\Completion\Bridge\TolerantParser\DebugTolerantCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\LimitingCompletor;
 use Phpactor\Completion\Bridge\TolerantParser\ReferenceFinder\AttributeCompletor;
@@ -167,7 +168,7 @@ class CompletionWorseExtension implements Extension
                     }
                     return $container->get($serviceId) ?? false;
                 }, $container->get(self::SERVICE_COMPLETOR_MAP))),
-                $container->get('worse_reflection.tolerant_parser')
+                $container->expect('worse_reflection.tolerant_parser', Parser::class)
             );
         }, [ CompletionExtension::TAG_COMPLETOR => []]);
 
@@ -270,8 +271,8 @@ class CompletionWorseExtension implements Extension
                 function (Container $container) {
                     return new DoctrineAnnotationCompletor(
                         $container->get(NameSearcher::class),
-                        $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
-                        $container->get(WorseReflectionExtension::SERVICE_PARSER)
+                        $container->expect(WorseReflectionExtension::SERVICE_REFLECTOR, Reflector::class),
+                        $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class)
                     );
                 },
             ],
@@ -345,7 +346,7 @@ class CompletionWorseExtension implements Extension
                         new VariableCompletionHelper(
                             $container->get(WorseReflectionExtension::SERVICE_REFLECTOR),
                         ),
-                        $container->get(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER)
+                        $container->expect(CompletionExtension::SERVICE_SHORT_DESC_FORMATTER, ObjectFormatter::class)
                     );
                 },
             ],

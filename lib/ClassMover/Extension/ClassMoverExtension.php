@@ -27,8 +27,8 @@ class ClassMoverExtension implements Extension
     {
         $container->register(ClassMover::class, function (Container $container) {
             return new ClassMover(
-                $container->get('class_mover.class_finder'),
-                $container->get('class_mover.ref_replacer')
+                $container->expect('class_mover.class_finder', TolerantClassFinder::class),
+                $container->expect('class_mover.ref_replacer', TolerantClassReplacer::class)
             );
         });
 

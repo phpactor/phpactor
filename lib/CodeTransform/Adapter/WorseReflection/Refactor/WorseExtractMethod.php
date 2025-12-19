@@ -37,8 +37,7 @@ class WorseExtractMethod implements ExtractMethod
         private BuilderFactory $factory,
         private Updater $updater,
         private Parser $parser = new Parser(),
-    )
-    {
+    ) {
     }
 
     public function canExtractMethod(SourceCode $source, int $offsetStart, int $offsetEnd): bool

@@ -283,7 +283,7 @@ class CodeTransformExtension implements Extension
         $container->register(ImportName::class, function (Container $container) {
             return new TolerantImportName(
                 $container->get(Updater::class),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER),
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class),
                 $container->parameter(self::PARAM_IMPORT_GLOBALS)->bool(),
             );
         });
@@ -354,7 +354,7 @@ class CodeTransformExtension implements Extension
             return new TolerantUpdater(
                 $container->get('code_transform.renderer'),
                 $container->get(TextFormat::class),
-                $container->get(WorseReflectionExtension::SERVICE_PARSER)
+                $container->expect(WorseReflectionExtension::SERVICE_PARSER, Parser::class)
             );
         });
         $container->register(BuilderFactory::class, function (Container $container) {
