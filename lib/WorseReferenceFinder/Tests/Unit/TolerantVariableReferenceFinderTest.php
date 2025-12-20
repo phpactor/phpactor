@@ -117,6 +117,10 @@ class TolerantVariableReferenceFinderTest extends TestCase
             '<?php $v<>ar1 = 5; $func = function() use (<sr>$var1) { };',
         ];
 
+        yield 'static var::' => [
+            '<?php class C1 { function m1() { $v<>ar4::prop1; <sr>$var4 = 12; } }',
+        ];
+
         yield 'scope: anonymous function: inside' => [
             '<?php $v<>ar1 = 5; $func = function() use (<sr>$var1) { $var2 = <sr>$var1; };',
         ];

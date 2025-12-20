@@ -17,6 +17,7 @@ Improvements:
 
 Bug fixes:
 
+  - Fix scoped property access variable renaming #2968 @dantleech
   - Fix display of configuration warnings #2971 @dantleech
 
 ## 2025.10.17.0
