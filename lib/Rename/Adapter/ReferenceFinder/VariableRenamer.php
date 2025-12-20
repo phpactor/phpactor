@@ -16,7 +16,10 @@ class VariableRenamer extends AbstractReferenceRenamer
     public function getRenameRangeForNode(Node $node): ?ByteOffsetRange
     {
         // do not try and rename static property names
-        if ($node->parent instanceof ScopedPropertyAccessExpression) {
+        if (
+            $node->parent instanceof ScopedPropertyAccessExpression
+            && $node->parent->scopeResolutionQualifier !== $node
+        ) {
             return null;
         }
 

@@ -91,6 +91,7 @@ class VariableRenamerTest extends TestCase
         yield 'NULL: Rename property (multiple definition)' => [
             '<?php class Class1 { public $prop1, $pr<>op2; } }'
         ];
+
     }
 
     #[DataProvider('provideRename')]
@@ -202,6 +203,10 @@ class VariableRenamerTest extends TestCase
 
         yield 'Rename foreach variable' => [
             '<?php $var1 = 0; foreach($array as <d>${{value}}) { echo <r>${{val<>ue}}; }'
+        ];
+
+        yield 'Rename variable on ::class' => [
+            '<?php class Class1 { function method1(){ <d>${{va<>r1}}::class; $var2 = <r>${{var1}}; } }'
         ];
     }
 
