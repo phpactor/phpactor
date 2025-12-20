@@ -73,7 +73,7 @@ abstract class AbstractMethodUpdater
             }
 
             $lines = $methodPrototype->body()->lines();
-            if ($lines !== null && $lines->count()) {
+            if ($lines->count() > 0) {
                 $bodyNode = $methodDeclaration->compoundStatementOrSemicolon;
                 $this->appendLinesToMethod($edits, $methodPrototype, $bodyNode);
             }
@@ -152,7 +152,7 @@ abstract class AbstractMethodUpdater
 
         $lastStatement = end($bodyNode->statements) ?: $bodyNode->openBrace;
 
-        foreach ($method->body()->lines() ?? [] as $line) {
+        foreach ($method->body()->lines() as $line) {
             // do not add duplicate lines
             $bodyNodeLines = explode("\n", $bodyNode->getText());
 
