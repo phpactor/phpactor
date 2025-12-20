@@ -9,11 +9,8 @@ use Symfony\Component\Yaml\Parser;
 
 class YamlDeserializer implements Deserializer
 {
-    private Parser $parser;
-
-    public function __construct(?Parser $parser = null)
+    public function __construct(private Parser $parser = new Parser())
     {
-        $this->parser = $parser ?: new Parser();
     }
 
     public function deserialize(string $contents): array

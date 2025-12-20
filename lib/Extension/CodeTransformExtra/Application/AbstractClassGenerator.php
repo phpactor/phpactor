@@ -11,14 +11,11 @@ use Psr\Log\NullLogger;
 
 class AbstractClassGenerator
 {
-    private LoggerInterface $logger;
-
     public function __construct(
         protected ClassFileNormalizer $normalizer,
         protected Generators $generators,
-        ?LoggerInterface $logger = null
+        private LoggerInterface $logger = new NullLogger()
     ) {
-        $this->logger = $logger ?: new NullLogger();
     }
 
     public function availableGenerators()

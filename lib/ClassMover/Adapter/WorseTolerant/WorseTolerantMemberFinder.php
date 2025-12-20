@@ -45,18 +45,12 @@ class WorseTolerantMemberFinder implements MemberFinder
 {
     private Reflector $reflector;
 
-    private Parser $parser;
-
-    private LoggerInterface $logger;
-
     public function __construct(
         ?Reflector $reflector = null,
-        ?Parser $parser = null,
-        ?LoggerInterface $logger = null
+        private Parser $parser = new Parser(),
+        private LoggerInterface $logger = new NullLogger()
     ) {
         $this->reflector = $reflector ?: ReflectorBuilder::create()->addSource(TextDocumentBuilder::empty());
-        $this->parser = $parser ?: new Parser();
-        $this->logger = $logger ?: new NullLogger();
     }
 
     public function findMembers(SourceCode $source, ClassMemberQuery $query): MemberReferences

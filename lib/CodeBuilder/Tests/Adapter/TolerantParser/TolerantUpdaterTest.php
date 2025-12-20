@@ -11,6 +11,6 @@ class TolerantUpdaterTest extends UpdaterTestCase
 {
     protected function updater(): Updater
     {
-        return new TolerantUpdater(new TwigRenderer(), null, null);
+        return new TolerantUpdater(new TwigRenderer());
     }
 }

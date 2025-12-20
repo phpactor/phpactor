@@ -16,11 +16,8 @@ class Edits
      */
     private array $edits = [];
 
-    private TextFormat $format;
-
-    public function __construct(?TextFormat $format = null)
+    public function __construct(private TextFormat $format = new TextFormat())
     {
-        $this->format = $format ?: new TextFormat();
     }
 
     /**

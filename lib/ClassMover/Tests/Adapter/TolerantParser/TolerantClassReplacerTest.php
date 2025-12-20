@@ -5,7 +5,6 @@ namespace Phpactor\ClassMover\Tests\Adapter\TolerantParser;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestDox;
 use Generator;
-use Microsoft\PhpParser\Parser;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassFinder;
 use PHPUnit\Framework\TestCase;
 use Phpactor\ClassMover\Adapter\TolerantParser\TolerantClassReplacer;
@@ -20,8 +19,7 @@ class TolerantClassReplacerTest extends TestCase
     #[TestDox('It finds all class references.')]
     public function testFind(string $fileName, string $classFqn, string $replaceWithFqn, string $expectedSource): void
     {
-        $parser = new Parser();
-        $tolerantRefFinder = new TolerantClassFinder($parser);
+        $tolerantRefFinder = new TolerantClassFinder();
         $source = TextDocumentBuilder::fromUri(__DIR__ . '/examples/' . $fileName)->build();
         $originalName = FullyQualifiedName::fromString($classFqn);
 

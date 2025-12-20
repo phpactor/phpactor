@@ -226,7 +226,11 @@ final class ReflectorBuilder
         }
 
         if (count($locators) > 1) {
-            return new ChainSourceLocator($locators, $this->logger);
+            $args = [$locators];
+            if ($this->logger !== null) {
+                $args[] = $this->logger;
+            }
+            return new ChainSourceLocator(...$args);
         }
 
         return reset($locators);
@@ -234,7 +238,7 @@ final class ReflectorBuilder
 
     private function buildLogger(): LoggerInterface
     {
-        return $this->logger ?: new ArrayLogger();
+        return $this->logger ?? new ArrayLogger();
     }
 
     private function buildReflectorFactory(): SourceCodeReflectorFactory

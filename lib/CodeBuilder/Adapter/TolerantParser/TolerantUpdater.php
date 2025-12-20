@@ -25,10 +25,6 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantUpdater implements Updater
 {
-    private Parser $parser;
-
-    private TextFormat $textFormat;
-
     private ClassUpdater $classUpdater;
 
     private InterfaceUpdater $interfaceUpdater;
@@ -41,11 +37,9 @@ class TolerantUpdater implements Updater
 
     public function __construct(
         private Renderer $renderer,
-        ?TextFormat $textFormat = null,
-        ?Parser $parser = null
+        private TextFormat $textFormat = new TextFormat(),
+        private Parser $parser = new Parser()
     ) {
-        $this->parser = $parser ?: new Parser();
-        $this->textFormat = $textFormat ?: new TextFormat();
         $this->classUpdater = new ClassUpdater($renderer);
         $this->interfaceUpdater = new InterfaceUpdater($renderer);
         $this->traitUpdater = new TraitUpdater($renderer);

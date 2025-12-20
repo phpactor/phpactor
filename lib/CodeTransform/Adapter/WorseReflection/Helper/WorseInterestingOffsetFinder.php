@@ -11,11 +11,10 @@ use Phpactor\WorseReflection\Core\Reflector\SourceCodeReflector;
 
 class WorseInterestingOffsetFinder implements InterestingOffsetFinder
 {
-    private Parser $parser;
-
-    public function __construct(private SourceCodeReflector $reflector, ?Parser $parser = null)
-    {
-        $this->parser = $parser ?: new Parser();
+    public function __construct(
+        private SourceCodeReflector $reflector,
+        private Parser $parser = new Parser(),
+    ) {
     }
 
     public function find(TextDocument $source, ByteOffset $offset): ByteOffset

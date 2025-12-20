@@ -40,13 +40,12 @@ class LanguageServerRenameWorseExtension implements Extension
     public function load(ContainerBuilder $container): void
     {
         $container->register(VariableRenamer::class, function (Container $container) {
+            $parser = $container->get('worse_reflection.tolerant_parser');
+
             return new VariableRenamer(
-                new TolerantVariableReferenceFinder(
-                    $container->get('worse_reflection.tolerant_parser'),
-                    true
-                ),
+                new TolerantVariableReferenceFinder($parser, true),
                 $container->get(TextDocumentLocator::class),
-                $container->get('worse_reflection.tolerant_parser')
+                $parser,
             );
         }, [
             LanguageServerRenameExtension::TAG_RENAMER => []

@@ -27,14 +27,11 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantImportName implements ImportName
 {
-    private Parser $parser;
-
     public function __construct(
         private Updater $updater,
-        ?Parser $parser = null,
-        private bool $importGlobals = false
+        private Parser $parser = new Parser(),
+        private bool $importGlobals = false,
     ) {
-        $this->parser = $parser ?: new Parser();
     }
 
     public function importName(SourceCode $source, ByteOffset $offset, NameImport $nameImport): TextEdits

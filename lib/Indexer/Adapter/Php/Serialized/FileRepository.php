@@ -23,8 +23,6 @@ class FileRepository
 
     private int $lastUpdate;
 
-    private LoggerInterface $logger;
-
     /**
      * @var array<string,Record>
      */
@@ -35,10 +33,9 @@ class FileRepository
     public function __construct(
         private string $path,
         private RecordSerializer $serializer,
-        ?LoggerInterface $logger = null
+        private LoggerInterface $logger = new NullLogger()
     ) {
         $this->initializeLastUpdate();
-        $this->logger = $logger ?: new NullLogger();
     }
 
     public function put(Record $record): void

@@ -22,15 +22,12 @@ use Phpactor\WorseReflection\Reflector;
 
 class DoctrineAnnotationCompletor extends NameSearcherCompletor implements Completor
 {
-    private Parser $parser;
-
     public function __construct(
         NameSearcher $nameSearcher,
         private Reflector $reflector,
-        ?Parser $parser = null
+        private Parser $parser = new Parser()
     ) {
-        parent::__construct($nameSearcher, null);
-        $this->parser = $parser ?: new Parser();
+        parent::__construct($nameSearcher);
     }
 
     public function complete(TextDocument $source, ByteOffset $byteOffset): Generator

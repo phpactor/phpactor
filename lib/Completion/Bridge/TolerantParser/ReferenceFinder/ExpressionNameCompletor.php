@@ -26,7 +26,11 @@ class ExpressionNameCompletor extends CoreNameSearcherCompletor implements Toler
         private ObjectFormatter $snippetFormatter,
         ?DocumentPrioritizer $prioritizer = null
     ) {
-        parent::__construct($nameSearcher, $prioritizer);
+        if ($prioritizer === null) {
+            parent::__construct($nameSearcher);
+        } else {
+            parent::__construct($nameSearcher, $prioritizer);
+        }
     }
 
     // 1. If no namespace separator  - search by short name

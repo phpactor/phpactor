@@ -16,11 +16,13 @@ final class ChainTypeLocator implements TypeLocator
      */
     private array $locators = [];
 
-    private LoggerInterface $logger;
-
-    public function __construct(array $locators, ?LoggerInterface $logger = null)
-    {
-        $this->logger = $logger ?: new NullLogger();
+    /**
+     * @param TypeLocator[] $locators
+     */
+    public function __construct(
+        array $locators,
+        private LoggerInterface $logger = new NullLogger(),
+    ) {
         foreach ($locators as $locator) {
             $this->add($locator);
         }

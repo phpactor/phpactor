@@ -11,15 +11,12 @@ use Psr\Log\LoggerInterface;
 
 class PhpstanProcess
 {
-    private DiagnosticsParser $parser;
-
     public function __construct(
         private string $cwd,
         private PhpstanConfig $config,
         private LoggerInterface $logger,
-        ?DiagnosticsParser $parser = null
+        private DiagnosticsParser $parser = new DiagnosticsParser(),
     ) {
-        $this->parser = $parser ?: new DiagnosticsParser();
     }
 
     /**

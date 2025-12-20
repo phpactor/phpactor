@@ -17,13 +17,10 @@ use Microsoft\PhpParser\Node\Expression\ScopedPropertyAccessExpression;
 
 class WorseLocalVariableCompletor implements TolerantCompletor
 {
-    private ObjectFormatter $informationFormatter;
-
     public function __construct(
         private VariableCompletionHelper $variableCompletionHelper,
-        ?ObjectFormatter $typeFormatter = null
+        private ObjectFormatter $informationFormatter = new ObjectFormatter(),
     ) {
-        $this->informationFormatter = $typeFormatter ?: new ObjectFormatter();
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator

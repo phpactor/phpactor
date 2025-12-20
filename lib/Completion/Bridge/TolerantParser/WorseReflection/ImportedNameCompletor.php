@@ -18,11 +18,8 @@ use Phpactor\TextDocument\TextDocument;
 
 class ImportedNameCompletor implements TolerantCompletor, TolerantQualifiable
 {
-    private ClassQualifier $qualifier;
-
-    public function __construct(?ClassQualifier $qualifier = null)
+    public function __construct(private ClassQualifier $qualifier = new ClassQualifier(0))
     {
-        $this->qualifier = $qualifier ?: new ClassQualifier(0);
     }
 
     public function complete(Node $node, TextDocument $source, ByteOffset $offset): Generator

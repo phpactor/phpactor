@@ -9,11 +9,8 @@ use Phpactor\WorseReflection\Core\Cache\TtlCache;
 
 class CachedParser extends Parser
 {
-    private Cache $cache;
-
-    public function __construct(?Cache $cache = null)
+    public function __construct(private Cache $cache = new TtlCache())
     {
-        $this->cache = $cache ?: new TtlCache();
         parent::__construct();
     }
 

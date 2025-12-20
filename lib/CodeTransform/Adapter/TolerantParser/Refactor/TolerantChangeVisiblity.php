@@ -16,11 +16,8 @@ use Phpactor\TextDocument\TextEdits;
 
 class TolerantChangeVisiblity implements ChangeVisiblity
 {
-    private Parser $parser;
-
-    public function __construct(?Parser $parser = null)
+    public function __construct(private Parser $parser = new Parser())
     {
-        $this->parser = $parser ?: new Parser();
     }
 
     public function changeVisiblity(SourceCode $source, int $offset): SourceCode

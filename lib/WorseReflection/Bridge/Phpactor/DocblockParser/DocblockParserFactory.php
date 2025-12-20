@@ -31,17 +31,11 @@ class DocblockParserFactory implements DocBlockFactory
         'assert',
     ];
 
-    private Lexer $lexer;
-
-    private Parser $parser;
-
     public function __construct(
         private Reflector $reflector,
-        ?Lexer $lexer = null,
-        ?Parser $parser = null
+        private Lexer $lexer = new Lexer(),
+        private Parser $parser = new Parser(),
     ) {
-        $this->lexer = $lexer ?: new Lexer();
-        $this->parser = $parser ?: new Parser();
     }
 
     public function create(string $docblock, ReflectionScope $scope): DocBlock

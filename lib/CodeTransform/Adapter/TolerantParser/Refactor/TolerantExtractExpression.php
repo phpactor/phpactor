@@ -18,11 +18,8 @@ use function preg_match;
 
 class TolerantExtractExpression implements ExtractExpression
 {
-    private Parser $parser;
-
-    public function __construct(?Parser $parser = null)
+    public function __construct(private Parser $parser = new Parser())
     {
-        $this->parser = $parser ?: new Parser();
     }
 
     public function canExtractExpression(SourceCode $source, int $offsetStart, ?int $offsetEnd = null): bool
