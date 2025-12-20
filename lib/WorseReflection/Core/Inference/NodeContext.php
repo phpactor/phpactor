@@ -15,6 +15,7 @@ class NodeContext
      * @var string[]
      */
     private array $issues = [];
+    private int $nodeId = 0;
 
     protected function __construct(
         protected Symbol $symbol,
@@ -46,6 +47,19 @@ class NodeContext
         $new->containerType = $containerType;
 
         return $new;
+    }
+
+    public function withNodeId(int $id): self
+    {
+        $new = clone $this;
+        $new->nodeId = $id;
+
+        return $new;
+    }
+
+    public function nodeId(): int
+    {
+        return $this->nodeId;
     }
 
     public function withTypeAssertions(TypeAssertions $typeAssertions): NodeContext

@@ -13,6 +13,7 @@ use Phpactor\Extension\WorseReflection\Documentor\DiagnosticDocumentor;
 use Phpactor\Extension\OpenTelemetry\OpenTelemetryExtension;
 use Phpactor\Extension\WorseReflection\Telemetry\WorseTelemetry;
 use Phpactor\FilePathResolver\PathResolver;
+use Phpactor\TolerantAstDiff\AstDiff;
 use Phpactor\WorseReflection\Bridge\Phpactor\MemberProvider\DocblockMemberProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\AssignmentToMissingPropertyProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\DeprecatedUsageDiagnosticProvider;
@@ -26,6 +27,7 @@ use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\MissingReturnType
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UndefinedVariableProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnresolvableNameProvider;
 use Phpactor\WorseReflection\Bridge\TolerantParser\Diagnostics\UnusedImportProvider;
+use Phpactor\WorseReflection\Bridge\TolerantParser\Parser\MergingParser;
 use Phpactor\WorseReflection\Core\Cache;
 use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Cache\StaticCache;
@@ -156,7 +158,7 @@ class WorseReflectionExtension implements Extension
         });
 
         $container->register(self::SERVICE_PARSER, function (Container $container) {
-            return new CachedParser($container->get(Cache::class));
+            return new MergingParser(new AstDiff());
         });
 
         $container->register(Cache::class, function (Container $container) {
