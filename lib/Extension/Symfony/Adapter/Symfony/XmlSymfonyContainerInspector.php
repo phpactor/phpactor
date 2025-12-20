@@ -127,9 +127,10 @@ class XmlSymfonyContainerInspector implements SymfonyContainerInspector
         if (empty($id) || empty($class)) {
             return null;
         }
+
         return new SymfonyContainerService(
             $id,
-            TypeFactory::fromString($class),
+            TypeFactory::class($class),
         );
     }
 }
