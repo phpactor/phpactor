@@ -14,6 +14,7 @@ use Psr\Log\LoggerInterface;
 
 class NodeContextResolver
 {
+    public int $cacheMisses = 0;
     /**
      * @param array<class-name,Resolver> $resolverMap
      */
@@ -78,6 +79,7 @@ class NodeContextResolver
                     get_class($node)
                 ));
             }
+            $this->cacheMisses++;
 
             $context = $this->doResolveNode($frame, $node);
             $context = $context->withScope(new ReflectionScope($this->reflector, $node));
