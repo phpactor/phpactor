@@ -4,32 +4,68 @@ namespace Phpactor\WorseReflection\Tests\Unit\Core\Cache;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\WorseReflection\Core\Cache\TtlCache;
-use function Amp\Promise\wait;
-use function Amp\call;
 
 class TtlCacheTest extends TestCase
 {
     public function testPutsCacheIfNotSet(): void
     {
         $cache = new TtlCache();
+        self::assertFalse($cache->has('foobar'));
         self::assertEquals(1234, $cache->getOrSet('foobar', function () {
             return 1234;
         }));
+        self::assertTrue($cache->has('foobar'));
     }
 
-    public function testCachesResultOfPromise(): void
+    public function testGetExpire(): void
     {
-        $cache = new TtlCache();
-        $calls = 0;
-        $setter = function () use (&$calls) {
-            return call(function () use (&$calls): void {
-                $calls++;
-            });
-        };
-        wait($cache->getOrSet('foobar', $setter));
-        wait($cache->getOrSet('foobar', $setter));
-        wait($cache->getOrSet('foobar', $setter));
-        self::assertEquals(1, $calls);
+        // 0.5ms
+        $cache = new TtlCache(0.0005);
+        $count = 0;
+
+        // cache should expire on every other iteration
+        for ($i = 0; $i < 10; $i++) {
+            if (null === $cache->get('foobar')) {
+                $cache->set('foobar', ++$count);
+            }
+
+            // 0.25 milliseconds
+            usleep(250);
+        }
+
+        self::assertGreaterThan(4, $count);
+        self::assertLessThanOrEqual(6, $count);
+    }
+
+    public function testHasExpire(): void
+    {
+        // 0.5ms
+        $cache = new TtlCache(0.0005);
+        $count = 0;
+
+        // cache should expire on every other iteration
+        for ($i = 0; $i < 10; $i++) {
+            if (false === $cache->has('foobar')) {
+                $cache->set('foobar', ++$count);
+            }
+
+            // 0.25 milliseconds
+            usleep(250);
+        }
+
+        self::assertGreaterThan(4, $count);
+        self::assertLessThanOrEqual(6, $count);
+    }
+
+    public function testRemove(): void
+    {
+        $cache = new TtlCache(1);
+        $count = 0;
+
+        $cache->set('foobar', 'hello');
+        self::assertTrue($cache->has('foobar'));
+        $cache->remove('foobar');
+        self::assertFalse($cache->has('foobar'));
     }
 
     public function testCallbackIsOnlyCalledOnce(): void

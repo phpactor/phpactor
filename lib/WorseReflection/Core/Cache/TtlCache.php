@@ -17,7 +17,7 @@ class TtlCache implements Cache
      */
     private array $expires = [];
 
-    private ?float $lifetimeStart = null;
+    private ?float $epoch = null;
 
     /**
      * @var float $lifetime Lifetime in seconds
@@ -28,24 +28,14 @@ class TtlCache implements Cache
 
     public function getOrSet(string $key, Closure $setter)
     {
-        $now = microtime(true);
-        if (null === $this->lifetimeStart) {
-            $this->lifetimeStart = $now;
+        $this->purgeIfNeeded();
+
+        if ($this->has($key)) {
+            return $this->get($key);
         }
 
-        if (isset($this->cache[$key]) && $this->expires[$key] > $now) {
-            return $this->cache[$key];
-        }
-
-        $elapsed = $now - $this->lifetimeStart;
-
-        if ($elapsed >= $this->lifetime) {
-            $this->purgeExpired($now);
-            $this->lifetimeStart = $now;
-        }
-
-        $this->cache[$key] = $setter();
-        $this->expires[$key] = microtime(true) + $this->lifetime;
+        $value = $setter();
+        $this->set($key, $value);
 
         return $this->cache[$key];
     }
@@ -54,6 +44,46 @@ class TtlCache implements Cache
     {
         $this->cache = [];
         $this->expires = [];
+    }
+
+    public function has(string $key): bool
+    {
+        $this->purgeIfNeeded();
+        return isset($this->cache[$key]) && $this->expires[$key] > microtime(true);
+    }
+
+    public function get(string $key): mixed
+    {
+        $this->purgeIfNeeded();
+        return $this->has($key) ? $this->cache[$key] : null;
+    }
+
+    public function set(string $key, mixed $value): void
+    {
+        $this->cache[$key] = $value;
+        $this->expires[$key] = microtime(true) + $this->lifetime;
+    }
+
+    public function remove(string $key): void
+    {
+        unset($this->cache[$key]);
+    }
+
+    private function purgeIfNeeded(?int $now = null): void
+    {
+        $now = $now ?? microtime(true);
+
+        if (null === $this->epoch) {
+            $this->epoch = $now;
+            return;
+        }
+
+        $elapsed = $now - $this->epoch;
+
+        if ($elapsed >= $this->lifetime) {
+            $this->purgeExpired($now);
+            $this->epoch = $now;
+        }
     }
 
     private function purgeExpired(float $now): void
