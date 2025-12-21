@@ -141,15 +141,16 @@ class ServiceLocator
         );
     }
 
-    public function frameBuilder(): FrameResolver
+    public function frameBuilder(?NodeContextResolver $resolver = null): FrameResolver
     {
         return FrameResolver::create(
-            $this->nodeContextResolver(),
+            $resolver ?? $this->nodeContextResolver(),
             array_merge([
                 new FunctionLikeWalker(),
                 new PassThroughWalker(),
                 new VariableWalker($this->docblockFactory),
             ], $this->frameWalkers),
+            $this->cacheForDocument,
         );
     }
 

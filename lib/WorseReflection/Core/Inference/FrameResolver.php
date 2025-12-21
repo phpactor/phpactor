@@ -10,6 +10,8 @@ use Microsoft\PhpParser\Node\Expression\AnonymousFunctionCreationExpression;
 use Microsoft\PhpParser\Node\Expression\ArrowFunctionCreationExpression;
 use Microsoft\PhpParser\Node\SourceFileNode;
 use Microsoft\PhpParser\Token;
+use Phpactor\TextDocument\TextDocumentUri;
+use Phpactor\WorseReflection\Core\CacheForDocument;
 use Phpactor\WorseReflection\Core\Inference\Frame\ConcreteFrame;
 use Phpactor\WorseReflection\Reflector;
 use RuntimeException;
@@ -23,7 +25,8 @@ final class FrameResolver
     public function __construct(
         private NodeContextResolver $nodeContextResolver,
         private array $globalWalkers,
-        private array $nodeWalkers
+        private array $nodeWalkers,
+        private CacheForDocument $cache,
     ) {
     }
 
@@ -32,7 +35,8 @@ final class FrameResolver
      */
     public static function create(
         NodeContextResolver $nodeContextResolver,
-        array $walkers = []
+        array $walkers,
+        CacheForDocument $cache,
     ): self {
         $globalWalkers = [];
         $nodeWalkers = [];
@@ -50,25 +54,37 @@ final class FrameResolver
             }
         }
 
-        return new self($nodeContextResolver, $globalWalkers, $nodeWalkers);
+        return new self($nodeContextResolver, $globalWalkers, $nodeWalkers, $cache);
     }
 
     public function build(Node $node): Frame
     {
-        $generator = $this->walkNode($this->resolveScopeNode($node), $node);
-        foreach ($generator as $_) {
+        $scopedNode = $this->resolveScopeNode($node);
+
+        if (!$uri = $node->getUri()) {
+            return $this->doBuild($scopedNode, $node);
         }
 
-        $frame = $generator->getReturn();
-        if (!$frame) {
-            throw new RuntimeException(
-                'Walker did not return a Frame, this should never happen'
-            );
+        $scopeKey = sprintf('scope:%s', spl_object_id($scopedNode));
+        $scopeExtentKey = sprintf('scopex:%s', spl_object_id($scopedNode));
+
+        $cache = $this->cache->cacheForDocument(TextDocumentUri::fromString($uri));
+
+        if (null !== $scopeExtent = $cache->get($scopeExtentKey)) {
+            if ($node->getStartPosition() > (int)$scopeExtent->scalar()) {
+                $cache->remove($scopeKey);
+            }
         }
 
-        return $frame;
+        return $cache->getOrSet($scopeKey, function () use ($cache, $scopeExtentKey, $scopedNode, $node) {
+            $cache->set($scopeExtentKey, $node->getStartPosition());
+            return $this->doBuild($scopedNode, $node);
+        });
     }
 
+    /**
+     * @return Generator<int,null,null,?Frame>
+     */
     public function buildGenerator(Node $node): Generator
     {
         return $this->walkNode($this->resolveScopeNode($node), $node);
@@ -120,6 +136,22 @@ final class FrameResolver
     public function resolver(): NodeContextResolver
     {
         return $this->nodeContextResolver;
+    }
+
+    private function doBuild(Node $scopedNode, Node $node): Frame
+    {
+        $generator = $this->walkNode($scopedNode, $node);
+        foreach ($generator as $_) {
+        }
+
+        $frame = $generator->getReturn();
+        if (!$frame) {
+            throw new RuntimeException(
+                'Walker did not return a Frame, this should never happen'
+            );
+        }
+
+        return $frame;
     }
 
     /**
