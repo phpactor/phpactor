@@ -72,18 +72,19 @@ class ContextMenu
                 }
 
                 $action = $this->actions[$actionName];
+                $key = $action->key() ?? '';
 
-                if (isset($keys[$action->key()])) {
+                if (isset($keys[$key])) {
                     throw new RuntimeException(sprintf(
                         'Key "%s" in context "%s" mapped by action "%s" is already used by action "%s"',
-                        $action->key(),
+                        $key,
                         $name,
                         $actionName,
-                        $keys[$action->key()]
+                        $keys[$key]
                     ));
                 }
 
-                $keys[$action->key()] = $actionName;
+                $keys[$key] = $actionName;
             }
         }
     }
